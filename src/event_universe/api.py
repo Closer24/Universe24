@@ -5,10 +5,17 @@ from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
 from event_universe.core.state import Config
+from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.dynamics.transit import transit_ticks
 from event_universe.dynamics.turning import FieldTurning
 from event_universe.fields.policies import ScalarActivity, sample_changed_or_source
 from event_universe.fields.scalar import ScalarFieldRule
+from event_universe.models.causal_stream import (
+    STREAM_FIELD,
+    STREAM_MODEL,
+    STREAM_SAMPLES,
+    CausalStreamConfig,
+)
 from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
 
@@ -71,4 +78,24 @@ class LinkedSimulation(LinkedEngine):
             transit_rule=transit_ticks,
             merge_rule=max,
             field_activity=model.field_is_active,
+        )
+
+
+class CausalStreamSimulation(StreamingEngine):
+    """Opt-in field candidate whose populations stream one link before particle response."""
+
+    def __init__(
+        self,
+        settings: CausalStreamConfig | None = None,
+        *,
+        observer: Observer | None = None,
+    ) -> None:
+        selected = CausalStreamConfig() if settings is None else settings
+        super().__init__(
+            selected.engine_config(),
+            STREAM_MODEL.update_particle,
+            STREAM_FIELD.emit,
+            selected.source_per_octant,
+            STREAM_SAMPLES,
+            observer,
         )
