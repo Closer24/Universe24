@@ -62,6 +62,22 @@ def violations(source, module):
     relative = module.removeprefix("event_universe.")
     layer = relative.split(".")[0]
     found = []
+    if layer in {"fields", "dynamics", "models"}:
+        forbidden_world_members = {
+            "cells",
+            "particles",
+            "occupancy",
+            "active",
+            "transits",
+            "history",
+            "paths",
+            "force_records",
+            "step",
+            "run",
+        }
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Attribute) and node.attr in forbidden_world_members:
+                found.append((node.lineno, "local calculation accesses world state or replay"))
     for line, target in import_targets(tree, module):
         if target.startswith("event_universe."):
             dependency = target.removeprefix("event_universe.")

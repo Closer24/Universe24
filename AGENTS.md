@@ -47,6 +47,12 @@ silent change to a physical law.
 
 ## Change boundaries
 
+- Enforce LOCALITY-1 in SIMULATOR_DEFINITIONS.md for every physical dependency,
+  including self-field estimation and subtraction. Audit the origin of every
+  input end-to-end: a local subtraction cannot legalize a global estimator.
+  Require fixed local work and storage for fixed K; report total host costs
+  separately. Q-ORACLE-1 is confined to the explicit quantum owner and cannot
+  supply an exception for ordinary fields, forces, movement or geometry.
 - Physical calculations use bounded integers, fixed local state and six neighbors.
   Measure host computation and storage separately from the model's local cost.
 - Field, response, movement and transit calculations belong in generic components.

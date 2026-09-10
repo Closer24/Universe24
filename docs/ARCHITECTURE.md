@@ -170,6 +170,27 @@ it cannot be added by turning a diagnostic observer into a second state owner.
 
 ## Verification scope
 
+LOCALITY-1 in SIMULATOR_DEFINITIONS.md governs the complete dependency path of
+every non-quantum physical update, including self-field inputs. Shadow/reference
+computations cannot be hidden behind a local adapter. `test_locality.py` checks
+exactly six baseline neighbor reads independent of world extent and rejects
+known world access and replay in field, dynamics and model modules. Code review
+must still check causal input provenance and bounded loops; static checks do
+not prove arbitrary Python is O(1). Global scheduling and diagnostics retain
+their explicitly separate host costs.
+
+| Reviewed path | Local bound | Separate host cost |
+| --- | --- | --- |
+| Baseline scalar update | Six neighbor samples, five cell registers and at most K source slots | Work/frontier sweeps grow with visited cells |
+| Field response and movement | Three vector components; one hop request; at most K destination slots | Occupancy-address scheduling grows with retained addresses |
+| One cell's particle phase | At most K particles, each with at most K slot work | K is fixed; no all-source search supplies force inputs |
+| Link transport and geometry | Six ports per cell, one packet per port, at most two delivered proposals per edge | `advance` visits materialized link cells |
+| Matter transit | Four integers per in-flight particle; one neighbor destination | Tick scheduling visits in-flight particles |
+| Diagnostics and rendering | Not a physical update; cannot feed state repairs | Full-state audits, histories and rendering are not O(1) |
+
+The implementation therefore supports bounded local model work, not a claim that
+the entire non-quantum Python program or a full simulation tick is O(1).
+
 The frozen reference has SHA-256
 `822f62ac790c0b8477ed634d24454774152bcba8fb3322a53d039c251376163f`.
 It is loaded only by tests. The three primary experiments compare every physical

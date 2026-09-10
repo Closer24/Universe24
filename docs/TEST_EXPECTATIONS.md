@@ -141,6 +141,17 @@ be rejected even with aliases. Bounded arithmetic from core.state, imports withi
 quantum and the integration adapter are allowed. These are static checks, not a
 proof against arbitrary dynamic Python or a proof of physical locality.
 
+## Locality and bounded local work
+
+`test_locality.py` supplies a read spy at (3,3,3) in extents 8 and 1,000,000.
+Both calls must read the same six cardinal neighbors once each and return the
+six supplied values in order. This test creates no world and advances no time.
+Negative source examples in fields, dynamics and models must reject global cell
+or particle access, occupancy/history reads and shadow step/run calls. The
+normal architecture test scans all production modules with the same guard.
+LOCALITY-1 also requires manual end-to-end provenance and loop-bound review;
+passing these finite checks alone does not establish general O(1) complexity.
+
 ## Repository language
 
 The English-only rule is authoritative in AGENTS.md and linked from the
