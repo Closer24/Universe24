@@ -8,6 +8,7 @@ from pathlib import Path
 
 from event_universe import __version__
 from event_universe.diagnostics.frames import Frame, Slice, VolumeFrame, capture_frame, capture_volume
+from event_universe.diagnostics.invariants import require_inertial_momentum
 from event_universe.diagnostics.measurements import report, total_momentum
 from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.diagnostics.render import render_run, render_volume
@@ -44,12 +45,30 @@ def run_scenario(
         frames.append(capture_frame(world, scenario.view))
         if volume:
             volume_frames.append(capture_volume(world))
+        # The runner owns the run: no external seeds or later particle additions.
+        # Field-bearing initial states are not evidence of isolation.
+        isolated = (
+            next(iter(world.particles.items()))
+            if len(world.particles) == 1 and not any(any(cell) for cell in world.cells.values())
+            else None
+        )
+        isolated_status = "not_applicable" if isolated is None else "passed"
         initial_momentum = total_momentum(world)
         conserved = True
         try:
             for _ in range(scenario.ticks):
                 world.step()
                 conserved = conserved and total_momentum(world) == initial_momentum
+                if isolated is not None:
+                    pid, initial_particle = isolated
+                    isolated_status = "failed"
+                    require_inertial_momentum(
+                        initial_particle.momentum,
+                        world.particles[pid].momentum,
+                        pid=pid,
+                        tick=world.tick,
+                    )
+                    isolated_status = "passed"
                 if world.tick % frame_stride == 0:
                     frames.append(capture_frame(world, scenario.view))
                     if volume:
@@ -70,11 +89,14 @@ def run_scenario(
         "initial_total_momentum": initial_momentum,
         "momentum_equal_at_every_completed_tick": conserved,
         "status": "failed" if failure else "completed",
+        "isolated_momentum_check": isolated_status,
         "error": str(failure) if failure else None,
         "report": report(world) if failure is None else {"tick": world.tick, "faulted": world.faulted},
     }
     (output / "run.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     title = f"Event Universe — {scenario.name}"
+    if failure is not None:
+        title = f"FAILED RUN — {title} — {failure}"
     if volume:
         artifact = render_volume(volume_frames, output / "run.html", title=title, metadata=metadata)
     else:

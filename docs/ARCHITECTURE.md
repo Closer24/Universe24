@@ -260,3 +260,12 @@ is [Repository language: English](../AGENTS.md#repository-language-english).
 review checks the actual language. Older branches must follow this rule when
 merged. Mathematical notation remains valid. This affects documentation and
 review, not physical laws.
+
+### Run acceptance diagnostics
+
+`diagnostics/invariants.py` compares immutable momentum values and raises on an
+isolated-motion violation. The runner establishes the initial applicability
+(single particle and zero field records), calls the check each tick before frame
+sampling, and uses the existing failure-output pipeline. No check result is fed
+back into a physical law to repair state. The engine remains separate from this
+application-level acceptance policy.
