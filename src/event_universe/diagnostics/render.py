@@ -244,16 +244,22 @@ def render_volume(
         if frame.field:
             xs, ys, zs = zip(*frame.field, strict=True)
             values = list(frame.field.values())
-            strengths = [value / vmax for value in values]
+            # Display-only gamma lift keeps weak field cells visible on the dark background.
+            strengths = [(value / vmax) ** 0.5 for value in values]
             # One shared scalar field: do not invent a per-particle source attribution.
-            for spread, base_alpha, gain in ((24, 0.02, 0.06), (8, 0.04, 0.12), (1, 0.08, 0.42)):
+            for spread, base_alpha, gain in (
+                (45, 0.025, 0.05),
+                (20, 0.04, 0.08),
+                (8, 0.06, 0.12),
+                (2, 0.12, 0.30),
+            ):
                 ax.scatter(
                     xs,
                     ys,
                     zs,
                     c=[(1.0, 0.35 + 0.5 * u, 0.12 + 0.35 * u, base_alpha + gain * u) for u in strengths],
                     s=[(18 + 70 * u) * spread for u in strengths],
-                    marker="s" if spread == 1 else "o",
+                    marker="o",
                     edgecolors="none",
                     depthshade=False,
                     zorder=3,
@@ -400,6 +406,7 @@ def render_volume(
         note="Transparent amber markers show the combined scalar field. Stronger values have "
         "brighter color and greater opacity, using one fixed scale throughout the animation. "
         "Broad soft halos enlarge field markers for visibility, not the physical field range. "
+        "A square-root display transfer lifts weak values; colors are not a linear field scale. "
         "The display grid has twice as many subdivisions per axis; physical cells are unchanged. "
         "Particle markers and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
