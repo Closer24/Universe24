@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "event-universe"
+version = "0.1.0"
+description = "A local integer 3D event-field research simulator"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+render = ["matplotlib>=3.8,<4", "Pillow>=10,<13"]
+dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
+
+[project.scripts]
+event-universe = "event_universe.runner:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["persistent_source_field"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib -ra"
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 105
+extend-exclude = ["tests/reference"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/event_universe"]
+exclude = ["tests/reference"]
+
+[[tool.mypy.overrides]]
+module = ["matplotlib.*", "PIL.*"]
+ignore_missing_imports = true
