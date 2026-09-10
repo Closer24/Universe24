@@ -4,13 +4,7 @@ import ast
 from importlib.util import resolve_name
 
 GENERIC_LAYERS = {"core", "fields", "dynamics"}
-COMPOSITION_MODULES = {
-    "api",
-    "compat",
-    "models.current_field",
-    "models.local_field",
-    "models.linked_field",
-}
+COMPOSITION_MODULES = {"api", "compat"}
 FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "Engine", "Simulation"}
 
 
@@ -100,7 +94,7 @@ def violations(source, module):
             "subprocess",
         }:
             found.append((line, "physical code imports output or storage"))
-    if relative in COMPOSITION_MODULES:
+    if relative in COMPOSITION_MODULES or layer == "models":
         arithmetic = RuntimeArithmetic()
         arithmetic.visit(tree)
         found.extend(

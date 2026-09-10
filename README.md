@@ -1,21 +1,21 @@
-# Universe24 — סימולטור אירועים תלת־ממדי
+# Universe24 — a three-dimensional event simulator
 
-מקור האמת: [Closer24/Universe24](https://github.com/Closer24/Universe24), ענף `main`.
-שם חבילת Python נשאר `event_universe`.
+Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
+branch `main`. The Python package remains `event_universe`.
 
-**מתחילים כאן:** [AGENTS.md](AGENTS.md) — הוראות משותפות, מקור האמת ומפת הכללים.
-זהו פרויקט אחד; הקוד הפעיל נמצא רק ב־`src/event_universe/`.
+**Start here:** [AGENTS.md](AGENTS.md) contains the shared instructions, source of
+truth and rule map, including the English-only repository language rule. This is
+one project; active implementation lives only in `src/event_universe/`.
 
-חבילת Python מסודרת למחקר של שדה ואירועים מקומיים. המנוע, החוקים המועמדים,
-המדידות והבדיקות מופרדים. גרסת המודל היא `scalar-field-v10-contact`.
-החבילה משמרת את חוק השדה ואת חוק הפנייה של הגרסה שנבדקה לפני הארגון מחדש.
+The package supports research into local fields and events, separating the engine,
+candidate laws, measurements and tests. The baseline model is
+`scalar-field-v10-contact`. It preserves the field and turning laws tested before
+modularization. Start with `POSTULATES.md` for a plain-language explanation of
+binding principles, candidate laws and open questions.
 
-להבנת הרעיון לפני הפרטים הטכניים, מתחילים ב־`POSTULATES_HE.md`. הוא מסביר
-בעברית פשוטה מה מחייב, מהו רק חוק מועמד ומה עדיין שאלה פתוחה.
+## Install and run
 
-## התקנה והרצה
-
-נדרש Python 3.11 ומעלה. מתוך תיקיית הפרויקט:
+Python 3.11 or later is required. From the project directory:
 
 ```bash
 python -m venv .venv
@@ -24,17 +24,16 @@ python -m pip install -e '.[render,dev]'
 python -m event_universe --scenario contact --output artifacts/contact
 ```
 
-ב־Windows מפעילים את הסביבה באמצעות `.venv\Scripts\activate`.
-לכל הרצה דרך כלי ההרצה נוצרים:
+On Windows, activate with `.venv\Scripts\activate`. Each application run creates:
 
-| קובץ | תוכן |
+| File | Contents |
 | --- | --- |
-| `run.html` | HTML עצמאי עם ההנפשה, המישור והפרמטרים |
-| `run.gif` | ההנפשה שמוטמעת ב־HTML |
-| `run.json` | מצב סיום, תנאי התחלה, גרסת קוד ותוצאות בדיקות ההרצה |
-| `events.jsonl` | אירועי תנועה, חילופי תנע ומעברים חסומים, הנכתבים בהדרגה |
+| `run.html` | Standalone animation, view description and parameters |
+| `run.gif` | Animation embedded in the HTML |
+| `run.json` | Completion status, initial conditions, code identity and run checks |
+| `events.jsonl` | Streamed movement, momentum-exchange and blocked-move events |
 
-תרחישים נוספים:
+Other examples:
 
 ```bash
 python -m event_universe --scenario turning --output artifacts/turning
@@ -42,26 +41,25 @@ python -m event_universe --scenario contact --view-3d --output artifacts/contact
 python -m event_universe --scenario stationary --frame-stride 4 --output artifacts/stationary
 ```
 
-`--ticks` משנה את משך ההרצה. `--plane XY|XZ|YZ` ו־`--slice` בוחרים חתך לצפייה;
-בחירת החתך אינה משנה את הפיזיקה התלת־ממדית.
-`--frame-stride` מדלל תמונות בלבד ואינו מדלג על צעדים פיזיקליים.
+`--ticks` sets run duration. `--plane XY|XZ|YZ` and `--slice` select a displayed
+slice; they do not change 3D physics. `--frame-stride` samples images without
+skipping physical ticks.
 
-תצוגת תלת־ממד משופרת באיכות 1500×1275 היא ברירת המחדל בכל הרצה, גם בדוחות הבדיקות.
-לבחירת חתך השתמש ב־`--view-2d --plane XY --slice 12`.
-הכלל המלא כתוב ב־[דף ההגדרות](SIMULATOR_DEFINITIONS.md#ברירת-המחדל-להצגת-הרצות).
+Enhanced 1500×1275 3D is the default for every run, including test reports.
+Use `--view-2d --plane XY --slice 12` for a slice. The full rule is in the
+[definitions](SIMULATOR_DEFINITIONS.md#default-run-display).
+Running into the same output directory replaces its results. Use separate
+output directories to compare experiments.
 
-הרצה לאותה תיקיית פלט מחליפה את קובצי התוצאה;
-להשוואת ניסויים יש לבחור תיקיות פלט שונות.
-
-## בדיקת הפרויקט בפקודה אחת
+## Check the project with one command
 
 ```bash
 python tools/check.py
 ```
 
-הפקודה בודקת סגנון, עיצוב, טיפוסים ובדיקות התנהגות, ומפיקה
-`artifacts/test-runs.html` עם כל הרצות הבדיקה, כולל גרסת ההשוואה הישנה.
-אפשר להפעיל את הבדיקות בנפרד:
+This checks lint, formatting, types and behavior and generates
+`artifacts/test-runs.html` with every test world, including the frozen comparison.
+Individual commands are also available:
 
 ```bash
 python -m ruff check .
@@ -70,73 +68,74 @@ python -m mypy
 python -m pytest --junitxml=artifacts/junit.xml
 ```
 
-הגדרת GitHub Actions מצורפת ב־`.github/workflows/check.yml`. היא מיועדת לרוץ
-על push ועל pull request לאחר העלאת הפרויקט למאגר GitHub. אין תלות ב־GitHub
-להרצה ולבדיקה מקומית.
+Prefer `tools/check.py` for the full gate: it passes the current Python version
+to mypy. GitHub Actions is configured in `.github/workflows/check.yml` for pushes
+and pull requests. Local execution and testing do not require GitHub.
 
-## איפה כל דבר נמצא
+## Project map
 
-| נתיב | אחריות |
+| Path | Responsibility |
 | --- | --- |
-| `src/event_universe/core/state.py` | רשומות קבועות, פרמטרים וחשבון שלמים חסום |
-| `src/event_universe/core/contracts.py` | ממשקי החוקים והאירועים המקומיים |
-| `src/event_universe/core/lattice.py` | כתובות מחזוריות ושכנים, במימוש משותף לקריאה ולתנועה |
-| `src/event_universe/core/engine.py` | אחסון דליל, זמן, שכנים, תפוסה ומעבר בין תאים |
-| `src/event_universe/fields/scalar.py` | חישוב כללי של שדה סקלרי והגרדיאנט שלו |
-| `src/event_universe/fields/policies.py` | חישוב מקור ומדיניות טווח ופעילות שנבחרות במודל |
-| `src/event_universe/dynamics/turning.py` | פנייה כללית: בחירת כיוון, צבירת שאריות וחילופי תנע |
-| `src/event_universe/dynamics/movement.py` | תקציב תנועה ובחירת צעד לשכן |
-| `src/event_universe/models/current_field.py` | הבחירות של המודל שלנו וחיבור הרכיבים למצב התא והחלקיק |
-| `src/event_universe/models/local_field.py` | תאימות לייבואים קודמים, ללא עותק של הלוגיקה |
-| `src/event_universe/diagnostics/` | מדידות, ביקורת מצב, תיעוד ו־HTML |
-| `src/event_universe/scenarios.py` | תרחישים ותנאי התחלה מפורשים |
-| `src/event_universe/runner.py` | חיבור הריצה לתיעוד ולתצוגה |
-| `tests/` | בדיקות יחידה, כללים מחייבים, רגרסיה והשוואת מצב מלאה |
-| `tests/reference/` | עותק קפוא של המקור, המשמש לבדיקה בלבד |
-| `POSTULATES_HE.md` | הפוסטולטים והרעיונות המחייבים בעברית פשוטה |
-| `SIMULATOR_DEFINITIONS.md` | ההגדרות המחייבות המעודכנות |
-| `docs/ARCHITECTURE.md` | גבולות אחריות וסדר העדכון |
-| `docs/FIELDS_HE.md` | איך מחליפים שדה או כלל פנייה, בשפה פשוטה |
-| `docs/TEST_EXPECTATIONS_HE.md` | בדיקות לפי אחריות, קלטים ותוצאות צפויות מדויקות |
-| `docs/MIGRATION.md` | מעבר מקוד וממחברות ישנים |
+| `src/event_universe/core/state.py` | Fixed records, parameters and bounded integer arithmetic |
+| `src/event_universe/core/contracts.py` | Local law and event interfaces |
+| `src/event_universe/core/lattice.py` | Shared periodic addresses and neighbors for reading and moving |
+| `src/event_universe/core/engine.py` | Sparse storage, time, neighbors, occupancy and cell movement |
+| `src/event_universe/fields/scalar.py` | Generic scalar field and gradient |
+| `src/event_universe/fields/policies.py` | Source, range and activity calculations selected by models |
+| `src/event_universe/dynamics/turning.py` | Generic direction selection, remainders and momentum exchange |
+| `src/event_universe/dynamics/movement.py` | Movement budget and neighbor-step selection |
+| `src/event_universe/models/current_field.py` | Model choices and record adaptation |
+| `src/event_universe/models/local_field.py` | Import compatibility without duplicated logic |
+| `src/event_universe/diagnostics/` | Measurements, state audits, recording and HTML |
+| `src/event_universe/scenarios.py` | Explicit initial conditions |
+| `src/event_universe/runner.py` | Connect execution, recording and visualization |
+| `tests/` | Unit, contract, regression and full-state comparison tests |
+| `tests/reference/` | Frozen source used only for comparison |
+| `POSTULATES.md` | Binding ideas in plain language |
+| `SIMULATOR_DEFINITIONS.md` | Current precise requirements |
+| `docs/ARCHITECTURE.md` | Responsibilities and update order |
+| `docs/FIELDS.md` | How to replace a field or turning policy |
+| `docs/PHYSICAL_FEATURES.md` | Required contract for a new physical feature |
+| `docs/TEST_EXPECTATIONS.md` | Test responsibilities, inputs and exact expectations |
+| `docs/MIGRATION.md` | Migrating older code and notebooks |
 
-## שדה כללי ושימוש פרטני
+## Generic field, specific use
 
-`ScalarField` מחשב שדה לפי משקלים לשישה שכנים, משקל לערך המקומי ומקור נתון.
-`FieldTurning` מקבל וקטור מקומי ופונקציה שבוחרת לאילו רכיבים להגיב; הוא מרכז
-את חישוב הדחף, השאריות וחילופי התנע. שני הרכיבים אינם מכירים עולם או חלקיק.
+`ScalarField` calculates from six neighbor weights, a local weight and a supplied
+source. `FieldTurning` receives a local vector and a response-selection function,
+centralizing impulse arithmetic, remainders and momentum exchange. Neither
+component knows a world or particle record.
 
-`CurrentFieldModel` מחבר אותם לשימוש שלנו: מקור לפי תפוסה, שדה שאינו שלילי
-ופנייה לפי הגרדיאנט הרוחבי לציר התנועה הדומיננטי. אפשר להחליף כל רכיב בנפרד
-באמצעות `Simulation(field=..., turning=...)`. ההסבר והדוגמאות נמצאים
-ב־`docs/FIELDS_HE.md`. הבדיקות לשדה שלנו נמצאות ב־`tests/test_current_field.py`;
-בדיקות נפרדות מאמתות את הרכיבים הכלליים ואת החלפתם בתוך סימולציה.
+`CurrentFieldModel` assembles the current occupancy source, nonnegative field and
+dominant-axis transverse response. Replace components independently through
+`Simulation(field=..., turning=...)`; see `docs/FIELDS.md`. The specific model is
+tested in `tests/test_current_field.py`, alongside separate generic and integration tests.
 
-## כללים שנשמרים
+## Preserved rules
 
-- פיזיקה ב־3D עם שישה שכנים קרדינליים.
-- מצב פיזיקלי בשלמים בלבד: חמישה רגיסטרים לתא ו־12 לחלקיק.
-- רגיסטרים פיזיקליים חסומים; חישובי ביניים חסומים; גלישה נעצרת בשגיאה.
-- עבודה מקומית חסומה לפי שישה שכנים ו־K מקומות קבועים בתא.
-- מקור מתמיד נקבע על ידי תפוסה; שאריות חלוקה נשמרות בשלמים.
-- חילופי תנע מקומיים בין חומר לשדה; אין תיקון תנע גלובלי.
-- חוק מהירות אחד, ועד מעבר אחד לשכן בכל tick.
-- המדידות וההנפשה אינן מזינות מידע חזרה למנוע.
+- 3D physics with six cardinal neighbors.
+- Integer physical state: five cell registers and twelve particle registers.
+- Bounded registers and intermediate calculations; overflow raises an error.
+- Bounded local work over six neighbors and K fixed cell slots.
+- Persistent sources represented by occupancy; integer division residues retained.
+- Local matter-field momentum exchange, without global correction.
+- One speed law and at most one neighbor hop per tick.
+- Measurements and animation do not feed back into the engine.
 
-זו מסגרת למחקר של מודל בדיד. חוק השדה וחוק הפנייה הם חוקים מועמדים מפורשים.
-בדיקות התוכנה אינן הוכחה לשימור אנרגיה או לנכונות פיזיקלית כללית.
-הנחות קיימות, ובהן סדר התנועה והעדפת ציר בשוויון, מתועדות ב־ARCHITECTURE.
+This is a discrete-model research framework. Field and turning laws are explicit
+candidates. Software tests do not establish energy conservation or general physical
+validity. Assumptions such as movement order and axis tie-breaking are documented
+in the architecture guide.
 
-
-### Local stretched-link candidate
+## Local stretched-link candidate
 
 ```bash
 PYTHONPATH=src python -m event_universe --scenario links --output artifacts/local-links --frame-stride 12
 ```
 
 This selects `scalar-field-v11-local-links`: local six-port mailboxes, integer
-lengths, symmetric edge proposals and frozen travel times. Its dedicated tests
-are `test_link_geometry.py`, `test_link_transport.py` and `test_linked_engine.py`.
-The example uses base length 10 for shorter replay; `LinkConfig()` defaults to
-100. See the extension in `POSTULATES_HE.md`, `SIMULATOR_DEFINITIONS.md` and
-`docs/ARCHITECTURE.md`. Existing baseline scenarios keep their old behavior.
+lengths, symmetric edge proposals and frozen travel times. Dedicated tests are
+`test_link_geometry.py`, `test_link_transport.py` and `test_linked_engine.py`.
+The example uses base length 10 for a shorter replay; `LinkConfig()` defaults to
+100. See `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
+Existing baseline scenarios keep their old behavior.

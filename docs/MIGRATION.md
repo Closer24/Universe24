@@ -43,7 +43,7 @@ Existing `Simulation(config, observer=...)` calls retain the same defaults.
 Optional `field=` and `turning=` keywords replace the respective component
 without changing scheduling. The compatibility `IntegerO1Field3D` facade
 continues to use the current defaults; use `Simulation` for component injection.
-See `FIELDS_HE.md` for the scalar protocol and an example.
+See `FIELDS.md` for the scalar protocol and an example.
 
 Imports of `update_field`, `update_particle`, `gradient`, `transverse_gradient`,
 `choose_axis` and `MODEL_ID` from `models.local_field` remain supported through
