@@ -222,7 +222,9 @@ def select_focused_event(
         raise ValueError("focus ticket must be smaller than total weight")
     if request.ticket < focus_set.no_event_weight:
         return (
-            FocusReply(None, event_weight, focus_set.no_event_weight, total_weight, evaluation_nodes, 0, 0),
+            FocusReply(
+                None, event_weight, focus_set.no_event_weight, total_weight, evaluation_nodes, 0, 0
+            ),
             FocusTrace(request.request_id, ()),
         )
 
