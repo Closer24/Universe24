@@ -11,6 +11,7 @@ from event_universe.quantum import (
     DeferredQuantum,
     FocusCandidate,
     FocusRequest,
+    FocusSet,
     QuantumConfig,
     Region3D,
     region_from_shape,
@@ -30,8 +31,8 @@ def _leaf_addresses(region: Region3D) -> set[tuple[int, int, int]]:
     return leaves
 
 
-def _focused_fixture():
-    q = DeferredQuantum()
+def _focused_fixture(config: QuantumConfig | None = None):
+    q = DeferredQuantum(config)
     bridge = QuantumBridge(q)
     specs = (
         ((1, 1, 1), 1, 10),
@@ -43,7 +44,8 @@ def _focused_fixture():
     for event_id, (address, amplitude, outcome) in enumerate(specs):
         root = bridge.prepare(event_id, address, 0, amplitude).quantum_node
         candidates.append(FocusCandidate(root, address, outcome))
-    return q, bridge, tuple(candidates)
+    bridge.bind_focus_set(7, FocusSet(region_from_shape(8, 8, 8), tuple(candidates), 2))
+    return q, bridge
 
 
 def test_even_cube_splits_into_exactly_eight_equal_octants():
@@ -62,9 +64,9 @@ def test_odd_rectangular_space_has_no_gaps_or_overlap_at_any_depth():
 
 
 def test_non_unit_axes_only_are_split():
-    children = split_region(Region3D(0, 1, 0, 5, 0, 2))
-    assert len(children) == 4
-    assert _leaf_addresses(Region3D(0, 1, 0, 5, 0, 2)) == {(0, y, z) for y in range(5) for z in range(2)}
+    region = Region3D(0, 1, 0, 5, 0, 2)
+    assert len(split_region(region)) == 4
+    assert _leaf_addresses(region) == {(0, y, z) for y in range(5) for z in range(2)}
 
 
 def test_1024_cube_focus_reaches_one_cell_in_ten_levels():
@@ -72,75 +74,90 @@ def test_1024_cube_focus_reaches_one_cell_in_ten_levels():
     bridge = QuantumBridge(q)
     address = (1000, 777, 513)
     root = bridge.prepare(1, address, 0, 1).quantum_node
-    reply = bridge.focus_event(
-        FocusRequest(7, region_from_shape(1024, 1024, 1024), (FocusCandidate(root, address, 5),), 0, 0)
-    )
+    bridge.bind_focus_set(2, FocusSet(region_from_shape(1024, 1024, 1024), (FocusCandidate(root, address, 5),)))
+    reply = bridge.focus_event(FocusRequest(7, 2, 0, 0))
     assert reply.event is not None
     assert reply.event.address == address
     assert reply.focus_steps == 10
     assert reply.cost == (1, 0)
     assert reply.evaluation_nodes == 1
-    assert all(step.child_count == 8 for step in reply.path)
+    assert len(q.last_focus_trace.steps) == 10
+    assert all(step.child_count == 8 for step in q.last_focus_trace.steps)
 
 
 def test_exhaustive_ticket_counts_match_flat_weights_exactly():
-    q, bridge, candidates = _focused_fixture()
+    _, bridge = _focused_fixture()
     counts = {None: 0, 10: 0, 20: 0, 30: 0, 40: 0}
     expected = {None: 2, 10: 1, 20: 4, 30: 9, 40: 16}
     for ticket in range(32):
-        reply = bridge.focus_event(
-            FocusRequest(100 + ticket, region_from_shape(8, 8, 8), candidates, 0, ticket, 2)
-        )
+        reply = bridge.focus_event(FocusRequest(100 + ticket, 7, 0, ticket))
         assert reply.cost == (1, 0)
         assert reply.total_weight == 32
         assert reply.event_weight == 30
         assert reply.no_event_weight == 2
-        assert reply.evaluation_nodes == 4
         outcome = None if reply.event is None else reply.event.outcome
         counts[outcome] += 1
-        if reply.event is None:
-            assert reply.focus_steps == 0 and reply.path == ()
-        else:
-            assert reply.focus_steps == 3
-            assert reply.path[-1].selected_weight > 0
+        assert reply.focus_steps == (0 if reply.event is None else 3)
     assert counts == expected
-    assert q.node_count == 4
 
 
-def test_candidate_input_order_does_not_change_spatial_focus_result():
-    _, bridge_a, candidates_a = _focused_fixture()
-    _, bridge_b, candidates_b = _focused_fixture()
+def test_candidate_binding_order_does_not_change_spatial_focus_result():
+    q1, a = _focused_fixture()
+    q2 = DeferredQuantum()
+    b = QuantumBridge(q2)
+    specs = (((4, 4, 4), 4, 40), ((7, 0, 5), 3, 30), ((2, 6, 3), 2, 20), ((1, 1, 1), 1, 10))
+    reversed_candidates = []
+    for event_id, (address, amplitude, outcome) in enumerate(specs):
+        root = b.prepare(event_id, address, 0, amplitude).quantum_node
+        reversed_candidates.append(FocusCandidate(root, address, outcome))
+    b.bind_focus_set(7, FocusSet(region_from_shape(8, 8, 8), tuple(reversed_candidates), 2))
     for ticket in range(32):
-        a = bridge_a.focus_event(
-            FocusRequest(ticket, region_from_shape(8, 8, 8), candidates_a, 0, ticket, 2)
+        left = a.focus_event(FocusRequest(100 + ticket, 7, 0, ticket))
+        right = b.focus_event(FocusRequest(100 + ticket, 7, 0, ticket))
+        assert (None if left.event is None else (left.event.address, left.event.outcome)) == (
+            None if right.event is None else (right.event.address, right.event.outcome)
         )
-        b = bridge_b.focus_event(
-            FocusRequest(ticket, region_from_shape(8, 8, 8), tuple(reversed(candidates_b)), 0, ticket, 2)
-        )
-        assert (None if a.event is None else (a.event.address, a.event.outcome)) == (
-            None if b.event is None else (b.event.address, b.event.outcome)
-        )
+    assert q1.focus_set_count == q2.focus_set_count == 1
 
 
-def test_same_request_is_deterministic_and_never_resamples():
-    _, bridge, candidates = _focused_fixture()
-    request = FocusRequest(55, region_from_shape(8, 8, 8), candidates, 0, 17, 2)
+def test_same_request_id_is_one_decision_and_cannot_be_rewritten():
+    _, bridge = _focused_fixture()
+    request = FocusRequest(55, 7, 0, 17)
     first = bridge.focus_event(request)
-    second = bridge.focus_event(request)
-    assert second.event == first.event
-    assert second.path == first.path
+    repeat = bridge.focus_event(request)
+    assert repeat.event == first.event
+    assert repeat.repeated == 1
+    assert repeat.evaluation_nodes == 0
+    with pytest.raises(ValueError, match="rewritten"):
+        bridge.focus_event(FocusRequest(55, 7, 0, 18))
 
 
-def test_focus_rejects_future_or_mismatched_quantum_roots():
+def test_physical_side_request_and_reply_are_fixed_size():
+    _, bridge = _focused_fixture()
+    request = FocusRequest(1, 7, 0, 5)
+    reply = bridge.focus_event(request)
+    assert len(request) == 4
+    assert len(reply) == 7
+    assert reply.event is None or len(reply.event) == 8
+    assert not hasattr(reply, "path")
+
+
+def test_focus_rejects_future_quantum_roots():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (2, 2, 2), 5, 1).quantum_node
-    candidate = FocusCandidate(root, (2, 2, 2), 1)
+    bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 2), 1),)))
     with pytest.raises(ValueError, match="future"):
-        bridge.focus_event(FocusRequest(1, region_from_shape(8, 8, 8), (candidate,), 4, 0))
-    wrong = FocusCandidate(root, (2, 2, 3), 1)
+        bridge.focus_event(FocusRequest(1, 1, 4, 0))
+
+
+def test_focus_binding_rejects_mismatched_quantum_root_without_commit():
+    q = DeferredQuantum()
+    bridge = QuantumBridge(q)
+    root = bridge.prepare(1, (2, 2, 2), 0, 1).quantum_node
     with pytest.raises(ValueError, match="match"):
-        bridge.focus_event(FocusRequest(2, region_from_shape(8, 8, 8), (wrong,), 5, 0))
+        bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 3), 1),)))
+    assert q.focus_set_count == 0
 
 
 def test_focus_uses_one_combined_host_evaluation_budget():
@@ -149,18 +166,40 @@ def test_focus_uses_one_combined_host_evaluation_budget():
     candidates = tuple(
         FocusCandidate(bridge.prepare(i, (i, 0, 0), 0, 1).quantum_node, (i, 0, 0), i) for i in range(4)
     )
+    bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 1, 1), candidates))
     with pytest.raises(OverflowError, match="evaluation budget"):
-        bridge.focus_event(FocusRequest(1, region_from_shape(8, 1, 1), candidates, 0, 0))
+        bridge.focus_event(FocusRequest(1, 1, 0, 0))
+
+
+def test_focus_storage_budgets_are_explicit():
+    q = DeferredQuantum(QuantumConfig(max_focus_sets=1, max_focus_candidates=1))
+    bridge = QuantumBridge(q)
+    root = bridge.prepare(1, (0, 0, 0), 0, 1).quantum_node
+    one = FocusSet(region_from_shape(2, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),))
+    bridge.bind_focus_set(1, one)
+    with pytest.raises(OverflowError, match="set budget"):
+        bridge.bind_focus_set(2, one)
+
+    q2 = DeferredQuantum(QuantumConfig(max_focus_candidates=1))
+    b2 = QuantumBridge(q2)
+    roots = (b2.prepare(1, (0, 0, 0), 0, 1).quantum_node, b2.prepare(2, (1, 0, 0), 0, 1).quantum_node)
+    with pytest.raises(OverflowError, match="candidate budget"):
+        b2.bind_focus_set(
+            1,
+            FocusSet(
+                region_from_shape(2, 1, 1),
+                (FocusCandidate(roots[0], (0, 0, 0), 1), FocusCandidate(roots[1], (1, 0, 0), 2)),
+            ),
+        )
 
 
 def test_zero_total_weight_is_error_not_no_event():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (0, 0, 0), 0, 0).quantum_node
+    bridge.bind_focus_set(1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),)))
     with pytest.raises(ValueError, match="zero total"):
-        bridge.focus_event(
-            FocusRequest(1, region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),), 0, 0)
-        )
+        bridge.focus_event(FocusRequest(1, 1, 0, 0))
 
 
 def test_focus_does_not_advance_or_mutate_main_world():
@@ -178,19 +217,15 @@ def test_focus_does_not_advance_or_mutate_main_world():
         bridge.prepare(1, (1, 1, 1), 0, 1).quantum_node,
         bridge.prepare(2, (9, 9, 9), 0, 2).quantum_node,
     )
-    before = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
-    reply = bridge.focus_event(
-        FocusRequest(
-            99,
+    bridge.bind_focus_set(
+        1,
+        FocusSet(
             region_from_shape(12, 12, 12),
-            (
-                FocusCandidate(roots[0], (1, 1, 1), 10),
-                FocusCandidate(roots[1], (9, 9, 9), 20),
-            ),
-            world.tick,
-            3,
-        )
+            (FocusCandidate(roots[0], (1, 1, 1), 10), FocusCandidate(roots[1], (9, 9, 9), 20)),
+        ),
     )
+    before = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
+    reply = bridge.focus_event(FocusRequest(99, 1, world.tick, 3))
     after = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
     assert reply.event is not None and reply.event.address == (9, 9, 9)
     assert before == after
