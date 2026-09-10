@@ -8,7 +8,6 @@ time, or commit native physical events. Host evaluation has explicit budgets.
 from event_universe.core.state import Address, checked, checked_work
 
 from .focus import (
-    FocusCandidate,
     FocusReply,
     FocusRequest,
     FocusSet,
