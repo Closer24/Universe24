@@ -215,10 +215,10 @@ def render_volume(
         ax.set_box_aspect(tuple(hi - lo for lo, hi in bounds))
         ax.view_init(elev=26, azim=-65 + 35 * index / max(1, len(frames) - 1))
         ax.grid(False)
-        for x in np.linspace(*bounds[0], 5):
-            ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
-        for y in np.linspace(*bounds[1], 5):
-            ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
+        for grid_x in np.linspace(*bounds[0], 5):
+            ax.plot([grid_x, grid_x], bounds[1], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
+        for grid_y in np.linspace(*bounds[1], 5):
+            ax.plot(bounds[0], [grid_y, grid_y], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
         for axis, label in ((ax.xaxis, "x"), (ax.yaxis, "y"), (ax.zaxis, "z")):
             axis.set_pane_color((0.045, 0.075, 0.12, 0.25))
             axis.label.set_color("#91a4be")
