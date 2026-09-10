@@ -165,6 +165,29 @@ also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is
 guard against non-English scripts, not a language classifier: Latin-script prose
 still requires review. No physical calculation changes as part of translation.
 
+## Motion display and playback
+
+- `test_render_motion.py`: momentum (3,0,0) at c_units=12 produces an arrow
+  of length 2.7; (12,0,0) produces 10.8. Momentum (3,4,0) at c_units=14
+  produces (3.24,4.32,0), length 5.4. Rest or a missing scale shows no arrow;
+  invalid scales are rejected. These are display-only numerical calculations.
+- Periodic display fixtures cover both directions and every axis. The move
+  x=63 to x=0 in a 64-cell axis is a boundary crossing, not a multi-cell jump.
+  The move x=63 to x=1 is both a boundary crossing and a two-cell jump;
+  the renderer must preserve both indicators. Two simultaneous seam crossings
+  likewise cannot hide a two-cardinal-step displacement.
+- `test_playback.py`: two distinct synthetic snapshots are rendered in both
+  slice and 3D modes. Expect two distinct GIF frames with positive duration,
+  no repeat extension, and an HTML note that playback stops at the end.
+- `test_three_particle_continuity.py`: replay the reported 64-tick experiment
+  in a 64x48x32 world with its original three seeds. Every particle ID persists;
+  each particle stays put or moves to one periodic neighbor at each tick.
+  Expect no boundary crossings in this exact experiment. Save every tick in
+  the standalone HTML; do not interpolate or smooth any physical position.
+- Continuity is not an isolated-motion or self-force test. A trajectory may
+  obey the one-hop bound and still contain an incorrect self-induced turn.
+
+
 ## Run rejection for isolated momentum changes
 
 `test_run_invariants.py` requires rejection of even a one-unit isolated momentum
