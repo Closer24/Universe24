@@ -1,0 +1,211 @@
+# Simulator postulates in plain language
+
+This document explains the ideas underlying the simulator without programming
+details. Consult it before any change. A change contradicting a binding principle
+requires an explicit decision to change the model.
+
+Distinguish three categories:
+
+- **Binding principle:** a rule the simulator must satisfy.
+- **Candidate law:** a specific hypothesis under evaluation, not a proven law of nature.
+- **Open question:** an idea that has not been implemented or established.
+
+## 1. The world consists of locations and events
+
+Space is divided into three-dimensional cells. Each cell has six nearest neighbors:
+right, left, forward, backward, up and down.
+
+An event is a local change in a cell at a particular time: a field update, a particle
+momentum change, a move to a neighbor or a blocked move attempt.
+
+The simulator does not assume every familiar physical phenomenon is fundamental.
+Mass, gravity, curvature or a known particle can count as an emergent result only
+if they arise from local events and laws, rather than being inserted under another name.
+
+## 2. Every location has only bounded local information
+
+A physical cell does not store a picture of the entire universe. It stores a fixed
+amount of information and reads its own state and its six neighbors. Section 14
+explicitly adds an optional shared quantum query primitive, not a neighbor read.
+
+Cell particle capacity is fixed in advance. A cell has no list that grows with the
+number of sources in the universe and does not retain its entire history.
+
+Physical work per local update is therefore bounded and constant. Total host
+runtime for a large world is not constant: all active locations still require updates.
+
+## 3. Consistency is maintained locally and causally
+
+Each location must be consistent with all information that could already have
+reached it. It need not know about a distant event before information arrives.
+
+There is no instantaneous update of the whole universe or central repair of all
+space. An event first changes its own location. Its influence travels from neighbor
+to neighbor, and each location updates upon receipt under the same local law.
+The optional oracle in section 14 is a host-computation exception, not permission
+to rewrite physical records or send instantaneous physical messages.
+
+Global consistency emerges from consistent local updates. New information does
+not rewrite completed events; it becomes causal input to future events.
+
+**Implemented:** a field change travels at most one link per tick; a field update
+reads six neighbors. There is no global correction at the end of a tick.
+
+**Not established:** that these local laws suffice for every kind of physical
+consistency, particularly quantum consistency and entanglement.
+
+## 4. There is a maximum causal speed
+
+Physical influence cannot skip cells. It travels at most one neighboring cell per
+elementary step. This is the role of c: the maximum propagation speed of causal
+influence in the simulator. Oracle evaluation is not physical propagation.
+
+A particle can also move at most one neighbor per step. The same movement law
+applies at all speeds; there are no separate low-speed and high-speed laws.
+
+## 5. Physical calculations use integers only
+
+Every value affecting simulation evolution is an integer: position, time, field,
+momentum, counter and remainder.
+
+Core calculations contain no floating-point values, trigonometry, roots or vector
+normalization. Nonintegral division retains the missing fraction as an integer
+remainder carried into the next calculation.
+
+Numbers have fixed bounds. An out-of-range calculation stops the run with an error
+rather than hiding overflow or distorting the result.
+
+Display and measurement code may use floating-point values, provided none of its
+results feed back into the simulation.
+
+## 6. A resident source remains a source
+
+A particle occupying a cell remains a source every tick even without moving.
+Its presence in that cell represents the source.
+
+The simulator does not repeatedly add a source's own new emission to itself.
+A stationary source should form a persistent surrounding state, rather than grow
+without bound or disappear because there was no movement event.
+
+## 7. An isolated symmetric source does not push itself
+
+For a single stationary source in symmetric space, field values on opposite sides
+of every axis must be equal. Opposite influences cancel, leaving its momentum unchanged.
+
+This is a fundamental local-consistency test: a particle must not start moving
+solely because of its own symmetric field.
+
+## 8. Momentum is exchanged at the event location
+
+When a particle receives a momentum change, the field receives an equal and
+opposite change in the same event. Both sides are validated before committing.
+
+Never calculate missing momentum at the end of a run and distribute a correction
+throughout the universe. Total momentum is a measurement for validation only.
+
+**Open:** energy conservation has not been established, and there is no complete
+law for transporting field momentum between locations.
+
+## 9. Field and turning laws are hypotheses under test
+
+The current local field law uses six neighbors, the local source and a retained
+remainder. A turning law lets transverse field imbalance change motion direction.
+
+These are **candidate laws**. They are not called gravity and do not establish
+Newton's or Einstein's equations. A successful experiment describes the tested
+conditions only.
+
+Introduce another law as a separate candidate and compare results. Do not change
+old tests merely to make a new law appear successful.
+
+## 10. Measurement and display are outside the physics
+
+Trajectories, reports, images and HTML only read run results. They neither direct
+particle motion nor repair the field. Here measurement means diagnostics, not a
+quantum interaction that creates a new physical record.
+
+Every application run saves initial conditions, parameters, code identity and an
+HTML view identifying its displayed geometry. A view may be a 2D slice while the
+underlying calculation remains 3D.
+
+## 11. A result must pass tests to be considered reliable
+
+A phenomenon seen once in an animation is not a general model result. Check that it:
+
+- is not a bug, an accidental update-order effect or a display artifact;
+- persists under the translations, reflections and coordinate-plane changes tested;
+- obeys local rules and numerical bounds;
+- repeats from documented initial conditions;
+- passes checks that were not used to construct the law.
+
+Failure is information about the model. Do not add a special correction just to hide it.
+
+## 12. Quantum behavior and entanglement remain open
+
+The physical core describes discrete fields and particles. An optional sidecar now
+stores explicitly supplied amplitude operations and evaluates them on demand.
+This is not a general quantum simulator or native detector-event implementation.
+
+A future full quantum layer must preserve both consistent joint results and the
+inability to use those correlations to send information faster than c.
+
+Until these requirements have been tested for the proposed laws, do not claim that
+the simulator solves quantum collapse or entanglement consistency.
+
+## Overall principle
+
+Physical cells keep bounded local state and exchange influence with neighbors.
+Section 14 adds an explicitly authorized shared computation primitive alongside
+that local world. It does not turn host evaluation into physical communication.
+
+`SIMULATOR_DEFINITIONS.md` contains the exact executable requirements.
+`docs/ARCHITECTURE.md` separates the engine, laws and measurements.
+
+## 13. Experimental extension: variable-length links
+
+In this candidate, each cell also stores fixed information about its six links.
+It owns the three positive-direction links and keeps local copies of the other
+three. Ownership organizes storage; it must not privilege a physical direction.
+
+Both endpoints can propose a length from their local field and information
+already delivered by their neighbor. A proposal travels along the old length.
+Both endpoints activate it only on arrival. Simultaneous proposals use the larger
+length. This is an explicit experimental choice, not a consequence of Einstein's
+work. Length changes do not alter a transit already in progress.
+
+The default address spacing is 100 elementary length units; length 110 represents
+a tenth of the default spacing added. Light travels one elementary length unit
+per elementary tick, so its speed is 1. Each link has at most one packet traveling
+in each direction. There are no per-source lists.
+
+A moving particle remains a source at its origin until arrival. Direction and
+length are locked at departure; interaction with the field resumes on arrival.
+A nonintegral arrival time rounds up to the next tick. Unlike field and momentum
+remainders, excess travel time cannot shorten the next transit: crossing a link
+faster than c to repair an average is forbidden.
+
+Tests verify stationary-source symmetry, neighbor-only influence and fixed local
+storage capacity. They do not establish gravity or geodesics.
+
+## 14. Shared quantum query postulate — Q-ORACLE-1
+
+The user explicitly authorized `deferred-unit-cost-oracle-v1`: one successful
+query to the shared quantum space counts as one elementary model operation and
+consumes zero world ticks. This is a model assumption, not an established physical
+fact or a claim that host computation takes constant time.
+
+The quantum owner may evaluate a long deferred history outside the physical
+six-neighbor computation. Its work and resource budgets are measured separately.
+Bounded integer arithmetic still applies. Exhaustion and overflow are errors,
+not absence of a particle, collapse or a new physical event.
+
+Pure queries do not sample outcomes or change past records. Repeated queries are
+consistent. The optional `terminal-two-output-trial-v1` test chooses one complete,
+absorbing output using a supplied uniform integer ticket; repeated readout returns
+the same shared record. This does not implement general measurement or establish
+no-signalling. The test controller's record is not an Engine-native event.
+
+Only the main engine may eventually commit physical events through an explicit
+interface. That interface, automatic cell polling and quantum-field feedback are
+not implemented by this addition. Exact contracts and ownership are specified in
+`SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.

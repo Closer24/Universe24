@@ -46,7 +46,7 @@ default model and its identifier remain unchanged.
 An additional local-retention fixture verifies the expected sample sequence
 `(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (2,0)`, ensuring a replacement
 field is not stopped while only its remainder changes. Calculation inputs,
-expected outputs and ownership are documented in `TEST_EXPECTATIONS_HE.md`.
+expected outputs and ownership are documented in `TEST_EXPECTATIONS.md`.
 
 | Tool | Version |
 | --- | --- |

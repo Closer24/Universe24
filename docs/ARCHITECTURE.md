@@ -1,7 +1,7 @@
 # Architecture and change boundaries
 
 [AGENTS.md](../AGENTS.md) is the shared contributor entry point.
-`POSTULATES_HE.md` is the plain-language conceptual entry point.
+`POSTULATES.md` is the plain-language conceptual entry point.
 `SIMULATOR_DEFINITIONS.md` translates those principles into exact technical
 requirements, and this document describes the code boundaries that enforce them.
 
@@ -76,7 +76,7 @@ A signed field can be calculated by the generic primitive, but the current
 adapter clamps negative results. A vector field or several simultaneous fields
 requires a separately designed fixed-size state contract and corresponding
 engine and diagnostic support. It is not enabled merely by passing a new law.
-The practical extension guide is `FIELDS_HE.md`.
+The practical extension guide is `FIELDS.md`.
 
 ## Local contracts
 
@@ -162,7 +162,7 @@ arithmetic in model assembly, API assembly and compatibility facades, while
 allowing type annotations and literal configuration. It is tested with both
 allowed and forbidden examples. Dedicated tests also cover periodic lattice
 geometry, scalar policies, digital movement and each diagnostic projection.
-Inputs and expected outcomes are listed in `TEST_EXPECTATIONS_HE.md`.
+Inputs and expected outcomes are listed in `TEST_EXPECTATIONS.md`.
 
 Stricter input checks and exception atomicity are intentional boundary fixes.
 They can reject invalid inputs that old code accepted. They do not alter the
@@ -223,21 +223,67 @@ unbounded local message queue. Busy channels retain one snapshot; intermediate
 versions are coalesced to the current cell value after delivery.
 
 
-## Opt-in quantum detector trial — Q-ORACLE-1
+## Adding physical features
 
-The user's approved `deferred-unit-cost-oracle-v1` postulate adds a shared oracle:
-one successful query has model_cost=1 and world_ticks=0. This explicitly permits
-non-neighbor HOST evaluation; physical signalling constraints remain unproven.
-Host work and bounded integer budgets are accounted separately. No core change.
+Follow [the physical-feature procedure](PHYSICAL_FEATURES.md) before adding a
+law or state contract. It separates explicit local inputs, evolving state,
+immutable parameters, derived values and model assembly. Dependencies between
+physical inputs remain explicit; code separation does not imply statistical
+independence. Formula-free assembly is checked for every module beneath
+`models/`, including future and nested models, rather than a fixed name list.
 
-DeferredQuantum owns histories, caches and one optional terminal trial. Only
-integration/quantum_bridge.py connects it to spacetime. Pure queries never sample.
-`terminal-two-output-trial-v1` is a complete absorbing two-output experiment with
-equally scaled amplitudes and a supplied UNIFORM integer ticket. Tests enumerate
-tickets, not a random generator. Zero total weight and exhaustion are errors.
-Repeated readout returns one immutable shared record, not another detection.
+### Audit against main e74f2fd
 
-The test controller in tests/quantum_detector_fixture.py owns one detector-event
-slot and two bits. These are NOT native Engine physical events. It never writes
-CellState or ParticleState; full physical commit remains unimplemented. No field
-coupling, continued entanglement or Bell/no-signalling validation is claimed.
+- `ScalarField.advance` receives samples, six neighbors, source and denominator;
+  it does not import model state or the world.
+- `FieldTurning.apply` receives momenta, a vector, residues and rational coupling;
+  direction selection is injected. Local exchange is implemented once.
+- `MeanStretch` stores immutable coefficients and receives two local samples.
+  Its caller supplies already delivered neighbor information.
+- `CurrentFieldModel` extracts values from physical records, invokes the generic
+  laws and constructs proposals. The engine owns the subsequent commits.
+- API assembly independently accepts field, turning and (for linked worlds)
+  length policies. Tests exercise alternate laws and numerical parameter changes.
+- The baseline fixed state does not accept arbitrary vector/multiple-field
+  records. Such an extension needs a new explicit contract and diagnostic support.
+
+These are code and tested-contract findings, not a proof of every possible
+plugin's locality or physical correctness. Dynamic imports, arbitrary callbacks
+and hidden external state still require review; the static gate is not a sandbox.
+
+## Repository language
+
+English is required for all repository comments, docstrings, documentation,
+instructions, diagnostic messages and new identifiers. The authoritative rule
+is [Repository language: English](../AGENTS.md#repository-language-english).
+`tests/test_repository_language.py` guards against legacy non-English scripts;
+review checks the actual language. Older branches must follow this rule when
+merged. Mathematical notation remains valid. This affects documentation and
+review, not physical laws.
+
+## Opt-in quantum ownership — Q-ORACLE-1
+
+The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its
+numeric, timing and resource contracts in SIMULATOR_DEFINITIONS.md. The feature
+contract and limits are in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
+The existing physical engines and schemas above are unchanged.
+
+| Module | Responsibility and allowed dependencies |
+| --- | --- |
+| `quantum/state`, `quantum/query`, `quantum/terminal` | Fixed records and bounded integer helpers; may use core.state, never an engine |
+| `quantum/deferred` | Sole owner of deferred history, cache, accounting and one terminal result |
+| `integration/quantum_bridge` | Sole production adapter between spacetime references and quantum APIs; no Engine or write callback |
+| `tests/quantum_detector_fixture` | Test-only controller with one detector-event slot and two detector bits |
+
+Physical modules, models, application assembly and diagnostics must not import
+quantum. Quantum must not import physical engines, models, dynamics, fields,
+diagnostics or integration. Shared bounded arithmetic from core.state is allowed.
+The architecture tests reuse the existing import resolver and cover relative,
+member and aliased imports. They are static guards, not a sandbox against dynamic
+Python. The bridge does not duplicate evaluation or maintain another quantum cache.
+
+Queries are explicit, not automatically polled. Only DeferredQuantum evaluates
+histories or chooses the terminal output. Replies are immutable. The test
+controller records that result without writing CellState, ParticleState, time or
+Engine events. A future native physical commit needs an explicit engine contract;
+it cannot be added by turning a diagnostic observer into a second state owner.

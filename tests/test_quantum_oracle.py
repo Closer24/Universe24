@@ -35,7 +35,7 @@ def test_unit_cost_postulate_is_explicit_and_not_a_host_work_claim():
     assert ORACLE_COST.world_ticks == 0
     assert QUANTUM_MODEL_ID == "deferred-unit-cost-oracle-v1"
     root = Path(__file__).parents[1]
-    for name in ("POSTULATES_HE.md", "SIMULATOR_DEFINITIONS.md", "docs/ARCHITECTURE.md"):
+    for name in ("POSTULATES.md", "SIMULATOR_DEFINITIONS.md", "docs/ARCHITECTURE.md"):
         text = (root / name).read_text(encoding="utf-8")
         assert "Q-ORACLE-1" in text
         assert "deferred-unit-cost-oracle-v1" in text

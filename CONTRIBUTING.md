@@ -4,7 +4,7 @@ Start with [AGENTS.md](AGENTS.md), the shared entry point for all contributors.
 The canonical repository is https://github.com/Closer24/Universe24. Branch from
 current origin/main; use isolated worktrees for concurrent tasks and submit a PR.
 
-1. Read `POSTULATES_HE.md` and `SIMULATOR_DEFINITIONS.md` before changing a
+1. Read `POSTULATES.md` and `SIMULATOR_DEFINITIONS.md` before changing a
    physical module. A postulate change must update both documents and its tests.
 2. Keep scheduling, generic field/dynamics calculations, model choices and output
    code in their documented modules. Reuse the generic arithmetic; choose and
@@ -21,7 +21,7 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    current choices in `test_current_field.py`, and public component replacement
    in `test_field_composition.py`.
    Specify input, expected output and a boundary case for each calculation;
-   maintain `docs/TEST_EXPECTATIONS_HE.md`. Movement, lattice geometry, field
+   maintain `docs/TEST_EXPECTATIONS.md`. Movement, lattice geometry, field
    policies and diagnostic projections have their own focused test modules.
    Assembly modules must contain no independent arithmetic; the architecture
    gate also checks absolute and relative dependencies.
@@ -32,3 +32,7 @@ Formatting is managed by Ruff. The development dependencies are declared in
 `pyproject.toml`; exact tool versions used for the delivered validation are
 recorded in `docs/VALIDATION.md`. No coverage percentage substitutes for tests of
 integer bounds, causality, occupancy, momentum and known historical regressions.
+
+Write all comments, docstrings and repository documentation in English under
+the repository language rule in AGENTS.md. Run the language gate along with
+the architecture tests. Translate prose from older branches before integration.

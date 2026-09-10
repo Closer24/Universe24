@@ -1,20 +1,41 @@
 # Detector integration prototype
 
-GitHub base: e74f2fdf390b5dc8036b707eefcfc53bc8a82c17.
-Exact cached src tree verified: 18253dfaca7208b9f5f8d4e4f4bf7cc48fd579d7.
 Development branch: `feat/quantum-detector-trial` in `Closer24/Universe24`.
-The connector verifies the base and publishes this focused change; it does not
-replace main from an archive. Merge requires successful CI and explicit approval.
-Previous quantum sidecar was absent from main; only its quantum/integration
-modules and focused tests are ported. No existing physical source is replaced.
+Pull request: https://github.com/Closer24/Universe24/pull/7.
+Original reviewed base: `e74f2fdf390b5dc8036b707eefcfc53bc8a82c17`.
+Synchronized base: `951d244dd632f09c09d197f3e693b04a4bac7435`.
+The synchronization preserves the English documentation, physical-feature
+procedure and language gate from main. It does not replace main from an archive.
+Merge requires successful CI and explicit approval.
 
-Run python -m pytest tests/test_quantum_detector_trial.py -q.
+## Feature contract
+
+| Part | Contract |
+| --- | --- |
+| Law | Deferred Gaussian-integer source, quarter-phase and binary-sum graph; prescribed two-output absorbing readout, not general unitary dynamics |
+| Inputs | Bounded integer root IDs, 3D address, world tick, amplitudes, phase count and a supplied uniform integer ticket |
+| Evolving state | One DeferredQuantum owner holds the bounded graph, query cache, counters and one optional terminal record; no new physical-cell state |
+| Parameters | Immutable QuantumConfig bounds max_nodes, max_eval_nodes and max_cached_results; positive bounded integers |
+| Derived values | Weight is real squared plus imaginary squared; output choice is derived from two weights and the ticket |
+| Outputs | Fixed-size immutable query or terminal reply; a successful call has model cost 1 and world time cost 0 under Q-ORACLE-1 |
+| Consistency | Parent edges are same-cell or six-neighbor causal hops in an unwrapped chart; failed readout cannot commit; repeated readout reuses one record |
+| Tests | Four phases yield weights (4,0), (2,2), (0,4), (2,2); enumerate all tickets, test invalid inputs, bounds, repeated calls and independent engine baseline |
+
+The authoritative model postulate is in POSTULATES.md, exact contracts in
+SIMULATOR_DEFINITIONS.md and ownership rules in docs/ARCHITECTURE.md.
+No existing engine, field, movement or renderer implementation is replaced.
+
+Run `python -m pytest tests/test_quantum_detector_trial.py -q` for the trial.
 Every actual Engine run uses the existing pytest HTML visualization path.
-Full gate: python tools/check.py. Missing dependencies must not be marked PASS.
+Full gate: `python tools/check.py`. Missing checks must not be marked PASS.
+
+## Limits
 
 This is a prescribed finite 3D interferometer circuit and a terminal single-
-excitation detector mock, not spontaneous detector physics. The main test harness
+excitation detector mock, not spontaneous detector physics. The test harness
 stores a single physical-side record but Engine has no detector commit API.
-No coupled quantum field dynamics, general post-measurement evolution, energy or
-momentum proof, no-signalling or Bell test. Fixed graph nodes and bounded ints
-remain mandatory; total host DAG work is not constant.
+The background classical particle is not a duplicate quantum excitation.
+There is no automatic polling, quantum-field feedback, general post-measurement
+evolution, energy or momentum proof, no-signalling or Bell validation. Tickets
+are exhaustively controlled inputs, not a tested randomness source. Fixed graph
+nodes and bounded integers remain mandatory; total host DAG work is not constant.

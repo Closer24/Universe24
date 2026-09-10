@@ -3,7 +3,7 @@
 The canonical implementation is the `event_universe` Python package under `src/`.
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
 The model identifier is `scalar-field-v10-contact`; package version is `0.1.0`.
-The plain-language conceptual source is `POSTULATES_HE.md`. If its wording is
+The plain-language conceptual source is `POSTULATES.md`. If its wording is
 ambiguous, this file defines the executable technical requirement. A deliberate
 change to a postulate must update both files and the relevant regression tests.
 
@@ -137,24 +137,23 @@ and external; JSONL recording streams it to disk.
 - Generic field/turning unit tests, current-model-specific tests and independent
   replacement of both components through the public simulation API.
 - Dedicated lattice, movement, source/activity-policy and diagnostic-projection
-  tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS_HE.md`.
+  tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS.md`.
 
 ## Output and failures
 
-### ברירת המחדל להצגת הרצות
+### Default run display
 
-כל הרצה מוצגת כברירת מחדל בתלת־ממד באיכות 1500×1275: חלקיקים ככדורים
-מוארים עם הילה, שדה רך ושקוף, מסלולים מודגשים ומצלמה מסתובבת.
-מצרפים HTML עצמאי ואנימציית GIF שאפשר לצפות בה. הכלל חל גם על תרחישים
-חדשים ועל כל הרצת עולם בבדיקות, לרבות הרצות ההשוואה לגרסה המקורית.
-דוח הבדיקות רשאי לדגום פריימים, אך משתמש באותו עיצוב ובאותה רזולוציה.
-בדיקות של פונקציה בודדת שאינן מריצות עולם אינן צריכות אנימציה.
+Every run defaults to enhanced 1500×1275 3D: lit particle spheres with glow,
+a soft translucent field, emphasized paths and a rotating camera. Provide a
+standalone HTML file and its GIF animation. This also applies to new scenarios
+and every test world, including frozen-reference runs. Test reports may sample
+frames while retaining the same design and resolution. Pure-function tests need
+no animation.
 
-זו ברירת מחדל של תצוגה בלבד: אין שינוי ברזולוציית הסריג או בפיזיקה.
-גודל הכדור וההילה הם סמלים חזותיים ולא גודל פיזיקלי של החלקיק.
-תצוגת חתך דורשת בחירה מפורשת: `--view-2d` בשורת הפקודה או
-`volume=False` ב־`run_scenario`. האפשרויות `--plane` ו־`--slice`
-קובעות את החתך כשנבחר מצב דו־ממדי; `--view-3d` נשאר נתמך.
+This changes display defaults only, not lattice resolution or physics. Sphere
+and glow sizes are visual symbols, not physical particle sizes. A slice requires
+explicit `--view-2d` or `volume=False` in `run_scenario`. `--plane` and `--slice`
+choose the slice in 2D mode; `--view-3d` remains supported.
 
 Every application run also records metadata and JSONL events through the existing
 Matplotlib/FuncAnimation/Pillow pipeline. Pytest produces a combined standalone
@@ -215,22 +214,38 @@ momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
 
+## Opt-in quantum contracts — Q-ORACLE-1
 
-## Opt-in quantum detector trial — Q-ORACLE-1
+The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
+A successful query returns fixed-size integer records with model_cost=1 and
+world_ticks=0, regardless of host evaluation work. It never calls Engine.step
+or writes physical state. Host counters and budgets remain distinct from cost.
+No automatic per-cell polling is added; any future scheduler must bound calls
+per cell update, with one call per tick as the intended policy.
 
-The user's approved `deferred-unit-cost-oracle-v1` postulate adds a shared oracle:
-one successful query has model_cost=1 and world_ticks=0. This explicitly permits
-non-neighbor HOST evaluation; physical signalling constraints remain unproven.
-Host work and bounded integer budgets are accounted separately. No core change.
+The optional sidecar has a single owner for its bounded deferred graph, cache,
+query accounting and terminal state. Node records have ten integers and at most
+two parents. Amplitudes have two integers; weight is their squared norm. Public
+registers and intermediate work obey the same 32-bit and 64-bit bounds above.
+max_nodes, max_eval_nodes and max_cached_results are explicit positive budgets.
+Failure raises an exception without manufacturing an outcome. Python allocation
+and graph traversal are host work, not strict constant-time cell calculations.
 
-DeferredQuantum owns histories, caches and one optional terminal trial. Only
-integration/quantum_bridge.py connects it to spacetime. Pure queries never sample.
-`terminal-two-output-trial-v1` is a complete absorbing two-output experiment with
-equally scaled amplitudes and a supplied UNIFORM integer ticket. Tests enumerate
-tickets, not a random generator. Zero total weight and exhaustion are errors.
-Repeated readout returns one immutable shared record, not another detection.
+Recorded physical graph edges use an unwrapped 3D chart: same-cell or one cardinal
+neighbor with a sufficient tick difference. Periodic seam mapping and variable-
+length physical links are not inferred by the sidecar. Pure queries must match
+their root address and cannot read a future root. They do not measure or resample.
 
-The test controller in tests/quantum_detector_fixture.py owns one detector-event
-slot and two bits. These are NOT native Engine physical events. It never writes
-CellState or ParticleState; full physical commit remains unimplemented. No field
-coupling, continued entanglement or Bell/no-signalling validation is claimed.
+`terminal-two-output-trial-v1` binds one complete absorbing output pair per owner.
+The amplitudes must share a scale. The first readout must occur at the scheduled
+tick with a supplied uniform integer ticket in [0, weight_a + weight_b). Weights
+and their sum must fit the physical bound. Zero total weight is an error. Both
+output evaluations share the combined work budget; repeated ancestors across
+the two resolves are counted as host work twice. Readout commits one immutable
+record after all validation; subsequent calls reuse it. The test enumerates
+tickets, rather than validating an RNG or general measurement statistics.
+
+Only the test controller stores detector bits and an event slot. No Engine-native
+physical event is added, no source or field is changed, and no post-detection
+excitation continues. No general entanglement, Bell, no-signalling, energy or
+momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contract.
