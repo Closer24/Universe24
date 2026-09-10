@@ -7,7 +7,16 @@ time, or commit native physical events. Host evaluation has explicit budgets.
 
 from event_universe.core.state import Address, checked, checked_work
 
-from .focus import FocusReply, FocusRequest, WeightedFocusCandidate, select_focused_event
+from .focus import (
+    FocusCandidate,
+    FocusReply,
+    FocusRequest,
+    FocusSet,
+    FocusTrace,
+    WeightedFocusCandidate,
+    checked_focus_request,
+    select_focused_event,
+)
 from .query import QuantumQuery, QuantumQueryStats, QuantumReply
 from .state import (
     EMPTY_NODE,
@@ -34,6 +43,11 @@ class DeferredQuantum:
         self._nodes: list[QuantumNode] = []
         self._query_cache: dict[int, tuple[Amplitude, int]] = {}
         self._query_stats = QuantumQueryStats()
+        self._focus_sets: dict[int, FocusSet] = {}
+        self._focus_candidate_count = 0
+        self._focus_requests: dict[int, FocusRequest] = {}
+        self._focus_replies: dict[int, FocusReply] = {}
+        self._last_focus_trace = FocusTrace(0, ())
         self._terminal_setup: TerminalSetup | None = None
         self._terminal_record: TerminalRecord | None = None
         self._terminal_calls = 0
@@ -50,6 +64,19 @@ class DeferredQuantum:
     @property
     def query_stats(self) -> QuantumQueryStats:
         return self._query_stats
+
+    @property
+    def focus_set_count(self) -> int:
+        return len(self._focus_sets)
+
+    @property
+    def focus_candidate_count(self) -> int:
+        return self._focus_candidate_count
+
+    @property
+    def last_focus_trace(self) -> FocusTrace:
+        """Host diagnostics only; never part of the physical-side query contract."""
+        return self._last_focus_trace
 
     def _append(self, node: QuantumNode) -> int:
         if len(self._nodes) >= self._config.max_nodes:
@@ -188,21 +215,49 @@ class DeferredQuantum:
         self._query_stats = updated
         return reply
 
-    def focus_event(self, request: FocusRequest) -> FocusReply:
-        """Resolve one spatial event/no-event decision by hierarchical refinement.
-
-        The whole call costs one model oracle operation and zero world ticks. The
-        recursive region work and every history evaluation remain host work. The
-        same global ticket is narrowed through all levels; focus never resamples.
-        """
-        if type(request) is not FocusRequest:
-            raise TypeError("focus_event requires an immutable FocusRequest")
-        weighted: list[WeightedFocusCandidate] = []
-        work = 0
-        for candidate in request.candidates:
+    def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
+        """Store bounded candidate configuration inside the quantum owner, not a cell."""
+        checked(focus_set_id)
+        if focus_set_id < 0:
+            raise ValueError("focus set id must be non-negative")
+        if type(focus_set) is not FocusSet:
+            raise TypeError("focus set must be an immutable FocusSet")
+        existing = self._focus_sets.get(focus_set_id)
+        if existing is not None:
+            if existing != focus_set:
+                raise ValueError("focus set id is already bound")
+            return
+        if len(self._focus_sets) >= self._config.max_focus_sets:
+            raise OverflowError("focus set budget exceeded")
+        candidate_count = checked_work(self._focus_candidate_count + len(focus_set.candidates))
+        if candidate_count > self._config.max_focus_candidates:
+            raise OverflowError("focus candidate budget exceeded")
+        for candidate in focus_set.candidates:
             node = self.node(candidate.root)
             if candidate.address != (node.x, node.y, node.z):
                 raise ValueError("focus candidate address must match its quantum root")
+        self._focus_sets[focus_set_id] = focus_set
+        self._focus_candidate_count = candidate_count
+
+    def focus_event(self, request: FocusRequest) -> FocusReply:
+        """Resolve one event/no-event decision through a fixed-size oracle request."""
+        checked_focus_request(request)
+        prior_request = self._focus_requests.get(request.request_id)
+        prior_reply = self._focus_replies.get(request.request_id)
+        if prior_request is not None:
+            if prior_request != request or prior_reply is None:
+                raise ValueError("focus request id cannot be rewritten")
+            return prior_reply._replace(evaluation_nodes=0, repeated=1)
+        if len(self._focus_replies) >= self._config.max_cached_results:
+            raise OverflowError("focus result cache budget exceeded")
+        focus_set = self._focus_sets.get(request.focus_set_id)
+        if focus_set is None:
+            raise KeyError("unknown focus set")
+
+        weighted: list[WeightedFocusCandidate] = []
+        work = 0
+        for candidate in focus_set.candidates:
+            node = self.node(candidate.root)
             if request.tick < node.tick:
                 raise ValueError("focus cannot read a future quantum history node")
             remaining = checked(self._config.max_eval_nodes - work)
@@ -216,7 +271,11 @@ class DeferredQuantum:
                     amplitude_weight(amplitude),
                 )
             )
-        return select_focused_event(request, tuple(weighted), work)
+        reply, trace = select_focused_event(request, focus_set, tuple(weighted), work)
+        self._focus_requests[request.request_id] = request
+        self._focus_replies[request.request_id] = reply
+        self._last_focus_trace = trace
+        return reply
 
     @property
     def terminal_record(self) -> TerminalRecord | None:
