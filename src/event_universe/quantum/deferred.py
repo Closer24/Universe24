@@ -1,13 +1,13 @@
-"""A shared, bounded deferred-history owner with a unit-model-cost query interface.
+"""A shared, bounded deferred-history owner with unit-model-cost queries.
 
-The oracle postulate is implemented by `query`, not by pretending its host DAG
-traversal is constant-time. Queries do not measure/collapse, mutate source facts,
-advance world time, or commit physical events. Host evaluation and caching have
-explicit budgets. The legacy raw `resolve` remains a pure evaluator.
+The oracle postulate is implemented by query methods, not by pretending host DAG
+traversal is constant-time. Queries do not mutate source facts, advance world
+time, or commit native physical events. Host evaluation has explicit budgets.
 """
 
 from event_universe.core.state import Address, checked, checked_work
 
+from .focus import FocusReply, FocusRequest, WeightedFocusCandidate, select_focused_event
 from .query import QuantumQuery, QuantumQueryStats, QuantumReply
 from .state import (
     EMPTY_NODE,
@@ -27,18 +27,13 @@ from .terminal import TerminalRecord, TerminalReply, TerminalSetup, choose_outpu
 
 
 class DeferredQuantum:
-    """Single owner of history, query cache and accounting for one quantum space.
-
-    Use one instance for a shared space; any bridges must refer to that instance.
-    Calls are synchronous on one controlling thread, not a thread-safe service.
-    """
+    """Single owner of history, query cache and accounting for one quantum space."""
 
     def __init__(self, config: QuantumConfig | None = None) -> None:
         self._config = config if config is not None else QuantumConfig()
         self._nodes: list[QuantumNode] = []
         self._query_cache: dict[int, tuple[Amplitude, int]] = {}
         self._query_stats = QuantumQueryStats()
-        # One optional terminal test per owner. Fixed slots, not per-cell history.
         self._terminal_setup: TerminalSetup | None = None
         self._terminal_record: TerminalRecord | None = None
         self._terminal_calls = 0
@@ -100,11 +95,7 @@ class DeferredQuantum:
         return self._nodes[node_id]
 
     def _require_local_parent(self, parent: int, address: Address, tick: int) -> None:
-        """Validate recorded physical edges; oracle evaluation is not such an edge.
-
-        Addresses use an unwrapped 3D chart. A remote path must contain explicit
-        neighbor hops. Periodic seam mapping is not inferred by the sidecar.
-        """
+        """Validate recorded physical edges; oracle evaluation is not such an edge."""
         node = self.node(parent)
         dx = abs(checked_work(address[0] - node.x))
         dy = abs(checked_work(address[1] - node.y))
@@ -118,12 +109,7 @@ class DeferredQuantum:
             raise ValueError("quantum history edge arrives before its causal tick")
 
     def resolve(self, root: int, *, node_budget: int | None = None) -> tuple[Amplitude, int]:
-        """Evaluate reachable ancestors only; return amplitude and evaluated-node count.
-
-        The discovered-node guard bounds backward expansion *before* reaching a
-        leaf. It is not enough to count only completed nodes of a deep history.
-        This low-level diagnostic method is not itself a modeled cell query.
-        """
+        """Evaluate reachable ancestors only; return amplitude and evaluated-node count."""
         self._require_node(root)
         budget = self._config.max_eval_nodes
         if node_budget is not None:
@@ -169,13 +155,7 @@ class DeferredQuantum:
         return memo[root], work
 
     def query(self, request: QuantumQuery) -> QuantumReply:
-        """One model operation, zero simulated ticks, separately bounded host work.
-
-        Success returns information only. Repeating a query never draws an
-        outcome. Cache and counters are committed together after validation;
-        rejected/failed queries do not modify history or successful-call metrics.
-        Every successful invocation counts as one model unit, even on a cache hit.
-        """
+        """One model operation, zero simulated ticks, separately bounded host work."""
         if type(request) is not QuantumQuery:
             raise TypeError("query requires an immutable QuantumQuery")
         root = self.node(request.root)
@@ -208,6 +188,36 @@ class DeferredQuantum:
         self._query_stats = updated
         return reply
 
+    def focus_event(self, request: FocusRequest) -> FocusReply:
+        """Resolve one spatial event/no-event decision by hierarchical refinement.
+
+        The whole call costs one model oracle operation and zero world ticks. The
+        recursive region work and every history evaluation remain host work. The
+        same global ticket is narrowed through all levels; focus never resamples.
+        """
+        if type(request) is not FocusRequest:
+            raise TypeError("focus_event requires an immutable FocusRequest")
+        weighted: list[WeightedFocusCandidate] = []
+        work = 0
+        for candidate in request.candidates:
+            node = self.node(candidate.root)
+            if candidate.address != (node.x, node.y, node.z):
+                raise ValueError("focus candidate address must match its quantum root")
+            if request.tick < node.tick:
+                raise ValueError("focus cannot read a future quantum history node")
+            remaining = checked(self._config.max_eval_nodes - work)
+            amplitude, used = self.resolve(candidate.root, node_budget=remaining)
+            work = checked(work + used)
+            weighted.append(
+                WeightedFocusCandidate(
+                    candidate.root,
+                    candidate.address,
+                    candidate.outcome,
+                    amplitude_weight(amplitude),
+                )
+            )
+        return select_focused_event(request, tuple(weighted), work)
+
     @property
     def terminal_record(self) -> TerminalRecord | None:
         return self._terminal_record
@@ -234,11 +244,7 @@ class DeferredQuantum:
         self._terminal_setup = setup
 
     def read_terminal_trial(self, tick: int, ticket: int) -> TerminalReply:
-        """Absorbing trial. First ticket must be uniform; repeats reuse the result.
-
-        No Engine reference, physical writes, clock advancement or second
-        evaluator. The trial has no post-detection evolving quantum excitation.
-        """
+        """Absorbing trial. First ticket must be uniform; repeats reuse the result."""
         checked(tick)
         checked(ticket)
         if tick < 0 or ticket < 0:
