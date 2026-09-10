@@ -3,9 +3,9 @@
 Development branch: `feat/quantum-detector-trial` in `Closer24/Universe24`.
 Pull request: https://github.com/Closer24/Universe24/pull/7.
 Original reviewed base: `e74f2fdf390b5dc8036b707eefcfc53bc8a82c17`.
-Synchronized base: `951d244dd632f09c09d197f3e693b04a4bac7435`.
-The synchronization preserves the English documentation, physical-feature
-procedure and language gate from main. It does not replace main from an archive.
+The PR metadata records subsequent main synchronizations and validation.
+They preserve main's English documentation, physical-feature procedure, language
+gate and run-acceptance diagnostics rather than replacing main from an archive.
 Merge requires successful CI and explicit approval.
 
 ## Feature contract

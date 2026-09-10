@@ -139,6 +139,42 @@ and external; JSONL recording streams it to disk.
 - Dedicated lattice, movement, source/activity-policy and diagnostic-projection
   tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS.md`.
 
+## Opt-in quantum contracts — Q-ORACLE-1
+
+The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
+A successful query returns fixed-size integer records with model_cost=1 and
+world_ticks=0, regardless of host evaluation work. It never calls Engine.step
+or writes physical state. Host counters and budgets remain distinct from cost.
+No automatic per-cell polling is added; any future scheduler must bound calls
+per cell update, with one call per tick as the intended policy.
+
+The optional sidecar has a single owner for its bounded deferred graph, cache,
+query accounting and terminal state. Node records have ten integers and at most
+two parents. Amplitudes have two integers; weight is their squared norm. Public
+registers and intermediate work obey the same 32-bit and 64-bit bounds above.
+max_nodes, max_eval_nodes and max_cached_results are explicit positive budgets.
+Failure raises an exception without manufacturing an outcome. Python allocation
+and graph traversal are host work, not strict constant-time cell calculations.
+
+Recorded physical graph edges use an unwrapped 3D chart: same-cell or one cardinal
+neighbor with a sufficient tick difference. Periodic seam mapping and variable-
+length physical links are not inferred by the sidecar. Pure queries must match
+their root address and cannot read a future root. They do not measure or resample.
+
+`terminal-two-output-trial-v1` binds one complete absorbing output pair per owner.
+The amplitudes must share a scale. The first readout must occur at the scheduled
+tick with a supplied uniform integer ticket in [0, weight_a + weight_b). Weights
+and their sum must fit the physical bound. Zero total weight is an error. Both
+output evaluations share the combined work budget; repeated ancestors across
+the two resolves are counted as host work twice. Readout commits one immutable
+record after all validation; subsequent calls reuse it. The test enumerates
+tickets, rather than validating an RNG or general measurement statistics.
+
+Only the test controller stores detector bits and an event slot. No Engine-native
+physical event is added, no source or field is changed, and no post-detection
+excitation continues. No general entanglement, Bell, no-signalling, energy or
+momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contract.
+
 ## Output and failures
 
 ### Default run display
@@ -214,38 +250,20 @@ momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
 
-## Opt-in quantum contracts — Q-ORACLE-1
+### Reject isolated self-force in application runs
 
-The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
-A successful query returns fixed-size integer records with model_cost=1 and
-world_ticks=0, regardless of host evaluation work. It never calls Engine.step
-or writes physical state. Host counters and budgets remain distinct from cost.
-No automatic per-cell polling is added; any future scheduler must bound calls
-per cell update, with one call per tick as the intended policy.
+The application runner validates particle momentum after every completed tick
+when the initial world contains exactly one particle and entirely zero field
+records. Its own source stays active. Any change in its initial momentum raises
+`InertialMotionViolation`, terminates the application run and saves the failing
+tick, event trace, failed metadata and an HTML heading explicitly marked FAILED RUN.
+The check is independent of display sampling and never clears remainders, changes
+momentum or disables sources. Multi-particle and initially seeded-field worlds
+are not classified as isolated by this check.
 
-The optional sidecar has a single owner for its bounded deferred graph, cache,
-query accounting and terminal state. Node records have ten integers and at most
-two parents. Amplitudes have two integers; weight is their squared norm. Public
-registers and intermediate work obey the same 32-bit and 64-bit bounds above.
-max_nodes, max_eval_nodes and max_cached_results are explicit positive budgets.
-Failure raises an exception without manufacturing an outcome. Python allocation
-and graph traversal are host work, not strict constant-time cell calculations.
-
-Recorded physical graph edges use an unwrapped 3D chart: same-cell or one cardinal
-neighbor with a sufficient tick difference. Periodic seam mapping and variable-
-length physical links are not inferred by the sidecar. Pure queries must match
-their root address and cannot read a future root. They do not measure or resample.
-
-`terminal-two-output-trial-v1` binds one complete absorbing output pair per owner.
-The amplitudes must share a scale. The first readout must occur at the scheduled
-tick with a supplied uniform integer ticket in [0, weight_a + weight_b). Weights
-and their sum must fit the physical bound. Zero total weight is an error. Both
-output evaluations share the combined work budget; repeated ancestors across
-the two resolves are counted as host work twice. Readout commits one immutable
-record after all validation; subsequent calls reuse it. The test enumerates
-tickets, rather than validating an RNG or general measurement statistics.
-
-Only the test controller stores detector bits and an event slot. No Engine-native
-physical event is added, no source or field is changed, and no post-detection
-excitation continues. No general entanglement, Bell, no-signalling, energy or
-momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contract.
+This is read-only diagnostic rejection, not a corrected physical law or a proof
+of straight trajectories. Direct Engine/Simulation callers still receive the
+underlying model behavior. Model acceptance requires the separate isolated-motion
+gate; a test that confirms rejection does not turn that failing physical gate
+into a pass. Existing baseline physics and frozen regression expectations remain
+unchanged. No threshold exempts a one-unit impulse.

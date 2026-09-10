@@ -116,19 +116,6 @@ The stretch law and proposal merge are tested as separate hypotheses.
 - These tests do not run worlds and do not prove that an agent in another
   conversation has read the instructions.
 
-## Repository language
-
-The English-only rule is authoritative in AGENTS.md and linked from the
-architecture guide. The language test scans project source, tests (including
-frozen references), tools, docs, root text files and workflow configuration.
-Generated artifacts, installed dependencies and Git history are outside its scope.
-
-Examples contain escaped test data: a Hebrew comment, docstring or heading must
-be rejected; English prose and mathematical notation must pass. The script check
-also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
-guard against non-English scripts, not a language classifier: Latin-script prose
-still requires review. No physical calculation changes as part of translation.
-
 ## Quantum detector trial — opt-in only
 
 The feature contract is in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
@@ -153,3 +140,27 @@ imports, importing engine from core and importing quantum from diagnostics must
 be rejected even with aliases. Bounded arithmetic from core.state, imports within
 quantum and the integration adapter are allowed. These are static checks, not a
 proof against arbitrary dynamic Python or a proof of physical locality.
+
+## Repository language
+
+The English-only rule is authoritative in AGENTS.md and linked from the
+architecture guide. The language test scans project source, tests (including
+frozen references), tools, docs, root text files and workflow configuration.
+Generated artifacts, installed dependencies and Git history are outside its scope.
+
+Examples contain escaped test data: a Hebrew comment, docstring or heading must
+be rejected; English prose and mathematical notation must pass. The script check
+also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
+guard against non-English scripts, not a language classifier: Latin-script prose
+still requires review. No physical calculation changes as part of translation.
+
+## Run rejection for isolated momentum changes
+
+`test_run_invariants.py` requires rejection of even a one-unit isolated momentum
+change and acceptance of unchanged momentum. A real diagonal self-field run with
+initial momentum (1,1,0), force denominator 12 and 72 requested ticks must stop at
+tick 45 with actual momentum (1,0,0), even with frame_stride=64. Metadata must say
+failed, HTML must say FAILED RUN, and both the trace and failure frame must survive.
+Total momentum conservation does not excuse the particle's self-impulse. A stationary
+isolated run passes; a two-particle contact run is not subject to isolated classification.
+These tests verify the detector, not success of the physical inertial-motion gate.
