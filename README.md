@@ -140,3 +140,20 @@ are `test_link_geometry.py`, `test_link_transport.py` and `test_linked_engine.py
 The example uses base length 10 for shorter replay; `LinkConfig()` defaults to
 100. See the extension in `POSTULATES_HE.md`, `SIMULATOR_DEFINITIONS.md` and
 `docs/ARCHITECTURE.md`. Existing baseline scenarios keep their old behavior.
+
+### Unified response: direction and event timing
+
+```bash
+PYTHONPATH=src python -m event_universe --scenario unified --output artifacts/unified --frame-stride 8
+PYTHONPATH=src python -m event_universe --scenario unified-links --output artifacts/unified-links --frame-stride 8
+PYTHONPATH=src python tools/run_unified_experiment.py
+```
+
+The full-vector candidates use the separate `dynamics/field_action.py` component:
+one particle/field impulse exchange drives both routing and timing. The shared
+hop rate lives in `dynamics/rate.py`; it is not geometric speed. No physical
+state registers or global correction are added. See the definitions for the
+low-speed comparison, the 3-4-5 rotation test and open self-field/SR limitations.
+The experiment produces four HTML replays through the existing 3D renderer,
+including isolated-source checks; it does not presume that those sources pass
+the physical test of inertial motion.

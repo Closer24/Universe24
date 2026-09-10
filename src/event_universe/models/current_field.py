@@ -5,6 +5,7 @@ their records to the simulator's fixed cell and particle state.
 """
 
 from dataclasses import dataclass
+from dataclasses import field as dataclass_field
 
 from event_universe.core.contracts import ParticleUpdate
 from event_universe.core.state import (
@@ -16,6 +17,7 @@ from event_universe.core.state import (
     validate_cell,
     validate_particle,
 )
+from event_universe.dynamics.field_action import UnifiedFieldAction
 from event_universe.dynamics.movement import MovementRule, advance_movement
 from event_universe.dynamics.turning import FieldTurning, dominant_axis_transverse
 from event_universe.fields.policies import (
@@ -43,6 +45,10 @@ class CurrentFieldModel:
     turning: FieldTurning
     activity: ScalarActivity = value_changed_or_source
     movement: MovementRule = advance_movement
+    action: UnifiedFieldAction = dataclass_field(init=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "action", UnifiedFieldAction(self.turning, self.movement))
 
     def update_field(
         self, cell: CellState, neighbors: Neighbors, sources: int, config: Config
@@ -68,17 +74,18 @@ class CurrentFieldModel:
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
         raw_gradient = gradient(neighbors)
-        response = self.turning.apply(
+        acted = self.action.apply(
             particle.momentum,
             (cell.px, cell.py, cell.pz),
             raw_gradient,
             (particle.force_rx, particle.force_ry, particle.force_rz),
+            particle.move_budget,
+            particle.axis_phase,
             numerator=config.force_num,
             denominator=config.force_den,
+            speed_cap=config.c_units,
         )
-        move = self.movement(
-            response.momentum, particle.move_budget, particle.axis_phase, speed_cap=config.c_units
-        )
+        response, move = acted.response, acted.motion
         next_cell = cell._replace(
             px=response.field_momentum[0], py=response.field_momentum[1], pz=response.field_momentum[2]
         )

@@ -2,6 +2,7 @@
 
 from event_universe.core.state import Vector, checked, checked_work
 from event_universe.dynamics.movement import MovementResult, choose_axis
+from event_universe.dynamics.rate import step_rate
 
 
 def depart_movement(momentum: Vector, budget: int, phase: int, *, speed_cap: int) -> MovementResult:
@@ -15,12 +16,12 @@ def depart_movement(momentum: Vector, budget: int, phase: int, *, speed_cap: int
 
 
 def transit_ticks(length: int, momentum: Vector, speed_cap: int) -> int:
-    """Speed/c=min(L1(momentum),cap)/cap. Never borrow credit from another edge."""
+    """Per-link travel from step rate; never borrow credit from another edge."""
     for value in (length, *momentum, speed_cap):
         checked(value)
     if length < 1 or speed_cap < 1:
         raise ValueError("positive length and speed cap required")
-    speed = min(checked_work(sum(abs(value) for value in momentum)), speed_cap)
+    speed = step_rate(momentum, speed_cap).numerator
     if not speed:
         raise ValueError("a resting particle cannot start a transit")
     required = checked_work(length * speed_cap)

@@ -13,6 +13,7 @@ from event_universe.core.state import (
     checked,
     checked_work,
 )
+from event_universe.dynamics.rate import step_rate
 
 
 class MovementResult(NamedTuple):
@@ -45,7 +46,7 @@ def advance_movement(momentum: Vector, budget: int, phase: int, *, speed_cap: in
         checked(value)
     if speed_cap <= 0 or not 0 <= budget < speed_cap or phase < 0:
         raise ValueError("invalid movement budget, phase or speed cap")
-    speed = min(checked_work(sum(abs(value) for value in momentum)), speed_cap)
+    speed = step_rate(momentum, speed_cap).numerator
     next_budget = checked(budget + speed)
     if next_budget < speed_cap:
         return MovementResult(-1, phase, next_budget)

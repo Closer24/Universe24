@@ -11,6 +11,7 @@ from event_universe.fields.policies import ScalarActivity, sample_changed_or_sou
 from event_universe.fields.scalar import ScalarFieldRule
 from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
+from event_universe.models.unified_field import UNIFIED_RESPONSE
 
 
 class Simulation(Engine):
@@ -71,4 +72,46 @@ class LinkedSimulation(LinkedEngine):
             transit_rule=transit_ticks,
             merge_rule=max,
             field_activity=model.field_is_active,
+        )
+
+
+class UnifiedSimulation(Simulation):
+    """Candidate full-vector impulse: changes direction and timing in one action."""
+
+    def __init__(
+        self,
+        config: Config | None = None,
+        *,
+        observer: Observer | None = None,
+        field: ScalarFieldRule | None = None,
+        field_activity: ScalarActivity | None = None,
+    ) -> None:
+        super().__init__(
+            config,
+            observer=observer,
+            field=field,
+            turning=UNIFIED_RESPONSE,
+            field_activity=field_activity,
+        )
+
+
+class UnifiedLinkedSimulation(LinkedSimulation):
+    """The same action with delivered neighbor fields and frozen link transits."""
+
+    def __init__(
+        self,
+        config: Config | None = None,
+        *,
+        links: LinkConfig | None = None,
+        observer: Observer | None = None,
+        field: ScalarFieldRule | None = None,
+        length_rule: LengthRule | None = None,
+    ) -> None:
+        super().__init__(
+            config,
+            links=links,
+            observer=observer,
+            field=field,
+            turning=UNIFIED_RESPONSE,
+            length_rule=length_rule,
         )

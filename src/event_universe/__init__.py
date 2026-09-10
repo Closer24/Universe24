@@ -1,6 +1,6 @@
 """Integer, local, three-dimensional event-field research simulator."""
 
-from .api import LinkedSimulation, Simulation
+from .api import LinkedSimulation, Simulation, UnifiedLinkedSimulation, UnifiedSimulation
 from .core.links import LinkConfig
 from .core.state import CellState, Config, ParticleState
 
@@ -11,6 +11,8 @@ __all__ = [
     "ParticleState",
     "Simulation",
     "LinkedSimulation",
+    "UnifiedSimulation",
+    "UnifiedLinkedSimulation",
     "LinkConfig",
     "__version__",
 ]

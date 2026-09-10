@@ -214,3 +214,71 @@ travel length, source symmetry with zero self-force, and three-particle local
 momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
+
+## Unified field-action candidates
+
+User-authorized selection is `UnifiedSimulation` / CLI `--scenario unified`,
+model `scalar-field-unified-action-v1`, or `UnifiedLinkedSimulation` /
+`--scenario unified-links`, model `scalar-field-unified-action-links-v1`.
+They retain the scalar source/evolution law and select `full_response` instead
+of suppressing the dominant axis. This is separate from the shared-action
+field-evolution proposal on another branch. Baseline v10/v11 remain comparisons.
+
+`dynamics/field_action.UnifiedFieldAction` composes replaceable response and
+movement components. It obtains a bounded local particle/field proposal, then
+plans motion from its new momentum. Both must succeed before the engine commits.
+The model constructs the action once; no new physical registers, private evolving
+state, remote identities or global corrections are added. The same composition
+with the original policies must preserve v10/v11 bit-for-bit.
+
+The action reuses `FieldTurning` without copying its integer arithmetic:
+
+```
+raw_i = force_num * gradient_i + old_remainder_i
+impulse_i, next_remainder_i = signed_divrem(raw_i, force_den)
+particle_p_i' = particle_p_i + impulse_i
+field_p_i' = field_p_i - impulse_i
+```
+
+The gradient remains the unscaled difference of opposite neighbors. Linked mode
+uses delivered mailboxes only and applies no update to an in-flight particle;
+direction, length and due time stay frozen until arrival.
+
+`dynamics/rate.step_rate` owns the common movement/transit rate: with
+`q=sum(abs(p_i))` and `C=c_units`, the rate is `min(q,C)/C`, stored as two integers.
+This counts cardinal hops; it is not Euclidean speed. With constant momentum
+on unit links, over complete digital cycles and below capacity (`q<=C`), net
+displacement per tick is p/C. Equal squared norms mean equal geometric mean
+speeds even when q changes. Physical rules evaluate no square root or vector
+normalization. Routing and timing are distinct outputs of the same p, avoiding
+an independent speed state that could disagree with measured momentum.
+
+Required comparisons: p=(4,0,0) with one impulse +2x, 0 or -2x and C=12 gives
+first hops at tick 2, 3 or 6 from zero budget. A true turn (5,0,0)->(3,4,0)
+preserves squared norm 25: over 60 free ticks with C=60 displacements are those
+two vectors, with five/seven hops. A finite side kick (5,0,0)->(5,1,0) gives
+squared norm 26. The exact identity `p'^2-p^2=(p'+p) dot impulse` explains why
+perpendicularity to old p does not imply a finite pure rotation. This identity
+is a work diagnostic, not a field-energy conservation law.
+
+### Physical correspondence and limits
+
+The full-vector impulse has the low-speed structure dp/dt=F. A physical
+potential interpretation additionally needs units/sign; positive gradient here
+would correspond to U proportional to -phi. This is a comparison, not gravity
+derived from event capacity. Source evolution is not Maxwell or Einstein.
+
+At capacity, mean velocity follows `(p/q)*min(q,C)/C`; its magnitude depends on
+lattice direction. No momentum is clipped when rate reaches capacity. That
+finite-momentum state represents neither a photon nor massive SR motion. Link
+rounding and grouped-axis routing add finite-resolution effects. Zero moving
+self-force is not established: restoring the longitudinal response can expose
+the moving source's own trail. Local field-momentum exchange is the existing
+accounting model, not a derivation of stress-energy or energy conservation.
+The scalar gradient has not been derived from a spacetime metric/geodesic.
+
+References used to assess, not import, physical laws:
+[Feynman I.13: work and kinetic energy](https://www.feynmanlectures.caltech.edu/I_13.html),
+[Feynman II.1: electromagnetic force](https://www.feynmanlectures.caltech.edu/II_01.html),
+[Feynman I.15: relativistic momentum](https://www.feynmanlectures.caltech.edu/I_15.html),
+[Einstein Online: light deflection](https://www.einstein-online.info/en/spotlight/light_deflection/).

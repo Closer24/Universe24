@@ -55,6 +55,14 @@ policy, obtains a gradient, calls turning and movement, and builds validated
 cell and particle proposals. `CURRENT_MODEL` explicitly selects six unit
 neighbor weights, no local retention and dominant-axis transverse response.
 Denominators come from `Config` so arithmetic and state audits share one value.
+`CurrentFieldModel` constructs a `UnifiedFieldAction` from its selected response
+and movement components once, then delegates the particle transition to it.
+`dynamics/field_action.py` returns fixed response/motion records for the adapter
+to map into particle/cell state. `dynamics/rate.py` owns the shared hop-rate
+calculation for movement and linked travel; hop rate is not Euclidean speed.
+`models/unified_field.py` identifies the full-vector candidate and selects its
+response; `UnifiedSimulation` and `UnifiedLinkedSimulation` reuse the existing
+API assembly, scheduling and record schemas with that response.
 The reusable components never import `Config`, `CellState` or `ParticleState`.
 Source multiplication, nonnegative clipping and scalar activity predicates live
 in `fields/policies`; the adapter selects and calls them. Bounded scaling with a

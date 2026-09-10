@@ -102,3 +102,42 @@ Ruff lint/format passed and strict mypy passed. The test renderer captured
 source; its current fingerprint is recorded in `artifacts/local-links/run.json`.
 Earlier evidence is preserved under `artifacts/local-links-before-merge` and
 `artifacts/local-links-check-before-merge.log`.
+
+## Unified field action — 2026-09-10
+
+Base: GitHub main `e74f2fdf390b5dc8036b707eefcfc53bc8a82c17`.
+Candidate branch: `feat/unified-field-action`.
+`python tools/check.py`: Ruff lint/format and strict mypy (34 source files)
+passed; **297 tests passed**, including the unchanged 278-tick frozen-v10
+comparison. The new 70 cases cover vector response, event timing, signed axis
+symmetries, geometric displacement, remainders, bounds and engine integration.
+The combined 3D HTML report contains 54 captured engine/reference runs.
+
+`PYTHONPATH=src python tools/run_unified_experiment.py` completed four application
+runs through the existing 3D HTML/GIF renderer. All four preserved total
+particle-plus-field momentum at every completed tick. Source fingerprint:
+`aa969f1a1ad5b9ffddfdcc4ab9144eaff9f62ae95461211eed3abd6dc1c57cca`.
+
+| Case | Ticks | Initial particle momentum | Final particle momentum |
+|---|---:|---|---|
+| isolated-slow | 24 | (3,0,0) | (2,0,0) |
+| isolated-capacity | 24 | (12,0,0) | (12,0,0) |
+| unified, three sources | 96 | (3,0,0); (-3,0,0); (0,-2,0) | all (0,0,0) |
+| unified-links, three sources | 96 | (3,0,0); (-3,0,0); (0,-2,0) | (-1,0,0); (1,0,0); (0,1,0) |
+
+The isolated runs start with zero field on a 72-cubed periodic lattice; source
+and its causal neighborhood remain away from seams through this 24-tick test.
+The slow source first receives a nonzero impulse at event tick 16 (visible in
+completed frame 17). It fails the intended inertial-source check for this
+initial condition. This is an observed moving self-field effect; whether it
+is only startup dressing or persists asymptotically was not tested here.
+The capacity case does not prove that massive particles can physically reach c.
+The three-source stops/reversals are not presented as validated gravity: the
+self-field effect prevents attributing them solely to mutual attraction.
+
+The user-facing physics comparison is therefore limited: the response follows
+full-vector low-speed impulse mechanics; the complete scalar field model has
+not passed an inertial-source/relativistic-gravity validation. No compensating
+force, global momentum repair, source-ID filter or expected-result relaxation
+was introduced. Outputs: `artifacts/unified-action/<case>/run.html`, `run.gif`,
+`run.json`, `events.jsonl`, plus `summary.json` and `artifacts/test-runs.html`.

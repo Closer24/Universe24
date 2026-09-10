@@ -2,12 +2,16 @@
 
 from dataclasses import dataclass
 
-from event_universe.api import LinkedSimulation, Simulation
+from event_universe.api import LinkedSimulation, Simulation, UnifiedLinkedSimulation, UnifiedSimulation
 from event_universe.core.contracts import Observer
 from event_universe.core.engine import Engine
 from event_universe.core.links import LinkConfig
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import Slice
+from event_universe.models.current_field import MODEL_ID
+from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
+from event_universe.models.unified_field import LINKED_MODEL_ID as UNIFIED_LINKED_MODEL_ID
+from event_universe.models.unified_field import MODEL_ID as UNIFIED_MODEL_ID
 
 ParticleSeed = tuple[int, int, int, int, int, int, int]
 
@@ -20,19 +24,38 @@ class Scenario:
     ticks: int
     view: Slice
     links: LinkConfig | None = None
+    unified: bool = False
+
+    @property
+    def model_id(self) -> str:
+        if self.unified:
+            return UNIFIED_MODEL_ID if self.links is None else UNIFIED_LINKED_MODEL_ID
+        return MODEL_ID if self.links is None else LINKED_MODEL_ID
 
     def create(self, observer: Observer | None = None) -> Engine:
-        world: Engine = (
-            Simulation(self.config, observer=observer)
-            if self.links is None
-            else LinkedSimulation(self.config, links=self.links, observer=observer)
-        )
+        world: Engine
+        if self.links is None:
+            plain = UnifiedSimulation if self.unified else Simulation
+            world = plain(self.config, observer=observer)
+        else:
+            linked = UnifiedLinkedSimulation if self.unified else LinkedSimulation
+            world = linked(self.config, links=self.links, observer=observer)
         for particle in self.particles:
             world.add_particle(*particle)
         return world
 
 
 def get_scenario(name: str) -> Scenario:
+    if name in ("unified", "unified-links"):
+        return Scenario(
+            name,
+            Config(nx=32, ny=24, nz=12, c_units=12, force_den=12),
+            ((0, 10, 10, 6, 3, 0, 0), (1, 20, 12, 6, -3, 0, 0), (2, 15, 19, 6, 0, -2, 0)),
+            96,
+            Slice("XY", 6),
+            LinkConfig(base_length=2) if name == "unified-links" else None,
+            unified=True,
+        )
     if name == "links":
         return Scenario(
             name,
