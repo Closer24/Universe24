@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-render = ["matplotlib>=3.8,<4", "Pillow>=10,<13"]
+render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "numpy>=1.26,<3"]
 dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
 
 [project.scripts]
@@ -44,5 +44,5 @@ files = ["src/event_universe"]
 exclude = ["tests/reference"]
 
 [[tool.mypy.overrides]]
-module = ["matplotlib.*", "PIL.*"]
+module = ["matplotlib.*", "mpl_toolkits.*", "PIL.*"]
 ignore_missing_imports = true

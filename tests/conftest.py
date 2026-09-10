@@ -10,8 +10,8 @@ from pathlib import Path
 import pytest
 
 from event_universe.core.engine import Engine
-from event_universe.diagnostics.frames import Frame, Slice, capture_frame
-from event_universe.diagnostics.render import render_run
+from event_universe.diagnostics.frames import VolumeFrame, capture_volume
+from event_universe.diagnostics.render import render_volume
 
 REFERENCE = Path(__file__).parent / "reference" / "legacy_v10.py"
 spec = importlib.util.spec_from_file_location("legacy_v10_reference", REFERENCE)
@@ -36,11 +36,8 @@ def capture_test_runs(monkeypatch, request):
         def step(world):
             key = id(world)
             if key not in runs:
-                z = next(iter(world.particles.values()))[2] if world.particles else world.config.nz // 2
-                view = getattr(world, "diagnostic_view", Slice("XY", z))
                 runs[key] = {
                     "world": world,
-                    "view": view,
                     "frames": [],
                     "stride": 1,
                     "label": request.node.nodeid + (" — reference" if is_legacy else " — refactored"),
@@ -59,15 +56,15 @@ def capture_test_runs(monkeypatch, request):
         return step
 
     def frame(record):
-        world, view = record["world"], record["view"]
+        world = record["world"]
         if record["legacy"]:
-            return Frame(
+            return VolumeFrame(
                 world.tick,
-                dict(world.xy_slice(view.coordinate)),
-                list(world.particles_on_xy_slice(view.coordinate)),
+                {position: cell[0] for position, cell in world.cells.items() if cell[0] != 0},
+                [(pid, *particle[:6]) for pid, particle in world.particles.items()],
                 world.total_momentum(),
             )
-        return capture_frame(world, view)
+        return capture_volume(world)
 
     monkeypatch.setattr(Engine, "step", instrument(Engine.step, False))
     monkeypatch.setattr(
@@ -89,12 +86,10 @@ def pytest_sessionfinish(session, exitstatus):
     for index, run in enumerate(RUNS):
         label = run["label"]
         slug = re.sub(r"[^a-zA-Z0-9_-]+", "-", label)[:85]
-        path = render_run(
+        path = render_volume(
             run["frames"],
-            run["view"],
             output / f"{index:03d}-{slug}.html",
             title=label,
-            compact=True,
             metadata={"suite_exit_status": int(exitstatus), "reference": run["legacy"]},
         )
         contents = path.read_text(encoding="utf-8")

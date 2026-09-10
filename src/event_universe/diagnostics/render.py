@@ -9,14 +9,18 @@ import html
 import json
 from collections.abc import Callable, Mapping, Sequence
 from pathlib import Path
+from typing import cast
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.artist import Artist
 from matplotlib.figure import Figure
+from matplotlib.ticker import MaxNLocator
+from mpl_toolkits.mplot3d import Axes3D
 
 from .frames import AXES, Frame, Slice, VolumeFrame
 
@@ -122,9 +126,32 @@ def render_volume(
         points = [(0, 0, 0), (8, 8, 8)]
     bounds = [(min(p[axis] for p in points) - 2, max(p[axis] for p in points) + 2) for axis in range(3)]
     vmax = max(1, max((value for frame in frames for value in frame.field.values()), default=1))
-    fig = plt.figure(figsize=(9, 7.5), facecolor="#111827")
-    ax = fig.add_subplot(111, projection="3d", facecolor="#111827")
+    fig = plt.figure(figsize=(10, 8.5), facecolor="#080f1c")
+    ax = cast(Axes3D, fig.add_axes((0.04, 0.09, 0.91, 0.79), projection="3d", facecolor="#080f1c"))
     colors = ("#4cc9ff", "#74ffac", "#ffd166", "#fa8cff")
+    fig.text(0.07, 0.94, "PARTICLE FIELD", color="#edf5ff", fontsize=20, weight="bold")
+    fig.text(
+        0.07,
+        0.905,
+        "Full 3D XYZ view  /  particles, field and trajectories",
+        color="#91a4be",
+        fontsize=10,
+    )
+    status = fig.text(0.93, 0.94, "", ha="right", color="#c2d5ed", fontsize=11)
+    for order, pid in enumerate(sorted({p[0] for frame in frames for p in frame.particles})):
+        fig.text(
+            0.07 + order * 0.16,
+            0.055,
+            f"●  Particle {pid}",
+            color=colors[pid % len(colors)],
+            fontsize=10,
+        )
+    fig.text(0.93, 0.055, "Warm glow: scalar field", color="#dcb485", ha="right", fontsize=10)
+    # Smooth display geometry only: physical coordinates and integer state are untouched.
+    longitude, latitude = np.meshgrid(np.linspace(0, 2 * np.pi, 21), np.linspace(0, np.pi, 13))
+    sphere_x = 0.38 * np.cos(longitude) * np.sin(latitude)
+    sphere_y = 0.38 * np.sin(longitude) * np.sin(latitude)
+    sphere_z = 0.38 * np.cos(latitude)
 
     def draw(index: int) -> tuple[Artist, ...]:
         ax.clear()
@@ -132,51 +159,73 @@ def render_volume(
         if frame.field:
             xs, ys, zs = zip(*frame.field, strict=True)
             values = list(frame.field.values())
-            ax.scatter(
-                xs,
-                ys,
-                zs,
-                c=values,
-                cmap="autumn",
-                vmin=0,
-                vmax=vmax,
-                s=[18 + 110 * value / vmax for value in values],
-                alpha=0.35,
-                edgecolors="none",
-                depthshade=False,
-            )
+            sizes = [28 + 130 * value / vmax for value in values]
+            for spread, opacity in ((6, 0.035), (2.5, 0.07), (1, 0.16)):
+                ax.scatter(
+                    xs,
+                    ys,
+                    zs,
+                    c=values,
+                    cmap="YlOrBr_r",
+                    vmin=0,
+                    vmax=vmax,
+                    s=[size * spread for size in sizes],
+                    alpha=opacity,
+                    edgecolors="none",
+                    depthshade=False,
+                )
         for pid, x, y, z, px, py, pz in frame.particles:
             color = colors[pid % len(colors)]
             trail = [p[1:4] for past in frames[: index + 1] for p in past.particles if p[0] == pid]
             tx, ty, tz = zip(*trail, strict=True)
-            ax.plot(tx, ty, tz, color=color, linewidth=2, alpha=0.9)
-            ax.scatter([x], [y], [z], color=color, s=110, edgecolors="white", depthshade=False)
+            ax.plot(tx, ty, tz, color=color, linewidth=7, alpha=0.07)
+            ax.plot(tx, ty, tz, color=color, linewidth=1.8, alpha=0.9)
+            ax.scatter(
+                [x], [y], [z], color=color, s=750, alpha=0.04, edgecolors="none", depthshade=False
+            )
+            ax.scatter(
+                [x], [y], [z], color=color, s=320, alpha=0.10, edgecolors="none", depthshade=False
+            )
+            ax.plot_surface(
+                x + sphere_x,
+                y + sphere_y,
+                z + sphere_z,
+                color=color,
+                linewidth=0,
+                antialiased=True,
+                shade=True,
+            )
             scale = max(1, abs(px) + abs(py) + abs(pz))
             ax.quiver(
                 x,
                 y,
                 z,
-                2.5 * px / scale,
-                2.5 * py / scale,
-                2.5 * pz / scale,
+                1.8 * px / scale,
+                1.8 * py / scale,
+                1.8 * pz / scale,
                 color=color,
-                linewidth=2,
+                linewidth=1.4,
                 arrow_length_ratio=0.3,
             )
-            ax.text(x, y, z + 0.7, str(pid), color=color, fontsize=12)
+            ax.text(x, y, z + 0.8, str(pid), color="#eff6ff", fontsize=10)
         ax.set_xlim(*bounds[0])
         ax.set_ylim(*bounds[1])
         ax.set_zlim(*bounds[2])
         ax.set_box_aspect(tuple(hi - lo for lo, hi in bounds))
         ax.view_init(elev=26, azim=-65 + 35 * index / max(1, len(frames) - 1))
+        ax.grid(False)
+        for x in np.linspace(*bounds[0], 5):
+            ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
+        for y in np.linspace(*bounds[1], 5):
+            ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
         for axis, label in ((ax.xaxis, "x"), (ax.yaxis, "y"), (ax.zaxis, "z")):
-            axis.set_pane_color((0.10, 0.15, 0.23, 0.8))
-            axis.label.set_color("white")
+            axis.set_pane_color((0.045, 0.075, 0.12, 0.25))
+            axis.label.set_color("#91a4be")
+            axis.line.set_color("#344861")
+            axis.set_major_locator(MaxNLocator(4, integer=True))
             axis.set_label_text(label)
-        ax.tick_params(colors="#d1d5db")
-        ax.set_title(
-            f"Full 3D XYZ view | tick={frame.tick}\nPtotal={frame.total_momentum}", color="white", pad=18
-        )
+        ax.tick_params(colors="#7f94af", labelsize=8)
+        status.set_text(f"TICK  {frame.tick:03d} / {frames[-1].tick:03d}\nPtotal {frame.total_momentum}")
         return tuple(ax.get_children())
 
     return _save_animation_html(
@@ -188,8 +237,10 @@ def render_volume(
         html_path,
         title=title,
         metadata=metadata,
-        note="Dots show all nonzero field cells; brightness and size indicate field value. "
-        "Lines show sampled particle paths. The camera rotates; coordinates and physics do not.",
+        note="Soft markers show all nonzero field cells; brightness and size indicate field value. "
+        "Particle spheres and glow are display symbols, not physical particle sizes. "
+        "Lines show sampled paths. The camera rotates; coordinates and physics do not.",
+        dpi=150,
     )
 
 
@@ -205,13 +256,14 @@ def _save_animation_html(
     metadata: Mapping[str, object] | None = None,
     compact: bool = False,
     note: str = "",
+    dpi: int = 100,
 ) -> Path:
     """One shared GIF/HTML output pipeline for plane and volume renderers."""
     html_path.parent.mkdir(parents=True, exist_ok=True)
     gif_path = html_path.with_suffix(".gif")
     try:
         animation = FuncAnimation(fig, draw, frames=frame_count, interval=120)
-        animation.save(str(gif_path), writer=PillowWriter(fps=8), dpi=65 if compact else 100)
+        animation.save(str(gif_path), writer=PillowWriter(fps=8), dpi=65 if compact else dpi)
     finally:
         plt.close(fig)
     encoded = base64.b64encode(gif_path.read_bytes()).decode("ascii")

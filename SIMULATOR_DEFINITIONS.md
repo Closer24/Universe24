@@ -141,10 +141,24 @@ and external; JSONL recording streams it to disk.
 
 ## Output and failures
 
-Every application run produces standalone HTML using the existing
-Matplotlib/FuncAnimation/Pillow GIF pipeline, a true plane label, metadata and
-JSONL events. Pytest produces a combined HTML of every engine run, including
-reference runs. Pure local-function unit tests do not create a world run.
+### ברירת המחדל להצגת הרצות
+
+כל הרצה מוצגת כברירת מחדל בתלת־ממד באיכות 1500×1275: חלקיקים ככדורים
+מוארים עם הילה, שדה רך ושקוף, מסלולים מודגשים ומצלמה מסתובבת.
+מצרפים HTML עצמאי ואנימציית GIF שאפשר לצפות בה. הכלל חל גם על תרחישים
+חדשים ועל כל הרצת עולם בבדיקות, לרבות הרצות ההשוואה לגרסה המקורית.
+דוח הבדיקות רשאי לדגום פריימים, אך משתמש באותו עיצוב ובאותה רזולוציה.
+בדיקות של פונקציה בודדת שאינן מריצות עולם אינן צריכות אנימציה.
+
+זו ברירת מחדל של תצוגה בלבד: אין שינוי ברזולוציית הסריג או בפיזיקה.
+גודל הכדור וההילה הם סמלים חזותיים ולא גודל פיזיקלי של החלקיק.
+תצוגת חתך דורשת בחירה מפורשת: `--view-2d` בשורת הפקודה או
+`volume=False` ב־`run_scenario`. האפשרויות `--plane` ו־`--slice`
+קובעות את החתך כשנבחר מצב דו־ממדי; `--view-3d` נשאר נתמך.
+
+Every application run also records metadata and JSONL events through the existing
+Matplotlib/FuncAnimation/Pillow pipeline. Pytest produces a combined standalone
+HTML report of every captured engine run.
 
 Field proposals are validated before the field phase commits. Particle-field
 proposals are validated before that local exchange commits. A whole tick is not

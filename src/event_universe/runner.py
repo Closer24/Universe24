@@ -28,7 +28,7 @@ def source_fingerprint() -> str:
 
 
 def run_scenario(
-    scenario: Scenario, output: Path, *, frame_stride: int = 1, volume: bool = False
+    scenario: Scenario, output: Path, *, frame_stride: int = 1, volume: bool = True
 ) -> Path:
     """Every application run writes event JSONL, metadata JSON and standalone HTML."""
     if type(frame_stride) is not int or frame_stride < 1:
@@ -94,9 +94,10 @@ def main() -> None:
     parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--frame-stride", type=int, default=1)
-    parser.add_argument(
-        "--view-3d", action="store_true", help="Show the full XYZ field and particle paths"
-    )
+    views = parser.add_mutually_exclusive_group()
+    views.add_argument("--view-3d", dest="view_3d", action="store_true", help="Full XYZ view (default)")
+    views.add_argument("--view-2d", dest="view_3d", action="store_false", help="Show a plane slice")
+    parser.set_defaults(view_3d=True)
     parser.add_argument("--plane", choices=("XY", "XZ", "YZ"))
     parser.add_argument("--slice", type=int, dest="coordinate")
     args = parser.parse_args()
