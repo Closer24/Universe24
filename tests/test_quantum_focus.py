@@ -148,9 +148,7 @@ def test_focus_rejects_future_quantum_roots():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (2, 2, 2), 5, 1).quantum_node
-    bridge.bind_focus_set(
-        1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 2), 1),))
-    )
+    bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 2), 1),)))
     with pytest.raises(ValueError, match="future"):
         bridge.focus_event(FocusRequest(1, 1, 4, 0))
 
@@ -206,9 +204,7 @@ def test_zero_total_weight_is_error_not_no_event():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (0, 0, 0), 0, 0).quantum_node
-    bridge.bind_focus_set(
-        1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),))
-    )
+    bridge.bind_focus_set(1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),)))
     with pytest.raises(ValueError, match="zero total"):
         bridge.focus_event(FocusRequest(1, 1, 0, 0))
 
