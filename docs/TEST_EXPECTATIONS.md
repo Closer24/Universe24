@@ -128,3 +128,14 @@ be rejected; English prose and mathematical notation must pass. The script check
 also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
 guard against non-English scripts, not a language classifier: Latin-script prose
 still requires review. No physical calculation changes as part of translation.
+
+## Run rejection for isolated momentum changes
+
+`test_run_invariants.py` requires rejection of even a one-unit isolated momentum
+change and acceptance of unchanged momentum. A real diagonal self-field run with
+initial momentum (1,1,0), force denominator 12 and 72 requested ticks must stop at
+tick 45 with actual momentum (1,0,0), even with frame_stride=64. Metadata must say
+failed, HTML must say FAILED RUN, and both the trace and failure frame must survive.
+Total momentum conservation does not excuse the particle's self-impulse. A stationary
+isolated run passes; a two-particle contact run is not subject to isolated classification.
+These tests verify the detector, not success of the physical inertial-motion gate.

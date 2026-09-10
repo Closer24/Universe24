@@ -213,3 +213,21 @@ travel length, source symmetry with zero self-force, and three-particle local
 momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
+
+### Reject isolated self-force in application runs
+
+The application runner validates particle momentum after every completed tick
+when the initial world contains exactly one particle and entirely zero field
+records. Its own source stays active. Any change in its initial momentum raises
+`InertialMotionViolation`, terminates the application run and saves the failing
+tick, event trace, failed metadata and an HTML heading explicitly marked FAILED RUN.
+The check is independent of display sampling and never clears remainders, changes
+momentum or disables sources. Multi-particle and initially seeded-field worlds
+are not classified as isolated by this check.
+
+This is read-only diagnostic rejection, not a corrected physical law or a proof
+of straight trajectories. Direct Engine/Simulation callers still receive the
+underlying model behavior. Model acceptance requires the separate isolated-motion
+gate; a test that confirms rejection does not turn that failing physical gate
+into a pass. Existing baseline physics and frozen regression expectations remain
+unchanged. No threshold exempts a one-unit impulse.
