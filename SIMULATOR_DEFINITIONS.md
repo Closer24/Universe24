@@ -3,7 +3,7 @@
 The canonical implementation is the `event_universe` Python package under `src/`.
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
 The model identifier is `scalar-field-v10-contact`; package version is `0.1.0`.
-The plain-language conceptual source is `POSTULATES_HE.md`. If its wording is
+The plain-language conceptual source is `POSTULATES.md`. If its wording is
 ambiguous, this file defines the executable technical requirement. A deliberate
 change to a postulate must update both files and the relevant regression tests.
 
@@ -137,24 +137,23 @@ and external; JSONL recording streams it to disk.
 - Generic field/turning unit tests, current-model-specific tests and independent
   replacement of both components through the public simulation API.
 - Dedicated lattice, movement, source/activity-policy and diagnostic-projection
-  tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS_HE.md`.
+  tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS.md`.
 
 ## Output and failures
 
-### ברירת המחדל להצגת הרצות
+### Default run display
 
-כל הרצה מוצגת כברירת מחדל בתלת־ממד באיכות 1500×1275: חלקיקים ככדורים
-מוארים עם הילה, שדה רך ושקוף, מסלולים מודגשים ומצלמה מסתובבת.
-מצרפים HTML עצמאי ואנימציית GIF שאפשר לצפות בה. הכלל חל גם על תרחישים
-חדשים ועל כל הרצת עולם בבדיקות, לרבות הרצות ההשוואה לגרסה המקורית.
-דוח הבדיקות רשאי לדגום פריימים, אך משתמש באותו עיצוב ובאותה רזולוציה.
-בדיקות של פונקציה בודדת שאינן מריצות עולם אינן צריכות אנימציה.
+Every run defaults to enhanced 1500×1275 3D: lit particle spheres with glow,
+a soft translucent field, emphasized paths and a rotating camera. Provide a
+standalone HTML file and its GIF animation. This also applies to new scenarios
+and every test world, including frozen-reference runs. Test reports may sample
+frames while retaining the same design and resolution. Pure-function tests need
+no animation.
 
-זו ברירת מחדל של תצוגה בלבד: אין שינוי ברזולוציית הסריג או בפיזיקה.
-גודל הכדור וההילה הם סמלים חזותיים ולא גודל פיזיקלי של החלקיק.
-תצוגת חתך דורשת בחירה מפורשת: `--view-2d` בשורת הפקודה או
-`volume=False` ב־`run_scenario`. האפשרויות `--plane` ו־`--slice`
-קובעות את החתך כשנבחר מצב דו־ממדי; `--view-3d` נשאר נתמך.
+This changes display defaults only, not lattice resolution or physics. Sphere
+and glow sizes are visual symbols, not physical particle sizes. A slice requires
+explicit `--view-2d` or `volume=False` in `run_scenario`. `--plane` and `--slice`
+choose the slice in 2D mode; `--view-3d` remains supported.
 
 Every application run also records metadata and JSONL events through the existing
 Matplotlib/FuncAnimation/Pillow pipeline. Pytest produces a combined standalone

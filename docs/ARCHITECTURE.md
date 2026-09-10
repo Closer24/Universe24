@@ -1,7 +1,7 @@
 # Architecture and change boundaries
 
 [AGENTS.md](../AGENTS.md) is the shared contributor entry point.
-`POSTULATES_HE.md` is the plain-language conceptual entry point.
+`POSTULATES.md` is the plain-language conceptual entry point.
 `SIMULATOR_DEFINITIONS.md` translates those principles into exact technical
 requirements, and this document describes the code boundaries that enforce them.
 
@@ -76,7 +76,7 @@ A signed field can be calculated by the generic primitive, but the current
 adapter clamps negative results. A vector field or several simultaneous fields
 requires a separately designed fixed-size state contract and corresponding
 engine and diagnostic support. It is not enabled merely by passing a new law.
-The practical extension guide is `FIELDS_HE.md`.
+The practical extension guide is `FIELDS.md`.
 
 ## Local contracts
 
@@ -162,7 +162,7 @@ arithmetic in model assembly, API assembly and compatibility facades, while
 allowing type annotations and literal configuration. It is tested with both
 allowed and forbidden examples. Dedicated tests also cover periodic lattice
 geometry, scalar policies, digital movement and each diagnostic projection.
-Inputs and expected outcomes are listed in `TEST_EXPECTATIONS_HE.md`.
+Inputs and expected outcomes are listed in `TEST_EXPECTATIONS.md`.
 
 Stricter input checks and exception atomicity are intentional boundary fixes.
 They can reject invalid inputs that old code accepted. They do not alter the
@@ -225,7 +225,7 @@ versions are coalesced to the current cell value after delivery.
 
 ## Adding physical features
 
-Follow [the physical-feature procedure](PHYSICAL_FEATURES_HE.md) before adding a
+Follow [the physical-feature procedure](PHYSICAL_FEATURES.md) before adding a
 law or state contract. It separates explicit local inputs, evolving state,
 immutable parameters, derived values and model assembly. Dependencies between
 physical inputs remain explicit; code separation does not imply statistical
@@ -250,3 +250,13 @@ independence. Formula-free assembly is checked for every module beneath
 These are code and tested-contract findings, not a proof of every possible
 plugin's locality or physical correctness. Dynamic imports, arbitrary callbacks
 and hidden external state still require review; the static gate is not a sandbox.
+
+## Repository language
+
+English is required for all repository comments, docstrings, documentation,
+instructions, diagnostic messages and new identifiers. The authoritative rule
+is [Repository language: English](../AGENTS.md#repository-language-english).
+`tests/test_repository_language.py` guards against legacy non-English scripts;
+review checks the actual language. Older branches must follow this rule when
+merged. Mathematical notation remains valid. This affects documentation and
+review, not physical laws.

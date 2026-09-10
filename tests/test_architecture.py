@@ -95,15 +95,15 @@ def test_physical_records_have_fixed_integer_fields_and_no_history():
 
 def test_postulates_are_linked_and_state_causal_consistency():
     root = Path(__file__).parents[1]
-    postulates = (root / "POSTULATES_HE.md").read_text(encoding="utf-8")
+    postulates = (root / "POSTULATES.md").read_text(encoding="utf-8")
     definitions = (root / "SIMULATOR_DEFINITIONS.md").read_text(encoding="utf-8")
     readme = (root / "README.md").read_text(encoding="utf-8")
     architecture = (root / "docs" / "ARCHITECTURE.md").read_text(encoding="utf-8")
     for document in (definitions, readme, architecture):
-        assert "POSTULATES_HE.md" in document
-    assert "עקביות נשמרת באופן מקומי וסיבתי" in postulates
+        assert "POSTULATES.md" in document
+    assert "Consistency is maintained locally and causally" in postulates
     assert "Spatial-causal consistency postulate" in definitions
-    assert "קוונטיות ושזירה הן עדיין שכבה פתוחה" in postulates
+    assert "Quantum behavior and entanglement remain open" in postulates
 
 
 def test_shared_rules_ship_with_source_and_have_one_entry_point():
@@ -113,11 +113,11 @@ def test_shared_rules_ship_with_source_and_have_one_entry_point():
     for name in ("README.md", "CONTRIBUTING.md", "docs/ARCHITECTURE.md", "MANIFEST.in"):
         assert "AGENTS.md" in (root / name).read_text()
     for name in (
-        "POSTULATES_HE.md",
+        "POSTULATES.md",
         "SIMULATOR_DEFINITIONS.md",
         "docs/ARCHITECTURE.md",
         "CONTRIBUTING.md",
-        "docs/TEST_EXPECTATIONS_HE.md",
+        "docs/TEST_EXPECTATIONS.md",
     ):
         assert name in entry.read_text()
         assert (root / name).is_file()
