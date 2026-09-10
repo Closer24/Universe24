@@ -167,12 +167,7 @@ def split_region(region: Region3D) -> tuple[Region3D, ...]:
     zs = _split_axis(region.z0, region.z1)
     if len(xs) == len(ys) == len(zs) == 1:
         return (region,)
-    return tuple(
-        Region3D(x0, x1, y0, y1, z0, z1)
-        for x0, x1 in xs
-        for y0, y1 in ys
-        for z0, z1 in zs
-    )
+    return tuple(Region3D(x0, x1, y0, y1, z0, z1) for x0, x1 in xs for y0, y1 in ys for z0, z1 in zs)
 
 
 def sum_candidate_weights(candidates: tuple[WeightedFocusCandidate, ...]) -> int:
@@ -220,7 +215,9 @@ def select_focused_event(
     while not is_unit(region):
         children = split_region(region)
         child_weights = tuple(
-            sum_candidate_weights(tuple(candidate for candidate in active if contains(child, candidate.address)))
+            sum_candidate_weights(
+                tuple(candidate for candidate in active if contains(child, candidate.address))
+            )
             for child in children
         )
         subtotal = sum(child_weights)
