@@ -246,7 +246,7 @@ def render_volume(
             values = list(frame.field.values())
             strengths = [value / vmax for value in values]
             # One shared scalar field: do not invent a per-particle source attribution.
-            for spread, base_alpha, gain in ((5, 0.025, 0.09), (1, 0.08, 0.42)):
+            for spread, base_alpha, gain in ((24, 0.02, 0.06), (8, 0.04, 0.12), (1, 0.08, 0.42)):
                 ax.scatter(
                     xs,
                     ys,
@@ -399,6 +399,7 @@ def render_volume(
         metadata=metadata,
         note="Transparent amber markers show the combined scalar field. Stronger values have "
         "brighter color and greater opacity, using one fixed scale throughout the animation. "
+        "Broad soft halos enlarge field markers for visibility, not the physical field range. "
         "The display grid has twice as many subdivisions per axis; physical cells are unchanged. "
         "Particle markers and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
