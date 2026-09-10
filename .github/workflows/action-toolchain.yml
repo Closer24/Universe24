@@ -9,10 +9,14 @@ jobs:
   toolchain:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - run: python -m pip download --only-binary=:all: 'ruff>=0.16,<0.17' 'mypy>=2.3,<3' 'build>=1,<2' -d toolchain
+      - name: Download tools and preserve source
+        run: |
+          python -m pip download --only-binary=:all: 'ruff>=0.16,<0.17' 'mypy>=2.3,<3' 'build>=1,<2' -d toolchain
+          git archive HEAD -o toolchain/repository.tar
       - uses: actions/upload-artifact@v4
         with:
           name: action-dev-toolchain
