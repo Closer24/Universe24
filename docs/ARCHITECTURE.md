@@ -317,3 +317,11 @@ isolated-motion violation. The runner establishes the initial applicability
 sampling, and uses the existing failure-output pipeline. No check result is fed
 back into a physical law to repair state. The engine remains separate from this
 application-level acceptance policy.
+
+## Opt-in balanced movement
+
+`Simulation(movement=...)` passes a generic MovementRule to the existing adapter.
+`BalancedSimulation` selects `advance_balanced_movement`, which reuses the shared
+budget calculation with `choose_balanced_axis`. No source, force or renderer
+logic enters movement. No core schema changes. The separate candidate and its
+remaining self-force failures are documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).

@@ -5,6 +5,7 @@ from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
 from event_universe.core.state import Config
+from event_universe.dynamics.movement import MovementRule, advance_balanced_movement
 from event_universe.dynamics.transit import transit_ticks
 from event_universe.dynamics.turning import FieldTurning
 from event_universe.fields.policies import ScalarActivity, sample_changed_or_source
@@ -24,6 +25,7 @@ class Simulation(Engine):
         field: ScalarFieldRule | None = None,
         turning: FieldTurning | None = None,
         field_activity: ScalarActivity | None = None,
+        movement: MovementRule | None = None,
     ) -> None:
         # Preserve the current scheduler; a supplied field tracks its full scalar sample.
         activity = CURRENT_MODEL.activity if field is None else sample_changed_or_source
@@ -31,6 +33,7 @@ class Simulation(Engine):
             field=CURRENT_MODEL.field if field is None else field,
             turning=CURRENT_MODEL.turning if turning is None else turning,
             activity=activity if field_activity is None else field_activity,
+            movement=CURRENT_MODEL.movement if movement is None else movement,
         )
         super().__init__(
             config if config is not None else Config(),
@@ -72,3 +75,10 @@ class LinkedSimulation(LinkedEngine):
             merge_rule=max,
             field_activity=model.field_is_active,
         )
+
+
+class BalancedSimulation(Simulation):
+    """Opt-in scalar-field-v12-balanced-motion candidate; self-force is unresolved."""
+
+    def __init__(self, config: Config | None = None, *, observer: Observer | None = None) -> None:
+        super().__init__(config, observer=observer, movement=advance_balanced_movement)

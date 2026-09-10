@@ -330,3 +330,14 @@ underlying model behavior. Model acceptance requires the separate isolated-motio
 gate; a test that confirms rejection does not turn that failing physical gate
 into a pass. Existing baseline physics and frozen regression expectations remain
 unchanged. No threshold exempts a one-unit impulse.
+
+## Opt-in balanced-motion candidate
+
+`scalar-field-v12-balanced-motion` uses the existing scalar field and response
+with interleaved integer cardinal movement, exposed as `BalancedSimulation`.
+It retains fixed local state and shared speed budgeting; baseline v10 is unchanged.
+The momentum L1 sum must fit a 32-bit register, with overflow rejected. Constant
+momentum has bounded digital path error, as specified in
+[docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md). This does not cure self-force:
+low-speed isolated runs still fail the independent acceptance script. Do not
+accept this candidate as a complete solution to isolated inertial motion.

@@ -198,3 +198,13 @@ failed, HTML must say FAILED RUN, and both the trace and failure frame must surv
 Total momentum conservation does not excuse the particle's self-impulse. A stationary
 isolated run passes; a two-particle contact run is not subject to isolated classification.
 These tests verify the detector, not success of the physical inertial-motion gate.
+
+## Balanced diagonal movement candidate
+
+`test_balanced_movement.py` checks all 342 signed nonzero directions in the
+cube [-3,3]^3 for two full cycles: exact component counts, x prefix error below
+one cell, and y/z below two cells. It also checks 600:400 interleaving over ten
+hops, momentum-scale equivalence, rate, zero, invalid inputs and 32-bit bounds.
+These are pure-function checks. `tools/check_diagonal_motion.py` independently
+renders engine runs and exits nonzero on remaining self-force. The detailed
+contract and passing/failing results are in [BALANCED_MOTION.md](BALANCED_MOTION.md).
