@@ -141,3 +141,11 @@ not passed an inertial-source/relativistic-gravity validation. No compensating
 force, global momentum repair, source-ID filter or expected-result relaxation
 was introduced. Outputs: `artifacts/unified-action/<case>/run.html`, `run.gif`,
 `run.json`, `events.jsonl`, plus `summary.json` and `artifacts/test-runs.html`.
+
+The first GitHub 3.12 job installed NumPy 2.5.3 and failed before tests because
+its stubs use type-statement syntax incompatible with the project's mypy 3.11
+target. The render extra now bounds NumPy below 2.4, retaining the 2.3 series
+used in local validation. This changes no physical code or expected outcome.
+CI also runs the four-candidate experiment so its replays accompany test reports
+in the existing Actions artifact upload. The earlier local-only tree identifier
+in the initial PR description predates this dependency/CI follow-up.
