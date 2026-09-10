@@ -173,7 +173,18 @@ def render_volume(
         color="#91a4be",
         fontsize=10,
     )
-    status = fig.text(0.93, 0.94, "", ha="right", color="#c2d5ed", fontsize=11)
+    # Matplotlib draws this Hebrew-only label left-to-right; reverse its display order.
+    fig.text(
+        0.93,
+        0.975,
+        "תנע כולל במערכת"[::-1],
+        ha="right",
+        va="top",
+        color="#edf5ff",
+        fontsize=12,
+        weight="bold",
+    )
+    status = fig.text(0.93, 0.94, "", ha="right", va="top", color="#c2d5ed", fontsize=11)
     for order, pid in enumerate(sorted({p[0] for frame in frames for p in frame.particles})):
         fig.text(
             0.28 + order * 0.16,
@@ -271,7 +282,9 @@ def render_volume(
         for y in ax.get_yticks():
             if bounds[1][0] <= y <= bounds[1][1]:
                 ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.85)
-        status.set_text(f"TICK  {frame.tick:03d} / {frames[-1].tick:03d}\nPtotal {frame.total_momentum}")
+        status.set_text(
+            f"(Px, Py, Pz) = {frame.total_momentum}\nTICK  {frame.tick:03d} / {frames[-1].tick:03d}"
+        )
         return (*ax.get_children(), *compass.get_children())
 
     return _save_animation_html(
@@ -287,6 +300,7 @@ def render_volume(
         "Particle spheres and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
+        "System momentum is the combined momentum of particles and field. "
         "The camera rotates; coordinates and physics do not.",
         dpi=150,
     )
