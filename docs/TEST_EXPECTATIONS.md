@@ -116,6 +116,31 @@ The stretch law and proposal merge are tested as separate hypotheses.
 - These tests do not run worlds and do not prove that an agent in another
   conversation has read the instructions.
 
+## Quantum detector trial — opt-in only
+
+The feature contract is in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
+For a prescribed two-output interferometer, phase counts 0, 1, 2, 3 must yield
+weights (4,0), (2,2), (0,4), (2,2). Enumerating tickets 0 through 3 verifies the
+exact categorical selection; it does not test empirical randomness.
+
+At world tick 8, the test controller commits exactly one detector record while
+Engine state and time remain unchanged. Four repeated readouts, including a
+changed ticket, return the same record without extra evaluation. Two bridges
+share the result. Continued physical evolution must match the unqueried baseline
+through tick 12. The detector record is not an Engine-native physical event.
+
+Bad tickets, early or late first-readout timestamps, overflowing amplitudes or
+weights, a zero total weight and exhausted combined work budgets must fail
+without creating a terminal record. Pure queries never sample; repeated queries
+preserve history and report cache hits. Different query depths retain model cost
+1 and world time cost 0 while reporting distinct host work under Q-ORACLE-1.
+
+Quantum boundary tests reuse the project's import resolver. Relative Engine
+imports, importing engine from core and importing quantum from diagnostics must
+be rejected even with aliases. Bounded arithmetic from core.state, imports within
+quantum and the integration adapter are allowed. These are static checks, not a
+proof against arbitrary dynamic Python or a proof of physical locality.
+
 ## Repository language
 
 The English-only rule is authoritative in AGENTS.md and linked from the

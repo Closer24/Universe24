@@ -24,8 +24,9 @@ if they arise from local events and laws, rather than being inserted under anoth
 
 ## 2. Every location has only bounded local information
 
-A cell does not store a picture of the entire universe. It stores a fixed amount
-of information and reads only its own state and information received from its six neighbors.
+A physical cell does not store a picture of the entire universe. It stores a fixed
+amount of information and reads its own state and its six neighbors. Section 14
+explicitly adds an optional shared quantum query primitive, not a neighbor read.
 
 Cell particle capacity is fixed in advance. A cell has no list that grows with the
 number of sources in the universe and does not retain its entire history.
@@ -41,6 +42,8 @@ reached it. It need not know about a distant event before information arrives.
 There is no instantaneous update of the whole universe or central repair of all
 space. An event first changes its own location. Its influence travels from neighbor
 to neighbor, and each location updates upon receipt under the same local law.
+The optional oracle in section 14 is a host-computation exception, not permission
+to rewrite physical records or send instantaneous physical messages.
 
 Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
@@ -53,9 +56,9 @@ consistency, particularly quantum consistency and entanglement.
 
 ## 4. There is a maximum causal speed
 
-Information and influence cannot skip cells. They travel at most one neighboring
-cell per elementary step. This is the role of c: the maximum propagation speed of
-causal influence in the simulator.
+Physical influence cannot skip cells. It travels at most one neighboring cell per
+elementary step. This is the role of c: the maximum propagation speed of causal
+influence in the simulator. Oracle evaluation is not physical propagation.
 
 A particle can also move at most one neighbor per step. The same movement law
 applies at all speeds; there are no separate low-speed and high-speed laws.
@@ -118,7 +121,8 @@ old tests merely to make a new law appear successful.
 ## 10. Measurement and display are outside the physics
 
 Trajectories, reports, images and HTML only read run results. They neither direct
-particle motion nor repair the field.
+particle motion nor repair the field. Here measurement means diagnostics, not a
+quantum interaction that creates a new physical record.
 
 Every application run saves initial conditions, parameters, code identity and an
 HTML view identifying its displayed geometry. A view may be a 2D slice while the
@@ -138,21 +142,21 @@ Failure is information about the model. Do not add a special correction just to 
 
 ## 12. Quantum behavior and entanglement remain open
 
-The present core describes discrete fields and particles. It does not yet implement
-quantum state, amplitudes, interference, measurement or entanglement.
+The physical core describes discrete fields and particles. An optional sidecar now
+stores explicitly supplied amplitude operations and evaluates them on demand.
+This is not a general quantum simulator or native detector-event implementation.
 
-A future quantum layer must preserve both consistent joint results and the
+A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
 
-Until a precise local law satisfies these requirements, do not claim that the
-simulator solves quantum collapse or entanglement consistency.
+Until these requirements have been tested for the proposed laws, do not claim that
+the simulator solves quantum collapse or entanglement consistency.
 
 ## Overall principle
 
-The simulated universe is not kept consistent by instantly knowing everything.
-Each location stores little information, responds only to what has arrived, and
-exchanges information with neighbors under a fixed law. Spatial consistency is
-intended to emerge from the consistency of each local event.
+Physical cells keep bounded local state and exchange influence with neighbors.
+Section 14 adds an explicitly authorized shared computation primitive alongside
+that local world. It does not turn host evaluation into physical communication.
 
 `SIMULATOR_DEFINITIONS.md` contains the exact executable requirements.
 `docs/ARCHITECTURE.md` separates the engine, laws and measurements.
@@ -182,3 +186,26 @@ faster than c to repair an average is forbidden.
 
 Tests verify stationary-source symmetry, neighbor-only influence and fixed local
 storage capacity. They do not establish gravity or geodesics.
+
+## 14. Shared quantum query postulate — Q-ORACLE-1
+
+The user explicitly authorized `deferred-unit-cost-oracle-v1`: one successful
+query to the shared quantum space counts as one elementary model operation and
+consumes zero world ticks. This is a model assumption, not an established physical
+fact or a claim that host computation takes constant time.
+
+The quantum owner may evaluate a long deferred history outside the physical
+six-neighbor computation. Its work and resource budgets are measured separately.
+Bounded integer arithmetic still applies. Exhaustion and overflow are errors,
+not absence of a particle, collapse or a new physical event.
+
+Pure queries do not sample outcomes or change past records. Repeated queries are
+consistent. The optional `terminal-two-output-trial-v1` test chooses one complete,
+absorbing output using a supplied uniform integer ticket; repeated readout returns
+the same shared record. This does not implement general measurement or establish
+no-signalling. The test controller's record is not an Engine-native event.
+
+Only the main engine may eventually commit physical events through an explicit
+interface. That interface, automatic cell polling and quantum-field feedback are
+not implemented by this addition. Exact contracts and ownership are specified in
+`SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.

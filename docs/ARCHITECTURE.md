@@ -141,6 +141,33 @@ equivalence. Reclaiming them is a separate scheduler change requiring the same
 differential checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
 
+## Opt-in quantum ownership — Q-ORACLE-1
+
+The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its
+numeric, timing and resource contracts in SIMULATOR_DEFINITIONS.md. The feature
+contract and limits are in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
+The existing physical engines and schemas above are unchanged.
+
+| Module | Responsibility and allowed dependencies |
+| --- | --- |
+| `quantum/state`, `quantum/query`, `quantum/terminal` | Fixed records and bounded integer helpers; may use core.state, never an engine |
+| `quantum/deferred` | Sole owner of deferred history, cache, accounting and one terminal result |
+| `integration/quantum_bridge` | Sole production adapter between spacetime references and quantum APIs; no Engine or write callback |
+| `tests/quantum_detector_fixture` | Test-only controller with one detector-event slot and two detector bits |
+
+Physical modules, models, application assembly and diagnostics must not import
+quantum. Quantum must not import physical engines, models, dynamics, fields,
+diagnostics or integration. Shared bounded arithmetic from core.state is allowed.
+The architecture tests reuse the existing import resolver and cover relative,
+member and aliased imports. They are static guards, not a sandbox against dynamic
+Python. The bridge does not duplicate evaluation or maintain another quantum cache.
+
+Queries are explicit, not automatically polled. Only DeferredQuantum evaluates
+histories or chooses the terminal output. Replies are immutable. The test
+controller records that result without writing CellState, ParticleState, time or
+Engine events. A future native physical commit needs an explicit engine contract;
+it cannot be added by turning a diagnostic observer into a second state owner.
+
 ## Verification scope
 
 The frozen reference has SHA-256
