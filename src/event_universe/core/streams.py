@@ -53,9 +53,7 @@ class StreamTransport:
             checked(count)
             if count < 0:
                 raise ValueError("source count cannot be negative")
-            outgoing = self._rule(
-                self.at(origin).populations, count, self._source_per_octant, phase
-            )
+            outgoing = self._rule(self.at(origin).populations, count, self._source_per_octant, phase)
             if len(outgoing) != 6:
                 raise ValueError("stream rule must return six outgoing ports")
             for direction, packet in enumerate(outgoing):
@@ -68,9 +66,7 @@ class StreamTransport:
                     checked(value)
                     if value < 0:
                         raise ValueError("stream populations must be non-negative")
-                    populations[octant] = checked(
-                        checked_work(populations[octant] + value)
-                    )
+                    populations[octant] = checked(checked_work(populations[octant] + value))
                     amount = checked(checked_work(amount + value))
                 flux = next_flux.setdefault(target, [0] * 6)
                 flux[direction] = checked(checked_work(flux[direction] + amount))
