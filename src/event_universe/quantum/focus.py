@@ -1,9 +1,9 @@
 """Hierarchical 3D spatial focus for deferred quantum event selection.
 
 Focus is a quantum-oracle computation, not a new physical lattice or a sequence
-of measurements. A half-open integer region is recursively subdivided until one
-canonical cell is reached. One integer ticket is narrowed through every level,
-so refinement does not resample or alter the underlying categorical outcome.
+of measurements. Candidate sets live inside the quantum owner. A physical-side
+focus call carries only fixed-size integer records. One ticket is narrowed through
+every refinement level, so focus never resamples.
 """
 
 from dataclasses import dataclass
@@ -41,33 +41,19 @@ class WeightedFocusCandidate(NamedTuple):
     weight: int
 
 
-class FocusStep(NamedTuple):
-    region: Region3D
-    child_count: int
-    selected_child: int
-    selected_weight: int
-    total_event_weight: int
-
-
 @dataclass(frozen=True, slots=True)
-class FocusRequest:
-    """One logical search for the next event within a canonical world region."""
+class FocusSet:
+    """Quantum-owned bounded configuration, never sent by a physical cell query."""
 
-    request_id: int
     region: Region3D
     candidates: tuple[FocusCandidate, ...]
-    tick: int
-    ticket: int
     no_event_weight: int = 0
 
     def __post_init__(self) -> None:
-        checked(self.request_id)
         checked_region(self.region)
-        checked(self.tick)
-        checked(self.ticket)
         checked(self.no_event_weight)
-        if min(self.request_id, self.tick, self.ticket, self.no_event_weight) < 0:
-            raise ValueError("focus identifiers, tick, ticket and weights must be non-negative")
+        if self.no_event_weight < 0:
+            raise ValueError("focus no-event weight must be non-negative")
         if type(self.candidates) is not tuple:
             raise TypeError("focus candidates must be an immutable tuple")
         seen: set[tuple[Address, int]] = set()
@@ -87,22 +73,36 @@ class FocusRequest:
             seen.add(key)
 
 
-@dataclass(frozen=True, slots=True)
-class FocusEvent:
-    """Oracle-selected candidate event; not yet a native Engine commit."""
+class FocusRequest(NamedTuple):
+    """Fixed-size physical-side request for one already-bound focus set."""
+
+    request_id: int
+    focus_set_id: int
+    tick: int
+    ticket: int
+
+
+class FocusEvent(NamedTuple):
+    """Fixed-size oracle-selected candidate event, not yet an Engine commit."""
 
     request_id: int
     tick: int
-    address: Address
+    x: int
+    y: int
+    z: int
     outcome: int
     root: int
     ticket: int
 
+    @property
+    def address(self) -> Address:
+        return self.x, self.y, self.z
 
-@dataclass(frozen=True, slots=True)
-class FocusReply:
+
+class FocusReply(NamedTuple):
+    """Fixed-size reply. Refinement path is retained only as host diagnostics."""
+
     event: FocusEvent | None
-    path: tuple[FocusStep, ...]
     event_weight: int
     no_event_weight: int
     total_weight: int
@@ -113,6 +113,33 @@ class FocusReply:
     @property
     def cost(self) -> OracleCost:
         return ORACLE_COST
+
+
+class FocusStep(NamedTuple):
+    """Host diagnostic record; never part of the physical-side oracle reply."""
+
+    region: Region3D
+    child_count: int
+    selected_child: int
+    selected_weight: int
+    total_event_weight: int
+
+
+class FocusTrace(NamedTuple):
+    """Last host-side refinement trace for testing and diagnostics only."""
+
+    request_id: int
+    steps: tuple[FocusStep, ...]
+
+
+def checked_focus_request(request: FocusRequest) -> FocusRequest:
+    if type(request) is not FocusRequest:
+        raise TypeError("focus request must be a fixed-size FocusRequest")
+    for value in request:
+        checked(value)
+        if value < 0:
+            raise ValueError("focus request integers must be non-negative")
+    return request
 
 
 def checked_region(region: Region3D) -> Region3D:
@@ -156,11 +183,7 @@ def _split_axis(low: int, high: int) -> tuple[tuple[int, int], ...]:
 
 
 def split_region(region: Region3D) -> tuple[Region3D, ...]:
-    """Split each non-unit axis in two; 3D cubes therefore produce eight children.
-
-    Odd extents are split into floor/ceiling halves. Half-open boundaries ensure
-    exact coverage without overlap, including non-power-of-two world dimensions.
-    """
+    """Split non-unit axes exactly; ordinary 3D cubes produce eight children."""
     region = checked_region(region)
     xs = _split_axis(region.x0, region.x1)
     ys = _split_axis(region.y0, region.y1)
@@ -182,36 +205,31 @@ def sum_candidate_weights(candidates: tuple[WeightedFocusCandidate, ...]) -> int
 
 def select_focused_event(
     request: FocusRequest,
+    focus_set: FocusSet,
     weighted: tuple[WeightedFocusCandidate, ...],
     evaluation_nodes: int,
-) -> FocusReply:
-    """Select by one global ticket, then reveal only the spatial path to its leaf."""
+) -> tuple[FocusReply, FocusTrace]:
+    """Select once from flat weights, then reveal that selection spatially."""
+    checked_focus_request(request)
     checked(evaluation_nodes)
-    if type(weighted) is not tuple or len(weighted) != len(request.candidates):
-        raise ValueError("weighted candidates must match the focus request")
+    if type(weighted) is not tuple or len(weighted) != len(focus_set.candidates):
+        raise ValueError("weighted candidates must match the bound focus set")
     event_weight = sum_candidate_weights(weighted)
-    total_weight = checked(checked_work(event_weight + request.no_event_weight))
+    total_weight = checked(checked_work(event_weight + focus_set.no_event_weight))
     if total_weight == 0:
         raise ValueError("zero total focus weight cannot define an event decision")
     if request.ticket >= total_weight:
         raise ValueError("focus ticket must be smaller than total weight")
-    if request.ticket < request.no_event_weight:
-        return FocusReply(
-            None,
-            (),
-            event_weight,
-            request.no_event_weight,
-            total_weight,
-            evaluation_nodes,
-            0,
-            0,
+    if request.ticket < focus_set.no_event_weight:
+        return (
+            FocusReply(None, event_weight, focus_set.no_event_weight, total_weight, evaluation_nodes, 0, 0),
+            FocusTrace(request.request_id, ()),
         )
 
-    local_ticket = request.ticket - request.no_event_weight
+    local_ticket = request.ticket - focus_set.no_event_weight
     active = tuple(candidate for candidate in weighted if candidate.weight > 0)
-    region = request.region
+    region = focus_set.region
     steps: list[FocusStep] = []
-
     while not is_unit(region):
         children = split_region(region)
         child_weights = tuple(
@@ -246,21 +264,24 @@ def select_focused_event(
     if selected_candidate is None:
         raise RuntimeError("focus ticket did not map to a leaf outcome")
 
+    x, y, z = selected_candidate.address
     event = FocusEvent(
         request.request_id,
         request.tick,
-        selected_candidate.address,
+        x,
+        y,
+        z,
         selected_candidate.outcome,
         selected_candidate.root,
         request.ticket,
     )
-    return FocusReply(
+    reply = FocusReply(
         event,
-        tuple(steps),
         event_weight,
-        request.no_event_weight,
+        focus_set.no_event_weight,
         total_weight,
         evaluation_nodes,
         len(steps),
         0,
     )
+    return reply, FocusTrace(request.request_id, tuple(steps))
