@@ -330,3 +330,19 @@ underlying model behavior. Model acceptance requires the separate isolated-motio
 gate; a test that confirms rejection does not turn that failing physical gate
 into a pass. Existing baseline physics and frozen regression expectations remain
 unchanged. No threshold exempts a one-unit impulse.
+
+## Opt-in balanced-motion and local-halo candidate
+
+`scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`, combines
+interleaved integer movement with a synchronous local scalar cancellation phase.
+After every particle has completed its response and optional hop, the phase sets
+`phi` and `remainder` to zero in the union of the six neighbors of its previous
+and current positions. It retains field momentum. Every proposal validates before
+commit; baseline v10 is unchanged.
+
+The scheduler may visit at most twelve targets per particle and coalesces overlaps.
+The local rule receives one fixed cell record. It adds no physical registers,
+source map or history and satisfies LOCALITY-1 for fixed K. The candidate must keep
+isolated particle momentum exactly at all tested ticks and retain nonzero external
+response. Exact inputs, results and limitations are in
+[docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md).

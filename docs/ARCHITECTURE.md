@@ -317,3 +317,13 @@ isolated-motion violation. The runner establishes the initial applicability
 sampling, and uses the existing failure-output pipeline. No check result is fed
 back into a physical law to repair state. The engine remains separate from this
 application-level acceptance policy.
+
+## Opt-in balanced motion and local halo
+
+`Simulation(movement=..., post_motion_halo=...)` passes generic local components
+to the existing adapter and engine. `BalancedSimulation` selects
+`advance_balanced_movement` and the current model's scalar-halo adapter. Movement
+remains in `dynamics/`; the scalar transformation remains in `fields/`; the model
+maps fixed records; the engine alone schedules the old/current six-neighbor union
+after all particle responses. No core schema changes. The law and evidence are
+documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
