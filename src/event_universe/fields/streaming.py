@@ -49,9 +49,7 @@ def _split_three(value: int, phase: int) -> tuple[int, int, int]:
 class CausalOctantStream:
     """Local stream law with no remote reads and no evolving private state."""
 
-    def emit(
-        self, populations: Octants, sources: int, source_per_octant: int, phase: int
-    ) -> Outgoing:
+    def emit(self, populations: Octants, sources: int, source_per_octant: int, phase: int) -> Outgoing:
         if len(populations) != 8:
             raise ValueError("exactly eight octant populations are required")
         for value in (*populations, sources, source_per_octant, phase):
@@ -66,9 +64,7 @@ class CausalOctantStream:
             signs = OCTANT_SIGNS[octant]
             for axis, share in enumerate(shares):
                 direction = _direction(axis, signs[axis])
-                buckets[direction][octant] = checked(
-                    checked_work(buckets[direction][octant] + share)
-                )
+                buckets[direction][octant] = checked(checked_work(buckets[direction][octant] + share))
         return cast(Outgoing, tuple(tuple(bucket) for bucket in buckets))
 
 
@@ -85,9 +81,7 @@ def flux_vector(flux: tuple[int, int, int, int, int, int]) -> tuple[int, int, in
     )
 
 
-def attractive_samples(
-    flux: tuple[int, int, int, int, int, int],
-) -> tuple[int, int, int, int, int, int]:
+def attractive_samples(flux: tuple[int, int, int, int, int, int]) -> tuple[int, int, int, int, int, int]:
     """Present incoming propagation as an attractive central-difference sample."""
     if len(flux) != 6:
         raise ValueError("exactly six directional flux values are required")
