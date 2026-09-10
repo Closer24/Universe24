@@ -1,79 +1,86 @@
-# Balanced motion candidate and self-force investigation
+# Balanced motion and twelve-cell local halo candidate
 
 Base: upstream `76676d48ffbe7fc53913f4d26464921cb20f72df`.
-Candidate: `scalar-field-v12-balanced-motion`, exposed as `BalancedSimulation`
-in `event_universe.api`. Baseline Simulation and the frozen reference retain
-v10 behavior. This candidate fixes grouped movement; it is not an accepted
-self-force correction and is not made the default.
+Candidate: `scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`
+in `event_universe.api`. Baseline `Simulation` and the frozen v10 reference retain
+their existing behavior.
 
 ## Feature contract
 
 | Part | Contract |
 | --- | --- |
-| Law | Interleave cardinal steps using integer prefix counts; retain the shared speed budget |
-| Local inputs | Momentum vector, movement budget, phase; supplied from the current particle |
-| Evolving state | Existing budget and phase only; no new particle or cell registers |
-| Parameters | Existing positive c_units; no angle-dependent or speed-dependent special law |
-| Derived values | Absolute component weights, their sum, and hierarchical prefix counts |
-| Outputs | Zero or one cardinal hop, updated phase and budget |
-| Bounds | Momentum L1 sum must fit one positive 32-bit register; products checked as 64-bit work |
-| Consistency | Fixed momentum from phase zero gives bounded coordinate error, exact cycle counts and the original hop rate |
-| Tests | All 342 nonzero signed vectors with components -3 through 3, scale equivalence, invalid values, register boundaries, and rendered engine cases |
+| Motion law | Interleave cardinal steps using integer prefix counts; retain the shared speed budget |
+| Halo law | After every particle has responded and moved, cancel scalar value and residue in the six neighbors of its old position and the six neighbors of its current position |
+| Local inputs | Momentum, budget and phase for motion; one local cell record for each scheduled halo operation |
+| Evolving state | Existing particle, cell, budget and phase records; no source identity map or history |
+| Parameters | Existing positive `c_units`; no angle-specific or speed-specific branch |
+| Outputs | Zero or one hop, updated phase and budget; up to twelve validated local cell proposals per particle |
+| Bounds | Momentum L1 sum fits one 32-bit register; products use checked 64-bit work registers |
+| Timing | Every particle reads the same post-field state before the halo phase; all halo proposals validate before commit |
+| Tests | 342 signed directions, six 200-tick isolated runs, exact halo cells, external seed response, two-source response, momentum and baseline comparison |
+
+The halo phase runs after the particle phase. Clearing before particle response
+would remove every gradient, including an external one. Clearing immediately
+after each particle would make later particles see a different state. The
+synchronous phase avoids both errors: all particles respond first, then the
+engine schedules the union of the old and current six-neighbor halos. A cardinal
+move has twelve distinct target cells in a normal-sized lattice. Rest or periodic
+small dimensions can make targets overlap; each address receives one proposal.
+
+This scheduling has host work proportional to the number of particles, just as
+the existing particle phase does. Each particle contributes at most twelve local
+targets, every local transformation takes one fixed cell record, and the state
+stored per cell and particle is unchanged. It therefore preserves the fixed
+local O(1) physical bound for fixed K. No world object, remote search, shadow
+simulation, source history or per-source field map enters the halo calculation.
+
+## Balanced integer movement
 
 For hop index n and weights a,b,c with total T, the x count is floor(n*a/T).
 The other n-floor(n*a/T) hops are distributed between y and z using the same
 integer construction. Three absolute values, fixed arithmetic and at most two
-axis decisions are needed. Local work and memory do not grow with elapsed time,
-world extent or particle count. The existing phase stores n modulo T. This
-retains exact full-cycle counts. There is no history replay, source identity map
-or global input to the movement rule.
+axis decisions are needed. The existing phase stores n modulo T.
 
-For constant momentum and phase initially zero, the x coordinate error is less
-than one lattice cell; the y/z errors are less than two cells. The bound applies
-to hop counts in an unwrapped chart with no blocked moves. It is not an exact
-Euclidean line, exact rotational symmetry, a proof for changing momentum, or a
-physical velocity definition. Coordinate priority remains explicit. A momentum
-change reuses the phase modulo its new total; the fixed-direction proof does not
-claim a smooth transition under arbitrary external forces.
+For constant momentum and phase initially zero, x error is less than one lattice
+cell and y/z error is less than two cells on an unwrapped chart without blocked
+moves. This is a bounded digital staircase rather than exact rotational
+invariance. Coordinate priority remains explicit. Momentum changes reuse phase
+modulo the new total.
 
-## Reproduction and acceptance
+## Reproduction and measured results
 
-`PYTHONPATH=src python tools/check_diagonal_motion.py` produces all five runs
-through the existing full 3D GIF/HTML renderer, plus JSON measurements. It exits
-1 if either the corrected movement or isolated-source requirement fails. No
-failure is converted to an expected pass or suppressed through a tolerance.
-The old no-field control is expected to reveal the grouped-axis defect and is
-excluded only from acceptance of the new candidate.
+Run `PYTHONPATH=src python tools/check_diagonal_motion.py`. It uses the existing
+full 3D GIF/HTML renderer, writes JSON measurements, and exits nonzero if any new
+candidate case changes isolated momentum or exceeds the digital-line bound.
 
-| Run | Result |
+| Run | Measured result |
 | --- | --- |
-| Legacy, source off, p=(600,400,0), cap=1000, 30 ticks | Displacement (30,0,0); wrong direction despite unchanged momentum |
-| Balanced, source off, same momentum, 30 ticks | Displacement (18,12,0); momentum unchanged; bounded staircase error |
-| Balanced, source=64, same momentum, 30 ticks | Same displacement and unchanged momentum in this short maximum-rate run |
-| Balanced, source=64, p=(6,4,0), cap=12, force_den=1 | Fails at tick 3: momentum becomes (6,3,0) |
-| Balanced, source=64, p=(1,1,0), cap=12, force_den=1 | Fails at tick 8: momentum becomes (1,-1,0) |
+| Legacy, source off, p=(600,400,0), cap=1000, 30 ticks | Displacement (30,0,0); grouped-axis control fails the line bound |
+| Candidate, source off, same momentum | Displacement (18,12,0); unchanged momentum |
+| Candidate, source=64, same momentum | Same displacement and unchanged momentum |
+| Candidate, source=64, p=(6,4,0), cap=12, 72 ticks | Unchanged particle momentum; test passes |
+| Candidate, source=64, p=(1,1,0), cap=12, 72 ticks | Unchanged particle momentum; test passes |
 
-All shown local impulses retain opposite field impulses; total momentum staying
-constant does not excuse self-force. The last two runs stop on the first impulse
-and are labelled FAIL. These results prevent accepting the full requested fix.
-The passing fast case must not be generalized to other speeds or long durations.
+The focused suite additionally runs six signed 3D directions for 200 ticks.
+The previous balanced-motion implementation without the halo changes p=(1,1,0)
+to (1,-1,0) by tick 8 under the same strong-coupling input; the candidate keeps
+(1,1,0). A seeded external field still changes a resting particle to momentum
+(101,0,0) within two ticks. The contact pair first responds at tick 18 with
+momenta (3,1,0) and (-3,-1,0), so the local cancellation does not remove all
+external interaction. Total particle-plus-field momentum remains exact in the
+tested runs.
 
-## Why self-force is still open
+## Scope of the result
 
-The adapter supplies the raw gradient of the combined scalar field. The current
-turning policy discards its dominant-axis component; it does not calculate the
-particle's own contribution. In particular, a parallel gradient (-6,-4,0) at
-momentum (600,400,0) becomes (0,-4,0), which is not a parallel projection.
+The rule implements the proposed moving local exclusion zone. It cancels the
+combined scalar value in those cells rather than identifying a source-specific
+component, because the five-register scalar cell contains no source identity.
+Consequently it changes how external scalar fields propagate through a
+particle's immediate halo. The tests establish that an adjacent seeded field
+and the contact scenario still act; they do not establish an unchanged force
+law at every distance, density or boundary.
 
-Rotating that filter would not identify self-field. With only combined local
-scalar samples, a correction cannot generally distinguish a self contribution
-from an external contribution producing the same samples. Simply erasing the
-local field, disabling a source, using a one-particle count, or increasing the
-force denominator would hide the defect or erase real interactions. None is used.
-
-A full cure needs a separately specified local field/source coupling whose
-self-response cancels by construction, or a justified fixed-size local state
-extension that actually retains sufficient information. No such general law is
-established by this change. It must pass low-speed and off-axis isolated tests,
-external-field response tests, and the end-to-end LOCALITY-1 review before being
-accepted. This investigation does not authorize nonlocal shadow-field inputs.
+The candidate preserves integer arithmetic, local bounds and tested momentum.
+Energy conservation, continuum rotational invariance and equivalence to a known
+physical self-field regularization remain unestablished. These are model limits,
+not exceptions to the passing isolated-motion contract.

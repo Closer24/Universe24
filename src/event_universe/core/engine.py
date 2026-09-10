@@ -11,6 +11,7 @@ from .contracts import (
     FieldActivity,
     FieldRule,
     ForceRecord,
+    LocalCellRule,
     MoveRecord,
     NullObserver,
     Observer,
@@ -42,10 +43,12 @@ class Engine:
         observer: Observer | None = None,
         *,
         field_activity: FieldActivity | None = None,
+        post_motion_halo: LocalCellRule | None = None,
     ) -> None:
         self._config = config
         self._field_rule = field_rule
         self._field_activity = field_activity
+        self._post_motion_halo = post_motion_halo
         self._lattice = PeriodicLattice((config.nx, config.ny, config.nz))
         self._particle_rule = particle_rule
         self._observer = observer if observer is not None else NullObserver()
@@ -178,6 +181,23 @@ class Engine:
     def _begin_tick(self) -> None:
         """Transport extension hook; the baseline has no in-flight transitions."""
 
+    def _apply_post_motion_halos(self, previous_positions: tuple[tuple[int, Address], ...]) -> None:
+        """Apply an optional fixed six-neighbor rule at old and current positions."""
+        if self._post_motion_halo is None:
+            return
+        targets: set[Address] = set()
+        for pid, previous in previous_positions:
+            targets.update(self._lattice.neighbors(previous))
+            targets.update(self._lattice.neighbors(self._particles[pid].position))
+        proposals = []
+        for address in targets:
+            cell = self._post_motion_halo(self.cell_at(address))
+            validate_cell(cell)
+            proposals.append((address, cell))
+        for address, cell in proposals:
+            self._cells[address] = cell
+            self._activate(address)
+
     def _particle_ready(self, pid: int) -> bool:
         return True
 
@@ -244,11 +264,15 @@ class Engine:
         self._ensure_healthy()
         next_tick = checked(self.tick + 1)
         try:
+            previous_positions = tuple(
+                (pid, particle.position) for pid, particle in self._particles.items()
+            )
             self._begin_tick()
             self._field_step()
             # Legacy order is part of this model's movement/conflict semantics.
             for position in tuple(self._occupancy):
                 self._particle_step_in_cell(position)
+            self._apply_post_motion_halos(previous_positions)
             self._tick = next_tick
         except Exception:
             self._faulted = True

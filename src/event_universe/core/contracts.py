@@ -17,6 +17,7 @@ class ParticleUpdate(NamedTuple):
 FieldRule = Callable[[CellState, Neighbors, int, Config], CellState]
 FieldActivity = Callable[[CellState, CellState, int], bool]
 ParticleRule = Callable[[ParticleState, CellState, Neighbors, Config, int], ParticleUpdate]
+LocalCellRule = Callable[[CellState], CellState]
 
 
 class MoveRecord(NamedTuple):

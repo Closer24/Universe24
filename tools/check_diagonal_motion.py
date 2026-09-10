@@ -1,7 +1,7 @@
-"""Render the movement fix and keep self-force acceptance separate and strict.
+"""Render the balanced-halo acceptance cases and one failing legacy control.
 
-Run with PYTHONPATH=src python tools/check_diagonal_motion.py. Exit 1 means
-that the full isolated-motion requirement still fails, even if movement passes.
+Run with PYTHONPATH=src python tools/check_diagonal_motion.py. The legacy control
+documents grouped movement; every candidate case must pass for exit status zero.
 """
 
 import json

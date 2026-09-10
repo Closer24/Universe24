@@ -1,6 +1,6 @@
 """Public assembly of the engine, current candidate model and optional observations."""
 
-from event_universe.core.contracts import Observer
+from event_universe.core.contracts import LocalCellRule, Observer
 from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
@@ -26,6 +26,7 @@ class Simulation(Engine):
         turning: FieldTurning | None = None,
         field_activity: ScalarActivity | None = None,
         movement: MovementRule | None = None,
+        post_motion_halo: LocalCellRule | None = None,
     ) -> None:
         # Preserve the current scheduler; a supplied field tracks its full scalar sample.
         activity = CURRENT_MODEL.activity if field is None else sample_changed_or_source
@@ -41,6 +42,7 @@ class Simulation(Engine):
             model.update_particle,
             observer,
             field_activity=model.field_is_active,
+            post_motion_halo=post_motion_halo,
         )
 
 
@@ -78,7 +80,12 @@ class LinkedSimulation(LinkedEngine):
 
 
 class BalancedSimulation(Simulation):
-    """Opt-in scalar-field-v12-balanced-motion candidate; self-force is unresolved."""
+    """Opt-in balanced motion with a synchronous old/new six-neighbor halo."""
 
     def __init__(self, config: Config | None = None, *, observer: Observer | None = None) -> None:
-        super().__init__(config, observer=observer, movement=advance_balanced_movement)
+        super().__init__(
+            config,
+            observer=observer,
+            movement=advance_balanced_movement,
+            post_motion_halo=CURRENT_MODEL.cancel_scalar_halo,
+        )

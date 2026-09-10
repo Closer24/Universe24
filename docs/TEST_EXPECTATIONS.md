@@ -199,12 +199,13 @@ Total momentum conservation does not excuse the particle's self-impulse. A stati
 isolated run passes; a two-particle contact run is not subject to isolated classification.
 These tests verify the detector, not success of the physical inertial-motion gate.
 
-## Balanced diagonal movement candidate
+## Balanced movement and twelve-cell halo candidate
 
-`test_balanced_movement.py` checks all 342 signed nonzero directions in the
-cube [-3,3]^3 for two full cycles: exact component counts, x prefix error below
-one cell, and y/z below two cells. It also checks 600:400 interleaving over ten
-hops, momentum-scale equivalence, rate, zero, invalid inputs and 32-bit bounds.
-These are pure-function checks. `tools/check_diagonal_motion.py` independently
-renders engine runs and exits nonzero on remaining self-force. The detailed
-contract and passing/failing results are in [BALANCED_MOTION.md](BALANCED_MOTION.md).
+`test_balanced_movement.py` checks all 342 signed nonzero directions in [-3,3]^3
+for exact cycle counts, bounded prefix error, scaling, rate, invalid inputs and
+register limits. `test_balanced_halo.py` runs six isolated signed 3D momenta for
+200 ticks, checks the exact old/new six-neighbor target set, verifies an external
+seed still creates momentum, verifies equal-and-opposite contact response, and
+shows the same balanced movement without the halo fails the p=(1,1,0) input.
+`tools/check_diagonal_motion.py` renders five engine runs and accepts only the new
+candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).

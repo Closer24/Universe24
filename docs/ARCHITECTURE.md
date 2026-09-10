@@ -318,10 +318,12 @@ sampling, and uses the existing failure-output pipeline. No check result is fed
 back into a physical law to repair state. The engine remains separate from this
 application-level acceptance policy.
 
-## Opt-in balanced movement
+## Opt-in balanced motion and local halo
 
-`Simulation(movement=...)` passes a generic MovementRule to the existing adapter.
-`BalancedSimulation` selects `advance_balanced_movement`, which reuses the shared
-budget calculation with `choose_balanced_axis`. No source, force or renderer
-logic enters movement. No core schema changes. The separate candidate and its
-remaining self-force failures are documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
+`Simulation(movement=..., post_motion_halo=...)` passes generic local components
+to the existing adapter and engine. `BalancedSimulation` selects
+`advance_balanced_movement` and the current model's scalar-halo adapter. Movement
+remains in `dynamics/`; the scalar transformation remains in `fields/`; the model
+maps fixed records; the engine alone schedules the old/current six-neighbor union
+after all particle responses. No core schema changes. The law and evidence are
+documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).

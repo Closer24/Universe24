@@ -18,6 +18,7 @@ from event_universe.core.state import (
 )
 from event_universe.dynamics.movement import MovementRule, advance_movement
 from event_universe.dynamics.turning import FieldTurning, dominant_axis_transverse
+from event_universe.fields.halo import cancel_scalar_sample
 from event_universe.fields.policies import (
     ScalarActivity,
     nonnegative_sample,
@@ -63,6 +64,11 @@ class CurrentFieldModel:
             ScalarSample(current.phi, current.remainder),
             sources,
         )
+
+    def cancel_scalar_halo(self, cell: CellState) -> CellState:
+        """Map the selected local halo policy back to the fixed cell record."""
+        sample = cancel_scalar_sample(ScalarSample(cell.phi, cell.remainder))
+        return cell._replace(phi=sample.value, remainder=sample.remainder)
 
     def update_particle(
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
