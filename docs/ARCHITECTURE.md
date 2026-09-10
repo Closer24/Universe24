@@ -1,5 +1,6 @@
 # Architecture and change boundaries
 
+[AGENTS.md](../AGENTS.md) is the shared contributor entry point.
 `POSTULATES_HE.md` is the plain-language conceptual entry point.
 `SIMULATOR_DEFINITIONS.md` translates those principles into exact technical
 requirements, and this document describes the code boundaries that enforce them.
@@ -125,7 +126,10 @@ frames live only in the runner. `--frame-stride` controls their sampling cost.
 The engine never reads an observer result. Observers are trusted application
 code, not a security sandbox; an observer exception during a tick stops the world.
 
-`--view-3d` captures independent `VolumeFrame` records with full XYZ coordinates.
+The default runner and test-report view captures independent `VolumeFrame` records
+with full XYZ coordinates and renders at 1500×1275. `--view-2d` or `volume=False`
+explicitly selects a plane slice. The authoritative output rule is in
+`SIMULATOR_DEFINITIONS.md`.
 The volume renderer shows nonzero scalar cells, sampled particle trails and
 momentum arrows with a rotating camera. Plane and volume renderers share one
 GIF/HTML output function. Camera rotation, color and marker scaling are purely

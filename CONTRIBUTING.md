@@ -1,5 +1,7 @@
 # Working on this simulator
 
+Start with [AGENTS.md](AGENTS.md), the shared entry point for all contributors.
+
 1. Read `POSTULATES_HE.md` and `SIMULATOR_DEFINITIONS.md` before changing a
    physical module. A postulate change must update both documents and its tests.
 2. Keep scheduling, generic field/dynamics calculations, model choices and output

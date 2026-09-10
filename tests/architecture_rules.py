@@ -85,7 +85,10 @@ def violations(source, module):
                     found.append((line, "generic calculation imports model state"))
             if layer == "models" and (
                 target_layer not in GENERIC_LAYERS | {"models"}
-                or dependency in {"core.engine", "core.linked_engine"}
+                or dependency == "core.engine"
+                or dependency.startswith("core.engine.")
+                or dependency == "core.linked_engine"
+                or dependency.startswith("core.linked_engine.")
             ):
                 found.append((line, "model imports world or application code"))
         elif layer in GENERIC_LAYERS | {"models"} and target.split(".")[0] in {

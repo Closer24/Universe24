@@ -50,6 +50,8 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
         ("fields.scalar", "from ..core import engine"),
         ("dynamics.turning", "from ..models.current_field import CURRENT_MODEL"),
         ("models.current_field", "from ..core.engine import Engine"),
+        ("models.current_field", "from ..core import engine"),
+        ("models.linked_field", "from ..core import linked_engine"),
         ("models.current_field", "from ..diagnostics import measurements"),
         ("fields.scalar", "from pathlib import Path"),
         ("models.current_field", "def update(source, count):\n    return source * count"),
@@ -96,3 +98,21 @@ def test_postulates_are_linked_and_state_causal_consistency():
     assert "עקביות נשמרת באופן מקומי וסיבתי" in postulates
     assert "Spatial-causal consistency postulate" in definitions
     assert "קוונטיות ושזירה הן עדיין שכבה פתוחה" in postulates
+
+
+def test_shared_rules_ship_with_source_and_have_one_entry_point():
+    root = Path(__file__).parents[1]
+    entry = root / "AGENTS.md"
+    assert entry.is_file()
+    for name in ("README.md", "CONTRIBUTING.md", "docs/ARCHITECTURE.md", "MANIFEST.in"):
+        assert "AGENTS.md" in (root / name).read_text()
+    for name in (
+        "POSTULATES_HE.md",
+        "SIMULATOR_DEFINITIONS.md",
+        "docs/ARCHITECTURE.md",
+        "CONTRIBUTING.md",
+        "docs/TEST_EXPECTATIONS_HE.md",
+    ):
+        assert name in entry.read_text()
+        assert (root / name).is_file()
+    assert "python tools/check.py" in (root / ".github/workflows/check.yml").read_text()
