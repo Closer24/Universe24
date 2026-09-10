@@ -11,9 +11,7 @@ StreamRule = Callable[[Octants, int, int, int], Outgoing]
 SampleRule = Callable[[Neighbors], Neighbors]
 
 
-def _unused_field_rule(
-    cell: CellState, neighbors: Neighbors, sources: int, config: Config
-) -> CellState:
+def _unused_field_rule(cell: CellState, neighbors: Neighbors, sources: int, config: Config) -> CellState:
     """Streaming transport replaces the scalar field phase in this candidate."""
     return cell
 
