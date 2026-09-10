@@ -128,3 +128,20 @@ be rejected; English prose and mathematical notation must pass. The script check
 also rejects Arabic, Cyrillic, CJK, Hiragana, Katakana and Hangul letters. It is a
 guard against non-English scripts, not a language classifier: Latin-script prose
 still requires review. No physical calculation changes as part of translation.
+
+## Mandatory isolated straight motion
+
+`test_isolated_motion.py` compares a single particle in its own active field
+with an otherwise identical source-free control, for baseline and unit-link
+transport. Inputs: source strengths 64/0, force denominator 12, speed cap 12,
+257×257×257 cells, origin (128,128,128), 72 ticks. Momenta are (1,0,0), (3,0,0),
+(12,0,0), (0,-3,0), (0,0,12), (1,1,0), (3,-2,1), and (6,4,-2).
+
+Expected: unchanged particle momentum and matching position at every tick;
+the self-field becomes nonzero while the control field stays zero. For baseline
+full 12-tick cycles, displacement is the initial momentum times the cycle count.
+An example is (3,-2,1) after 12 ticks: position (131,126,129). Digital cardinal
+steps are allowed between cycle endpoints. A self-induced momentum change or
+trajectory drift fails the ordinary suite, even if total matter-field momentum
+is conserved. The test has no xfail or skip exemption. All world runs are captured
+in the existing HTML test report, including the frame where an assertion fails.

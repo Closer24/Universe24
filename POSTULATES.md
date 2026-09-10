@@ -84,13 +84,24 @@ The simulator does not repeatedly add a source's own new emission to itself.
 A stationary source should form a persistent surrounding state, rather than grow
 without bound or disappear because there was no movement event.
 
-## 7. An isolated symmetric source does not push itself
+## 7. An isolated particle cannot deflect or accelerate itself
 
-For a single stationary source in symmetric space, field values on opposite sides
-of every axis must be equal. Opposite influences cancel, leaving its momentum unchanged.
+In the absence of external fields and other particles, a particle must retain
+its initial momentum and inertial trajectory even while its own field is active.
+This applies to moving particles as well as stationary ones, at low and high
+rates and along cardinal and diagonal directions. Switching on its own source
+must not change its trajectory relative to the same source-free experiment.
 
-This is a fundamental local-consistency test: a particle must not start moving
-solely because of its own symmetric field.
+A straight trajectory on the cardinal lattice is the corresponding digital
+staircase, not a diagonal hop through several cells. Compare complete digital
+cycles and each tick with the source-free control; do not smooth displayed
+coordinates to hide a physical deflection.
+
+For a stationary isolated source, opposite field values must remain symmetric
+and its momentum must remain zero. This is the existing stationary special case.
+The moving-particle requirement extends it by explicit user instruction. The
+historical baseline remains a reference, not proof that it meets this requirement.
+A failure of the mandatory isolated-motion test blocks acceptance of the model.
 
 ## 8. Momentum is exchanged at the event location
 

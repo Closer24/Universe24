@@ -44,8 +44,11 @@ field propagation. It does not yet establish quantum consistency or entanglement
 8. A scalar-field change traverses at most one neighbor edge per synchronous
    field update. Movement is also limited to at most one neighbor per tick.
    No special slow-speed law is introduced.
-9. An isolated stationary source must have equal values on opposite sides of
-   every coordinate axis and zero net self-force.
+9. An isolated particle must retain initial momentum and the same tick-by-tick
+   trajectory as its source-free control when no external fields or other particles
+   are present. Its own field must remain active in this test. This applies to
+   cardinal and diagonal motion at low and high rates. A stationary source must
+   additionally have equal opposite-axis field values and zero net self-force.
 10. A particle impulse is paired with the exact opposite field impulse in the
     same local proposal. Both records must be valid before either is committed.
     Global momentum measurements are diagnostic only; no later global correction
@@ -213,3 +216,25 @@ travel length, source symmetry with zero self-force, and three-particle local
 momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
+
+## Mandatory isolated-motion acceptance gate
+
+`tests/test_isolated_motion.py` is part of the normal pytest and CI suite. It must
+pass; do not mark it xfail, skip it, weaken its expected result or disable the
+self-field to obtain a pass. It compares one particle with source strength 64
+against a source-free control at strength 0, both with force denominator 12,
+speed cap 12 and initially empty fields. Eight momenta cover cardinal directions,
+signs, 2D/3D diagonals and low/high step rates for 72 ticks. A 257-cubed domain
+with origin (128,128,128) avoids boundary crossing in the test interval.
+
+Run the gate for baseline Simulation and LinkedSimulation. The linked case fixes
+unit-length links with stretch_num=0, isolating the response from variable geometry.
+This finite matrix does not establish every speed or stretched-link behavior.
+Every tick must preserve initial momentum and match the source-free position;
+baseline complete 12-tick cycles also have independently calculated displacement.
+The source-free scalar field stays zero, and the self-field must become nonzero.
+
+This user-requested requirement strengthens the previous stationary/cardinal
+checks. Frozen baseline comparisons remain historical regression evidence; a
+historically reproducible self-force is still a failure of this acceptance gate.
+Corrections must respect local fixed storage and explicit model identities.
