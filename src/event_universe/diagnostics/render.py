@@ -8,6 +8,7 @@ import base64
 import html
 import json
 from collections.abc import Callable, Mapping, Sequence
+from math import hypot
 from pathlib import Path
 from typing import cast
 
@@ -25,6 +26,38 @@ from mpl_toolkits.mplot3d import Axes3D
 from .frames import AXES, Frame, Slice, VolumeFrame
 
 VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
+FULL_SPEED_ARROW_LENGTH = 3.6
+
+
+def _speed_arrow(momentum: tuple[int, int, int], c_units: int | None) -> tuple[float, float, float]:
+    """Display the model's capped hop-budget rate, with Euclidean arrow length proportional to it."""
+    if c_units is None:
+        return (0.0, 0.0, 0.0)
+    if type(c_units) is not int or c_units <= 0:
+        raise ValueError("display speed scale must be a positive integer")
+    magnitude = hypot(*momentum)
+    if magnitude == 0:
+        return (0.0, 0.0, 0.0)
+    fraction = min(sum(abs(value) for value in momentum), c_units) / c_units
+    scale = FULL_SPEED_ARROW_LENGTH * fraction / magnitude
+    return momentum[0] * scale, momentum[1] * scale, momentum[2] * scale
+
+
+def _display_jump(previous: tuple[int, int, int], current: tuple[int, int, int]) -> bool:
+    """Flag two or more grid steps between displayed positions, including periodic wraps."""
+    return sum(abs(after - before) for before, after in zip(previous, current, strict=True)) >= 2
+
+
+def _periodic_crossing(
+    previous: tuple[int, int, int],
+    current: tuple[int, int, int],
+    shape: tuple[int, int, int] | None,
+) -> bool:
+    """Recognize a boundary crossing by the shorter periodic coordinate displacement."""
+    return shape is not None and any(
+        abs(after - before) > size / 2
+        for before, after, size in zip(previous, current, shape, strict=True)
+    )
 
 
 def _draw_orientation(ax: Axes3D, *, elevation: float, azimuth: float) -> None:
@@ -194,6 +227,9 @@ def render_volume(
             fontsize=10,
         )
     fig.text(0.93, 0.055, "Warm glow: scalar field", color="#dcb485", ha="right", fontsize=10)
+    fig.text(0.28, 0.055, "Arrow length: speed / c", color="#c2d5ed", fontsize=10)
+    fig.text(0.28, 0.025, "↻ Periodic boundary", color="#65e8ff", fontsize=10)
+    fig.text(0.60, 0.025, "X Jump of 2+ cells", color="#ff5252", fontsize=10)
     fig.text(0.12, 0.18, "AXIS DIRECTIONS", color="#c2d5ed", ha="center", fontsize=8)
     # Smooth display geometry only: physical coordinates and integer state are untouched.
     longitude, latitude = np.meshgrid(np.linspace(0, 2 * np.pi, 21), np.linspace(0, np.pi, 13))
@@ -204,6 +240,9 @@ def render_volume(
     def draw(index: int) -> tuple[Artist, ...]:
         ax.clear()
         frame = frames[index]
+        previous_positions = (
+            {p[0]: (p[1], p[2], p[3]) for p in frames[index - 1].particles} if index else {}
+        )
         if frame.field:
             xs, ys, zs = zip(*frame.field, strict=True)
             values = list(frame.field.values())
@@ -225,7 +264,16 @@ def render_volume(
         for pid, x, y, z, px, py, pz in frame.particles:
             color = colors[pid % len(colors)]
             trail = [p[1:4] for past in frames[: index + 1] for p in past.particles if p[0] == pid]
-            tx, ty, tz = zip(*trail, strict=True)
+            # Break visual discontinuities instead of drawing a fictitious line across the box.
+            path: list[tuple[float, float, float]] = []
+            for step, point in enumerate(trail):
+                if step and (
+                    _display_jump(trail[step - 1], point)
+                    or _periodic_crossing(trail[step - 1], point, frame.shape)
+                ):
+                    path.append((float("nan"),) * 3)
+                path.append(point)
+            tx, ty, tz = zip(*path, strict=True)
             ax.plot(tx, ty, tz, color=color, linewidth=7, alpha=0.07)
             ax.plot(tx, ty, tz, color=color, linewidth=1.8, alpha=0.9)
             ax.scatter(
@@ -243,19 +291,45 @@ def render_volume(
                 antialiased=True,
                 shade=True,
             )
-            scale = max(1, abs(px) + abs(py) + abs(pz))
+            arrow_x, arrow_y, arrow_z = _speed_arrow((px, py, pz), frame.c_units)
             ax.quiver(
                 x,
                 y,
                 z,
-                1.8 * px / scale,
-                1.8 * py / scale,
-                1.8 * pz / scale,
+                arrow_x,
+                arrow_y,
+                arrow_z,
                 color=color,
                 linewidth=1.4,
                 arrow_length_ratio=0.3,
             )
             ax.text(x, y, z + 0.8, str(pid), color="#eff6ff", fontsize=10)
+            previous = previous_positions.get(pid)
+            if previous is not None and _periodic_crossing(previous, (x, y, z), frame.shape):
+                ax.text(
+                    x,
+                    y,
+                    z + 1.4,
+                    "↻",
+                    color="#65e8ff",
+                    fontsize=30,
+                    ha="center",
+                    va="center",
+                    weight="bold",
+                    zorder=100,
+                )
+            elif previous is not None and _display_jump(previous, (x, y, z)):
+                ax.scatter(
+                    [x],
+                    [y],
+                    [z],
+                    marker="x",
+                    s=350,
+                    color="#ff3030",
+                    linewidths=3.5,
+                    depthshade=False,
+                    zorder=100,
+                )
         ax.set_xlim(*bounds[0])
         ax.set_ylim(*bounds[1])
         ax.set_zlim(*bounds[2])
@@ -301,6 +375,12 @@ def render_volume(
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
         "System momentum is the combined momentum of particles and field. "
+        "Arrow length is proportional to the capped movement-budget speed: c = 3.6 display cells. "
+        "Frames without a recorded speed scale omit velocity arrows. "
+        "A cyan ↻ marks a periodic boundary crossing (the shorter displacement uses the boundary). "
+        "A red X marks other displacements of at least two cardinal grid steps. "
+        "Trails break at both markers. Use consecutive ticks to avoid sampled-frame ambiguity; "
+        "a marker alone does not indicate motion faster than c. "
         "The camera rotates; coordinates and physics do not.",
         dpi=150,
     )

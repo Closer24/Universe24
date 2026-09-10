@@ -37,6 +37,8 @@ class VolumeFrame:
     field: dict[tuple[int, int, int], int]
     particles: list[tuple[int, int, int, int, int, int, int]]
     total_momentum: tuple[int, int, int]
+    c_units: int | None = None
+    shape: tuple[int, int, int] | None = None
 
 
 def capture_volume(world: Engine) -> VolumeFrame:
@@ -46,6 +48,8 @@ def capture_volume(world: Engine) -> VolumeFrame:
         {position: cell.phi for position, cell in world.cells.items() if cell.phi != 0},
         [(pid, *particle.position, *particle.momentum) for pid, particle in world.particles.items()],
         total_momentum(world),
+        world.config.c_units,
+        (world.config.nx, world.config.ny, world.config.nz),
     )
 
 

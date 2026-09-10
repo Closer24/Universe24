@@ -58,6 +58,7 @@ def test_empty_momentum_measurement_returns_three_integer_zeros():
 
 def test_volume_preserves_all_three_coordinates_and_copies_off_plane_records(records):
     frame = capture_volume(records)
+    assert frame.c_units == records.config.c_units
     assert frame.field == {(2, 3, 4): 9, (6, 7, 8): 11}
     assert frame.particles == [(5, 2, 3, 4, 5, -6, 7), (6, 6, 7, 8, -2, 3, -4)]
     assert frame.total_momentum == (10, -18, 26)
