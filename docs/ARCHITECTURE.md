@@ -221,3 +221,32 @@ resident slots per cell. Dictionary storage and full work-set iteration remain
 host costs, not strict worst-case O(1). There is no per-source field map or
 unbounded local message queue. Busy channels retain one snapshot; intermediate
 versions are coalesced to the current cell value after delivery.
+
+
+## Adding physical features
+
+Follow [the physical-feature procedure](PHYSICAL_FEATURES_HE.md) before adding a
+law or state contract. It separates explicit local inputs, evolving state,
+immutable parameters, derived values and model assembly. Dependencies between
+physical inputs remain explicit; code separation does not imply statistical
+independence. Formula-free assembly is checked for every module beneath
+`models/`, including future and nested models, rather than a fixed name list.
+
+### Audit against main e74f2fd
+
+- `ScalarField.advance` receives samples, six neighbors, source and denominator;
+  it does not import model state or the world.
+- `FieldTurning.apply` receives momenta, a vector, residues and rational coupling;
+  direction selection is injected. Local exchange is implemented once.
+- `MeanStretch` stores immutable coefficients and receives two local samples.
+  Its caller supplies already delivered neighbor information.
+- `CurrentFieldModel` extracts values from physical records, invokes the generic
+  laws and constructs proposals. The engine owns the subsequent commits.
+- API assembly independently accepts field, turning and (for linked worlds)
+  length policies. Tests exercise alternate laws and numerical parameter changes.
+- The baseline fixed state does not accept arbitrary vector/multiple-field
+  records. Such an extension needs a new explicit contract and diagnostic support.
+
+These are code and tested-contract findings, not a proof of every possible
+plugin's locality or physical correctness. Dynamic imports, arbitrary callbacks
+and hidden external state still require review; the static gate is not a sandbox.

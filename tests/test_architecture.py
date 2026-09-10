@@ -55,6 +55,8 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
         ("models.current_field", "from ..diagnostics import measurements"),
         ("fields.scalar", "from pathlib import Path"),
         ("models.current_field", "def update(source, count):\n    return source * count"),
+        ("models.new_feature", "def update(source, count):\n    return source * count"),
+        ("models.experimental.custom", "def update(x):\n    return x + 1"),
         ("api", "def calculate(momentum):\n    return -momentum"),
         ("compat", "def update(value):\n    value += 1\n    return value"),
     ],
@@ -72,6 +74,10 @@ def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source)
         ("models.current_field", "from ..fields.scalar import ScalarField"),
         ("api", "def build(value: int | None = None) -> int | None:\n    return value"),
         ("models.current_field", "selected: int | None = -1"),
+        (
+            "models.new_feature",
+            "from ..fields.geometry import MeanStretch\nlaw = MeanStretch(100, 1, 2)",
+        ),
     ],
 )
 def test_architecture_gate_allows_legal_dependencies_and_type_annotations(module, source):
