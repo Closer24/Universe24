@@ -112,6 +112,34 @@ simultaneously would change the model and requires separate evaluation.
 
 ## Complexity accounting
 
+### LOCALITY-1: end-to-end local physics
+
+Every physical update, including a self-field estimator or subtraction, may use
+only its fixed local records and six causally available neighbor records. For
+fixed K and fixed-width integers, its work and stored state must be O(1) with
+respect to world size, source count, elapsed ticks and traveled distance.
+Each dependency must satisfy this rule end-to-end, not only the final arithmetic.
+
+Forbidden physical dependencies include shadow worlds, per-source field maps,
+trajectory replay, expanding neighborhoods, remote source searches and global
+field solves. A fixed-size local answer computed by any such method is still
+nonlocal. A self-force correction may not infer isolation by counting all world
+particles or erase a response using global knowledge.
+
+Independent shadow simulations are allowed only as clearly labeled test/reference
+oracles. Their values must not feed a production trajectory, force or field, and
+their success does not establish a compliant cure. Read-only diagnostics may
+scan the world and reject a run; they must never repair its physical state.
+
+Q-ORACLE-1 is the sole explicit model-computation exception and is confined to
+the opt-in quantum owner. It does not relax ordinary field, self-field, movement,
+force or geometry locality. The current bridge does not write physical state.
+
+Review must identify each input's owner, causal delivery, fixed record count and
+maximum local loop bound. The architecture gate rejects known world/replay member
+access in calculations; six-read tests check the baseline neighbor boundary.
+These are partial checks, not a proof for arbitrary callbacks or dynamic Python.
+
 The physical rule and fixed-slot local work have constant bounds for fixed K
 and fixed-width numbers. Sparse dictionaries, sets, global sweeps and
 measurements do not have strict constant total runtime. The Python storage

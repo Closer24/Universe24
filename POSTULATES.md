@@ -34,6 +34,11 @@ number of sources in the universe and does not retain its entire history.
 Physical work per local update is therefore bounded and constant. Total host
 runtime for a large world is not constant: all active locations still require updates.
 
+This includes estimating or subtracting a particle's own field. A second simulated
+world or a search through source histories cannot supply a physical input merely
+because its final subtraction happens in one cell. LOCALITY-1 in the definitions
+document specifies this end-to-end rule and its test/reference boundary.
+
 ## 3. Consistency is maintained locally and causally
 
 Each location must be consistent with all information that could already have
