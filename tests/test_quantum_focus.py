@@ -64,9 +64,7 @@ def test_odd_rectangular_space_has_no_gaps_or_overlap_at_any_depth():
 def test_non_unit_axes_only_are_split():
     children = split_region(Region3D(0, 1, 0, 5, 0, 2))
     assert len(children) == 4
-    assert _leaf_addresses(Region3D(0, 1, 0, 5, 0, 2)) == {
-        (0, y, z) for y in range(5) for z in range(2)
-    }
+    assert _leaf_addresses(Region3D(0, 1, 0, 5, 0, 2)) == {(0, y, z) for y in range(5) for z in range(2)}
 
 
 def test_1024_cube_focus_reaches_one_cell_in_ten_levels():
@@ -113,7 +111,9 @@ def test_candidate_input_order_does_not_change_spatial_focus_result():
     _, bridge_a, candidates_a = _focused_fixture()
     _, bridge_b, candidates_b = _focused_fixture()
     for ticket in range(32):
-        a = bridge_a.focus_event(FocusRequest(ticket, region_from_shape(8, 8, 8), candidates_a, 0, ticket, 2))
+        a = bridge_a.focus_event(
+            FocusRequest(ticket, region_from_shape(8, 8, 8), candidates_a, 0, ticket, 2)
+        )
         b = bridge_b.focus_event(
             FocusRequest(ticket, region_from_shape(8, 8, 8), tuple(reversed(candidates_b)), 0, ticket, 2)
         )
@@ -147,8 +147,7 @@ def test_focus_uses_one_combined_host_evaluation_budget():
     q = DeferredQuantum(QuantumConfig(max_eval_nodes=3))
     bridge = QuantumBridge(q)
     candidates = tuple(
-        FocusCandidate(bridge.prepare(i, (i, 0, 0), 0, 1).quantum_node, (i, 0, 0), i)
-        for i in range(4)
+        FocusCandidate(bridge.prepare(i, (i, 0, 0), 0, 1).quantum_node, (i, 0, 0), i) for i in range(4)
     )
     with pytest.raises(OverflowError, match="evaluation budget"):
         bridge.focus_event(FocusRequest(1, region_from_shape(8, 1, 1), candidates, 0, 0))
@@ -195,7 +194,13 @@ def test_focus_does_not_advance_or_mutate_main_world():
     after = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
     assert reply.event is not None and reply.event.address == (9, 9, 9)
     assert before == after
-    assert after == (baseline.tick, dict(baseline.cells), dict(baseline.particles), dict(baseline.occupancy), baseline.active)
+    assert after == (
+        baseline.tick,
+        dict(baseline.cells),
+        dict(baseline.particles),
+        dict(baseline.occupancy),
+        baseline.active,
+    )
 
 
 def test_focus_modules_pass_integer_static_audit():
