@@ -1,6 +1,8 @@
 # Working on this simulator
 
 Start with [AGENTS.md](AGENTS.md), the shared entry point for all contributors.
+The canonical repository is https://github.com/Closer24/Universe24. Branch from
+current origin/main; use isolated worktrees for concurrent tasks and submit a PR.
 
 1. Read `POSTULATES_HE.md` and `SIMULATOR_DEFINITIONS.md` before changing a
    physical module. A postulate change must update both documents and its tests.

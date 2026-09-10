@@ -1,4 +1,7 @@
-# Event Universe — סימולטור תלת־ממדי בשלמים
+# Universe24 — סימולטור אירועים תלת־ממדי
+
+מקור האמת: [Closer24/Universe24](https://github.com/Closer24/Universe24), ענף `main`.
+שם חבילת Python נשאר `event_universe`.
 
 **מתחילים כאן:** [AGENTS.md](AGENTS.md) — הוראות משותפות, מקור האמת ומפת הכללים.
 זהו פרויקט אחד; הקוד הפעיל נמצא רק ב־`src/event_universe/`.
