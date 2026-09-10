@@ -31,7 +31,9 @@ VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
 FULL_SPEED_ARROW_LENGTH = 10.8
 
 
-def _speed_arrow(momentum: tuple[int, int, int], c_units: int | None) -> tuple[float, float, float]:
+def _speed_arrow(
+    momentum: tuple[int, int, int], c_units: int | None, mass: int = 1, momentum_den: int = 1
+) -> tuple[float, float, float]:
     """Display the model's capped hop-budget rate, with Euclidean arrow length proportional to it."""
     if c_units is None:
         return (0.0, 0.0, 0.0)
@@ -40,7 +42,10 @@ def _speed_arrow(momentum: tuple[int, int, int], c_units: int | None) -> tuple[f
     magnitude = hypot(*momentum)
     if magnitude == 0:
         return (0.0, 0.0, 0.0)
-    fraction = min(sum(abs(value) for value in momentum), c_units) / c_units
+    if mass < 1 or momentum_den < 1:
+        raise ValueError("positive mass and momentum denominator required")
+    cap = c_units * mass * momentum_den
+    fraction = min(sum(abs(value) for value in momentum), cap) / cap
     scale = FULL_SPEED_ARROW_LENGTH * fraction / magnitude
     return momentum[0] * scale, momentum[1] * scale, momentum[2] * scale
 
@@ -306,7 +311,9 @@ def render_volume(
                 depthshade=False,
                 zorder=20,
             )
-            arrow_x, arrow_y, arrow_z = _speed_arrow((px, py, pz), frame.c_units)
+            arrow_x, arrow_y, arrow_z = _speed_arrow(
+                (px, py, pz), frame.c_units, *frame.particle_scales.get(pid, (1, 1))
+            )
             velocity_arrow = ax.quiver(
                 x,
                 y,
@@ -329,7 +336,7 @@ def render_volume(
                 x,
                 y,
                 z + 1.4,
-                str(pid),
+                f"{pid}  m={frame.particle_scales.get(pid, (1, 1))[0]}",
                 color=color,
                 fontsize=13,
                 weight="bold",
@@ -464,7 +471,7 @@ def _save_animation_html(
         frame.info.pop("loop", None)
     images[0].save(gif_path, save_all=True, append_images=images[1:], duration=durations)
     encoded = base64.b64encode(gif_path.read_bytes()).decode("ascii")
-    details = html.escape(json.dumps(dict(metadata or {}), indent=2, ensure_ascii=False))
+    details = html.escape(json.dumps(dict(metadata or {}), indent=2, ensure_ascii=False, default=str))
     text = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title><style>

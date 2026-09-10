@@ -214,3 +214,24 @@ Only the main engine may eventually commit physical events through an explicit
 interface. That interface, automatic cell polling and quantum-field feedback are
 not implemented by this addition. Exact contracts and ownership are specified in
 `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
+
+## 15. Supplied mass and local elastic collisions
+
+The user explicitly adds a positive integer inertial mass per particle, default
+one. This mass is a model input; it has not emerged from events. At the same
+momentum a heavier particle moves more slowly, subject to the existing causal
+speed limit. Mass does not silently replace the source-strength or field laws.
+
+In the opt-in collision candidate, particles meeting at the same cell and tick
+undergo elastic backscattering. For equal and opposite momenta both return in the
+opposite direction. With unequal masses the result is calculated in the pair's
+center-of-mass frame, preserving the pair's total momentum and classical kinetic
+energy. Fractions are kept exactly using bounded integer numerators and
+denominators. No global correction supplies missing momentum or energy.
+
+A contact occurs once per encounter, without an extra position jump. Link transit
+particles can collide only after arrival. Fixed local flags distinguish a new
+encounter from particles still occupying the same cell. The exact two-body law,
+multiparticle ordering, schema extension and limits are in the v13 section of
+SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
+relativistic physics or energy conservation of the existing field law.

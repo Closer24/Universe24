@@ -4,12 +4,12 @@ from collections.abc import Callable, Mapping
 from types import MappingProxyType
 from typing import NamedTuple
 
-from .contracts import FieldActivity, FieldRule, Observer, ParticleRule
+from .contracts import CollisionRule, FieldActivity, FieldRule, Observer, ParticleRule
 from .engine import Engine
 from .links import LengthRule, LinkConfig, LinkTransport
 from .state import Address, CellState, Config, Neighbors, Vector, checked, validate_cell
 
-TransitRule = Callable[[int, Vector, int], int]
+TransitRule = Callable[[int, Vector, int, int, int], int]
 
 
 class Transit(NamedTuple):
@@ -22,7 +22,7 @@ class Transit(NamedTuple):
 class LinkedEngine(Engine):
     """Cell-owned links, delivered neighbor values and frozen integer transits.
 
-    The original five cell fields and twelve particle fields remain unchanged.
+    The base scalar record and the extended particle record are shared with Engine.
     Extra state: thirty link registers per materialized cell; four per transit.
     Fixed K occupancy also bounds in-flight residents per departure cell.
     """
@@ -39,8 +39,16 @@ class LinkedEngine(Engine):
         transit_rule: TransitRule,
         merge_rule: LengthRule = max,
         field_activity: FieldActivity | None = None,
+        collision_rule: CollisionRule | None = None,
     ) -> None:
-        super().__init__(config, field_rule, particle_rule, observer, field_activity=field_activity)
+        super().__init__(
+            config,
+            field_rule,
+            particle_rule,
+            observer,
+            field_activity=field_activity,
+            collision_rule=collision_rule,
+        )
         self.links = LinkTransport(self._lattice, link_config, length_rule, merge_rule)
         self._transit_rule = transit_rule
         self._transits: dict[int, Transit] = {}
@@ -50,11 +58,11 @@ class LinkedEngine(Engine):
         return MappingProxyType(self._transits)
 
     def add_particle(
-        self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0
+        self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0, *, mass: int = 1
     ) -> "LinkedEngine":
         if self.tick:
             raise RuntimeError("linked candidate accepts initial particles before tick zero only")
-        super().add_particle(pid, x, y, z, px, py, pz)
+        super().add_particle(pid, x, y, z, px, py, pz, mass=mass)
         return self
 
     def _begin_tick(self) -> None:
@@ -101,7 +109,13 @@ class LinkedEngine(Engine):
     def _move(self, pid: int, origin: Address, slot: int, direction: int) -> None:
         length = self.links.at(origin).lengths[direction]
         duration = checked(
-            self._transit_rule(length, self._particles[pid].momentum, self.config.c_units)
+            self._transit_rule(
+                length,
+                self._particles[pid].momentum,
+                self.config.c_units,
+                self._particles[pid].mass,
+                self._particles[pid].momentum_den,
+            )
         )
         if duration < length:
             raise ValueError("transit exceeds c=1 in the elementary length/time units")

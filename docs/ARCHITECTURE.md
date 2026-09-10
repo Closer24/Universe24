@@ -318,6 +318,27 @@ sampling, and uses the existing failure-output pipeline. No check result is fed
 back into a physical law to repair state. The engine remains separate from this
 application-level acceptance policy.
 
+## Massive point-contact extension
+
+The user-authorized v13 contract is in SIMULATOR_DEFINITIONS.md. Shared integer
+ratio reduction stays in core/state (a fixed 128-step bound, no numeric imports).
+`dynamics/collision.py` accepts only two fixed CollisionBody records and implements
+the elastic law once. `models/collisions.py` selects it and maps records without
+arithmetic. Engine receives the callable, resolves co-resident fixed slots,
+validates both output records and commits the pair before notifying observers.
+
+The original particle schema appends four integers; defaults preserve every
+legacy trajectory. Mass remains constant. Momentum and movement-credit
+numerators have explicit denominator owners. Generic movement, turning and
+transit accept these independent inputs without a Config or world reference.
+Neither diagnostics nor the optional quantum bridge feeds the collision law.
+Contact state is at most K*K flags per contacted address. Each local sweep has
+at most K(K-1)/2 pair candidates; sparse world iteration is a separate host cost.
+
+Frozen comparisons project the original twelve fields and assert the four new
+register defaults, in addition to all previous state/event checks. This is an
+explicit schema migration, not a changed baseline physical expectation.
+
 ## Opt-in balanced motion and local halo
 
 `Simulation(movement=..., post_motion_halo=...)` passes generic local components

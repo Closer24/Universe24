@@ -56,7 +56,11 @@ class FieldTurning:
         *,
         numerator: int,
         denominator: int,
+        momentum_den: int = 1,
     ) -> TurningResult:
+        checked(momentum_den)
+        if momentum_den <= 0:
+            raise ValueError("positive momentum denominator required")
         checked(numerator)
         checked(denominator)
         if denominator <= 0:
@@ -81,7 +85,11 @@ class FieldTurning:
         iy, ry = scaled_divrem(selected[1], numerator, denominator, remainders[1])
         iz, rz = scaled_divrem(selected[2], numerator, denominator, remainders[2])
         # Both sides are bounded before a result can be committed.
-        next_momentum = (checked(momentum[0] + ix), checked(momentum[1] + iy), checked(momentum[2] + iz))
+        next_momentum = (
+            checked(checked_work(momentum[0] + checked_work(ix * momentum_den))),
+            checked(checked_work(momentum[1] + checked_work(iy * momentum_den))),
+            checked(checked_work(momentum[2] + checked_work(iz * momentum_den))),
+        )
         next_field = (
             checked(field_momentum[0] - ix),
             checked(field_momentum[1] - iy),
