@@ -1,7 +1,7 @@
 """Sole adapter between spacetime records and the shared quantum-history owner.
 
 No Engine reference, write callback, automatic polling, or physical commit is
-allowed here. The caller supplies a current world timestamp and a local root.
+allowed here. The caller supplies current world time and explicit quantum input.
 """
 
 from dataclasses import dataclass
@@ -11,6 +11,8 @@ from event_universe.quantum import (
     ORACLE_COST,
     Amplitude,
     DeferredQuantum,
+    FocusReply,
+    FocusRequest,
     OracleCost,
     QuantumQuery,
     QuantumReply,
@@ -71,20 +73,15 @@ class QuantumBridge:
         return self._quantum.sum2(left, right, address, tick)
 
     def query_cell(self, root: int, address: Address, tick: int) -> QuantumReply:
-        """Explicit fixed-size call; does not turn every cell into a detector.
-
-        One invocation is one model unit. Repeated host probes are allowed and
-        remain read-only; the physical scheduler, if added later, must bound its
-        invocations per local update. This bridge never polls the world itself.
-        """
+        """Explicit fixed-size call; does not turn every cell into a detector."""
         return self._quantum.query(QuantumQuery(root, address, tick))
 
-    def measure(self, event_id: int, root: int) -> QuantumMeasurement:
-        """Compatibility adapter through the same oracle; no second evaluator.
+    def focus_event(self, request: FocusRequest) -> FocusReply:
+        """Ask the single quantum owner to refine one region into event/no-event."""
+        return self._quantum.focus_event(request)
 
-        With no world timestamp argument, this historical API queries at the
-        root's recorded time. Use query_cell for an explicitly stamped cell call.
-        """
+    def measure(self, event_id: int, root: int) -> QuantumMeasurement:
+        """Compatibility adapter through the same oracle; no second evaluator."""
         checked(event_id)
         if event_id < 0:
             raise ValueError("event id must be non-negative")
