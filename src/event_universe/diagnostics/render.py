@@ -24,6 +24,31 @@ from mpl_toolkits.mplot3d import Axes3D
 
 from .frames import AXES, Frame, Slice, VolumeFrame
 
+VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
+
+
+def _draw_orientation(ax: Axes3D, *, elevation: float, azimuth: float) -> None:
+    """Show positive world-axis directions with the same camera as the main view."""
+    ax.clear()
+    ax.set_axis_off()
+    ax.set_xlim(-0.25, 1.45)
+    ax.set_ylim(-0.25, 1.45)
+    ax.set_zlim(-0.25, 1.45)
+    ax.set_box_aspect((1, 1, 1))
+    ax.view_init(elev=elevation, azim=azimuth)
+    for index, (label, color) in enumerate(zip("XYZ", VOLUME_AXIS_COLORS, strict=True)):
+        direction = [int(axis == index) for axis in range(3)]
+        ax.quiver(0, 0, 0, *direction, color=color, linewidth=2.5, arrow_length_ratio=0.22)
+        ax.text(
+            *(1.25 * component for component in direction),
+            f"+{label}",
+            color=color,
+            fontsize=12,
+            weight="bold",
+            ha="center",
+            va="center",
+        )
+
 
 def _bounds(frames: Sequence[Frame]) -> tuple[int, int, int, int]:
     points = [(p[1], p[2]) for frame in frames for p in frame.particles]
@@ -124,29 +149,41 @@ def render_volume(
     points.extend((p[1], p[2], p[3]) for frame in frames for p in frame.particles)
     if not points:
         points = [(0, 0, 0), (8, 8, 8)]
-    bounds = [(min(p[axis] for p in points) - 2, max(p[axis] for p in points) + 2) for axis in range(3)]
+    bounds: list[tuple[float, float]] = [
+        (min(p[axis] for p in points) - 2, max(p[axis] for p in points) + 2) for axis in range(3)
+    ]
+    # Leave room for tick labels in flat/narrow runs while retaining equal XYZ unit scales.
+    minimum_span = max(hi - lo for lo, hi in bounds) * 0.4
+    bounds = [
+        (lo - max(0, minimum_span - (hi - lo)) / 2, hi + max(0, minimum_span - (hi - lo)) / 2)
+        for lo, hi in bounds
+    ]
     vmax = max(1, max((value for frame in frames for value in frame.field.values()), default=1))
     fig = plt.figure(figsize=(10, 8.5), facecolor="#080f1c")
-    ax = cast(Axes3D, fig.add_axes((0.04, 0.09, 0.91, 0.79), projection="3d", facecolor="#080f1c"))
+    ax = cast(Axes3D, fig.add_axes((0.03, 0.17, 0.88, 0.71), projection="3d", facecolor="#080f1c"))
+    compass = cast(
+        Axes3D, fig.add_axes((0.025, 0.015, 0.19, 0.19), projection="3d", facecolor="#080f1c")
+    )
     colors = ("#4cc9ff", "#74ffac", "#ffd166", "#fa8cff")
     fig.text(0.07, 0.94, "PARTICLE FIELD", color="#edf5ff", fontsize=20, weight="bold")
     fig.text(
         0.07,
         0.905,
-        "Full 3D XYZ view  /  particles, field and trajectories",
+        "Full 3D XYZ view  /  particles, field and trajectories  /  lattice coordinates",
         color="#91a4be",
         fontsize=10,
     )
     status = fig.text(0.93, 0.94, "", ha="right", color="#c2d5ed", fontsize=11)
     for order, pid in enumerate(sorted({p[0] for frame in frames for p in frame.particles})):
         fig.text(
-            0.07 + order * 0.16,
-            0.055,
+            0.28 + order * 0.16,
+            0.095,
             f"●  Particle {pid}",
             color=colors[pid % len(colors)],
             fontsize=10,
         )
     fig.text(0.93, 0.055, "Warm glow: scalar field", color="#dcb485", ha="right", fontsize=10)
+    fig.text(0.12, 0.18, "AXIS DIRECTIONS", color="#c2d5ed", ha="center", fontsize=8)
     # Smooth display geometry only: physical coordinates and integer state are untouched.
     longitude, latitude = np.meshgrid(np.linspace(0, 2 * np.pi, 21), np.linspace(0, np.pi, 13))
     sphere_x = 0.38 * np.cos(longitude) * np.sin(latitude)
@@ -212,21 +249,30 @@ def render_volume(
         ax.set_ylim(*bounds[1])
         ax.set_zlim(*bounds[2])
         ax.set_box_aspect(tuple(hi - lo for lo, hi in bounds))
-        ax.view_init(elev=26, azim=-65 + 35 * index / max(1, len(frames) - 1))
+        azimuth = -65 + 35 * index / max(1, len(frames) - 1)
+        ax.view_init(elev=26, azim=azimuth)
+        _draw_orientation(compass, elevation=26, azimuth=azimuth)
         ax.grid(False)
-        for x in np.linspace(*bounds[0], 5):
-            ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
-        for y in np.linspace(*bounds[1], 5):
-            ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#23364e", linewidth=0.6)
-        for axis, label in ((ax.xaxis, "x"), (ax.yaxis, "y"), (ax.zaxis, "z")):
-            axis.set_pane_color((0.045, 0.075, 0.12, 0.25))
-            axis.label.set_color("#91a4be")
-            axis.line.set_color("#344861")
+        for axis, label, color in zip(
+            (ax.xaxis, ax.yaxis, ax.zaxis), "XYZ", VOLUME_AXIS_COLORS, strict=True
+        ):
+            axis.set_pane_color((0.055, 0.085, 0.14, 0.40))
+            axis.pane.set_edgecolor("#435a75")
+            axis.line.set_color(color)
+            axis.line.set_linewidth(2.2)
             axis.set_major_locator(MaxNLocator(4, integer=True))
-            axis.set_label_text(label)
-        ax.tick_params(colors="#7f94af", labelsize=8)
+            axis.set_rotate_label(False)
+            axis.set_label_text(label, color=color, fontsize=17, weight="bold")
+            axis.labelpad = 12
+            axis.set_tick_params(colors=color, labelsize=11, pad=3)
+        for x in ax.get_xticks():
+            if bounds[0][0] <= x <= bounds[0][1]:
+                ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#38516d", linewidth=0.85)
+        for y in ax.get_yticks():
+            if bounds[1][0] <= y <= bounds[1][1]:
+                ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.85)
         status.set_text(f"TICK  {frame.tick:03d} / {frames[-1].tick:03d}\nPtotal {frame.total_momentum}")
-        return tuple(ax.get_children())
+        return (*ax.get_children(), *compass.get_children())
 
     return _save_animation_html(
         fig,
@@ -239,7 +285,9 @@ def render_volume(
         metadata=metadata,
         note="Soft markers show all nonzero field cells; brightness and size indicate field value. "
         "Particle spheres and glow are display symbols, not physical particle sizes. "
-        "Lines show sampled paths. The camera rotates; coordinates and physics do not.",
+        "Lines show sampled paths. X is coral, Y is green and Z is blue. "
+        "The corner arrows show positive axis directions, not a position or distance scale. "
+        "The camera rotates; coordinates and physics do not.",
         dpi=150,
     )
 
