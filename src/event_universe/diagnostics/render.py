@@ -8,6 +8,7 @@ import base64
 import html
 import json
 from collections.abc import Callable, Mapping, Sequence
+from itertools import pairwise
 from math import hypot
 from pathlib import Path
 from typing import cast
@@ -226,7 +227,7 @@ def render_volume(
             color=colors[pid % len(colors)],
             fontsize=10,
         )
-    fig.text(0.93, 0.055, "Warm glow: scalar field", color="#dcb485", ha="right", fontsize=10)
+    fig.text(0.93, 0.055, "Field: faint → strong", color="#dcb485", ha="right", fontsize=10)
     fig.text(0.28, 0.055, "Arrow length: speed / c", color="#c2d5ed", fontsize=10)
     fig.text(0.28, 0.025, "↻ Periodic boundary", color="#65e8ff", fontsize=10)
     fig.text(0.60, 0.025, "X Jump of 2+ cells", color="#ff5252", fontsize=10)
@@ -243,20 +244,19 @@ def render_volume(
         if frame.field:
             xs, ys, zs = zip(*frame.field, strict=True)
             values = list(frame.field.values())
-            sizes = [28 + 130 * value / vmax for value in values]
-            for spread, opacity in ((6, 0.035), (2.5, 0.07), (1, 0.16)):
+            strengths = [value / vmax for value in values]
+            # One shared scalar field: do not invent a per-particle source attribution.
+            for spread, base_alpha, gain in ((5, 0.025, 0.09), (1, 0.08, 0.42)):
                 ax.scatter(
                     xs,
                     ys,
                     zs,
-                    c=values,
-                    cmap="YlOrBr_r",
-                    vmin=0,
-                    vmax=vmax,
-                    s=[size * spread for size in sizes],
-                    alpha=opacity,
+                    c=[(1.0, 0.35 + 0.5 * u, 0.12 + 0.35 * u, base_alpha + gain * u) for u in strengths],
+                    s=[(18 + 70 * u) * spread for u in strengths],
+                    marker="s" if spread == 1 else "o",
                     edgecolors="none",
                     depthshade=False,
+                    zorder=3,
                 )
         for pid, x, y, z, px, py, pz in frame.particles:
             color = colors[pid % len(colors)]
@@ -367,12 +367,22 @@ def render_volume(
             axis.set_label_text(label, color=color, fontsize=17, weight="bold")
             axis.labelpad = 12
             axis.set_tick_params(colors=color, labelsize=11, pad=3)
-        for x in ax.get_xticks():
-            if bounds[0][0] <= x <= bounds[0][1]:
-                ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#38516d", linewidth=0.85)
-        for y in ax.get_yticks():
-            if bounds[1][0] <= y <= bounds[1][1]:
-                ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.85)
+        # Double the visible grid density without changing physical cells or tick labels.
+        grid_ticks = []
+        for ticks, (lo, hi) in zip(
+            (ax.get_xticks(), ax.get_yticks(), ax.get_zticks()), bounds, strict=True
+        ):
+            dense_ticks = sorted([*ticks, *((a + b) / 2 for a, b in pairwise(ticks))])
+            grid_ticks.append([value for value in dense_ticks if lo <= value <= hi])
+        for x in grid_ticks[0]:
+            ax.plot([x, x], bounds[1], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
+            ax.plot([x, x], [bounds[1][1]] * 2, bounds[2], color="#283c53", linewidth=0.55)
+        for y in grid_ticks[1]:
+            ax.plot(bounds[0], [y, y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
+            ax.plot([bounds[0][0]] * 2, [y, y], bounds[2], color="#283c53", linewidth=0.55)
+        for z in grid_ticks[2]:
+            ax.plot(bounds[0], [bounds[1][1]] * 2, [z, z], color="#283c53", linewidth=0.55)
+            ax.plot([bounds[0][0]] * 2, bounds[1], [z, z], color="#283c53", linewidth=0.55)
         status.set_text(
             f"(Px, Py, Pz) = {frame.total_momentum}\nTICK  {frame.tick:03d} / {frames[-1].tick:03d}"
         )
@@ -387,8 +397,10 @@ def render_volume(
         html_path,
         title=title,
         metadata=metadata,
-        note="Soft markers show all nonzero field cells; brightness and size indicate field value. "
-        "Particle spheres and glow are display symbols, not physical particle sizes. "
+        note="Transparent amber markers show the combined scalar field. Stronger values have "
+        "brighter color and greater opacity, using one fixed scale throughout the animation. "
+        "The display grid has twice as many subdivisions per axis; physical cells are unchanged. "
+        "Particle markers and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
         "System momentum is the combined momentum of particles and field. "
