@@ -2,12 +2,13 @@
 
 from dataclasses import dataclass
 
-from event_universe.api import LinkedSimulation, Simulation
+from event_universe.api import LinkedSimulation, SharedActionSimulation, Simulation
 from event_universe.core.contracts import Observer
 from event_universe.core.engine import Engine
 from event_universe.core.links import LinkConfig
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import Slice
+from event_universe.models.shared_action import SharedActionConfig
 
 ParticleSeed = tuple[int, int, int, int, int, int, int]
 
@@ -20,19 +21,33 @@ class Scenario:
     ticks: int
     view: Slice
     links: LinkConfig | None = None
+    action: SharedActionConfig | None = None
 
     def create(self, observer: Observer | None = None) -> Engine:
-        world: Engine = (
-            Simulation(self.config, observer=observer)
-            if self.links is None
-            else LinkedSimulation(self.config, links=self.links, observer=observer)
-        )
+        world: Engine
+        if self.action is not None:
+            if self.links is not None or self.config != self.action.engine_config():
+                raise ValueError("shared-action settings must match Config; mixed models unsupported")
+            world = SharedActionSimulation(self.action, observer=observer)
+        elif self.links is not None:
+            world = LinkedSimulation(self.config, links=self.links, observer=observer)
+        else:
+            world = Simulation(self.config, observer=observer)
         for particle in self.particles:
             world.add_particle(*particle)
         return world
 
 
 def get_scenario(name: str) -> Scenario:
+    if name in ("action-contact", "action-isolated", "action-rest", "action-free"):
+        # Explicit demonstration scale, NOT a new default or physical calibration.
+        settings = SharedActionConfig(impulse_units=64, coupling=0 if name == "action-free" else 64)
+        seeds: tuple[ParticleSeed, ...] = ((0, 24, 23, 16, 3, 2, 1),)
+        if name == "action-contact":
+            seeds = ((0, 25, 23, 16, 3, 0, 0), (1, 35, 25, 16, -3, 0, 0))
+        elif name == "action-rest":
+            seeds = ((0, 32, 24, 16, 0, 0, 0),)
+        return Scenario(name, settings.engine_config(), seeds, 72, Slice("XY", 16), action=settings)
     if name == "links":
         return Scenario(
             name,

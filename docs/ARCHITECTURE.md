@@ -221,3 +221,23 @@ resident slots per cell. Dictionary storage and full work-set iteration remain
 host costs, not strict worst-case O(1). There is no per-source field map or
 unbounded local message queue. Busy channels retain one snapshot; intermediate
 versions are coalesced to the current cell value after delivery.
+
+
+## Shared interaction assembly (v12, opt-in)
+
+`fields/interaction.py` owns the bounded generic interaction term and its local
+variations. It imports only integer primitives/fixed types from `core/state`.
+`CurrentFieldModel` now accepts pure `source` and `field_vector` callbacks,
+defaulting to its exact prior functions. No formula is copied into the adapter.
+`models/shared_action.py` binds both callbacks to one immutable interaction,
+selects full response and the existing departure movement, and translates the
+candidate configuration into the existing state contract without arithmetic.
+`api.SharedActionSimulation` assembles that model with the existing LinkedEngine
+and fixed-length ports. No engine/renderer/reference file is modified.
+
+`Scenario.action` is explicit and mutually exclusive with `Scenario.links`;
+contradictory translated Config values are rejected. `runner.py` records the
+correct candidate identity and uses the existing renderer. The new model is
+included in the arithmetic-free assembly gate; no gate is disabled. Scientific
+scope and timestep limitations are defined only in the authoritative
+[shared-interaction contract](../SIMULATOR_DEFINITIONS.md#shared-local-interaction-candidate-v12).

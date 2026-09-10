@@ -11,6 +11,7 @@ from event_universe.fields.policies import ScalarActivity, sample_changed_or_sou
 from event_universe.fields.scalar import ScalarFieldRule
 from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
+from event_universe.models.shared_action import SharedActionConfig, shared_action_model
 
 
 class Simulation(Engine):
@@ -68,6 +69,33 @@ class LinkedSimulation(LinkedEngine):
             observer,
             link_config=link_config,
             length_rule=geometry_policy(link_config) if length_rule is None else length_rule,
+            transit_rule=transit_ticks,
+            merge_rule=max,
+            field_activity=model.field_is_active,
+        )
+
+
+class SharedActionSimulation(LinkedEngine):
+    """Shared local interaction on fixed one-tick links, explicitly opt-in.
+
+    Reuses existing six-port transport and frozen transits. No source maps,
+    remote reads or global repair. This is NOT yet a full action-derived time
+    integrator or a validated solution to self-force.
+    """
+
+    def __init__(
+        self, settings: SharedActionConfig | None = None, *, observer: Observer | None = None
+    ) -> None:
+        selected = SharedActionConfig() if settings is None else settings
+        model = shared_action_model(selected)
+        link_config = LinkConfig(base_length=1, stretch_num=0)
+        super().__init__(
+            selected.engine_config(),
+            model.update_field,
+            model.update_particle,
+            observer,
+            link_config=link_config,
+            length_rule=geometry_policy(link_config),
             transit_rule=transit_ticks,
             merge_rule=max,
             field_activity=model.field_is_active,

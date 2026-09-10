@@ -214,3 +214,76 @@ travel length, source symmetry with zero self-force, and three-particle local
 momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
+
+
+## Shared local interaction candidate (v12)
+
+`SharedActionSimulation` explicitly selects `scalar-field-v12-shared-interaction`.
+The existing `Simulation` (v10), `LinkedSimulation` (v11), and frozen-reference
+expectations are unchanged. This candidate implements the **shared interaction
+term**, NOT a complete variational time integrator and NOT a self-force cure.
+
+The single immutable term is `S_int(n, phi) = g*n*phi`. Its unit field variation
+is `g*n`, used for the local source. Its central spatial variation for one
+particle is `g*(phi_plus - phi_minus)` on each axis, divided by
+`2*impulse_units` with retained signed integer remainders. Both callbacks are
+bound to the same `ScalarInteraction` instance. There is no independent source
+coefficient or response coupling in the public candidate configuration.
+
+A local spatial functional with neighboring values held fixed is
+`2V_i = (D-6)*phi_i^2 + sum6((phi_i-phi_j)^2) - 2*g*n_i*phi_i`.
+Its centered unit variation divided by four gives
+`D*phi_i - sum6(phi_j) - g*n_i`, identifying the **stationary** screened stencil.
+This local expression is not a globally additive energy: summing it would
+count spatial edges twice. The current relaxation, integer projection, delayed
+sampling, digital movement, and accumulated field-momentum bookkeeping have
+NOT been derived from a common temporal action. No energy/Noether claim follows.
+
+The field recurrence is retained. Full-vector response replaces dominant-axis
+suppression only in this candidate. It uses the existing fixed six-port linked
+transport with base length 1 and stretch 0, not new instantaneous neighbor reads.
+Signals traverse one port per tick; a particle occupies its departure cell until
+its frozen transit completes and is pushed only when ready to depart. Transit
+uses `ceil(length*c_units/min(L1(p),c_units))`, so nominal momentum ratios are
+NOT exact continuously varying velocities, nor isotropic Euclidean light speeds.
+These inherited v11 semantics differ explicitly from the v10 one-push-per-tick
+scheme. This is not a claim that delayed samples share one equal-time action.
+
+### Candidate parameters and exact register contract
+
+| Parameter | Default | Why / status |
+|---|---:|---|
+| `coupling` | 64 | Same experimental `g` in both variations; not calibrated physics |
+| `impulse_units` | 2048 | Declared impulse scale; default effective coefficient is 1/64 |
+| `field_den` | 7 | Retains screened six-neighbor recurrence, constrained to D >= 7 |
+| `c_units` | 12 | Inherited integer transit scale, not a relativistic dispersion law |
+| `nx, ny, nz` | 64, 48, 32 | Periodic experiment domain; all dimensions >= 3 |
+| `max_particles_per_cell` | 4 | Fixed local slot capacity K |
+| port length / stretch | 1 / 0 | Fixed transport policy for this candidate, not fitted geometry |
+
+Core state remains 5 cell + 12 particle registers; existing transport adds 30
+registers per materialized cell and 4 per in-flight particle, with at most K
+resident/in-flight particles per cell. Coefficients/physical state are bounded
+32-bit integers; every product/difference is bounded before use as 64-bit work.
+No source-ID maps, unbounded local queues, speed-dependent special physics, or
+global correction is introduced. Host dictionaries, iteration and rendering
+remain separately charged, not strict worst-case O(1) host computation.
+
+### Acceptance and scope
+
+CLI scenarios `action-contact`, `action-isolated`, `action-rest`, `action-free`
+are demonstration runs with `impulse_units=64` (effective coefficient 1/2 for
+`g=64`), NOT default physical parameters. The free control sets `g=0`, disabling
+both source and force. Every run uses the existing standalone 3D GIF/HTML output.
+Run `python tools/shared_action_evidence.py` for stationary/free controls,
+slow/fast isolated particles, the offset pair, and a near-pair response. It
+writes HTML/JSON/JSONL and exits nonzero for failed acceptance. Initial fields
+are empty; no velocity-matched dressed initial state is claimed. Residual force
+counts as response even when no integer momentum unit has changed yet.
+
+The offset-pair and slow/fast isolated-motion acceptances in
+`tests/test_shared_action_simulation.py` remain ordinary assertions. Missing
+transverse deflection or an isolated response in momentum OR remainder is a
+failure; these gates are not skipped, marked xfail, or weakened. Exact algebra, integer bounds, port
+locality and bookkeeping can pass while physical acceptance fails. Do not
+replace the default model or merge as a physical fix while these gates fail.

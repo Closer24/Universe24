@@ -81,7 +81,7 @@ python -m pytest --junitxml=artifacts/junit.xml
 | `src/event_universe/core/state.py` | רשומות קבועות, פרמטרים וחשבון שלמים חסום |
 | `src/event_universe/core/contracts.py` | ממשקי החוקים והאירועים המקומיים |
 | `src/event_universe/core/lattice.py` | כתובות מחזוריות ושכנים, במימוש משותף לקריאה ולתנועה |
-| `src/event_universe/core/engine.py` | אחסון דליל, זמן, שכנים, תפוסה ומעבר בין תאים |
+| `src/event_universe/core/engine.py` | אחסון דליל, זמן, שכנים ותפוסה ומעבר בין תאים |
 | `src/event_universe/fields/scalar.py` | חישוב כללי של שדה סקלרי והגרדיאנט שלו |
 | `src/event_universe/fields/policies.py` | חישוב מקור ומדיניות טווח ופעילות שנבחרות במודל |
 | `src/event_universe/dynamics/turning.py` | פנייה כללית: בחירת כיוון, צבירת שאריות וחילופי תנע |
@@ -140,3 +140,21 @@ are `test_link_geometry.py`, `test_link_transport.py` and `test_linked_engine.py
 The example uses base length 10 for shorter replay; `LinkConfig()` defaults to
 100. See the extension in `POSTULATES_HE.md`, `SIMULATOR_DEFINITIONS.md` and
 `docs/ARCHITECTURE.md`. Existing baseline scenarios keep their old behavior.
+
+
+## Shared local interaction experiment (opt-in, not a validated physical fix)
+
+The candidate `SharedActionSimulation` binds source and full-vector response to
+one integer `ScalarInteraction` term. Existing v10/v11 defaults are unchanged.
+The field recurrence is retained; this is **not** a complete action-derived
+time integrator or a claim to have solved self-force. See the authoritative
+[contract and limitations](SIMULATOR_DEFINITIONS.md#shared-local-interaction-candidate-v12).
+
+```bash
+python -m event_universe --scenario action-contact --output artifacts/action-contact
+python tools/shared_action_evidence.py
+```
+
+The evidence command emits standalone 3D HTML/JSON/JSONL and exits nonzero for
+failed physical acceptance. The offset-pair test also stays red when it fails;
+no failing physical criterion is bypassed to make this candidate mergeable.

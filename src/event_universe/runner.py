@@ -13,6 +13,7 @@ from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.diagnostics.render import render_run, render_volume
 from event_universe.models.current_field import MODEL_ID
 from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
+from event_universe.models.shared_action import MODEL_ID as SHARED_ACTION_MODEL_ID
 from event_universe.scenarios import Scenario, get_scenario
 
 
@@ -63,7 +64,11 @@ def run_scenario(
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": source_fingerprint(),
-        "model": MODEL_ID if scenario.links is None else LINKED_MODEL_ID,
+        "model": (
+            SHARED_ACTION_MODEL_ID
+            if scenario.action is not None
+            else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
+        ),
         "scenario": asdict(scenario),
         "frame_stride": frame_stride,
         "display": "volume-3d" if volume else "plane-slice",
@@ -89,7 +94,18 @@ def main() -> None:
         description="Run the integer 3D simulator and save HTML diagnostics."
     )
     parser.add_argument(
-        "--scenario", choices=("contact", "turning", "stationary", "links"), default="contact"
+        "--scenario",
+        choices=(
+            "contact",
+            "turning",
+            "stationary",
+            "links",
+            "action-contact",
+            "action-isolated",
+            "action-rest",
+            "action-free",
+        ),
+        default="contact",
     )
     parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))

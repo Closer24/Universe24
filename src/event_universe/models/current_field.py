@@ -4,6 +4,7 @@ Reusable arithmetic lives in fields/ and dynamics/. This adapter alone maps
 their records to the simulator's fixed cell and particle state.
 """
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from event_universe.core.contracts import ParticleUpdate
@@ -12,6 +13,7 @@ from event_universe.core.state import (
     Config,
     Neighbors,
     ParticleState,
+    Vector,
     checked,
     validate_cell,
     validate_particle,
@@ -43,6 +45,8 @@ class CurrentFieldModel:
     turning: FieldTurning
     activity: ScalarActivity = value_changed_or_source
     movement: MovementRule = advance_movement
+    source: Callable[[int, int], int] = uniform_source
+    field_vector: Callable[[Neighbors], Vector] = gradient
 
     def update_field(
         self, cell: CellState, neighbors: Neighbors, sources: int, config: Config
@@ -50,7 +54,7 @@ class CurrentFieldModel:
         sample = self.field.advance(
             ScalarSample(cell.phi, cell.remainder),
             neighbors,
-            source=uniform_source(sources, config.source_strength),
+            source=self.source(sources, config.source_strength),
             denominator=config.field_den,
         )
         validate_sample(sample, config.field_den)
@@ -67,7 +71,7 @@ class CurrentFieldModel:
     def update_particle(
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
-        raw_gradient = gradient(neighbors)
+        raw_gradient = self.field_vector(neighbors)
         response = self.turning.apply(
             particle.momentum,
             (cell.px, cell.py, cell.pz),

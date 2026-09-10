@@ -10,6 +10,7 @@ COMPOSITION_MODULES = {
     "models.current_field",
     "models.local_field",
     "models.linked_field",
+    "models.shared_action",
 }
 FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "Engine", "Simulation"}
 
