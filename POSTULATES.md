@@ -92,13 +92,32 @@ The simulator does not repeatedly add a source's own new emission to itself.
 A stationary source should form a persistent surrounding state, rather than grow
 without bound or disappear because there was no movement event.
 
-## 7. An isolated symmetric source does not push itself
+## 7. A free particle does not push itself
 
-For a single stationary source in symmetric space, field values on opposite sides
-of every axis must be equal. Opposite influences cancel, leaving its momentum unchanged.
+An isolated particle with no external influence must not accelerate, slow down or
+change momentum direction because of the field it generated. This applies at rest
+and in uniform motion, along axes and diagonals, at every permitted speed. Hidden
+impulse remainders must also stay zero; an unchanged final momentum is not enough
+if a self-response accumulated internally.
 
-This is a fundamental local-consistency test: a particle must not start moving
-solely because of its own symmetric field.
+This result must emerge from the local field dynamics. It may not be implemented
+with source identity, a remote lookup, a per-source field map, a growing source
+history, a global subtraction, a later momentum repair or a force-off branch based
+on the number of particles in the world. A particle response may use only its fixed
+local state and information causally delivered through the six neighboring links.
+
+A field signal propagates before the particle response and movement of the same
+tick. A candidate may use this causal ordering to keep an outward field influence
+ahead of matter, but it must demonstrate the result with explicit tests rather
+than assume that a one-link speed bound is sufficient. Periodic wraparound is a
+boundary return and must be reported separately from the isolated free-space test.
+
+`causal-octant-stream-v1` is an opt-in candidate for this requirement. It stores no
+source identity: fixed octant populations move outward one nearest-neighbor link
+per field phase, then the particle reads only the six amounts delivered locally.
+The candidate and its limitations are documented in `docs/CAUSAL_STREAM_FIELD.md`.
+Passing this self-force gate is necessary but does not establish a real-world field
+law, rotational invariance, energy conservation or the correct radial falloff.
 
 ## 8. Momentum is exchanged at the event location
 
