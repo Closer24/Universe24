@@ -106,3 +106,20 @@
 - קלט: מודל שמייבא מנוע דרך `from ..core import engine` או `linked_engine`.
   ציפייה: בדיקת גבולות השכבות דוחה אותו, גם בצורה העקיפה הזאת.
 - בדיקות אלה אינן מריצות עולם ואינן מוכיחות שסוכן בשיחה אחרת קרא את הכללים.
+
+
+## Quantum detector trial — test only
+
+Four phases must yield two-output weights (4,0), (2,2), (0,4), (2,2).
+Enumerating tickets 0..3 checks the exact categorical map, not empirical randomness.
+Actual Engine at tick 8 is unchanged by readout; the test controller, not Engine,
+records one detector result. Repeated calls, second bridges, invalid tickets,
+early/late timestamps and resource exhaustion must not create another result.
+
+### בדיקת אישור מיזוג — גבולות השכבה הקוונטית
+
+בדיקת ההפרדה משתמשת במפענח הייבוא המשותף של הפרויקט.
+קלטים אסורים: ייבוא יחסי של Engine, ייבוא engine מתוך core,
+ויבוא quantum מתוך diagnostics. כולם חייבים להידחות, גם עם כינוי לייבוא.
+קלטים מותרים: חשבון חסום מתוך core.state, ייבוא בתוך quantum
+והמחבר היחיד מתוך integration. הבדיקה סטטית ואינה הוכחה נגד קוד דינמי שרירותי.

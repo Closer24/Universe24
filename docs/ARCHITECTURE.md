@@ -221,3 +221,23 @@ resident slots per cell. Dictionary storage and full work-set iteration remain
 host costs, not strict worst-case O(1). There is no per-source field map or
 unbounded local message queue. Busy channels retain one snapshot; intermediate
 versions are coalesced to the current cell value after delivery.
+
+
+## Opt-in quantum detector trial — Q-ORACLE-1
+
+The user's approved `deferred-unit-cost-oracle-v1` postulate adds a shared oracle:
+one successful query has model_cost=1 and world_ticks=0. This explicitly permits
+non-neighbor HOST evaluation; physical signalling constraints remain unproven.
+Host work and bounded integer budgets are accounted separately. No core change.
+
+DeferredQuantum owns histories, caches and one optional terminal trial. Only
+integration/quantum_bridge.py connects it to spacetime. Pure queries never sample.
+`terminal-two-output-trial-v1` is a complete absorbing two-output experiment with
+equally scaled amplitudes and a supplied UNIFORM integer ticket. Tests enumerate
+tickets, not a random generator. Zero total weight and exhaustion are errors.
+Repeated readout returns one immutable shared record, not another detection.
+
+The test controller in tests/quantum_detector_fixture.py owns one detector-event
+slot and two bits. These are NOT native Engine physical events. It never writes
+CellState or ParticleState; full physical commit remains unimplemented. No field
+coupling, continued entanglement or Bell/no-signalling validation is claimed.
