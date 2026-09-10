@@ -13,6 +13,7 @@ from event_universe.quantum import (
     DeferredQuantum,
     FocusReply,
     FocusRequest,
+    FocusSet,
     OracleCost,
     QuantumQuery,
     QuantumReply,
@@ -76,8 +77,12 @@ class QuantumBridge:
         """Explicit fixed-size call; does not turn every cell into a detector."""
         return self._quantum.query(QuantumQuery(root, address, tick))
 
+    def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
+        """Configure a bounded candidate set in the quantum owner, not in a cell."""
+        self._quantum.bind_focus_set(focus_set_id, focus_set)
+
     def focus_event(self, request: FocusRequest) -> FocusReply:
-        """Ask the single quantum owner to refine one region into event/no-event."""
+        """Send one fixed-size request for one event/no-event focus decision."""
         return self._quantum.focus_event(request)
 
     def measure(self, event_id: int, root: int) -> QuantumMeasurement:
