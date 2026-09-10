@@ -21,6 +21,7 @@ from matplotlib.artist import Artist
 from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
 from mpl_toolkits.mplot3d import Axes3D
+from PIL import Image, ImageSequence
 
 from .frames import AXES, Frame, Slice, VolumeFrame
 
@@ -266,6 +267,14 @@ def _save_animation_html(
         animation.save(str(gif_path), writer=PillowWriter(fps=8), dpi=65 if compact else dpi)
     finally:
         plt.close(fig)
+    # PillowWriter exports an infinite loop. Remove that playback instruction
+    # through Pillow's public API so the final tick never looks like a teleport.
+    with Image.open(gif_path) as animation_file:
+        images = [frame.copy() for frame in ImageSequence.Iterator(animation_file)]
+    durations = [frame.info.get("duration", 120) for frame in images]
+    for frame in images:
+        frame.info.pop("loop", None)
+    images[0].save(gif_path, save_all=True, append_images=images[1:], duration=durations)
     encoded = base64.b64encode(gif_path.read_bytes()).decode("ascii")
     details = html.escape(json.dumps(dict(metadata or {}), indent=2, ensure_ascii=False))
     text = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -277,6 +286,7 @@ pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#1f2937;padding:16px
 </style></head><body><main><h1>{html.escape(title)}</h1>
 <p>Full 3D physics · {plane_label} · ticks {ticks[0]}–{ticks[1]}</p>
 <p>Frames may be sampled. Arrows show direction; their length is scaled for visibility.</p>
+<p>Playback stops at the final frame. Reload the page to replay from the beginning.</p>
 <p>{html.escape(note)}</p>
 <img alt="Simulation: {plane_label}" src="data:image/gif;base64,{encoded}">
 <details><summary>Run parameters and checks</summary><pre>{details}</pre></details>
