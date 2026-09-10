@@ -207,14 +207,14 @@ momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contrac
 
 ### Default run display
 
-Every run defaults to enhanced 1500×1275 3D: lit particle spheres with glow,
+Every run defaults to enhanced 1500×1275 3D: outlined particle markers with glow,
 a soft translucent field, emphasized paths and a rotating camera. Provide a
 standalone HTML file and its GIF animation. This also applies to new scenarios
 and every test world, including frozen-reference runs. Test reports may sample
 frames while retaining the same design and resolution. Pure-function tests need
 no animation.
 
-This changes display defaults only, not lattice resolution or physics. Sphere
+This changes display defaults only, not lattice resolution or physics. Marker
 and glow sizes are visual symbols, not physical particle sizes. A slice requires
 explicit `--view-2d` or `volume=False` in `run_scenario`. `--plane` and `--slice`
 choose the slice in 2D mode; `--view-3d` remains supported.
@@ -232,6 +232,41 @@ failure the runner saves diagnostic output and re-raises the error.
 Runtime validation uses exceptions and remains active under `python -O`.
 Reports distinguish checks actually performed from architecture descriptions
 and physical claims not established by the tests.
+
+### Display readability and playback
+
+The 3D axes have readable coordinate ticks and distinct colors: X is coral,
+Y is green and Z is blue. A camera-synchronized corner compass shows positive
+axis directions, not position or distance. Narrow views gain display padding
+while preserving equal coordinate-unit scales on all axes.
+
+Total particle-plus-field momentum appears at the top as (Px, Py, Pz).
+Particle markers are opaque colored discs with a white outline and glow;
+outlined arrows remain readable above the translucent field. Arrow length
+represents the model's capped movement-budget rate relative to c: full rate
+has length 10.8 display-coordinate units. The captured c_units sets this scale.
+Missing scale means no velocity arrow, not a guessed speed. In linked worlds
+this is the departure budget rate, not a measurement of displacement per tick.
+
+A cyan ↻ marks a shorter displacement through the periodic boundary, using the
+captured world dimensions. A red X marks a shortest displacement of at least
+two cardinal grid steps between displayed frames. A multi-cell jump across a
+boundary shows both markers; a periodic symbol must not hide that jump.
+Trails break at coordinate discontinuities. Sparse sampling is ambiguous, so
+a marker alone is not proof of faster-than-c motion; inspect consecutive ticks.
+
+The combined scalar field uses a fixed amber scale throughout an animation.
+A square-root display mapping lifts weak values; color is not a linear field
+measurement. Wide soft halos improve visibility without changing physical
+field range. There is no invented per-particle attribution of a shared field.
+The floor and two walls have twice as many visual grid subdivisions; this does
+not change the physical lattice or simulation resolution.
+
+The exported GIF stops at the final frame instead of resetting time through
+automatic replay. Reloading its HTML replays it from the start. This playback
+contract applies to both slices and 3D views. None of these display operations
+smooths physical positions, cancels self-force or changes a simulation record.
+
 
 ## Optional local-link geometry candidate — v11
 
