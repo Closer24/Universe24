@@ -10,16 +10,16 @@ from event_universe.diagnostics.render import _display_jump, _periodic_crossing,
 def test_arrow_length_tracks_speed_and_preserves_direction():
     quarter = _speed_arrow((3, 0, 0), 12)
     full = _speed_arrow((12, 0, 0), 12)
-    assert quarter == pytest.approx((0.9, 0, 0))
-    assert full == pytest.approx((3.6, 0, 0))
-    assert _speed_arrow((-3, 0, 0), 12) == pytest.approx((-0.9, 0, 0))
+    assert quarter == pytest.approx((2.7, 0, 0))
+    assert full == pytest.approx((10.8, 0, 0))
+    assert _speed_arrow((-3, 0, 0), 12) == pytest.approx((-2.7, 0, 0))
     diagonal = _speed_arrow((3, 4, 0), 14)
-    assert diagonal == pytest.approx((1.08, 1.44, 0))
-    assert hypot(*diagonal) == pytest.approx(1.8)
+    assert diagonal == pytest.approx((3.24, 4.32, 0))
+    assert hypot(*diagonal) == pytest.approx(5.4)
 
 
 def test_arrow_caps_at_c_and_does_not_invent_a_missing_speed_scale():
-    assert _speed_arrow((120, 0, 0), 12) == pytest.approx((3.6, 0, 0))
+    assert _speed_arrow((120, 0, 0), 12) == pytest.approx((10.8, 0, 0))
     assert _speed_arrow((0, 0, 0), 12) == (0, 0, 0)
     assert _speed_arrow((3, 0, 0), None) == (0, 0, 0)
     with pytest.raises(ValueError, match="positive integer"):

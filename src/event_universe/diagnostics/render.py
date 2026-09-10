@@ -15,8 +15,8 @@ from typing import cast
 import matplotlib
 
 matplotlib.use("Agg")
+import matplotlib.patheffects as path_effects
 import matplotlib.pyplot as plt
-import numpy as np
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.artist import Artist
 from matplotlib.figure import Figure
@@ -26,7 +26,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from .frames import AXES, Frame, Slice, VolumeFrame
 
 VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
-FULL_SPEED_ARROW_LENGTH = 3.6
+FULL_SPEED_ARROW_LENGTH = 10.8
 
 
 def _speed_arrow(momentum: tuple[int, int, int], c_units: int | None) -> tuple[float, float, float]:
@@ -231,11 +231,8 @@ def render_volume(
     fig.text(0.28, 0.025, "↻ Periodic boundary", color="#65e8ff", fontsize=10)
     fig.text(0.60, 0.025, "X Jump of 2+ cells", color="#ff5252", fontsize=10)
     fig.text(0.12, 0.18, "AXIS DIRECTIONS", color="#c2d5ed", ha="center", fontsize=8)
-    # Smooth display geometry only: physical coordinates and integer state are untouched.
-    longitude, latitude = np.meshgrid(np.linspace(0, 2 * np.pi, 21), np.linspace(0, np.pi, 13))
-    sphere_x = 0.38 * np.cos(longitude) * np.sin(latitude)
-    sphere_y = 0.38 * np.sin(longitude) * np.sin(latitude)
-    sphere_z = 0.38 * np.cos(latitude)
+    # Overlay particle identity and velocity above the translucent field.
+    ax.computed_zorder = False
 
     def draw(index: int) -> tuple[Artist, ...]:
         ax.clear()
@@ -282,17 +279,20 @@ def render_volume(
             ax.scatter(
                 [x], [y], [z], color=color, s=320, alpha=0.10, edgecolors="none", depthshade=False
             )
-            ax.plot_surface(
-                x + sphere_x,
-                y + sphere_y,
-                z + sphere_z,
+            ax.scatter(
+                [x],
+                [y],
+                [z],
                 color=color,
-                linewidth=0,
-                antialiased=True,
-                shade=True,
+                s=150,
+                alpha=1,
+                edgecolors="#ffffff",
+                linewidths=1.4,
+                depthshade=False,
+                zorder=20,
             )
             arrow_x, arrow_y, arrow_z = _speed_arrow((px, py, pz), frame.c_units)
-            ax.quiver(
+            velocity_arrow = ax.quiver(
                 x,
                 y,
                 z,
@@ -300,16 +300,33 @@ def render_volume(
                 arrow_y,
                 arrow_z,
                 color=color,
-                linewidth=1.4,
-                arrow_length_ratio=0.3,
+                linewidth=3.2,
+                arrow_length_ratio=0.35,
+                zorder=19,
             )
-            ax.text(x, y, z + 0.8, str(pid), color="#eff6ff", fontsize=10)
+            velocity_arrow.set_path_effects(
+                [
+                    path_effects.Stroke(linewidth=5.5, foreground="#080f1c"),
+                    path_effects.Normal(),
+                ]
+            )
+            ax.text(
+                x,
+                y,
+                z + 1.4,
+                str(pid),
+                color=color,
+                fontsize=13,
+                weight="bold",
+                zorder=21,
+                bbox={"facecolor": "#080f1c", "edgecolor": "none", "alpha": 0.85, "pad": 1},
+            )
             previous = previous_positions.get(pid)
             if previous is not None and _periodic_crossing(previous, (x, y, z), frame.shape):
                 ax.text(
                     x,
                     y,
-                    z + 1.4,
+                    z + 3.2,
                     "↻",
                     color="#65e8ff",
                     fontsize=30,
@@ -375,7 +392,7 @@ def render_volume(
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
         "System momentum is the combined momentum of particles and field. "
-        "Arrow length is proportional to the capped movement-budget speed: c = 3.6 display cells. "
+        "Arrow length is proportional to the capped movement-budget speed: c = 10.8 display cells. "
         "Frames without a recorded speed scale omit velocity arrows. "
         "A cyan ↻ marks a periodic boundary crossing (the shorter displacement uses the boundary). "
         "A red X marks other displacements of at least two cardinal grid steps. "

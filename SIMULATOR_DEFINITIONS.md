@@ -152,7 +152,7 @@ and external; JSONL recording streams it to disk.
 קואורדינטה נשאר שווה בשלושת הצירים.
 בראש התצוגה מופיע התנע הכולל של החלקיקים והשדה בסדר `(Px, Py, Pz)`.
 אורך חץ החלקיק יחסי לקצב התנועה המוגבל של המודל ביחס ל־c; אורך החץ
-ב־c הוא 3.6 יחידות תצוגה. מקור קנה המידה הוא `c_units` שנקלט בפריים.
+ב־c הוא 10.8 יחידות תצוגה. מקור קנה המידה הוא `c_units` שנקלט בפריים.
 הסמל ↻ בצבע תכלת מסמן מעבר מחזורי לפי ממדי העולם שנקלטו בפריים:
 כאשר הפרש קואורדינטות גדול מחצי אורך הציר, הדרך המחזורית קצרה יותר.
 X אדום מסמן שינוי אחר של שני צעדי סריג ומעלה בין פריימים מוצגים.
@@ -227,3 +227,6 @@ travel length, source symmetry with zero self-force, and three-particle local
 momentum exchange. The first owner-only proposal failed the stationary-source
 check; allowing symmetric proposals from both endpoints removed that artifact.
 No force cancellation or momentum repair was introduced to do so.
+
+החלקיקים מוצגים בדיסקות צבע אטומות עם גבול לבן; חצי המהירות עבים ובעלי
+מתאר כהה. שניהם מוצגים מעל השדה השקוף לשמירת הקריאות.
