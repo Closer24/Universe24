@@ -74,7 +74,9 @@ def test_1024_cube_focus_reaches_one_cell_in_ten_levels():
     bridge = QuantumBridge(q)
     address = (1000, 777, 513)
     root = bridge.prepare(1, address, 0, 1).quantum_node
-    bridge.bind_focus_set(2, FocusSet(region_from_shape(1024, 1024, 1024), (FocusCandidate(root, address, 5),)))
+    bridge.bind_focus_set(
+        2, FocusSet(region_from_shape(1024, 1024, 1024), (FocusCandidate(root, address, 5),))
+    )
     reply = bridge.focus_event(FocusRequest(7, 2, 0, 0))
     assert reply.event is not None
     assert reply.event.address == address
@@ -146,7 +148,9 @@ def test_focus_rejects_future_quantum_roots():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (2, 2, 2), 5, 1).quantum_node
-    bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 2), 1),)))
+    bridge.bind_focus_set(
+        1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 2), 1),))
+    )
     with pytest.raises(ValueError, match="future"):
         bridge.focus_event(FocusRequest(1, 1, 4, 0))
 
@@ -156,7 +160,9 @@ def test_focus_binding_rejects_mismatched_quantum_root_without_commit():
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (2, 2, 2), 0, 1).quantum_node
     with pytest.raises(ValueError, match="match"):
-        bridge.bind_focus_set(1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 3), 1),)))
+        bridge.bind_focus_set(
+            1, FocusSet(region_from_shape(8, 8, 8), (FocusCandidate(root, (2, 2, 3), 1),))
+        )
     assert q.focus_set_count == 0
 
 
@@ -182,7 +188,10 @@ def test_focus_storage_budgets_are_explicit():
 
     q2 = DeferredQuantum(QuantumConfig(max_focus_candidates=1))
     b2 = QuantumBridge(q2)
-    roots = (b2.prepare(1, (0, 0, 0), 0, 1).quantum_node, b2.prepare(2, (1, 0, 0), 0, 1).quantum_node)
+    roots = (
+        b2.prepare(1, (0, 0, 0), 0, 1).quantum_node,
+        b2.prepare(2, (1, 0, 0), 0, 1).quantum_node,
+    )
     with pytest.raises(OverflowError, match="candidate budget"):
         b2.bind_focus_set(
             1,
@@ -197,7 +206,9 @@ def test_zero_total_weight_is_error_not_no_event():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     root = bridge.prepare(1, (0, 0, 0), 0, 0).quantum_node
-    bridge.bind_focus_set(1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),)))
+    bridge.bind_focus_set(
+        1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),))
+    )
     with pytest.raises(ValueError, match="zero total"):
         bridge.focus_event(FocusRequest(1, 1, 0, 0))
 
