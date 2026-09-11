@@ -11,6 +11,13 @@ task needs focused investigation across normal ownership boundaries.
 
 ## Assignment
 
+Before diagnosing a blocker, fetch and read the current
+[Universe24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
+Record its revision and the applicable assumptions in the handoff. Compare them
+with the implementation and repository contracts. Explicitly distinguish a model
+hypothesis, an architectural requirement and a verified result. If the document
+cannot be read, report that gap rather than claiming the assumptions are current.
+
 Require an exact base commit, the failing behavior or desired result, existing
 evidence, an acceptance condition and owned files. Read the current failure report;
 do not assume that a remembered blocker still exists. Examples include moving

@@ -146,7 +146,7 @@ class CausalStreamSimulation(StreamingEngine):
 class FaceScalarSimulation(Simulation):
     """Experimental full response to old delivered scalar faces; not self-force accepted."""
 
-    model_id = "scalar-delivered-faces-v1-experimental"
+    model_id = "scalar-buffered-matter-v2-experimental"
 
     def __init__(
         self,
@@ -199,7 +199,7 @@ class FaceLinkedSimulation(LinkedSimulation):
 class FaceStreamSimulation(CausalStreamSimulation):
     """Experimental old-face response; its isolated co-arrival gate remains mandatory."""
 
-    model_id = "octant-delivered-faces-v1-experimental"
+    model_id = "octant-buffered-matter-v2-experimental"
 
     def __init__(
         self,
@@ -214,7 +214,7 @@ class FaceStreamSimulation(CausalStreamSimulation):
 class GenericFaceSimulation(GenericEngine):
     """Experimental simultaneous definitions; unit links, unresolved self-force gates."""
 
-    model_id = "generic-conserved-flux-bank-v2-experimental"
+    model_id = "generic-buffered-matter-v3-experimental"
 
     def __init__(
         self,

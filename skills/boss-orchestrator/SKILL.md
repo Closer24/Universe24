@@ -32,6 +32,10 @@ acceptance condition, exact source and owned files. Keep tests and physics revie
 independent from that agent's implementation. When concurrency is full, finish or
 release a completed assignment before starting it; do not displace an active owner
 silently. Track the blocker until independent checks establish its resolution.
+Read the current Highlights before assigning blocker fixes and send the relevant
+revision and assumptions to their owners. Reconcile changed requirements before
+coding, and synchronize the affected Skills when the workflow changes. Report a
+clean completion only after the applicable final-source checks have passed.
 
 ## Sequence and finish
 

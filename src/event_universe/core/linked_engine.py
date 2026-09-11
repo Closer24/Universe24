@@ -51,6 +51,7 @@ class LinkedEngine(Engine):
             collision_rule=collision_rule,
             old_face_response=old_face_response,
         )
+        self.matter_transport = None
         self.links = LinkTransport(self._lattice, link_config, length_rule, merge_rule)
         self._transit_rule = transit_rule
         self._transits: dict[int, Transit] = {}

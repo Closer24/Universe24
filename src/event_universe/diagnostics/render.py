@@ -36,10 +36,19 @@ def _face_metadata(
     frames: Sequence[Frame] | Sequence[VolumeFrame], metadata: Mapping[str, object] | None
 ) -> Mapping[str, object] | None:
     """Keep exact signed face values separate from the cloud's aggregate quantity."""
-    if not any(frame.faces_available for frame in frames):
-        return metadata
     return {
         **dict(metadata or {}),
+        "matter_ownership": {
+            "meaning": "Resident particles and link-owned particles are disjoint inventories. Link diamonds mark departure ports, not resident emitters or interpolated positions.",
+            "frames": [
+                {
+                    "tick": frame.tick,
+                    "resident_ids": [p[0] for p in frame.particles],
+                    "link_particles": [p._asdict() for p in frame.link_particles],
+                }
+                for frame in frames
+            ],
+        },
         "delivered_faces": {
             "order": FACE_LABELS,
             "meaning": "Local neighbor-facing surfaces from which input arrived; not velocity or phi",
@@ -167,6 +176,10 @@ def render_run(
         raise ValueError("at least one diagnostic frame is required")
     xmin, xmax, ymin, ymax = _bounds(frames)
     h_axis, v_axis, fixed_axis = AXES[view.plane]
+    for frame in frames:
+        for packet in frame.link_particles:
+            xmin, xmax = min(xmin, packet.origin[h_axis] - 1), max(xmax, packet.origin[h_axis] + 1)
+            ymin, ymax = min(ymin, packet.origin[v_axis] - 1), max(ymax, packet.origin[v_axis] + 1)
     labels = ("x", "y", "z")
     plane_label = f"{view.plane} slice {labels[fixed_axis]}={view.coordinate}"
     if any(frame.field_kind != frames[0].field_kind for frame in frames):
@@ -210,6 +223,16 @@ def render_run(
             )
             if not compact:
                 ax.text(x + 0.4, y + 0.3, str(pid), color="white")
+        for packet in frame.link_particles:
+            x, y = packet.origin[h_axis], packet.origin[v_axis]
+            ax.scatter([x], [y], marker="D", s=75, facecolors="none", edgecolors="#ffd166")
+            ax.text(
+                x + 0.2,
+                y + 0.2,
+                f"{packet.pid}: link {FACE_LABELS[packet.direction]}",
+                color="#ffd166",
+                fontsize=7,
+            )
         ax.set_xlim(xmin - 0.5, xmax + 0.5)
         ax.set_ylim(ymin - 0.5, ymax + 0.5)
         ax.set_title(
@@ -253,6 +276,7 @@ def render_volume(
     selected_pid = min((p[0] for frame in frames for p in frame.particles), default=None)
     points = [position for frame in frames for position in frame.field]
     points.extend((p[1], p[2], p[3]) for frame in frames for p in frame.particles)
+    points.extend(p.origin for frame in frames for p in frame.link_particles)
     if not points:
         points = [(0, 0, 0), (8, 8, 8)]
     bounds: list[tuple[float, float]] = [
@@ -381,6 +405,28 @@ def render_volume(
                     depthshade=False,
                     zorder=3,
                 )
+        for packet in frame.link_particles:
+            x, y, z = packet.origin
+            ax.scatter(
+                [x],
+                [y],
+                [z],
+                marker="D",
+                s=100,
+                facecolors="none",
+                edgecolors="#ffd166",
+                depthshade=False,
+                zorder=20,
+            )
+            ax.text(
+                x,
+                y,
+                z,
+                f"  {packet.pid}: link {FACE_LABELS[packet.direction]} / due {packet.due}",
+                color="#ffd166",
+                fontsize=8,
+                zorder=21,
+            )
         for pid, x, y, z, px, py, pz in frame.particles:
             color = colors[pid % len(colors)]
             trail = [p[1:4] for past in frames[: index + 1] for p in past.particles if p[0] == pid]
@@ -541,7 +587,8 @@ def render_volume(
         "Particle markers and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
-        "System momentum is the combined momentum of particles and field. "
+        "Hollow gold diamonds denote link-owned particles at departure ports; they are not resident emitters. Due is earliest arrival tick; full destinations can retain packets. "
+        "System momentum includes each resident or link-owned particle once, plus field momentum. "
         "Arrow length is proportional to the capped movement-budget speed: c = 10.8 display cells. "
         "Frames without a recorded speed scale omit velocity arrows. "
         "A cyan ↻ marks a periodic boundary crossing (the shorter displacement uses the boundary). "

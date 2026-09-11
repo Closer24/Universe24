@@ -4,6 +4,13 @@ Base: `7de319b`. This migration separates a local response interface from each
 field's transport law. It is not yet an accepted new default: the combined
 field-response-motion causal gate must pass before promotion.
 
+Current unit-link matter scheduling uses
+[bounded link ownership and delayed acknowledgements](CAUSAL_MATTER_TRANSPORT.md).
+It corrects the tested competing-arrival feedback. The
+[self-response investigation](SELF_RESPONSE_BLOCKER.md) remains blocked.
+The precursor staging and failure descriptions below are historical context,
+not a claim that the corrected unit-link scheduler still fails that contention case.
+
 ## Authoritative Highlights direction and remaining gaps
 
 The user instructed this work to follow the current
@@ -18,8 +25,17 @@ already implements it. The document itself has not been edited by this change.
 | A field definition specifies magnitude representation, allowed faces/directions, link propagation, combination, decay, source and response | FieldDefinition declares fixed positive schemas, permitted ports, publish/absorb/response callbacks and explicit source/combination/decay/propagation policies. Variable-length links remain unsupported in the bank. |
 | Adding a field type needs a definition, not a core engine edit | The generic bank accepts a new fixed schema and pure definition without a field-type engine branch; independent tests inject a third response policy. |
 | All stored numbers are positive integers; polarity, sign and zero use integer codes | New bank state, packets and delivered faces use validated positive codes. Legacy particle, clock, momentum-ledger and sidecar records remain signed/zero/sentinel based; the whole simulator is not positive-coded. |
-| Cell autonomy: own state and received values only; communicate through outgoing links | Local response reads are migrated. Whole-tick self-arrival and contention feedback acceptance still fails, so complete autonomy/causality is not established. |
+| Cell autonomy: own state and received values only; communicate through outgoing links | Local response reads are migrated. Unit-link contention now uses causal link ownership; moving self-response remains unresolved. Complete physical acceptance is not established. |
 | Positive link length L, transfer time L/c | The linked scalar candidate retains its bounded positive-length packet contract. The scalar unit-edge and stream transports are not yet one common variable-length transport for all field types. |
+| Shared integer Vector arithmetic and authoritative component views (3.3.2) | Existing signed working tuples and positive field codecs are not a complete common Vector API for field state, velocity and momentum. Exact vector storage, scale conversion and all required products remain incomplete. |
+| Generic Face with concurrent typed channels and shared transport (3.3.3) | The bank separates field definitions and sign-sector channels. Crossing-face labels do not reverse octant payloads. This is not yet one Face/Transport abstraction shared by fields and matter. |
+| Signed component balances and source/link/destination ownership (3.5) | Field inventories currently measure nonnegative scalar or sign-sector amounts. They cannot yet represent arbitrary signed momentum components through the same accounting interface. Particle transit and field inventory must not be described as a completed unified mechanism. |
+
+The blocker investigation read Highlights revision
+`ANLCKQlBPAyq4peJ3JSEXUjG-lsnLeQWsTUks2BDo0NOgBPrsjqfzWToVjzZrzJ5M11q-JCtjgq5f4Va8WDQ37VKC_hJvjelPhiKQeZzUZU`.
+Its expanded vector, face and momentum requirements are architectural targets,
+not retrospective evidence that existing tests cover them. Fixing the eight
+reported acceptance failures alone would not establish every new requirement.
 
 The implemented [generic definition contract](FIELD_DEFINITIONS.md) now provides
 fixed-schema positive records and simultaneous composition through an actual
@@ -56,9 +72,9 @@ dictionary; a later advance installs a new dictionary.
 ## Public candidates and compatibility
 
 `FaceScalarSimulation`, `FaceLinkedSimulation` and `FaceStreamSimulation` are
-explicit experimental APIs. Their model identifiers are respectively
-`scalar-delivered-faces-v1-experimental`, `linked-delivered-faces-v1-experimental`
-and `octant-delivered-faces-v1-experimental`. All select full response, including
+explicit experimental APIs. Their current model identifiers are respectively
+`scalar-buffered-matter-v2-experimental`, `linked-delivered-faces-v1-experimental`
+and `octant-buffered-matter-v2-experimental`. All select full response, including
 the longitudinal component, and never select the scalar halo. The scalar API
 accepts a replaceable `face_publisher`; the stream API accepts a structural
 `OctantFieldRule` through `field=`. Linked publication retains its existing

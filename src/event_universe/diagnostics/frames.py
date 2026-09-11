@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 from dataclasses import field as dataclass_field
-from typing import Literal
+from typing import Literal, NamedTuple
 
 from event_universe.core.engine import Engine
 from event_universe.core.generic_engine import GenericEngine
@@ -14,6 +14,34 @@ from .measurements import ExactVector, total_momentum
 Plane = Literal["XY", "XZ", "YZ"]
 FieldKind = Literal["scalar", "stream-magnitude", "face-magnitude"]
 AXES: dict[Plane, tuple[int, int, int]] = {"XY": (0, 1, 2), "XZ": (0, 2, 1), "YZ": (1, 2, 0)}
+
+
+class LinkParticle(NamedTuple):
+    pid: int
+    origin: Address
+    direction: int
+    due: int
+    momentum: tuple[int, int, int]
+    mass: int
+    momentum_den: int
+
+
+def _link_particles(world: Engine) -> list[LinkParticle]:
+    transport = getattr(world, "matter_transport", None)
+    if transport is None:
+        return []
+    return [
+        LinkParticle(
+            pid,
+            packet.origin,
+            packet.direction,
+            packet.due,
+            world.particles[pid].momentum,
+            world.particles[pid].mass,
+            world.particles[pid].momentum_den,
+        )
+        for pid, packet in sorted(transport.packets.items())
+    ]
 
 
 @dataclass(frozen=True, slots=True)
@@ -41,6 +69,7 @@ class Frame:
     field_inventory_by_name: dict[str, dict[Address, tuple[int, ...]]] = dataclass_field(
         default_factory=dict
     )
+    link_particles: list[LinkParticle] = dataclass_field(default_factory=list)
 
 
 @dataclass(slots=True)
@@ -60,6 +89,7 @@ class VolumeFrame:
     field_inventory_by_name: dict[str, dict[Address, tuple[int, ...]]] = dataclass_field(
         default_factory=dict
     )
+    link_particles: list[LinkParticle] = dataclass_field(default_factory=list)
 
 
 def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], FieldKind]:
@@ -100,10 +130,16 @@ def capture_volume(world: Engine) -> VolumeFrame:
     """Copy nonzero field intensity and each particle in full XYZ coordinates."""
     field, field_kind = _field_snapshot(world)
     faces, faces_available = _face_snapshot(world)
+    links = _link_particles(world)
+    link_ids = {p.pid for p in links}
     return VolumeFrame(
         world.tick,
         field,
-        [(pid, *particle.position, *particle.momentum) for pid, particle in world.particles.items()],
+        [
+            (pid, *particle.position, *particle.momentum)
+            for pid, particle in world.particles.items()
+            if pid not in link_ids
+        ],
         total_momentum(world),
         world.config.c_units,
         (world.config.nx, world.config.ny, world.config.nz),
@@ -114,6 +150,7 @@ def capture_volume(world: Engine) -> VolumeFrame:
         getattr(world, "display_field_name", None),
         {name: dict(records) for name, records in getattr(world, "field_faces_by_name", {}).items()},
         {name: dict(records) for name, records in getattr(world, "field_inventory_by_name", {}).items()},
+        links,
     )
 
 
@@ -126,10 +163,12 @@ def capture_frame(world: Engine, view: Slice) -> Frame:
     field = {
         (p[horizontal], p[vertical]): value for p, value in values.items() if p[fixed] == view.coordinate
     }
+    links = _link_particles(world)
+    link_ids = {p.pid for p in links}
     particles = [
         (pid, p[horizontal], p[vertical], p[3 + horizontal], p[3 + vertical], p[3 + fixed])
         for pid, p in world.particles.items()
-        if p[fixed] == view.coordinate
+        if p[fixed] == view.coordinate and pid not in link_ids
     ]
     all_faces, faces_available = _face_snapshot(world)
     faces = {
@@ -152,4 +191,5 @@ def capture_frame(world: Engine, view: Slice) -> Frame:
             name: {p: values for p, values in records.items() if p[fixed] == view.coordinate}
             for name, records in getattr(world, "field_inventory_by_name", {}).items()
         },
+        [p for p in links if p.origin[fixed] == view.coordinate],
     )

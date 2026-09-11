@@ -2,6 +2,7 @@
 
 from event_universe import CausalStreamConfig
 from event_universe.api import FaceStreamSimulation
+from event_universe.core.state import EMPTY_SLOT
 
 
 def test_source_intervention_cannot_ride_particle_two_edges_in_one_tick():
@@ -34,3 +35,31 @@ def test_competing_request_cannot_change_remote_sender_in_same_tick():
     # Its same-tick request must not decide whether that sender has departed.
     origin = (4, 5, 5)
     assert active.occupancy.get(origin) == control.occupancy.get(origin)
+
+    # The source-owned reservation is local state too. Receiver arbitration may
+    # not release it before the return acknowledgement crosses its link.
+    assert active.matter_transport is not None
+    assert control.matter_transport is not None
+    assert active.matter_transport.busy[origin] == control.matter_transport.busy[origin]
+    assert active.particles[0].momentum == control.particles[0].momentum == (1, 0, 0)
+
+    def assert_owned_once(world, expected_ids):
+        transport = world.matter_transport
+        assert transport is not None
+        residents = [pid for slots in world.occupancy.values() for pid in slots if pid != EMPTY_SLOT]
+        owners = residents + list(transport.packets)
+        assert sorted(owners) == sorted(expected_ids)
+        assert set(world.particles) == set(expected_ids)
+        assert sum(world.particles[pid].mass for pid in owners) == len(expected_ids)
+        assert all(sum(pid != EMPTY_SLOT for pid in slots) <= 1 for slots in world.occupancy.values())
+        assert all(len(slots) == 6 for slots in transport.busy.values())
+
+    for tick in range(1, 7):
+        assert_owned_once(active, (0, 1))
+        assert_owned_once(control, (0,))
+        # Uncontended motion retains one hop per tick, including successive
+        # departures while previous link acknowledgements are still in flight.
+        assert control.particles[0].position == (4 + tick, 5, 5)
+        if tick < 6:
+            active.step()
+            control.step()

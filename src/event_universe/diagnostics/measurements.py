@@ -80,6 +80,14 @@ def audit(world: Engine) -> dict[str, bool]:
             if world.particles[pid].position != address:
                 raise ValueError("particle and occupancy disagree")
             seen.add(pid)
+    if world.matter_transport is not None:
+        world.matter_transport.validate()
+        for pid, packet in world.matter_transport.packets.items():
+            if pid in seen or pid not in world.particles:
+                raise ValueError("duplicate or unknown link-owned particle")
+            if world.particles[pid].position != packet.origin:
+                raise ValueError("in-flight particle lost its departure address")
+            seen.add(pid)
     if seen != set(world.particles):
         raise ValueError("a particle is missing from occupancy")
     for particle in world.particles.values():
@@ -153,6 +161,12 @@ def report(world: Engine) -> dict[str, object]:
             ),
             "response_snapshot_work_registers_per_cell": (
                 FACE_REGISTERS if world._old_face_response else 0
+            ),
+            "outbound_matter_slots_per_cell": (
+                6 * world.config.max_particles_per_cell if world.matter_transport is not None else 0
+            ),
+            "link_owned_particles": (
+                len(world.matter_transport.packets) if world.matter_transport is not None else 0
             ),
             "eligibility_snapshot_slots_per_cell": (
                 world.config.max_particles_per_cell if world._old_face_response else 0

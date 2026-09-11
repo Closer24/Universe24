@@ -4,7 +4,7 @@ The user-directed [Highlights document](https://docs.google.com/document/d/1IkhS
 including section 3.3.1, requires fields to share a local definition contract,
 conserve discrete flux and retain integer directional ratios. The experimental
 `GenericFaceSimulation` runs every configured definition through one `FieldBank`.
-Its current identity is `generic-conserved-flux-bank-v2-experimental`.
+Its current identity is `generic-buffered-matter-v3-experimental`.
 Conservation is not proof of moving self-force cancellation or complete causality.
 
 ## Conservation and directional ratios

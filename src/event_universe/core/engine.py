@@ -22,6 +22,7 @@ from .contracts import (
 )
 from .faces import ZERO_FACES, FacePublisher, ScalarFaceTransport
 from .lattice import PeriodicLattice
+from .matter_transport import MatterTransport
 from .state import (
     EMPTY_SLOT,
     ZERO_CELL,
@@ -65,6 +66,9 @@ class Engine:
         )
         self._historical_response_staging = historical_response_staging
         self._old_face_response = old_face_response
+        self.matter_transport = (
+            MatterTransport(self._lattice, config.max_particles_per_cell) if old_face_response else None
+        )
         self._response_snapshot: Mapping[Address, Neighbors] | None = None
         self._movement_slots: Mapping[Address, tuple[int, ...]] | None = None
         self._particle_rule = particle_rule
@@ -278,6 +282,20 @@ class Engine:
                 self._move(pid, position, slot, result.direction)
 
     def _move(self, pid: int, origin: Address, slot: int, direction: int) -> None:
+        if self.matter_transport is not None:
+            target = self._lattice.neighbor(origin, direction)
+            if target == origin and self._collision_rule is not None:
+                self._observer.on_move(MoveRecord(self.tick, pid, *target))
+                return
+            if not self.matter_transport.launch(pid, origin, direction, slot, self.tick):
+                target = self._lattice.neighbor(origin, direction)
+                self._observer.on_blocked(MoveRecord(self.tick, pid, *target))
+                return
+            slots = self._occupancy[origin]
+            self._occupancy[origin] = slots[:slot] + (EMPTY_SLOT,) + slots[slot + 1 :]
+            self._clear_contact_slot(origin, slot)
+            self._activate(origin)
+            return
         target = self._lattice.neighbor(origin, direction)
         if target == origin and self._collision_rule is not None:
             # A periodic self-loop is not a new encounter or a change of local slots.
@@ -310,6 +328,29 @@ class Engine:
         self._observer.on_move(MoveRecord(self.tick, pid, *target))
         self._activate(origin)
         self._activate(target)
+
+    def _receive_matter(self, tick: int) -> None:
+        transport = self.matter_transport
+        if transport is None:
+            return
+        transport.receive_acks(tick)
+        for target, pids in transport.completed(tick).items():
+            slots = self._occupancy.get(target, self._empty_slots())
+            for pid in pids:
+                if EMPTY_SLOT not in slots:
+                    # The completed payload remains link-owned. No source-cell
+                    # state is changed by this receiver's admission decision.
+                    continue
+                free = slots.index(EMPTY_SLOT)
+                slots = slots[:free] + (pid,) + slots[free + 1 :]
+                self._occupancy[target] = slots
+                self._particles[pid] = self._particles[pid]._replace(
+                    x=target[0], y=target[1], z=target[2]
+                )
+                self._clear_contact_slot(target, free)
+                transport.accept(pid, tick)
+                self._observer.on_move(MoveRecord(self.tick, pid, *target))
+                self._activate(target)
 
     def _clear_contact_slot(self, position: Address, slot: int) -> None:
         if self._collision_rule is None or position not in self._contacts:
@@ -395,6 +436,7 @@ class Engine:
             # Legacy order is part of this model's movement/conflict semantics.
             for position in tuple(self._occupancy):
                 self._particle_step_in_cell(position)
+            self._receive_matter(next_tick)
             self._collision_step()
             self._apply_post_motion_halos(previous_positions)
             self._tick = next_tick

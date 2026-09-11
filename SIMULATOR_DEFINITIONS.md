@@ -480,3 +480,9 @@ source map or history and satisfies LOCALITY-1 for fixed K. The candidate must k
 isolated particle momentum exactly at all tested ticks and retain nonzero external
 response. Exact inputs, results and limitations are in
 [docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md).
+
+## Experimental unit-link matter ownership
+
+[Bounded matter transport](docs/CAUSAL_MATTER_TRANSPORT.md) defines the explicit
+source, link and destination ownership schedule for the buffered face candidates.
+The historical variable-link candidate is excluded from this correction.

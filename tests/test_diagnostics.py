@@ -72,3 +72,20 @@ def test_volume_preserves_all_three_coordinates_and_copies_off_plane_records(rec
 def test_out_of_domain_slices_are_rejected(records, view):
     with pytest.raises(ValueError, match="outside"):
         capture_frame(records, view)
+
+
+def test_link_owned_records_are_not_resident_emitters_and_remain_in_total(records):
+    records.matter_transport = SimpleNamespace(
+        packets={5: SimpleNamespace(origin=(2, 3, 4), direction=0, due=7)}
+    )
+    volume = capture_volume(records)
+    plane = capture_frame(records, Slice("XY", 4))
+    assert [p[0] for p in volume.particles] == [6]
+    assert plane.particles == []
+    assert volume.link_particles == plane.link_particles
+    packet = volume.link_particles[0]
+    assert (packet.pid, packet.origin, packet.direction, packet.due) == (5, (2, 3, 4), 0, 7)
+    assert packet.momentum == (5, -6, 7)
+    assert volume.total_momentum == (10, -18, 26)
+    records.matter_transport.packets.clear()
+    assert len(volume.link_particles) == 1
