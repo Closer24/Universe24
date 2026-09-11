@@ -275,6 +275,15 @@ Pytest enables captured run reports and presentation-only tests only through
 HTML/GIF run reports are generated. Requested frame stride changes recording
 only, never the physical update interval.
 
+The historical runner supports a live display during calculation and replay
+export only when explicitly requested with `--live` or API `live=True`. A live
+request also enables recorded visualization. Both options default off.
+Live preview snapshots may be coalesced and use explicitly provisional framing
+and color scales. They never replace the canonical sampled frames, final enhanced
+GIF/HTML, event trace or acceptance checks. Preview faults must not alter physical
+evolution or prevent the recorded failure report. A completed live page opens the
+current run's final replay, retaining its completion or failure status.
+
 The active generic local commit and failure behavior is defined in
 [docs/DISTURBANCES.md](docs/DISTURBANCES.md). The following field-phase description
 applies to historical scalar models.

@@ -43,3 +43,11 @@ their physical assertions. A successful process does not prove the candidate is
 physically accepted. Route runtime errors to the component owner, visual ambiguity to visualization-check, and a reproducible
 behavior difference to regression-check/physics-rule-validation. Do not edit
 laws or use diagnostic results to repair the world while running an experiment.
+
+For speed investigations, follow the shared workflow's
+[performance procedure](../workflow.md#performance-work). Reuse the environment
+once dependencies and source identity are verified; installing it again is setup
+work, not a simulator benchmark.
+Historical live previews require explicit `--live` or API `live=True`, which
+also requests recorded visualization. A performance investigation alone does not request
+visualization, a live preview or visual test execution.

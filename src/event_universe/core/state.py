@@ -5,6 +5,7 @@ from typing import NamedTuple
 
 from .integer import MAX_WORK_INT as MAX_WORK_INT
 from .integer import checked_work as checked_work
+from .integer import signed_divrem as _signed_divrem
 
 Address = tuple[int, int, int]
 Vector = tuple[int, int, int]
@@ -39,10 +40,7 @@ def signed_divrem(numerator: int, denominator: int) -> tuple[int, int]:
     """Divide toward zero, preserving numerator == quotient * denominator + remainder."""
     checked_work(numerator)
     checked(denominator)
-    if denominator <= 0:
-        raise ValueError("positive denominator required")
-    quotient = numerator // denominator if numerator >= 0 else -((-numerator) // denominator)
-    return quotient, numerator - quotient * denominator
+    return _signed_divrem(numerator, denominator)
 
 
 def scaled_divrem(value: int, numerator: int, denominator: int, remainder: int) -> tuple[int, int]:

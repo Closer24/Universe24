@@ -312,3 +312,39 @@ candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).
   two diagonal particles of masses 1 and 2, conserves pair invariants in a
   source-free run and separates them after one contact. All existing balanced
   movement and self-halo expectations remain unchanged.
+
+## Run capture and export performance
+
+These contracts belong to the historical runner and optional renderer. Tests that
+generate visual artifacts require `pytest --visualize-runs`; ordinary tests stay
+headless and retain physical assertions.
+
+- `test_run_capture.py` checks selected-view snapshots against independent state
+  expectations, including zero ticks, an unsampled final tick, invalid slices,
+  complete event records and a partially committed failed tick. Failure metadata
+  and its final frame must reflect the changed state, including exact fractions.
+- `test_render_export.py` checks saved pixels and frame durations against the
+  previous export path for synthetic figures, full 3D dimensions, non-repeating
+  playback and figure cleanup on failure.
+- Performance measurements use identical scenario inputs, tick counts, display
+  sampling, image dimensions and dependencies. Timing comparisons are recorded
+  separately from functional tests; CI does not assert machine-dependent seconds.
+
+## Live display during execution
+
+- `test_live_display.py` exercises a real spawned consumer: a copied snapshot
+  appears before completion, later producer mutation stays isolated, and queued
+  large snapshots can be cancelled without a feeder shutdown deadlock. Startup,
+  publication and unexpected worker-exit errors remain diagnostic. Failed runs
+  preserve their reason and link only a newly registered artifact.
+- `test_render_live.py` compares preview PNGs with the actual canonical last
+  raster for volume and slice views, including transparent and tight-crop export
+  settings. Callbacks arrive before final GIF/HTML completion and cannot mutate
+  the canonical images. Empty histories and failed writes close figures.
+- `test_run_live.py` checks live/nonlive event and metadata parity, early page
+  availability, headless defaults and explicit opt-in, cleanup, and preservation
+  of physical errors even when final rendering also fails.
+- Manual run evidence records page/image availability before final output,
+  observed phases and saved image changes. First-image latency and whole-run
+  duration are distinct measurements; browser refresh and recorded-frame
+  equivalence are separate checks. Never infer concurrency from a callback name.

@@ -73,7 +73,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/state` | Standard-library data types |
+| `core/integer` | Standard-library types; owns shared working bounds and signed division |
+| `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
 | `fields/disturbances` | Generic records and bounded integer arithmetic; no world or diagnostics |
@@ -89,7 +90,8 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `disturbance_api` | Generic engine and disturbance local law |
 | `api` | Historical engine and explicitly chosen research model |
 | `diagnostics` | Read-only engine views, immutable events, rendering libraries |
-| `scenarios`, `runner` | Public API and diagnostics |
+| `runner` | Generic public API, initialization and optional diagnostics |
+| `scenarios`, `legacy_runner` | Historical public APIs and optional diagnostics |
 
 The historical scalar engine receives field and particle callables and an optional activity
 predicate. `ScalarSimulation` assembles them from a scalar
@@ -205,6 +207,47 @@ momentum arrows with a rotating camera. Plane and volume renderers share one
 GIF/HTML output function. Camera rotation, color and marker scaling are purely
 diagnostic; they do not change the engine or particle motion.
 
+With visualization enabled, the historical runner captures only the selected
+view. A capture may receive momentum already measured from that same state;
+otherwise it measures the state itself.
+Every completed tick still gets its momentum acceptance check, including ticks
+without a saved frame. A failed step is captured with a fresh measurement because
+its partially committed state can change without advancing the tick counter.
+
+The volume renderer retains static axes, grid and compass artists between frames
+and extends diagnostic trail history incrementally. It resets that history when
+playback seeks backward or the domain changes. Dynamic artists are replaced for
+each frame, preserving the existing draw order and camera. The shared Pillow
+writer copies the Agg canvas already drawn by FuncAnimation and encodes the
+non-looping GIF once. Custom savefig backgrounds or transparency use savefig to
+preserve their rendering semantics. See [PERFORMANCE.md](PERFORMANCE.md).
+
+`diagnostics/live.py` owns disposable historical preview coordination.
+`legacy_runner` enables it only with explicit `--live` or API `live=True`, which
+also enables recorded visualization. Ordinary generic and historical runs are headless.
+The parent alone steps the Engine, copies and retains every canonical frame,
+and records events. Before nonblocking queue submission, the
+preview serializes the copied frame, preventing later producer mutation from
+reaching the consumer. A spawned process receives only serialized frames and
+display configuration. Its queue holds one waiting snapshot and its trail window
+holds at most eight; intermediate preview messages may be coalesced.
+
+The worker uses the same volume/slice scene builders to publish the latest PNG
+inside an atomically replaced `live.html`. Its scales are provisional because
+future extrema are not yet known. An integer meta-refresh interval supports
+ordinary local-file browsers without a server. After computation, the parent
+signals a separate stop event, reaps the worker with bounded waits, and closes
+queues without waiting for an abandoned feeder. Only then does the canonical
+renderer publish selected already-drawn rasters through a read-only callback.
+This preserves one live-page writer and avoids recomputing final frames.
+
+Final GIF/HTML still uses the entire retained history and unchanged fixed scales.
+Preview failures warn without changing physical stepping or canonical export;
+physical failures keep their original exception and failed report. A final redirect
+is registered only for the current run's successfully written artifact, preserving
+failure status and avoiding a stale report left by an earlier run. Preview work,
+IPC and page updates are host costs, not part of the physical model.
+
 Sparse world storage is distinct from constant-size physical state. Existing
 materialized cells and occupancy-address order are retained for exact legacy
 equivalence. Reclaiming them is a separate scheduler change requiring physical
@@ -292,7 +335,7 @@ successful regression trajectories. Preserved model limitations are listed in
 
 ## Local-link candidate (v11)
 
-`LinkedSimulation` / CLI `--scenario links` explicitly selects
+`LinkedSimulation` / historical CLI `--scenario links` explicitly selects
 `scalar-field-v11-local-links`. `ScalarSimulation` retains the previous model and its
 physical behavior checks. This is a new geometry/transport hypothesis,
 not an architecture-only change to the baseline.

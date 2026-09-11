@@ -15,6 +15,7 @@ def checked_work(value: int) -> int:
 def signed_divrem(value: int, denominator: int) -> tuple[int, int]:
     """Divide toward zero and retain a remainder with the dividend's sign."""
     checked_work(value)
+    checked_work(denominator)
     if denominator < 1:
         raise ValueError("positive denominator required")
     magnitude, residue = divmod(abs(value), denominator)

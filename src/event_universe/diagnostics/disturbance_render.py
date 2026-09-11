@@ -23,7 +23,8 @@ input{width:70%}pre{white-space:pre-wrap}small{color:#aab8cc}
 function draw(){const f=frames[Number(seek.value)];document.querySelector('#tick').textContent='Tick '+f.tick;
 const body=document.querySelector('#cells');body.replaceChildren();
 for(const c of f.cells)for(const d of c.disturbances){const row=document.createElement('tr');
-for(const value of [c.position.join(', '),d.type,JSON.stringify(d.values),'Cost '+c.cost+'; ready '+c.available_tick]){
+const timing=c.waiting_until===null?'next cycle '+c.available_tick:'waiting until '+c.waiting_until;
+for(const value of [c.position.join(', '),d.type,JSON.stringify(d.values),'Cost '+c.cost+'; '+timing]){
 const td=document.createElement('td');td.textContent=value;row.append(td)}body.append(row)}
 document.querySelector('#links').textContent=JSON.stringify(f.transfers,null,2)}seek.oninput=draw;draw();</script></html>"""
     output.write_text(document.replace("__TITLE__", title).replace("__DATA__", data), encoding="utf-8")

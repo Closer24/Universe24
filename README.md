@@ -82,6 +82,57 @@ Visualization is read-only and does not change the physical update interval.
 The active runner requires an empty output directory to preserve earlier evidence.
 The display contract is in [definitions](SIMULATOR_DEFINITIONS.md#default-run-display).
 
+## Optional historical live display
+
+The historical scalar/particle renderer supports an explicitly requested live
+preview. This is separate from the active initialization-based runner's generic
+disturbance view. Install the `render` extra before requesting historical output:
+
+```bash
+python -m pip install -e '.[render]'
+python -m event_universe.legacy_runner --scenario contact --visualize --live --output artifacts/contact-live
+```
+
+This command prints the absolute `live.html` path at startup. Open that file in
+a browser while the command is running; the page updates automatically each
+second. It shows copied simulation snapshots as computation proceeds, then
+updates from the frames being rendered for the recorded replay. At completion,
+the page redirects to the standalone `run.html` animation. The final historical
+output also includes `run.gif`. No web server or browser extension is required.
+
+The live preview may skip intermediate snapshots and adjust its framing and color
+scale as new data arrives. The final replay retains every frame selected by
+`--frame-stride`, with the same fixed scale, quality and physics as before.
+For short simulations, the first image may appear during replay export because
+the physical calculation can finish before preview startup.
+
+Omit `--live` for final visualization without a live preview; omit visualization
+options for a headless run. Both features default off. Python callers opt in with
+`legacy_runner.run_scenario(scenario, output, visualize=True, live=True)`.
+Requesting `--live` or `live=True` also enables the recorded visualization.
+Scripts that start live runs must call them inside an `if __name__ == "__main__":`
+guard so the preview process can start safely on Windows. A preview fault is
+reported and does not cancel the physical calculation or its recorded output.
+
+## Run performance
+
+Reuse the installed environment for later runs; dependency installation is a
+one-time setup step. Ordinary runs capture no animation frames. When historical
+visualization is explicitly requested, stride 1 captures every tick and the 3D
+renderer exports enhanced 1500x1275 HTML and GIF. It draws each default frame once
+and encodes the stopped GIF once; the runner captures only the selected view.
+
+For a quicker, explicitly sampled preview of a long run, use the existing option:
+
+```bash
+python -m event_universe.legacy_runner --scenario contact --visualize --frame-stride 4 --output artifacts/contact-preview
+```
+
+This still computes and checks every physical tick and records every event.
+It saves fewer display frames, so intermediate movement is visible in the event
+trace rather than in the animation. Use stride 1 for consecutive-tick inspection.
+See [performance measurements](docs/PERFORMANCE.md) for the measured case and limits.
+
 ## Check the project with one command
 
 ```bash
@@ -117,6 +168,7 @@ from this README.
 | `src/event_universe/diagnostics/` | Read-only measurements, recording and optional output |
 | `src/event_universe/scenarios.py` | Explicit historical research scenarios |
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |
+| `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
 | `examples/basic.json` | Complete example initialization; physical names occur only as data |
 | `tests/` | Generic contracts, schema checks and retained research regressions |
 | `tests/reference/` | Historical source archive, not an active engine |
