@@ -23,7 +23,7 @@ Do not split packages or processes merely to satisfy a directory convention.
 
 For a schema/interface change, identify register owners, fixed sizes, bounds,
 defaults and every consumer. Inspect movement, transit, field exchange,
-recording/rendering and frozen-state projections when affected. Separate model
+recording/rendering and current state contracts when affected. Separate model
 local cost from dictionary/frontier/history costs on the host.
 
 Map PR overlaps before combining them. Preserve both sides of an API extension

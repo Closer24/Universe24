@@ -7,7 +7,7 @@ name = "event-universe"
 version = "0.1.0"
 description = "A local integer 3D event-field research simulator"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = []
 
 [project.optional-dependencies]
@@ -30,7 +30,7 @@ addopts = "--import-mode=importlib -ra"
 pythonpath = ["src"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py314"
 line-length = 105
 extend-exclude = ["tests/reference"]
 
@@ -38,7 +38,7 @@ extend-exclude = ["tests/reference"]
 select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.14"
 strict = true
 files = ["src/event_universe"]
 exclude = ["tests/reference"]

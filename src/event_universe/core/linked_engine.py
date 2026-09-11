@@ -59,7 +59,7 @@ class LinkedEngine(Engine):
 
     def add_particle(
         self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0, *, mass: int = 1
-    ) -> "LinkedEngine":
+    ) -> LinkedEngine:
         if self.tick:
             raise RuntimeError("linked candidate accepts initial particles before tick zero only")
         super().add_particle(pid, x, y, z, px, py, pz, mass=mass)

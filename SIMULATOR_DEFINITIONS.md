@@ -185,8 +185,6 @@ and external; JSONL recording streams it to disk.
 - Exact local matter-field exchange and total momentum through tested runs.
 - Offset-pair turning on XY, XZ and YZ slices, and original 180-tick regression.
 - Immediate transverse contact response with unit force denominator.
-- Tick-by-tick equivalence to frozen v10 for stationary, contact and turning
-  scenarios, including fields, particles, slots, active cells and event traces.
 - Identical physical evolution with and without recording and measurement.
 - Static numeric audit over every physical module and import-boundary checks.
 - Generic field/turning unit tests, current-model-specific tests and independent
@@ -237,7 +235,7 @@ momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contrac
 Every run defaults to enhanced 1500×1275 3D: outlined particle markers with glow,
 a soft translucent field, emphasized paths and a rotating camera. Provide a
 standalone HTML file and its GIF animation. This also applies to new scenarios
-and every test world, including frozen-reference runs. Test reports may sample
+and every executed test world. Test reports may sample
 frames while retaining the same design and resolution. Pure-function tests need
 no animation.
 
@@ -356,8 +354,8 @@ This is read-only diagnostic rejection, not a corrected physical law or a proof
 of straight trajectories. Direct Engine/Simulation callers still receive the
 underlying model behavior. Model acceptance requires the separate isolated-motion
 gate; a test that confirms rejection does not turn that failing physical gate
-into a pass. Existing baseline physics and frozen regression expectations remain
-unchanged. No threshold exempts a one-unit impulse.
+into a pass. Existing baseline physical requirements remain unchanged.
+No threshold exempts a one-unit impulse.
 
 ## User-authorized mass and elastic point contacts — v13
 
@@ -452,9 +450,9 @@ are numerators at the denominator from that particle's latest collision record
 moves; actual scattering events are in `collision_records`.
 
 The original twelve particle fields keep their order. Four new fields append
-with defaults (1,1,1,-1). Frozen-v10 comparisons still compare every original
-field, every cell, slot, frontier and event at every tick, and separately assert
-all four new defaults. The frozen source and expected physical traces are unchanged.
+with defaults (1,1,1,-1). Fixed-schema and physical behavior checks cover current
+records. Frozen-v10 equality is no longer an acceptance gate; its source remains
+an unchanged historical archive.
 
 ## Opt-in balanced-motion and local-halo candidate
 

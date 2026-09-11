@@ -1,4 +1,36 @@
-# Validation — 2026-09-10
+# Validation evidence
+
+## Python 3.14 and necessary tests — 2026-09-11
+
+Validated locally with CPython 3.14.7 in the project virtual environment, based on
+main `7e517afb7a274821de05bf247ece91827c1b030b`. The runtime selection, CI and
+agent workflow now use Python 3.14. Older-Python, archived-v10 equality and
+historical facade API tests are no longer gates, as requested by the user.
+Current physical contracts and known failure evidence remain covered.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint/format, strict mypy and 461 pytest cases |
+| Static scope | 114 Python files formatted; 48 package modules type checked |
+| Test reduction | Four fewer collected cases, six fewer worlds and 447 fewer simulation ticks |
+| Test visualization | All 94 current-engine worlds rendered through the existing HTML/GIF pipeline |
+| Contact CLI | Completed 48 ticks; momentum equal at every completed tick; all state audits passed |
+| Visual inspection | Contact frame at tick 24 shows both particles, field, axes and total momentum (0,0,0) |
+| Package build | Wheel and sdist built; minimum Python is 3.14 and sdist includes `.python-version` |
+| Agent Skills | Boss, architecture, regression and necessary-tests Skills validated; shared workflow updated |
+
+Installed project tools: pytest 9.1.1, Ruff 0.16.7, mypy 2.3.1, Matplotlib 3.11.1,
+Pillow 12.3.0, NumPy 2.5.3 and build 1.6.1. Isolated package build used
+setuptools 84.0.0. Contact source fingerprint:
+`c7696ccccad62080363a35673f9e6be053c3f5461909160de8792abc8b621256`.
+
+The remaining suite is defined in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
+Local outputs are `artifacts/junit.xml`, `artifacts/test-runs.html` and
+`artifacts/contact/run.html` with run metadata. The integration PR and its Actions
+run record the remote result for the submitted commit. No old-Python or archived
+engine compatibility run was performed. Earlier evidence below is historical.
+
+## Historical validation — 2026-09-10
 
 The required checks were executed locally on Python 3.12. GitHub Actions is
 configured but was not executed on a remote repository in this task.

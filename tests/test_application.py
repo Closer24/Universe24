@@ -1,22 +1,8 @@
 import json
 from dataclasses import replace
 
-from event_universe import Config
-from event_universe.compat import IntegerO1Field3D
-from event_universe.core.state import PX
 from event_universe.runner import run_scenario, source_fingerprint
 from event_universe.scenarios import get_scenario
-
-
-def test_legacy_read_api_is_preserved():
-    world = IntegerO1Field3D(Config(nx=8, ny=8, nz=8, source_strength=0))
-    world.add_particle(0, 4, 4, 4, 3)
-    world.step()
-    assert world.particles[0][PX] == 3
-    assert world.paths[0] and world.force_records
-    assert world.total_momentum() == (3, 0, 0)
-    assert world.audit()
-    assert world.particles_on_xy_slice(4)[0][0] == 0
 
 
 def test_volume_output_reuses_html_pipeline_without_changing_physical_events(tmp_path):

@@ -13,9 +13,10 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    functions. Do not add growing per-source structures or render imports to core.
 4. For a defect, add a focused test of the failed behavior before the correction.
    Tests should assert a contract or observed result, not mirror implementation.
-5. For refactors, retain exact differential equivalence to the frozen baseline.
+5. For refactors, retain current physical contracts and their behavioral checks.
    A change to a physical hypothesis needs a separate model identity and review;
-   do not change baseline expectations merely to make a test pass.
+   do not change physical expectations merely to make a test pass. Historical
+   API/frozen-v10 equality and older-Python compatibility are no longer gates.
 6. Run `python tools/check.py`. Inspect the HTML for affected run scenarios.
    Test reusable calculations in `test_scalar_field.py` and `test_turning.py`,
    current choices in `test_current_field.py`, and public component replacement
