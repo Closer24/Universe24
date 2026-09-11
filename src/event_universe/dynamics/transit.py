@@ -1,27 +1,41 @@
 """Generic departure and integer transit duration; no access to cells or the world."""
 
 from event_universe.core.state import Vector, checked, checked_work
-from event_universe.dynamics.movement import MovementResult, choose_axis
+from event_universe.dynamics.movement import MovementResult, choose_axis, speed_ratio
 
 
-def depart_movement(momentum: Vector, budget: int, phase: int, *, speed_cap: int) -> MovementResult:
+def depart_movement(
+    momentum: Vector,
+    budget: int,
+    phase: int,
+    *,
+    speed_cap: int,
+    mass: int = 1,
+    momentum_den: int = 1,
+    budget_den: int = 1,
+) -> MovementResult:
     """Select a single edge now; the transport engine schedules its completion."""
     for value in (*momentum, budget, phase, speed_cap):
         checked(value)
     if speed_cap < 1 or phase < 0 or budget != 0:
         raise ValueError("invalid departure state")
+    speed_ratio(momentum, mass, momentum_den, speed_cap)
+    if checked(budget_den) < 1:
+        raise ValueError("positive budget denominator required")
     direction, next_phase = choose_axis(momentum, phase)
     return MovementResult(direction, next_phase, 0)
 
 
-def transit_ticks(length: int, momentum: Vector, speed_cap: int) -> int:
+def transit_ticks(
+    length: int, momentum: Vector, speed_cap: int, mass: int = 1, momentum_den: int = 1
+) -> int:
     """Speed/c=min(L1(momentum),cap)/cap. Never borrow credit from another edge."""
     for value in (length, *momentum, speed_cap):
         checked(value)
     if length < 1 or speed_cap < 1:
         raise ValueError("positive length and speed cap required")
-    speed = min(checked_work(sum(abs(value) for value in momentum)), speed_cap)
+    speed, denominator = speed_ratio(momentum, mass, momentum_den, speed_cap)
     if not speed:
         raise ValueError("a resting particle cannot start a transit")
-    required = checked_work(length * speed_cap)
+    required = checked_work(checked_work(length * speed_cap) * denominator)
     return checked(checked_work(required + speed - 1) // speed)

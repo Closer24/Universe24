@@ -18,6 +18,7 @@ from event_universe.core.state import (
 )
 from event_universe.dynamics.movement import MovementRule, advance_movement
 from event_universe.dynamics.turning import FieldTurning, dominant_axis_transverse
+from event_universe.fields.halo import cancel_scalar_sample
 from event_universe.fields.policies import (
     ScalarActivity,
     nonnegative_sample,
@@ -64,6 +65,11 @@ class CurrentFieldModel:
             sources,
         )
 
+    def cancel_scalar_halo(self, cell: CellState) -> CellState:
+        """Map the selected local halo policy back to the fixed cell record."""
+        sample = cancel_scalar_sample(ScalarSample(cell.phi, cell.remainder))
+        return cell._replace(phi=sample.value, remainder=sample.remainder)
+
     def update_particle(
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
@@ -75,9 +81,16 @@ class CurrentFieldModel:
             (particle.force_rx, particle.force_ry, particle.force_rz),
             numerator=config.force_num,
             denominator=config.force_den,
+            momentum_den=particle.momentum_den,
         )
         move = self.movement(
-            response.momentum, particle.move_budget, particle.axis_phase, speed_cap=config.c_units
+            response.momentum,
+            particle.move_budget,
+            particle.axis_phase,
+            speed_cap=config.c_units,
+            mass=particle.mass,
+            momentum_den=particle.momentum_den,
+            budget_den=particle.move_budget_den,
         )
         next_cell = cell._replace(
             px=response.field_momentum[0], py=response.field_momentum[1], pz=response.field_momentum[2]
@@ -90,6 +103,7 @@ class CurrentFieldModel:
             force_ry=response.remainders[1],
             force_rz=response.remainders[2],
             move_budget=move.budget,
+            move_budget_den=move.budget_den,
             axis_phase=move.phase,
             last_update_tick=checked(tick),
         )

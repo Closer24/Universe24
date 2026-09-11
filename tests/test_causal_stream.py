@@ -6,6 +6,37 @@ from event_universe import CausalStreamConfig, CausalStreamSimulation
 from event_universe.fields.streaming import CausalOctantStream, attractive_samples
 
 
+def test_source_cannot_mask_invalid_negative_stream_population():
+    with pytest.raises(ValueError, match="before source emission"):
+        CausalOctantStream().emit((-1, 0, 0, 0, 0, 0, 0, 0), 1, 1, 0)
+
+
+def test_scalar_seed_is_rejected_without_mutating_stream_world():
+    world = CausalStreamSimulation()
+    with pytest.raises(NotImplementedError, match="scalar field seeds"):
+        world.seed_field((1, 2, 3), 64)
+    assert not world.cells
+    assert not world.streams.cells
+
+
+def test_stream_candidate_preserves_mass_aware_movement_and_state_audit():
+    from event_universe.diagnostics.measurements import audit, report
+
+    world = CausalStreamSimulation(
+        CausalStreamConfig(nx=64, ny=64, nz=64, c_units=4, source_per_octant=1)
+    )
+    world.add_particle(0, 20, 20, 20, 6, 0, 0, mass=3)
+    for tick in range(1, 9):
+        world.step()
+        particle = world.particles[0]
+        assert particle.mass == 3
+        assert particle.momentum == (6, 0, 0)
+        assert particle.position == (20 + tick // 2, 20, 20)
+        assert (particle.force_rx, particle.force_ry, particle.force_rz) == (0, 0, 0)
+        assert audit(world)["bounded_integer_state"]
+    assert report(world)["architecture"]["stream_registers_per_cell"] == 14
+
+
 def test_stream_split_conserves_every_integer_and_uses_six_ports():
     rule = CausalOctantStream()
     outgoing = rule.emit((1, 2, 3, 4, 5, 6, 7, 8), 2, 11, 2)

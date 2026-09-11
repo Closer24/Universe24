@@ -45,12 +45,20 @@ class QuantumConfig:
     max_nodes: int = 1_000_000
     max_eval_nodes: int = 100_000
     max_cached_results: int = 4_096
+    max_focus_sets: int = 4_096
+    max_focus_candidates: int = 100_000
 
     def __post_init__(self) -> None:
-        checked(self.max_nodes)
-        checked(self.max_eval_nodes)
-        checked(self.max_cached_results)
-        if min(self.max_nodes, self.max_eval_nodes, self.max_cached_results) <= 0:
+        values = (
+            self.max_nodes,
+            self.max_eval_nodes,
+            self.max_cached_results,
+            self.max_focus_sets,
+            self.max_focus_candidates,
+        )
+        for value in values:
+            checked(value)
+        if min(values) <= 0:
             raise ValueError("quantum budgets must be positive")
 
 

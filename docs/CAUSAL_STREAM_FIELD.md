@@ -2,6 +2,12 @@
 
 Model id: `causal-octant-stream-v1`.
 
+Integration retains this identity and its transport law. Invalid negative old
+populations are rejected before any positive source can mask them. The inherited
+scalar `seed_field` API is explicitly unsupported; it cannot silently create a
+scalar record that the stream evolution never reads. No scalar-to-stream initial
+condition rule is invented by this integration.
+
 This candidate tests one binding acceptance target: an isolated particle must not
 receive momentum or carried impulse residue from the field it generated itself.
 The result must emerge from causal field transport. The particle law may not use
@@ -56,6 +62,11 @@ model: a second source outside the particle must enter the Manhattan causal cone
 at one link per tick and produce an equal-and-opposite interaction in a symmetric
 pair test. An offset moving pair must show transverse attraction after causal
 contact.
+
+## Read-only display
+
+Diagnostics may display the sum of the eight populations as stream magnitude.
+This read-only host projection is not scalar phi and never feeds physical state.
 
 ## What this candidate does not establish
 

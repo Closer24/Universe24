@@ -11,9 +11,9 @@ __all__ = [
     "Config",
     "ParticleState",
     "Simulation",
-    "CausalStreamSimulation",
-    "CausalStreamConfig",
     "LinkedSimulation",
     "LinkConfig",
+    "CausalStreamSimulation",
+    "CausalStreamConfig",
     "__version__",
 ]

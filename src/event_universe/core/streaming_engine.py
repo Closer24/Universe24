@@ -32,6 +32,10 @@ class StreamingEngine(Engine):
         self.streams = StreamTransport(self._lattice, stream_rule, source_per_octant)
         self._sample_rule = sample_rule
 
+    def seed_field(self, position: Address, phi: int) -> None:
+        """A scalar seed has no defined conversion to directional stream state."""
+        raise NotImplementedError("causal streams do not support scalar field seeds")
+
     def _begin_tick(self) -> None:
         source_counts = {
             position: sum(pid >= 0 for pid in slots)

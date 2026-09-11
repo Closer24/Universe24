@@ -54,6 +54,8 @@ class CausalOctantStream:
             raise ValueError("exactly eight octant populations are required")
         for value in (*populations, sources, source_per_octant, phase):
             checked(value)
+        if any(value < 0 for value in populations):
+            raise ValueError("stream populations must be non-negative before source emission")
         if sources < 0 or source_per_octant < 0 or phase < 0:
             raise ValueError("sources, stream strength and phase must be non-negative")
         source = checked_work(sources * source_per_octant)

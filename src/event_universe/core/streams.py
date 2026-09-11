@@ -41,6 +41,18 @@ class StreamTransport:
     def at(self, position: Address) -> StreamCell:
         return self._cells.get(position, StreamCell())
 
+    def validate(self) -> None:
+        """Read-only host audit of all fixed stream records."""
+        for position, cell in self._cells.items():
+            if self._lattice.wrap(position) != position:
+                raise ValueError("non-canonical stream address")
+            if len(cell.populations) != 8 or len(cell.flux) != 6:
+                raise ValueError("stream cells require fourteen fixed registers")
+            for value in (*cell.populations, *cell.flux):
+                checked(value)
+                if value < 0:
+                    raise ValueError("stream registers must be non-negative")
+
     def advance(self, sources: Mapping[Address, int], phase: int) -> None:
         checked(phase)
         if phase < 0:

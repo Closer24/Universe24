@@ -92,32 +92,22 @@ The simulator does not repeatedly add a source's own new emission to itself.
 A stationary source should form a persistent surrounding state, rather than grow
 without bound or disappear because there was no movement event.
 
-## 7. A free particle does not push itself
+## 7. An isolated symmetric source does not push itself
 
-An isolated particle with no external influence must not accelerate, slow down or
-change momentum direction because of the field it generated. This applies at rest
-and in uniform motion, along axes and diagonals, at every permitted speed. Hidden
-impulse remainders must also stay zero; an unchanged final momentum is not enough
-if a self-response accumulated internally.
+For a single stationary source in symmetric space, field values on opposite sides
+of every axis must be equal. Opposite influences cancel, leaving its momentum unchanged.
 
-This result must emerge from the local field dynamics. It may not be implemented
-with source identity, a remote lookup, a per-source field map, a growing source
-history, a global subtraction, a later momentum repair or a force-off branch based
-on the number of particles in the world. A particle response may use only its fixed
-local state and information causally delivered through the six neighboring links.
+This is a fundamental local-consistency test: a particle must not start moving
+solely because of its own symmetric field.
 
-A field signal propagates before the particle response and movement of the same
-tick. A candidate may use this causal ordering to keep an outward field influence
-ahead of matter, but it must demonstrate the result with explicit tests rather
-than assume that a one-link speed bound is sufficient. Periodic wraparound is a
-boundary return and must be reported separately from the isolated free-space test.
-
-`causal-octant-stream-v1` is an opt-in candidate for this requirement. It stores no
-source identity: fixed octant populations move outward one nearest-neighbor link
-per field phase, then the particle reads only the six amounts delivered locally.
-The candidate and its limitations are documented in `docs/CAUSAL_STREAM_FIELD.md`.
-Passing this self-force gate is necessary but does not establish a real-world field
-law, rotational invariance, energy conservation or the correct radial falloff.
+For an accepted free-motion candidate, this requirement also applies to moving
+isolated particles: their momentum and impulse remainders must not change due
+to their own field. Baseline failures remain evidence, not approved corrections.
+The opt-in `causal-octant-stream-v1` candidate tests this through outward one-link
+transport before the particle response, with no source identity or subtraction.
+Its free-space guarantee ends at periodic return, which is a boundary effect
+requiring separate evidence. The fixed state and limits are specified in
+`SIMULATOR_DEFINITIONS.md` and `docs/CAUSAL_STREAM_FIELD.md`.
 
 ## 8. Momentum is exchanged at the event location
 
@@ -233,3 +223,24 @@ Only the main engine may eventually commit physical events through an explicit
 interface. That interface, automatic cell polling and quantum-field feedback are
 not implemented by this addition. Exact contracts and ownership are specified in
 `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
+
+## 15. Supplied mass and local elastic collisions
+
+The user explicitly adds a positive integer inertial mass per particle, default
+one. This mass is a model input; it has not emerged from events. At the same
+momentum a heavier particle moves more slowly, subject to the existing causal
+speed limit. Mass does not silently replace the source-strength or field laws.
+
+In the opt-in collision candidate, particles meeting at the same cell and tick
+undergo elastic backscattering. For equal and opposite momenta both return in the
+opposite direction. With unequal masses the result is calculated in the pair's
+center-of-mass frame, preserving the pair's total momentum and classical kinetic
+energy. Fractions are kept exactly using bounded integer numerators and
+denominators. No global correction supplies missing momentum or energy.
+
+A contact occurs once per encounter, without an extra position jump. Link transit
+particles can collide only after arrival. Fixed local flags distinguish a new
+encounter from particles still occupying the same cell. The exact two-body law,
+multiparticle ordering, schema extension and limits are in the v13 section of
+SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
+relativistic physics or energy conservation of the existing field law.

@@ -63,6 +63,8 @@ def capture_test_runs(monkeypatch, request):
                 {position: cell[0] for position, cell in world.cells.items() if cell[0] != 0},
                 [(pid, *particle[:6]) for pid, particle in world.particles.items()],
                 world.total_momentum(),
+                world.config.c_units,
+                (world.config.nx, world.config.ny, world.config.nz),
             )
         return capture_volume(world)
 

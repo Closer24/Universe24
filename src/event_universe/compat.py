@@ -8,6 +8,7 @@ from event_universe.api import Simulation
 from event_universe.core.state import Config, Vector
 from event_universe.diagnostics.frames import Slice, capture_frame
 from event_universe.diagnostics.measurements import (
+    ExactVector,
     audit,
     field_momentum,
     particle_momentum,
@@ -27,13 +28,13 @@ class IntegerO1Field3D(Simulation):
         self.force_records = self.recorder.force_records
         self.collisions = self.recorder.collisions
 
-    def total_particle_momentum(self) -> Vector:
+    def total_particle_momentum(self) -> ExactVector:
         return particle_momentum(self)
 
     def total_field_momentum(self) -> Vector:
         return field_momentum(self)
 
-    def total_momentum(self) -> Vector:
+    def total_momentum(self) -> ExactVector:
         return total_momentum(self)
 
     def xy_slice(self, z: int) -> dict[tuple[int, int], int]:

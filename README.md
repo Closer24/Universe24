@@ -139,3 +139,24 @@ lengths, symmetric edge proposals and frozen travel times. Dedicated tests are
 The example uses base length 10 for a shorter replay; `LinkConfig()` defaults to
 100. See `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
 Existing baseline scenarios keep their old behavior.
+
+## Particle mass and elastic collisions
+
+```python
+from event_universe import Config, Simulation
+
+world = Simulation(Config(source_strength=0), collisions=True)
+world.add_particle(0, 14, 6, 6, px=6, mass=1)
+world.add_particle(1, 18, 6, 6, px=-6, mass=2)
+```
+
+Run `python -m event_universe --scenario collision-masses --output artifacts/collision-masses`
+for a saved 3D replay. `collision` demonstrates equal masses; `collision-links`
+uses delayed local links. Mass defaults to 1; collisions are explicit opt-in to
+preserve baseline comparisons. Momentum components have the integer denominator
+`particle.momentum_den`. The exact law, timing and classical-model limits are in
+the v13 section of SIMULATOR_DEFINITIONS.md.
+
+The same option works with `event_universe.api.BalancedSimulation(collisions=True)`
+to combine mass and contact handling with the current balanced movement and local
+scalar halo. Existing balanced-halo tests remain part of the required gate.

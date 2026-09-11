@@ -1,7 +1,7 @@
 """Sole adapter between spacetime records and the shared quantum-history owner.
 
 No Engine reference, write callback, automatic polling, or physical commit is
-allowed here. The caller supplies a current world timestamp and a local root.
+allowed here. The caller supplies current world time and explicit quantum input.
 """
 
 from dataclasses import dataclass
@@ -11,6 +11,9 @@ from event_universe.quantum import (
     ORACLE_COST,
     Amplitude,
     DeferredQuantum,
+    FocusReply,
+    FocusRequest,
+    FocusSet,
     OracleCost,
     QuantumQuery,
     QuantumReply,
@@ -78,6 +81,14 @@ class QuantumBridge:
         invocations per local update. This bridge never polls the world itself.
         """
         return self._quantum.query(QuantumQuery(root, address, tick))
+
+    def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
+        """Configure a bounded candidate set in the quantum owner, not in a cell."""
+        self._quantum.bind_focus_set(focus_set_id, focus_set)
+
+    def focus_event(self, request: FocusRequest) -> FocusReply:
+        """Send one fixed-size request for one event/no-event focus decision."""
+        return self._quantum.focus_event(request)
 
     def measure(self, event_id: int, root: int) -> QuantumMeasurement:
         """Compatibility adapter through the same oracle; no second evaluator.
