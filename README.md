@@ -7,6 +7,9 @@ branch `main`. The Python package remains `event_universe`.
 truth and rule map, including the English-only repository language rule. This is
 one project; active implementation lives only in `src/event_universe/`.
 
+Agent workflow: [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
+define task routing, independent checks and handoffs using the same project rules.
+
 The package supports research into local fields and events, separating the engine,
 candidate laws, measurements and tests. The baseline model is
 `scalar-field-v10-contact`. It preserves the field and turning laws tested before
