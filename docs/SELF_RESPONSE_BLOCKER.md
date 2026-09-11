@@ -4,6 +4,11 @@ Status: blocked; no physical correction is established by this investigation.
 Reviewed source: `f25262e0ef0fa7212acab9e60448d6e151baff32`.
 The ordinary isolated-motion acceptance tests remain unchanged and required.
 
+Follow-up: the user's [matter-state transfer hypothesis](MATTER_STATE_TRANSFER_HYPOTHESIS.md)
+has passed six exact local arithmetic checks. It establishes conditions for
+state restoration without an extra impulse, while leaving the replacement
+long-range interaction and the existing self-response failures unresolved.
+
 ## Contract and observed cause
 
 The [current Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
