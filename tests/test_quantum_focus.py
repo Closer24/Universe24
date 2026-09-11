@@ -253,3 +253,43 @@ def test_focus_modules_pass_integer_static_audit():
         "src/event_universe/integration/quantum_bridge.py",
     ):
         assert static_integer_audit(root / relative) == []
+
+
+def test_invalid_ticket_does_not_consume_request_or_cache_capacity():
+    q, bridge = _focused_fixture(QuantumConfig(max_cached_results=1))
+    trace = q.last_focus_trace
+    with pytest.raises(ValueError, match="smaller than total"):
+        bridge.focus_event(FocusRequest(50, 7, 0, 32))
+    assert q.last_focus_trace == trace
+    first = bridge.focus_event(FocusRequest(50, 7, 0, 0))
+    assert first.event is None
+    with pytest.raises(OverflowError, match="cache budget"):
+        bridge.focus_event(FocusRequest(51, 7, 0, 0))
+    assert bridge.focus_event(FocusRequest(50, 7, 0, 0)).repeated == 1
+
+
+def test_multiple_outcomes_at_one_cell_keep_their_distinct_weights():
+    q = DeferredQuantum()
+    bridge = QuantumBridge(q)
+    address = (0, 0, 0)
+    roots = tuple(bridge.prepare(i, address, 0, i + 1).quantum_node for i in range(2))
+    bridge.bind_focus_set(
+        1,
+        FocusSet(
+            region_from_shape(1, 1, 1),
+            (FocusCandidate(roots[1], address, 20), FocusCandidate(roots[0], address, 10)),
+        ),
+    )
+    replies = [bridge.focus_event(FocusRequest(i, 1, 0, i)) for i in range(5)]
+    assert [reply.event.outcome for reply in replies] == [10, 20, 20, 20, 20]
+    assert all(reply.focus_steps == 0 for reply in replies)
+
+
+def test_no_event_only_set_needs_no_quantum_root():
+    q = DeferredQuantum()
+    q.bind_focus_set(1, FocusSet(region_from_shape(1, 1, 1), (), 2))
+    for ticket in range(2):
+        reply = q.focus_event(FocusRequest(ticket, 1, 0, ticket))
+        assert reply.event is None
+        assert reply.total_weight == 2
+        assert reply.event_weight == reply.evaluation_nodes == reply.focus_steps == 0

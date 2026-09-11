@@ -1,12 +1,13 @@
 """Copied diagnostic frames with explicit projection axes and true lattice coordinates."""
 
 from dataclasses import dataclass
+from dataclasses import field as dataclass_field
 from typing import Literal
 
 from event_universe.core.engine import Engine
 from event_universe.core.state import checked
 
-from .measurements import total_momentum
+from .measurements import ExactVector, total_momentum
 
 Plane = Literal["XY", "XZ", "YZ"]
 AXES: dict[Plane, tuple[int, int, int]] = {"XY": (0, 1, 2), "XZ": (0, 2, 1), "YZ": (1, 2, 0)}
@@ -28,7 +29,7 @@ class Frame:
     tick: int
     field: dict[tuple[int, int], int]
     particles: list[tuple[int, int, int, int, int, int]]
-    total_momentum: tuple[int, int, int]
+    total_momentum: ExactVector
 
 
 @dataclass(slots=True)
@@ -36,9 +37,10 @@ class VolumeFrame:
     tick: int
     field: dict[tuple[int, int, int], int]
     particles: list[tuple[int, int, int, int, int, int, int]]
-    total_momentum: tuple[int, int, int]
+    total_momentum: ExactVector
     c_units: int | None = None
     shape: tuple[int, int, int] | None = None
+    particle_scales: dict[int, tuple[int, int]] = dataclass_field(default_factory=dict)
 
 
 def capture_volume(world: Engine) -> VolumeFrame:
@@ -50,6 +52,7 @@ def capture_volume(world: Engine) -> VolumeFrame:
         total_momentum(world),
         world.config.c_units,
         (world.config.nx, world.config.ny, world.config.nz),
+        {pid: (p.mass, p.momentum_den) for pid, p in world.particles.items()},
     )
 
 

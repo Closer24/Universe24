@@ -198,3 +198,47 @@ failed, HTML must say FAILED RUN, and both the trace and failure frame must surv
 Total momentum conservation does not excuse the particle's self-impulse. A stationary
 isolated run passes; a two-particle contact run is not subject to isolated classification.
 These tests verify the detector, not success of the physical inertial-motion gate.
+
+## Mass and elastic same-cell contact
+
+`test_collisions.py` independently evaluates total momentum and classical kinetic
+energy with diagnostic Fraction arithmetic, never using those values in physics.
+
+| Input | Required outcome |
+| --- | --- |
+| Masses 1,1; momenta +3,-3 | Momenta -3,+3 |
+| Masses 1,2; momenta +3,0 | Momenta -1,+4 |
+| Masses 1,2; momenta +1,0 | Exact momenta -1/3,+4/3; no integer truncation |
+| Opposite 3D momenta (3,2,-1),(-3,-2,1) | Every component reverses |
+| Oblique equal-mass momenta (3,0,0),(0,3,0) | Momentum vectors exchange |
+| 54 rational input pairs across unequal masses | Exact energy/momentum, reversibility and input-exchange symmetry |
+| Momentum 1, mass 2, cap 12 | Half-unit budget credit, first hop after 24 ticks |
+| Length 5, momentum numerator 1, denominator 3, mass 2, cap 12 | Transit 360 ticks |
+| Same-cell head-on arrival at completed tick 4 | One collision, no extra hop; separation at tick 8 |
+| Heavy stationary target | Fractional outgoing momenta persist and the target eventually moves |
+| Local links of length 2 at half c | No collision in flight; one on arrival at event tick 4 |
+| One-cell periodic self-loop | One contact, stable slot identity across four ticks |
+| Independent transparent contact callable | Replacement preserves momentum instead of backscattering |
+| Periodic four-cell axis | Contact at x=0, then another at x=2 after separation |
+| Different simultaneous addresses | No collision despite visiting the same address at different times |
+| Four co-residents | Fixed 16 flags, conserved totals and at most one collision per particle per tick |
+| Invalid mass or bound overflow | Failure before insertion or atomic pair commit; faulted world rejects continuation |
+
+The same renderer captures every integration world. Baseline regression checks
+retain every old expectation while verifying the appended register defaults.
+
+## Balanced movement and twelve-cell halo candidate
+
+`test_balanced_movement.py` checks all 342 signed nonzero directions in [-3,3]^3
+for exact cycle counts, bounded prefix error, scaling, rate, invalid inputs and
+register limits. `test_balanced_halo.py` runs six isolated signed 3D momenta for
+200 ticks, checks the exact old/new six-neighbor target set, verifies an external
+seed still creates momentum, verifies equal-and-opposite contact response, and
+shows the same balanced movement without the halo fails the p=(1,1,0) input.
+`tools/check_diagonal_motion.py` renders five engine runs and accepts only the new
+candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).
+
+- Composition with current main: `BalancedSimulation(collisions=True)` handles
+  two diagonal particles of masses 1 and 2, conserves pair invariants in a
+  source-free run and separates them after one contact. All existing balanced
+  movement and self-halo expectations remain unchanged.

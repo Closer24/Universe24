@@ -20,19 +20,36 @@ class Scenario:
     ticks: int
     view: Slice
     links: LinkConfig | None = None
+    masses: tuple[int, ...] = ()
+    collisions: bool = False
 
     def create(self, observer: Observer | None = None) -> Engine:
         world: Engine = (
-            Simulation(self.config, observer=observer)
+            Simulation(self.config, observer=observer, collisions=self.collisions)
             if self.links is None
-            else LinkedSimulation(self.config, links=self.links, observer=observer)
+            else LinkedSimulation(
+                self.config, links=self.links, observer=observer, collisions=self.collisions
+            )
         )
-        for particle in self.particles:
-            world.add_particle(*particle)
+        if self.masses and len(self.masses) != len(self.particles):
+            raise ValueError("provide one mass per particle seed")
+        for index, particle in enumerate(self.particles):
+            world.add_particle(*particle, mass=self.masses[index] if self.masses else 1)
         return world
 
 
 def get_scenario(name: str) -> Scenario:
+    if name in ("collision", "collision-masses", "collision-links"):
+        return Scenario(
+            name,
+            Config(nx=40, ny=12, nz=12, c_units=12, source_strength=0),
+            ((0, 14, 6, 6, 6, 0, 0), (1, 18, 6, 6, -6, 0, 0)),
+            48,
+            Slice("XY", 6),
+            LinkConfig(base_length=2, stretch_num=0) if name == "collision-links" else None,
+            (1, 2) if name == "collision-masses" else (1, 1),
+            True,
+        )
     if name == "links":
         return Scenario(
             name,

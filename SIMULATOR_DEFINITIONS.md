@@ -31,9 +31,10 @@ field propagation. It does not yet establish quantum consistency or entanglement
    and commit boundaries; arbitrary precision is not an escape for physical state.
 3. A cell contains exactly five integer fields:
    `phi, px, py, pz, remainder`.
-4. A particle contains exactly twelve integer fields:
+4. A particle contains exactly sixteen integer fields:
    `x, y, z, px, py, pz, move_budget, axis_phase, force_rx, force_ry, force_rz,
-   last_update_tick`. The last field prevents multiple updates in one tick.
+   last_update_tick, mass, momentum_den, move_budget_den, last_collision_tick`.
+   The v13 section below defines the four appended registers and their defaults.
 5. The physical neighborhood is exactly `+x, -x, +y, -y, +z, -z`.
    Each local rule receives only fixed records and six neighbor values.
 6. Every occupied cell has exactly `K = max_particles_per_cell` slots, with
@@ -330,3 +331,116 @@ underlying model behavior. Model acceptance requires the separate isolated-motio
 gate; a test that confirms rejection does not turn that failing physical gate
 into a pass. Existing baseline physics and frozen regression expectations remain
 unchanged. No threshold exempts a one-unit impulse.
+
+## User-authorized mass and elastic point contacts — v13
+
+The user requested same-point particle collisions and then an individual mass
+parameter. `Simulation(collisions=True)` selects
+`scalar-field-v13-mass-elastic-contact`; `LinkedSimulation(collisions=True)` selects
+`scalar-field-v13-mass-elastic-local-links`. Both public APIs accept
+`add_particle(..., mass=...)`. Mass is a fixed positive integer in simulation
+mass units, default 1. Zero, negative, non-integer and overflowing masses fail
+before insertion. It is supplied inertial mass, not emergent mass or a claim
+about gravitational charge. The existing occupancy-based scalar source and field
+coupling are unchanged. Collision-free mass-1 v10/v11 behavior remains available.
+
+### Contract and independent quantities
+
+| Part | Contract |
+| --- | --- |
+| Law | Classical elastic backscattering: reverse relative velocity in the pair center-of-mass frame |
+| Inputs | The two co-resident particles' three momentum numerators, denominator and positive mass; no remote particles or field solve |
+| Evolving state | Four added particle integers: mass, momentum_den, move_budget_den, last_collision_tick; fixed K-by-K contact flags owned by each contacted cell |
+| Parameters | Mass is constant per particle; c_units, K and field parameters retain their existing roles |
+| Derived values | Physical momentum is (px,py,pz)/momentum_den; movement-budget rate is min(L1(p)/mass,c_units), never an independent velocity parameter |
+| Output | Two validated particle records committed together; immutable collision event with before/after state |
+| Bounds | Every stored integer fits 32-bit magnitude; every intermediate fits 64-bit magnitude; exact reduction, never truncation or saturation |
+| Errors | Overflow stops the world before either member of the failing pair commits; prior local events need not roll back |
+
+For physical momenta p1 and p2 and M=m1+m2, componentwise:
+
+- p1' = ((m1-m2) p1 + 2 m1 p2) / M
+- p2' = (2 m2 p1 + (m2-m1) p2) / M
+
+The calculation preserves p1+p2 and p1^2/(2m1)+p2^2/(2m2) exactly. Squared
+momentum here is the sum of the three component squares. These energy checks
+belong to tests/diagnostics and do not repair physics. For equal and opposite
+momenta both particles reverse; equal masses exchange momentum vectors. General
+unequal masses or oblique inputs need not reverse both lab-frame directions.
+Literal lab-frame reversal would change total momentum whenever it is nonzero.
+The selected 180-degree center-of-mass scattering angle is a model choice.
+
+All fractional results use integer numerators and a positive common denominator
+per vector. Movement credit also has a positive denominator and is retained
+exactly across a collision. Direction phase restarts at zero for a newly scattered
+trajectory; carried field-force remainders remain attached to their particles.
+Field impulses remain integer physical impulses: a numerator changes by impulse
+multiplied by momentum_den, and the cell receives the opposite physical impulse.
+Linked transit time is ceil(length*c_units*mass*momentum_den/L1(numerators)),
+with the existing speed cap and no cross-edge credit. The same rule applies at
+all speeds. Bounded Euclid uses at most 128 divisions for 63-bit inputs. Vector
+reduction concerns rational representation, not Euclidean vector normalization.
+Denominator growth can exhaust fixed registers; that is an explicit error.
+
+### Contact timing, locality and scope
+
+A contact means the same canonical integer XYZ address at a tick boundary.
+After due link arrivals and before the field phase, resolve initial/current
+co-residence. After the complete sequential movement phase, resolve new baseline
+arrivals. Intermediate occupancy during sequential movement is not simultaneous
+co-residence. In-flight link residents are excluded until arrival. No collision
+adds a hop, rewrites a past event or changes locked in-flight travel.
+
+Each cell inspects only its K resident slots, at most K(K-1)/2 pairs. A pair's
+contact flag prevents repeated bouncing while it remains together. An actual
+move clears flags incident on the departing and arriving slots. Each particle
+scatters at most once in a tick. More than two co-residents are resolved in slot
+order as disjoint pairs per tick; remaining fresh pairs can scatter on later
+ticks. This is a deterministic local multiparticle policy, not a unique
+simultaneous many-body solution or a permutation-invariance claim. Capacity
+blocking remains distinct; K=1 cannot host a two-particle contact.
+
+The contact flags are K*K integer registers per contacted cell, independent of
+world size and elapsed time. Global address sweeps and Python dictionaries remain
+host costs. There are no per-source maps, growing local histories, external
+queries or quantum exceptions in this law.
+
+Point contacts do not detect crossing between sampled addresses, overlapping
+finite-radius surfaces or meeting midway along a link. The lattice's capped L1
+speed and field law are not relativistic mechanics. Exact classical pair energy
+conservation therefore does not establish relativistic energy conservation or
+energy conservation for the entire field-coupled simulator.
+
+### Output and compatibility
+
+`--scenario collision`, `collision-masses` and `collision-links` exercise this
+feature through the existing runner and 3D HTML/GIF renderer. Scenario `masses`
+contains one mass for each seed (or is empty for unit defaults). Metadata records
+these masses, collision selection and the explicit model identifier. In 3D,
+particle labels show mass and velocity arrows use the mass and momentum scale.
+`particle_collision` JSONL events include named before/after records and their
+denominators. Legacy force events keep their tuple layout; their momentum fields
+are numerators at the denominator from that particle's latest collision record
+(or 1 before any collision). Legacy `TraceRecorder.collisions` still means blocked
+moves; actual scattering events are in `collision_records`.
+
+The original twelve particle fields keep their order. Four new fields append
+with defaults (1,1,1,-1). Frozen-v10 comparisons still compare every original
+field, every cell, slot, frontier and event at every tick, and separately assert
+all four new defaults. The frozen source and expected physical traces are unchanged.
+
+## Opt-in balanced-motion and local-halo candidate
+
+`scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`, combines
+interleaved integer movement with a synchronous local scalar cancellation phase.
+After every particle has completed its response and optional hop, the phase sets
+`phi` and `remainder` to zero in the union of the six neighbors of its previous
+and current positions. It retains field momentum. Every proposal validates before
+commit; baseline v10 is unchanged.
+
+The scheduler may visit at most twelve targets per particle and coalesces overlaps.
+The local rule receives one fixed cell record. It adds no physical registers,
+source map or history and satisfies LOCALITY-1 for fixed K. The candidate must keep
+isolated particle momentum exactly at all tested ticks and retain nonzero external
+response. Exact inputs, results and limitations are in
+[docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md).

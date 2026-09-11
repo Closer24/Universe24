@@ -8,9 +8,12 @@ from collections.abc import Mapping
 from types import MappingProxyType
 
 from .contracts import (
+    CollisionRecord,
+    CollisionRule,
     FieldActivity,
     FieldRule,
     ForceRecord,
+    LocalCellRule,
     MoveRecord,
     NullObserver,
     Observer,
@@ -42,10 +45,15 @@ class Engine:
         observer: Observer | None = None,
         *,
         field_activity: FieldActivity | None = None,
+        collision_rule: CollisionRule | None = None,
+        post_motion_halo: LocalCellRule | None = None,
     ) -> None:
+        self._collision_rule = collision_rule
+        self._contacts: dict[Address, tuple[int, ...]] = {}
         self._config = config
         self._field_rule = field_rule
         self._field_activity = field_activity
+        self._post_motion_halo = post_motion_halo
         self._lattice = PeriodicLattice((config.nx, config.ny, config.nz))
         self._particle_rule = particle_rule
         self._observer = observer if observer is not None else NullObserver()
@@ -119,7 +127,7 @@ class Engine:
         self._activate(address)
 
     def add_particle(
-        self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0
+        self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0, *, mass: int = 1
     ) -> "Engine":
         self._ensure_healthy()
         for value in (pid, x, y, z, px, py, pz):
@@ -133,10 +141,11 @@ class Engine:
         if EMPTY_SLOT not in slots:
             raise ValueError("cell particle capacity exceeded")
         slot = slots.index(EMPTY_SLOT)
-        particle = ParticleState(*position, px, py, pz)
+        particle = ParticleState(*position, px, py, pz, mass=mass)
         validate_particle(particle)
         self._particles[pid] = particle
         self._occupancy[position] = slots[:slot] + (pid,) + slots[slot + 1 :]
+        self._clear_contact_slot(position, slot)
         self._activate(position)
         self._observer.on_move(MoveRecord(self.tick, pid, *position))
         return self
@@ -178,6 +187,23 @@ class Engine:
     def _begin_tick(self) -> None:
         """Transport extension hook; the baseline has no in-flight transitions."""
 
+    def _apply_post_motion_halos(self, previous_positions: tuple[tuple[int, Address], ...]) -> None:
+        """Apply an optional fixed six-neighbor rule at old and current positions."""
+        if self._post_motion_halo is None:
+            return
+        targets: set[Address] = set()
+        for pid, previous in previous_positions:
+            targets.update(self._lattice.neighbors(previous))
+            targets.update(self._lattice.neighbors(self._particles[pid].position))
+        proposals = []
+        for address in targets:
+            cell = self._post_motion_halo(self.cell_at(address))
+            validate_cell(cell)
+            proposals.append((address, cell))
+        for address, cell in proposals:
+            self._cells[address] = cell
+            self._activate(address)
+
     def _particle_ready(self, pid: int) -> bool:
         return True
 
@@ -206,6 +232,8 @@ class Engine:
                 raise ValueError("a particle proposal must request at most one cardinal hop")
             if result.particle.position != old.position or result.particle.last_update_tick != self.tick:
                 raise ValueError("laws must leave position to the engine and mark the current tick")
+            if result.particle.mass != old.mass or result.particle.momentum_den != old.momentum_den:
+                raise ValueError("particle-field law must preserve mass and momentum representation")
             self._cells[position] = result.cell
             self._particles[pid] = result.particle
             self._observer.on_force(
@@ -224,6 +252,10 @@ class Engine:
 
     def _move(self, pid: int, origin: Address, slot: int, direction: int) -> None:
         target = self._lattice.neighbor(origin, direction)
+        if target == origin and self._collision_rule is not None:
+            # A periodic self-loop is not a new encounter or a change of local slots.
+            self._observer.on_move(MoveRecord(self.tick, pid, *target))
+            return
         target_slots = self._occupancy.setdefault(target, self._empty_slots())
         if EMPTY_SLOT not in target_slots:
             self._observer.on_blocked(MoveRecord(self.tick, pid, *target))
@@ -235,20 +267,95 @@ class Engine:
         target_slots = self._occupancy[target]
         self._occupancy[target] = target_slots[:free] + (pid,) + target_slots[free + 1 :]
         self._particles[pid] = self._particles[pid]._replace(x=target[0], y=target[1], z=target[2])
+        if target != origin:
+            self._clear_contact_slot(origin, slot)
+            self._clear_contact_slot(target, free)
         self._observer.on_move(MoveRecord(self.tick, pid, *target))
         self._activate(origin)
         self._activate(target)
+
+    def _clear_contact_slot(self, position: Address, slot: int) -> None:
+        if self._collision_rule is None or position not in self._contacts:
+            return
+        capacity = self.config.max_particles_per_cell
+        flags = list(self._contacts[position])
+        for other in range(capacity):
+            flags[slot * capacity + other] = 0
+            flags[other * capacity + slot] = 0
+        self._contacts[position] = tuple(flags)
+
+    def _collision_step(self) -> None:
+        if self._collision_rule is None:
+            return
+        # This is a host address sweep; each visited cell reads only its K local slots.
+        for position, slots in self._occupancy.items():
+            self._collide_in_cell(position, slots)
+
+    def _collide_in_cell(self, position: Address, slots: tuple[int, ...]) -> None:
+        if self._collision_rule is None:
+            return
+        capacity = self.config.max_particles_per_cell
+        flags = list(self._contacts.get(position, (0,) * (capacity * capacity)))
+        for a in range(capacity):
+            first_pid = slots[a]
+            if first_pid == EMPTY_SLOT or not self._particle_ready(first_pid):
+                continue
+            for b in range(a + 1, capacity):
+                second_pid = slots[b]
+                if second_pid == EMPTY_SLOT or not self._particle_ready(second_pid):
+                    continue
+                first, second = self._particles[first_pid], self._particles[second_pid]
+                if (
+                    flags[a * capacity + b]
+                    or first.last_collision_tick == self.tick
+                    or second.last_collision_tick == self.tick
+                ):
+                    continue
+                next_first, next_second = self._collision_rule(first, second)
+                next_first = next_first._replace(last_collision_tick=self.tick)
+                next_second = next_second._replace(last_collision_tick=self.tick)
+                for old, new in ((first, next_first), (second, next_second)):
+                    validate_particle(new)
+                    if (
+                        new.position != position
+                        or new.mass != old.mass
+                        or new.last_update_tick != old.last_update_tick
+                        or (new.move_budget, new.move_budget_den)
+                        != (old.move_budget, old.move_budget_den)
+                        or (new.force_rx, new.force_ry, new.force_rz)
+                        != (old.force_rx, old.force_ry, old.force_rz)
+                    ):
+                        raise ValueError(
+                            "collision must preserve position, mass, time and carried credit"
+                        )
+                # Both records validate before either is committed. No extra hop is made.
+                self._particles[first_pid], self._particles[second_pid] = next_first, next_second
+                flags[a * capacity + b] = 1
+                self._contacts[position] = tuple(flags)
+                self._observer.on_collision(
+                    CollisionRecord(
+                        self.tick, first_pid, second_pid, first, second, next_first, next_second
+                    )
+                )
+        if any(flags):
+            self._contacts[position] = tuple(flags)
 
     def step(self) -> "Engine":
         """Advance once. Failed ticks are terminal; successful local commits are retained."""
         self._ensure_healthy()
         next_tick = checked(self.tick + 1)
         try:
+            previous_positions = tuple(
+                (pid, particle.position) for pid, particle in self._particles.items()
+            )
             self._begin_tick()
+            self._collision_step()
             self._field_step()
             # Legacy order is part of this model's movement/conflict semantics.
             for position in tuple(self._occupancy):
                 self._particle_step_in_cell(position)
+            self._collision_step()
+            self._apply_post_motion_halos(previous_positions)
             self._tick = next_tick
         except Exception:
             self._faulted = True

@@ -74,7 +74,12 @@ class QuantumBridge:
         return self._quantum.sum2(left, right, address, tick)
 
     def query_cell(self, root: int, address: Address, tick: int) -> QuantumReply:
-        """Explicit fixed-size call; does not turn every cell into a detector."""
+        """Explicit fixed-size call; does not turn every cell into a detector.
+
+        One invocation is one model unit. Repeated host probes are allowed and
+        remain read-only; the physical scheduler, if added later, must bound its
+        invocations per local update. This bridge never polls the world itself.
+        """
         return self._quantum.query(QuantumQuery(root, address, tick))
 
     def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
@@ -86,7 +91,11 @@ class QuantumBridge:
         return self._quantum.focus_event(request)
 
     def measure(self, event_id: int, root: int) -> QuantumMeasurement:
-        """Compatibility adapter through the same oracle; no second evaluator."""
+        """Compatibility adapter through the same oracle; no second evaluator.
+
+        With no world timestamp argument, this historical API queries at the
+        root's recorded time. Use query_cell for an explicitly stamped cell call.
+        """
         checked(event_id)
         if event_id < 0:
             raise ValueError("event id must be non-negative")

@@ -17,6 +17,20 @@ class ParticleUpdate(NamedTuple):
 FieldRule = Callable[[CellState, Neighbors, int, Config], CellState]
 FieldActivity = Callable[[CellState, CellState, int], bool]
 ParticleRule = Callable[[ParticleState, CellState, Neighbors, Config, int], ParticleUpdate]
+CollisionRule = Callable[[ParticleState, ParticleState], tuple[ParticleState, ParticleState]]
+
+
+class CollisionRecord(NamedTuple):
+    tick: int
+    first_pid: int
+    second_pid: int
+    before_first: ParticleState
+    before_second: ParticleState
+    after_first: ParticleState
+    after_second: ParticleState
+
+
+LocalCellRule = Callable[[CellState], CellState]
 
 
 class MoveRecord(NamedTuple):
@@ -53,6 +67,7 @@ class Observer(Protocol):
     def on_move(self, event: MoveRecord) -> None: ...
     def on_force(self, event: ForceRecord) -> None: ...
     def on_blocked(self, event: MoveRecord) -> None: ...
+    def on_collision(self, event: CollisionRecord) -> None: ...
 
 
 class NullObserver:
@@ -65,4 +80,7 @@ class NullObserver:
         pass
 
     def on_blocked(self, event: MoveRecord) -> None:
+        pass
+
+    def on_collision(self, event: CollisionRecord) -> None:
         pass

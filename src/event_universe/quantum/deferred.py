@@ -121,7 +121,11 @@ class DeferredQuantum:
         return self._nodes[node_id]
 
     def _require_local_parent(self, parent: int, address: Address, tick: int) -> None:
-        """Validate recorded physical edges; oracle evaluation is not such an edge."""
+        """Validate recorded physical edges; oracle evaluation is not such an edge.
+
+        Addresses use an unwrapped 3D chart. A remote path must contain explicit
+        neighbor hops. Periodic seam mapping is not inferred by the sidecar.
+        """
         node = self.node(parent)
         dx = abs(checked_work(address[0] - node.x))
         dy = abs(checked_work(address[1] - node.y))
@@ -135,7 +139,12 @@ class DeferredQuantum:
             raise ValueError("quantum history edge arrives before its causal tick")
 
     def resolve(self, root: int, *, node_budget: int | None = None) -> tuple[Amplitude, int]:
-        """Evaluate reachable ancestors only; return amplitude and evaluated-node count."""
+        """Evaluate reachable ancestors only; return amplitude and evaluated-node count.
+
+        The discovered-node guard bounds backward expansion *before* reaching a
+        leaf. It is not enough to count only completed nodes of a deep history.
+        This low-level diagnostic method is not itself a modeled cell query.
+        """
         self._require_node(root)
         budget = self._config.max_eval_nodes
         if node_budget is not None:
@@ -181,7 +190,13 @@ class DeferredQuantum:
         return memo[root], work
 
     def query(self, request: QuantumQuery) -> QuantumReply:
-        """One model operation, zero simulated ticks, separately bounded host work."""
+        """One model operation, zero simulated ticks, separately bounded host work.
+
+        Success returns information only. Repeating a query never draws an
+        outcome. Cache and counters are committed together after validation;
+        rejected/failed queries do not modify history or successful-call metrics.
+        Every successful invocation counts as one model unit, even on a cache hit.
+        """
         if type(request) is not QuantumQuery:
             raise TypeError("query requires an immutable QuantumQuery")
         root = self.node(request.root)
@@ -302,7 +317,11 @@ class DeferredQuantum:
         self._terminal_setup = setup
 
     def read_terminal_trial(self, tick: int, ticket: int) -> TerminalReply:
-        """Absorbing trial. First ticket must be uniform; repeats reuse the result."""
+        """Absorbing trial. First ticket must be uniform; repeats reuse the result.
+
+        No Engine reference, physical writes, clock advancement or second
+        evaluator. The trial has no post-detection evolving quantum excitation.
+        """
         checked(tick)
         checked(ticket)
         if tick < 0 or ticket < 0:

@@ -1,6 +1,7 @@
 """Read-only world measurements. Their global cost is not local physics cost."""
 
 from dataclasses import asdict
+from fractions import Fraction
 
 from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
@@ -15,13 +16,23 @@ from event_universe.core.state import (
     validate_particle,
 )
 
+ExactVector = tuple[int | Fraction, int | Fraction, int | Fraction]
 
-def particle_momentum(world: Engine) -> Vector:
-    return (
-        sum(p.px for p in world.particles.values()),
-        sum(p.py for p in world.particles.values()),
-        sum(p.pz for p in world.particles.values()),
-    )
+
+def exact_component(value: Fraction) -> int | Fraction:
+    return value.numerator if value.denominator == 1 else value
+
+
+def particle_momentum(world: Engine) -> ExactVector:
+    def component(axis: int) -> int | Fraction:
+        return exact_component(
+            sum(
+                (Fraction(p.momentum[axis], p.momentum_den) for p in world.particles.values()),
+                Fraction(0),
+            )
+        )
+
+    return component(0), component(1), component(2)
 
 
 def field_momentum(world: Engine) -> Vector:
@@ -32,7 +43,7 @@ def field_momentum(world: Engine) -> Vector:
     )
 
 
-def total_momentum(world: Engine) -> Vector:
+def total_momentum(world: Engine) -> ExactVector:
     matter, field = particle_momentum(world), field_momentum(world)
     return matter[0] + field[0], matter[1] + field[1], matter[2] + field[2]
 
@@ -63,7 +74,7 @@ def audit(world: Engine) -> dict[str, bool]:
         raise ValueError("a particle is missing from occupancy")
     for particle in world.particles.values():
         validate_particle(particle)
-        if not 0 <= particle.move_budget < world.config.c_units:
+        if not 0 <= particle.move_budget < world.config.c_units * particle.move_budget_den:
             raise ValueError("movement budget outside one-tick interval")
         if particle.axis_phase < 0 or not -1 <= particle.last_update_tick < world.tick:
             raise ValueError("invalid particle phase or last-update marker")
