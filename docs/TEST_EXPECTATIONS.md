@@ -81,6 +81,16 @@ declared fixed cell schema.
 
 ## Running and validating changes
 
+The suite reuses world runs when their inputs and required observations coincide.
+The frozen contact comparison also checks the first transverse response within
+24 ticks; the frozen turning comparison also checks the XY turning result and
+per-tick momentum. XZ and YZ runs remain separate symmetry checks. The shared
+plane/volume application test checks metadata, traces and standalone HTML together.
+The independent eight-case stream/free-control comparison covers the ordinary
+isolated-rate cases; the original sampler retains only the additional 1/100 and
+18/20 rate regimes. Bounds, failure evidence and frozen reference assertions are
+unchanged by this consolidation.
+
 Run `python tools/check.py` from the installed project. It checks style, types and
 behavior and creates `artifacts/test-runs.html` for all captured world runs.
 Pure-function unit tests do not run a world. See `VALIDATION.md` for recorded
