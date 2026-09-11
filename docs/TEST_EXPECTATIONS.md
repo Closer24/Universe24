@@ -276,3 +276,16 @@ candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).
   two diagonal particles of masses 1 and 2, conserves pair invariants in a
   source-free run and separates them after one contact. All existing balanced
   movement and self-halo expectations remain unchanged.
+
+## Run capture and export performance
+
+- `test_run_capture.py` checks selected-view snapshots against independent state
+  expectations, including zero ticks, an unsampled final tick, invalid slices,
+  complete event records and a partially committed failed tick. Failure metadata
+  and its final frame must reflect the changed state, including exact fractions.
+- `test_render_export.py` checks saved pixels and frame durations against the
+  previous export path for synthetic figures, full 3D dimensions, non-repeating
+  playback and figure cleanup on failure.
+- Performance measurements use identical scenario inputs, tick counts, display
+  sampling, image dimensions and dependencies. Timing comparisons are recorded
+  separately from functional tests; CI does not assert machine-dependent seconds.

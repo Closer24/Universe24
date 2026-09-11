@@ -28,3 +28,8 @@ Test only meaningful rendering contracts affected by the change and reuse existi
 run evidence. Hand presentation-only fixes to the assigned renderer owner, physical
 anomalies to simulation/physics review, and inspected output to Boss. Do not mark
 motion physically correct from its appearance alone.
+
+For renderer optimizations, follow the shared workflow's
+[performance procedure](../workflow.md#performance-work). Compare saved frame
+count, dimensions, duration, playback and representative decoded images in
+addition to the unchanged physical trace.
