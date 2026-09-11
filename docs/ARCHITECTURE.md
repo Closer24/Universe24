@@ -192,6 +192,30 @@ writer copies the Agg canvas already drawn by FuncAnimation and encodes the
 non-looping GIF once. Custom savefig backgrounds or transparency use savefig to
 preserve their rendering semantics. See [PERFORMANCE.md](PERFORMANCE.md).
 
+`diagnostics/live.py` owns disposable preview coordination. The CLI enables it;
+API callers opt in. The parent alone steps the Engine, copies and retains every
+canonical frame, and records events. Before nonblocking queue submission, the
+preview serializes the copied frame, preventing later producer mutation from
+reaching the consumer. A spawned process receives only serialized frames and
+display configuration. Its queue holds one waiting snapshot and its trail window
+holds at most eight; intermediate preview messages may be coalesced.
+
+The worker uses the same volume/slice scene builders to publish the latest PNG
+inside an atomically replaced `live.html`. Its scales are provisional because
+future extrema are not yet known. An integer meta-refresh interval supports
+ordinary local-file browsers without a server. After computation, the parent
+signals a separate stop event, reaps the worker with bounded waits, and closes
+queues without waiting for an abandoned feeder. Only then does the canonical
+renderer publish selected already-drawn rasters through a read-only callback.
+This preserves one live-page writer and avoids recomputing final frames.
+
+Final GIF/HTML still uses the entire retained history and unchanged fixed scales.
+Preview failures warn without changing physical stepping or canonical export;
+physical failures keep their original exception and failed report. A final redirect
+is registered only for the current run's successfully written artifact, preserving
+failure status and avoiding a stale report left by an earlier run. Preview work,
+IPC and page updates are host costs, not part of the physical model.
+
 Sparse world storage is distinct from constant-size physical state. Existing
 materialized cells and occupancy-address order are retained for exact legacy
 equivalence. Reclaiming them is a separate scheduler change requiring physical

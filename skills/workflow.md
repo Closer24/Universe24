@@ -80,6 +80,12 @@ Preserve every physical update, event and acceptance check. Compare traces and
 metadata and inspect saved frames after changing the output pipeline. Do not
 claim a speedup from fewer frames or lower resolution without saying so.
 
+For live displays, verify that an image is available before final output and
+distinguish simulation-time preview from export progress. Record time to first
+visible output separately from total duration. Keep preview queues bounded,
+preserve all canonical frames and physical failure evidence, and verify worker
+cleanup plus the final replay handoff. Disclose unverified browser behavior.
+
 ## Tools and authority
 
 Use the available local Git/Python tools and discover the connected GitHub tools

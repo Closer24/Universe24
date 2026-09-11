@@ -47,6 +47,14 @@ the measured improvement comes from fewer frames or reduced resolution.
 
 ## Reproduce the measurement
 
+These saved-output measurements use the API's `live=False` default. CLI live
+viewing now adds a separate preview process and throttled PNG page updates so
+images become available before the final GIF. This can add host work; concurrency
+improves time to visible results and does not promise a shorter whole-run duration.
+Use `--no-live` to compare final-output throughput, and record first-image latency
+separately when comparing live viewing. Short physical calculations can finish
+before the first preview image; updates continue during canonical export.
+
 Use the same installed dependencies for the baseline and optimized checkouts.
 Run the following from each checkout in a fresh Python process, with its `src`
 directory on `PYTHONPATH`. Use distinct output directories for each measurement.
@@ -78,6 +86,26 @@ Keep other heavy jobs idle during comparison. Reuse the installed environment
 for normal later runs; setup work is not part of running the simulator.
 
 ## Validation scope
+
+Live output was observed externally on the same Windows/Python 3.14.7 environment,
+without slowing or modifying physical steps. These times start at CLI launch,
+including imports and preview startup; they are not directly comparable to the
+earlier after-import throughput measurements.
+
+| Run | First live page | First PNG | Final HTML | CLI exit |
+| --- | ---: | ---: | ---: | ---: |
+| Contact, 48 ticks, stride 1, 49 frames | 1.277 s | 3.779 s | 28.854 s | 29.686 s |
+| Turning, 110 ticks, stride 10, 12 frames | 1.117 s | 2.558 s | 8.651 s | 8.872 s |
+
+In the turning run, preview images for ticks 20 and 90 were published before
+final metadata existed at 3.193 s. A separate observation of the same 110-tick
+scenario recorded a monotonic timestamp immediately after the final physical
+step; its first PNG was verified 0.507 s before that timestamp. This confirms
+actual overlap, using one final-step marker and no delays or numerical changes.
+The short contact calculation finished before its first image; that image and later
+updates arrived during export. All 49 final contact frames were pixel-identical
+to the prior output, with identical frame durations and all 136 events unchanged.
+The measurements describe file availability, not a browser's paint latency.
 
 The export and capture contracts are covered by `tests/test_render_export.py`
 and `tests/test_run_capture.py`; see [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
