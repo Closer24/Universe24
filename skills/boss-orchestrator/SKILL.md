@@ -20,11 +20,18 @@ task allocation and integration decisions; specialist logic stays in its skill.
 | Rendering or visual interpretation | [visualization-check](../visualization-check/SKILL.md) | Faithful, inspected output |
 | Compatibility with an earlier result | [regression-check](../regression-check/SKILL.md) | Independent baseline comparison |
 | Review, reconcile, close or merge PRs | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) | Current-head integration decision |
+| Unresolved blocker or unusual cross-component task | [special-tasks](../special-tasks/SKILL.md) | Root cause, focused candidate and independent acceptance evidence |
 
 One agent may use multiple skills when no independent review is needed. Launch
 agents only when delegation is authorized and independent tasks justify it.
 Give implementation and required independent review to different owners where
 practical. Do not create idle agents merely to match the table.
+
+For an unresolved blocker, assign a separate special-task agent with a concrete
+acceptance condition, exact source and owned files. Keep tests and physics review
+independent from that agent's implementation. When concurrency is full, finish or
+release a completed assignment before starting it; do not displace an active owner
+silently. Track the blocker until independent checks establish its resolution.
 
 ## Sequence and finish
 

@@ -14,6 +14,12 @@ acceptance target and owned files. Include relevant earlier findings and the
 current user's constraints. Use isolated branches/worktrees for concurrent edits;
 one owner writes each shared interface until the coordinator reconciles changes.
 
+Send unresolved blockers and unusual cross-component investigations to Boss for
+a separate [special-task agent](special-tasks/SKILL.md). Transfer the smallest
+reproducer, exact failing commit and violated contract; keep implementation and
+acceptance review with different owners. Ordinary domain ownership remains with
+the assigned specialist unless Boss explicitly transfers it.
+
 Return a concise handoff with:
 
 - status: pass, blocked or incomplete; distinguish code checks from physical acceptance;
