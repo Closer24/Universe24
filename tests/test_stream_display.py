@@ -3,13 +3,11 @@
 from copy import deepcopy
 
 import pytest
-from PIL import Image
 
 from event_universe import Config
 from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.core.streams import ZERO_OCTANTS, StreamCell
 from event_universe.diagnostics.frames import Slice, capture_frame, capture_volume
-from event_universe.diagnostics.render import render_run, render_volume
 from event_universe.models.current_field import update_particle
 
 
@@ -46,11 +44,15 @@ def test_stream_projection_copies_population_sums_and_never_materializes_cells(s
     assert dict(stream_world.cells) == {}
 
 
+@pytest.mark.visualization
 @pytest.mark.parametrize("volume", [False, True])
 def test_stream_output_names_its_quantity_in_image_and_html(tmp_path, stream_world, volume):
     from unittest.mock import patch
 
+    from PIL import Image
+
     import event_universe.diagnostics.render as renderer
+    from event_universe.diagnostics.render import render_run, render_volume
 
     path = tmp_path / "streams.html"
     frame = capture_volume(stream_world) if volume else capture_frame(stream_world, Slice("XY", 4))
@@ -80,6 +82,8 @@ def test_stream_output_names_its_quantity_in_image_and_html(tmp_path, stream_wor
 
 @pytest.mark.parametrize("volume", [False, True])
 def test_one_animation_cannot_mix_stream_and_scalar_quantities(tmp_path, stream_world, volume):
+    from event_universe.diagnostics.render import render_run, render_volume
+
     stream = capture_volume(stream_world) if volume else capture_frame(stream_world, Slice())
     scalar = deepcopy(stream)
     scalar.field_kind = "scalar"

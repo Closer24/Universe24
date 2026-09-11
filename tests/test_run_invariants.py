@@ -2,7 +2,6 @@
 
 import json
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -22,7 +21,7 @@ def test_unchanged_momentum_is_accepted():
     require_inertial_momentum((3, -2, 1), (3, -2, 1), pid=9, tick=12)
 
 
-def test_real_self_force_stops_run_even_when_failure_tick_is_not_sampled():
+def test_real_self_force_stops_run_even_when_failure_tick_is_not_sampled(tmp_path, request):
     scenario = Scenario(
         "isolated-self-force-rejection",
         Config(nx=257, ny=257, nz=257, c_units=12, force_den=12),
@@ -30,18 +29,24 @@ def test_real_self_force_stops_run_even_when_failure_tick_is_not_sampled():
         72,
         Slice("XY", 128),
     )
-    output = Path("artifacts/isolated-run-rejected")
+    output = tmp_path
+    visualize = request.config.getoption("--visualize-runs")
     with pytest.raises(InertialMotionViolation, match="tick 45"):
-        run_scenario(scenario, output, frame_stride=64)
+        run_scenario(scenario, output, frame_stride=64, visualize=visualize)
     metadata = json.loads((output / "run.json").read_text())
     assert metadata["status"] == "failed"
     assert metadata["isolated_momentum_check"] == "failed"
     assert metadata["report"]["tick"] == 45
     assert metadata["momentum_equal_at_every_completed_tick"]  # Total conservation is insufficient.
     assert "expected (1, 1, 0), actual (1, 0, 0)" in metadata["error"]
-    html = (output / "run.html").read_text()
-    assert "FAILED RUN" in html and "ticks 0–45" in html
-    assert "data:image/gif;base64," in html
+    if visualize:
+        html = (output / "run.html").read_text()
+        assert "FAILED RUN" in html and "ticks 0–45" in html
+        assert "data:image/gif;base64," in html
+    else:
+        assert metadata["display"] == "none"
+        assert not (output / "run.html").exists()
+        assert not (output / "run.gif").exists()
     assert (output / "events.jsonl").read_text()
 
 

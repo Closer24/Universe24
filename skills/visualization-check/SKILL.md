@@ -10,6 +10,11 @@ Read [the shared workflow](../workflow.md) and the display contract in
 the output change; output is an inspected artifact and scoped visual findings.
 Use the existing frame, HTML/GIF and image-inspection tools.
 
+Visualization is opt-in. Apply this workflow to requested visual output; do not
+turn a headless simulation or ordinary test run into a rendering run. Use
+`pytest --visualize-runs` only when visual checks were requested. Headless output
+contracts are checked through metadata and event traces without frame capture.
+
 Rendering reads copied state only. Keep physical changes with the field/engine
 owner. Inspect actual saved frames and HTML, not merely plotting code or a tool's
 success message. Check the relevant initial, event/failure and final frames.

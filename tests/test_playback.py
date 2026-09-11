@@ -1,12 +1,15 @@
 import pytest
-from PIL import Image
 
 from event_universe.diagnostics.frames import Frame, Slice, VolumeFrame
-from event_universe.diagnostics.render import render_run, render_volume
 
 
+@pytest.mark.visualization
 @pytest.mark.parametrize("volume", [False, True])
 def test_exported_animation_stops_at_final_frame(tmp_path, volume):
+    from PIL import Image
+
+    from event_universe.diagnostics.render import render_run, render_volume
+
     # Synthetic snapshots: no world runs or physical interpolation.
     output = tmp_path / "playback.html"
     if volume:
