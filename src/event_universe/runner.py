@@ -9,7 +9,7 @@ from pathlib import Path
 from event_universe import __version__
 from event_universe.diagnostics.frames import Frame, Slice, VolumeFrame, capture_frame, capture_volume
 from event_universe.diagnostics.invariants import require_inertial_momentum
-from event_universe.diagnostics.measurements import report, total_momentum
+from event_universe.diagnostics.measurements import ExactVector, report, total_momentum
 from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.diagnostics.render import render_run, render_volume
 from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED_MODEL_ID
@@ -44,9 +44,17 @@ def run_scenario(
     failure: Exception | None = None
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
         world = scenario.create(JsonlRecorder(stream))
-        frames.append(capture_frame(world, scenario.view))
-        if volume:
-            volume_frames.append(capture_volume(world))
+        scenario.view.validate_shape((world.config.nx, world.config.ny, world.config.nz))
+
+        def capture(momentum: ExactVector | None = None) -> None:
+            if volume:
+                volume_frames.append(capture_volume(world, momentum=momentum))
+            else:
+                frames.append(capture_frame(world, scenario.view, momentum=momentum))
+
+        initial_momentum = total_momentum(world)
+        current_momentum = initial_momentum
+        capture(current_momentum)
         # The runner owns the run: no external seeds or later particle additions.
         # Field-bearing initial states are not evidence of isolation.
         isolated = (
@@ -55,12 +63,12 @@ def run_scenario(
             else None
         )
         isolated_status = "not_applicable" if isolated is None else "passed"
-        initial_momentum = total_momentum(world)
         conserved = True
         try:
             for _ in range(scenario.ticks):
                 world.step()
-                conserved = conserved and total_momentum(world) == initial_momentum
+                current_momentum = total_momentum(world)
+                conserved = conserved and current_momentum == initial_momentum
                 if isolated is not None:
                     pid, initial_particle = isolated
                     isolated_status = "failed"
@@ -72,15 +80,13 @@ def run_scenario(
                     )
                     isolated_status = "passed"
                 if world.tick % frame_stride == 0:
-                    frames.append(capture_frame(world, scenario.view))
-                    if volume:
-                        volume_frames.append(capture_volume(world))
+                    capture(current_momentum)
         except Exception as error:
             failure = error
-        if frames[-1].tick != world.tick or failure is not None:
-            frames.append(capture_frame(world, scenario.view))
-            if volume:
-                volume_frames.append(capture_volume(world))
+        last_frame_tick = volume_frames[-1].tick if volume else frames[-1].tick
+        if last_frame_tick != world.tick or failure is not None:
+            # A failed step may have committed local state without advancing the tick.
+            capture(None if failure is not None else current_momentum)
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": source_fingerprint(),

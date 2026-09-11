@@ -178,6 +178,20 @@ momentum arrows with a rotating camera. Plane and volume renderers share one
 GIF/HTML output function. Camera rotation, color and marker scaling are purely
 diagnostic; they do not change the engine or particle motion.
 
+The runner captures only the selected view. A capture may receive momentum
+already measured from that same state; otherwise it measures the state itself.
+Every completed tick still gets its momentum acceptance check, including ticks
+without a saved frame. A failed step is captured with a fresh measurement because
+its partially committed state can change without advancing the tick counter.
+
+The volume renderer retains static axes, grid and compass artists between frames
+and extends diagnostic trail history incrementally. It resets that history when
+playback seeks backward or the domain changes. Dynamic artists are replaced for
+each frame, preserving the existing draw order and camera. The shared Pillow
+writer copies the Agg canvas already drawn by FuncAnimation and encodes the
+non-looping GIF once. Custom savefig backgrounds or transparency use savefig to
+preserve their rendering semantics. See [PERFORMANCE.md](PERFORMANCE.md).
+
 Sparse world storage is distinct from constant-size physical state. Existing
 materialized cells and occupancy-address order are retained for exact legacy
 equivalence. Reclaiming them is a separate scheduler change requiring physical

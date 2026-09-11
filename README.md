@@ -105,6 +105,24 @@ Use `--view-2d --plane XY --slice 12` for a slice. The full rule is in the
 Running into the same output directory replaces its results. Use separate
 output directories to compare experiments.
 
+## Run performance
+
+Reuse the installed environment for later runs; dependency installation is a
+one-time setup step. The default still records every tick and exports enhanced
+1500x1275 3D HTML and GIF. The renderer draws each default frame once and encodes
+the stopped GIF once; the runner captures only the selected view.
+
+For a quicker, explicitly sampled preview of a long run, use the existing option:
+
+```bash
+python -m event_universe --scenario contact --frame-stride 4 --output artifacts/contact-preview
+```
+
+This still computes and checks every physical tick and records every event.
+It saves fewer display frames, so intermediate movement is visible in the event
+trace rather than in the animation. Use stride 1 for consecutive-tick inspection.
+See [performance measurements](docs/PERFORMANCE.md) for the measured case and limits.
+
 ## Check the project with one command
 
 ```bash

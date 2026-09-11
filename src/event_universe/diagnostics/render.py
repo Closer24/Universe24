@@ -8,10 +8,11 @@ import base64
 import html
 import json
 from collections.abc import Callable, Mapping, Sequence
+from io import BytesIO
 from itertools import pairwise
 from math import hypot
 from pathlib import Path
-from typing import cast
+from typing import Any, cast
 
 import matplotlib
 
@@ -20,10 +21,11 @@ import matplotlib.patheffects as path_effects
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.artist import Artist
+from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
 from mpl_toolkits.mplot3d import Axes3D
-from PIL import Image, ImageSequence
+from PIL import Image
 
 from .frames import AXES, Frame, Slice, VolumeFrame
 
@@ -264,10 +266,70 @@ def render_volume(
     fig.text(0.12, 0.18, "AXIS DIRECTIONS", color="#c2d5ed", ha="center", fontsize=8)
     # Overlay particle identity and velocity above the translucent field.
     ax.computed_zorder = False
+    ax.set_xlim(*bounds[0])
+    ax.set_ylim(*bounds[1])
+    ax.set_zlim(*bounds[2])
+    ax.set_box_aspect(tuple(hi - lo for lo, hi in bounds))
+    ax.grid(False)
+    for axis, label, color in zip(
+        (ax.xaxis, ax.yaxis, ax.zaxis), "XYZ", VOLUME_AXIS_COLORS, strict=True
+    ):
+        axis.set_pane_color((0.055, 0.085, 0.14, 0.40))
+        axis.pane.set_edgecolor("#435a75")
+        axis.line.set_color(color)
+        axis.line.set_linewidth(2.2)
+        axis.set_major_locator(MaxNLocator(4, integer=True))
+        axis.set_rotate_label(False)
+        axis.set_label_text(label, color=color, fontsize=17, weight="bold")
+        axis.labelpad = 12
+        axis.set_tick_params(colors=color, labelsize=11, pad=3)
+    # Static geometry is shared by every camera angle; physical cells are unchanged.
+    grid_ticks = []
+    for ticks, (lo, hi) in zip((ax.get_xticks(), ax.get_yticks(), ax.get_zticks()), bounds, strict=True):
+        dense_ticks = sorted([*ticks, *((a + b) / 2 for a, b in pairwise(ticks))])
+        grid_ticks.append([value for value in dense_ticks if lo <= value <= hi])
+    for grid_x in grid_ticks[0]:
+        ax.plot([grid_x, grid_x], bounds[1], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
+        ax.plot([grid_x, grid_x], [bounds[1][1]] * 2, bounds[2], color="#283c53", linewidth=0.55)
+    for grid_y in grid_ticks[1]:
+        ax.plot(bounds[0], [grid_y, grid_y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
+        ax.plot([bounds[0][0]] * 2, [grid_y, grid_y], bounds[2], color="#283c53", linewidth=0.55)
+    for grid_z in grid_ticks[2]:
+        ax.plot(bounds[0], [bounds[1][1]] * 2, [grid_z, grid_z], color="#283c53", linewidth=0.55)
+        ax.plot([bounds[0][0]] * 2, bounds[1], [grid_z, grid_z], color="#283c53", linewidth=0.55)
+    grid_lines = tuple(ax.lines)
+    fixed_artists = set(ax.get_children())
+    _draw_orientation(compass, elevation=26, azimuth=-65)
+    paths: dict[int, list[tuple[float, float, float]]] = {}
+    trail_positions: dict[int, tuple[int, int, int]] = {}
+    last_index = -1
+    last_shape = frames[0].shape
 
     def draw(index: int) -> tuple[Artist, ...]:
-        ax.clear()
+        nonlocal last_index, last_shape
+        for artist in tuple(ax.get_children()):
+            if artist not in fixed_artists:
+                artist.remove()
         frame = frames[index]
+        # Append only new sampled points. Rebuild if playback restarts or the domain changes.
+        if index != last_index + 1 or frame.shape != last_shape:
+            paths.clear()
+            trail_positions.clear()
+            last_index = -1
+        for past in frames[last_index + 1 : index + 1]:
+            for particle in past.particles:
+                pid = particle[0]
+                point = (particle[1], particle[2], particle[3])
+                path = paths.setdefault(pid, [])
+                previous_point = trail_positions.get(pid)
+                if previous_point is not None and (
+                    _display_jump(previous_point, point)
+                    or _periodic_crossing(previous_point, point, frame.shape)
+                ):
+                    path.append((float("nan"),) * 3)
+                path.append(point)
+                trail_positions[pid] = point
+        last_index, last_shape = index, frame.shape
         previous_positions = (
             {p[0]: (p[1], p[2], p[3]) for p in frames[index - 1].particles} if index else {}
         )
@@ -296,17 +358,7 @@ def render_volume(
                 )
         for pid, x, y, z, px, py, pz in frame.particles:
             color = colors[pid % len(colors)]
-            trail = [p[1:4] for past in frames[: index + 1] for p in past.particles if p[0] == pid]
-            # Break visual discontinuities instead of drawing a fictitious line across the box.
-            path: list[tuple[float, float, float]] = []
-            for step, point in enumerate(trail):
-                if step and (
-                    _display_jump(trail[step - 1], point)
-                    or _periodic_crossing(trail[step - 1], point, frame.shape)
-                ):
-                    path.append((float("nan"),) * 3)
-                path.append(point)
-            tx, ty, tz = zip(*path, strict=True)
+            tx, ty, tz = zip(*paths[pid], strict=True)
             ax.plot(tx, ty, tz, color=color, linewidth=7, alpha=0.07)
             ax.plot(tx, ty, tz, color=color, linewidth=1.8, alpha=0.9)
             ax.scatter(
@@ -385,42 +437,13 @@ def render_volume(
                     depthshade=False,
                     zorder=100,
                 )
-        ax.set_xlim(*bounds[0])
-        ax.set_ylim(*bounds[1])
-        ax.set_zlim(*bounds[2])
-        ax.set_box_aspect(tuple(hi - lo for lo, hi in bounds))
         azimuth = -65 + 35 * index / max(1, len(frames) - 1)
         ax.view_init(elev=26, azim=azimuth)
-        _draw_orientation(compass, elevation=26, azimuth=azimuth)
-        ax.grid(False)
-        for axis, label, color in zip(
-            (ax.xaxis, ax.yaxis, ax.zaxis), "XYZ", VOLUME_AXIS_COLORS, strict=True
-        ):
-            axis.set_pane_color((0.055, 0.085, 0.14, 0.40))
-            axis.pane.set_edgecolor("#435a75")
-            axis.line.set_color(color)
-            axis.line.set_linewidth(2.2)
-            axis.set_major_locator(MaxNLocator(4, integer=True))
-            axis.set_rotate_label(False)
-            axis.set_label_text(label, color=color, fontsize=17, weight="bold")
-            axis.labelpad = 12
-            axis.set_tick_params(colors=color, labelsize=11, pad=3)
-        # Double the visible grid density without changing physical cells or tick labels.
-        grid_ticks = []
-        for ticks, (lo, hi) in zip(
-            (ax.get_xticks(), ax.get_yticks(), ax.get_zticks()), bounds, strict=True
-        ):
-            dense_ticks = sorted([*ticks, *((a + b) / 2 for a, b in pairwise(ticks))])
-            grid_ticks.append([value for value in dense_ticks if lo <= value <= hi])
-        for grid_x in grid_ticks[0]:
-            ax.plot([grid_x, grid_x], bounds[1], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
-            ax.plot([grid_x, grid_x], [bounds[1][1]] * 2, bounds[2], color="#283c53", linewidth=0.55)
-        for grid_y in grid_ticks[1]:
-            ax.plot(bounds[0], [grid_y, grid_y], [bounds[2][0]] * 2, color="#38516d", linewidth=0.7)
-            ax.plot([bounds[0][0]] * 2, [grid_y, grid_y], bounds[2], color="#283c53", linewidth=0.55)
-        for grid_z in grid_ticks[2]:
-            ax.plot(bounds[0], [bounds[1][1]] * 2, [grid_z, grid_z], color="#283c53", linewidth=0.55)
-            ax.plot([bounds[0][0]] * 2, bounds[1], [grid_z, grid_z], color="#283c53", linewidth=0.55)
+        compass.view_init(elev=26, azim=azimuth)
+        # Retain the original tie order: the grid is drawn after same-zorder trails.
+        for line in grid_lines:
+            line.remove()
+            ax.add_artist(line)
         status.set_text(
             f"(Px, Py, Pz) = {frame.total_momentum}\nTICK  {frame.tick:03d} / {frames[-1].tick:03d}"
         )
@@ -461,6 +484,49 @@ def render_volume(
     )
 
 
+class _SinglePassPillowWriter(PillowWriter):
+    """Capture the Agg frame already drawn by FuncAnimation and encode one stopped GIF."""
+
+    def setup(self, fig: Figure, outfile: str | Path, dpi: float | None = None) -> None:
+        super().setup(fig, outfile, dpi=dpi)
+        self._original_dpi = fig.dpi
+        # FuncAnimation draws before grab_frame, so it must draw at the export resolution.
+        fig.set_dpi(self.dpi)
+        self._rendered_frames: list[Image.Image] = []
+
+    def grab_frame(self, **savefig_kwargs: Any) -> None:
+        if (
+            savefig_kwargs
+            or matplotlib.rcParams["savefig.transparent"]
+            or matplotlib.rcParams["savefig.facecolor"] != "auto"
+            or matplotlib.rcParams["savefig.edgecolor"] != "auto"
+        ):
+            # Explicit save-only background settings still use Matplotlib's public exporter.
+            buffer = BytesIO()
+            self.fig.savefig(buffer, **{**savefig_kwargs, "format": "rgba", "dpi": self.dpi})
+            pixels = buffer.getvalue()
+        else:
+            canvas = cast(FigureCanvasAgg, self.fig.canvas)
+            pixels = bytes(cast(Callable[[], memoryview], canvas.buffer_rgba)())
+        frame = Image.frombuffer("RGBA", self.frame_size, pixels, "raw", "RGBA", 0, 1)
+        # Detach every frame from the reusable canvas, including transparent images.
+        minimum_alpha, _ = cast(tuple[float, float], frame.getchannel("A").getextrema())
+        self._rendered_frames.append(frame.copy() if minimum_alpha < 255 else frame.convert("RGB"))
+
+    def finish(self) -> None:
+        try:
+            if self._rendered_frames:
+                self._rendered_frames[0].save(
+                    self.outfile,
+                    save_all=True,
+                    append_images=self._rendered_frames[1:],
+                    duration=int(1000 / self.fps),
+                )
+        finally:
+            self._rendered_frames.clear()
+            self.fig.set_dpi(self._original_dpi)
+
+
 def _save_animation_html(
     fig: Figure,
     draw: Callable[[int], tuple[Artist, ...]],
@@ -479,18 +545,10 @@ def _save_animation_html(
     html_path.parent.mkdir(parents=True, exist_ok=True)
     gif_path = html_path.with_suffix(".gif")
     try:
-        animation = FuncAnimation(fig, draw, frames=frame_count, interval=120)
-        animation.save(str(gif_path), writer=PillowWriter(fps=8), dpi=65 if compact else dpi)
+        animation = FuncAnimation(fig, draw, frames=frame_count, interval=120, init_func=lambda: ())
+        animation.save(str(gif_path), writer=_SinglePassPillowWriter(fps=8), dpi=65 if compact else dpi)
     finally:
         plt.close(fig)
-    # PillowWriter exports an infinite loop. Remove that playback instruction
-    # through Pillow's public API so the final tick never looks like a teleport.
-    with Image.open(gif_path) as animation_file:
-        images = [frame.copy() for frame in ImageSequence.Iterator(animation_file)]
-    durations = [frame.info.get("duration", 120) for frame in images]
-    for frame in images:
-        frame.info.pop("loop", None)
-    images[0].save(gif_path, save_all=True, append_images=images[1:], duration=durations)
     encoded = base64.b64encode(gif_path.read_bytes()).decode("ascii")
     details = html.escape(json.dumps(dict(metadata or {}), indent=2, ensure_ascii=False, default=str))
     text = f"""<!doctype html><html lang="en"><head><meta charset="utf-8">

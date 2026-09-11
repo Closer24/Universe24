@@ -70,6 +70,16 @@ not newly invented physical tests. The repository's existing submission and CI
 gate still applies. Every world actually executed uses the existing HTML renderer;
 diagnostics may reject a run but may not repair physical state.
 
+## Performance work
+
+Separate environment setup, physical stepping and diagnostic rendering before
+optimizing. Reuse a verified checkout and installed environment for later runs.
+Measure before and after with identical inputs, tick counts, frame sampling,
+resolution and dependencies; report host timings separately from model cost.
+Preserve every physical update, event and acceptance check. Compare traces and
+metadata and inspect saved frames after changing the output pipeline. Do not
+claim a speedup from fewer frames or lower resolution without saying so.
+
 ## Tools and authority
 
 Use the available local Git/Python tools and discover the connected GitHub tools

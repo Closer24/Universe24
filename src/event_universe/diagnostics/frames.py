@@ -25,6 +25,11 @@ class Slice:
             raise ValueError("plane must be XY, XZ or YZ")
         checked(self.coordinate)
 
+    def validate_shape(self, shape: tuple[int, int, int]) -> None:
+        """Reject a slice outside its domain without capturing an unused projection."""
+        if not 0 <= self.coordinate < shape[AXES[self.plane][2]]:
+            raise ValueError("slice coordinate outside the simulation domain")
+
 
 @dataclass(slots=True)
 class Frame:
@@ -61,14 +66,14 @@ def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], Fie
     return {position: cell.phi for position, cell in world.cells.items() if cell.phi != 0}, "scalar"
 
 
-def capture_volume(world: Engine) -> VolumeFrame:
-    """Copy nonzero field intensity and each particle in full XYZ coordinates."""
+def capture_volume(world: Engine, *, momentum: ExactVector | None = None) -> VolumeFrame:
+    """Copy full XYZ state, optionally reusing momentum measured from this same state."""
     field, field_kind = _field_snapshot(world)
     return VolumeFrame(
         world.tick,
         field,
         [(pid, *particle.position, *particle.momentum) for pid, particle in world.particles.items()],
-        total_momentum(world),
+        total_momentum(world) if momentum is None else momentum,
         world.config.c_units,
         (world.config.nx, world.config.ny, world.config.nz),
         {pid: (p.mass, p.momentum_den) for pid, p in world.particles.items()},
@@ -76,11 +81,11 @@ def capture_volume(world: Engine) -> VolumeFrame:
     )
 
 
-def capture_frame(world: Engine, view: Slice) -> Frame:
+def capture_frame(world: Engine, view: Slice, *, momentum: ExactVector | None = None) -> Frame:
+    """Copy a slice, optionally reusing momentum measured from this same state."""
     horizontal, vertical, fixed = AXES[view.plane]
     shape = (world.config.nx, world.config.ny, world.config.nz)
-    if not 0 <= view.coordinate < shape[fixed]:
-        raise ValueError("slice coordinate outside the simulation domain")
+    view.validate_shape(shape)
     values, field_kind = _field_snapshot(world)
     field = {
         (p[horizontal], p[vertical]): value for p, value in values.items() if p[fixed] == view.coordinate
@@ -90,4 +95,10 @@ def capture_frame(world: Engine, view: Slice) -> Frame:
         for pid, p in world.particles.items()
         if p[fixed] == view.coordinate
     ]
-    return Frame(world.tick, field, particles, total_momentum(world), field_kind)
+    return Frame(
+        world.tick,
+        field,
+        particles,
+        total_momentum(world) if momentum is None else momentum,
+        field_kind,
+    )
