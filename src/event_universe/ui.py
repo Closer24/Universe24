@@ -21,6 +21,11 @@ from uuid import uuid4
 
 from event_universe.initialization import parse_initial_json, parse_json_document
 
+if sys.platform == "win32":
+    _creation_flags = subprocess.CREATE_NO_WINDOW
+else:
+    _creation_flags = 0
+
 MAX_REQUEST = 1_048_576
 ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl", "run.html"}
 RUN_ROUTE = re.compile(r"/api/runs/([a-f0-9]{32})(?:/(stop))?")
@@ -193,7 +198,7 @@ class Workspace:
                     stdout=log,
                     stderr=subprocess.STDOUT,
                     env=environment,
-                    creationflags=(subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0),
+                    creationflags=_creation_flags,
                 )
             except OSError:
                 log.close()
