@@ -4,6 +4,19 @@ These instructions apply to the entire project and every subdirectory. This is
 the entry point for coding agents and developers. Read the current files rather
 than relying on memory from another conversation.
 
+## Agent skills
+
+For coordinated work, use [Boss orchestration](skills/boss-orchestrator/SKILL.md).
+It routes to separate field, architecture, physics-rule, test, simulation,
+visualization, regression and PR skills. Direct specialist tasks may load the
+matching skill from that table without starting the whole team. All roles use
+the [shared handoff and completion contract](skills/workflow.md).
+
+Any physics-engine behavior change requires physics-rule validation, necessary
+tests, an affected simulator run and regression checks before completion. Reuse
+matching evidence rather than adding duplicate test worlds. Skill instructions
+do not replace the authoritative documents below or expand user authorization.
+
 ## One project and one source of truth
 
 The only active implementation is `src/event_universe/` in this project.
