@@ -8,6 +8,7 @@ import base64
 import html
 import json
 from collections.abc import Callable, Mapping, Sequence
+from dataclasses import dataclass
 from io import BytesIO
 from itertools import pairwise
 from math import hypot
@@ -31,6 +32,16 @@ from .frames import AXES, Frame, Slice, VolumeFrame
 
 VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
 FULL_SPEED_ARROW_LENGTH = 10.8
+FrameCallback = Callable[[int, Image.Image], None]
+
+
+@dataclass(frozen=True)
+class _RenderScene:
+    figure: Figure
+    draw: Callable[[int], tuple[Artist, ...]]
+    label: str
+    note: str = ""
+    dpi: int = 100
 
 
 def _speed_arrow(
@@ -111,15 +122,12 @@ def _bounds(frames: Sequence[Frame]) -> tuple[int, int, int, int]:
     return min(xs) - 5, max(xs) + 5, min(ys) - 5, max(ys) + 5
 
 
-def render_run(
+def _slice_scene(
     frames: Sequence[Frame],
     view: Slice,
-    html_path: Path,
     *,
-    title: str,
-    metadata: Mapping[str, object] | None = None,
     compact: bool = False,
-) -> Path:
+) -> _RenderScene:
     """Render sampled frames with fixed color scale and a true, explicitly named plane."""
     if not frames:
         raise ValueError("at least one diagnostic frame is required")
@@ -177,26 +185,10 @@ def render_run(
         ax.grid(True, alpha=0.15)
         return tuple(ax.get_children())
 
-    return _save_animation_html(
-        fig,
-        draw,
-        len(frames),
-        (frames[0].tick, frames[-1].tick),
-        plane_label,
-        html_path,
-        title=title,
-        metadata=metadata,
-        compact=compact,
-    )
+    return _RenderScene(fig, draw, plane_label, dpi=65 if compact else 100)
 
 
-def render_volume(
-    frames: Sequence[VolumeFrame],
-    html_path: Path,
-    *,
-    title: str,
-    metadata: Mapping[str, object] | None = None,
-) -> Path:
+def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
     """Render all nonzero field cells, particle trails and momenta in a rotating XYZ view."""
     if not frames:
         raise ValueError("at least one diagnostic frame is required")
@@ -449,15 +441,10 @@ def render_volume(
         )
         return (*ax.get_children(), *compass.get_children())
 
-    return _save_animation_html(
+    return _RenderScene(
         fig,
         draw,
-        len(frames),
-        (frames[0].tick, frames[-1].tick),
         "Full 3D XYZ view",
-        html_path,
-        title=title,
-        metadata=metadata,
         note=(
             "Transparent amber markers show stream magnitude: the sum of eight populations, "
             "not scalar phi. Stronger values have "
@@ -484,8 +471,86 @@ def render_volume(
     )
 
 
+def render_run(
+    frames: Sequence[Frame],
+    view: Slice,
+    html_path: Path,
+    *,
+    title: str,
+    metadata: Mapping[str, object] | None = None,
+    compact: bool = False,
+    on_frame: FrameCallback | None = None,
+) -> Path:
+    """Render the recorded plane sequence, optionally publishing each completed raster."""
+    scene = _slice_scene(frames, view, compact=compact)
+    return _save_animation_html(
+        scene.figure,
+        scene.draw,
+        len(frames),
+        (frames[0].tick, frames[-1].tick),
+        scene.label,
+        html_path,
+        title=title,
+        metadata=metadata,
+        compact=compact,
+        on_frame=on_frame,
+    )
+
+
+def render_volume(
+    frames: Sequence[VolumeFrame],
+    html_path: Path,
+    *,
+    title: str,
+    metadata: Mapping[str, object] | None = None,
+    on_frame: FrameCallback | None = None,
+) -> Path:
+    """Render the recorded volume sequence, optionally publishing each completed raster."""
+    scene = _volume_scene(frames)
+    return _save_animation_html(
+        scene.figure,
+        scene.draw,
+        len(frames),
+        (frames[0].tick, frames[-1].tick),
+        scene.label,
+        html_path,
+        title=title,
+        metadata=metadata,
+        note=scene.note,
+        dpi=scene.dpi,
+        on_frame=on_frame,
+    )
+
+
+def _save_preview(scene: _RenderScene, index: int, png_path: Path) -> None:
+    """Draw one recorded snapshot; the supplied window determines provisional display scales."""
+    try:
+        png_path.parent.mkdir(parents=True, exist_ok=True)
+        scene.figure.set_dpi(scene.dpi)
+        scene.draw(index)
+        # Match animation export: tight cropping must not change the required canvas size.
+        with matplotlib.rc_context({"savefig.bbox": None}):
+            scene.figure.savefig(png_path, format="png", dpi=scene.dpi)
+    finally:
+        plt.close(scene.figure)
+
+
+def render_volume_preview(frames: Sequence[VolumeFrame], png_path: Path) -> None:
+    """Save only the latest volume snapshot using the same drawing code as the final GIF."""
+    _save_preview(_volume_scene(frames), len(frames) - 1, png_path)
+
+
+def render_run_preview(frames: Sequence[Frame], view: Slice, png_path: Path) -> None:
+    """Save only the latest plane snapshot using the same drawing code as the final GIF."""
+    _save_preview(_slice_scene(frames, view), len(frames) - 1, png_path)
+
+
 class _SinglePassPillowWriter(PillowWriter):
     """Capture the Agg frame already drawn by FuncAnimation and encode one stopped GIF."""
+
+    def __init__(self, fps: int = 8, *, on_frame: FrameCallback | None = None) -> None:
+        super().__init__(fps=fps)
+        self._on_frame = on_frame
 
     def setup(self, fig: Figure, outfile: str | Path, dpi: float | None = None) -> None:
         super().setup(fig, outfile, dpi=dpi)
@@ -512,6 +577,9 @@ class _SinglePassPillowWriter(PillowWriter):
         # Detach every frame from the reusable canvas, including transparent images.
         minimum_alpha, _ = cast(tuple[float, float], frame.getchannel("A").getextrema())
         self._rendered_frames.append(frame.copy() if minimum_alpha < 255 else frame.convert("RGB"))
+        if self._on_frame is not None:
+            # The callback owns its copy and cannot alter the canonical GIF's stored pixels.
+            self._on_frame(len(self._rendered_frames) - 1, self._rendered_frames[-1].copy())
 
     def finish(self) -> None:
         try:
@@ -540,13 +608,18 @@ def _save_animation_html(
     compact: bool = False,
     note: str = "",
     dpi: int = 100,
+    on_frame: FrameCallback | None = None,
 ) -> Path:
     """One shared GIF/HTML output pipeline for plane and volume renderers."""
     html_path.parent.mkdir(parents=True, exist_ok=True)
     gif_path = html_path.with_suffix(".gif")
     try:
         animation = FuncAnimation(fig, draw, frames=frame_count, interval=120, init_func=lambda: ())
-        animation.save(str(gif_path), writer=_SinglePassPillowWriter(fps=8), dpi=65 if compact else dpi)
+        animation.save(
+            str(gif_path),
+            writer=_SinglePassPillowWriter(fps=8, on_frame=on_frame),
+            dpi=65 if compact else dpi,
+        )
     finally:
         plt.close(fig)
     encoded = base64.b64encode(gif_path.read_bytes()).decode("ascii")

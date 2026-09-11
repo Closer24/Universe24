@@ -248,6 +248,14 @@ Every application run also records metadata and JSONL events through the existin
 Matplotlib/FuncAnimation/Pillow pipeline. Pytest produces a combined standalone
 HTML report of every captured engine run.
 
+The CLI also defaults to a live display while calculation and replay export are
+in progress; `--no-live` disables it and API callers opt in with `live=True`.
+Live preview snapshots may be coalesced and use explicitly provisional framing
+and color scales. They never replace the canonical sampled frames, final enhanced
+GIF/HTML, event trace or acceptance checks. Preview faults must not alter physical
+evolution or prevent the recorded failure report. A completed live page opens the
+current run's final replay, retaining its completion or failure status.
+
 Field proposals are validated before the field phase commits. Particle-field
 proposals are validated before that local exchange commits. A whole tick is not
 transactional: if a later operation fails, previously committed local operations

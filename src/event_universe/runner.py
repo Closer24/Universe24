@@ -9,6 +9,7 @@ from pathlib import Path
 from event_universe import __version__
 from event_universe.diagnostics.frames import Frame, Slice, VolumeFrame, capture_frame, capture_volume
 from event_universe.diagnostics.invariants import require_inertial_momentum
+from event_universe.diagnostics.live import LiveDisplay
 from event_universe.diagnostics.measurements import ExactVector, report, total_momentum
 from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.diagnostics.render import render_run, render_volume
@@ -31,14 +32,51 @@ def source_fingerprint() -> str:
 
 
 def run_scenario(
-    scenario: Scenario, output: Path, *, frame_stride: int = 1, volume: bool = True
+    scenario: Scenario,
+    output: Path,
+    *,
+    frame_stride: int = 1,
+    volume: bool = True,
+    live: bool = False,
 ) -> Path:
-    """Every application run writes event JSONL, metadata JSON and standalone HTML."""
+    """Write canonical run artifacts, optionally publishing progress during execution."""
     if type(frame_stride) is not int or frame_stride < 1:
         raise ValueError("frame_stride must be a positive integer")
     if type(scenario.ticks) is not int or scenario.ticks < 0:
         raise ValueError("ticks must be a non-negative integer")
     output.mkdir(parents=True, exist_ok=True)
+    display = (
+        LiveDisplay(
+            output,
+            title=f"Event Universe — {scenario.name}",
+            total_ticks=scenario.ticks,
+            view=scenario.view,
+            volume=volume,
+        )
+        if live
+        else None
+    )
+    try:
+        if display is not None:
+            display.start()
+        return _run_scenario(scenario, output, frame_stride=frame_stride, volume=volume, display=display)
+    except BaseException as error:
+        if display is not None:
+            display.fail(error)
+        raise
+    finally:
+        if display is not None:
+            display.close()
+
+
+def _run_scenario(
+    scenario: Scenario,
+    output: Path,
+    *,
+    frame_stride: int,
+    volume: bool,
+    display: LiveDisplay | None,
+) -> Path:
     frames: list[Frame] = []
     volume_frames: list[VolumeFrame] = []
     failure: Exception | None = None
@@ -47,10 +85,16 @@ def run_scenario(
         scenario.view.validate_shape((world.config.nx, world.config.ny, world.config.nz))
 
         def capture(momentum: ExactVector | None = None) -> None:
+            frame: Frame | VolumeFrame
             if volume:
-                volume_frames.append(capture_volume(world, momentum=momentum))
+                frame = capture_volume(world, momentum=momentum)
+                volume_frames.append(frame)
             else:
-                frames.append(capture_frame(world, scenario.view, momentum=momentum))
+                frame = capture_frame(world, scenario.view, momentum=momentum)
+                frames.append(frame)
+            if display is not None:
+                # LiveDisplay serializes this copied state before asynchronous delivery.
+                display.submit(frame)
 
         initial_momentum = total_momentum(world)
         current_momentum = initial_momentum
@@ -111,10 +155,44 @@ def run_scenario(
     title = f"Event Universe — {scenario.name}"
     if failure is not None:
         title = f"FAILED RUN — {title} — {failure}"
-    if volume:
-        artifact = render_volume(volume_frames, output / "run.html", title=title, metadata=metadata)
-    else:
-        artifact = render_run(frames, scenario.view, output / "run.html", title=title, metadata=metadata)
+    try:
+        if display is not None:
+            display.stop_preview()
+        if volume:
+            if display is None:
+                artifact = render_volume(
+                    volume_frames, output / "run.html", title=title, metadata=metadata
+                )
+            else:
+                artifact = render_volume(
+                    volume_frames,
+                    output / "run.html",
+                    title=title,
+                    metadata=metadata,
+                    on_frame=display.rendered,
+                )
+        elif display is None:
+            artifact = render_run(
+                frames, scenario.view, output / "run.html", title=title, metadata=metadata
+            )
+        else:
+            artifact = render_run(
+                frames,
+                scenario.view,
+                output / "run.html",
+                title=title,
+                metadata=metadata,
+                on_frame=display.rendered,
+            )
+        if display is not None:
+            if failure is not None:
+                display.fail(failure)
+            display.finish(artifact)
+    except Exception as error:
+        if failure is not None:
+            failure.add_note(f"Final diagnostic rendering also failed: {error}")
+            raise failure from error
+        raise
     if failure is not None:
         raise failure
     return artifact
@@ -140,6 +218,9 @@ def main() -> None:
     parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
     parser.add_argument("--frame-stride", type=int, default=1)
+    parser.add_argument(
+        "--no-live", action="store_false", dest="live", help="Disable live preview and progress HTML"
+    )
     views = parser.add_mutually_exclusive_group()
     views.add_argument("--view-3d", dest="view_3d", action="store_true", help="Full XYZ view (default)")
     views.add_argument("--view-2d", dest="view_3d", action="store_false", help="Show a plane slice")
@@ -158,8 +239,10 @@ def main() -> None:
                 scenario.view.coordinate if args.coordinate is None else args.coordinate,
             ),
         )
+    if args.live:
+        print((args.output / "live.html").resolve(), flush=True)
     print(
         run_scenario(
-            scenario, args.output, frame_stride=args.frame_stride, volume=args.view_3d
+            scenario, args.output, frame_stride=args.frame_stride, volume=args.view_3d, live=args.live
         ).resolve()
     )

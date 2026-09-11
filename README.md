@@ -86,6 +86,7 @@ Each application run creates:
 | `run.gif` | Animation embedded in the HTML |
 | `run.json` | Completion status, initial conditions, code identity and run checks |
 | `events.jsonl` | Streamed movement, momentum-exchange and blocked-move events |
+| `live.html` | Automatically updating display during the run and replay export (CLI default) |
 
 Other examples:
 
@@ -104,6 +105,30 @@ Use `--view-2d --plane XY --slice 12` for a slice. The full rule is in the
 [definitions](SIMULATOR_DEFINITIONS.md#default-run-display).
 Running into the same output directory replaces its results. Use separate
 output directories to compare experiments.
+
+## Watch while the simulator runs
+
+The CLI prints the absolute `live.html` path at startup. Open that file in a
+browser while the command is running; the page updates automatically each second.
+It shows copied simulation snapshots as computation proceeds, then updates from
+the frames being rendered for the recorded replay. At completion it opens the
+standalone `run.html` animation. No web server or browser extension is required.
+
+```bash
+python -m event_universe --scenario contact --output artifacts/contact-live
+```
+
+The live preview may skip intermediate snapshots and adjust its framing and color
+scale as new data arrives. The final replay retains every frame selected by
+`--frame-stride`, with the same fixed scale, quality and physics as before.
+For short simulations, the first image may appear during replay export because
+the physical calculation can finish before preview startup.
+
+Use `--no-live` for batch runs that only need the final files. Python callers opt
+in with `run_scenario(scenario, output, live=True)`; the API default remains off.
+Scripts that start live runs must call them inside an `if __name__ == "__main__":`
+guard so the preview process can start safely on Windows. A preview fault is
+reported and does not cancel the physical calculation or its recorded output.
 
 ## Run performance
 
