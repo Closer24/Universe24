@@ -1,11 +1,9 @@
 # Project status and restart guide
 
-Contract update: 2026-09-11. The generic integration includes main at
-[ec0826b](https://github.com/Closer24/Universe24/commit/ec0826b20286a166498beacd6cb68002624826eb).
-Local combined verification is recorded in [VALIDATION.md](VALIDATION.md).
-That base commit does not contain the generic changes by itself. This guide
-does not claim that a remote merge has completed; verify current main and the
-submitted PR before continuing work.
+Snapshot: 2026-09-11. The generic initialization integration is merged in reviewed
+main [a53e1a2](https://github.com/Closer24/Universe24/commit/a53e1a2f83d4dca898ed827b2f6e4d101932be95).
+Verification for that integration is recorded in [VALIDATION.md](VALIDATION.md).
+This is an orientation snapshot; verify current main and open PRs before work.
 
 ## What this checkout contains
 
@@ -13,6 +11,10 @@ The active package is [event_universe](../src/event_universe/).
 `Simulation(initial: InitialState)` uses named fields, disturbance types and laws
 from JSON initialization. The CLI requires `--init`; ordinary execution and tests
 are headless. Start with [DISTURBANCES.md](DISTURBANCES.md) and the README.
+
+The [local configuration workspace](WORKSPACE.md) provides template selection,
+editable JSON and isolated runs through `python -m event_universe.ui`.
+Configuration changes are runtime data and require no compilation or rebuild.
 
 `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
 `CausalStreamSimulation` retain explicit historical research laws. Their

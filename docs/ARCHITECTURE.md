@@ -91,6 +91,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `api` | Historical engine and explicitly chosen research model |
 | `diagnostics` | Read-only engine views, immutable events, rendering libraries |
 | `runner` | Generic public API, initialization and optional diagnostics |
+| `ui` | Local HTTP, strict initialization validation and isolated CLI process ownership |
 | `scenarios`, `legacy_runner` | Historical public APIs and optional diagnostics |
 
 The historical scalar engine receives field and particle callables and an optional activity
@@ -101,6 +102,24 @@ either component independently with the keyword arguments `field=` and
 file-writing module. No plugin registry or inheritance hierarchy is needed.
 `PeriodicLattice` is the single implementation of periodic wrapping and the
 six directional neighbors used for reads, activation and movement.
+
+## Configuration workspace
+
+`ui.py` serves packaged `ui_assets/` HTML, CSS and JavaScript without a frontend
+build. Templates remain the canonical JSON files in `examples/`, included as
+package data files for installed use; `--configs` selects another directory.
+Full inputs and JSON fragments share `initialization.parse_json_document`
+duplicate-key enforcement. The existing validator checks configurations before
+runs. The browser previews initial seed positions, not computed motion.
+
+Each accepted request becomes immutable JSON passed to the existing runner in
+a separate Python process using the server's package source. The UI never steps
+an Engine or supplies physical arithmetic. It owns one active job, session
+history, cancellation and links restricted to known artifacts. Configuration
+edits require no compilation or restart. Output directories are unique;
+recorded views remain opt-in. Cancelled runs are labeled incomplete. Loopback
+binding, Host/Origin checks and a session token constrain HTTP access.
+See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
 
 ## Generic calculations and model choices
 

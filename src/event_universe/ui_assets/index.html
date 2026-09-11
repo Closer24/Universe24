@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="workspace-token" content="__WORKSPACE_TOKEN__">
+  <title>Universe24 · Simulation workspace</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Universe24 workspace"><span class="brand-mark">U<span>24</span></span><span>UNIVERSE<span class="brand-number">24</span><small>RESEARCH WORKSPACE</small></span></a>
+    <div class="sidebar-label">YOUR LAB</div>
+    <div class="nav-current"><span class="nav-icon">◈</span> Simulations <span class="nav-count" id="template-count">0</span></div>
+    <div class="sidebar-label templates-label">STARTING POINTS</div>
+    <div id="templates" class="template-list" aria-label="Simulation templates"></div>
+    <button id="import" class="import-button" type="button"><span>＋</span> Import configuration</button>
+    <input id="import-file" type="file" accept=".json,application/json" hidden>
+    <div class="sidebar-note"><span class="small-orbit">◎</span><strong>Your experiment. Your rules.</strong><p>Fields, disturbances and local laws are defined by your configuration.</p></div>
+    <div class="local-status"><span class="status-dot"></span> Local workspace <span>●</span></div>
+  </aside>
+
+  <main>
+    <header class="topbar"><div>Workspace <span>/</span> Simulations</div><span class="topbar-tag">INITIALIZATION-DEFINED MODELS</span></header>
+    <section class="page-heading"><div><div class="eyebrow">CONFIGURE · EXPERIMENT · OBSERVE</div><h1>Simulation workspace</h1><p>Choose a starting point. Make it yours. See what happens.</p></div><button id="export" class="button secondary" type="button">↓ Export JSON</button></section>
+    <div id="message" role="status" aria-live="polite" hidden></div>
+    <div class="workspace-grid">
+      <section class="configuration panel" aria-labelledby="config-title">
+        <div class="panel-heading"><div><span class="section-number">01</span><h2 id="config-title">Configuration</h2></div><span id="draft-state" class="draft-tag">Draft</span></div>
+        <div class="config-summary"><div><span class="overline" id="template-label">SELECT A TEMPLATE</span><h3 id="model-heading">Choose your simulation</h3></div><button id="reset" class="text-button" type="button">Reset</button></div>
+        <div id="tabs" class="tabs" role="tablist" aria-label="Configuration sections">
+          <button role="tab" aria-selected="true" aria-controls="editor-panel" data-tab="general">General</button>
+          <button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="fields">Fields</button>
+          <button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="types">Disturbances</button>
+          <button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="seeds">Initial state</button>
+          <button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="rules">Rules & costs</button>
+          <button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="json">JSON</button>
+        </div>
+        <form id="editor-panel" role="tabpanel" class="editor" autocomplete="off"></form>
+        <div class="configuration-footer"><span><span class="status-dot muted"></span> Changes apply to the next run</span><button id="validate" class="button secondary" type="button">Check configuration</button></div>
+      </section>
+
+      <aside class="run-column">
+        <section class="panel initial-preview"><div class="panel-heading"><div><span class="section-number">02</span><h2>Initial placement</h2></div><span class="preview-tag">XYZ</span></div><canvas id="preview" width="680" height="430" aria-label="Isometric preview of configured seed positions"></canvas><div id="seed-legend" class="seed-legend"></div><p class="preview-caption">Configured seeds · isometric projection</p><div id="summary-metrics" class="summary-metrics"></div></section>
+        <section class="panel launch-panel"><div class="launch-heading"><h2>Ready to explore?</h2><span id="duration-label">— ticks</span></div><p>Run this configuration in a separate process.</p><label class="check-option"><input id="visualize" type="checkbox"><span>Create a recorded view<small>Optional sampled state after completion</small></span></label><label class="stride-option" for="stride">Record every <input id="stride" type="number" value="1" min="1" step="1" disabled> tick(s)</label><button id="run" class="button primary" type="button" disabled><span>▶</span> Run simulation <span class="button-arrow">↗</span></button><button id="stop" class="button danger" type="button" hidden>Stop current run</button><small class="launch-note">Configuration is read at runtime. No build step.</small></section>
+      </aside>
+    </div>
+
+    <section class="panel results-panel" aria-labelledby="results-title"><div class="panel-heading"><div><span class="section-number">03</span><h2 id="results-title">Run results</h2></div><span id="run-count" class="draft-tag">This session</span></div><div id="results" aria-live="polite"><div class="empty-results"><span>↗</span><div><h3>Your next discovery starts here</h3><p>Run a configuration to inspect its status, conserved quantities and saved files.</p></div></div></div><div id="history"></div></section>
+    <footer class="page-footer"><span>UNIVERSE24 <span> / </span> Local integer simulation</span><span>Configuration stays on this computer.</span></footer>
+  </main>
+</body>
+</html>
