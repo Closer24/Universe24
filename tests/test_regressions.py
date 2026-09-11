@@ -1,6 +1,7 @@
 import pytest
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.diagnostics.frames import Slice
 from event_universe.diagnostics.measurements import audit, total_momentum
 from event_universe.diagnostics.recorder import TraceRecorder

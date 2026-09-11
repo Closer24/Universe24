@@ -2,7 +2,8 @@
 
 from dataclasses import dataclass
 
-from event_universe.api import LinkedSimulation, Simulation
+from event_universe.api import LinkedSimulation
+from event_universe.api import ScalarSimulation as Simulation
 from event_universe.core.contracts import Observer
 from event_universe.core.engine import Engine
 from event_universe.core.links import LinkConfig

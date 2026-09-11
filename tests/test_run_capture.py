@@ -7,7 +7,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from event_universe import CellState, Config, ParticleState, runner
+import event_universe.diagnostics.frames as frame_capture
+from event_universe import CellState, Config, ParticleState
+from event_universe import legacy_runner as runner
 from event_universe.core.contracts import MoveRecord
 from event_universe.diagnostics.frames import Slice
 from event_universe.scenarios import Scenario
@@ -26,7 +28,7 @@ def scenario(ticks):
 def observe_capture(monkeypatch, volume):
     captured = []
     name = "capture_volume" if volume else "capture_frame"
-    original = getattr(runner, name)
+    original = getattr(frame_capture, name)
 
     def capture(*args, **kwargs):
         frame = original(*args, **kwargs)
@@ -36,19 +38,22 @@ def observe_capture(monkeypatch, volume):
     def unused_view(*args, **kwargs):
         raise AssertionError("the unselected view must not traverse the world")
 
-    monkeypatch.setattr(runner, name, capture)
-    monkeypatch.setattr(runner, "capture_frame" if volume else "capture_volume", unused_view)
+    monkeypatch.setattr(frame_capture, name, capture)
+    monkeypatch.setattr(frame_capture, "capture_frame" if volume else "capture_volume", unused_view)
     return captured
 
 
 @pytest.mark.parametrize("volume", [False, True])
 @pytest.mark.parametrize("ticks,expected_ticks", [(0, [0]), (3, [0, 2, 3])])
 def test_selected_capture_preserves_empty_duration_and_unsampled_final_state(
-    monkeypatch, tmp_path, volume, ticks, expected_ticks
+    monkeypatch, tmp_path, volume, ticks, expected_ticks, request
 ):
-    captured = observe_capture(monkeypatch, volume)
-    output = runner.run_scenario(scenario(ticks), tmp_path, volume=volume, frame_stride=2)
-    assert [frame.tick for frame in captured] == expected_ticks
+    visualize = request.config.getoption("--visualize-runs")
+    captured = observe_capture(monkeypatch, volume) if visualize else []
+    output = runner.run_scenario(
+        scenario(ticks), tmp_path, volume=volume, frame_stride=2, visualize=visualize
+    )
+    assert [frame.tick for frame in captured] == (expected_ticks if visualize else [])
     for frame in captured:
         assert frame.total_momentum == (6, 0, 0)
         assert frame.field == {}
@@ -63,19 +68,24 @@ def test_selected_capture_preserves_empty_duration_and_unsampled_final_state(
     assert all(metadata["report"]["checks"].values())
     events = [json.loads(line) for line in (tmp_path / "events.jsonl").read_text().splitlines()]
     assert len([event for event in events if event["kind"] == "force"]) == 2 * ticks
-    assert "data:image/gif;base64," in output.read_text()
+    if visualize:
+        assert "data:image/gif;base64," in output.read_text()
+    else:
+        assert output == tmp_path / "run.json"
+        assert not (tmp_path / "run.html").exists()
+        assert not (tmp_path / "run.gif").exists()
 
 
 @pytest.mark.parametrize("volume", [False, True])
 def test_invalid_slice_rejects_even_when_volume_is_selected(tmp_path, volume):
     invalid = replace(scenario(0), view=Slice("XY", 8))
     with pytest.raises(ValueError, match="slice coordinate outside"):
-        runner.run_scenario(invalid, tmp_path, volume=volume)
+        runner.run_scenario(invalid, tmp_path, volume=volume, visualize=True)
 
 
 @pytest.mark.parametrize("volume", [False, True])
 def test_failed_step_captures_new_state_and_momentum_without_a_tick_increment(
-    monkeypatch, tmp_path, volume
+    monkeypatch, tmp_path, volume, request
 ):
     # A diagnostic test double exposes a partial commit, independently of any physical law.
     world = SimpleNamespace(
@@ -98,20 +108,25 @@ def test_failed_step_captures_new_state_and_momentum_without_a_tick_increment(
 
     world.step = fail_after_commit
     monkeypatch.setattr(Scenario, "create", create)
-    captured = observe_capture(monkeypatch, volume)
+    visualize = request.config.getoption("--visualize-runs")
+    captured = observe_capture(monkeypatch, volume) if visualize else []
     with pytest.raises(RuntimeError, match="after a local commit"):
-        runner.run_scenario(scenario(1), tmp_path, volume=volume, frame_stride=8)
-    assert [frame.tick for frame in captured] == [0, 0]
-    assert [frame.total_momentum for frame in captured] == [
-        (Fraction(2, 3), 0, 0),
-        (Fraction(16, 3), 0, 0),
-    ]
-    position = (2, 3, 4) if volume else (2, 3)
-    assert captured[0].field == {position: 7}
-    assert captured[1].field == {position: 11}
-    assert captured[1].particles == ([(0, 2, 3, 4, 1, 0, 0)] if volume else [(0, 2, 3, 1, 0, 0)])
+        runner.run_scenario(scenario(1), tmp_path, volume=volume, frame_stride=8, visualize=visualize)
+    if visualize:
+        assert [frame.tick for frame in captured] == [0, 0]
+        assert [frame.total_momentum for frame in captured] == [
+            (Fraction(2, 3), 0, 0),
+            (Fraction(16, 3), 0, 0),
+        ]
+        position = (2, 3, 4) if volume else (2, 3)
+        assert captured[0].field == {position: 7}
+        assert captured[1].field == {position: 11}
+        assert captured[1].particles == ([(0, 2, 3, 4, 1, 0, 0)] if volume else [(0, 2, 3, 1, 0, 0)])
     metadata = json.loads((tmp_path / "run.json").read_text())
     assert metadata["status"] == "failed"
     assert metadata["report"] == {"tick": 0, "faulted": True}
-    assert "FAILED RUN" in (tmp_path / "run.html").read_text()
+    if visualize:
+        assert "FAILED RUN" in (tmp_path / "run.html").read_text()
+    else:
+        assert not (tmp_path / "run.html").exists()
     assert (tmp_path / "events.jsonl").read_text()

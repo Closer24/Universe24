@@ -19,6 +19,7 @@ def display_at(path):
     return LiveDisplay(path, title="Live <example>", total_ticks=4, view=Slice("XY", 4), volume=True)
 
 
+@pytest.mark.visualization
 def test_spawn_preview_is_available_before_finish_and_owns_a_copied_snapshot(tmp_path):
     display = display_at(tmp_path / "live output")
     try:
@@ -55,6 +56,7 @@ def test_spawn_preview_is_available_before_finish_and_owns_a_copied_snapshot(tmp
     assert not any(child.name == "Universe24LivePreview" for child in multiprocessing.active_children())
 
 
+@pytest.mark.visualization
 def test_pending_large_preview_can_be_cancelled_without_queue_shutdown_deadlock(tmp_path):
     display = display_at(tmp_path)
     try:
@@ -73,6 +75,7 @@ def test_pending_large_preview_can_be_cancelled_without_queue_shutdown_deadlock(
         display.close()
 
 
+@pytest.mark.visualization
 def test_worker_start_failure_does_not_prevent_export_progress_or_failed_replay(tmp_path, monkeypatch):
     def denied_start(self):
         raise OSError("preview worker could not start")
@@ -111,6 +114,7 @@ def test_failure_does_not_redirect_to_a_stale_previous_run(tmp_path):
     assert 'href="run.html"' not in text
 
 
+@pytest.mark.visualization
 def test_worker_crash_after_the_last_submission_is_reported_at_shutdown(tmp_path):
     display = display_at(tmp_path)
     try:

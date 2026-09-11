@@ -1,4 +1,4 @@
-"""Capture every test simulation through the existing renderer."""
+"""Capture test simulations only when --visualize-runs is requested."""
 
 import html
 import re
@@ -6,16 +6,40 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.core.engine import Engine
-from event_universe.diagnostics.frames import capture_volume
-from event_universe.diagnostics.render import render_volume
-
 RUNS = []
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--visualize-runs",
+        action="store_true",
+        default=False,
+        help="Capture simulation frames, render run reports and execute visualization tests",
+    )
+
+
+def pytest_configure(config):
+    config.addinivalue_line("markers", "visualization: requires explicit --visualize-runs")
+
+
+def pytest_collection_modifyitems(config, items):
+    if not config.getoption("--visualize-runs"):
+        skip = pytest.mark.skip(reason="visualization requires --visualize-runs")
+        for item in items:
+            if "visualization" in item.keywords:
+                item.add_marker(skip)
 
 
 @pytest.fixture(autouse=True)
 def capture_test_runs(monkeypatch, request):
     """Keep at most a few sampled frames per actual engine, without changing its inputs."""
+    if not request.config.getoption("--visualize-runs"):
+        yield
+        return
+
+    from event_universe.core.engine import Engine
+    from event_universe.diagnostics.frames import capture_volume
+
     runs = {}
 
     def instrument(original):
@@ -51,6 +75,11 @@ def capture_test_runs(monkeypatch, request):
 
 
 def pytest_sessionfinish(session, exitstatus):
+    if not session.config.getoption("--visualize-runs"):
+        return
+
+    from event_universe.diagnostics.render import render_volume
+
     output = Path("artifacts/test-runs")
     output.mkdir(parents=True, exist_ok=True)
     sections = []

@@ -1,5 +1,39 @@
 # Test inputs and expected results
 
+## Active generic disturbance contracts
+
+The primary Simulation follows [DISTURBANCES.md](DISTURBANCES.md). Schema and
+engine tests must use independent examples for the contracts below. These are
+acceptance requirements, not a statement that a particular source tree passed.
+
+| Input or boundary | Required outcome |
+| --- | --- |
+| Complete JSON initialization; renamed field/type labels | Equivalent declared behavior with no physical-name branches |
+| Unknown/duplicate names or keys, wrong components, floats, unsupported expressions | Validation error before simulation |
+| Whole-record move with scalar amounts and a vector attribute | One owner and unchanged carried values in free transport |
+| 12 units, weights `[2,0,1,0,0,0]` | 8 through +X, 4 through +Y |
+| Signed vector splitting and indivisible amounts | Component totals exact; bounded retained allocation state |
+| Conserved-field assignment without source flag | Rejection; explicit source change included only when committed |
+| Local exchange from donor to receiver | Equal-and-opposite component changes; both sides commit together |
+| Exchange drives unsigned field negative | Failure before either proposed record is committed |
+| `B=10`, costs 10, 11, 21 | Total earliest arrival after cycle start is `tau`, `2*tau`, `3*tau` |
+| Delayed local cycle with later arrivals | Frozen original proposal; arrivals cannot overwrite locked records |
+| Waiting originals and in-flight packets | Each conserved amount counted exactly once at every completed tick |
+| Receiving/outgoing capacity or arithmetic bound exceeded | Explicit stopped run with retained ownership, no hidden queue or dropped record |
+| Missing CLI `--init` | Error without implicit built-in physics |
+| Ordinary headless run | Input, event, metadata and final-state files; no frame capture/render import |
+
+`test_initialization.py` covers the parser and examples;
+`test_disturbance_engine.py` covers generic ownership, timing and arithmetic;
+`test_disturbance_application.py` covers required initialization, headless output
+and run metadata. Standard checks are headless. Only
+`pytest --visualize-runs` enables rendered run reports and presentation-only
+checks; physical invariants remain active without it.
+
+The remaining scalar, source, stream, collision, link and turning expectations
+are retained for explicitly selected historical research APIs. Their results do
+not establish those laws for arbitrary configured disturbances.
+
 ## Causal-stream candidate
 
 `test_causal_stream.py` checks exact conservative six-port branching; rejection
@@ -30,7 +64,7 @@ occupancy; measurements read the result.
 | `test_field_composition.py` | Replacement in the engine | Alternative laws change the expected outcome; remainder-only activity persists |
 | `test_engine.py` | Causality, occupancy and scheduling | One-edge propagation and movement; one particle update per tick |
 | `test_diagnostics.py` | Measurement and display | Exact XY/XZ/YZ slices; full XYZ and off-plane records; source state untouched |
-| `test_application.py` | Execution and display | Metadata, events and standalone HTML; same events for slice and volume |
+| `test_application.py` | Historical runner output | Headless metadata/events and lazy imports; explicit visualization preserves slice/volume event identity |
 | `test_regressions.py` | Physical behavior | Prompt contact, reflection symmetry, three-plane turning, momentum, isolated motion and the original 180-tick result |
 | `test_architecture.py` | Layer separation | Reject forbidden imports and adapter formulas; audit integer physics |
 | `test_repository_language.py` | English repository text | Reject legacy non-English scripts in project prose; preserve mathematical notation |
@@ -71,7 +105,7 @@ remainder accumulation and division live in `core/state.py` and serve all three
 turning components.
 
 Cell activity is an injected decision. The original model explicitly keeps its
-old value-based activity. Supplying `Simulation(field=...)` tracks remainder
+old value-based activity. Supplying `ScalarSimulation(field=...)` tracks remainder
 changes by default; `field_activity=` selects another policy.
 
 Model, API and compatibility assembly contain no independent arithmetic.
@@ -123,7 +157,8 @@ enforce known boundaries; they do not replace behavioral tests.
 | Symmetry | Stationary source, coupling 1, 80 ticks | Six directions equal; zero momentum |
 | Three particles | Moving sources, coupling 1, 50 ticks | Total momentum conserved each tick; valid occupancy |
 
-Baseline expectations remain unchanged. World tests use the existing HTML pipeline.
+Historical baseline expectations remain unchanged. World tests use the existing
+HTML pipeline only when `--visualize-runs` is explicitly requested.
 The stretch law and proposal merge are tested as separate hypotheses.
 
 ## Repository navigation
@@ -216,8 +251,8 @@ still requires review. No physical calculation changes as part of translation.
 - `test_three_particle_continuity.py`: replay the reported 64-tick experiment
   in a 64x48x32 world with its original three seeds. Every particle ID persists;
   each particle stays put or moves to one periodic neighbor at each tick.
-  Expect no boundary crossings in this exact experiment. Save every tick in
-  the standalone HTML; do not interpolate or smooth any physical position.
+  Expect no boundary crossings in this exact experiment. When visualization is
+  requested, save every tick in HTML without interpolating or smoothing positions.
 - Continuity is not an isolated-motion or self-force test. A trajectory may
   obey the one-hop bound and still contain an incorrect self-induced turn.
 
@@ -228,7 +263,8 @@ still requires review. No physical calculation changes as part of translation.
 change and acceptance of unchanged momentum. A real diagonal self-field run with
 initial momentum (1,1,0), force denominator 12 and 72 requested ticks must stop at
 tick 45 with actual momentum (1,0,0), even with frame_stride=64. Metadata must say
-failed, HTML must say FAILED RUN, and both the trace and failure frame must survive.
+failed and the trace must survive. When visualization is requested, HTML must
+say FAILED RUN and include the failure frame.
 Total momentum conservation does not excuse the particle's self-impulse. A stationary
 isolated run passes; a two-particle contact run is not subject to isolated classification.
 These tests verify the detector, not success of the physical inertial-motion gate.
@@ -258,8 +294,8 @@ energy with diagnostic Fraction arithmetic, never using those values in physics.
 | Four co-residents | Fixed 16 flags, conserved totals and at most one collision per particle per tick |
 | Invalid mass or bound overflow | Failure before insertion or atomic pair commit; faulted world rejects continuation |
 
-The same renderer captures every integration world. Fixed-schema, numeric and
-collision behavior checks cover the current records and their defaults.
+Integration worlds are headless unless visualization is requested. Historical
+fixed-schema, numeric and collision checks cover those research records and defaults.
 
 ## Balanced movement and twelve-cell halo candidate
 
@@ -272,12 +308,16 @@ shows the same balanced movement without the halo fails the p=(1,1,0) input.
 `tools/check_diagonal_motion.py` renders five engine runs and accepts only the new
 candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).
 
-- Composition with current main: `BalancedSimulation(collisions=True)` handles
+- Historical candidate composition: `BalancedSimulation(collisions=True)` handles
   two diagonal particles of masses 1 and 2, conserves pair invariants in a
   source-free run and separates them after one contact. All existing balanced
   movement and self-halo expectations remain unchanged.
 
 ## Run capture and export performance
+
+These contracts belong to the historical runner and optional renderer. Tests that
+generate visual artifacts require `pytest --visualize-runs`; ordinary tests stay
+headless and retain physical assertions.
 
 - `test_run_capture.py` checks selected-view snapshots against independent state
   expectations, including zero ticks, an unsampled final tick, invalid slices,
@@ -302,8 +342,8 @@ candidate cases. See [BALANCED_MOTION.md](BALANCED_MOTION.md).
   settings. Callbacks arrive before final GIF/HTML completion and cannot mutate
   the canonical images. Empty histories and failed writes close figures.
 - `test_run_live.py` checks live/nonlive event and metadata parity, early page
-  availability, CLI defaults and opt-out, cleanup, and preservation of physical
-  errors even when final rendering also fails.
+  availability, headless defaults and explicit opt-in, cleanup, and preservation
+  of physical errors even when final rendering also fails.
 - Manual run evidence records page/image availability before final output,
   observed phases and saved image changes. First-image latency and whole-run
   duration are distinct measurements; browser refresh and recorded-frame

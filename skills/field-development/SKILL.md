@@ -8,7 +8,12 @@ description: Implement or repair Universe24 local field transport and response c
 Read [the shared workflow](../workflow.md), [field interfaces](../../docs/FIELDS.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
-**Scope:** reusable field/source/gradient calculations and candidate composition.
+The active field contract is [DISTURBANCES.md](../../docs/DISTURBANCES.md).
+Configure identities and supported laws in JSON; do not add field-name branches
+or Python execution to the loader. Whole-record movement, extensive splitting,
+source accounting and paired exchange are distinct contracts.
+
+**Scope:** reusable local calculations and candidate composition.
 The engine owns scheduling and commits; models select laws rather than copying
 arithmetic. Inputs are the task's candidate, required behavior and local contract.
 Output is an implementation plus numerical examples, tests and a review handoff.

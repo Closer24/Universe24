@@ -1,14 +1,17 @@
 # Run performance
 
-The optimization changes host diagnostics and export, without changing the
-physical engine, scenario defaults, frame sampling or output resolution.
+These are historical scalar/particle renderer measurements. The optimization
+changes host diagnostics and export without changing that candidate's physical
+engine, scenario inputs, frame sampling or output resolution. It does not measure
+the active initialization-defined disturbance engine. Current generic and
+historical runs are headless unless visualization is explicitly requested.
 
 ## Measured contact run
 
 Measured on the same Windows host on 2026-09-11, using Python 3.14.7,
 Matplotlib 3.11.1, Pillow 12.3.0 and NumPy 2.5.3 in one existing environment.
 The baseline was commit `1168463ae7d211f86274200dd75c5e03c556c8f3`.
-Each measurement used the default contact scenario: 48 physical ticks, 49 saved
+Each measurement used the historical contact scenario: 48 physical ticks, 49 saved
 frames, stride 1, and enhanced 1500x1275 3D GIF and standalone HTML.
 
 | Measured phase | Before | After |
@@ -47,25 +50,31 @@ the measured improvement comes from fewer frames or reduced resolution.
 
 ## Reproduce the measurement
 
-These saved-output measurements use the API's `live=False` default. CLI live
-viewing now adds a separate preview process and throttled PNG page updates so
-images become available before the final GIF. This can add host work; concurrency
+These saved-output measurements used no live preview. In the current historical
+API, request recorded output with `visualize=True` and leave `live=False`.
+Explicit live viewing adds a separate preview process and throttled PNG page
+updates so images become available before the final GIF. This can add host work; concurrency
 improves time to visible results and does not promise a shorter whole-run duration.
-Use `--no-live` to compare final-output throughput, and record first-image latency
-separately when comparing live viewing. Short physical calculations can finish
+Use `--visualize` without `--live` on `event_universe.legacy_runner` to compare
+final-output throughput, and record first-image latency separately when
+comparing live viewing. Short physical calculations can finish
 before the first preview image; updates continue during canonical export.
 
 Use the same installed dependencies for the baseline and optimized checkouts.
-Run the following from each checkout in a fresh Python process, with its `src`
-directory on `PYTHONPATH`. Use distinct output directories for each measurement.
+Use each checkout's recorded API and explicit historical scenario in a fresh
+Python process, with its `src` directory on `PYTHONPATH`. Use distinct output
+directories for each measurement. The example below targets the current tree:
+its lazy renderer lookup must be patched in `diagnostics.render`. The historical
+baseline exposed the eager renderer and `run_scenario` through `runner` instead.
 
 ```python
 import time
 from pathlib import Path
-from event_universe import runner
+from event_universe import legacy_runner
+from event_universe.diagnostics import render as render_module
 from event_universe.scenarios import get_scenario
 
-render = runner.render_volume
+render = render_module.render_volume
 started = time.perf_counter()
 
 
@@ -77,8 +86,13 @@ def measured_render(*args, **kwargs):
     return result
 
 
-runner.render_volume = measured_render
-runner.run_scenario(get_scenario("contact"), Path("artifacts/contact-benchmark"))
+render_module.render_volume = measured_render
+legacy_runner.run_scenario(
+    get_scenario("contact"),
+    Path("artifacts/contact-benchmark"),
+    visualize=True,
+    live=False,
+)
 print("total:", time.perf_counter() - started)
 ```
 
@@ -87,7 +101,8 @@ for normal later runs; setup work is not part of running the simulator.
 
 ## Validation scope
 
-Live output was observed externally on the same Windows/Python 3.14.7 environment,
+Before integration with the generic/headless runner, live output was observed
+externally on the same Windows/Python 3.14.7 environment,
 without slowing or modifying physical steps. These times start at CLI launch,
 including imports and preview startup; they are not directly comparable to the
 earlier after-import throughput measurements.
@@ -109,9 +124,12 @@ The measurements describe file availability, not a browser's paint latency.
 
 The export and capture contracts are covered by `tests/test_render_export.py`
 and `tests/test_run_capture.py`; see [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
-The unchanged `python tools/check.py` gate also retains current physical
-regressions and produces a 3D HTML report for test worlds. Timing thresholds
-are deliberately kept out of CI because shared-runner load varies.
+The unchanged `python tools/check.py` gate retains current physical regressions
+and runs headlessly. Visual artifact tests and historical 3D test-world reports
+require an explicit `pytest --visualize-runs` request. Timing thresholds are
+deliberately kept out of CI because shared-runner load varies. The historical
+measurements above are not a claim that visual checks were repeated on the
+integrated generic/headless tree.
 
 The Windows validation environment enables UTF-8 mode (`$env:PYTHONUTF8 = '1'`
 in PowerShell) before the unchanged gate. Some existing tests read UTF-8 source

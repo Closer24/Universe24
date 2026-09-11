@@ -1,5 +1,25 @@
 # Architecture and change boundaries
 
+## Active generic ownership
+
+`disturbance_api.Simulation(initial: InitialState)` composes the generic engine
+and local law; it is exported as the primary package Simulation.
+`initialization.py` reads strict JSON data and resolves names to bounded typed
+definitions. `core/disturbance_state.py` owns fixed schemas and payload coding;
+`fields/disturbances.py` owns expression arithmetic, updates, paired coupling
+and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
+fixed transit and delayed atomic commits. No layer branches on a physical field
+name or imports Python code named by initialization.
+
+The complete source contract is [DISTURBANCES.md](DISTURBANCES.md). Its six-port,
+bounded-record schema replaces the implicit scalar/particle schema for the
+primary API. Global diagnostics never drive physical rules, and rendering is
+absent unless explicitly requested.
+
+The remaining scalar, stream, linked, collision and balanced sections describe
+explicitly named research APIs. Their record layouts, extension points, tick
+orders and acceptance limits remain scoped to those candidates.
+
 ## Causal-stream candidate extension
 
 `fields/streaming.py` owns bounded pure octant splitting and delivered-flux
@@ -28,6 +48,7 @@ table below defines code boundaries. Architecture owns this repository policy.
 | Information | Single owner | Update rule |
 | --- | --- | --- |
 | Executable code and model selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; models select them |
+| Generic initialization schema and transition law | [DISTURBANCES.md](DISTURBANCES.md) | Keep the active source contract separate from historical candidates |
 | Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
 | Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
 | Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
@@ -52,7 +73,12 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/state` | Standard-library data types |
+| `core/integer` | Standard-library types; owns shared working bounds and signed division |
+| `core/state` | Standard-library data types and `core/integer` |
+| `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
+| `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
+| `fields/disturbances` | Generic records and bounded integer arithmetic; no world or diagnostics |
+| `initialization` | JSON input and generic typed definitions; no arbitrary execution |
 | `core/contracts` | State types |
 | `core/lattice` | State types and integer bounds |
 | `core/engine` | State, lattice and local contracts |
@@ -61,12 +87,14 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `dynamics/turning`, `dynamics/movement` | Integer primitives and fixed vector types from `core/state` |
 | `models/current_field` | State, local contracts, generic fields and dynamics |
 | `models/local_field` | Compatibility re-exports only |
-| `api` | Engine and chosen candidate model |
+| `disturbance_api` | Generic engine and disturbance local law |
+| `api` | Historical engine and explicitly chosen research model |
 | `diagnostics` | Read-only engine views, immutable events, rendering libraries |
-| `scenarios`, `runner` | Public API and diagnostics |
+| `runner` | Generic public API, initialization and optional diagnostics |
+| `scenarios`, `legacy_runner` | Historical public APIs and optional diagnostics |
 
-The engine receives field and particle callables and an optional activity
-predicate. `Simulation` assembles them from a scalar
+The historical scalar engine receives field and particle callables and an optional activity
+predicate. `ScalarSimulation` assembles them from a scalar
 field and a turning component through `CurrentFieldModel`. Callers can replace
 either component independently with the keyword arguments `field=` and
 `turning=`. `Engine` itself imports no field, dynamics, model, rendering or
@@ -105,7 +133,7 @@ carried remainder is implemented once in `core/state.scaled_divrem`, including
 a bound on the product before adding a potentially cancelling remainder.
 
 `CURRENT_MODEL` explicitly retains `value_changed_or_source` for exact v10
-scheduling. Supplying `Simulation(field=...)` instead selects
+scheduling. Supplying `ScalarSimulation(field=...)` instead selects
 `sample_changed_or_source`, which also tracks remainder-only evolution. Callers
 can override either choice with `field_activity=`. The engine validates the
 boolean result before committing any field proposal. Direct `Engine` callers
@@ -117,8 +145,9 @@ depend on an unstated time input or on private evolving state.
 These extension points preserve the current five-register scalar cell schema.
 A signed field can be calculated by the generic primitive, but the current
 adapter clamps negative results. A vector field or several simultaneous fields
-requires a separately designed fixed-size state contract and corresponding
-engine and diagnostic support. It is not enabled merely by passing a new law.
+requires another schema rather than a replacement scalar callable. The active
+disturbance engine supplies that separate fixed-size multi-field contract; this
+historical adapter remains scalar-only.
 The practical extension guide is `FIELDS.md`.
 
 ## Local contracts
@@ -162,24 +191,25 @@ tick 15 is first visible in completed frame 16; this convention is unchanged.
 
 ## Recording and resources
 
-`Simulation` defaults to `NullObserver`, retaining no trace. `TraceRecorder` is
+`ScalarSimulation` defaults to `NullObserver`, retaining no trace. `TraceRecorder` is
 intended for small tests or old notebooks; its memory grows with history.
 `JsonlRecorder` writes events immediately and does not retain them. Rendering
 frames live only in the runner. `--frame-stride` controls their sampling cost.
 The engine never reads an observer result. Observers are trusted application
 code, not a security sandbox; an observer exception during a tick stops the world.
 
-The default runner and test-report view captures independent `VolumeFrame` records
-with full XYZ coordinates and renders at 1500×1275. `--view-2d` or `volume=False`
-explicitly selects a plane slice. The authoritative output rule is in
-`SIMULATOR_DEFINITIONS.md`.
+Run and test visualization is opt-in. When explicitly requested for a historical
+scalar run, the renderer captures independent `VolumeFrame` records with full XYZ
+coordinates and renders at 1500×1275; `volume=False` chooses a plane slice.
+The authoritative headless/default output rule is in `SIMULATOR_DEFINITIONS.md`.
 The volume renderer shows nonzero scalar cells, sampled particle trails and
 momentum arrows with a rotating camera. Plane and volume renderers share one
 GIF/HTML output function. Camera rotation, color and marker scaling are purely
 diagnostic; they do not change the engine or particle motion.
 
-The runner captures only the selected view. A capture may receive momentum
-already measured from that same state; otherwise it measures the state itself.
+With visualization enabled, the historical runner captures only the selected
+view. A capture may receive momentum already measured from that same state;
+otherwise it measures the state itself.
 Every completed tick still gets its momentum acceptance check, including ticks
 without a saved frame. A failed step is captured with a fresh measurement because
 its partially committed state can change without advancing the tick counter.
@@ -192,9 +222,11 @@ writer copies the Agg canvas already drawn by FuncAnimation and encodes the
 non-looping GIF once. Custom savefig backgrounds or transparency use savefig to
 preserve their rendering semantics. See [PERFORMANCE.md](PERFORMANCE.md).
 
-`diagnostics/live.py` owns disposable preview coordination. The CLI enables it;
-API callers opt in. The parent alone steps the Engine, copies and retains every
-canonical frame, and records events. Before nonblocking queue submission, the
+`diagnostics/live.py` owns disposable historical preview coordination.
+`legacy_runner` enables it only with explicit `--live` or API `live=True`, which
+also enables recorded visualization. Ordinary generic and historical runs are headless.
+The parent alone steps the Engine, copies and retains every canonical frame,
+and records events. Before nonblocking queue submission, the
 preview serializes the copied frame, preventing later producer mutation from
 reaching the consumer. A spawned process receives only serialized frames and
 display configuration. Its queue holds one waiting snapshot and its trail window
@@ -262,6 +294,7 @@ their explicitly separate host costs.
 
 | Reviewed path | Local bound | Separate host cost |
 | --- | --- | --- |
+| Generic disturbance local cycle | Fixed fields/types/rules and resident slots; up to six outgoing channels per record | Sparse scheduler and diagnostic totals grow with materialized cells and packets |
 | Baseline scalar update | Six neighbor samples, five cell registers and at most K source slots | Work/frontier sweeps grow with visited cells |
 | Field response and movement | Three vector components; one hop request; at most K destination slots | Occupancy-address scheduling grows with retained addresses |
 | One cell's particle phase | At most K particles, each with at most K slot work | K is fixed; no all-source search supplies force inputs |
@@ -302,8 +335,8 @@ successful regression trajectories. Preserved model limitations are listed in
 
 ## Local-link candidate (v11)
 
-`LinkedSimulation` / CLI `--scenario links` explicitly selects
-`scalar-field-v11-local-links`. `Simulation` retains the previous model and its
+`LinkedSimulation` / historical CLI `--scenario links` explicitly selects
+`scalar-field-v11-local-links`. `ScalarSimulation` retains the previous model and its
 physical behavior checks. This is a new geometry/transport hypothesis,
 not an architecture-only change to the baseline.
 
@@ -423,7 +456,7 @@ cover the active records without requiring equality to the archived engine.
 
 ## Opt-in balanced motion and local halo
 
-`Simulation(movement=..., post_motion_halo=...)` passes generic local components
+`ScalarSimulation(movement=..., post_motion_halo=...)` passes generic local components
 to the existing adapter and engine. `BalancedSimulation` selects
 `advance_balanced_movement` and the current model's scalar-halo adapter. Movement
 remains in `dynamics/`; the scalar transformation remains in `fields/`; the model

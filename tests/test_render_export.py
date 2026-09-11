@@ -42,6 +42,7 @@ def _decoded_frames(path):
         )
 
 
+@pytest.mark.visualization
 @pytest.mark.parametrize("compact,dpi", [(False, 150), (True, 65)])
 @pytest.mark.parametrize(
     "save_settings,transparent",
@@ -98,6 +99,7 @@ def _compare_exports(tmp_path, compact, dpi, transparent):
     assert "data:image/gif;base64," in output.read_text()
 
 
+@pytest.mark.visualization
 def test_single_volume_snapshot_preserves_resolution_and_recorded_state(tmp_path):
     frames = [VolumeFrame(7, {(1, 2, 3): 5}, [(0, 1, 2, 3, 1, 0, 0)], (1, 0, 0), 12)]
     recorded = deepcopy(frames)

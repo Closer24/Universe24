@@ -67,8 +67,11 @@ repair another model's failure or establish a real-world law.
 
 Pure documentation/skill changes need skill/link/language and packaging validation,
 not newly invented physical tests. The repository's existing submission and CI
-gate still applies. Every world actually executed uses the existing HTML renderer;
-diagnostics may reject a run but may not repair physical state.
+gate still applies. Ordinary runs and tests are headless; render only when the
+user explicitly requests visualization or visual checks. Diagnostics may reject
+a run but may not repair physical state. Consult
+[the active disturbance contract](../docs/DISTURBANCES.md) before applying old
+scalar/particle assumptions to the primary Simulation API.
 
 ## Performance work
 
@@ -77,11 +80,14 @@ optimizing. Reuse a verified checkout and installed environment for later runs.
 Measure before and after with identical inputs, tick counts, frame sampling,
 resolution and dependencies; report host timings separately from model cost.
 Preserve every physical update, event and acceptance check. Compare traces and
-metadata and inspect saved frames after changing the output pipeline. Do not
-claim a speedup from fewer frames or lower resolution without saying so.
+metadata. Inspect saved frames when visual checks were requested; otherwise
+report visual validation as not run. Do not claim a speedup from fewer frames
+or lower resolution without saying so. Keep historical renderer benchmarks on
+`event_universe.legacy_runner`; active runs require initialization data.
 
-For live displays, verify that an image is available before final output and
-distinguish simulation-time preview from export progress. Record time to first
+When live display validation is explicitly requested, verify that an image is
+available before final output and distinguish simulation-time preview from
+export progress. Record time to first
 visible output separately from total duration. Keep preview queues bounded,
 preserve all canonical frames and physical failure evidence, and verify worker
 cleanup plus the final replay handoff. Disclose unverified browser behavior.

@@ -8,7 +8,9 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    physical module. A postulate change must update both documents and its tests.
 2. Keep scheduling, generic field/dynamics calculations, model choices and output
    code in their documented modules. Reuse the generic arithmetic; choose and
-   connect it in `models/current_field.py` rather than copying it into a model.
+   select active laws in initialization data. Use `fields/disturbances.py` for
+   reusable generic arithmetic; historical models keep their named owners. Read
+   [the disturbance contract](docs/DISTURBANCES.md) for the active API.
 3. Use named immutable physical records, typed public interfaces and short local
    functions. Do not add growing per-source structures or render imports to core.
 4. For a defect, add a focused test of the failed behavior before the correction.
@@ -17,7 +19,8 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    A change to a physical hypothesis needs a separate model identity and review;
    do not change physical expectations merely to make a test pass. Historical
    API/frozen-v10 equality and older-Python compatibility are no longer gates.
-6. Run `python tools/check.py`. Inspect the HTML for affected run scenarios.
+6. Run `python tools/check.py`. Inspect metadata and traces for affected runs.
+   Capture and inspect HTML only when visualization was explicitly requested.
    Test reusable calculations in `test_scalar_field.py` and `test_turning.py`,
    current choices in `test_current_field.py`, and public component replacement
    in `test_field_composition.py`.
@@ -52,8 +55,10 @@ branch `main`. ZIP files are backups after the project has been uploaded. For ea
    Do not mix physical changes with display changes or architecture cleanup.
 5. Before pushing, inspect `git diff --check`, the diff and changed-file list.
    Never commit secrets, installed environments, caches or generated outputs.
-6. Run `python tools/check.py` on the version being submitted. Show the HTML for
-   world runs. CI outputs are available as GitHub Actions artifacts.
+6. Run `python tools/check.py` on the version being submitted. Standard runs
+   are headless; visual output requires an explicit request. Preserve actual
+   metadata, traces and requested visual evidence. CI outputs are available as
+   GitHub Actions artifacts.
 7. Open a pull request to `main` explaining the problem, change, expected behavior,
    validation, limitations and compatibility impact. State which tests were not run.
 8. If `main` advances, integrate its changes and recheck the resulting risks.

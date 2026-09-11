@@ -18,6 +18,12 @@ counterexample test. Review does not grant permission to change a physical law.
 An undefined or contradictory contract, or missing evidence for the exact source,
 means incomplete or blocked; do not fill the gap with an assumed pass.
 
+For initialization-defined simulation, use
+[DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
+whole-record versus extensive transport, exact source accounting, paired
+exchange, fixed transit and cost-dependent frozen local commits. Historical
+self-force and particle-momentum laws apply only to their named candidates.
+
 For each changed rule, verify:
 
 - the operation, units, parameters, assumptions and expected behavior are explicit

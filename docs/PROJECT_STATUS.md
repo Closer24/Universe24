@@ -1,18 +1,24 @@
 # Project status and restart guide
 
-Snapshot: 2026-09-11. Reviewed main:
-[7e517af](https://github.com/Closer24/Universe24/commit/7e517afb7a274821de05bf247ece91827c1b030b).
-This is an orientation snapshot, not a live dashboard or a test result.
-Refresh it when the default model, major integration state or restart procedure
-changes; daily task detail belongs in Issues and PRs.
+Contract update: 2026-09-11. The generic integration includes main at
+[ec0826b](https://github.com/Closer24/Universe24/commit/ec0826b20286a166498beacd6cb68002624826eb).
+Local combined verification is recorded in [VALIDATION.md](VALIDATION.md).
+That base commit does not contain the generic changes by itself. This guide
+does not claim that a remote merge has completed; verify current main and the
+submitted PR before continuing work.
 
 ## What this checkout contains
 
-The active package is [event_universe](../src/event_universe/). The ordinary
-`Simulation` defaults to `scalar-field-v10-contact`; link, balanced-motion,
-collision and causal-stream choices remain explicit alternatives. Check
-[api.py](../src/event_universe/api.py) and the selected model, not an old chat.
-Their physics contracts and limitations are in
+The active package is [event_universe](../src/event_universe/).
+`Simulation(initial: InitialState)` uses named fields, disturbance types and laws
+from JSON initialization. The CLI requires `--init`; ordinary execution and tests
+are headless. Start with [DISTURBANCES.md](DISTURBANCES.md) and the README.
+
+`ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
+`CausalStreamSimulation` retain explicit historical research laws. Their
+regression tests do not make those laws the primary generic model. Check
+[the public API](../src/event_universe/__init__.py) and the selected configuration,
+not an old chat. Historical contracts remain scoped in
 [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md).
 
 Use the default interpreter in [.python-version](../.python-version) with the
@@ -32,11 +38,19 @@ in that PR; do not infer that it is ready from this navigation document.
 
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
 is the user's high-level specification. Its requirements are not automatically
-implemented: the generic Vector/Face/Transport target must not be confused with
-the baseline scalar engine. Read relevant current sections for specification work.
+implemented: distinguish the active initialization-defined disturbance contract
+from historical scalar/particle candidates. Read relevant current sections for specification work.
 Keep accepted executable contracts in the repository and record source revision
 or retrieval date in the related PR. Resolve differences explicitly; do not
 overwrite the baseline to make a description appear true.
+
+The generic schema supports bounded integer expressions, extensive splitting,
+whole-record movement, paired exchange, explicit sources and local computation
+delay with fixed neighbor transit. Operation prices, ordinary cost and field laws
+are initialization choices. The cost output is local; propagating a computation
+influence requires a separate law. Capacity exhaustion stops a run rather than
+discarding content. Gravity, waves, relativity and general energy conservation
+are not established by the framework.
 
 Software validation and physical acceptance are separate. In particular, the
 [isolated-motion rejection contract](../SIMULATOR_DEFINITIONS.md#reject-isolated-self-force-in-application-runs)
@@ -48,8 +62,9 @@ detects a baseline failure; a passing detector test does not fix that law.
    [open PRs](https://github.com/Closer24/Universe24/pulls).
 2. Resolve the task from its [Issue](https://github.com/Closer24/Universe24/issues)
    or user request. Record the intended model, base, owned files and acceptance.
-3. Install and run using [README.md](../README.md#install-and-run). Use a new
-   output directory so previous experiment evidence is not overwritten.
+3. Install and run using [README.md](../README.md#install-and-run) and explicit
+   initialization. Use a new output directory; enable visualization only when
+   requested.
 4. Follow [CONTRIBUTING.md](../CONTRIBUTING.md). Run the required gate and attach
    actual results for the submitted tree, including not-run checks and failures.
 5. Hand off through [skills/workflow.md](../skills/workflow.md), then verify any

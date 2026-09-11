@@ -1,6 +1,7 @@
 import pytest
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.core.state import (
     MAX_CORE_INT,
     MAX_WORK_INT,

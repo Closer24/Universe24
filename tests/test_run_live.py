@@ -8,7 +8,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from event_universe import Config, ParticleState, runner
+from event_universe import Config, ParticleState
+from event_universe import legacy_runner as runner
 from event_universe.core.engine import Engine
 from event_universe.diagnostics.frames import Slice
 from event_universe.scenarios import Scenario
@@ -24,19 +25,22 @@ def scenario(ticks=2):
     )
 
 
+@pytest.mark.visualization
 @pytest.mark.parametrize("volume", [False, True])
 def test_live_worker_keeps_all_canonical_frames_events_and_metadata(monkeypatch, tmp_path, volume):
+    import event_universe.diagnostics.render as renderer
+
     plain, live = tmp_path / "plain", tmp_path / "live"
     captures = []
     name = "render_volume" if volume else "render_run"
-    original_render = getattr(runner, name)
+    original_render = getattr(renderer, name)
 
     def render(frames, *args, **kwargs):
         captures.append(deepcopy(frames))
         return original_render(frames, *args, **kwargs)
 
-    monkeypatch.setattr(runner, name, render)
-    runner.run_scenario(scenario(), plain, volume=volume)
+    monkeypatch.setattr(renderer, name, render)
+    runner.run_scenario(scenario(), plain, volume=volume, visualize=True)
     original_step = Engine.step
 
     def step(world):
@@ -57,6 +61,9 @@ def test_live_worker_keeps_all_canonical_frames_events_and_metadata(monkeypatch,
 
 @pytest.fixture
 def display_spy(monkeypatch):
+    import event_universe.diagnostics.live as live_diagnostics
+    import event_universe.diagnostics.render as renderer
+
     instances = []
 
     class RecordingDisplay:
@@ -96,7 +103,16 @@ def display_spy(monkeypatch):
         def close(self):
             self.closed = True
 
-    monkeypatch.setattr(runner, "LiveDisplay", RecordingDisplay)
+    def record_export(frames, output, *, on_frame=None, title, **kwargs):
+        # Exercise coordination and failure ownership without drawing a raster.
+        if on_frame is not None:
+            for index in range(len(frames)):
+                on_frame(index, None)
+        output.write_text(title, encoding="utf-8")
+        return output
+
+    monkeypatch.setattr(live_diagnostics, "LiveDisplay", RecordingDisplay)
+    monkeypatch.setattr(renderer, "render_volume", record_export)
     return instances, RecordingDisplay
 
 
@@ -131,7 +147,7 @@ def test_physical_failure_retains_original_error_and_cleans_live_display(
         def fail_export(*args, **kwargs):
             raise render_error
 
-        monkeypatch.setattr(runner, "render_volume", fail_export)
+        monkeypatch.setattr("event_universe.diagnostics.render.render_volume", fail_export)
     with pytest.raises(RuntimeError) as caught:
         runner.run_scenario(scenario(), tmp_path, live=True)
     assert caught.value is failure
@@ -176,31 +192,44 @@ def test_live_cleanup_covers_startup_metadata_and_interruption(
     assert display.closed
 
 
-@pytest.mark.parametrize("flags,expected_live", [([], True), (["--no-live"], False)])
-def test_cli_live_default_and_explicit_opt_out(monkeypatch, tmp_path, capsys, flags, expected_live):
+@pytest.mark.parametrize(
+    "flags,expected_live,expected_visualize",
+    [
+        ([], False, False),
+        (["--no-live"], False, False),
+        (["--live"], True, True),
+        (["--visualize"], False, True),
+    ],
+)
+def test_cli_live_requires_explicit_opt_in(
+    monkeypatch, tmp_path, capsys, flags, expected_live, expected_visualize
+):
     invocations = []
 
     def run(selected, output, **kwargs):
         invocations.append(kwargs)
-        return output / "run.html"
+        return output / ("run.html" if kwargs["visualize"] else "run.json")
 
     monkeypatch.setattr(runner, "run_scenario", run)
     monkeypatch.setattr(sys, "argv", ["event-universe", "--output", str(tmp_path), *flags])
     runner.main()
     assert invocations[0]["live"] is expected_live
+    assert invocations[0]["visualize"] is expected_visualize
     lines = capsys.readouterr().out.splitlines()
-    expected = [str((tmp_path / "run.html").resolve())]
+    expected = [str((tmp_path / ("run.html" if expected_visualize else "run.json")).resolve())]
     if expected_live:
         expected.insert(0, str((tmp_path / "live.html").resolve()))
     assert lines == expected
 
 
 def test_importing_module_entrypoint_does_not_launch_another_cli(monkeypatch):
+    from event_universe import runner as active_runner
+
     def unexpected_main():
         raise AssertionError("a spawned import must not start another simulation")
 
     with monkeypatch.context() as guard:
-        guard.setattr(runner, "main", unexpected_main)
+        guard.setattr(active_runner, "main", unexpected_main)
         module = importlib.import_module("event_universe.__main__")
         importlib.reload(module)
     importlib.reload(module)

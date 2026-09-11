@@ -26,7 +26,9 @@ SIMULATOR_DEFINITIONS.md and ownership rules in docs/ARCHITECTURE.md.
 No existing engine, field, movement or renderer implementation is replaced.
 
 Run `python -m pytest tests/test_quantum_detector_trial.py -q` for the trial.
-Every actual Engine run uses the existing pytest HTML visualization path.
+Trial execution is headless by default. The existing pytest HTML visualization
+path is enabled only when visual checks are explicitly requested with
+`--visualize-runs`.
 Full gate: `python tools/check.py`. Missing checks must not be marked PASS.
 
 ## Limits

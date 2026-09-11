@@ -10,6 +10,12 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
+For the active API, read [DISTURBANCES.md](../../docs/DISTURBANCES.md).
+Check the full initialization-to-expression-to-proposal path, fixed capacities,
+positive payload coding, frozen pending ownership and lazy optional rendering.
+Historical scalar records are not the universal schema. Missing initialization
+must fail rather than silently selecting built-in physics.
+
 Trace responsibilities across generic calculations, model assembly, engine
 scheduling/commits, public API, scenario setup and read-only diagnostics. Models
 must compose shared calculations; neither a new model nor a compatibility facade

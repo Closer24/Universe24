@@ -1,27 +1,16 @@
-"""One application entry point: initial conditions -> simulation -> metadata + HTML."""
+"""Initialization file -> generic disturbances -> headless artifacts by default."""
 
 import argparse
 import hashlib
 import json
-from dataclasses import asdict, replace
 from pathlib import Path
 
 from event_universe import __version__
-from event_universe.diagnostics.frames import Frame, Slice, VolumeFrame, capture_frame, capture_volume
-from event_universe.diagnostics.invariants import require_inertial_momentum
-from event_universe.diagnostics.live import LiveDisplay
-from event_universe.diagnostics.measurements import ExactVector, report, total_momentum
-from event_universe.diagnostics.recorder import JsonlRecorder
-from event_universe.diagnostics.render import render_run, render_volume
-from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED_MODEL_ID
-from event_universe.models.collisions import MODEL_ID as COLLISION_MODEL_ID
-from event_universe.models.current_field import MODEL_ID
-from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
-from event_universe.scenarios import Scenario, get_scenario
+from event_universe.disturbance_api import Simulation
+from event_universe.initialization import parse_initial_json
 
 
 def source_fingerprint() -> str:
-    """Content identity remains available in source archives and installed wheels."""
     root = Path(__file__).parent
     digest = hashlib.sha256()
     for path in sorted(root.rglob("*.py")):
@@ -31,218 +20,107 @@ def source_fingerprint() -> str:
     return digest.hexdigest()
 
 
-def run_scenario(
-    scenario: Scenario,
+def run_initialization(
+    initialization: Path,
     output: Path,
     *,
+    ticks: int | None = None,
+    visualize: bool = False,
     frame_stride: int = 1,
-    volume: bool = True,
-    live: bool = False,
 ) -> Path:
-    """Write canonical run artifacts, optionally publishing progress during execution."""
-    if type(frame_stride) is not int or frame_stride < 1:
-        raise ValueError("frame_stride must be a positive integer")
-    if type(scenario.ticks) is not int or scenario.ticks < 0:
-        raise ValueError("ticks must be a non-negative integer")
+    """Preserve input, events, final state, and conservation evidence."""
+    source = initialization.read_bytes()
+    initial = parse_initial_json(source)
+    fingerprint = source_fingerprint()
+    count = initial.ticks if ticks is None else ticks
+    if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
+        raise ValueError("ticks must be nonnegative and frame_stride positive")
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
-    display = (
-        LiveDisplay(
-            output,
-            title=f"Event Universe — {scenario.name}",
-            total_ticks=scenario.ticks,
-            view=scenario.view,
-            volume=volume,
-        )
-        if live
-        else None
-    )
-    try:
-        if display is not None:
-            display.start()
-        return _run_scenario(scenario, output, frame_stride=frame_stride, volume=volume, display=display)
-    except BaseException as error:
-        if display is not None:
-            display.fail(error)
-        raise
-    finally:
-        if display is not None:
-            display.close()
-
-
-def _run_scenario(
-    scenario: Scenario,
-    output: Path,
-    *,
-    frame_stride: int,
-    volume: bool,
-    display: LiveDisplay | None,
-) -> Path:
-    frames: list[Frame] = []
-    volume_frames: list[VolumeFrame] = []
+    (output / "initialization.json").write_bytes(source)
+    frames: list[dict[str, object]] = []
     failure: Exception | None = None
+    conservation = True
+    completed = 0
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
-        world = scenario.create(JsonlRecorder(stream))
-        scenario.view.validate_shape((world.config.nx, world.config.ny, world.config.nz))
 
-        def capture(momentum: ExactVector | None = None) -> None:
-            frame: Frame | VolumeFrame
-            if volume:
-                frame = capture_volume(world, momentum=momentum)
-                volume_frames.append(frame)
-            else:
-                frame = capture_frame(world, scenario.view, momentum=momentum)
-                frames.append(frame)
-            if display is not None:
-                # LiveDisplay serializes this copied state before asynchronous delivery.
-                display.submit(frame)
+        def record(event: dict[str, object]) -> None:
+            stream.write(json.dumps(event) + "\n")
 
-        initial_momentum = total_momentum(world)
-        current_momentum = initial_momentum
-        capture(current_momentum)
-        # The runner owns the run: no external seeds or later particle additions.
-        # Field-bearing initial states are not evidence of isolation.
-        isolated = (
-            next(iter(world.particles.items()))
-            if len(world.particles) == 1 and not any(any(cell) for cell in world.cells.values())
-            else None
-        )
-        isolated_status = "not_applicable" if isolated is None else "passed"
-        conserved = True
+        world = Simulation(initial, observer=record)
+        initial_totals = world.totals()
+        if visualize:
+            frames.append(world.snapshot())
         try:
-            for _ in range(scenario.ticks):
+            for _ in range(count):
                 world.step()
-                current_momentum = total_momentum(world)
-                conserved = conserved and current_momentum == initial_momentum
-                if isolated is not None:
-                    pid, initial_particle = isolated
-                    isolated_status = "failed"
-                    require_inertial_momentum(
-                        initial_particle.momentum,
-                        world.particles[pid].momentum,
-                        pid=pid,
-                        tick=world.tick,
-                    )
-                    isolated_status = "passed"
-                if world.tick % frame_stride == 0:
-                    capture(current_momentum)
+                totals, sources = world.totals(), world.source_totals()
+                equal = all(
+                    totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
+                    for name, values in initial_totals.items()
+                )
+                conservation = conservation and equal
+                if not equal:
+                    raise ValueError("declared quantity conservation failed")
+                completed += 1
+                if visualize and world.tick % frame_stride == 0:
+                    frames.append(world.snapshot())
         except Exception as error:
             failure = error
-        last_frame_tick = volume_frames[-1].tick if volume else frames[-1].tick
-        if last_frame_tick != world.tick or failure is not None:
-            # A failed step may have committed local state without advancing the tick.
-            capture(None if failure is not None else current_momentum)
+        final = world.snapshot()
+        if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
+            frames.append(final)
     metadata: dict[str, object] = {
         "package_version": __version__,
-        "source_sha256": source_fingerprint(),
-        "model": (
-            (COLLISION_MODEL_ID if scenario.links is None else COLLISION_LINKED_MODEL_ID)
-            if scenario.collisions or any(m != 1 for m in scenario.masses)
-            else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
-        ),
-        "scenario": asdict(scenario),
-        "frame_stride": frame_stride,
-        "display": "volume-3d" if volume else "plane-slice",
-        "initial_total_momentum": initial_momentum,
-        "momentum_equal_at_every_completed_tick": conserved,
+        "source_sha256": fingerprint,
+        "initialization_sha256": hashlib.sha256(source).hexdigest(),
+        "model": initial.model_id,
         "status": "failed" if failure else "completed",
-        "isolated_momentum_check": isolated_status,
         "error": str(failure) if failure else None,
-        "report": report(world) if failure is None else {"tick": world.tick, "faulted": world.faulted},
+        "requested_ticks": count,
+        "completed_ticks": completed,
+        "tick": world.tick,
+        "display": "disturbances" if visualize else "none",
+        "initial_totals": initial_totals,
+        "final_totals": world.totals(),
+        "source_totals": world.source_totals(),
+        "conserved_at_every_completed_tick": conservation,
+        "fields": [field.name for field in initial.fields],
+        "disturbance_types": [kind.name for kind in initial.disturbances],
     }
-    (output / "run.json").write_text(
-        json.dumps(metadata, indent=2, default=str) + "\n", encoding="utf-8"
-    )
-    title = f"Event Universe — {scenario.name}"
-    if failure is not None:
-        title = f"FAILED RUN — {title} — {failure}"
-    try:
-        if display is not None:
-            display.stop_preview()
-        if volume:
-            if display is None:
-                artifact = render_volume(
-                    volume_frames, output / "run.html", title=title, metadata=metadata
-                )
-            else:
-                artifact = render_volume(
-                    volume_frames,
-                    output / "run.html",
-                    title=title,
-                    metadata=metadata,
-                    on_frame=display.rendered,
-                )
-        elif display is None:
-            artifact = render_run(
-                frames, scenario.view, output / "run.html", title=title, metadata=metadata
-            )
-        else:
-            artifact = render_run(
-                frames,
-                scenario.view,
-                output / "run.html",
-                title=title,
-                metadata=metadata,
-                on_frame=display.rendered,
-            )
-        if display is not None:
-            if failure is not None:
-                display.fail(failure)
-            display.finish(artifact)
-    except Exception as error:
-        if failure is not None:
-            failure.add_note(f"Final diagnostic rendering also failed: {error}")
-            raise failure from error
-        raise
+    (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
+    path = output / "run.json"
+    path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    if visualize:
+        from event_universe.diagnostics.disturbance_render import render_disturbances
+
+        path = render_disturbances(frames, output / "run.html", metadata)
     if failure is not None:
         raise failure
-    return artifact
+    return path
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run the integer 3D simulator and save HTML diagnostics."
+        description="Run generic disturbances from an initialization JSON file."
     )
     parser.add_argument(
-        "--scenario",
-        choices=(
-            "contact",
-            "turning",
-            "stationary",
-            "links",
-            "collision",
-            "collision-masses",
-            "collision-links",
-        ),
-        default="contact",
+        "--init", required=True, type=Path, help="Field, disturbance, law and initial-state file"
     )
-    parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
+    parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
+    parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
-    parser.add_argument(
-        "--no-live", action="store_false", dest="live", help="Disable live preview and progress HTML"
-    )
-    views = parser.add_mutually_exclusive_group()
-    views.add_argument("--view-3d", dest="view_3d", action="store_true", help="Full XYZ view (default)")
-    views.add_argument("--view-2d", dest="view_3d", action="store_false", help="Show a plane slice")
-    parser.set_defaults(view_3d=True)
-    parser.add_argument("--plane", choices=("XY", "XZ", "YZ"))
-    parser.add_argument("--slice", type=int, dest="coordinate")
     args = parser.parse_args()
-    scenario = get_scenario(args.scenario)
-    if args.ticks is not None:
-        scenario = replace(scenario, ticks=args.ticks)
-    if args.plane is not None or args.coordinate is not None:
-        scenario = replace(
-            scenario,
-            view=Slice(
-                args.plane or scenario.view.plane,
-                scenario.view.coordinate if args.coordinate is None else args.coordinate,
-            ),
+    try:
+        artifact = run_initialization(
+            args.init,
+            args.output,
+            ticks=args.ticks,
+            visualize=args.visualize,
+            frame_stride=args.frame_stride,
         )
-    if args.live:
-        print((args.output / "live.html").resolve(), flush=True)
-    print(
-        run_scenario(
-            scenario, args.output, frame_stride=args.frame_stride, volume=args.view_3d, live=args.live
-        ).resolve()
-    )
+    except (ValueError, OSError) as error:
+        parser.exit(1, f"Run failed: {error}\n")
+    print(artifact.resolve())

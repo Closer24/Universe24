@@ -8,7 +8,8 @@ description: Run and maintain the minimum sufficient Universe24 test suite, diag
 Read [the shared workflow](../workflow.md) and
 [test expectations](../../docs/TEST_EXPECTATIONS.md). Input is the changed
 behavior/risk and exact tree; output is actual commands/results, retained coverage,
-failure evidence and the existing HTML report for executed worlds.
+failure evidence, metadata and traces. Visual reports are optional output only
+when visualization has been explicitly requested.
 
 Choose tests for independent numerical outcomes, distinct bounds/errors,
 component replacement, causal timing, local conservation and known regressions.
@@ -23,8 +24,10 @@ boundary and failure regimes when they exercise different behavior. Reduce actua
 duplicate computation rather than hiding cases inside one counted test.
 
 Run focused checks while resolving a concrete failure. For submission run the
-existing `python tools/check.py` gate on the submitted version and inspect its
-HTML. Report pass/fail counts, not-run checks and the source tree. Reuse results
+existing `python tools/check.py` gate on the submitted version. Standard tests
+are headless. Use `pytest --visualize-runs` and inspect visual artifacts only when
+visual checks were requested; preserve physical assertions in ordinary tests.
+Report pass/fail counts, not-run checks and the source tree. Reuse results
 for an unchanged tree; do not repeat unrelated worlds merely for reassurance.
 
 Local Git/Python and available CI log tools are sufficient. Changes to tests are

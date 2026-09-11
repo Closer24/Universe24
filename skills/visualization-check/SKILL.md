@@ -10,12 +10,19 @@ Read [the shared workflow](../workflow.md) and the display contract in
 the output change; output is an inspected artifact and scoped visual findings.
 Use the existing frame, HTML/GIF and image-inspection tools.
 
+Visualization is opt-in. Apply this workflow to requested visual output; do not
+turn a headless simulation or ordinary test run into a rendering run. Use
+`pytest --visualize-runs` only when visual checks were requested. Headless output
+contracts are checked through metadata and event traces without frame capture.
+
 Rendering reads copied state only. Keep physical changes with the field/engine
 owner. Inspect actual saved frames and HTML, not merely plotting code or a tool's
 success message. Check the relevant initial, event/failure and final frames.
 
 Verify labels, scales, geometry, particle identities, visibility and playback.
-Velocity arrows must use the selected model's mass/momentum scale. Periodic seams,
+For historical particle views, velocity arrows must use the selected model's
+mass/momentum scale. Generic disturbance views must label configured fields
+without inferring physical meaning from names. Periodic seams,
 sampled-frame displacement and actual multi-hop movement are different facts;
 show the recorded distinction rather than interpolating it away. The animation
 must follow the current end-of-playback contract.
@@ -33,3 +40,5 @@ For renderer optimizations, follow the shared workflow's
 [performance procedure](../workflow.md#performance-work). Compare saved frame
 count, dimensions, duration, playback and representative decoded images in
 addition to the unchanged physical trace.
+Historical live previews remain explicit opt-ins. Do not apply their scalar and
+particle display semantics to initialization-defined fields in the active runner.

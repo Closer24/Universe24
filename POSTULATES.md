@@ -10,6 +10,25 @@ Distinguish three categories:
 - **Candidate law:** a specific hypothesis under evaluation, not a proven law of nature.
 - **Open question:** an idea that has not been implemented or established.
 
+## Active initialization-defined model
+
+The active model treats physical content as configured disturbances carrying
+named fields. The engine supplies integer local updates, causal transport,
+conservation enforcement and scheduling; initialization supplies identities and
+candidate laws. It does not infer familiar physics from names.
+
+The user-defined cost of a local cycle sets a general cell delay above the
+normal cost. Neighbor transit is fixed, and no computation debt accumulates
+between cycles. The exact schema, exchange, timing and source rules are in
+[the disturbance contract](docs/DISTURBANCES.md).
+
+Sections 1–5 and 10–11 state shared locality, arithmetic and evidence principles.
+Sections 6–9 document the source, self-force, momentum and turning requirements
+of the explicitly selected historical research models; they are not implicit
+laws of every configured disturbance. Sections 13 and 15 likewise belong to
+named historical candidates. Section 14 remains a separate optional quantum
+assumption and does not add an operation to the generic disturbance engine.
+
 ## 1. The world consists of locations and events
 
 Space is divided into three-dimensional cells. Each cell has six nearest neighbors:
@@ -25,10 +44,11 @@ if they arise from local events and laws, rather than being inserted under anoth
 ## 2. Every location has only bounded local information
 
 A physical cell does not store a picture of the entire universe. It stores a fixed
-amount of information and reads its own state and its six neighbors. Section 14
+amount of information and reads its own state and information already delivered
+by its six neighbors. Section 14
 explicitly adds an optional shared quantum query primitive, not a neighbor read.
 
-Cell particle capacity is fixed in advance. A cell has no list that grows with the
+Local disturbance capacity is fixed in advance. A cell has no list that grows with the
 number of sources in the universe and does not retain its entire history.
 
 Physical work per local update is therefore bounded and constant. Total host
@@ -53,8 +73,9 @@ to rewrite physical records or send instantaneous physical messages.
 Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
-**Implemented:** a field change travels at most one link per tick; a field update
-reads six neighbors. There is no global correction at the end of a tick.
+**Active contract:** disturbance transfers cross one neighbor link after its
+fixed transit time; updates use already available local records. Extra cell delay
+can make propagation slower. There is no global correction at the end of a tick.
 
 **Not established:** that these local laws suffice for every kind of physical
 consistency, particularly quantum consistency and entanglement.
@@ -122,7 +143,7 @@ law for transporting field momentum between locations.
 
 ## 9. Field and turning laws are hypotheses under test
 
-The current local field law uses six neighbors, the local source and a retained
+The historical scalar field law uses six neighbors, the local source and a retained
 remainder. A turning law lets transverse field imbalance change motion direction.
 
 These are **candidate laws**. They are not called gravity and do not establish
@@ -138,9 +159,10 @@ Trajectories, reports, images and HTML only read run results. They neither direc
 particle motion nor repair the field. Here measurement means diagnostics, not a
 quantum interaction that creates a new physical record.
 
-Every application run saves initial conditions, parameters, code identity and an
-HTML view identifying its displayed geometry. A view may be a 2D slice while the
-underlying calculation remains 3D.
+Every application run saves initial conditions, parameters, code identity and
+completion or failure evidence. Runs and ordinary tests are headless. Only an
+explicit visualization request adds frame capture and a visual artifact identifying
+its displayed quantity and geometry. A slice does not change the underlying 3D world.
 
 ## 11. A result must pass tests to be considered reliable
 
@@ -177,6 +199,8 @@ that local world. It does not turn host evaluation into physical communication.
 
 ## 13. Experimental extension: variable-length links
 
+This historical candidate is selected explicitly through LinkedSimulation. It
+does not replace the active disturbance model's fixed neighbor transit time.
 In this candidate, each cell also stores fixed information about its six links.
 It owns the three positive-direction links and keeps local copies of the other
 three. Ownership organizes storage; it must not privilege a physical direction.
@@ -226,7 +250,8 @@ not implemented by this addition. Exact contracts and ownership are specified in
 
 ## 15. Supplied mass and local elastic collisions
 
-The user explicitly adds a positive integer inertial mass per particle, default
+The historical scalar/contact candidate explicitly adds a positive integer inertial
+mass per particle, default
 one. This mass is a model input; it has not emerged from events. At the same
 momentum a heavier particle moves more slowly, subject to the existing causal
 speed limit. Mass does not silently replace the source-strength or field laws.

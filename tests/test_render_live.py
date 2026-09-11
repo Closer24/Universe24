@@ -32,6 +32,7 @@ def _frames(volume):
     return [Frame(tick, {(2, 3): tick + 1}, [(0, tick + 2, 3, 1, 0, 0)], (1, 0, 0)) for tick in (0, 1)]
 
 
+@pytest.mark.visualization
 @pytest.mark.parametrize("volume", [False, True])
 @pytest.mark.parametrize("save_settings", [{}, {"savefig.transparent": True}, {"savefig.bbox": "tight"}])
 def test_preview_matches_last_canonical_raster_and_callback_precedes_gif(
@@ -65,6 +66,7 @@ def test_preview_matches_last_canonical_raster_and_callback_precedes_gif(
     assert frames == recorded
 
 
+@pytest.mark.visualization
 def test_callback_image_mutation_cannot_change_canonical_gif(tmp_path):
     frames = _frames(False)
     normal = tmp_path / "normal.html"
@@ -91,6 +93,7 @@ def test_preview_rejects_empty_history_without_creating_an_artifact(tmp_path, vo
     assert plt.get_fignums() == figures_before
 
 
+@pytest.mark.visualization
 def test_preview_and_callback_failures_close_their_figures(tmp_path):
     frames = _frames(False)
     figures_before = plt.get_fignums()
