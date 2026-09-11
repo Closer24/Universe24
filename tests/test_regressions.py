@@ -18,9 +18,20 @@ def test_full_state_matches_frozen_legacy_after_every_tick(name, legacy, referen
     reference = legacy.IntegerO1Field3D(legacy.Config(**asdict(scenario.config)))
     for seed in scenario.particles:
         reference.add_particle(*seed)
+    contact_tick, turn_tick = None, None
     for _ in range(scenario.ticks):
+        previous = len(trace.force_records)
+        before = tuple(p.py for p in current.particles.values())
         current.step()
         reference.step()
+        if name == "contact" and current.tick <= 24:
+            if contact_tick is None and any(event.gy for event in trace.force_records[previous:]):
+                contact_tick = current.tick
+            if turn_tick is None and before != tuple(p.py for p in current.particles.values()):
+                turn_tick = current.tick
+            assert total_momentum(current) == (0, 0, 0)
+        if name == "turning":
+            assert total_momentum(current) == (0, 0, 0)
         assert current.tick == reference.tick
         assert dict(current.cells) == {key: tuple(value) for key, value in reference.cells.items()}
         assert {pid: p[:12] for pid, p in current.particles.items()} == {
@@ -36,9 +47,16 @@ def test_full_state_matches_frozen_legacy_after_every_tick(name, legacy, referen
         assert trace.collisions == reference.collisions
         assert total_momentum(current) == reference.total_momentum()
     assert audit(current)["valid_remainders"]
+    if name == "contact":
+        assert contact_tick is not None and turn_tick == contact_tick
+    if name == "turning":
+        first, second = current.particles[0], current.particles[1]
+        assert first.py > 0 and second.py < 0
+        assert first.momentum == tuple(-value for value in second.momentum)
+        assert first.z == second.z == 16
 
 
-@pytest.mark.parametrize("plane", ["XY", "XZ", "YZ"])
+@pytest.mark.parametrize("plane", ["XZ", "YZ"])
 def test_offset_pair_turns_in_all_three_coordinate_planes(plane):
     # Keep the original order of the two nonzero digital axes in each embedding.
     permutations = {"XY": (0, 1, 2), "XZ": (0, 2, 1), "YZ": (2, 0, 1)}
@@ -57,22 +75,6 @@ def test_offset_pair_turns_in_all_three_coordinate_planes(plane):
     assert first.momentum[transverse] > 0 and second.momentum[transverse] < 0
     assert first.momentum == tuple(-value for value in second.momentum)
     assert first.position[fixed] == second.position[fixed] == 16
-
-
-def test_first_transverse_contact_changes_momentum_on_same_tick_at_unit_coupling():
-    trace = TraceRecorder()
-    world = get_scenario("contact").create(trace)
-    contact_tick, turn_tick = None, None
-    for _ in range(24):
-        previous = len(trace.force_records)
-        before = world.particles[0].py, world.particles[1].py
-        world.step()
-        if contact_tick is None and any(event.gy for event in trace.force_records[previous:]):
-            contact_tick = world.tick
-        if turn_tick is None and before != (world.particles[0].py, world.particles[1].py):
-            turn_tick = world.tick
-        assert total_momentum(world) == (0, 0, 0)
-    assert contact_tick is not None and turn_tick == contact_tick
 
 
 def test_isolated_cardinal_mover_has_no_self_drag():
