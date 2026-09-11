@@ -1,5 +1,16 @@
 # Test inputs and expected results
 
+## Causal-stream candidate
+
+`test_causal_stream.py` checks exact conservative six-port branching; rejection
+of a negative old population even when a positive source would mask it; explicit
+rejection of scalar seeding without mutation; isolated axis and diagonal momenta
+with zero impulse residues at every tick; a Manhattan-distance-nine source pair
+with zero response through tick eight and opposite (2,0,1) impulses at tick nine;
+and an offset moving pair with opposite transverse responses at tick twenty-six.
+The free-space cases do not reach periodic return. These are candidate acceptance
+checks, not a claim of isotropic propagation or an established force law.
+
 Shared calculations live in generic components. The model selects weights,
 sources, response and activity policies and maps results to fixed records.
 Scenarios provide initial conditions; the engine manages time, neighbors and

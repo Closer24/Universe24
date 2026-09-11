@@ -100,6 +100,15 @@ of every axis must be equal. Opposite influences cancel, leaving its momentum un
 This is a fundamental local-consistency test: a particle must not start moving
 solely because of its own symmetric field.
 
+For an accepted free-motion candidate, this requirement also applies to moving
+isolated particles: their momentum and impulse remainders must not change due
+to their own field. Baseline failures remain evidence, not approved corrections.
+The opt-in `causal-octant-stream-v1` candidate tests this through outward one-link
+transport before the particle response, with no source identity or subtraction.
+Its free-space guarantee ends at periodic return, which is a boundary effect
+requiring separate evidence. The fixed state and limits are specified in
+`SIMULATOR_DEFINITIONS.md` and `docs/CAUSAL_STREAM_FIELD.md`.
+
 ## 8. Momentum is exchanged at the event location
 
 When a particle receives a momentum change, the field receives an equal and

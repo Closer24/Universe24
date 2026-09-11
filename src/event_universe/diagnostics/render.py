@@ -125,6 +125,10 @@ def render_run(
     h_axis, v_axis, fixed_axis = AXES[view.plane]
     labels = ("x", "y", "z")
     plane_label = f"{view.plane} slice {labels[fixed_axis]}={view.coordinate}"
+    if any(frame.field_kind != frames[0].field_kind for frame in frames):
+        raise ValueError("one animation must use one field quantity")
+    if frames[0].field_kind == "stream-magnitude":
+        plane_label += " | Stream magnitude = sum populations (not scalar phi)"
     vmax = max(1, max((v for frame in frames for v in frame.field.values()), default=1))
     fig, ax = plt.subplots(figsize=(4, 2.8) if compact else (9, 5.5))
 
@@ -194,6 +198,9 @@ def render_volume(
     """Render all nonzero field cells, particle trails and momenta in a rotating XYZ view."""
     if not frames:
         raise ValueError("at least one diagnostic frame is required")
+    if any(frame.field_kind != frames[0].field_kind for frame in frames):
+        raise ValueError("one animation must use one field quantity")
+    streaming = frames[0].field_kind == "stream-magnitude"
     points = [position for frame in frames for position in frame.field]
     points.extend((p[1], p[2], p[3]) for frame in frames for p in frame.particles)
     if not points:
@@ -218,7 +225,9 @@ def render_volume(
     fig.text(
         0.07,
         0.905,
-        "Full 3D XYZ view  /  particles, field and trajectories  /  lattice coordinates",
+        "Full 3D XYZ / Stream magnitude = sum populations (not scalar phi)"
+        if streaming
+        else "Full 3D XYZ view  /  particles, field and trajectories  /  lattice coordinates",
         color="#91a4be",
         fontsize=10,
     )
@@ -241,7 +250,14 @@ def render_volume(
             color=colors[pid % len(colors)],
             fontsize=10,
         )
-    fig.text(0.93, 0.055, "Field: faint → strong", color="#dcb485", ha="right", fontsize=10)
+    fig.text(
+        0.93,
+        0.055,
+        "Streams: faint → strong" if streaming else "Field: faint → strong",
+        color="#dcb485",
+        ha="right",
+        fontsize=10,
+    )
     fig.text(0.28, 0.055, "Arrow length: speed / c", color="#c2d5ed", fontsize=10)
     fig.text(0.28, 0.025, "↻ Periodic boundary", color="#65e8ff", fontsize=10)
     fig.text(0.60, 0.025, "X Jump of 2+ cells", color="#ff5252", fontsize=10)
@@ -419,8 +435,13 @@ def render_volume(
         html_path,
         title=title,
         metadata=metadata,
-        note="Transparent amber markers show the combined scalar field. Stronger values have "
-        "brighter color and greater opacity, using one fixed scale throughout the animation. "
+        note=(
+            "Transparent amber markers show stream magnitude: the sum of eight populations, "
+            "not scalar phi. Stronger values have "
+            if streaming
+            else "Transparent amber markers show the combined scalar field. Stronger values have "
+        )
+        + "brighter color and greater opacity, using one fixed scale throughout the animation. "
         "Broad soft halos enlarge field markers for visibility, not the physical field range. "
         "A square-root display transfer lifts weak values; colors are not a linear field scale. "
         "The display grid has twice as many subdivisions per axis; physical cells are unchanged. "

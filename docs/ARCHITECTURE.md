@@ -1,5 +1,17 @@
 # Architecture and change boundaries
 
+## Causal-stream candidate extension
+
+`fields/streaming.py` owns bounded pure octant splitting and delivered-flux
+selection. `core/streams.py` owns the fourteen-register stream records and
+one-edge packet routing; its full-state validation is a read-only host audit.
+`core/streaming_engine.py` schedules that phase before the existing local
+particle update. `models/causal_stream.py` selects full-vector response and
+ordinary movement through `CurrentFieldModel`; `api.CausalStreamSimulation`
+assembles them. No field law receives an Engine or mutable source history.
+The ordinary scalar seeding interface is rejected for this distinct state type.
+The existing scalar and linked candidates retain their own implementations.
+
 [AGENTS.md](../AGENTS.md) is the shared contributor entry point.
 `POSTULATES.md` is the plain-language conceptual entry point.
 `SIMULATOR_DEFINITIONS.md` translates those principles into exact technical

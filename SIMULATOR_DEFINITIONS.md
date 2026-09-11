@@ -1,5 +1,31 @@
 # Event Universe — active modular 3D integer simulator
 
+## Opt-in causal outward streams
+
+`CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar
+transport with exactly fourteen nonnegative bounded integers per stream cell:
+eight octant populations and six delivered directional amounts. Ordinary cell
+momentum registers remain the local exchange ledger. Stream records contain no
+source identities or histories. Each update reads one old population record and
+at most K local resident slots, produces six fixed eight-integer packets, and
+each destination combines at most six packets. This is bounded local work;
+the host sparse sweep and aggregate storage are not constant in world size.
+
+Every old population is validated before adding the local source. Emission and
+one-edge delivery complete before the particle response and movement. Octant
+signs never change, so the stream travels monotonically away from its emission
+point in the unwrapped Manhattan metric. Before periodic return it is ahead of
+its emitting particle at each response. No isolation-count branch or cancellation
+of a calculated force is used. A scalar `seed_field` call is rejected: no law
+converting one scalar into directional streams has been specified.
+
+The model uses full-vector response to the reversed locally delivered flux,
+with the existing bounded impulse exchange and movement. `source_per_octant`
+is an explicit independent strength. The three-tick integer branching phase
+is anisotropic. Periodic return, radial falloff, energy conservation and physical
+field-momentum transport are not established by the free-space self-force proof.
+See [the candidate contract](docs/CAUSAL_STREAM_FIELD.md).
+
 The canonical implementation is the `event_universe` Python package under `src/`.
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
 The model identifier is `scalar-field-v10-contact`; package version is `0.1.0`.

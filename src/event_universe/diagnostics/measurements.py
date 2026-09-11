@@ -15,6 +15,8 @@ from event_universe.core.state import (
     validate_cell,
     validate_particle,
 )
+from event_universe.core.streaming_engine import StreamingEngine
+from event_universe.core.streams import STREAM_CELL_REGISTERS
 
 ExactVector = tuple[int | Fraction, int | Fraction, int | Fraction]
 
@@ -51,6 +53,8 @@ def total_momentum(world: Engine) -> ExactVector:
 def audit(world: Engine) -> dict[str, bool]:
     """Validate actual state using exceptions, also when Python runs with -O."""
     checked(world.tick)
+    if isinstance(world, StreamingEngine):
+        world.streams.validate()
     seen: set[int] = set()
     for address, cell in world.cells.items():
         validate_cell(cell)
@@ -123,6 +127,9 @@ def report(world: Engine) -> dict[str, object]:
             "dimensions": 3,
             "nearest_neighbors": 6,
             "cell_registers": CELL_REGISTERS,
+            "stream_registers_per_cell": (
+                STREAM_CELL_REGISTERS if isinstance(world, StreamingEngine) else 0
+            ),
             "link_registers_per_cell": LINK_REGISTERS if isinstance(world, LinkedEngine) else 0,
             "transit_registers_per_particle": 4 if isinstance(world, LinkedEngine) else 0,
             "particle_registers": PARTICLE_REGISTERS,
