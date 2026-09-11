@@ -180,8 +180,8 @@ diagnostic; they do not change the engine or particle motion.
 
 Sparse world storage is distinct from constant-size physical state. Existing
 materialized cells and occupancy-address order are retained for exact legacy
-equivalence. Reclaiming them is a separate scheduler change requiring the same
-differential checks. This refactor does not claim constant total memory or
+equivalence. Reclaiming them is a separate scheduler change requiring physical
+contract checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
 
 ## Opt-in quantum ownership — Q-ORACLE-1
@@ -234,11 +234,12 @@ their explicitly separate host costs.
 The implementation therefore supports bounded local model work, not a claim that
 the entire non-quantum Python program or a full simulation tick is O(1).
 
-The frozen reference has SHA-256
+The archived frozen reference has SHA-256
 `822f62ac790c0b8477ed634d24454774152bcba8fb3322a53d039c251376163f`.
-It is loaded only by tests. The three primary experiments compare every physical
-record, active frontier, occupancy and history after every tick, for 278 ticks
-in total (120 stationary, 48 contact, 110 turning).
+It was used for historical tick-by-tick comparisons, totaling 278 ticks
+(120 stationary, 48 contact, 110 turning). It is no longer imported or executed
+by the suite. Current physical regression coverage is described in
+[TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
 
 Generic unit tests cover weighted and signed scalar values, exact fractional
 response, selectable directions and overflow on both sides of an exchange.
@@ -264,8 +265,8 @@ successful regression trajectories. Preserved model limitations are listed in
 ## Local-link candidate (v11)
 
 `LinkedSimulation` / CLI `--scenario links` explicitly selects
-`scalar-field-v11-local-links`. `Simulation` and its frozen-v10 differential
-checks retain the previous model. This is a new geometry/transport hypothesis,
+`scalar-field-v11-local-links`. `Simulation` retains the previous model and its
+physical behavior checks. This is a new geometry/transport hypothesis,
 not an architecture-only change to the baseline.
 
 | Module | Responsibility |
@@ -378,9 +379,9 @@ Neither diagnostics nor the optional quantum bridge feeds the collision law.
 Contact state is at most K*K flags per contacted address. Each local sweep has
 at most K(K-1)/2 pair candidates; sparse world iteration is a separate host cost.
 
-Frozen comparisons project the original twelve fields and assert the four new
-register defaults, in addition to all previous state/event checks. This is an
-explicit schema migration, not a changed baseline physical expectation.
+Historical frozen comparisons projected the original twelve fields and checked
+the four appended defaults. Current fixed-schema, numeric and behavior tests
+cover the active records without requiring equality to the archived engine.
 
 ## Opt-in balanced motion and local halo
 

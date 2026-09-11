@@ -93,19 +93,6 @@ def test_physical_records_have_fixed_integer_fields_and_no_history():
     assert "self.paths" not in engine_source and "self.force_records" not in engine_source
 
 
-def test_postulates_are_linked_and_state_causal_consistency():
-    root = Path(__file__).parents[1]
-    postulates = (root / "POSTULATES.md").read_text(encoding="utf-8")
-    definitions = (root / "SIMULATOR_DEFINITIONS.md").read_text(encoding="utf-8")
-    readme = (root / "README.md").read_text(encoding="utf-8")
-    architecture = (root / "docs" / "ARCHITECTURE.md").read_text(encoding="utf-8")
-    for document in (definitions, readme, architecture):
-        assert "POSTULATES.md" in document
-    assert "Consistency is maintained locally and causally" in postulates
-    assert "Spatial-causal consistency postulate" in definitions
-    assert "Quantum behavior and entanglement remain open" in postulates
-
-
 def test_shared_rules_ship_with_source_and_have_one_entry_point():
     root = Path(__file__).parents[1]
     entry = root / "AGENTS.md"

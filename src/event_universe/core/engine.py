@@ -128,7 +128,7 @@ class Engine:
 
     def add_particle(
         self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0, *, mass: int = 1
-    ) -> "Engine":
+    ) -> Engine:
         self._ensure_healthy()
         for value in (pid, x, y, z, px, py, pz):
             checked(value)
@@ -340,7 +340,7 @@ class Engine:
         if any(flags):
             self._contacts[position] = tuple(flags)
 
-    def step(self) -> "Engine":
+    def step(self) -> Engine:
         """Advance once. Failed ticks are terminal; successful local commits are retained."""
         self._ensure_healthy()
         next_tick = checked(self.tick + 1)
@@ -362,7 +362,7 @@ class Engine:
             raise
         return self
 
-    def run(self, ticks: int) -> "Engine":
+    def run(self, ticks: int) -> Engine:
         """Low-level advance; the application runner owns HTML and run metadata."""
         checked(ticks)
         if ticks < 0:

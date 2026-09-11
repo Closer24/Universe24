@@ -1,5 +1,3 @@
-from dataclasses import asdict
-
 import pytest
 
 from event_universe import Config, Simulation
@@ -9,54 +7,7 @@ from event_universe.diagnostics.recorder import TraceRecorder
 from event_universe.scenarios import get_scenario
 
 
-@pytest.mark.parametrize("name", ["stationary", "contact", "turning"])
-def test_full_state_matches_frozen_legacy_after_every_tick(name, legacy, reference_sha256):
-    assert reference_sha256 == "822f62ac790c0b8477ed634d24454774152bcba8fb3322a53d039c251376163f"
-    scenario = get_scenario(name)
-    trace = TraceRecorder()
-    current = scenario.create(trace)
-    reference = legacy.IntegerO1Field3D(legacy.Config(**asdict(scenario.config)))
-    for seed in scenario.particles:
-        reference.add_particle(*seed)
-    contact_tick, turn_tick = None, None
-    for _ in range(scenario.ticks):
-        previous = len(trace.force_records)
-        before = tuple(p.py for p in current.particles.values())
-        current.step()
-        reference.step()
-        if name == "contact" and current.tick <= 24:
-            if contact_tick is None and any(event.gy for event in trace.force_records[previous:]):
-                contact_tick = current.tick
-            if turn_tick is None and before != tuple(p.py for p in current.particles.values()):
-                turn_tick = current.tick
-            assert total_momentum(current) == (0, 0, 0)
-        if name == "turning":
-            assert total_momentum(current) == (0, 0, 0)
-        assert current.tick == reference.tick
-        assert dict(current.cells) == {key: tuple(value) for key, value in reference.cells.items()}
-        assert {pid: p[:12] for pid, p in current.particles.items()} == {
-            key: tuple(value) for key, value in reference.particles.items()
-        }
-        assert dict(current.occupancy) == {
-            key: tuple(value) for key, value in reference.occupancy.items()
-        }
-        assert all(p[12:] == (1, 1, 1, -1) for p in current.particles.values())
-        assert current.active == reference.active
-        assert trace.force_records == reference.force_records
-        assert trace.paths == reference.paths
-        assert trace.collisions == reference.collisions
-        assert total_momentum(current) == reference.total_momentum()
-    assert audit(current)["valid_remainders"]
-    if name == "contact":
-        assert contact_tick is not None and turn_tick == contact_tick
-    if name == "turning":
-        first, second = current.particles[0], current.particles[1]
-        assert first.py > 0 and second.py < 0
-        assert first.momentum == tuple(-value for value in second.momentum)
-        assert first.z == second.z == 16
-
-
-@pytest.mark.parametrize("plane", ["XZ", "YZ"])
+@pytest.mark.parametrize("plane", ["XY", "XZ", "YZ"])
 def test_offset_pair_turns_in_all_three_coordinate_planes(plane):
     # Keep the original order of the two nonzero digital axes in each embedding.
     permutations = {"XY": (0, 1, 2), "XZ": (0, 2, 1), "YZ": (2, 0, 1)}
@@ -75,6 +26,7 @@ def test_offset_pair_turns_in_all_three_coordinate_planes(plane):
     assert first.momentum[transverse] > 0 and second.momentum[transverse] < 0
     assert first.momentum == tuple(-value for value in second.momentum)
     assert first.position[fixed] == second.position[fixed] == 16
+    assert audit(world)["valid_remainders"]
 
 
 def test_isolated_cardinal_mover_has_no_self_drag():
@@ -98,15 +50,26 @@ def test_original_180_tick_two_particle_regression():
     assert total_momentum(world) == (0, 0, 0)
 
 
-def test_reflection_of_contact_experiment_reflects_result():
+def test_contact_response_is_prompt_and_reflection_symmetric():
     scenario = get_scenario("contact")
-    original, reflected = scenario.create(), Simulation(scenario.config)
+    trace = TraceRecorder()
+    original, reflected = scenario.create(trace), Simulation(scenario.config)
     for pid, x, y, z, px, py, pz in scenario.particles:
         reflected.add_particle(pid, 63 - x, 47 - y, z, -px, -py, pz)
+    contact_tick, turn_tick = None, None
     for _ in range(24):
+        previous = len(trace.force_records)
+        before = tuple(p.py for p in original.particles.values())
         original.step()
         reflected.step()
+        if contact_tick is None and any(event.gy for event in trace.force_records[previous:]):
+            contact_tick = original.tick
+        if turn_tick is None and before != tuple(p.py for p in original.particles.values()):
+            turn_tick = original.tick
+        assert total_momentum(original) == total_momentum(reflected) == (0, 0, 0)
         for pid, old in original.particles.items():
             new = reflected.particles[pid]
             assert new.position == (63 - old.x, 47 - old.y, old.z)
             assert new.momentum == (-old.px, -old.py, old.pz)
+    assert contact_tick is not None and turn_tick == contact_tick
+    assert audit(original)["valid_remainders"] and audit(reflected)["valid_remainders"]

@@ -30,8 +30,8 @@ occupancy; measurements read the result.
 | `test_field_composition.py` | Replacement in the engine | Alternative laws change the expected outcome; remainder-only activity persists |
 | `test_engine.py` | Causality, occupancy and scheduling | One-edge propagation and movement; one particle update per tick |
 | `test_diagnostics.py` | Measurement and display | Exact XY/XZ/YZ slices; full XYZ and off-plane records; source state untouched |
-| `test_application.py` | Execution and compatibility | Metadata, events and standalone HTML; same events for slice and volume; old API preserved |
-| `test_regressions.py` | Established behavior | All state and events match the frozen version across 278 comparison ticks |
+| `test_application.py` | Execution and display | Metadata, events and standalone HTML; same events for slice and volume |
+| `test_regressions.py` | Physical behavior | Prompt contact, reflection symmetry, three-plane turning, momentum, isolated motion and the original 180-tick result |
 | `test_architecture.py` | Layer separation | Reject forbidden imports and adapter formulas; audit integer physics |
 | `test_repository_language.py` | English repository text | Reject legacy non-English scripts in project prose; preserve mathematical notation |
 
@@ -58,8 +58,9 @@ including relative imports and aliases.
 
 These are independently fixed expectations. Conservation tests also use identities
 such as the sum of particle and field momentum before and after exchange.
-Regressions compare against a separate frozen source instead of copying the tested
-formula to calculate expectations.
+Regression assertions use independently specified physical outcomes rather than
+copying the tested formula. Historical engine/API and old-Python compatibility
+are not acceptance targets.
 
 ## Calculation ownership
 
@@ -82,14 +83,17 @@ declared fixed cell schema.
 ## Running and validating changes
 
 The suite reuses world runs when their inputs and required observations coincide.
-The frozen contact comparison also checks the first transverse response within
-24 ticks; the frozen turning comparison also checks the XY turning result and
-per-tick momentum. XZ and YZ runs remain separate symmetry checks. The shared
+The existing 24-tick contact/reflection experiment also checks the first transverse
+response, per-tick momentum and final remainders. The 110-tick turning experiment
+covers XY, XZ and YZ with momentum and remainder checks. Stationary-source symmetry
+and persistence remain in `test_engine.py`. The shared
 plane/volume application test checks metadata, traces and standalone HTML together.
 The independent eight-case stream/free-control comparison covers the ordinary
 isolated-rate cases; the original sampler retains only the additional 1/100 and
-18/20 rate regimes. Bounds, failure evidence and frozen reference assertions are
-unchanged by this consolidation.
+18/20 rate regimes. Bounds and known physical failure evidence remain covered.
+The frozen engine is no longer imported or simulated, and the old facade API
+comparison is removed. This reduction removes four collected cases, six worlds
+and 447 simulation ticks without removing the physical regimes above.
 
 Run `python tools/check.py` from the installed project. It checks style, types and
 behavior and creates `artifacts/test-runs.html` for all captured world runs.
@@ -254,8 +258,8 @@ energy with diagnostic Fraction arithmetic, never using those values in physics.
 | Four co-residents | Fixed 16 flags, conserved totals and at most one collision per particle per tick |
 | Invalid mass or bound overflow | Failure before insertion or atomic pair commit; faulted world rejects continuation |
 
-The same renderer captures every integration world. Baseline regression checks
-retain every old expectation while verifying the appended register defaults.
+The same renderer captures every integration world. Fixed-schema, numeric and
+collision behavior checks cover the current records and their defaults.
 
 ## Balanced movement and twelve-cell halo candidate
 

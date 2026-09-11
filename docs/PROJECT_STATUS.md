@@ -1,7 +1,7 @@
 # Project status and restart guide
 
 Snapshot: 2026-09-11. Reviewed main:
-[f426155](https://github.com/Closer24/Universe24/commit/f426155056b72ecdbecd133c7392888465fcbc1d).
+[7e517af](https://github.com/Closer24/Universe24/commit/7e517afb7a274821de05bf247ece91827c1b030b).
 This is an orientation snapshot, not a live dashboard or a test result.
 Refresh it when the default model, major integration state or restart procedure
 changes; daily task detail belongs in Issues and PRs.
@@ -15,11 +15,17 @@ collision and causal-stream choices remain explicit alternatives. Check
 Their physics contracts and limitations are in
 [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md).
 
+Use the default interpreter in [.python-version](../.python-version) with the
+project environment described in [README.md](../README.md#install-and-run).
+The package's minimum required Python version is separately declared in
+[pyproject.toml](../pyproject.toml); it does not select the runtime for a shell.
+
 The generic delivered-face/conservative-field work, unit-link matter ownership
 and Computational Field display rename are tracked in
 [PR #19](https://github.com/Closer24/Universe24/pull/19).
-At this snapshot it is open and draft at `e69a77fee97dcbb385cb2565240fafdd6b6a6179`,
-not included in the reviewed main. Its acceptance evidence and blockers belong
+It was closed without merge on 2026-09-11 at head
+`e69a77fee97dcbb385cb2565240fafdd6b6a6179` and is not included in the reviewed main.
+Its acceptance evidence and blockers belong
 in that PR; do not infer that it is ready from this navigation document.
 
 ## Specifications and gaps

@@ -48,16 +48,37 @@ below work without chat history; review current GitHub work before integration.
 
 ## Install and run
 
-Python 3.11 or later is required. From the project directory:
+Python 3.14 is the default development and simulation runtime, recorded in
+[.python-version](.python-version). Install the latest available 3.14 patch.
+Python 3.14 is also the minimum required version. CI runs only this project
+runtime; older-Python and historical API compatibility are not acceptance targets.
+Use a project virtual environment so installation and execution use the same
+interpreter. From the project directory on Linux/macOS:
 
 ```bash
-python -m venv .venv
+python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e '.[render,dev]'
 python -m event_universe --scenario contact --output artifacts/contact
 ```
 
-On Windows, activate with `.venv\Scripts\activate`. Each application run creates:
+On Windows, use the installed Python 3.14 explicitly; activation is optional:
+
+```powershell
+py -3.14 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e '.[render,dev]'
+.\.venv\Scripts\python.exe -m event_universe --scenario contact --output artifacts/contact
+.\.venv\Scripts\python.exe tools/check.py
+```
+
+If `.venv` already uses an older interpreter, create a separate 3.14 environment
+and reinstall the project dependencies there. Do not reuse its old site-packages.
+Verify the selected interpreter with `python --version` after activation, or run
+the environment's Python executable directly. The examples below assume that
+environment is active. `.python-version` guides tools such as uv and pyenv; it
+does not change an arbitrary system `python` command by itself.
+
+Each application run creates:
 
 | File | Contents |
 | --- | --- |
@@ -91,7 +112,7 @@ python tools/check.py
 ```
 
 This checks lint, formatting, types and behavior and generates
-`artifacts/test-runs.html` with every test world, including the frozen comparison.
+`artifacts/test-runs.html` with every current-engine test world.
 Individual commands are also available:
 
 ```bash
@@ -102,8 +123,9 @@ python -m pytest --junitxml=artifacts/junit.xml
 ```
 
 Prefer `tools/check.py` for the full gate: it passes the current Python version
-to mypy. GitHub Actions is configured in `.github/workflows/check.yml` for pushes
-and pull requests. Local execution and testing do not require GitHub.
+to mypy. GitHub Actions uses `.python-version` on pull requests and pushes to
+`main`. Feature-branch pushes do not duplicate the same PR run; a newer revision
+cancels an obsolete run. Local execution and testing do not require GitHub.
 
 ## Project map
 
@@ -122,8 +144,8 @@ and pull requests. Local execution and testing do not require GitHub.
 | `src/event_universe/diagnostics/` | Measurements, state audits, recording and HTML |
 | `src/event_universe/scenarios.py` | Explicit initial conditions |
 | `src/event_universe/runner.py` | Connect execution, recording and visualization |
-| `tests/` | Unit, contract, regression and full-state comparison tests |
-| `tests/reference/` | Frozen source used only for comparison |
+| `tests/` | Necessary unit, physical contract, regression and application tests |
+| `tests/reference/` | Historical source archive, not executed by the required test suite |
 | `POSTULATES.md` | Binding ideas in plain language |
 | `SIMULATOR_DEFINITIONS.md` | Current precise requirements |
 | `docs/ARCHITECTURE.md` | Responsibilities and update order |

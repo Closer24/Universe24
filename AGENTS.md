@@ -19,7 +19,8 @@ checkout; do not rely on a previous conversation.
 [Monorepo ownership](docs/ARCHITECTURE.md#monorepo-ownership) defines boundaries.
 The active implementation lives only in `src/event_universe/`.
 `src/persistent_source_field.py` is a compatibility facade, not a second engine.
-`tests/reference/` is a frozen comparison source; never edit it to make a test pass.
+`tests/reference/` is a historical archive, not an active compatibility gate;
+never edit it to make a test pass.
 Generated artifacts, distributions and backups are outputs or history.
 One repository does not require one runtime process or a new package hierarchy.
 
@@ -83,8 +84,8 @@ disable the gate, or encode non-English prose as escapes to evade this rule.
   the existing renderer, with enhanced 3D as the default, including test runs, as
   specified in the definitions document.
 - A behavior change needs a dedicated test with inputs, an expected result and an
-  edge case. Preserve the frozen v10 comparison. A new physical hypothesis needs
-  an explicit model identity.
+  edge case. Preserve current physical contract coverage. A new physical
+  hypothesis needs an explicit model identity.
 - Run `python tools/check.py` and inspect the HTML report before delivery. Static
   checks are partial enforcement, not proof of locality or correct physics.
 

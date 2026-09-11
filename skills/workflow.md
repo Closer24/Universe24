@@ -46,6 +46,14 @@ integrating their work, and never overwrite unrelated edits.
 
 ## Checks proportional to the change
 
+Select the project interpreter from [.python-version](../.python-version) and
+[the run instructions](../README.md#install-and-run) before installing dependencies
+or executing checks. Use one project virtual environment; record the actual
+interpreter/version in the handoff. Use the declared project version, not an
+arbitrary host `python` alias. Older-Python and historical API/frozen-v10 equality
+checks are not required. Preserve independent physical invariants and useful
+regression regimes when removing compatibility comparisons or duplicate worlds.
+
 For a physics-engine behavior change, completion requires physics-rule validation,
 necessary tests, an affected simulator run, and regression comparison. Architecture
 reviews interface/schema changes; visualization reviews changed output. Reuse the

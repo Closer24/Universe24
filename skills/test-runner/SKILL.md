@@ -13,7 +13,8 @@ failure evidence and the existing HTML report for executed worlds.
 Choose tests for independent numerical outcomes, distinct bounds/errors,
 component replacement, causal timing, local conservation and known regressions.
 Do not add a test merely because a function was added, or derive the expected
-answer by repeating the implementation. Keep the frozen source untouched.
+answer by repeating the implementation. Do not add old-Python, historical API or
+frozen-engine compatibility gates. Keep the archived frozen source untouched.
 
 When reducing tests, map each removed assertion or parameter regime to retained
 evidence before deletion. Combine identical model/config/seed/tick runs and keep
@@ -30,4 +31,4 @@ Local Git/Python and available CI log tools are sufficient. Changes to tests are
 allowed within the assigned scope; changing physics or weakening a requirement is
 not a way to fix a red gate. Keep original acceptance failures visible even when
 a different candidate passes. Hand behavior failures to fields/architecture,
-cross-version drift to regression-check, and the final evidence to Boss/PR review.
+unexpected physical drift to regression-check, and the final evidence to Boss/PR review.

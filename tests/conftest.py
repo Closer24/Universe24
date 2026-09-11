@@ -1,30 +1,16 @@
-"""Capture every test simulation, including the frozen reference, through the same renderer."""
+"""Capture every test simulation through the existing renderer."""
 
-import hashlib
 import html
-import importlib.util
 import re
-import sys
 from pathlib import Path
 
 import pytest
 
 from event_universe.core.engine import Engine
-from event_universe.diagnostics.frames import VolumeFrame, capture_volume
+from event_universe.diagnostics.frames import capture_volume
 from event_universe.diagnostics.render import render_volume
 
-REFERENCE = Path(__file__).parent / "reference" / "legacy_v10.py"
-spec = importlib.util.spec_from_file_location("legacy_v10_reference", REFERENCE)
-legacy_module = importlib.util.module_from_spec(spec)
-sys.modules[spec.name] = legacy_module
-spec.loader.exec_module(legacy_module)
-
 RUNS = []
-
-
-@pytest.fixture
-def legacy():
-    return legacy_module
 
 
 @pytest.fixture(autouse=True)
@@ -32,7 +18,7 @@ def capture_test_runs(monkeypatch, request):
     """Keep at most a few sampled frames per actual engine, without changing its inputs."""
     runs = {}
 
-    def instrument(original, is_legacy):
+    def instrument(original):
         def step(world):
             key = id(world)
             if key not in runs:
@@ -40,14 +26,13 @@ def capture_test_runs(monkeypatch, request):
                     "world": world,
                     "frames": [],
                     "stride": 1,
-                    "label": request.node.nodeid + (" — reference" if is_legacy else " — refactored"),
-                    "legacy": is_legacy,
+                    "label": request.node.nodeid,
                 }
-                runs[key]["frames"].append(frame(runs[key]))
+                runs[key]["frames"].append(capture_volume(world))
             result = original(world)
             record = runs[key]
             if world.tick % record["stride"] == 0:
-                record["frames"].append(frame(record))
+                record["frames"].append(capture_volume(world))
             if len(record["frames"]) > 6:
                 record["frames"] = record["frames"][::2]
                 record["stride"] *= 2
@@ -55,26 +40,10 @@ def capture_test_runs(monkeypatch, request):
 
         return step
 
-    def frame(record):
-        world = record["world"]
-        if record["legacy"]:
-            return VolumeFrame(
-                world.tick,
-                {position: cell[0] for position, cell in world.cells.items() if cell[0] != 0},
-                [(pid, *particle[:6]) for pid, particle in world.particles.items()],
-                world.total_momentum(),
-                world.config.c_units,
-                (world.config.nx, world.config.ny, world.config.nz),
-            )
-        return capture_volume(world)
-
-    monkeypatch.setattr(Engine, "step", instrument(Engine.step, False))
-    monkeypatch.setattr(
-        legacy_module.IntegerO1Field3D, "step", instrument(legacy_module.IntegerO1Field3D.step, True)
-    )
+    monkeypatch.setattr(Engine, "step", instrument(Engine.step))
     yield
     for record in runs.values():
-        final = frame(record)
+        final = capture_volume(record["world"])
         if record["frames"][-1].tick != final.tick:
             record["frames"].append(final)
         record.pop("world")
@@ -92,7 +61,7 @@ def pytest_sessionfinish(session, exitstatus):
             run["frames"],
             output / f"{index:03d}-{slug}.html",
             title=label,
-            metadata={"suite_exit_status": int(exitstatus), "reference": run["legacy"]},
+            metadata={"suite_exit_status": int(exitstatus)},
         )
         contents = path.read_text(encoding="utf-8")
         image = re.search(r"<img [^>]+>", contents).group(0)
@@ -107,8 +76,3 @@ def pytest_sessionfinish(session, exitstatus):
         f"<main>{''.join(sections)}</main></body></html>"
     )
     (output.parent / "test-runs.html").write_text(summary, encoding="utf-8")
-
-
-@pytest.fixture
-def reference_sha256():
-    return hashlib.sha256(REFERENCE.read_bytes()).hexdigest()

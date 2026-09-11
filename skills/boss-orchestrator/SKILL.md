@@ -49,7 +49,7 @@ Before completion, review Boss itself and every participating or affected Skill.
 | Necessary tests, failures or redundant coverage | [test-runner](../test-runner/SKILL.md) | Minimal sufficient checks and actual results |
 | Reproducible world execution | [simulation-runner](../simulation-runner/SKILL.md) | Identified run, trace and HTML evidence |
 | Rendering or visual interpretation | [visualization-check](../visualization-check/SKILL.md) | Faithful, inspected output |
-| Compatibility with an earlier result | [regression-check](../regression-check/SKILL.md) | Independent baseline comparison |
+| Unintended change to current physical behavior | [regression-check](../regression-check/SKILL.md) | Contract-focused regression evidence |
 | Review, reconcile, close or merge PRs | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) | Current-head integration decision |
 
 This routing table is a current default, not a permanent taxonomy. Change it when repeated task evidence shows that a smaller or clearer Skill set works better.
