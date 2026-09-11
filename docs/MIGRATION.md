@@ -6,8 +6,33 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
-Use `python -m event_universe` for runs with automatic HTML. Use
-`from event_universe import Config, Simulation` for programmatic work.
+## Primary initialization-based API
+
+`Simulation` now requires a validated `InitialState`; it no longer accepts an
+implicit scalar Config or built-in particle semantics. Initialize the active
+model with a strict JSON file:
+
+```bash
+python -m event_universe --init examples/basic.json --output artifacts/basic
+```
+
+Programmatic users import `Simulation` from `event_universe` and
+`load_initial_state` from `event_universe.initialization`. Field/type names,
+transport, updates, coupling and costs are data. Read
+[DISTURBANCES.md](DISTURBANCES.md) for the complete schema and limits.
+
+Runs are headless. Visualization requires `--visualize`; standard tests do not
+produce animation reports. `pytest --visualize-runs` explicitly enables them.
+The active runner requires an empty output directory and preserves the original
+initialization, events, final state and metadata.
+
+For the old scalar engine, change `Simulation(...)` calls and imports to the
+explicit name `ScalarSimulation(...)`. `LinkedSimulation`, `BalancedSimulation`
+and `CausalStreamSimulation` remain named research APIs. Historical scenarios
+run through `python -m event_universe.legacy_runner --scenario ...`; the primary
+CLI does not accept `--scenario`. The old runner function is
+`event_universe.legacy_runner.run_scenario`, headless unless `visualize=True`.
+The following notebook/component notes concern only those historical APIs.
 
 ## Existing notebook imports
 
@@ -15,7 +40,7 @@ Use `python -m event_universe` for runs with automatic HTML. Use
 `IntegerO1Field` remains an alias. The compatibility facade keeps `paths`,
 `force_records`, `collisions`, momentum methods, `audit()`, `report()`,
 `xy_slice(z)` and `particles_on_xy_slice(z)`. This facade opts into in-memory
-recording. The modern `Simulation` has no retained history by default.
+recording. The modern `ScalarSimulation` has no retained history by default.
 
 | Old usage | New usage or behavior |
 | --- | --- |
@@ -39,10 +64,10 @@ source, tests, documentation and the preserved reference.
 
 ## Field and turning components
 
-Existing `Simulation(config, observer=...)` calls retain the same defaults.
+Existing `ScalarSimulation(config, observer=...)` calls retain the same defaults.
 Optional `field=` and `turning=` keywords replace the respective component
 without changing scheduling. The compatibility `IntegerO1Field3D` facade
-continues to use the current defaults; use `Simulation` for component injection.
+continues to use the current defaults; use `ScalarSimulation` for component injection.
 See `FIELDS.md` for the scalar protocol and an example.
 
 Imports of `update_field`, `update_particle`, `gradient`, `transverse_gradient`,
@@ -52,10 +77,10 @@ and `models.current_field` directly. Tests specific to the current law moved
 from `test_local_laws.py` to `test_current_field.py`.
 
 Activity decisions are now injected into `Engine` with the optional
-`field_activity=` keyword. `Simulation()` explicitly keeps legacy activity;
-`Simulation(field=...)` tracks both value and remainder changes by default.
+`field_activity=` keyword. `ScalarSimulation()` explicitly keeps legacy activity;
+`ScalarSimulation(field=...)` tracks both value and remainder changes by default.
 This fixes prematurely stopped remainder-only evolution for replacement fields.
-Explicit `Simulation(field_activity=...)` accepts a predicate over two scalar
+Explicit `ScalarSimulation(field_activity=...)` accepts a predicate over two scalar
 samples and a source count. Direct `Engine` predicates receive two cell records
 and a source count; omitting one retains visited cells conservatively.
 Periodic geometry is shared by all engine operations in `core/lattice.py`.

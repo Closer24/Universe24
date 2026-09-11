@@ -20,7 +20,9 @@ owner. Inspect actual saved frames and HTML, not merely plotting code or a tool'
 success message. Check the relevant initial, event/failure and final frames.
 
 Verify labels, scales, geometry, particle identities, visibility and playback.
-Velocity arrows must use the selected model's mass/momentum scale. Periodic seams,
+For historical particle views, velocity arrows must use the selected model's
+mass/momentum scale. Generic disturbance views must label configured fields
+without inferring physical meaning from names. Periodic seams,
 sampled-frame displacement and actual multi-hop movement are different facts;
 show the recorded distinction rather than interpolating it away. The animation
 must follow the current end-of-playback contract.

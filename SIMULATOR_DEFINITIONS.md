@@ -1,5 +1,23 @@
 # Event Universe — active modular 3D integer simulator
 
+## Active generic disturbance model
+
+The primary API is `Simulation(initial: InitialState)`. An initialization JSON
+file supplies every field/type name, seed, allowed local expression, coupling,
+transport rule and cost setting. The engine has no hardcoded interpretation of
+mass, charge, velocity or other user-defined physical names. Missing initialization
+does not select a scalar model.
+
+[docs/DISTURBANCES.md](docs/DISTURBANCES.md) is the authoritative active schema
+and transition contract: bounded scalar/vector payloads, whole-record or extensive
+transport, atomic local exchange, explicit sources, fixed link transit, local
+computation delay without debt, capacity failures and headless output.
+
+The source/self-force, scalar cell, particle, turning, variable-link and collision
+laws below remain requirements of explicitly named research APIs. They do not
+define the active generic schema. Shared locality, integer bounds, read-only
+diagnostics and honest failure reporting still apply across applicable models.
+
 ## Opt-in causal outward streams
 
 `CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar
@@ -28,7 +46,8 @@ See [the candidate contract](docs/CAUSAL_STREAM_FIELD.md).
 
 The canonical implementation is the `event_universe` Python package under `src/`.
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
-The model identifier is `scalar-field-v10-contact`; package version is `0.1.0`.
+The historical scalar model identifier is `scalar-field-v10-contact`.
+Active generic model identity is supplied by initialization.
 The plain-language conceptual source is `POSTULATES.md`. If its wording is
 ambiguous, this file defines the executable technical requirement. A deliberate
 change to a postulate must update both files and the relevant regression tests.
@@ -45,6 +64,12 @@ The present implementation enforces the local information boundary and one-edge
 field propagation. It does not yet establish quantum consistency or entanglement.
 
 ## Hard physical constraints
+
+The numbered record/source/response constraints here describe the historical
+scalar models selected through ScalarSimulation and related named APIs. Their
+five-register cell and sixteen-register particle schema is not universal. The
+active generic state and its smaller payload bound are defined in
+[the disturbance contract](docs/DISTURBANCES.md).
 
 1. All dynamic physical registers and arithmetic are integers. No floats, true
    division, trigonometry, square roots, logarithms or vector normalization occur
@@ -92,7 +117,7 @@ Source scaling and range/activity policies are reusable functions in
 Model, API and compatibility assembly are checked for accidental runtime
 arithmetic, alongside absolute and relative import boundaries.
 
-The field and turning components can be supplied independently to `Simulation`.
+The field and turning components can be supplied independently to `ScalarSimulation`.
 Their denominators come from the same `Config` used by state audits. A scalar
 replacement must fit the existing fixed cell schema; vector or multiple-field
 state needs a separate explicit contract. Custom implementations must be local,
@@ -101,7 +126,7 @@ reads output and records evidence. No local law receives a world object or
 knows source identities at remote cells.
 
 The engine receives field activity as a predicate instead of interpreting the
-candidate law's changes itself. The default model explicitly retains its legacy
+candidate law's changes itself. The historical scalar model explicitly retains its legacy
 value-based predicate. An injected scalar law tracks changes to both value and
 remainder unless `field_activity=` is supplied. A law must preserve the all-zero
 sample when neighbors and source are zero, as required by sparse scheduling.
@@ -232,21 +257,27 @@ momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contrac
 
 ### Default run display
 
-Every run defaults to enhanced 1500×1275 3D: outlined particle markers with glow,
-a soft translucent field, emphasized paths and a rotating camera. Provide a
-standalone HTML file and its GIF animation. This also applies to new scenarios
-and every executed test world. Test reports may sample
-frames while retaining the same design and resolution. Pure-function tests need
-no animation.
+Runs are headless by default, including ordinary tests. The active CLI requires
+an initialization file. Historical scenarios use the explicitly selected
+`event_universe.legacy_runner` module. Metadata and JSONL events do not depend
+on Matplotlib, Pillow or animation capture.
 
-This changes display defaults only, not lattice resolution or physics. Marker
-and glow sizes are visual symbols, not physical particle sizes. A slice requires
-explicit `--view-2d` or `volume=False` in `run_scenario`. `--plane` and `--slice`
-choose the slice in 2D mode; `--view-3d` remains supported.
+Only an explicit visualization request enables output frames and rendering.
+`--visualize` requests the active runner's optional view. For historical
+`legacy_runner.run_scenario`, pass `visualize=True`; its `volume` option chooses
+volume or slice. Explicit historical CLI view options also request visualization.
+The historical 3D view uses the existing 1500×1275 renderer; a generic view must
+label configured fields rather than interpreting their names as scalar phi or
+particle momentum.
 
-Every application run also records metadata and JSONL events through the existing
-Matplotlib/FuncAnimation/Pillow pipeline. Pytest produces a combined standalone
-HTML report of every captured engine run.
+Pytest enables captured run reports and presentation-only tests only through
+`--visualize-runs`. Without that flag, physical assertions still execute and no
+HTML/GIF run reports are generated. Requested frame stride changes recording
+only, never the physical update interval.
+
+The active generic local commit and failure behavior is defined in
+[docs/DISTURBANCES.md](docs/DISTURBANCES.md). The following field-phase description
+applies to historical scalar models.
 
 Field proposals are validated before the field phase commits. Particle-field
 proposals are validated before that local exchange commits. A whole tick is not
@@ -259,6 +290,10 @@ Reports distinguish checks actually performed from architecture descriptions
 and physical claims not established by the tests.
 
 ### Display readability and playback
+
+The following visual conventions apply when the historical scalar/particle
+renderer is explicitly requested. They do not assign meanings to generic field
+names or require visualization for a run.
 
 The 3D axes have readable coordinate ticks and distinct colors: X is coral,
 Y is green and Z is blue. A camera-synchronized corner compass shows positive
@@ -296,8 +331,8 @@ smooths physical positions, cancels self-force or changes a simulation record.
 ## Optional local-link geometry candidate — v11
 
 The user-authorized link extension is `scalar-field-v11-local-links`, selected
-by `LinkedSimulation` or `--scenario links`. Baseline v10 remains available for
-comparison. The five/sixteen-register schemas above describe current field and
+by `LinkedSimulation` or the historical CLI's `--scenario links`. Baseline v10 remains available for
+comparison. The five/sixteen-register schemas above describe historical scalar field and
 particle records; the frozen v10 reference retains twelve particle registers.
 The v11 candidate additionally has fixed `LinkCell` and `Transit` records:
 
@@ -345,13 +380,14 @@ The application runner validates particle momentum after every completed tick
 when the initial world contains exactly one particle and entirely zero field
 records. Its own source stays active. Any change in its initial momentum raises
 `InertialMotionViolation`, terminates the application run and saves the failing
-tick, event trace, failed metadata and an HTML heading explicitly marked FAILED RUN.
+tick, event trace and failed metadata. If visualization was requested, preserve
+the failure frame and an HTML heading explicitly marked FAILED RUN.
 The check is independent of display sampling and never clears remainders, changes
 momentum or disables sources. Multi-particle and initially seeded-field worlds
 are not classified as isolated by this check.
 
 This is read-only diagnostic rejection, not a corrected physical law or a proof
-of straight trajectories. Direct Engine/Simulation callers still receive the
+of straight trajectories. Direct Engine/ScalarSimulation callers still receive the
 underlying model behavior. Model acceptance requires the separate isolated-motion
 gate; a test that confirms rejection does not turn that failing physical gate
 into a pass. Existing baseline physical requirements remain unchanged.
@@ -360,7 +396,7 @@ No threshold exempts a one-unit impulse.
 ## User-authorized mass and elastic point contacts — v13
 
 The user requested same-point particle collisions and then an individual mass
-parameter. `Simulation(collisions=True)` selects
+parameter. `ScalarSimulation(collisions=True)` selects
 `scalar-field-v13-mass-elastic-contact`; `LinkedSimulation(collisions=True)` selects
 `scalar-field-v13-mass-elastic-local-links`. Both public APIs accept
 `add_particle(..., mass=...)`. Mass is a fixed positive integer in simulation
@@ -439,7 +475,8 @@ energy conservation for the entire field-coupled simulator.
 ### Output and compatibility
 
 `--scenario collision`, `collision-masses` and `collision-links` exercise this
-feature through the existing runner and 3D HTML/GIF renderer. Scenario `masses`
+feature through the historical runner. The 3D HTML/GIF renderer is used only
+when visualization is explicitly requested. Scenario `masses`
 contains one mass for each seed (or is empty for unit defaults). Metadata records
 these masses, collision selection and the explicit model identifier. In 3D,
 particle labels show mass and velocity arrows use the mass and momentum scale.

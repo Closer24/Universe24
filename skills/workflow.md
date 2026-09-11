@@ -67,8 +67,11 @@ repair another model's failure or establish a real-world law.
 
 Pure documentation/skill changes need skill/link/language and packaging validation,
 not newly invented physical tests. The repository's existing submission and CI
-gate still applies. Every world actually executed uses the existing HTML renderer;
-diagnostics may reject a run but may not repair physical state.
+gate still applies. Ordinary runs and tests are headless; render only when the
+user explicitly requests visualization or visual checks. Diagnostics may reject
+a run but may not repair physical state. Consult
+[the active disturbance contract](../docs/DISTURBANCES.md) before applying old
+scalar/particle assumptions to the primary Simulation API.
 
 ## Tools and authority
 

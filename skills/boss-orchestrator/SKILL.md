@@ -15,6 +15,11 @@ https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/
 
 At the start of relevant work, reconcile the applicable project rules and hypotheses with this document. When the user changes a durable project rule, update the relevant repository Skill(s) as part of the same work when authorized, so the rule does not depend on chat history.
 
+The primary model contract is [initialization-defined disturbances](../../docs/DISTURBANCES.md).
+Scope historical scalar/particle assumptions to their explicitly named APIs.
+Preserve user-defined field names as data and use headless execution by default;
+do not route ordinary simulation work into mandatory visualization.
+
 Use the shared workflow's rule/hypothesis/result distinction. Keep accepted
 contracts locally readable and record the relevant Highlights revision/date in
 the PR. Technical workflow belongs in this repository, not in Highlights.
@@ -47,7 +52,7 @@ Before completion, review Boss itself and every participating or affected Skill.
 | State, interfaces or dependency boundaries | [architecture-review](../architecture-review/SKILL.md) | Compatible ownership/schema assessment |
 | Any physical-engine behavior change | [physics-rule-validation](../physics-rule-validation/SKILL.md) | Rule-by-rule acceptance or concrete blockers |
 | Necessary tests, failures or redundant coverage | [test-runner](../test-runner/SKILL.md) | Minimal sufficient checks and actual results |
-| Reproducible world execution | [simulation-runner](../simulation-runner/SKILL.md) | Identified run, trace and HTML evidence |
+| Reproducible world execution | [simulation-runner](../simulation-runner/SKILL.md) | Identified initialization, metadata and trace; visual evidence only when requested |
 | Rendering or visual interpretation | [visualization-check](../visualization-check/SKILL.md) | Faithful, inspected output |
 | Unintended change to current physical behavior | [regression-check](../regression-check/SKILL.md) | Contract-focused regression evidence |
 | Review, reconcile, close or merge PRs | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) | Current-head integration decision |

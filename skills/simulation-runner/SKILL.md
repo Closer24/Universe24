@@ -17,13 +17,20 @@ dependencies or create HTML/GIF unless visualization is explicitly requested.
 Use the existing Python runner and optional renderer; an API-only candidate must
 retain its actual identity in recorded evidence.
 
-Verify the runtime and select an existing scenario or explicit initial conditions
-that exercise the requested behavior. Use an isolated checkout and unique output
+For primary runs, require the explicit initialization file and read its field,
+disturbance, transport, coupling and cost definitions; see
+[DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select a
+historical scalar universe. Historical scenarios belong to the separate
+`event_universe.legacy_runner` entry point.
+
+Verify the runtime and select explicit initialization or a named historical scenario
+that exercises the requested behavior. Use an isolated checkout and unique output
 directory. Do not run a large parameter sweep when one bounded case resolves the
 current question. Reuse a matching test run instead of duplicating it.
 
-Check actual completion, requested tick count, source fingerprint/model, integer
-and occupancy checks, per-tick momentum and relevant isolated-motion acceptance.
+Check actual completion, requested tick count, source/configuration identity,
+integer bounds, local capacity and declared per-tick conservation. Check momentum
+and isolated-motion acceptance when the selected historical candidate requires them.
 Frame stride changes recording only, never the physical update interval. On a
 failure retain the trace and failed metadata. If visualization was requested,
 also retain the failure frame and FAILED RUN HTML report. Do not smooth the
@@ -33,7 +40,6 @@ Inspect metadata and events for every run. Only when visualization was requested
 inspect the existing standalone HTML and relevant frames. Test-run rendering is
 opt-in with `pytest --visualize-runs`; normal test runs remain headless and keep
 their physical assertions. A successful process does not prove the candidate is
-physically accepted. Route runtime errors to the
-component owner, visual ambiguity to visualization-check, and a reproducible
+physically accepted. Route runtime errors to the component owner, visual ambiguity to visualization-check, and a reproducible
 behavior difference to regression-check/physics-rule-validation. Do not edit
 laws or use diagnostic results to repair the world while running an experiment.

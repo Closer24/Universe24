@@ -29,6 +29,7 @@ One repository does not require one runtime process or a new package hierarchy.
 | Scope | Authoritative source |
 | --- | --- |
 | Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
@@ -80,13 +81,17 @@ disable the gate, or encode non-English prose as escapes to evade this rule.
 - Field, response, movement and transit calculations belong in generic components.
   Models select policies and compose components without copying formulas. The engine
   schedules work and validates contracts.
-- Displays and measurements only read state. Every world run produces HTML through
-  the existing renderer, with enhanced 3D as the default, including test runs, as
-  specified in the definitions document.
+- The active Simulation requires initialization-defined disturbance types and
+  fields. Do not branch on physical field names or reintroduce an implicit scalar
+  default. Named historical research APIs retain their own contracts.
+- Displays and measurements only read state. Runs and tests are headless unless
+  visualization is explicitly requested. Do not capture frames or load render
+  dependencies in the ordinary runner path; see the definitions display contract.
 - A behavior change needs a dedicated test with inputs, an expected result and an
   edge case. Preserve current physical contract coverage. A new physical
   hypothesis needs an explicit model identity.
-- Run `python tools/check.py` and inspect the HTML report before delivery. Static
+- Run `python tools/check.py` before delivery. Inspect metadata/events for runs
+  and inspect visual artifacts only when visualization was requested. Static
   checks are partial enforcement, not proof of locality or correct physics.
 
 For physics changes, validation also requires the physics-rule reviewer, necessary
@@ -96,7 +101,7 @@ Passing code checks does not establish a real-world physical law.
 
 ## Completion
 
-Use the unchanged full gate `python tools/check.py` before submission and inspect
-its HTML report for world runs. State missing checks and remaining blockers.
+Use the unchanged full gate `python tools/check.py` before submission. Its
+ordinary mode is headless; `pytest --visualize-runs` is explicit visual validation. State missing checks and remaining blockers.
 Keep provider, consumers, tests and documentation together when an interface
 changes. Follow the merge conditions in CONTRIBUTING.md; never bypass failed CI.

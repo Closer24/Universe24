@@ -1,5 +1,13 @@
 # Fields and turning: generic components and model choices
 
+The active API defines fields and disturbance types through initialization data.
+See [DISTURBANCES.md](DISTURBANCES.md) for the schema, safe expression language,
+transport modes, paired coupling and conservation requirements. This supports
+bounded scalar and vector fields without adding physical names to the engine.
+
+The component guide below is retained for the explicitly named historical
+ScalarSimulation API. It does not define the active generic payload schema.
+
 Write each calculation once. The model selects its use, and a field or turning
 policy can be replaced without editing the engine or duplicating calculations.
 Start each new physical feature with the [extension procedure](PHYSICAL_FEATURES.md).
@@ -25,10 +33,10 @@ The local value receives weight 1 alongside the six neighbors. The denominator
 comes from the same Config used to audit physical-state remainders.
 
 ```python
-from event_universe import Config, Simulation
+from event_universe import Config, ScalarSimulation
 from event_universe.fields import ScalarField
 
-world = Simulation(
+world = ScalarSimulation(
     Config(field_den=8),
     field=ScalarField(neighbor_weights=(1, 1, 1, 1, 1, 1), self_weight=1),
 )
@@ -58,11 +66,11 @@ three integers. It only selects the response vector. `FieldTurning` continues to
 handle denominators, remainders, bounds and opposite field momentum in one shared implementation.
 
 ```python
-from event_universe import Simulation
+from event_universe import ScalarSimulation
 from event_universe.dynamics import FieldTurning
 from event_universe.dynamics.turning import full_response
 
-world = Simulation(turning=FieldTurning(select_direction=full_response))
+world = ScalarSimulation(turning=FieldTurning(select_direction=full_response))
 ```
 
 This responds to the longitudinal component as well. `field=` and `turning=` can
@@ -75,7 +83,7 @@ be supplied together and selected independently. Omitting both preserves the cur
 | `tests/test_scalar_field.py` | Weighted field, signed values, remainders and bounds |
 | `tests/test_turning.py` | Different direction policies over shared arithmetic, small impulses and local momentum conservation |
 | `tests/test_current_field.py` | Exact current-model field, occupancy source and turning policy |
-| `tests/test_field_composition.py` | Replace field and turning through Simulation; reject invalid results before commit |
+| `tests/test_field_composition.py` | Replace field and turning through ScalarSimulation; reject invalid results before commit |
 | `tests/test_architecture.py` | Generic components do not depend on models or worlds; physical arithmetic remains integer |
 
 See `TEST_EXPECTATIONS.md` for movement, geometry and measurement tests and their
@@ -83,14 +91,16 @@ numerical inputs and expected results.
 
 The replacement test combines a source-only test field with full-vector response.
 It demonstrates composition, not adoption of another physical law. Full-state
-comparison against the frozen version remains in place for all 278 ticks of the
-three regression scenarios. Every test world run appears in `artifacts/test-runs.html`.
+comparisons against the frozen version are historical evidence; the archived
+reference is not an active compatibility gate. Current regression assertions
+remain. Test worlds are headless unless `--visualize-runs` is requested.
 
 ## Current extension limit
 
 The adapter supports one scalar field within a fixed cell schema. The generic
 calculation can return negative values, but the current adapter clips a negative
-result and its remainder to zero. Vector fields, simultaneous fields or another
-sign policy require a separate state contract and engine/measurement adaptation.
+result and its remainder to zero. This limit is specific to the historical scalar adapter. Vector and simultaneous
+fields use the active disturbance contract instead; a different sign policy is
+specified by the field definition.
 An experimental physical law also needs a separate model identity and documentation,
 as required by `SIMULATOR_DEFINITIONS.md`.
