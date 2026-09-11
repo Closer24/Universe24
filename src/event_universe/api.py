@@ -2,15 +2,18 @@
 
 from event_universe.core.contracts import LocalCellRule, Observer
 from event_universe.core.engine import Engine
+from event_universe.core.faces import FacePublisher
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
 from event_universe.core.state import Config
 from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.dynamics.movement import MovementRule, advance_balanced_movement
 from event_universe.dynamics.transit import transit_ticks
-from event_universe.dynamics.turning import FieldTurning
+from event_universe.dynamics.turning import FieldTurning, full_response
+from event_universe.fields.faces import scalar_broadcast
 from event_universe.fields.policies import ScalarActivity, sample_changed_or_source
 from event_universe.fields.scalar import ScalarFieldRule
+from event_universe.fields.streaming import OctantFieldRule
 from event_universe.models.causal_stream import (
     STREAM_FIELD,
     STREAM_MODEL,
@@ -36,6 +39,9 @@ class Simulation(Engine):
         field_activity: ScalarActivity | None = None,
         movement: MovementRule | None = None,
         post_motion_halo: LocalCellRule | None = None,
+        face_publisher: FacePublisher = scalar_broadcast,
+        historical_response_staging: bool = True,
+        old_face_response: bool = False,
     ) -> None:
         # Preserve the current scheduler; a supplied field tracks its full scalar sample.
         activity = CURRENT_MODEL.activity if field is None else sample_changed_or_source
@@ -53,6 +59,9 @@ class Simulation(Engine):
             field_activity=model.field_is_active,
             collision_rule=collide if collisions else None,
             post_motion_halo=post_motion_halo,
+            face_publisher=face_publisher,
+            historical_response_staging=historical_response_staging,
+            old_face_response=old_face_response,
         )
 
 
@@ -69,6 +78,7 @@ class LinkedSimulation(LinkedEngine):
         field: ScalarFieldRule | None = None,
         turning: FieldTurning | None = None,
         length_rule: LengthRule | None = None,
+        old_face_response: bool = False,
     ) -> None:
         link_config = LinkConfig() if links is None else links
         model = CurrentFieldModel(
@@ -88,6 +98,7 @@ class LinkedSimulation(LinkedEngine):
             merge_rule=max,
             field_activity=model.field_is_active,
             collision_rule=collide if collisions else None,
+            old_face_response=old_face_response,
         )
 
 
@@ -110,14 +121,88 @@ class CausalStreamSimulation(StreamingEngine):
     """Opt-in outward stream transport with locally delivered full-vector response."""
 
     def __init__(
-        self, settings: CausalStreamConfig | None = None, *, observer: Observer | None = None
+        self,
+        settings: CausalStreamConfig | None = None,
+        *,
+        observer: Observer | None = None,
+        field: OctantFieldRule | None = None,
+        old_face_response: bool = False,
     ) -> None:
         choices = CausalStreamConfig() if settings is None else settings
         super().__init__(
             choices.engine_config(),
             STREAM_MODEL.update_particle,
-            STREAM_FIELD.emit,
+            (STREAM_FIELD if field is None else field).emit,
             choices.source_per_octant,
             STREAM_SAMPLES,
             observer,
+            old_face_response=old_face_response,
         )
+
+
+class FaceScalarSimulation(Simulation):
+    """Experimental full response to old delivered scalar faces; not self-force accepted."""
+
+    model_id = "scalar-delivered-faces-v1-experimental"
+
+    def __init__(
+        self,
+        config: Config | None = None,
+        *,
+        observer: Observer | None = None,
+        collisions: bool = False,
+        field: ScalarFieldRule | None = None,
+        face_publisher: FacePublisher = scalar_broadcast,
+    ) -> None:
+        super().__init__(
+            config,
+            observer=observer,
+            collisions=collisions,
+            field=field,
+            turning=FieldTurning(select_direction=full_response),
+            face_publisher=face_publisher,
+            historical_response_staging=False,
+            old_face_response=True,
+        )
+
+
+class FaceLinkedSimulation(LinkedSimulation):
+    """Experimental full response to the previous local delivered link inbox."""
+
+    model_id = "linked-delivered-faces-v1-experimental"
+
+    def __init__(
+        self,
+        config: Config | None = None,
+        *,
+        links: LinkConfig | None = None,
+        observer: Observer | None = None,
+        collisions: bool = False,
+        field: ScalarFieldRule | None = None,
+        length_rule: LengthRule | None = None,
+    ) -> None:
+        super().__init__(
+            config,
+            links=links,
+            observer=observer,
+            collisions=collisions,
+            field=field,
+            length_rule=length_rule,
+            turning=FieldTurning(select_direction=full_response),
+            old_face_response=True,
+        )
+
+
+class FaceStreamSimulation(CausalStreamSimulation):
+    """Experimental old-face response; its isolated co-arrival gate remains mandatory."""
+
+    model_id = "octant-delivered-faces-v1-experimental"
+
+    def __init__(
+        self,
+        settings: CausalStreamConfig | None = None,
+        *,
+        observer: Observer | None = None,
+        field: OctantFieldRule | None = None,
+    ) -> None:
+        super().__init__(settings, observer=observer, field=field, old_face_response=True)

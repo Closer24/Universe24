@@ -1,6 +1,13 @@
 """Integer, local, three-dimensional event-field research simulator."""
 
-from .api import CausalStreamSimulation, LinkedSimulation, Simulation
+from .api import (
+    CausalStreamSimulation,
+    FaceLinkedSimulation,
+    FaceScalarSimulation,
+    FaceStreamSimulation,
+    LinkedSimulation,
+    Simulation,
+)
 from .core.links import LinkConfig
 from .core.state import CellState, Config, ParticleState
 from .models.causal_stream import CausalStreamConfig
@@ -15,5 +22,8 @@ __all__ = [
     "LinkConfig",
     "CausalStreamSimulation",
     "CausalStreamConfig",
+    "FaceScalarSimulation",
+    "FaceLinkedSimulation",
+    "FaceStreamSimulation",
     "__version__",
 ]

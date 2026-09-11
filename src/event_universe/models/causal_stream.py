@@ -5,7 +5,8 @@ from dataclasses import dataclass
 from event_universe.core.state import Config
 from event_universe.dynamics.movement import advance_movement
 from event_universe.dynamics.turning import FieldTurning, full_response
-from event_universe.fields.streaming import CausalOctantStream, attractive_samples
+from event_universe.fields.faces import delivered_faces
+from event_universe.fields.streaming import CausalOctantStream
 from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 
 MODEL_ID = "causal-octant-stream-v1"
@@ -45,4 +46,4 @@ STREAM_MODEL = CurrentFieldModel(
     activity=CURRENT_MODEL.activity,
     movement=advance_movement,
 )
-STREAM_SAMPLES = attractive_samples
+STREAM_SAMPLES = delivered_faces

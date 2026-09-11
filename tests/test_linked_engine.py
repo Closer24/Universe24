@@ -26,8 +26,10 @@ def test_actual_c_transit_and_rest_with_fixed_local_state():
 
 
 def test_far_change_cannot_affect_local_cell_before_two_edge_deliveries():
-    a = LinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
-    b = LinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
+    from event_universe.api import FaceLinkedSimulation
+
+    a = FaceLinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
+    b = FaceLinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
     b.seed_field((6, 4, 4), 100)
     target = (4, 4, 4)
     for _ in range(6):
@@ -35,9 +37,12 @@ def test_far_change_cannot_affect_local_cell_before_two_edge_deliveries():
         b.step()
         assert a.cell_at(target) == b.cell_at(target)
         assert a.links.at(target) == b.links.at(target)
+        assert a.face_at(target) == b.face_at(target)
     a.step()
     b.step()
     assert a.cell_at(target).phi == 0 < b.cell_at(target).phi
+    assert a.face_at(target) == (0,) * 6
+    assert b.face_at(target)[0] > 0
 
 
 def test_no_direct_remote_scalar_reads_and_all_versions_agree():

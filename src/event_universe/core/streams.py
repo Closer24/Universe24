@@ -81,7 +81,8 @@ class StreamTransport:
                     populations[octant] = checked(checked_work(populations[octant] + value))
                     amount = checked(checked_work(amount + value))
                 flux = next_flux.setdefault(target, [0] * 6)
-                flux[direction] = checked(checked_work(flux[direction] + amount))
+                face = direction ^ 1
+                flux[face] = checked(checked_work(flux[face] + amount))
         cells: dict[Address, StreamCell] = {}
         for position in set(next_populations) | set(next_flux):
             final_populations = cast(Octants, tuple(next_populations.get(position, [0] * 8)))

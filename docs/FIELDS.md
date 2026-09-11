@@ -1,5 +1,62 @@
 # Fields and turning: generic components and model choices
 
+## Delivered-face interface
+
+`fields.faces.face_imbalance(incoming)` is the generic response-input calculation.
+Its six integer values are ordered +x, -x, +y, -y, +z, -z and refer to the
+source-facing sides of the current cell: a value on +x arrived from the +x
+neighbor. They are already delivered local records. The calculation never queries
+a neighbor or knows particle identities. A transport that labels travel direction
+must reverse the face index exactly once when delivering its packet.
+
+| Part | Contract |
+| --- | --- |
+| Law | Opposite-face differences `(I[0]-I[1], I[2]-I[3], I[4]-I[5])` |
+| Inputs | Six signed 32-bit physical values, already delivered to one cell |
+| Evolving state | None in the primitive; the engine owns face records |
+| Parameters | No hidden coefficients or source classification |
+| Outputs | Three checked 64-bit working differences |
+| Response | Existing `FieldTurning` owns impulse scaling, carried residues and exact opposite field impulse |
+| Equality | Equal opposite faces produce a zero vector; they do not stop inertial motion |
+| Example | `(9,4,2,10,6,6)` produces `(5,-8,0)` |
+| Bounds | `MAX_CORE_INT - (-MAX_CORE_INT)` is valid work; an individual input outside its physical bound is rejected |
+
+`scalar.gradient` remains a compatibility name delegating to this one calculation.
+This arithmetic refactor alone changes neither scalar transport nor the selected
+response policy. A model must explicitly select full-vector response if longitudinal
+acceleration is intended. Face data do not identify or subtract an individual
+particle's old field.
+
+`scalar_broadcast(value)` validates one scalar snapshot and publishes it on six
+outgoing faces. It retains no value internally. The transport injects this pure
+publication policy and owns delivery; this function neither reads neighbors nor
+chooses when a newly calculated scalar becomes available to another cell.
+
+## Replaceable directional transport law
+
+`fields.streaming.OctantFieldRule` specifies
+`emit(populations, sources, source_per_octant, phase) -> outgoing`. One local
+eight-integer population record and a resident source count at most K are inputs.
+Source strength is an immutable run parameter; phase is a supplied bounded tick.
+The output is exactly six packets, each containing eight nonnegative bounded
+integers. The engine owns old-snapshot delivery, face orientation and commits.
+An implementation has no world access, mutable private history or source maps.
+
+The existing `CausalOctantStream` satisfies this structural interface. It retains
+the eight fixed sign sectors while splitting into six outgoing cardinal ports.
+It validates old populations before source addition. Generic interface compliance
+does not prove conservation, monotone propagation, self-force cancellation or
+correct scheduling for a replacement law; each needs independent contract tests.
+The existing rule's outward-sign argument concerns its own returning contribution
+before periodic wrap. It is not a proof of the complete engine's intervention
+cone, which also depends on when response and particle movement commit.
+
+Each local emit uses eight channels and at most three directions per channel;
+each destination combines at most six fixed packets. For fixed K these are
+constant local bounds. Host frontier sweeps and full simulation storage still grow
+with materialized cells. Six incoming response values do not imply that directional
+transport must discard its eight-channel memory or that either law is isotropic.
+
 Write each calculation once. The model selects its use, and a field or turning
 policy can be replaced without editing the engine or duplicating calculations.
 Start each new physical feature with the [extension procedure](PHYSICAL_FEATURES.md).

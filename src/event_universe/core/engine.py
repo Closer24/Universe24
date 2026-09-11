@@ -19,6 +19,7 @@ from .contracts import (
     Observer,
     ParticleRule,
 )
+from .faces import ZERO_FACES, FacePublisher, ScalarFaceTransport
 from .lattice import PeriodicLattice
 from .state import (
     EMPTY_SLOT,
@@ -47,6 +48,9 @@ class Engine:
         field_activity: FieldActivity | None = None,
         collision_rule: CollisionRule | None = None,
         post_motion_halo: LocalCellRule | None = None,
+        face_publisher: FacePublisher | None = None,
+        historical_response_staging: bool = True,
+        old_face_response: bool = False,
     ) -> None:
         self._collision_rule = collision_rule
         self._contacts: dict[Address, tuple[int, ...]] = {}
@@ -55,6 +59,13 @@ class Engine:
         self._field_activity = field_activity
         self._post_motion_halo = post_motion_halo
         self._lattice = PeriodicLattice((config.nx, config.ny, config.nz))
+        self._face_transport = (
+            None if face_publisher is None else ScalarFaceTransport(self._lattice, face_publisher)
+        )
+        self._historical_response_staging = historical_response_staging
+        self._old_face_response = old_face_response
+        self._response_snapshot: Mapping[Address, Neighbors] | None = None
+        self._movement_slots: Mapping[Address, tuple[int, ...]] | None = None
         self._particle_rule = particle_rule
         self._observer = observer if observer is not None else NullObserver()
         self._cells: dict[Address, CellState] = {}
@@ -92,6 +103,15 @@ class Engine:
     def active(self) -> frozenset[Address]:
         """Diagnostic copy, with O(number of active cells) cost."""
         return frozenset(self._active)
+
+    @property
+    def field_faces(self) -> Mapping[Address, Neighbors]:
+        """Read-only view of this transport's persisted local delivered inboxes."""
+        return MappingProxyType({}) if self._face_transport is None else self._face_transport.cells
+
+    def face_at(self, position: Address) -> Neighbors:
+        """Read one local inbox; never sample a remote scalar during response."""
+        return ZERO_FACES if self._face_transport is None else self._face_transport.at(position)
 
     def addr(self, x: int, y: int, z: int) -> Address:
         return self._lattice.wrap((x, y, z))
@@ -151,21 +171,20 @@ class Engine:
         return self
 
     def _field_step(self) -> None:
+        if self._face_transport is None:
+            raise ValueError("scalar Engine requires an explicit face publisher")
         work = set(self._active)
         for position in tuple(self._active):
             work.update(self._lattice.neighbors(position))
         old_phi = {position: self.cell_at(position).phi for position in work}
 
-        def previous_value(position: Address) -> int:
-            return old_phi.get(position, 0)
+        self._face_transport.advance(old_phi)
 
         updates: list[tuple[Address, CellState, bool]] = []
         for position in work:
             old = self.cell_at(position)
             sources = sum(pid >= 0 for pid in self._occupancy.get(position, ()))
-            new = self._field_rule(
-                old, self._lattice.sample(position, previous_value), sources, self.config
-            )
+            new = self._field_rule(old, self.face_at(position), sources, self.config)
             validate_cell(new)
             # Without a quiescence policy, conservatively retain every visited cell.
             keep_active = (
@@ -183,6 +202,11 @@ class Engine:
                 next_active.add(position)
         for position in next_active:
             self._activate(position)
+        if self._historical_response_staging:
+            # Explicit historical v10 staging: the second publication preserves
+            # its response timing, including its known two-edge causal defect.
+            # New face candidates disable this stage; it is not a causal proof.
+            self._face_transport.advance({p: cell.phi for p, cell in self._cells.items()})
 
     def _begin_tick(self) -> None:
         """Transport extension hook; the baseline has no in-flight transitions."""
@@ -208,7 +232,10 @@ class Engine:
         return True
 
     def _particle_neighbors(self, position: Address) -> Neighbors:
-        return self._lattice.sample(position, self.phi)
+        """Compatibility name for a local delivered-face read."""
+        if self._response_snapshot is not None:
+            return self._response_snapshot.get(position, ZERO_FACES)
+        return self.face_at(position)
 
     def _particle_step_in_cell(self, position: Address) -> None:
         for slot in range(self.config.max_particles_per_cell):
@@ -257,10 +284,20 @@ class Engine:
             self._observer.on_move(MoveRecord(self.tick, pid, *target))
             return
         target_slots = self._occupancy.setdefault(target, self._empty_slots())
-        if EMPTY_SLOT not in target_slots:
+        eligible = (
+            target_slots
+            if self._movement_slots is None
+            else self._movement_slots.get(target, self._empty_slots())
+        )
+        available = [
+            index
+            for index in range(self.config.max_particles_per_cell)
+            if eligible[index] == EMPTY_SLOT and target_slots[index] == EMPTY_SLOT
+        ]
+        if not available:
             self._observer.on_blocked(MoveRecord(self.tick, pid, *target))
             return
-        free = target_slots.index(EMPTY_SLOT)
+        free = available[0]
         origin_slots = self._occupancy[origin]
         self._occupancy[origin] = origin_slots[:slot] + (EMPTY_SLOT,) + origin_slots[slot + 1 :]
         # A one-cell periodic dimension can make target == origin.
@@ -345,6 +382,10 @@ class Engine:
         self._ensure_healthy()
         next_tick = checked(self.tick + 1)
         try:
+            if self._old_face_response:
+                # Host snapshots of fixed local records, not a force estimator.
+                self._response_snapshot = dict(self.field_faces)
+                self._movement_slots = dict(self._occupancy)
             previous_positions = tuple(
                 (pid, particle.position) for pid, particle in self._particles.items()
             )
@@ -357,6 +398,8 @@ class Engine:
             self._collision_step()
             self._apply_post_motion_halos(previous_positions)
             self._tick = next_tick
+            self._response_snapshot = None
+            self._movement_slots = None
         except Exception:
             self._faulted = True
             raise

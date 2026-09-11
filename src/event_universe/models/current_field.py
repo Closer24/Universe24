@@ -18,6 +18,7 @@ from event_universe.core.state import (
 )
 from event_universe.dynamics.movement import MovementRule, advance_movement
 from event_universe.dynamics.turning import FieldTurning, dominant_axis_transverse
+from event_universe.fields.faces import face_imbalance
 from event_universe.fields.halo import cancel_scalar_sample
 from event_universe.fields.policies import (
     ScalarActivity,
@@ -29,7 +30,6 @@ from event_universe.fields.scalar import (
     ScalarField,
     ScalarFieldRule,
     ScalarSample,
-    gradient,
     validate_sample,
 )
 
@@ -73,7 +73,7 @@ class CurrentFieldModel:
     def update_particle(
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
-        raw_gradient = gradient(neighbors)
+        raw_gradient = face_imbalance(neighbors)
         response = self.turning.apply(
             particle.momentum,
             (cell.px, cell.py, cell.pz),

@@ -18,6 +18,25 @@ occupancy; measurements read the result.
 
 ## Tests by responsibility
 
+Delivered-face tests use independent local numerical inputs and reuse the
+existing isolated stream/free-control fixtures, now targeting FaceStreamSimulation. `test_field_faces.py` checks
+source-facing order, signed register validation, bounded work-width differences,
+full longitudinal momentum exchange and unchanged momentum for balanced faces.
+`test_face_transport.py` checks old-snapshot one-edge delivery, source-facing
+arrival slots and rejection of an overflowing update without partial commit.
+The isolated control suite poisons scalar lookups to prevent a response path
+from silently reverting to remote scalar reads.
+
+`test_face_causality.py` checks the complete transport/response/movement tick.
+An initial source intervention at (5,5,5) cannot change any record at (7,5,5)
+after one tick, including momentum carried by a particle initially at (6,5,5).
+Separate one-edge field and movement checks do not establish this composed
+causal requirement. A second one-tick fixture places two opposed senders around
+an empty capacity-one target; removing one sender, two edges away, must not
+change whether the other has departed. A failing result remains an acceptance
+failure. The linked two-edge timing fixture targets FaceLinkedSimulation and
+checks a nonzero received face after causal arrival.
+
 | Test file | Responsibility | Expected outcome |
 | --- | --- | --- |
 | `test_integer_contract.py` | Integer arithmetic and bounds | Exact quotient and remainder for either sign; reject overflow before use |
@@ -165,8 +184,10 @@ proof against arbitrary dynamic Python or a proof of physical locality.
 ## Locality and bounded local work
 
 `test_locality.py` supplies a read spy at (3,3,3) in extents 8 and 1,000,000.
-Both calls must read the same six cardinal neighbors once each and return the
-six supplied values in order. This test creates no world and advances no time.
+Both response calls must read only the local delivered-face record and return
+the six nonzero supplied values in order; remote scalar access must fail. This
+test creates no world and advances no time. The independent transport test
+checks actual nonzero one-edge delivery and no same-update relay.
 Negative source examples in fields, dynamics and models must reject global cell
 or particle access, occupancy/history reads and shadow step/run calls. The
 normal architecture test scans all production modules with the same guard.

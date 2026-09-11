@@ -19,6 +19,13 @@ do not replace the authoritative documents below or expand user authorization.
 
 ## One project and one source of truth
 
+The user directs field work using the
+[Universe24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
+Read its relevant requirements together with the repository contracts. Verify
+claims about what exists against code and tests; a stated target is not a passed
+acceptance result. [The field migration gap map](docs/FIELD_FACES.md) records the
+current implementation limits and unfinished requirements without duplicating laws.
+
 The only active implementation is `src/event_universe/` in this project.
 `src/persistent_source_field.py` is a compatibility facade only.
 `tests/reference/` is a frozen comparison source; never edit it to make a test pass.

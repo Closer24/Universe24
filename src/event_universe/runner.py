@@ -84,10 +84,14 @@ def run_scenario(
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": source_fingerprint(),
-        "model": (
-            (COLLISION_MODEL_ID if scenario.links is None else COLLISION_LINKED_MODEL_ID)
-            if scenario.collisions or any(m != 1 for m in scenario.masses)
-            else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
+        "model": getattr(
+            world,
+            "model_id",
+            (
+                (COLLISION_MODEL_ID if scenario.links is None else COLLISION_LINKED_MODEL_ID)
+                if scenario.collisions or any(m != 1 for m in scenario.masses)
+                else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
+            ),
         ),
         "scenario": asdict(scenario),
         "frame_stride": frame_stride,

@@ -240,6 +240,7 @@ def test_periodic_self_loop_preserves_contact_identity():
 
 def test_collision_callable_can_be_replaced_without_world_access():
     from event_universe.core.engine import Engine
+    from event_universe.fields.faces import scalar_broadcast
     from event_universe.models.current_field import CURRENT_MODEL
 
     def transparent_contact(first, second):
@@ -251,6 +252,7 @@ def test_collision_callable_can_be_replaced_without_world_access():
         CURRENT_MODEL.update_particle,
         collision_rule=transparent_contact,
         field_activity=CURRENT_MODEL.field_is_active,
+        face_publisher=scalar_broadcast,
     )
     world.add_particle(0, 4, 4, 4, 3)
     world.add_particle(1, 4, 4, 4, -3)

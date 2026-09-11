@@ -29,6 +29,33 @@ from .frames import AXES, Frame, Slice, VolumeFrame
 
 VOLUME_AXIS_COLORS = ("#ff8c91", "#81e6af", "#80bdff")
 FULL_SPEED_ARROW_LENGTH = 10.8
+FACE_LABELS = ("+X", "-X", "+Y", "-Y", "+Z", "-Z")
+
+
+def _face_metadata(
+    frames: Sequence[Frame] | Sequence[VolumeFrame], metadata: Mapping[str, object] | None
+) -> Mapping[str, object] | None:
+    """Keep exact signed face values separate from the cloud's aggregate quantity."""
+    if not any(frame.faces_available for frame in frames):
+        return metadata
+    return {
+        **dict(metadata or {}),
+        "delivered_faces": {
+            "order": FACE_LABELS,
+            "meaning": "Local neighbor-facing surfaces from which input arrived; not velocity or phi",
+            "frames": [
+                {
+                    "tick": frame.tick,
+                    "available": frame.faces_available,
+                    "cells": [
+                        {"position": position, "values": values}
+                        for position, values in sorted(frame.field_faces.items())
+                    ],
+                }
+                for frame in frames
+            ],
+        },
+    }
 
 
 def _speed_arrow(
@@ -183,7 +210,7 @@ def render_run(
         plane_label,
         html_path,
         title=title,
-        metadata=metadata,
+        metadata=_face_metadata(frames, metadata),
         compact=compact,
     )
 
@@ -201,6 +228,8 @@ def render_volume(
     if any(frame.field_kind != frames[0].field_kind for frame in frames):
         raise ValueError("one animation must use one field quantity")
     streaming = frames[0].field_kind == "stream-magnitude"
+    show_faces = any(frame.faces_available for frame in frames)
+    selected_pid = min((p[0] for frame in frames for p in frame.particles), default=None)
     points = [position for frame in frames for position in frame.field]
     points.extend((p[1], p[2], p[3]) for frame in frames for p in frame.particles)
     if not points:
@@ -242,6 +271,22 @@ def render_volume(
         weight="bold",
     )
     status = fig.text(0.93, 0.94, "", ha="right", va="top", color="#c2d5ed", fontsize=11)
+    face_heading = None
+    face_values = []
+    if show_faces:
+        ax.set_position((0.03, 0.17, 0.88, 0.64))
+        face_heading = fig.text(0.07, 0.865, "", color="#c2d5ed", fontsize=10)
+        for index in range(6):
+            face_values.append(
+                fig.text(
+                    0.07 + index * 0.145,
+                    0.837,
+                    "",
+                    color=VOLUME_AXIS_COLORS[index // 2],
+                    fontsize=11,
+                    weight="bold",
+                )
+            )
     for order, pid in enumerate(sorted({p[0] for frame in frames for p in frame.particles})):
         fig.text(
             0.28 + order * 0.16,
@@ -268,6 +313,20 @@ def render_volume(
     def draw(index: int) -> tuple[Artist, ...]:
         ax.clear()
         frame = frames[index]
+        if face_heading is not None:
+            selected = next((p for p in frame.particles if p[0] == selected_pid), None)
+            if not frame.faces_available or selected is None:
+                face_heading.set_text("Local delivered faces: no selected occupied cell")
+                for text in face_values:
+                    text.set_text("")
+            else:
+                position = (selected[1], selected[2], selected[3])
+                delivered_values = frame.field_faces.get(position, (0, 0, 0, 0, 0, 0))
+                face_heading.set_text(
+                    f"Local delivered faces / particle {selected_pid} at {position} / not velocity or phi"
+                )
+                for text, label, value in zip(face_values, FACE_LABELS, delivered_values, strict=True):
+                    text.set_text(f"{label}: {value}")
         previous_positions = (
             {p[0]: (p[1], p[2], p[3]) for p in frames[index - 1].particles} if index else {}
         )
@@ -434,7 +493,7 @@ def render_volume(
         "Full 3D XYZ view",
         html_path,
         title=title,
-        metadata=metadata,
+        metadata=_face_metadata(frames, metadata),
         note=(
             "Transparent amber markers show stream magnitude: the sum of eight populations, "
             "not scalar phi. Stronger values have "

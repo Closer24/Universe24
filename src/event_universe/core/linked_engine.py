@@ -40,6 +40,7 @@ class LinkedEngine(Engine):
         merge_rule: LengthRule = max,
         field_activity: FieldActivity | None = None,
         collision_rule: CollisionRule | None = None,
+        old_face_response: bool = False,
     ) -> None:
         super().__init__(
             config,
@@ -48,6 +49,7 @@ class LinkedEngine(Engine):
             observer,
             field_activity=field_activity,
             collision_rule=collision_rule,
+            old_face_response=old_face_response,
         )
         self.links = LinkTransport(self._lattice, link_config, length_rule, merge_rule)
         self._transit_rule = transit_rule
@@ -56,6 +58,14 @@ class LinkedEngine(Engine):
     @property
     def transits(self) -> Mapping[int, Transit]:
         return MappingProxyType(self._transits)
+
+    @property
+    def field_faces(self) -> Mapping[Address, Neighbors]:
+        """Diagnostic copy; physical response reads its local link mailbox."""
+        return MappingProxyType({p: cell.received for p, cell in self.links.cells.items()})
+
+    def face_at(self, position: Address) -> Neighbors:
+        return self.links.at(position).received
 
     def add_particle(
         self, pid: int, x: int, y: int, z: int, px: int = 0, py: int = 0, pz: int = 0, *, mass: int = 1
@@ -101,7 +111,7 @@ class LinkedEngine(Engine):
             self.links.publish(position, new.phi)
 
     def _particle_neighbors(self, position: Address) -> Neighbors:
-        return self.links.at(position).received
+        return super()._particle_neighbors(position)
 
     def _particle_ready(self, pid: int) -> bool:
         return pid not in self._transits

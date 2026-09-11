@@ -8,9 +8,10 @@ change total field amount.
 """
 
 from dataclasses import dataclass
-from typing import cast
+from typing import Protocol, cast
 
 from event_universe.core.state import checked, checked_work
+from event_universe.fields.faces import face_imbalance
 
 Octants = tuple[int, int, int, int, int, int, int, int]
 Outgoing = tuple[Octants, Octants, Octants, Octants, Octants, Octants]
@@ -25,6 +26,22 @@ OCTANT_SIGNS: tuple[tuple[int, int, int], ...] = (
     (-1, -1, 1),
     (-1, -1, -1),
 )
+
+
+class OctantFieldRule(Protocol):
+    """Replaceable pure law over a fixed eight-channel directional state.
+
+    Inputs are one cell's old populations, bounded resident source count,
+    immutable source strength and supplied tick phase. Return six fixed packets
+    of eight nonnegative integers. The engine owns neighbor delivery and commits.
+    Implementations must retain no private evolving state or source histories.
+    Passing this interface alone does not establish a law's causal or self-force
+    properties; those also depend on its routing and the engine's tick order.
+    """
+
+    def emit(
+        self, populations: Octants, sources: int, source_per_octant: int, phase: int
+    ) -> Outgoing: ...
 
 
 def _direction(axis: int, sign: int) -> int:
@@ -71,16 +88,12 @@ class CausalOctantStream:
 
 
 def flux_vector(flux: tuple[int, int, int, int, int, int]) -> tuple[int, int, int]:
-    """Convert six delivered directional amounts into one local propagation vector."""
-    if len(flux) != 6:
-        raise ValueError("exactly six directional flux values are required")
-    for value in flux:
-        checked(value)
-    return (
-        checked_work(flux[0] - flux[1]),
-        checked_work(flux[2] - flux[3]),
-        checked_work(flux[4] - flux[5]),
-    )
+    """Compatibility difference of six travel-oriented directional amounts.
+
+    This delegates the arithmetic only; it does not reverse packet orientation.
+    New source-facing response code calls face_imbalance on its delivered inbox.
+    """
+    return face_imbalance(flux)
 
 
 def attractive_samples(flux: tuple[int, int, int, int, int, int]) -> tuple[int, int, int, int, int, int]:

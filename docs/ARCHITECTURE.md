@@ -1,5 +1,13 @@
 # Architecture and change boundaries
 
+The delivered-face migration is specified in [FIELD_FACES.md](FIELD_FACES.md).
+`core/faces` owns bounded scalar packet routing and persisted inboxes, with a
+pure injected publication policy. Linked and stream records own their existing
+inboxes. `face_at` is the physical local accessor; `field_faces` is a read-only
+diagnostic view. Full opposite-face arithmetic lives in `fields/faces`; model
+adapters compose it with the existing turning/movement components. Historical
+timing remains explicit and new candidate promotion is blocked on physics gates.
+
 ## Causal-stream candidate extension
 
 `fields/streaming.py` owns bounded pure octant splitting and delivered-flux

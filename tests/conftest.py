@@ -36,11 +36,17 @@ def capture_test_runs(monkeypatch, request):
         def step(world):
             key = id(world)
             if key not in runs:
+                model_id = getattr(world, "model_id", "frozen-v10" if is_legacy else None)
+                implementation = type(world).__module__ + "." + type(world).__qualname__
+                identity = model_id or implementation
                 runs[key] = {
                     "world": world,
                     "frames": [],
                     "stride": 1,
-                    "label": request.node.nodeid + (" — reference" if is_legacy else " — refactored"),
+                    "label": request.node.nodeid + " — " + identity,
+                    "test": request.node.nodeid,
+                    "model_id": model_id,
+                    "implementation": implementation,
                     "legacy": is_legacy,
                 }
                 runs[key]["frames"].append(frame(runs[key]))
@@ -92,7 +98,13 @@ def pytest_sessionfinish(session, exitstatus):
             run["frames"],
             output / f"{index:03d}-{slug}.html",
             title=label,
-            metadata={"suite_exit_status": int(exitstatus), "reference": run["legacy"]},
+            metadata={
+                "suite_exit_status": int(exitstatus),
+                "reference": run["legacy"],
+                "test": run["test"],
+                "model_id": run["model_id"],
+                "implementation": run["implementation"],
+            },
         )
         contents = path.read_text(encoding="utf-8")
         image = re.search(r"<img [^>]+>", contents).group(0)

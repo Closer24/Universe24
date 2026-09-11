@@ -1,5 +1,15 @@
 # Event Universe — active modular 3D integer simulator
 
+## Delivered-face interface migration (experimental, not promoted)
+
+The exact migration contract is in [docs/FIELD_FACES.md](docs/FIELD_FACES.md).
+All supported response adapters now consume persisted local delivered faces.
+Historical compatibility timing remains explicit; a local accessor alone does
+not establish the complete causal cone. The new FaceScalarSimulation,
+FaceLinkedSimulation and FaceStreamSimulation use old-face snapshots and full
+response under separate experimental identities. Their remaining self-arrival
+and competing-arrival failures block promotion; they are not accepted defaults.
+
 ## Opt-in causal outward streams
 
 `CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar

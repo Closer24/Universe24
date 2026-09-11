@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import NamedTuple, Protocol
 
 from event_universe.core.state import Neighbors, Vector, checked, checked_work, signed_divrem
+from event_universe.fields.faces import face_imbalance
 
 
 class ScalarSample(NamedTuple):
@@ -65,13 +66,5 @@ class ScalarField:
 
 
 def gradient(neighbors: Neighbors) -> Vector:
-    """Unscaled integer central difference on the three coordinate axes."""
-    if len(neighbors) != 6:
-        raise ValueError("exactly six neighbor values are required")
-    for value in neighbors:
-        checked(value)
-    return (
-        checked_work(neighbors[0] - neighbors[1]),
-        checked_work(neighbors[2] - neighbors[3]),
-        checked_work(neighbors[4] - neighbors[5]),
-    )
+    """Compatibility name for the shared opposite-face difference calculation."""
+    return face_imbalance(neighbors)

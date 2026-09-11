@@ -12,20 +12,28 @@ from .architecture_rules import violations
 
 
 @pytest.mark.parametrize("extent", [8, 1_000_000])
-def test_particle_neighborhood_reads_exactly_six_cells_independent_of_world_extent(extent):
-    # This is a read spy, not a simulated world or an evolution run.
+def test_particle_response_reads_only_its_delivered_faces_independent_of_extent(extent):
+    # A read spy, not a simulated world; nonzero data prevents an all-zero bypass.
     position = (3, 3, 3)
-    expected = ((4, 3, 3), (2, 3, 3), (3, 4, 3), (3, 2, 3), (3, 3, 4), (3, 3, 2))
     reads = []
 
-    def read(address):
-        assert address in expected, "A remote cell was read"
+    def delivered(address):
+        assert address == position
         reads.append(address)
-        return expected.index(address) + 1
+        return (1, 2, 3, 4, 5, 6)
 
-    reader = SimpleNamespace(_lattice=PeriodicLattice((extent,) * 3), phi=read)
+    def forbidden(*args):
+        raise AssertionError("particle response attempted a remote scalar read")
+
+    reader = SimpleNamespace(
+        _lattice=PeriodicLattice((extent,) * 3),
+        phi=forbidden,
+        _neighbor_values=forbidden,
+        face_at=delivered,
+        _response_snapshot=None,
+    )
     assert Engine._particle_neighbors(reader, position) == (1, 2, 3, 4, 5, 6)
-    assert tuple(reads) == expected
+    assert reads == [position]
 
 
 @pytest.mark.parametrize("layer", ["fields", "dynamics", "models"])
