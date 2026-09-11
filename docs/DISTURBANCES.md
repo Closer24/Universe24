@@ -195,8 +195,12 @@ the amount expression proposes component-wise exchange from left to right.
 A positive quotient subtracts from the left and adds to the right; a negative
 quotient reverses the exchange. The denominator is positive, default 1. Division
 truncates toward zero, with a bounded signed remainder retained in positive-code
-storage, so sign reversal does not introduce a rounding bias. Both resulting records are validated
-before committing either side. An unsigned field cannot be driven negative.
+storage, so sign reversal does not introduce a rounding bias. Both resulting
+records are validated before committing either side. An unsigned field cannot be
+driven negative. Each remainder belongs to one rule and current local slot pair;
+when either participant departs, that pair's remainder resets to zero. A later
+occupant does not inherit it. Retained local split channels keep their remainders.
+These are subquantum rounding registers, not additional conserved quantities.
 
 Configured coupling order followed by fixed slot order is part of the declared
 law. Identical participant types use each distinct unordered pair once. Different

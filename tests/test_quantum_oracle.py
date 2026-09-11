@@ -293,7 +293,8 @@ def test_request_reply_and_node_views_cannot_rewrite_facts():
 
 
 def test_real_world_unchanged_by_many_unit_cost_queries_and_keeps_evolving():
-    from event_universe import Config, Simulation
+    from event_universe import Config
+    from event_universe import ScalarSimulation as Simulation
     from event_universe.diagnostics.measurements import total_momentum
     from event_universe.diagnostics.recorder import TraceRecorder
 

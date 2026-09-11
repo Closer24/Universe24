@@ -4,7 +4,7 @@ import ast
 from importlib.util import resolve_name
 
 GENERIC_LAYERS = {"core", "fields", "dynamics"}
-COMPOSITION_MODULES = {"api", "compat"}
+COMPOSITION_MODULES = {"api", "compat", "disturbance_api"}
 FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "Engine", "Simulation"}
 
 
@@ -88,6 +88,10 @@ def violations(source, module):
                 if not (
                     dependency == "core.state"
                     or dependency.startswith("core.state.")
+                    or dependency == "core.disturbance_state"
+                    or dependency.startswith("core.disturbance_state.")
+                    or dependency == "core.integer"
+                    or dependency.startswith("core.integer.")
                     or target_layer == layer
                 ):
                     found.append((line, "generic calculation imports another layer"))
@@ -99,6 +103,8 @@ def violations(source, module):
                 or dependency.startswith("core.engine.")
                 or dependency == "core.linked_engine"
                 or dependency.startswith("core.linked_engine.")
+                or dependency == "core.disturbance_engine"
+                or dependency.startswith("core.disturbance_engine.")
             ):
                 found.append((line, "model imports world or application code"))
         elif layer in GENERIC_LAYERS | {"models"} and target.split(".")[0] in {

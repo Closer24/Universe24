@@ -22,7 +22,7 @@ from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
 
 
-class Simulation(Engine):
+class ScalarSimulation(Engine):
     """Default model with no retained history. Use the CLI runner for saved experiments."""
 
     def __init__(
@@ -91,7 +91,7 @@ class LinkedSimulation(LinkedEngine):
         )
 
 
-class BalancedSimulation(Simulation):
+class BalancedSimulation(ScalarSimulation):
     """Opt-in balanced motion with a synchronous old/new six-neighbor halo."""
 
     def __init__(

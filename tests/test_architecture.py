@@ -48,6 +48,8 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
         ("core.engine", "from ..models import current_field"),
         ("fields.scalar", "from ..core.state import Config as Settings"),
         ("fields.scalar", "from ..core import engine"),
+        ("fields.disturbances", "from ..core.disturbance_engine import DisturbanceEngine"),
+        ("models.generic", "from ..core import disturbance_engine"),
         ("dynamics.turning", "from ..models.current_field import CURRENT_MODEL"),
         ("models.current_field", "from ..core.engine import Engine"),
         ("models.current_field", "from ..core import engine"),
@@ -70,6 +72,8 @@ def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source)
     [
         ("core.lattice", "from .state import Address"),
         ("fields.policies", "from ..core.state import checked"),
+        ("fields.disturbances", "from ..core.disturbance_state import DisturbanceRecord"),
+        ("fields.disturbances", "from ..core.integer import checked_work"),
         ("dynamics.turning", "import event_universe.core.state as state"),
         ("models.current_field", "from ..fields.scalar import ScalarField"),
         ("api", "def build(value: int | None = None) -> int | None:\n    return value"),

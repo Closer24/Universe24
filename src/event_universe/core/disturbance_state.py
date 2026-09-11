@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import NamedTuple
 
-from .state import checked_work
+from .integer import checked_work
 
 MAX_VALUE = 1_073_741_823
 MAX_FIELDS = 16
@@ -51,18 +51,20 @@ class FieldDefinition:
     signed: bool
     conserved: bool
     scale: int = 1
+    extensive: bool = True
 
     def validate(self, values: Payload) -> None:
         if len(values) != self.components:
             raise ValueError(f"invalid component count for field {self.name}")
-        if not self.signed and any(v < 0 for v in unpack(values)):
+        decoded = unpack(values)
+        if not self.signed and any(v < 0 for v in decoded):
             raise ValueError(f"negative value forbidden for field {self.name}")
 
 
 @dataclass(frozen=True, slots=True)
 class Expression:
     op: str
-    arguments: tuple["Expression", ...] = ()
+    arguments: tuple[Expression, ...] = ()
     literal: tuple[int, ...] = ()
     field: int = 0
     side: int = 0
@@ -192,3 +194,13 @@ class DisturbanceCell:
     available_tick: int = 0
     received_count: int = 0
     last_cost: int = 0
+
+
+@dataclass(frozen=True, slots=True)
+class CellView:
+    records: tuple[DisturbanceRecord | None, ...]
+    coupling_remainders: tuple[int, ...]
+    pending: PendingCycle | None
+    available_tick: int
+    received_count: int
+    last_cost: int

@@ -5,7 +5,8 @@ from itertools import product
 
 import pytest
 
-from event_universe import Config, LinkedSimulation, Simulation
+from event_universe import Config, LinkedSimulation
+from event_universe import ScalarSimulation as Simulation
 from event_universe.core.links import LinkConfig
 from event_universe.core.state import MAX_CORE_INT, CellState, ParticleState, validate_particle
 from event_universe.diagnostics.frames import capture_volume

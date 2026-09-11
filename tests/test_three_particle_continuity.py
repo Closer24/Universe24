@@ -1,7 +1,8 @@
 from dataclasses import asdict
 from pathlib import Path
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.runner import source_fingerprint
 
 

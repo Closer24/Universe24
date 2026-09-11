@@ -18,7 +18,8 @@ jobs:
           python-version-file: .python-version
       - run: python -m pip install -e '.[render,dev]'
       - run: python tools/check.py
-      - run: python -m event_universe --scenario contact --output artifacts/contact
+      - run: python -m event_universe --init examples/basic.json --output artifacts/basic
+      - run: python -m event_universe --init examples/exchange.json --output artifacts/exchange
       - run: python -m build
       - uses: actions/upload-artifact@v4
         if: always()

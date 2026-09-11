@@ -2,7 +2,8 @@
 
 import pytest
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.core.state import Neighbors
 from event_universe.diagnostics.measurements import audit, total_momentum
 from event_universe.dynamics import FieldTurning

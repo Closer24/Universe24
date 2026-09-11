@@ -50,7 +50,8 @@ def test_backward_time_link_is_rejected_at_bridge():
 
 
 def test_sidecar_query_cannot_change_simulator_state():
-    from event_universe import Config, Simulation
+    from event_universe import Config
+    from event_universe import ScalarSimulation as Simulation
 
     def make_world():
         world = Simulation(Config(nx=32, ny=32, nz=32))

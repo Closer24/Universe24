@@ -4,7 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.diagnostics.numeric_audit import static_integer_audit
 from event_universe.integration.quantum_bridge import QuantumBridge
 from event_universe.quantum import (

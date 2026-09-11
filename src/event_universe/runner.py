@@ -1,28 +1,16 @@
-"""Run initial conditions with metadata and optional read-only visualization."""
+"""Initialization file -> generic disturbances -> headless artifacts by default."""
 
 import argparse
 import hashlib
 import json
-from dataclasses import asdict, replace
 from pathlib import Path
-from typing import TYPE_CHECKING
 
 from event_universe import __version__
-from event_universe.diagnostics.invariants import require_inertial_momentum
-from event_universe.diagnostics.measurements import report, total_momentum
-from event_universe.diagnostics.recorder import JsonlRecorder
-from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED_MODEL_ID
-from event_universe.models.collisions import MODEL_ID as COLLISION_MODEL_ID
-from event_universe.models.current_field import MODEL_ID
-from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
-from event_universe.scenarios import Scenario, get_scenario
-
-if TYPE_CHECKING:
-    from event_universe.diagnostics.frames import Frame, VolumeFrame
+from event_universe.disturbance_api import Simulation
+from event_universe.initialization import parse_initial_json
 
 
 def source_fingerprint() -> str:
-    """Content identity remains available in source archives and installed wheels."""
     root = Path(__file__).parent
     digest = hashlib.sha256()
     for path in sorted(root.rglob("*.py")):
@@ -32,163 +20,107 @@ def source_fingerprint() -> str:
     return digest.hexdigest()
 
 
-def run_scenario(
-    scenario: Scenario,
+def run_initialization(
+    initialization: Path,
     output: Path,
     *,
-    frame_stride: int = 1,
-    volume: bool = True,
+    ticks: int | None = None,
     visualize: bool = False,
+    frame_stride: int = 1,
 ) -> Path:
-    """Write events and metadata; capture frames and return HTML only when requested."""
-    if type(frame_stride) is not int or frame_stride < 1:
-        raise ValueError("frame_stride must be a positive integer")
-    if type(scenario.ticks) is not int or scenario.ticks < 0:
-        raise ValueError("ticks must be a non-negative integer")
-    if visualize:
-        from event_universe.diagnostics.frames import capture_frame, capture_volume
-
+    """Preserve input, events, final state, and conservation evidence."""
+    source = initialization.read_bytes()
+    initial = parse_initial_json(source)
+    fingerprint = source_fingerprint()
+    count = initial.ticks if ticks is None else ticks
+    if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
+        raise ValueError("ticks must be nonnegative and frame_stride positive")
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
-    frames: list[Frame] = []
-    volume_frames: list[VolumeFrame] = []
+    (output / "initialization.json").write_bytes(source)
+    frames: list[dict[str, object]] = []
     failure: Exception | None = None
+    conservation = True
+    completed = 0
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
-        world = scenario.create(JsonlRecorder(stream))
+
+        def record(event: dict[str, object]) -> None:
+            stream.write(json.dumps(event) + "\n")
+
+        world = Simulation(initial, observer=record)
+        initial_totals = world.totals()
         if visualize:
-            if volume:
-                volume_frames.append(capture_volume(world))
-            else:
-                frames.append(capture_frame(world, scenario.view))
-        # The runner owns the run: no external seeds or later particle additions.
-        # Field-bearing initial states are not evidence of isolation.
-        isolated = (
-            next(iter(world.particles.items()))
-            if len(world.particles) == 1 and not any(any(cell) for cell in world.cells.values())
-            else None
-        )
-        isolated_status = "not_applicable" if isolated is None else "passed"
-        initial_momentum = total_momentum(world)
-        conserved = True
+            frames.append(world.snapshot())
         try:
-            for _ in range(scenario.ticks):
+            for _ in range(count):
                 world.step()
-                conserved = conserved and total_momentum(world) == initial_momentum
-                if isolated is not None:
-                    pid, initial_particle = isolated
-                    isolated_status = "failed"
-                    require_inertial_momentum(
-                        initial_particle.momentum,
-                        world.particles[pid].momentum,
-                        pid=pid,
-                        tick=world.tick,
-                    )
-                    isolated_status = "passed"
+                totals, sources = world.totals(), world.source_totals()
+                equal = all(
+                    totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
+                    for name, values in initial_totals.items()
+                )
+                conservation = conservation and equal
+                if not equal:
+                    raise ValueError("declared quantity conservation failed")
+                completed += 1
                 if visualize and world.tick % frame_stride == 0:
-                    if volume:
-                        volume_frames.append(capture_volume(world))
-                    else:
-                        frames.append(capture_frame(world, scenario.view))
+                    frames.append(world.snapshot())
         except Exception as error:
             failure = error
-        if visualize:
-            last_tick = volume_frames[-1].tick if volume else frames[-1].tick
-            if last_tick != world.tick or failure is not None:
-                if volume:
-                    volume_frames.append(capture_volume(world))
-                else:
-                    frames.append(capture_frame(world, scenario.view))
+        final = world.snapshot()
+        if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
+            frames.append(final)
     metadata: dict[str, object] = {
         "package_version": __version__,
-        "source_sha256": source_fingerprint(),
-        "model": (
-            (COLLISION_MODEL_ID if scenario.links is None else COLLISION_LINKED_MODEL_ID)
-            if scenario.collisions or any(m != 1 for m in scenario.masses)
-            else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
-        ),
-        "scenario": asdict(scenario),
-        "frame_stride": frame_stride,
-        "display": ("volume-3d" if volume else "plane-slice") if visualize else "none",
-        "initial_total_momentum": initial_momentum,
-        "momentum_equal_at_every_completed_tick": conserved,
+        "source_sha256": fingerprint,
+        "initialization_sha256": hashlib.sha256(source).hexdigest(),
+        "model": initial.model_id,
         "status": "failed" if failure else "completed",
-        "isolated_momentum_check": isolated_status,
         "error": str(failure) if failure else None,
-        "report": report(world) if failure is None else {"tick": world.tick, "faulted": world.faulted},
+        "requested_ticks": count,
+        "completed_ticks": completed,
+        "tick": world.tick,
+        "display": "disturbances" if visualize else "none",
+        "initial_totals": initial_totals,
+        "final_totals": world.totals(),
+        "source_totals": world.source_totals(),
+        "conserved_at_every_completed_tick": conservation,
+        "fields": [field.name for field in initial.fields],
+        "disturbance_types": [kind.name for kind in initial.disturbances],
     }
-    artifact = output / "run.json"
-    artifact.write_text(json.dumps(metadata, indent=2, default=str) + "\n", encoding="utf-8")
+    (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
+    path = output / "run.json"
+    path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     if visualize:
-        from event_universe.diagnostics.render import render_run, render_volume
+        from event_universe.diagnostics.disturbance_render import render_disturbances
 
-        title = f"Event Universe — {scenario.name}"
-        if failure is not None:
-            title = f"FAILED RUN — {title} — {failure}"
-        if volume:
-            artifact = render_volume(volume_frames, output / "run.html", title=title, metadata=metadata)
-        else:
-            artifact = render_run(
-                frames, scenario.view, output / "run.html", title=title, metadata=metadata
-            )
+        path = render_disturbances(frames, output / "run.html", metadata)
     if failure is not None:
         raise failure
-    return artifact
+    return path
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run the integer 3D simulator; request visualization explicitly."
+        description="Run generic disturbances from an initialization JSON file."
     )
     parser.add_argument(
-        "--scenario",
-        choices=(
-            "contact",
-            "turning",
-            "stationary",
-            "links",
-            "collision",
-            "collision-masses",
-            "collision-links",
-        ),
-        default="contact",
+        "--init", required=True, type=Path, help="Field, disturbance, law and initial-state file"
     )
-    parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))
+    parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
+    parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
-    parser.add_argument("--visualize", action="store_true", help="Save HTML/GIF diagnostics")
-    views = parser.add_mutually_exclusive_group()
-    views.add_argument("--view-3d", dest="view_3d", action="store_true", help="Render full XYZ view")
-    views.add_argument("--view-2d", dest="view_3d", action="store_false", help="Show a plane slice")
-    parser.set_defaults(view_3d=None)
-    parser.add_argument("--plane", choices=("XY", "XZ", "YZ"))
-    parser.add_argument("--slice", type=int, dest="coordinate")
     args = parser.parse_args()
-    scenario = get_scenario(args.scenario)
-    if args.ticks is not None:
-        scenario = replace(scenario, ticks=args.ticks)
-    if args.plane is not None or args.coordinate is not None:
-        scenario = replace(
-            scenario,
-            view=replace(
-                scenario.view,
-                plane=args.plane or scenario.view.plane,
-                coordinate=scenario.view.coordinate if args.coordinate is None else args.coordinate,
-            ),
-        )
-    print(
-        run_scenario(
-            scenario,
+    try:
+        artifact = run_initialization(
+            args.init,
             args.output,
+            ticks=args.ticks,
+            visualize=args.visualize,
             frame_stride=args.frame_stride,
-            volume=(
-                args.view_3d
-                if args.view_3d is not None
-                else args.plane is None and args.coordinate is None
-            ),
-            visualize=(
-                args.visualize
-                or args.view_3d is not None
-                or args.plane is not None
-                or args.coordinate is not None
-            ),
-        ).resolve()
-    )
+        )
+    except (ValueError, OSError) as error:
+        parser.exit(1, f"Run failed: {error}\n")
+    print(artifact.resolve())

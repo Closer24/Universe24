@@ -435,6 +435,10 @@ def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
 
 def load_initial_state(path: Path) -> InitialState:
     """Read a strict JSON initialization file and compile its generic definitions."""
-    with path.open(encoding="utf-8") as stream:
-        document: object = json.load(stream, object_pairs_hook=_unique_object)
+    return parse_initial_json(path.read_bytes())
+
+
+def parse_initial_json(source: str | bytes) -> InitialState:
+    """Compile one immutable JSON payload, rejecting duplicate keys."""
+    document: object = json.loads(source, object_pairs_hook=_unique_object)
     return parse_initial_state(document)

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.runner import main, run_scenario, source_fingerprint
+from event_universe.legacy_runner import main, run_scenario, source_fingerprint
 from event_universe.scenarios import get_scenario
 
 
@@ -15,7 +15,7 @@ def test_runner_import_does_not_load_optional_rendering_dependencies():
     script = """
 import sys
 sys.path.insert(0, sys.argv[1])
-import event_universe.runner
+import event_universe.legacy_runner
 for name in ('matplotlib', 'PIL', 'numpy', 'event_universe.diagnostics.render'):
     assert name not in sys.modules, name
 """
@@ -75,7 +75,7 @@ def test_legacy_cli_requires_explicit_visualization(options, visualize, volume, 
         received.update(kwargs)
         return output / "run.json"
 
-    monkeypatch.setattr("event_universe.runner.run_scenario", record_run)
+    monkeypatch.setattr("event_universe.legacy_runner.run_scenario", record_run)
     monkeypatch.setattr(
         sys,
         "argv",

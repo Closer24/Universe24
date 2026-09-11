@@ -1,6 +1,7 @@
 import pytest
 
-from event_universe import Config, Simulation
+from event_universe import Config
+from event_universe import ScalarSimulation as Simulation
 from event_universe.core.state import DIRECTIONS, MAX_CORE_INT, ZERO_CELL
 from event_universe.diagnostics.frames import Slice, capture_frame
 from event_universe.diagnostics.measurements import audit, total_momentum

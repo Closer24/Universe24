@@ -8,7 +8,7 @@ import pytest
 from event_universe import Config
 from event_universe.diagnostics.frames import Slice
 from event_universe.diagnostics.invariants import InertialMotionViolation, require_inertial_momentum
-from event_universe.runner import run_scenario
+from event_universe.legacy_runner import run_scenario
 from event_universe.scenarios import Scenario, get_scenario
 
 

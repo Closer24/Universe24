@@ -2,7 +2,8 @@
 
 import pytest
 
-from event_universe.api import BalancedSimulation, Simulation
+from event_universe.api import BalancedSimulation
+from event_universe.api import ScalarSimulation as Simulation
 from event_universe.core.state import Config
 from event_universe.diagnostics.measurements import total_momentum
 from event_universe.dynamics.movement import advance_balanced_movement

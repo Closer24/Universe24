@@ -20,7 +20,7 @@
   "fields": [
     {"name": "mass", "components": 1, "units": "inventory unit", "signed": false, "conserved": true},
     {"name": "charge", "components": 1, "units": "signed inventory unit", "signed": true, "conserved": true},
-    {"name": "velocity", "components": 3, "units": "direction weight", "signed": true, "conserved": false, "extensive": false},
+    {"name": "velocity", "components": 3, "units": "lattice displacement per base interval", "scale": 12, "signed": true, "conserved": false, "extensive": false},
     {"name": "signal", "components": 1, "units": "inventory unit", "signed": false, "conserved": true},
     {"name": "computation", "components": 1, "units": "model operation cost", "signed": false, "conserved": false, "extensive": false}
   ],
@@ -29,7 +29,7 @@
       "name": "carrier",
       "fields": ["mass", "charge", "velocity"],
       "defaults": {"mass": 2, "charge": -1, "velocity": [2, 1, 0]},
-      "transport": {"mode": "move", "direction_field": "velocity", "rate": 1, "rate_denominator": 1}
+      "transport": {"mode": "move", "direction_field": "velocity", "rate": {"op": "sum", "args": [{"op": "abs", "args": [{"field": "velocity"}]}]}, "rate_denominator": 12}
     },
     {
       "name": "pulse",

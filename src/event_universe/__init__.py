@@ -1,19 +1,29 @@
-"""Integer, local, three-dimensional event-field research simulator."""
+"""Generic local disturbance simulation, with explicit historical research APIs."""
 
-from .api import CausalStreamSimulation, LinkedSimulation, Simulation
-from .core.links import LinkConfig
-from .core.state import CellState, Config, ParticleState
-from .models.causal_stream import CausalStreamConfig
+from importlib import import_module
+from typing import Any
 
-__version__ = "0.1.0"
-__all__ = [
-    "CellState",
-    "Config",
-    "ParticleState",
-    "Simulation",
-    "LinkedSimulation",
-    "LinkConfig",
-    "CausalStreamSimulation",
-    "CausalStreamConfig",
-    "__version__",
-]
+from .core.disturbance_state import InitialState
+from .disturbance_api import Simulation
+
+__version__ = "0.2.0"
+__all__ = ["InitialState", "Simulation", "load_initial_state", "__version__"]
+
+
+def __getattr__(name: str) -> Any:
+    """Load initialization or explicitly requested historical APIs on demand."""
+    modules = {
+        "load_initial_state": ".initialization",
+        "ScalarSimulation": ".api",
+        "LinkedSimulation": ".api",
+        "BalancedSimulation": ".api",
+        "CausalStreamSimulation": ".api",
+        "Config": ".core.state",
+        "CellState": ".core.state",
+        "ParticleState": ".core.state",
+        "LinkConfig": ".core.links",
+        "CausalStreamConfig": ".models.causal_stream",
+    }
+    if name not in modules:
+        raise AttributeError(name)
+    return getattr(import_module(modules[name], __name__), name)

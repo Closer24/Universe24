@@ -3,12 +3,14 @@
 from dataclasses import dataclass, fields
 from typing import NamedTuple
 
+from .integer import MAX_WORK_INT as MAX_WORK_INT
+from .integer import checked_work as checked_work
+
 Address = tuple[int, int, int]
 Vector = tuple[int, int, int]
 Neighbors = tuple[int, int, int, int, int, int]
 
 MAX_CORE_INT = (1 << 31) - 1
-MAX_WORK_INT = (1 << 63) - 1
 EMPTY_SLOT = -1
 PLUS_X, MINUS_X, PLUS_Y, MINUS_Y, PLUS_Z, MINUS_Z = range(6)
 DIRECTIONS: tuple[Address, ...] = (
@@ -30,15 +32,6 @@ def checked(value: int) -> int:
         raise TypeError("physical registers require int, not bool or float")
     if not -MAX_CORE_INT <= value <= MAX_CORE_INT:
         raise OverflowError("32-bit physical register range exceeded")
-    return value
-
-
-def checked_work(value: int) -> int:
-    """Bound intermediate arithmetic to a signed 64-bit working register."""
-    if type(value) is not int:
-        raise TypeError("integer intermediate required")
-    if not -MAX_WORK_INT <= value <= MAX_WORK_INT:
-        raise OverflowError("64-bit intermediate range exceeded")
     return value
 
 
