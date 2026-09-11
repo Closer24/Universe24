@@ -22,6 +22,21 @@ Keep three states distinct:
 
 Never promote a hypothesis to a verified result because it sounds plausible or because an implementation exists. The Focus algorithm is a hypothesis to test until its defined tests pass.
 
+## Mandatory persistence review for every task
+
+Every task must include a persistence review before it is considered complete.
+
+1. Ask which participating agent Skills learned a durable rule, procedure, invariant, failure mode, test requirement, handoff contract, or project convention from the task.
+2. Inspect every affected Skill, not only the Boss Skill.
+3. If future work by that agent would be improved or corrected by retaining the lesson, update that agent's Skill in the same task.
+4. If a lesson applies to several agents, update every relevant Skill or place the shared rule in an authoritative shared reference and make each affected Skill point to it.
+5. Do not copy temporary debugging details, one-off outputs, branch names, or transient implementation state into Skills.
+6. Keep durable project physics/specification knowledge synchronized with Universe 24 Highlights as well as the relevant Skills.
+7. Record the Skill updates in the repository so the behavior can be reconstructed even if all chat history is unavailable.
+8. A task is not complete until the persistence review has either produced the required Skill updates or explicitly concluded that no Skill change is needed.
+
+The goal is persistent operational knowledge, not duplication. Skills should remain small, authoritative, and scoped to the agents that need the rule.
+
 ## Route the work
 
 | Need | Skill | Expected handoff |
@@ -47,8 +62,8 @@ practical. Do not create idle agents merely to match the table.
 3. Define the acceptance target and handoff for each task. Resolve shared schema and interface dependencies before parallel changes build on them.
 4. For physics changes, obtain the rule contract/review and coordinate tests, simulation and regression evidence. Checks may share identical run outputs.
 5. Reconcile completed branches on current main. Route changed interfaces or behavior back to the affected specialist; do not restart unrelated checks.
-6. Synchronize any durable rule changes into the relevant Skill(s) and project specification.
-7. Apply the PR skill using the combined result. Complete a task only when its actual requirements pass and the authorized result is in the intended branch.
+6. Run the mandatory persistence review across every participating/affected Skill. Apply all durable Skill and specification updates before completion.
+7. Apply the PR skill using the combined result. Complete a task only when its actual requirements pass, persistence review is complete, and the authorized result is in the intended branch.
 
 Report completed PRs separately from physical or operational blockers. Do not
 close a failing proposal just because an alternative candidate works. If a new
