@@ -1,10 +1,11 @@
 # Project status and restart guide
 
-Contract update: 2026-09-11. The earlier scalar-model snapshot reviewed main at
-[7e517af](https://github.com/Closer24/Universe24/commit/7e517afb7a274821de05bf247ece91827c1b030b).
-That commit does not identify the new generic implementation described here.
-This guide is not a claim that a particular remote branch or validation run has
-completed. Verify the actual checkout, current main and submitted evidence.
+Contract update: 2026-09-11. The generic integration includes main at
+[ec0826b](https://github.com/Closer24/Universe24/commit/ec0826b20286a166498beacd6cb68002624826eb).
+Local combined verification is recorded in [VALIDATION.md](VALIDATION.md).
+That base commit does not contain the generic changes by itself. This guide
+does not claim that a remote merge has completed; verify current main and the
+submitted PR before continuing work.
 
 ## What this checkout contains
 

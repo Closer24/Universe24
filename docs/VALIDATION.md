@@ -1,5 +1,46 @@
 # Validation evidence
 
+## Initialization-defined disturbances — 2026-09-11
+
+The generic implementation was integrated with main
+`ec0826b20286a166498beacd6cb68002624826eb`, including its historical renderer
+performance and concurrent-preview changes. The active CLI requires `--init`;
+historical scenarios use `event_universe.legacy_runner`. Both paths are headless
+unless visualization is explicitly selected. This section records local
+verification; the submitted PR records the remote commit and CI result.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint/format, strict mypy, 569 passed and 28 visualization cases skipped |
+| Static scope | 133 formatted files, 57 typed source modules |
+| Initialization | 42 checks cover schema bounds, expressions, arbitrary names and invalid input |
+| Generic ownership and arithmetic | 23 checks cover signed scalar/vector conservation, whole-record movement, coupling, exact delay, frozen proposals, capacity and failure atomicity |
+| Generic application | 12 checks cover required input, headless imports/output, input-byte identity, failed-tick reporting and renamed simulation equivalence |
+| Independent physics review | Six reproduced defects corrected and covered; scoped review passed, including pair-remainder lifetime and counterflow channels |
+| Basic example | 8 completed ticks; initial/final totals mass 2, charge -1, signal 12; conservation checked after every completed tick |
+| Exchange example | 8 completed ticks; initial/final balance 8; conservation checked after every completed tick |
+| Visualization | No world visualization generated; rendering-only cases require `--visualize-runs` |
+
+Both final example runs have local source fingerprint
+`3f26ce8cb69c01368f4b04166c82bdaafe2a2db4b6d6381ea5215f1e6f2ebe6b`.
+Their preserved outputs are `artifacts/basic-final/` and
+`artifacts/exchange-final/`, each containing the exact initialization bytes,
+events, final state and `run.json` metadata. The full gate writes
+`artifacts/junit.xml`. Source fingerprints identify runtime file bytes and may
+differ across platform line-ending conventions.
+
+Runtime: CPython 3.14.7. Tools: pytest 9.1.1, Ruff 0.16.7, mypy 2.3.1,
+build 1.6.1 and setuptools 84.0.0. Historical fixed-physics regression contracts
+remain active under their named APIs. The new framework supports same-field
+paired exchange, fixed capacity and bounded integer laws; it does not establish
+gravity, wave equations, relativity or arbitrary energy conservation.
+
+The agreed high-level specification was reconciled with Universe 24 Highlights
+on 2026-09-11. Detailed executable requirements are in
+[DISTURBANCES.md](DISTURBANCES.md), with inputs and acceptance cases in
+[TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md). Earlier evidence below describes
+historical candidates and earlier output defaults.
+
 ## Python 3.14 and necessary tests — 2026-09-11
 
 Validated locally with CPython 3.14.7 in the project virtual environment, based on
