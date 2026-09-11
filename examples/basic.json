@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-disturbance-demo-v1",
+  "shape": [17, 17, 17],
+  "slots_per_cell": 32,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {"name": "mass", "components": 1, "units": "inventory unit", "signed": false, "conserved": true},
+    {"name": "charge", "components": 1, "units": "signed inventory unit", "signed": true, "conserved": true},
+    {"name": "velocity", "components": 3, "units": "direction weight", "signed": true, "conserved": false, "extensive": false},
+    {"name": "signal", "components": 1, "units": "inventory unit", "signed": false, "conserved": true},
+    {"name": "computation", "components": 1, "units": "model operation cost", "signed": false, "conserved": false, "extensive": false}
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": ["mass", "charge", "velocity"],
+      "defaults": {"mass": 2, "charge": -1, "velocity": [2, 1, 0]},
+      "transport": {"mode": "move", "direction_field": "velocity", "rate": 1, "rate_denominator": 1}
+    },
+    {
+      "name": "pulse",
+      "fields": ["signal"],
+      "defaults": {"signal": 12},
+      "transport": {"mode": "split", "weights": [1, 0, 1, 0, 0, 0]}
+    },
+    {
+      "name": "local_work",
+      "fields": ["computation"],
+      "defaults": {"computation": 0},
+      "transport": {"mode": "hold"},
+      "cost_field": "computation"
+    }
+  ],
+  "couplings": [],
+  "seeds": [
+    {"position": [2, 2, 2], "type": "carrier"},
+    {"position": [2, 2, 2], "type": "pulse"},
+    {"position": [2, 2, 2], "type": "local_work"}
+  ]
+}

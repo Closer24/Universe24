@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-local-exchange-demo-v1",
+  "shape": [7, 7, 7],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 1000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 2,
+    "update": 1,
+    "couple": 3,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {"name": "balance", "components": 1, "units": "signed inventory unit", "signed": true, "conserved": true},
+    {"name": "work", "components": 1, "units": "model operation cost", "signed": false, "conserved": false, "extensive": false}
+  ],
+  "disturbance_types": [
+    {
+      "name": "donor",
+      "fields": ["balance", "work"],
+      "defaults": {"balance": 8, "work": 0},
+      "transport": {"mode": "hold"},
+      "cost_field": "work"
+    },
+    {
+      "name": "receiver",
+      "fields": ["balance"],
+      "defaults": {"balance": 0},
+      "transport": {"mode": "hold"}
+    }
+  ],
+  "couplings": [
+    {
+      "name": "local_balance_exchange",
+      "left_type": "donor",
+      "right_type": "receiver",
+      "field": "balance",
+      "amount": {"op": "sub", "args": [{"field": "balance"}, {"field": "balance", "side": "right"}]},
+      "denominator": 4
+    }
+  ],
+  "seeds": [
+    {"position": [3, 3, 3], "type": "donor"},
+    {"position": [3, 3, 3], "type": "receiver"}
+  ]
+}
