@@ -27,7 +27,7 @@ def test_active_stream_matches_free_trajectory_at_every_tick(momentum, generic, 
     settings = CausalStreamConfig(nx=257, ny=257, nz=257, c_units=12, source_per_octant=1, force_den=12)
     if generic:
         config = Config(nx=257, ny=257, nz=257, c_units=12, force_den=12)
-        active = GenericFaceSimulation(config, definitions=(octant_definition(source_per_octant=1),))
+        active = GenericFaceSimulation(config, definitions=(octant_definition(source_per_octant=3),))
         control = GenericFaceSimulation(config, definitions=(octant_definition(source_per_octant=0),))
     else:
         active = FaceStreamSimulation(settings)

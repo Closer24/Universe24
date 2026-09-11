@@ -214,7 +214,7 @@ class FaceStreamSimulation(CausalStreamSimulation):
 class GenericFaceSimulation(GenericEngine):
     """Experimental simultaneous definitions; unit links, unresolved self-force gates."""
 
-    model_id = "generic-positive-field-bank-v1-experimental"
+    model_id = "generic-conserved-flux-bank-v2-experimental"
 
     def __init__(
         self,

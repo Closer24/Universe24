@@ -61,6 +61,18 @@ class GenericEngine(Engine):
             }
         )
 
+    @property
+    def field_inventory_by_name(self) -> Mapping[str, Mapping[Address, tuple[int, ...]]]:
+        """Diagnostic inventory, including remainders; separate from face arrivals."""
+        return MappingProxyType(
+            {
+                definition.name: MappingProxyType(
+                    {p: self.bank.inventory_at(p, index) for p in self.bank.cells}
+                )
+                for index, definition in enumerate(self.bank.definitions)
+            }
+        )
+
     def face_at(self, position: Address) -> Neighbors:
         return self._decode_faces(self.bank.at(position).response_faces)
 

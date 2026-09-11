@@ -14,7 +14,7 @@ already implements it. The document itself has not been edited by this change.
 
 | Required direction | Current implementation and gap |
 | --- | --- |
-| One generic Field model, several simultaneous field types | GenericFaceSimulation now runs a fixed tuple of scalar and octant definitions in one FieldBank; historical APIs remain separate compatibility paths. |
+| One generic Field model, several simultaneous field types | GenericFaceSimulation now runs a fixed tuple of conserved scalar and octant definitions in one FieldBank; historical APIs remain separate compatibility paths, not Highlights acceptance evidence. |
 | A field definition specifies magnitude representation, allowed faces/directions, link propagation, combination, decay, source and response | FieldDefinition declares fixed positive schemas, permitted ports, publish/absorb/response callbacks and explicit source/combination/decay/propagation policies. Variable-length links remain unsupported in the bank. |
 | Adding a field type needs a definition, not a core engine edit | The generic bank accepts a new fixed schema and pure definition without a field-type engine branch; independent tests inject a third response policy. |
 | All stored numbers are positive integers; polarity, sign and zero use integer codes | New bank state, packets and delivered faces use validated positive codes. Legacy particle, clock, momentum-ledger and sidecar records remain signed/zero/sentinel based; the whole simulator is not positive-coded. |
@@ -23,7 +23,8 @@ already implements it. The document itself has not been edited by this change.
 
 The implemented [generic definition contract](FIELD_DEFINITIONS.md) now provides
 fixed-schema positive records and simultaneous composition through an actual
-shared runtime. An accepted joint transport/motion protocol and generic
+shared runtime. Its version-two definitions enforce per-channel flux conservation
+and retain division remainders under Highlights section 3.3.1. An accepted joint transport/motion protocol and generic
 variable-length links remain unfinished; this is not an accepted new default.
 
 | Part | Contract |

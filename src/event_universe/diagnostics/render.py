@@ -43,6 +43,10 @@ def _face_metadata(
         "delivered_faces": {
             "order": FACE_LABELS,
             "meaning": "Local neighbor-facing surfaces from which input arrived; not velocity or phi",
+            "inventory_meaning": (
+                "Separate per-field, per-channel local state inventory, including retained remainders. "
+                "Excludes in-flight packets. Face arrivals are not added to this inventory."
+            ),
             "frames": [
                 {
                     "tick": frame.tick,
@@ -53,6 +57,12 @@ def _face_metadata(
                             {"position": p, "values": values} for p, values in sorted(records.items())
                         ]
                         for name, records in frame.field_faces_by_name.items()
+                    },
+                    "local_inventory": {
+                        name: [
+                            {"position": p, "channels": values} for p, values in sorted(records.items())
+                        ]
+                        for name, records in frame.field_inventory_by_name.items()
                     },
                     "cells": [
                         {"position": position, "values": values}
@@ -164,7 +174,7 @@ def render_run(
     if frames[0].field_kind == "stream-magnitude":
         plane_label += " | Stream magnitude = sum populations (not scalar phi)"
     if frames[0].field_kind == "face-magnitude":
-        plane_label += f" | {frames[0].primary_field_name}: sum of face magnitudes (not phi)"
+        plane_label += f" | {frames[0].primary_field_name}: last delivered face flux: sum magnitudes (not inventory)"
     vmax = max(1, max((v for frame in frames for v in frame.field.values()), default=1))
     fig, ax = plt.subplots(figsize=(4, 2.8) if compact else (9, 5.5))
 
@@ -265,7 +275,7 @@ def render_volume(
     fig.text(
         0.07,
         0.905,
-        f"{primary_name}: sum of face magnitudes (not phi; primary field only)"
+        f"{primary_name}: last delivered face flux: sum magnitudes (not inventory)"
         if face_magnitude
         else "Full 3D XYZ / Stream magnitude = sum populations (not scalar phi)"
         if streaming
@@ -311,7 +321,7 @@ def render_volume(
     fig.text(
         0.93,
         0.055,
-        "Primary faces: faint → strong"
+        "Face arrivals: faint → strong"
         if face_magnitude
         else "Streams: faint → strong"
         if streaming
@@ -514,7 +524,9 @@ def render_volume(
         metadata=_face_metadata(frames, metadata),
         note=(
             f"Transparent amber markers show {primary_name}: the sum of absolute values of its "
-            "six decoded delivered faces, not scalar phi. Other fields are not added to this magnitude. "
+            "six decoded last-delivered face fluxes, not scalar phi or conserved inventory. "
+            "Retained remainders can remain while face brightness is zero; brightness is not decay. "
+            "Other fields are not added to this magnitude. "
             "Exact signed faces for every named field are recorded below. Stronger values have "
             if face_magnitude
             else "Transparent amber markers show stream magnitude: the sum of eight populations, "

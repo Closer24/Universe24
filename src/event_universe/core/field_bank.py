@@ -25,7 +25,13 @@ class Definition(Protocol):
     def zero_packet(self) -> Record: ...
     @property
     def response_unit(self) -> str: ...
-    def publish(self, old: Record, sources: int, phase: int) -> Packets: ...
+    @property
+    def conserved_width(self) -> int: ...
+    def inventory_state(self, state: Record) -> tuple[int, ...]: ...
+    def inventory_packet(self, packet: Record) -> tuple[int, ...]: ...
+    def source_amount(self, sources: int, phase: int) -> tuple[int, ...]: ...
+    def sink_amount(self, old: Record, sources: int, phase: int) -> tuple[int, ...]: ...
+    def publish(self, old: Record, sources: int, phase: int) -> tuple[Packets, Record]: ...
     def absorb(
         self, old: Record, incoming: Packets, sources: int, phase: int
     ) -> tuple[Record, Faces]: ...
@@ -70,12 +76,26 @@ class FieldBank:
         self._cells: dict[Address, tuple[FieldCell, ...]] = {}
         for definition, zero in zip(definitions, self._zero, strict=True):
             definition.validate_state(zero.state)
-            emitted = definition.publish(zero.state, 0, 0)
-            definition.validate_outgoing(emitted)
-            state, faces = definition.absorb(zero.state, (definition.zero_packet,) * 6, 0, 0)
+            checked(definition.conserved_width)
+            if definition.conserved_width < 1:
+                raise ValueError("a field requires fixed conserved channels")
+            neutral = (0,) * definition.conserved_width
+            if (
+                self._quantities(definition, definition.inventory_state(zero.state)) != neutral
+                or self._quantities(definition, definition.inventory_packet(definition.zero_packet))
+                != neutral
+            ):
+                raise ValueError("neutral sparse records must have zero conserved inventory")
+            emitted, retained = self._publish(definition, zero.state, 0, 0)
+            state, faces = self._absorb(definition, retained, (definition.zero_packet,) * 6, 0, 0)
             definition.validate_state(state)
             definition.validate_faces(faces)
-            if emitted != (definition.zero_packet,) * 6 or state != zero.state or faces != ZERO_RESPONSE:
+            if (
+                emitted != (definition.zero_packet,) * 6
+                or retained != zero.state
+                or state != zero.state
+                or faces != ZERO_RESPONSE
+            ):
                 raise ValueError("sparse field definitions must preserve their quiescent zero")
             if definition.response(faces) != (0, 0, 0):
                 raise ValueError("a zero field cannot produce a response")
@@ -91,6 +111,11 @@ class FieldBank:
 
     def at(self, address: Address, index: int = 0) -> FieldCell:
         return self._cells.get(self._lattice.wrap(address), self._zero)[index]
+
+    def inventory_at(self, address: Address, index: int = 0) -> tuple[int, ...]:
+        """Measured conserved channels, including retained division remainders."""
+        definition = self._definitions[index]
+        return self._quantities(definition, definition.inventory_state(self.at(address, index).state))
 
     def response_at(self, address: Address) -> Vector:
         total = (0, 0, 0)
@@ -116,6 +141,63 @@ class FieldBank:
             for definition, record in zip(self._definitions, records, strict=True):
                 definition.validate_state(record.state)
                 definition.validate_faces(record.response_faces)
+                self._quantities(definition, definition.inventory_state(record.state))
+
+    @staticmethod
+    def _quantities(definition: Definition, values: tuple[int, ...]) -> tuple[int, ...]:
+        if not isinstance(values, tuple) or len(values) != definition.conserved_width:
+            raise ValueError("inventory must match the fixed conserved channel count")
+        for value in values:
+            checked_work(value)
+            if value < 0:
+                raise ValueError("conserved inventory must be non-negative")
+        return values
+
+    @staticmethod
+    def _add(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[int, ...]:
+        return tuple(checked_work(a + b) for a, b in zip(left, right, strict=True))
+
+    def _packet_total(self, definition: Definition, packets: Packets) -> tuple[int, ...]:
+        total = (0,) * definition.conserved_width
+        for packet in packets:
+            total = self._add(total, self._quantities(definition, definition.inventory_packet(packet)))
+        return total
+
+    def _publish(
+        self, definition: Definition, old: Record, sources: int, phase: int
+    ) -> tuple[Packets, Record]:
+        outgoing, retained = definition.publish(old, sources, phase)
+        definition.validate_outgoing(outgoing)
+        definition.validate_state(retained)
+        available = self._add(
+            self._quantities(definition, definition.inventory_state(old)),
+            self._quantities(definition, definition.source_amount(sources, phase)),
+        )
+        accounted = self._add(
+            self._packet_total(definition, outgoing),
+            self._quantities(definition, definition.inventory_state(retained)),
+        )
+        accounted = self._add(
+            accounted, self._quantities(definition, definition.sink_amount(old, sources, phase))
+        )
+        if available != accounted:
+            raise ValueError("field publication violates channel flux conservation")
+        return outgoing, retained
+
+    def _absorb(
+        self, definition: Definition, retained: Record, incoming: Packets, sources: int, phase: int
+    ) -> tuple[Record, Faces]:
+        definition.validate_incoming(incoming)
+        state, faces = definition.absorb(retained, incoming, sources, phase)
+        definition.validate_state(state)
+        definition.validate_faces(faces)
+        available = self._add(
+            self._quantities(definition, definition.inventory_state(retained)),
+            self._packet_total(definition, incoming),
+        )
+        if available != self._quantities(definition, definition.inventory_state(state)):
+            raise ValueError("field absorption violates channel flux conservation")
+        return state, faces
 
     def advance(self, sources: Mapping[Address, int], phase: int) -> None:
         checked(phase)
@@ -127,12 +209,14 @@ class FieldBank:
                 raise ValueError("sources require canonical addresses and non-negative counts")
         work = set(self._cells) | set(sources)
         arrivals: dict[Address, list[list[Record]]] = {}
+        retained_states: dict[Address, list[Record]] = {}
         for address in tuple(work):
+            retained_states[address] = []
             for index, definition in enumerate(self._definitions):
-                outgoing = definition.publish(
-                    self.at(address, index).state, sources.get(address, 0), phase
+                outgoing, retained = self._publish(
+                    definition, self.at(address, index).state, sources.get(address, 0), phase
                 )
-                definition.validate_outgoing(outgoing)
+                retained_states[address].append(retained)
                 for direction, packet in enumerate(outgoing):
                     if packet == definition.zero_packet:
                         continue
@@ -150,12 +234,14 @@ class FieldBank:
                     if address in arrivals
                     else (definition.zero_packet,) * 6
                 )
-                definition.validate_incoming(incoming)
-                state, faces = definition.absorb(
-                    self.at(address, index).state, incoming, sources.get(address, 0), phase
+                retained = (
+                    retained_states[address][index]
+                    if address in retained_states
+                    else definition.zero_state
                 )
-                definition.validate_state(state)
-                definition.validate_faces(faces)
+                state, faces = self._absorb(
+                    definition, retained, incoming, sources.get(address, 0), phase
+                )
                 vector = definition.response(faces)
                 if not isinstance(vector, tuple) or len(vector) != 3:
                     raise ValueError("a definition response must return three working integers")

@@ -25,14 +25,35 @@ yet changed. The other eight delivered-face cases remain unchanged.
 
 `test_field_encoding.py` fixes positive-pair representations of zero, both signs
 and signed register endpoints, and rejects malformed or noncanonical codes.
-`test_field_bank.py` runs scalar strength 7/denominator 7 with octant strength 3:
+`test_field_bank.py` runs conservative scalar strength 7 with six equal outgoing weights and octant strength 3:
 after two steps, the adjacent cell receives contributions 1 and 4, producing
 response -5 along x. Adding an opposite scalar definition changes only the sum
 to -4 and preserves the first two fields' records. A three-tick application run
-checks probe momenta 100, 96, 91, positive field records and total momentum 100.
+checks probe momenta 100, 95, 90, positive field records and total momentum 100.
 The same file rejects incompatible response units, forbidden directions,
 negative octant populations and invalid packets without a partial bank commit.
 Link length greater than one is explicitly unsupported; no delay law is inferred.
+
+Clause 3.3.1 uses exact local inventory, including retained integer amounts.
+`test_field_conservation.py` pins scalar old 6 + incoming 8 + source 14 =
+next 10 + outgoing 18, and independently checks all eight octant channels.
+Undeclared creation rejects the entire bank update; a declared one-unit sink
+leaves exactly six units from a seven-unit source. Ratio weights (2,1,0) retain
+an indivisible unit until two further units permit an exact (2,1,0) emission.
+Working-width amounts may split into bounded physical outputs without premature
+32-bit rejection. Invalid ratio budgets and overflowing work are errors.
+
+The existing coexistence fixture keeps scalar inventory 14 and octant inventory
+48 after sources turn off; these quantities include retained remainders. The
+three-tick application checks source injection separately for both fields.
+One zero-source generic world with mass 2 and momentum (3,-2,1) advances 24 ticks
+at cap 12: its displacement is (3,-2,1), momentum stays fixed and the movement
+credit cycles 3,6,9,0. This is a complete digital phase-cycle check, not a claim
+of straight motion in every short window or rotational invariance.
+
+The mandatory generic self-force fixture now emits three units per octant so
+its first update exercises actual outgoing packets; strength one would initially
+retain sub-bundle amounts. Its zero-self-response requirement is unchanged.
 
 Delivered-face tests use independent local numerical inputs and reuse the
 existing isolated stream/free-control fixtures, now targeting FaceStreamSimulation. `test_field_faces.py` checks

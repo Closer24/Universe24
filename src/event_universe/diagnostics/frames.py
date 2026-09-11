@@ -38,6 +38,9 @@ class Frame:
     faces_available: bool = False
     primary_field_name: str | None = None
     field_faces_by_name: dict[str, dict[Address, Neighbors]] = dataclass_field(default_factory=dict)
+    field_inventory_by_name: dict[str, dict[Address, tuple[int, ...]]] = dataclass_field(
+        default_factory=dict
+    )
 
 
 @dataclass(slots=True)
@@ -54,6 +57,9 @@ class VolumeFrame:
     faces_available: bool = False
     primary_field_name: str | None = None
     field_faces_by_name: dict[str, dict[Address, Neighbors]] = dataclass_field(default_factory=dict)
+    field_inventory_by_name: dict[str, dict[Address, tuple[int, ...]]] = dataclass_field(
+        default_factory=dict
+    )
 
 
 def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], FieldKind]:
@@ -107,6 +113,7 @@ def capture_volume(world: Engine) -> VolumeFrame:
         faces_available,
         getattr(world, "display_field_name", None),
         {name: dict(records) for name, records in getattr(world, "field_faces_by_name", {}).items()},
+        {name: dict(records) for name, records in getattr(world, "field_inventory_by_name", {}).items()},
     )
 
 
@@ -140,5 +147,9 @@ def capture_frame(world: Engine, view: Slice) -> Frame:
         {
             name: {p: values for p, values in records.items() if p[fixed] == view.coordinate}
             for name, records in getattr(world, "field_faces_by_name", {}).items()
+        },
+        {
+            name: {p: values for p, values in records.items() if p[fixed] == view.coordinate}
+            for name, records in getattr(world, "field_inventory_by_name", {}).items()
         },
     )

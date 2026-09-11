@@ -16,10 +16,15 @@ ResponseFaces = tuple[
     EncodedMagnitude,
     EncodedMagnitude,
 ]
-PublishRule = Callable[[FieldRecord, int, int], FacePackets]
+PublishResult = tuple[FacePackets, FieldRecord]
+PublishRule = Callable[[FieldRecord, int, int], PublishResult]
 AbsorbRule = Callable[[FieldRecord, FacePackets, int, int], tuple[FieldRecord, ResponseFaces]]
 ResponseRule = Callable[[ResponseFaces], Vector]
 EncodingValidator = Callable[[FieldRecord], None]
+Inventory = tuple[int, ...]
+InventoryRule = Callable[[FieldRecord], Inventory]
+SourceAmountRule = Callable[[int, int], Inventory]
+SinkAmountRule = Callable[[FieldRecord, int, int], Inventory]
 
 
 def validate_magnitude_pairs(record: FieldRecord) -> None:
@@ -31,10 +36,11 @@ def validate_magnitude_pairs(record: FieldRecord) -> None:
 class FieldDefinition:
     """All local policies and fixed schemas; no engine, world or evolving state.
 
-    Publish consumes an OLD record. After one scheduled transport cycle, absorb
-    consumes that old record and six newly delivered packets. The definition
-    chooses which phase applies its source and decay; the bank does not branch
-    on field names. Response returns transient signed working arithmetic for
+    Publish consumes an OLD record and returns outgoing packets plus retained
+    state. After transport, absorb consumes that retained state and six newly
+    delivered packets. Explicit source and sink budgets apply at publication;
+    absorption only combines retained inventory with delivered packets. The bank
+    does not branch on field names. Response returns transient signed working arithmetic for
     the existing dynamics adapter, not a stored negative field register.
     """
 
@@ -55,12 +61,18 @@ class FieldDefinition:
     decay_rule: str
     propagation_rule: str
     response_rule: str
+    conserved_width: int
+    inventory_state: InventoryRule
+    inventory_packet: InventoryRule
+    source_amount: SourceAmountRule
+    sink_amount: SinkAmountRule
     response_unit: str = "candidate-integer-response-v1"
+    direction_change_rule: str = "No direction-changing local interaction."
 
     def __post_init__(self) -> None:
         if not isinstance(self.name, str) or not self.name:
             raise ValueError("a field definition requires a name")
-        for width in (self.state_width, self.packet_width):
+        for width in (self.state_width, self.packet_width, self.conserved_width):
             checked(width)
             if width < 1:
                 raise ValueError("field state and packet widths must be positive")
@@ -81,10 +93,20 @@ class FieldDefinition:
             self.propagation_rule,
             self.response_rule,
             self.response_unit,
+            self.direction_change_rule,
         ):
             if not isinstance(description, str) or not description:
                 raise ValueError("every field policy must have an explicit description")
-        for rule in (self.publish, self.absorb, self.response, self.encoding_validator):
+        for rule in (
+            self.publish,
+            self.absorb,
+            self.response,
+            self.encoding_validator,
+            self.inventory_state,
+            self.inventory_packet,
+            self.source_amount,
+            self.sink_amount,
+        ):
             if not callable(rule):
                 raise TypeError("field rules and encoding validation must be callable")
         self.validate_state(self.zero_state)

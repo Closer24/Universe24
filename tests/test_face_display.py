@@ -109,6 +109,10 @@ def test_generic_primary_projection_keeps_named_fields_distinct(face_records):
         **vars(face_records),
         display_field_name="density",
         field_faces_by_name={"density": primary, "outward": secondary},
+        field_inventory_by_name={
+            "density": {(4, 5, 6): (7,)},
+            "outward": {(4, 5, 6): (1, 2, 3, 4, 5, 6, 7, 8)},
+        },
     )
     frame = capture_volume(world)
     assert frame.field_kind == "face-magnitude"
@@ -117,6 +121,10 @@ def test_generic_primary_projection_keeps_named_fields_distinct(face_records):
     assert frame.field_faces_by_name == {"density": primary, "outward": secondary}
     details = _face_metadata([frame], {})["delivered_faces"]["frames"][0]
     assert details["primary_field_name"] == "density"
+    assert details["local_inventory"]["density"] == [{"position": (4, 5, 6), "channels": (7,)}]
+    assert frame.field_inventory_by_name["outward"][(4, 5, 6)] == (1, 2, 3, 4, 5, 6, 7, 8)
+    frame.field_inventory_by_name["density"].clear()
+    assert world.field_inventory_by_name["density"] == {(4, 5, 6): (7,)}
     assert details["fields"]["outward"] == [
         {"position": (4, 5, 6), "values": (100, 200, 300, 400, 500, 600)}
     ]
