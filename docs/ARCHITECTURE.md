@@ -17,6 +17,37 @@ The existing scalar and linked candidates retain their own implementations.
 `SIMULATOR_DEFINITIONS.md` translates those principles into exact technical
 requirements, and this document describes the code boundaries that enforce them.
 
+## Monorepo ownership
+
+Universe24 is one versioned repository, not a requirement that every component
+run in one process. Keep the current package layout until an actual independently
+built component justifies another package; do not create empty apps/packages trees.
+The [README project map](../README.md#project-map) is the path index; the dependency
+table below defines code boundaries. Architecture owns this repository policy.
+
+| Information | Single owner | Update rule |
+| --- | --- | --- |
+| Executable code and model selection | [src/event_universe](../src/event_universe/) | Keep shared formulas generic; models select them |
+| Physical contracts | [POSTULATES.md](../POSTULATES.md), [SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md) | Plain-language principles and exact contracts have distinct roles |
+| Test expectations | [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) | Link the responsible tests, inputs and outcomes without copying laws |
+| Installation and execution | [README.md](../README.md) | Reuse the package CLI and [tools/check.py](../tools/check.py) |
+| Contribution and integration | [CONTRIBUTING.md](../CONTRIBUTING.md) | One coordinated change includes affected providers and consumers |
+| Durable agent procedures | [skills/workflow.md](../skills/workflow.md) and specialist Skills | Shared rules live once; specialist Skills reference them |
+| Current task, owner and evidence | Repository Issues and PRs | Record head/base, acceptance target, blockers and next action |
+| Checkout orientation | [PROJECT_STATUS.md](PROJECT_STATUS.md) | A dated, commit-pinned snapshot links to live work; no duplicate task ledger |
+
+Use existing definition headings or stable rule IDs when mapping a change to code
+and tests. Record the exact contract, implementation path and test path in the PR;
+extend the responsible test-expectation entry if coverage changes. Never treat a
+test's existence as proof it passed. Architectural decisions belong here or in a
+linked focused decision document; physics decisions belong in their contracts.
+
+Store reproducible scenario inputs, configuration and test fixtures with the code.
+Keep generated videos, HTML, traces and large outputs outside source commits.
+Link them from the PR with the code identity, command and relevant parameters;
+artifact retention is finite, so preserve required evidence before it expires.
+There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
+
 ## Dependency direction
 
 | Module | Allowed dependencies |

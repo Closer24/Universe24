@@ -1,30 +1,53 @@
 # Instructions for every project contributor
 
-These instructions apply to the entire project and every subdirectory. This is
-the entry point for coding agents and developers. Read the current files rather
-than relying on memory from another conversation.
+These instructions apply to the entire monorepo. Start here from the current
+checkout; do not rely on a previous conversation.
+
+## Start a task
+
+1. Read [project status](docs/PROJECT_STATUS.md), then verify the actual checkout,
+   current main and relevant open PRs. A status snapshot is not live evidence.
+2. Follow [CONTRIBUTING.md](CONTRIBUTING.md) for every edit, validation and Git
+   operation. Record the base commit and preserve unrelated local work.
+3. Use the [README project map](README.md#project-map) to locate the owner.
+   Read the applicable contracts below and only the specialist Skills needed.
+4. Keep changes within the user's scope. An explanation or diagnosis does not
+   authorize implementation; a Skill does not grant additional permissions.
+
+## Monorepo and one source of truth
+
+[Monorepo ownership](docs/ARCHITECTURE.md#monorepo-ownership) defines boundaries.
+The active implementation lives only in `src/event_universe/`.
+`src/persistent_source_field.py` is a compatibility facade, not a second engine.
+`tests/reference/` is a frozen comparison source; never edit it to make a test pass.
+Generated artifacts, distributions and backups are outputs or history.
+One repository does not require one runtime process or a new package hierarchy.
+
+## Read the contract for the affected scope
+
+| Scope | Authoritative source |
+| --- | --- |
+| Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
+| New physical feature | [docs/PHYSICAL_FEATURES.md](docs/PHYSICAL_FEATURES.md) |
+| Rendering and run outputs | Display contracts in [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
+| Agent handoffs and durable knowledge | [skills/workflow.md](skills/workflow.md) |
+
+Follow linked requirements for the affected path. Do not load every Skill for a
+small task. Keep each technical rule in its responsible document and link to its
+implementation and tests; do not copy it into each agent's instructions.
+An unresolved contradiction never authorizes a silent physical-law change.
 
 ## Agent skills
 
-For coordinated work, use [Boss orchestration](skills/boss-orchestrator/SKILL.md).
-It routes to separate field, architecture, physics-rule, test, simulation,
-visualization, regression and PR skills. Direct specialist tasks may load the
-matching skill from that table without starting the whole team. All roles use
-the [shared handoff and completion contract](skills/workflow.md).
-
-Any physics-engine behavior change requires physics-rule validation, necessary
-tests, an affected simulator run and regression checks before completion. Reuse
-matching evidence rather than adding duplicate test worlds. Skill instructions
-do not replace the authoritative documents below or expand user authorization.
-
-## One project and one source of truth
-
-The only active implementation is `src/event_universe/` in this project.
-`src/persistent_source_field.py` is a compatibility facade only.
-`tests/reference/` is a frozen comparison source; never edit it to make a test pass.
-`artifacts/`, distributions, patches and backups are outputs or history, not
-alternative development sources. Models v10 and v11 are explicit models in the
-same package.
+Use [Boss orchestration](skills/boss-orchestrator/SKILL.md) for coordinated work,
+or a matching specialist directly. Every role follows the
+[shared workflow](skills/workflow.md). Skills are repository instructions, not
+always-running agents. Use bounded assignments and one writer per shared interface.
+Review Boss and affected Skills for useful durable lessons; record either the
+authorized update or why none is needed. Keep temporary task state in Issues/PRs.
 
 ## Repository language: English
 
@@ -42,21 +65,6 @@ Before submitting a change, translate any non-English prose it introduces and ru
 text and several other non-Latin scripts; it does not prove that Latin-script prose
 is English. Reviewers must check the language as well. Do not exempt a directory,
 disable the gate, or encode non-English prose as escapes to evade this rule.
-
-## What to read before making changes
-
-| File | Authoritative responsibility |
-| --- | --- |
-| [POSTULATES.md](POSTULATES.md) | Principles in plain language |
-| [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) | Exact contracts, model exceptions and display defaults |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Layer boundaries and dependency direction |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | Change and validation workflow |
-| [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) | Test inputs and expected outcomes |
-
-Do not duplicate all rules across parallel documents. Update the responsible
-document and its references and tests. Explicit user instructions take precedence;
-document authorized changes. An unresolved contradiction does not authorize a
-silent change to a physical law.
 
 ## Change boundaries
 
@@ -80,62 +88,14 @@ silent change to a physical law.
 - Run `python tools/check.py` and inspect the HTML report before delivery. Static
   checks are partial enforcement, not proof of locality or correct physics.
 
-## Adding a physical feature
+For physics changes, validation also requires the physics-rule reviewer, necessary
+tests, an affected simulator run and regression evidence. Reuse matching runs.
+A new hypothesis needs an explicit model identity and independent expectations.
+Passing code checks does not establish a real-world physical law.
 
-Follow the [physical feature procedure](docs/PHYSICAL_FEATURES.md) before coding.
-Define the law, local inputs, evolving state, fixed parameters and outputs
-separately. Generic calculations must not receive a world or an entire Config;
-the adapter passes only the required values. The procedure also requires
-independent tests and explicit extension limits.
+## Completion
 
-## Shared repository and Git workflow
-
-The canonical development source is https://github.com/Closer24/Universe24,
-branch `main`. ZIP files are backups after the project has been uploaded. For each task:
-
-1. Read these instructions and relevant documents from the current repository.
-2. Check `git status`, fetch `origin`, and record the base commit. Never overwrite
-   local work belonging to the user or another conversation.
-3. Create a short-lived branch from `origin/main`, such as `fix/field-bounds` or
-   `feat/volume-controls`. Use a separate worktree or clone for concurrent work.
-4. Keep the task focused and commits small, explaining why each change is needed.
-   Do not mix physical changes with display changes or architecture cleanup.
-5. Before pushing, inspect `git diff --check`, the diff and changed-file list.
-   Never commit secrets, installed environments, caches or generated outputs.
-6. Run `python tools/check.py` on the version being submitted. Show the HTML for
-   world runs. CI outputs are available as GitHub Actions artifacts.
-7. Open a pull request to `main` explaining the problem, change, expected behavior,
-   validation, limitations and compatibility impact. State which tests were not run.
-8. If `main` advances, integrate its changes and recheck the resulting risks.
-   Merge only after successful CI and within the user's authorization; never bypass
-   a failing check.
-
-Do not push directly to `main` during routine work or force-push a shared branch.
-An initial upload to an empty repository is allowed when the user requests it.
-These workflow rules are not technical branch protection; do not claim server-side
-protection exists without verifying it.
-
-## Code and test quality
-
-- Give each component one responsibility, clear names and a small typed interface.
-  Prefer composition and short functions over deep inheritance or unnecessary
-  plugin registries. Introduce abstractions when there is a clear shared contract.
-- Write each generic calculation once. Keep model parameters and choices in the
-  model. Never add scenario-name conditions to a general law.
-- Validate inputs at component boundaries and represent failure explicitly. Never
-  swallow exceptions, repair momentum globally or change expectations to hide failure.
-- Unit tests use independent numerical examples, boundaries and errors. Integration
-  tests check replacement and composition; regressions compare established behavior.
-  Simple documentation edits need link and packaging checks, not artificial tests.
-- Dependency changes require a concrete need and installation validation. Preserve
-  Ruff, strict mypy, integer audits and layer checks; never disable a quality gate.
-- Report the change, PR or commit, validation and remaining work. Never present a
-  model hypothesis as proof of real-world physics.
-
-## Multiple conversations
-
-Every conversation starts from the current repository and works on its own branch.
-Conversations do not synchronize automatically, and AGENTS.md cannot update an old
-checkout already in use. Never import an old ZIP into `main`; integrate a focused
-change against its recorded base. Before merging older branches, translate their
-remaining prose and preserve the repository language gate.
+Use the unchanged full gate `python tools/check.py` before submission and inspect
+its HTML report for world runs. State missing checks and remaining blockers.
+Keep provider, consumers, tests and documentation together when an interface
+changes. Follow the merge conditions in CONTRIBUTING.md; never bypass failed CI.

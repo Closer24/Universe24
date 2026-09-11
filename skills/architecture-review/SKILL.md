@@ -16,6 +16,11 @@ must compose shared calculations; neither a new model nor a compatibility facade
 may become a second owner of arithmetic. Review actual imports and data flow,
 not just the directory names or a passing static gate.
 
+For repository changes, use [monorepo ownership](../../docs/ARCHITECTURE.md#monorepo-ownership).
+Check that a fresh checkout can find the active model, required commands and live
+work through the root entry point. Keep path maps and rules in their single owners.
+Do not split packages or processes merely to satisfy a directory convention.
+
 For a schema/interface change, identify register owners, fixed sizes, bounds,
 defaults and every consumer. Inspect movement, transit, field exchange,
 recording/rendering and frozen-state projections when affected. Separate model

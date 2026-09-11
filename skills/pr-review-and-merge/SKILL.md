@@ -5,10 +5,15 @@ description: Reconcile and review Universe24 PRs against current main, verify re
 
 # PR review and merge
 
-Read [the shared workflow](../workflow.md) and Git workflow in
-[AGENTS.md](../../AGENTS.md). Input is the PR, current head/base, user authorization
+Read [the shared workflow](../workflow.md), [AGENTS.md](../../AGENTS.md), and the
+Git workflow in [CONTRIBUTING.md](../../CONTRIBUTING.md).
+Input is the PR, current head/base, user authorization
 and specialist handoffs; output is an evidence-backed merge, closure or blocker.
 Use local Git and the available connected GitHub tools.
+
+Check that the PR identifies affected contracts, providers, consumers, tests and
+documentation. Reconcile those changes as one unit. Refresh the restart snapshot
+when integration changes a fact it records, without copying the entire PR history.
 
 Read the current PR/diff and main. Identify missing functionality, overlapping
 branches and stale test results before resolving conflicts. Preserve newer code,
