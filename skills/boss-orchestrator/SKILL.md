@@ -15,31 +15,29 @@ https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/
 
 At the start of relevant work, reconcile the applicable project rules and hypotheses with this document. When the user changes a durable project rule, update the relevant repository Skill(s) as part of the same work when authorized, so the rule does not depend on chat history.
 
-Keep three states distinct:
-- **Model rule** — a rule currently defining the simulator.
-- **Hypothesis to test** — an unverified proposal with a test and pass condition.
-- **Verified result** — a result supported by a completed defined test.
-
-Never promote a hypothesis to a verified result because it sounds plausible or because an implementation exists. The Focus algorithm is a hypothesis to test until its defined tests pass.
+Use the shared workflow's rule/hypothesis/result distinction. Keep accepted
+contracts locally readable and record the relevant Highlights revision/date in
+the PR. Technical workflow belongs in this repository, not in Highlights.
+Check the restart guide against the current checkout and live work; never treat
+a dated snapshot or an unavailable source as current evidence.
 
 ## Mandatory persistence and self-improvement review
 
-Every task must include a Skill review before it is considered complete. Boss reviews both itself and every participating or affected specialist.
+Before completion, review Boss itself and every participating or affected Skill.
 
-1. Review **Boss's own Skill** after every task. Ask whether routing, decomposition, sequencing, handoffs, validation, persistence, or completion logic can be made clearer, smaller, safer, or more efficient from what was learned.
-2. Review every participating or affected child-agent Skill. Ask whether it learned a durable rule, procedure, invariant, failure mode, test requirement, handoff contract, or project convention.
-3. If future work would be improved or corrected by retaining a lesson, update the relevant Skill in the same task. This includes Boss's own Skill.
-4. If a lesson applies to several agents, update every relevant Skill or place the shared rule in one authoritative shared reference and make affected Skills point to it.
-5. Review the **Skill set itself**. Prefer a small set of focused, reusable Skills. Merge overlapping Skills when one abstraction is enough. Remove or retire obsolete, redundant, misleading, or consistently unused Skills when safe. Split a Skill only when responsibilities are genuinely different and the split improves routing or independent validation.
-6. Do not freeze the current Skill taxonomy. The set may evolve as evidence from real tasks shows a better structure.
-7. Do not create a new Skill for a one-off task if an existing generic Skill can absorb the durable lesson cleanly.
-8. Do not accumulate history inside Skills. Rewrite or remove superseded guidance instead of endlessly appending rules.
-9. Do not copy temporary debugging details, one-off outputs, branch names, or transient implementation state into Skills.
-10. Keep durable project physics/specification knowledge synchronized with Universe 24 Highlights as well as the relevant Skills.
-11. Record Skill changes in the repository so the operating knowledge survives loss of all chat history.
-12. A task is not complete until this review has either applied the useful Skill changes or explicitly concluded that no Skill or Skill-set change is needed.
-
-Optimize for continuous learning with minimal complexity. Boss and its children should improve from completed work, but the resulting Skills must stay concise, generic, non-duplicative, and evidence-driven.
+- Retain demonstrated improvements to routing, decomposition, handoffs, validation
+  and persistence. Apply authorized useful updates in the same task; otherwise
+  report the proposed update without exceeding the user's scope.
+- Put shared lessons in one authoritative reference and link affected Skills.
+  Keep technical workflow here and physics/specification changes synchronized
+  with their authorized contracts and Highlights.
+- Keep the Skill set small and adaptable. Merge overlap, safely retire obsolete
+  instructions, and split only when a distinct responsibility warrants it.
+  Do not create a Skill solely for a one-off task.
+- Rewrite superseded guidance; do not accumulate chat history, transient branch
+  state or debugging logs in Skills.
+- Record which Skills changed, or why no change is needed, in the task handoff.
+  Persist authorized updates in the repository so another AI can continue.
 
 ## Route the work
 

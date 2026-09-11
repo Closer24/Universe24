@@ -299,8 +299,9 @@ smooths physical positions, cancels self-force or changes a simulation record.
 
 The user-authorized link extension is `scalar-field-v11-local-links`, selected
 by `LinkedSimulation` or `--scenario links`. Baseline v10 remains available for
-comparison. The five/twelve-register schemas above describe baseline field and
-particle records; v11 additionally has fixed `LinkCell` and `Transit` records:
+comparison. The five/sixteen-register schemas above describe current field and
+particle records; the frozen v10 reference retains twelve particle registers.
+The v11 candidate additionally has fixed `LinkCell` and `Transit` records:
 
 - Six received scalar integers; six active length integers; six packets of
   `(value, proposed_length, remaining)` = 30 link integers per materialized cell.

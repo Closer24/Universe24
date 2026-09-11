@@ -122,6 +122,15 @@ enforce known boundaries; they do not replace behavioral tests.
 Baseline expectations remain unchanged. World tests use the existing HTML pipeline.
 The stretch law and proposal merge are tested as separate hypotheses.
 
+## Repository navigation
+
+`test_repository_navigation.py` checks local Markdown destinations in root
+documents, docs and Skills against the actual tree. It also checks that every
+specialist is reachable from Boss and references the shared workflow. Synthetic
+valid and missing file/heading links exercise rejection independently. No world
+runs are added. External URL reachability and instruction quality still require
+review; this check does not certify physical acceptance.
+
 ## Shared instructions and architecture boundaries
 
 - Repository input: AGENTS.md must exist, be linked by README, contribution and

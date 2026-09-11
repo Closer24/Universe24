@@ -16,6 +16,14 @@ candidate laws, measurements and tests. The baseline model is
 modularization. Start with `POSTULATES.md` for a plain-language explanation of
 binding principles, candidate laws and open questions.
 
+## AI-ready monorepo
+
+Code, tests, diagnostics, tools and agent Skills evolve in this repository.
+Start with [AGENTS.md](AGENTS.md), the [status snapshot](docs/PROJECT_STATUS.md)
+and [monorepo ownership](docs/ARCHITECTURE.md#monorepo-ownership). Only then load
+the contracts and specialist instructions needed for the task. The commands
+below work without chat history; review current GitHub work before integration.
+
 ## Install and run
 
 Python 3.11 or later is required. From the project directory:
@@ -117,7 +125,7 @@ tested in `tests/test_current_field.py`, alongside separate generic and integrat
 ## Preserved rules
 
 - 3D physics with six cardinal neighbors.
-- Integer physical state: five cell registers and twelve particle registers.
+- Baseline integer records: five cell registers and sixteen particle registers.
 - Bounded registers and intermediate calculations; overflow raises an error.
 - Bounded local work over six neighbors and K fixed cell slots.
 - Persistent sources represented by occupancy; integer division residues retained.

@@ -7,6 +7,24 @@ instructions take precedence; the postulates, definitions and feature procedure
 remain the authoritative physical contracts. Skills route work without copying
 or weakening those contracts.
 
+## Repository knowledge and restart
+
+Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
+[restart guide](../docs/PROJECT_STATUS.md) to recover context without chat history.
+Read only affected contracts and Skills after the root entry point. Use one
+authoritative definition per concept; Skills link to laws rather than copy them.
+
+Keep model rules, hypotheses to test and verified results distinct. A hypothesis
+needs a test and pass condition; a verified result needs an identified tree and
+completed evidence. A high-level target or a passing detector is not proof that
+the underlying physical law works.
+
+Keep durable procedures in Skills and architectural decisions in their responsible
+documents. Put temporary task state, assignments, blocked checks and next actions
+in Issues/PRs. For permitted publishing, persist the handoff there rather than only
+in chat. If publishing is unavailable or unauthorized, report the unsaved handoff.
+Do not claim personal Skills were installed merely because repository files exist.
+
 ## Inputs and handoff
 
 Give each owner a bounded task with the repository, base commit, candidate/model,
