@@ -181,7 +181,7 @@ def render_run(
             xmin, xmax = min(xmin, packet.origin[h_axis] - 1), max(xmax, packet.origin[h_axis] + 1)
             ymin, ymax = min(ymin, packet.origin[v_axis] - 1), max(ymax, packet.origin[v_axis] + 1)
     labels = ("x", "y", "z")
-    plane_label = f"{view.plane} slice {labels[fixed_axis]}={view.coordinate}"
+    plane_label = f"Computational Field | {view.plane} slice {labels[fixed_axis]}={view.coordinate}"
     if any(frame.field_kind != frames[0].field_kind for frame in frames):
         raise ValueError("one animation must use one field quantity")
     if frames[0].field_kind == "stream-magnitude":
@@ -295,7 +295,7 @@ def render_volume(
         Axes3D, fig.add_axes((0.025, 0.015, 0.19, 0.19), projection="3d", facecolor="#080f1c")
     )
     colors = ("#4cc9ff", "#74ffac", "#ffd166", "#fa8cff")
-    fig.text(0.07, 0.94, "PARTICLE FIELD", color="#edf5ff", fontsize=20, weight="bold")
+    fig.text(0.07, 0.94, "COMPUTATIONAL FIELD", color="#edf5ff", fontsize=20, weight="bold")
     fig.text(
         0.07,
         0.905,
@@ -349,7 +349,7 @@ def render_volume(
         if face_magnitude
         else "Streams: faint → strong"
         if streaming
-        else "Field: faint → strong",
+        else "Computational Field: faint → strong",
         color="#dcb485",
         ha="right",
         fontsize=10,
@@ -564,7 +564,7 @@ def render_volume(
         draw,
         len(frames),
         (frames[0].tick, frames[-1].tick),
-        "Full 3D XYZ view",
+        "Computational Field | Full 3D XYZ view",
         html_path,
         title=title,
         metadata=_face_metadata(frames, metadata),
@@ -578,7 +578,7 @@ def render_volume(
             else "Transparent amber markers show stream magnitude: the sum of eight populations, "
             "not scalar phi. Stronger values have "
             if streaming
-            else "Transparent amber markers show the combined scalar field. Stronger values have "
+            else "Transparent amber markers show the Computational Field (scalar values). Stronger values have "
         )
         + "brighter color and greater opacity, using one fixed scale throughout the animation. "
         "Broad soft halos enlarge field markers for visibility, not the physical field range. "

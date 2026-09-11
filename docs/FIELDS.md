@@ -1,5 +1,12 @@
 # Fields and turning: generic components and model choices
 
+## Field name
+
+The field's user-facing English name is **Computational Field**. This name does
+not assert a gravitational law. Scalar values, directional populations and named
+channels retain their precise mathematical meanings. Existing Python API names,
+serialized field kinds and historical model identifiers are unchanged.
+
 ## Delivered-face interface
 
 `fields.faces.face_imbalance(incoming)` is the generic response-input calculation.

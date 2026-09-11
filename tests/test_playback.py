@@ -23,3 +23,4 @@ def test_exported_animation_stops_at_final_frame(tmp_path, volume):
         assert animation.convert("RGB").tobytes() != first
         assert animation.info["duration"] > 0
     assert "Playback stops at the final frame" in output.read_text()
+    assert "Computational Field" in output.read_text()

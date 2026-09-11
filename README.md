@@ -1,5 +1,8 @@
 # Universe24 — a three-dimensional event simulator
 
+The simulator's field is named **Computational Field**; see the
+[field naming contract](docs/FIELDS.md#field-name).
+
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
 branch `main`. The Python package remains `event_universe`.
 
