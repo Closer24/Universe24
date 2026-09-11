@@ -16,6 +16,28 @@ candidate laws, measurements and tests. The baseline model is
 modularization. Start with `POSTULATES.md` for a plain-language explanation of
 binding principles, candidate laws and open questions.
 
+## Project specification (Google Docs)
+
+[Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
+is the project's high-level specification.
+
+To access it:
+
+1. Open the link above in your browser.
+2. If prompted, sign in with the Google account that has access to the document.
+3. If Google shows "You need access", use "Request access" when available, or ask
+   the document owner to share it with your Google account.
+
+GitHub repository access does not grant Google Docs access. This repository stores
+a link to the live document; cloning or downloading the repository does not
+include a copy of its contents.
+
+The document describes project goals and requirements, which may not all be
+implemented. See [project status](docs/PROJECT_STATUS.md#specifications-and-gaps)
+for context and [POSTULATES.md](POSTULATES.md) and
+[SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) for the repository's accepted
+contracts. Resolve differences explicitly before changing physical behavior.
+
 ## AI-ready monorepo
 
 Code, tests, diagnostics, tools and agent Skills evolve in this repository.
