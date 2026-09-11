@@ -23,12 +23,13 @@ def test_full_state_matches_frozen_legacy_after_every_tick(name, legacy, referen
         reference.step()
         assert current.tick == reference.tick
         assert dict(current.cells) == {key: tuple(value) for key, value in reference.cells.items()}
-        assert dict(current.particles) == {
+        assert {pid: p[:12] for pid, p in current.particles.items()} == {
             key: tuple(value) for key, value in reference.particles.items()
         }
         assert dict(current.occupancy) == {
             key: tuple(value) for key, value in reference.occupancy.items()
         }
+        assert all(p[12:] == (1, 1, 1, -1) for p in current.particles.values())
         assert current.active == reference.active
         assert trace.force_records == reference.force_records
         assert trace.paths == reference.paths

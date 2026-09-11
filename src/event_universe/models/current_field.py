@@ -81,9 +81,16 @@ class CurrentFieldModel:
             (particle.force_rx, particle.force_ry, particle.force_rz),
             numerator=config.force_num,
             denominator=config.force_den,
+            momentum_den=particle.momentum_den,
         )
         move = self.movement(
-            response.momentum, particle.move_budget, particle.axis_phase, speed_cap=config.c_units
+            response.momentum,
+            particle.move_budget,
+            particle.axis_phase,
+            speed_cap=config.c_units,
+            mass=particle.mass,
+            momentum_den=particle.momentum_den,
+            budget_den=particle.move_budget_den,
         )
         next_cell = cell._replace(
             px=response.field_momentum[0], py=response.field_momentum[1], pz=response.field_momentum[2]
@@ -96,6 +103,7 @@ class CurrentFieldModel:
             force_ry=response.remainders[1],
             force_rz=response.remainders[2],
             move_budget=move.budget,
+            move_budget_den=move.budget_den,
             axis_phase=move.phase,
             last_update_tick=checked(tick),
         )

@@ -11,8 +11,10 @@ from event_universe.core.state import (
     PLUS_Y,
     PLUS_Z,
     Vector,
+    bounded_gcd,
     checked,
     checked_work,
+    reduced_ratio,
 )
 
 
@@ -20,6 +22,7 @@ class MovementResult(NamedTuple):
     direction: int
     phase: int
     budget: int
+    budget_den: int = 1
 
 
 def choose_axis(momentum: Vector, phase: int) -> tuple[int, int]:
@@ -38,32 +41,61 @@ def choose_axis(momentum: Vector, phase: int) -> tuple[int, int]:
     return (PLUS_Z if pz >= 0 else MINUS_Z), next_phase
 
 
+def speed_ratio(momentum: Vector, mass: int, momentum_den: int, speed_cap: int) -> tuple[int, int]:
+    """Return the capped L1 momentum/mass budget rate as integer numerator/denominator."""
+    if len(momentum) != 3:
+        raise ValueError("exactly three momentum components are required")
+    for value in (*momentum, mass, momentum_den, speed_cap):
+        checked(value)
+    if min(mass, momentum_den, speed_cap) <= 0:
+        raise ValueError("mass, denominator and speed cap must be positive")
+    denominator = checked_work(mass * momentum_den)
+    cap = checked_work(speed_cap * denominator)
+    numerator = min(checked_work(sum(abs(value) for value in momentum)), cap)
+    return reduced_ratio(numerator, denominator)
+
+
 def advance_movement(
     momentum: Vector,
     budget: int,
     phase: int,
     *,
     speed_cap: int,
+    mass: int = 1,
+    momentum_den: int = 1,
+    budget_den: int = 1,
     select_axis: Callable[[Vector, int], tuple[int, int]] = choose_axis,
 ) -> MovementResult:
-    """Request zero or one cardinal hop using the same rule for every speed."""
-    if len(momentum) != 3:
-        raise ValueError("exactly three momentum components are required")
-    for value in (*momentum, budget, phase, speed_cap):
+    """Request at most one hop, retaining fractional speed and existing movement credit."""
+    for value in (budget, budget_den, phase):
         checked(value)
-    if speed_cap <= 0 or not 0 <= budget < speed_cap or phase < 0:
+    if budget_den <= 0 or not 0 <= budget < checked_work(speed_cap * budget_den) or phase < 0:
         raise ValueError("invalid movement budget, phase or speed cap")
-    speed = min(checked_work(sum(abs(value) for value in momentum)), speed_cap)
-    next_budget = checked(budget + speed)
-    if next_budget < speed_cap:
-        return MovementResult(-1, phase, next_budget)
+    speed_num, speed_den = speed_ratio(momentum, mass, momentum_den, speed_cap)
+    common = checked_work((budget_den // bounded_gcd(budget_den, speed_den)) * speed_den)
+    total = checked_work(
+        checked_work(budget * (common // budget_den)) + checked_work(speed_num * (common // speed_den))
+    )
+    threshold = checked_work(speed_cap * common)
+    if total < threshold:
+        numerator, denominator = reduced_ratio(total, common)
+        return MovementResult(-1, phase, numerator, denominator)
     direction, next_phase = select_axis(momentum, phase)
-    return MovementResult(direction, next_phase, next_budget - speed_cap)
+    numerator, denominator = reduced_ratio(total - threshold, common)
+    return MovementResult(direction, next_phase, numerator, denominator)
 
 
 class MovementRule(Protocol):
     def __call__(
-        self, momentum: Vector, budget: int, phase: int, *, speed_cap: int
+        self,
+        momentum: Vector,
+        budget: int,
+        phase: int,
+        *,
+        speed_cap: int,
+        mass: int = 1,
+        momentum_den: int = 1,
+        budget_den: int = 1,
     ) -> MovementResult: ...
 
 
@@ -104,9 +136,23 @@ def choose_balanced_axis(momentum: Vector, phase: int) -> tuple[int, int]:
 
 
 def advance_balanced_movement(
-    momentum: Vector, budget: int, phase: int, *, speed_cap: int
+    momentum: Vector,
+    budget: int,
+    phase: int,
+    *,
+    speed_cap: int,
+    mass: int = 1,
+    momentum_den: int = 1,
+    budget_den: int = 1,
 ) -> MovementResult:
     """Use the shared speed budget with balanced rather than grouped axis steps."""
     return advance_movement(
-        momentum, budget, phase, speed_cap=speed_cap, select_axis=choose_balanced_axis
+        momentum,
+        budget,
+        phase,
+        speed_cap=speed_cap,
+        select_axis=choose_balanced_axis,
+        mass=mass,
+        momentum_den=momentum_den,
+        budget_den=budget_den,
     )

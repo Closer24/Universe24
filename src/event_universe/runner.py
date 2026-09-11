@@ -12,6 +12,8 @@ from event_universe.diagnostics.invariants import require_inertial_momentum
 from event_universe.diagnostics.measurements import report, total_momentum
 from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.diagnostics.render import render_run, render_volume
+from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED_MODEL_ID
+from event_universe.models.collisions import MODEL_ID as COLLISION_MODEL_ID
 from event_universe.models.current_field import MODEL_ID
 from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
 from event_universe.scenarios import Scenario, get_scenario
@@ -82,7 +84,11 @@ def run_scenario(
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": source_fingerprint(),
-        "model": MODEL_ID if scenario.links is None else LINKED_MODEL_ID,
+        "model": (
+            (COLLISION_MODEL_ID if scenario.links is None else COLLISION_LINKED_MODEL_ID)
+            if scenario.collisions or any(m != 1 for m in scenario.masses)
+            else (MODEL_ID if scenario.links is None else LINKED_MODEL_ID)
+        ),
         "scenario": asdict(scenario),
         "frame_stride": frame_stride,
         "display": "volume-3d" if volume else "plane-slice",
@@ -93,7 +99,9 @@ def run_scenario(
         "error": str(failure) if failure else None,
         "report": report(world) if failure is None else {"tick": world.tick, "faulted": world.faulted},
     }
-    (output / "run.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    (output / "run.json").write_text(
+        json.dumps(metadata, indent=2, default=str) + "\n", encoding="utf-8"
+    )
     title = f"Event Universe — {scenario.name}"
     if failure is not None:
         title = f"FAILED RUN — {title} — {failure}"
@@ -111,7 +119,17 @@ def main() -> None:
         description="Run the integer 3D simulator and save HTML diagnostics."
     )
     parser.add_argument(
-        "--scenario", choices=("contact", "turning", "stationary", "links"), default="contact"
+        "--scenario",
+        choices=(
+            "contact",
+            "turning",
+            "stationary",
+            "links",
+            "collision",
+            "collision-masses",
+            "collision-links",
+        ),
+        default="contact",
     )
     parser.add_argument("--ticks", type=int)
     parser.add_argument("--output", type=Path, default=Path("artifacts/run"))

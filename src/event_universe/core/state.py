@@ -119,6 +119,10 @@ class ParticleState(NamedTuple):
     force_ry: int = 0
     force_rz: int = 0
     last_update_tick: int = -1
+    mass: int = 1
+    momentum_den: int = 1
+    move_budget_den: int = 1
+    last_collision_tick: int = -1
 
     @property
     def position(self) -> Address:
@@ -144,3 +148,44 @@ def validate_cell(cell: CellState) -> None:
 def validate_particle(particle: ParticleState) -> None:
     for value in particle:
         checked(value)
+    if min(particle.mass, particle.momentum_den, particle.move_budget_den) < 1:
+        raise ValueError("mass and rational denominators must be positive integers")
+    if particle.last_collision_tick < -1:
+        raise ValueError("invalid collision tick")
+
+
+def bounded_gcd(first: int, second: int) -> int:
+    """Euclid on at most 63 magnitude bits; 128 divisions is a fixed upper bound."""
+    a, b = abs(checked_work(first)), abs(checked_work(second))
+    for _ in range(128):
+        if b == 0:
+            return a
+        a, b = b, a % b
+    raise ArithmeticError("bounded gcd iteration limit exceeded")
+
+
+def reduced_ratio(numerator: int, denominator: int) -> tuple[int, int]:
+    checked_work(numerator)
+    checked_work(denominator)
+    if denominator <= 0:
+        raise ValueError("positive rational denominator required")
+    divisor = bounded_gcd(numerator, denominator)
+    return checked(numerator // divisor), checked(denominator // divisor)
+
+
+def reduced_vector(momentum: Vector, denominator: int) -> tuple[Vector, int]:
+    """Three numerators sharing one positive bounded integer denominator."""
+    checked_work(denominator)
+    if len(momentum) != 3 or denominator <= 0:
+        raise ValueError("three components and a positive denominator required")
+    divisor = denominator
+    for value in momentum:
+        divisor = bounded_gcd(divisor, value)
+    return (
+        (
+            checked(momentum[0] // divisor),
+            checked(momentum[1] // divisor),
+            checked(momentum[2] // divisor),
+        ),
+        checked(denominator // divisor),
+    )

@@ -85,8 +85,8 @@ def test_architecture_gate_allows_legal_dependencies_and_type_annotations(module
 
 
 def test_physical_records_have_fixed_integer_fields_and_no_history():
-    assert CELL_REGISTERS == 5 and PARTICLE_REGISTERS == 12
-    assert len(CellState()) == 5 and len(ParticleState(0, 0, 0)) == 12
+    assert CELL_REGISTERS == 5 and PARTICLE_REGISTERS == 16
+    assert len(CellState()) == 5 and len(ParticleState(0, 0, 0)) == 16
     assert not hasattr(CellState(), "__dict__")
     assert not hasattr(ParticleState(0, 0, 0), "__dict__")
     engine_source = Path(__import__(Engine.__module__, fromlist=["__file__"]).__file__).read_text()

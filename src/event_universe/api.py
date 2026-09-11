@@ -10,6 +10,7 @@ from event_universe.dynamics.transit import transit_ticks
 from event_universe.dynamics.turning import FieldTurning
 from event_universe.fields.policies import ScalarActivity, sample_changed_or_source
 from event_universe.fields.scalar import ScalarFieldRule
+from event_universe.models.collisions import collide
 from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
 
@@ -22,6 +23,7 @@ class Simulation(Engine):
         config: Config | None = None,
         *,
         observer: Observer | None = None,
+        collisions: bool = False,
         field: ScalarFieldRule | None = None,
         turning: FieldTurning | None = None,
         field_activity: ScalarActivity | None = None,
@@ -42,6 +44,7 @@ class Simulation(Engine):
             model.update_particle,
             observer,
             field_activity=model.field_is_active,
+            collision_rule=collide if collisions else None,
             post_motion_halo=post_motion_halo,
         )
 
@@ -55,6 +58,7 @@ class LinkedSimulation(LinkedEngine):
         *,
         links: LinkConfig | None = None,
         observer: Observer | None = None,
+        collisions: bool = False,
         field: ScalarFieldRule | None = None,
         turning: FieldTurning | None = None,
         length_rule: LengthRule | None = None,
@@ -76,16 +80,20 @@ class LinkedSimulation(LinkedEngine):
             transit_rule=transit_ticks,
             merge_rule=max,
             field_activity=model.field_is_active,
+            collision_rule=collide if collisions else None,
         )
 
 
 class BalancedSimulation(Simulation):
     """Opt-in balanced motion with a synchronous old/new six-neighbor halo."""
 
-    def __init__(self, config: Config | None = None, *, observer: Observer | None = None) -> None:
+    def __init__(
+        self, config: Config | None = None, *, observer: Observer | None = None, collisions: bool = False
+    ) -> None:
         super().__init__(
             config,
             observer=observer,
             movement=advance_balanced_movement,
+            collisions=collisions,
             post_motion_halo=CURRENT_MODEL.cancel_scalar_halo,
         )
