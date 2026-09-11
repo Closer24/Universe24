@@ -12,6 +12,7 @@ from event_universe.core.state import (
     Config,
     Neighbors,
     ParticleState,
+    Vector,
     checked,
     validate_cell,
     validate_particle,
@@ -73,7 +74,12 @@ class CurrentFieldModel:
     def update_particle(
         self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
-        raw_gradient = face_imbalance(neighbors)
+        return self.update_particle_from_vector(particle, cell, face_imbalance(neighbors), config, tick)
+
+    def update_particle_from_vector(
+        self, particle: ParticleState, cell: CellState, raw_gradient: Vector, config: Config, tick: int
+    ) -> ParticleUpdate:
+        """Shared response and movement adapter for definition-owned vector laws."""
         response = self.turning.apply(
             particle.momentum,
             (cell.px, cell.py, cell.pz),

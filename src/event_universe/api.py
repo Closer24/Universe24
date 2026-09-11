@@ -3,6 +3,7 @@
 from event_universe.core.contracts import LocalCellRule, Observer
 from event_universe.core.engine import Engine
 from event_universe.core.faces import FacePublisher
+from event_universe.core.generic_engine import GenericEngine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
 from event_universe.core.state import Config
@@ -10,6 +11,8 @@ from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.dynamics.movement import MovementRule, advance_balanced_movement
 from event_universe.dynamics.transit import transit_ticks
 from event_universe.dynamics.turning import FieldTurning, full_response
+from event_universe.fields.definition import FieldDefinition
+from event_universe.fields.definitions import decode_response_faces
 from event_universe.fields.faces import scalar_broadcast
 from event_universe.fields.policies import ScalarActivity, sample_changed_or_source
 from event_universe.fields.scalar import ScalarFieldRule
@@ -206,3 +209,36 @@ class FaceStreamSimulation(CausalStreamSimulation):
         field: OctantFieldRule | None = None,
     ) -> None:
         super().__init__(settings, observer=observer, field=field, old_face_response=True)
+
+
+class GenericFaceSimulation(GenericEngine):
+    """Experimental simultaneous definitions; unit links, unresolved self-force gates."""
+
+    model_id = "generic-positive-field-bank-v1-experimental"
+
+    def __init__(
+        self,
+        config: Config | None = None,
+        *,
+        definitions: tuple[FieldDefinition, ...],
+        link_length: int = 1,
+        observer: Observer | None = None,
+        collisions: bool = False,
+    ) -> None:
+        model = CurrentFieldModel(
+            field=CURRENT_MODEL.field,
+            turning=FieldTurning(select_direction=full_response),
+            activity=CURRENT_MODEL.activity,
+            movement=CURRENT_MODEL.movement,
+        )
+        super().__init__(
+            Config() if config is None else config,
+            definitions,
+            model.update_field,
+            model.update_particle,
+            model.update_particle_from_vector,
+            decode_response_faces,
+            observer,
+            link_length=link_length,
+            collision_rule=collide if collisions else None,
+        )

@@ -47,6 +47,13 @@ def _face_metadata(
                 {
                     "tick": frame.tick,
                     "available": frame.faces_available,
+                    "primary_field_name": frame.primary_field_name,
+                    "fields": {
+                        name: [
+                            {"position": p, "values": values} for p, values in sorted(records.items())
+                        ]
+                        for name, records in frame.field_faces_by_name.items()
+                    },
                     "cells": [
                         {"position": position, "values": values}
                         for position, values in sorted(frame.field_faces.items())
@@ -156,6 +163,8 @@ def render_run(
         raise ValueError("one animation must use one field quantity")
     if frames[0].field_kind == "stream-magnitude":
         plane_label += " | Stream magnitude = sum populations (not scalar phi)"
+    if frames[0].field_kind == "face-magnitude":
+        plane_label += f" | {frames[0].primary_field_name}: sum of face magnitudes (not phi)"
     vmax = max(1, max((v for frame in frames for v in frame.field.values()), default=1))
     fig, ax = plt.subplots(figsize=(4, 2.8) if compact else (9, 5.5))
 
@@ -228,6 +237,8 @@ def render_volume(
     if any(frame.field_kind != frames[0].field_kind for frame in frames):
         raise ValueError("one animation must use one field quantity")
     streaming = frames[0].field_kind == "stream-magnitude"
+    face_magnitude = frames[0].field_kind == "face-magnitude"
+    primary_name = frames[0].primary_field_name
     show_faces = any(frame.faces_available for frame in frames)
     selected_pid = min((p[0] for frame in frames for p in frame.particles), default=None)
     points = [position for frame in frames for position in frame.field]
@@ -254,7 +265,9 @@ def render_volume(
     fig.text(
         0.07,
         0.905,
-        "Full 3D XYZ / Stream magnitude = sum populations (not scalar phi)"
+        f"{primary_name}: sum of face magnitudes (not phi; primary field only)"
+        if face_magnitude
+        else "Full 3D XYZ / Stream magnitude = sum populations (not scalar phi)"
         if streaming
         else "Full 3D XYZ view  /  particles, field and trajectories  /  lattice coordinates",
         color="#91a4be",
@@ -298,7 +311,11 @@ def render_volume(
     fig.text(
         0.93,
         0.055,
-        "Streams: faint → strong" if streaming else "Field: faint → strong",
+        "Primary faces: faint → strong"
+        if face_magnitude
+        else "Streams: faint → strong"
+        if streaming
+        else "Field: faint → strong",
         color="#dcb485",
         ha="right",
         fontsize=10,
@@ -324,6 +341,7 @@ def render_volume(
                 delivered_values = frame.field_faces.get(position, (0, 0, 0, 0, 0, 0))
                 face_heading.set_text(
                     f"Local delivered faces / particle {selected_pid} at {position} / not velocity or phi"
+                    + (f" / {frame.primary_field_name}" if frame.primary_field_name else "")
                 )
                 for text, label, value in zip(face_values, FACE_LABELS, delivered_values, strict=True):
                     text.set_text(f"{label}: {value}")
@@ -495,7 +513,11 @@ def render_volume(
         title=title,
         metadata=_face_metadata(frames, metadata),
         note=(
-            "Transparent amber markers show stream magnitude: the sum of eight populations, "
+            f"Transparent amber markers show {primary_name}: the sum of absolute values of its "
+            "six decoded delivered faces, not scalar phi. Other fields are not added to this magnitude. "
+            "Exact signed faces for every named field are recorded below. Stronger values have "
+            if face_magnitude
+            else "Transparent amber markers show stream magnitude: the sum of eight populations, "
             "not scalar phi. Stronger values have "
             if streaming
             else "Transparent amber markers show the combined scalar field. Stronger values have "

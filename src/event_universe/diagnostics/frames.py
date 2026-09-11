@@ -5,13 +5,14 @@ from dataclasses import field as dataclass_field
 from typing import Literal
 
 from event_universe.core.engine import Engine
+from event_universe.core.generic_engine import GenericEngine
 from event_universe.core.state import Address, Neighbors, checked
 from event_universe.core.streaming_engine import StreamingEngine
 
 from .measurements import ExactVector, total_momentum
 
 Plane = Literal["XY", "XZ", "YZ"]
-FieldKind = Literal["scalar", "stream-magnitude"]
+FieldKind = Literal["scalar", "stream-magnitude", "face-magnitude"]
 AXES: dict[Plane, tuple[int, int, int]] = {"XY": (0, 1, 2), "XZ": (0, 2, 1), "YZ": (1, 2, 0)}
 
 
@@ -35,6 +36,8 @@ class Frame:
     field_kind: FieldKind = "scalar"
     field_faces: dict[Address, Neighbors] = dataclass_field(default_factory=dict)
     faces_available: bool = False
+    primary_field_name: str | None = None
+    field_faces_by_name: dict[str, dict[Address, Neighbors]] = dataclass_field(default_factory=dict)
 
 
 @dataclass(slots=True)
@@ -49,10 +52,21 @@ class VolumeFrame:
     field_kind: FieldKind = "scalar"
     field_faces: dict[Address, Neighbors] = dataclass_field(default_factory=dict)
     faces_available: bool = False
+    primary_field_name: str | None = None
+    field_faces_by_name: dict[str, dict[Address, Neighbors]] = dataclass_field(default_factory=dict)
 
 
 def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], FieldKind]:
     """Copy diagnostic intensity without writing or materializing physical records."""
+    if isinstance(world, GenericEngine):
+        return (
+            {
+                position: magnitude
+                for position, values in world.field_faces.items()
+                if (magnitude := sum(abs(value) for value in values)) != 0
+            },
+            "face-magnitude",
+        )
     if isinstance(world, StreamingEngine):
         return (
             {
@@ -91,6 +105,8 @@ def capture_volume(world: Engine) -> VolumeFrame:
         field_kind,
         faces,
         faces_available,
+        getattr(world, "display_field_name", None),
+        {name: dict(records) for name, records in getattr(world, "field_faces_by_name", {}).items()},
     )
 
 
@@ -120,4 +136,9 @@ def capture_frame(world: Engine, view: Slice) -> Frame:
         field_kind,
         faces,
         faces_available,
+        getattr(world, "display_field_name", None),
+        {
+            name: {p: values for p, values in records.items() if p[fixed] == view.coordinate}
+            for name, records in getattr(world, "field_faces_by_name", {}).items()
+        },
     )

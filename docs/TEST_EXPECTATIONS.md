@@ -18,6 +18,22 @@ occupancy; measurements read the result.
 
 ## Tests by responsibility
 
+Generic-bank coverage reuses the mandatory isolated-motion fixture with one
+additional maximum-speed `GenericFaceSimulation` case. Its own-field response
+must remain zero; a failing residue is not accepted because momentum has not
+yet changed. The other eight delivered-face cases remain unchanged.
+
+`test_field_encoding.py` fixes positive-pair representations of zero, both signs
+and signed register endpoints, and rejects malformed or noncanonical codes.
+`test_field_bank.py` runs scalar strength 7/denominator 7 with octant strength 3:
+after two steps, the adjacent cell receives contributions 1 and 4, producing
+response -5 along x. Adding an opposite scalar definition changes only the sum
+to -4 and preserves the first two fields' records. A three-tick application run
+checks probe momenta 100, 96, 91, positive field records and total momentum 100.
+The same file rejects incompatible response units, forbidden directions,
+negative octant populations and invalid packets without a partial bank commit.
+Link length greater than one is explicitly unsupported; no delay law is inferred.
+
 Delivered-face tests use independent local numerical inputs and reuse the
 existing isolated stream/free-control fixtures, now targeting FaceStreamSimulation. `test_field_faces.py` checks
 source-facing order, signed register validation, bounded work-width differences,

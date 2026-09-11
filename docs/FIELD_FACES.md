@@ -14,18 +14,17 @@ already implements it. The document itself has not been edited by this change.
 
 | Required direction | Current implementation and gap |
 | --- | --- |
-| One generic Field model, several simultaneous field types | Shared face arithmetic and access exist, but scalar, linked and octant transports still have separate assembly. Simultaneous typed fields are not implemented. |
-| A field definition specifies magnitude representation, allowed faces/directions, link propagation, combination, decay, source and response | Scalar publication and octant emission are injectable. There is no complete common definition record covering every listed policy. |
-| Adding a field type needs a definition, not a core engine edit | Replacing compatible scalar/octant laws is possible; introducing a new state schema still needs engine support. A bounded common payload and dispatcher contract remains to be designed. |
-| All stored numbers are positive integers; polarity, sign and zero use integer codes | Existing records still store signed integers, zero and sentinel -1. This draft does not implement positive-code field storage. Any broader migration of particle or sidecar records needs an explicit scope; this field task does not silently authorize it. |
+| One generic Field model, several simultaneous field types | GenericFaceSimulation now runs a fixed tuple of scalar and octant definitions in one FieldBank; historical APIs remain separate compatibility paths. |
+| A field definition specifies magnitude representation, allowed faces/directions, link propagation, combination, decay, source and response | FieldDefinition declares fixed positive schemas, permitted ports, publish/absorb/response callbacks and explicit source/combination/decay/propagation policies. Variable-length links remain unsupported in the bank. |
+| Adding a field type needs a definition, not a core engine edit | The generic bank accepts a new fixed schema and pure definition without a field-type engine branch; independent tests inject a third response policy. |
+| All stored numbers are positive integers; polarity, sign and zero use integer codes | New bank state, packets and delivered faces use validated positive codes. Legacy particle, clock, momentum-ledger and sidecar records remain signed/zero/sentinel based; the whole simulator is not positive-coded. |
 | Cell autonomy: own state and received values only; communicate through outgoing links | Local response reads are migrated. Whole-tick self-arrival and contention feedback acceptance still fails, so complete autonomy/causality is not established. |
 | Positive link length L, transfer time L/c | The linked scalar candidate retains its bounded positive-length packet contract. The scalar unit-edge and stream transports are not yet one common variable-length transport for all field types. |
 
-A complete follow-up needs one fixed-budget field-definition/state contract,
-positive-code representation with validated encode/decode boundaries, explicit
-composition of simultaneous fields, and an accepted joint transport/motion
-protocol. A facade over the three existing engines would not satisfy these
-requirements and is not presented as completion.
+The implemented [generic definition contract](FIELD_DEFINITIONS.md) now provides
+fixed-schema positive records and simultaneous composition through an actual
+shared runtime. An accepted joint transport/motion protocol and generic
+variable-length links remain unfinished; this is not an accepted new default.
 
 | Part | Contract |
 | --- | --- |

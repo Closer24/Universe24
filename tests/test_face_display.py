@@ -94,3 +94,34 @@ def test_faces_have_exact_html_records_and_visible_volume_before_after(tmp_path,
         assert gif.n_frames == 2 and "loop" not in gif.info
         if volume:
             assert gif.size == (1500, 1275)
+
+
+def test_generic_primary_projection_keeps_named_fields_distinct(face_records):
+    from unittest.mock import Mock
+
+    from event_universe.core.generic_engine import GenericEngine
+    from event_universe.diagnostics.render import _face_metadata
+
+    primary = dict(face_records.field_faces)
+    secondary = {(4, 5, 6): (100, 200, 300, 400, 500, 600)}
+    world = Mock(
+        spec=GenericEngine,
+        **vars(face_records),
+        display_field_name="density",
+        field_faces_by_name={"density": primary, "outward": secondary},
+    )
+    frame = capture_volume(world)
+    assert frame.field_kind == "face-magnitude"
+    assert frame.primary_field_name == "density"
+    assert frame.field == {(4, 5, 6): 21, (2, 3, 8): 8}
+    assert frame.field_faces_by_name == {"density": primary, "outward": secondary}
+    details = _face_metadata([frame], {})["delivered_faces"]["frames"][0]
+    assert details["primary_field_name"] == "density"
+    assert details["fields"]["outward"] == [
+        {"position": (4, 5, 6), "values": (100, 200, 300, 400, 500, 600)}
+    ]
+    plane = capture_frame(world, Slice("XY", 6))
+    assert plane.field == {(4, 5): 21}
+    assert plane.field_faces_by_name["density"] == {(4, 5, 6): (1, -2, 3, -4, 5, -6)}
+    frame.field_faces_by_name["outward"].clear()
+    assert secondary == {(4, 5, 6): (100, 200, 300, 400, 500, 600)}

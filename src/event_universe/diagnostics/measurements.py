@@ -5,6 +5,7 @@ from fractions import Fraction
 
 from event_universe.core.engine import Engine
 from event_universe.core.faces import FACE_REGISTERS
+from event_universe.core.generic_engine import GenericEngine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LINK_REGISTERS
 from event_universe.core.state import (
@@ -56,6 +57,8 @@ def audit(world: Engine) -> dict[str, bool]:
     checked(world.tick)
     if world._face_transport is not None:
         world._face_transport.validate()
+    if isinstance(world, GenericEngine):
+        world.bank.validate()
     if isinstance(world, StreamingEngine):
         world.streams.validate()
     seen: set[int] = set()
@@ -130,6 +133,20 @@ def report(world: Engine) -> dict[str, object]:
             "dimensions": 3,
             "nearest_neighbors": 6,
             "cell_registers": CELL_REGISTERS,
+            "generic_field_registers_per_cell": (
+                world.bank.registers_per_cell if isinstance(world, GenericEngine) else 0
+            ),
+            "generic_response_vector_work_registers_per_cell": (
+                3 if isinstance(world, GenericEngine) else 0
+            ),
+            "generic_field_names": (
+                [definition.name for definition in world.bank.definitions]
+                if isinstance(world, GenericEngine)
+                else []
+            ),
+            "generic_primary_display_field": (
+                world.display_field_name if isinstance(world, GenericEngine) else None
+            ),
             "delivered_face_registers_per_cell": FACE_REGISTERS,
             "separate_scalar_face_registers_per_cell": (
                 FACE_REGISTERS if world._face_transport is not None else 0

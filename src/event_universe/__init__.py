@@ -5,6 +5,7 @@ from .api import (
     FaceLinkedSimulation,
     FaceScalarSimulation,
     FaceStreamSimulation,
+    GenericFaceSimulation,
     LinkedSimulation,
     Simulation,
 )
@@ -25,5 +26,6 @@ __all__ = [
     "FaceScalarSimulation",
     "FaceLinkedSimulation",
     "FaceStreamSimulation",
+    "GenericFaceSimulation",
     "__version__",
 ]

@@ -18,6 +18,7 @@ from .contracts import (
     NullObserver,
     Observer,
     ParticleRule,
+    ParticleUpdate,
 )
 from .faces import ZERO_FACES, FacePublisher, ScalarFaceTransport
 from .lattice import PeriodicLattice
@@ -237,6 +238,11 @@ class Engine:
             return self._response_snapshot.get(position, ZERO_FACES)
         return self.face_at(position)
 
+    def _propose_particle(self, particle: ParticleState, position: Address) -> ParticleUpdate:
+        return self._particle_rule(
+            particle, self.cell_at(position), self._particle_neighbors(position), self.config, self.tick
+        )
+
     def _particle_step_in_cell(self, position: Address) -> None:
         for slot in range(self.config.max_particles_per_cell):
             # Re-read this fixed slot: an earlier move may have freed or filled it.
@@ -246,13 +252,7 @@ class Engine:
             old = self._particles[pid]
             if old.last_update_tick == self.tick or not self._particle_ready(pid):
                 continue
-            result = self._particle_rule(
-                old,
-                self.cell_at(position),
-                self._particle_neighbors(position),
-                self.config,
-                self.tick,
-            )
+            result = self._propose_particle(old, position)
             validate_cell(result.cell)
             validate_particle(result.particle)
             if result.direction not in (-1, 0, 1, 2, 3, 4, 5):
