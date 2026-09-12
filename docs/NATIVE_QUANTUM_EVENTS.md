@@ -151,9 +151,9 @@ universal objective event trigger also remain outside the selected contract.
 ## Run through the normal engine
 
 ```sh
-python -m event_universe.runner --init examples/quantum/native_classical.json --output artifacts/native-classical
-python -m event_universe.runner --init examples/quantum/native_quantum.json --output artifacts/native-quantum --visualize
-python -m event_universe.runner --init examples/quantum/native_cost_delay.json --output artifacts/native-delay --visualize
+python -m event_universe --init examples/quantum/native_classical.json --output artifacts/native-classical
+python -m event_universe --init examples/quantum/native_quantum.json --output artifacts/native-quantum --visualize
+python -m event_universe --init examples/quantum/native_cost_delay.json --output artifacts/native-delay --visualize
 ```
 
 The normal runner writes `run.json`, `state.json`, `events.jsonl`, original

@@ -2,6 +2,8 @@
 
 import copy
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -435,3 +437,21 @@ def test_classical_control_with_same_operation_cost_matches_delayed_world(budget
             quantum.computation_report()["model_operations_cost"]
             == classical.computation_report()["model_operations_cost"]
         )
+
+
+def test_canonical_cli_actually_emits_native_results(tmp_path):
+    output = tmp_path / "native-cli"
+    source = BASE.parent / "native_classical.json"
+    result = subprocess.run(
+        [sys.executable, "-m", "event_universe", "--init", str(source), "--output", str(output)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    metadata = json.loads((output / "run.json").read_text())
+    assert metadata["computation"]["model_operations_cost"] == 116
+    assert metadata["computation"]["resolver"]["oracle_calls"] == 1
+    assert metadata["computation"]["resolver"]["random_draws"] == 0
+    assert (output / "causal-events.jsonl").stat().st_size > 0
+    assert (output / "state.json").stat().st_size > 0
