@@ -7,6 +7,11 @@ own state and information already delivered through those links. It never reads
 another node's current state, a global measurement or a source history.
 
 These are configurable operations, not a supplied electromagnetic model.
+
+The optional [directional-wave example](DIRECTIONAL_WAVE.md) composes the existing
+operations into a transverse-mode candidate with explicit conserved energy and
+momentum, including unequal polarization encounters. Its limitations are explicit.
+
 Grouping two vectors does not establish Maxwell's equations, the Lorentz force,
 a quantum photon, or a general energy-conservation law. Candidate laws and
 independent acceptance criteria still belong in each experiment's initialization

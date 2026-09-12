@@ -1,0 +1,81 @@
+{
+  "model_id": "conservative-transverse-directional-wave-v1",
+  "claim_level": "candidate_discrete_field_law",
+  "channels": [
+    {
+      "field": "a_px",
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "port": 0
+    },
+    {
+      "field": "a_mx",
+      "direction": [
+        -1,
+        0,
+        0
+      ],
+      "port": 1
+    },
+    {
+      "field": "a_py",
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "port": 2
+    },
+    {
+      "field": "a_my",
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "port": 3
+    },
+    {
+      "field": "a_pz",
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "port": 4
+    },
+    {
+      "field": "a_mz",
+      "direction": [
+        0,
+        0,
+        -1
+      ],
+      "port": 5
+    }
+  ],
+  "readouts": {
+    "electric": "sum(a_p)",
+    "magnetic": "sum(n_p cross a_p)",
+    "energy": "sum(dot(a_p,a_p))",
+    "momentum": "sum(n_p * dot(a_p,a_p))"
+  },
+  "collision_rules": [
+    "opposite_pair_polarization_0",
+    "opposite_pair_polarization_1",
+    "opposite_pair_polarization_2"
+  ],
+  "assumptions": [
+    "Zero baselines, periodic space, no carriers or ongoing sources.",
+    "Each mode is transverse to its fixed cardinal travel direction.",
+    "Energy and momentum include resident and in-flight owners exactly once.",
+    "E and B are derived readouts, not additional owned stock.",
+    "The collision changes polarization; it does not deflect a trajectory.",
+    "This candidate does not establish Maxwell dynamics, charge coupling or continuum isotropy.",
+    "Each amplitude component has absolute value at most 536870911, ensuring bounded quarter-turn ledger deltas."
+  ],
+  "max_abs_component": 536870911
+}

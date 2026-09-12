@@ -10,6 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
+    "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
+    "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
+    "examples/directional-wave/prepare.py": ("tests/test_directional_wave.py",),
+    "examples/directional-wave/observe.py": ("tests/test_directional_wave.py",),
     "examples/maxwell/configuration.py": ("tests/test_maxwell_configuration.py",),
     "examples/maxwell/measurements.py": ("tests/test_maxwell_configuration.py",),
     "examples/local_lorentz_field.json": (
