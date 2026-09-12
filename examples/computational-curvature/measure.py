@@ -248,7 +248,9 @@ def classify(results: list[dict[str, object]]) -> dict[str, object]:
     steady_clock_gradient = int(strong["near_clock_steady_cycles"]) < int(
         strong["far_clock_steady_cycles"]
     )
-    amplitude_scaling = weak_ray_delay is not None and strong_ray_delay is not None and strong_ray_delay > weak_ray_delay
+    amplitude_scaling = (
+        weak_ray_delay is not None and strong_ray_delay is not None and strong_ray_delay > weak_ray_delay
+    )
     full_curvature_signature = all(
         (
             strong_ray_delay is not None and strong_ray_delay > 0,
