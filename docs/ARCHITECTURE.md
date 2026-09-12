@@ -345,6 +345,23 @@ controller records that result without writing CellState, ParticleState, time or
 Engine events. A future native physical commit needs an explicit engine contract;
 it cannot be added by turning a diagnostic observer into a second state owner.
 
+### Selected joint-state event backend
+
+`DeferredQuantum.bind_event_network` composes the selected finite backend from
+`quantum/event_network.py`. That module owns the per-cell heads, immutable event
+DAG, conditional-record closure and exact host checkpoints. `quantum/event_rules.py`
+owns generic bounded local matrix validation/evaluation. It does not infer a
+physical law from a name. The existing scalar-expression backend is preserved;
+an owner cannot mix the two representations or silently switch a live history.
+
+`integration/quantum_event_trial.py` is an explicit headless test controller, not
+an Engine adapter. It supplies example matrices and one externally supplied
+integer ticket. Native disturbance schemas, scheduling, fields and momentum
+updates are unchanged. The existing quantum import boundary applies to the new
+modules. Host full-state inspection and controller-conditioned weights are not
+local physical observables. See [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md) for the
+selected contract and [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) for its tests.
+
 ## Verification scope
 
 LOCALITY-1 in SIMULATOR_DEFINITIONS.md governs the complete dependency path of

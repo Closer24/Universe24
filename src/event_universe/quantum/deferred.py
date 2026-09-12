@@ -7,6 +7,7 @@ time, or commit native physical events. Host evaluation has explicit budgets.
 
 from event_universe.core.state import Address, checked, checked_work
 
+from .event_network import EventNetwork, EventNetworkConfig
 from .focus import (
     FocusReply,
     FocusRequest,
@@ -51,9 +52,35 @@ class DeferredQuantum:
         self._terminal_record: TerminalRecord | None = None
         self._terminal_calls = 0
         self._terminal_work = 0
+        self._event_network: EventNetwork | None = None
+
+    def bind_event_network(self, config: EventNetworkConfig) -> EventNetwork:
+        """Select the joint-state event backend before creating legacy nodes.
+
+        The same owner may select one representation, not two competing states.
+        Existing scalar-expression, Focus and terminal APIs remain unchanged for
+        owners that do not explicitly select the event-network candidate.
+        """
+        if self._event_network is not None:
+            if self._event_network.config != config:
+                raise ValueError("quantum event network is already bound")
+            return self._event_network
+        if self._nodes or self._focus_sets or self._terminal_setup is not None:
+            raise ValueError("cannot replace an existing scalar quantum history")
+        network = EventNetwork(config)
+        self._event_network = network
+        return network
+
+    @property
+    def event_network(self) -> EventNetwork:
+        if self._event_network is None:
+            raise ValueError("bind an event network before accessing it")
+        return self._event_network
 
     @property
     def node_count(self) -> int:
+        if self._event_network is not None:
+            return self._event_network.node_count
         return len(self._nodes)
 
     @property
@@ -62,6 +89,11 @@ class DeferredQuantum:
 
     @property
     def query_stats(self) -> QuantumQueryStats:
+        if self._event_network is not None:
+            return QuantumQueryStats(
+                self._event_network.successful_queries,
+                self._event_network.host_evaluated_nodes,
+            )
         return self._query_stats
 
     @property
@@ -78,6 +110,8 @@ class DeferredQuantum:
         return self._last_focus_trace
 
     def _append(self, node: QuantumNode) -> int:
+        if self._event_network is not None:
+            raise ValueError("scalar nodes cannot be added to an event-network owner")
         if len(self._nodes) >= self._config.max_nodes:
             raise OverflowError("quantum node budget exceeded")
         self._nodes.append(node)
@@ -111,6 +145,8 @@ class DeferredQuantum:
         return self._append(QuantumNode(Q_SUM2, left, right, 0, 0, 0, x, y, z, tick))
 
     def _require_node(self, node_id: int) -> None:
+        if self._event_network is not None:
+            raise ValueError("use the selected event-network query interface")
         checked(node_id)
         if node_id < 0 or node_id >= len(self._nodes):
             raise IndexError("unknown quantum node")

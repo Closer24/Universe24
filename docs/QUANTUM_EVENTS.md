@@ -1,0 +1,157 @@
+# Selected quantum method: deferred event network
+
+## Status and scope
+
+`deferred-event-network-v1` is the selected finite quantum-state implementation
+under Q-ORACLE-1. It extends the existing `DeferredQuantum` owner. It is not a
+second physical simulator, an electron/photon field law, or a universal collapse
+criterion. The scalar-amplitude, Focus and terminal-trial APIs retain their old
+contracts for owners that do not select this backend.
+
+The user selected a local event lattice plus a demand-driven quantum dependency
+graph. This document separates that method from the still-open physical laws.
+
+## Contract and ownership
+
+| Part | Definition |
+| --- | --- |
+| Physical input | Immutable unwrapped 3D cell addresses and a layer of disjoint one-cell or cardinal nearest-neighbor operations |
+| Initial state | Binary occupation per configured cell; source amplitudes define the joint state, not hidden classical paths |
+| Wave storage | Joint source/checkpoint state plus local matrix operations and per-cell predecessor links |
+| Coherent law | Explicit 2x2 or 4x4 Gaussian-integer matrix satisfying `U* U = scale I`, with positive common scale |
+| Instrument | Explicit one-cell family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
+| Query | Conservative backward dependency closure, including relevant earlier recorded constraints, then forward amplitude evaluation |
+| Result | Local Born weights; no RNG, historical path selection, or physical-clock advance |
+| Decision | First compute every branch weight, then supply one uniform integer ticket; update only the selected conditional state |
+| State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical cells |
+| Resource contract | Bounded nodes, discovered dependencies, sparse terms, decisions and existing 32/64-bit arithmetic; explicit failure, never a guessed no-event result |
+
+`EventNetworkConfig` accepts 1–30 addresses; the 30-site cap keeps occupation
+masks inside the signed register range. This does not imply full states on 30
+sites are tractable. Default caps are 10,000 stored nodes, 10,000 visited nodes,
+4,096 terms and 1,024 decision identities. These are computational capacities,
+not physical constants. Configuration is immutable once bound.
+
+All coefficients use the existing `Amplitude(real, imag)` bounded signed
+representation. A whole-state common integer factor may be removed exactly.
+Different prospective instrument branches MUST NOT be independently rescaled
+before their relative probabilities have been calculated. Coefficients, products,
+accumulations and weights are checked; the original arbitrary-precision research
+prototype is not copied as an exception to the register contract.
+
+## Algorithm
+
+1. `step` validates a whole disjoint local layer before appending its recipes.
+   It advances the physical tick once. No amplitudes or random tickets are needed.
+2. `query` follows the target head backwards. It includes previously committed
+   constraints that overlap the dependency component, repeating to closure.
+   Disconnected product histories and irrelevant unitaries may remain unevaluated.
+3. The quantum owner evaluates the selected recipes forward from source or
+   checkpoint states, retaining complex amplitudes and interference.
+4. `prepare` does the same work for a declared instrument. It computes all
+   outcome weights, including no-click/no-transfer, before any result is chosen.
+5. `commit` binds a result to that prepared request. A uniform ticket in
+   `[0, total_weight)` selects the cumulative weight interval. A certain result
+   needs no random number. Repeated commits return the original immutable record.
+6. A later operation uses the conditional joint state. It does not acquire sharp
+   values for all unmeasured quantities, and it does not resample the past.
+
+The links are not the wave by themselves: states and operation laws are essential.
+The traversal is conservative, not an optimal tensor-network contraction solver.
+No query of an uncomputed coherent branch chooses which historical route occurred.
+
+A decision is tied to its owner, record identity, cell, instrument and graph
+revision. A graph change makes an uncommitted decision stale; use a fresh identity.
+Prepared identities consume the decision budget even if not committed. Callers
+must not accumulate unlimited abandoned requests. Past records remain available
+in an immutable audit ledger; no API silently reuses their identities.
+
+## What triggers an event?
+
+The controller supplies a local instrument request. This can represent an
+explicit measurement or a configured contact with a fresh nonreturning environment.
+It is not conditional on a guessed sharp occupation, and no detector object must
+be planted in every cell. Both transfer and no-transfer are possible outcomes.
+
+A coherent interaction is a local unitary recipe and does not sample. A returning
+environment must remain in the joint coherent model. Choosing an outcome at every
+interaction can destroy later interference. A fresh-environment trajectory is a
+specified open-system model, not proof of objective collapse in the whole universe.
+One Kraus matrix per outcome is supported; an unresolved sum of Kraus alternatives
+would require a mixed-state extension rather than a fake sharp record.
+
+The controller knows its previous records and can compute conditional marginals.
+These weights are host information, not a classical signal available to a remote
+cell. No native Engine or generic field law consumes them in this addition. A
+future native bridge must define accessible records, scheduling and physical
+commits; a universal physical trigger has not been inferred from uncertainty.
+
+## Closing the past without deleting the wave
+
+`checkpoint(site)` resolves the full live correlated component and saves an exact
+joint replacement state. Only then can old recipes be removed. The host operation
+creates no measurement, advances no world tick and preserves remaining phases.
+A local marginal is not a sufficient checkpoint for a correlated component.
+A branch omitted by one query may become necessary at a future recombination.
+
+Checkpoints summarize computation, whereas records fix a result. Neither proves
+that all future possibilities close, that total memory is bounded for infinite
+time, or that arbitrary real amplitudes have finite rational representations.
+An over-budget or over-range request fails rather than changing the physics.
+
+## Time and cost
+
+Each successful modeled query has unit model cost and zero added world ticks.
+The backend's tick is changed only by `step`. Records, checkpoint operations and
+host diagnostics do not run a physical engine tick. `host_evaluated_nodes` counts
+nodes in successful query/preparation evaluations, not CPU instructions or total
+memory; full diagnostics/checkpoints are separate host work. Re-reading a prepared
+record reuses the first computation and never causes another ticket draw.
+
+Physical insertion uses at most two heads and fixed local matrices. A complete
+host tick, graph scan, tensor-product evaluation and checkpoint are not O(1).
+Zero world time is the selected oracle postulate, not zero elapsed machine time.
+
+## Position, momentum and the classical interface
+
+An event has a definite recorded location at its recorded time. Its continuing
+quantum state need not have a definite next location or a sharp momentum.
+Position and lattice-Fourier diagnostics use the same amplitudes and phases.
+For a one-excitation 4x4 periodic Fourier diagnostic, one occupied site produces
+16 equal momentum weights. The finite entropic bound is `H(position)+H(Fourier)>=4`.
+This tests complementary bases; it does not validate a free-particle Hamiltonian.
+
+The 3:4 beam-splitter matrix in tests and the headless demonstration is an explicit
+example, not a default law selected by the engine. It does not by itself derive
+free-momentum conservation, Newtonian motion or a quantum-to-classical dynamics
+limit. Ordinary disturbance fields and their existing conservation laws are not
+replaced by this candidate.
+
+## Entry point and reproducible checks
+
+```python
+from event_universe.quantum import DeferredQuantum, EventNetworkConfig
+
+owner = DeferredQuantum()
+space = owner.bind_event_network(
+    EventNetworkConfig(
+        addresses=tuple((x, y, 0) for y in range(4) for x in range(4)),
+        occupied=(5,),
+    )
+)
+```
+
+Supply `LocalUnitary` and `LocalInstrument` matrices explicitly. Existing legacy
+nodes and a selected event network cannot coexist inside the same owner.
+
+A complete small controller is available as:
+
+```shell
+python -m event_universe.integration.quantum_event_trial --ticket 24
+python tools/check.py --base origin/main
+```
+
+The first command prints headless JSON; its ticket is deliberately supplied,
+not claimed to come from a real quantum device. The integration PR records the
+actual interpreter, source tree, executed checks and limitations. Required finite
+expectations are listed in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).

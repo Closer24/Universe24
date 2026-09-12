@@ -221,9 +221,13 @@ Failure is information about the model. Do not add a special correction just to 
 
 ## 12. Quantum behavior and entanglement remain open
 
-The physical core describes discrete fields and particles. An optional sidecar now
-stores explicitly supplied amplitude operations and evaluates them on demand.
-This is not a general quantum simulator or native detector-event implementation.
+The physical core describes discrete fields and particles. The selected quantum
+candidate is a deferred event network: a saved joint state plus local operations
+and immutable outcome records defines the wave without evaluating it every tick.
+An explicit query follows the required past dependencies and evaluates forward.
+This is a bounded finite-state model, not a derived electron/photon field law.
+The previous scalar-amplitude and terminal-trial interfaces remain available as
+separate, explicitly selected historical contracts.
 
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
@@ -312,3 +316,18 @@ encounter from particles still occupying the same cell. The exact two-body law,
 multiparticle ordering, schema extension and limits are in the v13 section of
 SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
 relativistic physics or energy conservation of the existing field law.
+
+
+### Selected event-network method
+
+`deferred-event-network-v1` extends the existing quantum owner, not the ordinary
+physical cells. Its detailed contract is [QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md).
+Queries compute possibilities without choosing historical paths. Only an explicit
+instrument request can select a result; it retains the conditional joint state,
+including a no-event branch. No universal interaction-to-collapse trigger is claimed.
+
+A known event location does not supply a simultaneous sharp momentum. Position
+and lattice-momentum diagnostics use the same state. Exact host checkpoints may
+replace complete correlated histories without sampling. Unused branches remain
+available until an exact sufficient replacement is saved. These choices neither
+make host computation O(1) nor establish a Newtonian or continuum field limit.
