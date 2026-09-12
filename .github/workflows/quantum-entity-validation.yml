@@ -9,17 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
-      - run: python -m pip install -e '.[dev]'
-      - name: Export only interpreter and validation dependencies
+      - name: Export exact main and optional image test dependency
         run: |
-          mkdir -p artifacts/python-environment
-          python --version > artifacts/python-environment/version.txt
-          tar -czf artifacts/python-environment/python.tar.gz -C "$pythonLocation" .
+          mkdir -p artifacts/quantum-validation-base
+          git archive 99b9f5f0034ea288f7de0a2a8d7645220c45d8aa | gzip > artifacts/quantum-validation-base/main.tar.gz
+          git rev-parse 99b9f5f0034ea288f7de0a2a8d7645220c45d8aa^{tree} > artifacts/quantum-validation-base/tree.txt
+          python -m pip download --only-binary=:all: --no-deps 'Pillow>=10,<13' --dest artifacts/quantum-validation-base
       - uses: actions/upload-artifact@v4
         with:
-          name: quantum-python-environment
-          path: artifacts/python-environment/
+          name: quantum-validation-base
+          path: artifacts/quantum-validation-base/
           retention-days: 1
