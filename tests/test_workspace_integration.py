@@ -131,6 +131,112 @@ def test_field_rename_preserves_nested_flux_coupling_and_valid_configuration():
     assert initial.fields[1].name == "renamed_signal"
 
 
+@pytest.mark.parametrize(
+    "stored",
+    [
+        "{}",
+        json.dumps({"__proto__": "older draft", "keep": "unchanged draft"}),
+        "null",
+        "[]",
+        "invalid JSON",
+    ],
+)
+def test_drafts_save_arbitrary_template_names_and_preserve_loaded_drafts(stored):
+    updates = {name: f"draft for {name}" for name in ("__proto__", "constructor", "toString")}
+    saved = javascript(
+        "app.js",
+        "let drafts =",
+        "function changed()",
+        "let selected='',source='',saved='';const localStorage={"
+        "getItem(){return input.stored},setItem(key,value){saved=value}};",
+        "for(const [key,value] of Object.entries(input.updates)){"
+        "selected=key;source=value;remember();}console.log(saved);",
+        {"stored": stored, "updates": updates},
+    )
+    expected = dict(updates)
+    if "unchanged draft" in stored:
+        expected["keep"] = "unchanged draft"
+    assert saved == expected
+
+
+def add_editor_item(raw, tab):
+    return javascript(
+        "app.js",
+        "function addButton(",
+        "function $$(",
+        "const configuration=input.document,tab=input.tab,buttons=[];"
+        "function node(tag,text=''){const value={text,children:[],classList:{add(){}},"
+        "append(...items){this.children.push(...items);this.lastChild=items.at(-1)},"
+        "replaceChildren(){this.children=[]},querySelector(){return {}},"
+        "addEventListener(event,callback){if(event==='click')this.click=callback}};"
+        "if(tag==='button')buttons.push(value);return value;}"
+        "const editor=node('form');editor.reportValidity=()=>true;"
+        "const $=()=>editor,$$=()=>[];function card(){return node('section')}"
+        "function inputControl(parent){parent.append(node('label'))}"
+        "function check(){}function jsonField(){}function changed(){}"
+        "{const input=inputControl;",
+        "renderEditor();buttons[0].click();console.log(JSON.stringify(configuration));}",
+        {"document": raw, "tab": tab},
+    )
+
+
+@pytest.mark.parametrize(
+    "tab,names,expected",
+    [
+        ("fields", ["field_4", "heading", "radiation"], "field_5"),
+        ("fields", ["field_4", "field_5", "constructor"], "field_6"),
+        ("fields", ["constructor", "__proto__", "toString"], "field_4"),
+        ("types", ["type_2"], "type_3"),
+        ("types", ["type_3", "type_4"], "type_5"),
+        ("types", ["__proto__"], "type_2"),
+    ],
+)
+def test_add_editor_item_uses_an_unused_name_without_changing_existing_defaults(tab, names, expected):
+    field_names = names if tab == "fields" else ["stock"]
+    type_names = names if tab == "types" else ["carrier"]
+    raw = {
+        "schema_version": 1,
+        "model_id": "editor-name-check",
+        "shape": [3, 3, 3],
+        "slots_per_cell": 4,
+        "link_ticks": 1,
+        "normal_budget": 1000,
+        "ticks": 0,
+        "operation_costs": {
+            name: 1
+            for name in (
+                "receive",
+                "read",
+                "evaluate",
+                "update",
+                "couple",
+                "route",
+                "split",
+                "send",
+                "commit",
+            )
+        },
+        "fields": [
+            {"name": name, "components": 1, "units": "unit", "signed": False, "conserved": False}
+            for name in field_names
+        ],
+        "disturbance_types": [
+            {"name": name, "fields": [field_names[0]], "transport": {"mode": "hold"}}
+            for name in type_names
+        ],
+        "seeds": [],
+    }
+    parse_initial_state(raw)
+    added = add_editor_item(raw, tab)
+    collection = "fields" if tab == "fields" else "disturbance_types"
+    assert added[collection][:-1] == raw[collection]
+    assert added[collection][-1]["name"] == expected
+    if tab == "types":
+        assert added[collection][-1]["fields"] == [field_names[0]]
+        assert added[collection][-1]["transport"] == {"mode": "hold"}
+    parse_initial_state(added)
+
+
 def result_view(metadata):
     return javascript(
         "app.js",

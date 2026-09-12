@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from uuid import uuid4
 
-from event_universe.api import BalancedSimulation, Simulation
+from event_universe.api import BalancedSimulation, ScalarSimulation
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import capture_volume
 from event_universe.diagnostics.measurements import total_momentum
@@ -78,7 +78,7 @@ def main():
 
 def run_cases(output):
     results = [
-        check_case(output, "legacy-no-field", Simulation, 0),
+        check_case(output, "legacy-no-field", ScalarSimulation, 0),
         check_case(output, "balanced-no-field", BalancedSimulation, 0),
         check_case(output, "balanced-own-field", BalancedSimulation, 64),
         check_case(

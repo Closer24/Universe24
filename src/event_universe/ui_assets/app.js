@@ -9,6 +9,7 @@ let moviePath = null;
 let drafts = {};
 try { drafts = JSON.parse(localStorage.getItem("universe24-drafts-v1") || "{}"); } catch { /* Start fresh if local storage is unavailable. */ }
 if (!drafts || typeof drafts !== "object" || Array.isArray(drafts)) drafts = {};
+drafts = Object.assign(Object.create(null), drafts);
 
 function node(tag, text = "", className = "") {
   const result = document.createElement(tag);
@@ -178,6 +179,13 @@ function addButton(label, callback) {
   $("#editor-panel").append(button);
 }
 
+function nextName(prefix, collection) {
+  const names = new Set(collection.map(item => item.name));
+  let number = collection.length + 1;
+  while (names.has(`${prefix}_${number}`)) number++;
+  return `${prefix}_${number}`;
+}
+
 function renderEditor() {
   const editor = $("#editor-panel"); editor.replaceChildren();
   $$("[data-tab]").forEach(button => { button.setAttribute("aria-selected", String(button.dataset.tab === tab)); button.tabIndex = button.dataset.tab === tab ? 0 : -1; });
@@ -215,7 +223,7 @@ function renderEditor() {
       const checks = node("div", "", "card-checkboxes"); item.append(checks);
       check(checks, "Signed", field, "signed"); check(checks, "Conserved", field, "conserved"); check(checks, "Extensive", field, "extensive", true);
     });
-    addButton("Add field", () => doc.fields.push({name: `field_${doc.fields.length + 1}`, components: 1, units: "unit", signed: false, conserved: false}));
+    addButton("Add field", () => doc.fields.push({name: nextName("field", doc.fields), components: 1, units: "unit", signed: false, conserved: false}));
   } else if (tab === "types") {
     editor.append(node("p", "Define which fields travel together, their defaults, and their transport and update rules.", "editor-description"));
     doc.disturbance_types.forEach((type, i) => {
@@ -226,7 +234,7 @@ function renderEditor() {
       jsonField(grid, "Local update rules", type, "updates", []);
       if (type.cost_field !== undefined) input(grid, "Computation cost field", type, "cost_field", { text: true, full: true });
     });
-    addButton("Add disturbance type", () => doc.disturbance_types.push({name: `type_${doc.disturbance_types.length + 1}`, fields: doc.fields.length ? [doc.fields[0].name] : [], transport: {mode: "hold"}}));
+    addButton("Add disturbance type", () => doc.disturbance_types.push({name: nextName("type", doc.disturbance_types), fields: doc.fields.length ? [doc.fields[0].name] : [], transport: {mode: "hold"}}));
   } else if (tab === "seeds") {
     editor.append(node("p", "Place initial disturbances at lattice addresses. Values override the selected type's defaults.", "editor-description"));
     doc.seeds.forEach((seed, i) => {

@@ -21,6 +21,14 @@ and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
 
+Field, type, model and unit labels are data. Reordering field/type declarations
+must preserve the same resolved behavior; declared update/coupling order and
+spatial axes can be meaningful and are not interchangeable. The executable
+cross-layer checks live in `tests/test_generic_identity.py`. Genericity is scoped
+to the supported integer scalar/vector schema, three-dimensional six-port
+geometry, fixed capacities and declared operation set; it does not imply an
+arbitrary equation interpreter.
+
 The complete source contract is [DISTURBANCES.md](DISTURBANCES.md). Its six-port,
 bounded-record schema replaces the implicit scalar/particle schema for the
 primary API. Global diagnostics never drive physical rules, and rendering is

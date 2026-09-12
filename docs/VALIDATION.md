@@ -1,5 +1,48 @@
 # Validation evidence
 
+## Genericity audit — 2026-09-12
+
+The audit continues published feature head `188e3d3` on main base `c252254`.
+It covers the active initialization-to-law-to-engine path, spatial responses,
+costs, timing, ledgers and workspace adapters. No physical engine, parser or
+arithmetic implementation changed. Historical named research APIs remain
+explicit model selections, not the primary generic Simulation.
+
+| Check | Result |
+| --- | --- |
+| Active engine/field review | No physical-name or model-ID dispatch; 233 focused existing tests passed |
+| Durable identity regressions | 18 cases compare six scenarios across six transitions after renaming labels/units, reordering declarations, or both; snapshots, complete ordered events, costs, timing and ledgers agree |
+| Executed behaviors | Source updates, splitting, delayed commits, cost reporting, paired exchange, finite emission/decay, norm-preserving rotation, delivered flux and open exits are required to occur |
+| Independent composite audit | 744 snapshot/event/accounting comparisons passed across eight boundary/transit/budget combinations; low budgets actually reduced committed cycles |
+| Editor fixes | Draft storage retains arbitrary template keys, including `__proto__`; generated field/type names skip existing declarations without changing defaults |
+| Failure-before evidence | Eight new editor cases failed before the fix; the historical diagonal tool separately failed to import its obsolete Simulation name |
+| Focused verification | 60 workspace tests and 9 historical application tests passed; one explicitly visual application case skipped |
+| Independent diff review | No blocking finding; all 30 selected new regressions passed |
+| Unchanged full gate | Ruff lint/format and strict mypy passed; 1,075 tests passed, 30 explicitly visual cases skipped in 118.03 seconds |
+| Static scope | 167 formatted Python files; 66 typed package modules |
+| Packaging | Wheel and sdist built in a leased temporary source copy; packaged editor bytes match source and sdist includes the new identity suite and explicit historical tool |
+
+The Python runtime fingerprint remains
+`f2cfc31cb5d85bd3dc414d871c36bde17453b0773e9bc51505b2424474a7893d`.
+Temporary build/equality evidence is under `../runs/genericity-packaging/`;
+the full gate report is `artifacts/junit.xml`. Both follow the 24-hour output
+retention policy. Package source checks preceded this evidence-only addition.
+
+The historical diagonal tool now imports `ScalarSimulation` explicitly; its
+regression checks importability without rendering. The editor fixes affect
+configuration handling only. Identity comparisons normalize semantic labels,
+preserve ordered rules/axes/seeds and require nonzero activity. They establish
+the tested scenarios and duration, not equivalence of every private register or
+arbitrary user-defined algorithms.
+
+The movie currently omits spatial populations and spatial transfers, although
+those remain in saved state/recording data. Spatial extension settings remain
+editable through complete JSON. This capability limit is documented in
+[WORKSPACE.md](WORKSPACE.md); no visualization was requested or generated.
+The architecture-review Skill now requires role-aware renaming, declaration
+permutations and observed activity. Shared workflow and Boss guidance were
+reviewed and already cover integration ownership and the required full gate.
+
 ## Generated-output retention — 2026-09-12
 
 This host-only update continues published feature head `45da520` on main base

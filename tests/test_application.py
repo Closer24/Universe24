@@ -1,14 +1,28 @@
 import builtins
 import json
+import runpy
 import subprocess
 import sys
 from dataclasses import replace
 from pathlib import Path
+from types import ModuleType
 
 import pytest
 
 from event_universe.legacy_runner import main, run_scenario, source_fingerprint
 from event_universe.scenarios import get_scenario
+
+
+def test_legacy_acceptance_tool_resolves_its_explicit_scalar_model(monkeypatch):
+    from event_universe.api import ScalarSimulation
+
+    renderer = ModuleType("event_universe.diagnostics.render")
+    renderer.render_volume = lambda *args, **kwargs: pytest.fail("rendering was not requested")
+    monkeypatch.setitem(sys.modules, renderer.__name__, renderer)
+    namespace = runpy.run_path(
+        str(Path(__file__).resolve().parents[1] / "tools/check_diagonal_motion.py")
+    )
+    assert namespace["ScalarSimulation"] is ScalarSimulation
 
 
 def test_runner_import_does_not_load_optional_rendering_dependencies():

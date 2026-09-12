@@ -64,6 +64,9 @@ records of that type share it. The two-particle presets use distinct types so
 each particle can have its own name. Raw JSON edits and removals still require
 valid references.
 
+Generated field/type names skip names already declared. Template draft keys are
+plain data, including names such as `__proto__` and `constructor`.
+
 Drafts are saved per template in this browser. Switching templates keeps them;
 **Reset** restores a template. **Export JSON** downloads the checked configuration
 for later import or direct CLI execution. Browser storage is not a backup.
@@ -85,7 +88,12 @@ when calculation finishes; Open full view opens the same self-contained HTML.
 Play/Pause, Restart, speed, XY/XZ/YZ projection and the timeline operate only on
 saved samples. Playback stops on the final frame; Replay starts again. Scrubbing
 pauses playback. Reduced-motion preference suppresses automatic playback.
-Detailed field values and ownership remain available in the movie's folded table.
+Carried field values and disturbance ownership remain available in the movie's
+folded table. The movie currently draws disturbances and their link transfers;
+it does not draw spatial field populations or spatial field transfers. Inspect
+those values in the saved state/recording data. Spatial definitions, emissions,
+seeds and responses are editable through the complete JSON editor and remain
+preserved when using forms for other settings.
 
 Filled markers are recorded resident disturbances. Link transfers use their
 recorded origin, port and arrival time with the configured fixed transit time.

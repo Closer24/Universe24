@@ -16,6 +16,13 @@ positive payload coding, frozen pending ownership and lazy optional rendering.
 Historical scalar records are not the universal schema. Missing initialization
 must fail rather than silently selecting built-in physics.
 
+Verify genericity by renaming labels through their semantic reference positions
+and permuting declarations, then comparing actual states, events, costs and
+ledgers. Include labels that resemble schema/operation keywords or JavaScript
+prototype members when checking adapters. Preserve declared rule and axis order;
+keyword searches alone cannot establish behavior independence. Require observed
+activity in each comparison so an idle scenario cannot silently pass.
+
 Trace responsibilities across generic calculations, model assembly, engine
 scheduling/commits, public API, scenario setup and read-only diagnostics. Models
 must compose shared calculations; neither a new model nor a compatibility facade

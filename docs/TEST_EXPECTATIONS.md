@@ -63,6 +63,8 @@ acceptance requirements, not a statement that a particular source tree passed.
 | Input or boundary | Required outcome |
 | --- | --- |
 | Complete JSON initialization; renamed field/type labels | Equivalent declared behavior with no physical-name branches |
+| `test_generic_identity.py`: rename labels/units, reorder declarations, or both | Exact snapshots, ordered events, costs, timing and accounting over six ticks in six active scenarios; real commits, delays, reactions, decay and exits prevent vacuous equality |
+| Workspace drafts and generated names | `__proto__`, `constructor` and `toString` survive browser draft storage; adding fields/types skips existing names and leaves existing definitions intact |
 | Unknown/duplicate names or keys, wrong components, floats, unsupported expressions | Validation error before simulation |
 | Whole-record move with scalar amounts and a vector attribute | One owner and unchanged carried values in free transport |
 | 12 units, weights `[2,0,1,0,0,0]` | 8 through +X, 4 through +Y |
@@ -144,7 +146,7 @@ occupancy; measurements read the result.
 | `test_field_composition.py` | Replacement in the engine | Alternative laws change the expected outcome; remainder-only activity persists |
 | `test_engine.py` | Causality, occupancy and scheduling | One-edge propagation and movement; one particle update per tick |
 | `test_diagnostics.py` | Measurement and display | Exact XY/XZ/YZ slices; full XYZ and off-plane records; source state untouched |
-| `test_application.py` | Historical runner output | Headless metadata/events and lazy imports; explicit visualization preserves slice/volume event identity |
+| `test_application.py` | Historical runner output | Headless metadata/events and lazy imports; diagonal acceptance tool selects explicit ScalarSimulation; explicit visualization preserves slice/volume event identity |
 | `test_regressions.py` | Physical behavior | Prompt contact, reflection symmetry, three-plane turning, momentum, isolated motion and the original 180-tick result |
 | `test_architecture.py` | Layer separation | Reject forbidden imports and adapter formulas; audit integer physics |
 | `test_repository_language.py` | English repository text | Reject legacy non-English scripts in project prose; preserve mathematical notation |
