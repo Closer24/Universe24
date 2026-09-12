@@ -122,6 +122,8 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        if path.startswith("tools/generic_vector_lab/"):
+            tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")

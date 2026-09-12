@@ -476,3 +476,15 @@ conversion/rotation, weighted inventory, rejection before commit, invalid schema
 pair totals larger than individual registers, and renamed fields in a larger
 world. These are classical-candidate and generic-contract checks, not proof of
 an emergent gravitational or universal energy law.
+
+## Standalone generic vector lab
+
+[The lab contract suite](../tools/generic_vector_lab/test_lab.py) checks exact
+rational vectors, energy/momentum/charge accounting, reaction rollback, binding,
+recoil and local quantum examples. [Node-rule tests](../tools/generic_vector_lab/test_node_rules.py)
+check six-way A/A/B/B/C/C composition, forbidden mixtures, configurable limits
+including a 17-input case, deterministic matching and property predicates.
+The six-node example has E=3, p=(0,0,0), q=0 before and after its configured
+cyclic vector map. These are mechanism checks, not real-particle validation.
+[The repository adapter](../tests/test_generic_vector_lab.py) runs all 52 lab
+cases; the check selector maps every lab source/configuration change to it.

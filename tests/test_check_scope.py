@@ -16,6 +16,13 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
+def test_standalone_lab_changes_select_its_contract_suite(name):
+    tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})
+    assert "tests/test_generic_vector_lab.py" in tests
+    assert not typed
+
+
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
     sources = {
         "src/domain/math.py": "def calculate(): pass",
