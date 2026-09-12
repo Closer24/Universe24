@@ -77,8 +77,27 @@ Use the standalone `examples/known-entities/conversion.json` through the same
 runner. This example deliberately does not label its configured transformation
 as matter annihilation.
 
+For established catalog particles, the host-side
+[particle reaction adapter](PARTICLE_REACTIONS.md) adds a stricter authoring
+contract on top of that same conversion owner. It reads particle/antiparticle,
+charge, doubled-spin and mass-relation metadata as data, derives only the
+fermion/boson classification from doubled spin, and requires exact electric
+charge plus explicitly configured energy and momentum totals before compiling.
+The compiled runtime fields remain conserved, so a later tampering or invalid
+proposal is rejected by the ordinary atomic transaction as well. No species
+name selects an engine law.
+
+The current particle reaction shape is deliberately `2 -> 2`. The provided
+electron/positron to two-photon file is a conservation and ownership probe, not
+a derived QED annihilation calculation. Product multiplicity, relativistic
+dispersion, interaction probability, exchange antisymmetry and field-theoretic
+creation operators remain separate work.
+
 `tests/test_entity_compiler.py` validates every profile, composed carrier/vector
 and multi-scalar transport, name independence and rejection boundaries. Shared
 mechanisms are exercised by representative active worlds instead of running
 35 identical carrier dynamics tests. `tests/test_local_conversions.py` checks
-the changed conversion contract. Physical emergence remains unestablished.
+the changed conversion contract, while `tests/test_particle_reactions.py` checks
+known-particle metadata, authoring conservation, runtime conservation, arbitrary
+species renaming and adding a new catalog particle without an engine branch.
+Physical emergence remains unestablished.
