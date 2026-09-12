@@ -1,0 +1,157 @@
+name: Reconcile audit with latest head
+on:
+  push:
+    branches: [chore/repository-consistency-audit]
+permissions:
+  contents: write
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Integrate latest main and preserve naming rules
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          BASE=8ceb1fd00e9f23020965d8c2873caf0eff384f92
+          test "$(git rev-parse origin/main)" = "$BASE"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git merge --no-ff --no-commit -X theirs "$BASE"
+          test -z "$(git diff --name-only --diff-filter=U)"
+          python - <<'PY'
+          from pathlib import Path
+          import subprocess
+
+          root = Path.cwd()
+          replacements = [
+              ('event_universe.api', 'event_universe.particle_api'),
+              ('event_universe.scenarios', 'event_universe.particle_scenarios'),
+              ('core/engine.py', 'core/scalar_engine.py'),
+              ('models/current_field.py', 'models/scalar_field.py'),
+              ('src/event_universe/api.py', 'src/event_universe/particle_api.py'),
+              ('src/event_universe/scenarios.py', 'src/event_universe/particle_scenarios.py'),
+              ('test_current_field.py', 'test_scalar_field_model.py'),
+              ('test_engine.py', 'test_scalar_engine.py'),
+              ('test_application.py', 'test_legacy_application.py'),
+              ('docs/FIELDS.md', 'docs/SCALAR_FIELDS.md'),
+              ('](FIELDS.md)', '](SCALAR_FIELDS.md)'),
+              ('examples/known-entities/run.py', 'examples/known-entities/run_reference_checks.py'),
+              ('examples/known-entities/run.ps1', 'examples/known-entities/run_reference_checks.ps1'),
+              ('examples/maxwell/run.py', 'examples/maxwell/run_experiments.py'),
+              ('examples/small-space/run.py', 'examples/small-space/run_experiments.py'),
+              ('examples/particle-contracts/build.py', 'examples/particle-contracts/build_reference_configurations.py'),
+          ]
+          for name in subprocess.check_output(['git', 'ls-files'], text=True).splitlines():
+              path = root / name
+              if not path.is_file() or path.suffix not in {'.py', '.md', '.ps1', '.json', '.yml', '.yaml', '.toml'}:
+                  continue
+              if name.startswith('tests/reference/') or name in {'docs/MIGRATION.md', 'docs/VALIDATION.md'}:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              updated = text
+              for old, new in replacements:
+                  updated = updated.replace(old, new)
+              if updated != text:
+                  path.write_text(updated, encoding='utf-8')
+
+          index = root / 'docs/README.md'
+          text = index.read_text(encoding='utf-8')
+          additions = [
+              ('DIRECTIONAL_WAVE.md', '| [Directional wave](DIRECTIONAL_WAVE.md) | Local directional-wave research configuration, observations and validation |'),
+              ('RATIONAL_PARTICLES.md', '| [Rational particle contracts](RATIONAL_PARTICLES.md) | Exact bounded ratio state, routing and particle-reference configurations |'),
+          ]
+          anchor = '| [Physical entities](PHYSICAL_ENTITIES.md)'
+          assert anchor in text
+          rows = []
+          for marker, row in additions:
+              if marker not in text:
+                  rows.append(row)
+          if rows:
+              text = text.replace(anchor, '\n'.join(rows) + '\n' + anchor, 1)
+              index.write_text(text, encoding='utf-8')
+
+          status = root / 'docs/PROJECT_STATUS.md'
+          text = status.read_text(encoding='utf-8')
+          heading = '## Repository naming and ownership audit'
+          if heading in text:
+              before, section = text.split(heading, 1)
+              for old in ('85ec120862e5bead2c63eebfc37753b52497c0eb', '10e5221bc9c1d1f47311785e484b2870450dba45'):
+                  section = section.replace(old, '8ceb1fd00e9f23020965d8c2873caf0eff384f92', 1)
+              text = before + heading + section
+          status.write_text(text.rstrip() + '\n', encoding='utf-8')
+
+          transport = root / '.github/workflows/reconcile-head.yml'
+          if transport.exists():
+              transport.unlink()
+          assert subprocess.check_output(['git', 'diff', '--name-only', '--diff-filter=U']) == b''
+          assert subprocess.check_output(['git', 'diff', '8ceb1fd00e9f23020965d8c2873caf0eff384f92', '--', 'tests/reference']) == b''
+          PY
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Verify behavior equivalence and affected contracts
+        shell: bash
+        run: |
+          BASE=8ceb1fd00e9f23020965d8c2873caf0eff384f92
+          python -m ruff check --select I --fix .
+          python -m ruff format .
+          git diff --check
+          python - <<'PY'
+          import ast
+          import pathlib
+          import re
+          import subprocess
+
+          base = '8ceb1fd00e9f23020965d8c2873caf0eff384f92'
+          names = {'api.py': 'particle_api.py', 'engine.py': 'scalar_engine.py', 'current_field.py': 'scalar_field.py', 'scenarios.py': 'particle_scenarios.py'}
+          substitutions = [
+              ('event_universe.api', 'event_universe.particle_api'),
+              ('event_universe.scenarios', 'event_universe.particle_scenarios'),
+              ('core.engine', 'core.scalar_engine'),
+              ('models.current_field', 'models.scalar_field'),
+              ('CurrentFieldModel', 'ScalarFieldModel'),
+              ('CURRENT_MODEL', 'SCALAR_MODEL'),
+              ('from .api import', 'from .particle_api import'),
+              ('".api"', '".particle_api"'),
+              ('from .engine import', 'from .scalar_engine import'),
+              ('from .scenarios import', 'from .particle_scenarios import'),
+              ('from .current_field import', 'from .scalar_field import'),
+          ]
+          def normalized(text):
+              for old, new in substitutions:
+                  text = text.replace(old, new)
+              tree = ast.parse(re.sub(r'\bEngine\b', 'ScalarEngine', text))
+              for node in ast.walk(tree):
+                  if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                      if node.body and isinstance(node.body[0], ast.Expr) and isinstance(node.body[0].value, ast.Constant) and isinstance(node.body[0].value.value, str):
+                          node.body.pop(0)
+              imports = [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom))]
+              rest = [n for n in tree.body if not isinstance(n, (ast.Import, ast.ImportFrom))]
+              tree.body = sorted(imports, key=ast.dump) + rest
+              return ast.dump(tree, include_attributes=False)
+          count = 0
+          for name in subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', base, 'src'], text=True).splitlines():
+              path = pathlib.Path(name)
+              if path.suffix != '.py':
+                  continue
+              target = path.with_name(names.get(path.name, path.name))
+              previous = subprocess.check_output(['git', 'show', base + ':' + name], text=True)
+              assert normalized(previous) == normalized(target.read_text()), name
+              count += 1
+          print(f'PASS: executable AST preserved in all {count} production Python modules.')
+          PY
+          python tools/check.py --base "$BASE" --tests tests/test_repository_hygiene.py tests/test_repository_language.py tests/test_repository_navigation.py tests/test_reference_examples.py
+      - name: Publish checked reconciliation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test ! -e .github/workflows/reconcile-head.yml
+          gh auth setup-git
+          git commit -am 'chore: reconcile naming audit with latest main'
+          git push origin HEAD:refs/heads/chore/repository-consistency-audit
