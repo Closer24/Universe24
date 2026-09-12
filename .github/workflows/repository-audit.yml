@@ -1,0 +1,90 @@
+name: Repository consistency audit
+on:
+  push:
+    branches: [chore/repository-consistency-audit]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Inventory source snapshot
+        shell: bash
+        run: |
+          mkdir -p "$RUNNER_TEMP/repository-audit"
+          git archive --format=tar 2e753fed1f6922d9d2082d6d43c9e150f237bdd6 | gzip > "$RUNNER_TEMP/repository-audit/source.tar.gz"
+          python - <<'PY'
+          import ast
+          import collections
+          import hashlib
+          import json
+          import os
+          import pathlib
+          import re
+          import subprocess
+          files = subprocess.check_output(['git', 'ls-files', '-z']).decode().split('\0')
+          files = sorted(path for path in files if path)
+          exact = collections.defaultdict(list)
+          functions = collections.defaultdict(list)
+          non_english = []
+          suspicious = []
+          inventory = []
+          for name in files:
+              path = pathlib.Path(name)
+              data = path.read_bytes()
+              inventory.append({'path': name, 'bytes': len(data)})
+              if data.strip():
+                  exact[hashlib.sha256(data).hexdigest()].append(name)
+              if not name.isascii() or re.search(r'(?:^|[/_.-])(?:copy|backup|final|new|old|v[0-9]+)(?:[/_.-]|$)', name, re.I):
+                  suspicious.append(name)
+              try:
+                  text = data.decode('utf-8')
+              except UnicodeDecodeError:
+                  continue
+              for number, line in enumerate(text.splitlines(), 1):
+                  if re.search('[\u0590-\u08ff\u3040-\u30ff\u3400-\u9fff\uac00-\ud7af]', line):
+                      non_english.append({'path': name, 'line': number, 'text': line[:240]})
+              if name.startswith('src/') and name.endswith('.py'):
+                  tree = ast.parse(text, filename=name)
+                  for node in ast.walk(tree):
+                      if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and (node.end_lineno or node.lineno) - node.lineno >= 12:
+                          body = list(node.body)
+                          if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant) and isinstance(body[0].value.value, str):
+                              body = body[1:]
+                          key = ast.dump(ast.Module(body=body, type_ignores=[]), include_attributes=False)
+                          functions[key].append({'path': name, 'line': node.lineno, 'name': node.name})
+          report = {
+              'base_commit': '2e753fed1f6922d9d2082d6d43c9e150f237bdd6',
+              'file_count': len(files),
+              'non_english': non_english,
+              'suspicious_paths': suspicious,
+              'exact_duplicate_files': [group for group in exact.values() if len(group) > 1],
+              'duplicate_function_bodies': [group for group in functions.values() if len(group) > 1],
+              'inventory': inventory,
+          }
+          target = pathlib.Path(os.environ['RUNNER_TEMP']) / 'repository-audit' / 'inventory.json'
+          target.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repository-audit-source
+          path: ${{ runner.temp }}/repository-audit/
+          retention-days: 1
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Complete audit baseline
+        run: python tools/check.py --base 2e753fed1f6922d9d2082d6d43c9e150f237bdd6 --full
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-audit-diagnostics
+          path: artifacts/
+          retention-days: 1
