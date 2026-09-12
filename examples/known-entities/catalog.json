@@ -3705,7 +3705,7 @@
       "not_claimed": ["maxwell_dynamics", "physical_electromagnetic_energy", "photon", "isotropic_wave_propagation"]
     },
     {
-      "path": "examples/known-entities/collision.json",
+      "path": "examples/04-unequal-mass-collision.json",
       "entity_ids": [],
       "claim": "Historical continuum-formula benchmark for unequal-mass elastic bodies; not an elementary-rule emergence example.",
       "not_claimed": ["emergent_collision_law", "quantum_scattering"]

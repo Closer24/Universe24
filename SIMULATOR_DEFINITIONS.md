@@ -180,7 +180,7 @@ active generic state and its smaller payload bound are defined in
 The engine owns addresses, fixed occupancy, scheduling and commits. Generic
 `fields/` code owns scalar arithmetic and gradients; generic `dynamics/` code
 owns the shared response, local momentum exchange and movement calculations.
-`models/current_field.py` selects their policies and maps them to physical
+`models/scalar_field.py` selects their policies and maps them to physical
 records: six equal neighbor weights, no local retention, occupancy-based source,
 nonnegative scalar values and dominant-axis transverse response. No copied
 formulas are maintained in the adapter or compatibility imports.
@@ -202,7 +202,7 @@ candidate law's changes itself. The historical scalar model explicitly retains i
 value-based predicate. An injected scalar law tracks changes to both value and
 remainder unless `field_activity=` is supplied. A law must preserve the all-zero
 sample when neighbors and source are zero, as required by sparse scheduling.
-With no predicate, direct `Engine` callers retain all visited cells.
+With no predicate, direct `ScalarEngine` callers retain all visited cells.
 
 No gravitational attraction law, Newton/Einstein equation, future path search or
 unproven physical identification is added as part of architecture maintenance.

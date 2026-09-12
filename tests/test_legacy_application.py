@@ -10,11 +10,11 @@ from types import ModuleType
 import pytest
 
 from event_universe.legacy_runner import main, run_scenario, source_fingerprint
-from event_universe.scenarios import get_scenario
+from event_universe.particle_scenarios import get_scenario
 
 
 def test_legacy_acceptance_tool_resolves_its_explicit_scalar_model(monkeypatch):
-    from event_universe.api import ScalarSimulation
+    from event_universe.particle_api import ScalarSimulation
 
     renderer = ModuleType("event_universe.diagnostics.render")
     renderer.render_volume = lambda *args, **kwargs: pytest.fail("rendering was not requested")

@@ -21,11 +21,11 @@ def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
         "src/domain/math.py": "def calculate(): pass",
         "src/domain/engine.py": "from .math import calculate",
         "tests/helper.py": "from domain.engine import calculate",
-        "tests/test_engine.py": "from .helper import calculate",
+        "tests/test_scalar_engine.py": "from .helper import calculate",
         "tests/test_unrelated.py": "def test_other(): pass",
     }
     tests, typed = CHECK.select(["src/domain/math.py"], sources)
-    assert "tests/test_engine.py" in tests
+    assert "tests/test_scalar_engine.py" in tests
     assert "tests/test_unrelated.py" not in tests
     assert typed == ["src/domain/engine.py", "src/domain/math.py"]
 
@@ -60,6 +60,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     assert tests == [
         "tests/test_check_scope.py",
+        "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
     ]
@@ -98,11 +99,11 @@ def test_dynamic_example_paths_retain_identity_checks_without_unrelated_physics(
 
 def test_runpy_acceptance_tool_retains_application_consumer():
     sources = {
-        "tests/test_application.py": 'runpy.run_path(root / "tools/check_diagonal_motion.py")',
+        "tests/test_legacy_application.py": 'runpy.run_path(root / "tools/check_diagonal_motion.py")',
         "tests/test_collisions.py": "def test_historical(): pass",
     }
     tests, _ = CHECK.select(["tools/check_diagonal_motion.py"], sources)
-    assert "tests/test_application.py" in tests
+    assert "tests/test_legacy_application.py" in tests
     assert "tests/test_collisions.py" not in tests
 
 
@@ -160,3 +161,27 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     finished = cleanup_expired(report.parent, now=time.time() + MAX_AGE_SECONDS + 1)
     assert not finished["errors"] and finished["deleted"] == [str(report)]
     assert selected.exists()
+
+
+@pytest.mark.parametrize("path", [".github/workflows/check.yml", "setup.ps1", "new-component/notes.txt"])
+def test_every_file_change_selects_language_and_canonical_copy_guards(path):
+    tests, typed = CHECK.select([path], {})
+    assert {"tests/test_repository_language.py", "tests/test_repository_hygiene.py"} <= set(tests)
+    assert not typed
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "examples/04-unequal-mass-collision.json",
+        "examples/known-entities/three-masses.json",
+        "examples/known-entities/three-masses-low-budget.json",
+        "examples/known-entities/boundary-periodic.json",
+        "examples/known-entities/boundary-open.json",
+        "examples/known-entities/run_reference_checks.py",
+        "examples/known-entities/run_reference_checks.ps1",
+    ],
+)
+def test_reference_runner_dynamic_resources_select_numerical_acceptance(path):
+    tests, _ = CHECK.select([path], {})
+    assert "tests/test_reference_examples.py" in tests

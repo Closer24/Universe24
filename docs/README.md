@@ -1,0 +1,55 @@
+# Documentation index
+
+Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
+Each document below owns one subject. Link to that owner instead of maintaining
+another copy of its rules. A configured law, a research hypothesis and a measured
+result are different claims. Revision-specific results are not a live status feed.
+
+## Active implementation contracts
+
+| Document | Responsibility |
+| --- | --- |
+| [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
+| [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
+| [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
+| [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
+| [Entity catalog](ENTITY_CATALOG.md) | Compilation of bounded entity profiles into initialization data |
+| [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
+| [Physical entities](PHYSICAL_ENTITIES.md) | Inventory, representation coverage and unestablished physical behavior |
+
+## Explicit quantum experiments
+
+| Document | Responsibility |
+| --- | --- |
+| [Quantum events](QUANTUM_EVENTS.md) | Selected deferred joint-state event backend and decision semantics |
+| [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
+| [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
+| [Quantum detector trial](QUANTUM_DETECTOR_TRIAL.md) | Historical opt-in detector/controller experiment |
+
+## Historical particle candidates
+
+These named APIs remain testable; none is the implicit active `Simulation`.
+
+| Document | Responsibility |
+| --- | --- |
+| [Scalar fields](SCALAR_FIELDS.md) | Historical scalar field composition and turning policies |
+| [Balanced motion](BALANCED_MOTION.md) | Digital movement and local halo candidate, including its limits |
+| [Causal-stream field](CAUSAL_STREAM_FIELD.md) | Outward stream candidate and pre-wrap isolation result |
+
+## Operation, validation and change procedure
+
+| Document | Responsibility |
+| --- | --- |
+| [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
+| [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
+| [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
+| [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |
+| [Test expectations](TEST_EXPECTATIONS.md) | Independent expected results and coverage ownership |
+| [Validation evidence](VALIDATION.md) | Dated, source-identified check results; not timeless certification |
+| [Migration](MIGRATION.md) | Public API transitions and internal path renames |
+| [Physical features](PHYSICAL_FEATURES.md) | Contract and review procedure for a new physical hypothesis |
+
+The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
+and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
+routes readers; it does not duplicate their technical rules.

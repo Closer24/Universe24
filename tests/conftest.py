@@ -51,7 +51,7 @@ def capture_test_runs(monkeypatch, request):
         yield
         return
 
-    from event_universe.core.engine import Engine
+    from event_universe.core.scalar_engine import ScalarEngine
     from event_universe.diagnostics.frames import capture_volume
 
     runs = {}
@@ -78,7 +78,7 @@ def capture_test_runs(monkeypatch, request):
 
         return step
 
-    monkeypatch.setattr(Engine, "step", instrument(Engine.step))
+    monkeypatch.setattr(ScalarEngine, "step", instrument(ScalarEngine.step))
     yield
     for record in runs.values():
         final = capture_volume(record["world"])

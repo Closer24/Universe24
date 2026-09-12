@@ -1,4 +1,4 @@
-# Migration from the single-file simulator
+# API and repository migration
 
 Install from the extracted project first:
 
@@ -67,21 +67,21 @@ source, tests, documentation and the preserved reference.
 Existing `ScalarSimulation(config, observer=...)` calls retain the same defaults.
 Optional `field=` and `turning=` keywords replace the respective component
 without changing scheduling. The compatibility `IntegerO1Field3D` facade
-continues to use the current defaults; use `ScalarSimulation` for component injection.
-See `FIELDS.md` for the scalar protocol and an example.
+continues to use the historical scalar defaults; use `ScalarSimulation` for component injection.
+See `SCALAR_FIELDS.md` for the scalar protocol and an example.
 
 Imports of `update_field`, `update_particle`, `gradient`, `transverse_gradient`,
 `choose_axis` and `MODEL_ID` from `models.local_field` remain supported through
 re-exports. New code uses `fields.scalar`, `dynamics.turning`, `dynamics.movement`
-and `models.current_field` directly. Tests specific to the current law moved
-from `test_local_laws.py` to `test_current_field.py`.
+and `models.scalar_field` directly. Tests specific to the historical scalar law moved
+from `test_local_laws.py` to `test_scalar_field_model.py`.
 
-Activity decisions are now injected into `Engine` with the optional
+Activity decisions are now injected into `ScalarEngine` with the optional
 `field_activity=` keyword. `ScalarSimulation()` explicitly keeps legacy activity;
 `ScalarSimulation(field=...)` tracks both value and remainder changes by default.
 This fixes prematurely stopped remainder-only evolution for replacement fields.
 Explicit `ScalarSimulation(field_activity=...)` accepts a predicate over two scalar
-samples and a source count. Direct `Engine` predicates receive two cell records
+samples and a source count. Direct `ScalarEngine` predicates receive two cell records
 and a source count; omitting one retains visited cells conservatively.
 Periodic geometry is shared by all engine operations in `core/lattice.py`.
 
@@ -91,3 +91,34 @@ Use Git commits and tags for source versions. The v10 reference is retained unde
 `tests/reference/` only; application code must never import it. Each run records
 a SHA-256 fingerprint of the active package files, so source identity survives
 installation from a ZIP or wheel without a Git checkout.
+
+
+## Explicit historical component names
+
+The 2026-09-12 consistency cleanup makes the active generic engine distinct from
+historical particle models. These are source/import/command renames, not new
+physical laws. Public `event_universe.Simulation`, `ScalarSimulation`,
+`LinkedSimulation`, `BalancedSimulation` and `CausalStreamSimulation` keep the same
+implementations. Internal imports in downstream scripts must use the new paths.
+No second implementation or duplicate compatibility module was added for these names.
+
+| Previous internal path or name | Canonical replacement |
+| --- | --- |
+| `event_universe.api` | `event_universe.particle_api` |
+| `event_universe.core.engine.Engine` | `event_universe.core.scalar_engine.ScalarEngine` |
+| `event_universe.models.current_field.CurrentFieldModel` | `event_universe.models.scalar_field.ScalarFieldModel` |
+| `CURRENT_MODEL` in the historical field module | `SCALAR_MODEL` |
+| `event_universe.scenarios` | `event_universe.particle_scenarios` |
+| `tests/test_engine.py` | `tests/test_scalar_engine.py` |
+| `tests/test_current_field.py` | `tests/test_scalar_field_model.py` |
+| `tests/test_application.py` | `tests/test_legacy_application.py` |
+| `docs/FIELDS.md` | `docs/SCALAR_FIELDS.md` |
+| `examples/known-entities/run.py` | `examples/known-entities/run_reference_checks.py` |
+| `examples/known-entities/run.ps1` | `examples/known-entities/run_reference_checks.ps1` |
+| `examples/known-entities/collision.json` | `examples/04-unequal-mass-collision.json` |
+
+The removed collision file was byte-identical to the canonical workspace example.
+The reference command resolves its logical `collision` experiment to that file;
+other reference inputs retain their separate configuration and expectations.
+Archived files under `tests/reference/` are unchanged. Earlier validation records
+retain their original paths and hashes; use this table to locate the current owner.

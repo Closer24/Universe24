@@ -4,9 +4,9 @@ from event_universe import CellState, Config, ParticleState
 from event_universe.core.state import MAX_CORE_INT
 from event_universe.fields import ScalarField
 from event_universe.fields.scalar import gradient
-from event_universe.models.current_field import (
-    CURRENT_MODEL,
-    CurrentFieldModel,
+from event_universe.models.scalar_field import (
+    SCALAR_MODEL,
+    ScalarFieldModel,
     update_field,
     update_particle,
 )
@@ -53,7 +53,7 @@ def test_overflow_cannot_commit_only_one_side_of_exchange():
     assert particle.px == 0 and cell.px == -MAX_CORE_INT
 
 
-def test_current_field_uses_occupancy_without_retaining_its_own_value():
+def test_scalar_field_model_uses_occupancy_without_retaining_its_own_value():
     old = CellState(phi=1234, px=5, py=-6, pz=7)
     neighbors = (0, 0, 0, 0, 0, 0)
     assert update_field(old, neighbors, 1, Config()) == CellState(9, 5, -6, 7, 1)
@@ -62,7 +62,7 @@ def test_current_field_uses_occupancy_without_retaining_its_own_value():
 
 def test_current_adapter_owns_nonnegative_field_policy():
     signed_field = ScalarField(neighbor_weights=(-1, 0, 0, 0, 0, 0))
-    model = CurrentFieldModel(field=signed_field, turning=CURRENT_MODEL.turning)
+    model = ScalarFieldModel(field=signed_field, turning=SCALAR_MODEL.turning)
     cell = CellState(px=5, py=-6, pz=7)
     assert model.update_field(cell, (10, 0, 0, 0, 0, 0), 0, Config(field_den=3)) == cell
 
@@ -79,8 +79,8 @@ def test_current_particle_uses_only_transverse_gradient_while_moving():
 
 def test_current_model_explicitly_preserves_value_based_activity():
     previous, current = CellState(phi=1), CellState(phi=1, remainder=1)
-    assert not CURRENT_MODEL.field_is_active(previous, current, 0)
-    assert CURRENT_MODEL.field_is_active(previous, current, 1)
+    assert not SCALAR_MODEL.field_is_active(previous, current, 0)
+    assert SCALAR_MODEL.field_is_active(previous, current, 1)
 
 
 def test_current_particle_connects_turning_and_movement_without_changing_position():

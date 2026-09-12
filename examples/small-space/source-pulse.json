@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "model_id": "small-space-stationary-source-probe-v1",
+  "shape": [9, 9, 9],
+  "boundary": "open",
+  "slots_per_cell": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 3,
+  "operation_costs": {
+    "receive": 1, "read": 1, "evaluate": 1, "update": 1, "couple": 1,
+    "route": 1, "split": 1, "send": 1, "commit": 1
+  },
+  "fields": [
+    {
+      "name": "strength", "components": 1, "units": "source units per field interval",
+      "signed": false, "conserved": true, "extensive": true
+    },
+    {
+      "name": "radiation", "components": 1, "units": "transported scalar unit",
+      "signed": true, "conserved": true, "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "stationary_source", "fields": ["strength"],
+      "defaults": {"strength": 216}, "transport": {"mode": "hold"}
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "radiation", "baseline": 0, "transport": "outward",
+      "axis_weights": [1, 1, 1], "octant_weights": [1, 1, 1, 1, 1, 1, 1, 1]
+    }
+  ],
+  "emissions": [
+    {
+      "type": "stationary_source", "field": "radiation",
+      "amount": {"field": "strength"}, "denominator": 1, "source": true
+    }
+  ],
+  "seeds": [{"position": [4, 4, 4], "type": "stationary_source"}]
+}

@@ -1,5 +1,15 @@
 # Test inputs and expected results
 
+## Small-space physical comparisons
+
+See [the experiment evidence](../examples/small-space/README.md).
+`tests/test_small_space_experiments.py` checks finite reservoir depletion with
+zero injection, delayed-by-one-link source response and opposite vector stock,
+and a restricted unequal-mass momentum permutation. It also rejects a nonzero
+total-momentum pair and checks classical units using actual displacement.
+The experiment report separately exposes missing physical laws; an accounting
+pass must not be relabeled as physical acceptance.
+
 ## Physical entity catalog and elementary probes
 
 `tests/test_physical_entities.py` covers the sourced catalog and only its new
@@ -186,11 +196,11 @@ occupancy; measurements read the result.
 | `test_field_policies.py` | Source, range and activity | Derive source from count; test clipping and activity separately |
 | `test_turning.py` | Generic vector response | Shared impulse arithmetic for each direction policy; opposite field impulse |
 | `test_movement.py` | Movement budget and axis selection | Preserve momentum without field influence; budget schedules one step |
-| `test_current_field.py` | Current-model assembly | Occupancy source, nonnegative field, transverse response and legacy activity |
+| `test_scalar_field_model.py` | Current-model assembly | Occupancy source, nonnegative field, transverse response and legacy activity |
 | `test_field_composition.py` | Replacement in the engine | Alternative laws change the expected outcome; remainder-only activity persists |
-| `test_engine.py` | Causality, occupancy and scheduling | One-edge propagation and movement; one particle update per tick |
+| `test_scalar_engine.py` | Causality, occupancy and scheduling | One-edge propagation and movement; one particle update per tick |
 | `test_diagnostics.py` | Measurement and display | Exact XY/XZ/YZ slices; full XYZ and off-plane records; source state untouched |
-| `test_application.py` | Historical runner output | Headless metadata/events and lazy imports; diagonal acceptance tool selects explicit ScalarSimulation; explicit visualization preserves slice/volume event identity |
+| `test_legacy_application.py` | Historical runner output | Headless metadata/events and lazy imports; diagonal acceptance tool selects explicit ScalarSimulation; explicit visualization preserves slice/volume event identity |
 | `test_regressions.py` | Physical behavior | Prompt contact, reflection symmetry, three-plane turning, momentum, isolated motion and the original 180-tick result |
 | `test_architecture.py` | Layer separation | Reject forbidden imports and adapter formulas; audit integer physics |
 | `test_repository_language.py` | English repository text | Reject legacy non-English scripts in project prose; preserve mathematical notation |
@@ -246,7 +256,7 @@ The suite reuses world runs when their inputs and required observations coincide
 The existing 24-tick contact/reflection experiment also checks the first transverse
 response, per-tick momentum and final remainders. The 110-tick turning experiment
 covers XY, XZ and YZ with momentum and remainder checks. Stationary-source symmetry
-and persistence remain in `test_engine.py`. The shared
+and persistence remain in `test_scalar_engine.py`. The shared
 plane/volume application test checks metadata, traces and standalone HTML together.
 The independent eight-case stream/free-control comparison covers the ordinary
 isolated-rate cases; the original sampler retains only the additional 1/100 and
@@ -539,3 +549,28 @@ from physical-law acceptance; do not multiply identical runs across labels.
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress.
 Existing shared engine tests remain necessary consumers of the changed schema.
+
+
+## Repository consistency and canonical references
+
+`test_repository_hygiene.py` rejects nonempty byte-identical files and JSON copies
+that differ only in formatting or object-key order. Negative cases insert a real
+copy; controls retain different array order and allow empty package markers.
+It does not detect arbitrary semantic duplication or replace ownership review.
+
+`test_repository_language.py` covers source paths, Python identifiers and prose,
+including PowerShell and interpreter-selection files. Paths and identifiers use
+ASCII names; scientific notation remains allowed in prose. Deliberate escaped
+multilingual negative fixtures verify rejection. Latin-script English still needs
+human review; a script check cannot certify natural-language meaning.
+
+`test_repository_navigation.py` scans Markdown throughout the source tree,
+including nested example READMEs, and requires the documentation index to route
+every document. Missing-file and missing-heading examples must fail.
+
+`test_reference_examples.py` verifies that public APIs resolve to the correct
+active or historical owner, that collision checks load the canonical workspace
+JSON, and that all five existing reference worlds keep their independent numeric
+assertions without producing HTML/GIF. The wrapper and its dynamically selected
+inputs explicitly select this regression through `tools/check.py`; every changed
+path selects the inexpensive repository language and canonical-copy guards.

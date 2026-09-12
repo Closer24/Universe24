@@ -1,4 +1,4 @@
-"""Our v10-contact model: local source meaning, nonnegative field and response choices.
+"""The historical v10-contact scalar model: local source meaning, nonnegative field and response choices.
 
 Reusable arithmetic lives in fields/ and dynamics/. This adapter alone maps
 their records to the simulator's fixed cell and particle state.
@@ -37,7 +37,7 @@ MODEL_ID = "scalar-field-v10-contact"
 
 
 @dataclass(frozen=True, slots=True)
-class CurrentFieldModel:
+class ScalarFieldModel:
     """Replaceable scalar field and turning policy, composed once per simulation."""
 
     field: ScalarFieldRule
@@ -113,12 +113,12 @@ class CurrentFieldModel:
 
 
 # Model choices are explicit here; generic primitives have no defaults for this model.
-CURRENT_MODEL = CurrentFieldModel(
+SCALAR_MODEL = ScalarFieldModel(
     field=ScalarField(neighbor_weights=(1, 1, 1, 1, 1, 1), self_weight=0),
     turning=FieldTurning(select_direction=dominant_axis_transverse),
     activity=value_changed_or_source,
 )
 
 # Preserve the former callable interface without duplicating physical formulas.
-update_field = CURRENT_MODEL.update_field
-update_particle = CURRENT_MODEL.update_particle
+update_field = SCALAR_MODEL.update_field
+update_particle = SCALAR_MODEL.update_particle

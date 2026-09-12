@@ -12,22 +12,23 @@ from event_universe.runner import run_initialization, source_fingerprint
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 
+# Logical experiment names select one canonical configuration, never a copied law.
+REFERENCE_CONFIGURATIONS = {
+    "collision": HERE.parent / "04-unequal-mass-collision.json",
+    "three-masses": HERE / "three-masses.json",
+    "three-masses-low-budget": HERE / "three-masses-low-budget.json",
+    "boundary-periodic": HERE / "boundary-periodic.json",
+    "boundary-open": HERE / "boundary-open.json",
+}
+
 
 def main():
     if not __debug__:
         raise RuntimeError("Run without -O so numerical acceptance checks remain enabled")
-    names = [
-        "collision",
-        "three-masses",
-        "three-masses-low-budget",
-        "boundary-periodic",
-        "boundary-open",
-    ]
     output = ROOT / "artifacts" / ("known-entities-" + datetime.now().strftime("%Y%m%d-%H%M%S-%f"))
     before = source_fingerprint()
     results = []
-    for name in names:
-        config = HERE / (name + ".json")
+    for name, config in REFERENCE_CONFIGURATIONS.items():
         raw = json.loads(config.read_text())
         folder = output / name
         print("Running " + name, flush=True)

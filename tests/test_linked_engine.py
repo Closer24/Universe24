@@ -1,9 +1,9 @@
 """Candidate behavior and causal boundary; original v10 expectations are untouched."""
 
-from event_universe.api import LinkedSimulation
 from event_universe.core.links import LinkConfig
 from event_universe.core.state import Config
 from event_universe.diagnostics.measurements import audit, total_momentum
+from event_universe.particle_api import LinkedSimulation
 
 
 def small(**changes):

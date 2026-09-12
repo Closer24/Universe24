@@ -16,14 +16,16 @@ benchmark, not evidence of emergence from elementary vector operations.
 From a repository checkout with the project Python environment already available:
 
 ```powershell
-./examples/known-entities/run.ps1 -Python python
+./examples/known-entities/run_reference_checks.ps1 -Python python
 ```
 
 Pass the existing environment's Python executable with `-Python` when needed.
 On other shells, set `PYTHONPATH=src` and run
-`python -B examples/known-entities/run.py` from the repository root.
+`python -B examples/known-entities/run_reference_checks.py` from the repository root.
 No build, installation, simulator edits, or visualization is performed.
-All entity definitions and laws are in the five JSON inputs. The diagnostic
+All entity definitions and laws are in the five JSON inputs. The collision input
+is [the canonical workspace example](../04-unequal-mass-collision.json), also used
+by this runner; no local duplicate is maintained. The diagnostic
 runner reads them without overwriting them. Its numerical acceptance checks
 are specific to these configurations; update expectations when editing a model.
 
@@ -32,7 +34,7 @@ and summary files are registered for the standard 24-hour artifact retention;
 idle removal requires the existing retention watcher. See
 [retention](../../docs/RETENTION.md). Original configurations remain in Git.
 
-Recorded local validation on 2026-09-12 using Python 3.14.7:
+Historical local validation on 2026-09-12 using Python 3.14.7 (source hash below):
 
 | Configuration | Ticks | Simulator seconds | Observation |
 |---|---:|---:|---|

@@ -2,7 +2,7 @@
 
 Base: upstream `76676d48ffbe7fc53913f4d26464921cb20f72df`.
 Candidate: `scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`
-in `event_universe.api`. Baseline `Simulation` and the frozen v10 reference retain
+in `event_universe.particle_api`. Historical `ScalarSimulation` and the frozen v10 reference retain
 their existing behavior.
 
 ## Feature contract
@@ -49,8 +49,9 @@ modulo the new total.
 
 ## Reproduction and measured results
 
-Run `PYTHONPATH=src python tools/check_diagonal_motion.py`. It uses the existing
-full 3D GIF/HTML renderer, writes JSON measurements, and exits nonzero if any new
+For explicitly requested visual validation, run
+`PYTHONPATH=src python tools/check_diagonal_motion.py`. It captures volume frames
+and calls the existing HTML renderer, writes JSON measurements, and exits nonzero if any new
 candidate case changes isolated momentum or exceeds the digital-line bound.
 
 | Run | Measured result |

@@ -1,6 +1,6 @@
 """Sole adapter between spacetime records and the shared quantum-history owner.
 
-No Engine reference, write callback, automatic polling, or physical commit is
+No ScalarEngine reference, write callback, automatic polling, or physical commit is
 allowed here. The caller supplies current world time and explicit quantum input.
 """
 
@@ -108,5 +108,5 @@ class QuantumBridge:
         self._quantum.bind_terminal_trial(setup)
 
     def read_terminal_trial(self, tick: int, ticket: int) -> TerminalReply:
-        """Return trial result, never write a physical detector or Engine event."""
+        """Return trial result, never write a physical detector or ScalarEngine event."""
         return self._quantum.read_terminal_trial(tick, ticket)

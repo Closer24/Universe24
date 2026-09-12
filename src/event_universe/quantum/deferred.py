@@ -355,7 +355,7 @@ class DeferredQuantum:
     def read_terminal_trial(self, tick: int, ticket: int) -> TerminalReply:
         """Absorbing trial. First ticket must be uniform; repeats reuse the result.
 
-        No Engine reference, physical writes, clock advancement or second
+        No ScalarEngine reference, physical writes, clock advancement or second
         evaluator. The trial has no post-detection evolving quantum excitation.
         """
         checked(tick)

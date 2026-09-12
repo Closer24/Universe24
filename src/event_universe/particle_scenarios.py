@@ -2,13 +2,13 @@
 
 from dataclasses import dataclass
 
-from event_universe.api import LinkedSimulation
-from event_universe.api import ScalarSimulation as Simulation
 from event_universe.core.contracts import Observer
-from event_universe.core.engine import Engine
 from event_universe.core.links import LinkConfig
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import Slice
+from event_universe.particle_api import LinkedSimulation
+from event_universe.particle_api import ScalarSimulation as Simulation
 
 ParticleSeed = tuple[int, int, int, int, int, int, int]
 
@@ -24,8 +24,8 @@ class Scenario:
     masses: tuple[int, ...] = ()
     collisions: bool = False
 
-    def create(self, observer: Observer | None = None) -> Engine:
-        world: Engine = (
+    def create(self, observer: Observer | None = None) -> ScalarEngine:
+        world: ScalarEngine = (
             Simulation(self.config, observer=observer, collisions=self.collisions)
             if self.links is None
             else LinkedSimulation(

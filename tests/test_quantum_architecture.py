@@ -10,12 +10,12 @@ import event_universe
 from .architecture_rules import import_targets
 
 FORBIDDEN_QUANTUM_DEPENDENCIES = (
-    "event_universe.core.engine",
+    "event_universe.core.scalar_engine",
     "event_universe.core.linked_engine",
-    "event_universe.api",
+    "event_universe.particle_api",
     "event_universe.compat",
     "event_universe.runner",
-    "event_universe.scenarios",
+    "event_universe.particle_scenarios",
     "event_universe.fields",
     "event_universe.dynamics",
     "event_universe.models",
@@ -57,8 +57,8 @@ def test_all_production_modules_respect_quantum_ownership():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("quantum.deferred", "from ..core.engine import Engine"),
-        ("quantum.deferred", "from event_universe.core import engine"),
+        ("quantum.deferred", "from ..core.scalar_engine import ScalarEngine"),
+        ("quantum.deferred", "from event_universe.core import scalar_engine"),
         ("quantum.deferred", "from ..core import linked_engine as engine"),
         ("quantum.deferred", "from .. import Simulation"),
         ("quantum.deferred", "from event_universe import LinkedSimulation"),
@@ -66,9 +66,9 @@ def test_all_production_modules_respect_quantum_ownership():
         ("quantum.deferred", "from ..integration import quantum_bridge"),
         ("quantum.deferred", "import event_universe.diagnostics.frames as frames"),
         ("diagnostics.frames", "from ..quantum import DeferredQuantum"),
-        ("core.engine", "from .. import quantum"),
-        ("models.current_field", "import event_universe.quantum as quantum"),
-        ("api", "from .quantum import DeferredQuantum"),
+        ("core.scalar_engine", "from .. import quantum"),
+        ("models.scalar_field", "import event_universe.quantum as quantum"),
+        ("particle_api", "from .quantum import DeferredQuantum"),
     ],
 )
 def test_gate_rejects_relative_member_and_aliased_imports(module, source):
@@ -82,7 +82,7 @@ def test_gate_rejects_relative_member_and_aliased_imports(module, source):
         ("quantum.deferred", "from .state import Amplitude"),
         ("quantum.__init__", "from .deferred import DeferredQuantum"),
         ("integration.quantum_bridge", "from ..quantum import DeferredQuantum"),
-        ("diagnostics.frames", "from ..core.engine import Engine"),
+        ("diagnostics.frames", "from ..core.scalar_engine import ScalarEngine"),
     ],
 )
 def test_gate_allows_legal_dependencies(module, source):

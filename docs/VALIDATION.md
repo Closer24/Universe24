@@ -1,5 +1,10 @@
 # Validation evidence
 
+Each record applies to its identified source and configuration, not all future
+checkouts. Original paths and hashes in historical results are retained. Use
+[the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
+and [project status](PROJECT_STATUS.md) for the current source map.
+
 ## Physical inventory and elementary probes — 2026-09-12
 
 Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
@@ -688,7 +693,7 @@ Ruff lint/format passed and strict mypy passed. The test renderer captured
 source; its current fingerprint is recorded in `artifacts/local-links/run.json`.
 Earlier evidence is preserved under `artifacts/local-links-before-merge` and
 `artifacts/local-links-check-before-merge.log`.
-# Executable catalog and bounded conversions, 2026-09-12
+## Executable catalog and bounded conversions, 2026-09-12
 
 Base: `d1d7251ba739fb7231eff0d41037744456297ddd`. Python 3.14.7.
 The affected gate selected 764 passing cases and five explicitly optional visual
@@ -722,3 +727,23 @@ inspection was not performed; the existing renderer is unchanged. These are
 representation/conversion tests, not physical annihilation, Maxwell, mass,
 spinor, gauge, metric or general energy derivations. Git PR/CI evidence identifies
 the final integrated tree; generated output follows finite retention.
+
+
+## Repository consistency baseline — 2026-09-12
+
+The whole-repository audit starts from main
+`2e753fed1f6922d9d2082d6d43c9e150f237bdd6` (228 tracked project files).
+[Baseline run 34693224761](https://github.com/Closer24/Universe24/actions/runs/34693224761)
+executed `python tools/check.py --full` using Python 3.14.7, Ruff 0.16.7,
+mypy 2.3.1 and pytest 9.1.1: Ruff check/format passed, strict mypy passed
+73 source files, and pytest passed 1,249 cases with 30 explicit visualization skips.
+The temporary read-only audit workflow was the only addition in that run;
+its source tree was otherwise the recorded main revision.
+
+The inventory found one byte-identical collision configuration pair and no exact
+production function-body copies at the inspected threshold of 12 source lines.
+This is a duplication heuristic, not proof of absence of semantic overlap.
+The cleanup consolidates that input, explicitly names historical scalar owners,
+extends source-language/navigation/hygiene coverage and preserves reference files.
+Final submitted-tree validation is recorded in its PR/CI, not inferred from this
+baseline result. No visual inspection or newly derived physical law is claimed.

@@ -5,7 +5,7 @@ from event_universe import ScalarSimulation as Simulation
 from event_universe.diagnostics.frames import Slice
 from event_universe.diagnostics.measurements import audit, total_momentum
 from event_universe.diagnostics.recorder import TraceRecorder
-from event_universe.scenarios import get_scenario
+from event_universe.particle_scenarios import get_scenario
 
 
 @pytest.mark.parametrize("plane", ["XY", "XZ", "YZ"])

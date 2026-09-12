@@ -1,9 +1,9 @@
-"""Engine extension for one-link causal outward field streaming."""
+"""ScalarEngine extension for one-link causal outward field streaming."""
 
 from collections.abc import Callable
 
 from .contracts import NullObserver, Observer, ParticleRule
-from .engine import Engine
+from .scalar_engine import ScalarEngine
 from .state import Address, CellState, Config, Neighbors
 from .streams import Octants, Outgoing, StreamTransport
 
@@ -16,7 +16,7 @@ def _unused_field_rule(cell: CellState, neighbors: Neighbors, sources: int, conf
     return cell
 
 
-class StreamingEngine(Engine):
+class StreamingEngine(ScalarEngine):
     """Advance field streams first, then let particles read only delivered flux."""
 
     def __init__(

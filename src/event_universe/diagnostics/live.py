@@ -89,7 +89,7 @@ def _preview_worker(
     view: Slice,
     volume: bool,
 ) -> None:
-    """Consume only copied snapshots; the child never receives an Engine or a callback."""
+    """Consume only copied snapshots; the child never receives a ScalarEngine or a callback."""
     picture = output / f".live-frame-{os.getpid()}.png"
     volume_history: deque[VolumeFrame] = deque(maxlen=8)
     slice_history: deque[Frame] = deque(maxlen=8)

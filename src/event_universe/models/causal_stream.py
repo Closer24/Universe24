@@ -6,7 +6,7 @@ from event_universe.core.state import Config
 from event_universe.dynamics.movement import advance_movement
 from event_universe.dynamics.turning import FieldTurning, full_response
 from event_universe.fields.streaming import CausalOctantStream, attractive_samples
-from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
+from event_universe.models.scalar_field import SCALAR_MODEL, ScalarFieldModel
 
 MODEL_ID = "causal-octant-stream-v1"
 
@@ -39,10 +39,10 @@ class CausalStreamConfig:
 
 
 STREAM_FIELD = CausalOctantStream()
-STREAM_MODEL = CurrentFieldModel(
-    field=CURRENT_MODEL.field,
+STREAM_MODEL = ScalarFieldModel(
+    field=SCALAR_MODEL.field,
     turning=FieldTurning(select_direction=full_response),
-    activity=CURRENT_MODEL.activity,
+    activity=SCALAR_MODEL.activity,
     movement=advance_movement,
 )
 STREAM_SAMPLES = attractive_samples

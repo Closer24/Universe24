@@ -1,7 +1,8 @@
 """Compatibility entry point. Install event-universe, then keep existing imports.
 
 The active implementation is event_universe; this file contains no copied physics.
-Run this file to create a contact demonstration with standalone HTML output.
+Running this file delegates to the active CLI, which requires --init and is headless
+by default. Use --visualize only when a recorded HTML display is requested.
 """
 
 from event_universe.compat import IntegerO1Field, IntegerO1Field3D

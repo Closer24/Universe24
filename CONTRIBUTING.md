@@ -23,7 +23,7 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    Inspect metadata and traces for affected runs.
    Capture and inspect HTML only when visualization was explicitly requested.
    Test reusable calculations in `test_scalar_field.py` and `test_turning.py`,
-   current choices in `test_current_field.py`, and public component replacement
+   current choices in `test_scalar_field_model.py`, and public component replacement
    in `test_field_composition.py`.
    Specify input, expected output and a boundary case for each calculation;
    maintain `docs/TEST_EXPECTATIONS.md`. Movement, lattice geometry, field

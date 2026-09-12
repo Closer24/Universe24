@@ -26,7 +26,7 @@ target continuum equation. Physical equations may be independent external
 validation targets. A successful finite example establishes only its stated
 local mechanism and measured outcome.
 
-The older [unequal-mass collision](../examples/known-entities/collision.json)
+The older [unequal-mass collision](../examples/04-unequal-mass-collision.json)
 contains a configured elastic formula. It remains a reference benchmark, not
 evidence that the new elementary rules derived that formula. The new examples
 below do not use it to generate their updates.
@@ -106,7 +106,7 @@ python -m event_universe --init examples/known-entities/discrete-pair.json --out
 python -m event_universe --init examples/known-entities/field-channel.json --output artifacts/field-channel --visualize
 ```
 
-The old `known-entities/run.py` wrapper runs its original five benchmarks only.
+The old `known-entities/run_reference_checks.py` wrapper runs its original five benchmarks only.
 It does not consume the catalog or these two inputs. Use the explicit commands
 above to obtain the recorded HTML for the new probes.
 

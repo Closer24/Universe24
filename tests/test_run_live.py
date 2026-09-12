@@ -10,9 +10,9 @@ import pytest
 
 from event_universe import Config, ParticleState
 from event_universe import legacy_runner as runner
-from event_universe.core.engine import Engine
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.diagnostics.frames import Slice
-from event_universe.scenarios import Scenario
+from event_universe.particle_scenarios import Scenario
 
 
 def scenario(ticks=2):
@@ -41,13 +41,13 @@ def test_live_worker_keeps_all_canonical_frames_events_and_metadata(monkeypatch,
 
     monkeypatch.setattr(renderer, name, render)
     runner.run_scenario(scenario(), plain, volume=volume, visualize=True)
-    original_step = Engine.step
+    original_step = ScalarEngine.step
 
     def step(world):
         assert (live / "live.html").is_file()
         return original_step(world)
 
-    monkeypatch.setattr(Engine, "step", step)
+    monkeypatch.setattr(ScalarEngine, "step", step)
     artifact = runner.run_scenario(scenario(), live, volume=volume, live=True)
     assert captures[0] == captures[1]
     assert [frame.tick for frame in captures[1]] == [0, 1, 2]

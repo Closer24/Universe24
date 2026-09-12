@@ -3,7 +3,7 @@
 Acyclic per-cell heads describe the wave; pure queries never select old paths.
 Recorded constraints close the conservative backward cone. Only an explicitly
 supplied local instrument can commit an outcome. This is an opt-in finite
-quantum candidate, not a field law or an Engine-native event producer.
+quantum candidate, not a field law or an ScalarEngine-native event producer.
 """
 
 from dataclasses import dataclass

@@ -1,12 +1,12 @@
-"""Engine transport extension; field, geometry and transit arithmetic are injected."""
+"""ScalarEngine transport extension; field, geometry and transit arithmetic are injected."""
 
 from collections.abc import Callable, Mapping
 from types import MappingProxyType
 from typing import NamedTuple
 
 from .contracts import CollisionRule, FieldActivity, FieldRule, Observer, ParticleRule
-from .engine import Engine
 from .links import LengthRule, LinkConfig, LinkTransport
+from .scalar_engine import ScalarEngine
 from .state import Address, CellState, Config, Neighbors, Vector, checked, validate_cell
 
 TransitRule = Callable[[int, Vector, int, int, int], int]
@@ -19,10 +19,10 @@ class Transit(NamedTuple):
     due: int
 
 
-class LinkedEngine(Engine):
+class LinkedEngine(ScalarEngine):
     """Cell-owned links, delivered neighbor values and frozen integer transits.
 
-    The base scalar record and the extended particle record are shared with Engine.
+    The base scalar record and the extended particle record are shared with ScalarEngine.
     Extra state: thirty link registers per materialized cell; four per transit.
     Fixed K occupancy also bounds in-flight residents per departure cell.
     """

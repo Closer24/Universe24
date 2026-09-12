@@ -9,9 +9,9 @@ import pytest
 
 from event_universe import Simulation
 from event_universe.legacy_runner import run_scenario
+from event_universe.particle_scenarios import get_scenario
 from event_universe.retention import cleanup_expired
 from event_universe.runner import run_initialization
-from event_universe.scenarios import get_scenario
 
 ROOT = Path(__file__).resolve().parents[1]
 

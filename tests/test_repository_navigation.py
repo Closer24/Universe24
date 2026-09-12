@@ -6,6 +6,8 @@ from urllib.parse import unquote, urlsplit
 
 import pytest
 
+from .test_repository_language import repository_files
+
 
 def local_links(document):
     text = re.sub(r"```.*?```", "", document.read_text(encoding="utf-8"), flags=re.S)
@@ -40,8 +42,7 @@ def broken_links(document, root):
 
 def test_repository_documents_and_skill_routes_are_navigable():
     root = Path(__file__).resolve().parents[1]
-    documents = [*root.glob("*.md"), *(root / "docs").rglob("*.md")]
-    documents.extend((root / "skills").rglob("*.md"))
+    documents = [path for path in repository_files(root) if path.suffix == ".md"]
     for document in documents:
         assert not broken_links(document, root), (document, broken_links(document, root))
     boss = root / "skills/boss-orchestrator/SKILL.md"
@@ -67,3 +68,20 @@ def test_navigation_detects_missing_files_and_headings(tmp_path, target, valid):
     entry = tmp_path / "entry.md"
     entry.write_text(f"# Entry\n[Contract]({target})\n", encoding="utf-8")
     assert (not broken_links(entry, tmp_path)) is valid
+
+
+def test_documentation_index_routes_every_document():
+    root = Path(__file__).resolve().parents[1]
+    index = root / "docs/README.md"
+    routes = {path for path, _ in local_links(index)}
+    documents = set((root / "docs").rglob("*.md")) - {index}
+    assert documents <= routes, sorted(str(path) for path in documents - routes)
+
+
+def test_nested_example_readmes_are_included_in_navigation_audit(tmp_path):
+    entry = tmp_path / "examples" / "nested" / "README.md"
+    entry.parent.mkdir(parents=True)
+    entry.write_text("# Example\n[Missing contract](missing.md)\n", encoding="utf-8")
+    documents = [path for path in repository_files(tmp_path) if path.suffix == ".md"]
+    assert documents == [entry]
+    assert broken_links(entry, tmp_path) == [str(entry.parent / "missing.md")]

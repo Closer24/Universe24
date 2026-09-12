@@ -30,7 +30,7 @@ class TerminalSetup:
 
 @dataclass(frozen=True, slots=True)
 class TerminalRecord:
-    """Immutable quantum result, not an Engine event."""
+    """Immutable quantum result, not an ScalarEngine event."""
 
     tick: int
     detector: int
