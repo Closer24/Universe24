@@ -1,0 +1,21 @@
+{
+  "frame_stride": 2,
+  "duration_ms": 100,
+  "width": 720,
+  "height": 760,
+  "view": {
+    "x": [
+      20,
+      60
+    ],
+    "y": [
+      26,
+      45
+    ],
+    "z": [
+      26,
+      39
+    ]
+  },
+  "camera_rotation_degrees": 18
+}

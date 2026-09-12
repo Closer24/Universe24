@@ -3,6 +3,7 @@
 from dataclasses import replace
 
 from event_universe.core.disturbance_state import (
+    MAX_PORTS,
     CostMeter,
     FieldDefinition,
     Payload,
@@ -32,8 +33,8 @@ OCTANT_SIGNS: tuple[tuple[int, int, int], ...] = (
 
 
 def _weight_sum(weights: tuple[int, ...]) -> int:
-    if not 1 <= len(weights) <= 8:
-        raise ValueError("a spatial partition requires one through eight weights")
+    if not 1 <= len(weights) <= MAX_PORTS:
+        raise ValueError("a spatial partition requires one through 26 weights")
     for weight in weights:
         if bounded(weight) < 0:
             raise ValueError("spatial weights must be nonnegative")

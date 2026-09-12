@@ -25,6 +25,13 @@ FORBIDDEN_QUANTUM_DEPENDENCIES = (
     "event_universe.LinkedSimulation",
 )
 
+# Host persistence reads/writes allowlisted state; it never evaluates a quantum
+# operation or supplies an input to the running planner.
+CHECKPOINT_HOST_MODULES = {
+    "event_universe.checkpoint_codec",
+    "event_universe.checkpoint_quantum",
+}
+
 
 def _within(target: str, prefix: str) -> bool:
     return target == prefix or target.startswith(prefix + ".")
@@ -42,7 +49,11 @@ def quantum_violations(source: str, module: str) -> list[tuple[int, str]]:
         if layer == "quantum":
             if any(_within(target, prefix) for prefix in FORBIDDEN_QUANTUM_DEPENDENCIES):
                 found.append((line, target))
-        elif layer != "integration" and _within(target, "event_universe.quantum"):
+        elif (
+            layer != "integration"
+            and module not in CHECKPOINT_HOST_MODULES
+            and _within(target, "event_universe.quantum")
+        ):
             found.append((line, target))
     return found
 
@@ -69,6 +80,8 @@ def test_all_production_modules_respect_quantum_ownership():
         ("core.scalar_engine", "from .. import quantum"),
         ("models.scalar_field", "import event_universe.quantum as quantum"),
         ("particle_api", "from .quantum import DeferredQuantum"),
+        ("checkpoint_other", "from .quantum import DeferredQuantum"),
+        ("core.checkpoint_quantum", "from ..quantum import DeferredQuantum"),
     ],
 )
 def test_gate_rejects_relative_member_and_aliased_imports(module, source):
@@ -82,6 +95,8 @@ def test_gate_rejects_relative_member_and_aliased_imports(module, source):
         ("quantum.deferred", "from .state import Amplitude"),
         ("quantum.__init__", "from .deferred import DeferredQuantum"),
         ("integration.quantum_bridge", "from ..quantum import DeferredQuantum"),
+        ("checkpoint_codec", "from .quantum.state import Amplitude"),
+        ("checkpoint_quantum", "from .quantum.event_network import EventNetwork"),
         ("diagnostics.frames", "from ..core.scalar_engine import ScalarEngine"),
     ],
 )

@@ -42,6 +42,39 @@ treating its omissions as current gaps.
 
 ## 10. Implemented entities and rules
 
+### Experiment contract reconciliation, 2026-09-12
+
+The live document was reread at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 3.3.2 and 3.5 require compatible scales and defined quantities; sections
+4.5 and 10.7 require explicit initialization and preserved run evidence.
+[Experiment packages](EXPERIMENTS.md), [unit validation](UNITS.md) and
+[full restart](CHECKPOINTS.md) implement host-side support for those requirements.
+They preserve integer physical state and the existing configured local laws.
+Calibration is a declared mapping, not a derived fundamental physical scale;
+dimensional validation is not proof that an equation emerges from discrete rules.
+The live Google Doc was not changed, and output format adapters are outside scope.
+
+### Configured topology reconciliation, 2026-09-12
+
+The live Highlights revision inspected for the user-authorized topology extension
+was `ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Its sections 3.3.3, 10.1 and 10.4 still describe six faces/ports. Section 5 also
+describes equivalent links with equal physical length and causal speed. This
+change retains that six-port default and adds the explicitly selected
+[configured-port hypothesis](CONFIGURED_TOPOLOGY.md) requested by the user.
+It does not rewrite the historical inventory below or claim that the live Google
+Doc was edited. Mixed-length offsets with common `link_ticks` supply a graph
+transit contract, not an established equal-Euclidean-speed law.
+
+Executable owners are `core/topology.py`, the configured carrier/local-field
+engines and their shared vector operations. Independent acceptance is in
+`test_configured_topology.py`, `test_topology_invariants.py` and
+`test_topology_example.py`; saved-offset display is covered by
+`test_topology_playback.py`. Geometry support and declared conservation are
+implemented; arbitrary field-law compatibility, physical isotropy, Maxwell
+emergence and universal energy conservation remain separate questions.
+
 ### 10.1 World, cells and links
 
 - The active world is a bounded three-dimensional lattice with six directed
@@ -215,6 +248,34 @@ Highlights edit or replace the earlier revision record above.
 
 ### Source contracts and evidence
 
+### Star-cluster attraction experiment
+
+Live Highlights was reread on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The [star-cluster experiment](../examples/star-cluster/README.md) configures
+existing local scalar delivery and paired momentum exchange under sections
+10.3--10.7. Forty cases establish attraction and exact declared inventory
+accounting, not physical gravity, binding or stellar stability. Angular field
+variation, missing total energy, one-way source response, speed limits and local
+capacity remain explicit gaps. The engine and live Highlights are unchanged.
+
+### Source evidence table
+
+### Measured computational-field delay
+
+Highlights was reread on 2026-09-12 at the same live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The [computational-star candidate](../examples/computational-star/README.md)
+uses sections 10.3, 10.6 and 10.7: emitted vector processing drives the existing
+uniform carrier delay. It has no momentum response. Five 128-tick cases show
+slowing with unchanged node sequences and exact inventory accounting. Mass
+magnitude and vector sign controls preserve timing, so mass-derived load,
+directional delay, path curvature and gravitational binding remain gaps.
+The scoped no-force rule is retained in field-development. This repository
+reconciliation changes neither the engine nor the live Highlights document.
+
+### Source evidence links
+
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |
 | 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_open_boundaries.py, test_boundary_configuration.py and architecture tests |
@@ -225,3 +286,14 @@ Highlights edit or replace the earlier revision record above.
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
 | 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
+
+### Directional timing candidate
+
+Highlights was reread on 2026-09-12 at the same revision recorded above.
+Sections 10.3 and 10.6 retain local ownership and fixed transit after dispatch.
+The [optional directional wait](DIRECTIONAL_DELAY.md) is an explicit new candidate
+extending the origin timing rule to spatial transfers, not a claim already made
+by the live document. Sign-sensitive waiting is implemented and independently
+tested; mass-derived work, curvature and gravitational binding remain unverified.
+The live document was not edited. The field-development Skill now points to the
+new scheduling contract; Boss needs no change because its review workflow applies.

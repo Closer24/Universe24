@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from .disturbance_state import (
+    MAX_PORTS,
     Address3,
     Assignment,
     DisturbanceRecord,
@@ -113,7 +114,7 @@ class SpatialSeed:
 
 @dataclass(frozen=True, slots=True)
 class SpatialState:
-    """Eight owned populations, eight allocation phases, and six delivered samples.
+    """Eight owned populations/phases and a configured count of delivered samples.
 
     All entries use the ordinary positive payload coding, including phases.
     Delivered samples project already owned inventory and are never extra stock.
@@ -123,16 +124,20 @@ class SpatialState:
     allocation_phases: SpatialPopulations
     delivered: tuple[Payload, ...]
 
-    def validate(self, components: int) -> None:
+    def validate(self, components: int, port_count: int = 6) -> None:
         if components not in (1, 3):
             raise ValueError("spatial fields require one or three components")
+        if type(port_count) is not int or not 2 <= port_count <= MAX_PORTS:
+            raise ValueError("spatial port count must be from 2 through 26")
         for values, size in (
             (self.populations, 8),
             (self.allocation_phases, 8),
-            (self.delivered, 6),
+            (self.delivered, port_count),
         ):
             if len(values) != size:
-                raise ValueError("spatial state requires eight octants and six delivered channels")
+                raise ValueError(
+                    "spatial state requires eight octants and configured delivered channels"
+                )
             for value in values:
                 if len(value) != components:
                     raise ValueError("spatial state component count differs from the field")
@@ -152,6 +157,7 @@ class SpatialCell:
     last_begin_tick: int = -1
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
+    port_waits: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -170,11 +176,15 @@ class SpatialPacket:
     origin: Address3
     port: int
     fields: SpatialBundle
+    dispatch_tick: int | None = None
+    dispatched: int = 1
 
 
-def zero_spatial_state(components: int) -> SpatialState:
+def zero_spatial_state(components: int, port_count: int = 6) -> SpatialState:
     bounded(components)
     if components not in (1, 3):
         raise ValueError("spatial fields require one or three components")
     zero = pack((0,) * components)
-    return SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6)
+    state = SpatialState((zero,) * 8, (zero,) * 8, (zero,) * port_count)
+    state.validate(components, port_count)
+    return state

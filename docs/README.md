@@ -1,5 +1,14 @@
 # Documentation index
 
+- [Computational star](../examples/computational-star/README.md): vector-field
+  processing delay without momentum changes, with mass and sign controls.
+- [Star-cluster encounters](../examples/star-cluster/README.md): configuration-only
+  attraction tests, independent orbital acceptance and retained failure evidence.
+- [Configured topology](CONFIGURED_TOPOLOGY.md): immutable reciprocal ports and
+  site patterns, default six-port compatibility, supported laws and invariants.
+- [BCC vector encounter](../examples/topology/README.md): complete JSON example
+  with independent normalized energy and directional-norm checks.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
@@ -11,6 +20,9 @@ result are different claims. Revision-specific results are not a live status fee
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
+| [Experiment packages](EXPERIMENTS.md) | Reusable versioned input parts, provenance and formal JSON Schemas |
+| [Units](UNITS.md) | Coherent rational SI calibration and dimensional expression validation |
+| [Checkpoints](CHECKPOINTS.md) | Complete safe state persistence and exact compatible-source continuation |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
@@ -61,3 +73,7 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+- [Directional origin waiting](DIRECTIONAL_DELAY.md): optional vector timing for carriers and spatial fields.
+
+- [Directional star/orbit audit](../examples/directional-star-audit/README.md): carrier non-binding and an asynchronous wave counterexample.

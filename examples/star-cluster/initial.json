@@ -1,0 +1,321 @@
+{
+  "part_version": 1,
+  "part_kind": "initial_conditions",
+  "data": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          4,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          4,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          4,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          5,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          5,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          5,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          6,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          6,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          4,
+          6,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          4,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          4,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          4,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          5,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          5,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 2048
+        }
+      },
+      {
+        "position": [
+          5,
+          5,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          6,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          6,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          5,
+          6,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          4,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          4,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          4,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          5,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          5,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          5,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          6,
+          4
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          6,
+          5
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          6,
+          6,
+          6
+        ],
+        "type": "held_source",
+        "values": {
+          "mass": 64
+        }
+      },
+      {
+        "position": [
+          8,
+          5,
+          5
+        ],
+        "type": "probe",
+        "values": {
+          "mass": 64,
+          "momentum": [
+            0,
+            16,
+            0
+          ]
+        }
+      }
+    ]
+  }
+}

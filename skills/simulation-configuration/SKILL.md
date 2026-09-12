@@ -26,8 +26,12 @@ the example family in the guide for fields, catalog entities or native events.
 2. Choose the supported schema and mechanism before assigning physical labels.
    Use schema 1 for local field rules, schema 2 for finite dissipative outward
    fields. Native event programs currently cannot compose with spatial fields.
-3. Define the space and run envelope. Set boundary explicitly, keep every seed
-   in range, and distinguish transit time, computation delay and playback speed.
+3. Define the space and run envelope. For nondefault links, use the
+   [configured topology contract](../../docs/CONFIGURED_TOPOLOGY.md): supply offsets
+   and the site pattern, rather than a neighbor count alone. Check seed membership,
+   supported field laws and reciprocal links. Distinguish three vector components
+   from D ports, and graph transit from Euclidean speed. Set boundary explicitly
+   and distinguish transit time, computation delay and playback speed.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.
@@ -38,7 +42,11 @@ the example family in the guide for fields, catalog entities or native events.
    is a linear amount declaration, not proof of kinetic or field energy. For a new
    physical hypothesis, assign a new model identity and use the existing field
    development and physics review workflow; do not invent an unsupported JSON key.
-7. Validate through `load_initial_state`, then construct `Simulation` to check runtime
+7. For reusable files, use the [experiment package](../../docs/EXPERIMENTS.md)
+   manifest and typed parts. Use [explicit SI dimensions](../../docs/UNITS.md)
+   when dimensional validation is required; a free-text unit label alone does not
+   enable it. Validate with `--experiment ... --validate` or `--init ... --validate`,
+   then construct `Simulation` to check runtime
    composition. Run the smallest useful headless acceptance case. Preserve the
    source/config identity and inspect completion, events and declared balances.
 8. When visualization is requested, record the same configured run and render only
@@ -48,9 +56,11 @@ the example family in the guide for fields, catalog entities or native events.
 ## Deliver reusable files
 
 Keep reusable definitions and experiment inputs separate from disposable run outputs.
-Use existing authoring adapters to assemble ordinary initialization JSON; this is
+Use `--experiment` or the existing authoring adapters to assemble ordinary initialization JSON; this is
 data preparation, not a Python/native-code compilation step. The final file is
-self-contained: the engine does not implement generic include/import directives.
+self-contained: local includes belong to versioned package parts, not runtime laws.
+Export the formal schemas with `--schema`; canonical validation also checks names,
+integer JSON tokens, dimensions and semantic constraints beyond JSON Schema.
 Preserve unknown user-owned metadata in its authoring document, but do not insert it
 into the strict runtime schema. Record labels in the supported display format or
 authoring metadata; seeds accept only position, type and values.

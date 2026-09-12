@@ -22,6 +22,12 @@ For a complete authoring walkthrough, use the
 space, reusable entities, field laws, encounters, run commands and display options,
 with a runnable two-stream template.
 
+[Experiment packages](docs/EXPERIMENTS.md) connect reusable environment,
+definitions, initial conditions and run controls. The optional
+[unit contract](docs/UNITS.md) checks coherent rational SI dimensions before
+execution; [checkpoints](docs/CHECKPOINTS.md) resume complete state without replay.
+Formal JSON Schemas are packaged for offline validation and editor integration.
+
 The optional [local reception observer](docs/LOCAL_OBSERVER.md) shows only
 signals received at one selected node, with a local cycle counter and six
 arrival directions, separately from the global world audit.
@@ -76,10 +82,22 @@ Select the environment's interpreter explicitly if activation is unavailable.
 For development, install `python -m pip install -e '.[render,dev]'`; renderer
 helper tests use the optional libraries even when no animation is generated.
 
-The initialization file is required. It supplies `ticks`; `--ticks` can override
+Select `--init`, `--experiment` or `--resume` explicitly. Initialization supplies
+`ticks`; `--ticks` can override
 duration. Missing input is an error, not a request to load a built-in universe.
 Field definitions, disturbance types, seeds, formulas and cost settings are
 documented with examples in [DISTURBANCES.md](docs/DISTURBANCES.md).
+
+```bash
+python -m event_universe --experiment examples/experiment-package/experiment.json --validate
+python -m event_universe --schema runtime
+python -m event_universe --experiment examples/experiment-package/experiment.json --ticks 2 --output artifacts/first --checkpoint artifacts/first/checkpoint.json
+python -m event_universe --resume artifacts/first/checkpoint.json --output artifacts/continued
+```
+
+The first run stops at tick 2; continuation completes the package's remaining
+configured duration. A resume override `--ticks N` means N additional steps.
+Checkpoints and generated run output follow [24-hour retention](docs/RETENTION.md).
 
 Set the top-level initialization member `"boundary": "periodic"` for a closed
 periodic domain: a transfer leaving one side arrives at the opposite side.
@@ -284,7 +302,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/initialization.py` | Strict JSON schema and typed expression parsing |
 | `src/event_universe/core/disturbance_state.py` | Fixed generic definitions, records and positive payload codes |
 | `src/event_universe/core/disturbance_engine.py` | Local scheduling, fixed transit, ownership and capacity |
-| `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
+| `src/event_universe/core/topology.py` | Shared bounded configured-port geometry and sites; six cardinal ports by default |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
 | `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
@@ -325,7 +343,9 @@ fixed, and no computation debt accumulates between cycles.
 
 ## Preserved rules
 
-- Three dimensions and six causal neighbor links.
+- Three dimensions and six causal neighbor links by default; the explicit
+  [configured topology](docs/CONFIGURED_TOPOLOGY.md) supports bounded reciprocal
+  port lists, including BCC and FCC site patterns, for compatible generic laws.
 - Bounded integer payloads, arithmetic and fixed local storage.
 - Explicit ownership during local waits and transit.
 - Local conservation checks, with no global physical correction.

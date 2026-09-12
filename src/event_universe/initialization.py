@@ -4,9 +4,12 @@ import json
 from pathlib import Path
 from typing import cast
 
+from .core.directional_state import validate_directional_delay
 from .core.disturbance_state import (
+    DEFAULT_TOPOLOGY,
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
+    MAX_PORTS,
     MAX_RULES,
     MAX_SLOTS,
     MAX_TYPES,
@@ -15,6 +18,7 @@ from .core.disturbance_state import (
     Address3,
     Assignment,
     CouplingDefinition,
+    DirectionalDelayDefinition,
     DisturbanceDefinition,
     DisturbanceRecord,
     Expression,
@@ -24,6 +28,7 @@ from .core.disturbance_state import (
     Invariant,
     OperationCosts,
     Payload,
+    PortTopology,
     Seed,
     TransportDefinition,
     UpdateRule,
@@ -44,6 +49,7 @@ from .core.spatial_state import (
     SpatialInteractionDefinition,
     SpatialSeed,
 )
+from .core.topology import validate_position, validate_topology, validate_topology_configuration
 from .observer_configuration import ObserverDefinition
 
 
@@ -166,6 +172,7 @@ class _Expressions:
         flux_fields: tuple[int, ...] = (),
         received_fields: tuple[int, ...] = (),
         outgoing_fields: tuple[int, ...] = (),
+        port_count: int = 6,
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
@@ -174,6 +181,8 @@ class _Expressions:
         self.flux_fields = flux_fields
         self.received_fields = received_fields
         self.outgoing_fields = outgoing_fields
+        self.port_count = port_count
+        self.max_nodes = max(MAX_EXPRESSION_NODES, 8 * port_count + 16)
 
     def parse(
         self, value: object, expected: int | None = None, *, invariant: bool = False
@@ -187,7 +196,7 @@ class _Expressions:
         self, value: object, depth: int, rational: bool = False, *, allow_key: bool = False
     ) -> tuple[Expression, int]:
         self.nodes += 1
-        if self.nodes > MAX_EXPRESSION_NODES or depth > 16:
+        if self.nodes > self.max_nodes or depth > 16:
             raise ValueError("expression exceeds the node or depth limit")
         if type(value) is int:
             return Expression("literal", literal=(_integer(value, "expression literal"),)), 1
@@ -210,8 +219,8 @@ class _Expressions:
             names = {self.fields[index].name: index for index in owned}
             index = _index(obj[operation], names, f"{operation} spatial field")
             port = _integer(obj["port"], "expression.port", 0)
-            if port >= 6:
-                raise ValueError("expression.port must be from 0 through 5")
+            if port >= self.port_count:
+                raise ValueError(f"expression.port must be from 0 through {self.port_count - 1}")
             return Expression(operation, field=index, port=port), self.fields[index].components
         if "flux" in obj:
             obj = _object(obj, "flux expression", {"flux"}, {"flux"})
@@ -315,7 +324,10 @@ class _Expressions:
 
 
 def _transport(
-    value: object, fields: tuple[FieldDefinition, ...], owned: tuple[int, ...]
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    owned: tuple[int, ...],
+    topology: PortTopology = DEFAULT_TOPOLOGY,
 ) -> TransportDefinition:
     obj = _object(
         value,
@@ -329,6 +341,7 @@ def _transport(
             "routing",
             "direction",
             "rate_divisor",
+            "direction_policy",
         },
         {"mode"},
     )
@@ -345,12 +358,16 @@ def _transport(
             "routing",
             "direction",
             "rate_divisor",
+            "direction_policy",
         },
     }
     if mode not in allowed:
         raise ValueError("transport.mode must be hold, move or split")
     _object(obj, f"{mode} transport", allowed[mode], {"mode"})
-    weights_raw = _array(obj.get("weights", [1, 1, 1, 1, 1, 1]), "transport.weights", 6, 6)
+    port_count = len(topology.offsets)
+    weights_raw = _array(
+        obj.get("weights", [1] * port_count), "transport.weights", port_count, port_count
+    )
     weights = cast(Weights, tuple(_integer(item, "transport weight", 0) for item in weights_raw))
     if not 1 <= sum(weights) or (obj.get("routing", "cyclic") == "cyclic" and sum(weights) > MAX_VALUE):
         raise ValueError("transport weights must have a positive bounded sum")
@@ -376,8 +393,16 @@ def _transport(
     divisor = (
         _Expressions(fields, owned).parse(obj["rate_divisor"], 1) if "rate_divisor" in obj else None
     )
+    policy = _text(obj.get("direction_policy", "cardinal"), "transport.direction_policy")
+    if policy not in ("cardinal", "positive-dot"):
+        raise ValueError("direction_policy must be cardinal or positive-dot")
+    has_direction = direction is not None or direction_expression is not None
+    if "direction_policy" in obj and not has_direction:
+        raise ValueError("direction_policy requires a direction provider")
+    if has_direction and topology.model_id != "cardinal-six-v1" and policy != "positive-dot":
+        raise ValueError("configured topology direction requires explicit positive-dot policy")
     return TransportDefinition(
-        mode, weights, direction, rate, denominator, routing, direction_expression, divisor
+        mode, weights, direction, rate, denominator, routing, direction_expression, divisor, policy
     )
 
 
@@ -402,7 +427,7 @@ def _updates(
 
 
 def _disturbances(
-    value: object, fields: tuple[FieldDefinition, ...]
+    value: object, fields: tuple[FieldDefinition, ...], topology: PortTopology = DEFAULT_TOPOLOGY
 ) -> tuple[DisturbanceDefinition, ...]:
     result: list[DisturbanceDefinition] = []
     names = _names(fields)
@@ -416,7 +441,7 @@ def _disturbances(
         )
         if len(set(owned)) != len(owned):
             raise ValueError("duplicate disturbance field")
-        transport = _transport(obj["transport"], fields, owned)
+        transport = _transport(obj["transport"], fields, owned, topology)
         updates = _updates(obj.get("updates", []), fields, owned)
         cost_field: int | None = None
         if "cost_field" in obj:
@@ -588,6 +613,7 @@ def _seeds(
     disturbances: tuple[DisturbanceDefinition, ...],
     shape: Address3,
     capacity: int,
+    topology: PortTopology = DEFAULT_TOPOLOGY,
 ) -> tuple[Seed, ...]:
     if not isinstance(value, list):
         raise ValueError("seeds must be an array")
@@ -600,13 +626,25 @@ def _seeds(
         position = _address(obj["position"], "seed.position", 0)
         if any(coordinate >= length for coordinate, length in zip(position, shape, strict=True)):
             raise ValueError("seed.position must be within shape")
+        validate_position(position, shape, topology)
         occupied[position] = occupied.get(position, 0) + 1
         if occupied[position] > capacity:
             raise ValueError("initial seeds exceed slots_per_cell")
         type_index = _index(obj["type"], names, "seed.type")
         definition = disturbances[type_index]
         values = _values(obj.get("values", {}), fields, definition.fields, definition.defaults)
-        result.append(Seed(position, DisturbanceRecord(type_index, values, phases)))
+        result.append(
+            Seed(
+                position,
+                DisturbanceRecord(
+                    type_index,
+                    values,
+                    phases,
+                    route_count_codes=(1,) * len(topology.offsets),
+                    route_weight_codes=(1,) * len(topology.offsets),
+                ),
+            )
+        )
     return tuple(result)
 
 
@@ -857,6 +895,7 @@ def _field_rules(
     value: object,
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
+    port_count: int = 6,
 ) -> tuple[NodeFieldRuleDefinition, ...]:
     result: list[NodeFieldRuleDefinition] = []
     spatial_fields = tuple(definition.field for definition in spatial)
@@ -865,7 +904,12 @@ def _field_rules(
 
     def expression(raw: object, expected: int | None = None) -> Expression:
         return _Expressions(
-            fields, (), spatial_fields, received_fields=spatial_fields, outgoing_fields=local_fields
+            fields,
+            (),
+            spatial_fields,
+            received_fields=spatial_fields,
+            outgoing_fields=local_fields,
+            port_count=port_count,
         ).parse(raw, expected)
 
     required = {"name", "assignments", "invariants"}
@@ -884,8 +928,8 @@ def _field_rules(
             )
             field = _index(item["field"], names, "local spatial assignment field")
             port = _integer(item["port"], "field assignment.port", 0) if "port" in item else -1
-            if port >= 6:
-                raise ValueError("field assignment.port must be from 0 through 5")
+            if port >= port_count:
+                raise ValueError(f"field assignment.port must be from 0 through {port_count - 1}")
             if any(a.field == field and a.port == port for a in assignments):
                 raise ValueError("duplicate field assignment target")
             assignments.append(
@@ -898,7 +942,7 @@ def _field_rules(
             if any(invariant.name == invariant_name for invariant in invariants):
                 raise ValueError("duplicate invariant name")
             invariant_expression = _Expressions(
-                fields, (), spatial_fields, outgoing_fields=local_fields
+                fields, (), spatial_fields, outgoing_fields=local_fields, port_count=port_count
             ).parse(item["expression"], invariant=True)
             invariants.append(Invariant(invariant_name, invariant_expression))
         when = expression(obj["when"], 1) if "when" in obj else None
@@ -911,6 +955,7 @@ def _spatial_interactions(
     fields: tuple[FieldDefinition, ...],
     disturbances: tuple[DisturbanceDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
+    port_count: int = 6,
 ) -> tuple[SpatialInteractionDefinition, ...]:
     result: list[SpatialInteractionDefinition] = []
     type_names, field_names = _names(disturbances), _names(fields)
@@ -946,7 +991,11 @@ def _spatial_interactions(
             if any(a.side == side and a.field == field for a in assignments):
                 raise ValueError("duplicate spatial assignment target")
             expression = _Expressions(
-                fields, participant.fields, spatial_fields, received_fields=spatial_fields
+                fields,
+                participant.fields,
+                spatial_fields,
+                received_fields=spatial_fields,
+                port_count=port_count,
             ).parse(item["expression"], fields[field].components)
             assignments.append(Assignment(side, field, expression))
         invariants: list[Invariant] = []
@@ -961,7 +1010,11 @@ def _spatial_interactions(
             invariants.append(Invariant(invariant_name, expression))
         when = (
             _Expressions(
-                fields, participant.fields, spatial_fields, received_fields=spatial_fields
+                fields,
+                participant.fields,
+                spatial_fields,
+                received_fields=spatial_fields,
+                port_count=port_count,
             ).parse(obj["when"], 1)
             if "when" in obj
             else None
@@ -970,6 +1023,25 @@ def _spatial_interactions(
             SpatialInteractionDefinition(name, kind, tuple(assignments), tuple(invariants), when)
         )
     return tuple(result)
+
+
+def _topology(value: object, shape: Address3, boundary: str) -> PortTopology:
+    required = {"model_id", "offsets"}
+    obj = _object(value, "topology", required | {"site_modulus", "site_residues"}, required)
+    if obj["model_id"] != "configured-ports-v1":
+        raise ValueError("explicit topology requires model_id configured-ports-v1")
+    offsets = tuple(
+        _address(item, "topology offset", -1)
+        for item in _array(obj["offsets"], "topology offsets", MAX_PORTS, 2)
+    )
+    modulus = _integer(obj.get("site_modulus", 1), "site_modulus", 1)
+    residues = tuple(
+        _address(item, "site residue", 0)
+        for item in _array(obj.get("site_residues", [[0, 0, 0]]), "site residues", 8, 1)
+    )
+    topology = PortTopology(offsets, modulus, residues, "configured-ports-v1")
+    validate_topology(topology, shape, boundary)
+    return topology
 
 
 def parse_initial_state(document: object) -> InitialState:
@@ -1004,6 +1076,9 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_interactions",
             "event_program",
             "observer",
+            "topology",
+            "unit_system",
+            "directional_delay",
         },
         required,
     )
@@ -1018,13 +1093,33 @@ def parse_initial_state(document: object) -> InitialState:
     shape = _address(obj["shape"], "shape", 1)
     if "observer" in obj:
         ObserverDefinition.parse(obj["observer"], shape)
+    topology = _topology(obj["topology"], shape, boundary) if "topology" in obj else DEFAULT_TOPOLOGY
+    port_count = len(topology.offsets)
     capacity = _integer(obj["slots_per_cell"], "slots_per_cell", 1)
     if capacity > MAX_SLOTS:
         raise ValueError(f"slots_per_cell exceeds {MAX_SLOTS}")
     costs = _object(obj["operation_costs"], "operation_costs", set(OPERATIONS), set(OPERATIONS))
     fields = _fields(obj["fields"])
-    disturbances = _disturbances(obj["disturbance_types"], fields)
+    disturbances = _disturbances(obj["disturbance_types"], fields, topology)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
+    delay = None
+    if "directional_delay" in obj:
+        rule = _object(
+            obj["directional_delay"],
+            "directional_delay",
+            {"model_id", "field", "divisor"},
+            {"model_id", "field", "divisor"},
+        )
+        if rule["model_id"] != "positive-projection-origin-wait-v1":
+            raise ValueError("unsupported directional delay model")
+        index = _index(
+            rule["field"], {f.name: i for i, f in enumerate(fields)}, "directional delay field"
+        )
+        delay = DirectionalDelayDefinition(
+            index, _integer(rule["divisor"], "directional delay divisor", 1)
+        )
+    from .units import parse_unit_system, validate_units
+
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         shape=shape,
@@ -1038,7 +1133,7 @@ def parse_initial_state(document: object) -> InitialState:
         operation_costs=OperationCosts(
             tuple(_integer(costs[name], f"cost of {name}", 1) for name in OPERATIONS)
         ),
-        seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity),
+        seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity, topology),
         spatial_fields=spatial,
         emissions=_emissions(obj.get("emissions", []), fields, disturbances, spatial, schema_version),
         spatial_seeds=_spatial_seeds(obj.get("spatial_seeds", []), fields, spatial, shape),
@@ -1049,17 +1144,28 @@ def parse_initial_state(document: object) -> InitialState:
         boundary=boundary,
         interactions=_interactions(obj.get("interactions", []), fields, disturbances),
         field_groups=_field_groups(obj.get("field_groups", []), fields),
-        field_rules=_field_rules(obj.get("field_rules", []), fields, spatial),
+        field_rules=_field_rules(obj.get("field_rules", []), fields, spatial, port_count),
         spatial_interactions=_spatial_interactions(
-            obj.get("spatial_interactions", []), fields, disturbances, spatial
+            obj.get("spatial_interactions", []), fields, disturbances, spatial, port_count
         ),
-        event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
+        event_program=(
+            None
+            if "event_program" not in obj
+            else json.dumps(obj["event_program"], sort_keys=True, separators=(",", ":"), allow_nan=False)
+        ),
+        topology=topology,
+        unit_system=parse_unit_system(obj["unit_system"]) if "unit_system" in obj else None,
+        source_json=json.dumps(obj, sort_keys=True, separators=(",", ":"), allow_nan=False),
+        directional_delay=delay,
     )
+    validate_topology_configuration(initial)
+    validate_directional_delay(initial)
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program
 
         parse_event_program(initial)
     _validate_conversions(initial)
+    validate_units(initial)
     return initial
 
 

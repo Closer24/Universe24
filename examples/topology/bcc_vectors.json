@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "model_id": "bcc-vector-encounter-v1",
+  "shape": [
+    8,
+    8,
+    8
+  ],
+  "boundary": "periodic",
+  "topology": {
+    "model_id": "configured-ports-v1",
+    "offsets": [
+      [
+        1,
+        1,
+        1
+      ],
+      [
+        -1,
+        -1,
+        -1
+      ],
+      [
+        1,
+        1,
+        -1
+      ],
+      [
+        -1,
+        -1,
+        1
+      ],
+      [
+        1,
+        -1,
+        1
+      ],
+      [
+        -1,
+        1,
+        -1
+      ],
+      [
+        -1,
+        1,
+        1
+      ],
+      [
+        1,
+        -1,
+        -1
+      ]
+    ],
+    "site_modulus": 2,
+    "site_residues": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  "slots_per_cell": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 10,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "forward",
+      "components": 3,
+      "units": "candidate amplitude",
+      "signed": true,
+      "conserved": false
+    },
+    {
+      "name": "backward",
+      "components": 3,
+      "units": "candidate amplitude",
+      "signed": true,
+      "conserved": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "probe",
+      "fields": [
+        "forward",
+        "backward"
+      ],
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [],
+  "spatial_fields": [
+    {
+      "field": "forward",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "backward",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "field": "forward",
+      "populations": [
+        [
+          3,
+          -3,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        6,
+        6,
+        6
+      ],
+      "field": "backward",
+      "populations": [
+        [
+          0,
+          2,
+          -2
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "field_rules": [
+    {
+      "name": "joint_diagonal_rotation",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "forward",
+                    "side": "right"
+                  },
+                  {
+                    "field": "forward",
+                    "side": "right"
+                  }
+                ]
+              },
+              0
+            ]
+          },
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "backward",
+                    "side": "right"
+                  },
+                  {
+                    "field": "backward",
+                    "side": "right"
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "field": "forward",
+          "expression": {
+            "op": "transform",
+            "matrix": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "args": [
+              {
+                "field": "forward",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "field": "backward",
+          "expression": {
+            "op": "transform",
+            "matrix": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0
+              ]
+            ],
+            "args": [
+              {
+                "field": "backward",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "forward_norm",
+          "expression": {
+            "op": "dot",
+            "args": [
+              {
+                "field": "forward",
+                "side": "right"
+              },
+              {
+                "field": "forward",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "backward_norm",
+          "expression": {
+            "op": "dot",
+            "args": [
+              {
+                "field": "backward",
+                "side": "right"
+              },
+              {
+                "field": "backward",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "forward_transverse",
+          "expression": {
+            "op": "dot",
+            "args": [
+              {
+                "field": "forward",
+                "side": "right"
+              },
+              [
+                1,
+                1,
+                1
+              ]
+            ]
+          }
+        },
+        {
+          "name": "backward_transverse",
+          "expression": {
+            "op": "dot",
+            "args": [
+              {
+                "field": "backward",
+                "side": "right"
+              },
+              [
+                -1,
+                -1,
+                -1
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "transport_forward",
+      "assignments": [
+        {
+          "field": "forward",
+          "expression": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "field": "forward",
+          "port": 0,
+          "expression": {
+            "field": "forward",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "preserve_mode_inventory",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "forward",
+                "side": "right"
+              },
+              {
+                "outgoing": "forward",
+                "port": 0
+              }
+            ]
+          }
+        },
+        {
+          "name": "preserve_mode_norm",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "forward",
+                    "side": "right"
+                  },
+                  {
+                    "field": "forward",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "outgoing": "forward",
+                    "port": 0
+                  },
+                  {
+                    "outgoing": "forward",
+                    "port": 0
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "transport_backward",
+      "assignments": [
+        {
+          "field": "backward",
+          "expression": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "field": "backward",
+          "port": 1,
+          "expression": {
+            "field": "backward",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "preserve_mode_inventory",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "backward",
+                "side": "right"
+              },
+              {
+                "outgoing": "backward",
+                "port": 1
+              }
+            ]
+          }
+        },
+        {
+          "name": "preserve_mode_norm",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "backward",
+                    "side": "right"
+                  },
+                  {
+                    "field": "backward",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "outgoing": "backward",
+                    "port": 1
+                  },
+                  {
+                    "outgoing": "backward",
+                    "port": 1
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

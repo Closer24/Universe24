@@ -8,6 +8,14 @@ transport rule and cost setting. The engine has no hardcoded interpretation of
 mass, charge, velocity or other user-defined physical names. Missing initialization
 does not select a scalar model.
 
+The host [experiment contract](docs/EXPERIMENTS.md) assembles versioned local
+parts into that same runtime JSON. Optional [unit calibration](docs/UNITS.md)
+validates dimensions and coherent integer quanta before execution. It supplies
+no physical formula or implicit runtime conversion. Full
+[checkpoints](docs/CHECKPOINTS.md) preserve owned state, pending proposals,
+transit, scheduling and native event decisions for compatible-source restart;
+ordinary diagnostic snapshots remain observations, not restart files.
+
 New emergence experiments produce states using elementary local vector
 operations rather than supplied continuum physical formulas. Comparisons,
 invariants and independent external benchmarks remain validation tools. Existing
@@ -19,6 +27,15 @@ physical inventory, executable probes and remaining classical/quantum gaps.
 and transition contract: bounded scalar/vector payloads, whole-record or extensive
 transport, atomic local exchange, explicit sources, fixed link transit, local
 computation delay without debt, capacity failures and headless output.
+
+The optional [configured topology](docs/CONFIGURED_TOPOLOGY.md) selects an immutable
+reciprocal list of 2 through 26 three-dimensional ports and a bounded site pattern.
+It applies to carried records and generic local field rules/transactions. Omitted
+topology retains six cardinal ports and their existing results. The older outward
+octant, specialized spatial-response and native-event models require that default;
+unsupported combinations fail before world construction. Local quantities retain
+one or three components regardless of port count. Common `link_ticks` measures
+graph transit, with no implied common Euclidean speed for mixed-length offsets.
 
 Optional [spatial fields](docs/SPATIAL_FIELDS.md) add initialization-defined
 baselines, continuous external emission and fixed-clock outward octant transport.
@@ -35,7 +52,7 @@ restricted straight-line isolation result without general source attribution.
 
 Optional [generic local field rules](docs/LOCAL_FIELD_RULES.md) add schema 1
 local transport alongside existing outward fields. A node can retain dynamic
-stock, read six delivered scalar/vector channels independently, and assign
+stock, read each configured delivered scalar/vector channel independently, and assign
 several retained/outgoing values from one frozen rule view. Groups are metadata
 over existing field definitions. Joint carrier/field assignments store additive
 field deltas and revalidate declared invariants against live stock before delayed
@@ -247,7 +264,7 @@ simultaneously would change the model and requires separate evaluation.
 ### LOCALITY-1: end-to-end local physics
 
 Every physical update, including a self-field estimator or subtraction, may use
-only its fixed local records and six causally available neighbor records. For
+only its fixed local records and its bounded configured causal neighbor records. For
 fixed K and fixed-width integers, its work and stored state must be O(1) with
 respect to world size, source count, elapsed ticks and traveled distance.
 Each dependency must satisfy this rule end-to-end, not only the final arithmetic.
@@ -701,3 +718,9 @@ still incur native cycle cost; zero oracle ticks do not imply zero host work.
 The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](docs/DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

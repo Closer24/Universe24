@@ -1,5 +1,53 @@
 # Test inputs and expected results
 
+`tests/test_computational_star.py` prohibits force/routing substitutions in the
+delay-only candidate and checks an independently specified arriving vector
+pulse: local cost 106 exceeds budget 80, so departure ticks shift from 3/7 to
+4/8 while mass, momentum and +X ports stay unchanged. The accompanying
+[five-case study](../examples/computational-star/README.md) verifies exact
+mass/sign controls and separates elapsed waiting from scheduled future waits.
+
+The star-cluster candidate is covered by `tests/test_star_cluster.py`: all 40
+configurations parse, the equal-velocity mass control preserves p/m, a local
+delivered signal causes attraction with opposite momentum accounting, and a
+speed-limit rejection still records the faulted final state. Contact, escape
+and faults cannot be labeled an orbit. These are contract checks, not a gravity
+validation; the [experiment report](../examples/star-cluster/README.md) owns the
+bounded physical observations.
+
+## Experiment, unit and restart contracts
+
+`test_experiment.py` checks bounded composition, reusable definitions, exact
+portable source capture and invalid dependency rejection. `test_json_schema.py`
+validates the shipped runtime examples and versioned package parts using an
+offline registry; `test_native_json_schema.py` covers native branch shapes.
+`test_experiment_runner.py` checks CLI validation, schema export, effective
+overrides and package provenance without changing physical event traces.
+
+`test_units.py` checks exact host conversions, coherent field scales, dimensional
+AST validation in each supported law context and identical calibrated/legacy
+integer results. Its force/time and momentum/energy formulas are explicit test
+inputs, not claimed emergent laws. `test_checkpoint.py` compares future states,
+events and counters across actual saved pending/transit/native boundaries and
+rejects malformed/incompatible state. `test_checkpoint_runner.py` checks exact
+CLI continuation, cumulative accounting and output retention ownership.
+
+## Configured neighbor topology
+
+`test_configured_topology.py` checks 2/4/6/8/12/18/26 port capacities, actual
+one-link diagonal arrivals, reciprocal/site closure, boundary escape, typed API
+capabilities, integer/rational port access and routing bounds.
+Baseline accounting independently checks 16 BCC and 32 FCC sites in a periodic
+4-cube, and 30 BCC versus 53 FCC sites in an open 5 by 7 by 3 box.
+`test_topology_invariants.py` independently checks all-port scalar/vector totals,
+nonlinear outgoing guards, local collision energy/momentum, delayed guard
+revalidation, integer phase preservation and formula-free evolving state.
+`test_topology_example.py` checks each owned mode and normalized U/Q at every
+tick of the BCC encounter, including actual amplitude rotation and periodic return.
+`test_topology_playback.py` checks metadata, selected-site projections and saved
+diagonal links/local observer channels. The authoritative supported scope and
+remaining physical limits are in [CONFIGURED_TOPOLOGY.md](CONFIGURED_TOPOLOGY.md).
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,
@@ -712,3 +760,10 @@ transport suites remain the integration coverage for callers and operation costs
 Inline observer input is covered by `tests/test_local_observer.py`: normal schema
 validation, rejection before output creation, ambiguous placement rejection, exact
 saved initialization and unchanged physical results with recording enabled.
+## Directional waiting
+
+`test_directional_delay.py` independently expects waits (3,0,0,2,0,0) for
+L=(6,-4,0), divisor 2. It verifies fixed link time, reversal, conservation,
+checkpoint schedule integrity, unchanged carrier port sequence, signed cancellation,
+frozen waits after new arrivals, finite held-source backpressure and arrival-only
+decay/escape. `examples/directional-delay` compares 32 ticks with a no-delay control.

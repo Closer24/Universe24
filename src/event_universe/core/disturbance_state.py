@@ -1,6 +1,6 @@
 """Fixed, domain-neutral schemas for initialization-defined disturbances."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     )
 
 from .integer import checked_work
+from .unit_state import UnitSystem
 
 MAX_VALUE = 1_073_741_823
 MAX_FIELDS = 16
@@ -23,11 +24,39 @@ MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
 MAX_EXPRESSION_NODES = 64
+MAX_PORTS = 26
+MAX_SITE_MODULUS = 2
+MAX_SITE_RESIDUES = 8
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 Payload = tuple[int, ...]
 Values = tuple[Payload, ...]
-Weights = tuple[int, int, int, int, int, int]
+Weights = tuple[int, ...]
 Address3 = tuple[int, int, int]
+CARDINAL_OFFSETS: tuple[Address3, ...] = (
+    (1, 0, 0),
+    (-1, 0, 0),
+    (0, 1, 0),
+    (0, -1, 0),
+    (0, 0, 1),
+    (0, 0, -1),
+)
+
+
+@dataclass(frozen=True, slots=True)
+class PortTopology:
+    """Immutable local geometry, validated against the run's domain before use."""
+
+    offsets: tuple[Address3, ...] = CARDINAL_OFFSETS
+    site_modulus: int = 1
+    site_residues: tuple[Address3, ...] = ((0, 0, 0),)
+    model_id: str = "cardinal-six-v1"
+
+    @property
+    def degree(self) -> int:
+        return len(self.offsets)
+
+
+DEFAULT_TOPOLOGY = PortTopology()
 
 
 def bounded(value: int) -> int:
@@ -102,6 +131,7 @@ class TransportDefinition:
     routing: str = "cyclic"
     direction: Expression | None = None
     rate_divisor: Expression | None = None
+    direction_policy: str = "cardinal"
 
 
 @dataclass(frozen=True, slots=True)
@@ -195,6 +225,12 @@ class Seed:
 
 
 @dataclass(frozen=True, slots=True)
+class DirectionalDelayDefinition:
+    field: int
+    divisor: int
+
+
+@dataclass(frozen=True, slots=True)
 class InitialState:
     model_id: str
     shape: Address3
@@ -218,6 +254,10 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    topology: PortTopology = DEFAULT_TOPOLOGY
+    unit_system: UnitSystem | None = None
+    directional_delay: DirectionalDelayDefinition | None = None
+    source_json: str | None = field(default=None, compare=False, repr=False)
 
 
 class Departure(NamedTuple):
@@ -236,6 +276,7 @@ class LocalPlan:
     spatial_reaction: Values = ()
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
     cause_id: int | None = None
+    port_waits: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -253,6 +294,8 @@ class Packet:
     port: int
     record: DisturbanceRecord
     cause_id: int | None = None
+    dispatch_tick: int | None = None
+    dispatched: int = 1
 
 
 @dataclass(slots=True)

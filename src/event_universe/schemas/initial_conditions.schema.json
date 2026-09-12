@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Closer24/Universe24/main/src/event_universe/schemas/initial_conditions.schema.json",
+  "type": "object",
+  "properties": {
+    "part_version": {
+      "const": 1
+    },
+    "part_kind": {
+      "const": "initial_conditions"
+    },
+    "includes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?![\\\\/])(?!.*[\\\\:\\u0000])[^\\n]+\\.json$"
+      },
+      "minItems": 0,
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "data": {
+      "$ref": "https://raw.githubusercontent.com/Closer24/Universe24/main/src/event_universe/schemas/runtime.schema.json#/$defs/initial_conditions_data"
+    }
+  },
+  "required": [
+    "part_version",
+    "part_kind",
+    "data"
+  ],
+  "additionalProperties": false,
+  "title": "Universe24 initial conditions part"
+}

@@ -1,0 +1,9 @@
+{
+  "cases": ["flyby-base", "tangential-slow"],
+  "maximum_frames": 80,
+  "frame_duration_ms": 180,
+  "width_inches": 7.2,
+  "panel_height_inches": 5,
+  "dpi": 100,
+  "camera_rotation_degrees": 16
+}

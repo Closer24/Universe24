@@ -35,6 +35,103 @@ checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
 
+## Reusable experiments, unit validation and full restart — 2026-09-12
+
+Implementation base: `3c739e20e400d3c9e4479cbba523fda9434930b1`, the configured
+topology branch above main `992e0006469bb1156f517ae8273a80a980df7c57`.
+Contracts are [experiments](EXPERIMENTS.md), [units](UNITS.md) and
+[checkpoints](CHECKPOINTS.md). These add host interfaces and input checks without
+new physical operators, automatic runtime unit conversion or output adapters.
+
+Validation uses Python 3.14.7, pytest 9.1.1, Ruff 0.16.7, mypy 2.3.1 and
+jsonschema 4.26.0. Formal Draft 2020-12 references resolve offline; production
+runtime dependencies remain empty. The required `tools/check.py --base
+3c739e20e400d3c9e4479cbba523fda9434930b1` selection expands through shared parser,
+state and package configuration consumers. It also builds distribution artifacts.
+An ordinary workspace validation copy is byte-checked against the source before
+execution, preserving the retention guard on the working tree's `.codex` parent.
+Exact submitted source and the final affected-gate result belong to the PR/CI.
+
+Independent review checks portable source capture and bounded includes, package
+defaults and overrides, recursive schema shapes, unit calibration and dimensional
+operations, and complete checkpoint ownership. Unit tests compare calibrated and
+uncalibrated integer traces, including explicit force/time and momentum/energy
+expressions. Those are declared test laws, not claims of discrete emergence.
+
+Restart cases compare all subsequent events, snapshots, phase/residual state,
+costs and cumulative ledgers after carrier transit, delayed proposals, open
+finite fields, local coupling, configured topology and pure/mixed/grouped native
+decisions. CLI continuation is also tested in a new Python process. Review found
+and corrected source JSON ordering, large unit metadata encoding, sampled-flux
+layout, pending/current quantity balance and native payload consistency issues.
+Corruption checks run before a restored world is returned; checksums are integrity
+evidence, not authentication or proof that an arbitrary edited state has a valid
+physical history.
+
+Configuration and runner Skills link the new contracts. Boss, architecture and
+physics review workflows were applied; the existing local integer law contract
+remains authoritative. The unchanged live Highlights revision was reconciled in
+[its implementation map](HIGHLIGHTS_IMPLEMENTATION.md).
+
+The inspected [18-tick package demo](https://drive.google.com/file/d/1UWdUKHiwzVxQ_VHfRP3gSCKUtcSMa0jm/view)
+uses source fingerprint
+`f704060adae5cb65723712453cb63199070daac8ba9849698e193c85244777c2`
+and merged initialization fingerprint
+`6d6678cfb8cf88284e050b2facaf1a314d327a5c967effd65689ea5270e23b92`.
+Two occurrences of one reusable type share a node at ticks 2/11 and return
+periodically at ticks 9/18. Quantity remains 2. Saving at tick 9 and continuing
+nine steps exactly matches all 19 snapshots and 140 ordered events. No encounter
+law is selected in this authoring demo. The 720 by 960 GIF is 662,744 bytes,
+contains 19 actual states without physical interpolation, and every frame decoded.
+Its digest is `428fab3229e7a69c9cbd06ca251cf8e5d3dd7f8754c9ad0bf5d4c8d3ae09b037`.
+
+## Configured reciprocal topology — 2026-09-12
+
+Base main: `992e0006469bb1156f517ae8273a80a980df7c57`. The opt-in contract is
+[configured topology](CONFIGURED_TOPOLOGY.md); the omitted six-port model keeps
+its previous geometry and costs. Validation used Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1, with Windows UTF-8 mode and `PYTHONPATH=src`.
+The required affected selection uses the shared state/parser dependencies;
+no full-suite switch was used. Its final result and submitted tree are recorded
+in the PR and CI. The validation checkout was verified byte-identical to the
+working tree, with output under an ordinary workspace path so retention guards
+did not treat an ancestor named `.codex` as a permitted artifact directory.
+
+Independent review covered reciprocal/site closure, BCC/FCC connectivity,
+scalar/vector ownership during delayed transfers and open escapes, local
+momentum/energy guards, nonlinear outgoing-owner guards, delayed revalidation,
+integer bounds, periodic translation, explicit unsupported compositions and
+saved topology playback. Two review findings were fixed with regressions:
+baseline totals must count actual permitted sites, and scalar sampling
+reservation must include all D ports and their projection operations. Exact
+budget and one-unit-short cases verify modeled delay as well as the meter.
+The final focused topology/coupling/invariant gate passed 142 cases.
+
+The [BCC encounter](../examples/topology/README.md) ran ten ticks through the
+normal CLI. Final source fingerprint:
+`202a81cc7473a1d53e0f8b71fe8a831243f715fe9f13631c53132b158acfaa62`.
+Initialization fingerprint:
+`8bb3c3dfb0f0a17c1db53b70731991ffb01e9f0d0ffde3e788037b2b17efa44b`.
+Its final states, events and input exactly reproduce the inspected GIF source.
+The independent test extends to tick 11: 22 actual opposite-port dispatches,
+meetings at ticks 2/6/10, one-tick transit, and restoration of the amplitudes
+after three encounters. Both owned norms stay 18/8; normalized candidate U is
+26 and direction-weighted Q is (10,10,10).
+
+The [inspected GIF](https://drive.google.com/file/d/1lwX1jPoIslURSYYy-RbCX9yE_yvGqssk/view)
+has 33 camera frames of 11 actual states, 720 by 1050 pixels, and 1,694,410 bytes.
+Every frame decoded; the node/axis, encounter, rotation and periodic-boundary
+views were inspected. Camera motion supplies no physical interpolation. U/Q
+are defined normalized diagnostics for two isolated modes, not SI energy or
+momentum, a Maxwell derivation or general same-mode interference accounting.
+
+The configuration and visualization Skills were updated. Boss, shared workflow,
+field-development, architecture and physics-review Skills were reviewed; their
+existing workflows apply without another procedural edit. Live Highlights was
+read at the revision recorded in [its implementation map](HIGHLIGHTS_IMPLEMENTATION.md);
+the user-authorized topology extension is reconciled there without changing
+the live document. Generated outputs remain subject to finite retention.
+
 ## Conservative directional-wave configuration and authoring Skill — 2026-09-12
 
 Based first on main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`, then integrated

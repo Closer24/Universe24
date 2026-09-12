@@ -1,0 +1,8 @@
+{
+  "purpose": "Reusable abstract massive probes; charge is inert in this timing-only experiment. These are not calibrated electrons or protons.",
+  "types": [
+    {"name":"light_neutral","fields":["mass","momentum","charge"],"defaults":{"mass":4,"momentum":[1,0,0],"charge":0},"transport":{"mode":"move","direction_field":"momentum","routing":"balanced","rate":1,"rate_denominator":4}},
+    {"name":"heavy_neutral","fields":["mass","momentum","charge"],"defaults":{"mass":4000,"momentum":[1000,0,0],"charge":0},"transport":{"mode":"move","direction_field":"momentum","routing":"balanced","rate":1,"rate_denominator":4}},
+    {"name":"light_charged","fields":["mass","momentum","charge"],"defaults":{"mass":4,"momentum":[1,0,0],"charge":1},"transport":{"mode":"move","direction_field":"momentum","routing":"balanced","rate":1,"rate_denominator":4}}
+  ]
+}

@@ -33,6 +33,14 @@ generic payload schema below.
 
 ## Run and initialize
 
+[Experiment packages](EXPERIMENTS.md) are a host authoring contract that resolves
+environment, definitions, initial conditions and run controls to this runtime
+schema. Export the packaged Draft 2020-12 contract using `--schema runtime`;
+canonical parsing additionally validates references, bounded integer tokens and
+semantic constraints. Optional top-level `unit_system` selects
+[strict dimensional validation](UNITS.md); omitting it preserves free-text labels.
+Use [complete checkpoints](CHECKPOINTS.md) for exact continuation.
+
 ```bash
 python -m event_universe --init examples/basic.json --output artifacts/basic
 python -m event_universe --init examples/basic.json --ticks 20 --output artifacts/basic-20
@@ -72,11 +80,17 @@ are illustrative data, not a list of recognized physical entities.
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
 | Coupling | Configured local exchange between records, or between a record and a spatial field |
 
-The six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
+The default six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
 of transport. A vector value still has three components; it is not automatically
 the six port weights. A negative field component and travel through a negative
 axis are independent facts. Oppositely directed transfers retain their separate
 channels rather than being replaced by their net vector.
+
+An explicit [configured topology](CONFIGURED_TOPOLOGY.md) instead selects D bounded
+reciprocal offsets. All weights, received samples and outgoing buffers then have
+D entries. Direction providers require explicit `direction_policy: "positive-dot"`
+for that model. Vectors still have three components. The topology contract defines
+site selection, capability rejection, integer bounds and calibration limits.
 
 An absent carried field is zero. Spatial fields instead use their configured
 baseline, which can be nonzero. Presence alone does not create a persistent
@@ -91,6 +105,7 @@ separate carriers and their different directions.
 | `schema_version` | `1` for conservative spatial laws, or `2` for finite dissipative spatial laws |
 | `model_id` | Explicit identifier for this configured candidate |
 | `shape` | Three positive bounded integer domain extents |
+| `topology` | Optional immutable `configured-ports-v1` offset list and site pattern; see [topology](CONFIGURED_TOPOLOGY.md) |
 | `boundary` | Optional `"periodic"` or `"open"`, default `"periodic"`, in either schema version |
 | `slots_per_cell` | Fixed positive resident capacity, at most 32 |
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
@@ -107,7 +122,7 @@ separate carriers and their different directions.
 | `spatial_seeds` | Optional initial octant populations at named lattice cells |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
-| `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
+| `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/configured-port-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
 
 The authoritative contract for local field selection, group semantics, rule
@@ -181,9 +196,10 @@ seed coordinates. Historical research APIs retain their own topology contract.
 
 `components` is 1 or 3. JSON scalar values are integers; vector values are
 three-element integer arrays. `signed` controls permitted mathematical signs.
-`scale` is a positive declared denominator, default 1. Units and scale describe
-the quantity; the evaluator does not infer dimensional consistency or convert
-between units automatically. Rules must use compatible scales explicitly.
+`scale` is a positive declared denominator, default 1. Without `unit_system`,
+units remain descriptive labels and the model must ensure dimensional consistency.
+The optional [unit validator](UNITS.md) checks configured expressions and coherent
+scales before execution. The physical evaluator never converts units automatically.
 
 `extensive`, default true, means additive amounts may be divided among outgoing
 records. A conserved field must be extensive. A direction or other intensive
@@ -218,9 +234,9 @@ values start at zero. Defaults and seed overrides share the same validation.
 | --- | --- |
 | `hold` | Retain the record in its cell |
 | `move` | Transfer the whole record to one selected neighbor |
-| `split` | Divide extensive field components among up to six outgoing records |
+| `split` | Divide extensive field components among the configured outgoing records |
 
-`move` accepts six nonnegative integer `weights` or a `direction_field`, not
+`move` accepts D nonnegative integer `weights` (six by default) or a `direction_field`, not
 both. Direction `(2,-1,0)` yields port weights `[2,0,0,1,0,0]`. Weighted cyclic
 selection retains phase; it does not require floating-point normalization.
 A zero direction holds the record. Optional scalar `rate` and positive
@@ -229,7 +245,7 @@ retain fractional movement opportunity. A rate outside that range fails. The com
 numerator from `sum(abs(velocity))` and divides by 12, matching that configured
 field's scale. The engine does not supply this relation from the name.
 
-`split` accepts six nonnegative weights with a positive bounded sum. Each
+`split` accepts D nonnegative weights with a positive bounded sum. Each
 component's magnitude is partitioned exactly, then its sign is applied to the
 shares. Equal positive and negative amounts at the same phase therefore use the
 same ports with opposite signs and advance allocation phase identically. Phase
@@ -336,8 +352,9 @@ must have exactly equal scalar/vector values before and after the transaction.
 Every field marked `conserved` also retains its pair sum component by component,
 even if the configuration omits an invariant for it. Checks occur per transaction,
 so a later transaction cannot cancel an earlier violation. Units and scales of
-custom expressions must be declared consistently by the model; the evaluator
-does not infer dimensional correctness or prove physical meaning from a label.
+custom expressions must be declared consistently by the model. Optional
+`unit_system` validates their dimensions before execution; a correct dimension
+does not prove physical meaning or establish a conservation law.
 
 The generic expression additions are:
 
@@ -525,3 +542,9 @@ The top-level `event_program` selects [native causal events and local instrument
 It leaves existing configurations unchanged. It can supply a locally recorded
 control code to an existing generic law; all resulting moves retain ordinary
 operation costs, frozen proposals, conservation checks and causal transit.
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

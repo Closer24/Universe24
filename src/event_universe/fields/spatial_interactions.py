@@ -55,7 +55,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
     interactions: tuple[SpatialInteractionDefinition, ...] = ()
 
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
-        return received_values(self.fields, self.spatial_definitions, states)
+        return received_values(self.fields, self.spatial_definitions, states, self.port_count)
 
     def _reserve_sample(self, meter: CostMeter) -> None:
         for definition in self.spatial_definitions:
@@ -118,8 +118,8 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         if not self.interactions:
             self._reserve_local_deposit(meter, legacy.reaction)
             return replace(legacy, cost=meter.total)
-        if len(ports) != 6:
-            raise ValueError("spatial interactions require six received port samples")
+        if len(ports) != self.port_count:
+            raise ValueError("spatial interactions require the configured received port samples")
         for channel in ports:
             if len(channel) != len(self.fields):
                 raise ValueError("received port fields differ from the configured schema")
@@ -191,7 +191,9 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
             for index, change in enumerate(guard.delta):
                 for component, value in enumerate(change):
                     remaining[index][component] = checked_work(remaining[index][component] - value)
-        sample = sample_values(states, self.spatial_definitions, self.fields, meter)
+        sample = sample_values(
+            states, self.spatial_definitions, self.fields, meter, port_count=self.port_count
+        )
         current = _add_delta(sample, tuple(tuple(value) for value in remaining), meter)
         for guard in guards:
             if not 0 <= guard.rule_index < len(self.interactions):
@@ -221,7 +223,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                 continue
             field = self.fields[definition.field]
             state = states[index]
-            state.validate(field.components)
+            state.validate(field.components, self.port_count)
             values = list(reaction[definition.field])
             for payload in state.populations:
                 field.validate(payload)
@@ -229,10 +231,10 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                     values[component] = checked_work(values[component] + amount)
             packed = pack(tuple(values))
             field.validate(packed)
-            blank = zero_spatial_state(field.components)
+            blank = zero_spatial_state(field.components, self.port_count)
             updated[index] = replace(state, populations=(packed, *blank.populations[1:]))
         result = tuple(updated)
-        sample_values(result, self.spatial_definitions, self.fields)
+        sample_values(result, self.spatial_definitions, self.fields, port_count=self.port_count)
         return result
 
     def deposit(

@@ -1,0 +1,115 @@
+{
+  "screen_ticks": 48,
+  "long_ticks": 192,
+  "families": [
+    {
+      "name": "radial",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "momentum": [
+        -8,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "tangential",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "momentum": [
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "name": "flyby",
+      "position": [
+        -3,
+        2,
+        0
+      ],
+      "momentum": [
+        24,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "inclined",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "momentum": [
+        -4,
+        8,
+        8
+      ]
+    },
+    {
+      "name": "live_cluster",
+      "position": [
+        3,
+        0,
+        0
+      ],
+      "momentum": [
+        0,
+        16,
+        0
+      ],
+      "live": true
+    }
+  ],
+  "variants": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "slow",
+      "speed": [
+        1,
+        2
+      ]
+    },
+    {
+      "name": "fast",
+      "speed": [
+        2,
+        1
+      ]
+    },
+    {
+      "name": "double_probe_mass",
+      "probe_mass": 128,
+      "speed": [
+        2,
+        1
+      ]
+    },
+    {
+      "name": "rotated",
+      "rotate": true
+    },
+    {
+      "name": "reverse_seed_order",
+      "reverse": true
+    },
+    {
+      "name": "no_field",
+      "no_field": true
+    },
+    {
+      "name": "stronger",
+      "denominator": 512
+    }
+  ]
+}

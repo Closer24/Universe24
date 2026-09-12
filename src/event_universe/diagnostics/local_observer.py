@@ -3,6 +3,7 @@
 from collections.abc import Mapping
 from typing import TypedDict
 
+from event_universe.core.disturbance_state import MAX_PORTS
 from event_universe.observer_configuration import ObserverDefinition as ObserverDefinition
 
 MODEL = "local-reception-observer-v1"
@@ -47,8 +48,11 @@ class LocalObserver:
     belong to the host and never become cell state or a planner input.
     """
 
-    def __init__(self, definition: ObserverDefinition) -> None:
+    def __init__(self, definition: ObserverDefinition, *, port_count: int = 6) -> None:
+        if type(port_count) is not int or not 2 <= port_count <= MAX_PORTS:
+            raise ValueError(f"observer port_count must be an integer from 2 through {MAX_PORTS}")
         self.definition = definition
+        self.port_count = port_count
         self.clock = 0
         self.receipts: list[Receipt] = []
         self.samples: list[ObserverSample] = []
@@ -68,8 +72,8 @@ class LocalObserver:
             batch = [self._receipt("disturbance", event.get("port"), label, event.get("values"))]
         elif kind == "spatial_received":
             ports = event.get("received_fields")
-            if not isinstance(ports, (list, tuple)) or len(ports) != 6:
-                raise ValueError("spatial reception requires six completed receiver-port readings")
+            if not isinstance(ports, (list, tuple)) or len(ports) != self.port_count:
+                raise ValueError("spatial reception requires every configured receiver-port reading")
             batch = [
                 self._receipt("field", port, "Field reception", values)
                 for port, values in enumerate(ports)
@@ -87,8 +91,8 @@ class LocalObserver:
             self.receipts.append(receipt)
 
     def _receipt(self, kind: str, port: object, label: str, values: object) -> Receipt:
-        if type(port) is not int or not 0 <= port < 6:
-            raise ValueError("reception port must be one of the six receiver sides")
+        if type(port) is not int or not 0 <= port < self.port_count:
+            raise ValueError("reception port must be one of the configured receiver sides")
         return Receipt(
             sequence=0, clock=self.clock, kind=kind, port=port, label=label, values=_values(values)
         )

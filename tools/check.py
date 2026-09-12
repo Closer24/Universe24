@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/topology/bcc_vectors.json": ("tests/test_topology_example.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
@@ -171,9 +172,35 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        if path.startswith("examples/directional-star-audit/"):
+            tests.add("tests/test_directional_star_audit.py")
+        if path.startswith("examples/computational-star/"):
+            tests.add("tests/test_computational_star.py")
+        if path.startswith("examples/star-cluster/"):
+            tests.add("tests/test_star_cluster.py")
         if path.startswith("tools/generic_vector_lab/"):
             tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
+        if path.startswith("src/event_universe/schemas/"):
+            tests.update(
+                ("tests/test_json_schema.py", "tests/test_native_json_schema.py", "tests/test_units.py")
+            )
+        if path.startswith("examples/experiment-package/"):
+            tests.update(
+                (
+                    "tests/test_experiment.py",
+                    "tests/test_json_schema.py",
+                    "tests/test_experiment_runner.py",
+                )
+            )
+        if path.startswith("src/event_universe/checkpoint"):
+            tests.update(
+                (
+                    "tests/test_quantum_architecture.py",
+                    "tests/test_checkpoint.py",
+                    "tests/test_checkpoint_runner.py",
+                )
+            )
         if path.startswith("examples/particle-contracts/"):
             tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":

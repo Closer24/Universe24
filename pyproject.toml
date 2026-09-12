@@ -12,7 +12,7 @@ dependencies = []
 
 [project.optional-dependencies]
 render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "numpy>=1.26,<3"]
-dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
+dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2", "jsonschema>=4.23,<5"]
 
 [project.scripts]
 event-universe = "event_universe.runner:main"
@@ -26,7 +26,7 @@ package-dir = {"" = "src"}
 py-modules = ["persistent_source_field"]
 
 [tool.setuptools.package-data]
-event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
+event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js", "schemas/*.json"]
 
 [tool.setuptools.data-files]
 "share/event-universe/examples" = ["examples/*.json"]

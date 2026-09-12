@@ -1,7 +1,12 @@
 """Public assembly of the generic disturbance simulator."""
 
+from pathlib import Path
+
+from event_universe.core.directional_state import validate_directional_delay
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.topology import validate_topology_configuration
+from event_universe.fields.directional_delay import DirectionalWaitLaw
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
@@ -14,7 +19,26 @@ class Simulation(DisturbanceEngine):
     """Run the fields, disturbances and integer laws supplied by initialization."""
 
     def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
+        from event_universe.units import validate_units
+
+        validate_topology_configuration(initial)
+        validate_directional_delay(initial)
+        validate_units(initial)
         event_space, resolver = None, None
+        waiter = None
+        if initial.directional_delay is not None:
+            delay = initial.directional_delay
+            index = next(
+                i for i, field in enumerate(initial.spatial_fields) if field.field == delay.field
+            )
+            waiter = DirectionalWaitLaw(
+                index,
+                initial.spatial_fields[index].baseline,
+                initial.topology.offsets,
+                delay.divisor,
+                initial.link_ticks,
+                initial.operation_costs,
+            )
         if initial.event_program is not None:
             from event_universe.integration.event_runtime import build_event_runtime
 
@@ -27,6 +51,7 @@ class Simulation(DisturbanceEngine):
                 initial.couplings,
                 initial.operation_costs,
                 initial.interactions,
+                port_offsets=initial.topology.offsets,
             ),
             observer,
             SpatialLaw(
@@ -35,6 +60,7 @@ class Simulation(DisturbanceEngine):
                 initial.emissions,
                 initial.operation_costs,
                 initial.field_rules,
+                port_count=len(initial.topology.offsets),
             ),
             (
                 JointSpatialCouplingLaw(
@@ -43,6 +69,7 @@ class Simulation(DisturbanceEngine):
                     initial.operation_costs,
                     initial.spatial_fields,
                     initial.spatial_interactions,
+                    port_offsets=initial.topology.offsets,
                 )
                 if initial.spatial_interactions
                 or (
@@ -54,6 +81,7 @@ class Simulation(DisturbanceEngine):
                     initial.spatial_couplings,
                     initial.operation_costs,
                     initial.spatial_fields,
+                    port_offsets=initial.topology.offsets,
                 )
                 if initial.spatial_couplings
                 else None
@@ -77,4 +105,31 @@ class Simulation(DisturbanceEngine):
             ),
             event_space=event_space,
             resolver=resolver,
+            port_waiter=waiter,
         )
+        self._checkpoint_components = (
+            self._planner,
+            self._record_policy,
+            self._spatial,
+            self._spatial.planner if self._spatial else None,
+            self._spatial.coupler if self._spatial else None,
+            self._spatial.decayer if self._spatial else None,
+            self._spatial.port_waiter if self._spatial else None,
+            self.event_space,
+            self._resolver,
+        )
+
+    def save_checkpoint(self, path: Path, *, initialization: str | bytes | None = None) -> Path:
+        """Save the complete canonical world at its current completed step boundary."""
+        from event_universe.checkpoint import save_checkpoint
+
+        return save_checkpoint(self, path, initialization=initialization)
+
+    @classmethod
+    def from_checkpoint(cls, path: Path, *, observer: EventSink | None = None) -> Simulation:
+        """Restore a saved world without replaying already completed ticks."""
+        from event_universe.checkpoint import load_checkpoint
+
+        if cls is not Simulation:
+            raise ValueError("checkpoint restore requires the canonical Simulation class")
+        return load_checkpoint(path, observer=observer)

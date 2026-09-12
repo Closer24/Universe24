@@ -5,6 +5,7 @@ from dataclasses import replace
 from types import MappingProxyType
 
 from .disturbance_state import (
+    DEFAULT_TOPOLOGY,
     Address3,
     CellView,
     DisturbanceCell,
@@ -21,8 +22,13 @@ from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
 from .record_policy import RecordPolicy
-from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
-from .topology import neighbor_address
+from .spatial_engine import PortWaiter, SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
+from .topology import (
+    inverse_port,
+    neighbor_address,
+    validate_position,
+    validate_topology_configuration,
+)
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
@@ -36,7 +42,7 @@ def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
 
 
 class DisturbanceEngine:
-    """One bounded record schema, one local planner, and six equal-time links.
+    """One bounded record schema, one local planner, and configured equal-time links.
 
     Physical-name semantics are absent. Measurements may inspect totals but never
     drive the planner. A capacity failure stops the run without dropping records.
@@ -55,7 +61,11 @@ class DisturbanceEngine:
         record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
+        port_waiter: PortWaiter | None = None,
     ) -> None:
+        validate_topology_configuration(initial)
+        if event_space is not None and initial.topology != DEFAULT_TOPOLOGY:
+            raise ValueError("causal event_space currently requires cardinal-six-v1 topology")
         self.initial = initial
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
@@ -75,6 +85,8 @@ class DisturbanceEngine:
         self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
             rule.type_index for rule in initial.spatial_interactions
         }
+        if initial.directional_delay is not None and port_waiter is None:
+            raise ValueError("directional delay requires an explicitly composed port waiter")
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
         if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
@@ -84,7 +96,9 @@ class DisturbanceEngine:
         self._spatial = (
             None
             if spatial_planner is None or not initial.spatial_fields
-            else SpatialEngine(initial, spatial_planner, observer, spatial_coupler, spatial_decayer)
+            else SpatialEngine(
+                initial, spatial_planner, observer, spatial_coupler, spatial_decayer, port_waiter
+            )
         )
         for seed in initial.seeds:
             cell = self._at(seed.position)
@@ -122,6 +136,7 @@ class DisturbanceEngine:
 
     def _at(self, position: Address3) -> DisturbanceCell:
         if position not in self._cells:
+            validate_position(position, self.initial.shape, self.initial.topology)
             capacity = self.initial.slots_per_cell
             self._cells[position] = DisturbanceCell(
                 (None,) * capacity,
@@ -130,7 +145,9 @@ class DisturbanceEngine:
         return self._cells[position]
 
     def neighbor(self, origin: Address3, port: int) -> Address3 | None:
-        return neighbor_address(origin, port, self.initial.shape, self.initial.boundary)
+        return neighbor_address(
+            origin, port, self.initial.shape, self.initial.boundary, self.initial.topology
+        )
 
     def _emit(
         self,
@@ -174,6 +191,10 @@ class DisturbanceEngine:
 
     def _begin(self, position: Address3, cell: DisturbanceCell) -> None:
         if cell.pending is not None or cell.available_tick > self.tick:
+            return
+        if self.initial.directional_delay is not None and any(
+            p is not None for p in self._links.get(position, ())
+        ):
             return
         if not self._record_policy.has_work(cell.records) and not (
             self._resolver is not None
@@ -219,11 +240,16 @@ class DisturbanceEngine:
             )
         if self._spatial is not None:
             plan = replace(
-                plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
+                plan,
+                cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick))),
+                port_waits=self._spatial.waits(position),
             )
             plan = self._record_policy.report_cost(plan)
-        if len(plan.departures) > self.initial.slots_per_cell * 6:
+        if len(plan.departures) > self.initial.slots_per_cell * self.initial.topology.degree:
             raise ValueError("local rule exceeds fixed outgoing capacity")
+        for departure in plan.departures:
+            if not 0 <= bounded(departure.port) < self.initial.topology.degree:
+                raise ValueError("departure port exceeds configured topology")
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
         work = checked_work(self._model_work + plan.cost)
         cycles = checked_work(self._local_cycles + 1)
@@ -250,7 +276,9 @@ class DisturbanceEngine:
             return
         if self.event_space is not None:
             self.event_space.require_room(2 + len(pending.plan.departures))
-        old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_cell))
+        old_links = self._links.get(
+            position, (None,) * (self.initial.topology.degree * self.initial.slots_per_cell)
+        )
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
         records = list(cell.records)
@@ -267,7 +295,15 @@ class DisturbanceEngine:
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
-            links[index] = Packet(departure_tick, position, departure.port, record)
+            wait = pending.plan.port_waits[departure.port] if pending.plan.port_waits else 0
+            links[index] = Packet(
+                bounded(departure_tick + wait),
+                position,
+                departure.port,
+                record,
+                dispatch_tick=bounded(self.tick + wait) if pending.plan.port_waits else None,
+                dispatched=int(wait == 0),
+            )
         if self._spatial is not None:
             self._spatial.validate_guards(
                 position, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -308,13 +344,23 @@ class DisturbanceEngine:
                 },
             )
         for index, departure in enumerate(pending.plan.departures):
+            outgoing_packet = self._links[position][index]
+            assert outgoing_packet is not None
+            timing_details: dict[str, object] = (
+                {"dispatch_tick": outgoing_packet.dispatch_tick}
+                if outgoing_packet.dispatch_tick is not None
+                else {}
+            )
             cause = self._emit(
-                "sent",
+                "sent" if outgoing_packet.dispatched else "departure_waiting",
                 position,
                 port=departure.port,
                 disturbance=self.initial.disturbances[departure.record.type_index].name,
                 values=self.record_values(departure.record),
-                arrival_tick=departure_tick,
+                arrival_tick=outgoing_packet.arrival_tick,
+                causes=(),
+                event_cost=0,
+                **timing_details,
             )
             if cause is not None:
                 linked = list(self._links[position])
@@ -418,15 +464,38 @@ class DisturbanceEngine:
                     "received",
                     position,
                     causes=() if packet.cause_id is None else (packet.cause_id,),
-                    port=packet.port ^ 1,
+                    port=inverse_port(packet.port, self.initial.topology),
                     disturbance=self.initial.disturbances[packet.record.type_index].name,
                     values=self.record_values(packet.record),
+                )
+
+    def _dispatch_waiting(self) -> None:
+        if self.initial.directional_delay is None:
+            return
+        if self._spatial is not None:
+            self._spatial.dispatch_waiting(self.tick)
+        for origin, packets in tuple(self._links.items()):
+            for index, packet in enumerate(packets):
+                if packet is None or packet.dispatched or packet.dispatch_tick != self.tick:
+                    continue
+                updated = list(self._links[origin])
+                updated[index] = replace(packet, dispatched=1)
+                self._links[origin] = tuple(updated)
+                self._emit(
+                    "sent",
+                    origin,
+                    port=packet.port,
+                    disturbance=self.initial.disturbances[packet.record.type_index].name,
+                    values=self.record_values(packet.record),
+                    dispatch_tick=self.tick,
+                    arrival_tick=packet.arrival_tick,
                 )
 
     def step(self) -> None:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
+            self._dispatch_waiting()
             if self._spatial is not None:
                 self._spatial.begin(
                     self.tick,
@@ -438,6 +507,7 @@ class DisturbanceEngine:
                 self._begin(position, cell)
                 self._commit(position, cell)
             self.tick = bounded(self.tick + 1)
+            self._dispatch_waiting()
             if self._spatial is not None:
                 self._spatial.deliver(self.tick)
             self._deliver()
@@ -486,8 +556,7 @@ class DisturbanceEngine:
 
     def spatial_values(self, position: Address3) -> dict[str, dict[str, object]]:
         """Read the independent spatial state without inferring source identity."""
-        if any(not 0 <= v < n for v, n in zip(position, self.initial.shape, strict=True)):
-            raise ValueError("spatial sample position must be within shape")
+        validate_position(position, self.initial.shape, self.initial.topology)
         return {} if self._spatial is None else self._spatial.values(position)
 
     def dissipation_totals(self) -> dict[str, tuple[int, ...]]:
@@ -571,6 +640,14 @@ class DisturbanceEngine:
                     "target": self.neighbor(p.origin, p.port),
                     "port": p.port,
                     "arrival_tick": p.arrival_tick,
+                    **(
+                        {
+                            "dispatch_tick": p.dispatch_tick,
+                            "phase": "transit" if p.dispatched else "waiting",
+                        }
+                        if p.dispatch_tick is not None
+                        else {}
+                    ),
                     "type": self.initial.disturbances[p.record.type_index].name,
                     "values": self.record_values(p.record),
                     **self._bookkeeping(p.record),
