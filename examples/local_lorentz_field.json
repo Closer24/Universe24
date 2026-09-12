@@ -1,0 +1,1134 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-local-lorentz-pulse-v1",
+  "shape": [
+    9,
+    7,
+    3
+  ],
+  "slots_per_cell": 3,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 20,
+  "boundary": "periodic",
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "configured impulse experiment units",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "configured impulse experiment units",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "configured impulse experiment units",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "armed",
+      "components": 1,
+      "units": "configured impulse experiment units",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "electric",
+      "components": 3,
+      "units": "configured impulse experiment units",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "magnetic",
+      "components": 3,
+      "units": "configured impulse experiment units",
+      "signed": true,
+      "conserved": true
+    }
+  ],
+  "field_groups": [
+    {
+      "name": "electromagnetic_components",
+      "fields": [
+        "electric",
+        "magnetic"
+      ]
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "electron",
+      "fields": [
+        "momentum",
+        "mass",
+        "charge",
+        "armed"
+      ],
+      "defaults": {
+        "momentum": [
+          100000,
+          0,
+          0
+        ],
+        "mass": 100000,
+        "charge": -1,
+        "armed": 1
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "proton",
+      "fields": [
+        "momentum",
+        "mass",
+        "charge",
+        "armed"
+      ],
+      "defaults": {
+        "momentum": [
+          183615267,
+          0,
+          0
+        ],
+        "mass": 183615267,
+        "charge": 1,
+        "armed": 1
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "neutron",
+      "fields": [
+        "momentum",
+        "mass",
+        "charge",
+        "armed"
+      ],
+      "defaults": {
+        "momentum": [
+          183868366,
+          0,
+          0
+        ],
+        "mass": 183868366,
+        "charge": 0,
+        "armed": 1
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        5,
+        1,
+        1
+      ],
+      "type": "electron"
+    },
+    {
+      "position": [
+        5,
+        3,
+        1
+      ],
+      "type": "proton"
+    },
+    {
+      "position": [
+        5,
+        5,
+        1
+      ],
+      "type": "neutron"
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "electric",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "magnetic",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "momentum",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        1,
+        1,
+        1
+      ],
+      "field": "electric",
+      "populations": [
+        [
+          0,
+          200000,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        1,
+        1,
+        1
+      ],
+      "field": "magnetic",
+      "populations": [
+        [
+          0,
+          0,
+          300000
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        1,
+        3,
+        1
+      ],
+      "field": "electric",
+      "populations": [
+        [
+          0,
+          200000,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        1,
+        3,
+        1
+      ],
+      "field": "magnetic",
+      "populations": [
+        [
+          0,
+          0,
+          300000
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        1,
+        5,
+        1
+      ],
+      "field": "electric",
+      "populations": [
+        [
+          0,
+          200000,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    {
+      "position": [
+        1,
+        5,
+        1
+      ],
+      "field": "magnetic",
+      "populations": [
+        [
+          0,
+          0,
+          300000
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "field_rules": [
+    {
+      "name": "electric_forward",
+      "assignments": [
+        {
+          "field": "electric",
+          "expression": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "field": "electric",
+          "port": 0,
+          "expression": {
+            "field": "electric",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "stock_plus_link",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "electric",
+                "side": "right"
+              },
+              {
+                "outgoing": "electric",
+                "port": 0
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "magnetic_forward",
+      "assignments": [
+        {
+          "field": "magnetic",
+          "expression": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "field": "magnetic",
+          "port": 0,
+          "expression": {
+            "field": "magnetic",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "stock_plus_link",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "magnetic",
+                "side": "right"
+              },
+              {
+                "outgoing": "magnetic",
+                "port": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "spatial_interactions": [
+    {
+      "name": "electron_local_impulse",
+      "type": "electron",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "armed",
+            "side": "left"
+          },
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "electric",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "right"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "armed",
+          "expression": 0
+        }
+      ],
+      "invariants": [
+        {
+          "name": "combined_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "field": "momentum",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "proton_local_impulse",
+      "type": "proton",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "armed",
+            "side": "left"
+          },
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "electric",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "right"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "armed",
+          "expression": 0
+        }
+      ],
+      "invariants": [
+        {
+          "name": "combined_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "field": "momentum",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "neutron_local_impulse",
+      "type": "neutron",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "armed",
+            "side": "left"
+          },
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "electric",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "sum",
+                    "args": [
+                      {
+                        "op": "abs",
+                        "args": [
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "right"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "charge",
+                    "side": "left"
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "electric",
+                        "side": "right"
+                      },
+                      {
+                        "op": "cross",
+                        "args": [
+                          {
+                            "op": "exact_div",
+                            "args": [
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "magnetic",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "armed",
+          "expression": 0
+        }
+      ],
+      "invariants": [
+        {
+          "name": "combined_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "field": "momentum",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
