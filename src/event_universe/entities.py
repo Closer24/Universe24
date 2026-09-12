@@ -36,6 +36,7 @@ def compile_entities(
     shape: tuple[int, int, int] = (9, 9, 9),
     ticks: int = 4,
     link_ticks: int = 1,
+    representation: str = "classical",
 ) -> JsonObject:
     """Select bounded explicit profiles; retain physical claims in the catalog.
 
@@ -64,6 +65,14 @@ def compile_entities(
         raise ValueError("select at least one entity without duplicates")
     if len(shape) != 3 or any(type(size) is not int or size < 5 for size in shape):
         raise ValueError("representation probes require three integer dimensions of at least five")
+    if representation not in ("classical", "quantum"):
+        raise ValueError("representation must be classical or quantum")
+    if representation == "quantum":
+        from event_universe.integration.quantum_entities import compile_quantum_entities
+
+        return compile_quantum_entities(
+            indexed, entity_ids, shape=shape, ticks=ticks, link_ticks=link_ticks
+        )
     fields: dict[str, JsonObject] = {}
     types: dict[str, JsonObject] = {}
     spatial_names: set[str] = set()
@@ -173,9 +182,13 @@ def main() -> None:
     parser.add_argument("--entity", action="append", required=True)
     parser.add_argument("--output-init", type=Path, required=True)
     parser.add_argument("--ticks", type=int, default=4)
+    parser.add_argument("--representation", choices=("classical", "quantum"), default="classical")
     args = parser.parse_args()
     initial = compile_entities(
-        parse_json_document(args.catalog.read_bytes()), args.entity, ticks=args.ticks
+        parse_json_document(args.catalog.read_bytes()),
+        args.entity,
+        ticks=args.ticks,
+        representation=args.representation,
     )
     args.output_init.parent.mkdir(parents=True, exist_ok=True)
     with args.output_init.open("x", encoding="utf-8") as output:

@@ -139,6 +139,23 @@ files allow reconstruction without chat history.
 
 ## Coverage map
 
+### Local Maxwell research reconciliation
+
+For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),
+Highlights was reread on 2026-09-12 at live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 1.3.3, 1.3.4 and 10.4 are reconciled as follows: the existing generic
+local field interface can express a transverse reflection and one-link
+streaming hypothesis without adding an engine field equation. Conditional
+leading vacuum dynamics and small-space mode frequencies agree with the
+independent forecast. Exact centered Gauss conservation, complete macroscopic
+energy, physical light speed and indefinite bounded-integer mixing remain gaps.
+The experiment does not promote full electromagnetic emergence to a verified
+result. This entry records repository coverage; it does not claim a live
+Highlights edit or replace the earlier revision record above.
+
+### Source contracts and evidence
+
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |
 | 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_open_boundaries.py, test_boundary_configuration.py and architecture tests |
