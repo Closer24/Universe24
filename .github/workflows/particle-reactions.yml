@@ -16,101 +16,6 @@ jobs:
         with:
           python-version-file: .python-version
       - run: python -m pip install -e '.[dev]'
-      - name: Resolve static typing once
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          source = Path('src/event_universe/particle_reactions.py')
-          text = source.read_text()
-          old = (
-              '    if not all(\n'
-              '        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)\n'
-              '    ):\n'
-              '        raise ValueError(f"particle {identity} has incomplete identity metadata")\n'
-          )
-          new = (
-              '    if (\n'
-              '        not isinstance(antiparticle, str)\n'
-              '        or not antiparticle\n'
-              '        or not isinstance(conjugacy, str)\n'
-              '        or not conjugacy\n'
-              '        or not isinstance(rest_mass, str)\n'
-              '        or not rest_mass\n'
-              '        or not isinstance(status, str)\n'
-              '        or not status\n'
-              '    ):\n'
-              '        raise ValueError(f"particle {identity} has incomplete identity metadata")\n'
-          )
-          if old in text:
-              text = text.replace(old, new, 1)
-          old = (
-              '    momentum = tuple(_integer(component, f"{label}.momentum") for component in momentum_raw)\n'
-              '    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]\n\n\n'
-              'def _sum_scalar(values: tuple[int, int]) -> int:\n'
-              '    return checked(checked_work(values[0] + values[1]))\n\n\n'
-              'def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tuple[int, int, int]:\n'
-              '    return tuple(checked(checked_work(a + b)) for a, b in zip(*values, strict=True))  # type: ignore[return-value]\n'
-          )
-          new = (
-              '    momentum = (\n'
-              '        _integer(momentum_raw[0], f"{label}.momentum"),\n'
-              '        _integer(momentum_raw[1], f"{label}.momentum"),\n'
-              '        _integer(momentum_raw[2], f"{label}.momentum"),\n'
-              '    )\n'
-              '    return ReactionLeg(entity, energy, momentum)\n\n\n'
-              'def _sum_scalar(values: tuple[int, ...]) -> int:\n'
-              '    if len(values) != 2:\n'
-              '        raise ValueError("reaction scalar sum requires exactly two values")\n'
-              '    return checked(checked_work(values[0] + values[1]))\n\n\n'
-              'def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:\n'
-              '    if len(values) != 2:\n'
-              '        raise ValueError("reaction vector sum requires exactly two values")\n'
-              '    left, right = values\n'
-              '    return (\n'
-              '        checked(checked_work(left[0] + right[0])),\n'
-              '        checked(checked_work(left[1] + right[1])),\n'
-              '        checked(checked_work(left[2] + right[2])),\n'
-              '    )\n'
-          )
-          if old in text:
-              text = text.replace(old, new, 1)
-          old = (
-              '    inputs = tuple(\n'
-              '        _leg(item, f"inputs[{index}]", indexed)\n'
-              '        for index, item in enumerate(_array(raw["inputs"], "inputs", 2))\n'
-              '    )\n'
-              '    outputs = tuple(\n'
-              '        _leg(item, f"outputs[{index}]", indexed)\n'
-              '        for index, item in enumerate(_array(raw["outputs"], "outputs", 2))\n'
-              '    )\n'
-              '    return raw, indexed, inputs, outputs  # type: ignore[return-value]\n'
-          )
-          new = (
-              '    input_rows = _array(raw["inputs"], "inputs", 2)\n'
-              '    output_rows = _array(raw["outputs"], "outputs", 2)\n'
-              '    inputs = (\n'
-              '        _leg(input_rows[0], "inputs[0]", indexed),\n'
-              '        _leg(input_rows[1], "inputs[1]", indexed),\n'
-              '    )\n'
-              '    outputs = (\n'
-              '        _leg(output_rows[0], "outputs[0]", indexed),\n'
-              '        _leg(output_rows[1], "outputs[1]", indexed),\n'
-              '    )\n'
-              '    return raw, indexed, inputs, outputs\n'
-          )
-          if old in text:
-              text = text.replace(old, new, 1)
-          source.write_text(text)
-          PY
-          python -m ruff format src/event_universe/particle_reactions.py tests/test_particle_reactions.py
-          git diff --check
-          if ! git diff --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add src/event_universe/particle_reactions.py tests/test_particle_reactions.py
-            git commit -m 'Resolve particle reaction static typing'
-            git push origin HEAD:feat/generic-particle-reactions
-          fi
       - name: Validate affected scope
         run: |
           python tools/check.py --base b8941d97545e9ab8c35fbff5391288ccffa447bd --tests tests/test_particle_reactions.py tests/test_local_conversions.py tests/test_entity_compiler.py tests/test_physical_entities.py
@@ -138,10 +43,14 @@ jobs:
           assert manifest['conservation']['configured_momentum'] == {'before': [0,0,0], 'after': [0,0,0]}
           assert [x['statistics_class'] for x in manifest['inputs']] == ['fermion', 'fermion']
           assert [x['statistics_class'] for x in manifest['outputs']] == ['boson', 'boson']
-          final = json.loads((root/'run'/'final-state.json').read_text())
-          assert final['totals']['charge'] == [0]
-          assert final['totals']['energy'] == [10]
-          assert final['totals']['momentum'] == [0,0,0]
+          run = json.loads((root/'run'/'run.json').read_text())
+          assert run['status'] == 'completed'
+          assert run['initial_totals'] == {'charge': [0], 'energy': [10], 'momentum': [0,0,0]}
+          assert run['final_totals'] == run['initial_totals']
+          assert run['source_totals'] == {'charge': [0], 'energy': [0], 'momentum': [0,0,0]}
+          assert run['escaped_totals'] == {'charge': [0], 'energy': [0], 'momentum': [0,0,0]}
+          assert run['conserved_at_every_completed_tick']
+          assert run['accounting_balanced_at_every_completed_tick']
           PY
       - uses: actions/upload-artifact@v4
         if: always()
