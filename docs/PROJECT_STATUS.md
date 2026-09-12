@@ -36,6 +36,8 @@ The unequal-mass collision configuration has one canonical file:
 [04-unequal-mass-collision.json](../examples/04-unequal-mass-collision.json).
 Both the workspace and [reference checks](../examples/known-entities/run_reference_checks.py)
 consume it. The reference runner does not maintain a second copy of the law.
+Its three-mass case likewise uses [three_mass_finite.json](../examples/three_mass_finite.json)
+with a 120-tick override instead of a duration-only copy of the initialization.
 
 ## Specifications and gaps
 

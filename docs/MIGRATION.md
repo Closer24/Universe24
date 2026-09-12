@@ -122,3 +122,20 @@ The reference command resolves its logical `collision` experiment to that file;
 other reference inputs retain their separate configuration and expectations.
 Archived files under `tests/reference/` are unchanged. Earlier validation records
 retain their original paths and hashes; use this table to locate the current owner.
+
+
+## Duration-only reference configuration
+
+The reference three-mass case now reads `examples/three_mass_finite.json` and
+passes `ticks=120` to the existing runner rather than keeping a second JSON
+initialization. Replace the former `examples/known-entities/three-masses.json`
+command with:
+
+```sh
+python -m event_universe --init examples/three_mass_finite.json --ticks 120 --output artifacts/three-masses
+```
+
+The original initialization retains its 100-tick default and is copied unchanged
+into the output. Actual execution length is recorded separately. The reference
+wrapper preserves its 120-tick numerical checks; physical coefficients, budgets
+and laws are unchanged.

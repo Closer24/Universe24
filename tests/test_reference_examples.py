@@ -41,11 +41,22 @@ def test_reference_collision_uses_the_workspace_configuration():
     assert len(set(reference.REFERENCE_CONFIGURATIONS.values())) == 5
 
 
+def test_three_mass_reference_reuses_the_workspace_input_with_explicit_duration():
+    reference = load_reference_checks()
+    assert reference.REFERENCE_CONFIGURATIONS["three-masses"] == ROOT / "examples/three_mass_finite.json"
+    assert reference.REFERENCE_TICK_OVERRIDES == {"three-masses": 120}
+
+
 def test_five_reference_worlds_retain_existing_independent_assertions(tmp_path, monkeypatch):
     reference = load_reference_checks()
     monkeypatch.setattr(reference, "ROOT", tmp_path)
     reference.main()
     outputs = list((tmp_path / "artifacts").glob("known-entities-*"))
     assert len(outputs) == 1
+    import json
+
+    original = json.loads((outputs[0] / "three-masses/initialization.json").read_text())
+    metadata = json.loads((outputs[0] / "three-masses/run.json").read_text())
+    assert original["ticks"] == 100 and metadata["completed_ticks"] == 120
     assert not list(outputs[0].rglob("*.html"))
     assert not list(outputs[0].rglob("*.gif"))

@@ -8,7 +8,8 @@ from pathlib import Path
 from .test_repository_language import repository_files
 
 
-def duplicate_files(root, *, normalized_json=False):
+def duplicate_files(root, *, normalized_json=False, ignore_run_duration=False):
+    assert not ignore_run_duration or normalized_json
     groups = defaultdict(list)
     for path in repository_files(root):
         if normalized_json and path.suffix != ".json":
@@ -17,7 +18,14 @@ def duplicate_files(root, *, normalized_json=False):
         if not content.strip():
             continue  # Empty package markers carry no duplicated implementation.
         if normalized_json:
-            content = json.dumps(json.loads(content), sort_keys=True, separators=(",", ":")).encode()
+            definition = json.loads(content)
+            if (
+                ignore_run_duration
+                and isinstance(definition, dict)
+                and "disturbance_types" in definition
+            ):
+                definition.pop("ticks", None)
+            content = json.dumps(definition, sort_keys=True, separators=(",", ":")).encode()
         groups[hashlib.sha256(content).hexdigest()].append(path.relative_to(root).as_posix())
     return sorted(sorted(paths) for paths in groups.values() if len(paths) > 1)
 
@@ -51,3 +59,23 @@ def test_json_gate_ignores_object_key_order_but_preserves_semantic_array_order(t
     assert duplicate_files(tmp_path, normalized_json=True) == [["first.json", "second.json"]]
     second.write_text('{"cost": 3, "operations": [2, 1]}', encoding="utf-8")
     assert not duplicate_files(tmp_path, normalized_json=True)
+
+
+def test_run_duration_does_not_justify_a_duplicate_initialization():
+    assert not duplicate_files(
+        Path(__file__).resolve().parents[1], normalized_json=True, ignore_run_duration=True
+    )
+
+
+def test_duration_gate_rejects_copies_but_retains_distinct_operation_budgets(tmp_path):
+    first = {"disturbance_types": [], "ticks": 100, "normal_budget": 10}
+    second = {"disturbance_types": [], "ticks": 120, "normal_budget": 10}
+    (tmp_path / "first.json").write_text(json.dumps(first), encoding="utf-8")
+    (tmp_path / "second.json").write_text(json.dumps(second), encoding="utf-8")
+    assert not duplicate_files(tmp_path, normalized_json=True)
+    assert duplicate_files(tmp_path, normalized_json=True, ignore_run_duration=True) == [
+        ["first.json", "second.json"]
+    ]
+    second["normal_budget"] = 2
+    (tmp_path / "second.json").write_text(json.dumps(second), encoding="utf-8")
+    assert not duplicate_files(tmp_path, normalized_json=True, ignore_run_duration=True)

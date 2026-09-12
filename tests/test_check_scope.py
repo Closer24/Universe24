@@ -174,7 +174,7 @@ def test_every_file_change_selects_language_and_canonical_copy_guards(path):
     "path",
     [
         "examples/04-unequal-mass-collision.json",
-        "examples/known-entities/three-masses.json",
+        "examples/three_mass_finite.json",
         "examples/known-entities/three-masses-low-budget.json",
         "examples/known-entities/boundary-periodic.json",
         "examples/known-entities/boundary-open.json",

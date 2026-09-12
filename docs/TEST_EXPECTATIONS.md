@@ -556,7 +556,11 @@ Existing shared engine tests remain necessary consumers of the changed schema.
 `test_repository_hygiene.py` rejects nonempty byte-identical files and JSON copies
 that differ only in formatting or object-key order. Negative cases insert a real
 copy; controls retain different array order and allow empty package markers.
-It does not detect arbitrary semantic duplication or replace ownership review.
+The duration guard also rejects initialization copies distinguished only by
+`ticks`; the ordinary runner already supports an explicit duration override.
+Distinct operation-budget and boundary controls remain separate experimental
+inputs. These checks do not detect arbitrary semantic duplication or replace
+ownership review.
 
 `test_repository_language.py` covers source paths, Python identifiers and prose,
 including PowerShell and interpreter-selection files. Paths and identifiers use

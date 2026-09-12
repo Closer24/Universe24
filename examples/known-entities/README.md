@@ -25,7 +25,12 @@ On other shells, set `PYTHONPATH=src` and run
 No build, installation, simulator edits, or visualization is performed.
 All entity definitions and laws are in the five JSON inputs. The collision input
 is [the canonical workspace example](../04-unequal-mass-collision.json), also used
-by this runner; no local duplicate is maintained. The diagnostic
+by this runner; no local duplicate is maintained. The normal-budget three-mass
+case reuses [three_mass_finite.json](../three_mass_finite.json) with an explicit
+120-tick override through the existing runner. The original input remains 100
+ticks and is preserved byte-for-byte in output; the actual completed count is
+recorded separately. Low-budget and boundary controls retain their distinct
+physical configurations. The diagnostic
 runner reads them without overwriting them. Its numerical acceptance checks
 are specific to these configurations; update expectations when editing a model.
 

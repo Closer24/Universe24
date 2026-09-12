@@ -29,7 +29,7 @@ RESOURCE_CONSUMERS = {
     "examples/open_world.json": ("tests/test_generic_identity.py",),
     "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
     "examples/04-unequal-mass-collision.json": ("tests/test_reference_examples.py",),
-    "examples/known-entities/three-masses.json": ("tests/test_reference_examples.py",),
+    "examples/three_mass_finite.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/three-masses-low-budget.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/boundary-periodic.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/boundary-open.json": ("tests/test_reference_examples.py",),
