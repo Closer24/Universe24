@@ -29,7 +29,7 @@ py-modules = ["persistent_source_field"]
 event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
 
 [tool.setuptools.data-files]
-"share/event-universe/examples" = ["examples/basic.json", "examples/exchange.json"]
+"share/event-universe/examples" = ["examples/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

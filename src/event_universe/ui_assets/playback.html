@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Simulation movie</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#10241f;color:#e0eee6;font:15px system-ui;padding:16px}h1{font-size:17px;margin:0;overflow-wrap:anywhere}p{font-size:12px;color:#b0cbbb;line-height:1.5}.heading,.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.heading{justify-content:space-between}.stage{margin:12px 0;background:#0b1b17;border:1px solid #345145;border-radius:12px}canvas{display:block;width:100%;height:340px}.controls{margin:12px 0}button,select{font:inherit;min-height:44px;border:1px solid #668776;background:#254c3b;color:white;border-radius:7px;padding:8px 12px}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}input[type=range]{width:100%;min-height:44px;accent-color:#81d8a3}label{display:flex;align-items:center;gap:8px;min-height:44px}select{font-size:16px}.controls label{font-size:13px}#tick{font-variant-numeric:tabular-nums}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px}.legend span{overflow-wrap:anywhere}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.facts{max-height:260px;overflow:auto}table{border-collapse:collapse;table-layout:fixed;width:100%;font-size:12px}td,th{padding:8px;text-align:left;overflow-wrap:anywhere;border-bottom:1px solid #355243}summary{cursor:pointer;min-height:44px;padding:12px 0}#status{color:#e4cb88}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #ace4c2;outline-offset:3px}@media(max-width:500px){body{padding:12px}canvas{height:280px}.controls{gap:8px}.controls button{flex:1}h1{font-size:15px}}
+</style></head><body>
+<div class="heading"><h1 id="title">Simulation movie</h1><span id="status"></span></div><div class="stage"><canvas id="scene" aria-label="Recorded particle positions on the selected lattice plane"></canvas></div><div id="legend" class="legend"></div>
+<div class="controls"><button id="play" type="button">Play</button><button id="restart" type="button">Restart</button><button id="previous" type="button" aria-label="Previous frame">← Tick</button><button id="next" type="button" aria-label="Next frame">Tick →</button><label>Speed <select id="speed"><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option><option value="4">4x</option></select></label><label>View <select id="plane"><option value="0,1">XY</option><option value="0,2">XZ</option><option value="1,2">YZ</option></select></label><label>Zoom <select id="zoom"><option value="1">Fit</option><option value="2">2x</option><option value="4">4x</option><option value="8">8x</option></select></label></div>
+<p id="grid-info"></p>
+<label for="seek">Timeline <b id="tick"></b></label><input id="seek" aria-label="Recorded frame" type="range" min="0" step="1" value="0">
+<p>Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned; rings are transfers in links. Co-located records use concentric rings. Periodic boundaries wrap. No invented motion between samples.</p>
+<details><summary>Particle names, field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Particle / type</th><th>Position</th><th>Fields</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
+<script id="recording" type="application/json">__RECORDING__</script><script>
+"use strict";
+const {frames,metadata}=JSON.parse(document.querySelector('#recording').textContent);
+const $=s=>document.querySelector(s),seek=$('#seek'),canvas=$('#scene'),ctx=canvas.getContext('2d');
+const palette=['#83e1b1','#ffc977','#94beff','#edabdf','#ff958a','#bdadff'];
+const types=[...new Set(frames.flatMap(f=>[...f.cells.flatMap(c=>c.disturbances.map(d=>d.type)),...f.transfers.map(d=>d.type)]))];
+const shape=metadata.shape||[1,1,1].map((_,i)=>Math.max(1,...frames.flatMap(f=>f.cells.map(c=>c.position[i]+1))));
+let playing=false,lastTime=null,clock=frames[0].tick,index=0;
+seek.max=String(frames.length-1);seek.disabled=frames.length<2;$('#play').disabled=frames.length<2;
+$('#title').textContent=metadata.model;$('#status').textContent=metadata.status==='failed'?'Failed run · partial recording':'Recorded run';
+$('#sampling').textContent=`${frames.length} samples, ticks ${frames[0].tick}–${frames.at(-1).tick}. Playback speed changes viewing only. ${metadata.error||''}`;
+for(const [i,name] of types.entries()){const item=document.createElement('span'),dot=document.createElement('i');dot.style.backgroundColor=palette[i%palette.length];item.append(dot,document.createTextNode(name));$('#legend').append(item);}
+function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
+function visibleRecords(f){const records=f.cells.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Cell':'Waiting cell'})));
+for(const t of f.transfers){const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));p[axis]=(p[axis]+sign*fraction+shape[axis])%shape[axis];records.push({...t,position:p,owner:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`,transfer:true});}return records;}
+let pan=[0,0],drag=null;
+function draw(){
+  const rect=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
+  canvas.width=Math.round(rect.width*ratio);canvas.height=Math.round(rect.height*ratio);ctx.setTransform(ratio,0,0,ratio,0,0);
+  const w=rect.width,h=rect.height,axes=$('#plane').value.split(',').map(Number),pad=32,zoom=Number($('#zoom').value);
+  const nx=shape[axes[0]],ny=shape[axes[1]],unit=Math.min((w-2*pad)/Math.max(1,nx-1),(h-2*pad)/Math.max(1,ny-1))*zoom;
+  const ox=(w-(nx-1)*unit)/2+pan[0],oy=(h+(ny-1)*unit)/2+pan[1],project=p=>[ox+p[axes[0]]*unit,oy-p[axes[1]]*unit];
+  const x0=Math.max(0,Math.ceil((pad-ox)/unit)),x1=Math.min(nx-1,Math.floor((w-pad-ox)/unit)),y0=Math.max(0,Math.ceil((oy-h+pad)/unit)),y1=Math.min(ny-1,Math.floor((oy-pad)/unit));
+  const dense=(x1-x0+1)*(y1-y0+1)>20000||unit<3;
+  ctx.clearRect(0,0,w,h);ctx.save();ctx.beginPath();ctx.rect(pad-8,pad-8,w-2*pad+16,h-2*pad+16);ctx.clip();
+  if(!dense){
+    ctx.strokeStyle='#244336';ctx.lineWidth=.7;
+    for(let x=x0;x<=x1;x++){ctx.beginPath();ctx.moveTo(ox+x*unit,oy-y0*unit);ctx.lineTo(ox+x*unit,oy-y1*unit);ctx.stroke();}
+    for(let y=y0;y<=y1;y++){ctx.beginPath();ctx.moveTo(ox+x0*unit,oy-y*unit);ctx.lineTo(ox+x1*unit,oy-y*unit);ctx.stroke();}
+    ctx.fillStyle='#648d76';for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++){ctx.beginPath();ctx.arc(ox+x*unit,oy-y*unit,Math.min(1.8,unit*.13),0,Math.PI*2);ctx.fill();}
+  }
+  const f=frames[index],records=visibleRecords(f),seen=new Map();
+  $('#tick').textContent='Tick '+f.tick+' · '+(index+1)+'/'+frames.length;seek.value=String(index);
+  $('#previous').disabled=index===0;$('#next').disabled=index===frames.length-1;
+  $('#grid-info').textContent=dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).';
+  const body=$('#records');body.replaceChildren();
+  for(const r of records){
+    const [x,y]=project(r.position),key=x+','+y,n=seen.get(key)||0;seen.set(key,n+1);
+    const color=palette[Math.max(0,types.indexOf(r.type))%palette.length];ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
+    if(r.transfer){const from=project(r.origin),target=[...r.origin];target[Math.floor(r.port/2)]+=r.port%2===0?1:-1;ctx.beginPath();ctx.moveTo(...from);ctx.lineTo(...project(target));ctx.stroke();}
+    ctx.beginPath();ctx.arc(x,y,Math.max(2,Math.min(7,unit*.35))+n*3,0,Math.PI*2);if(!r.transfer&&!n)ctx.fill();ctx.stroke();
+    const row=document.createElement('tr');for(const text of [r.type,r.position.map(v=>Number.isInteger(v)?v:v.toFixed(2)).join(', '),JSON.stringify(r.values),r.owner]){const cell=document.createElement('td');cell.textContent=text;row.append(cell);}body.append(row);
+  }
+  ctx.restore();ctx.fillStyle='#9dbcaa';ctx.font='12px system-ui';ctx.fillText('XYZ'[axes[0]]+' · lattice nodes',pad,h-8);ctx.fillText('XYZ'[axes[1]]+' · lattice nodes',pad,18);
+}
+function selectFrame(next){index=Math.max(0,Math.min(frames.length-1,next));clock=frames[index].tick;setPlaying(false);draw();}
+$('#previous').onclick=()=>selectFrame(index-1);$('#next').onclick=()=>selectFrame(index+1);
+$('#zoom').onchange=()=>{pan=[0,0];canvas.style.touchAction=Number($('#zoom').value)>1?'none':'pan-y';draw();};
+canvas.style.touchAction='pan-y';
+canvas.onpointerdown=event=>{if(Number($('#zoom').value)===1)return;drag=[event.clientX,event.clientY,...pan];canvas.setPointerCapture(event.pointerId);};
+canvas.onpointermove=event=>{if(drag){pan=[drag[2]+event.clientX-drag[0],drag[3]+event.clientY-drag[1]];draw();}};
+canvas.onpointerup=canvas.onpointercancel=()=>{drag=null;};
+$('#play').onclick=()=>{if(!playing&&index===frames.length-1){index=0;clock=frames[0].tick;draw();}setPlaying(!playing);};
+$('#restart').onclick=()=>{index=0;clock=frames[0].tick;setPlaying(false);draw();};seek.oninput=()=>{index=Number(seek.value);clock=frames[index].tick;setPlaying(false);draw();};$('#plane').onchange=()=>{pan=[0,0];draw();};
+function animate(time){if(playing){if(lastTime!==null)clock+=(time-lastTime)/1000*4*Number($('#speed').value);lastTime=time;const previous=index;while(index<frames.length-1&&frames[index+1].tick<=clock)index++;if(previous!==index)draw();if(index===frames.length-1)setPlaying(false);}requestAnimationFrame(animate);}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)setPlaying(false);});new ResizeObserver(draw).observe(canvas);draw();
+if(new URLSearchParams(location.search).get('autoplay')==='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&frames.length>1)setPlaying(true);requestAnimationFrame(animate);
+</script></body></html>

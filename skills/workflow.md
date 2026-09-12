@@ -80,6 +80,9 @@ not introduce a compilation, package rebuild or server restart for each edit.
 Reuse the canonical validator and runner; verify that edited values reach saved
 run inputs/results and that in-flight runs retain their original configuration.
 Keep frontend interaction checks distinct from HTTP/backend tests.
+During a lecture, use the prepared simulator to create, save and rerun experiment
+configurations. Do not rebuild for configuration edits. If the checkout is behind
+the intended GitHub revision, update and prepare it before using it for the lecture.
 
 Separate environment setup, physical stepping and diagnostic rendering before
 optimizing. Reuse a verified checkout and installed environment for later runs.

@@ -366,3 +366,11 @@ configuration tabs, numeric and JSON editing, shortcuts and completed results.
 Check document overflow, readable input text and touch target size. Record the
 actual browser and dimensions; viewport emulation does not verify native iOS
 keyboard, Safari or safe-area behavior on a physical device.
+
+`test_recorded_movie.py` checks that the approaching pair meets at the declared
+cell and passes without an invented collision, that parallel speeds differ and
+the pulse spreads while declared inventory remains conserved. Its explicitly
+marked visualization tests check exact sampled/final payloads, headless event
+parity, escaped names and partial failures. Browser checks must cover movie
+play/pause/restart/final hold, scrubbing, projection/speed, folded settings and
+renaming references without resetting an already loaded movie during polling.

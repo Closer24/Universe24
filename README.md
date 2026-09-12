@@ -98,7 +98,11 @@ Each run reads a saved JSON snapshot at runtime. Configuration changes require
 no compilation, package rebuild, dependency installation or server restart.
 
 The interface stays responsive while the runner executes in another process.
-Runs are headless unless **Create a recorded view** is selected. Results include
+**Run & watch** records a movie with play/pause, timeline, speed and plane controls.
+Prepared examples show approaching particles, parallel beams and a spreading
+pulse using idealized configured laws. Advanced settings start folded; the Names
+tab updates particle/type and field references together. Disable recording for
+a headless UI run; the CLI remains headless by default. Results include
 conservation checks and links to the input, state and events. Use `--configs`
 to select your own template folder, or `--port 0` to choose an available port.
 See the [workspace guide](docs/WORKSPACE.md) for drafts, files and interruption.

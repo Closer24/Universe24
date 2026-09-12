@@ -88,6 +88,8 @@ def run_initialization(
         "conserved_at_every_completed_tick": conservation,
         "fields": [field.name for field in initial.fields],
         "disturbance_types": [kind.name for kind in initial.disturbances],
+        "shape": initial.shape,
+        "link_ticks": initial.link_ticks,
     }
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     path = output / "run.json"

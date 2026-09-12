@@ -5,6 +5,7 @@ const colors = ["#247658", "#d29c4e", "#668daa", "#a373a3", "#ab704f", "#6d998b"
 const token = $('meta[name="workspace-token"]').content;
 let templates = [], selected = "", source = "", configuration = null, tab = "general";
 let runs = [], selectedRun = null, busy = false, validated = false, loading = false, selectionVersion = 0;
+let moviePath = null;
 let drafts = {};
 try { drafts = JSON.parse(localStorage.getItem("universe24-drafts-v1") || "{}"); } catch { /* Start fresh if local storage is unavailable. */ }
 if (!drafts || typeof drafts !== "object" || Array.isArray(drafts)) drafts = {};
@@ -47,6 +48,7 @@ function refreshSummary() {
   $("#draft-state").className = "draft-tag" + (validated ? " valid" : "");
   $("#model-heading").textContent = configuration?.model_id || "Custom configuration";
   $("#duration-label").textContent = `${configuration?.ticks ?? "—"} ticks`;
+  $("#selected-description").textContent = `${templates.find(t => t.id === selected)?.name || "Custom configuration"} · ${configuration?.seeds?.length || 0} initial particles / records`;
   $("#template-label").textContent = selected === "custom" ? "CUSTOM CONFIGURATION" : `${selected.toUpperCase()} TEMPLATE`;
   const counts = [[configuration?.fields?.length || 0, "FIELDS"],
     [configuration?.disturbance_types?.length || 0, "TYPES"], [configuration?.seeds?.length || 0, "SEEDS"]];
@@ -104,11 +106,31 @@ function input(parent, label, object, key, options = {}) {
   control.required = true; control.value = String(object[key] ?? "");
   control.addEventListener("input", () => {
     if (!control.checkValidity()) return;
+    if (options.rename) {
+      const collection = options.rename === "field" ? configuration.fields : configuration.disturbance_types;
+      if (!control.value.trim() || collection.some(item => item !== object && item.name === control.value)) {
+        control.setCustomValidity("Choose a nonempty, unique name."); return;
+      }
+      renameReferences(configuration, options.rename, object[key], control.value);
+    }
     object[key] = options.text ? control.value : Number(control.value); changed();
   });
   wrapper.append(control);
   if (options.hint) wrapper.append(node("small", options.hint));
   parent.append(wrapper); return control;
+}
+
+function renameReferences(value, kind, before, after) {
+  if (!value || typeof value !== "object") return;
+  if (Array.isArray(value)) { value.forEach(item => renameReferences(item, kind, before, after)); return; }
+  for (const [key, child] of Object.entries(value)) {
+    const references = kind === "field" ? ["field", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
+    if (references.includes(key) && child === before) value[key] = after;
+    else if (kind === "field" && key === "fields" && Array.isArray(child) && child.every(item => typeof item === "string")) value[key] = child.map(name => name === before ? after : name);
+    else if (kind === "field" && ["defaults", "values"].includes(key) && child && typeof child === "object" && Object.hasOwn(child, before)) {
+      const fields = Object.fromEntries(Object.entries(child).map(([name, payload]) => [name === before ? after : name, payload])); value[key] = fields;
+    } else renameReferences(child, kind, before, after);
+  }
 }
 
 function check(parent, label, object, key, fallback) {
@@ -167,7 +189,12 @@ function renderEditor() {
     editor.append(raw); return;
   }
   const doc = configuration;
-  if (tab === "general") {
+  if (tab === "names") {
+    let grid = section("Particle names", "A name identifies a disturbance type. Every record of that type shares it; presets use separate types for separately named particles.");
+    doc.disturbance_types.forEach((type, i) => input(grid, `Particle ${i + 1} name`, type, "name", {text: true, full: true, rename: "type"}));
+    editor.append(node("hr", "", "editor-divider")); grid = section("Field names", "Renaming updates references in this configuration, including rules and initial values.");
+    doc.fields.forEach((field, i) => input(grid, `Field ${i + 1} name`, field, "name", {text: true, full: true, rename: "field"}));
+  } else if (tab === "general") {
     let grid = section("Experiment", "All settings are read from JSON when a run starts.");
     input(grid, "Model identifier", doc, "model_id", { text: true, full: true });
     input(grid, "Simulation ticks", doc, "ticks", { hint: "Number of base time intervals" });
@@ -182,7 +209,7 @@ function renderEditor() {
     editor.append(node("p", "Names are your labels. Declare the structure and conservation properties of each quantity.", "editor-description"));
     doc.fields.forEach((field, i) => {
       const item = card(`Field ${i + 1} · ${field.name}`, () => doc.fields.splice(i, 1)), grid = node("div", "", "field-grid"); item.append(grid);
-      input(grid, "Name", field, "name", { text: true }); input(grid, "Components", field, "components", { choices: [1, 3] });
+      input(grid, "Name", field, "name", { text: true, rename: "field" }); input(grid, "Components", field, "components", { choices: [1, 3] });
       input(grid, "Units", field, "units", { text: true }); input(grid, "Scale denominator", field, "scale", { min: 1 });
       if (field.scale === undefined) grid.lastChild.querySelector("input").value = "1";
       const checks = node("div", "", "card-checkboxes"); item.append(checks);
@@ -193,7 +220,7 @@ function renderEditor() {
     editor.append(node("p", "Define which fields travel together, their defaults, and their transport and update rules.", "editor-description"));
     doc.disturbance_types.forEach((type, i) => {
       const item = card(`Disturbance ${i + 1} · ${type.name}`, () => doc.disturbance_types.splice(i, 1)), grid = node("div", "", "field-grid"); item.append(grid);
-      input(grid, "Type name", type, "name", { text: true, full: true });
+      input(grid, "Type name", type, "name", { text: true, full: true, rename: "type" });
       jsonField(grid, "Owned fields", type, "fields", []); jsonField(grid, "Default field values", type, "defaults", {});
       jsonField(grid, "Transport rule", type, "transport", { mode: "hold" }, "Modes: hold, move or split. Ports: +X, −X, +Y, −Y, +Z, −Z.");
       jsonField(grid, "Local update rules", type, "updates", []);
@@ -241,7 +268,7 @@ async function selectTemplate(id, reset = false) {
     await api("/api/validate", { source: candidate }); parsed = JSON.parse(candidate);
   } catch { /* Preserve an invalid saved draft in the full JSON editor. */ }
   if (version !== selectionVersion) return;
-  selected = id; source = candidate; configuration = parsed; tab = parsed ? "general" : "json"; loading = false;
+  selected = id; source = candidate; configuration = parsed; tab = parsed ? "names" : "json"; loading = false;
   validated = false; remember(); renderTemplates(); renderEditor(); refreshSummary(); message("");
 }
 
@@ -266,6 +293,14 @@ function renderResults() {
   $("#run-count").textContent = `${runs.length} run${runs.length === 1 ? "" : "s"} this session`;
   const run = runs.find(item => item.id === selectedRun) || runs[0];
   if (!run) return;
+  const path = run.artifacts["run.html"] || null;
+  if (moviePath !== path) {
+    moviePath = path; const frame = $("#movie-frame");
+    frame.hidden = !path; $("#movie-empty").hidden = Boolean(path); $("#movie-external").hidden = !path;
+    if (path) { frame.src = path + "?autoplay=1"; $("#movie-external").href = path; }
+    else frame.removeAttribute("src");
+  }
+  if (!path) $("#movie-empty p").textContent = run.status === "running" ? "Calculating your recording. You can prepare the next configuration while this runs." : "This run has no movie. Enable recording and run again.";
   const result = node("div", "", "run-result"), top = node("div", "", "result-top");
   top.append(node("h3", run.model), node("span", run.status, `run-status ${run.status}`)); result.append(top);
   const metadata = run.metadata;
@@ -285,7 +320,7 @@ function renderResults() {
   }
   const links = node("div", "", "artifact-links");
   for (const [name, path] of Object.entries(run.artifacts)) {
-    const link = node("a", name === "run.html" ? "↗ Open recorded view" : `↓ ${name}`); link.href = path;
+    const link = node("a", name === "run.html" ? "↗ Open recorded movie" : `↓ ${name}`); link.href = path;
     if (name === "run.html") { link.target = "_blank"; link.rel = "noopener"; }
     else link.download = name;
     links.append(link);
@@ -299,12 +334,21 @@ function renderResults() {
 }
 
 async function poll() {
-  try { const result = await api("/api/runs"); runs = result.runs; renderResults(); }
+  try { const result = await api("/api/runs"); if (JSON.stringify(runs) !== JSON.stringify(result.runs)) { runs = result.runs; renderResults(); } }
   catch { if (runs.some(run => run.status === "running")) message("Connection lost. The run may still be active. Keep the server terminal open and reconnect.", "warning"); }
   finally { setTimeout(poll, 900); }
 }
 
 $("#editor-panel").addEventListener("submit", event => event.preventDefault());
+$("#phone-controls").addEventListener("click", () => {
+  const open = document.body.classList.toggle("controls-open");
+  $("#phone-controls").setAttribute("aria-expanded", String(open));
+  $("#phone-controls").textContent = open ? "Back to movie" : "Experiment controls";
+});
+$("#editor-panel").addEventListener("input", event => { if (event.target.tagName === "INPUT") event.target.setCustomValidity(""); }, true);
+function revealSection() { const section = document.getElementById(location.hash.slice(1)); if (section?.tagName === "DETAILS") section.open = true; }
+window.addEventListener("hashchange", revealSection);
+document.querySelectorAll('a[href="#configuration"]').forEach(link => link.addEventListener("click", () => { $("#configuration").open = true; }));
 $$("[data-tab]").forEach(button => {
   button.addEventListener("click", async () => {
     try {

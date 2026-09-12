@@ -117,7 +117,11 @@ a separate Python process using the server's package source. The UI never steps
 an Engine or supplies physical arithmetic. It owns one active job, session
 history, cancellation and links restricted to known artifacts. Configuration
 edits require no compilation or restart. Output directories are unique;
-recorded views remain opt-in. Cancelled runs are labeled incomplete. Loopback
+Run & watch explicitly requests a movie; recording can be disabled and the CLI
+remains headless by default. `diagnostics/disturbance_render.py` embeds copied
+frames and metadata in the packaged self-contained player. Neither the player
+nor its speed/projection controls supply simulation inputs. Name controls update
+declarative references only. Cancelled runs are labeled incomplete. Loopback
 binding, Host/Origin checks and a session token constrain HTTP access.
 See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
 

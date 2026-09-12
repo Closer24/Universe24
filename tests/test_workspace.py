@@ -61,7 +61,13 @@ def test_workspace_serves_assets_and_current_example_data(server):
     assert request(server, "/app.js")[0] == request(server, "/style.css")[0] == 200
     status, payload = request(server, "/api/templates")
     assert status == 200
-    assert {item["id"] for item in payload["templates"]} == {"basic", "exchange"}
+    assert {item["id"] for item in payload["templates"]} == {
+        "01-two-approaching-particles",
+        "02-parallel-particle-beams",
+        "03-spreading-pulse",
+        "basic",
+        "exchange",
+    }
     for template in payload["templates"]:
         assert template["source"] == (ROOT / "examples" / f"{template['id']}.json").read_text(
             encoding="utf-8"

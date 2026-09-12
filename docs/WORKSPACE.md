@@ -29,8 +29,12 @@ the UI. The runtime validates and reads each submitted input afresh.
 
 ## Choose and configure
 
-The default templates are the canonical `examples/basic.json` and
-`examples/exchange.json`, also included with installed packages. Their labels
+The default templates include two approaching particles, parallel particle beams,
+a spreading conserved pulse, Basic and Exchange, all packaged from `examples/`.
+The first three are idealized transport experiments, not validated electron,
+proton, photon, electromagnetic-force or collision models. The approaching pair
+meets and passes through; names and signed charge do not create attraction.
+Their labels
 describe data, not built-in physical laws. To use another directory:
 
 ```bash
@@ -42,6 +46,7 @@ the template files. Invalid files and files over 1 MiB are omitted. **Import
 configuration** loads a validated JSON file as a custom draft; the original file
 is preserved.
 
+- **Names:** particle/type and field names, with references updated consistently.
 - **General:** model identifier, ticks, world dimensions, capacity and timing.
 - **Fields:** names, scalar/vector structure, units, signs, scale and conservation.
 - **Disturbances:** owned fields, defaults, transport and local updates.
@@ -52,8 +57,12 @@ is preserved.
 Nested rule/value editors accept JSON data. Both those editors and full inputs
 reject duplicate JSON keys. Configuration cannot execute Python or JavaScript.
 Check it before running or switching from raw JSON to forms. Errors identify
-invalid members or references. Renaming or removing a field requires updating
-its references; the editor does not silently rewrite model laws.
+invalid members or references. Name controls update type, seed, field, default
+and rule references together; they do not change model arithmetic. Names are
+unique within their category. A particle name identifies its disturbance type;
+records of that type share it. The two-particle presets use distinct types so
+each particle can have its own name. Raw JSON edits and removals still require
+valid references.
 
 Drafts are saved per template in this browser. Switching templates keeps them;
 **Reset** restores a template. **Export JSON** downloads the checked configuration
@@ -65,10 +74,36 @@ The initial-placement diagram reads configured seed positions, not computed
 motion. It is an isometric projection; concentric rings denote co-located seeds.
 The preview never supplies physical inputs.
 
+## Movie and folded settings
+
+The preset chooser, movie and Run & watch action are prominent. Configuration,
+recording options, initial placement and result files start folded and open on
+request. The Names tab gives quick naming controls without exposing local laws.
+
+Run & watch creates a recorded movie by default. It appears inside the workspace
+when calculation finishes; Open full view opens the same self-contained HTML.
+Play/Pause, Restart, speed, XY/XZ/YZ projection and the timeline operate only on
+saved samples. Playback stops on the final frame; Replay starts again. Scrubbing
+pauses playback. Reduced-motion preference suppresses automatic playback.
+Detailed field values and ownership remain available in the movie's folded table.
+
+Filled markers are recorded resident disturbances. Link transfers use their
+recorded origin, port and arrival time with the configured fixed transit time.
+Concentric rings distinguish co-located records. The viewer does not invent
+trajectories between snapshots or draw a false trail across a periodic seam.
+The grid uses actual integer lattice nodes and equal axis scale. Tick arrows
+select recorded frames; the default stride records every tick. Zoom and drag
+expose individual nodes at larger scales. A dense view asks for zoom instead of
+substituting a schematic grid. The approaching preset takes two ticks per link.
+
 ## Phone layout
 
-Narrow screens use stacked panels, wrapping template cards and visible configuration
-tabs. Configure, Run and Results shortcuts jump to the relevant section without
+Phone screens initially show the recorded movie and one Experiment controls
+button. Presets, configuration, launch options and files remain hidden until
+that button is opened; Back to movie restores the simple results view.
+The self-contained animated HTML is the phone playback format, not a GIF export.
+When controls are open, narrow screens use stacked panels, wrapping template cards and visible configuration
+tabs. Movie, Run and Settings shortcuts jump to the relevant section without
 discarding edits. Form text is at least 16 CSS pixels and buttons have at least
 44 CSS pixels of touch height. Number fields request a numeric keyboard; JSON
 editors keep their own horizontal scrolling. Conserved values wrap inside the
@@ -82,17 +117,22 @@ deployment or connection setup.
 
 ## Run and inspect
 
-**Run simulation** submits an immutable snapshot. Later edits apply to the next
+**Run & watch** submits an immutable snapshot. Later edits apply to the next
 run. One run is active at a time; the existing CLI runs in a separate process.
 Results show status, requested/completed ticks, elapsed host time, conservation
 checks and artifact links. The current server session lists its latest 20 runs.
 Page reloads preserve that list; restarting the server starts a new session,
 while all saved output directories remain on disk.
 
-Runs remain headless unless **Create a recorded view** explicitly enables the
-existing generic sampled-state HTML. Its frame stride changes recording only.
-The result link appears after completion. This is a generic data view, not the
-historical particle animation or a live image stream.
+Turn off **Create a recorded movie** under Recording options for a headless run.
+CLI runs remain headless by default. Frame stride changes recording only.
+This is recorded generic-state playback after completion, not a live image stream.
+
+During a lecture, use the prepared simulator to select or create a configuration,
+export it, and run the saved file again. The lecture can produce a new reusable
+experiment; it is not a simulator build session. Update and prepare the local
+simulator separately when its GitHub version is outdated. Keep configuration
+files and source versions together when comparing reproducible results.
 
 Inputs are saved under `artifacts/workspace/inputs/<run-id>.json`, with runner
 errors in an adjacent `.log`. Results are under `artifacts/workspace/runs/<run-id>/`.

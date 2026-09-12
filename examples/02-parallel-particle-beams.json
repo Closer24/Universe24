@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "model_id": "parallel-particle-beams-idealized-v1",
+  "shape": [
+    65,
+    17,
+    9
+  ],
+  "slots_per_cell": 8,
+  "link_ticks": 2,
+  "normal_budget": 10000,
+  "ticks": 64,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "normalized inventory",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "normalized signed inventory",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "velocity",
+      "components": 3,
+      "units": "lattice direction",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "Fast beam",
+      "fields": [
+        "mass",
+        "charge",
+        "velocity"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": -1,
+        "velocity": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "velocity",
+        "rate": 1,
+        "rate_denominator": 1
+      }
+    },
+    {
+      "name": "Slow beam",
+      "fields": [
+        "mass",
+        "charge",
+        "velocity"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": -1,
+        "velocity": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "velocity",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    }
+  ],
+  "couplings": [],
+  "seeds": [
+    {
+      "position": [
+        8,
+        4,
+        4
+      ],
+      "type": "Fast beam"
+    },
+    {
+      "position": [
+        8,
+        12,
+        4
+      ],
+      "type": "Slow beam"
+    }
+  ]
+}

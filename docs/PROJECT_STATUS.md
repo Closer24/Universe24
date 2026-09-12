@@ -15,6 +15,9 @@ are headless. Start with [DISTURBANCES.md](DISTURBANCES.md) and the README.
 The [local configuration workspace](WORKSPACE.md) provides template selection,
 editable JSON and isolated runs through `python -m event_universe.ui`.
 Configuration changes are runtime data and require no compilation or rebuild.
+The workspace includes recorded movie playback, folded settings, names and three
+idealized motion presets. These transport demonstrations do not establish the
+behavior of real electrons, protons, photons or electromagnetic interactions.
 
 `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
 `CausalStreamSimulation` retain explicit historical research laws. Their

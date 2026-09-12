@@ -149,7 +149,7 @@ class Workspace:
             result.append(
                 {
                     "id": path.stem,
-                    "name": path.stem.replace("-", " ").title(),
+                    "name": re.sub(r"^\d+-", "", path.stem).replace("-", " ").title(),
                     "source": source,
                     "summary": summary,
                 }
