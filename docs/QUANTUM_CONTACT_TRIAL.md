@@ -1,5 +1,10 @@
 # Quantum-selected local contact trial
 
+This document preserves the earlier bounded contact fixture. The newer
+[native event-program interface](NATIVE_QUANTUM_EVENTS.md) supports optional
+composition through the ordinary engine and repeated local triggers. The limits
+below belong to this historical fixture, not that newer interface.
+
 ## Selected experiment, not a default engine rule
 
 `quantum-selected-elastic-contact-demo-v1` composes the existing

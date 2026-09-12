@@ -925,6 +925,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_groups",
             "field_rules",
             "spatial_interactions",
+            "event_program",
         },
         required,
     )
@@ -972,8 +973,12 @@ def parse_initial_state(document: object) -> InitialState:
         spatial_interactions=_spatial_interactions(
             obj.get("spatial_interactions", []), fields, disturbances, spatial
         ),
+        event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
     )
+    if initial.event_program is not None:
+        from .integration.event_program import parse_event_program
 
+        parse_event_program(initial)
     _validate_conversions(initial)
     return initial
 

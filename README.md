@@ -13,6 +13,9 @@ defines field names and values, disturbance types, local updates, couplings,
 transport, operation costs, normal cost and initial placements. The engine does
 not recognize mass, charge or velocity by name or supply a hidden physical model.
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
+Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
+local quantum decisions to that same engine and charge the executed mechanical
+path. They currently cannot be combined with spatial fields.
 
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.

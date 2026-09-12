@@ -574,3 +574,12 @@ JSON, and that all five existing reference worlds keep their independent numeric
 assertions without producing HTML/GIF. The wrapper and its dynamically selected
 inputs explicitly select this regression through `tools/check.py`; every changed
 path selects the inexpensive repository language and canonical-copy guards.
+
+## Native event programs and path costs
+
+`tests/test_native_event_runtime.py` covers the [native event contract](NATIVE_QUANTUM_EVENTS.md):
+365 exact ticket cases, deterministic classical trajectories, shared identity
+and packet ancestry, repeated encounters, bounded failures, code/type renaming,
+normal runner output and per-cycle cost-dependent delay without repeated charges.
+Existing quantum, locality, generic initialization and physical regression suites
+remain affected consumers. These checks do not derive a classical limit.

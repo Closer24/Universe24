@@ -22,6 +22,7 @@ result are different claims. Revision-specific results are not a live status fee
 
 | Document | Responsibility |
 | --- | --- |
+| [Native event programs](NATIVE_QUANTUM_EVENTS.md) | Shared causal ledger, optional quantum composition, repeated triggers and charged mechanical paths |
 | [Quantum events](QUANTUM_EVENTS.md) | Selected deferred joint-state event backend and decision semantics |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |

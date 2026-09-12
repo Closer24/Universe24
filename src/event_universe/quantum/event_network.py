@@ -8,6 +8,7 @@ quantum candidate, not a field law or an ScalarEngine-native event producer.
 
 from dataclasses import dataclass
 
+from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.state import Address, checked, checked_work
 
 from .event_rules import (
@@ -87,6 +88,7 @@ class EventDecision:
     evaluated_nodes: int
     model_cost: int = 1
     world_ticks: int = 0
+    cause: int | None = None
 
     @property
     def total_weight(self) -> int:
@@ -103,6 +105,14 @@ class NetworkRecord:
     event_id: int
 
 
+@dataclass(frozen=True, slots=True)
+class QuantumPayload:
+    sites: tuple[int, ...]
+    matrix: Matrix | None
+    state: State | None
+    outcome: int
+
+
 class EventNetwork:
     """Internal backend; instantiate through DeferredQuantum.bind_event_network.
 
@@ -111,25 +121,57 @@ class EventNetwork:
     never to ordinary field, movement or self-field rules.
     """
 
-    def __init__(self, config: EventNetworkConfig) -> None:
+    def __init__(self, config: EventNetworkConfig, event_space: CausalEventSpace | None = None) -> None:
         if type(config) is not EventNetworkConfig:
             raise TypeError("immutable EventNetworkConfig required")
         self._config = config
         self._tick = 0
         self._revision = 0
-        self._next_id = len(config.addresses)
-        self._events = {
-            q: NetworkEvent(
-                q, 0, (q,), state=(((1 << q) if q in config.occupied else 0, Amplitude(1, 0)),)
+        self.event_space = event_space if event_space is not None else CausalEventSpace()
+        self.event_space.require_room(len(config.addresses))
+        self._payloads: dict[int, QuantumPayload] = {}
+        self._heads: dict[int, int] = {}
+        for q in range(len(config.addresses)):
+            node = NetworkEvent(
+                self.event_space.next_id,
+                0,
+                (q,),
+                state=(((1 << q) if q in config.occupied else 0, Amplitude(1, 0)),),
             )
-            for q in range(len(config.addresses))
-        }
-        self._heads = dict(enumerate(range(len(config.addresses))))
+            self._store(node)
+            self._heads[q] = node.id
         self._constraints: dict[int, tuple[frozenset[int], frozenset[int]]] = {}
         self._prepared: dict[int, EventDecision] = {}
         self._records: dict[int, NetworkRecord] = {}
         self._queries = 0
         self._evaluated = 0
+
+    def _store(self, node: NetworkEvent, cause: int | None = None) -> None:
+        parents = node.parents if cause is None else (*node.parents, cause)
+        event = self.event_space.append(
+            tick=node.tick,
+            addresses=tuple(self.config.addresses[q] for q in node.sites),
+            owner="quantum",
+            kind="record" if node.outcome >= 0 else "state" if node.state is not None else "operation",
+            parents=parents,
+            payload_ref=node.id,
+        )
+        if event.id != node.id:
+            raise ValueError("event identity changed during insertion")
+        self._payloads[event.id] = QuantumPayload(node.sites, node.matrix, node.state, node.outcome)
+
+    def _event(self, identity: int) -> NetworkEvent:
+        payload = self._payloads[identity]
+        event = self.event_space.event(identity)
+        return NetworkEvent(
+            identity,
+            event.tick,
+            payload.sites,
+            tuple(i for i in event.parents if i in self._payloads),
+            payload.matrix,
+            payload.state,
+            payload.outcome,
+        )
 
     @property
     def config(self) -> EventNetworkConfig:
@@ -137,7 +179,7 @@ class EventNetwork:
 
     @property
     def node_count(self) -> int:
-        return len(self._events)
+        return len(self._payloads)
 
     @property
     def tick(self) -> int:
@@ -149,7 +191,7 @@ class EventNetwork:
 
     @property
     def events(self) -> tuple[NetworkEvent, ...]:
-        return tuple(self._events.values())
+        return tuple(self._event(i) for i in self._payloads)
 
     @property
     def records(self) -> tuple[NetworkRecord, ...]:
@@ -169,8 +211,9 @@ class EventNetwork:
             raise ValueError("site outside network")
 
     def _room(self, count: int) -> None:
-        checked(self._next_id + count)
-        if len(self._events) + count > self.config.max_nodes:
+        self.event_space.require_room(count)
+        checked(self.event_space.next_id + count)
+        if len(self._payloads) + count > self.config.max_nodes:
             raise OverflowError("quantum node budget exceeded")
 
     def step(self, operations: tuple[tuple[LocalUnitary, tuple[int, ...]], ...]) -> None:
@@ -198,12 +241,13 @@ class EventNetwork:
                 if distance != 1:
                     raise ValueError("only cardinal nearest-neighbor operations are allowed")
             parents = tuple(dict.fromkeys(self._heads[q] for q in sites))
-            nodes.append(NetworkEvent(self._next_id + len(nodes), tick, sites, parents, rule.matrix))
+            nodes.append(
+                NetworkEvent(self.event_space.next_id + len(nodes), tick, sites, parents, rule.matrix)
+            )
         for node in nodes:
-            self._events[node.id] = node
+            self._store(node)
             for site in node.sites:
                 self._heads[site] = node.id
-        self._next_id += len(nodes)
         self._tick, self._revision = tick, revision
 
     def _ancestors(self, roots: tuple[int, ...]) -> tuple[set[int], set[int]]:
@@ -216,7 +260,7 @@ class EventNetwork:
                 continue
             if len(found) >= self.config.max_eval_nodes:
                 raise OverflowError("backward dependency budget exceeded")
-            node = self._events[i]
+            node = self._event(i)
             found.add(i)
             sites.update(node.sites)
             stack.extend(node.parents)
@@ -243,7 +287,7 @@ class EventNetwork:
         initialized: set[int] = set()
         peak = 1
         for i in ids:
-            node = self._events[i]
+            node = self._event(i)
             if node.state is not None:
                 if initialized.intersection(node.sites):
                     raise ArithmeticError("overlapping checkpoint sources")
@@ -253,7 +297,7 @@ class EventNetwork:
                 value = tuple(sorted((a | b, multiply(x, y)) for a, x in value for b, y in node.state))
         peak = max(peak, len(value))
         for i in ids:
-            node = self._events[i]
+            node = self._event(i)
             if node.matrix is not None:
                 value = apply_matrix(value, node.matrix, node.sites, self.config.max_terms)
                 value = reduce_state(value)
@@ -283,7 +327,9 @@ class EventNetwork:
         ids, _ = self._plan(tuple(range(len(self.config.addresses))))
         return self._evaluate(ids)[0]
 
-    def prepare(self, record_id: int, site: int, instrument: LocalInstrument) -> EventDecision:
+    def prepare(
+        self, record_id: int, site: int, instrument: LocalInstrument, *, cause: int | None = None
+    ) -> EventDecision:
         """Resolve branches before asking the external sampler for a ticket.
 
         A record identity binds one instrument at one site. Calling prepare is
@@ -293,9 +339,13 @@ class EventNetwork:
         if checked(record_id) < 0 or type(instrument) is not LocalInstrument:
             raise ValueError("non-negative record id and local instrument required")
         self._site(site)
+        if cause is not None:
+            causal = self.event_space.event(cause)
+            if causal.tick != self.tick or self.config.addresses[site] not in causal.addresses:
+                raise ValueError("instrument trigger must be local and current")
         old = self._prepared.get(record_id)
         if old is not None:
-            if old.site != site or old.instrument != instrument:
+            if old.site != site or old.instrument != instrument or old.cause != cause:
                 raise ValueError("record identity cannot be rebound")
             if record_id not in self._records and old.revision != self._revision:
                 raise ValueError("pending decision is stale; use a new record identity")
@@ -310,7 +360,7 @@ class EventNetwork:
             for matrix in instrument.branches
         )
         decision = EventDecision(
-            record_id, self.tick, self._revision, site, instrument, weights, len(ids)
+            record_id, self.tick, self._revision, site, instrument, weights, len(ids), cause=cause
         )
         if decision.total_weight == 0:
             raise ArithmeticError("zero total branch weight")
@@ -350,7 +400,7 @@ class EventNetwork:
         ids, sites = self._ancestors(parents)
         if len(ids) + 1 > self.config.max_eval_nodes:
             raise OverflowError("record dependency budget exceeded")
-        i = self._next_id
+        i = self.event_space.next_id
         node = NetworkEvent(
             i,
             self.tick,
@@ -360,11 +410,11 @@ class EventNetwork:
             outcome=outcome,
         )
         record = NetworkRecord(decision, outcome, i)
-        self._events[i] = node
+        self._store(node, decision.cause)
         self._heads[decision.site] = i
         self._constraints[i] = (frozenset(ids | {i}), frozenset(sites))
         self._records[decision.record_id] = record
-        self._next_id, self._revision = i + 1, revision
+        self._revision = revision
         return record
 
     def checkpoint(self, site: int) -> int:
@@ -383,9 +433,9 @@ class EventNetwork:
             sites = grown
         state, _ = self._evaluate(ids)
         revision = checked(self._revision + 1)
-        next_id = checked(self._next_id + 1)
-        new = NetworkEvent(self._next_id, self.tick, sites, state=state)
-        events = {**self._events, new.id: new}
+        self.event_space.require_room(1)
+        new = NetworkEvent(self.event_space.next_id, self.tick, sites, state=state)
+        events = {**{i: self._event(i) for i in self._payloads}, new.id: new}
         heads = {**self._heads, **dict.fromkeys(sites, new.id)}
         constraints = {i: cone for i, cone in self._constraints.items() if i not in ids}
         live: set[int] = set()
@@ -400,7 +450,8 @@ class EventNetwork:
             stack.extend(events[i].parents)
         if len(live) > self.config.max_nodes:
             raise OverflowError("checkpoint node budget exceeded")
-        self._events = {i: node for i, node in events.items() if i in live}
+        self._store(new)
+        self._payloads = {i: payload for i, payload in self._payloads.items() if i in live}
         self._heads, self._constraints = heads, constraints
-        self._next_id, self._revision = next_id, revision
+        self._revision = revision
         return new.id

@@ -1,6 +1,6 @@
 # Project status and restart guide
 
-Audit reference: 2026-09-12, main `7e451fff1e44dfc3bef21c4a166326a3ba6c3b0d`.
+Audit reference: 2026-09-12, main `fb083c159fe1f51612203962d9a7921683eb31c8`.
 The names below include the repository-consistency cleanup based on that revision.
 Verify the current checkout, main and open PRs before continuing. A dated source
 map does not certify another checkout or turn an unmerged branch into implemented work.
@@ -16,7 +16,8 @@ Use the [documentation index](README.md) for each subject's authoritative owner.
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
 | Entity representation | [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | 46 inventory profiles compile to selected initialization records; labels are not physical derivations |
 | Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
-| Native contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
+| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |
+| Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
 | Historical particle APIs | [particle_api.py](../src/event_universe/particle_api.py) | Explicit `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`, `CausalStreamSimulation` |
 | Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
 
@@ -61,10 +62,16 @@ identifies invalid behavior; it does not repair the underlying candidate law.
 method. Querying computes branch weights; an explicit instrument and ticket select
 a recorded outcome without advancing the physical clock. Host dependency evaluation
 is counted separately from Q-ORACLE-1. [Focus](QUANTUM_FOCUS.md) remains a separate
-opt-in candidate-selection experiment. The [contact trial](QUANTUM_CONTACT_TRIAL.md)
-changes native outgoing trajectories for one constrained encounter, but does not
-supply arbitrary repeated contacts, a universal collapse criterion, derived particle
-scattering, a general classical limit or closed quantum-plus-matter energy balance.
+opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
+now composes the optional quantum owner through the ordinary `Simulation` and
+runner, with shared causal identities, repeated local encounters and explicit
+computation charges. Configured deterministic endpoints reproduce an ordinary
+mechanical path when both costs fit the budget; resolver overhead is not hidden.
+Combining an event program with spatial fields is rejected. These finite controls
+do not derive universal scattering, an objective collapse criterion, a general
+classical limit or quantum-plus-matter energy conservation. The earlier
+[contact trial](QUANTUM_CONTACT_TRIAL.md) remains a historical eight-tick fixture,
+not the current scope of the native event-program interface.
 
 The [entity inventory](PHYSICAL_ENTITIES.md), [catalog](ENTITY_CATALOG.md) and
 [conversion interface](LOCAL_CONVERSIONS.md) separate representation from physical
