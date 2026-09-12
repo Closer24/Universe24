@@ -1,5 +1,43 @@
 # Validation evidence
 
+## Physical inventory and elementary probes — 2026-09-12
+
+Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
+[entity catalog](../examples/known-entities/catalog.json) contains 11 field
+categories and 35 particle/multiplet entries. These are inventory entries,
+not a count of implemented physical fields. Its definitions and support
+assessment are explained in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
+Highlights was retrieved on 2026-09-12, including its implemented-entities
+section; the user's elementary-vector-operation restriction is binding.
+
+No engine code changes. The two new configurations produce updates only by
+copying, swapping or clearing vector values; guards and dot-product invariants
+validate those proposals. The old unequal-mass formula remains a clearly labeled
+comparison benchmark. No new configuration derives its state from that formula.
+
+The new focused suite passed eight checks: catalog/source/conjugate consistency,
+elementary update assignments, equal-mass contact on 9-cubed/X and 15-cubed/Y
+domains, outgoing/rest/unequal-mass exclusions, and causal two-vector transport.
+The same-local-mechanism checks are not a continuum-limit proof. The final PR
+records the mandatory affected gate and exact submitted tree.
+
+Both new inputs were run with the existing CLI and `--visualize`. The pair
+completed 16 ticks and 17 recorded frames: contact at tick 4, reversed momentum
+in the next sample, final X positions 1 and 7, positive mass 2 in total and zero
+net charge/momentum throughout. Its summed raw squared momentum remains 2.
+The field probe completed six ticks and seven frames, with exactly three
+nearest-neighbor transfers taking two ticks each. Its isolated E/B pulse retains
+raw squared amplitude 18 and has no source or dissipation. Both runs report
+balanced accounting and use unchanged runtime fingerprint
+`b8b0db5aba5c8ee14cfb87be318471f3e1352d0e83b5afb5640e3d49903c37a2`.
+Recorded data and metadata were inspected; no graphical-browser validation is
+claimed. Generated HTML stays outside the source commit.
+
+This verifies restricted classical proxies and a vector transport mechanism,
+not Maxwell dynamics, a photon, gravity or annihilation. Boss and specialist
+Skills already route to the updated postulates and owner contracts; no duplicate
+Skill rule or new agent role is needed.
+
 ## Generic local field rules — 2026-09-12
 
 The extension starts from main `12c85316f011d0601adcd0f4a31f0f52e59eaa27`.
@@ -650,3 +688,37 @@ Ruff lint/format passed and strict mypy passed. The test renderer captured
 source; its current fingerprint is recorded in `artifacts/local-links/run.json`.
 Earlier evidence is preserved under `artifacts/local-links-before-merge` and
 `artifacts/local-links-check-before-merge.log`.
+# Executable catalog and bounded conversions, 2026-09-12
+
+Base: `d1d7251ba739fb7231eff0d41037744456297ddd`. Python 3.14.7.
+The affected gate selected 764 passing cases and five explicitly optional visual
+skips; Ruff and mypy passed. Selection includes consumers of the shared
+initialization, record schema and local interaction law, not a full-suite switch.
+All 46 catalog entries compile through the canonical validator. Representative
+active worlds cover shared carrier, scalar and vector behavior without repeating
+the same dynamics for every particle name.
+
+Independent architecture/physics review found and resolved strict catalog input
+validation and a conversion restriction on nonzero arrival channel tags. A real
+incoming-pair regression now verifies conversion after neighbor arrival; channel
+provenance is preserved while actual carried fractional progress remains rejected.
+Boss, architecture, fields, physics, tests and simulation Skills were reviewed;
+their existing workflow covers this change, so no Skill edit was necessary.
+Highlights was read on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+No change to that Google document is implied.
+
+Three CLI runs generated recorded HTML with source fingerprint
+`1695a4c8757b6493e5bf58613a6b6cd97e533df81d1f17f58723c9a9354d4fce`:
+
+| Probe | Evidence |
+| --- | --- |
+| Catalog electron/positron/EM registers | Four ticks; inventory 2, charge 0, momentum (2,0,0), E/B component stock (0,1,0); causal carrier and field transfers |
+| `conversion.json` | Six ticks; two held records become outgoing types, stock 5 and momentum zero remain |
+| Incoming variant from `test_incoming_carriers_convert_after_real_neighbor_arrival_and_reverse` | Six ticks; seeds at x=3/5 meet at x=4, convert and reverse to x=2/6; stock 5 and momentum zero remain; link time 2 |
+
+Metadata, final states, event traces and HTML data were inspected. Browser visual
+inspection was not performed; the existing renderer is unchanged. These are
+representation/conversion tests, not physical annihilation, Maxwell, mass,
+spinor, gauge, metric or general energy derivations. Git PR/CI evidence identifies
+the final integrated tree; generated output follows finite retention.

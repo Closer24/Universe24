@@ -1,0 +1,3714 @@
+{
+  "catalog_version": 1,
+  "notes": [
+    "Entity metadata and executable representation profiles: compile selected entries through event_universe.entities into an ordinary Initialization input; the catalog itself is not a world.",
+    "Each profile supplies bounded scalar/vector data for the generic entity compiler; selected profiles must fit runtime field, rule, type and slot limits. Profiles do not establish physical dynamics or emergence.",
+    "Electric charges are integer multiples of one third of the elementary positive charge. Twice-spin values are identity metadata, not implemented spin dynamics.",
+    "No numerical masses are assigned here. Neutrino flavor records are not mass eigenstates; their paired IDs distinguish interaction labels without deciding Dirac or Majorana self-conjugacy.",
+    "The gluon entry denotes the eight-generator adjoint multiplet, not eight uncoupled scalar fields or eight additional antiparticle species.",
+    "Conserved component sums do not establish physical field energy or momentum; flux, constraint, dispersion and continuum-limit acceptance remain independent.",
+    "Known microscopic species are not all classical particles. A classical proxy omits their quantum and internal structure.",
+    "Creation and annihilation require local product ownership and total energy-momentum-charge accounting; opposite charge never means negative mass.",
+    "Source references document physical classifications. Runtime support assessments follow the project contracts and do not claim implementation by citation."
+  ],
+  "sources": {
+    "pdg_higgs": {"title": "PDG 2025: Higgs boson physics", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-higgs-boson.pdf"},
+    "cern_standard_model": {"title": "CERN: The Standard Model", "url": "https://home.cern/science/physics/standard-model/"},
+    "pdg_particles": {"title": "PDG 2025: Particle summary tables", "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"},
+    "cern_antimatter": {"title": "CERN: Antimatter", "url": "https://home.cern/science/physics/antimatter/"},
+    "pdg_neutrinos": {"title": "PDG 2025: Neutrino masses, mixing, and oscillations", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-neutrino-mixing.pdf"},
+    "tong_qft": {"title": "David Tong: Quantum Field Theory", "url": "https://davidtong.org/pdfs/teaching/quantum-field-theory/qft.pdf"},
+    "tong_em": {"title": "David Tong: Electromagnetism and Relativity", "url": "https://davidtong.org/pdfs/teaching/electromagnetism/electro4.pdf"},
+    "tong_gr": {"title": "David Tong: General Relativity", "url": "https://davidtong.org/pdfs/teaching/general-relativity/gr.pdf"},
+    "cern_dark_sector": {"title": "CERN: Dark matter and dark energy", "url": "https://home.cern/science/physics/dark-matter/"},
+    "project_postulates": {"title": "Universe24 postulates: computational-field hypothesis", "url": "https://github.com/Closer24/Universe24/blob/main/POSTULATES.md"}
+  },
+  "field_entities": [
+    {
+      "id": "electromagnetic_field",
+      "label": "Electromagnetic field",
+      "physical_status": "established",
+      "representation_status": "component_storage_available",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "One logical E/B group of two three-component vectors at each node, with six directional ports; E and B depend on the reference frame.",
+      "missing_capabilities": ["maxwell_constraint_preservation", "charge_current_continuity", "wave_dispersion_and_isotropy", "lorentz_coupling", "physical_energy_momentum_balance"],
+      "sources": ["tong_em"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Two vector payloads only; copying them does not implement Maxwell dynamics or physical electromagnetic energy.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "E",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "B",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "E",
+          "B"
+        ],
+        "seed_values": {
+          "E": [
+            0,
+            1,
+            0
+          ],
+          "B": [
+            0,
+            1,
+            0
+          ]
+        },
+        "spatial_fields": [
+          {"field": "E", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "B", "baseline": [0, 0, 0], "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "E", "assignments": [{"field": "E", "expression": [0, 0, 0]}, {"field": "E", "port": 0, "expression": {"field": "E", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "E", "side": "right"}, {"outgoing": "E", "port": 0}]}, {"outgoing": "E", "port": 1}]}, {"outgoing": "E", "port": 2}]}, {"outgoing": "E", "port": 3}]}, {"outgoing": "E", "port": 4}]}, {"outgoing": "E", "port": 5}]}}]},
+          {"name": "B", "assignments": [{"field": "B", "expression": [0, 0, 0]}, {"field": "B", "port": 0, "expression": {"field": "B", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "B", "side": "right"}, {"outgoing": "B", "port": 0}]}, {"outgoing": "B", "port": 1}]}, {"outgoing": "B", "port": 2}]}, {"outgoing": "B", "port": 3}]}, {"outgoing": "B", "port": 4}]}, {"outgoing": "B", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "strong_field",
+      "label": "Strong gauge field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "SU(3) gauge field with eight internal generators; these are not eight independent classical scalar laws.",
+      "missing_capabilities": ["nonabelian_gauge_transport", "color_dynamics", "confinement"],
+      "sources": ["cern_standard_model", "tong_qft"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Eight vector generator coordinates are a partial register representation, not gauge links, full E/B data, color transformations or confinement.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "strong_generator_1",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_2",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_3",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_4",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_5",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_6",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_7",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "strong_generator_8",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "strong_generator_1",
+          "strong_generator_2",
+          "strong_generator_3",
+          "strong_generator_4",
+          "strong_generator_5",
+          "strong_generator_6",
+          "strong_generator_7",
+          "strong_generator_8"
+        ],
+        "seed_values": {
+          "strong_generator_1": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_2": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_3": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_4": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_5": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_6": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_7": [
+            0,
+            1,
+            0
+          ],
+          "strong_generator_8": [
+            0,
+            1,
+            0
+          ]
+        },
+        "spatial_fields": [
+          {"field": "strong_generator_1", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_2", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_3", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_4", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_5", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_6", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_7", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "strong_generator_8", "baseline": [0, 0, 0], "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "strong_generator_1", "assignments": [{"field": "strong_generator_1", "expression": [0, 0, 0]}, {"field": "strong_generator_1", "port": 0, "expression": {"field": "strong_generator_1", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_1", "side": "right"}, {"outgoing": "strong_generator_1", "port": 0}]}, {"outgoing": "strong_generator_1", "port": 1}]}, {"outgoing": "strong_generator_1", "port": 2}]}, {"outgoing": "strong_generator_1", "port": 3}]}, {"outgoing": "strong_generator_1", "port": 4}]}, {"outgoing": "strong_generator_1", "port": 5}]}}]},
+          {"name": "strong_generator_2", "assignments": [{"field": "strong_generator_2", "expression": [0, 0, 0]}, {"field": "strong_generator_2", "port": 0, "expression": {"field": "strong_generator_2", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_2", "side": "right"}, {"outgoing": "strong_generator_2", "port": 0}]}, {"outgoing": "strong_generator_2", "port": 1}]}, {"outgoing": "strong_generator_2", "port": 2}]}, {"outgoing": "strong_generator_2", "port": 3}]}, {"outgoing": "strong_generator_2", "port": 4}]}, {"outgoing": "strong_generator_2", "port": 5}]}}]},
+          {"name": "strong_generator_3", "assignments": [{"field": "strong_generator_3", "expression": [0, 0, 0]}, {"field": "strong_generator_3", "port": 0, "expression": {"field": "strong_generator_3", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_3", "side": "right"}, {"outgoing": "strong_generator_3", "port": 0}]}, {"outgoing": "strong_generator_3", "port": 1}]}, {"outgoing": "strong_generator_3", "port": 2}]}, {"outgoing": "strong_generator_3", "port": 3}]}, {"outgoing": "strong_generator_3", "port": 4}]}, {"outgoing": "strong_generator_3", "port": 5}]}}]},
+          {"name": "strong_generator_4", "assignments": [{"field": "strong_generator_4", "expression": [0, 0, 0]}, {"field": "strong_generator_4", "port": 0, "expression": {"field": "strong_generator_4", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_4", "side": "right"}, {"outgoing": "strong_generator_4", "port": 0}]}, {"outgoing": "strong_generator_4", "port": 1}]}, {"outgoing": "strong_generator_4", "port": 2}]}, {"outgoing": "strong_generator_4", "port": 3}]}, {"outgoing": "strong_generator_4", "port": 4}]}, {"outgoing": "strong_generator_4", "port": 5}]}}]},
+          {"name": "strong_generator_5", "assignments": [{"field": "strong_generator_5", "expression": [0, 0, 0]}, {"field": "strong_generator_5", "port": 0, "expression": {"field": "strong_generator_5", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_5", "side": "right"}, {"outgoing": "strong_generator_5", "port": 0}]}, {"outgoing": "strong_generator_5", "port": 1}]}, {"outgoing": "strong_generator_5", "port": 2}]}, {"outgoing": "strong_generator_5", "port": 3}]}, {"outgoing": "strong_generator_5", "port": 4}]}, {"outgoing": "strong_generator_5", "port": 5}]}}]},
+          {"name": "strong_generator_6", "assignments": [{"field": "strong_generator_6", "expression": [0, 0, 0]}, {"field": "strong_generator_6", "port": 0, "expression": {"field": "strong_generator_6", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_6", "side": "right"}, {"outgoing": "strong_generator_6", "port": 0}]}, {"outgoing": "strong_generator_6", "port": 1}]}, {"outgoing": "strong_generator_6", "port": 2}]}, {"outgoing": "strong_generator_6", "port": 3}]}, {"outgoing": "strong_generator_6", "port": 4}]}, {"outgoing": "strong_generator_6", "port": 5}]}}]},
+          {"name": "strong_generator_7", "assignments": [{"field": "strong_generator_7", "expression": [0, 0, 0]}, {"field": "strong_generator_7", "port": 0, "expression": {"field": "strong_generator_7", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_7", "side": "right"}, {"outgoing": "strong_generator_7", "port": 0}]}, {"outgoing": "strong_generator_7", "port": 1}]}, {"outgoing": "strong_generator_7", "port": 2}]}, {"outgoing": "strong_generator_7", "port": 3}]}, {"outgoing": "strong_generator_7", "port": 4}]}, {"outgoing": "strong_generator_7", "port": 5}]}}]},
+          {"name": "strong_generator_8", "assignments": [{"field": "strong_generator_8", "expression": [0, 0, 0]}, {"field": "strong_generator_8", "port": 0, "expression": {"field": "strong_generator_8", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_8", "side": "right"}, {"outgoing": "strong_generator_8", "port": 0}]}, {"outgoing": "strong_generator_8", "port": 1}]}, {"outgoing": "strong_generator_8", "port": 2}]}, {"outgoing": "strong_generator_8", "port": 3}]}, {"outgoing": "strong_generator_8", "port": 4}]}, {"outgoing": "strong_generator_8", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "weak_field",
+      "label": "Weak sector of the electroweak field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "W+, W- and Z in the broken electroweak description; a scalar/vector grouping does not supply electroweak gauge structure.",
+      "missing_capabilities": ["chiral_coupling", "electroweak_gauge_structure", "species_changing_reactions"],
+      "sources": ["cern_standard_model", "pdg_particles"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Three vector payloads do not implement electroweak gauge structure, chirality or reactions.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "weak_w_plus",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "weak_w_minus",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "weak_z",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "weak_w_plus",
+          "weak_w_minus",
+          "weak_z"
+        ],
+        "seed_values": {
+          "weak_w_plus": [
+            0,
+            1,
+            0
+          ],
+          "weak_w_minus": [
+            0,
+            1,
+            0
+          ],
+          "weak_z": [
+            0,
+            1,
+            0
+          ]
+        },
+        "spatial_fields": [
+          {"field": "weak_w_plus", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "weak_w_minus", "baseline": [0, 0, 0], "transport": "local"},
+          {"field": "weak_z", "baseline": [0, 0, 0], "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "weak_w_plus", "assignments": [{"field": "weak_w_plus", "expression": [0, 0, 0]}, {"field": "weak_w_plus", "port": 0, "expression": {"field": "weak_w_plus", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "weak_w_plus", "side": "right"}, {"outgoing": "weak_w_plus", "port": 0}]}, {"outgoing": "weak_w_plus", "port": 1}]}, {"outgoing": "weak_w_plus", "port": 2}]}, {"outgoing": "weak_w_plus", "port": 3}]}, {"outgoing": "weak_w_plus", "port": 4}]}, {"outgoing": "weak_w_plus", "port": 5}]}}]},
+          {"name": "weak_w_minus", "assignments": [{"field": "weak_w_minus", "expression": [0, 0, 0]}, {"field": "weak_w_minus", "port": 0, "expression": {"field": "weak_w_minus", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "weak_w_minus", "side": "right"}, {"outgoing": "weak_w_minus", "port": 0}]}, {"outgoing": "weak_w_minus", "port": 1}]}, {"outgoing": "weak_w_minus", "port": 2}]}, {"outgoing": "weak_w_minus", "port": 3}]}, {"outgoing": "weak_w_minus", "port": 4}]}, {"outgoing": "weak_w_minus", "port": 5}]}}]},
+          {"name": "weak_z", "assignments": [{"field": "weak_z", "expression": [0, 0, 0]}, {"field": "weak_z", "port": 0, "expression": {"field": "weak_z", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "weak_z", "side": "right"}, {"outgoing": "weak_z", "port": 0}]}, {"outgoing": "weak_z", "port": 1}]}, {"outgoing": "weak_z", "port": 2}]}, {"outgoing": "weak_z", "port": 3}]}, {"outgoing": "weak_z", "port": 4}]}, {"outgoing": "weak_z", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "higgs_field",
+      "label": "Higgs field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Complex scalar electroweak doublet; one physical scalar Higgs excitation in the broken phase.",
+      "missing_capabilities": ["symmetry_breaking", "yukawa_coupling", "mass_generation"],
+      "sources": ["pdg_higgs"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Four real registers represent component storage only; no symmetry breaking or mass generation is supplied.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "higgs_upper_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "higgs_upper_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "higgs_lower_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "higgs_lower_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "higgs_upper_real",
+          "higgs_upper_imag",
+          "higgs_lower_real",
+          "higgs_lower_imag"
+        ],
+        "seed_values": {
+          "higgs_upper_real": 1,
+          "higgs_upper_imag": 1,
+          "higgs_lower_real": 1,
+          "higgs_lower_imag": 1
+        },
+        "spatial_fields": [
+          {"field": "higgs_upper_real", "baseline": 0, "transport": "local"},
+          {"field": "higgs_upper_imag", "baseline": 0, "transport": "local"},
+          {"field": "higgs_lower_real", "baseline": 0, "transport": "local"},
+          {"field": "higgs_lower_imag", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "higgs_upper_real", "assignments": [{"field": "higgs_upper_real", "expression": 0}, {"field": "higgs_upper_real", "port": 0, "expression": {"field": "higgs_upper_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_upper_real", "side": "right"}, {"outgoing": "higgs_upper_real", "port": 0}]}, {"outgoing": "higgs_upper_real", "port": 1}]}, {"outgoing": "higgs_upper_real", "port": 2}]}, {"outgoing": "higgs_upper_real", "port": 3}]}, {"outgoing": "higgs_upper_real", "port": 4}]}, {"outgoing": "higgs_upper_real", "port": 5}]}}]},
+          {"name": "higgs_upper_imag", "assignments": [{"field": "higgs_upper_imag", "expression": 0}, {"field": "higgs_upper_imag", "port": 0, "expression": {"field": "higgs_upper_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_upper_imag", "side": "right"}, {"outgoing": "higgs_upper_imag", "port": 0}]}, {"outgoing": "higgs_upper_imag", "port": 1}]}, {"outgoing": "higgs_upper_imag", "port": 2}]}, {"outgoing": "higgs_upper_imag", "port": 3}]}, {"outgoing": "higgs_upper_imag", "port": 4}]}, {"outgoing": "higgs_upper_imag", "port": 5}]}}]},
+          {"name": "higgs_lower_real", "assignments": [{"field": "higgs_lower_real", "expression": 0}, {"field": "higgs_lower_real", "port": 0, "expression": {"field": "higgs_lower_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_lower_real", "side": "right"}, {"outgoing": "higgs_lower_real", "port": 0}]}, {"outgoing": "higgs_lower_real", "port": 1}]}, {"outgoing": "higgs_lower_real", "port": 2}]}, {"outgoing": "higgs_lower_real", "port": 3}]}, {"outgoing": "higgs_lower_real", "port": 4}]}, {"outgoing": "higgs_lower_real", "port": 5}]}}]},
+          {"name": "higgs_lower_imag", "assignments": [{"field": "higgs_lower_imag", "expression": 0}, {"field": "higgs_lower_imag", "port": 0, "expression": {"field": "higgs_lower_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_lower_imag", "side": "right"}, {"outgoing": "higgs_lower_imag", "port": 0}]}, {"outgoing": "higgs_lower_imag", "port": 1}]}, {"outgoing": "higgs_lower_imag", "port": 2}]}, {"outgoing": "higgs_lower_imag", "port": 3}]}, {"outgoing": "higgs_lower_imag", "port": 4}]}, {"outgoing": "higgs_lower_imag", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "quark_fields",
+      "label": "Quark flavor fields",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Six flavors: up, down, charm, strange, top, bottom; spinor fields with color and antiparticle sectors.",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "color_dynamics"],
+      "sources": ["cern_standard_model", "tong_qft"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "One selected spinor component set only; no full flavor/color inventory, spinor transformation, gauge interaction or fermion statistics.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "quark_spinor_1_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_1_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_2_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_2_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_3_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_3_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_4_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "quark_spinor_4_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "quark_spinor_1_real",
+          "quark_spinor_1_imag",
+          "quark_spinor_2_real",
+          "quark_spinor_2_imag",
+          "quark_spinor_3_real",
+          "quark_spinor_3_imag",
+          "quark_spinor_4_real",
+          "quark_spinor_4_imag"
+        ],
+        "seed_values": {
+          "quark_spinor_1_real": 1,
+          "quark_spinor_1_imag": 1,
+          "quark_spinor_2_real": 1,
+          "quark_spinor_2_imag": 1,
+          "quark_spinor_3_real": 1,
+          "quark_spinor_3_imag": 1,
+          "quark_spinor_4_real": 1,
+          "quark_spinor_4_imag": 1
+        },
+        "spatial_fields": [
+          {"field": "quark_spinor_1_real", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_1_imag", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_2_real", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_2_imag", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_3_real", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_3_imag", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_4_real", "baseline": 0, "transport": "local"},
+          {"field": "quark_spinor_4_imag", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "quark_spinor_1_real", "assignments": [{"field": "quark_spinor_1_real", "expression": 0}, {"field": "quark_spinor_1_real", "port": 0, "expression": {"field": "quark_spinor_1_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_1_real", "side": "right"}, {"outgoing": "quark_spinor_1_real", "port": 0}]}, {"outgoing": "quark_spinor_1_real", "port": 1}]}, {"outgoing": "quark_spinor_1_real", "port": 2}]}, {"outgoing": "quark_spinor_1_real", "port": 3}]}, {"outgoing": "quark_spinor_1_real", "port": 4}]}, {"outgoing": "quark_spinor_1_real", "port": 5}]}}]},
+          {"name": "quark_spinor_1_imag", "assignments": [{"field": "quark_spinor_1_imag", "expression": 0}, {"field": "quark_spinor_1_imag", "port": 0, "expression": {"field": "quark_spinor_1_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_1_imag", "side": "right"}, {"outgoing": "quark_spinor_1_imag", "port": 0}]}, {"outgoing": "quark_spinor_1_imag", "port": 1}]}, {"outgoing": "quark_spinor_1_imag", "port": 2}]}, {"outgoing": "quark_spinor_1_imag", "port": 3}]}, {"outgoing": "quark_spinor_1_imag", "port": 4}]}, {"outgoing": "quark_spinor_1_imag", "port": 5}]}}]},
+          {"name": "quark_spinor_2_real", "assignments": [{"field": "quark_spinor_2_real", "expression": 0}, {"field": "quark_spinor_2_real", "port": 0, "expression": {"field": "quark_spinor_2_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_2_real", "side": "right"}, {"outgoing": "quark_spinor_2_real", "port": 0}]}, {"outgoing": "quark_spinor_2_real", "port": 1}]}, {"outgoing": "quark_spinor_2_real", "port": 2}]}, {"outgoing": "quark_spinor_2_real", "port": 3}]}, {"outgoing": "quark_spinor_2_real", "port": 4}]}, {"outgoing": "quark_spinor_2_real", "port": 5}]}}]},
+          {"name": "quark_spinor_2_imag", "assignments": [{"field": "quark_spinor_2_imag", "expression": 0}, {"field": "quark_spinor_2_imag", "port": 0, "expression": {"field": "quark_spinor_2_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_2_imag", "side": "right"}, {"outgoing": "quark_spinor_2_imag", "port": 0}]}, {"outgoing": "quark_spinor_2_imag", "port": 1}]}, {"outgoing": "quark_spinor_2_imag", "port": 2}]}, {"outgoing": "quark_spinor_2_imag", "port": 3}]}, {"outgoing": "quark_spinor_2_imag", "port": 4}]}, {"outgoing": "quark_spinor_2_imag", "port": 5}]}}]},
+          {"name": "quark_spinor_3_real", "assignments": [{"field": "quark_spinor_3_real", "expression": 0}, {"field": "quark_spinor_3_real", "port": 0, "expression": {"field": "quark_spinor_3_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_3_real", "side": "right"}, {"outgoing": "quark_spinor_3_real", "port": 0}]}, {"outgoing": "quark_spinor_3_real", "port": 1}]}, {"outgoing": "quark_spinor_3_real", "port": 2}]}, {"outgoing": "quark_spinor_3_real", "port": 3}]}, {"outgoing": "quark_spinor_3_real", "port": 4}]}, {"outgoing": "quark_spinor_3_real", "port": 5}]}}]},
+          {"name": "quark_spinor_3_imag", "assignments": [{"field": "quark_spinor_3_imag", "expression": 0}, {"field": "quark_spinor_3_imag", "port": 0, "expression": {"field": "quark_spinor_3_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_3_imag", "side": "right"}, {"outgoing": "quark_spinor_3_imag", "port": 0}]}, {"outgoing": "quark_spinor_3_imag", "port": 1}]}, {"outgoing": "quark_spinor_3_imag", "port": 2}]}, {"outgoing": "quark_spinor_3_imag", "port": 3}]}, {"outgoing": "quark_spinor_3_imag", "port": 4}]}, {"outgoing": "quark_spinor_3_imag", "port": 5}]}}]},
+          {"name": "quark_spinor_4_real", "assignments": [{"field": "quark_spinor_4_real", "expression": 0}, {"field": "quark_spinor_4_real", "port": 0, "expression": {"field": "quark_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_4_real", "side": "right"}, {"outgoing": "quark_spinor_4_real", "port": 0}]}, {"outgoing": "quark_spinor_4_real", "port": 1}]}, {"outgoing": "quark_spinor_4_real", "port": 2}]}, {"outgoing": "quark_spinor_4_real", "port": 3}]}, {"outgoing": "quark_spinor_4_real", "port": 4}]}, {"outgoing": "quark_spinor_4_real", "port": 5}]}}]},
+          {"name": "quark_spinor_4_imag", "assignments": [{"field": "quark_spinor_4_imag", "expression": 0}, {"field": "quark_spinor_4_imag", "port": 0, "expression": {"field": "quark_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_4_imag", "side": "right"}, {"outgoing": "quark_spinor_4_imag", "port": 0}]}, {"outgoing": "quark_spinor_4_imag", "port": 1}]}, {"outgoing": "quark_spinor_4_imag", "port": 2}]}, {"outgoing": "quark_spinor_4_imag", "port": 3}]}, {"outgoing": "quark_spinor_4_imag", "port": 4}]}, {"outgoing": "quark_spinor_4_imag", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "charged_lepton_fields",
+      "label": "Charged lepton flavor fields",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Electron, muon and tau spinor fields with antiparticle sectors.",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "quantum_electromagnetic_coupling"],
+      "sources": ["cern_standard_model", "tong_qft"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "One selected spinor component set only; no full flavor inventory, spinor transformation or fermion statistics.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "lepton_spinor_1_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_1_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_2_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_2_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_3_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_3_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_4_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "lepton_spinor_4_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "lepton_spinor_1_real",
+          "lepton_spinor_1_imag",
+          "lepton_spinor_2_real",
+          "lepton_spinor_2_imag",
+          "lepton_spinor_3_real",
+          "lepton_spinor_3_imag",
+          "lepton_spinor_4_real",
+          "lepton_spinor_4_imag"
+        ],
+        "seed_values": {
+          "lepton_spinor_1_real": 1,
+          "lepton_spinor_1_imag": 1,
+          "lepton_spinor_2_real": 1,
+          "lepton_spinor_2_imag": 1,
+          "lepton_spinor_3_real": 1,
+          "lepton_spinor_3_imag": 1,
+          "lepton_spinor_4_real": 1,
+          "lepton_spinor_4_imag": 1
+        },
+        "spatial_fields": [
+          {"field": "lepton_spinor_1_real", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_1_imag", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_2_real", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_2_imag", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_3_real", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_3_imag", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_4_real", "baseline": 0, "transport": "local"},
+          {"field": "lepton_spinor_4_imag", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "lepton_spinor_1_real", "assignments": [{"field": "lepton_spinor_1_real", "expression": 0}, {"field": "lepton_spinor_1_real", "port": 0, "expression": {"field": "lepton_spinor_1_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_1_real", "side": "right"}, {"outgoing": "lepton_spinor_1_real", "port": 0}]}, {"outgoing": "lepton_spinor_1_real", "port": 1}]}, {"outgoing": "lepton_spinor_1_real", "port": 2}]}, {"outgoing": "lepton_spinor_1_real", "port": 3}]}, {"outgoing": "lepton_spinor_1_real", "port": 4}]}, {"outgoing": "lepton_spinor_1_real", "port": 5}]}}]},
+          {"name": "lepton_spinor_1_imag", "assignments": [{"field": "lepton_spinor_1_imag", "expression": 0}, {"field": "lepton_spinor_1_imag", "port": 0, "expression": {"field": "lepton_spinor_1_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_1_imag", "side": "right"}, {"outgoing": "lepton_spinor_1_imag", "port": 0}]}, {"outgoing": "lepton_spinor_1_imag", "port": 1}]}, {"outgoing": "lepton_spinor_1_imag", "port": 2}]}, {"outgoing": "lepton_spinor_1_imag", "port": 3}]}, {"outgoing": "lepton_spinor_1_imag", "port": 4}]}, {"outgoing": "lepton_spinor_1_imag", "port": 5}]}}]},
+          {"name": "lepton_spinor_2_real", "assignments": [{"field": "lepton_spinor_2_real", "expression": 0}, {"field": "lepton_spinor_2_real", "port": 0, "expression": {"field": "lepton_spinor_2_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_2_real", "side": "right"}, {"outgoing": "lepton_spinor_2_real", "port": 0}]}, {"outgoing": "lepton_spinor_2_real", "port": 1}]}, {"outgoing": "lepton_spinor_2_real", "port": 2}]}, {"outgoing": "lepton_spinor_2_real", "port": 3}]}, {"outgoing": "lepton_spinor_2_real", "port": 4}]}, {"outgoing": "lepton_spinor_2_real", "port": 5}]}}]},
+          {"name": "lepton_spinor_2_imag", "assignments": [{"field": "lepton_spinor_2_imag", "expression": 0}, {"field": "lepton_spinor_2_imag", "port": 0, "expression": {"field": "lepton_spinor_2_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_2_imag", "side": "right"}, {"outgoing": "lepton_spinor_2_imag", "port": 0}]}, {"outgoing": "lepton_spinor_2_imag", "port": 1}]}, {"outgoing": "lepton_spinor_2_imag", "port": 2}]}, {"outgoing": "lepton_spinor_2_imag", "port": 3}]}, {"outgoing": "lepton_spinor_2_imag", "port": 4}]}, {"outgoing": "lepton_spinor_2_imag", "port": 5}]}}]},
+          {"name": "lepton_spinor_3_real", "assignments": [{"field": "lepton_spinor_3_real", "expression": 0}, {"field": "lepton_spinor_3_real", "port": 0, "expression": {"field": "lepton_spinor_3_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_3_real", "side": "right"}, {"outgoing": "lepton_spinor_3_real", "port": 0}]}, {"outgoing": "lepton_spinor_3_real", "port": 1}]}, {"outgoing": "lepton_spinor_3_real", "port": 2}]}, {"outgoing": "lepton_spinor_3_real", "port": 3}]}, {"outgoing": "lepton_spinor_3_real", "port": 4}]}, {"outgoing": "lepton_spinor_3_real", "port": 5}]}}]},
+          {"name": "lepton_spinor_3_imag", "assignments": [{"field": "lepton_spinor_3_imag", "expression": 0}, {"field": "lepton_spinor_3_imag", "port": 0, "expression": {"field": "lepton_spinor_3_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_3_imag", "side": "right"}, {"outgoing": "lepton_spinor_3_imag", "port": 0}]}, {"outgoing": "lepton_spinor_3_imag", "port": 1}]}, {"outgoing": "lepton_spinor_3_imag", "port": 2}]}, {"outgoing": "lepton_spinor_3_imag", "port": 3}]}, {"outgoing": "lepton_spinor_3_imag", "port": 4}]}, {"outgoing": "lepton_spinor_3_imag", "port": 5}]}}]},
+          {"name": "lepton_spinor_4_real", "assignments": [{"field": "lepton_spinor_4_real", "expression": 0}, {"field": "lepton_spinor_4_real", "port": 0, "expression": {"field": "lepton_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_4_real", "side": "right"}, {"outgoing": "lepton_spinor_4_real", "port": 0}]}, {"outgoing": "lepton_spinor_4_real", "port": 1}]}, {"outgoing": "lepton_spinor_4_real", "port": 2}]}, {"outgoing": "lepton_spinor_4_real", "port": 3}]}, {"outgoing": "lepton_spinor_4_real", "port": 4}]}, {"outgoing": "lepton_spinor_4_real", "port": 5}]}}]},
+          {"name": "lepton_spinor_4_imag", "assignments": [{"field": "lepton_spinor_4_imag", "expression": 0}, {"field": "lepton_spinor_4_imag", "port": 0, "expression": {"field": "lepton_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_4_imag", "side": "right"}, {"outgoing": "lepton_spinor_4_imag", "port": 0}]}, {"outgoing": "lepton_spinor_4_imag", "port": 1}]}, {"outgoing": "lepton_spinor_4_imag", "port": 2}]}, {"outgoing": "lepton_spinor_4_imag", "port": 3}]}, {"outgoing": "lepton_spinor_4_imag", "port": 4}]}, {"outgoing": "lepton_spinor_4_imag", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "neutrino_fields",
+      "label": "Neutrino flavor and mass fields",
+      "physical_status": "established_with_unresolved_mass_nature",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Electron, muon and tau flavor states mix mass eigenstates; Dirac versus Majorana nature is unresolved.",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"],
+      "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Eight candidate registers do not select Dirac versus Majorana physics, identify a flavor state with a definite mass, or implement flavor mixing.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "neutrino_spinor_1_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_1_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_2_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_2_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_3_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_3_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_4_real",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "neutrino_spinor_4_imag",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "neutrino_spinor_1_real",
+          "neutrino_spinor_1_imag",
+          "neutrino_spinor_2_real",
+          "neutrino_spinor_2_imag",
+          "neutrino_spinor_3_real",
+          "neutrino_spinor_3_imag",
+          "neutrino_spinor_4_real",
+          "neutrino_spinor_4_imag"
+        ],
+        "seed_values": {
+          "neutrino_spinor_1_real": 1,
+          "neutrino_spinor_1_imag": 1,
+          "neutrino_spinor_2_real": 1,
+          "neutrino_spinor_2_imag": 1,
+          "neutrino_spinor_3_real": 1,
+          "neutrino_spinor_3_imag": 1,
+          "neutrino_spinor_4_real": 1,
+          "neutrino_spinor_4_imag": 1
+        },
+        "spatial_fields": [
+          {"field": "neutrino_spinor_1_real", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_1_imag", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_2_real", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_2_imag", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_3_real", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_3_imag", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_4_real", "baseline": 0, "transport": "local"},
+          {"field": "neutrino_spinor_4_imag", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "neutrino_spinor_1_real", "assignments": [{"field": "neutrino_spinor_1_real", "expression": 0}, {"field": "neutrino_spinor_1_real", "port": 0, "expression": {"field": "neutrino_spinor_1_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_1_real", "side": "right"}, {"outgoing": "neutrino_spinor_1_real", "port": 0}]}, {"outgoing": "neutrino_spinor_1_real", "port": 1}]}, {"outgoing": "neutrino_spinor_1_real", "port": 2}]}, {"outgoing": "neutrino_spinor_1_real", "port": 3}]}, {"outgoing": "neutrino_spinor_1_real", "port": 4}]}, {"outgoing": "neutrino_spinor_1_real", "port": 5}]}}]},
+          {"name": "neutrino_spinor_1_imag", "assignments": [{"field": "neutrino_spinor_1_imag", "expression": 0}, {"field": "neutrino_spinor_1_imag", "port": 0, "expression": {"field": "neutrino_spinor_1_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_1_imag", "side": "right"}, {"outgoing": "neutrino_spinor_1_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_1_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_1_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_1_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_1_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_1_imag", "port": 5}]}}]},
+          {"name": "neutrino_spinor_2_real", "assignments": [{"field": "neutrino_spinor_2_real", "expression": 0}, {"field": "neutrino_spinor_2_real", "port": 0, "expression": {"field": "neutrino_spinor_2_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_2_real", "side": "right"}, {"outgoing": "neutrino_spinor_2_real", "port": 0}]}, {"outgoing": "neutrino_spinor_2_real", "port": 1}]}, {"outgoing": "neutrino_spinor_2_real", "port": 2}]}, {"outgoing": "neutrino_spinor_2_real", "port": 3}]}, {"outgoing": "neutrino_spinor_2_real", "port": 4}]}, {"outgoing": "neutrino_spinor_2_real", "port": 5}]}}]},
+          {"name": "neutrino_spinor_2_imag", "assignments": [{"field": "neutrino_spinor_2_imag", "expression": 0}, {"field": "neutrino_spinor_2_imag", "port": 0, "expression": {"field": "neutrino_spinor_2_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_2_imag", "side": "right"}, {"outgoing": "neutrino_spinor_2_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_2_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_2_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_2_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_2_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_2_imag", "port": 5}]}}]},
+          {"name": "neutrino_spinor_3_real", "assignments": [{"field": "neutrino_spinor_3_real", "expression": 0}, {"field": "neutrino_spinor_3_real", "port": 0, "expression": {"field": "neutrino_spinor_3_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_3_real", "side": "right"}, {"outgoing": "neutrino_spinor_3_real", "port": 0}]}, {"outgoing": "neutrino_spinor_3_real", "port": 1}]}, {"outgoing": "neutrino_spinor_3_real", "port": 2}]}, {"outgoing": "neutrino_spinor_3_real", "port": 3}]}, {"outgoing": "neutrino_spinor_3_real", "port": 4}]}, {"outgoing": "neutrino_spinor_3_real", "port": 5}]}}]},
+          {"name": "neutrino_spinor_3_imag", "assignments": [{"field": "neutrino_spinor_3_imag", "expression": 0}, {"field": "neutrino_spinor_3_imag", "port": 0, "expression": {"field": "neutrino_spinor_3_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_3_imag", "side": "right"}, {"outgoing": "neutrino_spinor_3_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 5}]}}]},
+          {"name": "neutrino_spinor_4_real", "assignments": [{"field": "neutrino_spinor_4_real", "expression": 0}, {"field": "neutrino_spinor_4_real", "port": 0, "expression": {"field": "neutrino_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_4_real", "side": "right"}, {"outgoing": "neutrino_spinor_4_real", "port": 0}]}, {"outgoing": "neutrino_spinor_4_real", "port": 1}]}, {"outgoing": "neutrino_spinor_4_real", "port": 2}]}, {"outgoing": "neutrino_spinor_4_real", "port": 3}]}, {"outgoing": "neutrino_spinor_4_real", "port": 4}]}, {"outgoing": "neutrino_spinor_4_real", "port": 5}]}}]},
+          {"name": "neutrino_spinor_4_imag", "assignments": [{"field": "neutrino_spinor_4_imag", "expression": 0}, {"field": "neutrino_spinor_4_imag", "port": 0, "expression": {"field": "neutrino_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_4_imag", "side": "right"}, {"outgoing": "neutrino_spinor_4_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "gravity_metric",
+      "label": "Classical spacetime metric",
+      "physical_status": "established_classical_description",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "A spacetime metric describes gravity in general relativity; a Newtonian scalar potential is a limited approximation.",
+      "missing_capabilities": ["metric_dynamics", "gravitational_constraints", "newtonian_limit", "equivalence_principle"],
+      "sources": ["tong_gr"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Ten component registers do not enforce a Lorentzian metric, metric transformations, gravitational constraints or geometric evolution; sample values are register probes, not a physical geometry.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "metric_00",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_01",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_02",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_03",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_11",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_12",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_13",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_22",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_23",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          },
+          {
+            "name": "metric_33",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "metric_00",
+          "metric_01",
+          "metric_02",
+          "metric_03",
+          "metric_11",
+          "metric_12",
+          "metric_13",
+          "metric_22",
+          "metric_23",
+          "metric_33"
+        ],
+        "seed_values": {
+          "metric_00": 1,
+          "metric_01": 1,
+          "metric_02": 1,
+          "metric_03": 1,
+          "metric_11": 1,
+          "metric_12": 1,
+          "metric_13": 1,
+          "metric_22": 1,
+          "metric_23": 1,
+          "metric_33": 1
+        },
+        "spatial_fields": [
+          {"field": "metric_00", "baseline": 0, "transport": "local"},
+          {"field": "metric_01", "baseline": 0, "transport": "local"},
+          {"field": "metric_02", "baseline": 0, "transport": "local"},
+          {"field": "metric_03", "baseline": 0, "transport": "local"},
+          {"field": "metric_11", "baseline": 0, "transport": "local"},
+          {"field": "metric_12", "baseline": 0, "transport": "local"},
+          {"field": "metric_13", "baseline": 0, "transport": "local"},
+          {"field": "metric_22", "baseline": 0, "transport": "local"},
+          {"field": "metric_23", "baseline": 0, "transport": "local"},
+          {"field": "metric_33", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "metric_00", "assignments": [{"field": "metric_00", "expression": 0}, {"field": "metric_00", "port": 0, "expression": {"field": "metric_00", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_00", "side": "right"}, {"outgoing": "metric_00", "port": 0}]}, {"outgoing": "metric_00", "port": 1}]}, {"outgoing": "metric_00", "port": 2}]}, {"outgoing": "metric_00", "port": 3}]}, {"outgoing": "metric_00", "port": 4}]}, {"outgoing": "metric_00", "port": 5}]}}]},
+          {"name": "metric_01", "assignments": [{"field": "metric_01", "expression": 0}, {"field": "metric_01", "port": 0, "expression": {"field": "metric_01", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_01", "side": "right"}, {"outgoing": "metric_01", "port": 0}]}, {"outgoing": "metric_01", "port": 1}]}, {"outgoing": "metric_01", "port": 2}]}, {"outgoing": "metric_01", "port": 3}]}, {"outgoing": "metric_01", "port": 4}]}, {"outgoing": "metric_01", "port": 5}]}}]},
+          {"name": "metric_02", "assignments": [{"field": "metric_02", "expression": 0}, {"field": "metric_02", "port": 0, "expression": {"field": "metric_02", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_02", "side": "right"}, {"outgoing": "metric_02", "port": 0}]}, {"outgoing": "metric_02", "port": 1}]}, {"outgoing": "metric_02", "port": 2}]}, {"outgoing": "metric_02", "port": 3}]}, {"outgoing": "metric_02", "port": 4}]}, {"outgoing": "metric_02", "port": 5}]}}]},
+          {"name": "metric_03", "assignments": [{"field": "metric_03", "expression": 0}, {"field": "metric_03", "port": 0, "expression": {"field": "metric_03", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_03", "side": "right"}, {"outgoing": "metric_03", "port": 0}]}, {"outgoing": "metric_03", "port": 1}]}, {"outgoing": "metric_03", "port": 2}]}, {"outgoing": "metric_03", "port": 3}]}, {"outgoing": "metric_03", "port": 4}]}, {"outgoing": "metric_03", "port": 5}]}}]},
+          {"name": "metric_11", "assignments": [{"field": "metric_11", "expression": 0}, {"field": "metric_11", "port": 0, "expression": {"field": "metric_11", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_11", "side": "right"}, {"outgoing": "metric_11", "port": 0}]}, {"outgoing": "metric_11", "port": 1}]}, {"outgoing": "metric_11", "port": 2}]}, {"outgoing": "metric_11", "port": 3}]}, {"outgoing": "metric_11", "port": 4}]}, {"outgoing": "metric_11", "port": 5}]}}]},
+          {"name": "metric_12", "assignments": [{"field": "metric_12", "expression": 0}, {"field": "metric_12", "port": 0, "expression": {"field": "metric_12", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_12", "side": "right"}, {"outgoing": "metric_12", "port": 0}]}, {"outgoing": "metric_12", "port": 1}]}, {"outgoing": "metric_12", "port": 2}]}, {"outgoing": "metric_12", "port": 3}]}, {"outgoing": "metric_12", "port": 4}]}, {"outgoing": "metric_12", "port": 5}]}}]},
+          {"name": "metric_13", "assignments": [{"field": "metric_13", "expression": 0}, {"field": "metric_13", "port": 0, "expression": {"field": "metric_13", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_13", "side": "right"}, {"outgoing": "metric_13", "port": 0}]}, {"outgoing": "metric_13", "port": 1}]}, {"outgoing": "metric_13", "port": 2}]}, {"outgoing": "metric_13", "port": 3}]}, {"outgoing": "metric_13", "port": 4}]}, {"outgoing": "metric_13", "port": 5}]}}]},
+          {"name": "metric_22", "assignments": [{"field": "metric_22", "expression": 0}, {"field": "metric_22", "port": 0, "expression": {"field": "metric_22", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_22", "side": "right"}, {"outgoing": "metric_22", "port": 0}]}, {"outgoing": "metric_22", "port": 1}]}, {"outgoing": "metric_22", "port": 2}]}, {"outgoing": "metric_22", "port": 3}]}, {"outgoing": "metric_22", "port": 4}]}, {"outgoing": "metric_22", "port": 5}]}}]},
+          {"name": "metric_23", "assignments": [{"field": "metric_23", "expression": 0}, {"field": "metric_23", "port": 0, "expression": {"field": "metric_23", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_23", "side": "right"}, {"outgoing": "metric_23", "port": 0}]}, {"outgoing": "metric_23", "port": 1}]}, {"outgoing": "metric_23", "port": 2}]}, {"outgoing": "metric_23", "port": 3}]}, {"outgoing": "metric_23", "port": 4}]}, {"outgoing": "metric_23", "port": 5}]}}]},
+          {"name": "metric_33", "assignments": [{"field": "metric_33", "expression": 0}, {"field": "metric_33", "port": 0, "expression": {"field": "metric_33", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_33", "side": "right"}, {"outgoing": "metric_33", "port": 0}]}, {"outgoing": "metric_33", "port": 1}]}, {"outgoing": "metric_33", "port": 2}]}, {"outgoing": "metric_33", "port": 3}]}, {"outgoing": "metric_33", "port": 4}]}, {"outgoing": "metric_33", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "computational_field",
+      "label": "Computational Field",
+      "physical_status": "project_hypothesis",
+      "representation_status": "component_storage_available",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Project-defined local computation influence represented by configured scalar/vector quantities; not identified with the spacetime metric.",
+      "missing_capabilities": ["derived_gravity_law", "physical_calibration", "continuum_limit"],
+      "sources": ["project_postulates"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "The scalar transport probe does not derive gravity, physical time or the proposed computation response.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "computational_influence",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "computational_influence"
+        ],
+        "seed_values": {
+          "computational_influence": 1
+        },
+        "spatial_fields": [
+          {"field": "computational_influence", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "computational_influence", "assignments": [{"field": "computational_influence", "expression": 0}, {"field": "computational_influence", "port": 0, "expression": {"field": "computational_influence", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "computational_influence", "side": "right"}, {"outgoing": "computational_influence", "port": 0}]}, {"outgoing": "computational_influence", "port": 1}]}, {"outgoing": "computational_influence", "port": 2}]}, {"outgoing": "computational_influence", "port": 3}]}, {"outgoing": "computational_influence", "port": 4}]}, {"outgoing": "computational_influence", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "dark_matter",
+      "label": "Dark matter category",
+      "physical_status": "inferred_component_unknown_identity",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "An observationally inferred matter category; no confirmed microscopic field or particle identity is assigned.",
+      "missing_capabilities": ["identified_microscopic_model"],
+      "sources": ["cern_dark_sector"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "This is an explicitly unspecified candidate register, not an identified dark matter field or particle.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "dark_matter_candidate_register",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "dark_matter_candidate_register"
+        ],
+        "seed_values": {
+          "dark_matter_candidate_register": 1
+        },
+        "spatial_fields": [
+          {"field": "dark_matter_candidate_register", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "dark_matter_candidate_register", "assignments": [{"field": "dark_matter_candidate_register", "expression": 0}, {"field": "dark_matter_candidate_register", "port": 0, "expression": {"field": "dark_matter_candidate_register", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "dark_matter_candidate_register", "side": "right"}, {"outgoing": "dark_matter_candidate_register", "port": 0}]}, {"outgoing": "dark_matter_candidate_register", "port": 1}]}, {"outgoing": "dark_matter_candidate_register", "port": 2}]}, {"outgoing": "dark_matter_candidate_register", "port": 3}]}, {"outgoing": "dark_matter_candidate_register", "port": 4}]}, {"outgoing": "dark_matter_candidate_register", "port": 5}]}}]}
+        ]
+      }
+    },
+    {
+      "id": "dark_energy",
+      "label": "Dark energy category",
+      "physical_status": "inferred_component_unknown_identity",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "An accelerated-expansion category, not a confirmed additional particle field; a cosmological constant is one description.",
+      "missing_capabilities": ["identified_microscopic_model"],
+      "sources": ["cern_dark_sector", "tong_gr"],
+      "executable_profile": {
+        "kind": "local_field",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "This is an explicitly unspecified candidate register, not an identified dark energy field or an expansion law.",
+          "Sample amplitudes are abstract integer register values, not calibrated physical fields.",
+          "Directed local copy and transfer preserve declared component stock; component stock is not automatically physical energy."
+        ],
+        "fields": [
+          {
+            "name": "dark_energy_candidate_register",
+            "components": 1,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": false,
+            "scale": 1
+          }
+        ],
+        "components": [
+          "dark_energy_candidate_register"
+        ],
+        "seed_values": {
+          "dark_energy_candidate_register": 1
+        },
+        "spatial_fields": [
+          {"field": "dark_energy_candidate_register", "baseline": 0, "transport": "local"}
+        ],
+        "field_rules": [
+          {"name": "dark_energy_candidate_register", "assignments": [{"field": "dark_energy_candidate_register", "expression": 0}, {"field": "dark_energy_candidate_register", "port": 0, "expression": {"field": "dark_energy_candidate_register", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "dark_energy_candidate_register", "side": "right"}, {"outgoing": "dark_energy_candidate_register", "port": 0}]}, {"outgoing": "dark_energy_candidate_register", "port": 1}]}, {"outgoing": "dark_energy_candidate_register", "port": 2}]}, {"outgoing": "dark_energy_candidate_register", "port": 3}]}, {"outgoing": "dark_energy_candidate_register", "port": 4}]}, {"outgoing": "dark_energy_candidate_register", "port": 5}]}}]}
+        ]
+      }
+    }
+  ],
+  "particle_entities": [
+    {
+      "id": "up_quark", "label": "Up quark", "category": "quark",
+      "antiparticle_id": "antiup_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "up_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antiup_quark", "label": "Antiup quark", "category": "antiquark",
+      "antiparticle_id": "up_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antiup_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "down_quark", "label": "Down quark", "category": "quark",
+      "antiparticle_id": "antidown_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "down_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antidown_quark", "label": "Antidown quark", "category": "antiquark",
+      "antiparticle_id": "down_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antidown_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "charm_quark", "label": "Charm quark", "category": "quark",
+      "antiparticle_id": "anticharm_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "charm_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "anticharm_quark", "label": "Anticharm quark", "category": "antiquark",
+      "antiparticle_id": "charm_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "anticharm_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "strange_quark", "label": "Strange quark", "category": "quark",
+      "antiparticle_id": "antistrange_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "strange_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antistrange_quark", "label": "Antistrange quark", "category": "antiquark",
+      "antiparticle_id": "strange_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antistrange_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "top_quark", "label": "Top quark", "category": "quark",
+      "antiparticle_id": "antitop_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "top_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antitop_quark", "label": "Antitop quark", "category": "antiquark",
+      "antiparticle_id": "top_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antitop_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -2,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -2,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "bottom_quark", "label": "Bottom quark", "category": "quark",
+      "antiparticle_id": "antibottom_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "bottom_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antibottom_quark", "label": "Antibottom quark", "category": "antiquark",
+      "antiparticle_id": "bottom_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antibottom_quark representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 1,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 1,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "electron", "label": "Electron", "category": "charged_lepton",
+      "antiparticle_id": "positron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "classical_attributes_available", "dynamics_status": "restricted_classical_proxy_only", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "electron representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "positron", "label": "Positron", "category": "charged_antilepton",
+      "antiparticle_id": "electron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "classical_attributes_available", "dynamics_status": "restricted_classical_proxy_only", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "positron representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "muon", "label": "Muon", "category": "charged_lepton",
+      "antiparticle_id": "antimuon", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "muon representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antimuon", "label": "Antimuon", "category": "charged_antilepton",
+      "antiparticle_id": "muon", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antimuon representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "tau", "label": "Tau", "category": "charged_lepton",
+      "antiparticle_id": "antitau", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "tau representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antitau", "label": "Antitau", "category": "charged_antilepton",
+      "antiparticle_id": "tau", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antitau representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "electron_neutrino", "label": "Electron neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "electron_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "electron_neutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "electron_antineutrino", "label": "Electron antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "electron_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "electron_antineutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "muon_neutrino", "label": "Muon neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "muon_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "muon_neutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "muon_antineutrino", "label": "Muon antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "muon_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "muon_antineutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "tau_neutrino", "label": "Tau neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "tau_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "tau_neutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "tau_antineutrino", "label": "Tau antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "tau_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "No definite mass or Dirac versus Majorana identity is assigned to this flavor-sector label."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "tau_antineutrino representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "photon", "label": "Photon", "category": "gauge_boson",
+      "antiparticle_id": "photon", "conjugacy_status": "self_conjugate", "rest_mass_relation": "massless",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quantized_electromagnetic_excitation", "polarization_dynamics", "photon_detection"], "sources": ["pdg_particles", "tong_qft"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "The sample one-half rate is not physical photon propagation; this record does not implement a quantum electromagnetic excitation."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "photon representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "gluon_multiplet", "label": "Gluon multiplet", "category": "gauge_boson_multiplet",
+      "antiparticle_id": "gluon_multiplet", "conjugacy_status": "self_conjugate_multiplet", "rest_mass_relation": "massless_gauge_bosons",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["nonabelian_gauge_transport", "color_dynamics", "confinement"], "sources": ["pdg_particles", "tong_qft"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "gluon_multiplet representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "w_plus", "label": "W+ boson", "category": "gauge_boson",
+      "antiparticle_id": "w_minus", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "w_plus representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "w_minus", "label": "W- boson", "category": "gauge_boson",
+      "antiparticle_id": "w_plus", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "w_minus representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "z_boson", "label": "Z boson", "category": "gauge_boson",
+      "antiparticle_id": "z_boson", "conjugacy_status": "self_conjugate", "rest_mass_relation": "positive_self_conjugate",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "z_boson representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "higgs_boson", "label": "Higgs boson", "category": "scalar_boson",
+      "antiparticle_id": "higgs_boson", "conjugacy_status": "self_conjugate", "rest_mass_relation": "positive_self_conjugate",
+      "electric_charge_thirds": 0, "twice_spin": 0, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["higgs_dynamics", "mass_generation", "decay_channels"], "sources": ["pdg_particles"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "higgs_boson representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "proton", "label": "Proton", "category": "composite_baryon",
+      "antiparticle_id": "antiproton", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "proton representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antiproton", "label": "Antiproton", "category": "composite_antibaryon",
+      "antiparticle_id": "proton", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "annihilation_products"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antiproton representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": -3,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": -3,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "neutron", "label": "Neutron", "category": "composite_baryon",
+      "antiparticle_id": "antineutron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "neutron representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "antineutron", "label": "Antineutron", "category": "composite_antibaryon",
+      "antiparticle_id": "neutron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "annihilation_products"], "sources": ["pdg_particles", "cern_antimatter"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "antineutron representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "graviton", "label": "Hypothetical graviton", "category": "hypothetical_gauge_quantum",
+      "antiparticle_id": "graviton", "conjugacy_status": "self_conjugate_in_standard_candidate", "rest_mass_relation": "massless_in_standard_linearized_candidate",
+      "electric_charge_thirds": 0, "twice_spin": 4, "physical_status": "hypothetical",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quantum_gravity", "experimental_confirmation"], "sources": ["cern_standard_model", "tong_gr"],
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "Inventory counts an abstract carrier unit; it is neither mass nor energy.",
+          "Momentum is an abstract vector register; the configured one-half transport rate is a kinematic probe and is not derived from momentum or mass.",
+          "Charge uses the catalog electric charge in thirds of the elementary charge; spin and conjugacy remain identity metadata.",
+          "No physical particle dynamics, creation, annihilation, binding or decay follows from this record.",
+          "This hypothetical entity remains experimentally unconfirmed; the profile does not establish its existence."
+        ],
+        "fields": [
+          {
+            "name": "inventory",
+            "components": 1,
+            "units": "abstract carrier unit",
+            "signed": false,
+            "conserved": true,
+            "scale": 1
+          },
+          {
+            "name": "charge",
+            "components": 1,
+            "units": "elementary charge",
+            "signed": true,
+            "conserved": true,
+            "scale": 3
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "candidate register unit",
+            "signed": true,
+            "conserved": true,
+            "scale": 1
+          }
+        ],
+        "disturbance": {
+          "name": "graviton representation probe",
+          "fields": [
+            "inventory",
+            "charge",
+            "momentum"
+          ],
+          "defaults": {
+            "inventory": 1,
+            "charge": 0,
+            "momentum": [
+              1,
+              0,
+              0
+            ]
+          },
+          "transport": {
+            "mode": "move",
+            "direction_field": "momentum",
+            "rate": 1,
+            "rate_denominator": 2
+          }
+        },
+        "seed_values": {
+          "inventory": 1,
+          "charge": 0,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "path": "examples/known-entities/discrete-pair.json",
+      "entity_ids": ["electron", "positron"],
+      "type_entities": {"electron classical proxy": "electron", "positron classical proxy": "positron"},
+      "claim": "Restricted equal-positive-mass, opposite-charge classical proxies with a configured non-annihilating contact rule.",
+      "not_claimed": ["physical_electron_positron_scattering", "annihilation", "quantum_statistics", "emergent_force_law"]
+    },
+    {
+      "path": "examples/known-entities/field-channel.json",
+      "entity_ids": ["electromagnetic_field"],
+      "claim": "Directed six-port transport of two transverse vector components in a logical group.",
+      "not_claimed": ["maxwell_dynamics", "physical_electromagnetic_energy", "photon", "isotropic_wave_propagation"]
+    },
+    {
+      "path": "examples/known-entities/collision.json",
+      "entity_ids": [],
+      "claim": "Historical continuum-formula benchmark for unequal-mass elastic bodies; not an elementary-rule emergence example.",
+      "not_claimed": ["emergent_collision_law", "quantum_scattering"]
+    }
+  ]
+}
