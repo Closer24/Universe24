@@ -17,6 +17,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
 | [Entity catalog](ENTITY_CATALOG.md) | Compilation of bounded entity profiles into initialization data |
 | [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
+| [Particle reactions](PARTICLE_REACTIONS.md) | Catalog-driven two-to-two particle replacement with exact charge, configured-energy and momentum balances |
 | [Rational particle candidates](RATIONAL_PARTICLES.md) | Opt-in bounded ratios, balanced routes, fractional credit and local checks |
 | [Directional-wave candidate](DIRECTIONAL_WAVE.md) | Six transverse modes and configured conservative polarization encounters |
 | [Physical entities](PHYSICAL_ENTITIES.md) | Inventory, representation coverage and unestablished physical behavior |
