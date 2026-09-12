@@ -36,7 +36,7 @@ jobs:
           )
           insert_after(
               'POSTULATES.md',
-              'Energy must have a defined representation and conservation check\nbefore any example can claim physical energy preservation.\n',
+              'The optional [bounded conversion](docs/LOCAL_CONVERSIONS.md) also permits two\nlocal records to become two explicitly configured output types under the same\natomic conservation checks. This is a supplied transformation, not evidence of\nemergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)\ndescribe bounded representations; physical identity and dynamics cannot be\ninferred solely from the ability to store or transport their registers.\n',
               '\nThe optional [particle reaction authoring contract](docs/PARTICLE_REACTIONS.md)\nuses established catalog identity as data and compiles a bounded two-to-two local\ntype replacement through that same conversion owner. Electric charge and explicitly\nconfigured energy/momentum totals must balance before compilation and remain runtime\nconserved fields. This supplies conservation/ownership plumbing, not a derived QED\nreaction, reaction probability or arbitrary particle production law. Baryon and\nlepton numbers are not silently declared universal exact invariants.\n',
           )
           insert_after(
