@@ -12,13 +12,14 @@ from event_universe.diagnostics.disturbance_render import render_disturbances
 from event_universe.initialization import parse_initial_state, parse_json_document
 
 HERE = Path(__file__).resolve().parent
-MASS_POSITION = (20, 12, 4)
-NEAR_CLOCK = (20, 14, 4)
-FAR_CLOCK = (20, 20, 4)
-RAY_LINE = (16, 5)
-WAVE_LINE = (16, 3)
-DETECTOR_X = 34
-STEADY_START = 24
+MASS_POSITION = (12, 8, 3)
+NEAR_CLOCK = (12, 10, 3)
+FAR_CLOCK = (12, 14, 3)
+RAY_LINE = (12, 4)
+WAVE_LINE = (12, 2)
+DETECTOR_X = 21
+STEADY_START = 16
+END_TICK = 28
 
 CASES = (
     ("control", 0, 32),
@@ -291,7 +292,7 @@ def main() -> None:
             "ray_line_yz": RAY_LINE,
             "wave_line_yz": WAVE_LINE,
             "detector_x": DETECTOR_X,
-            "steady_rate_window": [STEADY_START, 44],
+            "steady_rate_window": [STEADY_START, END_TICK],
         },
         "measurements": results,
         "classification": classify(results),
