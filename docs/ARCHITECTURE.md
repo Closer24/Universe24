@@ -566,3 +566,11 @@ remains in `dynamics/`; the scalar transformation remains in `fields/`; the mode
 maps fixed records; the engine alone schedules the old/current six-neighbor union
 after all particle responses. No core schema changes. The law and evidence are
 documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
+
+## Shared native event extension
+
+The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
+ledger and local resolver protocol under core. The integration owner composes
+quantum payloads, initialization-selected instruments and classical control codes.
+Only primary API assembly and initialization reference that integration owner;
+core and ordinary field arithmetic never import quantum.
