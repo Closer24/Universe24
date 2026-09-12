@@ -230,6 +230,19 @@ Highlights edit or replace the earlier revision record above.
 
 ### Source contracts and evidence
 
+### Star-cluster attraction experiment
+
+Live Highlights was reread on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The [star-cluster experiment](../examples/star-cluster/README.md) configures
+existing local scalar delivery and paired momentum exchange under sections
+10.3--10.7. Forty cases establish attraction and exact declared inventory
+accounting, not physical gravity, binding or stellar stability. Angular field
+variation, missing total energy, one-way source response, speed limits and local
+capacity remain explicit gaps. The engine and live Highlights are unchanged.
+
+### Source evidence table
+
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |
 | 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_open_boundaries.py, test_boundary_configuration.py and architecture tests |

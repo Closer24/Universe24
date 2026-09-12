@@ -1,0 +1,213 @@
+{
+  "part_version": 1,
+  "part_kind": "definitions",
+  "data": {
+    "fields": [
+      {
+        "name": "mass",
+        "components": 1,
+        "signed": false,
+        "conserved": true,
+        "extensive": true,
+        "units": "candidate lattice units"
+      },
+      {
+        "name": "signal",
+        "components": 1,
+        "signed": true,
+        "conserved": true,
+        "extensive": true,
+        "units": "candidate lattice units"
+      },
+      {
+        "name": "momentum",
+        "components": 3,
+        "signed": true,
+        "conserved": true,
+        "extensive": true,
+        "units": "candidate lattice units"
+      }
+    ],
+    "disturbance_types": [
+      {
+        "name": "held_source",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 64,
+          "momentum": [
+            0,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "hold"
+        }
+      },
+      {
+        "name": "probe",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 64,
+          "momentum": [
+            0,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "move",
+          "direction_field": "momentum",
+          "routing": "balanced",
+          "rate": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum"
+                  }
+                ]
+              }
+            ]
+          },
+          "rate_divisor": {
+            "field": "mass"
+          }
+        }
+      },
+      {
+        "name": "live_source",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 64,
+          "momentum": [
+            0,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "move",
+          "direction_field": "momentum",
+          "routing": "balanced",
+          "rate": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum"
+                  }
+                ]
+              }
+            ]
+          },
+          "rate_divisor": {
+            "field": "mass"
+          }
+        }
+      }
+    ],
+    "spatial_fields": [
+      {
+        "field": "signal",
+        "baseline": 0,
+        "transport": "outward",
+        "axis_weights": [
+          1,
+          1,
+          1
+        ],
+        "octant_weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "field": "momentum",
+        "baseline": [
+          0,
+          0,
+          0
+        ],
+        "transport": "local"
+      }
+    ],
+    "emissions": [
+      {
+        "type": "held_source",
+        "field": "signal",
+        "amount": {
+          "field": "mass"
+        },
+        "denominator": 1,
+        "source": true
+      },
+      {
+        "type": "live_source",
+        "field": "signal",
+        "amount": {
+          "field": "mass"
+        },
+        "denominator": 1,
+        "source": true
+      }
+    ],
+    "spatial_couplings": [
+      {
+        "name": "probe_attraction",
+        "type": "probe",
+        "field": "momentum",
+        "mode": "exchange",
+        "amount": {
+          "op": "mul",
+          "args": [
+            {
+              "field": "mass"
+            },
+            {
+              "flux": "signal"
+            }
+          ]
+        },
+        "denominator": 2048
+      },
+      {
+        "name": "live_source_attraction",
+        "type": "live_source",
+        "field": "momentum",
+        "mode": "exchange",
+        "amount": {
+          "op": "mul",
+          "args": [
+            {
+              "field": "mass"
+            },
+            {
+              "flux": "signal"
+            }
+          ]
+        },
+        "denominator": 2048
+      }
+    ]
+  }
+}

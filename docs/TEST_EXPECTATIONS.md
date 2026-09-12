@@ -1,5 +1,13 @@
 # Test inputs and expected results
 
+The star-cluster candidate is covered by `tests/test_star_cluster.py`: all 40
+configurations parse, the equal-velocity mass control preserves p/m, a local
+delivered signal causes attraction with opposite momentum accounting, and a
+speed-limit rejection still records the faulted final state. Contact, escape
+and faults cannot be labeled an orbit. These are contract checks, not a gravity
+validation; the [experiment report](../examples/star-cluster/README.md) owns the
+bounded physical observations.
+
 ## Experiment, unit and restart contracts
 
 `test_experiment.py` checks bounded composition, reusable definitions, exact

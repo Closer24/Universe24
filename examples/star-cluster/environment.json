@@ -1,0 +1,26 @@
+{
+  "part_version": 1,
+  "part_kind": "environment",
+  "data": {
+    "shape": [
+      11,
+      11,
+      11
+    ],
+    "boundary": "open",
+    "slots_per_cell": 8,
+    "link_ticks": 1,
+    "normal_budget": 1000000000,
+    "operation_costs": {
+      "receive": 1,
+      "read": 1,
+      "evaluate": 1,
+      "update": 1,
+      "couple": 1,
+      "route": 1,
+      "split": 1,
+      "send": 1,
+      "commit": 1
+    }
+  }
+}

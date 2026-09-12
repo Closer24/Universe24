@@ -1,5 +1,7 @@
 # Documentation index
 
+- [Star-cluster encounters](../examples/star-cluster/README.md): configuration-only
+  attraction tests, independent orbital acceptance and retained failure evidence.
 - [Configured topology](CONFIGURED_TOPOLOGY.md): immutable reciprocal ports and
   site patterns, default six-port compatibility, supported laws and invariants.
 - [BCC vector encounter](../examples/topology/README.md): complete JSON example
