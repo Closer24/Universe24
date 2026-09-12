@@ -20,6 +20,16 @@ Existing integer regressions retain their original paths. The headless
 diagnostics; supplied formulas are reference benchmarks, not emergence claims.
 See [the contract](RATIONAL_PARTICLES.md).
 
+## Small-space physical comparisons
+
+See [the experiment evidence](../examples/small-space/README.md).
+`tests/test_small_space_experiments.py` checks finite reservoir depletion with
+zero injection, delayed-by-one-link source response and opposite vector stock,
+and a restricted unequal-mass momentum permutation. It also rejects a nonzero
+total-momentum pair and checks classical units using actual displacement.
+The experiment report separately exposes missing physical laws; an accounting
+pass must not be relabeled as physical acceptance.
+
 ## Physical entity catalog and elementary probes
 
 `tests/test_physical_entities.py` covers the sourced catalog and only its new
@@ -550,3 +560,35 @@ expectations; a passing source identity and command belong in the integration PR
 The legacy quantum, architecture, integer, locality, navigation and language
 suites remain regression requirements. Do not weaken them to accept the new
 candidate. No physical engine behavior or default rendering mode is changed.
+## Executable entity and conversion expectations
+
+`tests/test_entity_compiler.py` validates all 46 profiles, active representative
+carrier/vector and scalar transport, generic name selection, capacity rejection,
+conflicting declarations and malformed profiles. Profile compilation is distinct
+from physical-law acceptance; do not multiply identical runs across labels.
+`tests/test_local_conversions.py` checks two-to-two ownership, ignored output
+defaults, causal/delayed commits and rejected invalid balances or carried progress.
+Existing shared engine tests remain necessary consumers of the changed schema.
+
+## Native event programs and path costs
+
+`tests/test_native_event_runtime.py` covers the [native event contract](NATIVE_QUANTUM_EVENTS.md):
+365 exact ticket cases, deterministic classical trajectories, shared identity
+and packet ancestry, repeated encounters, bounded failures, code/type renaming,
+normal runner output and per-cycle cost-dependent delay without repeated charges.
+Existing quantum, locality, generic initialization and physical regression suites
+remain affected consumers. These checks do not derive a classical limit.
+
+## Shared integer arithmetic
+
+`test_integer_arithmetic.py` covers decoded scalar/vector addition and
+subtraction, ordered sums, dot/cross products and integer rounding. Independent
+examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
+(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
+counts, cross-product orientation/parallel vectors, signed limits and overflow
+before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
+-7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
+even when the quotient would fit, preserving existing timing behavior.
+
+Existing expression, spatial transaction, rotation, engine timing and link
+transport suites remain the integration coverage for callers and operation costs.

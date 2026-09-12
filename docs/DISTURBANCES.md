@@ -514,3 +514,10 @@ execution. See [the test expectations](TEST_EXPECTATIONS.md). Test results and
 the tested source identity belong in the current validation evidence, not in
 this contract. This framework does not establish gravity, wave behavior,
 relativity, energy conservation or all historical candidates' acceptance laws.
+
+## Optional event program
+
+The top-level `event_program` selects [native causal events and local instruments](NATIVE_QUANTUM_EVENTS.md).
+It leaves existing configurations unchanged. It can supply a locally recorded
+control code to an existing generic law; all resulting moves retain ordinary
+operation costs, frozen proposals, conservation checks and causal transit.

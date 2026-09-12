@@ -688,3 +688,37 @@ Ruff lint/format passed and strict mypy passed. The test renderer captured
 source; its current fingerprint is recorded in `artifacts/local-links/run.json`.
 Earlier evidence is preserved under `artifacts/local-links-before-merge` and
 `artifacts/local-links-check-before-merge.log`.
+# Executable catalog and bounded conversions, 2026-09-12
+
+Base: `d1d7251ba739fb7231eff0d41037744456297ddd`. Python 3.14.7.
+The affected gate selected 764 passing cases and five explicitly optional visual
+skips; Ruff and mypy passed. Selection includes consumers of the shared
+initialization, record schema and local interaction law, not a full-suite switch.
+All 46 catalog entries compile through the canonical validator. Representative
+active worlds cover shared carrier, scalar and vector behavior without repeating
+the same dynamics for every particle name.
+
+Independent architecture/physics review found and resolved strict catalog input
+validation and a conversion restriction on nonzero arrival channel tags. A real
+incoming-pair regression now verifies conversion after neighbor arrival; channel
+provenance is preserved while actual carried fractional progress remains rejected.
+Boss, architecture, fields, physics, tests and simulation Skills were reviewed;
+their existing workflow covers this change, so no Skill edit was necessary.
+Highlights was read on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+No change to that Google document is implied.
+
+Three CLI runs generated recorded HTML with source fingerprint
+`1695a4c8757b6493e5bf58613a6b6cd97e533df81d1f17f58723c9a9354d4fce`:
+
+| Probe | Evidence |
+| --- | --- |
+| Catalog electron/positron/EM registers | Four ticks; inventory 2, charge 0, momentum (2,0,0), E/B component stock (0,1,0); causal carrier and field transfers |
+| `conversion.json` | Six ticks; two held records become outgoing types, stock 5 and momentum zero remain |
+| Incoming variant from `test_incoming_carriers_convert_after_real_neighbor_arrival_and_reverse` | Six ticks; seeds at x=3/5 meet at x=4, convert and reverse to x=2/6; stock 5 and momentum zero remain; link time 2 |
+
+Metadata, final states, event traces and HTML data were inspected. Browser visual
+inspection was not performed; the existing renderer is unchanged. These are
+representation/conversion tests, not physical annihilation, Maxwell, mass,
+spinor, gauge, metric or general energy derivations. Git PR/CI evidence identifies
+the final integrated tree; generated output follows finite retention.

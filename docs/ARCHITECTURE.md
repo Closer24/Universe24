@@ -1,5 +1,13 @@
 # Architecture and change boundaries
 
+`entities.py` owns host-only compilation of selected explicit catalog profiles
+into ordinary initialization; it delegates strict JSON and runtime schema
+validation to `initialization.py`. Profiles contain their candidate operations.
+It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
+Optional two-record type conversion follows the existing frozen pair proposal
+and delayed engine commit; its ownership restrictions are in
+[local conversions](LOCAL_CONVERSIONS.md).
+
 ## Generated output ownership
 
 `retention.py` owns host-only artifact registration, writer leases and expiry.
@@ -136,7 +144,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns shared working bounds and signed division |
+| `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
 | `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
@@ -189,6 +197,16 @@ binding, Host/Origin checks and a session token constrain HTTP access.
 See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
 
 ## Generic calculations and model choices
+
+`core/integer.py` owns shared decoded component addition/subtraction, ordered
+sums, dot/cross products and nonnegative ceiling division. Products and ordered
+partial sums retain their working-register checks, including overflow before
+cancellation. Ceiling division retains the existing adjusted-numerator bound;
+`signed_divrem` instead rounds toward zero and returns a signed remainder.
+Callers supply schema-bounded components and retain payload encoding, field
+validation, operation pricing and atomic commit ownership. The expression
+interpreter delegates arithmetic while retaining broadcasting and AST costs.
+See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 
 `ScalarFieldRule.advance(sample, neighbors, source=..., denominator=...)`
 returns a `ScalarSample(value, remainder)`. The built-in `ScalarField` implements
@@ -566,3 +584,11 @@ remains in `dynamics/`; the scalar transformation remains in `fields/`; the mode
 maps fixed records; the engine alone schedules the old/current six-neighbor union
 after all particle responses. No core schema changes. The law and evidence are
 documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
+
+## Shared native event extension
+
+The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
+ledger and local resolver protocol under core. The integration owner composes
+quantum payloads, initialization-selected instruments and classical control codes.
+Only primary API assembly and initialization reference that integration owner;
+core and ordinary field arithmetic never import quantum.

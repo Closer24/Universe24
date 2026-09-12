@@ -113,8 +113,11 @@ or quantum behavior.
 
 For the physical field/particle inventory, matter and antimatter, and the exact
 limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.md)
-and [the entity catalog](examples/known-entities/catalog.json). New emergence
-probes use elementary local vector operations; known continuum equations remain
+and [the entity catalog](examples/known-entities/catalog.json). Compile selected
+profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
+two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
+Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.
 
 For opt-in exact fractional representation, balanced routing, massless transport

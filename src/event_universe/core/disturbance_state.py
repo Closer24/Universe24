@@ -147,6 +147,7 @@ class InteractionDefinition:
     assignments: tuple[Assignment, ...]
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
+    output_types: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -216,6 +217,7 @@ class InitialState:
     field_groups: tuple[FieldGroupDefinition, ...] = ()
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
+    event_program: str | None = None
 
 
 class Departure(NamedTuple):
@@ -233,6 +235,7 @@ class LocalPlan:
     cost: int
     spatial_reaction: Values = ()
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -240,6 +243,7 @@ class PendingCycle:
     ready_tick: int
     next_tick: int
     plan: LocalPlan
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -248,6 +252,7 @@ class Packet:
     origin: Address3
     port: int
     record: DisturbanceRecord
+    cause_id: int | None = None
 
 
 @dataclass(slots=True)
@@ -258,6 +263,7 @@ class DisturbanceCell:
     available_tick: int = 0
     received_count: int = 0
     last_cost: int = 0
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
