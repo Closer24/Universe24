@@ -11,6 +11,17 @@ classical, import and locality regressions. Quantum-mode definitions alone are
 not evidence of full species dynamics.
 
 
+## Local reflection and Maxwell-limit experiment
+
+`tests/test_maxwell_configuration.py` checks the selected six-population
+configuration with an independent nontrivial reflection example and involution,
+an atomic rejection of an inexact half, exact one-link population ownership,
+frequency recovery from a signal containing static and fast components, and
+divergence on initially empty neighboring nodes. The tests validate these
+mechanisms; the [experiment](../examples/maxwell/README.md) records physical
+agreement and failures separately. Frequency forecasts and the Gauss
+counterexample are specified in its independent derivation before engine runs.
+
 ## Small-space physical comparisons
 
 See [the experiment evidence](../examples/small-space/README.md).
