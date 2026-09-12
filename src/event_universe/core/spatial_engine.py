@@ -1,4 +1,4 @@
-"""Fixed-clock ownership for configured spatial fields, separate from carriers."""
+"""Local spatial field ownership with explicit fixed or delayed dispatch."""
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass, replace
@@ -246,7 +246,11 @@ class SpatialEngine:
                     ),
                     weights=delay_weights,
                 )
-            available = bounded(checked_work(tick + duration))
+            available = (
+                bounded(checked_work(tick + duration))
+                if self.initial.directional_delay.spatial_mode == "cost"
+                else 0
+            )
             packets: list[SpatialPacket | None] = [None] * 6
             for port, bundle in enumerate(plan.outgoing):
                 if any(any(unpack(payload)) for field in bundle for payload in field):

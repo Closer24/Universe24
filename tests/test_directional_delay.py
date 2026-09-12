@@ -351,3 +351,14 @@ def test_source_keeps_emitting_while_its_output_waits_at_the_origin():
     sends = [e for e in events if e["event"] == "sent" and e["disturbance"] == "carrier"]
     assert sends[0]["tick"] == 3 and sends[0]["arrival_tick"] == 4
     assert world.source_totals()["radiation"] == (216,)
+
+
+def test_fixed_spatial_no_output_does_not_reserve_an_unused_future_link():
+    raw = field_document([field("stock", conserved=True)], [seed("stock", 8)])
+    raw["link_ticks"] = 2
+    world = Simulation(parse_initial_state(raw))
+    world.tick = MAX_VALUE - 1
+    world.step()
+    assert world.tick == MAX_VALUE
+    assert world.totals() == {"stock": (8,)}
+    assert world.snapshot()["spatial_transfers"] == []
