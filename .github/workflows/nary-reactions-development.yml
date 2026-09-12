@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
-      - run: python -m pip install -e '.[dev]'
+      - run: python -m pip install -e '.[render,dev]'
       - name: Apply bounded n-ary reaction implementation once
         run: |
           python - <<'PY'
@@ -115,6 +115,40 @@ jobs:
               --init artifacts/nary-reactions/${reaction}-init.json \
               --output artifacts/nary-reactions/${reaction}-run
           done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('artifacts/nary-reactions')
+          expected = {
+              'electron-electron-scattering': {
+                  'charge': [-6], 'energy': [10], 'momentum': [0, 0, 0],
+                  'inputs': 2, 'outputs': 2,
+              },
+              'muon-decay': {
+                  'charge': [-3], 'energy': [12], 'momentum': [0, 0, 0],
+                  'inputs': 1, 'outputs': 3,
+              },
+          }
+          for name, values in expected.items():
+              manifest = json.loads((root / f'{name}-manifest.json').read_text())
+              run = json.loads((root / f'{name}-run' / 'run.json').read_text())
+              assert len(manifest['inputs']) == values['inputs']
+              assert len(manifest['outputs']) == values['outputs']
+              assert manifest['conservation']['electric_charge_thirds']['before'] == values['charge'][0]
+              assert manifest['conservation']['electric_charge_thirds']['after'] == values['charge'][0]
+              assert manifest['conservation']['configured_energy']['before'] == values['energy'][0]
+              assert manifest['conservation']['configured_energy']['after'] == values['energy'][0]
+              assert manifest['conservation']['configured_momentum']['before'] == values['momentum']
+              assert manifest['conservation']['configured_momentum']['after'] == values['momentum']
+              assert run['status'] == 'completed'
+              assert run['initial_totals'] == {
+                  'charge': values['charge'], 'energy': values['energy'], 'momentum': values['momentum']
+              }
+              assert run['final_totals'] == run['initial_totals']
+              assert run['conserved_at_every_completed_tick']
+              assert run['accounting_balanced_at_every_completed_tick']
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
