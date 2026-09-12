@@ -563,6 +563,16 @@ expectations; a passing source identity and command belong in the integration PR
 The legacy quantum, architecture, integer, locality, navigation and language
 suites remain regression requirements. Do not weaken them to accept the new
 candidate. No physical engine behavior or default rendering mode is changed.
+
+## Local field impulse and cell ownership
+
+`tests/test_local_lorentz_field.py` covers a four-link causal pulse, independent
+electric/magnetic impulse directions, neutral response, equal/opposite local
+momentum, delayed commit, field autonomy, renaming and invalid arithmetic.
+`tests/test_cell_state_contract.py` verifies formula-free evolving state and
+rejects injected ASTs, laws, callbacks and formula strings. See
+[the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
+
 ## Executable entity and conversion expectations
 
 `tests/test_entity_compiler.py` validates all 46 profiles, active representative
