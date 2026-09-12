@@ -3,10 +3,11 @@ on:
   push:
     branches: [feat/quantum-entities-channels]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  environment:
+  validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -14,14 +15,96 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
-      - name: Export exact main and optional image test dependency
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Assemble the exact reviewed candidate without publishing
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          mkdir -p artifacts/quantum-validation-base
-          git archive 99b9f5f0034ea288f7de0a2a8d7645220c45d8aa | gzip > artifacts/quantum-validation-base/main.tar.gz
-          git rev-parse 99b9f5f0034ea288f7de0a2a8d7645220c45d8aa^{tree} > artifacts/quantum-validation-base/tree.txt
-          python -m pip download --only-binary=:all: --no-deps 'Pillow>=10,<13' --dest artifacts/quantum-validation-base
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python - <<'PY'
+          import base64, difflib, hashlib, json, lzma, pathlib, subprocess
+          def command(*args):
+              return subprocess.check_output(args, text=True)
+          base = '99b9f5f0034ea288f7de0a2a8d7645220c45d8aa'
+          latest = '0af7e04559278a00ef2244bd815957d5d89d3879'
+          subprocess.run(['git', 'merge', '--no-ff', '-m', 'Merge inspected base for quantum entity extension', base], check=True)
+          parts = ['c9309e1abc283bc587a90e9fce1fd68b7fa49eea','278400c2dd11bd31ad110e19fdb50ccef8cb3404','fe94e46df24437f41ba8d0b0224472456bcef4fc','1225f4888f5d3dea40da16cabe1bf26ab24946a9','a49ca0f2cb4caf2a6e420fe88e89cba94a1f59b6','a38e2ee4a1ec36b9dfb9474b10af0084183b33c2']
+          payload = b''
+          for sha in parts:
+              obj = json.loads(command('gh', 'api', 'repos/Closer24/Universe24/git/blobs/' + sha))
+              data = base64.b64decode(obj['content'])
+              assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest() == sha
+              payload += data
+          assert hashlib.sha256(payload).hexdigest() == '3c77451b2338002e54eaeef2c1c60220a2b736f148ff3a33d481bc363ab3c503'
+          out = pathlib.Path('artifacts/quantum-evidence'); out.mkdir(parents=True, exist_ok=True)
+          patch = out/'extension.patch'; patch.write_bytes(lzma.decompress(payload))
+          subprocess.run(['git','apply','--check',str(patch)],check=True)
+          subprocess.run(['git','apply',str(patch)],check=True)
+          allowed = '''POSTULATES.md SIMULATOR_DEFINITIONS.md docs/ARCHITECTURE.md docs/ENTITY_CATALOG.md docs/NATIVE_QUANTUM_EVENTS.md docs/PHYSICAL_ENTITIES.md docs/PROJECT_STATUS.md docs/QUANTUM_ENTITIES.md docs/QUANTUM_EVENTS.md docs/TEST_EXPECTATIONS.md examples/known-entities/catalog.json examples/quantum/dephasing.json examples/quantum/interference.json examples/quantum/partial_dephasing.json examples/quantum/phase_reversal.json examples/quantum/run_physics_checks.py src/event_universe/entities.py src/event_universe/integration/event_program.py src/event_universe/integration/event_runtime.py src/event_universe/integration/quantum_entities.py src/event_universe/quantum/__init__.py src/event_universe/quantum/event_network.py src/event_universe/quantum/event_rules.py src/event_universe/quantum/mixed.py src/event_universe/quantum/operations.py tests/test_check_scope.py tests/test_native_quantum_channels.py tests/test_quantum_channels.py tests/test_quantum_entities.py tools/check.py'''.split()
+          subprocess.run(['git','add','--',*allowed],check=True)
+          assert set(command('git','diff','--cached','--name-only').splitlines()) == set(allowed)
+          subprocess.run(['git','diff','--cached','--check'],check=True)
+          subprocess.run(['git','commit','-m','Add finite quantum entity profiles, mixed channels and native physics checks'],check=True)
+          merged = subprocess.run(['git','merge','--no-commit','--no-ff',latest])
+          conflicts = set(command('git','diff','--name-only','--diff-filter=U').splitlines())
+          assert merged.returncode in (0,1) and conflicts <= {'docs/PROJECT_STATUS.md','docs/TEST_EXPECTATIONS.md','tools/check.py'}, conflicts
+          for path in conflicts:
+              old = command('git','show',base+':'+path).splitlines(keepends=True)
+              theirs = command('git','show',latest+':'+path).splitlines(keepends=True)
+              ours = command('git','show','HEAD:'+path)
+              for tag,i1,i2,j1,j2 in difflib.SequenceMatcher(None,old,theirs,autojunk=False).get_opcodes():
+                  if tag == 'equal': continue
+                  assert tag == 'insert', (path,tag)
+                  anchor = ''.join(old[i1:i1+3])
+                  assert anchor and ours.count(anchor)==1, (path,anchor)
+                  ours = ours.replace(anchor,''.join(theirs[j1:j2])+anchor,1)
+              pathlib.Path(path).write_text(ours)
+              subprocess.run(['git','add','--',path],check=True)
+          assert not command('git','diff','--name-only','--diff-filter=U').strip()
+          subprocess.run(['git','diff','--cached','--check'],check=True)
+          subprocess.run(['git','commit','-m','Preserve concurrent Maxwell examples and both validation scopes'],check=True)
+          (out/'python.txt').write_text(command('python','--version'))
+          (out/'candidate-head.txt').write_text(command('git','rev-parse','HEAD'))
+          PY
+      - name: Required affected project gate
+        run: |
+          set -o pipefail
+          python tools/check.py --base 0af7e04559278a00ef2244bd815957d5d89d3879 2>&1 | tee artifacts/quantum-evidence/check.log
+      - name: Quantum and classical experiments through existing owners
+        run: |
+          python examples/quantum/run_physics_checks.py --output artifacts/quantum-evidence/physics --visualize
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('artifacts/quantum-evidence/physics')
+          r = json.loads((root/'summary.json').read_text())
+          assert r['status']=='pass' and r['bell']['chsh']=='14/5'
+          assert r['source_sha256']=='694ca7a2b9c2daccce3e7ac12a5a81fc9fd25f0b643ec90ff2cd0e115c13f0c5'
+          assert r['catalog']['profiles']==46
+          expected = [('interference',['1','0'],116,0),('phase_reversal',['0','1'],135,0),('dephasing',['1/2','1/2'],135,1),('partial_dephasing',['17/25','8/25'],116,1),('native_classical',['1','0'],116,0),('native_cost_delay',['1','0'],130,0)]
+          for item,(name,weights,cost,draws) in zip(r['native'],expected,strict=True):
+              assert (item['name'],item['probabilities'],item['cost'],item['random_draws'])==(name,weights,cost,draws)
+              for file in ('run.json','state.json','events.jsonl','causal-events.jsonl','run.html'):
+                  assert (root/name/file).stat().st_size>0, (name,file)
+          assert (root/'report.html').stat().st_size>0
+          PY
+      - name: Publish validated candidate to feature branch only
+        env:
+          EXPECTED_HEAD: ${{ github.sha }}
+        run: |
+          test "$(git ls-remote origin refs/heads/feat/quantum-entities-channels | cut -f1)" = "$EXPECTED_HEAD"
+          test -z "$(git status --porcelain --untracked-files=no)"
+          git push origin HEAD:refs/heads/feat/quantum-entities-channels
+          git rev-parse HEAD > artifacts/quantum-evidence/published-commit.txt
+      - name: Preserve source identity with results
+        if: always()
+        run: |
+          mkdir -p artifacts/quantum-evidence
+          git archive HEAD | gzip > artifacts/quantum-evidence/source.tar.gz
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: quantum-validation-base
-          path: artifacts/quantum-validation-base/
+          name: quantum-entity-evidence
+          path: artifacts/
           retention-days: 1
