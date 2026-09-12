@@ -1,0 +1,146 @@
+name: Final repository integration audit
+on:
+  push:
+    branches: [chore/repository-consistency-audit]
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Preserve native quantum integration and reconcile its documentation
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python - <<'PY'
+          import pathlib
+          import subprocess
+          base = 'fb083c159fe1f51612203962d9a7921683eb31c8'
+          result = subprocess.run(['git', 'merge', '--no-ff', '--no-commit', base])
+          conflicts = subprocess.check_output(['git', 'diff', '--name-only', '--diff-filter=U'], text=True).splitlines()
+          assert set(conflicts) <= {'docs/PROJECT_STATUS.md'}, conflicts
+          assert result.returncode in (0, 1)
+          status = pathlib.Path('docs/PROJECT_STATUS.md')
+          text = subprocess.check_output(['git', 'show', 'HEAD:docs/PROJECT_STATUS.md'], text=True)
+          text = text.replace('7e451fff1e44dfc3bef21c4a166326a3ba6c3b0d', base)
+          row = '| Native contact experiment |'
+          assert row in text
+          text = text.replace(row, '| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |\n| Historical contact experiment |')
+          old = '''opt-in candidate-selection experiment. The [contact trial](QUANTUM_CONTACT_TRIAL.md)
+          changes native outgoing trajectories for one constrained encounter, but does not
+          supply arbitrary repeated contacts, a universal collapse criterion, derived particle
+          scattering, a general classical limit or closed quantum-plus-matter energy balance.'''
+          new = '''opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
+          now composes the optional quantum owner through the ordinary `Simulation` and
+          runner, with shared causal identities, repeated local encounters and explicit
+          computation charges. Configured deterministic endpoints reproduce an ordinary
+          mechanical path when both costs fit the budget; resolver overhead is not hidden.
+          Combining an event program with spatial fields is rejected. These finite controls
+          do not derive universal scattering, an objective collapse criterion, a general
+          classical limit or quantum-plus-matter energy conservation. The earlier
+          [contact trial](QUANTUM_CONTACT_TRIAL.md) remains a historical eight-tick fixture,
+          not the current scope of the native event-program interface.'''
+          assert old in text
+          status.write_text(text.replace(old, new), encoding='utf-8')
+          subprocess.run(['git', 'add', 'docs/PROJECT_STATUS.md'], check=True)
+          def replace(path, old, new):
+              target = pathlib.Path(path)
+              text = target.read_text(encoding='utf-8')
+              assert old in text, path
+              target.write_text(text.replace(old, new, 1), encoding='utf-8')
+          replace('docs/README.md', '| [Quantum events](QUANTUM_EVENTS.md)', '| [Native event programs](NATIVE_QUANTUM_EVENTS.md) | Shared causal ledger, optional quantum composition, repeated triggers and charged mechanical paths |\n| [Quantum events](QUANTUM_EVENTS.md)')
+          replace('README.md', 'Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.', 'Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.\nOptional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated\nlocal quantum decisions to that same engine and charge the executed mechanical\npath. They currently cannot be combined with spatial fields.')
+          replace('docs/QUANTUM_EVENTS.md', '## Contract and ownership', 'For composition through the ordinary simulator and runner, use\n[native event programs](NATIVE_QUANTUM_EVENTS.md). That contract owns the shared\ncausal identities, repeated local triggers and charged mechanical paths; this\ndocument owns the finite quantum state and instrument semantics.\n\n## Contract and ownership')
+          replace('docs/QUANTUM_CONTACT_TRIAL.md', '## Selected experiment, not a default engine rule', 'This document preserves the earlier bounded contact fixture. The newer\n[native event-program interface](NATIVE_QUANTUM_EVENTS.md) supports optional\ncomposition through the ordinary engine and repeated local triggers. The limits\nbelow belong to this historical fixture, not that newer interface.\n\n## Selected experiment, not a default engine rule')
+          pathlib.Path('.github/workflows/repository-audit.yml').unlink()
+          assert subprocess.check_output(['git', 'diff', base, '--', 'tests/reference']) == b''
+          PY
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Verify production logic is unchanged from integrated main after name mapping
+        shell: bash
+        run: |
+          python - <<'PY'
+          import ast
+          import pathlib
+          import re
+          import subprocess
+          base = 'fb083c159fe1f51612203962d9a7921683eb31c8'
+          names = {'api.py': 'particle_api.py', 'engine.py': 'scalar_engine.py', 'current_field.py': 'scalar_field.py', 'scenarios.py': 'particle_scenarios.py'}
+          substitutions = [('event_universe.api', 'event_universe.particle_api'), ('event_universe.scenarios', 'event_universe.particle_scenarios'), ('core.engine', 'core.scalar_engine'), ('models.current_field', 'models.scalar_field'), ('CurrentFieldModel', 'ScalarFieldModel'), ('CURRENT_MODEL', 'SCALAR_MODEL'), ('from .api import', 'from .particle_api import'), ('".api"', '".particle_api"'), ('from .engine import', 'from .scalar_engine import'), ('from .scenarios import', 'from .particle_scenarios import'), ('from .current_field import', 'from .scalar_field import')]
+          def normalized(text):
+              for old, new in substitutions:
+                  text = text.replace(old, new)
+              tree = ast.parse(re.sub(r'\bEngine\b', 'ScalarEngine', text))
+              for node in ast.walk(tree):
+                  if isinstance(node, (ast.Module, ast.ClassDef, ast.FunctionDef, ast.AsyncFunctionDef)):
+                      if node.body and isinstance(node.body[0], ast.Expr) and isinstance(node.body[0].value, ast.Constant) and isinstance(node.body[0].value.value, str):
+                          node.body.pop(0)
+              imports = [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom))]
+              rest = [n for n in tree.body if not isinstance(n, (ast.Import, ast.ImportFrom))]
+              tree.body = sorted(imports, key=ast.dump) + rest
+              return ast.dump(tree, include_attributes=False)
+          count = 0
+          for name in subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', base, 'src'], text=True).splitlines():
+              path = pathlib.Path(name)
+              if path.suffix != '.py':
+                  continue
+              target = path.with_name(names.get(path.name, path.name))
+              previous = subprocess.check_output(['git', 'show', base + ':' + name], text=True)
+              assert normalized(previous) == normalized(target.read_text()), name
+              count += 1
+          print(f'PASS: executable AST preserved in all {count} production Python modules.')
+          PY
+      - name: Complete submitted-tree audit
+        run: |
+          git diff --check
+          python tools/check.py --base fb083c159fe1f51612203962d9a7921683eb31c8 --full
+      - name: Build and inspect distribution names
+        run: |
+          python -m build --outdir "$RUNNER_TEMP/distribution"
+          python - <<'PY'
+          import os
+          import pathlib
+          import zipfile
+          wheel = next((pathlib.Path(os.environ['RUNNER_TEMP']) / 'distribution').glob('*.whl'))
+          with zipfile.ZipFile(wheel) as package:
+              names = set(package.namelist())
+          for name in ('event_universe/particle_api.py', 'event_universe/particle_scenarios.py', 'event_universe/core/scalar_engine.py', 'event_universe/models/scalar_field.py', 'event_universe/integration/event_runtime.py'):
+              assert name in names, name
+          for name in ('event_universe/api.py', 'event_universe/scenarios.py', 'event_universe/core/engine.py', 'event_universe/models/current_field.py'):
+              assert name not in names, name
+          PY
+      - name: Preserve checked source and results
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/repository-audit"
+          git add -A
+          tree=$(git write-tree)
+          echo "$tree" > "$RUNNER_TEMP/repository-audit/tree.txt"
+          git archive --format=tar "$tree" | gzip > "$RUNNER_TEMP/repository-audit/source.tar.gz"
+          git diff --cached fb083c159fe1f51612203962d9a7921683eb31c8 > "$RUNNER_TEMP/repository-audit/cleanup.diff"
+          cp artifacts/junit.xml artifacts/check-scope.json "$RUNNER_TEMP/repository-audit/" 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-audit-final
+          path: ${{ runner.temp }}/repository-audit/
+          retention-days: 1
+      - name: Publish only the successfully checked audit branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          test ! -e .github/workflows/repository-audit.yml
+          gh auth setup-git
+          git commit -m 'docs: reconcile repository map with native quantum integration'
+          git push origin HEAD:refs/heads/chore/repository-consistency-audit
