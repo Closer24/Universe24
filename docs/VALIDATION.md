@@ -8,7 +8,7 @@ one owner and delegates each format to its existing semantic validator. The UI
 and runner share initialization/observer preparation. It introduces no physical
 formula, inferred law, catalog measurement conversion or simulation during a check.
 
-The 99 facade tests cover all 38 shipped initializations, explicit dependencies,
+The 102 facade tests cover all 38 shipped initializations, explicit dependencies,
 unsupported authoring formats, observer composition, no world/filesystem effects,
 reports, CLI batches and shared UI/runner rejection. The shipped profiles return
 46 classical and 46 quantum successes. Profile tests retain independent validation
@@ -25,6 +25,11 @@ workspace, field, accounting and output regressions remain in the affected scope
 The broad regression also caught a sidecar being read before an inline/external
 conflict was rejected. The shared selection check now runs before sidecar I/O;
 the existing missing-file regression and a read-forbidding test retain that order.
+The first CI run exposed two tests that assumed Windows decoder stack depth.
+Linux decoded the same nested array and correctly rejected its format. The real
+input tests now assert rejection, attribution and batch continuation regardless
+of which valid rejection happens first. Separate bounded-decoder replacement
+tests require syntax reports for input, catalog and initialization dependencies.
 Static success does not guarantee future capacities or physical acceptance.
 
 Validation command:

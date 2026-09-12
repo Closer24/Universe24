@@ -341,15 +341,16 @@ def _deep_catalog(depth=2000):
     return _read(CATALOG).replace('"scope": {', '"scope": {"nested_audit":' + nested + ",", 1)
 
 
-def test_excessive_json_nesting_returns_an_input_syntax_issue_and_ui_rejection():
+def test_deep_input_is_rejected_without_escaping_api_or_ui():
     from event_universe.ui import MAX_REQUEST, validate_source
 
     source = "[" * 50000 + "0" + "]" * 50000
     assert len(source.encode("utf-8")) < MAX_REQUEST
     report = validate_configuration(source, kind="initialization")
-    _assert_invalid(report, "nesting")
+    _assert_invalid(report)
     assert report.issues[0].document == "input"
-    assert report.issues[0].code == "syntax"
+    # Decoder stack limits differ by platform. A decoded array is still invalid input.
+    assert report.issues[0].code in {"syntax", "validation"}
     with pytest.raises(ValueError) as caught:
         validate_source(source)
     assert str(caught.value) == report.issues[0].message
@@ -376,7 +377,8 @@ def test_cli_batch_continues_after_excessively_nested_json_and_catalog(tmp_path)
     assert result.returncode == 1
     report = json.loads(result.stdout)
     assert [row["valid"] for row in report["results"]] == [False, False, True]
-    assert [row["issues"][0]["code"] for row in report["results"][:2]] == ["syntax", "validation"]
+    assert report["results"][0]["issues"][0]["code"] in {"syntax", "unsupported_kind"}
+    assert report["results"][1]["issues"][0]["code"] == "validation"
     assert "Traceback" not in result.stderr
 
 
@@ -423,3 +425,29 @@ def test_conflicting_observer_sources_reject_before_reading_the_sidecar(tmp_path
     with pytest.raises(ValueError, match="not both"):
         run_initialization(path, tmp_path / "output", observer=sidecar)
     assert not (tmp_path / "output").exists()
+
+
+@pytest.mark.parametrize("context", ["input", "catalog", "initialization"])
+def test_decoder_depth_failure_is_reported_for_each_supplied_document(monkeypatch, context):
+    import event_universe.configuration_validation as validation
+
+    original = validation.parse_json_document
+    bounded_source = "{}"
+
+    def bounded_decoder(source):
+        if source == bounded_source:
+            raise RecursionError("Decoder nesting limit reached")
+        return original(source)
+
+    monkeypatch.setattr(validation, "parse_json_document", bounded_decoder)
+    if context == "input":
+        report = validation.validate_configuration(bounded_source)
+    elif context == "catalog":
+        report = validation.validate_configuration(_read(PROFILES), catalog_source=bounded_source)
+    else:
+        report = validation.validate_configuration(
+            '{"position":[0,0,0]}', kind="observer", initialization_source=bounded_source
+        )
+    _assert_invalid(report, "nesting")
+    assert report.issues[0].code == "syntax"
+    assert report.issues[0].document == context
