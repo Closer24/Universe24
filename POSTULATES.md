@@ -48,6 +48,16 @@ Straight cardinal self flux is parallel to its carrier and cannot turn that
 vector under the flux-driven law. Turns, periodic return and other coupling
 laws require separate self-interaction analysis.
 
+The optional [local field-rule framework](docs/LOCAL_FIELD_RULES.md) treats a
+location as a node with six directional connections. Several scalar/vector
+components can evolve together from local state and received information, with
+explicit retained and outgoing amounts. Joint field/carrier transactions must
+pass declared balances before both owners commit; delayed transactions cannot
+overwrite intervening field evolution. A logical group of two vectors does not
+itself identify an electromagnetic field or supply a photon. Known physical laws
+remain independent acceptance targets unless a configuration explicitly inserts
+them. This extension is a research interface, not evidence of their emergence.
+
 Initialization independently chooses periodic or open boundaries. Periodic space
 connects opposite faces on each of X, Y and Z without changing a carried direction.
 An open terminal link instead removes the original packet after its full transit

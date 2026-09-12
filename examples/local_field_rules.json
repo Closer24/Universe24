@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-local-two-vector-exchange-v1",
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "slots_per_cell": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "a",
+      "components": 3,
+      "units": "configured amplitude",
+      "signed": true,
+      "conserved": false
+    },
+    {
+      "name": "b",
+      "components": 3,
+      "units": "configured amplitude",
+      "signed": true,
+      "conserved": false
+    }
+  ],
+  "field_groups": [
+    {
+      "name": "dual_component_field",
+      "fields": [
+        "a",
+        "b"
+      ]
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "held_probe",
+      "fields": [
+        "a",
+        "b"
+      ],
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [],
+  "spatial_fields": [
+    {
+      "field": "a",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "b",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        4,
+        4,
+        4
+      ],
+      "field": "a",
+      "populations": [
+        [
+          3,
+          4,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "field_rules": [
+    {
+      "name": "quarter_turn_between_components",
+      "assignments": [
+        {
+          "field": "a",
+          "expression": {
+            "field": "b",
+            "side": "right"
+          }
+        },
+        {
+          "field": "b",
+          "expression": {
+            "op": "neg",
+            "args": [
+              {
+                "field": "a",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "combined_squared_amplitude",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "a",
+                    "side": "right"
+                  },
+                  {
+                    "field": "a",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "b",
+                    "side": "right"
+                  },
+                  {
+                    "field": "b",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

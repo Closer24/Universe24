@@ -140,11 +140,19 @@ def _execute_run(
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
-            spatial_transport="outward-octants",
+            spatial_transport=(
+                "configured-six-ports"
+                if any(field.transport == "local" for field in initial.spatial_fields)
+                else "outward-octants"
+            ),
             emission_interval_ticks=initial.link_ticks,
             self_field_filter="unsupported",
             spatial_policy=(
-                "finite-dissipative-v1" if initial.schema_version == 2 else "conservative-outward-v1"
+                "finite-dissipative-v1"
+                if initial.schema_version == 2
+                else "configured-local-fields-v1"
+                if any(field.transport == "local" for field in initial.spatial_fields)
+                else "conservative-outward-v1"
             ),
             spatial_accounting=world.spatial_accounting(),
             spatial_background="immutable; excluded from decay",

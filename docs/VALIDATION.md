@@ -1,5 +1,47 @@
 # Validation evidence
 
+## Generic local field rules — 2026-09-12
+
+The extension starts from main `12c85316f011d0601adcd0f4a31f0f52e59eaa27`.
+Its authoritative scope is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md): retained
+field stock, six delivered/outgoing ports, multiple scalar/vector components,
+explicit invariants and joint carrier/field transactions. It introduces no
+electromagnetic law or quantum-photon result. Highlights was read on 2026-09-12;
+the user's node-with-six-ports clarification governs the interface.
+
+The necessary checks exercise simultaneous vector updates, exact six-port
+inventory and link delay, independent counterflow samples, integer bounds,
+immutable baselines, delayed arrival preservation and stale-invariant rejection.
+Active rules retain their results after renaming and declaration permutation.
+A zero-net joint chain retains both commit guards and prices their work. Existing
+exchange into a local field retains its reaction instead of forwarding it outward.
+Unsupported carrier-only joint rules without spatial owners fail initialization.
+
+Independent architecture and physics-rule reviews checked local ownership,
+frozen proposals, fixed field timing, bounded arithmetic and commit-cost
+reservation. The implementation keeps generic calculations under `fields/`;
+engine code schedules them and commits validated ownership changes.
+
+The affected gate uses CPython 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1.
+Only changed files and their affected consumers are selected. No full audit,
+older-Python compatibility suite or unrelated parameter sweep is part of this
+acceptance. Exact final check counts and submitted source identity are attached
+to the PR; the gate saves its commands in `artifacts/check-scope.json`.
+
+The explicit visual run uses `examples/local_field_rules.json` with the existing
+CLI and `--visualize`: a 9 by 9 by 9 lattice, eight transitions, and nine recorded
+frames. Starting at `a=(3,4,0), b=(0,0,0)`, the configured rule applies
+`a'=b, b'=-a`; the combined squared amplitude is 25 in every recorded frame.
+All eight cycles contain component transformations, with no external sources
+and balanced spatial ledgers. This quantity is a declared mathematical
+invariant, not an established physical energy. The standalone HTML uses recorded
+node values and port packets; directional samples are not counted as extra stock.
+
+Boss, field, architecture, test, physics-review, run and PR Skills were reviewed.
+Their existing links already route to the updated owner contracts, so no
+duplicated procedural rules were added to Skills. Generated run files remain
+outside source commits and follow the existing output-retention policy.
+
 ## Merge follow-up: affected checks — 2026-09-12
 
 While combined feature head `4dfc1df7543aa7e7568f5112e2e2eb879e464714` passed

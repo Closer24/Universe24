@@ -7,6 +7,13 @@ Transport and source ownership remain defined in [SPATIAL_FIELDS.md](SPATIAL_FIE
 That example uses schema 1. Schema 2 keeps the same local operations but requires
 a finite `budget` on every spatial coupling and decay on every spatial field.
 
+Schema 1 separately offers [joint field/carrier transactions](LOCAL_FIELD_RULES.md#joint-fieldcarrier-transactions)
+through `spatial_interactions`. They can assign multiple carrier and local field
+components, with named invariants rechecked against actual field stock at delayed
+commit. They run after the response rules described here. Their six-port inputs
+retain scalar/vector channels independently; they do not expand the scalar
+`flux` projection below into an implicit vector-flux tensor.
+
 ## Inputs and ownership
 
 Each rule names its receiving disturbance type and the carried target `field`.

@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+Local field-rule extension base: 2026-09-12, main
+`12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
+[local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
+six-port reads, retained/outgoing field assignments and guarded joint
+field/carrier transactions. This is a bounded generic research interface, not
+an implemented electromagnetic law. Integration and validation status require
+the current PR and its exact tested tree; this paragraph does not certify a run.
+
 Integration reference: 2026-09-12. [PR #27](https://github.com/Closer24/Universe24/pull/27)
 combines reviewed spatial-field feature head
 `137830fd621b9522598e0719e7bd2055ead595a9` with main
@@ -81,6 +89,8 @@ The optional [spatial-field extension](SPATIAL_FIELDS.md) adds independent
 outward emission, baselines and combined balance diagnostics. Its fixed
 field clock is separate from carrier computation delay. The new example selects
 that candidate explicitly; configurations without it preserve their old laws.
+Schema 1 local transport can coexist with outward fields and retains its own
+explicitly selected rules, as described in [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
 [Spatial couplings](SPATIAL_COUPLINGS.md) add configured exchange and exact
 discrete rotation with an atomic opposite field reaction. The scalar-flux-driven
 rotation has a restricted straight cardinal isolation property. General automatic

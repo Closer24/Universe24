@@ -57,6 +57,20 @@ of engine scheduling. Carrier and field owners validate together before committi
 the response; fixed sample registers and departure timestamps prevent future
 reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md).
 
+The opt-in [local field-rule contract](LOCAL_FIELD_RULES.md) reuses these owners.
+`fields/local_field_rules.py` evaluates bounded multi-field retained/outgoing
+proposals using delivered six-port data; `fields/spatial_plan.py` composes them
+with existing emission and outward routing. Logical groups reference existing
+scalar/vector fields and allocate no second physical owner.
+`fields/spatial_interactions.py` extends the injected coupler with generic
+field/carrier assignments and actual-commit invariant guards. The engine freezes
+carrier transaction views and additive field deltas, then validates the complete
+commit against current local field stock before either owner mutates. It never
+replaces live fields with sampled state. Old emission metadata keeps its owner
+through delayed carrier commits. Transformation ledgers are diagnostics, not
+sources or inputs to physical laws. The schema, bounded expression evaluator,
+fixed field clock and existing outward path remain shared.
+
 The remaining scalar, stream, linked, collision and balanced sections describe
 explicitly named research APIs. Their record layouts, extension points, tick
 orders and acceptance limits remain scoped to those candidates.
