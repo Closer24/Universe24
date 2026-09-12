@@ -1,0 +1,102 @@
+name: Particle reaction validation
+on:
+  push:
+    branches: [feat/generic-particle-reactions]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[dev]'
+      - name: Apply contract documentation and formatting once
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def insert_after(path, marker, addition):
+              p = Path(path)
+              text = p.read_text()
+              if addition.strip() in text:
+                  return
+              assert marker in text, (path, marker)
+              p.write_text(text.replace(marker, marker + addition, 1))
+
+          insert_after(
+              'docs/ARCHITECTURE.md',
+              'Optional two-record type conversion follows the existing frozen pair proposal\nand delayed engine commit; its ownership restrictions are in\n[local conversions](LOCAL_CONVERSIONS.md).\n',
+              '\n`particle_reactions.py` is a host-only catalog authoring adapter layered on that\nconversion owner. It validates selected established particle metadata and exact\ncharge/configured-energy/momentum totals, then emits ordinary role-named types and\nconserved fields. The engine receives no particle identity and has no species\ndispatch. See [particle reactions](PARTICLE_REACTIONS.md).\n',
+          )
+          insert_after(
+              'POSTULATES.md',
+              'Energy must have a defined representation and conservation check\nbefore any example can claim physical energy preservation.\n',
+              '\nThe optional [particle reaction authoring contract](docs/PARTICLE_REACTIONS.md)\nuses established catalog identity as data and compiles a bounded two-to-two local\ntype replacement through that same conversion owner. Electric charge and explicitly\nconfigured energy/momentum totals must balance before compilation and remain runtime\nconserved fields. This supplies conservation/ownership plumbing, not a derived QED\nreaction, reaction probability or arbitrary particle production law. Baryon and\nlepton numbers are not silently declared universal exact invariants.\n',
+          )
+          insert_after(
+              'docs/TEST_EXPECTATIONS.md',
+              'See [the acceptance limits](PHYSICAL_ENTITIES.md).\n',
+              '\n## Generic particle reactions\n\n`tests/test_particle_reactions.py` uses the catalog plus the explicit electron/positron\nto two-photon conservation probe. Selected particle/antiparticle charge and doubled-spin\nmetadata must be reciprocal and established; electron/positron classify as fermions and\nphoton as a boson. Authoring rejects charge, configured-energy or momentum imbalance.\nThe compiled generic conversion keeps all three totals exact while products move, and a\npost-compilation tamper is rejected atomically at runtime. Arbitrary species renaming\nmust leave the compiled physical initialization identical, and a new established catalog\nparticle with compatible metadata must compile without engine code. The current adapter is\nstrictly `2 -> 2`; it does not establish QED dynamics, arbitrary product counts, exchange\nantisymmetry or a relativistic dispersion law. See [PARTICLE_REACTIONS.md](PARTICLE_REACTIONS.md).\n',
+          )
+
+          catalog = Path('examples/known-entities/catalog.json')
+          text = catalog.read_text()
+          text = text.replace(
+              '"pdg_particles": {"title": "PDG 2025: Particle summary tables", "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"}',
+              '"pdg_particles": {"title": "PDG 2026: Particle summary tables", "url": "https://pdg.lbl.gov/2026/tables/contents_tables.html"}',
+          )
+          catalog.write_text(text)
+          PY
+          python -m ruff format src/event_universe/particle_reactions.py tests/test_particle_reactions.py
+          git diff --check
+          if ! git diff --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add docs/ARCHITECTURE.md POSTULATES.md docs/TEST_EXPECTATIONS.md examples/known-entities/catalog.json src/event_universe/particle_reactions.py tests/test_particle_reactions.py
+            git commit -m 'Document and format generic particle reaction contract'
+            git push origin HEAD:feat/generic-particle-reactions
+          fi
+      - name: Validate affected scope
+        run: |
+          python tools/check.py --base b8941d97545e9ab8c35fbff5391288ccffa447bd --tests tests/test_particle_reactions.py tests/test_local_conversions.py tests/test_entity_compiler.py tests/test_physical_entities.py
+      - name: Compile and run particle reaction probe
+        run: |
+          rm -rf artifacts/particle-reaction-validation
+          mkdir -p artifacts/particle-reaction-validation
+          python -m event_universe.particle_reactions \
+            --catalog examples/known-entities/catalog.json \
+            --reaction examples/known-entities/electron-positron-to-two-photons.json \
+            --output-init artifacts/particle-reaction-validation/init.json \
+            --output-manifest artifacts/particle-reaction-validation/manifest.json
+          python -m event_universe \
+            --init artifacts/particle-reaction-validation/init.json \
+            --output artifacts/particle-reaction-validation/run
+      - name: Verify run evidence
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('artifacts/particle-reaction-validation')
+          manifest = json.loads((root/'manifest.json').read_text())
+          assert manifest['conservation']['electric_charge_thirds'] == {'before': 0, 'after': 0}
+          assert manifest['conservation']['configured_energy'] == {'before': 10, 'after': 10}
+          assert manifest['conservation']['configured_momentum'] == {'before': [0,0,0], 'after': [0,0,0]}
+          assert [x['statistics_class'] for x in manifest['inputs']] == ['fermion', 'fermion']
+          assert [x['statistics_class'] for x in manifest['outputs']] == ['boson', 'boson']
+          final = json.loads((root/'run'/'final-state.json').read_text())
+          assert final['totals']['charge'] == [0]
+          assert final['totals']['energy'] == [10]
+          assert final['totals']['momentum'] == [0,0,0]
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: particle-reaction-evidence
+          path: artifacts/
+          retention-days: 1
