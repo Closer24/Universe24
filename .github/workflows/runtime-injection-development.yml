@@ -1,0 +1,71 @@
+name: Runtime injection development
+on:
+  push:
+    branches:
+      - feat/runtime-disturbance-injections-ui
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Apply implementation
+        run: |
+          python tools/apply_runtime_injection_feature.py
+          python -m ruff check --fix src/event_universe/core/disturbance_state.py src/event_universe/core/disturbance_engine.py src/event_universe/initialization.py src/event_universe/runner.py src/event_universe/ui.py tests/test_runtime_injections.py tests/test_runtime_injection_workspace.py tools/apply_runtime_injection_feature.py
+          python -m ruff format src/event_universe/core/disturbance_state.py src/event_universe/core/disturbance_engine.py src/event_universe/initialization.py src/event_universe/runner.py src/event_universe/ui.py tests/test_runtime_injections.py tests/test_runtime_injection_workspace.py tools/apply_runtime_injection_feature.py
+          git diff --check
+          if ! git diff --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add src/event_universe/core/disturbance_state.py src/event_universe/core/disturbance_engine.py src/event_universe/initialization.py src/event_universe/runner.py src/event_universe/ui.py src/event_universe/ui_assets/index.html src/event_universe/ui_assets/app.js src/event_universe/ui_assets/style.css SIMULATOR_DEFINITIONS.md docs/DISTURBANCES.md docs/ARCHITECTURE.md docs/WORKSPACE.md docs/TEST_EXPECTATIONS.md tests/test_runtime_injections.py tests/test_runtime_injection_workspace.py tools/apply_runtime_injection_feature.py
+            git commit -m 'Add scheduled generic disturbance injections'
+            git push origin HEAD:feat/runtime-disturbance-injections-ui
+          fi
+      - name: Run affected checks
+        run: |
+          python tools/check.py --base 98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81 --tests tests/test_runtime_injections.py tests/test_runtime_injection_workspace.py tests/test_initialization.py tests/test_workspace.py tests/test_disturbance_engine.py tests/test_disturbance_application.py
+      - name: Run explicit visual checks
+        run: python -m pytest tests/test_runtime_injections.py tests/test_runtime_injection_workspace.py --visualize-runs -q
+      - name: Render scheduled-injection demo
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = json.loads(Path('examples/basic.json').read_text())
+          source['ticks'] = 3
+          source['runtime_injections'] = [
+              {'tick': 1, 'position': [8, 8, 8], 'type': 'carrier', 'values': {'mass': 5, 'charge': 3, 'velocity': [0, 0, 0]}},
+              {'tick': 2, 'position': [10, 8, 8], 'type': 'pulse', 'values': {'signal': 18}},
+          ]
+          Path('artifacts/runtime-injection-input.json').write_text(json.dumps(source, indent=2) + '\n')
+          PY
+          rm -rf artifacts/runtime-injection-demo
+          python -m event_universe --init artifacts/runtime-injection-input.json --output artifacts/runtime-injection-demo --visualize
+          test -f artifacts/runtime-injection-demo/run.html
+          test "$(grep -c 'runtime_injected' artifacts/runtime-injection-demo/events.jsonl)" -eq 2
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          metadata = json.loads(Path('artifacts/runtime-injection-demo/run.json').read_text())
+          assert metadata['runtime_injections_scheduled'] == 2
+          assert metadata['computation']['runtime_injections_applied'] == 2
+          assert metadata['accounting_balanced_at_every_completed_tick']
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: runtime-injection-evidence
+          path: |
+            artifacts/runtime-injection-demo/
+            artifacts/runtime-injection-input.json
+            artifacts/check-scope.json
+          retention-days: 1
