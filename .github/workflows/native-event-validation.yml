@@ -21,13 +21,13 @@ jobs:
         run: |
           python - <<'PY'
           import base64, hashlib, json, lzma, pathlib, subprocess
-          parts = ['0da34538504f13d53d55ea7a62d2dfbb4b30d080', 'ca0ac11e967161fdbed41bbb44310e1c52c63f43']
-          payload = b''
-          for sha in parts:
+          def read_blob(sha):
               obj = json.loads(subprocess.check_output(['gh', 'api', 'repos/Closer24/Universe24/git/blobs/' + sha]))
               part = base64.b64decode(obj['content'])
               assert hashlib.sha1(b'blob ' + str(len(part)).encode() + b'\0' + part).hexdigest() == sha
-              payload += part
+              return part
+          parts = ['0da34538504f13d53d55ea7a62d2dfbb4b30d080', 'ca0ac11e967161fdbed41bbb44310e1c52c63f43']
+          payload = b''.join(read_blob(sha) for sha in parts)
           assert hashlib.sha256(payload).hexdigest() == '686a43a7ba621dd45a78f2e06362b45cbd770fb1ae7a08315e3a70c4ad1ded34'
           out = pathlib.Path('artifacts/native-integration')
           out.mkdir(parents=True, exist_ok=True)
@@ -35,6 +35,10 @@ jobs:
           patch.write_bytes(lzma.decompress(payload))
           subprocess.run(['git', 'apply', '--check', str(patch)], check=True)
           subprocess.run(['git', 'apply', str(patch)], check=True)
+          fix = out / 'lazy-import.patch'
+          fix.write_bytes(read_blob('e131ee591fc894f46926b07c9ee2e5d220c5b928'))
+          subprocess.run(['git', 'apply', '--check', str(fix)], check=True)
+          subprocess.run(['git', 'apply', str(fix)], check=True)
           allowed = '''POSTULATES.md SIMULATOR_DEFINITIONS.md docs/ARCHITECTURE.md docs/DISTURBANCES.md docs/NATIVE_QUANTUM_EVENTS.md docs/PROJECT_STATUS.md docs/TEST_EXPECTATIONS.md examples/quantum/native_classical.json examples/quantum/native_cost_delay.json examples/quantum/native_quantum.json examples/quantum/native_reflection.json src/event_universe/core/disturbance_engine.py src/event_universe/core/disturbance_state.py src/event_universe/core/event_resolution.py src/event_universe/core/event_space.py src/event_universe/disturbance_api.py src/event_universe/initialization.py src/event_universe/integration/event_program.py src/event_universe/integration/event_runtime.py src/event_universe/quantum/deferred.py src/event_universe/quantum/event_network.py src/event_universe/runner.py tests/test_native_event_runtime.py tools/check.py'''.split()
           subprocess.run(['git', 'add', '--', *allowed], check=True)
           changed = set(subprocess.check_output(['git', 'diff', '--cached', '--name-only'], text=True).splitlines())
