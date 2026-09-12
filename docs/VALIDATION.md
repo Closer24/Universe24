@@ -1,5 +1,47 @@
 # Validation evidence
 
+## Generated-output retention — 2026-09-12
+
+This host-only update continues published feature head `45da520` on main base
+`c252254`. The policy and ownership rules are in [RETENTION.md](RETENTION.md).
+Physical laws, costs and simulated time are unchanged.
+
+| Check | Result |
+| --- | --- |
+| Unchanged full gate | Ruff lint/format and strict mypy passed; 1,045 tests passed, 30 explicitly visual cases skipped |
+| Static scope | 166 formatted Python files; 66 typed package modules |
+| Expiry and safety | Exact 24-hour boundaries, latest-write extension, active writers, orphan-child dependencies, source/link rejection, generation replacement, interrupted quarantine/reuse, verified adoption and singleton watcher covered |
+| Runner/UI integration | Successful, failed and cancelled jobs, real HTTP/CLI equality, expired links and fresh/empty/sibling-relative output paths covered |
+| Independent review | Filesystem replacement, interrupted cleanup and orphan-parent probes passed; existing artifact inventory excludes source and original example/configuration directories |
+| Headless regression | Final 12-tick open run has byte-identical initialization, events and state to the prior published run |
+| Packaging | Wheel and sdist built; four changed package modules match final source bytes, and sdist includes the retention contract |
+| Local operation | 192 reviewed generated files enrolled with expected filesystem identities; no historical file was over 24 hours old, so initial cleanup removed none |
+| Scheduling | Hidden singleton watcher started for five reviewed local output roots; a second start confirmed it already running; hourly thread automation `universe24` maintains it and catches up after interruption |
+| Automatic deletion | The running watcher removed a newly registered, deliberately expired generated probe without a manual cleanup invocation |
+
+The five operational roots are this workspace's `runs/` and the `artifacts/`
+directories in `Universe24`, `Universe24-fields`, `Universe24-init` and
+`Universe24-output`. A separate older UI reports outputs under a sibling
+`con/outputs/movie-workspace/` directory. That directory is outside this session's
+writable roots, so this deployment does not claim retention coverage there.
+
+The final runtime fingerprint is
+`f2cfc31cb5d85bd3dc414d871c36bde17453b0773e9bc51505b2424474a7893d`.
+The open-run event hash remains
+`42376d9d97516e7d5667d35489e06f7e4db1426666e3e4a0fa359920554273bd`;
+the final state hash remains
+`7a8f082a80c77a1218bfba678bd8fcf249e531926e08814b1306476b66388320`.
+Temporary evidence is in `../runs/retention-open-final/`,
+`../runs/retention-validation.json`, `../runs/retention-packaging/` and
+`artifacts/junit.xml`; those paths follow the same expiry policy.
+
+The first real sibling-relative CLI invocation exposed an unnormalized `..` in
+its lease target. Both runners now validate the original lexical path before
+passing its resolved path to retention; dedicated regressions cover that case.
+The unchanged full gate was repeated after this correction. No visualization
+was requested or generated. Workflow and simulation-runner guidance now require
+temporary-evidence handling and explicit ownership for custom diagnostics.
+
 ## Publication integration with the configuration workspace — 2026-09-12
 
 The publication candidate combines local field head `d3bb0ce` with exact remote

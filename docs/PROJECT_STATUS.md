@@ -9,6 +9,14 @@ The feature branch remains separate from main until its pull request is merged.
 Verify live checkout, remote and PR state before continuing. Identified local
 checks and run evidence belong in [VALIDATION.md](VALIDATION.md).
 
+The generated-output maintenance update continues published feature head
+`45da520c5ed13ab305c8ec8cdcbb1767ebe17705` in
+[PR #27](https://github.com/Closer24/Universe24/pull/27). Registered run outputs,
+workspace copies/logs/exports and test reports expire after 24 hours, with live
+writer protection; see [RETENTION.md](RETENTION.md). Idle cleanup requires the
+watcher or a scheduled invocation. Generated evidence paths in older validation
+records are temporary, while their recorded conclusions remain in the repository.
+
 ## What this checkout contains
 
 The active package is [event_universe](../src/event_universe/).

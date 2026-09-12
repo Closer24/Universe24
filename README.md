@@ -118,7 +118,10 @@ no two-tick movement interval is inserted automatically.
 
 Normal runs do not capture animation frames or import rendering libraries.
 Visualization is read-only and does not change the physical update interval.
-The active runner requires an empty output directory to preserve earlier evidence.
+Both active and historical runners require a new or empty output directory.
+Generated output expires 24 hours after writing finishes; active writers remain
+protected. Original initialization files and templates are preserved. See
+[output retention](docs/RETENTION.md) for ownership and interrupted runs.
 The reported `elapsed_seconds` includes world construction, simulation steps,
 per-tick accounting, event writing and the final snapshot. Input parsing and final
 artifact serialization are outside that timer. For a small open-boundary run, use
@@ -149,6 +152,17 @@ a headless UI run; the CLI remains headless by default. Results include
 conservation checks and links to the input, state and events. Use `--configs`
 to select your own template folder, or `--port 0` to choose an available port.
 See the [workspace guide](docs/WORKSPACE.md) for drafts, files and interruption.
+
+The running workspace cleans expired outputs periodically and removes expired
+result links. CLI runs also check for expired output at startup. To keep cleanup
+running while both are idle, use a watcher or schedule the cleanup command:
+
+```bash
+python -m event_universe.retention --root artifacts --root runs --watch
+```
+
+Use `--dry-run` to inspect candidates without deletion. A stopped watcher or an
+offline computer catches up on the next cleanup; see [retention](docs/RETENTION.md).
 
 ## Optional historical live display
 
@@ -239,6 +253,7 @@ from this README.
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |
 | `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
+| `src/event_universe/retention.py`, `docs/RETENTION.md` | Registered output ownership, active writer protection and 24-hour cleanup |
 | `examples/basic.json` | Complete example initialization; physical names occur only as data |
 | `examples/finite_fields.json` | Schema 2 finite emission, completed-link decay and explicit background |
 | `tests/` | Generic contracts, schema checks and retained research regressions |

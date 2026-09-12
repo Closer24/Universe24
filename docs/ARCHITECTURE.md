@@ -1,5 +1,15 @@
 # Architecture and change boundaries
 
+## Generated output ownership
+
+`retention.py` owns host-only artifact registration, writer leases and expiry.
+Runners own complete fresh output directories; the workspace owns exact input,
+log and export files and declares the child-output dependency for companions.
+Cleanup uses recorded filesystem generations and operating-system locks, with
+recoverable quarantine before removal. The module never imports or changes
+physical engine state. Its one-shot and singleton watcher interfaces share the
+[same retention contract](RETENTION.md).
+
 ## Active generic ownership
 
 `disturbance_api.Simulation(initial: InitialState)` composes the generic engine

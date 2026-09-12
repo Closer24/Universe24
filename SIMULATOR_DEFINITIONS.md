@@ -299,6 +299,22 @@ momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contrac
 
 ## Output and failures
 
+### Generated output lifetime
+
+Registered generated outputs are temporary: the default retention period is
+24 hours after their writers finish, including failure reports and cancelled
+workspace jobs. Active operating-system writer leases prevent cleanup. An
+unfinalized process exit uses the last recorded start or content modification
+time. Source files, original initialization and unregistered content are not
+cleanup targets. Both runners require a new or empty output directory.
+
+The [retention contract](docs/RETENTION.md) defines registration, expiry checks,
+workspace links, interrupted writes and the cleanup CLI. Startup and active UI
+checks do not provide an idle background service; a watcher or scheduler is
+needed for that. Visual test sessions use unique output directories, and CI
+diagnostic uploads have one-day retention. This is a host storage policy and
+does not alter simulation ticks, physical updates or failure detection.
+
 ### Default run display
 
 Runs are headless by default, including ordinary tests. The active CLI requires

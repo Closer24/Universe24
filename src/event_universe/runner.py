@@ -7,8 +7,10 @@ import time
 from pathlib import Path
 
 from event_universe import __version__
+from event_universe.core.disturbance_state import InitialState
 from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_json
+from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 
 def source_fingerprint() -> str:
@@ -36,9 +38,26 @@ def run_initialization(
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
         raise ValueError("ticks must be nonnegative and frame_stride positive")
+    validate_output_path(output)
+    if initialization.resolve().is_relative_to(output.resolve()):
+        raise ValueError("the original initialization must be outside the output directory")
+    cleanup_expired(output.parent)
     if output.exists() and any(output.iterdir()):
         raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
+    with ArtifactLease(output.parent, [output.resolve()]):
+        return _execute_run(initial, source, output, fingerprint, count, visualize, frame_stride)
+
+
+def _execute_run(
+    initial: InitialState,
+    source: bytes,
+    output: Path,
+    fingerprint: str,
+    count: int,
+    visualize: bool,
+    frame_stride: int,
+) -> Path:
     (output / "initialization.json").write_bytes(source)
     frames: list[dict[str, object]] = []
     failure: Exception | None = None

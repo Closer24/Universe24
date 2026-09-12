@@ -6,16 +6,20 @@ documents grouped movement; every candidate case must pass for exit status zero.
 
 import json
 from pathlib import Path
+from uuid import uuid4
 
 from event_universe.api import BalancedSimulation, Simulation
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import capture_volume
 from event_universe.diagnostics.measurements import total_momentum
 from event_universe.diagnostics.render import render_volume
+from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.runner import source_fingerprint
 
 
-def check_case(label, simulation, source_strength, ticks=30, initial=(600, 400, 0), c_units=1000):
+def check_case(
+    output, label, simulation, source_strength, ticks=30, initial=(600, 400, 0), c_units=1000
+):
     world = simulation(
         Config(nx=128, ny=128, nz=32, source_strength=source_strength, force_den=1, c_units=c_units)
     )
@@ -51,8 +55,6 @@ def check_case(label, simulation, source_strength, ticks=30, initial=(600, 400, 
         source_sha256=source_fingerprint(),
         upstream_base="76676d48ffbe7fc53913f4d26464921cb20f72df",
     )
-    output = Path("artifacts/diagonal-motion")
-    output.mkdir(parents=True, exist_ok=True)
     (output / f"{label}.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result), flush=True)
     render_volume(
@@ -65,19 +67,41 @@ def check_case(label, simulation, source_strength, ticks=30, initial=(600, 400, 
 
 
 def main():
+    output = Path("artifacts/diagonal-motion") / uuid4().hex
+    validate_output_path(output)
+    cleanup_expired(output.parent)
+    output.mkdir(parents=True)
+    with ArtifactLease(output.parent, [output.absolute()]):
+        status = run_cases(output)
+    raise SystemExit(status)
+
+
+def run_cases(output):
     results = [
-        check_case("legacy-no-field", Simulation, 0),
-        check_case("balanced-no-field", BalancedSimulation, 0),
-        check_case("balanced-own-field", BalancedSimulation, 64),
+        check_case(output, "legacy-no-field", Simulation, 0),
+        check_case(output, "balanced-no-field", BalancedSimulation, 0),
+        check_case(output, "balanced-own-field", BalancedSimulation, 64),
         check_case(
-            "balanced-own-field-slower", BalancedSimulation, 64, ticks=72, initial=(6, 4, 0), c_units=12
+            output,
+            "balanced-own-field-slower",
+            BalancedSimulation,
+            64,
+            ticks=72,
+            initial=(6, 4, 0),
+            c_units=12,
         ),
         check_case(
-            "balanced-own-field-slow", BalancedSimulation, 64, ticks=72, initial=(1, 1, 0), c_units=12
+            output,
+            "balanced-own-field-slow",
+            BalancedSimulation,
+            64,
+            ticks=72,
+            initial=(1, 1, 0),
+            c_units=12,
         ),
     ]
-    Path("artifacts/diagonal-motion/results.json").write_text(json.dumps(results, indent=2) + "\n")
-    raise SystemExit(0 if all(r["straight_motion_passed"] for r in results[1:]) else 1)
+    (output / "results.json").write_text(json.dumps(results, indent=2) + "\n")
+    return 0 if all(r["straight_motion_passed"] for r in results[1:]) else 1
 
 
 if __name__ == "__main__":

@@ -39,6 +39,13 @@ Return a concise handoff with:
 - result and evidence: commands with outcomes, not-run checks, and relevant HTML/trace;
 - violated or satisfied contract, remaining limitation, and next owner/action.
 
+Generated run evidence, including previously retained failure traces, follows
+the [24-hour retention policy](../docs/RETENTION.md). Record reproducible inputs
+and concise acceptance results durably before registered output expires. Active
+writer leases protect ongoing work; do not infer cleanup ownership from a folder
+name or age. Use the cleanup watcher or a scheduled command when the UI and
+runners are idle, and distinguish configured automation from verified execution.
+
 Do not reuse a pass after its relevant inputs change without assessing the diff.
 An unchanged tree can reuse its verified results; record that equality. Different
 conversations do not synchronize automatically. Read current GitHub state before

@@ -28,11 +28,19 @@ that exercises the requested behavior. Use an isolated checkout and unique outpu
 directory. Do not run a large parameter sweep when one bounded case resolves the
 current question. Reuse a matching test run instead of duplicating it.
 
+Both runners require a new or empty output directory. Follow
+[output retention](../../docs/RETENTION.md): generated output is registered for
+24-hour cleanup after writing finishes, while active leases protect ongoing
+writes. Keep original initialization outside the output and never register source
+or templates as disposable artifacts. Inspect or save required acceptance evidence
+before it expires; startup cleanup alone does not run while the simulator is idle.
+Use the cleanup CLI's `--watch` or an authorized scheduled command when needed.
+
 Check actual completion, requested tick count, source/configuration identity,
 integer bounds, local capacity and declared per-tick conservation. Check momentum
 and isolated-motion acceptance when the selected historical candidate requires them.
 Frame stride changes recording only, never the physical update interval. On a
-failure retain the trace and failed metadata. If visualization was requested,
+failure retain the trace and failed metadata for the retention period. If visualization was requested,
 also retain the failure frame and FAILED RUN HTML report. Do not smooth the
 trajectory or silently rerun with weaker parameters.
 

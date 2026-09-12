@@ -1,5 +1,20 @@
 # Test inputs and expected results
 
+## Generated-output lifetime
+
+These are host filesystem contracts; they do not change simulated time or costs.
+See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
+
+| Suite | Independent expectations |
+| --- | --- |
+| `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
+| `test_runner_retention.py` | Both runners lease fresh or empty output through writing, reject nonempty output, preserve original initialization, and expire finished or failed artifacts; cleanup during a simulation step cannot remove its output |
+| `test_workspace_retention.py` | Finished/failed/cancelled jobs and exports expire, active and orphaned children protect companion files, log-close failures keep their lease, stale links return 404, linked output paths cause no writes or process launch |
+
+Ordinary test execution leases its JUnit report and generated detector result.
+Explicit visual sessions lease a unique output directory and summary through
+render completion. Neither test collection nor cleanup enables rendering.
+
 ## Configured boundaries and dormant spatial work
 
 | Suite | Independent expectations |

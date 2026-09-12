@@ -28,3 +28,4 @@ jobs:
         with:
           name: diagnostics
           path: artifacts/
+          retention-days: 1

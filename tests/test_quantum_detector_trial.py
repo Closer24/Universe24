@@ -14,6 +14,7 @@ from event_universe.diagnostics.recorder import TraceRecorder
 from event_universe.integration.quantum_bridge import QuantumBridge
 from event_universe.quantum import QuantumConfig
 from event_universe.quantum.terminal import TerminalSetup, choose_output
+from event_universe.retention import ArtifactLease, validate_output_path
 
 from .quantum_detector_fixture import DetectorController, prepare
 
@@ -76,31 +77,32 @@ def test_actual_engine_and_single_detector_record():
         control.step()
     assert snapshot(world, wt) == snapshot(control, ct)
     output = Path("artifacts/quantum-detector-results.json")
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(
-        json.dumps(
-            {
-                "base_commit": "e74f2fdf390b5dc8036b707eefcfc53bc8a82c17",
-                "baseline_src_tree": "18253dfaca7208b9f5f8d4e4f4bf7cc48fd579d7",
-                "test_model": "terminal-two-output-trial-v1",
-                "world_tick_at_readout": record.tick,
-                "world_ticks_consumed_by_query": 0,
-                "model_cost_per_successful_readout": 1,
-                "first_readout_host_evaluated_nodes": work,
-                "repeated_calls": 4,
-                "extra_host_nodes_on_repeats": q.terminal_evaluated_nodes - work,
-                "detector_bits": list(c.detector_bits),
-                "detector_record_count": 1,
-                "record": dataclasses.asdict(record),
-                "main_state_unchanged_by_query": True,
-                "continuation_matches_baseline_through_tick": world.tick,
-                "event_is_test_controller_record_not_native_engine_event": True,
-                "sampling_test": "Exhaustive integer tickets; no RNG tested",
-            },
-            indent=2,
-        ),
-        encoding="utf-8",
+    payload = json.dumps(
+        {
+            "base_commit": "e74f2fdf390b5dc8036b707eefcfc53bc8a82c17",
+            "baseline_src_tree": "18253dfaca7208b9f5f8d4e4f4bf7cc48fd579d7",
+            "test_model": "terminal-two-output-trial-v1",
+            "world_tick_at_readout": record.tick,
+            "world_ticks_consumed_by_query": 0,
+            "model_cost_per_successful_readout": 1,
+            "first_readout_host_evaluated_nodes": work,
+            "repeated_calls": 4,
+            "extra_host_nodes_on_repeats": q.terminal_evaluated_nodes - work,
+            "detector_bits": list(c.detector_bits),
+            "detector_record_count": 1,
+            "record": dataclasses.asdict(record),
+            "main_state_unchanged_by_query": True,
+            "continuation_matches_baseline_through_tick": world.tick,
+            "event_is_test_controller_record_not_native_engine_event": True,
+            "sampling_test": "Exhaustive integer tickets; no RNG tested",
+        },
+        indent=2,
     )
+    validate_output_path(output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.touch(exist_ok=True)
+    with ArtifactLease(output.parent, [output.absolute()]):
+        output.write_text(payload, encoding="utf-8")
 
 
 def test_two_bridges_share_result():
