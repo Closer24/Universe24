@@ -1,10 +1,10 @@
 """Validate passive probe placement independently of physical state and recording."""
 
-import json
 from dataclasses import dataclass
 from pathlib import Path
 
 from event_universe.core.disturbance_state import Address3
+from event_universe.json_documents import parse_json_document
 
 
 @dataclass(frozen=True)
@@ -16,7 +16,7 @@ class ObserverDefinition:
 
     @classmethod
     def load(cls, path: Path, shape: Address3) -> ObserverDefinition:
-        return cls.parse(json.loads(path.read_text(encoding="utf-8")), shape)
+        return cls.parse(parse_json_document(path.read_bytes()), shape)
 
     @classmethod
     def parse(cls, raw: object, shape: Address3) -> ObserverDefinition:

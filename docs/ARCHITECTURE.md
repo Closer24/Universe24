@@ -17,6 +17,16 @@ Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).
 
+## Configuration validation ownership
+
+The [configuration preflight contract](CONFIGURATION_VALIDATION.md) defines the
+shared JSON decoder, supported format dispatch and explicit context dependencies.
+`configuration_validation.py` coordinates existing format owners and returns
+reports without constructing a simulation. It shares initialization/observer
+preparation with the runner; the UI consumes its read-only validation result.
+Semantic rules remain in initialization, native programs, catalog, profiles and
+observer owners. Runtime execution and physical acceptance remain separate checks.
+
 ## Local integer operation contract
 
 This contract applies to all new and changed physical code, entity definitions,

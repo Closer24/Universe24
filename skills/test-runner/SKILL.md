@@ -17,6 +17,13 @@ Do not add a test merely because a function was added, or derive the expected
 answer by repeating the implementation. Do not add old-Python, historical API or
 frozen-engine compatibility gates. Keep the archived frozen source untouched.
 
+For configuration work, follow the
+[preflight contract](../../docs/CONFIGURATION_VALIDATION.md). Cover valid and invalid
+inputs through their real entry points, explicit dependency failures, whole-profile
+coverage and rejection before runtime/output creation. Keep semantic cases in the
+format owner's tests and cross-entry consistency in adapter tests. Syntax success,
+run completion and physical acceptance need separate assertions.
+
 When reducing tests, map each removed assertion or parameter regime to retained
 evidence before deletion. Combine identical model/config/seed/tick runs and keep
 their useful assertions together. Preserve distinct low-rate, saturated, signed,

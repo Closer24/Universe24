@@ -13,6 +13,7 @@ result are different claims. Revision-specific results are not a live status fee
 | Document | Responsibility |
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |

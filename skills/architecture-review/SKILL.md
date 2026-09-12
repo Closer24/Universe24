@@ -37,6 +37,13 @@ Check that a fresh checkout can find the active model, required commands and liv
 work through the root entry point. Keep path maps and rules in their single owners.
 Do not split packages or processes merely to satisfy a directory convention.
 
+For configuration changes, apply the
+[validation boundary](../../docs/CONFIGURATION_VALIDATION.md): one strict JSON
+decoder, one semantic owner per format, and a thin dispatcher with explicit context.
+Trace CLI, UI, runner and sidecar entry points. Preflight must not construct a world,
+execute a profile, select laws from physical names, or claim runtime/physics proof.
+Keep runtime-dependent bounds in their owner and reject unsupported file formats.
+
 For a schema/interface change, identify register owners, fixed sizes, bounds,
 defaults and every consumer. Inspect movement, transit, field exchange,
 recording/rendering and current state contracts when affected. Separate model

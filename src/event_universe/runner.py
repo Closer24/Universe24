@@ -6,14 +6,18 @@ import json
 import time
 from contextlib import ExitStack
 from pathlib import Path
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 from event_universe import __version__
 from event_universe.archive import JsonArchive, write_json
+from event_universe.configuration_validation import (
+    prepare_initialization,
+    validate_observer_selection,
+)
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.local_execution import validate_execution_options
 from event_universe.disturbance_api import Simulation
-from event_universe.initialization import parse_initial_state, parse_json_document
+from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
@@ -53,15 +57,15 @@ def run_initialization(
     validate_execution_options(workers, parallel_threshold, chunk_size)
     source = initialization.read_bytes()
     document = parse_json_document(source)
-    initial = parse_initial_state(document)
-    document = cast(dict[str, object], document)
-    observer_definition = (
-        ObserverDefinition.parse(document["observer"], initial.shape) if "observer" in document else None
+    validate_observer_selection(document, external=observer is not None)
+    prepared = (
+        prepare_initialization(document)
+        if observer is None
+        else prepare_initialization(
+            document, observer_document=parse_json_document(observer.read_bytes())
+        )
     )
-    if observer is not None:
-        if observer_definition is not None:
-            raise ValueError("define observer in initialization or --observer, not both")
-        observer_definition = ObserverDefinition.load(observer, initial.shape)
+    initial, observer_definition = prepared.initial, prepared.observer
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:

@@ -1,5 +1,33 @@
 # Validation evidence
 
+## Memory integration with configuration preflight — 2026-09-13
+
+Main advanced to `b0988512fa7f42a057c08dee7d6baa83cbf3eef7` while memory head
+`b608f3ed88797591b27e3a02095884b296a71a8e` was being published. Both changes are
+retained. The integrated source fingerprint is
+`21280e4ecd621dee242cc92f0ca60f3605292c4772398f6a541778af93f4ddcf`.
+The runner combines shared initialization/observer preflight with bounded
+archives, worker options and cleanup. Core storage, archive and worker modules
+are unchanged by this integration. Check selection retains both configuration
+consumers and mandatory system/memory tests; both sets of Skill contracts remain.
+
+Independent accepted-run regression again matches 172 complete states and 2,178
+ordered events across 12 ordinary/failure cases, including errors and modeled
+costs. Eight focused integration checks pass: invalid preflight creates no output,
+observer conflicts reject before reading an unused sidecar, native initial
+capacity rejection remains static, and archives close on success/export failure.
+The same memory probe was repeated at this integrated source: unique default
+coupling storage remains 786,480 bytes versus the original 50,334,720 bytes;
+the 10,000-tick observer retains all 10,001 samples with peak traced Python
+allocation of 1,121,493 bytes versus 5,174,352 bytes. Moving-world retained
+allocation remains 1,450,000 versus 2,729,440 bytes with all metadata retained.
+These are Python allocation measurements, not RSS or worker-process totals.
+Earlier measurements and CPU timings retain their original source identities.
+The integrated affected gate (`python tools/check.py`, without `--full`) passed
+2,081 tests with 30 opt-in visualization skips, Ruff/format on 295 Python files,
+strict mypy on 99 source files and wheel/sdist builds. All 14 MPI tests ran locally.
+The submitted PR records exact-head CI results and any optional launcher skips.
+
 ## Memory ownership, bounded recording and permanent review — 2026-09-13
 
 Extends PR #60 head `206cb0aad123abfb941b6bdec84fe1a3f44cd1dc`, with main
@@ -53,6 +81,54 @@ locally against Intel MPI. Package changes already in PR #60 selected package-wi
 consumers; the scope was not expanded just for reassurance. The PR records CI for
 the submitted head. Ordinary verification is headless and no GIF or visual
 simulation was requested.
+
+## Read-only configuration preflight - 2026-09-13
+
+Base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. The
+[validation architecture](CONFIGURATION_VALIDATION.md) gives strict JSON decoding
+one owner and delegates each format to its existing semantic validator. The UI
+and runner share initialization/observer preparation. It introduces no physical
+formula, inferred law, catalog measurement conversion or simulation during a check.
+
+The 102 facade tests cover all 38 shipped initializations, explicit dependencies,
+unsupported authoring formats, observer composition, no world/filesystem effects,
+reports, CLI batches and shared UI/runner rejection. The shipped profiles return
+46 classical and 46 quantum successes. Profile tests retain independent validation
+of unselected rows, subset/single-representation support and input immutability.
+Strict JSON tests cover nonfinite constants, exponent overflow, duplicate decoded
+keys, scalar editor fragments, finite numbers and consistent byte decoding.
+Native tests cover initial event requirements at and below the exact capacity;
+the insufficient two-cell case failed before the parser correction.
+
+Independent review found decoder and semantic recursion errors that escaped the
+report boundary. Regression tests now check contextual invalid reports, UI
+rejection and continuation to the next CLI file. Existing runtime, native-event,
+workspace, field, accounting and output regressions remain in the affected scope.
+The broad regression also caught a sidecar being read before an inline/external
+conflict was rejected. The shared selection check now runs before sidecar I/O;
+the existing missing-file regression and a read-forbidding test retain that order.
+The first CI run exposed two tests that assumed Windows decoder stack depth.
+Linux decoded the same nested array and correctly rejected its format. The real
+input tests now assert rejection, attribution and batch continuation regardless
+of which valid rejection happens first. Separate bounded-decoder replacement
+tests require syntax reports for input, catalog and initialization dependencies.
+Static success does not guarantee future capacities or physical acceptance.
+
+Validation command:
+`python tools/check.py --base 521b63567d186bab2fac982a1e1f9d0a592a73a5`.
+The PR records the final selected count and CI result for the submitted head.
+Tools: Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Validation is
+headless and affected; no unrelated full-suite or visual audit is claimed.
+
+The simulation-configuration, simulation-runner, architecture-review and
+test-runner Skills now link one maintained preflight contract and distinguish
+configuration validity, completed execution and physical acceptance. All four
+pass Skill Creator's quick validator (PyYAML 6.0.3 in temporary tooling only).
+Boss and PR-review Skills were reviewed; their existing routing and merge rules
+remain sufficient, so no additional Skill or orchestration layer was created.
+The live Highlights revision is reconciled in its
+[coverage map](HIGHLIGHTS_IMPLEMENTATION.md); the live document was not changed.
+
 
 ## Descriptive physical catalog and explicit profiles — 2026-09-12
 

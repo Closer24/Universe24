@@ -55,6 +55,23 @@ audited timings retain all ordinary runner checks and event writes. Performance
 reports use identical inputs and source fingerprints; CI has no wall-time
 threshold. See [performance](PERFORMANCE.md) for measured scope and limitations.
 
+## Configuration preflight
+
+The [validation contract](CONFIGURATION_VALIDATION.md) is covered by
+`test_json_documents.py`, `test_profile_validation.py` and
+`test_configuration_validation.py`. Shipped runnable configurations must pass;
+unknown/ambiguous formats, duplicate keys, nonfinite numbers, invalid references,
+bad placements and missing/mismatched dependencies must fail. All 46 classical
+and quantum profiles are checked independently, including unselected rows;
+subsets and single representations remain valid. Tests forbid world construction
+and implicit filesystem access, preserve supplied objects and verify CLI batch
+exit/report behavior and rejection before runner artifacts are created. Existing
+UI and runner tests retain accepted output and physical execution contracts.
+`test_event_program_validation.py` checks exact and insufficient startup event
+capacity for distinct/colocated classical seeds and quantum registers, including
+mixed worlds. Future exhaustion remains a separate runtime test.
+
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,
