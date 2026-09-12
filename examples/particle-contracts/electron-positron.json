@@ -1,0 +1,1332 @@
+{
+  "schema_version": 1,
+  "model_id": "bounded-rational-elastic-electron-positron-v1",
+  "shape": [
+    17,
+    17,
+    17
+  ],
+  "boundary": "periodic",
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "ticks": 180,
+  "normal_budget": 100000000,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "configured unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "whole",
+      "components": 3,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "remainder",
+      "components": 3,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "denominator",
+      "components": 1,
+      "units": "configured unit",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "electron",
+      "fields": [
+        "mass",
+        "charge",
+        "whole",
+        "remainder",
+        "denominator"
+      ],
+      "defaults": {
+        "mass": 1000,
+        "charge": -1,
+        "whole": [
+          1000,
+          0,
+          0
+        ],
+        "remainder": [
+          0,
+          0,
+          0
+        ],
+        "denominator": 1
+      },
+      "transport": {
+        "mode": "move",
+        "routing": "balanced",
+        "direction": {
+          "op": "rational_direction",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "field": "whole",
+                  "side": "left"
+                },
+                {
+                  "op": "ratio",
+                  "args": [
+                    {
+                      "field": "remainder",
+                      "side": "left"
+                    },
+                    {
+                      "field": "denominator",
+                      "side": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "rate": {
+          "op": "rational_numerator",
+          "args": [
+            {
+              "op": "ratio",
+              "args": [
+                {
+                  "op": "sum",
+                  "args": [
+                    {
+                      "op": "abs",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "field": "whole",
+                              "side": "left"
+                            },
+                            {
+                              "op": "ratio",
+                              "args": [
+                                {
+                                  "field": "remainder",
+                                  "side": "left"
+                                },
+                                {
+                                  "field": "denominator",
+                                  "side": "left"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "field": "mass",
+                  "side": "left"
+                }
+              ]
+            }
+          ]
+        },
+        "rate_divisor": {
+          "op": "rational_denominator",
+          "args": [
+            {
+              "op": "ratio",
+              "args": [
+                {
+                  "op": "sum",
+                  "args": [
+                    {
+                      "op": "abs",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "field": "whole",
+                              "side": "left"
+                            },
+                            {
+                              "op": "ratio",
+                              "args": [
+                                {
+                                  "field": "remainder",
+                                  "side": "left"
+                                },
+                                {
+                                  "field": "denominator",
+                                  "side": "left"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "field": "mass",
+                  "side": "left"
+                }
+              ]
+            }
+          ]
+        },
+        "rate_denominator": 12
+      }
+    },
+    {
+      "name": "positron",
+      "fields": [
+        "mass",
+        "charge",
+        "whole",
+        "remainder",
+        "denominator"
+      ],
+      "defaults": {
+        "mass": 1000,
+        "charge": 1,
+        "whole": [
+          -1000,
+          0,
+          0
+        ],
+        "remainder": [
+          0,
+          0,
+          0
+        ],
+        "denominator": 1
+      },
+      "transport": {
+        "mode": "move",
+        "routing": "balanced",
+        "direction": {
+          "op": "rational_direction",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "field": "whole",
+                  "side": "left"
+                },
+                {
+                  "op": "ratio",
+                  "args": [
+                    {
+                      "field": "remainder",
+                      "side": "left"
+                    },
+                    {
+                      "field": "denominator",
+                      "side": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "rate": {
+          "op": "rational_numerator",
+          "args": [
+            {
+              "op": "ratio",
+              "args": [
+                {
+                  "op": "sum",
+                  "args": [
+                    {
+                      "op": "abs",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "field": "whole",
+                              "side": "left"
+                            },
+                            {
+                              "op": "ratio",
+                              "args": [
+                                {
+                                  "field": "remainder",
+                                  "side": "left"
+                                },
+                                {
+                                  "field": "denominator",
+                                  "side": "left"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "field": "mass",
+                  "side": "left"
+                }
+              ]
+            }
+          ]
+        },
+        "rate_divisor": {
+          "op": "rational_denominator",
+          "args": [
+            {
+              "op": "ratio",
+              "args": [
+                {
+                  "op": "sum",
+                  "args": [
+                    {
+                      "op": "abs",
+                      "args": [
+                        {
+                          "op": "add",
+                          "args": [
+                            {
+                              "field": "whole",
+                              "side": "left"
+                            },
+                            {
+                              "op": "ratio",
+                              "args": [
+                                {
+                                  "field": "remainder",
+                                  "side": "left"
+                                },
+                                {
+                                  "field": "denominator",
+                                  "side": "left"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "field": "mass",
+                  "side": "left"
+                }
+              ]
+            }
+          ]
+        },
+        "rate_denominator": 12
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        8,
+        8,
+        8
+      ],
+      "type": "electron"
+    },
+    {
+      "position": [
+        8,
+        8,
+        8
+      ],
+      "type": "positron"
+    }
+  ],
+  "interactions": [
+    {
+      "name": "configured_elastic_backscatter",
+      "left_type": "electron",
+      "right_type": "positron",
+      "when": {
+        "op": "rational_floor",
+        "args": [
+          {
+            "op": "gt",
+            "args": [
+              {
+                "op": "component",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "field": "mass",
+                            "side": "left"
+                          }
+                        ]
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "field": "mass",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "index": 0
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "whole",
+          "expression": {
+            "op": "rational_whole",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "remainder",
+          "expression": {
+            "op": "rational_remainder",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "denominator",
+          "expression": {
+            "op": "rational_denominator",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "whole",
+          "expression": {
+            "op": "rational_whole",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "remainder",
+          "expression": {
+            "op": "rational_remainder",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "denominator",
+          "expression": {
+            "op": "rational_denominator",
+            "args": [
+              {
+                "op": "ratio",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "sub",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              },
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "decoded_momentum",
+          "expression": {
+            "op": "rational_key",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "left"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "left"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "right"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "right"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "decoded_kinetic_energy",
+          "expression": {
+            "op": "rational_key",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "ratio",
+                    "args": [
+                      {
+                        "op": "dot",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          2,
+                          {
+                            "field": "mass",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ratio",
+                    "args": [
+                      {
+                        "op": "dot",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "right"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "right"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          2,
+                          {
+                            "field": "mass",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

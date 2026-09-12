@@ -130,6 +130,14 @@ and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
 
+The opt-in rational extension stays within these owners: `fields/ratios.py`
+owns finite exact arithmetic and projections; `fields/routing.py` owns balanced
+six-port selection and fractional credit. Neither receives world state. Fixed
+carrier bookkeeping travels through the existing scheduler. The numerical and
+cost amendment is explicit in [RATIONAL_PARTICLES.md](RATIONAL_PARTICLES.md).
+Physical formulas in its examples are reference benchmarks, separate from the
+elementary emergence probes in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
+
 Field, type, model and unit labels are data. Reordering field/type declarations
 must preserve the same resolved behavior; declared update/coupling order and
 spatial axes can be meaningful and are not interchangeable. The executable

@@ -1,0 +1,13 @@
+{
+  "mass_unit": "electron mass / 1000; rounded CODATA 2022 reference ratios",
+  "mass_source": "https://physics.nist.gov/cuu/Constants/Table/allascii.txt",
+  "entities": {
+    "electron": {"mass": 1000, "charge": -1},
+    "positron": {"mass": 1000, "charge": 1},
+    "proton": {"mass": 1836153, "charge": 1},
+    "antiproton": {"mass": 1836153, "charge": -1},
+    "neutron": {"mass": 1838684, "charge": 0},
+    "muon": {"mass": 206768, "charge": -1},
+    "alpha": {"mass": 7294300, "charge": 2}
+  }
+}
