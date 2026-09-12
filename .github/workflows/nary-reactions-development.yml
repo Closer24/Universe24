@@ -21,45 +21,66 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          source = Path('tools/apply_nary_reactions_dev_source.txt').read_text()
-          start_marker = "          python - <<'PY'\n"
-          end_marker = "\n          PY\n"
-          start = source.index(start_marker) + len(start_marker)
-          end = source.index(end_marker, start)
-          raw_lines = source[start:end].splitlines()
-          lines = []
-          delimiter = None
-          for line in raw_lines:
-              if delimiter is None:
-                  prepared = line[10:] if line.startswith('          ') else line
-                  single = prepared.count("'''")
-                  double = prepared.count('"""')
-                  if single % 2:
-                      delimiter = "'''"
-                  elif double % 2:
-                      delimiter = '"""'
-                  lines.append(prepared)
-                  continue
-              if delimiter in line:
-                  prepared = line[10:] if line.startswith('          ') else line
-                  lines.append(prepared)
-                  if prepared.count(delimiter) % 2:
-                      delimiter = None
-              else:
-                  lines.append(line)
-          if delimiter is not None:
-              raise RuntimeError('unterminated embedded triple-quoted string')
-          script = '\n'.join(lines) + '\n'
-          compile(script, 'apply_nary_reactions_dev.py', 'exec')
-          exec(compile(script, 'apply_nary_reactions_dev.py', 'exec'), {'__name__': '__main__'})
+          if 'class ReactionDefinition:' not in Path('src/event_universe/core/disturbance_state.py').read_text():
+              source = Path('tools/apply_nary_reactions_dev_source.txt').read_text()
+              start_marker = "          python - <<'PY'\n"
+              end_marker = "\n          PY\n"
+              start = source.index(start_marker) + len(start_marker)
+              end = source.index(end_marker, start)
+              raw_lines = source[start:end].splitlines()
+              lines = []
+              delimiter = None
+              for line in raw_lines:
+                  if delimiter is None:
+                      prepared = line[10:] if line.startswith('          ') else line
+                      single = prepared.count("'''")
+                      double = prepared.count('"""')
+                      if single % 2:
+                          delimiter = "'''"
+                      elif double % 2:
+                          delimiter = '"""'
+                      lines.append(prepared)
+                      continue
+                  if delimiter in line:
+                      prepared = line[10:] if line.startswith('          ') else line
+                      lines.append(prepared)
+                      if prepared.count(delimiter) % 2:
+                          delimiter = None
+                  else:
+                      lines.append(line)
+              if delimiter is not None:
+                  raise RuntimeError('unterminated embedded triple-quoted string')
+              script = '\n'.join(lines) + '\n'
+              exec(compile(script, 'apply_nary_reactions_dev.py', 'exec'), {'__name__': '__main__'})
+
+          path = Path('src/event_universe/initialization.py')
+          text = path.read_text()
+          old = '''        def input_expression(raw_value: object, expected: int | None = None) -> Expression:\n            return _Expressions(\n                fields,\n                input_owned[0],\n                participants=input_owned,\n            ).parse(raw_value, expected)\n'''
+          new = '''        input_expressions = _Expressions(\n            fields,\n            input_owned[0],\n            participants=input_owned,\n        )\n'''
+          if old in text:
+              text = text.replace(old, new, 1)
+              text = text.replace(
+                  'input_expression(item["expression"], fields[field].components)',
+                  'input_expressions.parse(item["expression"], fields[field].components)',
+              )
+              text = text.replace(
+                  'before = input_expression(item["before"], 1)',
+                  'before = input_expressions.parse(item["before"], 1)',
+              )
+              text = text.replace(
+                  'when = input_expression(obj["when"], 1) if "when" in obj else None',
+                  'when = input_expressions.parse(obj["when"], 1) if "when" in obj else None',
+              )
+              path.write_text(text)
           PY
+          python -m ruff check --fix src/event_universe/initialization.py
           python -m ruff format src/event_universe/core/disturbance_state.py src/event_universe/initialization.py src/event_universe/fields/ratios.py src/event_universe/fields/disturbances.py src/event_universe/fields/record_operations.py src/event_universe/disturbance_api.py src/event_universe/integration/event_program.py src/event_universe/particle_reactions.py tests/test_particle_reactions.py tests/test_nary_reactions.py
           git diff --check
           if ! git diff --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add src/event_universe/core/disturbance_state.py src/event_universe/initialization.py src/event_universe/fields/ratios.py src/event_universe/fields/disturbances.py src/event_universe/fields/record_operations.py src/event_universe/disturbance_api.py src/event_universe/integration/event_program.py src/event_universe/particle_reactions.py tests/test_particle_reactions.py tests/test_nary_reactions.py examples/known-entities/electron-electron-scattering.json examples/known-entities/muon-decay.json docs/PARTICLE_REACTIONS.md docs/LOCAL_CONVERSIONS.md POSTULATES.md SIMULATOR_DEFINITIONS.md docs/TEST_EXPECTATIONS.md docs/ARCHITECTURE.md
-            git commit -m 'Generalize local reactions to bounded n-to-m ownership'
+            git commit -m 'Fix bounded n-to-m reaction parser'
             git push origin HEAD:feat/generic-particle-reactions-final
           fi
       - name: Validate focused reaction scope
