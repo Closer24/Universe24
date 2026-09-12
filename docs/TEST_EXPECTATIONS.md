@@ -1,5 +1,6 @@
 # Test inputs and expected results
 
+
 ## Local record operations
 
 `test_record_operations.py` checks generic vector merging with independent
@@ -10,6 +11,17 @@ and configured cost reporting without repricing. Direct engine composition tests
 prove that the injected activity policy is used and that a capacity-changing
 arrival proposal fails before packets are cleared. Existing timing, generic-name,
 spatial-response and native-event tests retain the cross-owner contracts.
+
+
+
+## Transverse directional-wave candidate
+
+`tests/test_directional_wave.py` validates the configuration-defined
+[candidate](DIRECTIONAL_WAVE.md). The unequal 3Y/2Y encounter produces 3Z/-2Z
+while preserving U=13 and P=5X. It also checks coincident/dark readouts, solitary
+motion, all six modes, same-law cubic covariance, periodic state return and
+atomic rejection of longitudinal, oversized, amplified or misrouted proposals.
+These are candidate acceptance tests, not evidence of Maxwell dynamics.
 
 
 ## Bounded rational particle candidates
@@ -31,6 +43,7 @@ Existing integer regressions retain their original paths. The headless
 `tools/audit_particle_contracts.py` runs longer instances with per-tick exact
 diagnostics; supplied formulas are reference benchmarks, not emergence claims.
 See [the contract](RATIONAL_PARTICLES.md).
+
 
 ## Quantum registers, channels and catalog profiles
 

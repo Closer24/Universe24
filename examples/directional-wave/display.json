@@ -1,0 +1,15 @@
+{
+  "width": 720,
+  "height": 980,
+  "frame_ms": 140,
+  "encounter_ms": 600,
+  "show_nodes": true,
+  "show_axes": true,
+  "show_electric": true,
+  "show_magnetic": true,
+  "show_modes": true,
+  "show_travel": true,
+  "vector_scale": 0.45,
+  "camera_yaw": 0.55,
+  "camera_wobble": 0.08
+}

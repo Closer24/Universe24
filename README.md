@@ -14,6 +14,11 @@ transport, operation costs, normal cost and initial placements. The engine does
 not recognize mass, charge or velocity by name or supply a hidden physical model.
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
 
+For a complete authoring walkthrough, use the
+[simulation configuration Skill](skills/simulation-configuration/SKILL.md):
+space, reusable entities, field laws, encounters, run commands and display options,
+with a runnable two-stream template.
+
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.
 Their five-register cell and sixteen-register particle schemas are not the

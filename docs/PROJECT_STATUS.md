@@ -1,5 +1,10 @@
 # Project status and restart guide
 
+An optional [directional-wave candidate](DIRECTIONAL_WAVE.md) supplies six modes
+and a configured polarization encounter with exact normalized energy/momentum
+guards. It uses the existing local field engine and does not replace the catalog
+probes or establish Maxwell dynamics. Check its PR for integration status.
+
 For a clean machine or deleted conversation, follow
 [recovery without chat history](RECOVERY.md), including the versioned daily
 genericity skill and local retention setup.
