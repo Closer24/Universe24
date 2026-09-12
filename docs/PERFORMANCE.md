@@ -72,7 +72,7 @@ import time
 from pathlib import Path
 from event_universe import legacy_runner
 from event_universe.diagnostics import render as render_module
-from event_universe.scenarios import get_scenario
+from event_universe.particle_scenarios import get_scenario
 
 render = render_module.render_volume
 started = time.perf_counter()

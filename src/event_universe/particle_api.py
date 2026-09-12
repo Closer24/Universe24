@@ -1,9 +1,9 @@
-"""Public assembly of the engine, current candidate model and optional observations."""
+"""Assembly of historical particle models and optional observations."""
 
 from event_universe.core.contracts import LocalCellRule, Observer
-from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LengthRule, LinkConfig
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import Config
 from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.dynamics.movement import MovementRule, advance_balanced_movement
@@ -18,12 +18,12 @@ from event_universe.models.causal_stream import (
     CausalStreamConfig,
 )
 from event_universe.models.collisions import collide
-from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
 from event_universe.models.linked_field import LINKED_MODEL, geometry_policy
+from event_universe.models.scalar_field import SCALAR_MODEL, ScalarFieldModel
 
 
-class ScalarSimulation(Engine):
-    """Default model with no retained history. Use the CLI runner for saved experiments."""
+class ScalarSimulation(ScalarEngine):
+    """Historical scalar model without retained history; not the active generic Simulation."""
 
     def __init__(
         self,
@@ -37,13 +37,13 @@ class ScalarSimulation(Engine):
         movement: MovementRule | None = None,
         post_motion_halo: LocalCellRule | None = None,
     ) -> None:
-        # Preserve the current scheduler; a supplied field tracks its full scalar sample.
-        activity = CURRENT_MODEL.activity if field is None else sample_changed_or_source
-        model = CurrentFieldModel(
-            field=CURRENT_MODEL.field if field is None else field,
-            turning=CURRENT_MODEL.turning if turning is None else turning,
+        # Preserve the scalar scheduler; a supplied field tracks its full scalar sample.
+        activity = SCALAR_MODEL.activity if field is None else sample_changed_or_source
+        model = ScalarFieldModel(
+            field=SCALAR_MODEL.field if field is None else field,
+            turning=SCALAR_MODEL.turning if turning is None else turning,
             activity=activity if field_activity is None else field_activity,
-            movement=CURRENT_MODEL.movement if movement is None else movement,
+            movement=SCALAR_MODEL.movement if movement is None else movement,
         )
         super().__init__(
             config if config is not None else Config(),
@@ -71,7 +71,7 @@ class LinkedSimulation(LinkedEngine):
         length_rule: LengthRule | None = None,
     ) -> None:
         link_config = LinkConfig() if links is None else links
-        model = CurrentFieldModel(
+        model = ScalarFieldModel(
             field=LINKED_MODEL.field if field is None else field,
             turning=LINKED_MODEL.turning if turning is None else turning,
             activity=sample_changed_or_source,
@@ -102,7 +102,7 @@ class BalancedSimulation(ScalarSimulation):
             observer=observer,
             movement=advance_balanced_movement,
             collisions=collisions,
-            post_motion_halo=CURRENT_MODEL.cancel_scalar_halo,
+            post_motion_halo=SCALAR_MODEL.cancel_scalar_halo,
         )
 
 

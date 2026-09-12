@@ -3,13 +3,13 @@
 from event_universe.core.links import LinkConfig
 from event_universe.dynamics.transit import depart_movement
 from event_universe.fields.geometry import MeanStretch
-from event_universe.models.current_field import CURRENT_MODEL, CurrentFieldModel
+from event_universe.models.scalar_field import SCALAR_MODEL, ScalarFieldModel
 
 MODEL_ID = "scalar-field-v11-local-links"
-LINKED_MODEL = CurrentFieldModel(
-    field=CURRENT_MODEL.field,
-    turning=CURRENT_MODEL.turning,
-    activity=CURRENT_MODEL.activity,
+LINKED_MODEL = ScalarFieldModel(
+    field=SCALAR_MODEL.field,
+    turning=SCALAR_MODEL.turning,
+    activity=SCALAR_MODEL.activity,
     movement=depart_movement,
 )
 

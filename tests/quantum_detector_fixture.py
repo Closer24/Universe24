@@ -1,8 +1,8 @@
-"""Test-only controller. Detector records are NOT Engine-native physical events."""
+"""Test-only controller. Detector records are NOT ScalarEngine-native physical events."""
 
 from dataclasses import dataclass
 
-from event_universe.core.engine import Engine
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import Address
 from event_universe.integration.quantum_bridge import QuantumBridge
 from event_universe.quantum import DeferredQuantum, QuantumConfig
@@ -16,7 +16,7 @@ READOUT_TICK = 8
 
 @dataclass(slots=True)
 class DetectorController:
-    world: Engine
+    world: ScalarEngine
     bridge: QuantumBridge
     event: TerminalRecord | None = None
     detector_bits: tuple[int, int] = (0, 0)

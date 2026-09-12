@@ -48,7 +48,14 @@ RESOURCE_CONSUMERS = {
     "examples/finite_fields.json": ("tests/test_generic_identity.py",),
     "examples/open_world.json": ("tests/test_generic_identity.py",),
     "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
-    "tools/check_diagonal_motion.py": ("tests/test_application.py",),
+    "examples/04-unequal-mass-collision.json": ("tests/test_reference_examples.py",),
+    "examples/three_mass_finite.json": ("tests/test_reference_examples.py",),
+    "examples/known-entities/three-masses-low-budget.json": ("tests/test_reference_examples.py",),
+    "examples/known-entities/boundary-periodic.json": ("tests/test_reference_examples.py",),
+    "examples/known-entities/boundary-open.json": ("tests/test_reference_examples.py",),
+    "examples/known-entities/run_reference_checks.py": ("tests/test_reference_examples.py",),
+    "examples/known-entities/run_reference_checks.ps1": ("tests/test_reference_examples.py",),
+    "tools/check_diagonal_motion.py": ("tests/test_legacy_application.py",),
 }
 
 
@@ -162,8 +169,8 @@ def select(changed, sources):
             tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
-        if path.endswith((".md", ".py", ".js", ".html", ".css", ".json")):
-            tests.add("tests/test_repository_language.py")
+        # Paths and duplicate contents can change in any source file, not just Python.
+        tests.update(("tests/test_repository_language.py", "tests/test_repository_hygiene.py"))
         if path.startswith("src/") and path.endswith(".py"):
             tests.update(("tests/test_architecture.py", "tests/test_locality.py"))
         if path.startswith(("src/event_universe/quantum/", "src/event_universe/integration/")):

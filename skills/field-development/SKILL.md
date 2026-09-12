@@ -5,7 +5,7 @@ description: Implement or repair Universe24 local field transport and response c
 
 # Field development
 
-Read [the shared workflow](../workflow.md), [field interfaces](../../docs/FIELDS.md)
+Read [the shared workflow](../workflow.md), [field interfaces](../../docs/SCALAR_FIELDS.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
 The active field contract is [DISTURBANCES.md](../../docs/DISTURBANCES.md).

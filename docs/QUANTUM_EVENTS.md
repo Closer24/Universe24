@@ -18,6 +18,11 @@ contracts for owners that do not select this backend.
 The user selected a local event lattice plus a demand-driven quantum dependency
 graph. This document separates that method from the still-open physical laws.
 
+For composition through the ordinary simulator and runner, use
+[native event programs](NATIVE_QUANTUM_EVENTS.md). That contract owns the shared
+causal identities, repeated local triggers and charged mechanical paths; this
+document owns the finite quantum state and instrument semantics.
+
 ## Contract and ownership
 
 | Part | Definition |

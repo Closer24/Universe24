@@ -4,7 +4,6 @@ State is now read-only. Replace private `_cell(...)[PHI] = value` initialization
 with `seed_field(...)`. self_tests lives in pytest; report checks are explicit.
 """
 
-from event_universe.api import ScalarSimulation as Simulation
 from event_universe.core.state import Config, Vector
 from event_universe.diagnostics.frames import Slice, capture_frame
 from event_universe.diagnostics.measurements import (
@@ -16,6 +15,7 @@ from event_universe.diagnostics.measurements import (
     total_momentum,
 )
 from event_universe.diagnostics.recorder import TraceRecorder
+from event_universe.particle_api import ScalarSimulation as Simulation
 
 
 class IntegerO1Field3D(Simulation):

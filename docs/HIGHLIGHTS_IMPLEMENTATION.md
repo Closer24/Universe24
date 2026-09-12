@@ -11,6 +11,17 @@ and rejection cases. Neither a prose document nor Git restores credentials or
 expired outputs. Together, this map, the contracts and versioned initialization
 files allow reconstruction without chat history.
 
+This is a dated inventory for the revision above. Later native event programs,
+local probes and internal path changes are described in [project status](PROJECT_STATUS.md),
+[the documentation index](README.md) and [migration](MIGRATION.md). Preserve this
+record as historical evidence rather than treating its omissions as current gaps.
+
+This is a dated inventory for the revision recorded above. Later native event programs,
+quantum entity support, Maxwell research examples, local probes and internal path changes
+are described in [project status](PROJECT_STATUS.md), [the documentation index](README.md)
+and [migration](MIGRATION.md). Preserve this record as historical evidence rather than
+treating its omissions as current gaps.
+
 ## 10. Implemented entities and rules
 
 ### 10.1 World, cells and links

@@ -12,26 +12,32 @@ from event_universe.runner import run_initialization, source_fingerprint
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 
+# Logical experiment names select one canonical configuration, never a copied law.
+REFERENCE_CONFIGURATIONS = {
+    "collision": HERE.parent / "04-unequal-mass-collision.json",
+    "three-masses": HERE.parent / "three_mass_finite.json",
+    "three-masses-low-budget": HERE / "three-masses-low-budget.json",
+    "boundary-periodic": HERE / "boundary-periodic.json",
+    "boundary-open": HERE / "boundary-open.json",
+}
+
+
+# Run duration is not a second copy of the initialization-defined law.
+REFERENCE_TICK_OVERRIDES = {"three-masses": 120}
+
 
 def main():
     if not __debug__:
         raise RuntimeError("Run without -O so numerical acceptance checks remain enabled")
-    names = [
-        "collision",
-        "three-masses",
-        "three-masses-low-budget",
-        "boundary-periodic",
-        "boundary-open",
-    ]
     output = ROOT / "artifacts" / ("known-entities-" + datetime.now().strftime("%Y%m%d-%H%M%S-%f"))
     before = source_fingerprint()
     results = []
-    for name in names:
-        config = HERE / (name + ".json")
+    for name, config in REFERENCE_CONFIGURATIONS.items():
         raw = json.loads(config.read_text())
+        ticks = REFERENCE_TICK_OVERRIDES.get(name, raw["ticks"])
         folder = output / name
         print("Running " + name, flush=True)
-        meta = json.loads(run_initialization(config, folder).read_text())
+        meta = json.loads(run_initialization(config, folder, ticks=ticks).read_text())
         state = json.loads((folder / "state.json").read_text())
         counts = Counter()
         delayed = 0
@@ -54,7 +60,7 @@ def main():
             if kind == "received":
                 first_receives.setdefault(event["disturbance"], event)
         assert meta["status"] == "completed"
-        assert meta["completed_ticks"] == raw["ticks"]
+        assert meta["completed_ticks"] == ticks
         assert meta["accounting_balanced_at_every_completed_tick"]
         assert meta["display"] == "none"
         assert (folder / "initialization.json").read_bytes() == config.read_bytes()

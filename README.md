@@ -13,6 +13,9 @@ defines field names and values, disturbance types, local updates, couplings,
 transport, operation costs, normal cost and initial placements. The engine does
 not recognize mass, charge or velocity by name or supply a hidden physical model.
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
+Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
+local quantum decisions to that same engine and charge the executed mechanical
+path. They currently cannot be combined with spatial fields.
 
 For a complete authoring walkthrough, use the
 [simulation configuration Skill](skills/simulation-configuration/SKILL.md):
@@ -268,6 +271,10 @@ from this README.
 
 ## Project map
 
+The [documentation index](docs/README.md) assigns one owner per topic and separates
+active contracts, explicit experiments and revision-specific evidence.
+
+
 | Path | Responsibility |
 | --- | --- |
 | `src/event_universe/initialization.py` | Strict JSON schema and typed expression parsing |
@@ -276,11 +283,11 @@ from this README.
 | `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
-| `src/event_universe/api.py` | Explicitly named historical research APIs |
-| `src/event_universe/core/engine.py` | Historical scalar-engine scheduling and occupancy |
+| `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
+| `src/event_universe/core/scalar_engine.py` | Historical scalar-engine scheduling and occupancy |
 | `src/event_universe/fields/`, `dynamics/`, `models/` | Generic arithmetic and retained candidate implementations |
 | `src/event_universe/diagnostics/` | Read-only measurements, recording and optional output |
-| `src/event_universe/scenarios.py` | Explicit historical research scenarios |
+| `src/event_universe/particle_scenarios.py` | Explicit historical research scenarios |
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |
 | `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
@@ -293,7 +300,7 @@ from this README.
 | `docs/LOCAL_FIELD_RULES.md` | Local retained/output rules, component groups and joint field/carrier transactions |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |
-| `docs/FIELDS.md` | Active field definition and historical component extension |
+| `docs/SCALAR_FIELDS.md` | Historical scalar field composition and turning |
 | `docs/PHYSICAL_FEATURES.md` | Procedure for a new physical hypothesis |
 | `docs/TEST_EXPECTATIONS.md` | Independent test inputs and expected outcomes |
 | `docs/MIGRATION.md` | Transition from implicit scalar defaults |

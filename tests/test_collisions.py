@@ -16,7 +16,7 @@ from event_universe.diagnostics.render import _speed_arrow
 from event_universe.dynamics.collision import CollisionBody, elastic_backscatter
 from event_universe.dynamics.movement import advance_movement
 from event_universe.dynamics.transit import transit_ticks
-from event_universe.models.current_field import update_particle
+from event_universe.models.scalar_field import update_particle
 
 
 def values(body):
@@ -240,18 +240,18 @@ def test_periodic_self_loop_preserves_contact_identity():
 
 
 def test_collision_callable_can_be_replaced_without_world_access():
-    from event_universe.core.engine import Engine
-    from event_universe.models.current_field import CURRENT_MODEL
+    from event_universe.core.scalar_engine import ScalarEngine
+    from event_universe.models.scalar_field import SCALAR_MODEL
 
     def transparent_contact(first, second):
         return first, second
 
-    world = Engine(
+    world = ScalarEngine(
         Config(nx=8, ny=8, nz=8, source_strength=0),
-        CURRENT_MODEL.update_field,
-        CURRENT_MODEL.update_particle,
+        SCALAR_MODEL.update_field,
+        SCALAR_MODEL.update_particle,
         collision_rule=transparent_contact,
-        field_activity=CURRENT_MODEL.field_is_active,
+        field_activity=SCALAR_MODEL.field_is_active,
     )
     world.add_particle(0, 4, 4, 4, 3)
     world.add_particle(1, 4, 4, 4, -3)
@@ -261,7 +261,7 @@ def test_collision_callable_can_be_replaced_without_world_access():
 
 
 def test_mass_and_collisions_compose_with_balanced_motion_and_halo():
-    from event_universe.api import BalancedSimulation
+    from event_universe.particle_api import BalancedSimulation
 
     trace = TraceRecorder()
     world = BalancedSimulation(

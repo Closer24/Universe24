@@ -3,7 +3,8 @@
 An optional [directional-wave candidate](DIRECTIONAL_WAVE.md) supplies six modes
 and a configured polarization encounter with exact normalized energy/momentum
 guards. It uses the existing local field engine and does not replace the catalog
-probes or establish Maxwell dynamics. Check its PR for integration status.
+probes or establish Maxwell dynamics. Verify the current Git tree and PR status
+before using historical validation evidence.
 
 For a clean machine or deleted conversation, follow
 [recovery without chat history](RECOVERY.md), including the versioned daily
@@ -78,119 +79,125 @@ records are temporary, while their recorded conclusions remain in the repository
 
 ## What this checkout contains
 
-The active package is [event_universe](../src/event_universe/).
-`Simulation(initial: InitialState)` uses named fields, disturbance types and laws
-from JSON initialization. The CLI requires `--init`; ordinary execution and tests
-are headless. Start with [DISTURBANCES.md](DISTURBANCES.md) and the README.
+| Scope | Implemented owner | Contract and limits |
+| --- | --- | --- |
+| Active generic simulator | [disturbance_api.py](../src/event_universe/disturbance_api.py), [disturbance_engine.py](../src/event_universe/core/disturbance_engine.py) | `Simulation(InitialState)`; laws and fields come from explicit initialization, not physical names |
+| Record operation policy | [record_operations.py](../src/event_universe/fields/record_operations.py) | Fixed local activity, delivered-record combination and cost reporting; the engine retains scheduling |
+| Rational particle candidates | [rational contract](RATIONAL_PARTICLES.md) | Explicit bounded rational regions, balanced routes, fractional movement credit and local checks; supplied reference laws |
+| Local expressions and transactions | [disturbances.py](../src/event_universe/fields/disturbances.py) | Bounded integer operations, declared balances, fixed local capacities and explicit rejection |
+| Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
+| Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
+| Entity representation | [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | 46 inventory profiles compile to selected initialization records; labels are not physical derivations |
+| Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
+| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |
+| Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
+| Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
+| Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
+| Formula-free state diagnostic | [cell_contract.py](../src/event_universe/diagnostics/cell_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
+| Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the active generic Simulation |
+| Historical particle APIs | [particle_api.py](../src/event_universe/particle_api.py) | Explicit `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`, `CausalStreamSimulation` |
+| Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
 
-The [local configuration workspace](WORKSPACE.md) provides template selection,
-editable JSON and isolated runs through `python -m event_universe.ui`.
-Configuration changes are runtime data and require no compilation or rebuild.
-The workspace includes recorded movie playback, folded settings, names and three
-idealized motion presets, plus a configured unequal-mass elastic collision.
-The latter uses atomic generic interactions with explicit invariants; see
-[the candidate contract](DISTURBANCES.md#configured-unequal-mass-elastic-example).
-These transport demonstrations do not establish the
-behavior of real electrons, protons, photons or electromagnetic interactions.
+The active package lives only in `src/event_universe/`. The
+[persistent-source facade](../src/persistent_source_field.py) re-exports historical
+notebook names; it contains no second engine. `tests/reference/` preserves source
+history, not an active implementation or a compatibility acceptance gate.
 
-`ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
-`CausalStreamSimulation` retain explicit historical research laws. Their
-regression tests do not make those laws the primary generic model. Check
-[the public API](../src/event_universe/__init__.py) and the selected configuration,
-not an old chat. Historical contracts remain scoped in
-[SIMULATOR_DEFINITIONS.md](../SIMULATOR_DEFINITIONS.md).
+The historical scalar scheduler is `core/scalar_engine.py` (`ScalarEngine`), and
+its selected scalar policy is `models/scalar_field.py` (`ScalarFieldModel`).
+The active `Simulation` still resolves to `disturbance_api.py`. See
+[migration](MIGRATION.md#explicit-historical-component-names) for renamed internal
+imports and commands. Public named simulation classes keep their identities.
 
-Use the default interpreter in [.python-version](../.python-version) with the
-project environment described in [README.md](../README.md#install-and-run).
-The package's minimum required Python version is separately declared in
-[pyproject.toml](../pyproject.toml); it does not select the runtime for a shell.
-
-The generic delivered-face/conservative-field work, unit-link matter ownership
-and Computational Field display rename are tracked in
-[PR #19](https://github.com/Closer24/Universe24/pull/19).
-It was closed without merge on 2026-09-11 at head
-`e69a77fee97dcbb385cb2565240fafdd6b6a6179` and is not included in the reviewed main.
-Its acceptance evidence and blockers belong
-in that PR; do not infer that it is ready from this navigation document.
+The unequal-mass collision configuration has one canonical file:
+[04-unequal-mass-collision.json](../examples/04-unequal-mass-collision.json).
+Both the workspace and [reference checks](../examples/known-entities/run_reference_checks.py)
+consume it. The reference runner does not maintain a second copy of the law.
+Its three-mass case likewise uses [three_mass_finite.json](../examples/three_mass_finite.json)
+with a 120-tick override instead of a duration-only copy of the initialization.
 
 ## Specifications and gaps
 
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
-is the user's high-level specification. Its requirements are not automatically
-implemented: distinguish the active initialization-defined disturbance contract
-from historical scalar/particle candidates. Read relevant current sections for specification work.
-Keep accepted executable contracts in the repository and record source revision
-or retrieval date in the related PR. Resolve differences explicitly; do not
-overwrite the baseline to make a description appear true.
+is the high-level specification, not automatic evidence of implementation.
+Repository cleanup does not modify that external document. Read its current
+revision when working on specification changes and reconcile differences explicitly.
 
-The generic schema supports bounded integer expressions, extensive splitting,
-whole-record movement, paired exchange, explicit sources and local computation
-delay with fixed neighbor transit. Atomic pair transactions also support multiple
-assignments, vector transforms and declared pre/post invariants. Operation prices, ordinary cost and field laws
-are initialization choices. The cost output is local; propagating a computation
-influence requires a separate law. Capacity exhaustion stops a run rather than
-discarding content. Gravity, waves, relativity and general energy conservation
-are not established by the framework.
+The active [disturbance contract](DISTURBANCES.md) supports named scalar/vector
+fields, whole-record movement, extensive splitting, atomic interactions, explicit
+sources and computation-dependent local waits. Physical work/storage per fixed
+local configuration is distinct from total host scheduling and history costs.
+Capacity exhaustion rejects a run rather than silently losing state.
 
-The optional [spatial-field extension](SPATIAL_FIELDS.md) adds independent
-outward emission, baselines and combined balance diagnostics. Its fixed
-field clock is separate from carrier computation delay. The new example selects
-that candidate explicitly; configurations without it preserve their old laws.
-Schema 1 local transport can coexist with outward fields and retains its own
-explicitly selected rules, as described in [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
-[Spatial couplings](SPATIAL_COUPLINGS.md) add configured exchange and exact
-discrete rotation with an atomic opposite field reaction. The scalar-flux-driven
-rotation has a restricted straight cardinal isolation property. General automatic
-self attribution remains unsupported, particularly after turns or periodic
-return.
+[Spatial fields](SPATIAL_FIELDS.md) and [couplings](SPATIAL_COUPLINGS.md) retain
+candidate-specific behavior. Schema 2 (`finite-dissipative-v1`) records completed-link
+loss and finite source/response allowances; accounting for decay is not physical
+energy or momentum conservation through decay. Periodic and open boundaries have
+separate explicit contracts. General automatic self-field attribution after turns
+or periodic return remains unsupported. A passing isolated-motion rejection test
+identifies invalid behavior; it does not repair the underlying candidate law.
 
-The local schema 2 candidate `finite-dissipative-v1` requires completed-link
-integer decay at interior receivers for every spatial field and finite per-record budgets for emitted
-amounts and coupling reactions. [finite_fields.json](../examples/finite_fields.json)
-is the small headless example. Baselines are exempt; dynamic populations vanish
-after their last nonzero input. This candidate explicitly records loss and does
-not conserve physical momentum or energy through decay. Schema 1 preserves its
-conservative transport and unlimited declared sources and responses. Candidate
-identity is selected by schema version, independently of field and model names.
-Verify current validation evidence and the running source version before reusing
-results. No Highlights update is implied by repository edits.
+[Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
+method. Querying computes branch weights; an explicit instrument and ticket select
+a recorded outcome without advancing the physical clock. Host dependency evaluation
+is counted separately from Q-ORACLE-1. [Focus](QUANTUM_FOCUS.md) remains a separate
+opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
+now composes the optional quantum owner through the ordinary `Simulation` and
+runner, with shared causal identities, repeated local encounters and explicit
+computation charges. Configured deterministic endpoints reproduce an ordinary
+mechanical path when both costs fit the budget; resolver overhead is not hidden.
+Combining an event program with spatial fields is rejected. These finite controls
+do not derive universal scattering, an objective collapse criterion, a general
+classical limit or quantum-plus-matter energy conservation. The earlier
+[contact trial](QUANTUM_CONTACT_TRIAL.md) remains a historical eight-tick fixture,
+not the current scope of the native event-program interface.
 
-Both schemas support `boundary: "periodic"` (the default) or `boundary: "open"`.
-Periodic particles and fields wrap across every X, Y and Z face without changing
-direction or link time. Open terminal packets leave after full transit and their
-unchanged signed amounts enter an escaped ledger; no exterior cell is simulated.
-See [the boundary contract](DISTURBANCES.md#domain-boundary) and
-[open_world.json](../examples/open_world.json). A host scheduling index skips
-dormant spatial cells while preserving local costs and physical updates. The
-runner records elapsed host seconds separately from simulation ticks.
+The [entity inventory](PHYSICAL_ENTITIES.md), [catalog](ENTITY_CATALOG.md) and
+[conversion interface](LOCAL_CONVERSIONS.md) separate representation from physical
+acceptance. Maxwell dynamics, gravity, general physical creation/annihilation,
+relativity and universal energy conservation are not established merely by these
+interfaces or by successful software tests.
 
-Software validation and physical acceptance are separate. In particular, the
-[isolated-motion rejection contract](../SIMULATOR_DEFINITIONS.md#reject-isolated-self-force-in-application-runs)
-detects a baseline failure; a passing detector test does not fix that law.
+The [small-space comparisons](../examples/small-space/README.md), integrated through
+PR #40, record 24 experiments in 9-cubed/15-cubed worlds. Finite reservoir transfer,
+a ray-speed parameter and a restricted zero-total-momentum unequal-mass candidate
+are explicit configuration solutions, not changed entity defaults or derived
+universal laws. Their limitations and revision-specific results remain in the
+experiment README.
+
+The audit reference now includes the standalone vector laboratory, shared bounded
+arithmetic, the local E/B pulse and formula-free cell-state guard, and the
+Highlights/recovery documentation. Their appearance in the checkout does not
+promote reference experiments into the active physical engine. The
+[Highlights coverage record](HIGHLIGHTS_IMPLEMENTATION.md) preserves its stated
+historical revision; use this map and current contracts for later additions.
+Consult [live PRs](https://github.com/Closer24/Universe24/pulls) for any subsequent
+work rather than inferring integration from a branch description.
+Historical integration chronology remains in Git and [validation records](VALIDATION.md),
+not a competing current-status list.
 
 ## Resume without a conversation
 
-1. Read [AGENTS.md](../AGENTS.md); inspect checkout status, current main and
-   [open PRs](https://github.com/Closer24/Universe24/pulls).
-2. Resolve the task from its [Issue](https://github.com/Closer24/Universe24/issues)
-   or user request. Record the intended model, base, owned files and acceptance.
-3. Install and run using [README.md](../README.md#install-and-run) and explicit
-   initialization. Use a new output directory; enable visualization only when
-   requested.
-4. Follow [CONTRIBUTING.md](../CONTRIBUTING.md). Run the required gate and attach
-   actual results for the submitted tree, including not-run checks and failures.
-5. Hand off through [skills/workflow.md](../skills/workflow.md), then verify any
-   authorized integration against current GitHub state.
+1. Read [AGENTS.md](../AGENTS.md), inspect local changes, fetch main and record the
+   actual base. Use a separate branch/worktree for the task.
+2. Use [README installation instructions](../README.md#install-and-run) and the
+   interpreter in [.python-version](../.python-version). The minimum package version
+   in [pyproject.toml](../pyproject.toml) does not select the shell interpreter.
+3. Select an explicit initialization and an unused output directory. The
+   [workspace](WORKSPACE.md) changes runtime JSON without rebuilding the engine.
+   Visualization is opt-in. Registered outputs expire under [retention](RETENTION.md);
+   idle cleanup needs the existing watcher or a scheduled invocation.
+4. Follow [CONTRIBUTING.md](../CONTRIBUTING.md), inspect the affected selection from
+   `python tools/check.py`, and attach actual results for the submitted tree.
+   Use `--full` only for an explicitly justified complete audit.
+5. Hand off the scope, validation, limits and integration state through the PR and
+   [shared workflow](../skills/workflow.md). A Git rename changes the source fingerprint;
+   retain older fingerprints as historical evidence rather than relabeling old runs.
 
-If GitHub or Highlights cannot be read, say which information is unavailable.
-Do not claim the snapshot is current. Work within verified local contracts where
-the task permits; stop for clarification when a missing decision affects the law.
+## Repository naming and ownership audit
 
-## Native local event programs
-
-The [native event contract](NATIVE_QUANTUM_EVENTS.md) documents initialization-
-selected quantum instruments in the ordinary Simulation, shared causal identities
-and explicit path-cost accounting. Earlier contact/sweep scripts are reference
-experiments, not the native entry point. The new program does not yet compose
-independent spatial-field clocks. Check the live PR and tested source before
-asserting merged status or acceptance.
+The repository-wide naming/ownership audit is reconciled against main
+`8ceb1fd00e9f23020965d8c2873caf0eff384f92`. It preserves the integrated
+native quantum, quantum-entity and Maxwell research additions while keeping
+one active implementation owner per documented responsibility. Historical
+research APIs and standalone laboratories remain explicitly labeled.

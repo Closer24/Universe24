@@ -4,8 +4,8 @@ import ast
 from importlib.util import resolve_name
 
 GENERIC_LAYERS = {"core", "fields", "dynamics"}
-COMPOSITION_MODULES = {"api", "compat", "disturbance_api"}
-FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "Engine", "Simulation"}
+COMPOSITION_MODULES = {"particle_api", "compat", "disturbance_api"}
+FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "ScalarEngine", "Simulation"}
 
 
 def import_targets(tree, module):
@@ -101,8 +101,8 @@ def violations(source, module):
                     found.append((line, "generic calculation imports model state"))
             if layer == "models" and (
                 target_layer not in GENERIC_LAYERS | {"models"}
-                or dependency == "core.engine"
-                or dependency.startswith("core.engine.")
+                or dependency == "core.scalar_engine"
+                or dependency.startswith("core.scalar_engine.")
                 or dependency == "core.linked_engine"
                 or dependency.startswith("core.linked_engine.")
                 or dependency == "core.disturbance_engine"

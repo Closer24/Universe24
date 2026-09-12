@@ -12,7 +12,7 @@ from event_universe import CellState, Config, ParticleState
 from event_universe import legacy_runner as runner
 from event_universe.core.contracts import MoveRecord
 from event_universe.diagnostics.frames import Slice
-from event_universe.scenarios import Scenario
+from event_universe.particle_scenarios import Scenario
 
 
 def scenario(ticks):

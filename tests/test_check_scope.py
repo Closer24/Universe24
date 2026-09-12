@@ -34,11 +34,11 @@ def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
         "src/domain/math.py": "def calculate(): pass",
         "src/domain/engine.py": "from .math import calculate",
         "tests/helper.py": "from domain.engine import calculate",
-        "tests/test_engine.py": "from .helper import calculate",
+        "tests/test_scalar_engine.py": "from .helper import calculate",
         "tests/test_unrelated.py": "def test_other(): pass",
     }
     tests, typed = CHECK.select(["src/domain/math.py"], sources)
-    assert "tests/test_engine.py" in tests
+    assert "tests/test_scalar_engine.py" in tests
     assert "tests/test_unrelated.py" not in tests
     assert typed == ["src/domain/engine.py", "src/domain/math.py"]
 
@@ -73,6 +73,7 @@ def test_docs_and_validation_changes_do_not_schedule_simulations():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     assert tests == [
         "tests/test_check_scope.py",
+        "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
     ]
@@ -111,11 +112,11 @@ def test_dynamic_example_paths_retain_identity_checks_without_unrelated_physics(
 
 def test_runpy_acceptance_tool_retains_application_consumer():
     sources = {
-        "tests/test_application.py": 'runpy.run_path(root / "tools/check_diagonal_motion.py")',
+        "tests/test_legacy_application.py": 'runpy.run_path(root / "tools/check_diagonal_motion.py")',
         "tests/test_collisions.py": "def test_historical(): pass",
     }
     tests, _ = CHECK.select(["tools/check_diagonal_motion.py"], sources)
-    assert "tests/test_application.py" in tests
+    assert "tests/test_legacy_application.py" in tests
     assert "tests/test_collisions.py" not in tests
 
 
@@ -127,7 +128,9 @@ def test_directional_field_resources_select_the_candidate_consumer(filename):
     assert "tests/test_directional_wave.py" in tests
 
 
-@pytest.mark.parametrize("resource", ["entities.json", "build.py", "electron-proton.json"])
+@pytest.mark.parametrize(
+    "resource", ["entities.json", "build_reference_configurations.py", "electron-proton.json"]
+)
 def test_particle_resources_select_the_dynamic_contract_consumer(resource):
     tests, _ = CHECK.select(["examples/particle-contracts/" + resource], {})
     assert "tests/test_rational_particles.py" in tests

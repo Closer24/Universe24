@@ -4,7 +4,7 @@ import pytest
 
 import event_universe
 from event_universe import CellState, ParticleState
-from event_universe.core.engine import Engine
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import CELL_REGISTERS, PARTICLE_REGISTERS
 from event_universe.diagnostics.numeric_audit import audit_physical_modules, static_integer_audit
 
@@ -44,22 +44,22 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
 @pytest.mark.parametrize(
     "module,source",
     [
-        ("core.engine", "import event_universe.models.current_field as model"),
-        ("core.engine", "from ..models import current_field"),
+        ("core.scalar_engine", "import event_universe.models.scalar_field as model"),
+        ("core.scalar_engine", "from ..models import scalar_field"),
         ("fields.scalar", "from ..core.state import Config as Settings"),
-        ("fields.scalar", "from ..core import engine"),
+        ("fields.scalar", "from ..core import scalar_engine"),
         ("fields.disturbances", "from ..core.disturbance_engine import DisturbanceEngine"),
         ("models.generic", "from ..core import disturbance_engine"),
-        ("dynamics.turning", "from ..models.current_field import CURRENT_MODEL"),
-        ("models.current_field", "from ..core.engine import Engine"),
-        ("models.current_field", "from ..core import engine"),
+        ("dynamics.turning", "from ..models.scalar_field import SCALAR_MODEL"),
+        ("models.scalar_field", "from ..core.scalar_engine import ScalarEngine"),
+        ("models.scalar_field", "from ..core import scalar_engine"),
         ("models.linked_field", "from ..core import linked_engine"),
-        ("models.current_field", "from ..diagnostics import measurements"),
+        ("models.scalar_field", "from ..diagnostics import measurements"),
         ("fields.scalar", "from pathlib import Path"),
-        ("models.current_field", "def update(source, count):\n    return source * count"),
+        ("models.scalar_field", "def update(source, count):\n    return source * count"),
         ("models.new_feature", "def update(source, count):\n    return source * count"),
         ("models.experimental.custom", "def update(x):\n    return x + 1"),
-        ("api", "def calculate(momentum):\n    return -momentum"),
+        ("particle_api", "def calculate(momentum):\n    return -momentum"),
         ("compat", "def update(value):\n    value += 1\n    return value"),
     ],
 )
@@ -75,9 +75,9 @@ def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source)
         ("fields.disturbances", "from ..core.disturbance_state import DisturbanceRecord"),
         ("fields.disturbances", "from ..core.integer import checked_work"),
         ("dynamics.turning", "import event_universe.core.state as state"),
-        ("models.current_field", "from ..fields.scalar import ScalarField"),
-        ("api", "def build(value: int | None = None) -> int | None:\n    return value"),
-        ("models.current_field", "selected: int | None = -1"),
+        ("models.scalar_field", "from ..fields.scalar import ScalarField"),
+        ("particle_api", "def build(value: int | None = None) -> int | None:\n    return value"),
+        ("models.scalar_field", "selected: int | None = -1"),
         (
             "models.new_feature",
             "from ..fields.geometry import MeanStretch\nlaw = MeanStretch(100, 1, 2)",
@@ -93,7 +93,7 @@ def test_physical_records_have_fixed_integer_fields_and_no_history():
     assert len(CellState()) == 5 and len(ParticleState(0, 0, 0)) == 16
     assert not hasattr(CellState(), "__dict__")
     assert not hasattr(ParticleState(0, 0, 0), "__dict__")
-    engine_source = Path(__import__(Engine.__module__, fromlist=["__file__"]).__file__).read_text()
+    engine_source = Path(__import__(ScalarEngine.__module__, fromlist=["__file__"]).__file__).read_text()
     assert "self.paths" not in engine_source and "self.force_records" not in engine_source
 
 

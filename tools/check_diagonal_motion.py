@@ -8,11 +8,11 @@ import json
 from pathlib import Path
 from uuid import uuid4
 
-from event_universe.api import BalancedSimulation, ScalarSimulation
 from event_universe.core.state import Config
 from event_universe.diagnostics.frames import capture_volume
 from event_universe.diagnostics.measurements import total_momentum
 from event_universe.diagnostics.render import render_volume
+from event_universe.particle_api import BalancedSimulation, ScalarSimulation
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.runner import source_fingerprint
 

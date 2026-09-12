@@ -218,7 +218,7 @@ selection. `core/streams.py` owns the fourteen-register stream records and
 one-edge packet routing; its full-state validation is a read-only host audit.
 `core/streaming_engine.py` schedules that phase before the existing local
 particle update. `models/causal_stream.py` selects full-vector response and
-ordinary movement through `CurrentFieldModel`; `api.CausalStreamSimulation`
+ordinary movement through `ScalarFieldModel`; `particle_api.CausalStreamSimulation`
 assembles them. No field law receives an Engine or mutable source history.
 The ordinary scalar seeding interface is rejected for this distinct state type.
 The existing scalar and linked candidates retain their own implementations.
@@ -272,14 +272,14 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `initialization` | JSON input and generic typed definitions; no arbitrary execution |
 | `core/contracts` | State types |
 | `core/lattice` | State types and integer bounds |
-| `core/engine` | State, lattice and local contracts |
+| `core/scalar_engine` | State, lattice and local contracts |
 | `fields/scalar` | Integer primitives and fixed vector types from `core/state` |
 | `fields/policies` | Integer primitives and scalar samples |
 | `dynamics/turning`, `dynamics/movement` | Integer primitives and fixed vector types from `core/state` |
-| `models/current_field` | State, local contracts, generic fields and dynamics |
+| `models/scalar_field` | State, local contracts, generic fields and dynamics |
 | `models/local_field` | Compatibility re-exports only |
 | `disturbance_api` | Generic engine and disturbance local law |
-| `api` | Historical engine and explicitly chosen research model |
+| `particle_api` | Historical engine and explicitly chosen research model |
 | `diagnostics` | Read-only engine views, immutable events, rendering libraries |
 | `runner` | Generic public API, initialization and optional diagnostics |
 | `ui` | Local HTTP, strict initialization validation and isolated CLI process ownership |
@@ -287,9 +287,9 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 The historical scalar engine receives field and particle callables and an optional activity
 predicate. `ScalarSimulation` assembles them from a scalar
-field and a turning component through `CurrentFieldModel`. Callers can replace
+field and a turning component through `ScalarFieldModel`. Callers can replace
 either component independently with the keyword arguments `field=` and
-`turning=`. `Engine` itself imports no field, dynamics, model, rendering or
+`turning=`. `ScalarEngine` itself imports no field, dynamics, model, rendering or
 file-writing module. No plugin registry or inheritance hierarchy is needed.
 `PeriodicLattice` is the single implementation of periodic wrapping and the
 six directional neighbors used for reads, activation and movement.
@@ -344,10 +344,10 @@ direction policy. It does not compute or store a field, or interpret cell state.
 an implicit default. The transverse policy is a discrete dominant-axis filter,
 not a geometric rotation or orthogonal projection.
 
-`CurrentFieldModel` is the single adapter for the existing physical state. It
+`ScalarFieldModel` is the single adapter for the existing physical state. It
 maps occupancy to source strength, enforces the current nonnegative scalar
 policy, obtains a gradient, calls turning and movement, and builds validated
-cell and particle proposals. `CURRENT_MODEL` explicitly selects six unit
+cell and particle proposals. `SCALAR_MODEL` explicitly selects six unit
 neighbor weights, no local retention and dominant-axis transverse response.
 Denominators come from `Config` so arithmetic and state audits share one value.
 The reusable components never import `Config`, `CellState` or `ParticleState`.
@@ -356,11 +356,11 @@ in `fields/policies`; the adapter selects and calls them. Bounded scaling with a
 carried remainder is implemented once in `core/state.scaled_divrem`, including
 a bound on the product before adding a potentially cancelling remainder.
 
-`CURRENT_MODEL` explicitly retains `value_changed_or_source` for exact v10
+`SCALAR_MODEL` explicitly retains `value_changed_or_source` for exact v10
 scheduling. Supplying `ScalarSimulation(field=...)` instead selects
 `sample_changed_or_source`, which also tracks remainder-only evolution. Callers
 can override either choice with `field_activity=`. The engine validates the
-boolean result before committing any field proposal. Direct `Engine` callers
+boolean result before committing any field proposal. Direct `ScalarEngine` callers
 that omit an activity predicate conservatively retain every visited cell.
 Custom scalar laws must preserve a zero sample with zero neighbors and zero
 source; this is the quiescent state assumed by sparse scheduling. They must not
@@ -372,7 +372,7 @@ adapter clamps negative results. A vector field or several simultaneous fields
 requires another schema rather than a replacement scalar callable. The active
 disturbance engine supplies that separate fixed-size multi-field contract; this
 historical adapter remains scalar-only.
-The practical extension guide is `FIELDS.md`.
+The practical extension guide is `SCALAR_FIELDS.md`.
 
 ## Local contracts
 
@@ -555,7 +555,7 @@ by the suite. Current physical regression coverage is described in
 
 Generic unit tests cover weighted and signed scalar values, exact fractional
 response, selectable directions and overflow on both sides of an exchange.
-`test_current_field.py` pins the current model's source, clipping and transverse
+`test_scalar_field_model.py` pins the current model's source, clipping and transverse
 response choices. `test_field_composition.py` injects a distinct source-only law
 and full-vector response through the public API, verifies their observed
 behavior and local conservation, and rejects an invalid law before commit.
@@ -593,7 +593,7 @@ not an architecture-only change to the baseline.
 The existing model adapter accepts a `MovementRule`; it still contains no
 independent arithmetic. Linked movement selects direction at departure and
 schedules an integer arrival. Its motion and scalar inputs use delivered local
-mailboxes. `Engine` adds extension hooks without copying its occupancy, local
+mailboxes. `ScalarEngine` adds extension hooks without copying its occupancy, local
 impulse exchange, record validation or observer logic.
 
 Each cell owns its three positive edges. The opposite endpoint keeps a copy of
@@ -644,7 +644,7 @@ independence. Formula-free assembly is checked for every module beneath
   direction selection is injected. Local exchange is implemented once.
 - `MeanStretch` stores immutable coefficients and receives two local samples.
   Its caller supplies already delivered neighbor information.
-- `CurrentFieldModel` extracts values from physical records, invokes the generic
+- `ScalarFieldModel` extracts values from physical records, invokes the generic
   laws and constructs proposals. The engine owns the subsequent commits.
 - API assembly independently accepts field, turning and (for linked worlds)
   length policies. Tests exercise alternate laws and numerical parameter changes.

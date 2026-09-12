@@ -68,6 +68,17 @@ text and several other non-Latin scripts; it does not prove that Latin-script pr
 is English. Reviewers must check the language as well. Do not exempt a directory,
 disable the gate, or encode non-English prose as escapes to evade this rule.
 
+Names must identify a component's actual responsibility in simple English.
+Use portable ASCII file names, `snake_case` Python modules/functions and explicit
+class names. Do not call a historical model "current" or imply that it is the
+active default. Keep one canonical copy of each nonempty file and JSON
+configuration; consumers must reference it rather than copy it. Empty package
+markers are not duplicated implementations. Preserve scoped historical evidence.
+The language and repository-hygiene gates check paths, identifiers and exact or
+JSON-normalized copies; reviewers still check semantic clarity and overlapping
+responsibilities. Keep renames, consumers, migration notes and the
+[documentation index](docs/README.md) together.
+
 ## Change boundaries
 
 - Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)

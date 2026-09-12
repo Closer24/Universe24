@@ -5,8 +5,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from event_universe.core.engine import Engine
 from event_universe.core.lattice import PeriodicLattice
+from event_universe.core.scalar_engine import ScalarEngine
 
 from .architecture_rules import violations
 
@@ -24,7 +24,7 @@ def test_particle_neighborhood_reads_exactly_six_cells_independent_of_world_exte
         return expected.index(address) + 1
 
     reader = SimpleNamespace(_lattice=PeriodicLattice((extent,) * 3), phi=read)
-    assert Engine._particle_neighbors(reader, position) == (1, 2, 3, 4, 5, 6)
+    assert ScalarEngine._particle_neighbors(reader, position) == (1, 2, 3, 4, 5, 6)
     assert tuple(reads) == expected
 
 

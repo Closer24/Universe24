@@ -1,4 +1,4 @@
-# Fields and turning: generic components and model choices
+# Historical scalar fields and turning components
 
 The active API defines fields and disturbance types through initialization data.
 See [DISTURBANCES.md](DISTURBANCES.md) for the schema, safe expression language,
@@ -14,16 +14,16 @@ Start each new physical feature with the [extension procedure](PHYSICAL_FEATURES
 
 ## Responsibilities
 
-| Component | Responsibility | Current model choice |
+| Component | Responsibility | Historical scalar choice |
 | --- | --- | --- |
 | `ScalarField` | Weight six neighbors, the local value and the supplied source, retaining division residues | Neighbor weights 1, local weight 0, source from cell occupancy |
 | `gradient` | Opposite-neighbor differences on three axes | Use the scalar gradient as turning input |
 | `FieldTurning` | Impulse calculation, remainder accumulation and equal-and-opposite momentum exchange | Remove the gradient component along the dominant momentum axis |
 | `advance_movement` | Movement budget and one neighbor step | Speed cap from simulation configuration |
 | `fields/policies.py` | Source, range and activity calculations | Uniform occupancy source, nonnegative clipping and legacy activity |
-| `CurrentFieldModel` | Connect calculations to cell and particle records | Nonnegative field and the choices listed above |
+| `ScalarFieldModel` | Connect calculations to cell and particle records | Nonnegative field and the choices listed above |
 
-Turning means a momentum response to a field. The current policy removes a
+Turning means a momentum response to a field. The historical scalar policy removes a
 dominant-axis component; it is not a geometric angle rotation and uses no trigonometry.
 
 ## Selecting another field using the same calculation
@@ -49,7 +49,7 @@ and denominator. Return `ScalarSample(value, remainder)`. Inheritance is not
 required. Values must be bounded integers, with absolute remainder below the denominator.
 
 The component cannot access the world, source identities or history, and retains
-no private evolving state. Source calculation happens outside it; the current
+no private evolving state. Source calculation happens outside it; the historical scalar
 model derives the source from occupancy. Zero sample, neighbors and source must
 produce a zero sample. This lets the engine skip unaffected empty cells.
 
@@ -82,7 +82,7 @@ be supplied together and selected independently. Omitting both preserves the cur
 | --- | --- |
 | `tests/test_scalar_field.py` | Weighted field, signed values, remainders and bounds |
 | `tests/test_turning.py` | Different direction policies over shared arithmetic, small impulses and local momentum conservation |
-| `tests/test_current_field.py` | Exact current-model field, occupancy source and turning policy |
+| `tests/test_scalar_field_model.py` | Exact current-model field, occupancy source and turning policy |
 | `tests/test_field_composition.py` | Replace field and turning through ScalarSimulation; reject invalid results before commit |
 | `tests/test_architecture.py` | Generic components do not depend on models or worlds; physical arithmetic remains integer |
 
@@ -95,7 +95,7 @@ comparisons against the frozen version are historical evidence; the archived
 reference is not an active compatibility gate. Current regression assertions
 remain. Test worlds are headless unless `--visualize-runs` is requested.
 
-## Current extension limit
+## Scalar extension limit
 
 The adapter supports one scalar field within a fixed cell schema. The generic
 calculation can return negative values, but the current adapter clips a negative

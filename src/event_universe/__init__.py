@@ -14,10 +14,10 @@ def __getattr__(name: str) -> Any:
     """Load initialization or explicitly requested historical APIs on demand."""
     modules = {
         "load_initial_state": ".initialization",
-        "ScalarSimulation": ".api",
-        "LinkedSimulation": ".api",
-        "BalancedSimulation": ".api",
-        "CausalStreamSimulation": ".api",
+        "ScalarSimulation": ".particle_api",
+        "LinkedSimulation": ".particle_api",
+        "BalancedSimulation": ".particle_api",
+        "CausalStreamSimulation": ".particle_api",
         "Config": ".core.state",
         "CellState": ".core.state",
         "ParticleState": ".core.state",

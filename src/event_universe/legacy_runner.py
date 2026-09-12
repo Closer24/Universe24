@@ -12,11 +12,11 @@ from event_universe.diagnostics.measurements import ExactVector, report, total_m
 from event_universe.diagnostics.recorder import JsonlRecorder
 from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED_MODEL_ID
 from event_universe.models.collisions import MODEL_ID as COLLISION_MODEL_ID
-from event_universe.models.current_field import MODEL_ID
 from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
+from event_universe.models.scalar_field import MODEL_ID
+from event_universe.particle_scenarios import Scenario, get_scenario
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.runner import source_fingerprint
-from event_universe.scenarios import Scenario, get_scenario
 
 if TYPE_CHECKING:
     from event_universe.diagnostics.frames import Frame, VolumeFrame

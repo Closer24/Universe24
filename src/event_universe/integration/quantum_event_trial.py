@@ -1,4 +1,4 @@
-"""Explicit headless 4x4 controller; not a native Engine event source."""
+"""Explicit headless 4x4 controller; not a native ScalarEngine event source."""
 
 import argparse
 import json

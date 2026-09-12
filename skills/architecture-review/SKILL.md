@@ -52,3 +52,12 @@ reviewed tree and stated scope. Send physical dependency concerns to the physics
 reviewer, behavioral coverage gaps to tests, and unresolved ownership conflicts
 to Boss. Pure test deduplication is acceptable when independent assertions and
 contract coverage remain intact.
+
+
+For naming/consolidation changes, inspect the
+[canonical-copy and naming rules](../../AGENTS.md#repository-language-english).
+Keep public exports distinguishable from historical internal owners, route shared
+example inputs to one file, and recheck dynamic resource consumers as well as
+imports. Preserve revision-specific evidence rather than rewriting it to resemble
+the renamed source. The [documentation index](../../docs/README.md) must route each
+contract without becoming another copy of its definitions.

@@ -8,7 +8,7 @@ from event_universe import Config
 from event_universe.core.streaming_engine import StreamingEngine
 from event_universe.core.streams import ZERO_OCTANTS, StreamCell
 from event_universe.diagnostics.frames import Slice, capture_frame, capture_volume
-from event_universe.models.current_field import update_particle
+from event_universe.models.scalar_field import update_particle
 
 
 @pytest.fixture

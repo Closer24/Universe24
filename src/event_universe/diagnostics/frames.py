@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from dataclasses import field as dataclass_field
 from typing import Literal
 
-from event_universe.core.engine import Engine
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import checked
 from event_universe.core.streaming_engine import StreamingEngine
 
@@ -52,7 +52,7 @@ class VolumeFrame:
     field_kind: FieldKind = "scalar"
 
 
-def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], FieldKind]:
+def _field_snapshot(world: ScalarEngine) -> tuple[dict[tuple[int, int, int], int], FieldKind]:
     """Copy diagnostic intensity without writing or materializing physical records."""
     if isinstance(world, StreamingEngine):
         return (
@@ -66,7 +66,7 @@ def _field_snapshot(world: Engine) -> tuple[dict[tuple[int, int, int], int], Fie
     return {position: cell.phi for position, cell in world.cells.items() if cell.phi != 0}, "scalar"
 
 
-def capture_volume(world: Engine, *, momentum: ExactVector | None = None) -> VolumeFrame:
+def capture_volume(world: ScalarEngine, *, momentum: ExactVector | None = None) -> VolumeFrame:
     """Copy full XYZ state, optionally reusing momentum measured from this same state."""
     field, field_kind = _field_snapshot(world)
     return VolumeFrame(
@@ -81,7 +81,7 @@ def capture_volume(world: Engine, *, momentum: ExactVector | None = None) -> Vol
     )
 
 
-def capture_frame(world: Engine, view: Slice, *, momentum: ExactVector | None = None) -> Frame:
+def capture_frame(world: ScalarEngine, view: Slice, *, momentum: ExactVector | None = None) -> Frame:
     """Copy a slice, optionally reusing momentum measured from this same state."""
     horizontal, vertical, fixed = AXES[view.plane]
     shape = (world.config.nx, world.config.ny, world.config.nz)

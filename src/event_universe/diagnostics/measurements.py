@@ -3,9 +3,9 @@
 from dataclasses import asdict
 from fractions import Fraction
 
-from event_universe.core.engine import Engine
 from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LINK_REGISTERS
+from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import (
     CELL_REGISTERS,
     EMPTY_SLOT,
@@ -25,7 +25,7 @@ def exact_component(value: Fraction) -> int | Fraction:
     return value.numerator if value.denominator == 1 else value
 
 
-def particle_momentum(world: Engine) -> ExactVector:
+def particle_momentum(world: ScalarEngine) -> ExactVector:
     def component(axis: int) -> int | Fraction:
         return exact_component(
             sum(
@@ -37,7 +37,7 @@ def particle_momentum(world: Engine) -> ExactVector:
     return component(0), component(1), component(2)
 
 
-def field_momentum(world: Engine) -> Vector:
+def field_momentum(world: ScalarEngine) -> Vector:
     return (
         sum(c.px for c in world.cells.values()),
         sum(c.py for c in world.cells.values()),
@@ -45,12 +45,12 @@ def field_momentum(world: Engine) -> Vector:
     )
 
 
-def total_momentum(world: Engine) -> ExactVector:
+def total_momentum(world: ScalarEngine) -> ExactVector:
     matter, field = particle_momentum(world), field_momentum(world)
     return matter[0] + field[0], matter[1] + field[1], matter[2] + field[2]
 
 
-def audit(world: Engine) -> dict[str, bool]:
+def audit(world: ScalarEngine) -> dict[str, bool]:
     """Validate actual state using exceptions, also when Python runs with -O."""
     checked(world.tick)
     if isinstance(world, StreamingEngine):
@@ -110,7 +110,7 @@ def audit(world: Engine) -> dict[str, bool]:
     }
 
 
-def report(world: Engine) -> dict[str, object]:
+def report(world: ScalarEngine) -> dict[str, object]:
     """Distinguish runtime checks from declared architecture and untested physical claims."""
     return {
         "tick": world.tick,

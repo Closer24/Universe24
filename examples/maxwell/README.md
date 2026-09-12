@@ -43,7 +43,7 @@ Use the project Python 3.14 environment with `render` dependencies from the
 [main instructions](../../README.md#install-and-run):
 
 ```bash
-PYTHONPATH=src python examples/maxwell/run.py --output artifacts/maxwell-new
+PYTHONPATH=src python examples/maxwell/run_experiments.py --output artifacts/maxwell-new
 ```
 
 The harness saves eleven JSON initialization files and invokes the canonical
@@ -149,7 +149,7 @@ electromagnetism or a complete continuum convergence theorem.
 [configuration.py](configuration.py) builds candidate JSON;
 [cases.py](cases.py) prepares integer seeds;
 [measurements.py](measurements.py) reads recordings;
-[run.py](run.py) executes and saves evidence. The
+[run_experiments.py](run_experiments.py) executes and saves evidence. The
 [focused tests](../../tests/test_maxwell_configuration.py) cover local
 reflection/involution, inexact-division rejection, one-link ownership,
 independent frequency recovery and empty-node divergence. Use
