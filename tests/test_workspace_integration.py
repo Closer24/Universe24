@@ -106,6 +106,74 @@ def test_legacy_periodic_movie_keeps_wrapped_transfer_positions(boundary):
     assert records[0]["owner"] == "Link → 4, 2, 2; arrives 3"
 
 
+def test_field_only_movie_draws_node_vectors_and_separate_transfer_values_without_mutation():
+    frame = {
+        "tick": 0,
+        "cells": [],
+        "transfers": [],
+        "spatial_baselines": {"a": [2, 0, 0], "b": [0, 0, 0]},
+        "spatial_fields": [
+            {
+                "position": [2, 2, 2],
+                "fields": {
+                    "a": {
+                        "baseline": [2, 0, 0],
+                        "value": [3, 4, 0],
+                        "populations": [[1, 4, 0]] + [[0, 0, 0]] * 7,
+                        "directions": [[90, 80, 0]] * 6,
+                    },
+                    "b": {"baseline": [0, 0, 0], "value": [0, 0, 0]},
+                },
+            }
+        ],
+        "spatial_transfers": [
+            {
+                "origin": [0, 2, 2],
+                "target": [1, 2, 2],
+                "port": 0,
+                "arrival_tick": 2,
+                "fields": {"a": [[2, 0, 0], [-1, 0, 0]] + [[0, 0, 0]] * 6},
+            }
+        ],
+    }
+    recording = {
+        "frames": [frame],
+        "metadata": {"model": "field-only", "shape": [5, 5, 5], "link_ticks": 2},
+    }
+    result = javascript(
+        "playback.html",
+        '"use strict";',
+        "</script></body>",
+        "const calls=[];const context=new Proxy({}, {get(target,key){return target[key]||"
+        "((...args)=>calls.push([key,...args]));}});"
+        "function element(){return {children:[],style:{},value:'',textContent:'',"
+        "append(...children){this.children.push(...children)},replaceChildren(){this.children=[]}}}"
+        "const elements=new Map();const document={querySelector(id){if(!elements.has(id))"
+        "elements.set(id,element());return elements.get(id)},createElement:element,"
+        "createTextNode(text){return {textContent:text}},addEventListener(){}};"
+        "document.querySelector('#recording').textContent=JSON.stringify(input);"
+        "document.querySelector('#plane').value='0,1';"
+        "document.querySelector('#zoom').value='1';"
+        "Object.assign(document.querySelector('#scene'),{getContext(){return context},"
+        "getBoundingClientRect(){return {width:640,height:360}}});"
+        "const window={devicePixelRatio:1},location={search:''};"
+        "class ResizeObserver{observe(){}}function requestAnimationFrame(){}",
+        "console.log(JSON.stringify({rows:elements.get('#records').children.map(row=>"
+        "row.children.map(cell=>cell.textContent)),labels:calls.filter(call=>call[0]==='fillText'),"
+        "rectangles:calls.filter(call=>call[0]==='rect').length,"
+        "values:visibleSpatialFields(frames[0]).map(record=>record.value),"
+        "unchanged:JSON.stringify({frames,metadata})===JSON.stringify(input)}));",
+        recording,
+    )
+    assert result["values"] == [[3, 4, 0], [0, 0, 0], [1, 0, 0]]
+    assert [row[0] for row in result["rows"]] == ["Field: a", "Field: b", "Field: a"]
+    assert result["rows"][0][2:] == ["[3,4,0]", "Node field; value includes baseline"]
+    assert result["rows"][2][2:] == ["[1,0,0]", "Field Link → 1, 2, 2; arrives 2"]
+    assert any(label[1] == "a: 3, 4, 0" for label in result["labels"])
+    assert result["rectangles"] >= 3  # Two node squares and the existing clip rectangle.
+    assert result["unchanged"] is True
+
+
 def test_field_rename_preserves_nested_flux_coupling_and_valid_configuration():
     raw = document()
     raw["fields"][1]["components"] = 1
@@ -129,6 +197,45 @@ def test_field_rename_preserves_nested_flux_coupling_and_valid_configuration():
     assert renamed["spatial_couplings"][0]["rotation"]["args"][0] == {"field": "polarity"}
     initial = parse_initial_state(renamed)
     assert initial.fields[1].name == "renamed_signal"
+
+
+def test_editor_rename_preserves_group_port_and_joint_rule_references():
+    from tests.test_spatial_interactions import exchange
+
+    raw = exchange()
+    raw["field_groups"] = [{"name": "joint_group", "fields": ["quantity"]}]
+    raw["field_rules"] = [
+        {
+            "name": "retain",
+            "when": {"received": "quantity", "port": 0},
+            "assignments": [{"field": "quantity", "expression": {"field": "quantity", "side": "right"}}],
+            "invariants": [
+                {"name": "unchanged_output", "expression": {"outgoing": "quantity", "port": 0}}
+            ],
+        }
+    ]
+    parse_initial_state(raw)
+    renamed = javascript(
+        "app.js",
+        "function renameReferences(",
+        "function check(",
+        "",
+        "renameReferences(input,'field','quantity','inventory');"
+        "renameReferences(input,'type','held','probe');"
+        "input.fields[0].name='inventory'; input.disturbance_types[0].name='probe';"
+        "console.log(JSON.stringify(input));",
+        raw,
+    )
+    assert renamed["field_groups"][0]["fields"] == ["inventory"]
+    assert renamed["field_rules"][0]["when"] == {"received": "inventory", "port": 0}
+    assert renamed["field_rules"][0]["invariants"][0]["expression"] == {
+        "outgoing": "inventory",
+        "port": 0,
+    }
+    assert renamed["spatial_interactions"][0]["type"] == "probe"
+    assert renamed["spatial_interactions"][0]["assignments"][0]["field"] == "inventory"
+    assert renamed["disturbance_types"][0]["defaults"] == {"inventory": 5}
+    parse_initial_state(renamed)
 
 
 @pytest.mark.parametrize(

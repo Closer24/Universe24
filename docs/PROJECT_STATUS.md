@@ -1,5 +1,41 @@
 # Project status and restart guide
 
+For a clean machine or deleted conversation, follow
+[recovery without chat history](RECOVERY.md), including the versioned daily
+genericity skill and local retention setup.
+The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
+live specification reconciliation, entity coverage and exact source contracts.
+
+The [small-space comparisons](../examples/small-space/README.md) record 24
+9-cubed/15-cubed entity, source and response experiments. Local accounting and
+selected mechanisms pass; field/particle physical laws remain incomplete.
+Finite owned-reservoir transfer, a ray-speed parameter and a restricted
+zero-total-momentum unequal-mass candidate are explicit configuration solutions,
+not replacements for the default entity profiles or derived universal laws.
+
+The [executable catalog](ENTITY_CATALOG.md) provides bounded representation
+profiles for all 46 inventory entries and compilation into ordinary run inputs.
+The [local conversion interface](LOCAL_CONVERSIONS.md) supports explicit atomic
+two-to-two type replacement with declared balances. These additions do not
+establish physical annihilation, general particle production or physical field
+dynamics. Consult current PR/CI evidence for the exact integrated tree.
+
+The [physical entity inventory](PHYSICAL_ENTITIES.md), based on main
+`09464b41b2c44a191aa2fcbdf4b036680bd646a5`, separates descriptive entities from
+executable mechanics and unestablished emergence. New equal-mass charged-pair
+and two-vector port probes use elementary operations only. They do not provide
+Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
+Use the linked catalog and exact PR evidence instead of treating physical labels
+as implemented laws.
+
+Local field-rule extension base: 2026-09-12, main
+`12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
+[local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
+six-port reads, retained/outgoing field assignments and guarded joint
+field/carrier transactions. This is a bounded generic research interface, not
+an implemented electromagnetic law. Integration and validation status require
+the current PR and its exact tested tree; this paragraph does not certify a run.
+
 Integration reference: 2026-09-12. [PR #27](https://github.com/Closer24/Universe24/pull/27)
 combines reviewed spatial-field feature head
 `137830fd621b9522598e0719e7bd2055ead595a9` with main
@@ -81,6 +117,8 @@ The optional [spatial-field extension](SPATIAL_FIELDS.md) adds independent
 outward emission, baselines and combined balance diagnostics. Its fixed
 field clock is separate from carrier computation delay. The new example selects
 that candidate explicitly; configurations without it preserve their old laws.
+Schema 1 local transport can coexist with outward fields and retains its own
+explicitly selected rules, as described in [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
 [Spatial couplings](SPATIAL_COUPLINGS.md) add configured exchange and exact
 discrete rotation with an atomic opposite field reaction. The scalar-flux-driven
 rotation has a restricted straight cardinal isolation property. General automatic
@@ -128,3 +166,12 @@ detects a baseline failure; a passing detector test does not fix that law.
 If GitHub or Highlights cannot be read, say which information is unavailable.
 Do not claim the snapshot is current. Work within verified local contracts where
 the task permits; stop for clarification when a missing decision affects the law.
+
+## Native local event programs
+
+The [native event contract](NATIVE_QUANTUM_EVENTS.md) documents initialization-
+selected quantum instruments in the ordinary Simulation, shared causal identities
+and explicit path-cost accounting. Earlier contact/sweep scripts are reference
+experiments, not the native entry point. The new program does not yet compose
+independent spatial-field clocks. Check the live PR and tested source before
+asserting merged status or acceptance.

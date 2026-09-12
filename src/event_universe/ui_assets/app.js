@@ -125,7 +125,7 @@ function renameReferences(value, kind, before, after) {
   if (!value || typeof value !== "object") return;
   if (Array.isArray(value)) { value.forEach(item => renameReferences(item, kind, before, after)); return; }
   for (const [key, child] of Object.entries(value)) {
-    const references = kind === "field" ? ["field", "flux", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
+    const references = kind === "field" ? ["field", "flux", "received", "outgoing", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
     if (references.includes(key) && child === before) value[key] = after;
     else if (kind === "field" && key === "fields" && Array.isArray(child) && child.every(item => typeof item === "string")) value[key] = child.map(name => name === before ? after : name);
     else if (kind === "field" && ["defaults", "values"].includes(key) && child && typeof child === "object" && Object.hasOwn(child, before)) {

@@ -19,10 +19,20 @@ candidate laws. It does not infer familiar physics from names.
 
 All interactions use generic definitions. A configured local pair transaction
 may transform several fields together only when its declared invariants and
-conserved pair totals hold exactly. Familiar elastic collisions can be supplied
-as explicit example laws; reproducing them does not mean they emerged from a
-computational field. See the atomic interaction contract and example in
+conserved pair totals hold exactly. Existing elastic-collision formulas remain
+explicit reference benchmarks; reproducing them does not mean they emerged from
+a computational field. New emergence experiments must use simple local vector
+operations to produce states, not supplied continuum force or collision formulas.
+Guards and conservation diagnostics validate proposals without replacing this
+elementary rule. See [physical entities](docs/PHYSICAL_ENTITIES.md) and the example in
 [DISTURBANCES.md](docs/DISTURBANCES.md).
+
+The optional [bounded conversion](docs/LOCAL_CONVERSIONS.md) also permits two
+local records to become two explicitly configured output types under the same
+atomic conservation checks. This is a supplied transformation, not evidence of
+emergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)
+describe bounded representations; physical identity and dynamics cannot be
+inferred solely from the ability to store or transport their registers.
 
 The user-defined cost of a local cycle sets a general cell delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
@@ -48,6 +58,17 @@ Straight cardinal self flux is parallel to its carrier and cannot turn that
 vector under the flux-driven law. Turns, periodic return and other coupling
 laws require separate self-interaction analysis.
 
+The optional [local field-rule framework](docs/LOCAL_FIELD_RULES.md) treats a
+location as a node with six directional connections. Several scalar/vector
+components can evolve together from local state and received information, with
+explicit retained and outgoing amounts. Joint field/carrier transactions must
+pass declared balances before both owners commit; delayed transactions cannot
+overwrite intervening field evolution. A logical group of two vectors does not
+itself identify an electromagnetic field or supply a photon. Known physical laws
+remain independent acceptance targets. A historical benchmark that explicitly
+inserts them is not an emergence experiment. This extension is a research
+interface, not evidence of their emergence.
+
 Initialization independently chooses periodic or open boundaries. Periodic space
 connects opposite faces on each of X, Y and Z without changing a carried direction.
 An open terminal link instead removes the original packet after its full transit
@@ -58,8 +79,8 @@ Sections 1–5 and 10–11 state shared locality, arithmetic and evidence princi
 Sections 6–9 document the source, self-force, momentum and turning requirements
 of the explicitly selected historical research models; they are not implicit
 laws of every configured disturbance. Sections 13 and 15 likewise belong to
-named historical candidates. Section 14 remains a separate optional quantum
-assumption and does not add an operation to the generic disturbance engine.
+named historical candidates. Section 14 defines the optional quantum assumption. Section 16 explicitly
+selects its native local-cycle integration without changing unselected worlds.
 
 ## 1. The world consists of locations and events
 
@@ -221,9 +242,13 @@ Failure is information about the model. Do not add a special correction just to 
 
 ## 12. Quantum behavior and entanglement remain open
 
-The physical core describes discrete fields and particles. An optional sidecar now
-stores explicitly supplied amplitude operations and evaluates them on demand.
-This is not a general quantum simulator or native detector-event implementation.
+The physical core describes discrete fields and particles. The selected quantum
+candidate is a deferred event network: a saved joint state plus local operations
+and immutable outcome records defines the wave without evaluating it every tick.
+An explicit query follows the required past dependencies and evaluates forward.
+This is a bounded finite-state model, not a derived electron/photon field law.
+The previous scalar-amplitude and terminal-trial interfaces remain available as
+separate, explicitly selected historical contracts.
 
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
@@ -312,3 +337,29 @@ encounter from particles still occupying the same cell. The exact two-body law,
 multiparticle ordering, schema extension and limits are in the v13 section of
 SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
 relativistic physics or energy conservation of the existing field law.
+
+
+### Selected event-network method
+
+`deferred-event-network-v1` extends the existing quantum owner, not the ordinary
+physical cells. Its detailed contract is [QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md).
+Queries compute possibilities without choosing historical paths. Only an explicit
+instrument request can select a result; it retains the conditional joint state,
+including a no-event branch. No universal interaction-to-collapse trigger is claimed.
+
+A known event location does not supply a simultaneous sharp momentum. Position
+and lattice-momentum diagnostics use the same state. Exact host checkpoints may
+replace complete correlated histories without sampling. Unused branches remain
+available until an exact sufficient replacement is saved. These choices neither
+make host computation O(1) nor establish a Newtonian or continuum field limit.
+
+## 16. Selected native event-program extension
+
+An explicitly selected initialization program may connect the shared quantum
+owner to ordinary local cycles through a generic event resolver. A local result
+can select a configured mechanical continuation; it is not a free remote state
+read. Every executed physical path retains its local operation costs. A query
+is one additional model operation, with zero direct world ticks; total local
+cycle cost may still produce the ordinary computation delay. No cost is erased
+to manufacture the classical endpoint. See [the native contract](docs/NATIVE_QUANTUM_EVENTS.md).
+This extends section 14 only for the declared candidate, not all interactions.

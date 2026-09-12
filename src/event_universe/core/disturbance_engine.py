@@ -20,7 +20,9 @@ from .disturbance_state import (
     pack,
     unpack,
 )
-from .integer import checked_work
+from .event_resolution import EventResolver, LocalContext
+from .event_space import CausalEventSpace
+from .integer import add_components, ceil_div, checked_work
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
 from .topology import neighbor_address
 
@@ -31,7 +33,7 @@ EventSink = Callable[[dict[str, object]], None]
 def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
     if min(budget, link_ticks) < 1 or cost < 0:
         raise ValueError("invalid cost, normal budget, or fixed link time")
-    cycles = max(1, checked_work(cost + budget - 1) // budget)
+    cycles = max(1, ceil_div(cost, budget))
     return bounded(checked_work((cycles - 1) * link_ticks)), bounded(checked_work(cycles * link_ticks))
 
 
@@ -51,8 +53,17 @@ class DisturbanceEngine:
         spatial_planner: SpatialPlanner | None = None,
         spatial_coupler: SpatialCoupler | None = None,
         spatial_decayer: SpatialDecayer | None = None,
+        *,
+        event_space: CausalEventSpace | None = None,
+        resolver: EventResolver | None = None,
     ) -> None:
         self.initial = initial
+        if resolver is not None and event_space is None:
+            raise ValueError("an event resolver requires a shared event space")
+        self.event_space = event_space
+        self._resolver = resolver
+        self._model_work = 0
+        self._local_cycles = 0
         self._planner = planner
         self._observer = observer
         self._cells: dict[Address3, DisturbanceCell] = {}
@@ -61,10 +72,12 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings}
+        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
+            rule.type_index for rule in initial.spatial_interactions
+        }
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
-        if initial.spatial_couplings and spatial_coupler is None:
+        if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
             raise ValueError("spatial couplings require an explicitly composed response law")
         if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
             raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
@@ -82,6 +95,10 @@ class DisturbanceEngine:
                 raise ValueError("initial disturbance capacity exceeded") from error
             records[slot] = seed.record
             cell.records = tuple(records)
+        if self.event_space is not None:
+            self.event_space.require_room(len(self._cells))
+            for position in sorted(self._cells):
+                self._emit("source", position)
 
     @property
     def cells(self) -> Mapping[Address3, CellView]:
@@ -115,9 +132,45 @@ class DisturbanceEngine:
     def neighbor(self, origin: Address3, port: int) -> Address3 | None:
         return neighbor_address(origin, port, self.initial.shape, self.initial.boundary)
 
-    def _emit(self, event: str, position: Address3, **data: object) -> None:
+    def _emit(
+        self,
+        event: str,
+        position: Address3,
+        *,
+        causes: tuple[int, ...] = (),
+        event_cost: int = 0,
+        **data: object,
+    ) -> int | None:
+        identity = None
+        if self.event_space is not None:
+            cell = self._at(position)
+            parents = causes if cell.cause_id is None else (*causes, cell.cause_id)
+            entry = self.event_space.append(
+                tick=self.tick,
+                addresses=(position,),
+                owner="disturbance",
+                kind=event,
+                physical_parents=parents,
+                model_cost=event_cost,
+            )
+            identity = cell.cause_id = entry.id
+            data = {**data, "event_id": identity, "parents": entry.parents}
         if self._observer is not None:
             self._observer({"event": event, "tick": self.tick, "position": position, **data})
+        return identity
+
+    def computation_report(self) -> dict[str, object]:
+        """Every begun local cycle is charged once, even while waiting or in flight."""
+        report: dict[str, object] = {
+            "model_operations_cost": self._model_work,
+            "local_cycles_started": self._local_cycles,
+        }
+        if self.event_space is not None:
+            report["causal_events"] = self.event_space.next_id
+            report["event_ledger_cost"] = self.event_space.model_cost
+        if self._resolver is not None:
+            report["resolver"] = self._resolver.report()
+        return report
 
     def _has_work(self, cell: DisturbanceCell) -> bool:
         present = [record.type_index for record in cell.records if record is not None]
@@ -143,7 +196,21 @@ class DisturbanceEngine:
         return False
 
     def _begin(self, position: Address3, cell: DisturbanceCell) -> None:
-        if cell.pending is not None or cell.available_tick > self.tick or not self._has_work(cell):
+        if cell.pending is not None or cell.available_tick > self.tick:
+            return
+        if not self._has_work(cell) and not (
+            self._resolver is not None
+            and self._resolver.has_work(
+                LocalContext(
+                    self.tick,
+                    position,
+                    cell.records,
+                    cell.coupling_remainders,
+                    cell.received_count,
+                    cell.cause_id,
+                )
+            )
+        ):
             return
         coupled = (
             self._spatial.couple(position, cell.records)
@@ -151,15 +218,26 @@ class DisturbanceEngine:
             and any(r is not None and r.type_index in self._coupled_types for r in cell.records)
             else None
         )
-        plan = self._planner(
+        if self.event_space is not None:
+            self.event_space.require_room(1)
+        context = LocalContext(
+            self.tick,
+            position,
             cell.records if coupled is None else coupled.records,
             cell.coupling_remainders,
             cell.received_count,
+            cell.cause_id,
+        )
+        plan = (
+            self._planner(context.records, context.residuals, context.received)
+            if self._resolver is None
+            else self._resolver.resolve(context, self._planner)
         )
         if coupled is not None:
             plan = replace(
                 plan,
                 spatial_reaction=coupled.reaction,
+                spatial_guards=coupled.guards,
                 cost=bounded(checked_work(plan.cost + coupled.cost)),
             )
         if self._spatial is not None:
@@ -180,23 +258,31 @@ class DisturbanceEngine:
         if len(plan.departures) > self.initial.slots_per_cell * 6:
             raise ValueError("local rule exceeds fixed outgoing capacity")
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
+        work = checked_work(self._model_work + plan.cost)
+        cycles = checked_work(self._local_cycles + 1)
         pending = PendingCycle(bounded(self.tick + extra), bounded(self.tick + duration), plan)
         # Originals remain in their occupied slots throughout the local wait.
         cell.pending = pending
         cell.received_count = 0
         cell.last_cost = plan.cost
-        self._emit(
+        self._model_work, self._local_cycles = work, cycles
+        cause = self._emit(
             "cycle_started",
             position,
+            causes=() if plan.cause_id is None else (plan.cause_id,),
+            event_cost=plan.cost,
             cost=plan.cost,
             ready_tick=pending.ready_tick,
             next_tick=pending.next_tick,
         )
+        cell.pending = replace(pending, cause_id=cause)
 
     def _commit(self, position: Address3, cell: DisturbanceCell) -> None:
         pending = cell.pending
         if pending is None or pending.ready_tick > self.tick:
             return
+        if self.event_space is not None:
+            self.event_space.require_room(2 + len(pending.plan.departures))
         old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_cell))
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
@@ -215,6 +301,10 @@ class DisturbanceEngine:
                 assert merged is not None
                 record = merged
             links[index] = Packet(departure_tick, position, departure.port, record)
+        if self._spatial is not None:
+            self._spatial.validate_guards(
+                position, pending.plan.spatial_reaction, pending.plan.spatial_guards
+            )
         reaction = (
             None
             if self._spatial is None
@@ -232,7 +322,11 @@ class DisturbanceEngine:
             for component, delta in enumerate(values):
                 self._source_totals[index][component] += delta
         self._emit(
-            "cycle_committed", position, cost=pending.plan.cost, transfers=len(pending.plan.departures)
+            "cycle_committed",
+            position,
+            causes=() if pending.cause_id is None else (pending.cause_id,),
+            cost=pending.plan.cost,
+            transfers=len(pending.plan.departures),
         )
         if pending.plan.spatial_reaction:
             self._emit(
@@ -246,8 +340,8 @@ class DisturbanceEngine:
                     if any(values)
                 },
             )
-        for departure in pending.plan.departures:
-            self._emit(
+        for index, departure in enumerate(pending.plan.departures):
+            cause = self._emit(
                 "sent",
                 position,
                 port=departure.port,
@@ -255,6 +349,12 @@ class DisturbanceEngine:
                 values=self.record_values(departure.record),
                 arrival_tick=departure_tick,
             )
+            if cause is not None:
+                linked = list(self._links[position])
+                packet = linked[index]
+                assert packet is not None
+                linked[index] = replace(packet, cause_id=cause)
+                self._links[position] = tuple(linked)
 
     @staticmethod
     def _current_emission_state(
@@ -317,9 +417,7 @@ class DisturbanceEngine:
                 assert old is not None
                 combined: list[tuple[int, ...]] = []
                 for index, (a, b) in enumerate(zip(old.values, incoming.values, strict=True)):
-                    value = pack(
-                        tuple(checked_work(x + y) for x, y in zip(unpack(a), unpack(b), strict=True))
-                    )
+                    value = pack(add_components(unpack(a), unpack(b)))
                     self.initial.fields[index].validate(value)
                     combined.append(value)
                 records[match] = replace(old, values=tuple(combined))
@@ -335,6 +433,8 @@ class DisturbanceEngine:
 
     def _escape(self, origin: Address3, slot: int, packet: Packet) -> None:
         """Complete one terminal link; unused allowances are not physical stock."""
+        if self.event_space is not None:
+            self.event_space.require_room(1)
         for field, payload in zip(self.initial.fields, packet.record.values, strict=True):
             field.validate(payload)
         values = self.record_values(packet.record)
@@ -347,6 +447,7 @@ class DisturbanceEngine:
         self._emit(
             "escaped",
             origin,
+            causes=() if packet.cause_id is None else (packet.cause_id,),
             port=packet.port,
             disturbance=self.initial.disturbances[packet.record.type_index].name,
             values=values,
@@ -363,6 +464,8 @@ class DisturbanceEngine:
                     else:
                         ready.setdefault(target, []).append((origin, slot, packet))
         for position, deliveries in sorted(ready.items()):
+            if self.event_space is not None:
+                self.event_space.require_room(len(deliveries))
             cell = self._at(position)
             records = self._merge_arrivals(cell, tuple(packet for _, _, packet in deliveries))
             received = bounded(cell.received_count + len(deliveries))
@@ -378,6 +481,7 @@ class DisturbanceEngine:
                 self._emit(
                     "received",
                     position,
+                    causes=() if packet.cause_id is None else (packet.cause_id,),
                     port=packet.port ^ 1,
                     disturbance=self.initial.disturbances[packet.record.type_index].name,
                     values=self.record_values(packet.record),
@@ -403,6 +507,8 @@ class DisturbanceEngine:
             self._deliver()
             for position in sorted(self._cells):
                 self._commit(position, self._cells[position])
+            if self._resolver is not None:
+                self._resolver.advance(self.tick)
         except Exception:
             self.faulted = True
             raise

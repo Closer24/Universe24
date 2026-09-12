@@ -6,8 +6,12 @@ from typing import TYPE_CHECKING, NamedTuple
 if TYPE_CHECKING:
     from .spatial_state import (
         EmissionDefinition,
+        FieldGroupDefinition,
+        FieldInteractionGuard,
+        NodeFieldRuleDefinition,
         SpatialCouplingDefinition,
         SpatialFieldDefinition,
+        SpatialInteractionDefinition,
         SpatialSeed,
     )
 
@@ -78,6 +82,7 @@ class Expression:
     side: int = 0
     component: int = 0
     matrix: tuple[tuple[int, ...], ...] = ()
+    port: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -138,6 +143,7 @@ class InteractionDefinition:
     assignments: tuple[Assignment, ...]
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
+    output_types: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -201,6 +207,10 @@ class InitialState:
     schema_version: int = 1
     boundary: str = "periodic"
     interactions: tuple[InteractionDefinition, ...] = ()
+    field_groups: tuple[FieldGroupDefinition, ...] = ()
+    field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
+    spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
+    event_program: str | None = None
 
 
 class Departure(NamedTuple):
@@ -217,6 +227,8 @@ class LocalPlan:
     source_delta: Values
     cost: int
     spatial_reaction: Values = ()
+    spatial_guards: tuple[FieldInteractionGuard, ...] = ()
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -224,6 +236,7 @@ class PendingCycle:
     ready_tick: int
     next_tick: int
     plan: LocalPlan
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -232,6 +245,7 @@ class Packet:
     origin: Address3
     port: int
     record: DisturbanceRecord
+    cause_id: int | None = None
 
 
 @dataclass(slots=True)
@@ -242,6 +256,7 @@ class DisturbanceCell:
     available_tick: int = 0
     received_count: int = 0
     last_cost: int = 0
+    cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)

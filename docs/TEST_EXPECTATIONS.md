@@ -1,5 +1,50 @@
 # Test inputs and expected results
 
+## Small-space physical comparisons
+
+See [the experiment evidence](../examples/small-space/README.md).
+`tests/test_small_space_experiments.py` checks finite reservoir depletion with
+zero injection, delayed-by-one-link source response and opposite vector stock,
+and a restricted unequal-mass momentum permutation. It also rejects a nonzero
+total-momentum pair and checks classical units using actual displacement.
+The experiment report separately exposes missing physical laws; an accounting
+pass must not be relabeled as physical acceptance.
+
+## Physical entity catalog and elementary probes
+
+`tests/test_physical_entities.py` covers the sourced catalog and only its new
+runtime probes. Antiparticle references must be reciprocal where applicable,
+charges conjugate and neutrino ambiguity explicit. Example references and
+particle properties must agree with their catalog mappings.
+
+The equal-mass contact swaps momenta without a continuum update formula;
+individual positive masses/opposite charges and joint momentum/norm persist.
+Equivalent local trials on 9-cubed and 15-cubed domains and different lattice
+axes must agree before any boundary can matter. Rest and separated states must
+not trigger the contact. Two transverse field payloads travel one neighbor per
+two ticks with retained and in-flight ownership counted once. These checks do
+not establish Maxwell dynamics, annihilation or general classical emergence.
+See [the acceptance limits](PHYSICAL_ENTITIES.md).
+
+## Generic local field rules
+
+These are focused acceptance requirements for
+[LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md), not claims that a particular tree
+passed. Reuse the affected run and tests when collecting integration evidence.
+
+| Suite | Independent inputs and required outcomes |
+| --- | --- |
+| `test_local_field_rules.py` | Two-vector exchange/rotation reads one frozen rule snapshot and preserves its named invariant; existing outward 216-unit pulse still sends 36 to each axial neighbor; retained and six outgoing owners count stock once and wait a full link; signed counterflows remain separately observable; cross-field changes appear as transformations rather than sources; invalid shapes, bounds, schema 2 rules and broken invariants fail before local commit |
+| `test_spatial_interactions.py` | Multiple field/carrier assignments commit together; conserved combined components hold; delayed field evolution is preserved when a frozen delta commits; an invariant invalidated by live field changes rejects the whole transaction; pending source bookkeeping is not restored from old carrier state |
+| `test_workspace_integration.py` | Field/type renaming preserves groups and directional/joint references; field-only playback reads node values once, keeps field packets separate, and does not mutate the recording or add received samples as inventory |
+
+Check both a nonzero baseline with no dynamic work and actual received channels
+whose net stock is zero. The first must stay quiescent; the second must activate
+the local rule. Field-only and carrier-coupled checks must distinguish sampled
+input, retained stock, outgoing ownership and actual delayed-commit views.
+Generic labels do not establish electromagnetic behavior, and these tests do not
+claim a Maxwell, Lorentz or quantum result.
+
 ## Generated-output lifetime
 
 These are host filesystem contracts; they do not change simulated time or costs.
@@ -488,3 +533,54 @@ The six-node example has E=3, p=(0,0,0), q=0 before and after its configured
 cyclic vector map. These are mechanism checks, not real-particle validation.
 [The repository adapter](../tests/test_generic_vector_lab.py) runs all 52 lab
 cases; the check selector maps every lab source/configuration change to it.
+
+
+## Selected deferred quantum event network
+
+The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
+definitions, and the existing Q-ORACLE-1 exception. This table defines required
+expectations; a passing source identity and command belong in the integration PR.
+
+| Suite | Independent expectations |
+| --- | --- |
+| `test_quantum_event_network.py` | Existing-owner selection; 3:4 split gives 9:16 weights; deferred/eager agreement using independently lifted dense matrices; prior correlated records are included; a postponed phase becomes necessary at recombination; partial records and exact checkpoints preserve remaining entanglement |
+| `test_quantum_event_network.py` | No-transfer changes excitation from 1/2 to 9/34; early projection changes coherent return from 1 to 337/625; fresh-environment contacts use no detector call; immutable and stale decision guards; certain outcomes require no random ticket |
+| `test_quantum_event_network.py` | A 2,000-operation queried chain leaves a disconnected 2,000-operation chain unevaluated; zero extra world ticks; nearest-neighbor/disjoint supports; matrix completeness; node/term/traversal/record/register failures do not commit an outcome |
+| `test_quantum_event_network.py` | A single occupied site has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
+| `test_quantum_event_trial.py` | Reproducible 4x4 headless controller through the existing owner, explicit ticket choice, fixed event time, and preserved legacy scalar query API |
+
+The legacy quantum, architecture, integer, locality, navigation and language
+suites remain regression requirements. Do not weaken them to accept the new
+candidate. No physical engine behavior or default rendering mode is changed.
+## Executable entity and conversion expectations
+
+`tests/test_entity_compiler.py` validates all 46 profiles, active representative
+carrier/vector and scalar transport, generic name selection, capacity rejection,
+conflicting declarations and malformed profiles. Profile compilation is distinct
+from physical-law acceptance; do not multiply identical runs across labels.
+`tests/test_local_conversions.py` checks two-to-two ownership, ignored output
+defaults, causal/delayed commits and rejected invalid balances or carried progress.
+Existing shared engine tests remain necessary consumers of the changed schema.
+
+## Native event programs and path costs
+
+`tests/test_native_event_runtime.py` covers the [native event contract](NATIVE_QUANTUM_EVENTS.md):
+365 exact ticket cases, deterministic classical trajectories, shared identity
+and packet ancestry, repeated encounters, bounded failures, code/type renaming,
+normal runner output and per-cycle cost-dependent delay without repeated charges.
+Existing quantum, locality, generic initialization and physical regression suites
+remain affected consumers. These checks do not derive a classical limit.
+
+## Shared integer arithmetic
+
+`test_integer_arithmetic.py` covers decoded scalar/vector addition and
+subtraction, ordered sums, dot/cross products and integer rounding. Independent
+examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
+(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
+counts, cross-product orientation/parallel vectors, signed limits and overflow
+before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
+-7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
+even when the quotient would fit, preserving existing timing behavior.
+
+Existing expression, spatial transaction, rotation, engine timing and link
+transport suites remain the integration coverage for callers and operation costs.

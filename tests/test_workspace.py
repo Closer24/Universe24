@@ -77,6 +77,7 @@ def test_workspace_serves_assets_and_current_example_data(server):
         "basic",
         "exchange",
         "finite_fields",
+        "local_field_rules",
         "moving_source",
         "open_world",
         "spatial_turning",

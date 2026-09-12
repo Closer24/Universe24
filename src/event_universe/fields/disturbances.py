@@ -22,16 +22,16 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work, signed_divrem
+from event_universe.core.integer import (
+    add_components,
+    checked_sum,
+    checked_work,
+    cross_product,
+    dot_product,
+    signed_divrem,
+)
 
 from .spatial import split_weighted
-
-
-def _dot(left: tuple[int, ...], right: tuple[int, ...]) -> int:
-    total = 0
-    for a, b in zip(left, right, strict=True):
-        total = checked_work(total + checked_work(a * b))
-    return total
 
 
 def _broadcast(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
@@ -47,6 +47,9 @@ def evaluate(
     right: Values,
     meter: CostMeter,
     spatial_fluxes: Values = (),
+    *,
+    ports: tuple[Values, ...] = (),
+    outgoing: tuple[Values, ...] = (),
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
@@ -59,11 +62,23 @@ def evaluate(
         if not spatial_fluxes:
             raise ValueError("spatial flux requires an explicitly supplied local sample")
         return unpack(spatial_fluxes[expression.field])
-    operands = tuple(evaluate(arg, left, right, meter, spatial_fluxes) for arg in expression.arguments)
+    if op in ("received", "outgoing"):
+        channels = ports if op == "received" else outgoing
+        if len(channels) != 6 or not 0 <= expression.port < 6:
+            raise ValueError("directional expressions require six explicitly supplied local channels")
+        return unpack(channels[expression.port][expression.field])
+    operands = tuple(
+        evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        for arg in expression.arguments
+    )
     if op == "transform":
-        return tuple(_dot(row, operands[0]) for row in expression.matrix)
+        return tuple(dot_product(row, operands[0]) for row in expression.matrix)
     if op == "dot":
-        return (_dot(operands[0], operands[1]),)
+        return (dot_product(operands[0], operands[1]),)
+    if op == "cross":
+        return cross_product(operands[0], operands[1])
+    if op == "vector":
+        return tuple(operand[0] for operand in operands)
     if op == "gt":
         return (1 if operands[0][0] > operands[1][0] else 0,)
     if op in ("neg", "abs", "sum", "component"):
@@ -73,10 +88,7 @@ def evaluate(
         if op == "abs":
             return tuple(checked_work(abs(v)) for v in unary)
         if op == "sum":
-            total = 0
-            for value in unary:
-                total = checked_work(total + value)
-            return (total,)
+            return (checked_sum(unary),)
         return (unary[expression.component],)
     first, second = _broadcast(operands[0], operands[1])
     result = []
@@ -104,7 +116,7 @@ def evaluate(
 def add_values(left: Payload, right: Payload) -> Payload:
     if len(left) != len(right):
         raise ValueError("field component mismatch")
-    return pack(tuple(checked_work(a + b) for a, b in zip(unpack(left), unpack(right), strict=True)))
+    return pack(add_components(unpack(left), unpack(right)))
 
 
 def _sum_records(
@@ -161,6 +173,35 @@ class DisturbanceLaw:
             candidate[assignment.side] = _with_value(
                 candidate[assignment.side], assignment.field, pack(value)
             )
+        if rule.output_types is not None:
+            for side, original in enumerate((left, right)):
+                # A different routing law cannot inherit or silently erase fractional progress.
+                carried = (
+                    *original.phase_codes,
+                    *original.emission_remainders,
+                    *original.emission_phases,
+                    *original.exchange_remainders,
+                    *original.spatial_remainders,
+                    *original.emission_remaining,
+                    *original.spatial_remaining,
+                )
+                if (
+                    original.route_phase_code != 1
+                    or original.rate_remainder_code != 1
+                    or any(code != 1 for payload in carried for code in payload)
+                ):
+                    raise ValueError("conversion requires zero carried routing and allowance state")
+                if not 1 <= original.channel_code <= 7:
+                    raise ValueError("conversion channel must identify the seed or a neighbor port")
+                meter.charge("update")
+                zero = tuple((1,) * field.components for field in self.fields)
+                # Whole-record channel tags record arrival provenance, not fractional stock.
+                candidate[side] = DisturbanceRecord(
+                    rule.output_types[side],
+                    candidate[side].values,
+                    zero,
+                    channel_code=original.channel_code,
+                )
         for record in candidate:
             self._validate(record)
         first, second = candidate

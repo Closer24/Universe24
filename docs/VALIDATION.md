@@ -1,5 +1,85 @@
 # Validation evidence
 
+## Physical inventory and elementary probes — 2026-09-12
+
+Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
+[entity catalog](../examples/known-entities/catalog.json) contains 11 field
+categories and 35 particle/multiplet entries. These are inventory entries,
+not a count of implemented physical fields. Its definitions and support
+assessment are explained in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
+Highlights was retrieved on 2026-09-12, including its implemented-entities
+section; the user's elementary-vector-operation restriction is binding.
+
+No engine code changes. The two new configurations produce updates only by
+copying, swapping or clearing vector values; guards and dot-product invariants
+validate those proposals. The old unequal-mass formula remains a clearly labeled
+comparison benchmark. No new configuration derives its state from that formula.
+
+The new focused suite passed eight checks: catalog/source/conjugate consistency,
+elementary update assignments, equal-mass contact on 9-cubed/X and 15-cubed/Y
+domains, outgoing/rest/unequal-mass exclusions, and causal two-vector transport.
+The same-local-mechanism checks are not a continuum-limit proof. The final PR
+records the mandatory affected gate and exact submitted tree.
+
+Both new inputs were run with the existing CLI and `--visualize`. The pair
+completed 16 ticks and 17 recorded frames: contact at tick 4, reversed momentum
+in the next sample, final X positions 1 and 7, positive mass 2 in total and zero
+net charge/momentum throughout. Its summed raw squared momentum remains 2.
+The field probe completed six ticks and seven frames, with exactly three
+nearest-neighbor transfers taking two ticks each. Its isolated E/B pulse retains
+raw squared amplitude 18 and has no source or dissipation. Both runs report
+balanced accounting and use unchanged runtime fingerprint
+`b8b0db5aba5c8ee14cfb87be318471f3e1352d0e83b5afb5640e3d49903c37a2`.
+Recorded data and metadata were inspected; no graphical-browser validation is
+claimed. Generated HTML stays outside the source commit.
+
+This verifies restricted classical proxies and a vector transport mechanism,
+not Maxwell dynamics, a photon, gravity or annihilation. Boss and specialist
+Skills already route to the updated postulates and owner contracts; no duplicate
+Skill rule or new agent role is needed.
+
+## Generic local field rules — 2026-09-12
+
+The extension starts from main `12c85316f011d0601adcd0f4a31f0f52e59eaa27`.
+Its authoritative scope is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md): retained
+field stock, six delivered/outgoing ports, multiple scalar/vector components,
+explicit invariants and joint carrier/field transactions. It introduces no
+electromagnetic law or quantum-photon result. Highlights was read on 2026-09-12;
+the user's node-with-six-ports clarification governs the interface.
+
+The necessary checks exercise simultaneous vector updates, exact six-port
+inventory and link delay, independent counterflow samples, integer bounds,
+immutable baselines, delayed arrival preservation and stale-invariant rejection.
+Active rules retain their results after renaming and declaration permutation.
+A zero-net joint chain retains both commit guards and prices their work. Existing
+exchange into a local field retains its reaction instead of forwarding it outward.
+Unsupported carrier-only joint rules without spatial owners fail initialization.
+
+Independent architecture and physics-rule reviews checked local ownership,
+frozen proposals, fixed field timing, bounded arithmetic and commit-cost
+reservation. The implementation keeps generic calculations under `fields/`;
+engine code schedules them and commits validated ownership changes.
+
+The affected gate uses CPython 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1.
+Only changed files and their affected consumers are selected. No full audit,
+older-Python compatibility suite or unrelated parameter sweep is part of this
+acceptance. Exact final check counts and submitted source identity are attached
+to the PR; the gate saves its commands in `artifacts/check-scope.json`.
+
+The explicit visual run uses `examples/local_field_rules.json` with the existing
+CLI and `--visualize`: a 9 by 9 by 9 lattice, eight transitions, and nine recorded
+frames. Starting at `a=(3,4,0), b=(0,0,0)`, the configured rule applies
+`a'=b, b'=-a`; the combined squared amplitude is 25 in every recorded frame.
+All eight cycles contain component transformations, with no external sources
+and balanced spatial ledgers. This quantity is a declared mathematical
+invariant, not an established physical energy. The standalone HTML uses recorded
+node values and port packets; directional samples are not counted as extra stock.
+
+Boss, field, architecture, test, physics-review, run and PR Skills were reviewed.
+Their existing links already route to the updated owner contracts, so no
+duplicated procedural rules were added to Skills. Generated run files remain
+outside source commits and follow the existing output-retention policy.
+
 ## Merge follow-up: affected checks — 2026-09-12
 
 While combined feature head `4dfc1df7543aa7e7568f5112e2e2eb879e464714` passed
@@ -608,3 +688,37 @@ Ruff lint/format passed and strict mypy passed. The test renderer captured
 source; its current fingerprint is recorded in `artifacts/local-links/run.json`.
 Earlier evidence is preserved under `artifacts/local-links-before-merge` and
 `artifacts/local-links-check-before-merge.log`.
+# Executable catalog and bounded conversions, 2026-09-12
+
+Base: `d1d7251ba739fb7231eff0d41037744456297ddd`. Python 3.14.7.
+The affected gate selected 764 passing cases and five explicitly optional visual
+skips; Ruff and mypy passed. Selection includes consumers of the shared
+initialization, record schema and local interaction law, not a full-suite switch.
+All 46 catalog entries compile through the canonical validator. Representative
+active worlds cover shared carrier, scalar and vector behavior without repeating
+the same dynamics for every particle name.
+
+Independent architecture/physics review found and resolved strict catalog input
+validation and a conversion restriction on nonzero arrival channel tags. A real
+incoming-pair regression now verifies conversion after neighbor arrival; channel
+provenance is preserved while actual carried fractional progress remains rejected.
+Boss, architecture, fields, physics, tests and simulation Skills were reviewed;
+their existing workflow covers this change, so no Skill edit was necessary.
+Highlights was read on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+No change to that Google document is implied.
+
+Three CLI runs generated recorded HTML with source fingerprint
+`1695a4c8757b6493e5bf58613a6b6cd97e533df81d1f17f58723c9a9354d4fce`:
+
+| Probe | Evidence |
+| --- | --- |
+| Catalog electron/positron/EM registers | Four ticks; inventory 2, charge 0, momentum (2,0,0), E/B component stock (0,1,0); causal carrier and field transfers |
+| `conversion.json` | Six ticks; two held records become outgoing types, stock 5 and momentum zero remain |
+| Incoming variant from `test_incoming_carriers_convert_after_real_neighbor_arrival_and_reverse` | Six ticks; seeds at x=3/5 meet at x=4, convert and reverse to x=2/6; stock 5 and momentum zero remain; link time 2 |
+
+Metadata, final states, event traces and HTML data were inspected. Browser visual
+inspection was not performed; the existing renderer is unchanged. These are
+representation/conversion tests, not physical annihilation, Maxwell, mass,
+spinor, gauge, metric or general energy derivations. Git PR/CI evidence identifies
+the final integrated tree; generated output follows finite retention.
