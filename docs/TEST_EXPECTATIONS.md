@@ -1,5 +1,16 @@
 # Test inputs and expected results
 
+## Quantum registers, channels and catalog profiles
+
+See [the explicit v2 contract](QUANTUM_ENTITIES.md). New tests cover channel
+completeness, grouped outcomes without hidden sampling, 72 dense rational state
+comparisons, phase interference, CHSH 14/5 and local marginals, classical Markov
+probabilities, multilevel/colocated registers, rejection boundaries, all 46
+profiles, and native priced control paths. Preserve earlier uncertainty, quantum,
+classical, import and locality regressions. Quantum-mode definitions alone are
+not evidence of full species dynamics.
+
+
 ## Local reflection and Maxwell-limit experiment
 
 `tests/test_maxwell_configuration.py` checks the selected six-population
