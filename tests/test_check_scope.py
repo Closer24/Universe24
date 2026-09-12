@@ -128,7 +128,9 @@ def test_directional_field_resources_select_the_candidate_consumer(filename):
     assert "tests/test_directional_wave.py" in tests
 
 
-@pytest.mark.parametrize("resource", ["entities.json", "build.py", "electron-proton.json"])
+@pytest.mark.parametrize(
+    "resource", ["entities.json", "build_reference_configurations.py", "electron-proton.json"]
+)
 def test_particle_resources_select_the_dynamic_contract_consumer(resource):
     tests, _ = CHECK.select(["examples/particle-contracts/" + resource], {})
     assert "tests/test_rational_particles.py" in tests

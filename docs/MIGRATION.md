@@ -116,6 +116,9 @@ No second implementation or duplicate compatibility module was added for these n
 | `examples/known-entities/run.py` | `examples/known-entities/run_reference_checks.py` |
 | `examples/known-entities/run.ps1` | `examples/known-entities/run_reference_checks.ps1` |
 | `examples/known-entities/collision.json` | `examples/04-unequal-mass-collision.json` |
+| `examples/particle-contracts/build.py` | `examples/particle-contracts/build_reference_configurations.py` |
+| `examples/maxwell/run.py` | `examples/maxwell/run_experiments.py` |
+| `examples/small-space/run.py` | `examples/small-space/run_experiments.py` |
 
 The removed collision file was byte-identical to the canonical workspace example.
 The reference command resolves its logical `collision` experiment to that file;

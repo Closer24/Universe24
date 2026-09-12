@@ -197,7 +197,7 @@ not a competing current-status list.
 ## Repository naming and ownership audit
 
 The repository-wide naming/ownership audit is reconciled against main
-`85ec120862e5bead2c63eebfc37753b52497c0eb`. It preserves the integrated
+`10e5221bc9c1d1f47311785e484b2870450dba45`. It preserves the integrated
 native quantum, quantum-entity and Maxwell research additions while keeping
 one active implementation owner per documented responsibility. Historical
 research APIs and standalone laboratories remain explicitly labeled.

@@ -218,7 +218,7 @@ selection. `core/streams.py` owns the fourteen-register stream records and
 one-edge packet routing; its full-state validation is a read-only host audit.
 `core/streaming_engine.py` schedules that phase before the existing local
 particle update. `models/causal_stream.py` selects full-vector response and
-ordinary movement through `ScalarFieldModel`; `api.CausalStreamSimulation`
+ordinary movement through `ScalarFieldModel`; `particle_api.CausalStreamSimulation`
 assembles them. No field law receives an Engine or mutable source history.
 The ordinary scalar seeding interface is rejected for this distinct state type.
 The existing scalar and linked candidates retain their own implementations.
