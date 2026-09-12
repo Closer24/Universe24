@@ -1,5 +1,15 @@
 # Test inputs and expected results
 
+## Small-space physical comparisons
+
+See [the experiment evidence](../examples/small-space/README.md).
+`tests/test_small_space_experiments.py` checks finite reservoir depletion with
+zero injection, delayed-by-one-link source response and opposite vector stock,
+and a restricted unequal-mass momentum permutation. It also rejects a nonzero
+total-momentum pair and checks classical units using actual displacement.
+The experiment report separately exposes missing physical laws; an accounting
+pass must not be relabeled as physical acceptance.
+
 ## Physical entity catalog and elementary probes
 
 `tests/test_physical_entities.py` covers the sourced catalog and only its new

@@ -10,6 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
+    "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
+    "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
+    "examples/known-entities/catalog.json": ("tests/test_small_space_experiments.py",),
+    "examples/known-entities/discrete-pair.json": ("tests/test_small_space_experiments.py",),
     "examples/quantum/contact.json": (
         "tests/test_native_event_runtime.py",
         "tests/test_quantum_contact_trial.py",

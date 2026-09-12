@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The [small-space comparisons](../examples/small-space/README.md) record 24
+9-cubed/15-cubed entity, source and response experiments. Local accounting and
+selected mechanisms pass; field/particle physical laws remain incomplete.
+Finite owned-reservoir transfer, a ray-speed parameter and a restricted
+zero-total-momentum unequal-mass candidate are explicit configuration solutions,
+not replacements for the default entity profiles or derived universal laws.
+
 The [executable catalog](ENTITY_CATALOG.md) provides bounded representation
 profiles for all 46 inventory entries and compilation into ordinary run inputs.
 The [local conversion interface](LOCAL_CONVERSIONS.md) supports explicit atomic
