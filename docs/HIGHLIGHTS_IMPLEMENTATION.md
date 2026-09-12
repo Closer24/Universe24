@@ -150,6 +150,25 @@ treating its omissions as current gaps.
 
 ## Coverage map
 
+### Directional-wave candidate reconciliation
+
+Read the live Highlights on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The [directional-wave contract](DIRECTIONAL_WAVE.md) is a new explicit candidate
+under sections 3.3, 3.3.2, 3.5, 10.4 and 10.5. Six transverse directional modes,
+bounded vector operations and local encounter guards preserve the declared
+U=sum of squared mode amplitudes and P=sum of their direction-weighted energies,
+with resident and in-flight ownership counted once. Same-law cubic rotations and
+periodic return are tested. E/B are derived readouts, not duplicated stock.
+
+The candidate demonstrates conditional polarization interaction and declared
+balances. It does not promote the emergence hypothesis to a verified physical
+law, or claim Maxwell dynamics, charge response or trajectory scattering.
+The [configuration Skill](../skills/simulation-configuration/SKILL.md) supports
+section 10.7 with reusable input definitions and separate recording/display controls.
+Its commands and template are executable evidence; technical workflow remains in
+the repository. This reconciliation does not edit the live Google document.
+
 ### Local Maxwell research reconciliation
 
 For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),

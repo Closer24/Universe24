@@ -17,6 +17,11 @@ Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
 local quantum decisions to that same engine and charge the executed mechanical
 path. They currently cannot be combined with spatial fields.
 
+For a complete authoring walkthrough, use the
+[simulation configuration Skill](skills/simulation-configuration/SKILL.md):
+space, reusable entities, field laws, encounters, run commands and display options,
+with a runnable two-stream template.
+
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.
 Their five-register cell and sixteen-register particle schemas are not the
@@ -124,6 +129,10 @@ The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
 reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.
+
+For opt-in exact fractional representation, balanced routing, massless transport
+and joint-energy reference benchmarks, see [RATIONAL_PARTICLES.md](docs/RATIONAL_PARTICLES.md).
+These examples test supplied mechanical contracts, not emergent physical laws.
 
 Read [SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md) for the baseline, eight-octant
 transport through six faces, source cadence, cost accounting and self-field

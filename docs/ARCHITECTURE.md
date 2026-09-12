@@ -121,6 +121,25 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 
 ## Active generic ownership
 
+The engine receives an explicit `core/record_policy.RecordPolicy` alongside its
+local planner. `fields/record_operations.RecordOperations` owns the existing
+activity predicate, delivered-record merging and configured cost reporting.
+It stores immutable definitions and receives only fixed local slots, delivered
+records, pending-slot locks or a local plan. It receives no world, address or
+clock. The engine alone determines arrival eligibility, supplies locks, validates
+slot capacity, and commits proposals before clearing packets. Public Simulation
+and the explicit contact trial assemble this component; direct DisturbanceEngine
+callers must supply `record_policy=`. Configuration files are unchanged.
+
+This is an ownership refactor: arithmetic order, transport/channel distinctions,
+source bookkeeping, cost prices and frozen pending semantics are preserved.
+Generic operations and configured physical meaning remain separate; this change
+does not add a physical force, a tensor schema or an arbitrary Python plugin API.
+See tests/test_record_operations.py and the existing disturbance, spatial and
+native-event regressions. The independent spatial scheduler retains its current
+ownership and is outside this refactor.
+
+
 `disturbance_api.Simulation(initial: InitialState)` composes the generic engine
 and local law; it is exported as the primary package Simulation.
 `initialization.py` reads strict JSON data and resolves names to bounded typed
@@ -129,6 +148,14 @@ definitions. `core/disturbance_state.py` owns fixed schemas and payload coding;
 and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
+
+The opt-in rational extension stays within these owners: `fields/ratios.py`
+owns finite exact arithmetic and projections; `fields/routing.py` owns balanced
+six-port selection and fractional credit. Neither receives world state. Fixed
+carrier bookkeeping travels through the existing scheduler. The numerical and
+cost amendment is explicit in [RATIONAL_PARTICLES.md](RATIONAL_PARTICLES.md).
+Physical formulas in its examples are reference benchmarks, separate from the
+elementary emergence probes in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
 
 Field, type, model and unit labels are data. Reordering field/type declarations
 must preserve the same resolved behavior; declared update/coupling order and

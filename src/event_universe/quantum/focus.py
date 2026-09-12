@@ -83,7 +83,7 @@ class FocusRequest(NamedTuple):
 
 
 class FocusEvent(NamedTuple):
-    """Fixed-size oracle-selected candidate event, not yet an ScalarEngine commit."""
+    """Fixed-size oracle-selected candidate event, not yet a ScalarEngine commit."""
 
     request_id: int
     tick: int

@@ -1,5 +1,50 @@
 # Test inputs and expected results
 
+
+## Local record operations
+
+`test_record_operations.py` checks generic vector merging with independent
+expected components, separation by type/channel/pending lock and whole-record
+transport, all-or-nothing failure for overflow and capacity, zero-state activity
+(including held zero records with configured local checks),
+and configured cost reporting without repricing. Direct engine composition tests
+prove that the injected activity policy is used and that a capacity-changing
+arrival proposal fails before packets are cleared. Existing timing, generic-name,
+spatial-response and native-event tests retain the cross-owner contracts.
+
+
+
+## Transverse directional-wave candidate
+
+`tests/test_directional_wave.py` validates the configuration-defined
+[candidate](DIRECTIONAL_WAVE.md). The unequal 3Y/2Y encounter produces 3Z/-2Z
+while preserving U=13 and P=5X. It also checks coincident/dark readouts, solitary
+motion, all six modes, same-law cubic covariance, periodic state return and
+atomic rejection of longitudinal, oversized, amplified or misrouted proposals.
+These are candidate acceptance tests, not evidence of Maxwell dynamics.
+
+
+## Bounded rational particle candidates
+
+`tests/test_rational_particles.py` independently checks: scaled directions
+(1,1,0) and (1000,1000,0) give identical alternating hops; coprime (1000,999)
+interleaves; direction changes reset fixed routing counters; maximum legal weights
+remain bounded through JSON and world transport; credit 1/3 followed by 1/2 then
+1/2 produces one hop and 1/3 remaining; mixed -7/3 and 1/2 use whole (-2,0) and
+denominator six with remainders (-2,3); finite exact arithmetic rejects overflows
+and zero denominators. Rational comparison keys cannot nest or feed arithmetic.
+Configured unequal-mass contacts are compared with an independent Fraction
+center-of-mass reflection and preserve decoded momentum/energy for 180 ticks.
+Zero-mass axis and 3:4 directions cover the same Euclidean distance at c=1/2;
+invalid mass-shell data rejects. Even a held zero record executes local checks.
+A local reservoir exchanges kinetic energy and opposite momentum, including
+carrier transit; insufficient energy and invalid denominators reject atomically.
+Existing integer regressions retain their original paths. The headless
+`tools/audit_particle_contracts.py` runs longer instances with per-tick exact
+diagnostics; supplied formulas are reference benchmarks, not emergence claims.
+See [the contract](RATIONAL_PARTICLES.md).
+
+
 ## Quantum registers, channels and catalog profiles
 
 See [the explicit v2 contract](QUANTUM_ENTITIES.md). New tests cover channel

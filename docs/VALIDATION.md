@@ -1,9 +1,79 @@
 # Validation evidence
 
+
 Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
+
+## Conservative directional-wave configuration and authoring Skill — 2026-09-12
+
+Based first on main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`, then integrated
+with main `fb083c159fe1f51612203962d9a7921683eb31c8`, then `0f94cbd`, and finally
+`99b9f5f0034ea288f7de0a2a8d7645220c45d8aa` (tree
+`b7609f1d22f04a1421d30f0d4a6acc7ad1774b03`). The candidate changes no runtime
+source file. The final source fingerprint is
+`8de38e5f4ba9db0b188168bf9d33c647b3abe3df2a3450a7cbaa9016a29f2e8d`.
+
+The [candidate contract](DIRECTIONAL_WAVE.md) and six saved cases use ordinary
+local field rules. The unequal encounter changes 3Y/2Y into 3Z/-2Z and preserves
+normalized U=13 and P=5X. All physical guards, encounters and streaming are JSON;
+preparation assembles input and observation/rendering do not advance the world.
+
+- Python 3.14.7, pytest 9.1.1 and Ruff 0.16.7: affected gate **230 passed,
+  2 opt-in visual skips**. No runtime typing scope changed. The gate included
+  49 candidate cases plus check selection, local fields, entity compilation,
+  native events, integer arithmetic, cell-state ownership, local Lorentz response,
+  recorded-movie, workspace, language and navigation regressions.
+- Candidate checks include all 24 proper cubic rotations with the same unchanged
+  law, periodic translation/return, slow links, six simultaneous modes, aggregate
+  cancellation, per-mode bounds and atomic rollback after invalid proposals.
+- An independent physics reviewer accepted locality, all 24 changing-rule U/P
+  expressions, numeric bounds and readout ownership. Independent pre/post-main
+  comparison against fb083c1 covered seven cases and 244 ticks per runtime: every
+  complete state matched, with exact U/P and spatial accounting throughout.
+  Subsequent review of 0f94cbd confirmed the shared integer dot/cross operations
+  preserve checked ordering, signs and rejection behavior for this candidate.
+  The added 99b9f5f cell-state guard accepted three 72-tick slow-link cases:
+  2,903 cell inspections and 360 packet inspections, with exact U/P throughout.
+- Two canonical 36-tick recordings on the integrated source were independently
+  replayed headlessly: all 37 recorded states matched exactly, with zero U/P
+  error at every tick. Inputs are identified by SHA-256
+  `813deba62d78bd398eda3b7ded525fe72ff3b3510f715c4e01481d8c07f9c1c1`
+  (free) and `9759f56cd53b5553f28950c2037d578f8526fe550090f41be3681bed29b92ce1`
+  (encounter). Definition SHA-256 is
+  `10c896ba55ce774c0bad3e9d5b5c781425206b32e417ea4574e540246d0d5d65`.
+- Pillow 12.3.0 decoded the requested comparison GIF: 37 frames, 720 x 980,
+  7,940 ms, 1,361,123 bytes. Encounter and post-encounter images were inspected.
+  Swapped reference roles, duplicate comparison inputs and a changed recording
+  with a stale proof were all rejected. The [saved GIF](https://drive.google.com/file/d/1_q_8CEM4pY_jRn_jI3kw5m_KrfsSTez-/view)
+  shows the free/reference and interacting runs with nodes, axes, modes, E/B and U/P.
+- The new [configuration Skill](../skills/simulation-configuration/SKILL.md)
+  explains the distinct input, catalog/law, execution and display formats. Its
+  complete two-stream template completed 18 ticks with inventory 2 conserved;
+  its electron/proton/neutron catalog command compiled and completed 36 ticks
+  with open-boundary accounting. Both were headless. Skill frontmatter validation
+  used the bundled validator with PyYAML 6.0.3 in a separate validation dependency
+  directory; no project dependency was added.
+
+The exact affected gate invocation was `python tools/check.py --base HEAD --tests
+tests/test_local_field_rules.py tests/test_entity_compiler.py
+tests/test_native_event_runtime.py tests/test_integer_arithmetic.py
+tests/test_cell_state_contract.py tests/test_local_lorentz_field.py`, where local
+validation HEAD had the exact
+remote main tree above. Generated recordings, replay proofs, GIFs and local gate
+artifacts remain outside source commits; reproduction commands are in the contract.
+The full suite and unrelated historical render tests were not selected.
+
+The [Highlights coverage map](HIGHLIGHTS_IMPLEMENTATION.md) records the live
+document revision and the candidate's relation to existing rules and hypotheses.
+Skill review added the requested authoring responsibility and linked Boss/runner
+to it. Existing field-development, physics review and visualization workflows
+already cover the candidate; no broader procedure change was needed. This result
+is a discrete polarization-interaction candidate, not Maxwell dynamics, trajectory
+scattering, charge coupling or arbitrary-angle isotropy. Native event programs
+remain absent; their spatial-field composition is explicitly unsupported.
+
 
 ## Physical inventory and elementary probes — 2026-09-12
 

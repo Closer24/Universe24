@@ -5,6 +5,10 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
+For creating or changing the input, use
+[simulation-configuration](../simulation-configuration/SKILL.md), including its
+complete file map and runnable template. This skill executes the resulting input.
+
 Read [the shared workflow](../workflow.md), current
 [run instructions](../../README.md) and the output/failure contract in
 [definitions](../../SIMULATOR_DEFINITIONS.md). This skill can run independently

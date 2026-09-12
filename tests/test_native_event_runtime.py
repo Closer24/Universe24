@@ -406,6 +406,7 @@ def test_classical_control_with_same_operation_cost_matches_delayed_world(budget
     from event_universe.core.disturbance_engine import DisturbanceEngine
     from event_universe.core.disturbance_state import pack
     from event_universe.fields.disturbances import DisturbanceLaw
+    from event_universe.fields.record_operations import RecordOperations
 
     data = configuration(0, 1, 1)
     data["normal_budget"] = budget
@@ -428,7 +429,13 @@ def test_classical_control_with_same_operation_cost_matches_delayed_world(budget
             return replace(plan, cost=plan.cost + 4)
         return law(records, residuals, received)
 
-    classical = DisturbanceEngine(initial, classical_plan)
+    classical = DisturbanceEngine(
+        initial,
+        classical_plan,
+        record_policy=RecordOperations(
+            initial.fields, initial.disturbances, initial.couplings, initial.interactions
+        ),
+    )
     for _ in range(40):
         quantum.step()
         classical.step()

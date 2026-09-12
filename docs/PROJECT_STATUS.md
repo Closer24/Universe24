@@ -1,5 +1,11 @@
 # Project status and restart guide
 
+An optional [directional-wave candidate](DIRECTIONAL_WAVE.md) supplies six modes
+and a configured polarization encounter with exact normalized energy/momentum
+guards. It uses the existing local field engine and does not replace the catalog
+probes or establish Maxwell dynamics. Verify the current Git tree and PR status
+before using historical validation evidence.
+
 For a clean machine or deleted conversation, follow
 [recovery without chat history](RECOVERY.md), including the versioned daily
 genericity skill and local retention setup.
@@ -76,6 +82,8 @@ records are temporary, while their recorded conclusions remain in the repository
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
 | Active generic simulator | [disturbance_api.py](../src/event_universe/disturbance_api.py), [disturbance_engine.py](../src/event_universe/core/disturbance_engine.py) | `Simulation(InitialState)`; laws and fields come from explicit initialization, not physical names |
+| Record operation policy | [record_operations.py](../src/event_universe/fields/record_operations.py) | Fixed local activity, delivered-record combination and cost reporting; the engine retains scheduling |
+| Rational particle candidates | [rational contract](RATIONAL_PARTICLES.md) | Explicit bounded rational regions, balanced routes, fractional movement credit and local checks; supplied reference laws |
 | Local expressions and transactions | [disturbances.py](../src/event_universe/fields/disturbances.py) | Bounded integer operations, declared balances, fixed local capacities and explicit rejection |
 | Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
