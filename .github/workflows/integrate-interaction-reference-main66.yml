@@ -18,7 +18,34 @@ jobs:
           git config user.name 'Closer24'
           git config user.email 'logic24@gmail.com'
           git fetch origin feat/interaction-reference-completeness
-          git cherry-pick 2de5921a6ae93ea88744db44ad7711143446197c
+          if ! git cherry-pick 2de5921a6ae93ea88744db44ad7711143446197c; then
+            conflicts="$(git diff --name-only --diff-filter=U)"
+            test "$conflicts" = "skills/simulation-configuration/references/configuration-guide.md"
+            git checkout --ours skills/simulation-configuration/references/configuration-guide.md
+            python - <<'PY'
+          from pathlib import Path
+          path = Path('skills/simulation-configuration/references/configuration-guide.md')
+          text = path.read_text(encoding='utf-8')
+          old = '''The version 2 physical catalog contains no executable expressions. Physical
+          properties and possible interactions stay in that reference; experiment profiles
+          are supplied through a separate file. Never infer update laws, reaction rates or
+          lattice parameters from catalog measurements. Validate reference changes with
+          `python -m event_universe.configuration_validation examples/known-entities/catalog.json`.'''
+          new = '''The version 2 physical catalog contains no executable expressions. Physical
+          properties and possible interactions stay in that reference; experiment profiles
+          are supplied through a separate file. Its canonical interaction taxonomy includes
+          every established family relevant to the represented sectors, with at least one
+          descriptive representative channel per established family. Individual exclusive
+          channels remain non-exhaustive. Never infer update laws, reaction rates or lattice
+          parameters from catalog measurements or interaction names. Validate reference changes with
+          `python -m event_universe.configuration_validation examples/known-entities/catalog.json`.'''
+          if old not in text:
+              raise SystemExit('latest-main catalog guidance anchor not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+            git add skills/simulation-configuration/references/configuration-guide.md
+            git cherry-pick --continue
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
