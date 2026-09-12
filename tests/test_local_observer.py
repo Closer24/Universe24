@@ -159,15 +159,14 @@ def test_remote_change_is_hidden_until_delivery_and_runner_stride_keeps_receipts
     for world in worlds:
         world.step()
     assert probes[0].receipts[0]["values"] != probes[1].receipts[0]["values"]
-    initialization, placement = tmp_path / "input.json", tmp_path / "probe.json"
-    initialization.write_text(json.dumps(raw))
-    placement.write_text(json.dumps({"position": NODE}))
-    for name, stride, observer in (
-        ("dense", 1, placement),
-        ("sparse", 3, placement),
-        ("plain", 1, None),
-    ):
-        run_initialization(initialization, tmp_path / name, frame_stride=stride, observer=observer)
+    initialization = tmp_path / "input.json"
+    for name, stride in (("dense", 1), ("sparse", 3), ("plain", 1)):
+        configured = deepcopy(raw)
+        if name != "plain":
+            configured["observer"] = {"position": list(NODE)}
+        initialization.write_text(json.dumps(configured))
+        run_initialization(initialization, tmp_path / name, frame_stride=stride)
+        assert (tmp_path / name / "initialization.json").read_bytes() == initialization.read_bytes()
     dense = json.loads((tmp_path / "dense/observations.json").read_text())
     sparse = json.loads((tmp_path / "sparse/observations.json").read_text())
     assert dense["receipts"] == sparse["receipts"]
@@ -190,7 +189,30 @@ def test_remote_change_is_hidden_until_delivery_and_runner_stride_keeps_receipts
     ],
 )
 def test_invalid_configuration_is_rejected_before_running(tmp_path, raw):
-    path = tmp_path / "observer.json"
-    path.write_text(json.dumps(raw))
+    configured = pulse_document()
+    configured["observer"] = raw
     with pytest.raises(ValueError, match="observer"):
-        ObserverDefinition.load(path, (5, 5, 5))
+        parse_initial_state(configured)
+    path = tmp_path / "input.json"
+    path.write_text(json.dumps(configured))
+    with pytest.raises(ValueError, match="observer"):
+        run_initialization(path, tmp_path / "output")
+    assert not (tmp_path / "output").exists()
+
+
+def test_inline_observer_rejects_ambiguous_external_placement(tmp_path):
+    path = tmp_path / "input.json"
+    path.write_text(json.dumps(build_configuration()))
+    with pytest.raises(ValueError, match="not both"):
+        run_initialization(path, tmp_path / "output", observer=tmp_path / "missing.json")
+    assert not (tmp_path / "output").exists()
+
+
+def test_inline_observer_rejects_duplicate_json_keys_before_output(tmp_path):
+    source = json.dumps(build_configuration())
+    source = source.replace('"observer": {', '"observer": {"position": [0, 0, 0], ', 1)
+    path = tmp_path / "input.json"
+    path.write_text(source)
+    with pytest.raises(ValueError, match="duplicate JSON key 'position'"):
+        run_initialization(path, tmp_path / "output")
+    assert not (tmp_path / "output").exists()

@@ -11,7 +11,8 @@
 | Run output directory | Copied input, metadata, states, events and optional recorded HTML | Inspection and rendering tools |
 
 These are responsibilities, not a new universal package schema. A simple run needs
-only one initialization JSON. There is no generic `include`, `entities_file`, `camera`
+only one initialization JSON. Put optional passive probe placement in its
+[`observer` member](../../../docs/LOCAL_OBSERVER.md); no separate placement file is needed. There is no generic `include`, `entities_file`, `camera`
 or `display` member in that runtime file. Reusable authoring files must be assembled
 by a supported adapter. Do not put Python expressions or callbacks into JSON.
 

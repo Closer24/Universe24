@@ -112,6 +112,9 @@ local integer contract.
 ## Generated output ownership
 
 The optional [local observer](LOCAL_OBSERVER.md) belongs to diagnostics.
+`observer_configuration.py` owns placement validation shared by initialization and
+the runner. Initialization validates the optional `observer` member without adding
+it to physical state; the runner selects recording without eager diagnostic imports.
 `diagnostics/local_observer.py` whitelists completed events at one node and
 archives copied reception values plus a cycle counter. The runner captures exact
 receipt prefixes beside playback frames. Enriched spatial reception events are

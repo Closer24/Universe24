@@ -5,16 +5,17 @@ import hashlib
 import json
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 from event_universe import __version__
 from event_universe.core.disturbance_state import InitialState
 from event_universe.disturbance_api import Simulation
-from event_universe.initialization import parse_initial_json
+from event_universe.initialization import parse_initial_state, parse_json_document
+from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if TYPE_CHECKING:
-    from event_universe.diagnostics.local_observer import LocalObserver, ObserverDefinition
+    from event_universe.diagnostics.local_observer import LocalObserver
 
 
 def source_fingerprint() -> str:
@@ -38,11 +39,15 @@ def run_initialization(
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
     source = initialization.read_bytes()
-    initial = parse_initial_json(source)
-    observer_definition = None
+    document = parse_json_document(source)
+    initial = parse_initial_state(document)
+    document = cast(dict[str, object], document)
+    observer_definition = (
+        ObserverDefinition.parse(document["observer"], initial.shape) if "observer" in document else None
+    )
     if observer is not None:
-        from event_universe.diagnostics.local_observer import ObserverDefinition
-
+        if observer_definition is not None:
+            raise ValueError("define observer in initialization or --observer, not both")
         observer_definition = ObserverDefinition.load(observer, initial.shape)
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks

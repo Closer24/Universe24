@@ -7,18 +7,27 @@ spacetime, Maxwell equations or a new Gauss constraint.
 
 ## Run and view
 
-Generate an initialization and separate probe placement, then use the ordinary
+Generate an initialization containing probe placement, then use the ordinary
 runner and existing HTML generator:
 
 ```bash
 python examples/observer/configuration.py --size 9 --output artifacts/observer-input
-python -m event_universe --init artifacts/observer-input/initialization.json --observer artifacts/observer-input/observer.json --output artifacts/observer-run --visualize
+python -m event_universe --init artifacts/observer-input/initialization.json --output artifacts/observer-run --visualize
 ```
 
-Keep reusable inputs outside the disposable run output directory. The placement
-file contains `{"position": [4, 4, 4], "max_receipts": 100000}`. Choose another
-in-bounds integer position and rerun to move the probe; no rebuild is needed.
-The API accepts `run_initialization(..., observer=Path("observer.json"))`.
+Keep reusable inputs outside the disposable run output directory. Add this optional
+top-level member to the ordinary initialization JSON (schema 1 or 2):
+
+```json
+"observer": {"position": [4, 4, 4], "max_receipts": 100000}
+```
+
+Choose another in-bounds integer position and rerun to move the probe; no rebuild
+is needed. Omit `observer` to disable recording. One node is supported, not a
+region or list of observers. Placement is validated by the ordinary initialization
+loader but is not part of physical `InitialState`. The runner activates it.
+The older separate `--observer` option remains available; supplying both sources
+is rejected before creating output. The generated example uses only one input.
 Without `--visualize`, the same observer produces JSON without physical frame
 capture. No GIF is required.
 
