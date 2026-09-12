@@ -1,0 +1,33 @@
+{
+  "reaction_version": 1,
+  "model_id": "catalog-electron-positron-two-photon-conservation-probe-v1",
+  "shape": [9, 9, 9],
+  "position": [4, 4, 4],
+  "ticks": 5,
+  "link_ticks": 1,
+  "move_outputs": true,
+  "inputs": [
+    {
+      "entity": "electron",
+      "energy": 5,
+      "momentum": [3, 0, 0]
+    },
+    {
+      "entity": "positron",
+      "energy": 5,
+      "momentum": [-3, 0, 0]
+    }
+  ],
+  "outputs": [
+    {
+      "entity": "photon",
+      "energy": 5,
+      "momentum": [5, 0, 0]
+    },
+    {
+      "entity": "photon",
+      "energy": 5,
+      "momentum": [-5, 0, 0]
+    }
+  ]
+}
