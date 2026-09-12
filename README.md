@@ -99,8 +99,11 @@ no compilation, package rebuild, dependency installation or server restart.
 
 The interface stays responsive while the runner executes in another process.
 **Run & watch** records a movie with play/pause, timeline, speed and plane controls.
-Prepared examples show approaching particles, parallel beams and a spreading
-pulse using idealized configured laws. Advanced settings start folded; the Names
+Prepared examples show approaching particles, parallel beams, a spreading
+pulse and an unequal-mass elastic collision using configured laws. The collision
+example uses generic atomic interactions and checks momentum and kinetic energy;
+see [its contract](docs/DISTURBANCES.md#configured-unequal-mass-elastic-example).
+Advanced settings start folded; the Names
 tab updates particle/type and field references together. Disable recording for
 a headless UI run; the CLI remains headless by default. Results include
 conservation checks and links to the input, state and events. Use `--configs`

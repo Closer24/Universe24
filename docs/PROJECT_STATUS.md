@@ -16,7 +16,10 @@ The [local configuration workspace](WORKSPACE.md) provides template selection,
 editable JSON and isolated runs through `python -m event_universe.ui`.
 Configuration changes are runtime data and require no compilation or rebuild.
 The workspace includes recorded movie playback, folded settings, names and three
-idealized motion presets. These transport demonstrations do not establish the
+idealized motion presets, plus a configured unequal-mass elastic collision.
+The latter uses atomic generic interactions with explicit invariants; see
+[the candidate contract](DISTURBANCES.md#configured-unequal-mass-elastic-example).
+These transport demonstrations do not establish the
 behavior of real electrons, protons, photons or electromagnetic interactions.
 
 `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
@@ -51,7 +54,8 @@ overwrite the baseline to make a description appear true.
 
 The generic schema supports bounded integer expressions, extensive splitting,
 whole-record movement, paired exchange, explicit sources and local computation
-delay with fixed neighbor transit. Operation prices, ordinary cost and field laws
+delay with fixed neighbor transit. Atomic pair transactions also support multiple
+assignments, vector transforms and declared pre/post invariants. Operation prices, ordinary cost and field laws
 are initialization choices. The cost output is local; propagating a computation
 influence requires a separate law. Capacity exhaustion stops a run rather than
 discarding content. Gravity, waves, relativity and general energy conservation
