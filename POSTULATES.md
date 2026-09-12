@@ -41,6 +41,14 @@ emergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)
 describe bounded representations; physical identity and dynamics cannot be
 inferred solely from the ability to store or transport their registers.
 
+The optional [particle reaction authoring contract](docs/PARTICLE_REACTIONS.md)
+uses established catalog identity as data and compiles a bounded two-to-two local
+type replacement through that same conversion owner. Electric charge and explicitly
+configured energy/momentum totals must balance before compilation and remain runtime
+conserved fields. This supplies conservation/ownership plumbing, not a derived QED
+reaction, reaction probability or arbitrary particle production law. Baryon and
+lepton numbers are not silently declared universal exact invariants.
+
 The user-defined cost of a local cycle sets a general cell delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in
