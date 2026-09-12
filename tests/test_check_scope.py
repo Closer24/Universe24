@@ -16,6 +16,12 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+def test_local_field_example_selects_state_and_physical_contract_consumers():
+    selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
+    assert "tests/test_cell_state_contract.py" in selected
+    assert "tests/test_local_lorentz_field.py" in selected
+
+
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
     sources = {
         "src/domain/math.py": "def calculate(): pass",

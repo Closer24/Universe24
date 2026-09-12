@@ -10,6 +10,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/local_lorentz_field.json": (
+        "tests/test_cell_state_contract.py",
+        "tests/test_local_lorentz_field.py",
+    ),
     "examples/basic.json": ("tests/test_generic_identity.py",),
     "examples/exchange.json": ("tests/test_generic_identity.py",),
     "examples/finite_fields.json": ("tests/test_generic_identity.py",),
