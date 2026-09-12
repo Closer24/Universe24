@@ -9,6 +9,13 @@ Read [the shared workflow](../workflow.md) and the regression expectations in
 [test expectations](../../docs/TEST_EXPECTATIONS.md). Run independently or accept
 an exact old/new tree and expected-change contract from Boss.
 
+For physical-path audits, apply the
+[local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract).
+Check intermediate bounds, exact division or declared remainder ownership,
+causal inputs and formula-free dynamic payloads alongside observed behavior.
+Use the existing related gates and report missing coverage; do not infer tensor
+support, locality or physical conservation from a passing rendering or name check.
+
 Select the smallest comparison that covers the changed behavior. Use identical
 configurations, seeds, update counts and observation points. Compare physical
 records, occupancy, active frontier and events when the contract promises exact

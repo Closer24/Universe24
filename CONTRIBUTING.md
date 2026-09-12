@@ -11,6 +11,9 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    select active laws in initialization data. Use `fields/disturbances.py` for
    reusable generic arithmetic; historical models keep their named owners. Read
    [the disturbance contract](docs/DISTURBANCES.md) for the active API.
+   Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)
+   when reviewing operations, numeric bounds and input provenance; do not promote
+   a global or floating-point prototype into the physical path.
 3. Use named immutable physical records, typed public interfaces and short local
    functions. Do not add growing per-source structures or render imports to core.
 4. For a defect, add a focused test of the failed behavior before the correction.
