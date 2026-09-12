@@ -16,6 +16,12 @@ local probes and internal path changes are described in [project status](PROJECT
 [the documentation index](README.md) and [migration](MIGRATION.md). Preserve this
 record as historical evidence rather than treating its omissions as current gaps.
 
+This is a dated inventory for the revision recorded above. Later native event programs,
+quantum entity support, Maxwell research examples, local probes and internal path changes
+are described in [project status](PROJECT_STATUS.md), [the documentation index](README.md)
+and [migration](MIGRATION.md). Preserve this record as historical evidence rather than
+treating its omissions as current gaps.
+
 ## 10. Implemented entities and rules
 
 ### 10.1 World, cells and links
@@ -143,6 +149,23 @@ record as historical evidence rather than treating its omissions as current gaps
   Generated results expire under the 24-hour policy; idle cleanup needs a scheduler.
 
 ## Coverage map
+
+### Local Maxwell research reconciliation
+
+For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),
+Highlights was reread on 2026-09-12 at live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 1.3.3, 1.3.4 and 10.4 are reconciled as follows: the existing generic
+local field interface can express a transverse reflection and one-link
+streaming hypothesis without adding an engine field equation. Conditional
+leading vacuum dynamics and small-space mode frequencies agree with the
+independent forecast. Exact centered Gauss conservation, complete macroscopic
+energy, physical light speed and indefinite bounded-integer mixing remain gaps.
+The experiment does not promote full electromagnetic emergence to a verified
+result. This entry records repository coverage; it does not claim a live
+Highlights edit or replace the earlier revision record above.
+
+### Source contracts and evidence
 
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |

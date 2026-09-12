@@ -10,7 +10,8 @@ from dataclasses import dataclass
 from event_universe.core.disturbance_state import Address3, InitialState
 from event_universe.initialization import _address, _array, _index, _integer, _object, _text
 from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
-from event_universe.quantum.event_rules import Matrix
+from event_universe.quantum.event_network import Instrument, LocalOperation
+from event_universe.quantum.event_rules import GroupedInstrument, LocalChannel, Matrix, outcome_groups
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,23 +21,21 @@ class Binding:
     types: tuple[int, ...]
     field: int
     codes: tuple[int, ...]
-    instrument: LocalInstrument
+    instrument: Instrument
 
 
 @dataclass(frozen=True, slots=True)
 class Program:
     capacity: int
     network: EventNetworkConfig | None
-    layers: tuple[tuple[int, tuple[tuple[LocalUnitary, tuple[int, ...]], ...]], ...]
+    layers: tuple[tuple[int, tuple[tuple[LocalOperation, tuple[int, ...]], ...]], ...]
     bindings: tuple[Binding, ...]
     seed: int
     tickets: tuple[int, ...] | None
 
 
 def _matrix(value: object) -> Matrix:
-    rows = _array(value, "matrix", 4, 2)
-    if len(rows) not in (2, 4):
-        raise ValueError("matrix must be two or four dimensional")
+    rows = _array(value, "matrix", 16, 2)
     result = []
     for row in rows:
         values = []
@@ -66,18 +65,24 @@ def parse_event_program(initial: InitialState) -> Program:
             "seed",
             "tickets",
             "bounds",
+            "dimensions",
+            "initial_levels",
+            "register_names",
         },
         {"model", "capacity"},
     )
     model = _text(obj["model"], "event program model")
     capacity = _integer(obj["capacity"], "event capacity", 1)
     if initial.spatial_fields:
-        raise ValueError("native event program v1 does not yet bind independent spatial-field clocks")
+        raise ValueError("native event program does not yet bind independent spatial-field clocks")
     if model == "causal-events-v1":
         _object(obj, "causal program", {"model", "capacity"}, {"model", "capacity"})
         return Program(capacity, None, (), (), 0, None)
-    if model != "local-quantum-events-v1":
+    if model not in ("local-quantum-events-v1", "local-quantum-events-v2"):
         raise ValueError("unknown event program model")
+    v2 = model == "local-quantum-events-v2"
+    if not v2 and {"dimensions", "initial_levels", "register_names"} & obj.keys():
+        raise ValueError("register definitions require local-quantum-events-v2")
     addresses = tuple(
         _address(a, "quantum address", 0) for a in _array(obj.get("addresses"), "addresses", 30, 1)
     )
@@ -100,6 +105,17 @@ def parse_event_program(initial: InitialState) -> Program:
         max_eval_nodes=_integer(bounds.get("max_eval_nodes", 10000), "max_eval_nodes", 1),
         max_terms=_integer(bounds.get("max_terms", 4096), "max_terms", 1),
         max_records=_integer(bounds.get("max_records", 1024), "max_records", 1),
+        dimensions=tuple(
+            _integer(d, "dimension", 2) for d in _array(obj.get("dimensions", []), "dimensions", 30)
+        ),
+        initial_levels=tuple(
+            _integer(d, "initial level", 0)
+            for d in _array(obj.get("initial_levels", []), "initial_levels", 30)
+        ),
+        register_names=tuple(
+            _text(n, "register name")
+            for n in _array(obj.get("register_names", []), "register_names", 30)
+        ),
     )
     layers = []
     prior_tick = 0
@@ -110,25 +126,39 @@ def parse_event_program(initial: InitialState) -> Program:
             raise ValueError("layers must have strictly increasing ticks")
         prior_tick = tick
         used: set[int] = set()
-        operations = []
+        operations: list[tuple[LocalOperation, tuple[int, ...]]] = []
         for raw_op in _array(layer["operations"], "operations", 30, 1):
-            op = _object(raw_op, "operation", {"sites", "matrix"}, {"sites", "matrix"})
+            op = _object(
+                raw_op,
+                "operation",
+                {"sites", "matrix", "channel"} if v2 else {"sites", "matrix"},
+                {"sites"},
+            )
+            if ("matrix" in op) == ("channel" in op):
+                raise ValueError("operation must supply exactly one matrix or channel")
             sites = tuple(
                 _integer(q, "operation site", 0) for q in _array(op["sites"], "operation sites", 2, 1)
             )
             if any(q >= len(addresses) or q in used for q in sites) or len(set(sites)) != len(sites):
                 raise ValueError("overlapping or invalid operation sites")
             used.update(sites)
-            rule = LocalUnitary(_matrix(op["matrix"]))
-            if len(rule.matrix) != 1 << len(sites):
+            rule: LocalOperation
+            if "matrix" in op:
+                rule = LocalUnitary(_matrix(op["matrix"]))
+                size = len(rule.matrix)
+            else:
+                rule = LocalChannel(tuple(_matrix(m) for m in _array(op["channel"], "channel", 4, 1)))
+                if len(sites) != 1:
+                    raise ValueError("a local channel acts on one register")
+                size = len(rule.kraus[0])
+            dimension = 1
+            for site in sites:
+                dimension *= network.local_dimensions[site]
+            if size != dimension:
                 raise ValueError("matrix dimension disagrees with operation support")
-            if (
-                len(sites) == 2
-                and sum(
-                    abs(a - b) for a, b in zip(addresses[sites[0]], addresses[sites[1]], strict=True)
-                )
-                != 1
-            ):
+            if len(sites) == 2 and sum(
+                abs(a - b) for a, b in zip(addresses[sites[0]], addresses[sites[1]], strict=True)
+            ) not in ((0, 1) if v2 else (1,)):
                 raise ValueError("quantum operations require cardinal nearest neighbors")
             operations.append((rule, sites))
         layers.append((tick, tuple(operations)))
@@ -140,8 +170,10 @@ def parse_event_program(initial: InitialState) -> Program:
         b = _object(
             raw,
             "binding",
-            {"address", "types", "field", "codes", "instrument"},
-            {"address", "types", "field", "codes", "instrument"},
+            {"address", "types", "field", "codes", "instrument", "grouped_instrument", "site"}
+            if v2
+            else {"address", "types", "field", "codes", "instrument"},
+            {"address", "types", "field", "codes"},
         )
         address = _address(b["address"], "binding address", 0)
         if address not in addresses or address in bound:
@@ -159,16 +191,37 @@ def parse_event_program(initial: InitialState) -> Program:
             for t in types
         ):
             raise ValueError("every participant must own a separate outcome field")
-        instrument = LocalInstrument(
-            tuple(_matrix(m) for m in _array(b["instrument"], "instrument", 4, 1))
-        )
+        if ("instrument" in b) == ("grouped_instrument" in b):
+            raise ValueError("binding requires exactly one instrument definition")
+        instrument: Instrument
+        if "instrument" in b:
+            instrument = LocalInstrument(
+                tuple(_matrix(m) for m in _array(b["instrument"], "instrument", 4, 1))
+            )
+        else:
+            instrument = GroupedInstrument(
+                tuple(
+                    tuple(_matrix(m) for m in _array(group, "unobserved Kraus terms", 4, 1))
+                    for group in _array(b["grouped_instrument"], "grouped instrument", 4, 1)
+                )
+            )
+        if "site" in b:
+            site = _integer(b["site"], "binding site", 0)
+            if site >= len(addresses) or addresses[site] != address:
+                raise ValueError("binding register must be at its physical address")
+        else:
+            if addresses.count(address) != 1:
+                raise ValueError("colocated registers require an explicit binding site")
+            site = addresses.index(address)
+        groups = outcome_groups(instrument)
+        if len(groups[0][0]) != network.local_dimensions[site]:
+            raise ValueError("instrument dimension disagrees with binding register")
         codes = tuple(
-            _integer(c, "outcome code")
-            for c in _array(b["codes"], "codes", len(instrument.branches), len(instrument.branches))
+            _integer(c, "outcome code") for c in _array(b["codes"], "codes", len(groups), len(groups))
         )
         if not definition.signed and any(c < 0 for c in codes):
             raise ValueError("negative code for unsigned outcome field")
-        bindings.append(Binding(address, addresses.index(address), types, field, codes, instrument))
+        bindings.append(Binding(address, site, types, field, codes, instrument))
     tickets = (
         None
         if "tickets" not in obj

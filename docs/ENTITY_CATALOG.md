@@ -1,5 +1,11 @@
 # Executable entity catalog
 
+An explicit `--representation quantum` now compiles each entry's
+[finite quantum profile](QUANTUM_ENTITIES.md) into the native event program.
+Classical profiles are unchanged. A field's quantum mode profile is not its
+classical spatial-field clock; those two runtime policies are not silently mixed.
+
+
 All 46 current catalog entries have explicit executable representation profiles:
 11 field families and 35 particle or multiplet records. This is the scope of this
 inventory, not a claim that every physical entity in nature is known or simulated.

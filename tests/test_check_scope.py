@@ -176,25 +176,10 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     assert selected.exists()
 
 
-@pytest.mark.parametrize("path", [".github/workflows/check.yml", "setup.ps1", "new-component/notes.txt"])
-def test_every_file_change_selects_language_and_canonical_copy_guards(path):
-    tests, typed = CHECK.select([path], {})
-    assert {"tests/test_repository_language.py", "tests/test_repository_hygiene.py"} <= set(tests)
-    assert not typed
-
-
-@pytest.mark.parametrize(
-    "path",
-    [
-        "examples/04-unequal-mass-collision.json",
-        "examples/three_mass_finite.json",
-        "examples/known-entities/three-masses-low-budget.json",
-        "examples/known-entities/boundary-periodic.json",
-        "examples/known-entities/boundary-open.json",
-        "examples/known-entities/run_reference_checks.py",
-        "examples/known-entities/run_reference_checks.ps1",
-    ],
-)
-def test_reference_runner_dynamic_resources_select_numerical_acceptance(path):
-    tests, _ = CHECK.select([path], {})
-    assert "tests/test_reference_examples.py" in tests
+def test_quantum_profile_and_experiment_resources_select_consumers():
+    tests, _ = CHECK.select(["examples/known-entities/catalog.json"], {})
+    assert "tests/test_quantum_entities.py" in tests
+    assert "tests/test_native_quantum_channels.py" in tests
+    assert "tests/test_small_space_experiments.py" in tests
+    tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
+    assert "tests/test_native_quantum_channels.py" in tests

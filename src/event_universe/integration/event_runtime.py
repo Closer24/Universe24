@@ -111,7 +111,10 @@ class NativeEventResolver:
             raise ValueError("native scheduler must advance the recipe clock once")
         layer = self.layers.get(tick, ())
         for _, sites in layer:
-            if len(sites) == 2:
+            if (
+                len(sites) == 2
+                and self.space.config.addresses[sites[0]] != self.space.config.addresses[sites[1]]
+            ):
                 for q in sites:
                     previous = self.events.event(self.space.heads[q])
                     if tick - previous.tick < self.initial.link_ticks:
@@ -120,7 +123,11 @@ class NativeEventResolver:
 
     def report(self) -> dict[str, object]:
         return {
-            "model": "local-quantum-events-v1",
+            "model": "local-quantum-events-v2"
+            if any(e.channel for e in self.space.events) or self.space.config.dimensions
+            else "local-quantum-events-v1",
+            "register_dimensions": self.space.config.local_dimensions,
+            "register_names": self.space.config.register_names,
             "tick": self.space.tick,
             "oracle_calls": self.owner.query_stats.successful_queries,
             "oracle_direct_world_ticks": 0,

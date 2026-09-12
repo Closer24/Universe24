@@ -1,5 +1,12 @@
 # Selected quantum method: deferred event network
 
+The [register/channel extension](QUANTUM_ENTITIES.md) adds explicit native v2
+inputs, finite multilevel registers, density states and grouped outcomes to this
+same owner. The binary pure-state contract below describes the original v1 subset;
+its old limitation on indistinguishable Kraus terms is removed only by that
+explicit extension. The shared [native runtime](NATIVE_QUANTUM_EVENTS.md) supplies
+classical feedback; the standalone backend does not own a physical engine.
+
 ## Status and scope
 
 `deferred-event-network-v1` is the selected finite quantum-state implementation
@@ -82,8 +89,9 @@ A coherent interaction is a local unitary recipe and does not sample. A returnin
 environment must remain in the joint coherent model. Choosing an outcome at every
 interaction can destroy later interference. A fresh-environment trajectory is a
 specified open-system model, not proof of objective collapse in the whole universe.
-One Kraus matrix per outcome is supported; an unresolved sum of Kraus alternatives
-would require a mixed-state extension rather than a fake sharp record.
+The original instrument form has one Kraus matrix per outcome. The explicit
+[register/channel extension](QUANTUM_ENTITIES.md) now retains indistinguishable
+terms as a mixed continuation rather than a fake sharp record.
 
 The controller knows its previous records and can compute conditional marginals.
 These weights are host information, not a classical signal available to a remote

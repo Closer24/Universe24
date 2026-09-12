@@ -7,7 +7,7 @@ force/collision equations. New output rules use copy, swap, add, subtract and
 integer vector operations. Physical references are independent acceptance targets.
 
 ```sh
-python examples/small-space/run.py --output artifacts/small-space-new
+python examples/small-space/run_experiments.py --output artifacts/small-space-new
 ```
 
 Use a fresh output directory. Each run uses the existing recorded HTML generator.

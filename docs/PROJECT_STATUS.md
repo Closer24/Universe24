@@ -1,10 +1,75 @@
 # Project status and restart guide
 
-Audit reference: 2026-09-12, main `99b9f5f0034ea288f7de0a2a8d7645220c45d8aa`.
-The names below include the repository-consistency cleanup based on that revision.
-Verify the current checkout, main and open PRs before continuing. A dated source
-map does not certify another checkout or turn an unmerged branch into implemented work.
-Use the [documentation index](README.md) for each subject's authoritative owner.
+For a clean machine or deleted conversation, follow
+[recovery without chat history](RECOVERY.md), including the versioned daily
+genericity skill and local retention setup.
+The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
+live specification reconciliation, entity coverage and exact source contracts.
+
+The [finite quantum-register extension](QUANTUM_ENTITIES.md) adds unobserved
+channels, mixed conditional states, grouped outcomes, finite multilevel registers
+and quantum preparation profiles for the existing 46 catalog entries. Species
+dynamics, spatial-field clock composition and general classical emergence are
+not established. Reproduce with `examples/quantum/run_physics_checks.py`.
+
+
+The [local Maxwell experiment](../examples/maxwell/README.md) selects a
+six-population reflection and causal streaming through configuration only.
+Its conditional long-wavelength vacuum generator and eleven small-world runs
+give two transverse modes with leading speed one half link per tick. Centered
+Gauss conservation, exact macro electromagnetic energy and indefinite integer
+mixing remain explicit blockers; this is not a complete electromagnetic law.
+
+The [small-space comparisons](../examples/small-space/README.md) record 24
+9-cubed/15-cubed entity, source and response experiments. Local accounting and
+selected mechanisms pass; field/particle physical laws remain incomplete.
+Finite owned-reservoir transfer, a ray-speed parameter and a restricted
+zero-total-momentum unequal-mass candidate are explicit configuration solutions,
+not replacements for the default entity profiles or derived universal laws.
+
+The [executable catalog](ENTITY_CATALOG.md) provides bounded representation
+profiles for all 46 inventory entries and compilation into ordinary run inputs.
+The [local conversion interface](LOCAL_CONVERSIONS.md) supports explicit atomic
+two-to-two type replacement with declared balances. These additions do not
+establish physical annihilation, general particle production or physical field
+dynamics. Consult current PR/CI evidence for the exact integrated tree.
+
+The [physical entity inventory](PHYSICAL_ENTITIES.md), based on main
+`09464b41b2c44a191aa2fcbdf4b036680bd646a5`, separates descriptive entities from
+executable mechanics and unestablished emergence. New equal-mass charged-pair
+and two-vector port probes use elementary operations only. They do not provide
+Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
+Use the linked catalog and exact PR evidence instead of treating physical labels
+as implemented laws.
+
+Local field-rule extension base: 2026-09-12, main
+`12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
+[local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
+six-port reads, retained/outgoing field assignments and guarded joint
+field/carrier transactions. This is a bounded generic research interface, not
+an implemented electromagnetic law. Integration and validation status require
+the current PR and its exact tested tree; this paragraph does not certify a run.
+
+Integration reference: 2026-09-12. [PR #27](https://github.com/Closer24/Universe24/pull/27)
+combines reviewed spatial-field feature head
+`137830fd621b9522598e0719e7bd2055ead595a9` with main
+`15029ba8d02bd7f1bb1dd1148fe55405ec1536b1`, which adds atomic generic interactions
+and the configured unequal-mass elastic example through PR #28, followed by
+main `64d26a89842637ab71517ec45aebfa7c3deae331` and its affected-check selection
+through PR #29. Validation selects changed code and reviewed consumers by default;
+complete audits require explicit `--full`. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+Spatial fields,
+finite budgets, boundaries, output retention and arbitrary-name handling remain
+included. GitHub-supplied blob, tree and commit hashes were verified before local
+integration. Verify live checkout, remote and PR state before continuing; this
+reference is not a claim about the version in another checkout. Identified checks
+and run evidence belong in [VALIDATION.md](VALIDATION.md).
+
+Registered run outputs,
+workspace copies/logs/exports and test reports expire after 24 hours, with live
+writer protection; see [RETENTION.md](RETENTION.md). Idle cleanup requires the
+watcher or a scheduled invocation. Generated evidence paths in older validation
+records are temporary, while their recorded conclusions remain in the repository.
 
 ## What this checkout contains
 
@@ -120,3 +185,11 @@ not a competing current-status list.
 5. Hand off the scope, validation, limits and integration state through the PR and
    [shared workflow](../skills/workflow.md). A Git rename changes the source fingerprint;
    retain older fingerprints as historical evidence rather than relabeling old runs.
+
+## Repository naming and ownership audit
+
+The repository-wide naming/ownership audit is reconciled against main
+`85ec120862e5bead2c63eebfc37753b52497c0eb`. It preserves the integrated
+native quantum, quantum-entity and Maxwell research additions while keeping
+one active implementation owner per documented responsibility. Historical
+research APIs and standalone laboratories remain explicitly labeled.

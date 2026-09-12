@@ -674,3 +674,16 @@ The existing budget delay applies once to the entire local cycle; neither
 waiting nor commit charges it again. Host work remains separate. Independent
 spatial-field composition is currently rejected for this candidate, not silently
 run without provenance. Existing configurations without event_program are unchanged.
+
+## Finite quantum registers and channels - Q-REGISTERS-2
+
+The explicit `local-quantum-events-v2` contract is defined in
+[QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md). It permits dimensions two to four,
+colocated named degrees of freedom, unobserved complete channels and grouped
+observable outcomes under existing bounded arithmetic and local support rules.
+Only an observable result is sampled. Inaccessible alternatives are summed as
+mixed-state contributions, not independently chosen paths. Classical trajectories
+still incur native cycle cost; zero oracle ticks do not imply zero host work.
+The entity compiler's explicit quantum selection adds no species-name dispatch.
+Independent spatial-field clocks and general field/particle dynamics remain
+outside this candidate. Legacy binary inputs retain their original behavior.
