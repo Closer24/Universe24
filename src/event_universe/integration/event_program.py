@@ -7,7 +7,7 @@ callbacks. This owner validates payloads; the physical scheduler stays neutral.
 import json
 from dataclasses import dataclass
 
-from event_universe.core.disturbance_state import Address3, InitialState
+from event_universe.core.disturbance_state import MAX_REACTION_INPUTS, Address3, InitialState
 from event_universe.initialization import _address, _array, _index, _integer, _object, _text
 from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
 from event_universe.quantum.event_network import Instrument, LocalOperation
@@ -180,7 +180,8 @@ def parse_event_program(initial: InitialState) -> Program:
             raise ValueError("one local binding per configured quantum address required")
         bound.add(address)
         types = tuple(
-            _index(t, names, "binding type") for t in _array(b["types"], "binding types", 2, 1)
+            _index(t, names, "binding type")
+            for t in _array(b["types"], "binding types", MAX_REACTION_INPUTS, 1)
         )
         field = _index(b["field"], field_names, "binding field")
         definition = initial.fields[field]

@@ -22,6 +22,8 @@ MAX_FIELDS = 16
 MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
+MAX_REACTION_INPUTS = 8
+MAX_REACTION_OUTPUTS = 8
 MAX_EXPRESSION_NODES = 64
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 Payload = tuple[int, ...]
@@ -151,6 +153,30 @@ class InteractionDefinition:
 
 
 @dataclass(frozen=True, slots=True)
+class ReactionAssignment:
+    output: int
+    field: int
+    expression: Expression
+
+
+@dataclass(frozen=True, slots=True)
+class ReactionInvariant:
+    name: str
+    before: Expression
+    after: Expression
+
+
+@dataclass(frozen=True, slots=True)
+class ReactionDefinition:
+    name: str
+    input_types: tuple[int, ...]
+    output_types: tuple[int, ...]
+    assignments: tuple[ReactionAssignment, ...]
+    invariants: tuple[ReactionInvariant, ...] = ()
+    when: Expression | None = None
+
+
+@dataclass(frozen=True, slots=True)
 class OperationCosts:
     prices: tuple[int, ...]
 
@@ -214,6 +240,7 @@ class InitialState:
     schema_version: int = 1
     boundary: str = "periodic"
     interactions: tuple[InteractionDefinition, ...] = ()
+    reactions: tuple[ReactionDefinition, ...] = ()
     field_groups: tuple[FieldGroupDefinition, ...] = ()
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()

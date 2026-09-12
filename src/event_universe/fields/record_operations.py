@@ -9,6 +9,7 @@ from event_universe.core.disturbance_state import (
     FieldDefinition,
     InteractionDefinition,
     LocalPlan,
+    ReactionDefinition,
     pack,
     unpack,
 )
@@ -29,6 +30,7 @@ class RecordOperations:
     couplings: tuple[CouplingDefinition, ...] = ()
     interactions: tuple[InteractionDefinition, ...] = ()
     spatial_types: frozenset[int] = frozenset()
+    reactions: tuple[ReactionDefinition, ...] = ()
 
     def has_work(self, records: tuple[DisturbanceRecord | None, ...]) -> bool:
         present = [record.type_index for record in records if record is not None]
@@ -42,6 +44,14 @@ class RecordOperations:
             if coupling.left_type in present and coupling.right_type in present:
                 if coupling.left_type != coupling.right_type or present.count(coupling.left_type) > 1:
                     return True
+        for reaction in self.reactions:
+            remaining = list(present)
+            for type_index in reaction.input_types:
+                if type_index not in remaining:
+                    break
+                remaining.remove(type_index)
+            else:
+                return True
         for record in records:
             if record is not None:
                 definition = self.disturbances[record.type_index]

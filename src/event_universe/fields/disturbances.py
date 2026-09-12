@@ -14,6 +14,7 @@ from event_universe.core.disturbance_state import (
     LocalPlan,
     OperationCosts,
     Payload,
+    ReactionDefinition,
     Values,
     Weights,
     bounded,
@@ -52,19 +53,28 @@ def evaluate(
     *,
     ports: tuple[Values, ...] = (),
     outgoing: tuple[Values, ...] = (),
+    participants: tuple[Values, ...] | None = None,
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
+    sources = participants if participants is not None else (left, right)
     op = expression.op
     if op in PROJECTIONS:
         values = evaluate_ratio(
-            expression.arguments[0], left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing
+            expression.arguments[0],
+            left,
+            right,
+            meter,
+            spatial_fluxes,
+            ports=ports,
+            outgoing=outgoing,
+            participants=sources,
         )
         return project(op, values)
     if op == "literal":
         return expression.literal
     if op == "field":
-        return unpack((left if expression.side == 0 else right)[expression.field])
+        return unpack(sources[expression.side][expression.field])
     if op == "flux":
         if not spatial_fluxes:
             raise ValueError("spatial flux requires an explicitly supplied local sample")
@@ -75,7 +85,9 @@ def evaluate(
             raise ValueError("directional expressions require six explicitly supplied local channels")
         return unpack(channels[expression.port][expression.field])
     operands = tuple(
-        evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        evaluate(
+            arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing, participants=sources
+        )
         for arg in expression.arguments
     )
     if op == "transform":
@@ -162,6 +174,7 @@ class DisturbanceLaw:
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
     interactions: tuple[InteractionDefinition, ...] = ()
+    reactions: tuple[ReactionDefinition, ...] = ()
 
     def _interact(
         self,
@@ -226,6 +239,79 @@ class DisturbanceLaw:
             if evaluate(invariant.expression, first.values, second.values, meter) != expected:
                 raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
         return first, second
+
+    def _reaction_input_ready(self, record: DisturbanceRecord) -> None:
+        carried = (
+            *record.phase_codes,
+            *record.emission_remainders,
+            *record.emission_phases,
+            *record.exchange_remainders,
+            *record.spatial_remainders,
+            *record.emission_remaining,
+            *record.spatial_remaining,
+        )
+        if (
+            record.route_phase_code != 1
+            or record.rate_remainder_code != 1
+            or record.rate_credit_denominator != 1
+            or any(code != 1 for code in record.route_count_codes)
+            or any(code != 1 for code in record.route_weight_codes)
+            or any(code != 1 for payload in carried for code in payload)
+        ):
+            raise ValueError("reaction requires zero carried routing and allowance state")
+        if not 1 <= record.channel_code <= 7:
+            raise ValueError("reaction input channel must identify a local origin or neighbor port")
+
+    def _react(
+        self,
+        rule: ReactionDefinition,
+        inputs: tuple[DisturbanceRecord, ...],
+        meter: CostMeter,
+    ) -> tuple[DisturbanceRecord, ...] | None:
+        values = tuple(record.values for record in inputs)
+        left, right = values[0], values[1] if len(values) > 1 else values[0]
+        if (
+            rule.when is not None
+            and evaluate(rule.when, left, right, meter, participants=values)[0] <= 0
+        ):
+            return None
+        meter.charge("couple")
+        before = tuple(
+            evaluate(invariant.before, left, right, meter, participants=values)
+            for invariant in rule.invariants
+        )
+        for record in inputs:
+            self._reaction_input_ready(record)
+        zero = tuple((1,) * field.components for field in self.fields)
+        outputs = [DisturbanceRecord(type_index, zero, zero) for type_index in rule.output_types]
+        for assignment in rule.assignments:
+            meter.charge("update")
+            value = evaluate(assignment.expression, left, right, meter, participants=values)
+            outputs[assignment.output] = _with_value(
+                outputs[assignment.output], assignment.field, pack(value)
+            )
+        meter.charge("update", max(len(inputs), len(outputs)))
+        for record in outputs:
+            self._validate(record, meter)
+        original_totals = _sum_records(inputs, self.fields)
+        candidate_totals = _sum_records(tuple(outputs), self.fields)
+        for index, field in enumerate(self.fields):
+            if field.conserved and original_totals[index] != candidate_totals[index]:
+                raise ValueError(f"reaction {rule.name} violates conservation of {field.name}")
+        output_values = tuple(record.values for record in outputs)
+        out_left = output_values[0]
+        out_right = output_values[1] if len(output_values) > 1 else output_values[0]
+        for invariant, expected in zip(rule.invariants, before, strict=True):
+            actual = evaluate(
+                invariant.after,
+                out_left,
+                out_right,
+                meter,
+                participants=output_values,
+            )
+            if actual != expected:
+                raise ValueError(f"reaction {rule.name} violates invariant {invariant.name}")
+        return tuple(outputs)
 
     def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
         definition = self.definitions[record.type_index]
@@ -462,6 +548,58 @@ class DisturbanceLaw:
                         interaction, left, right, meter
                     )
 
+        # Bounded n-to-m reactions consume disjoint local inputs once per rule/cycle.
+        # Outputs may feed a later configured rule, but never the same rule again in this cycle.
+        reaction_cleared: set[int] = set()
+        for reaction in self.reactions:
+            blocked: set[int] = set()
+            while True:
+                selected: list[int] = []
+                for type_index in reaction.input_types:
+                    match = next(
+                        (
+                            slot
+                            for slot, record in enumerate(updated)
+                            if slot not in blocked
+                            and slot not in selected
+                            and record is not None
+                            and record.type_index == type_index
+                        ),
+                        None,
+                    )
+                    if match is None:
+                        selected = []
+                        break
+                    selected.append(match)
+                if not selected:
+                    break
+                inputs = tuple(updated[slot] for slot in selected)
+                assert all(record is not None for record in inputs)
+                outputs = self._react(
+                    reaction,
+                    tuple(record for record in inputs if record is not None),
+                    meter,
+                )
+                blocked.update(selected)
+                if outputs is None:
+                    continue
+                extra_count = max(0, len(outputs) - len(selected))
+                extra_slots = [
+                    slot
+                    for slot, record in enumerate(updated)
+                    if record is None and slot not in selected and slot not in blocked
+                ][:extra_count]
+                if len(extra_slots) != extra_count:
+                    raise ValueError("reaction output capacity exhausted; no input was discarded")
+                targets = [*selected[: min(len(selected), len(outputs))], *extra_slots]
+                for slot in selected:
+                    updated[slot] = None
+                    reaction_cleared.add(slot)
+                for slot, output in zip(targets, outputs, strict=True):
+                    updated[slot] = output
+                    reaction_cleared.discard(slot)
+                    blocked.add(slot)
+
         replacements: list[tuple[int, DisturbanceRecord | None]] = []
         departures: list[Departure] = []
         for slot, record in enumerate(updated):
@@ -472,6 +610,10 @@ class DisturbanceLaw:
             departures.extend(Departure(item.port, item.record, slot) for item in outgoing)
             if self.definitions[record.type_index].cost_field is not None:
                 meter.charge("update")
+        replaced_slots = {slot for slot, _ in replacements}
+        for slot in range(slots):
+            if slot in reaction_cleared and slot not in replaced_slots:
+                replacements.append((slot, None))
         meter.charge("commit")
         # Subquantum exchange belongs to the current local pair, not to a later
         # occupant of its slot. It is rounding state, never conserved inventory.

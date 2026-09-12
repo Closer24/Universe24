@@ -1,0 +1,17 @@
+{
+  "reaction_version": 2,
+  "model_id": "catalog-muon-decay-conservation-topology-probe-v1",
+  "shape": [9, 9, 9],
+  "position": [4, 4, 4],
+  "ticks": 3,
+  "link_ticks": 1,
+  "move_outputs": true,
+  "inputs": [
+    {"entity": "muon", "energy": 12, "momentum": [0, 0, 0]}
+  ],
+  "outputs": [
+    {"entity": "electron", "energy": 6, "momentum": [4, 0, 0]},
+    {"entity": "electron_antineutrino", "energy": 3, "momentum": [-2, 0, 0]},
+    {"entity": "muon_neutrino", "energy": 3, "momentum": [-2, 0, 0]}
+  ]
+}

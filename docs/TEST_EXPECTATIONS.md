@@ -103,6 +103,17 @@ two ticks with retained and in-flight ownership counted once. These checks do
 not establish Maxwell dynamics, annihilation or general classical emergence.
 See [the acceptance limits](PHYSICAL_ENTITIES.md).
 
+
+## Bounded n-to-m reactions
+
+`tests/test_nary_reactions.py` requires an anonymous `3 -> 2` transaction to consume
+three colocated inputs once, create two outputs, preserve its conserved inventory
+and clear the unused input slot. A tampered output must fail without partial commit;
+reaction arity must fit `slots_per_cell`; runtime output-capacity exhaustion must
+preserve every input. `tests/test_particle_reactions.py` additionally runs the
+catalog electron-electron `2 -> 2` conservation topology and muon-decay `1 -> 3`
+topology. These are ownership/conservation tests, not QED or weak-rate derivations.
+
 ## Generic local field rules
 
 These are focused acceptance requirements for

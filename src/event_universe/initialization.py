@@ -8,6 +8,8 @@ from .core.disturbance_state import (
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
     MAX_RULES,
+    MAX_REACTION_INPUTS,
+    MAX_REACTION_OUTPUTS,
     MAX_SLOTS,
     MAX_TYPES,
     MAX_VALUE,
@@ -24,6 +26,9 @@ from .core.disturbance_state import (
     Invariant,
     OperationCosts,
     Payload,
+    ReactionAssignment,
+    ReactionDefinition,
+    ReactionInvariant,
     Seed,
     TransportDefinition,
     UpdateRule,
@@ -165,10 +170,11 @@ class _Expressions:
         flux_fields: tuple[int, ...] = (),
         received_fields: tuple[int, ...] = (),
         outgoing_fields: tuple[int, ...] = (),
+        participants: tuple[tuple[int, ...], ...] | None = None,
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
-        self.owned = (left, right)
+        self.owned = participants if participants is not None else (left, right)
         self.nodes = 0
         self.flux_fields = flux_fields
         self.received_fields = received_fields
@@ -199,7 +205,19 @@ class _Expressions:
         obj = _object(
             value,
             "expression",
-            {"field", "side", "op", "args", "index", "flux", "matrix", "received", "outgoing", "port"},
+            {
+                "field",
+                "side",
+                "participant",
+                "op",
+                "args",
+                "index",
+                "flux",
+                "matrix",
+                "received",
+                "outgoing",
+                "port",
+            },
             set(),
         )
         if "received" in obj or "outgoing" in obj:
@@ -301,16 +319,23 @@ class _Expressions:
         return Expression(operation, tuple(item[0] for item in arguments), component=component), size
 
     def _reference(self, obj: dict[str, object]) -> tuple[Expression, int]:
-        obj = _object(obj, "field expression", {"field", "side"}, {"field"})
-        side_name = obj.get("side", "left")
-        if side_name not in ("left", "right"):
-            raise ValueError("expression.side must be left or right")
-        side = 1 if side_name == "right" else 0
+        obj = _object(obj, "field expression", {"field", "side", "participant"}, {"field"})
+        if "side" in obj and "participant" in obj:
+            raise ValueError("field expression selects side or participant, not both")
+        if "participant" in obj:
+            participant = _integer(obj["participant"], "expression.participant", 0)
+        else:
+            side_name = obj.get("side", "left")
+            if side_name not in ("left", "right"):
+                raise ValueError("expression.side must be left or right")
+            participant = 1 if side_name == "right" else 0
+        if participant >= len(self.owned):
+            raise ValueError("expression.participant exceeds the configured participants")
         index = _index(obj["field"], self.names, "expression.field")
-        owned = self.owned[side]
+        owned = self.owned[participant]
         if owned is None or index not in owned:
             raise ValueError("expression references a field not owned by its participant")
-        return Expression("field", field=index, side=side), self.fields[index].components
+        return Expression("field", field=index, side=participant), self.fields[index].components
 
 
 def _transport(
@@ -576,6 +601,99 @@ def _interactions(
         result.append(
             InteractionDefinition(
                 name, left, right, tuple(assignments), tuple(invariants), when, output_types
+            )
+        )
+    return tuple(result)
+
+
+def _reactions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+) -> tuple[ReactionDefinition, ...]:
+    """Parse bounded local n-to-m record reactions without species dispatch."""
+    result: list[ReactionDefinition] = []
+    type_names, field_names = _names(disturbances), _names(fields)
+    required = {"name", "input_types", "output_types", "assignments"}
+    for raw in _array(value, "reactions", MAX_RULES):
+        obj = _object(raw, "reaction", required | {"invariants", "when"}, required)
+        name = _text(obj["name"], "reaction.name")
+        if any(rule.name == name for rule in result):
+            raise ValueError("duplicate reaction name")
+        input_types = tuple(
+            _index(item, type_names, "reaction.input_type")
+            for item in _array(obj["input_types"], "reaction.input_types", MAX_REACTION_INPUTS, 1)
+        )
+        output_types = tuple(
+            _index(item, type_names, "reaction.output_type")
+            for item in _array(obj["output_types"], "reaction.output_types", MAX_REACTION_OUTPUTS, 1)
+        )
+        inputs = tuple(disturbances[index] for index in input_types)
+        outputs = tuple(disturbances[index] for index in output_types)
+        involved = (*inputs, *outputs)
+        if any(kind.transport.mode == "split" or kind.cost_field is not None for kind in involved):
+            raise ValueError("reaction requires whole records without cost_field")
+        input_owned = tuple(kind.fields for kind in inputs)
+        output_owned = tuple(kind.fields for kind in outputs)
+
+        def input_expression(raw_value: object, expected: int | None = None) -> Expression:
+            return _Expressions(
+                fields,
+                input_owned[0],
+                participants=input_owned,
+            ).parse(raw_value, expected)
+
+        assignments: list[ReactionAssignment] = []
+        for raw_assignment in _array(
+            obj["assignments"], "reaction.assignments", MAX_FIELDS * MAX_REACTION_OUTPUTS
+        ):
+            item = _object(
+                raw_assignment,
+                "reaction assignment",
+                {"output", "field", "expression"},
+                {"output", "field", "expression"},
+            )
+            output = _integer(item["output"], "reaction assignment.output", 0)
+            if output >= len(outputs):
+                raise ValueError("reaction assignment.output exceeds the output count")
+            field = _index(item["field"], field_names, "reaction assignment.field")
+            if field not in outputs[output].fields:
+                raise ValueError("reaction assignment field must be owned by its output")
+            if any(a.output == output and a.field == field for a in assignments):
+                raise ValueError("duplicate reaction assignment target")
+            assignments.append(
+                ReactionAssignment(
+                    output,
+                    field,
+                    input_expression(item["expression"], fields[field].components),
+                )
+            )
+        expected = {(output, field) for output, kind in enumerate(outputs) for field in kind.fields}
+        if {(a.output, a.field) for a in assignments} != expected:
+            raise ValueError("reaction requires explicit assignments for every output field")
+
+        invariants: list[ReactionInvariant] = []
+        for raw_invariant in _array(obj.get("invariants", []), "reaction.invariants", MAX_FIELDS):
+            item = _object(
+                raw_invariant,
+                "reaction invariant",
+                {"name", "before", "after"},
+                {"name", "before", "after"},
+            )
+            invariant_name = _text(item["name"], "reaction invariant.name")
+            if any(invariant.name == invariant_name for invariant in invariants):
+                raise ValueError("duplicate reaction invariant name")
+            before = input_expression(item["before"], 1)
+            after = _Expressions(
+                fields,
+                output_owned[0],
+                participants=output_owned,
+            ).parse(item["after"], 1)
+            invariants.append(ReactionInvariant(invariant_name, before, after))
+        when = input_expression(obj["when"], 1) if "when" in obj else None
+        result.append(
+            ReactionDefinition(
+                name, input_types, output_types, tuple(assignments), tuple(invariants), when
             )
         )
     return tuple(result)
@@ -993,6 +1111,7 @@ def parse_initial_state(document: object) -> InitialState:
         | {
             "couplings",
             "interactions",
+            "reactions",
             "spatial_fields",
             "emissions",
             "spatial_seeds",
@@ -1044,6 +1163,7 @@ def parse_initial_state(document: object) -> InitialState:
         schema_version=schema_version,
         boundary=boundary,
         interactions=_interactions(obj.get("interactions", []), fields, disturbances),
+        reactions=_reactions(obj.get("reactions", []), fields, disturbances),
         field_groups=_field_groups(obj.get("field_groups", []), fields),
         field_rules=_field_rules(obj.get("field_rules", []), fields, spatial),
         spatial_interactions=_spatial_interactions(
@@ -1075,6 +1195,21 @@ def _validate_conversions(initial: InitialState) -> None:
         )
         if spatial_types & kinds:
             raise ValueError("conversion types cannot participate in spatial responses or emission")
+    for rule in initial.reactions:
+        if initial.schema_version != 1:
+            raise ValueError("reaction requires schema_version 1")
+        if max(len(rule.input_types), len(rule.output_types)) > initial.slots_per_cell:
+            raise ValueError("reaction arity exceeds slots_per_cell")
+        kinds = {*rule.input_types, *rule.output_types}
+        if any(c.left_type in kinds or c.right_type in kinds for c in initial.couplings):
+            raise ValueError("reaction types cannot participate in exchange couplings")
+        spatial_types = (
+            {r.type_index for r in initial.emissions}
+            | {r.type_index for r in initial.spatial_couplings}
+            | {r.type_index for r in initial.spatial_interactions}
+        )
+        if spatial_types & kinds:
+            raise ValueError("reaction types cannot participate in spatial responses or emission")
 
 
 def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:

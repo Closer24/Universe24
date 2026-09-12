@@ -1,9 +1,8 @@
-"""Compile catalog particle facts into a bounded local two-to-two reaction probe.
+"""Compile established catalog particle identities into bounded local reactions.
 
-This host-side adapter does not add species dispatch to the engine. Particle
-identity supplies data only. The compiled initialization uses the existing local
-conversion transaction and marks electric charge, configured energy and momentum
-as conserved physical fields so the runtime rejects an imbalanced proposal.
+Particle names remain host-side data. The generated initialization uses the generic
+n-to-m reaction owner and exact conserved charge, configured energy and momentum
+fields. No species name selects a runtime law or reaction probability.
 """
 
 from __future__ import annotations
@@ -14,7 +13,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from event_universe.core.disturbance_state import OPERATIONS
+from event_universe.core.disturbance_state import (
+    MAX_REACTION_INPUTS,
+    MAX_REACTION_OUTPUTS,
+    OPERATIONS,
+)
 from event_universe.core.state import checked, checked_work
 from event_universe.initialization import parse_initial_state, parse_json_document
 
@@ -23,8 +26,6 @@ JsonObject = dict[str, Any]
 
 @dataclass(frozen=True, slots=True)
 class ParticleFact:
-    """Integer catalog identity needed by the generic reaction authoring layer."""
-
     identity: str
     antiparticle_id: str
     electric_charge_thirds: int
@@ -35,7 +36,6 @@ class ParticleFact:
 
     @property
     def statistics_class(self) -> str:
-        """Classify the catalog spin using the established spin-statistics pairing."""
         return "fermion" if self.twice_spin % 2 else "boson"
 
 
@@ -57,6 +57,12 @@ def _object(value: object, label: str, allowed: set[str] | None = None) -> JsonO
 def _array(value: object, label: str, size: int) -> list[object]:
     if not isinstance(value, list) or len(value) != size:
         raise ValueError(f"{label} must contain exactly {size} items")
+    return value
+
+
+def _array_range(value: object, label: str, maximum: int, minimum: int = 1) -> list[object]:
+    if not isinstance(value, list) or not minimum <= len(value) <= maximum:
+        raise ValueError(f"{label} must contain {minimum} through {maximum} items")
     return value
 
 
@@ -137,61 +143,51 @@ def _leg(value: object, label: str, indexed: dict[str, JsonObject]) -> ReactionL
     _particle_fact(indexed, entity)
     energy = _integer(obj["energy"], f"{label}.energy", minimum=0)
     momentum_raw = _array(obj["momentum"], f"{label}.momentum", 3)
-    momentum = (
-        _integer(momentum_raw[0], f"{label}.momentum"),
-        _integer(momentum_raw[1], f"{label}.momentum"),
-        _integer(momentum_raw[2], f"{label}.momentum"),
-    )
-    return ReactionLeg(entity, energy, momentum)
+    momentum = tuple(_integer(value, f"{label}.momentum") for value in momentum_raw)
+    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]
 
 
 def _sum_scalar(values: tuple[int, ...]) -> int:
-    if len(values) != 2:
-        raise ValueError("reaction scalar sum requires exactly two values")
-    return checked(checked_work(values[0] + values[1]))
+    total = 0
+    for value in values:
+        total = checked(checked_work(total + value))
+    return total
 
 
 def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:
-    if len(values) != 2:
-        raise ValueError("reaction vector sum requires exactly two values")
-    left, right = values
-    return (
-        checked(checked_work(left[0] + right[0])),
-        checked(checked_work(left[1] + right[1])),
-        checked(checked_work(left[2] + right[2])),
-    )
+    totals = [0, 0, 0]
+    for value in values:
+        for component in range(3):
+            totals[component] = checked(checked_work(totals[component] + value[component]))
+    return totals[0], totals[1], totals[2]
 
 
 def _reaction_document(
     catalog: object, reaction: object
-) -> tuple[
-    JsonObject, dict[str, JsonObject], tuple[ReactionLeg, ReactionLeg], tuple[ReactionLeg, ReactionLeg]
-]:
+) -> tuple[JsonObject, dict[str, JsonObject], tuple[ReactionLeg, ...], tuple[ReactionLeg, ...]]:
     indexed = _particle_index(catalog)
     raw = _object(reaction, "reaction")
     required = {"reaction_version", "model_id", "inputs", "outputs"}
     optional = {"shape", "position", "ticks", "link_ticks", "move_outputs"}
     if not required <= set(raw) or not set(raw) <= required | optional:
         raise ValueError("reaction has missing or unsupported keys")
-    if raw["reaction_version"] != 1 or type(raw["reaction_version"]) is not int:
+    version = raw["reaction_version"]
+    if type(version) is not int or version not in (1, 2):
         raise ValueError("unsupported reaction_version")
     if not isinstance(raw["model_id"], str) or not raw["model_id"]:
         raise ValueError("reaction.model_id must be a nonempty string")
-    input_rows = _array(raw["inputs"], "inputs", 2)
-    output_rows = _array(raw["outputs"], "outputs", 2)
-    inputs = (
-        _leg(input_rows[0], "inputs[0]", indexed),
-        _leg(input_rows[1], "inputs[1]", indexed),
-    )
-    outputs = (
-        _leg(output_rows[0], "outputs[0]", indexed),
-        _leg(output_rows[1], "outputs[1]", indexed),
-    )
+    if version == 1:
+        input_rows = _array(raw["inputs"], "inputs", 2)
+        output_rows = _array(raw["outputs"], "outputs", 2)
+    else:
+        input_rows = _array_range(raw["inputs"], "inputs", MAX_REACTION_INPUTS)
+        output_rows = _array_range(raw["outputs"], "outputs", MAX_REACTION_OUTPUTS)
+    inputs = tuple(_leg(item, f"inputs[{index}]", indexed) for index, item in enumerate(input_rows))
+    outputs = tuple(_leg(item, f"outputs[{index}]", indexed) for index, item in enumerate(output_rows))
     return raw, indexed, inputs, outputs
 
 
 def reaction_manifest(catalog: object, reaction: object) -> JsonObject:
-    """Validate known particle facts and exact additive reaction balances."""
     raw, indexed, inputs, outputs = _reaction_document(catalog, reaction)
     input_facts = tuple(_particle_fact(indexed, leg.entity) for leg in inputs)
     output_facts = tuple(_particle_fact(indexed, leg.entity) for leg in outputs)
@@ -208,7 +204,7 @@ def reaction_manifest(catalog: object, reaction: object) -> JsonObject:
     if momentum_before != momentum_after:
         raise ValueError("reaction violates configured momentum conservation")
 
-    def facts(legs: tuple[ReactionLeg, ReactionLeg]) -> list[JsonObject]:
+    def facts(legs: tuple[ReactionLeg, ...]) -> list[JsonObject]:
         result: list[JsonObject] = []
         for leg in legs:
             fact = _particle_fact(indexed, leg.entity)
@@ -228,21 +224,18 @@ def reaction_manifest(catalog: object, reaction: object) -> JsonObject:
         return result
 
     return {
-        "reaction_version": 1,
+        "reaction_version": raw["reaction_version"],
         "model_id": raw["model_id"],
         "inputs": facts(inputs),
         "outputs": facts(outputs),
         "conservation": {
             "electric_charge_thirds": {"before": charge_before, "after": charge_after},
             "configured_energy": {"before": energy_before, "after": energy_after},
-            "configured_momentum": {
-                "before": list(momentum_before),
-                "after": list(momentum_after),
-            },
+            "configured_momentum": {"before": list(momentum_before), "after": list(momentum_after)},
         },
         "runtime_enforcement": ["charge", "energy", "momentum"],
         "limits": [
-            "The current runtime conversion contract is exactly two input records to two output records.",
+            f"Reaction version 2 supports one through {MAX_REACTION_INPUTS} inputs and one through {MAX_REACTION_OUTPUTS} outputs; version 1 remains exactly two-to-two.",
             "Configured energy is an explicit integer inventory; this adapter does not derive a relativistic dispersion relation.",
             "Spin statistics are identity metadata here; exchange antisymmetry and bosonic symmetrization remain quantum-dynamics work.",
             "Baryon and lepton numbers are not promoted to universal exact invariants by this adapter.",
@@ -250,25 +243,16 @@ def reaction_manifest(catalog: object, reaction: object) -> JsonObject:
     }
 
 
-def _total_expression(field: str) -> JsonObject:
-    return {
-        "op": "add",
-        "args": [
-            {"field": field, "side": "left"},
-            {"field": field, "side": "right"},
-        ],
-    }
-
-
 def compile_particle_reaction(catalog: object, reaction: object) -> tuple[JsonObject, JsonObject]:
-    """Compile a validated two-to-two particle reaction through the generic engine."""
     raw, indexed, inputs, outputs = _reaction_document(catalog, reaction)
     manifest = reaction_manifest(catalog, reaction)
     shape_raw = raw.get("shape", [9, 9, 9])
-    shape = tuple(_integer(v, "shape", minimum=5) for v in _array(shape_raw, "shape", 3))
+    shape_items = _array(shape_raw, "shape", 3)
+    shape = tuple(_integer(value, "shape", minimum=5) for value in shape_items)
     position_raw = raw.get("position", [value // 2 for value in shape])
-    position = tuple(_integer(v, "position", minimum=0) for v in _array(position_raw, "position", 3))
-    if any(v >= size for v, size in zip(position, shape, strict=True)):
+    position_items = _array(position_raw, "position", 3)
+    position = tuple(_integer(value, "position", minimum=0) for value in position_items)
+    if any(value >= size for value, size in zip(position, shape, strict=True)):
         raise ValueError("reaction position must be within shape")
     ticks = _integer(raw.get("ticks", 4), "ticks", minimum=1)
     link_ticks = _integer(raw.get("link_ticks", 1), "link_ticks", minimum=1)
@@ -304,28 +288,29 @@ def compile_particle_reaction(catalog: object, reaction: object) -> tuple[JsonOb
             "extensive": True,
         },
     ]
-    type_names = (
-        "reaction input left",
-        "reaction input right",
-        "reaction output left",
-        "reaction output right",
-    )
+    input_names = tuple(f"reaction input {index}" for index in range(len(inputs)))
+    output_names = tuple(f"reaction output {index}" for index in range(len(outputs)))
     types: list[JsonObject] = []
-    for index, (leg, fact) in enumerate(
-        zip((*inputs, *outputs), (*input_facts, *output_facts), strict=True)
-    ):
-        output = index >= 2
-        transport: JsonObject = {"mode": "hold"}
-        if output and move_outputs:
-            transport = {
-                "mode": "move",
-                "direction_field": "momentum",
-                "rate": 1,
-                "rate_denominator": 1,
-            }
+    for leg, fact in zip(inputs, input_facts, strict=True):
         types.append(
             {
-                "name": type_names[index],
+                "name": input_names[len(types)],
+                "fields": ["charge", "energy", "momentum"],
+                "defaults": {
+                    "charge": fact.electric_charge_thirds,
+                    "energy": leg.energy,
+                    "momentum": list(leg.momentum),
+                },
+                "transport": {"mode": "hold"},
+            }
+        )
+    for index, (leg, fact) in enumerate(zip(outputs, output_facts, strict=True)):
+        transport: JsonObject = {"mode": "hold"}
+        if move_outputs:
+            transport = {"mode": "move", "direction_field": "momentum", "rate": 1, "rate_denominator": 1}
+        types.append(
+            {
+                "name": output_names[index],
                 "fields": ["charge", "energy", "momentum"],
                 "defaults": {
                     "charge": fact.electric_charge_thirds,
@@ -337,12 +322,12 @@ def compile_particle_reaction(catalog: object, reaction: object) -> tuple[JsonOb
         )
 
     assignments: list[JsonObject] = []
-    for side, leg, fact in zip(("left", "right"), outputs, output_facts, strict=True):
+    for output, (leg, fact) in enumerate(zip(outputs, output_facts, strict=True)):
         assignments.extend(
             [
-                {"side": side, "field": "charge", "expression": fact.electric_charge_thirds},
-                {"side": side, "field": "energy", "expression": leg.energy},
-                {"side": side, "field": "momentum", "expression": list(leg.momentum)},
+                {"output": output, "field": "charge", "expression": fact.electric_charge_thirds},
+                {"output": output, "field": "energy", "expression": leg.energy},
+                {"output": output, "field": "momentum", "expression": list(leg.momentum)},
             ]
         )
     initial: JsonObject = {
@@ -350,38 +335,32 @@ def compile_particle_reaction(catalog: object, reaction: object) -> tuple[JsonOb
         "model_id": raw["model_id"],
         "shape": list(shape),
         "boundary": "open",
-        "slots_per_cell": 2,
+        "slots_per_cell": max(len(inputs), len(outputs)),
         "link_ticks": link_ticks,
         "normal_budget": 10000,
         "ticks": ticks,
         "operation_costs": dict.fromkeys(OPERATIONS, 1),
         "fields": fields,
         "disturbance_types": types,
-        "interactions": [
+        "reactions": [
             {
                 "name": "configured particle reaction",
-                "left_type": type_names[0],
-                "right_type": type_names[1],
-                "output_types": {"left": type_names[2], "right": type_names[3]},
+                "input_types": list(input_names),
+                "output_types": list(output_names),
                 "assignments": assignments,
-                "invariants": [
-                    {"name": "electric charge", "expression": _total_expression("charge")},
-                    {"name": "configured energy", "expression": _total_expression("energy")},
-                    {"name": "momentum", "expression": _total_expression("momentum")},
-                ],
             }
         ],
         "seeds": [
             {
                 "position": list(position),
-                "type": type_names[index],
+                "type": input_names[index],
                 "values": {
                     "charge": input_facts[index].electric_charge_thirds,
                     "energy": inputs[index].energy,
                     "momentum": list(inputs[index].momentum),
                 },
             }
-            for index in range(2)
+            for index in range(len(inputs))
         ],
     }
     parse_initial_state(initial)

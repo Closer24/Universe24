@@ -27,6 +27,7 @@ class Simulation(DisturbanceEngine):
                 initial.couplings,
                 initial.operation_costs,
                 initial.interactions,
+                initial.reactions,
             ),
             observer,
             SpatialLaw(
@@ -74,6 +75,7 @@ class Simulation(DisturbanceEngine):
                         *(rule.type_index for rule in initial.spatial_interactions),
                     )
                 ),
+                initial.reactions,
             ),
             event_space=event_space,
             resolver=resolver,

@@ -14,6 +14,8 @@ Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).
 
+`reactions` adds a separate bounded n-to-m local transaction owner. Participant and output arities are fixed by validated configuration limits; particle/type names remain data. Expressions read a frozen indexed input tuple, and the existing engine still owns scheduling and atomic delayed commit.
+
 ## Local integer operation contract
 
 This contract applies to all new and changed physical code, entity definitions,

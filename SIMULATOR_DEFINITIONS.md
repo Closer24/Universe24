@@ -701,3 +701,16 @@ still incur native cycle cost; zero oracle ticks do not imply zero host work.
 The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
+
+
+### Bounded n-to-m reaction ownership
+
+The active schema may declare `reactions` with one through eight local input
+records and one through eight local output records. Input references use explicit
+participant indices; every output-owned field must be assigned. A selected
+transaction reads one frozen local input tuple, requires enough local output slots,
+checks every conserved field and declared invariant, and commits all replacements
+atomically. Reaction work is bounded by `MAX_RULES`, `MAX_SLOTS`, field/expression
+limits and the fixed arity caps. No reaction may read remote state, repair a global
+total, or infer a law from a particle/type name. This is a configuration mechanism,
+not a claim that a configured reaction emerged.

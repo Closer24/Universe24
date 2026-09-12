@@ -119,16 +119,16 @@ def evaluate_ratio(
     *,
     ports: tuple[Values, ...] = (),
     outgoing: tuple[Values, ...] = (),
+    participants: tuple[Values, ...] | None = None,
 ) -> tuple[Ratio, ...]:
     # Fixed worst-case arithmetic tariff, independent of numerator magnitude.
     meter.charge("evaluate", 65536)
+    sources = participants if participants is not None else (left, right)
     op = expression.op
     if op == "literal":
         return tuple(Ratio(v) for v in expression.literal)
     if op == "field":
-        return tuple(
-            Ratio(v) for v in unpack((left if expression.side == 0 else right)[expression.field])
-        )
+        return tuple(Ratio(v) for v in unpack(sources[expression.side][expression.field]))
     if op == "flux":
         if not spatial_fluxes:
             raise ValueError("rational flux requires an explicit sample")
@@ -139,7 +139,9 @@ def evaluate_ratio(
             raise ValueError("rational port expression requires six local channels")
         return tuple(Ratio(v) for v in unpack(channels[expression.port][expression.field]))
     args = tuple(
-        evaluate_ratio(a, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        evaluate_ratio(
+            a, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing, participants=sources
+        )
         for a in expression.arguments
     )
     if op in PROJECTIONS:

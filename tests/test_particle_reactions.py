@@ -13,6 +13,8 @@ from event_universe.particle_reactions import compile_particle_reaction, reactio
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "examples/known-entities/catalog.json"
 REACTION = ROOT / "examples/known-entities/electron-positron-to-two-photons.json"
+ELECTRON_SCATTERING = ROOT / "examples/known-entities/electron-electron-scattering.json"
+MUON_DECAY = ROOT / "examples/known-entities/muon-decay.json"
 
 
 def read(path):
@@ -89,8 +91,8 @@ def test_runtime_still_rejects_a_tampered_compiled_conversion():
     initial, _ = compile_particle_reaction(read(CATALOG), read(REACTION))
     energy_assignment = next(
         item
-        for item in initial["interactions"][0]["assignments"]
-        if item["side"] == "left" and item["field"] == "energy"
+        for item in initial["reactions"][0]["assignments"]
+        if item["output"] == 0 and item["field"] == "energy"
     )
     energy_assignment["expression"] = 4
     world = Simulation(parse_initial_state(initial))
@@ -149,3 +151,41 @@ def test_malformed_particle_identity_and_product_count_fail_explicitly():
     reaction["outputs"].append(copy.deepcopy(reaction["outputs"][0]))
     with pytest.raises(ValueError, match="exactly 2"):
         reaction_manifest(read(CATALOG), reaction)
+
+
+def test_electron_electron_elastic_scattering_probe_uses_same_species_without_engine_dispatch():
+    initial, manifest = compile_particle_reaction(read(CATALOG), read(ELECTRON_SCATTERING))
+    assert [item["entity"] for item in manifest["inputs"]] == ["electron", "electron"]
+    assert [item["entity"] for item in manifest["outputs"]] == ["electron", "electron"]
+    assert all(
+        item["statistics_class"] == "fermion" for item in (*manifest["inputs"], *manifest["outputs"])
+    )
+    assert manifest["conservation"] == {
+        "electric_charge_thirds": {"before": -6, "after": -6},
+        "configured_energy": {"before": 10, "after": 10},
+        "configured_momentum": {"before": [0, 0, 0], "after": [0, 0, 0]},
+    }
+    world = Simulation(parse_initial_state(initial))
+    world.step()
+    assert world.totals() == {"charge": (-6,), "energy": (10,), "momentum": (0, 0, 0)}
+    values = [value for _, value in owned(world)]
+    assert sorted(value["momentum"] for value in values) == [(0, -3, 0), (0, 3, 0)]
+
+
+def test_muon_decay_probe_exercises_one_to_three_local_product_ownership():
+    initial, manifest = compile_particle_reaction(read(CATALOG), read(MUON_DECAY))
+    assert [item["entity"] for item in manifest["inputs"]] == ["muon"]
+    assert [item["entity"] for item in manifest["outputs"]] == [
+        "electron",
+        "electron_antineutrino",
+        "muon_neutrino",
+    ]
+    assert manifest["conservation"] == {
+        "electric_charge_thirds": {"before": -3, "after": -3},
+        "configured_energy": {"before": 12, "after": 12},
+        "configured_momentum": {"before": [0, 0, 0], "after": [0, 0, 0]},
+    }
+    world = Simulation(parse_initial_state(initial))
+    world.step()
+    assert len(owned(world)) == 3
+    assert world.totals() == {"charge": (-3,), "energy": (12,), "momentum": (0, 0, 0)}

@@ -58,3 +58,16 @@ The owners are `core/disturbance_state.py`, `initialization.py` and
 `fields/disturbances.py`. Focused evidence is in `tests/test_local_conversions.py`;
 the existing atomic interaction and engine suites cover their shared commit,
 capacity, arithmetic and transit contracts.
+
+
+## Bounded variable-multiplicity reactions
+
+The separate `reactions` initialization key generalizes local product ownership to
+one through eight input records and one through eight output records. It does not
+change the legacy pair `interactions` schema. Reaction assignments read the frozen
+input tuple by `participant` index and fully define every output-owned field. All
+inputs and output capacity are local to one cell; work and storage remain bounded
+by fixed rule, slot, field and arity limits. Conserved fields are checked across the
+whole selected input/output transaction before commit. Invalid proposals, missing
+capacity or nonzero carried routing/allowance state fail without partial mutation.
+See [particle reactions](PARTICLE_REACTIONS.md) and `tests/test_nary_reactions.py`.
