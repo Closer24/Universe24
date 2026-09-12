@@ -16,125 +16,88 @@ jobs:
         with:
           python-version-file: .python-version
       - run: python -m pip install -e '.[dev]'
-      - name: Apply one-time contract cleanup
+      - name: Resolve static typing once
         run: |
           python - <<'PY'
           from pathlib import Path
-
-          def insert_after(path, marker, addition):
-              p = Path(path)
-              text = p.read_text()
-              if addition.strip() in text:
-                  return
-              assert marker in text, (path, marker)
-              p.write_text(text.replace(marker, marker + addition, 1))
-
-          insert_after(
-              'docs/ARCHITECTURE.md',
-              'Optional two-record type conversion follows the existing frozen pair proposal\nand delayed engine commit; its ownership restrictions are in\n[local conversions](LOCAL_CONVERSIONS.md).\n',
-              '\n`particle_reactions.py` is a host-only catalog authoring adapter layered on that\nconversion owner. It validates selected established particle metadata and exact\ncharge/configured-energy/momentum totals, then emits ordinary role-named types and\nconserved fields. The engine receives no particle identity and has no species\ndispatch. See [particle reactions](PARTICLE_REACTIONS.md).\n',
-          )
-          insert_after(
-              'POSTULATES.md',
-              'The optional [bounded conversion](docs/LOCAL_CONVERSIONS.md) also permits two\nlocal records to become two explicitly configured output types under the same\natomic conservation checks. This is a supplied transformation, not evidence of\nemergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)\ndescribe bounded representations; physical identity and dynamics cannot be\ninferred solely from the ability to store or transport their registers.\n',
-              '\nThe optional [particle reaction authoring contract](docs/PARTICLE_REACTIONS.md)\nuses established catalog identity as data and compiles a bounded two-to-two local\ntype replacement through that same conversion owner. Electric charge and explicitly\nconfigured energy/momentum totals must balance before compilation and remain runtime\nconserved fields. This supplies conservation/ownership plumbing, not a derived QED\nreaction, reaction probability or arbitrary particle production law. Baryon and\nlepton numbers are not silently declared universal exact invariants.\n',
-          )
-          insert_after(
-              'docs/TEST_EXPECTATIONS.md',
-              'See [the acceptance limits](PHYSICAL_ENTITIES.md).\n',
-              '\n## Generic particle reactions\n\n`tests/test_particle_reactions.py` uses the catalog plus the explicit electron/positron\nto two-photon conservation probe. Selected particle/antiparticle charge and doubled-spin\nmetadata must be reciprocal and established; electron/positron classify as fermions and\nphoton as a boson. Authoring rejects charge, configured-energy or momentum imbalance.\nThe compiled generic conversion keeps all three totals exact while products move, and a\npost-compilation tamper is rejected atomically at runtime. Arbitrary species renaming\nmust leave the compiled physical initialization identical, and a new established catalog\nparticle with compatible metadata must compile without engine code. The current adapter is\nstrictly `2 -> 2`; it does not establish QED dynamics, arbitrary product counts, exchange\nantisymmetry or a relativistic dispersion law. See [PARTICLE_REACTIONS.md](PARTICLE_REACTIONS.md).\n',
-          )
-
-          catalog = Path('examples/known-entities/catalog.json')
-          text = catalog.read_text()
-          text = text.replace(
-              '"pdg_particles": {"title": "PDG 2025: Particle summary tables", "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"}',
-              '"pdg_particles": {"title": "PDG 2026: Particle summary tables", "url": "https://pdg.lbl.gov/2026/tables/contents_tables.html"}',
-          )
-          catalog.write_text(text)
-
           source = Path('src/event_universe/particle_reactions.py')
           text = source.read_text()
-          old = '''    if not all(
-        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)
-    ):
-        raise ValueError(f"particle {identity} has incomplete identity metadata")
-'''
-          new = '''    if (
-        not isinstance(antiparticle, str)
-        or not antiparticle
-        or not isinstance(conjugacy, str)
-        or not conjugacy
-        or not isinstance(rest_mass, str)
-        or not rest_mass
-        or not isinstance(status, str)
-        or not status
-    ):
-        raise ValueError(f"particle {identity} has incomplete identity metadata")
-'''
+          old = (
+              '    if not all(\n'
+              '        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)\n'
+              '    ):\n'
+              '        raise ValueError(f"particle {identity} has incomplete identity metadata")\n'
+          )
+          new = (
+              '    if (\n'
+              '        not isinstance(antiparticle, str)\n'
+              '        or not antiparticle\n'
+              '        or not isinstance(conjugacy, str)\n'
+              '        or not conjugacy\n'
+              '        or not isinstance(rest_mass, str)\n'
+              '        or not rest_mass\n'
+              '        or not isinstance(status, str)\n'
+              '        or not status\n'
+              '    ):\n'
+              '        raise ValueError(f"particle {identity} has incomplete identity metadata")\n'
+          )
           if old in text:
               text = text.replace(old, new, 1)
-
-          old = '''    momentum = tuple(_integer(component, f"{label}.momentum") for component in momentum_raw)
-    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]
-
-
-def _sum_scalar(values: tuple[int, int]) -> int:
-    return checked(checked_work(values[0] + values[1]))
-
-
-def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tuple[int, int, int]:
-    return tuple(checked(checked_work(a + b)) for a, b in zip(*values, strict=True))  # type: ignore[return-value]
-'''
-          new = '''    momentum = (
-        _integer(momentum_raw[0], f"{label}.momentum"),
-        _integer(momentum_raw[1], f"{label}.momentum"),
-        _integer(momentum_raw[2], f"{label}.momentum"),
-    )
-    return ReactionLeg(entity, energy, momentum)
-
-
-def _sum_scalar(values: tuple[int, ...]) -> int:
-    if len(values) != 2:
-        raise ValueError("reaction scalar sum requires exactly two values")
-    return checked(checked_work(values[0] + values[1]))
-
-
-def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:
-    if len(values) != 2:
-        raise ValueError("reaction vector sum requires exactly two values")
-    left, right = values
-    return (
-        checked(checked_work(left[0] + right[0])),
-        checked(checked_work(left[1] + right[1])),
-        checked(checked_work(left[2] + right[2])),
-    )
-'''
+          old = (
+              '    momentum = tuple(_integer(component, f"{label}.momentum") for component in momentum_raw)\n'
+              '    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]\n\n\n'
+              'def _sum_scalar(values: tuple[int, int]) -> int:\n'
+              '    return checked(checked_work(values[0] + values[1]))\n\n\n'
+              'def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tuple[int, int, int]:\n'
+              '    return tuple(checked(checked_work(a + b)) for a, b in zip(*values, strict=True))  # type: ignore[return-value]\n'
+          )
+          new = (
+              '    momentum = (\n'
+              '        _integer(momentum_raw[0], f"{label}.momentum"),\n'
+              '        _integer(momentum_raw[1], f"{label}.momentum"),\n'
+              '        _integer(momentum_raw[2], f"{label}.momentum"),\n'
+              '    )\n'
+              '    return ReactionLeg(entity, energy, momentum)\n\n\n'
+              'def _sum_scalar(values: tuple[int, ...]) -> int:\n'
+              '    if len(values) != 2:\n'
+              '        raise ValueError("reaction scalar sum requires exactly two values")\n'
+              '    return checked(checked_work(values[0] + values[1]))\n\n\n'
+              'def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:\n'
+              '    if len(values) != 2:\n'
+              '        raise ValueError("reaction vector sum requires exactly two values")\n'
+              '    left, right = values\n'
+              '    return (\n'
+              '        checked(checked_work(left[0] + right[0])),\n'
+              '        checked(checked_work(left[1] + right[1])),\n'
+              '        checked(checked_work(left[2] + right[2])),\n'
+              '    )\n'
+          )
           if old in text:
               text = text.replace(old, new, 1)
-
-          old = '''    inputs = tuple(
-        _leg(item, f"inputs[{index}]", indexed)
-        for index, item in enumerate(_array(raw["inputs"], "inputs", 2))
-    )
-    outputs = tuple(
-        _leg(item, f"outputs[{index}]", indexed)
-        for index, item in enumerate(_array(raw["outputs"], "outputs", 2))
-    )
-    return raw, indexed, inputs, outputs  # type: ignore[return-value]
-'''
-          new = '''    input_rows = _array(raw["inputs"], "inputs", 2)
-    output_rows = _array(raw["outputs"], "outputs", 2)
-    inputs = (
-        _leg(input_rows[0], "inputs[0]", indexed),
-        _leg(input_rows[1], "inputs[1]", indexed),
-    )
-    outputs = (
-        _leg(output_rows[0], "outputs[0]", indexed),
-        _leg(output_rows[1], "outputs[1]", indexed),
-    )
-    return raw, indexed, inputs, outputs
-'''
+          old = (
+              '    inputs = tuple(\n'
+              '        _leg(item, f"inputs[{index}]", indexed)\n'
+              '        for index, item in enumerate(_array(raw["inputs"], "inputs", 2))\n'
+              '    )\n'
+              '    outputs = tuple(\n'
+              '        _leg(item, f"outputs[{index}]", indexed)\n'
+              '        for index, item in enumerate(_array(raw["outputs"], "outputs", 2))\n'
+              '    )\n'
+              '    return raw, indexed, inputs, outputs  # type: ignore[return-value]\n'
+          )
+          new = (
+              '    input_rows = _array(raw["inputs"], "inputs", 2)\n'
+              '    output_rows = _array(raw["outputs"], "outputs", 2)\n'
+              '    inputs = (\n'
+              '        _leg(input_rows[0], "inputs[0]", indexed),\n'
+              '        _leg(input_rows[1], "inputs[1]", indexed),\n'
+              '    )\n'
+              '    outputs = (\n'
+              '        _leg(output_rows[0], "outputs[0]", indexed),\n'
+              '        _leg(output_rows[1], "outputs[1]", indexed),\n'
+              '    )\n'
+              '    return raw, indexed, inputs, outputs\n'
+          )
           if old in text:
               text = text.replace(old, new, 1)
           source.write_text(text)
@@ -144,8 +107,8 @@ def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int
           if ! git diff --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add docs/ARCHITECTURE.md POSTULATES.md docs/TEST_EXPECTATIONS.md examples/known-entities/catalog.json src/event_universe/particle_reactions.py tests/test_particle_reactions.py
-            git commit -m 'Resolve particle reaction validation typing'
+            git add src/event_universe/particle_reactions.py tests/test_particle_reactions.py
+            git commit -m 'Resolve particle reaction static typing'
             git push origin HEAD:feat/generic-particle-reactions
           fi
       - name: Validate affected scope
