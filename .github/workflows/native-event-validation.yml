@@ -1,0 +1,27 @@
+name: Native event integration validation
+on:
+  push:
+    branches: [feat/native-causal-quantum]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Preserve current native integration base
+        run: |
+          mkdir -p artifacts/native-base
+          git archive 2e753fed1f6922d9d2082d6d43c9e150f237bdd6 | gzip > artifacts/native-base/source.tar.gz
+          git rev-parse 2e753fed1f6922d9d2082d6d43c9e150f237bdd6^{tree} > artifacts/native-base/tree.txt
+          python --version > artifacts/native-base/python.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-integration-base
+          path: artifacts/native-base/
+          retention-days: 1
