@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "model_id": "computational-curvature-probe-v1",
-  "shape": [41, 25, 9],
+  "shape": [25, 17, 7],
   "boundary": "open",
   "slots_per_cell": 8,
   "link_ticks": 1,
   "normal_budget": 32,
-  "ticks": 44,
+  "ticks": 28,
   "operation_costs": {
     "receive": 1,
     "read": 1,
@@ -109,10 +109,10 @@
     }
   ],
   "seeds": [
-    {"position": [20, 12, 4], "type": "mass_source"},
-    {"position": [2, 16, 5], "type": "massless_ray"},
-    {"position": [20, 14, 4], "type": "local_clock"},
-    {"position": [20, 20, 4], "type": "local_clock"}
+    {"position": [12, 8, 3], "type": "mass_source"},
+    {"position": [1, 12, 4], "type": "massless_ray"},
+    {"position": [12, 10, 3], "type": "local_clock"},
+    {"position": [12, 14, 3], "type": "local_clock"}
   ],
   "spatial_fields": [
     {
@@ -139,7 +139,7 @@
   ],
   "spatial_seeds": [
     {
-      "position": [2, 16, 3],
+      "position": [1, 12, 2],
       "field": "wave",
       "populations": [64, 0, 0, 0, 0, 0, 0, 0]
     }
