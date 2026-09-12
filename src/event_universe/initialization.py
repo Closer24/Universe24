@@ -44,6 +44,7 @@ from .core.spatial_state import (
     SpatialInteractionDefinition,
     SpatialSeed,
 )
+from .observer_configuration import ObserverDefinition
 
 
 def _object(value: object, label: str, allowed: set[str], required: set[str]) -> dict[str, object]:
@@ -1002,6 +1003,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_rules",
             "spatial_interactions",
             "event_program",
+            "observer",
         },
         required,
     )
@@ -1014,6 +1016,8 @@ def parse_initial_state(document: object) -> InitialState:
     if boundary not in ("periodic", "open"):
         raise ValueError("boundary must be periodic or open")
     shape = _address(obj["shape"], "shape", 1)
+    if "observer" in obj:
+        ObserverDefinition.parse(obj["observer"], shape)
     capacity = _integer(obj["slots_per_cell"], "slots_per_cell", 1)
     if capacity > MAX_SLOTS:
         raise ValueError(f"slots_per_cell exceeds {MAX_SLOTS}")

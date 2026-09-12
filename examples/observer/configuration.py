@@ -87,6 +87,7 @@ def build_configuration(
     return {
         "schema_version": 1,
         "model_id": MODEL_ID,
+        "observer": {"position": list(center), "max_receipts": 100000},
         "shape": [size, size, size],
         "boundary": "open",
         "slots_per_cell": 2,
@@ -200,7 +201,6 @@ def main() -> None:
         parser.error(str(error))
     documents = {
         "initialization.json": initialization,
-        "observer.json": {"position": list(observer_position(args.size)), "max_receipts": 100000},
     }
     if args.output.exists() and (not args.output.is_dir() or any(args.output.iterdir())):
         parser.error("output must be a new or empty directory; existing inputs are not overwritten")

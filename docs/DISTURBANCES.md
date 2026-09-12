@@ -1,5 +1,9 @@
 # Initialization-defined disturbances
 
+The optional top-level `observer` member configures a passive reception probe in
+the same input file. See [local observer](LOCAL_OBSERVER.md) for placement, limits
+and runner behavior. It is validated for both schemas and excluded from physical state.
+
 The optional [bounded rational and balanced-routing contract](RATIONAL_PARTICLES.md)
 defines rational expression projections, exact dynamic movement divisors and
 local consistency checks. Old integer arithmetic and cyclic routing remain

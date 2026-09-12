@@ -700,3 +700,7 @@ even when the quotient would fit, preserving existing timing behavior.
 
 Existing expression, spatial transaction, rotation, engine timing and link
 transport suites remain the integration coverage for callers and operation costs.
+
+Inline observer input is covered by `tests/test_local_observer.py`: normal schema
+validation, rejection before output creation, ambiguous placement rejection, exact
+saved initialization and unchanged physical results with recording enabled.

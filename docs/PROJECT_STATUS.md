@@ -1,7 +1,7 @@
 # Project status and restart guide
 
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
-one node, using a completed local-cycle counter and the existing HTML player.
+one node configured in the ordinary initialization JSON, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar
 geometry, proper time and Maxwell laws in an emergent spacetime remain open.
 
