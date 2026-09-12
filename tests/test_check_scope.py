@@ -137,6 +137,12 @@ def test_particle_resources_select_the_dynamic_contract_consumer(resource):
     assert "tests/test_collisions.py" not in tests
 
 
+def test_rational_reference_selects_generated_parallel_benchmark_consumer():
+    tests, _ = CHECK.select(["examples/particle-contracts/electron-proton.json"], {})
+    assert "tests/test_parallel_runner.py" in tests
+    assert "tests/test_rational_particles.py" in tests
+
+
 def no_change_main(monkeypatch, tmp_path, *arguments):
     monkeypatch.setattr(CHECK, "ROOT", tmp_path)
     monkeypatch.setattr(CHECK, "git", lambda *args: "base" if args[0] == "merge-base" else "")
@@ -198,5 +204,15 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
     assert "tests/test_quantum_entities.py" in tests
     assert "tests/test_native_quantum_channels.py" in tests
     assert "tests/test_small_space_experiments.py" in tests
+    assert "tests/test_entity_catalog.py" in tests
+    assert "tests/test_entity_compiler.py" in tests
+    assert "tests/test_physical_entities.py" in tests
+    tests, _ = CHECK.select(["examples/known-entities/representation-probes.json"], {})
+    assert {
+        "tests/test_entity_compiler.py",
+        "tests/test_quantum_entities.py",
+        "tests/test_native_quantum_channels.py",
+        "tests/test_small_space_experiments.py",
+    } <= set(tests)
     tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
     assert "tests/test_native_quantum_channels.py" in tests

@@ -94,16 +94,21 @@ For existing particle definitions, use the
 [entity catalog](../../../docs/ENTITY_CATALOG.md):
 
 ```sh
-python -m event_universe.entities --catalog examples/known-entities/catalog.json --entity electron --entity proton --entity neutron --ticks 36 --output-init artifacts/inputs/three-entities.json
+python -m event_universe.entities --catalog examples/known-entities/catalog.json --profiles examples/known-entities/representation-probes.json --entity electron --entity proton --entity neutron --ticks 36 --output-init artifacts/inputs/three-entities.json
 ```
 
 Edit the generated file's `shape`, `boundary`, `seeds` and explicitly supported
 transport parameters, then validate again. The adapter selects each entity ID
 once; create additional occurrences by adding seeds of its generated type.
-For programmatic authoring, `compile_entities` supports `shape`, `ticks` and
+For programmatic authoring, pass `profiles` explicitly to `compile_entities`,
+which also supports `shape`, `ticks` and
 `link_ticks`; the CLI currently exposes `--ticks`, not all of those options.
 
-Catalog descriptive properties and executable values are different records.
+The version 2 physical catalog contains no executable expressions. Physical
+properties and possible interactions stay in that reference; experiment profiles
+are supplied through a separate file. Never infer update laws, reaction rates or
+lattice parameters from catalog measurements. Validate reference changes with
+`python -m event_universe.entity_catalog examples/known-entities/catalog.json`.
 The supplied profiles are representation probes, not a mass-calibrated particle
 theory. Do not assume that selecting electron adds Coulomb force, or that its
 inventory register is its SI mass. Reuse or author explicit executable profiles,

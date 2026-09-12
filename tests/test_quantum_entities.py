@@ -13,12 +13,13 @@ from event_universe.integration.event_program import parse_event_program
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = json.loads((ROOT / "examples/known-entities/catalog.json").read_text())
-ENTRIES = CATALOG["field_entities"] + CATALOG["particle_entities"]
+PROFILES = json.loads((ROOT / "examples/known-entities/representation-probes.json").read_text())
+ENTRIES = PROFILES["profiles"]
 
 
-@pytest.mark.parametrize("identity", [e["id"] for e in ENTRIES])
+@pytest.mark.parametrize("identity", [e["entity_id"] for e in ENTRIES])
 def test_every_existing_entity_has_a_finite_quantum_definition(identity):
-    raw = compile_entities(CATALOG, [identity], representation="quantum")
+    raw = compile_entities(CATALOG, [identity], profiles=PROFILES, representation="quantum")
     initial = parse_initial_state(raw)
     program = parse_event_program(initial)
     assert program.network is not None
@@ -33,7 +34,10 @@ def test_every_existing_entity_has_a_finite_quantum_definition(identity):
 
 def test_particle_and_field_quantum_profiles_compose_without_classical_copies():
     raw = compile_entities(
-        CATALOG, ["electron", "positron", "electromagnetic_field"], representation="quantum"
+        CATALOG,
+        ["electron", "positron", "electromagnetic_field"],
+        profiles=PROFILES,
+        representation="quantum",
     )
     p = parse_event_program(parse_initial_state(raw))
     assert p.network.local_dimensions == (2, 2, 2, 2, 3, 3)
@@ -47,9 +51,9 @@ def test_quantum_labels_do_not_select_hidden_species_laws():
     catalog = copy.deepcopy(CATALOG)
     e = catalog["particle_entities"][0]
     previous = e["id"]
-    e["id"] = "arbitrary renamed mode"
-    a = compile_entities(CATALOG, [previous], representation="quantum")
-    b = compile_entities(catalog, [e["id"]], representation="quantum")
+    e["label"] = "arbitrary renamed mode"
+    a = compile_entities(CATALOG, [previous], profiles=PROFILES, representation="quantum")
+    b = compile_entities(catalog, [e["id"]], profiles=PROFILES, representation="quantum")
     a["event_program"]["register_names"] = b["event_program"]["register_names"]
     assert a == b
 
@@ -58,7 +62,8 @@ def test_quantum_labels_do_not_select_hidden_species_laws():
 def test_invalid_quantum_profile_rejected(mutation):
     catalog = copy.deepcopy(CATALOG)
     e = catalog["particle_entities"][0]
-    p = e["quantum_profile"]
+    profiles = copy.deepcopy(PROFILES)
+    p = next(row for row in profiles["profiles"] if row["entity_id"] == e["id"])["quantum_profile"]
     if mutation == "basis":
         p["registers"][0]["basis"] = ["a", "a"]
     if mutation == "level":
@@ -70,18 +75,20 @@ def test_invalid_quantum_profile_rejected(mutation):
     if mutation == "incomplete":
         del p["missing_dynamics"]
     with pytest.raises(ValueError):
-        compile_entities(catalog, [e["id"]], representation="quantum")
+        compile_entities(catalog, [e["id"]], profiles=profiles, representation="quantum")
 
 
 def test_excessive_composition_does_not_expand_local_capacity():
     with pytest.raises((ValueError, OverflowError)):
-        compile_entities(CATALOG, [e["id"] for e in ENTRIES], representation="quantum")
+        compile_entities(
+            CATALOG, [e["entity_id"] for e in ENTRIES], profiles=PROFILES, representation="quantum"
+        )
 
 
 def test_classical_profiles_are_unchanged_by_quantum_selection():
-    a = compile_entities(CATALOG, ["electron"])
-    b = compile_entities(CATALOG, ["electron"], representation="classical")
+    a = compile_entities(CATALOG, ["electron"], profiles=PROFILES)
+    b = compile_entities(CATALOG, ["electron"], profiles=PROFILES, representation="classical")
     assert a == b
     assert "event_program" not in a
     with pytest.raises(ValueError):
-        compile_entities(CATALOG, ["electron"], representation="unknown")
+        compile_entities(CATALOG, ["electron"], profiles=PROFILES, representation="unknown")

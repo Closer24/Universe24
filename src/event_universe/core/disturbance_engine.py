@@ -2,7 +2,8 @@
 
 from collections.abc import Callable, Mapping
 from dataclasses import replace
-from types import MappingProxyType
+from types import MappingProxyType, TracebackType
+from typing import Self
 
 from .disturbance_state import (
     Address3,
@@ -21,6 +22,7 @@ from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
 from .link_schedule import LinkSchedule
+from .local_execution import LocalExecutor, ProposalInput, ProposalResult
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
 from .topology import neighbor_address
@@ -56,12 +58,15 @@ class DisturbanceEngine:
         record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
+        local_execution: LocalExecutor | None = None,
     ) -> None:
         self.initial = initial
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
         self.event_space = event_space
         self._resolver = resolver
+        self._local_execution = local_execution
+        self._closed = False
         self._model_work = 0
         self._local_cycles = 0
         self._planner = planner
@@ -176,7 +181,12 @@ class DisturbanceEngine:
             report["resolver"] = self._resolver.report()
         return report
 
-    def _begin(self, position: Address3, cell: DisturbanceCell) -> None:
+    def _begin(
+        self,
+        position: Address3,
+        cell: DisturbanceCell,
+        prepared: ProposalResult | None = None,
+    ) -> None:
         if cell.pending is not None or cell.available_tick > self.tick:
             return
         if not self._record_policy.has_work(cell.records) and not (
@@ -211,11 +221,36 @@ class DisturbanceEngine:
             cell.received_count,
             cell.cause_id,
         )
-        plan = (
-            self._planner(context.records, context.residuals, context.received)
-            if self._resolver is None
-            else self._resolver.resolve(context, self._planner)
-        )
+        execution = self._local_execution
+        if (
+            prepared is not None
+            and execution is not None
+            and execution.supported(self._planner, self._record_policy)
+            and self._resolver is None
+            and coupled is None
+        ):
+            plan = prepared.result()
+        else:
+            if execution is not None:
+                reason = (
+                    "serial"
+                    if not execution.parallel_enabled
+                    else "resolver"
+                    if self._resolver is not None
+                    else "custom_planner"
+                    if not execution.planner_unchanged(self._planner)
+                    else "custom_record_policy"
+                    if not execution.policy_unchanged(self._record_policy)
+                    else "spatial_coupling"
+                    if coupled is not None
+                    else "threshold"
+                )
+                execution.record_serial(reason)
+            plan = (
+                self._planner(context.records, context.residuals, context.received)
+                if self._resolver is None
+                else self._resolver.resolve(context, self._planner)
+            )
         if coupled is not None:
             plan = replace(
                 plan,
@@ -441,6 +476,8 @@ class DisturbanceEngine:
                 )
 
     def step(self) -> None:
+        if self._closed:
+            raise RuntimeError("a closed disturbance simulation cannot continue")
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
@@ -450,10 +487,7 @@ class DisturbanceEngine:
                     {p: cell.records for p, cell in self._cells.items()},
                     self._commit_emission_records,
                 )
-            for position in sorted(self._active_cells):
-                cell = self._cells[position]
-                self._begin(position, cell)
-                self._commit(position, cell)
+            self._advance_cells()
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
                 self._spatial.deliver(self.tick)
@@ -464,6 +498,72 @@ class DisturbanceEngine:
         except Exception:
             self.faulted = True
             raise
+
+    def _advance_cells(self) -> None:
+        positions = sorted(self._active_cells)
+        execution = self._local_execution
+        candidates = []
+        if (
+            execution is not None
+            and execution.parallel_enabled
+            and self._resolver is None
+            and execution.supported(self._planner, self._record_policy)
+        ):
+            for position in positions:
+                cell = self._cells[position]
+                if cell.pending is not None or cell.available_tick > self.tick:
+                    continue
+                if self._spatial is not None and any(
+                    record is not None and record.type_index in self._coupled_types
+                    for record in cell.records
+                ):
+                    continue
+                candidates.append(position)
+        if execution is None or len(candidates) < execution.parallel_threshold:
+            for position in positions:
+                cell = self._cells[position]
+                self._begin(position, cell)
+                self._commit(position, cell)
+            return
+        inputs = [
+            ProposalInput(cell.records, cell.coupling_remainders, cell.received_count)
+            for position in candidates
+            for cell in (self._cells[position],)
+        ]
+        eligible = set(candidates)
+        proposals = execution.evaluate(inputs)
+        try:
+            for position in positions:
+                prepared = next(proposals) if position in eligible else None
+                cell = self._cells[position]
+                self._begin(position, cell, prepared)
+                self._commit(position, cell)
+        finally:
+            proposals.close()
+
+    def execution_report(self) -> dict[str, object]:
+        """Host execution evidence is separate from physical computation charges."""
+        if self._local_execution is None:
+            return {"backend": "serial", "requested_workers": 1, "closed": self._closed}
+        return self._local_execution.report()
+
+    def close(self) -> None:
+        self._closed = True
+        if self._local_execution is not None:
+            self._local_execution.close()
+
+    def __enter__(self) -> Self:
+        if self._closed:
+            raise RuntimeError("a closed disturbance simulation cannot continue")
+        return self
+
+    def __exit__(
+        self,
+        exception_type: type[BaseException] | None,
+        exception: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> None:
+        self.close()
 
     def _commit_ready(self) -> None:
         for position in sorted(self._pending_due.get(self.tick, ())):

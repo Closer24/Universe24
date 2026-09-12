@@ -6,10 +6,13 @@ finite entity-profile compiler in `integration/quantum_entities.py`. The generic
 core is unchanged; native v2 selection extends the existing event-program owner.
 
 
-`entities.py` owns host-only compilation of selected explicit catalog profiles
-into ordinary initialization; it delegates strict JSON and runtime schema
-validation to `initialization.py`. Profiles contain their candidate operations.
-It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
+`entity_catalog.py` validates descriptive reference metadata and its links.
+Its decimal measurement parsing is host-side only and never updates physical
+state. `entities.py` requires separate explicit experiment profiles for version 2
+catalogs, compiles them into ordinary initialization, and delegates runtime schema
+validation to `initialization.py`. Reference properties and interaction lists do
+not enter runtime laws or select species-specific behavior. See
+[entity catalog](ENTITY_CATALOG.md).
 Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).
@@ -167,6 +170,27 @@ deliveries retain the original first-insertion order of origins and fixed slot
 order. Resolver-enabled worlds retain their required per-tick polling. These
 indices are reconstructible host data, not additional physical registers or laws.
 The ordinary tick phases and frozen-proposal semantics remain unchanged.
+
+`core/local_execution.py` owns immutable proposal messages and the local-executor
+protocol. `local_execution.py` implements bounded speculative local-planner work
+in isolated Python interpreters; `worker_bootstrap.py` pins the source before
+deserializing the owner's law. Simulation explicitly supplies the immutable
+generic law; the core scheduler does not import a field or resource implementation.
+Only independent eligible carrier inputs are copied after the spatial emission
+phase. The scheduler consumes proposals and exceptions in the original sorted
+begin/commit order. Workers cannot publish records, packets, delays or events.
+Native resolvers, spatial coupling and custom components remain with the serial
+owner. Executor counters are host diagnostics, excluded from modeled costs and
+physical snapshots. Worker lifetime is explicit through Simulation.close() or
+its context manager; the ordinary runner closes on failure as well as success.
+See [execution options and measurement](PERFORMANCE.md#parallel-local-work-inside-one-world).
+
+`mpi_runner.py` is an optional application owner for prelaunched MPI ranks. It
+injects a borrowed executor after Simulation creates the canonical immutable law
+from the runner's single parsed input. The coordinator alone owns the world and
+outputs; the MPI context owns worker shutdown. Physical core and field modules
+do not import MPI. The same source-pinned initializer and local proposal protocol
+serve interpreter and MPI workers, preserving one implementation of physical laws.
 
 Prepared expression plans contain only immutable law definitions. A bounded
 identity cache holds at most 1,024 roots and retains each root to prevent identity

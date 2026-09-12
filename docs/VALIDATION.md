@@ -1,10 +1,105 @@
 # Validation evidence
 
+## Descriptive physical catalog and explicit profiles — 2026-09-12
+
+Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2
+[physical reference](ENTITY_CATALOG.md) adds sourced properties and possible
+channels without introducing runtime laws. All 46 original classical/quantum
+profile pairs were extracted unchanged into `representation-probes.json`.
+
+An independent baseline worktree produced all 92 compiled configurations and
+three 12-tick worlds: a charged conjugate pair with the electromagnetic field,
+the four-component Higgs field probe, and the finite quantum pair/field
+preparation. The new compiler produces identical configurations, all 39 complete
+snapshots, every event, computation report and spatial accounting record.
+This checks behavior preservation, not the physical validity of those probes.
+
+Reference tests compare the declared PDG 2025 values, conventions and statuses;
+structural checks cover citations, units, aliases, reciprocal links, reaction
+charge balance and rejected executable content. The affected gate is
+`python tools/check.py --base 98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
+The PR records its final count and CI result for the submitted head. Validation
+uses Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Runs are headless;
+no unrelated full-suite audit or visual verification is claimed.
+
+The simulation-configuration guide now requires explicit experiment profiles and
+keeps reference measurements outside runtime laws. Boss, architecture, physics
+review and PR-review Skills already cover these boundaries; no additional Skill
+or workflow is needed. The Highlights revision and reconciliation are recorded
+in its [versioned companion](HIGHLIGHTS_IMPLEMENTATION.md); the live document
+was read, not changed.
+
 
 Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
+
+## Single-world CPU and MPI execution — 2026-09-12
+
+Extends PR #60 head `7e05013f62af1fff25618fb3ecf0ff2ff936e06c`. The measured
+physical/application source fingerprint before integrating the catalog update is
+`8439ddb9ec137ce8a44ae948f7fdef9b53f4aebe44150d7bc56e93392b3fac4c`.
+Main `521b63567d186bab2fac982a1e1f9d0a592a73a5` was subsequently integrated;
+the resulting source fingerprint is
+`850fca3929769bd3a2b80aac83decf52b393d413526f0c69ba0b52f16772bcde`.
+Its source changes are confined to entity authoring and descriptive catalog
+validation. All worker and physical runtime files remain byte-identical to the
+measured source, so timings retain their original fingerprint and workload scope.
+Physical definitions, operation prices, integer bounds, delays and event order
+remain unchanged. Worker startup and dispatch are host costs only.
+
+- Focused backend, independent physical, runner and MPI suites passed 60 tests:
+  20 lifecycle/queue/callback cases, 19 independent physical/source cases, seven
+  runner cases and 14 MPI cases. MPI tests used actual Intel MPI ranks on Windows,
+  including one-worker dispatch and both worker processes in the larger case.
+- Independent baseline comparison covered 12 ordinary/failure cases, 172 complete
+  per-tick state hashes and 2,178 events. Every state, event, exception and modeled
+  cost matched PR #60. That capture identifies source
+  `543b6b54b7e186d1840ef28ee6832c745e2bb59172de8e539d3a35702cd5d7a7`.
+  The later policy-instance override guard and newline normalization were reviewed
+  separately: canonical policy execution is unchanged, so this remains applicable
+  behavioral evidence rather than an exact-final-byte recapture.
+- Worker tests deliberately select a different installed package/PYTHONPATH.
+  The bootstrap pins the owner's source before unpickling its law. MPI additionally
+  changes the original JSON after the canonical planner is composed; recorded input,
+  state and events still use the single frozen input. No configuration rebuild occurs.
+- Exact rational MPI checks include approximately 120-bit integers, 240-bit
+  unreduced products, cancellation, and rejection of a normalized result outside
+  the 127-bit magnitude bound. Ordered failures preserve the serial artifact prefix.
+- Preflight failures, physical exceptions, observer failures and interrupted or
+  abandoned proposal streams release owned workers. Borrowed MPI executors remain
+  owned by the outer communicator context. Missing optional MPI dependencies leave
+  ordinary imports usable and cause explicit test skips where appropriate.
+- Headless benchmarks and their workload limits are recorded in
+  [performance](PERFORMANCE.md#parallel-local-work-inside-one-world). Source and
+  initialization fingerprints, all per-tick states and ordered events accompany
+  timings. Full-world GPU execution and distributed partition ownership are not
+  claimed. No visual output was requested or generated.
+
+An installed-wheel smoke from a foreign working directory also used two real
+interpreters. Both workers imported the installed package, reused their pool,
+matched all serial traces/artifacts and closed cleanly. Its source fingerprint
+matches the measured `8439ddb9` source.
+
+The affected submission gate includes package validation because the optional MPI
+extra and entry point change `pyproject.toml`; it is not a routine `--full` run.
+Before the catalog integration it passed **1,695 tests**, with 30 explicitly
+opt-in visualization skips, Ruff
+on 280 Python files and strict mypy on 95 source files. Source and wheel packages
+built successfully; the wheel includes the source bootstrap and both execution
+entry points. All 14 MPI tests ran on the installed local runtime. CI identity is
+recorded against the submitted PR head; environments without MPI skip its optional
+launcher cases explicitly.
+
+After integrating main `521b635`, the affected gate passed **1,856 tests** with
+the same 30 opt-in visualization skips, Ruff on 282 Python files and strict mypy
+on 96 source files. The integrated source fingerprint is `850fca39` as recorded
+above. Catalog authoring tests and consumers are included in this gate; the
+performance results continue to identify the unchanged measured runtime files.
+Boss and affected Skills were reviewed. The shared performance workflow now
+requires worker startup/transfer/shutdown timing, actual fallback evidence, exact
+failure prefixes and cleanup checks. No physical postulate or entity rule changed.
 
 ## Generic host execution and independent batches — 2026-09-12
 

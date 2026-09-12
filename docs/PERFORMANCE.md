@@ -14,10 +14,107 @@ For independent worlds, `python -m event_universe.batch` uses a bounded process
 pool. It saves validated input copies before starting workers, preserves each
 ordinary run's evidence, reports partial failure and joins interrupted workers.
 Inputs are runtime JSON; changing them requires no package rebuild. Process
-startup may outweigh parallelism for short runs. This is experiment throughput,
-not parallel execution inside one world. GPU, MPI, packed native arrays and
-cross-partition execution remain later work requiring a measured workload and
-the same exact arithmetic/causality acceptance.
+startup may outweigh parallelism for short runs. This command increases experiment
+throughput. The separate single-world interface below parallelizes local proposals.
+
+### Parallel local work inside one world
+
+```bash
+python -m event_universe --init my-simulation.json --workers 4 --output artifacts/parallel-world
+```
+
+`--workers` defaults to 1. Larger values select a persistent Python 3.14
+`InterpreterPoolExecutor`: each worker has its own interpreter and GIL, so pure
+Python calculations can use several CPU cores. Immutable laws are installed once
+per worker. A job carries fixed local records, residuals and already received
+counts; it cannot read neighboring cells or advance the world. Configurations
+remain runtime data and require no compilation.
+
+The scheduler dispatches bounded chunks when at least `--parallel-threshold`
+eligible cells are ready (default 64), using `--chunk-size` proposals per job
+(default 32). The owner applies results and failures in the existing address
+order, interleaving each begin and commit exactly as before. Worker completion
+order does not select a collision outcome, change a delay or reorder events.
+All arithmetic, integer bounds and modeled charges use the same generic law.
+
+Spatial evolution, field-coupled carrier work, shared native-event resolution
+and custom components retain their serial owner. `run.json.execution` records
+actual parallel work and fallback reasons separately from physical `computation`.
+Requesting several workers therefore does not mean every phase ran in parallel.
+The runner closes workers on completion and failure. Direct API consumers should
+use `with Simulation(initial, workers=4) as world:` or call `world.close()`.
+
+Small local laws may cost less than serialization and dispatch; the default
+remains serial. Measure your configuration before selecting more workers. Each
+batch job also defaults to serial stepping, avoiding nested pools by default.
+GPU kernels and independent partition ownership are not part of this backend.
+The optional MPI transport below uses the same local-proposal protocol.
+
+Reproduce a substantial local-work control and compare exact physical traces:
+
+```bash
+python tools/make_parallel_benchmark_input.py --output parallel-inputs --cells 128 --ticks 20
+python tools/benchmark_engine.py --init parallel-inputs/rational-pairs.json --workers 1 --repeat 3 --output artifacts/parallel-serial
+python tools/benchmark_engine.py --init parallel-inputs/rational-pairs.json --workers 4 --repeat 3 --output artifacts/parallel-four
+```
+
+The generator reuses the existing configured electron/proton rational scattering
+reference, holds one pair at each cell, and evaluates the reversible transaction
+each cycle. It is a computation control, not a realistic repeated-collision
+trajectory. Ordinary physical conservation checks remain enabled. Benchmark
+stepping includes fresh worker startup and shutdown for each run, with complete
+trace hashing performed separately. Audited timing retains every runner check,
+event and artifact. Compare both timings and the exact trace digests.
+
+The runtime mechanism follows the [Python 3.14 executor contract](https://docs.python.org/3.14/library/concurrent.futures.html#interpreterpoolexecutor).
+
+Measured on this Windows/Python 3.14.7 host with 12 logical CPUs, after other
+validation work stopped: 128 held pairs, 20 ticks, three fresh runs per mode and
+one unmeasured warmup. Both modes used source
+`8439ddb9ec137ce8a44ae948f7fdef9b53f4aebe44150d7bc56e93392b3fac4c`
+and initialization
+`556ce186745b09ccbd9bd886bb9457371b0b678c86d47752442a52235e5bbf4a`.
+
+| Execution | Median stepping | Median complete audited run |
+| --- | ---: | ---: |
+| One worker, serial | 7.489746 s | 7.751503 s |
+| Four interpreter workers | 2.483324 s | 2.532277 s |
+
+This control improves stepping by **3.02 times** and audited execution by
+**3.06 times**. Every repetition used four distinct worker interpreters, 80
+chunks and 2,560 local proposals, with no serial fallback. All 21 per-tick state
+hashes and 5,120 ordered events match both modes and the PR #60 predecessor.
+Startup and shutdown are included; trace hashing is separate. These results
+apply to this substantial rational workload, not small runs, spatial-only work,
+GPU execution or general distributed scaling.
+
+### Optional MPI processes
+
+Install the optional `mpi` dependencies once, then start ranks before the run:
+
+```bash
+python -m pip install ".[mpi]"
+mpiexec -n 3 python -m event_universe.mpi_runner --init my-simulation.json --output artifacts/mpi-world
+```
+
+Three ranks provide one coordinator and two calculation workers. On this Windows
+host, `python -m pip install impi-rt` installs the optional Intel runtime locally
+in the environment. Its launcher is in the environment's `Library/bin` directory;
+use its `-localonly` option for one computer. The MPI entry point uses an existing
+communicator and does not dynamically spawn ranks. Ordinary runs neither import
+nor require MPI. Every rank needs the same simulator source and Python runtime;
+multi-computer deployment also requires an MPI launch environment and shared
+access to that source.
+
+Only the coordinator reads the initialization and writes run artifacts. The
+worker initializer receives the canonical immutable planner created from that
+same parsed input, pins its source before deserialization, and reuses it across
+jobs. MPI transports the same bounded local proposal batches; it does not own
+spatial partitions or change the serial phase and fallback rules above. Errors
+from initialization and physical stepping release the waiting ranks. Successful
+MPI launch alone does not establish a speedup or multi-computer scaling.
+
+The adapter follows the [mpi4py futures communicator contract](https://mpi4py.readthedocs.io/en/stable/mpi4py.futures.html#mpicommexecutor).
 
 ### Reproduce active measurements
 

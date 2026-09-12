@@ -126,7 +126,7 @@ or quantum behavior.
 For the physical field/particle inventory, matter and antimatter, and the exact
 limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.md)
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
-profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
+experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
 Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
 The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
@@ -248,6 +248,19 @@ events, state and acceptance checks; `batch.json` records ordered success/failur
 results. The default is at most four workers, bounded by the number of inputs and
 available CPUs. Short runs can cost more to spawn than they save. This increases
 experiment throughput; it does not parallelize one world's physical ticks.
+
+For parallel local calculations inside one simulation, use `--workers` on the
+ordinary runner:
+
+```bash
+python -m event_universe --init examples/basic.json --workers 4 --output artifacts/one-world
+```
+
+This uses isolated Python interpreters with unchanged ordered physical commits.
+Small phases and unsupported components remain serial; `run.json.execution`
+records actual use. The default is one worker. See
+[single-world execution](docs/PERFORMANCE.md#parallel-local-work-inside-one-world)
+for scope, thresholds, direct API lifetime and reproducible benchmarks.
 Configuration changes require no build. See [active engine measurements](docs/PERFORMANCE.md#active-generic-engine)
 for headless benchmarks and current limits.
 
@@ -303,6 +316,8 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/fields/expressions.py` | Prepared generic integer expression execution |
 | `src/event_universe/batch.py` | Independent headless simulation workers and batch evidence |
+| `src/event_universe/local_execution.py` | Isolated CPU workers for local proposals in one world |
+| `src/event_universe/mpi_runner.py` | Optional prelaunched MPI workers with one output coordinator |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
 | `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
 | `src/event_universe/core/scalar_engine.py` | Historical scalar-engine scheduling and occupancy |

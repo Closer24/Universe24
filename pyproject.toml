@@ -13,10 +13,12 @@ dependencies = []
 [project.optional-dependencies]
 render = ["matplotlib>=3.8,<4", "Pillow>=10,<13", "numpy>=1.26,<3"]
 dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
+mpi = ["mpi4py>=4.1,<5"]
 
 [project.scripts]
 event-universe = "event_universe.runner:main"
 event-universe-ui = "event_universe.ui:main"
+event-universe-mpi = "event_universe.mpi_runner:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

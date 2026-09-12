@@ -2,6 +2,23 @@
 
 ## Host execution and independent batches
 
+`test_local_execution.py` and `test_parallel_execution.py` verify isolated worker
+execution, ordered publication and failure prefixes, complete per-tick state and
+event equivalence, integer arithmetic, modeled delays, and serial fallback for
+components whose execution cannot be safely speculated. Worker cleanup is part
+of the host contract; there are no timing thresholds in CI.
+
+`test_parallel_runner.py` compares saved inputs, events, states, local observer
+recordings and physical metadata between one and several workers. Invalid host
+options fail before output creation; a failed run releases workers and preserves
+its artifacts. Its dense rational-pair control reuses a canonical reference law;
+the check selector retains that consumer when the source configuration changes.
+
+`test_mpi_runner.py` launches real preexisting ranks when an MPI runtime is
+available. It compares full run artifacts and ordered errors with the ordinary
+runner and checks preflight failure release. Environments without MPI report an
+explicit optional-dependency skip; ordinary execution remains dependency-free.
+
 `test_link_scheduling.py` compares indexed execution with full scanning, preserving
 pending proposals, source bookkeeping, origin/port order, same-time arrivals,
 overflow/capacity failures and resolver clock wakeups. Dormant physical registers
@@ -112,6 +129,12 @@ The experiment report separately exposes missing physical laws; an accounting
 pass must not be relabeled as physical acceptance.
 
 ## Physical entity catalog and elementary probes
+
+`tests/test_entity_catalog.py` checks coverage of the Standard Model inventory,
+disturbance families and representative interactions, alongside sourced values,
+unknowns, units and reciprocal identity links. Negative inputs cover executable
+content, invalid references, measurement descriptors, alias cycles and reaction
+charge imbalance. These tests validate a reference, not a physical derivation.
 
 `tests/test_physical_entities.py` covers the sourced catalog and only its new
 runtime probes. Antiparticle references must be reciprocal where applicable,
@@ -667,7 +690,9 @@ rejects injected ASTs, laws, callbacks and formula strings. See
 
 `tests/test_entity_compiler.py` validates all 46 profiles, active representative
 carrier/vector and scalar transport, generic name selection, capacity rejection,
-conflicting declarations and malformed profiles. Profile compilation is distinct
+conflicting declarations and malformed profiles. Version 2 requires explicit
+separate profiles; version 1 retains embedded-profile compatibility. Metadata
+changes must not change compiled laws. Profile compilation is distinct
 from physical-law acceptance; do not multiply identical runs across labels.
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress.

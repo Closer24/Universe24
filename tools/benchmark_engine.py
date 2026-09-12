@@ -53,7 +53,7 @@ def physical_state(world):
     return result
 
 
-def trace(initial, ticks):
+def trace(initial, ticks, *, workers=1, parallel_threshold=64, chunk_size=32):
     events = hashlib.sha256()
     event_count = 0
 
@@ -62,17 +62,23 @@ def trace(initial, ticks):
         events.update(json.dumps(event, sort_keys=True).encode() + b"\n")
         event_count += 1
 
-    world = Simulation(initial, observer=receive)
-    hashes = [_digest(physical_state(world))]
-    failure = None
-    for _ in range(ticks):
-        try:
-            world.step()
-        except Exception as error:
-            failure = {"type": type(error).__name__, "message": str(error)}
-        hashes.append(_digest(physical_state(world)))
-        if failure is not None:
-            break
+    with Simulation(
+        initial,
+        observer=receive,
+        workers=workers,
+        parallel_threshold=parallel_threshold,
+        chunk_size=chunk_size,
+    ) as world:
+        hashes = [_digest(physical_state(world))]
+        failure = None
+        for _ in range(ticks):
+            try:
+                world.step()
+            except Exception as error:
+                failure = {"type": type(error).__name__, "message": str(error)}
+            hashes.append(_digest(physical_state(world)))
+            if failure is not None:
+                break
     return {
         "state_hashes": hashes,
         "events_sha256": events.hexdigest(),
@@ -82,33 +88,39 @@ def trace(initial, ticks):
     }
 
 
-def benchmark(path, output, ticks, repeats):
+def benchmark(path, output, ticks, repeats, *, workers=1, parallel_threshold=64, chunk_size=32):
     source = path.read_bytes()
     initial = parse_initial_json(source)
     count = initial.ticks if ticks is None else ticks
-    evidence = trace(initial, count)
+    options = {"workers": workers, "parallel_threshold": parallel_threshold, "chunk_size": chunk_size}
+    evidence = trace(initial, count, **options)
     stepping = []
+    executions = []
     # One unmeasured warmup; every measured repetition gets a fresh world.
     for repeat in range(repeats + 1):
-        world = Simulation(initial)
+        world = Simulation(initial, **options)
         started = time.perf_counter()
-        for _ in range(count):
-            try:
-                world.step()
-            except Exception:
-                break
+        try:
+            for _ in range(count):
+                try:
+                    world.step()
+                except Exception:
+                    break
+        finally:
+            world.close()
         elapsed = time.perf_counter() - started
         if _digest(physical_state(world)) != evidence["state_hashes"][-1]:
             raise AssertionError("timed stepping differs from the observed physical trace")
         if repeat:
             stepping.append(elapsed)
+            executions.append(world.execution_report())
     audited = []
     for repeat in range(repeats):
         destination = output / f"audit-{repeat:03d}"
         started = time.perf_counter()
         failure = None
         try:
-            run_initialization(path, destination, ticks=count)
+            run_initialization(path, destination, ticks=count, **options)
         except Exception as error:
             failure = {"type": type(error).__name__, "message": str(error)}
         audited.append(time.perf_counter() - started)
@@ -127,6 +139,8 @@ def benchmark(path, output, ticks, repeats):
         "audited_seconds": audited,
         "audited_median_seconds": statistics.median(audited),
         "trace": evidence,
+        "execution_options": options,
+        "executions": executions,
     }
 
 
@@ -136,6 +150,9 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--ticks", type=int)
     parser.add_argument("--repeat", type=int, default=3)
+    parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument("--parallel-threshold", type=int, default=64)
+    parser.add_argument("--chunk-size", type=int, default=32)
     args = parser.parse_args()
     if args.repeat < 1 or (args.ticks is not None and args.ticks < 0):
         parser.error("repeat must be positive and ticks nonnegative")
@@ -152,7 +169,15 @@ def main():
     cases = [args.output / f"case-{index:03d}" for index in range(len(args.init))]
     with ArtifactLease(args.output, [report], keep_alive_with=cases):
         results = [
-            benchmark(path, folder, args.ticks, args.repeat)
+            benchmark(
+                path,
+                folder,
+                args.ticks,
+                args.repeat,
+                workers=args.workers,
+                parallel_threshold=args.parallel_threshold,
+                chunk_size=args.chunk_size,
+            )
             for path, folder in zip(args.init, cases, strict=True)
         ]
         if source_fingerprint() != fingerprint:
@@ -165,7 +190,7 @@ def main():
                     "source_sha256": fingerprint,
                     "logical_cpus": os.process_cpu_count(),
                     "gil_enabled": sys._is_gil_enabled(),
-                    "scope": "headless; one core warmup; timing excludes trace hashing; audited timing includes all runner checks and event I/O",
+                    "scope": "headless; one core warmup; fresh workers per run; stepping includes worker startup and shutdown, excludes trace hashing; audited timing includes all runner checks and event I/O",
                     "cases": results,
                 },
                 indent=2,

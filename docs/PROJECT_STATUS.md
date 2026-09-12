@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The [host execution options](PERFORMANCE.md#parallel-local-work-inside-one-world)
+include optional local-proposal workers within one world and prelaunched MPI
+processes. Physical commits retain their existing owner/order; spatial and
+native-event phases retain documented serial fallback. Check `run.json.execution`
+for actual dispatched work. GPU whole-world execution and partition ownership
+remain open. Verify the current PR head before reusing measured validation.
+
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node configured in the ordinary initialization JSON, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar
@@ -38,8 +45,12 @@ Finite owned-reservoir transfer, a ray-speed parameter and a restricted
 zero-total-momentum unequal-mass candidate are explicit configuration solutions,
 not replacements for the default entity profiles or derived universal laws.
 
-The [executable catalog](ENTITY_CATALOG.md) provides bounded representation
-profiles for all 46 inventory entries and compilation into ordinary run inputs.
+The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
+and possible interactions from explicitly supplied representation experiments.
+It covers 11 field families, 35 particle records and 14 disturbance families, with
+17 interaction families and 33 representative channels. No catalog formula,
+measured mass or interaction label becomes a simulation law. The original 46
+bounded probes live in a separate file and compile into ordinary run inputs.
 The [local conversion interface](LOCAL_CONVERSIONS.md) supports explicit atomic
 two-to-two type replacement with declared balances. These additions do not
 establish physical annihilation, general particle production or physical field
@@ -92,7 +103,7 @@ records are temporary, while their recorded conclusions remain in the repository
 | Local expressions and transactions | [disturbances.py](../src/event_universe/fields/disturbances.py) | Bounded integer operations, declared balances, fixed local capacities and explicit rejection |
 | Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
-| Entity representation | [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | 46 inventory profiles compile to selected initialization records; labels are not physical derivations |
+| Entity reference and representation | [entity_catalog.py](../src/event_universe/entity_catalog.py), [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | Sourced properties and interactions are validated separately; 46 explicitly supplied experiment profiles compile without deriving laws from labels |
 | Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
 | Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |
 | Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |

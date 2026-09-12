@@ -36,6 +36,7 @@ generic payload schema below.
 ```bash
 python -m event_universe --init examples/basic.json --output artifacts/basic
 python -m event_universe --init examples/basic.json --ticks 20 --output artifacts/basic-20
+python -m event_universe --init examples/basic.json --workers 4 --output artifacts/basic-parallel
 ```
 
 The file contains the run duration; `--ticks` explicitly overrides it. Missing
@@ -46,6 +47,12 @@ The active runner writes `initialization.json`, `run.json`, `state.json` and
 and local events. Runs are headless by default. Visualization requires
 `--visualize`; ordinary execution does not capture frames or import optional
 rendering dependencies. The active runner rejects a nonempty output directory.
+Optional CPU workers evaluate eligible local proposals within this same world;
+small or unsupported phases remain serial. Worker selection is host execution
+configuration and changes no physical operation prices or laws. The separate
+`execution` report records dispatched work and fallbacks. See
+[performance](PERFORMANCE.md#parallel-local-work-inside-one-world) for thresholds,
+resource lifetime and measured limitations.
 
 ```python
 from pathlib import Path

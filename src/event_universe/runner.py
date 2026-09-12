@@ -9,12 +9,17 @@ from typing import TYPE_CHECKING, cast
 
 from event_universe import __version__
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.local_execution import validate_execution_options
 from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_state, parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+    from concurrent.futures import Executor
+
+    from event_universe.core.event_resolution import Planner
     from event_universe.diagnostics.local_observer import LocalObserver
 
 
@@ -36,8 +41,14 @@ def run_initialization(
     visualize: bool = False,
     frame_stride: int = 1,
     observer: Path | None = None,
+    workers: int = 1,
+    parallel_threshold: int = 64,
+    chunk_size: int = 32,
+    executor_factory: Callable[[Planner], Executor] | None = None,
+    execution_backend: str = "interpreters",
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
+    validate_execution_options(workers, parallel_threshold, chunk_size)
     source = initialization.read_bytes()
     document = parse_json_document(source)
     initial = parse_initial_state(document)
@@ -64,7 +75,19 @@ def run_initialization(
     output.mkdir(parents=True, exist_ok=True)
     with ArtifactLease(output.parent, [output.resolve()]):
         return _execute_run(
-            initial, source, output, fingerprint, count, visualize, frame_stride, observer_definition
+            initial,
+            source,
+            output,
+            fingerprint,
+            count,
+            visualize,
+            frame_stride,
+            observer_definition,
+            workers,
+            parallel_threshold,
+            chunk_size,
+            executor_factory,
+            execution_backend,
         )
 
 
@@ -77,6 +100,11 @@ def _execute_run(
     visualize: bool,
     frame_stride: int,
     observer_definition: ObserverDefinition | None,
+    workers: int,
+    parallel_threshold: int,
+    chunk_size: int,
+    executor_factory: Callable[[Planner], Executor] | None,
+    execution_backend: str,
 ) -> Path:
     (output / "initialization.json").write_bytes(source)
     frames: list[dict[str, object]] = []
@@ -108,7 +136,15 @@ def _execute_run(
             if probe is not None:
                 probe.receive(event)
 
-        world = Simulation(initial, observer=record)
+        world = Simulation(
+            initial,
+            observer=record,
+            workers=workers,
+            parallel_threshold=parallel_threshold,
+            chunk_size=chunk_size,
+            executor_factory=executor_factory,
+            execution_backend=execution_backend,
+        )
         initial_totals = world.totals()
         if visualize:
             frames.append(world.snapshot())
@@ -154,6 +190,8 @@ def _execute_run(
                         probe.capture(world.tick)
         except Exception as error:
             failure = error
+        finally:
+            world.close()
         final = world.snapshot()
         if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
             frames.append(final)
@@ -185,6 +223,7 @@ def _execute_run(
         "shape": initial.shape,
         "link_ticks": initial.link_ticks,
         "computation": world.computation_report(),
+        "execution": world.execution_report(),
     }
     if world.event_space is not None:
         from dataclasses import asdict
@@ -253,6 +292,14 @@ def main() -> None:
     parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
     parser.add_argument("--observer", type=Path, help="Local reception probe placement JSON")
+    parser.add_argument("--workers", type=int, default=1, help="CPU workers within this simulation")
+    parser.add_argument(
+        "--parallel-threshold",
+        type=int,
+        default=64,
+        help="Minimum eligible cells before dispatching parallel local proposals",
+    )
+    parser.add_argument("--chunk-size", type=int, default=32, help="Local proposals per worker job")
     args = parser.parse_args()
     try:
         artifact = run_initialization(
@@ -262,6 +309,9 @@ def main() -> None:
             visualize=args.visualize,
             frame_stride=args.frame_stride,
             observer=args.observer,
+            workers=args.workers,
+            parallel_threshold=args.parallel_threshold,
+            chunk_size=args.chunk_size,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

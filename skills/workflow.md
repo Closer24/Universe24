@@ -101,6 +101,10 @@ Separate environment setup, physical stepping and diagnostic rendering before
 optimizing. Reuse a verified checkout and installed environment for later runs.
 Measure before and after with identical inputs, tick counts, frame sampling,
 resolution and dependencies; report host timings separately from model cost.
+For within-world parallelism, compare complete per-tick state and ordered failure
+prefixes, and report actual dispatched work and serial fallback. Include worker
+startup, data transfer and shutdown in end-to-end timing; a worker count alone
+does not establish acceleration. Verify cleanup after failed and interrupted runs.
 Preserve every physical update, event and acceptance check. Compare traces and
 metadata. Inspect saved frames when visual checks were requested; otherwise
 report visual validation as not run. Do not claim a speedup from fewer frames
