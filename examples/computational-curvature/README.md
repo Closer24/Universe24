@@ -10,7 +10,7 @@ The probe deliberately separates three clocks that are easy to confuse:
 
 ## Geometry
 
-The default world is open and three-dimensional. The stationary mass source is at `(20,12,4)`. Two clock records sit at `(20,14,4)` and `(20,20,4)`, at Manhattan distances 2 and 8 from the source. A massless carrier probe travels in `+X` along `(y,z)=(16,5)`. A separate spatial wave travels in `+X` along `(y,z)=(16,3)`. Both pass the source at the same Manhattan impact distance 5. The detector plane is `x=34`.
+The default world is open and three-dimensional with shape `(25,17,7)`. The stationary mass source is at `(12,8,3)`. Two clock records sit at `(12,10,3)` and `(12,14,3)`, at Manhattan distances 2 and 6 from the source. A massless carrier probe travels in `+X` along `(y,z)=(12,4)`. A separate spatial wave travels in `+X` along `(y,z)=(12,2)`. Both pass the source at the same Manhattan impact distance 5. The detector plane is `x=21`.
 
 The fields are:
 
@@ -42,7 +42,7 @@ The independent readouts are:
 - **Carrier coordinate delay:** detector arrival tick of `massless_ray` relative to the zero-mass control.
 - **Spatial-wave coordinate delay:** detector arrival tick of `wave` relative to control.
 - **Path bending:** maximum lateral displacement from each probe's original `(y,z)` line.
-- **Clock-rate gradient:** local-clock cycles completed from tick 24 through tick 44, after both clock sites have had time to receive source influence.
+- **Clock-rate gradient:** local-clock cycles completed from tick 16 through tick 28, after both clock sites have had time to receive source influence.
 - **Mass scaling:** whether increasing the configured source mass from 64 to 512 increases the carrier delay at unchanged computation budget.
 - **Local causal link time:** every carrier `sent` event retains its explicit `arrival_tick - tick`; this distinguishes waiting at a node from slowing a link in transit.
 
