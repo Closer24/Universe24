@@ -101,7 +101,12 @@ Passing code checks does not establish a real-world physical law.
 
 ## Completion
 
-Use the unchanged full gate `python tools/check.py` before submission. Its
-ordinary mode is headless; `pytest --visualize-runs` is explicit visual validation. State missing checks and remaining blockers.
+Use `python tools/check.py` before submission. It selects changed files and
+affected consumers, rather than running unrelated suites. Inspect its reported
+scope; use `--tests` to add a related test whose dependency is not statically
+visible. See CONTRIBUTING.md for base selection and non-import dependencies.
+Full validation requires explicit `--full`; do not select it routinely.
+Ordinary checks are headless; `pytest --visualize-runs` is explicit visual validation.
+State the selected checks and remaining blockers.
 Keep provider, consumers, tests and documentation together when an interface
 changes. Follow the merge conditions in CONTRIBUTING.md; never bypass failed CI.
