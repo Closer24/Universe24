@@ -1,5 +1,16 @@
 # Test inputs and expected results
 
+## Local record operations
+
+`test_record_operations.py` checks generic vector merging with independent
+expected components, separation by type/channel/pending lock and whole-record
+transport, all-or-nothing failure for overflow and capacity, zero-state activity,
+and configured cost reporting without repricing. Direct engine composition tests
+prove that the injected activity policy is used and that a capacity-changing
+arrival proposal fails before packets are cleared. Existing timing, generic-name,
+spatial-response and native-event tests retain the cross-owner contracts.
+
+
 ## Small-space physical comparisons
 
 See [the experiment evidence](../examples/small-space/README.md).

@@ -115,6 +115,25 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 
 ## Active generic ownership
 
+The engine receives an explicit `core/record_policy.RecordPolicy` alongside its
+local planner. `fields/record_operations.RecordOperations` owns the existing
+activity predicate, delivered-record merging and configured cost reporting.
+It stores immutable definitions and receives only fixed local slots, delivered
+records, pending-slot locks or a local plan. It receives no world, address or
+clock. The engine alone determines arrival eligibility, supplies locks, validates
+slot capacity, and commits proposals before clearing packets. Public Simulation
+and the explicit contact trial assemble this component; direct DisturbanceEngine
+callers must supply `record_policy=`. Configuration files are unchanged.
+
+This is an ownership refactor: arithmetic order, transport/channel distinctions,
+source bookkeeping, cost prices and frozen pending semantics are preserved.
+Generic operations and configured physical meaning remain separate; this change
+does not add a physical force, a tensor schema or an arbitrary Python plugin API.
+See tests/test_record_operations.py and the existing disturbance, spatial and
+native-event regressions. The independent spatial scheduler retains its current
+ownership and is outside this refactor.
+
+
 `disturbance_api.Simulation(initial: InitialState)` composes the generic engine
 and local law; it is exported as the primary package Simulation.
 `initialization.py` reads strict JSON data and resolves names to bounded typed

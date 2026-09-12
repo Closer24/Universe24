@@ -7,22 +7,20 @@ from types import MappingProxyType
 from .disturbance_state import (
     Address3,
     CellView,
-    CouplingDefinition,
     DisturbanceCell,
     DisturbanceRecord,
     InitialState,
-    InteractionDefinition,
     LocalPlan,
     Packet,
     PendingCycle,
     bounded,
     decode,
-    pack,
     unpack,
 )
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
-from .integer import add_components, ceil_div, checked_work
+from .integer import ceil_div, checked_work
+from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
 from .topology import neighbor_address
 
@@ -54,6 +52,7 @@ class DisturbanceEngine:
         spatial_coupler: SpatialCoupler | None = None,
         spatial_decayer: SpatialDecayer | None = None,
         *,
+        record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
     ) -> None:
@@ -65,6 +64,7 @@ class DisturbanceEngine:
         self._model_work = 0
         self._local_cycles = 0
         self._planner = planner
+        self._record_policy = record_policy
         self._observer = observer
         self._cells: dict[Address3, DisturbanceCell] = {}
         self._links: dict[Address3, tuple[Packet | None, ...]] = {}
@@ -172,33 +172,10 @@ class DisturbanceEngine:
             report["resolver"] = self._resolver.report()
         return report
 
-    def _has_work(self, cell: DisturbanceCell) -> bool:
-        present = [record.type_index for record in cell.records if record is not None]
-        if self._coupled_types.intersection(present):
-            return True
-        rules: tuple[CouplingDefinition | InteractionDefinition, ...] = (
-            *self.initial.couplings,
-            *self.initial.interactions,
-        )
-        for coupling in rules:
-            if coupling.left_type in present and coupling.right_type in present:
-                if coupling.left_type != coupling.right_type or present.count(coupling.left_type) > 1:
-                    return True
-        for record in cell.records:
-            if record is not None:
-                definition = self.initial.disturbances[record.type_index]
-                if definition.transport.mode == "move" and definition.transport.direction_field is None:
-                    return True
-                if definition.updates or definition.cost_field is not None:
-                    return True
-                if any(any(unpack(v)) for v in record.values):
-                    return True
-        return False
-
     def _begin(self, position: Address3, cell: DisturbanceCell) -> None:
         if cell.pending is not None or cell.available_tick > self.tick:
             return
-        if not self._has_work(cell) and not (
+        if not self._record_policy.has_work(cell.records) and not (
             self._resolver is not None
             and self._resolver.has_work(
                 LocalContext(
@@ -244,17 +221,7 @@ class DisturbanceEngine:
             plan = replace(
                 plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
             )
-            replacements = []
-            for slot, record in plan.replacements:
-                if record is not None:
-                    cost_field = self.initial.disturbances[record.type_index].cost_field
-                    if cost_field is not None:
-                        values = list(record.values)
-                        # This reporter assignment was already metered by the local planner.
-                        values[cost_field] = pack((plan.cost,))
-                        record = replace(record, values=tuple(values))
-                replacements.append((slot, record))
-            plan = replace(plan, replacements=tuple(replacements))
+            plan = self._record_policy.report_cost(plan)
         if len(plan.departures) > self.initial.slots_per_cell * 6:
             raise ValueError("local rule exceeds fixed outgoing capacity")
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
@@ -391,46 +358,6 @@ class DisturbanceEngine:
                 raise ValueError("spatial emission cannot change a disturbance's physical values")
         cell.records = records
 
-    def _merge_arrivals(
-        self, cell: DisturbanceCell, packets: tuple[Packet, ...]
-    ) -> tuple[DisturbanceRecord | None, ...]:
-        records = list(cell.records)
-        locked = set() if cell.pending is None else {slot for slot, _ in cell.pending.plan.replacements}
-        for packet in packets:
-            incoming = packet.record
-            definition = self.initial.disturbances[incoming.type_index]
-            match = None
-            if definition.transport.mode == "split":
-                match = next(
-                    (
-                        slot
-                        for slot, old in enumerate(records)
-                        if slot not in locked
-                        and old is not None
-                        and old.type_index == incoming.type_index
-                        and old.channel_code == incoming.channel_code
-                    ),
-                    None,
-                )
-            if match is not None:
-                old = records[match]
-                assert old is not None
-                combined: list[tuple[int, ...]] = []
-                for index, (a, b) in enumerate(zip(old.values, incoming.values, strict=True)):
-                    value = pack(add_components(unpack(a), unpack(b)))
-                    self.initial.fields[index].validate(value)
-                    combined.append(value)
-                records[match] = replace(old, values=tuple(combined))
-            else:
-                try:
-                    slot = records.index(None)
-                except ValueError as error:
-                    raise ValueError(
-                        "local receiving capacity exhausted; no disturbance was discarded"
-                    ) from error
-                records[slot] = incoming
-        return tuple(records)
-
     def _escape(self, origin: Address3, slot: int, packet: Packet) -> None:
         """Complete one terminal link; unused allowances are not physical stock."""
         if self.event_space is not None:
@@ -467,7 +394,16 @@ class DisturbanceEngine:
             if self.event_space is not None:
                 self.event_space.require_room(len(deliveries))
             cell = self._at(position)
-            records = self._merge_arrivals(cell, tuple(packet for _, _, packet in deliveries))
+            locked = (
+                frozenset()
+                if cell.pending is None
+                else frozenset(slot for slot, _ in cell.pending.plan.replacements)
+            )
+            records = self._record_policy.receive(
+                cell.records, tuple(packet.record for _, _, packet in deliveries), locked
+            )
+            if len(records) != len(cell.records):
+                raise ValueError("record policy cannot change local capacity")
             received = bounded(cell.received_count + len(deliveries))
             # Validate the whole local arrival event before clearing any packet.
             cell.records = records
