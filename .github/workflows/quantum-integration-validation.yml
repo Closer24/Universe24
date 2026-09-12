@@ -1,0 +1,36 @@
+name: Quantum integration validation
+on:
+  push:
+    branches: [feat/deferred-quantum-events]
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Save exact checkout and validation tools
+        run: |
+          mkdir -p artifacts/quantum-validation
+          git archive HEAD | gzip > artifacts/quantum-validation/source.tar.gz
+          python -m pip download --no-deps --only-binary=:all: --dest artifacts/quantum-validation 'ruff>=0.16,<0.17'
+          python --version > artifacts/quantum-validation/python-version.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quantum-integration-source
+          path: artifacts/quantum-validation/
+          retention-days: 1
+      - name: Validate affected project
+        run: python tools/check.py --base 12c85316f011d0601adcd0f4a31f0f52e59eaa27
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quantum-integration-diagnostics
+          path: artifacts/
+          retention-days: 1
