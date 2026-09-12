@@ -15,7 +15,7 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work, signed_divrem
+from event_universe.core.integer import checked_work, dot_product, signed_divrem, subtract_components
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
     SpatialCouplingDefinition,
@@ -179,8 +179,8 @@ def _rotate(
             rotated[first], rotated[second] = b, -a
         if turns:
             meter.charge("update", 2)
-    before = checked_work(sum(checked_work(component * component) for component in value))
-    after = checked_work(sum(checked_work(component * component) for component in rotated))
+    before = dot_product(value, value)
+    after = dot_product(tuple(rotated), tuple(rotated))
     if before != after:
         raise ValueError("lattice rotation changed the squared vector norm")
     return tuple(rotated), pack(tuple(remainders))
@@ -404,13 +404,9 @@ class SpatialCouplingLaw:
                     fraction, residuals[index] = emission_amount(
                         request, residuals[index], definition.denominator, field, meter
                     )
-                    after = tuple(
-                        checked_work(a - b) for a, b in zip(before, unpack(fraction), strict=True)
-                    )
+                    after = subtract_components(before, unpack(fraction))
                 if definition.budget is not None:
-                    change = tuple(
-                        checked_work(old - new) for old, new in zip(before, after, strict=True)
-                    )
+                    change = subtract_components(before, after)
                     reserved = _debit_allowance(remaining[index], change, meter)
                     if reserved is None:
                         continue
