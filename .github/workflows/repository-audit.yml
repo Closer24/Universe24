@@ -28,8 +28,19 @@ jobs:
           base = 'fb083c159fe1f51612203962d9a7921683eb31c8'
           result = subprocess.run(['git', 'merge', '--no-ff', '--no-commit', base])
           conflicts = subprocess.check_output(['git', 'diff', '--name-only', '--diff-filter=U'], text=True).splitlines()
-          assert set(conflicts) <= {'docs/PROJECT_STATUS.md'}, conflicts
+          assert set(conflicts) <= {'docs/PROJECT_STATUS.md', 'docs/TEST_EXPECTATIONS.md'}, conflicts
           assert result.returncode in (0, 1)
+          # Both sides appended independent sections; preserve both verbatim.
+          expectations = 'docs/TEST_EXPECTATIONS.md'
+          ours = subprocess.check_output(['git', 'show', 'HEAD:' + expectations], text=True)
+          previous = subprocess.check_output(['git', 'show', '7e451fff1e44dfc3bef21c4a166326a3ba6c3b0d:' + expectations], text=True)
+          incoming = subprocess.check_output(['git', 'show', base + ':' + expectations], text=True)
+          assert incoming.startswith(previous)
+          addition = incoming[len(previous):]
+          assert addition.lstrip().startswith('## Native event programs and path costs')
+          assert '## Native event programs and path costs' not in ours
+          pathlib.Path(expectations).write_text(ours.rstrip() + '\n\n' + addition.lstrip(), encoding='utf-8')
+          subprocess.run(['git', 'add', expectations], check=True)
           status = pathlib.Path('docs/PROJECT_STATUS.md')
           text = subprocess.check_output(['git', 'show', 'HEAD:docs/PROJECT_STATUS.md'], text=True)
           text = text.replace('7e451fff1e44dfc3bef21c4a166326a3ba6c3b0d', base)
@@ -63,6 +74,7 @@ jobs:
           replace('docs/QUANTUM_EVENTS.md', '## Contract and ownership', 'For composition through the ordinary simulator and runner, use\n[native event programs](NATIVE_QUANTUM_EVENTS.md). That contract owns the shared\ncausal identities, repeated local triggers and charged mechanical paths; this\ndocument owns the finite quantum state and instrument semantics.\n\n## Contract and ownership')
           replace('docs/QUANTUM_CONTACT_TRIAL.md', '## Selected experiment, not a default engine rule', 'This document preserves the earlier bounded contact fixture. The newer\n[native event-program interface](NATIVE_QUANTUM_EVENTS.md) supports optional\ncomposition through the ordinary engine and repeated local triggers. The limits\nbelow belong to this historical fixture, not that newer interface.\n\n## Selected experiment, not a default engine rule')
           pathlib.Path('.github/workflows/repository-audit.yml').unlink()
+          assert subprocess.check_output(['git', 'diff', '--name-only', '--diff-filter=U']) == b''
           assert subprocess.check_output(['git', 'diff', base, '--', 'tests/reference']) == b''
           PY
       - run: python -m pip install -e '.[render,dev]'
