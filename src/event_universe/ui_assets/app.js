@@ -248,6 +248,8 @@ function renderEditor() {
   } else if (tab === "rules") {
     let grid = section("Local exchange", "Couplings exchange a configured quantity between records in the same cell.");
     jsonField(grid, "Coupling rules", doc, "couplings", []);
+    grid = section("Atomic interactions", "Update several fields together and enforce declared invariants for each local pair.");
+    jsonField(grid, "Interaction rules", doc, "interactions", []);
     editor.append(node("hr", "", "editor-divider")); grid = section("Operation prices", "Positive integer costs used by the model's local timing law."); grid.classList.add("three");
     Object.keys(doc.operation_costs).forEach(key => input(grid, key[0].toUpperCase() + key.slice(1), doc.operation_costs, key, { min: 1 }));
   }

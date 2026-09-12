@@ -15,7 +15,11 @@ class Simulation(DisturbanceEngine):
         super().__init__(
             initial,
             DisturbanceLaw(
-                initial.fields, initial.disturbances, initial.couplings, initial.operation_costs
+                initial.fields,
+                initial.disturbances,
+                initial.couplings,
+                initial.operation_costs,
+                initial.interactions,
             ),
             observer,
             SpatialLaw(

@@ -56,6 +56,14 @@ its squared norm remains 5. Sources total `(5,-3,0)`, signed reaction totals
 
 ## Active generic disturbance contracts
 
+`test_interaction_spatial_integration.py` checks atomic pair assignments after
+a nonzero spatial response, their frozen delayed commit while finite emission
+continues, and nested matrix/dot operations using delivered spatial flux.
+Pair invariants preserve the post-response sum; opposite field reactions and
+independently committed field emissions retain their existing owners.
+An invalid atomic proposal commits neither the rotated carriers nor their recoil,
+while an earlier independently committed emission and allowance debit remain.
+
 The primary Simulation follows [DISTURBANCES.md](DISTURBANCES.md). Schema and
 engine tests must use independent examples for the contracts below. These are
 acceptance requirements, not a statement that a particular source tree passed.
@@ -456,3 +464,14 @@ marked visualization tests check exact sampled/final payloads, headless event
 parity, escaped names and partial failures. Browser checks must cover movie
 play/pause/restart/final hold, scrubbing, projection/speed, folded settings and
 renaming references without resetting an already loaded movie during polling.
+
+## Atomic generic interaction acceptance
+
+`tests/test_atomic_interactions.py` checks the configured 15-cube unequal-mass
+collision: m=(2,3), p=(8,-3)->(-4,9), independent rational kinetic energy 35/2,
+constant total momentum 5, causal arrivals, no repeated bounce while co-resident,
+and final opposite departures. Further small cases cover simultaneous multi-field
+conversion/rotation, weighted inventory, rejection before commit, invalid schema,
+pair totals larger than individual registers, and renamed fields in a larger
+world. These are classical-candidate and generic-contract checks, not proof of
+an emergent gravitational or universal energy law.

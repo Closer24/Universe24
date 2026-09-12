@@ -73,6 +73,7 @@ def test_workspace_serves_assets_and_current_example_data(server):
         "01-two-approaching-particles",
         "02-parallel-particle-beams",
         "03-spreading-pulse",
+        "04-unequal-mass-collision",
         "basic",
         "exchange",
         "finite_fields",

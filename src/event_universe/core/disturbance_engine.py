@@ -7,9 +7,11 @@ from types import MappingProxyType
 from .disturbance_state import (
     Address3,
     CellView,
+    CouplingDefinition,
     DisturbanceCell,
     DisturbanceRecord,
     InitialState,
+    InteractionDefinition,
     LocalPlan,
     Packet,
     PendingCycle,
@@ -121,7 +123,11 @@ class DisturbanceEngine:
         present = [record.type_index for record in cell.records if record is not None]
         if self._coupled_types.intersection(present):
             return True
-        for coupling in self.initial.couplings:
+        rules: tuple[CouplingDefinition | InteractionDefinition, ...] = (
+            *self.initial.couplings,
+            *self.initial.interactions,
+        )
+        for coupling in rules:
             if coupling.left_type in present and coupling.right_type in present:
                 if coupling.left_type != coupling.right_type or present.count(coupling.left_type) > 1:
                     return True

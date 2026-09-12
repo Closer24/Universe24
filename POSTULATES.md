@@ -17,6 +17,13 @@ named fields. The engine supplies integer local updates, causal transport,
 conservation enforcement and scheduling; initialization supplies identities and
 candidate laws. It does not infer familiar physics from names.
 
+All interactions use generic definitions. A configured local pair transaction
+may transform several fields together only when its declared invariants and
+conserved pair totals hold exactly. Familiar elastic collisions can be supplied
+as explicit example laws; reproducing them does not mean they emerged from a
+computational field. See the atomic interaction contract and example in
+[DISTURBANCES.md](docs/DISTURBANCES.md).
+
 The user-defined cost of a local cycle sets a general cell delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in

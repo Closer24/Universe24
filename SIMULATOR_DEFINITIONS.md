@@ -56,6 +56,14 @@ is independent of schema version and named in metadata. Combined accounting is
 also includes committed opposite reactions. The escaped ledger is diagnostic,
 never a global repair or a physical input. See [the schema](docs/DISTURBANCES.md).
 
+Optional atomic pair `interactions` assign multiple fields from one frozen input
+pair, enforce each declared invariant and conserved-field pair balance, then
+enter the existing delayed local commit together. Generic integer dot products,
+matrix transforms and scalar comparisons are initialization operations. Exact
+division cannot round away a failed invariant. The configured unequal-mass
+elastic example and its limits are specified in the disturbance contract; they
+do not change the historical collision laws below or introduce a built-in force.
+
 The source/self-force, scalar cell, particle, turning, variable-link and collision
 laws below remain requirements of explicitly named research APIs. They do not
 define the active generic schema. Shared locality, integer bounds, read-only

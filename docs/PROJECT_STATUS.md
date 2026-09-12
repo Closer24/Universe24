@@ -1,17 +1,17 @@
 # Project status and restart guide
 
-Contract update: 2026-09-12. The spatial field, finite-budget and boundary work
-continues local `d3bb0ce4885134f238431cc2b2246488f81f4a6a` and incorporates
-reviewed main `c252254eecb5e3b090f9ae40667c383db11a14fc`, including its configuration
-workspace and recorded playback. The GitHub connection supplied exact Git objects;
-their blob, tree and commit hashes were verified before local integration.
-The feature branch remains separate from main until its pull request is merged.
-Verify live checkout, remote and PR state before continuing. Identified local
-checks and run evidence belong in [VALIDATION.md](VALIDATION.md).
+Integration reference: 2026-09-12. [PR #27](https://github.com/Closer24/Universe24/pull/27)
+combines reviewed spatial-field feature head
+`137830fd621b9522598e0719e7bd2055ead595a9` with main
+`15029ba8d02bd7f1bb1dd1148fe55405ec1536b1`, which adds atomic generic interactions
+and the configured unequal-mass elastic example through PR #28. Spatial fields,
+finite budgets, boundaries, output retention and arbitrary-name handling remain
+included. GitHub-supplied blob, tree and commit hashes were verified before local
+integration. Verify live checkout, remote and PR state before continuing; this
+reference is not a claim about the version in another checkout. Identified checks
+and run evidence belong in [VALIDATION.md](VALIDATION.md).
 
-The generated-output maintenance update continues published feature head
-`45da520c5ed13ab305c8ec8cdcbb1767ebe17705` in
-[PR #27](https://github.com/Closer24/Universe24/pull/27). Registered run outputs,
+Registered run outputs,
 workspace copies/logs/exports and test reports expire after 24 hours, with live
 writer protection; see [RETENTION.md](RETENTION.md). Idle cleanup requires the
 watcher or a scheduled invocation. Generated evidence paths in older validation
@@ -28,7 +28,10 @@ The [local configuration workspace](WORKSPACE.md) provides template selection,
 editable JSON and isolated runs through `python -m event_universe.ui`.
 Configuration changes are runtime data and require no compilation or rebuild.
 The workspace includes recorded movie playback, folded settings, names and three
-idealized motion presets. These transport demonstrations do not establish the
+idealized motion presets, plus a configured unequal-mass elastic collision.
+The latter uses atomic generic interactions with explicit invariants; see
+[the candidate contract](DISTURBANCES.md#configured-unequal-mass-elastic-example).
+These transport demonstrations do not establish the
 behavior of real electrons, protons, photons or electromagnetic interactions.
 
 `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation` and
@@ -63,7 +66,8 @@ overwrite the baseline to make a description appear true.
 
 The generic schema supports bounded integer expressions, extensive splitting,
 whole-record movement, paired exchange, explicit sources and local computation
-delay with fixed neighbor transit. Operation prices, ordinary cost and field laws
+delay with fixed neighbor transit. Atomic pair transactions also support multiple
+assignments, vector transforms and declared pre/post invariants. Operation prices, ordinary cost and field laws
 are initialization choices. The cost output is local; propagating a computation
 influence requires a separate law. Capacity exhaustion stops a run rather than
 discarding content. Gravity, waves, relativity and general energy conservation
@@ -87,8 +91,8 @@ after their last nonzero input. This candidate explicitly records loss and does
 not conserve physical momentum or energy through decay. Schema 1 preserves its
 conservative transport and unlimited declared sources and responses. Candidate
 identity is selected by schema version, independently of field and model names.
-Verify current validation evidence and integration before treating these local
-changes as merged main. No Highlights update is implied by repository edits.
+Verify current validation evidence and the running source version before reusing
+results. No Highlights update is implied by repository edits.
 
 Both schemas support `boundary: "periodic"` (the default) or `boundary: "open"`.
 Periodic particles and fields wrap across every X, Y and Z face without changing

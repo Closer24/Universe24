@@ -30,12 +30,17 @@ the UI. The runtime validates and reads each submitted input afresh.
 ## Choose and configure
 
 The default templates include two approaching particles, parallel particle beams,
-a spreading conserved pulse, Basic and Exchange, all packaged from `examples/`.
+a spreading conserved pulse, an unequal-mass elastic collision, Basic and Exchange,
+all packaged from `examples/`. The Rules tab accepts atomic interaction definitions
+with simultaneous assignments and conservation invariants.
 The first three are idealized transport experiments, not validated electron,
 proton, photon, electromagnetic-force or collision models. The approaching pair
 meets and passes through; names and signed charge do not create attraction.
 Their labels
-describe data, not built-in physical laws. To use another directory:
+describe data, not built-in physical laws. The separate collision example supplies
+an explicit classical elastic law through generic expressions; its two unequal
+masses rebound with conserved momentum and kinetic energy.
+To use another directory:
 
 ```bash
 python -m event_universe.ui --configs my-configurations --output artifacts/workspace

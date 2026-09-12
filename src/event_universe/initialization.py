@@ -13,12 +13,15 @@ from .core.disturbance_state import (
     MAX_VALUE,
     OPERATIONS,
     Address3,
+    Assignment,
     CouplingDefinition,
     DisturbanceDefinition,
     DisturbanceRecord,
     Expression,
     FieldDefinition,
     InitialState,
+    InteractionDefinition,
+    Invariant,
     OperationCosts,
     Payload,
     Seed,
@@ -163,9 +166,9 @@ class _Expressions:
         self.nodes = 0
         self.flux_fields = flux_fields
 
-    def parse(self, value: object, expected: int) -> Expression:
+    def parse(self, value: object, expected: int | None = None) -> Expression:
         expression, components = self._node(value, 1)
-        if components != expected:
+        if expected is not None and components != expected:
             raise ValueError(f"expression has {components} components; expected {expected}")
         return expression
 
@@ -181,7 +184,9 @@ class _Expressions:
                 raise ValueError("expression literal must contain 1 or 3 components")
             literal = tuple(_integer(item, "expression literal component") for item in items)
             return Expression("literal", literal=literal), len(literal)
-        obj = _object(value, "expression", {"field", "side", "op", "args", "index", "flux"}, set())
+        obj = _object(
+            value, "expression", {"field", "side", "op", "args", "index", "flux", "matrix"}, set()
+        )
         if "flux" in obj:
             obj = _object(obj, "flux expression", {"flux"}, {"flux"})
             names = {self.fields[index].name: index for index in self.flux_fields}
@@ -189,7 +194,7 @@ class _Expressions:
             return Expression("flux", field=index), 3
         if "field" in obj:
             return self._reference(obj)
-        obj = _object(obj, "operation expression", {"op", "args", "index"}, {"op", "args"})
+        obj = _object(obj, "operation expression", {"op", "args", "index", "matrix"}, {"op", "args"})
         operation = _text(obj["op"], "expression.op")
         arities = {
             "add": 2,
@@ -202,16 +207,33 @@ class _Expressions:
             "abs": 1,
             "sum": 1,
             "component": 1,
+            "transform": 1,
+            "dot": 2,
+            "gt": 2,
         }
         if operation not in arities:
             raise ValueError(f"unsupported expression operation {operation!r}")
         if operation != "component" and "index" in obj:
             raise ValueError("only component expressions accept index")
+        if operation != "transform" and "matrix" in obj:
+            raise ValueError("only transform expressions accept matrix")
         count = arities[operation]
         arguments = tuple(
             self._node(item, depth + 1) for item in _array(obj["args"], "expression.args", count, count)
         )
         sizes = tuple(item[1] for item in arguments)
+        if operation == "transform":
+            if sizes != (3,) or "matrix" not in obj:
+                raise ValueError("transform requires a vector and a 3 by 3 integer matrix")
+            matrix = tuple(
+                tuple(_integer(item, "matrix coefficient") for item in _array(row, "matrix row", 3, 3))
+                for row in _array(obj["matrix"], "matrix", 3, 3)
+            )
+            return Expression(operation, tuple(item[0] for item in arguments), matrix=matrix), 3
+        if operation == "dot" and sizes != (3, 3):
+            raise ValueError("dot requires two vectors")
+        if operation == "gt" and sizes != (1, 1):
+            raise ValueError("gt requires two scalars")
         component = 0
         if operation == "component":
             if "index" not in obj:
@@ -221,7 +243,7 @@ class _Expressions:
                 raise ValueError("expression.index exceeds the input component count")
         if operation == "exact_div" and sizes[1] != 1:
             raise ValueError("exact_div requires a scalar denominator")
-        size = 1 if operation in ("sum", "component") else max(sizes)
+        size = 1 if operation in ("sum", "component", "dot", "gt") else max(sizes)
         return Expression(operation, tuple(item[0] for item in arguments), component=component), size
 
     def _reference(self, obj: dict[str, object]) -> tuple[Expression, int]:
@@ -376,6 +398,65 @@ def _address(value: object, label: str, minimum: int) -> Address3:
         Address3,
         tuple(_integer(item, label, minimum) for item in _array(value, label, 3, 3)),
     )
+
+
+def _interactions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+) -> tuple[InteractionDefinition, ...]:
+    result: list[InteractionDefinition] = []
+    type_names, field_names = _names(disturbances), _names(fields)
+    required = {"name", "left_type", "right_type", "assignments", "invariants"}
+    for raw in _array(value, "interactions", MAX_RULES):
+        obj = _object(raw, "interaction", required | {"when"}, required)
+        name = _text(obj["name"], "interaction.name")
+        if any(rule.name == name for rule in result):
+            raise ValueError("duplicate interaction name")
+        left = _index(obj["left_type"], type_names, "interaction.left_type")
+        right = _index(obj["right_type"], type_names, "interaction.right_type")
+        participants = (disturbances[left], disturbances[right])
+
+        def expression(
+            raw: object,
+            expected: int | None = None,
+            participants: tuple[DisturbanceDefinition, DisturbanceDefinition] = participants,
+        ) -> Expression:
+            return _Expressions(fields, participants[0].fields, participants[1].fields).parse(
+                raw, expected
+            )
+
+        assignments: list[Assignment] = []
+        for raw_assignment in _array(obj["assignments"], "assignments", MAX_FIELDS * 2, 1):
+            item = _object(
+                raw_assignment,
+                "assignment",
+                {"side", "field", "expression"},
+                {"side", "field", "expression"},
+            )
+            if item["side"] not in ("left", "right"):
+                raise ValueError("assignment.side must be left or right")
+            side = 0 if item["side"] == "left" else 1
+            field = _index(item["field"], field_names, "assignment.field")
+            if field not in participants[side].fields or field == participants[side].cost_field:
+                raise ValueError("assignment requires an owned field other than cost_field")
+            if any(a.side == side and a.field == field for a in assignments):
+                raise ValueError("duplicate assignment target")
+            assignments.append(
+                Assignment(side, field, expression(item["expression"], fields[field].components))
+            )
+        invariants: list[Invariant] = []
+        for raw_invariant in _array(obj["invariants"], "invariants", MAX_FIELDS, 1):
+            item = _object(raw_invariant, "invariant", {"name", "expression"}, {"name", "expression"})
+            invariant_name = _text(item["name"], "invariant.name")
+            if any(i.name == invariant_name for i in invariants):
+                raise ValueError("duplicate invariant name")
+            invariants.append(Invariant(invariant_name, expression(item["expression"])))
+        when = expression(obj["when"], 1) if "when" in obj else None
+        result.append(
+            InteractionDefinition(name, left, right, tuple(assignments), tuple(invariants), when)
+        )
+    return tuple(result)
 
 
 def _seeds(
@@ -644,7 +725,15 @@ def parse_initial_state(document: object) -> InitialState:
         document,
         "initial state",
         required
-        | {"couplings", "spatial_fields", "emissions", "spatial_seeds", "spatial_couplings", "boundary"},
+        | {
+            "couplings",
+            "interactions",
+            "spatial_fields",
+            "emissions",
+            "spatial_seeds",
+            "spatial_couplings",
+            "boundary",
+        },
         required,
     )
     schema_version = _integer(obj["schema_version"], "schema_version", 1)
@@ -683,6 +772,7 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         schema_version=schema_version,
         boundary=boundary,
+        interactions=_interactions(obj.get("interactions", []), fields, disturbances),
     )
 
 

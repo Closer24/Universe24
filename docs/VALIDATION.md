@@ -1,5 +1,64 @@
 # Validation evidence
 
+## Merge with atomic interactions — 2026-09-12
+
+The authorized PR #27 merge found that main had advanced through PR #28 to
+`15029ba8d02bd7f1bb1dd1148fe55405ec1536b1`. The integration combines that exact
+main tree with tested feature head `137830fd621b9522598e0719e7bd2055ead595a9`.
+Signed commit, tree and blob hashes were verified through the GitHub connection
+before the local merge. The previous head's CI pass alone was not reused as
+evidence for the combined source.
+
+Conflict resolutions preserve recursive spatial flux when adding integer
+dot/matrix/comparison operators, all optional initial-state fields, both spatial
+schemas and boundaries, spatial work scheduling and atomic pair rules. API
+assembly retains spatial planner/coupler/decayer injection. Replacements preserve
+carried residuals and finite allowances. Atomic interactions follow proposed
+spatial response and ordinary exchange, before routing; invalid carrier proposals
+do not roll back earlier independent field transport or emission.
+
+The initial independent conflict-resolution review passed 301 focused cases.
+Four new combined numerical tests and the original atomic/language cases passed
+26 focused checks. A spatial Z turn followed by an atomic swap yields carrier
+vectors `(0,-1,0)` and `(0,5,0)` with opposite recoil `(4,-4,0)`; first-link half
+retention accounts for survivors `(2,-2,0)` and equal signed loss. Raising the
+coupling price by six increases local cost by 18 across the three responses.
+Delayed commits retain the frozen response while emission exhausts its allowance;
+nested transform/dot/comparison expressions retain delivered flux context. A
+rejected atomic proposal leaves earlier independent emission accounted.
+
+Independent physics-rule review found no additional ownership, locality, timing
+or conservation blocker. The first full-gate attempt stopped at mixed line
+endings in two resolved files; Ruff normalized those endings without a semantic
+change. The final runtime fingerprint is
+`cf684492a86605a68c29aba0a169a6e992478b2f7f7b3d70804e8fce7f2d4f4a`.
+Wheel and sdist build and asset/source equality checks passed in the leased
+`../runs/merge27-packaging/` directory. The packaged source precedes this
+evidence-only documentation addition. No visualization was requested or generated.
+
+The unchanged full gate passed: 1,093 tests, 30 explicitly visual skips, Ruff
+lint/format (169 files) and strict mypy (66 source modules), in 120.05 seconds.
+Independent headless comparisons against archived feature `137830f` retained
+byte-identical initialization, ordered events and final state for `open_world`
+(12 ticks), `three_mass_finite` (120) and `spatial_turning` (12), with equal
+per-tick snapshots and ledgers. Metadata excludes only source identity and host
+elapsed time. The new collision separately passed 360 ticks with mass 5,
+momentum `(5,0,0)` and kinetic diagnostic `35/2` throughout; contact is at tick
+120, reversal at 121, final X positions 3 and 13 and every link takes one tick.
+No old-source equivalence is claimed for that new example.
+
+The comparison archives identify Python fingerprints `df6553380020d5c6ccebc2f4b2f64687141c66938ac9e08528a5792dc795f812`
+(baseline) and `f6d202ba997eaf4bf35ad3c63f0aa37680926aae50be676dd68a8edb32c49d25`
+(combined snapshot). Only verified CRLF/LF normalization in two files separates
+that snapshot from final `cf684492`; the final source passes the full gate.
+Temporary run, comparison and source-normalization records live under
+`../runs/merge27-regression/`, with the same 24-hour artifact policy.
+
+The workspace includes all 11 packaged templates. Shared workflow, Boss and
+PR-review Skills were reviewed; their existing rules already require refreshed
+main, coordinated provider/consumer reconciliation and current-tree validation,
+so no additional procedural rule was needed for this merge.
+
 ## Genericity audit — 2026-09-12
 
 The audit continues published feature head `188e3d3` on main base `c252254`.
