@@ -3,22 +3,22 @@
 ## Conservative directional-wave configuration and authoring Skill — 2026-09-12
 
 Based first on main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`, then integrated
-with main `fb083c159fe1f51612203962d9a7921683eb31c8` and finally main
-`0f94cbd23ea4fb98347ff1413633f0ed38c4e577` (tree
-`aae7ea196fb6a80ddf7863721d6f3dcfa538650e`). The candidate changes no runtime
+with main `fb083c159fe1f51612203962d9a7921683eb31c8`, then `0f94cbd`, and finally
+`99b9f5f0034ea288f7de0a2a8d7645220c45d8aa` (tree
+`b7609f1d22f04a1421d30f0d4a6acc7ad1774b03`). The candidate changes no runtime
 source file. The final source fingerprint is
-`b380a79428e0fcdb103ba92c16ae3df903da1229197c586e932a6e583256b299`.
+`8de38e5f4ba9db0b188168bf9d33c647b3abe3df2a3450a7cbaa9016a29f2e8d`.
 
 The [candidate contract](DIRECTIONAL_WAVE.md) and six saved cases use ordinary
 local field rules. The unequal encounter changes 3Y/2Y into 3Z/-2Z and preserves
 normalized U=13 and P=5X. All physical guards, encounters and streaming are JSON;
 preparation assembles input and observation/rendering do not advance the world.
 
-- Python 3.14.7, pytest 9.1.1 and Ruff 0.16.7: affected gate **210 passed,
+- Python 3.14.7, pytest 9.1.1 and Ruff 0.16.7: affected gate **230 passed,
   2 opt-in visual skips**. No runtime typing scope changed. The gate included
   49 candidate cases plus check selection, local fields, entity compilation,
-  native events, integer arithmetic, recorded-movie, workspace, language and
-  navigation regressions.
+  native events, integer arithmetic, cell-state ownership, local Lorentz response,
+  recorded-movie, workspace, language and navigation regressions.
 - Candidate checks include all 24 proper cubic rotations with the same unchanged
   law, periodic translation/return, slow links, six simultaneous modes, aggregate
   cancellation, per-mode bounds and atomic rollback after invalid proposals.
@@ -28,6 +28,8 @@ preparation assembles input and observation/rendering do not advance the world.
   complete state matched, with exact U/P and spatial accounting throughout.
   Subsequent review of 0f94cbd confirmed the shared integer dot/cross operations
   preserve checked ordering, signs and rejection behavior for this candidate.
+  The added 99b9f5f cell-state guard accepted three 72-tick slow-link cases:
+  2,903 cell inspections and 360 packet inspections, with exact U/P throughout.
 - Two canonical 36-tick recordings on the integrated source were independently
   replayed headlessly: all 37 recorded states matched exactly, with zero U/P
   error at every tick. Inputs are identified by SHA-256
@@ -50,11 +52,15 @@ preparation assembles input and observation/rendering do not advance the world.
 
 The exact affected gate invocation was `python tools/check.py --base HEAD --tests
 tests/test_local_field_rules.py tests/test_entity_compiler.py
-tests/test_native_event_runtime.py tests/test_integer_arithmetic.py`, where local validation HEAD had the exact
+tests/test_native_event_runtime.py tests/test_integer_arithmetic.py
+tests/test_cell_state_contract.py tests/test_local_lorentz_field.py`, where local
+validation HEAD had the exact
 remote main tree above. Generated recordings, replay proofs, GIFs and local gate
 artifacts remain outside source commits; reproduction commands are in the contract.
 The full suite and unrelated historical render tests were not selected.
 
+The [Highlights coverage map](HIGHLIGHTS_IMPLEMENTATION.md) records the live
+document revision and the candidate's relation to existing rules and hypotheses.
 Skill review added the requested authoring responsibility and linked Boss/runner
 to it. Existing field-development, physics review and visualization workflows
 already cover the candidate; no broader procedure change was needed. This result

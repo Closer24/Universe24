@@ -15,6 +15,10 @@ RESOURCE_CONSUMERS = {
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/prepare.py": ("tests/test_directional_wave.py",),
     "examples/directional-wave/observe.py": ("tests/test_directional_wave.py",),
+    "examples/local_lorentz_field.json": (
+        "tests/test_cell_state_contract.py",
+        "tests/test_local_lorentz_field.py",
+    ),
     "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
@@ -140,6 +144,8 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        if path.startswith("tools/generic_vector_lab/"):
+            tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")

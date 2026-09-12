@@ -13,6 +13,15 @@ task allocation and integration decisions; specialist logic stays in its skill.
 Treat **Universe 24 Highlights** as the high-level project specification:
 https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit
 
+Use the versioned [implementation coverage map](../../docs/HIGHLIGHTS_IMPLEMENTATION.md)
+to reconcile entities and laws with their source contracts and tests. When an
+authorized change adds or changes a durable entity or rule, include its Highlights
+reconciliation in the same PR: identify the live document revision, update the
+coverage map, and distinguish implemented behavior from hypotheses and gaps.
+Do not claim the live document changed from a repository edit alone.
+Use the [regression skill](../regression-check/SKILL.md#daily-genericity-audit)
+for the daily engine/result-consumer audit and schedule restoration.
+
 At the start of relevant work, reconcile the applicable project rules and hypotheses with this document. When the user changes a durable project rule, update the relevant repository Skill(s) as part of the same work when authorized, so the rule does not depend on chat history.
 
 The primary model contract is [initialization-defined disturbances](../../docs/DISTURBANCES.md).

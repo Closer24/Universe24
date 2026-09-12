@@ -119,6 +119,11 @@ declare a consistent integer normalization, and retain their physical limitation
 | Source injection | `emissions` | [Spatial fields](../../../docs/SPATIAL_FIELDS.md) |
 | Field acts on a carried record | `spatial_couplings` or schema 1 `spatial_interactions` | [Spatial response](../../../docs/SPATIAL_COUPLINGS.md), [local rules](../../../docs/LOCAL_FIELD_RULES.md) |
 
+The [local Lorentz pulse](../../../docs/LOCAL_LORENTZ_FIELD.md) is also a complete
+schema 1 field/carrier example with normalized masses and exact paired momentum
+reaction. Its held, one-shot probes are explicit experiment controls. It does not
+establish Maxwell evolution or energy conservation; preserve that scope when reused.
+
 The six transport ports are `[+X,-X,+Y,-Y,+Z,-Z]`. Payload vectors have three
 components. A negative amplitude is not automatically a negative travel port.
 `spatial_seeds` uses the engine's eight population bins: scalar populations are
