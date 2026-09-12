@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The [executable catalog](ENTITY_CATALOG.md) provides bounded representation
+profiles for all 46 inventory entries and compilation into ordinary run inputs.
+The [local conversion interface](LOCAL_CONVERSIONS.md) supports explicit atomic
+two-to-two type replacement with declared balances. These additions do not
+establish physical annihilation, general particle production or physical field
+dynamics. Consult current PR/CI evidence for the exact integrated tree.
+
 The [physical entity inventory](PHYSICAL_ENTITIES.md), based on main
 `09464b41b2c44a191aa2fcbdf4b036680bd646a5`, separates descriptive entities from
 executable mechanics and unestablished emergence. New equal-mass charged-pair

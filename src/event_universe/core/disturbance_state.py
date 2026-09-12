@@ -143,6 +143,7 @@ class InteractionDefinition:
     assignments: tuple[Assignment, ...]
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
+    output_types: tuple[int, int] | None = None
 
 
 @dataclass(frozen=True, slots=True)

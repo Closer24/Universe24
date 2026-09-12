@@ -27,6 +27,13 @@ Guards and conservation diagnostics validate proposals without replacing this
 elementary rule. See [physical entities](docs/PHYSICAL_ENTITIES.md) and the example in
 [DISTURBANCES.md](docs/DISTURBANCES.md).
 
+The optional [bounded conversion](docs/LOCAL_CONVERSIONS.md) also permits two
+local records to become two explicitly configured output types under the same
+atomic conservation checks. This is a supplied transformation, not evidence of
+emergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)
+describe bounded representations; physical identity and dynamics cannot be
+inferred solely from the ability to store or transport their registers.
+
 The user-defined cost of a local cycle sets a general cell delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in
