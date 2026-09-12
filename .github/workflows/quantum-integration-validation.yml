@@ -35,6 +35,11 @@ jobs:
           patch.write_bytes(gzip.decompress(payload))
           subprocess.run(['git', 'apply', '--check', str(patch)], check=True)
           subprocess.run(['git', 'apply', str(patch)], check=True)
+          source = pathlib.Path('src/event_universe/quantum/event_network.py')
+          text = source.read_text()
+          old = '        sites = (site,)\n'
+          assert text.count(old) == 1
+          source.write_text(text.replace(old, '        sites: tuple[int, ...] = (site,)\n'))
           allowed = {'POSTULATES.md', 'SIMULATOR_DEFINITIONS.md', 'docs/ARCHITECTURE.md', 'docs/QUANTUM_EVENTS.md', 'docs/TEST_EXPECTATIONS.md', 'src/event_universe/integration/quantum_event_trial.py', 'src/event_universe/quantum/__init__.py', 'src/event_universe/quantum/deferred.py', 'src/event_universe/quantum/event_network.py', 'src/event_universe/quantum/event_rules.py', 'tests/test_quantum_event_network.py', 'tests/test_quantum_event_trial.py'}
           subprocess.run(['git', 'add', '--', *sorted(allowed)], check=True)
           changed = set(subprocess.check_output(['git', 'diff', '--cached', '--name-only'], text=True).splitlines())
