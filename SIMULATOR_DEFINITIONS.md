@@ -603,3 +603,49 @@ source map or history and satisfies LOCALITY-1 for fixed K. The candidate must k
 isolated particle momentum exactly at all tested ticks and retain nonzero external
 response. Exact inputs, results and limitations are in
 [docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md).
+
+
+## Selected quantum event network — Q-EVENTS-1
+
+The selected finite candidate is `deferred-event-network-v1`, specified in
+[QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md). A fresh `DeferredQuantum` owner binds
+one `EventNetworkConfig` before creating legacy scalar nodes. The two state
+representations cannot be mixed in one owner. Existing terminal/Focus consumers
+retain their old API and behavior unless the new representation is selected.
+
+The event backend owns immutable local matrices, per-cell head IDs, joint source
+or checkpoint amplitudes, earlier outcome constraints and bounded decision records.
+Ordinary cells do not acquire this growing host state. Coherent steps append only
+disjoint one-cell or nearest-neighbor operations. Queries return fixed-size local
+weights at the current tick; full-state inspection is host-only diagnostic work.
+Prior correlated records are included in a conservative dependency closure.
+This is sufficient pruning, not a proof of the smallest possible contraction.
+
+An explicit one-cell instrument supplies one to four outcome matrices whose
+completeness relation has a positive common integer scale. `prepare` computes
+all branch weights without sampling. `commit` accepts a uniform integer ticket
+when multiple outcomes have positive weight, or no ticket for a certain result.
+Repeated record identities cannot resample. A graph change invalidates an
+uncommitted decision. The no-event branch is applied like every other branch.
+A coherent interaction alone never requests a ticket.
+
+The executable representation retains the existing signed 32-bit real/imaginary
+registers and checked 64-bit intermediates. The positive-code representation in
+the high-level Highlights is not newly claimed implemented. Node, traversal,
+term and decision budgets are explicit. Exhaustion/overflow rejects an operation
+without inventing a physical result. Removing an exact common integer factor
+is representation reduction, not a floating-point normalization or rounding.
+
+Query evaluation and record commit add zero world ticks under Q-ORACLE-1. Host
+node evaluations are counted separately; state size, condition scans, checkpoint
+work and bit/storage limits remain host costs. A checkpoint replaces the full
+live correlated component, never merely a target marginal. It preserves all
+unresolved phases and the immutable audit ledger. This is not bounded total
+memory for an unlimited simulated lifetime.
+
+The controller may condition on its known records. Such conditional probabilities
+are not a remotely readable physical register, a classical communication channel,
+or an implemented generic Engine commit interface. There is no automatic native
+per-cell polling, quantum-field feedback, universal measurement trigger, physical
+free-momentum law or derived classical limit in this change. The 3:4 matrix is a
+test fixture and explicit demonstration parameter, never a hidden default law.

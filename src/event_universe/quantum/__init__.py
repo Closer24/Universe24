@@ -1,6 +1,15 @@
 """Public API of the shared, deferred, unit-model-cost quantum sidecar."""
 
 from .deferred import DeferredQuantum
+from .event_network import (
+    EVENT_NETWORK_MODEL_ID,
+    EventDecision,
+    EventNetworkConfig,
+    NetworkEvent,
+    NetworkQuery,
+    NetworkRecord,
+)
+from .event_rules import LocalInstrument, LocalUnitary
 from .focus import (
     FocusCandidate,
     FocusEvent,
@@ -17,10 +26,18 @@ from .query import QuantumQuery, QuantumQueryStats, QuantumReply
 from .state import Amplitude, QuantumConfig, amplitude_weight
 
 __all__ = [
+    "EVENT_NETWORK_MODEL_ID",
     "ORACLE_COST",
     "QUANTUM_MODEL_ID",
     "Amplitude",
     "DeferredQuantum",
+    "EventDecision",
+    "EventNetworkConfig",
+    "LocalInstrument",
+    "LocalUnitary",
+    "NetworkEvent",
+    "NetworkQuery",
+    "NetworkRecord",
     "FocusCandidate",
     "FocusEvent",
     "FocusReply",
