@@ -1,9 +1,9 @@
 """Demand-driven joint-state backend owned by DeferredQuantum.
 
-Acyclic per-cell heads describe the wave; pure queries never select old paths.
+Acyclic per-cell heads describe the wave; read-only queries never select old paths.
 Recorded constraints close the conservative backward cone. Only an explicitly
 supplied local instrument can commit an outcome. This is an opt-in finite
-quantum candidate, not a field law or an Engine-native event producer.
+quantum candidate, not a derived field law; native integration shares the causal metadata owner.
 """
 
 from dataclasses import dataclass
@@ -12,18 +12,35 @@ from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.state import Address, checked, checked_work
 
 from .event_rules import (
+    BasisLayout,
+    GroupedInstrument,
+    LocalChannel,
     LocalInstrument,
     LocalUnitary,
     Matrix,
     State,
-    apply_matrix,
-    multiply,
-    reduce_state,
-    squared_norm,
+    outcome_groups,
+)
+from .mixed import (
+    DensityState,
+    QuantumState,
+    density,
+    evolve,
+    marginal,
+    partial_trace,
+    reduce_quantum,
+    tensor,
+    term_count,
+    trace,
 )
 from .state import Amplitude, checked_address
 
+LocalOperation = LocalUnitary | LocalChannel
+Instrument = LocalInstrument | GroupedInstrument
+
 EVENT_NETWORK_MODEL_ID = "deferred-event-network-v1"
+# The original constant remains for legacy binary callers. Native v2 is explicit.
+REGISTER_NETWORK_MODEL_ID = "deferred-register-network-v2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,14 +51,42 @@ class EventNetworkConfig:
     max_eval_nodes: int = 10_000
     max_terms: int = 4_096
     max_records: int = 1_024
+    dimensions: tuple[int, ...] = ()
+    initial_levels: tuple[int, ...] = ()
+    register_names: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if type(self.addresses) is not tuple or not 1 <= len(self.addresses) <= 30:
             raise ValueError("one to thirty immutable addresses are supported")
         for address in self.addresses:
             checked_address(address)
-        if len(set(self.addresses)) != len(self.addresses):
-            raise ValueError("cell addresses must be distinct")
+        if type(self.register_names) is not tuple:
+            raise ValueError("register names must be immutable")
+        if self.register_names:
+            if (
+                type(self.register_names) is not tuple
+                or len(self.register_names) != len(self.addresses)
+                or len(set(self.register_names)) != len(self.register_names)
+                or any(type(n) is not str or not n or len(n) > 128 for n in self.register_names)
+            ):
+                raise ValueError("register names must be distinct bounded strings")
+        elif len(set(self.addresses)) != len(self.addresses):
+            raise ValueError("cell addresses must be distinct without explicit register names")
+        if type(self.dimensions) is not tuple or (
+            self.dimensions and len(self.dimensions) != len(self.addresses)
+        ):
+            raise ValueError("one dimension per register required")
+        BasisLayout(self.local_dimensions)
+        if type(self.initial_levels) is not tuple or (
+            self.initial_levels and len(self.initial_levels) != len(self.addresses)
+        ):
+            raise ValueError("one initial level per register required")
+        if self.initial_levels and self.occupied:
+            raise ValueError("initial_levels and occupied are mutually exclusive")
+        if self.initial_levels:
+            for level, dimension in zip(self.initial_levels, self.local_dimensions, strict=True):
+                if not 0 <= checked(level) < dimension:
+                    raise ValueError("initial level outside register basis")
         if type(self.occupied) is not tuple:
             raise TypeError("occupied cells must be immutable")
         for site in self.occupied:
@@ -56,6 +101,14 @@ class EventNetworkConfig:
         if self.max_nodes < len(self.addresses):
             raise ValueError("node budget cannot hold initial sources")
 
+    @property
+    def local_dimensions(self) -> tuple[int, ...]:
+        return self.dimensions or (2,) * len(self.addresses)
+
+    @property
+    def levels(self) -> tuple[int, ...]:
+        return self.initial_levels or tuple(int(q in self.occupied) for q in range(len(self.addresses)))
+
 
 @dataclass(frozen=True, slots=True)
 class NetworkEvent:
@@ -64,13 +117,14 @@ class NetworkEvent:
     sites: tuple[int, ...]
     parents: tuple[int, ...] = ()
     matrix: Matrix | None = None
-    state: State | None = None
+    state: QuantumState | None = None
     outcome: int = -1
+    channel: tuple[Matrix, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
 class NetworkQuery:
-    weights: tuple[int, int]
+    weights: tuple[int, ...]
     evaluated_nodes: int
     peak_terms: int
     model_cost: int = 1
@@ -83,7 +137,7 @@ class EventDecision:
     tick: int
     revision: int
     site: int
-    instrument: LocalInstrument
+    instrument: Instrument
     weights: tuple[int, ...]
     evaluated_nodes: int
     model_cost: int = 1
@@ -109,8 +163,9 @@ class NetworkRecord:
 class QuantumPayload:
     sites: tuple[int, ...]
     matrix: Matrix | None
-    state: State | None
+    state: QuantumState | None
     outcome: int
+    channel: tuple[Matrix, ...] = ()
 
 
 class EventNetwork:
@@ -131,12 +186,13 @@ class EventNetwork:
         self.event_space.require_room(len(config.addresses))
         self._payloads: dict[int, QuantumPayload] = {}
         self._heads: dict[int, int] = {}
+        layout = BasisLayout(config.local_dimensions)
         for q in range(len(config.addresses)):
             node = NetworkEvent(
                 self.event_space.next_id,
                 0,
                 (q,),
-                state=(((1 << q) if q in config.occupied else 0, Amplitude(1, 0)),),
+                state=((layout.stride(q) * config.levels[q], Amplitude(1, 0)),),
             )
             self._store(node)
             self._heads[q] = node.id
@@ -152,13 +208,21 @@ class EventNetwork:
             tick=node.tick,
             addresses=tuple(self.config.addresses[q] for q in node.sites),
             owner="quantum",
-            kind="record" if node.outcome >= 0 else "state" if node.state is not None else "operation",
+            kind="record"
+            if node.outcome >= 0
+            else "state"
+            if node.state is not None
+            else "channel"
+            if node.channel
+            else "operation",
             parents=parents,
             payload_ref=node.id,
         )
         if event.id != node.id:
             raise ValueError("event identity changed during insertion")
-        self._payloads[event.id] = QuantumPayload(node.sites, node.matrix, node.state, node.outcome)
+        self._payloads[event.id] = QuantumPayload(
+            node.sites, node.matrix, node.state, node.outcome, node.channel
+        )
 
     def _event(self, identity: int) -> NetworkEvent:
         payload = self._payloads[identity]
@@ -171,6 +235,7 @@ class EventNetwork:
             payload.matrix,
             payload.state,
             payload.outcome,
+            payload.channel,
         )
 
     @property
@@ -216,7 +281,7 @@ class EventNetwork:
         if len(self._payloads) + count > self.config.max_nodes:
             raise OverflowError("quantum node budget exceeded")
 
-    def step(self, operations: tuple[tuple[LocalUnitary, tuple[int, ...]], ...]) -> None:
+    def step(self, operations: tuple[tuple[LocalOperation, tuple[int, ...]], ...]) -> None:
         """One tick of disjoint local operations, validated before any mutation."""
         if type(operations) is not tuple:
             raise TypeError("immutable operation layer required")
@@ -226,9 +291,18 @@ class EventNetwork:
         used: set[int] = set()
         nodes: list[NetworkEvent] = []
         for rule, sites in operations:
-            if type(rule) is not LocalUnitary or type(sites) is not tuple:
+            if type(rule) not in (LocalUnitary, LocalChannel) or type(sites) is not tuple:
                 raise TypeError("local coherent rule and immutable sites required")
-            if len(sites) not in (1, 2) or len(rule.matrix) != 1 << len(sites):
+            if len(sites) not in (1, 2):
+                raise ValueError("rule dimension and sites disagree")
+            if isinstance(rule, LocalChannel) and len(sites) != 1:
+                raise ValueError("unobserved channels act on one register")
+            size = 1
+            for site in sites:
+                self._site(site)
+                size *= self.config.local_dimensions[site]
+            matrix = rule.matrix if isinstance(rule, LocalUnitary) else rule.kraus[0]
+            if len(matrix) != size:
                 raise ValueError("rule dimension and sites disagree")
             for site in sites:
                 self._site(site)
@@ -238,11 +312,18 @@ class EventNetwork:
             if len(sites) == 2:
                 a, b = (self.config.addresses[q] for q in sites)
                 distance = sum(abs(checked_work(x - y)) for x, y in zip(a, b, strict=True))
-                if distance != 1:
+                if distance not in (0, 1):
                     raise ValueError("only cardinal nearest-neighbor operations are allowed")
             parents = tuple(dict.fromkeys(self._heads[q] for q in sites))
             nodes.append(
-                NetworkEvent(self.event_space.next_id + len(nodes), tick, sites, parents, rule.matrix)
+                NetworkEvent(
+                    self.event_space.next_id + len(nodes),
+                    tick,
+                    sites,
+                    parents,
+                    rule.matrix if isinstance(rule, LocalUnitary) else None,
+                    channel=rule.kraus if isinstance(rule, LocalChannel) else (),
+                )
             )
         for node in nodes:
             self._store(node)
@@ -282,8 +363,8 @@ class EventNetwork:
             if not grew:
                 return tuple(sorted(ids)), tuple(sorted(sites))
 
-    def _evaluate(self, ids: tuple[int, ...]) -> tuple[State, int]:
-        value: State = ((0, Amplitude(1, 0)),)
+    def _evaluate(self, ids: tuple[int, ...]) -> tuple[QuantumState, int]:
+        value: QuantumState = ((0, Amplitude(1, 0)),)
         initialized: set[int] = set()
         peak = 1
         for i in ids:
@@ -292,16 +373,17 @@ class EventNetwork:
                 if initialized.intersection(node.sites):
                     raise ArithmeticError("overlapping checkpoint sources")
                 initialized.update(node.sites)
-                if len(value) * len(node.state) > self.config.max_terms:
-                    raise OverflowError("quantum tensor-product budget exceeded")
-                value = tuple(sorted((a | b, multiply(x, y)) for a, x in value for b, y in node.state))
-        peak = max(peak, len(value))
+                value = tensor(value, node.state, self.config.max_terms)
+        peak = max(peak, term_count(value))
         for i in ids:
             node = self._event(i)
-            if node.matrix is not None:
-                value = apply_matrix(value, node.matrix, node.sites, self.config.max_terms)
-                value = reduce_state(value)
-                peak = max(peak, len(value))
+            matrices = (node.matrix,) if node.matrix is not None else node.channel
+            if matrices:
+                value = evolve(
+                    value, matrices, node.sites, self.config.max_terms, self.config.local_dimensions
+                )
+                value = reduce_quantum(value)
+                peak = max(peak, term_count(value))
         return value, peak
 
     def _count_query(self, nodes: int) -> None:
@@ -313,22 +395,34 @@ class EventNetwork:
         """Compute a local marginal; never sample or alter a physical record."""
         ids, _ = self._plan((site,))
         state, peak = self._evaluate(ids)
-        weights = [0, 0]
-        for bits, amp in state:
-            outcome = (bits >> site) & 1
-            weights[outcome] = checked(weights[outcome] + squared_norm(((bits, amp),)))
-        checked(weights[0] + weights[1])
-        reply = NetworkQuery((weights[0], weights[1]), len(ids), peak)
+        weights = marginal(state, site, self.config.local_dimensions)
+        reply = NetworkQuery(weights, len(ids), peak)
         self._count_query(len(ids))
         return reply
 
     def joint_state(self) -> State:
         """Read-only host diagnostic, not a fixed-size physical cell reply."""
         ids, _ = self._plan(tuple(range(len(self.config.addresses))))
-        return self._evaluate(ids)[0]
+        state = self._evaluate(ids)[0]
+        if isinstance(state, DensityState):
+            raise ValueError("mixed state has no single wavefunction; use joint_density")
+        return state
+
+    def joint_density(self, sites: tuple[int, ...] | None = None) -> DensityState:
+        """Read-only host state, with exact partial trace when sites are supplied."""
+        targets = tuple(range(len(self.config.addresses))) if sites is None else sites
+        if type(targets) is not tuple or not targets or len(set(targets)) != len(targets):
+            raise ValueError("distinct immutable diagnostic registers required")
+        ids, _ = self._plan(targets)
+        state, _ = self._evaluate(ids)
+        if sites is None:
+            result = reduce_quantum(density(state, self.config.max_terms))
+            assert isinstance(result, DensityState)
+            return result
+        return partial_trace(state, targets, self.config.local_dimensions, self.config.max_terms)
 
     def prepare(
-        self, record_id: int, site: int, instrument: LocalInstrument, *, cause: int | None = None
+        self, record_id: int, site: int, instrument: Instrument, *, cause: int | None = None
     ) -> EventDecision:
         """Resolve branches before asking the external sampler for a ticket.
 
@@ -336,9 +430,12 @@ class EventNetwork:
         an explicit request from a configured rule, not proof an event occurred.
         No occupancy precondition or guessed uncomputed path is required.
         """
-        if checked(record_id) < 0 or type(instrument) is not LocalInstrument:
+        if checked(record_id) < 0 or type(instrument) not in (LocalInstrument, GroupedInstrument):
             raise ValueError("non-negative record id and local instrument required")
         self._site(site)
+        groups = outcome_groups(instrument)
+        if len(groups[0][0]) != self.config.local_dimensions[site]:
+            raise ValueError("instrument dimension and register disagree")
         if cause is not None:
             causal = self.event_space.event(cause)
             if causal.tick != self.tick or self.config.addresses[site] not in causal.addresses:
@@ -356,8 +453,8 @@ class EventNetwork:
         ids, _ = self._plan((site,))
         state, _ = self._evaluate(ids)
         weights = tuple(
-            squared_norm(apply_matrix(state, matrix, (site,), self.config.max_terms))
-            for matrix in instrument.branches
+            trace(evolve(state, group, (site,), self.config.max_terms, self.config.local_dimensions))
+            for group in groups
         )
         decision = EventDecision(
             record_id, self.tick, self._revision, site, instrument, weights, len(ids), cause=cause
@@ -401,13 +498,15 @@ class EventNetwork:
         if len(ids) + 1 > self.config.max_eval_nodes:
             raise OverflowError("record dependency budget exceeded")
         i = self.event_space.next_id
+        group = outcome_groups(decision.instrument)[outcome]
         node = NetworkEvent(
             i,
             self.tick,
             (decision.site,),
             parents,
-            decision.instrument.branches[outcome],
+            group[0] if len(group) == 1 else None,
             outcome=outcome,
+            channel=group if len(group) > 1 else (),
         )
         record = NetworkRecord(decision, outcome, i)
         self._store(node, decision.cause)

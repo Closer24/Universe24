@@ -9,7 +9,8 @@
     "Conserved component sums do not establish physical field energy or momentum; flux, constraint, dispersion and continuum-limit acceptance remain independent.",
     "Known microscopic species are not all classical particles. A classical proxy omits their quantum and internal structure.",
     "Creation and annihilation require local product ownership and total energy-momentum-charge accounting; opposite charge never means negative mass.",
-    "Source references document physical classifications. Runtime support assessments follow the project contracts and do not claim implementation by citation."
+    "Source references document physical classifications. Runtime support assessments follow the project contracts and do not claim implementation by citation.",
+    "Every quantum_profile is an explicit finite mode preparation. Use --representation quantum; unsupported dynamics remain listed, including for hypothetical entries."
   ],
   "sources": {
     "pdg_higgs": {"title": "PDG 2025: Higgs boson physics", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-higgs-boson.pdf"},
@@ -83,6 +84,41 @@
         "field_rules": [
           {"name": "E", "assignments": [{"field": "E", "expression": [0, 0, 0]}, {"field": "E", "port": 0, "expression": {"field": "E", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "E", "side": "right"}, {"outgoing": "E", "port": 0}]}, {"outgoing": "E", "port": 1}]}, {"outgoing": "E", "port": 2}]}, {"outgoing": "E", "port": 3}]}, {"outgoing": "E", "port": 4}]}, {"outgoing": "E", "port": 5}]}}]},
           {"name": "B", "assignments": [{"field": "B", "expression": [0, 0, 0]}, {"field": "B", "port": 0, "expression": {"field": "B", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "B", "side": "right"}, {"outgoing": "B", "port": 0}]}, {"outgoing": "B", "port": 1}]}, {"outgoing": "B", "port": 2}]}, {"outgoing": "B", "port": 3}]}, {"outgoing": "B", "port": 4}]}, {"outgoing": "B", "port": 5}]}}]}
+        ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
         ]
       }
     },
@@ -242,6 +278,31 @@
           {"name": "strong_generator_7", "assignments": [{"field": "strong_generator_7", "expression": [0, 0, 0]}, {"field": "strong_generator_7", "port": 0, "expression": {"field": "strong_generator_7", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_7", "side": "right"}, {"outgoing": "strong_generator_7", "port": 0}]}, {"outgoing": "strong_generator_7", "port": 1}]}, {"outgoing": "strong_generator_7", "port": 2}]}, {"outgoing": "strong_generator_7", "port": 3}]}, {"outgoing": "strong_generator_7", "port": 4}]}, {"outgoing": "strong_generator_7", "port": 5}]}}]},
           {"name": "strong_generator_8", "assignments": [{"field": "strong_generator_8", "expression": [0, 0, 0]}, {"field": "strong_generator_8", "port": 0, "expression": {"field": "strong_generator_8", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "strong_generator_8", "side": "right"}, {"outgoing": "strong_generator_8", "port": 0}]}, {"outgoing": "strong_generator_8", "port": 1}]}, {"outgoing": "strong_generator_8", "port": 2}]}, {"outgoing": "strong_generator_8", "port": 3}]}, {"outgoing": "strong_generator_8", "port": 4}]}, {"outgoing": "strong_generator_8", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-field-mode",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -320,6 +381,31 @@
           {"name": "weak_w_minus", "assignments": [{"field": "weak_w_minus", "expression": [0, 0, 0]}, {"field": "weak_w_minus", "port": 0, "expression": {"field": "weak_w_minus", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "weak_w_minus", "side": "right"}, {"outgoing": "weak_w_minus", "port": 0}]}, {"outgoing": "weak_w_minus", "port": 1}]}, {"outgoing": "weak_w_minus", "port": 2}]}, {"outgoing": "weak_w_minus", "port": 3}]}, {"outgoing": "weak_w_minus", "port": 4}]}, {"outgoing": "weak_w_minus", "port": 5}]}}]},
           {"name": "weak_z", "assignments": [{"field": "weak_z", "expression": [0, 0, 0]}, {"field": "weak_z", "port": 0, "expression": {"field": "weak_z", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "weak_z", "side": "right"}, {"outgoing": "weak_z", "port": 0}]}, {"outgoing": "weak_z", "port": 1}]}, {"outgoing": "weak_z", "port": 2}]}, {"outgoing": "weak_z", "port": 3}]}, {"outgoing": "weak_z", "port": 4}]}, {"outgoing": "weak_z", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-field-mode",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -397,6 +483,31 @@
           {"name": "higgs_upper_imag", "assignments": [{"field": "higgs_upper_imag", "expression": 0}, {"field": "higgs_upper_imag", "port": 0, "expression": {"field": "higgs_upper_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_upper_imag", "side": "right"}, {"outgoing": "higgs_upper_imag", "port": 0}]}, {"outgoing": "higgs_upper_imag", "port": 1}]}, {"outgoing": "higgs_upper_imag", "port": 2}]}, {"outgoing": "higgs_upper_imag", "port": 3}]}, {"outgoing": "higgs_upper_imag", "port": 4}]}, {"outgoing": "higgs_upper_imag", "port": 5}]}}]},
           {"name": "higgs_lower_real", "assignments": [{"field": "higgs_lower_real", "expression": 0}, {"field": "higgs_lower_real", "port": 0, "expression": {"field": "higgs_lower_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_lower_real", "side": "right"}, {"outgoing": "higgs_lower_real", "port": 0}]}, {"outgoing": "higgs_lower_real", "port": 1}]}, {"outgoing": "higgs_lower_real", "port": 2}]}, {"outgoing": "higgs_lower_real", "port": 3}]}, {"outgoing": "higgs_lower_real", "port": 4}]}, {"outgoing": "higgs_lower_real", "port": 5}]}}]},
           {"name": "higgs_lower_imag", "assignments": [{"field": "higgs_lower_imag", "expression": 0}, {"field": "higgs_lower_imag", "port": 0, "expression": {"field": "higgs_lower_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "higgs_lower_imag", "side": "right"}, {"outgoing": "higgs_lower_imag", "port": 0}]}, {"outgoing": "higgs_lower_imag", "port": 1}]}, {"outgoing": "higgs_lower_imag", "port": 2}]}, {"outgoing": "higgs_lower_imag", "port": 3}]}, {"outgoing": "higgs_lower_imag", "port": 4}]}, {"outgoing": "higgs_lower_imag", "port": 5}]}}]}
+        ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-field-mode",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
         ]
       }
     },
@@ -524,6 +635,30 @@
           {"name": "quark_spinor_4_real", "assignments": [{"field": "quark_spinor_4_real", "expression": 0}, {"field": "quark_spinor_4_real", "port": 0, "expression": {"field": "quark_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_4_real", "side": "right"}, {"outgoing": "quark_spinor_4_real", "port": 0}]}, {"outgoing": "quark_spinor_4_real", "port": 1}]}, {"outgoing": "quark_spinor_4_real", "port": 2}]}, {"outgoing": "quark_spinor_4_real", "port": 3}]}, {"outgoing": "quark_spinor_4_real", "port": 4}]}, {"outgoing": "quark_spinor_4_real", "port": 5}]}}]},
           {"name": "quark_spinor_4_imag", "assignments": [{"field": "quark_spinor_4_imag", "expression": 0}, {"field": "quark_spinor_4_imag", "port": 0, "expression": {"field": "quark_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "quark_spinor_4_imag", "side": "right"}, {"outgoing": "quark_spinor_4_imag", "port": 0}]}, {"outgoing": "quark_spinor_4_imag", "port": 1}]}, {"outgoing": "quark_spinor_4_imag", "port": 2}]}, {"outgoing": "quark_spinor_4_imag", "port": 3}]}, {"outgoing": "quark_spinor_4_imag", "port": 4}]}, {"outgoing": "quark_spinor_4_imag", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-spinor-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -650,6 +785,30 @@
           {"name": "lepton_spinor_4_real", "assignments": [{"field": "lepton_spinor_4_real", "expression": 0}, {"field": "lepton_spinor_4_real", "port": 0, "expression": {"field": "lepton_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_4_real", "side": "right"}, {"outgoing": "lepton_spinor_4_real", "port": 0}]}, {"outgoing": "lepton_spinor_4_real", "port": 1}]}, {"outgoing": "lepton_spinor_4_real", "port": 2}]}, {"outgoing": "lepton_spinor_4_real", "port": 3}]}, {"outgoing": "lepton_spinor_4_real", "port": 4}]}, {"outgoing": "lepton_spinor_4_real", "port": 5}]}}]},
           {"name": "lepton_spinor_4_imag", "assignments": [{"field": "lepton_spinor_4_imag", "expression": 0}, {"field": "lepton_spinor_4_imag", "port": 0, "expression": {"field": "lepton_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "lepton_spinor_4_imag", "side": "right"}, {"outgoing": "lepton_spinor_4_imag", "port": 0}]}, {"outgoing": "lepton_spinor_4_imag", "port": 1}]}, {"outgoing": "lepton_spinor_4_imag", "port": 2}]}, {"outgoing": "lepton_spinor_4_imag", "port": 3}]}, {"outgoing": "lepton_spinor_4_imag", "port": 4}]}, {"outgoing": "lepton_spinor_4_imag", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-spinor-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -775,6 +934,30 @@
           {"name": "neutrino_spinor_3_imag", "assignments": [{"field": "neutrino_spinor_3_imag", "expression": 0}, {"field": "neutrino_spinor_3_imag", "port": 0, "expression": {"field": "neutrino_spinor_3_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_3_imag", "side": "right"}, {"outgoing": "neutrino_spinor_3_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_3_imag", "port": 5}]}}]},
           {"name": "neutrino_spinor_4_real", "assignments": [{"field": "neutrino_spinor_4_real", "expression": 0}, {"field": "neutrino_spinor_4_real", "port": 0, "expression": {"field": "neutrino_spinor_4_real", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_4_real", "side": "right"}, {"outgoing": "neutrino_spinor_4_real", "port": 0}]}, {"outgoing": "neutrino_spinor_4_real", "port": 1}]}, {"outgoing": "neutrino_spinor_4_real", "port": 2}]}, {"outgoing": "neutrino_spinor_4_real", "port": 3}]}, {"outgoing": "neutrino_spinor_4_real", "port": 4}]}, {"outgoing": "neutrino_spinor_4_real", "port": 5}]}}]},
           {"name": "neutrino_spinor_4_imag", "assignments": [{"field": "neutrino_spinor_4_imag", "expression": 0}, {"field": "neutrino_spinor_4_imag", "port": 0, "expression": {"field": "neutrino_spinor_4_imag", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "neutrino_spinor_4_imag", "side": "right"}, {"outgoing": "neutrino_spinor_4_imag", "port": 0}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 1}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 2}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 3}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 4}]}, {"outgoing": "neutrino_spinor_4_imag", "port": 5}]}}]}
+        ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "selected-spinor-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
         ]
       }
     },
@@ -926,6 +1109,30 @@
           {"name": "metric_23", "assignments": [{"field": "metric_23", "expression": 0}, {"field": "metric_23", "port": 0, "expression": {"field": "metric_23", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_23", "side": "right"}, {"outgoing": "metric_23", "port": 0}]}, {"outgoing": "metric_23", "port": 1}]}, {"outgoing": "metric_23", "port": 2}]}, {"outgoing": "metric_23", "port": 3}]}, {"outgoing": "metric_23", "port": 4}]}, {"outgoing": "metric_23", "port": 5}]}}]},
           {"name": "metric_33", "assignments": [{"field": "metric_33", "expression": 0}, {"field": "metric_33", "port": 0, "expression": {"field": "metric_33", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "metric_33", "side": "right"}, {"outgoing": "metric_33", "port": 0}]}, {"outgoing": "metric_33", "port": 1}]}, {"outgoing": "metric_33", "port": 2}]}, {"outgoing": "metric_33", "port": 3}]}, {"outgoing": "metric_33", "port": 4}]}, {"outgoing": "metric_33", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "This entity is hypothetical or a collective model; its mode choice is a research assumption.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "hypothesis-register",
+            "basis": [
+              "level-0",
+              "level-1"
+            ],
+            "initial_level": 0,
+            "interpretation": "Two abstract levels in a research representation; no particle statistics or physical field dynamics are assigned."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -967,6 +1174,30 @@
         ],
         "field_rules": [
           {"name": "computational_influence", "assignments": [{"field": "computational_influence", "expression": 0}, {"field": "computational_influence", "port": 0, "expression": {"field": "computational_influence", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "computational_influence", "side": "right"}, {"outgoing": "computational_influence", "port": 0}]}, {"outgoing": "computational_influence", "port": 1}]}, {"outgoing": "computational_influence", "port": 2}]}, {"outgoing": "computational_influence", "port": 3}]}, {"outgoing": "computational_influence", "port": 4}]}, {"outgoing": "computational_influence", "port": 5}]}}]}
+        ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "This entity is hypothetical or a collective model; its mode choice is a research assumption.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "hypothesis-register",
+            "basis": [
+              "level-0",
+              "level-1"
+            ],
+            "initial_level": 0,
+            "interpretation": "Two abstract levels in a research representation; no particle statistics or physical field dynamics are assigned."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
         ]
       }
     },
@@ -1010,6 +1241,30 @@
         "field_rules": [
           {"name": "dark_matter_candidate_register", "assignments": [{"field": "dark_matter_candidate_register", "expression": 0}, {"field": "dark_matter_candidate_register", "port": 0, "expression": {"field": "dark_matter_candidate_register", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "dark_matter_candidate_register", "side": "right"}, {"outgoing": "dark_matter_candidate_register", "port": 0}]}, {"outgoing": "dark_matter_candidate_register", "port": 1}]}, {"outgoing": "dark_matter_candidate_register", "port": 2}]}, {"outgoing": "dark_matter_candidate_register", "port": 3}]}, {"outgoing": "dark_matter_candidate_register", "port": 4}]}, {"outgoing": "dark_matter_candidate_register", "port": 5}]}}]}
         ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "This entity is hypothetical or a collective model; its mode choice is a research assumption.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "hypothesis-register",
+            "basis": [
+              "level-0",
+              "level-1"
+            ],
+            "initial_level": 0,
+            "interpretation": "Two abstract levels in a research representation; no particle statistics or physical field dynamics are assigned."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1051,6 +1306,30 @@
         ],
         "field_rules": [
           {"name": "dark_energy_candidate_register", "assignments": [{"field": "dark_energy_candidate_register", "expression": 0}, {"field": "dark_energy_candidate_register", "port": 0, "expression": {"field": "dark_energy_candidate_register", "side": "right"}}], "invariants": [{"name": "linear stock", "expression": {"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"op": "add", "args": [{"field": "dark_energy_candidate_register", "side": "right"}, {"outgoing": "dark_energy_candidate_register", "port": 0}]}, {"outgoing": "dark_energy_candidate_register", "port": 1}]}, {"outgoing": "dark_energy_candidate_register", "port": 2}]}, {"outgoing": "dark_energy_candidate_register", "port": 3}]}, {"outgoing": "dark_energy_candidate_register", "port": 4}]}, {"outgoing": "dark_energy_candidate_register", "port": 5}]}}]}
+        ]
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "This entity is hypothetical or a collective model; its mode choice is a research assumption.",
+          "One representative sector of this field family is selected; this is not every species or momentum mode of the field."
+        ],
+        "registers": [
+          {
+            "name": "hypothesis-register",
+            "basis": [
+              "level-0",
+              "level-1"
+            ],
+            "initial_level": 0,
+            "interpretation": "Two abstract levels in a research representation; no particle statistics or physical field dynamics are assigned."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
         ]
       }
     }
@@ -1129,6 +1408,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1204,6 +1551,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1279,6 +1694,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1354,6 +1837,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1429,6 +1980,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1504,6 +2123,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1579,6 +2266,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1654,6 +2409,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1729,6 +2552,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1804,6 +2695,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1879,6 +2838,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "color-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "color-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -1954,6 +2981,74 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "anticolor-r-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-r-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-g-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "anticolor-b-spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2029,6 +3124,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2104,6 +3231,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2179,6 +3338,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2254,6 +3445,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2329,6 +3552,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2404,6 +3659,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2480,6 +3767,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2556,6 +3866,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2632,6 +3965,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2708,6 +4064,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2784,6 +4163,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2860,6 +4262,29 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "selected-helicity-mode",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -2936,6 +4361,40 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3011,6 +4470,180 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "adjoint-1-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-1-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-2-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-2-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-3-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-3-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-4-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-4-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-5-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-5-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-6-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-6-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-7-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-7-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-8-transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "adjoint-8-transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3086,6 +4719,50 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-minus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-zero",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-plus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3161,6 +4838,50 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-minus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-zero",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-plus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3236,6 +4957,50 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-minus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-zero",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "spin-plus",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3311,6 +5076,30 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "scalar-mode",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3386,6 +5175,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3461,6 +5282,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3536,6 +5389,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3611,6 +5496,38 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "Mode content is a finite representation choice, not an inferred dynamics."
+        ],
+        "registers": [
+          {
+            "name": "spin-up",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 1,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          },
+          {
+            "name": "spin-down",
+            "basis": [
+              "vacuum",
+              "occupied"
+            ],
+            "initial_level": 0,
+            "interpretation": "One fermion mode with occupancy zero or one; two particles cannot occupy that same mode."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     },
     {
@@ -3687,6 +5604,40 @@
             0
           ]
         }
+      },
+      "quantum_profile": {
+        "claim_level": "finite_mode_representation",
+        "assumptions": [
+          "A fixed spatial wave-packet mode is selected; registers describe its internal modes, not the full field.",
+          "The order of modes fixes the basis convention. No species name selects a runtime law.",
+          "This entity is hypothetical or a collective model; its mode choice is a research assumption."
+        ],
+        "registers": [
+          {
+            "name": "transverse-1",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 1,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          },
+          {
+            "name": "transverse-2",
+            "basis": [
+              "n=0",
+              "n=1",
+              "n=2"
+            ],
+            "initial_level": 0,
+            "interpretation": "Bosonic mode truncated at two quanta; the truncation is not a physical occupancy limit."
+          }
+        ],
+        "missing_dynamics": [
+          "No species Hamiltonian, mass-dependent propagation, gauge constraints or interaction strengths are supplied.",
+          "Mode occupancy alone does not implement exchange signs, relativistic fields or a particle-creation law."
+        ]
       }
     }
   ],
