@@ -530,3 +530,12 @@ expectations; a passing source identity and command belong in the integration PR
 The legacy quantum, architecture, integer, locality, navigation and language
 suites remain regression requirements. Do not weaken them to accept the new
 candidate. No physical engine behavior or default rendering mode is changed.
+## Executable entity and conversion expectations
+
+`tests/test_entity_compiler.py` validates all 46 profiles, active representative
+carrier/vector and scalar transport, generic name selection, capacity rejection,
+conflicting declarations and malformed profiles. Profile compilation is distinct
+from physical-law acceptance; do not multiply identical runs across labels.
+`tests/test_local_conversions.py` checks two-to-two ownership, ignored output
+defaults, causal/delayed commits and rejected invalid balances or carried progress.
+Existing shared engine tests remain necessary consumers of the changed schema.

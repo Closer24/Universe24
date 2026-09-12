@@ -436,7 +436,7 @@ def _interactions(
     type_names, field_names = _names(disturbances), _names(fields)
     required = {"name", "left_type", "right_type", "assignments", "invariants"}
     for raw in _array(value, "interactions", MAX_RULES):
-        obj = _object(raw, "interaction", required | {"when"}, required)
+        obj = _object(raw, "interaction", required | {"when", "output_types"}, required)
         name = _text(obj["name"], "interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate interaction name")
@@ -480,8 +480,27 @@ def _interactions(
                 raise ValueError("duplicate invariant name")
             invariants.append(Invariant(invariant_name, expression(item["expression"])))
         when = expression(obj["when"], 1) if "when" in obj else None
+        output_types = None
+        if "output_types" in obj:
+            outputs = _object(obj["output_types"], "output_types", {"left", "right"}, {"left", "right"})
+            output_types = (
+                _index(outputs["left"], type_names, "output_types.left"),
+                _index(outputs["right"], type_names, "output_types.right"),
+            )
+            if set(output_types) & {left, right}:
+                raise ValueError("conversion output types must differ from both input types")
+            involved = (*participants, *(disturbances[index] for index in output_types))
+            if any(set(kind.fields) != set(participants[0].fields) for kind in involved):
+                raise ValueError("conversion types must own the same fields")
+            if any(kind.transport.mode == "split" or kind.cost_field is not None for kind in involved):
+                raise ValueError("conversion requires whole records without cost_field")
+            expected = {(side, field) for side in (0, 1) for field in participants[side].fields}
+            if {(a.side, a.field) for a in assignments} != expected:
+                raise ValueError("conversion requires explicit assignments for every output field")
         result.append(
-            InteractionDefinition(name, left, right, tuple(assignments), tuple(invariants), when)
+            InteractionDefinition(
+                name, left, right, tuple(assignments), tuple(invariants), when, output_types
+            )
         )
     return tuple(result)
 
@@ -925,7 +944,7 @@ def parse_initial_state(document: object) -> InitialState:
     fields = _fields(obj["fields"])
     disturbances = _disturbances(obj["disturbance_types"], fields)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
-    return InitialState(
+    initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         shape=shape,
         slots_per_cell=capacity,
@@ -954,6 +973,27 @@ def parse_initial_state(document: object) -> InitialState:
             obj.get("spatial_interactions", []), fields, disturbances, spatial
         ),
     )
+
+    _validate_conversions(initial)
+    return initial
+
+
+def _validate_conversions(initial: InitialState) -> None:
+    for rule in initial.interactions:
+        if rule.output_types is None:
+            continue
+        if initial.schema_version != 1:
+            raise ValueError("conversion requires schema_version 1")
+        kinds = {rule.left_type, rule.right_type, *rule.output_types}
+        if any(c.left_type in kinds or c.right_type in kinds for c in initial.couplings):
+            raise ValueError("conversion types cannot participate in exchange couplings")
+        spatial_types = (
+            {r.type_index for r in initial.emissions}
+            | {r.type_index for r in initial.spatial_couplings}
+            | {r.type_index for r in initial.spatial_interactions}
+        )
+        if spatial_types & kinds:
+            raise ValueError("conversion types cannot participate in spatial responses or emission")
 
 
 def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:

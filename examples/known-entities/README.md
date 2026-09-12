@@ -2,7 +2,10 @@
 
 The physical inventory is [catalog.json](catalog.json). It describes fields,
 particles and antiparticles with separate representation, dynamics and emergence
-status; it is not an initialization file. See
+status; compile selected profiles with `python -m event_universe.entities` as
+described in [the executable catalog](../../docs/ENTITY_CATALOG.md). The
+[conversion probe](conversion.json) exercises generic two-record type replacement.
+The catalog itself is not a raw initialization file. See
 [physical entities and discrete support](../../docs/PHYSICAL_ENTITIES.md) for
 the sourced audit, the elementary-rule restriction and the two new executable
 probes: [discrete-pair.json](discrete-pair.json) and

@@ -180,6 +180,35 @@ class DisturbanceLaw:
             candidate[assignment.side] = _with_value(
                 candidate[assignment.side], assignment.field, pack(value)
             )
+        if rule.output_types is not None:
+            for side, original in enumerate((left, right)):
+                # A different routing law cannot inherit or silently erase fractional progress.
+                carried = (
+                    *original.phase_codes,
+                    *original.emission_remainders,
+                    *original.emission_phases,
+                    *original.exchange_remainders,
+                    *original.spatial_remainders,
+                    *original.emission_remaining,
+                    *original.spatial_remaining,
+                )
+                if (
+                    original.route_phase_code != 1
+                    or original.rate_remainder_code != 1
+                    or any(code != 1 for payload in carried for code in payload)
+                ):
+                    raise ValueError("conversion requires zero carried routing and allowance state")
+                if not 1 <= original.channel_code <= 7:
+                    raise ValueError("conversion channel must identify the seed or a neighbor port")
+                meter.charge("update")
+                zero = tuple((1,) * field.components for field in self.fields)
+                # Whole-record channel tags record arrival provenance, not fractional stock.
+                candidate[side] = DisturbanceRecord(
+                    rule.output_types[side],
+                    candidate[side].values,
+                    zero,
+                    channel_code=original.channel_code,
+                )
         for record in candidate:
             self._validate(record)
         first, second = candidate

@@ -1,5 +1,13 @@
 # Architecture and change boundaries
 
+`entities.py` owns host-only compilation of selected explicit catalog profiles
+into ordinary initialization; it delegates strict JSON and runtime schema
+validation to `initialization.py`. Profiles contain their candidate operations.
+It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
+Optional two-record type conversion follows the existing frozen pair proposal
+and delayed engine commit; its ownership restrictions are in
+[local conversions](LOCAL_CONVERSIONS.md).
+
 ## Generated output ownership
 
 `retention.py` owns host-only artifact registration, writer leases and expiry.
