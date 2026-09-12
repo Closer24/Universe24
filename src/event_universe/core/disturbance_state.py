@@ -69,6 +69,7 @@ class Expression:
     field: int = 0
     side: int = 0
     component: int = 0
+    matrix: tuple[tuple[int, ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,6 +106,29 @@ class CouplingDefinition:
     field: int
     amount: Expression
     denominator: int = 1
+
+
+@dataclass(frozen=True, slots=True)
+class Assignment:
+    side: int
+    field: int
+    expression: Expression
+
+
+@dataclass(frozen=True, slots=True)
+class Invariant:
+    name: str
+    expression: Expression
+
+
+@dataclass(frozen=True, slots=True)
+class InteractionDefinition:
+    name: str
+    left_type: int
+    right_type: int
+    assignments: tuple[Assignment, ...]
+    invariants: tuple[Invariant, ...]
+    when: Expression | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -155,6 +179,7 @@ class InitialState:
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
     seeds: tuple[Seed, ...]
+    interactions: tuple[InteractionDefinition, ...] = ()
 
 
 class Departure(NamedTuple):

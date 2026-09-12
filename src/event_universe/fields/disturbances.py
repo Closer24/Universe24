@@ -10,6 +10,7 @@ from event_universe.core.disturbance_state import (
     DisturbanceRecord,
     Expression,
     FieldDefinition,
+    InteractionDefinition,
     LocalPlan,
     OperationCosts,
     Payload,
@@ -22,6 +23,13 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work, signed_divrem
+
+
+def _dot(left: tuple[int, ...], right: tuple[int, ...]) -> int:
+    total = 0
+    for a, b in zip(left, right, strict=True):
+        total = checked_work(total + checked_work(a * b))
+    return total
 
 
 def _broadcast(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
@@ -45,6 +53,12 @@ def evaluate(
     if op == "field":
         return unpack((left if expression.side == 0 else right)[expression.field])
     operands = tuple(evaluate(arg, left, right, meter) for arg in expression.arguments)
+    if op == "transform":
+        return tuple(_dot(row, operands[0]) for row in expression.matrix)
+    if op == "dot":
+        return (_dot(operands[0], operands[1]),)
+    if op == "gt":
+        return (1 if operands[0][0] > operands[1][0] else 0,)
     if op in ("neg", "abs", "sum", "component"):
         unary = operands[0]
         if op == "neg":
@@ -132,6 +146,39 @@ class DisturbanceLaw:
     definitions: tuple[DisturbanceDefinition, ...]
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
+    interactions: tuple[InteractionDefinition, ...] = ()
+
+    def _interact(
+        self,
+        rule: InteractionDefinition,
+        left: DisturbanceRecord,
+        right: DisturbanceRecord,
+        meter: CostMeter,
+    ) -> tuple[DisturbanceRecord, DisturbanceRecord]:
+        if rule.when is not None and evaluate(rule.when, left.values, right.values, meter)[0] <= 0:
+            return left, right
+        meter.charge("couple")
+        before = tuple(evaluate(i.expression, left.values, right.values, meter) for i in rule.invariants)
+        candidate = [left, right]
+        for assignment in rule.assignments:
+            meter.charge("update")
+            # Every right-hand side reads the same frozen pair, not earlier assignments.
+            value = evaluate(assignment.expression, left.values, right.values, meter)
+            candidate[assignment.side] = _with_value(
+                candidate[assignment.side], assignment.field, pack(value)
+            )
+        for record in candidate:
+            self._validate(record)
+        first, second = candidate
+        original_totals = _sum_records((left, right), self.fields)
+        candidate_totals = _sum_records((first, second), self.fields)
+        for index, field in enumerate(self.fields):
+            if field.conserved and original_totals[index] != candidate_totals[index]:
+                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
+        for invariant, expected in zip(rule.invariants, before, strict=True):
+            if evaluate(invariant.expression, first.values, second.values, meter) != expected:
+                raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
+        return first, second
 
     def _validate(self, record: DisturbanceRecord) -> None:
         definition = self.definitions[record.type_index]
@@ -280,6 +327,24 @@ class DisturbanceLaw:
                     self._validate(left)
                     self._validate(right)
                     updated[left_slot], updated[right_slot] = left, right
+
+        # Multi-field transactions follow exchanges and precede all routing.
+        for interaction in self.interactions:
+            for left_slot in range(slots):
+                for right_slot in range(slots):
+                    left, right = updated[left_slot], updated[right_slot]
+                    if (
+                        left is None
+                        or right is None
+                        or left_slot == right_slot
+                        or left.type_index != interaction.left_type
+                        or right.type_index != interaction.right_type
+                        or (interaction.left_type == interaction.right_type and right_slot < left_slot)
+                    ):
+                        continue
+                    updated[left_slot], updated[right_slot] = self._interact(
+                        interaction, left, right, meter
+                    )
 
         replacements: list[tuple[int, DisturbanceRecord | None]] = []
         departures: list[Departure] = []

@@ -77,6 +77,7 @@ whole-record movement preserves separate carriers and their different directions
 | `fields` | Between 1 and 16 unique field definitions |
 | `disturbance_types` | Between 1 and 16 unique disturbance definitions |
 | `couplings` | Optional list, at most 32 local exchange rules |
+| `interactions` | Optional list, at most 32 atomic pair transactions |
 | `seeds` | Positions, disturbance type names and optional value overrides |
 
 Names and unit labels are nonempty strings of at most 128 characters. All names
@@ -172,7 +173,7 @@ order, so later updates in a record see earlier updates to that record.
 
 Expressions are bounded JSON trees, at most 64 nodes and depth 16. Available
 operations are `add`, `sub`, `mul`, `exact_div`, `min`, `max`, `neg`, `abs`,
-`sum` and `component`. Literals and field references are also nodes. Binary
+`sum`, `component`, `dot`, `transform` and `gt`. Literals and field references are also nodes. Binary
 component operations may broadcast a scalar to a vector. `sum` reduces to a
 scalar; `component` takes a zero-based `index`. `exact_div` requires a nonzero
 scalar divisor and an exact integer result. There is no truncating division,
@@ -212,6 +213,83 @@ This version exchanges one shared field per rule. It does not automatically
 derive mass-times-velocity or coordinate multiple different physical quantities.
 Any additional relation or conservation promise needs an explicit supported law
 and independent tests.
+
+### Atomic multi-field interactions
+
+`interactions` extends the generic framework without interpreting physical names.
+Each rule declares `name`, `left_type`, `right_type`, `assignments`, `invariants`
+and an optional scalar `when`. A strictly positive `when` activates the rule;
+zero or negative skips it. Omission activates every matching pair cycle.
+Activation reads only the pair's locally available fields. It is not an implicit
+geometric contact detector and adds no encounter history.
+
+Each assignment contains `side` (`left` or `right`), an owned `field`, and an
+`expression` producing its complete new value. There are 1–32 assignments with
+unique `(side, field)` targets; cost outputs cannot be targets. All right-hand
+sides read the same pre-interaction pair. The transaction builds both candidate
+records before validating either outcome. No partial update becomes physical.
+
+Each of 1–16 named invariants contains `name` and `expression`. The expression
+must have exactly equal scalar/vector values before and after the transaction.
+Every field marked `conserved` also retains its pair sum component by component,
+even if the configuration omits an invariant for it. Checks occur per transaction,
+so a later transaction cannot cancel an earlier violation. Units and scales of
+custom expressions must be declared consistently by the model; the evaluator
+does not infer dimensional correctness or prove physical meaning from a label.
+
+The generic expression additions are:
+
+- `dot`: two three-component vectors produce their integer dot product.
+- `transform`: one vector and a constant `matrix` (3 by 3 bounded integers)
+  produce matrix-vector multiplication. A matrix is not automatically a rotation;
+  the model declares any norm or momentum constraints it needs.
+- `gt`: two scalars produce 1 when the first exceeds the second, otherwise 0.
+
+Every product and partial sum uses the bounded working register. Every output
+uses the existing positive-coded payload schema. Existing `exact_div` rejects
+nonintegral results; transactions never round a violated invariant away. Choose
+appropriate integer units or explicitly modeled fraction fields when needed.
+The existing fractional single-field exchange remains available separately.
+
+Order is ordinary updates, exchange couplings, atomic interactions, then routing.
+Interactions use declared rule order, then fixed slot order, with each unordered
+pair once for equal types and ordered matching pairs for distinct types. Each
+assignment charges `update`, each accepted activation charges `couple`, and AST
+evaluation (including activation and invariants) charges `evaluate`. Every AST
+retains the 64-node/depth-16 bound. State and work remain bounded for fixed schema
+and slot capacity. All proposals obey the existing frozen computation wait and
+simultaneous local commit contract. An invalid proposal faults the run before
+changing the cell's records or pending plan; previously completed independent
+events are not rolled back.
+
+### Configured unequal-mass elastic example
+
+`examples/04-unequal-mass-collision.json` selects
+`configured-unequal-mass-elastic-head-on-v1`. This is a configured classical
+one-dimensional elastic contact example, not a force derived from a field.
+Mass and momentum are ordinary named fields; no collision formula or name is
+built into the engine. Movement uses `sum(abs(momentum)) / mass` exactly as an
+integer rate numerator with denominator 120; its x-axis velocities are in c/120.
+Both records move through the existing neighbor transport.
+
+For M=mL+mR, P=pL+pR, D=mR*pL-mL*pR, the configuration supplies
+`pL'=(mL*P+R*D)/M`, `pR'=(mR*P-R*D)/M`, with
+R=diag(-1,1,1). This reflects the relative x component. The rule activates when
+D.x>0 for the named incoming roles. It keeps each mass unchanged and preserves
+P and `mR*dot(pL,pL)+mL*dot(pR,pR)`, which is proportional to classical kinetic
+energy for the fixed pair masses. It therefore does not fire again while this
+outgoing pair remains co-resident. Arbitrary 3D contact normals, crossing between
+cells, species creation and relativistic scattering are not supplied by this example.
+
+Independent expected values: masses (2,3), momenta (8,-3) become (-4,9), hence
+velocity numerators (4,-1) become (-2,3). Total momentum is 5 and kinetic energy
+is 35/2 in the declared scaled units throughout. In a 15 by 15 by 15 lattice,
+seeds (3,7,7) and (8,7,7) arrive at (7,7,7) at tick 120, change momentum in the
+next local cycle, and are at x=3 and x=13 at tick 360 without boundary wrapping.
+This reproduces a classical elastic-collision benchmark; it does not establish
+universal energy conservation or emergence of real-world physics.
+
+Physical reference: [OpenStax, Types of collisions](https://openstax.org/books/university-physics-volume-1/pages/9-4-types-of-collisions).
 
 ## Computation cost and uniform cell delay
 

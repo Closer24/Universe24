@@ -374,3 +374,14 @@ marked visualization tests check exact sampled/final payloads, headless event
 parity, escaped names and partial failures. Browser checks must cover movie
 play/pause/restart/final hold, scrubbing, projection/speed, folded settings and
 renaming references without resetting an already loaded movie during polling.
+
+## Atomic generic interaction acceptance
+
+`tests/test_atomic_interactions.py` checks the configured 15-cube unequal-mass
+collision: m=(2,3), p=(8,-3)->(-4,9), independent rational kinetic energy 35/2,
+constant total momentum 5, causal arrivals, no repeated bounce while co-resident,
+and final opposite departures. Further small cases cover simultaneous multi-field
+conversion/rotation, weighted inventory, rejection before commit, invalid schema,
+pair totals larger than individual registers, and renamed fields in a larger
+world. These are classical-candidate and generic-contract checks, not proof of
+an emergent gravitational or universal energy law.

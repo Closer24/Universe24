@@ -11,6 +11,12 @@ and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
 
+Atomic interaction definitions share that path: initialization resolves bounded
+assignments, invariants and activation expressions; `fields/disturbances.py`
+evaluates frozen-pair proposals and exact per-transaction balances before routing.
+They add no per-source memory or alternate commit path. Example physics remains
+JSON data, including vector transforms and the unequal-mass elastic contact law.
+
 The complete source contract is [DISTURBANCES.md](DISTURBANCES.md). Its six-port,
 bounded-record schema replaces the implicit scalar/particle schema for the
 primary API. Global diagnostics never drive physical rules, and rendering is
