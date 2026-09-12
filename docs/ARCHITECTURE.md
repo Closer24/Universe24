@@ -1,5 +1,108 @@
 # Architecture and change boundaries
 
+`entities.py` owns host-only compilation of selected explicit catalog profiles
+into ordinary initialization; it delegates strict JSON and runtime schema
+validation to `initialization.py`. Profiles contain their candidate operations.
+It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
+Optional two-record type conversion follows the existing frozen pair proposal
+and delayed engine commit; its ownership restrictions are in
+[local conversions](LOCAL_CONVERSIONS.md).
+
+## Local integer operation contract
+
+This contract applies to all new and changed physical code, entity definitions,
+configuration adapters and prototypes intended for the active Simulation.
+Use [DISTURBANCES.md](DISTURBANCES.md) for the supported operation vocabulary
+and [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md) for delivered field inputs.
+LOCALITY-1 and the numeric bounds in SIMULATOR_DEFINITIONS.md remain authoritative.
+
+### Generic operations and law ownership
+
+Express active laws as initialization-defined compositions of supported scalar
+and vector operations. Particle names, charges, masses, couplings, thresholds,
+interaction eligibility and participant limits are data; names must not select
+hidden physical equations. Reuse generic operators instead of adding a special
+electron, proton, electromagnetic or computation-load branch to the engine.
+
+The engine owns scheduling, addresses, capacities, transport timing, validation
+and atomic commits. It must not own a model-specific force, energy, momentum or
+field equation. Generic arithmetic belongs to its documented reusable owner;
+model/API assembly only composes it. Scheduler indexing and timing arithmetic
+are necessary bookkeeping, not permission to hide physical laws in the scheduler.
+An externally configured equation is still a chosen law, not evidence that it
+emerged from the lattice.
+
+Keep immutable parsed law definitions outside dynamic cell, disturbance,
+pending-proposal and packet payloads. Payloads carry bounded state values and
+declared identifiers, never copied expression trees, formula strings, Python
+callbacks or executable code. Read-only diagnostics may calculate global
+measurements but cannot supply a physical update or repair conservation.
+
+### Integers, vectors and tensors
+
+All physical numeric inputs, registers, intermediate results and transmitted
+components use the declared bounded integer domains. Reject booleans and
+floating-point inputs rather than coercing them. Python's arbitrary-precision
+integers do not remove the model's working-register bounds: check intermediates
+before cancellation, scaling or assignment. Never add float, complex, NumPy,
+Decimal or Fraction arithmetic as a physical fallback.
+
+Represent scales and ratios with explicit bounded integer numerators and
+denominators. Exact-division operators must reject a zero divisor or a nonexact
+result. A rule that permits division with remainder must declare the existing
+bounded remainder owner, update and lifetime; do not silently discard a remainder,
+round through floating point, wrap overflow or clamp a failed calculation.
+Keep documented integer split/quantization policies explicit and test their
+accounting. Arithmetic failure must not leave a partially committed transaction.
+
+The active field schema currently supports scalars and three-component vectors.
+Its constant 3-by-3 integer matrix transform is not general tensor-valued state.
+Do not claim arbitrary tensor support or silently flatten an unsupported shape.
+A future tensor extension must declare fixed rank and dimensions, component
+bounds, generic operators, transport coding and all state/diagnostic consumers,
+with shape, overflow and locality tests before use. Tensor notation alone does
+not make a calculation generic, integer or local.
+
+### Local inputs and bounded work
+
+A physical rule may read its own fixed local records and information already
+delivered through the six neighbor ports under the transport contract. Neighbor
+coordinates do not authorize instantaneous reads of remote physical state.
+Trace every input to its causal owner, including self-field subtraction,
+computation-load fields, energy bookkeeping and collision eligibility.
+
+Fix local record, field, rule and participant capacities in validated definitions.
+Only supported configured participant limits may be used; a larger value does
+not create an unsupported many-body operator. Bound local loops and storage by
+those capacities, independently of world size. Never compute responses from an
+all-particle scan, global field reconstruction, growing per-source history or a
+host-side correction. Charge, momentum and declared energy balances need explicit
+local owners and transaction checks; a diagnostic total alone is not a law.
+
+### Review evidence and scope
+
+For each affected operator or rule, identify its owner, scalar/vector shape,
+integer input/intermediate/output bounds, causal input path and failure behavior.
+Run the affected checks selected by tools/check.py, including related integer,
+initialization, architecture and locality gates when those contracts change.
+The existing entry points include tests/test_integer_contract.py,
+tests/test_initialization.py, tests/test_architecture.py and tests/test_locality.py.
+Review gaps in scanner coverage explicitly; passing static checks is not a proof
+about arbitrary Python or every possible configuration.
+
+Read-only rendering and host timing may use noninteger arithmetic outside the
+physical path; their results must never feed physical state. Historical named
+models retain their explicit contracts and must not be copied into the active
+generic engine. External floating-point or globally coupled reference prototypes
+are not compliant active-engine implementations, even if their GIFs look useful.
+
+Q-ORACLE-1 is an existing explicitly scoped opt-in quantum exception, documented
+below. It is not a local-law implementation and cannot justify nonlocal inputs
+to ordinary physical rules. This instruction contract neither removes that
+separate research backend nor certifies it as local. Report such scope limits
+instead of claiming that every repository path already satisfies the active
+local integer contract.
+
 ## Generated output ownership
 
 `retention.py` owns host-only artifact registration, writer leases and expiry.
@@ -128,7 +231,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns shared working bounds and signed division |
+| `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
 | `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
@@ -181,6 +284,16 @@ binding, Host/Origin checks and a session token constrain HTTP access.
 See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
 
 ## Generic calculations and model choices
+
+`core/integer.py` owns shared decoded component addition/subtraction, ordered
+sums, dot/cross products and nonnegative ceiling division. Products and ordered
+partial sums retain their working-register checks, including overflow before
+cancellation. Ceiling division retains the existing adjusted-numerator bound;
+`signed_divrem` instead rounds toward zero and returns a signed remainder.
+Callers supply schema-bounded components and retain payload encoding, field
+validation, operation pricing and atomic commit ownership. The expression
+interpreter delegates arithmetic while retaining broadcasting and AST costs.
+See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 
 `ScalarFieldRule.advance(sample, neighbors, source=..., denominator=...)`
 returns a `ScalarSample(value, remainder)`. The built-in `ScalarField` implements
@@ -558,3 +671,21 @@ remains in `dynamics/`; the scalar transformation remains in `fields/`; the mode
 maps fixed records; the engine alone schedules the old/current six-neighbor union
 after all particle responses. No core schema changes. The law and evidence are
 documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
+
+## Standalone vector-lab experiment
+
+The user-requested [tools/generic_vector_lab](../tools/generic_vector_lab/README.md)
+is an opt-in mechanism experiment with its own explicit JSON laws. It does not
+import, replace or extend the active engine or its schema. The lab runtime owns
+its local transactions; its separate movie tool reads saved states. Generated
+outputs go under artifacts and remain outside source commits. Its local quantum
+coupling is a toy experiment, not an implementation of the active Q-ORACLE-1
+bridge contract. The active source-of-truth boundaries above remain unchanged.
+
+## Shared native event extension
+
+The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
+ledger and local resolver protocol under core. The integration owner composes
+quantum payloads, initialization-selected instruments and classical control codes.
+Only primary API assembly and initialization reference that integration owner;
+core and ordinary field arithmetic never import quantum.

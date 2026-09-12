@@ -10,7 +10,7 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work, signed_divrem
+from event_universe.core.integer import add_components, checked_work, signed_divrem
 from event_universe.core.spatial_state import (
     SpatialFieldDefinition,
     SpatialOutgoing,
@@ -79,7 +79,7 @@ def add_payloads(left: Payload, right: Payload, field: FieldDefinition, meter: C
     field.validate(right)
     meter.charge("read", 2)
     meter.charge("update", field.components)
-    result = pack(tuple(checked_work(a + b) for a, b in zip(unpack(left), unpack(right), strict=True)))
+    result = pack(add_components(unpack(left), unpack(right)))
     field.validate(result)
     return result
 

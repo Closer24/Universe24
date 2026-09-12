@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "model_id": "generic-two-record-conversion-probe-v1",
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "slots_per_cell": 2,
+  "link_ticks": 2,
+  "normal_budget": 10000,
+  "ticks": 6,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "stock",
+      "components": 1,
+      "units": "configured inventory unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "configured inventory unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "stored A",
+      "fields": [
+        "stock",
+        "momentum"
+      ],
+      "defaults": {
+        "stock": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "stored B",
+      "fields": [
+        "stock",
+        "momentum"
+      ],
+      "defaults": {
+        "stock": 3,
+        "momentum": [
+          -1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "outgoing A",
+      "fields": [
+        "stock",
+        "momentum"
+      ],
+      "defaults": {
+        "stock": 3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 1
+      }
+    },
+    {
+      "name": "outgoing B",
+      "fields": [
+        "stock",
+        "momentum"
+      ],
+      "defaults": {
+        "stock": 3,
+        "momentum": [
+          -1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 1
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "name": "release",
+      "left_type": "stored A",
+      "right_type": "stored B",
+      "output_types": {
+        "left": "outgoing A",
+        "right": "outgoing B"
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "stock",
+          "expression": {
+            "field": "stock",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        },
+        {
+          "side": "right",
+          "field": "stock",
+          "expression": {
+            "field": "stock",
+            "side": "right"
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "positive_inventory",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "stock",
+                "side": "left"
+              },
+              {
+                "field": "stock",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        4,
+        4,
+        4
+      ],
+      "type": "stored A"
+    },
+    {
+      "position": [
+        4,
+        4,
+        4
+      ],
+      "type": "stored B"
+    }
+  ]
+}

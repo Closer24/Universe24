@@ -1,9 +1,11 @@
 # Physical entities and discrete support
 
 The entity inventory is [catalog.json](../examples/known-entities/catalog.json).
-It is descriptive authoring data, not a simulator initialization file. Executable
-examples remain ordinary initialization JSON and select a small subset of
-entities. No catalog label selects a hidden engine law.
+It contains descriptive metadata and explicit executable representation profiles,
+not a raw simulator initialization file. The [catalog adapter](ENTITY_CATALOG.md)
+compiles selected profiles into ordinary initialization JSON. No catalog label
+selects a hidden engine law. All 46 entries have bounded representation probes;
+their actual physical dynamics and emergence remain separately unestablished.
 
 The scope is the established particle/field families and selected useful
 composites, together with explicitly unresolved or hypothetical entries. It is
@@ -70,9 +72,11 @@ The neutrino/antineutrino entries describe the observed sectors without deciding
 the unresolved Dirac/Majorana question; see the
 [PDG neutrino review](https://pdg.lbl.gov/2025/reviews/rpp2025-rev-neutrino-mixing.pdf).
 
-The engine can store positive masses and opposite charges. It cannot currently
-turn an arbitrary set of particle species into a new set of products through
-its atomic assignment interface. Removing opposite charges is not annihilation:
+The engine can store positive masses and opposite charges. The optional
+[local conversion interface](LOCAL_CONVERSIONS.md) can now replace two record
+types with two configured output types, with full assignments and exact declared
+balances. Arbitrary product counts and physical annihilation are unsupported.
+Removing opposite charges is not annihilation:
 products must carry the full applicable energy, momentum and charges. Rest mass
 is conserved in the restricted mechanical examples, not a universal invariant
 for matter/radiation reactions.

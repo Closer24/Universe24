@@ -5,6 +5,7 @@ traversal is constant-time. Queries do not mutate source facts, advance world
 time, or commit native physical events. Host evaluation has explicit budgets.
 """
 
+from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.state import Address, checked, checked_work
 
 from .event_network import EventNetwork, EventNetworkConfig
@@ -54,7 +55,9 @@ class DeferredQuantum:
         self._terminal_work = 0
         self._event_network: EventNetwork | None = None
 
-    def bind_event_network(self, config: EventNetworkConfig) -> EventNetwork:
+    def bind_event_network(
+        self, config: EventNetworkConfig, *, event_space: CausalEventSpace | None = None
+    ) -> EventNetwork:
         """Select the joint-state event backend before creating legacy nodes.
 
         The same owner may select one representation, not two competing states.
@@ -62,12 +65,14 @@ class DeferredQuantum:
         owners that do not explicitly select the event-network candidate.
         """
         if self._event_network is not None:
-            if self._event_network.config != config:
+            if self._event_network.config != config or (
+                event_space is not None and self._event_network.event_space is not event_space
+            ):
                 raise ValueError("quantum event network is already bound")
             return self._event_network
         if self._nodes or self._focus_sets or self._terminal_setup is not None:
             raise ValueError("cannot replace an existing scalar quantum history")
-        network = EventNetwork(config)
+        network = EventNetwork(config, event_space)
         self._event_network = network
         return network
 

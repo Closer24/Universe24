@@ -113,8 +113,11 @@ or quantum behavior.
 
 For the physical field/particle inventory, matter and antimatter, and the exact
 limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.md)
-and [the entity catalog](examples/known-entities/catalog.json). New emergence
-probes use elementary local vector operations; known continuum equations remain
+and [the entity catalog](examples/known-entities/catalog.json). Compile selected
+profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
+two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
+Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.
 
 Read [SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md) for the baseline, eight-octant
@@ -336,3 +339,10 @@ world.add_particle(1, 18, 6, 6, px=-6, mass=2)
 
 `BalancedSimulation` and `CausalStreamSimulation` likewise select explicit
 research laws. See [migration](docs/MIGRATION.md) and their candidate contracts.
+
+## Standalone generic vector lab
+
+The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
+configured N-to-M node reactions, bounded rational vector arithmetic and exact
+conservation tests. It is an independent experiment, not the active simulator.
+Run `python -m tools.generic_vector_lab.run_demo` from this repository.
