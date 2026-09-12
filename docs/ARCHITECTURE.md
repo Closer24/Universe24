@@ -672,6 +672,16 @@ maps fixed records; the engine alone schedules the old/current six-neighbor unio
 after all particle responses. No core schema changes. The law and evidence are
 documented in [BALANCED_MOTION.md](BALANCED_MOTION.md).
 
+## Standalone vector-lab experiment
+
+The user-requested [tools/generic_vector_lab](../tools/generic_vector_lab/README.md)
+is an opt-in mechanism experiment with its own explicit JSON laws. It does not
+import, replace or extend the active engine or its schema. The lab runtime owns
+its local transactions; its separate movie tool reads saved states. Generated
+outputs go under artifacts and remain outside source commits. Its local quantum
+coupling is a toy experiment, not an implementation of the active Q-ORACLE-1
+bridge contract. The active source-of-truth boundaries above remain unchanged.
+
 ## Shared native event extension
 
 The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
