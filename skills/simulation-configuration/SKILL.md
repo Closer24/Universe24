@@ -44,11 +44,14 @@ the example family in the guide for fields, catalog entities or native events.
    development and physics review workflow; do not invent an unsupported JSON key.
 7. For reusable files, use the [experiment package](../../docs/EXPERIMENTS.md)
    manifest and typed parts. Use [explicit SI dimensions](../../docs/UNITS.md)
-   when dimensional validation is required; a free-text unit label alone does not
-   enable it. Validate with `--experiment ... --validate` or `--init ... --validate`,
-   then construct `Simulation` to check runtime
-   composition. Run the smallest useful headless acceptance case. Preserve the
-   source/config identity and inspect completion, events and declared balances.
+   when dimensional validation is required. Validate packages with
+   `--experiment ... --validate`. For initialization, catalogs, profiles and
+   observers, use the [configuration preflight](../../docs/CONFIGURATION_VALIDATION.md)
+   with explicit dependencies. Validate all supplied profiles, then the final
+   compiled initialization. For a check-only request, return its report without
+   constructing `Simulation`. When behavior needs verification, run a separate
+   small headless acceptance case and inspect completion, source/config identity,
+   events and declared balances.
 8. When visualization is requested, record the same configured run and render only
    its saved state. Keep camera, arrows and playback in the selected display format.
    Inspect the encounter and boundary frames and decode the exported GIF.

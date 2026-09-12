@@ -49,6 +49,14 @@ def _matrix(value: object) -> Matrix:
     return tuple(result)
 
 
+def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sources: int = 0) -> None:
+    """Check the deterministic startup requirement without allocating event state."""
+    # The engine records one source per seeded cell; quantum records one per register.
+    required = len({seed.position for seed in initial.seeds}) + quantum_sources
+    if required > capacity:
+        raise ValueError(f"initial sources require {required} events but event capacity is {capacity}")
+
+
 def parse_event_program(initial: InitialState) -> Program:
     if initial.event_program is None or len(initial.event_program) > 1_000_000:
         raise ValueError("bounded event program required")
@@ -77,6 +85,7 @@ def parse_event_program(initial: InitialState) -> Program:
         raise ValueError("native event program does not yet bind independent spatial-field clocks")
     if model == "causal-events-v1":
         _object(obj, "causal program", {"model", "capacity"}, {"model", "capacity"})
+        _require_initial_capacity(initial, capacity)
         return Program(capacity, None, (), (), 0, None)
     if model not in ("local-quantum-events-v1", "local-quantum-events-v2"):
         raise ValueError("unknown event program model")
@@ -117,6 +126,7 @@ def parse_event_program(initial: InitialState) -> Program:
             for n in _array(obj.get("register_names", []), "register_names", 30)
         ),
     )
+    _require_initial_capacity(initial, capacity, len(network.addresses))
     layers = []
     prior_tick = 0
     for raw in _array(obj.get("layers", []), "layers", 4096):

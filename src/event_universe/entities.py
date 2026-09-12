@@ -59,9 +59,12 @@ def _profile_index(
             raise ValueError(f"orphan profile entity ID: {identity}")
         if set(row) - profile_keys != {"entity_id"} or not profile_keys.intersection(row):
             raise ValueError("unsupported or incomplete profile binding")
-        result[identity] = {
-            key: copy.deepcopy(_object(row[key], key)) for key in profile_keys.intersection(row)
-        }
+        result[identity] = {}
+        for key in profile_keys.intersection(row):
+            representation = "classical" if key == "executable_profile" else "quantum"
+            result[identity][key] = copy.deepcopy(
+                _object(row[key], f"{identity} {representation} profile")
+            )
     return result
 
 
@@ -220,6 +223,35 @@ def compile_entities(
     result["disturbance_types"] = list(types.values())
     parse_initial_state(result)
     return result
+
+
+def validate_profiles(catalog: object, profiles: object) -> dict[str, int]:
+    """Validate each supplied experiment separately without constructing a world.
+
+    The catalog must be a complete physical reference version 2. Bindings may
+    cover any subset and contain either or both supported representations.
+    Separate checks avoid imposing one world's capacity on the whole library.
+    """
+    source = _object(catalog, "catalog")
+    validate_catalog(source)
+    indexed = {
+        entry["id"]: entry for section in ENTITY_SECTIONS for entry in _rows(source[section], section)
+    }
+    experiments = _profile_index(indexed, profiles, 2)
+    summary = {"profiles": len(experiments), "classical": 0, "quantum": 0}
+    for identity, experiment in experiments.items():
+        for representation, key in (
+            ("classical", "executable_profile"),
+            ("quantum", "quantum_profile"),
+        ):
+            if key not in experiment:
+                continue
+            try:
+                compile_entities(source, [identity], profiles=profiles, representation=representation)
+            except (ValueError, OverflowError) as error:
+                raise ValueError(f"{identity} {representation} profile: {error}") from error
+            summary[representation] += 1
+    return summary
 
 
 def main() -> None:

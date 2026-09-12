@@ -9,11 +9,15 @@ from pathlib import Path
 from typing import TYPE_CHECKING, cast
 
 from event_universe import __version__
+from event_universe.configuration_validation import (
+    prepare_initialization,
+    validate_observer_selection,
+)
 from event_universe.core.disturbance_engine import EventSink
 from event_universe.core.disturbance_state import InitialState
-from event_universe.core.topology import validate_position
 from event_universe.disturbance_api import Simulation
-from event_universe.initialization import parse_initial_json, parse_json_document
+from event_universe.initialization import parse_initial_json
+from event_universe.json_documents import parse_json_document
 from event_universe.observer_configuration import ObserverDefinition
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
@@ -147,17 +151,16 @@ def _run_input(
     restart: tuple[Simulation, _Restart] | None = None,
     resumed_sha256: str | None = None,
 ) -> Path:
-    document = cast(dict[str, object], parse_json_document(source))
-    observer_definition = (
-        ObserverDefinition.parse(document["observer"], initial.shape) if "observer" in document else None
+    document = parse_json_document(source)
+    validate_observer_selection(document, external=observer is not None)
+    prepared = (
+        prepare_initialization(document)
+        if observer is None
+        else prepare_initialization(
+            document, observer_document=parse_json_document(observer.read_bytes())
+        )
     )
-    if observer_definition is not None:
-        validate_position(observer_definition.position, initial.shape, initial.topology)
-    if observer is not None:
-        if observer_definition is not None:
-            raise ValueError("define observer in initialization or --observer, not both")
-        observer_definition = ObserverDefinition.load(observer, initial.shape)
-        validate_position(observer_definition.position, initial.shape, initial.topology)
+    observer_definition = prepared.observer
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
@@ -476,11 +479,16 @@ def main() -> None:
                 raise ValueError("ticks must be nonnegative")
             if args.frame_stride is not None and args.frame_stride < 1:
                 raise ValueError("frame_stride must be positive")
-            if args.observer is not None:
-                from event_universe.diagnostics.local_observer import ObserverDefinition
-
-                probe = ObserverDefinition.load(args.observer, initial.shape)
-                validate_position(probe.position, initial.shape, initial.topology)
+            if initial.source_json is None:
+                raise ValueError("validated input has no canonical initialization source")
+            document = parse_json_document(initial.source_json)
+            validate_observer_selection(document, external=args.observer is not None)
+            if args.observer is None:
+                prepare_initialization(document)
+            else:
+                prepare_initialization(
+                    document, observer_document=parse_json_document(args.observer.read_bytes())
+                )
             print("Valid")
             return
         if args.experiment is not None:

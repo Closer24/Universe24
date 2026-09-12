@@ -88,6 +88,12 @@ a Hamiltonian from particle names. Duplicate or orphan profile IDs, incompatible
 declarations, malformed profiles and exceeded runtime capacities fail explicitly.
 Subset profile documents are allowed when every selected entity is covered.
 
+For whole-library checks, `entities.validate_profiles(catalog, profiles)` validates
+every supplied representation independently and returns profile/classical/quantum
+counts. Use the [common preflight CLI](CONFIGURATION_VALIDATION.md) for file reports
+and explicit dependencies. It checks unselected rows as well; validate a compiled
+multi-entity initialization separately for its combined capacity and compatibility.
+
 The carrier probes copy inventory, charge and momentum registers with an explicit
 half-rate movement policy. Inventory is not physical mass or energy. The photon
 probe is not a physical light-speed photon. Field probes copy registers toward

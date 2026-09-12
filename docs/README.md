@@ -19,6 +19,7 @@ result are different claims. Revision-specific results are not a live status fee
 | Document | Responsibility |
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Experiment packages](EXPERIMENTS.md) | Reusable versioned input parts, provenance and formal JSON Schemas |
 | [Units](UNITS.md) | Coherent rational SI calibration and dimensional expression validation |

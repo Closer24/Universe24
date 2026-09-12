@@ -1,5 +1,18 @@
 # Highlights implementation coverage
 
+## Configuration validation reconciliation - 2026-09-13
+
+The [read-only preflight](CONFIGURATION_VALIDATION.md) implements explicit input
+rejection and shared ownership under Highlights sections 4.5 and 10.7. It validates
+configuration data without generating a physical state or inferring a law from
+catalog measurements. Passing preflight remains distinct from the verified
+behavior and physical hypotheses in sections 1.3 and 6.3. The live document was
+read on 2026-09-13 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Source base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. This is a host validation
+and Skill workflow change; it adds no physical law and does not edit Highlights.
+
+
 ## Physical reference catalog reconciliation — 2026-09-12
 
 The version 2 [entity catalog](ENTITY_CATALOG.md) expands descriptive coverage

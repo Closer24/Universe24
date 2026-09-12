@@ -16,6 +16,11 @@ polarization rotation; its normalized diagnostics do not establish Maxwell
 dynamics. Specialized six-port couplings, outward octant transport and the
 native event program explicitly reject unsupported topology combinations.
 
+[Configuration preflight](CONFIGURATION_VALIDATION.md) checks initialization,
+physical reference catalogs, all supplied representation profiles and observer
+sidecars without running a world. It shares parsing and preparation with runtime
+entry points. Configuration validity is separate from run and physics acceptance.
+
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node configured in the ordinary initialization JSON, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar

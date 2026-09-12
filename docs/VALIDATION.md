@@ -1,5 +1,53 @@
 # Validation evidence
 
+## Read-only configuration preflight - 2026-09-13
+
+Base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. The
+[validation architecture](CONFIGURATION_VALIDATION.md) gives strict JSON decoding
+one owner and delegates each format to its existing semantic validator. The UI
+and runner share initialization/observer preparation. It introduces no physical
+formula, inferred law, catalog measurement conversion or simulation during a check.
+
+The 102 facade tests cover all 38 shipped initializations, explicit dependencies,
+unsupported authoring formats, observer composition, no world/filesystem effects,
+reports, CLI batches and shared UI/runner rejection. The shipped profiles return
+46 classical and 46 quantum successes. Profile tests retain independent validation
+of unselected rows, subset/single-representation support and input immutability.
+Strict JSON tests cover nonfinite constants, exponent overflow, duplicate decoded
+keys, scalar editor fragments, finite numbers and consistent byte decoding.
+Native tests cover initial event requirements at and below the exact capacity;
+the insufficient two-cell case failed before the parser correction.
+
+Independent review found decoder and semantic recursion errors that escaped the
+report boundary. Regression tests now check contextual invalid reports, UI
+rejection and continuation to the next CLI file. Existing runtime, native-event,
+workspace, field, accounting and output regressions remain in the affected scope.
+The broad regression also caught a sidecar being read before an inline/external
+conflict was rejected. The shared selection check now runs before sidecar I/O;
+the existing missing-file regression and a read-forbidding test retain that order.
+The first CI run exposed two tests that assumed Windows decoder stack depth.
+Linux decoded the same nested array and correctly rejected its format. The real
+input tests now assert rejection, attribution and batch continuation regardless
+of which valid rejection happens first. Separate bounded-decoder replacement
+tests require syntax reports for input, catalog and initialization dependencies.
+Static success does not guarantee future capacities or physical acceptance.
+
+Validation command:
+`python tools/check.py --base 521b63567d186bab2fac982a1e1f9d0a592a73a5`.
+The PR records the final selected count and CI result for the submitted head.
+Tools: Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Validation is
+headless and affected; no unrelated full-suite or visual audit is claimed.
+
+The simulation-configuration, simulation-runner, architecture-review and
+test-runner Skills now link one maintained preflight contract and distinguish
+configuration validity, completed execution and physical acceptance. All four
+pass Skill Creator's quick validator (PyYAML 6.0.3 in temporary tooling only).
+Boss and PR-review Skills were reviewed; their existing routing and merge rules
+remain sufficient, so no additional Skill or orchestration layer was created.
+The live Highlights revision is reconciled in its
+[coverage map](HIGHLIGHTS_IMPLEMENTATION.md); the live document was not changed.
+
+
 ## Descriptive physical catalog and explicit profiles — 2026-09-12
 
 Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2

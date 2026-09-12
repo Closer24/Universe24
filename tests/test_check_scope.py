@@ -236,3 +236,24 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
 def test_directional_star_configuration_selects_audit_contract():
     tests, _ = CHECK.select(["examples/directional-star-audit/entities.json"], {})
     assert "tests/test_directional_star_audit.py" in tests
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "examples/new-world.json",
+        "examples/directional-wave/display.json",
+        "skills/simulation-configuration/assets/two-streams.json",
+    ],
+)
+def test_configuration_inventory_selects_preflight_without_unrelated_worlds(path):
+    tests, _ = CHECK.select([path], {})
+    assert "tests/test_configuration_validation.py" in tests
+    assert "tests/test_collisions.py" not in tests
+
+
+@pytest.mark.parametrize("name", ["catalog.json", "representation-probes.json"])
+def test_profile_validation_retains_explicit_data_dependencies(name):
+    tests, _ = CHECK.select(["examples/known-entities/" + name], {})
+    assert "tests/test_profile_validation.py" in tests
+    assert "tests/test_configuration_validation.py" in tests

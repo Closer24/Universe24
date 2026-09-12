@@ -50,6 +50,7 @@ from .core.spatial_state import (
     SpatialSeed,
 )
 from .core.topology import validate_position, validate_topology, validate_topology_configuration
+from .json_documents import parse_json_document as parse_json_document
 from .observer_configuration import ObserverDefinition
 
 
@@ -1187,26 +1188,11 @@ def _validate_conversions(initial: InitialState) -> None:
             raise ValueError("conversion types cannot participate in spatial responses or emission")
 
 
-def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
-    result: dict[str, object] = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError(f"duplicate JSON key {key!r}")
-        result[key] = value
-    return result
-
-
 def load_initial_state(path: Path) -> InitialState:
     """Read a strict JSON initialization file and parse its generic definitions."""
     return parse_initial_json(path.read_bytes())
 
 
 def parse_initial_json(source: str | bytes) -> InitialState:
-    """Parse one immutable JSON payload, rejecting duplicate keys."""
+    """Parse strict JSON and validate its generic initialization definitions."""
     return parse_initial_state(parse_json_document(source))
-
-
-def parse_json_document(source: str | bytes) -> object:
-    """Read data with the same duplicate-key policy for full inputs and editor fragments."""
-    document: object = json.loads(source, object_pairs_hook=_unique_object)
-    return document

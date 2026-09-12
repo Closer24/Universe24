@@ -9,7 +9,7 @@ No gravitational force, momentum response, collision or prescribed turn is used.
 
 ## Source and reproduction
 
-The audit integrates current main `521b63567d186bab2fac982a1e1f9d0a592a73a5`
+The recorded audit integrates main `521b63567d186bab2fac982a1e1f9d0a592a73a5`
 with the PR65 stack at `a646cbd1d1439a05369cd596789c40ff09268f67`.
 Main contains the new separation of physical catalog metadata from explicit
 representation profiles. Timing is the PR65 positive-projection candidate, not
@@ -17,6 +17,14 @@ the incompatible six-coefficient candidate in open PR57 or elementary engine PR6
 Observer configuration/runner merge conflicts were reconciled without changing
 the timing, routing or field laws. Actual simulator source fingerprint:
 `1e545b3f8a269e90a947bfacba82a14eede4ec5c6ef750d1e09d33127f8eff4c`.
+
+The submitted branch also integrates the subsequent read-only validation update,
+main `b0988512fa7f42a057c08dee7d6baa83cbf3eef7`. All thirteen parsed physical inputs
+are byte-equivalent after normalized serialization, and the physical core, field
+laws and simulation API are unchanged from the recorded integration. The recorded
+source fingerprint above belongs to the actual runs, not the later host adapters.
+Shared preflight now retains configured-topology checks for inline and external
+observers. This integration does not replace the saved experiment evidence.
 
 The [configuration builder](configuration.py) reuses the computational-star
 experiment and the [three entity definitions](entities.json). Final inputs are
@@ -128,6 +136,12 @@ physical electromagnetic energy.
    open PR57's different timing law. The two cannot be silently combined as one
    model. Origin-wide backpressure also stalls later fast-port batches and can
    change source cadence; this is the current policy, not a discovered force.
+6. **Exported schema omits the inline observer.** Adding
+   `"observer": {"position": [0, 0, 0]}` to `examples/basic.json` passes shared
+   preflight but is rejected by the packaged runtime JSON Schema as an additional
+   property. The PR58 observer and PR56 schema need a shared schema definition
+   and cross-validator acceptance coverage. The observer-free audit inputs are
+   unaffected. This report records the gap rather than expanding the schema here.
 
 The simulator's physical laws were not changed to force a successful result.
 The run Skill already requires negative controls and source-specific evidence;

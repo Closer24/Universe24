@@ -82,6 +82,15 @@ Select the environment's interpreter explicitly if activation is unavailable.
 For development, install `python -m pip install -e '.[render,dev]'`; renderer
 helper tests use the optional libraries even when no animation is generated.
 
+Check a configuration without running a world:
+
+```bash
+python -m event_universe.configuration_validation examples/basic.json --json
+```
+
+See [configuration validation](docs/CONFIGURATION_VALIDATION.md) for catalog,
+profile and observer files, explicit dependencies and the limits of a valid report.
+
 Select `--init`, `--experiment` or `--resume` explicitly. Initialization supplies
 `ticks`; `--ticks` can override
 duration. Missing input is an error, not a request to load a built-in universe.
