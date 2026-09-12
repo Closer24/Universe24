@@ -2,7 +2,9 @@
 
 import html
 import re
+from contextlib import ExitStack
 from pathlib import Path
+from uuid import uuid4
 
 import pytest
 
@@ -20,6 +22,18 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     config.addinivalue_line("markers", "visualization: requires explicit --visualize-runs")
+
+
+def pytest_sessionstart(session):
+    xml = getattr(session.config.option, "xmlpath", None)
+    if xml:
+        from event_universe.retention import ArtifactLease, validate_output_path
+
+        output = Path(xml).absolute()
+        validate_output_path(output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.touch(exist_ok=True)
+        session.config._result_lease = ArtifactLease(output.parent, [output.resolve()])
 
 
 def pytest_collection_modifyitems(config, items):
@@ -74,14 +88,39 @@ def capture_test_runs(monkeypatch, request):
         RUNS.append(record)
 
 
+@pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
+    try:
+        if session.config.getoption("--visualize-runs"):
+            _write_test_runs(session, exitstatus)
+    finally:
+        lease = getattr(session.config, "_result_lease", None)
+        if lease is not None:
+            lease.finish()
+
+
+def _write_test_runs(session, exitstatus):
+    from event_universe.retention import ArtifactLease, validate_output_path
+
+    root = Path("artifacts")
+    output = root / "test-runs" / uuid4().hex
+    validate_output_path(output)
+    validate_output_path(root / "test-runs.html")
+    output.mkdir(parents=True)
+    summary = root / "test-runs.html"
+    summary.touch(exist_ok=True)
+    with ExitStack() as stack:
+        stack.enter_context(ArtifactLease(output.parent, [output.absolute()]))
+        stack.enter_context(ArtifactLease(root, [summary.absolute()]))
+        _render_test_runs(session, exitstatus, output, summary)
+
+
+def _render_test_runs(session, exitstatus, output, summary_path):
     if not session.config.getoption("--visualize-runs"):
         return
 
     from event_universe.diagnostics.render import render_volume
 
-    output = Path("artifacts/test-runs")
-    output.mkdir(parents=True, exist_ok=True)
     sections = []
     for index, run in enumerate(RUNS):
         label = run["label"]
@@ -104,4 +143,4 @@ def pytest_sessionfinish(session, exitstatus):
         f"<p>Exit status: {int(exitstatus)} · {len(RUNS)} runs · sampled frames; full physics in 3D</p>"
         f"<main>{''.join(sections)}</main></body></html>"
     )
-    (output.parent / "test-runs.html").write_text(summary, encoding="utf-8")
+    summary_path.write_text(summary, encoding="utf-8")

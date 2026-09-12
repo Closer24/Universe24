@@ -1,0 +1,120 @@
+{
+  "schema_version": 2,
+  "boundary": "periodic",
+  "model_id": "finite-moving-source-v1",
+  "shape": [
+    31,
+    31,
+    31
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 40,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "strength",
+      "components": 1,
+      "units": "source unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "heading",
+      "components": 3,
+      "units": "direction weight",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "radiation",
+      "components": 1,
+      "units": "field unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": [
+        "strength",
+        "heading"
+      ],
+      "defaults": {
+        "strength": 72,
+        "heading": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "heading"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "radiation",
+      "baseline": 0,
+      "transport": "outward",
+      "axis_weights": [
+        1,
+        1,
+        1
+      ],
+      "octant_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "decay": {
+        "retain_numerator": 9,
+        "retain_denominator": 10
+      }
+    }
+  ],
+  "emissions": [
+    {
+      "type": "carrier",
+      "field": "radiation",
+      "amount": {
+        "field": "strength"
+      },
+      "denominator": 1,
+      "source": true,
+      "budget": 720
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        15,
+        15,
+        15
+      ],
+      "type": "carrier"
+    }
+  ]
+}

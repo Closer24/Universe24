@@ -90,6 +90,8 @@ def violations(source, module):
                     or dependency.startswith("core.state.")
                     or dependency == "core.disturbance_state"
                     or dependency.startswith("core.disturbance_state.")
+                    or dependency == "core.spatial_state"
+                    or dependency.startswith("core.spatial_state.")
                     or dependency == "core.integer"
                     or dependency.startswith("core.integer.")
                     or target_layer == layer

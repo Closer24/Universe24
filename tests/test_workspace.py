@@ -3,6 +3,7 @@
 import hashlib
 import http.client
 import json
+import math
 import threading
 import time
 from pathlib import Path
@@ -53,6 +54,13 @@ def wait_for_run(server, identifier):
     pytest.fail("Workspace child did not complete")
 
 
+def without_elapsed(metadata):
+    comparable = dict(metadata)
+    elapsed = comparable.pop("elapsed_seconds")
+    assert type(elapsed) in (int, float) and math.isfinite(elapsed) and elapsed >= 0
+    return comparable
+
+
 def test_workspace_serves_assets_and_current_example_data(server):
     status, page = request(server, "/")
     assert status == 200
@@ -68,6 +76,11 @@ def test_workspace_serves_assets_and_current_example_data(server):
         "04-unequal-mass-collision",
         "basic",
         "exchange",
+        "finite_fields",
+        "moving_source",
+        "open_world",
+        "spatial_turning",
+        "three_mass_finite",
     }
     for template in payload["templates"]:
         assert template["source"] == (ROOT / "examples" / f"{template['id']}.json").read_text(
@@ -162,11 +175,52 @@ def test_changed_configuration_is_loaded_without_build_and_runs_match_cli(server
         direct = tmp_path / f"direct-{ticks}"
         run_initialization(initial, direct)
         for name in ("run.json", "state.json", "events.jsonl", "initialization.json"):
-            assert (saved / name).read_bytes() == (direct / name).read_bytes()
+            saved_bytes, direct_bytes = (saved / name).read_bytes(), (direct / name).read_bytes()
+            if name == "run.json":
+                assert without_elapsed(json.loads(saved_bytes)) == without_elapsed(
+                    json.loads(direct_bytes)
+                )
+            else:
+                assert saved_bytes == direct_bytes
             assert request(server, job["artifacts"][name]) == (200, (saved / name).read_bytes())
         identities.append(job["id"])
     assert len(set(identities)) == 2
     assert all(hashlib.sha256(p.read_bytes()).hexdigest() == digest for p, digest in files.items())
+
+
+def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_accounting(server):
+    source = (ROOT / "examples/open_world.json").read_text(encoding="utf-8")
+    status, checked = request(server, "/api/validate", {"source": source})
+    assert status == 200 and checked["valid"]
+    assert checked["summary"]["ticks"] == 12
+    status, started = request(server, "/api/runs", {"source": source})
+    assert status == 202
+    job = wait_for_run(server, started["id"])
+    assert job["status"] == "completed"
+    metadata = job["metadata"]
+    without_elapsed(metadata)
+    assert metadata["schema_version"] == 2
+    assert metadata["boundary"] == "open"
+    assert metadata["display"] == "none"
+    assert metadata["completed_ticks"] == metadata["tick"] == 12
+    assert metadata["initial_totals"] == {"strength": [72], "radiation": [0]}
+    assert metadata["source_totals"] == {"strength": [0], "radiation": [72]}
+    assert metadata["escaped_totals"] == {"strength": [72], "radiation": [20]}
+    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [52]}
+    assert metadata["final_totals"] == {"strength": [0], "radiation": [0]}
+    assert metadata["accounting_balanced_at_every_completed_tick"]
+    assert not metadata["conserved_at_every_completed_tick"]
+    assert all(field["balanced"] for field in metadata["spatial_accounting"].values())
+    assert set(job["artifacts"]) == {"initialization.json", "run.json", "state.json", "events.jsonl"}
+    saved = Path(job["output"])
+    assert (saved / "initialization.json").read_bytes() == source.encode("utf-8")
+    state = json.loads((saved / "state.json").read_bytes())
+    assert state["transfers"] == state["spatial_transfers"] == []
+    assert all(not cell["disturbances"] for cell in state["cells"])
+    events = [json.loads(line) for line in (saved / "events.jsonl").read_bytes().splitlines()]
+    assert any(event["event"] == "escaped" for event in events)
+    assert any(event["event"] == "spatial_escaped" for event in events)
+    assert {path.name for path in saved.iterdir()} == set(job["artifacts"])
 
 
 def test_failed_engine_run_keeps_its_failure_metadata(server):

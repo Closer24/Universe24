@@ -1,7 +1,15 @@
 """Fixed, domain-neutral schemas for initialization-defined disturbances."""
 
 from dataclasses import dataclass
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from .spatial_state import (
+        EmissionDefinition,
+        SpatialCouplingDefinition,
+        SpatialFieldDefinition,
+        SpatialSeed,
+    )
 
 from .integer import checked_work
 
@@ -106,6 +114,7 @@ class CouplingDefinition:
     field: int
     amount: Expression
     denominator: int = 1
+    remainder_owner: str = "pair"
 
 
 @dataclass(frozen=True, slots=True)
@@ -158,6 +167,12 @@ class DisturbanceRecord:
     route_phase_code: int = 1
     rate_remainder_code: int = 1
     channel_code: int = 1
+    emission_remainders: Values = ()
+    emission_phases: Values = ()
+    exchange_remainders: Values = ()
+    spatial_remainders: Values = ()
+    emission_remaining: Values = ()
+    spatial_remaining: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -179,12 +194,19 @@ class InitialState:
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
     seeds: tuple[Seed, ...]
+    spatial_fields: tuple[SpatialFieldDefinition, ...] = ()
+    emissions: tuple[EmissionDefinition, ...] = ()
+    spatial_seeds: tuple[SpatialSeed, ...] = ()
+    spatial_couplings: tuple[SpatialCouplingDefinition, ...] = ()
+    schema_version: int = 1
+    boundary: str = "periodic"
     interactions: tuple[InteractionDefinition, ...] = ()
 
 
 class Departure(NamedTuple):
     port: int
     record: DisturbanceRecord
+    origin_slot: int = -1
 
 
 @dataclass(frozen=True, slots=True)
@@ -194,6 +216,7 @@ class LocalPlan:
     coupling_remainders: tuple[int, ...]
     source_delta: Values
     cost: int
+    spatial_reaction: Values = ()
 
 
 @dataclass(frozen=True, slots=True)

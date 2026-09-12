@@ -39,6 +39,13 @@ Return a concise handoff with:
 - result and evidence: commands with outcomes, not-run checks, and relevant HTML/trace;
 - violated or satisfied contract, remaining limitation, and next owner/action.
 
+Generated run evidence, including previously retained failure traces, follows
+the [24-hour retention policy](../docs/RETENTION.md). Record reproducible inputs
+and concise acceptance results durably before registered output expires. Active
+writer leases protect ongoing work; do not infer cleanup ownership from a folder
+name or age. Use the cleanup watcher or a scheduled command when the UI and
+runners are idle, and distinguish configured automation from verified execution.
+
 Do not reuse a pass after its relevant inputs change without assessing the diff.
 An unchanged tree can reuse its verified results; record that equality. Different
 conversations do not synchronize automatically. Read current GitHub state before
@@ -53,6 +60,12 @@ interpreter/version in the handoff. Use the declared project version, not an
 arbitrary host `python` alias. Older-Python and historical API/frozen-v10 equality
 checks are not required. Preserve independent physical invariants and useful
 regression regimes when removing compatibility comparisons or duplicate worlds.
+
+When reusing that environment across worktrees or benchmark snapshots, an editable
+install can still resolve another checkout. Set `PYTHONPATH` to the intended `src`
+directory and verify the imported package path and source fingerprint before the
+run. Recheck the fingerprint afterward; interpreter identity alone does not
+identify the simulated source.
 
 For a physics-engine behavior change, completion requires physics-rule validation,
 necessary tests, an affected simulator run, and regression comparison. Architecture

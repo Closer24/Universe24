@@ -8,6 +8,15 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# These consumers build resource paths at runtime rather than importing modules.
+RESOURCE_CONSUMERS = {
+    "examples/basic.json": ("tests/test_generic_identity.py",),
+    "examples/exchange.json": ("tests/test_generic_identity.py",),
+    "examples/finite_fields.json": ("tests/test_generic_identity.py",),
+    "examples/open_world.json": ("tests/test_generic_identity.py",),
+    "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
+    "tools/check_diagonal_motion.py": ("tests/test_application.py",),
+}
 
 
 def git(*args):
@@ -113,6 +122,7 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         if path.endswith((".md", ".py", ".js", ".html", ".css", ".json")):
@@ -208,10 +218,16 @@ def main():
     report = {"mode": "full" if args.full else "affected", "changed": changed, "commands": commands}
     print(json.dumps(report, indent=2), flush=True)
     if not args.dry_run:
-        (ROOT / "artifacts").mkdir(exist_ok=True)
-        (ROOT / "artifacts/check-scope.json").write_text(json.dumps(report, indent=2) + "\n")
-        for command in commands:
-            subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
+        from event_universe.retention import ArtifactLease, validate_output_path
+
+        report_path = ROOT / "artifacts/check-scope.json"
+        validate_output_path(report_path)
+        report_path.parent.mkdir(exist_ok=True)
+        report_path.touch(exist_ok=True)
+        with ArtifactLease(report_path.parent, [report_path]):
+            report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+            for command in commands:
+                subprocess.run([sys.executable, "-m", *command], cwd=ROOT, check=True)
 
 
 if __name__ == "__main__":

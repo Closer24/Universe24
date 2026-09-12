@@ -30,6 +30,15 @@ from .core.disturbance_state import (
     Values,
     Weights,
     pack,
+    unpack,
+)
+from .core.integer import checked_work
+from .core.spatial_state import (
+    DecayDefinition,
+    EmissionDefinition,
+    SpatialCouplingDefinition,
+    SpatialFieldDefinition,
+    SpatialSeed,
 )
 
 
@@ -149,11 +158,13 @@ class _Expressions:
         fields: tuple[FieldDefinition, ...],
         left: tuple[int, ...],
         right: tuple[int, ...] | None = None,
+        flux_fields: tuple[int, ...] = (),
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
         self.owned = (left, right)
         self.nodes = 0
+        self.flux_fields = flux_fields
 
     def parse(self, value: object, expected: int | None = None) -> Expression:
         expression, components = self._node(value, 1)
@@ -173,7 +184,14 @@ class _Expressions:
                 raise ValueError("expression literal must contain 1 or 3 components")
             literal = tuple(_integer(item, "expression literal component") for item in items)
             return Expression("literal", literal=literal), len(literal)
-        obj = _object(value, "expression", {"field", "side", "op", "args", "index", "matrix"}, set())
+        obj = _object(
+            value, "expression", {"field", "side", "op", "args", "index", "flux", "matrix"}, set()
+        )
+        if "flux" in obj:
+            obj = _object(obj, "flux expression", {"flux"}, {"flux"})
+            names = {self.fields[index].name: index for index in self.flux_fields}
+            index = _index(obj["flux"], names, "scalar spatial flux")
+            return Expression("flux", field=index), 3
         if "field" in obj:
             return self._reference(obj)
         obj = _object(obj, "operation expression", {"op", "args", "index", "matrix"}, {"op", "args"})
@@ -347,7 +365,7 @@ def _couplings(
     field_names = _names(fields)
     required = {"name", "left_type", "right_type", "field", "amount"}
     for raw in _array(value, "couplings", MAX_RULES):
-        obj = _object(raw, "coupling", required | {"denominator"}, required)
+        obj = _object(raw, "coupling", required | {"denominator", "remainder_owner"}, required)
         name = _text(obj["name"], "coupling.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate coupling name")
@@ -363,7 +381,15 @@ def _couplings(
             obj["amount"], fields[field].components
         )
         denominator = _integer(obj.get("denominator", 1), "coupling.denominator", 1)
-        result.append(CouplingDefinition(name, left, right, field, amount, denominator))
+        owner = _text(obj.get("remainder_owner", "pair"), "coupling.remainder_owner")
+        if owner not in ("pair", "left"):
+            raise ValueError("coupling.remainder_owner must be pair or left")
+        if owner == "left":
+            if left == right:
+                raise ValueError("left-owned exchange remainders require distinct participant types")
+            if disturbances[left].transport.mode == "split":
+                raise ValueError("left-owned exchange remainders require whole-record hold or move")
+        result.append(CouplingDefinition(name, left, right, field, amount, denominator, owner))
     return tuple(result)
 
 
@@ -461,6 +487,225 @@ def _seeds(
     return tuple(result)
 
 
+def _decay(value: object) -> DecayDefinition:
+    keys = {"retain_numerator", "retain_denominator"}
+    obj = _object(value, "spatial decay", keys, keys)
+    numerator = _integer(obj["retain_numerator"], "decay.retain_numerator", 0)
+    denominator = _integer(obj["retain_denominator"], "decay.retain_denominator", 1)
+    if numerator >= denominator:
+        raise ValueError("decay requires retain_numerator < retain_denominator")
+    return DecayDefinition(numerator, denominator)
+
+
+def _allowance(value: object, field: FieldDefinition, label: str) -> Payload:
+    amounts: tuple[int, ...]
+    if field.components == 1:
+        amounts = (_integer(value, label, 0),)
+    else:
+        amounts = tuple(
+            _integer(component, label, 0)
+            for component in _array(value, label, field.components, field.components)
+        )
+    return pack(amounts)
+
+
+def _spatial_fields(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    schema_version: int = 1,
+) -> tuple[SpatialFieldDefinition, ...]:
+    result: list[SpatialFieldDefinition] = []
+    names = _names(fields)
+    for raw in _array(value, "spatial_fields", MAX_FIELDS):
+        obj = _object(
+            raw,
+            "spatial field",
+            {"field", "baseline", "transport", "axis_weights", "octant_weights"}
+            | ({"decay"} if schema_version == 2 else set()),
+            {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
+        )
+        index = _index(obj["field"], names, "spatial field")
+        if any(item.field == index for item in result):
+            raise ValueError("duplicate spatial field")
+        field = fields[index]
+        if not field.extensive:
+            raise ValueError("spatial transport requires extensive field components")
+        if obj["transport"] != "outward":
+            raise ValueError("spatial transport must be outward")
+        axis = tuple(
+            _integer(v, "axis weight", 0)
+            for v in _array(obj.get("axis_weights", [1, 1, 1]), "axis_weights", 3, 3)
+        )
+        octants = tuple(
+            _integer(v, "octant weight", 0)
+            for v in _array(obj.get("octant_weights", [1] * 8), "octant_weights", 8, 8)
+        )
+        if not 1 <= sum(axis) <= MAX_VALUE or not 1 <= sum(octants) <= MAX_VALUE:
+            raise ValueError("spatial weights must have positive bounded totals")
+        baseline = (
+            _payload(obj["baseline"], field) if "baseline" in obj else pack((0,) * field.components)
+        )
+        result.append(
+            SpatialFieldDefinition(
+                index,
+                baseline,
+                cast(tuple[int, int, int], axis),
+                octants,
+                _decay(obj["decay"]) if schema_version == 2 else None,
+            )
+        )
+    return tuple(result)
+
+
+def _emissions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    schema_version: int = 1,
+) -> tuple[EmissionDefinition, ...]:
+    result: list[EmissionDefinition] = []
+    names = {fields[item.field].name: i for i, item in enumerate(spatial)}
+    for raw in _array(value, "emissions", MAX_RULES):
+        obj = _object(
+            raw,
+            "emission",
+            {"type", "field", "amount", "denominator", "source"}
+            | ({"budget"} if schema_version == 2 else set()),
+            {"type", "field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
+        )
+        if not _boolean(obj["source"], "emission.source"):
+            raise ValueError("emission requires explicit source: true")
+        kind = _index(obj["type"], _names(disturbances), "emission.type")
+        index = _index(obj["field"], names, "emission.field")
+        if disturbances[kind].transport.mode == "split":
+            raise ValueError("an emitting disturbance must hold or move as a whole record")
+        if any(item.type_index == kind and item.spatial_field == index for item in result):
+            raise ValueError("duplicate emission for the same disturbance type and field")
+        amount = _Expressions(fields, disturbances[kind].fields).parse(
+            obj["amount"], fields[spatial[index].field].components
+        )
+        result.append(
+            EmissionDefinition(
+                kind,
+                index,
+                amount,
+                _integer(obj.get("denominator", 1), "emission.denominator", 1),
+                _allowance(obj["budget"], fields[spatial[index].field], "emission.budget")
+                if schema_version == 2
+                else None,
+            )
+        )
+    return tuple(result)
+
+
+def _spatial_seeds(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    shape: Address3,
+) -> tuple[SpatialSeed, ...]:
+    if not isinstance(value, list):
+        raise ValueError("spatial_seeds must be an array")
+    result: list[SpatialSeed] = []
+    occupied: set[tuple[Address3, int]] = set()
+    names = {fields[item.field].name: i for i, item in enumerate(spatial)}
+    for raw in value:
+        obj = _object(
+            raw,
+            "spatial seed",
+            {"position", "field", "populations"},
+            {"position", "field", "populations"},
+        )
+        position = _address(obj["position"], "spatial seed position", 0)
+        if any(v >= n for v, n in zip(position, shape, strict=True)):
+            raise ValueError("spatial seed position must be within shape")
+        index = _index(obj["field"], names, "spatial seed field")
+        if (position, index) in occupied:
+            raise ValueError("duplicate spatial seed at the same cell and field")
+        occupied.add((position, index))
+        payloads = tuple(
+            _payload(v, fields[spatial[index].field])
+            for v in _array(obj["populations"], "spatial populations", 8, 8)
+        )
+        local = list(unpack(spatial[index].baseline))
+        for payload in payloads:
+            for component, amount in enumerate(unpack(payload)):
+                local[component] = checked_work(local[component] + amount)
+        fields[spatial[index].field].validate(pack(tuple(local)))
+        result.append(SpatialSeed(position, index, payloads))
+    return tuple(result)
+
+
+def _spatial_couplings(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    schema_version: int = 1,
+) -> tuple[SpatialCouplingDefinition, ...]:
+    result: list[SpatialCouplingDefinition] = []
+    field_names, type_names = _names(fields), _names(disturbances)
+    spatial_fields = tuple(definition.field for definition in spatial)
+    flux_fields = tuple(index for index in spatial_fields if fields[index].components == 1)
+    required = {"name", "type", "field", "mode"} | ({"budget"} if schema_version == 2 else set())
+    for raw in _array(value, "spatial_couplings", MAX_RULES):
+        obj = _object(
+            raw,
+            "spatial coupling",
+            required | {"amount", "rotation", "denominator", "axis_order"},
+            required,
+        )
+        name = _text(obj["name"], "spatial coupling.name")
+        if any(rule.name == name for rule in result):
+            raise ValueError("duplicate spatial coupling name")
+        kind = _index(obj["type"], type_names, "spatial coupling.type")
+        target = _index(obj["field"], field_names, "spatial coupling.field")
+        mode = _text(obj["mode"], "spatial coupling.mode")
+        if mode not in ("exchange", "rotation"):
+            raise ValueError("spatial coupling.mode must be exchange or rotation")
+        parameter = "amount" if mode == "exchange" else "rotation"
+        allowed = (
+            required | {parameter, "denominator"} | ({"axis_order"} if mode == "rotation" else set())
+        )
+        obj = _object(obj, "spatial coupling", allowed, required | {parameter})
+        if target not in disturbances[kind].fields or target not in spatial_fields:
+            raise ValueError("spatial coupling target must be both carried and spatial")
+        field = fields[target]
+        if not field.signed or not field.extensive:
+            raise ValueError("spatial coupling target must be signed and extensive")
+        if disturbances[kind].transport.mode == "split":
+            raise ValueError("spatial coupling requires a whole-record hold or move type")
+        if disturbances[kind].cost_field == target:
+            raise ValueError("cost_field cannot also be a spatial coupling target")
+        if mode == "rotation" and field.components != 3:
+            raise ValueError("spatial rotation requires a three-component target")
+        expression = _Expressions(fields, disturbances[kind].fields, spatial_fields, flux_fields).parse(
+            obj[parameter], field.components
+        )
+        axes = tuple(
+            _integer(axis, "spatial coupling.axis_order", 0)
+            for axis in _array(obj.get("axis_order", [0, 1, 2]), "spatial coupling.axis_order", 3, 3)
+        )
+        if sorted(axes) != [0, 1, 2]:
+            raise ValueError("spatial coupling.axis_order must be a permutation of 0, 1, 2")
+        result.append(
+            SpatialCouplingDefinition(
+                name,
+                kind,
+                target,
+                mode,
+                expression,
+                _integer(obj.get("denominator", 1), "spatial coupling.denominator", 1),
+                cast(tuple[int, int, int], axes),
+                _allowance(obj["budget"], field, "spatial coupling.budget")
+                if schema_version == 2
+                else None,
+            )
+        )
+    return tuple(result)
+
+
 def parse_initial_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
@@ -476,9 +721,27 @@ def parse_initial_state(document: object) -> InitialState:
         "disturbance_types",
         "seeds",
     }
-    obj = _object(document, "initial state", required | {"couplings", "interactions"}, required)
-    if _integer(obj["schema_version"], "schema_version", 1) != 1:
-        raise ValueError("unsupported schema_version; expected 1")
+    obj = _object(
+        document,
+        "initial state",
+        required
+        | {
+            "couplings",
+            "interactions",
+            "spatial_fields",
+            "emissions",
+            "spatial_seeds",
+            "spatial_couplings",
+            "boundary",
+        },
+        required,
+    )
+    schema_version = _integer(obj["schema_version"], "schema_version", 1)
+    if schema_version not in (1, 2):
+        raise ValueError("unsupported schema_version; expected 1 or 2")
+    boundary = _text(obj.get("boundary", "periodic"), "boundary")
+    if boundary not in ("periodic", "open"):
+        raise ValueError("boundary must be periodic or open")
     shape = _address(obj["shape"], "shape", 1)
     capacity = _integer(obj["slots_per_cell"], "slots_per_cell", 1)
     if capacity > MAX_SLOTS:
@@ -486,6 +749,7 @@ def parse_initial_state(document: object) -> InitialState:
     costs = _object(obj["operation_costs"], "operation_costs", set(OPERATIONS), set(OPERATIONS))
     fields = _fields(obj["fields"])
     disturbances = _disturbances(obj["disturbance_types"], fields)
+    spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
     return InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         shape=shape,
@@ -500,6 +764,14 @@ def parse_initial_state(document: object) -> InitialState:
             tuple(_integer(costs[name], f"cost of {name}", 1) for name in OPERATIONS)
         ),
         seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity),
+        spatial_fields=spatial,
+        emissions=_emissions(obj.get("emissions", []), fields, disturbances, spatial, schema_version),
+        spatial_seeds=_spatial_seeds(obj.get("spatial_seeds", []), fields, spatial, shape),
+        spatial_couplings=_spatial_couplings(
+            obj.get("spatial_couplings", []), fields, disturbances, spatial, schema_version
+        ),
+        schema_version=schema_version,
+        boundary=boundary,
         interactions=_interactions(obj.get("interactions", []), fields, disturbances),
     )
 

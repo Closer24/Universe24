@@ -9,6 +9,7 @@ let moviePath = null;
 let drafts = {};
 try { drafts = JSON.parse(localStorage.getItem("universe24-drafts-v1") || "{}"); } catch { /* Start fresh if local storage is unavailable. */ }
 if (!drafts || typeof drafts !== "object" || Array.isArray(drafts)) drafts = {};
+drafts = Object.assign(Object.create(null), drafts);
 
 function node(tag, text = "", className = "") {
   const result = document.createElement(tag);
@@ -124,7 +125,7 @@ function renameReferences(value, kind, before, after) {
   if (!value || typeof value !== "object") return;
   if (Array.isArray(value)) { value.forEach(item => renameReferences(item, kind, before, after)); return; }
   for (const [key, child] of Object.entries(value)) {
-    const references = kind === "field" ? ["field", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
+    const references = kind === "field" ? ["field", "flux", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
     if (references.includes(key) && child === before) value[key] = after;
     else if (kind === "field" && key === "fields" && Array.isArray(child) && child.every(item => typeof item === "string")) value[key] = child.map(name => name === before ? after : name);
     else if (kind === "field" && ["defaults", "values"].includes(key) && child && typeof child === "object" && Object.hasOwn(child, before)) {
@@ -178,6 +179,13 @@ function addButton(label, callback) {
   $("#editor-panel").append(button);
 }
 
+function nextName(prefix, collection) {
+  const names = new Set(collection.map(item => item.name));
+  let number = collection.length + 1;
+  while (names.has(`${prefix}_${number}`)) number++;
+  return `${prefix}_${number}`;
+}
+
 function renderEditor() {
   const editor = $("#editor-panel"); editor.replaceChildren();
   $$("[data-tab]").forEach(button => { button.setAttribute("aria-selected", String(button.dataset.tab === tab)); button.tabIndex = button.dataset.tab === tab ? 0 : -1; });
@@ -200,7 +208,7 @@ function renderEditor() {
     input(grid, "Simulation ticks", doc, "ticks", { hint: "Number of base time intervals" });
     input(grid, "Slots per cell", doc, "slots_per_cell", { min: 1, max: 32, hint: "Fixed local record capacity · up to 32" });
     editor.append(node("hr", "", "editor-divider"));
-    grid = section("World dimensions", "Periodic lattice extents. Seed positions must be inside this volume."); grid.classList.add("three");
+    grid = section("World dimensions", "Configured lattice extents. Seed positions must be inside this volume."); grid.classList.add("three");
     ["X extent", "Y extent", "Z extent"].forEach((label, i) => input(grid, label, doc.shape, i, { min: 1 }));
     editor.append(node("hr", "", "editor-divider")); grid = section("Local timing");
     input(grid, "Link transit ticks", doc, "link_ticks", { min: 1, hint: "Fixed time between neighboring cells" });
@@ -215,7 +223,7 @@ function renderEditor() {
       const checks = node("div", "", "card-checkboxes"); item.append(checks);
       check(checks, "Signed", field, "signed"); check(checks, "Conserved", field, "conserved"); check(checks, "Extensive", field, "extensive", true);
     });
-    addButton("Add field", () => doc.fields.push({name: `field_${doc.fields.length + 1}`, components: 1, units: "unit", signed: false, conserved: false}));
+    addButton("Add field", () => doc.fields.push({name: nextName("field", doc.fields), components: 1, units: "unit", signed: false, conserved: false}));
   } else if (tab === "types") {
     editor.append(node("p", "Define which fields travel together, their defaults, and their transport and update rules.", "editor-description"));
     doc.disturbance_types.forEach((type, i) => {
@@ -226,7 +234,7 @@ function renderEditor() {
       jsonField(grid, "Local update rules", type, "updates", []);
       if (type.cost_field !== undefined) input(grid, "Computation cost field", type, "cost_field", { text: true, full: true });
     });
-    addButton("Add disturbance type", () => doc.disturbance_types.push({name: `type_${doc.disturbance_types.length + 1}`, fields: doc.fields.length ? [doc.fields[0].name] : [], transport: {mode: "hold"}}));
+    addButton("Add disturbance type", () => doc.disturbance_types.push({name: nextName("type", doc.disturbance_types), fields: doc.fields.length ? [doc.fields[0].name] : [], transport: {mode: "hold"}}));
   } else if (tab === "seeds") {
     editor.append(node("p", "Place initial disturbances at lattice addresses. Values override the selected type's defaults.", "editor-description"));
     doc.seeds.forEach((seed, i) => {
@@ -312,11 +320,18 @@ function renderResults() {
   if (run.status === "cancelled") result.append(node("p", "Stopped by request. Files may be partial; this is not a completed simulation.", "result-error"));
   if (run.status === "failed") result.append(node("p", metadata?.error || `The runner stopped before completion. See the log in ${run.output.replace(/runs[/\\].*$/, "inputs/")}${run.id}.log`, "result-error"));
   if (metadata) {
-    result.append(node("p", metadata.conserved_at_every_completed_tick ? "Declared quantities conserved at every completed tick." : "A conservation check failed.", "result-meta"));
+    const balanced = metadata.accounting_balanced_at_every_completed_tick ?? metadata.conserved_at_every_completed_tick;
+    const balanceText = !balanced ? "Quantity accounting failed." : metadata.conserved_at_every_completed_tick
+      ? "Declared quantities conserved at every completed tick."
+      : "Quantity accounting balances at every completed tick, including dissipation and escaped quantities.";
+    result.append(node("p", balanceText, balanced ? "result-meta" : "result-error"));
     const table = node("table", "", "totals"), head = node("tr");
-    ["CONSERVED FIELD", "INITIAL", "FINAL", "SOURCE CHANGE"].forEach(label => head.append(node("th", label))); table.append(head);
+    ["TRACKED FIELD", "INITIAL", "FINAL", "SOURCE CHANGE", "DISSIPATED", "ESCAPED"].forEach(label => head.append(node("th", label))); table.append(head);
     for (const [name, value] of Object.entries(metadata.initial_totals || {})) {
-      const row = node("tr"); [name, JSON.stringify(value), JSON.stringify(metadata.final_totals[name]), JSON.stringify(metadata.source_totals[name])].forEach(v => row.append(node("td", v))); table.append(row);
+      const row = node("tr"), zero = value.map(() => 0);
+      [name, JSON.stringify(value), JSON.stringify(metadata.final_totals[name]), JSON.stringify(metadata.source_totals[name]),
+        JSON.stringify(metadata.dissipation_totals?.[name] ?? zero), JSON.stringify(metadata.escaped_totals?.[name] ?? zero)
+      ].forEach(v => row.append(node("td", v))); table.append(row);
     }
     result.append(table);
   }

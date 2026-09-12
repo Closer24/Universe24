@@ -16,6 +16,31 @@ from event_universe.runner import main, run_initialization
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.mark.parametrize("ticks", [0, 12])
+def test_open_runner_reports_escape_separately_from_dissipation(ticks, tmp_path):
+    artifact = run_initialization(ROOT / "examples" / "open_world.json", tmp_path, ticks=ticks)
+    metadata = json.loads(artifact.read_text(encoding="utf-8"))
+    state = json.loads((tmp_path / "state.json").read_text(encoding="utf-8"))
+    events = [
+        json.loads(line) for line in (tmp_path / "events.jsonl").read_text(encoding="utf-8").splitlines()
+    ]
+    escaped = {"strength": [72], "radiation": [20]} if ticks else {"strength": [0], "radiation": [0]}
+    assert metadata["status"] == "completed"
+    assert metadata["completed_ticks"] == ticks
+    assert metadata["boundary"] == state["boundary"] == "open"
+    assert metadata["escaped_totals"] == state["escaped_totals"] == escaped
+    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [52 if ticks else 0]}
+    assert metadata["accounting_balanced_at_every_completed_tick"]
+    assert metadata["conserved_at_every_completed_tick"] == (ticks == 0)
+    assert metadata["display"] == "none"
+    if ticks:
+        exits = [event for event in events if event["event"] == "escaped"]
+        assert len(exits) == 1 and exits[0]["tick"] == 1
+        assert not any(event["event"] == "received" for event in events)
+    else:
+        assert events == []
+
+
 def test_default_package_and_cli_import_only_generic_physics():
     script = """
 import sys

@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 from event_universe.initialization import parse_initial_json, parse_json_document
+from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if sys.platform == "win32":
     _creation_flags = subprocess.CREATE_NO_WINDOW
@@ -31,6 +32,7 @@ ARTIFACTS = {"initialization.json", "run.json", "state.json", "events.jsonl", "r
 RUN_ROUTE = re.compile(r"/api/runs/([a-f0-9]{32})(?:/(stop))?")
 FILE_ROUTE = re.compile(r"/runs/([a-f0-9]{32})/([a-z.]+)")
 EXPORT_ROUTE = re.compile(r"/exports/([a-f0-9]{32})\.json")
+CLEANUP_INTERVAL_SECONDS = 30
 
 
 def validate_source(source: object) -> dict[str, object]:
@@ -62,15 +64,25 @@ class Job:
     process: subprocess.Popen[bytes]
     log: BinaryIO
     started: float
+    initialization: Path
+    lease: ArtifactLease
     state: str = "running"
     elapsed: float = 0
 
     def refresh(self) -> None:
         code = self.process.poll()
-        if self.state == "running" and code is not None:
-            self.state = "completed" if code == 0 else "failed"
-            self.elapsed = time.monotonic() - self.started
+        if code is not None:
+            if self.state == "running":
+                self.state = "completed" if code == 0 else "failed"
+                self.elapsed = time.monotonic() - self.started
+            self._finish()
+
+    def _finish(self) -> None:
+        try:
             self.log.close()
+        finally:
+            if self.log.closed:
+                self.lease.finish()
 
     def describe(self) -> dict[str, object]:
         self.refresh()
@@ -102,7 +114,11 @@ class Job:
         self.refresh()
         if self.state != "running":
             return
-        self.process.terminate()
+        try:
+            self.process.terminate()
+        except OSError:
+            if self.process.poll() is None:
+                raise
         try:
             self.process.wait(timeout=3)
         except subprocess.TimeoutExpired:
@@ -110,13 +126,14 @@ class Job:
             self.process.wait(timeout=3)
         self.state = "cancelled"
         self.elapsed = time.monotonic() - self.started
-        self.log.close()
+        self._finish()
 
 
 class Workspace:
     """Own host jobs and immutable inputs; never implement or modify physical laws."""
 
     def __init__(self, configs: Path, output: Path) -> None:
+        validate_output_path(output)
         self.configs = configs.resolve()
         self.output = output.resolve()
         self.jobs: dict[str, Job] = {}
@@ -128,9 +145,13 @@ class Workspace:
         assert isinstance(source, str)
         identifier = uuid4().hex
         directory = self.output / "exports"
-        directory.mkdir(parents=True, exist_ok=True)
         path = directory / f"{identifier}.json"
-        path.write_bytes(source.encode("utf-8"))
+        validate_output_path(path)
+        directory.mkdir(parents=True, exist_ok=True)
+        with path.open("xb"):
+            pass
+        with ArtifactLease(self.output, [path]):
+            path.write_bytes(source.encode("utf-8"))
         name = re.sub(r"[^a-zA-Z0-9_-]", "_", str(summary["model"]))[:80] + ".json"
         with self.lock:
             self.exports[identifier] = (path, name)
@@ -170,10 +191,14 @@ class Workspace:
                     )
             identifier = uuid4().hex
             inputs = self.output / "inputs"
-            inputs.mkdir(parents=True, exist_ok=True)
             initialization = inputs / f"{identifier}.json"
-            initialization.write_bytes(source.encode("utf-8"))
+            log_path = inputs / f"{identifier}.log"
             destination = self.output / "runs" / identifier
+            for path in (initialization, log_path, destination):
+                validate_output_path(path)
+            inputs.mkdir(parents=True, exist_ok=True)
+            with initialization.open("xb"):
+                pass
             command = [
                 sys.executable,
                 "-m",
@@ -191,8 +216,13 @@ class Workspace:
             package_root = str(Path(__file__).resolve().parent.parent)
             environment["PYTHONPATH"] = package_root + os.pathsep + environment.get("PYTHONPATH", "")
             environment["PYTHONUTF8"] = "1"
-            log = (inputs / f"{identifier}.log").open("wb")
+            log = log_path.open("xb")
+            lease: ArtifactLease | None = None
             try:
+                lease = ArtifactLease(
+                    self.output, [initialization, Path(log.name)], keep_alive_with=[destination]
+                )
+                initialization.write_bytes(source.encode("utf-8"))
                 process = subprocess.Popen(
                     command,
                     stdout=log,
@@ -200,8 +230,12 @@ class Workspace:
                     env=environment,
                     creationflags=_creation_flags,
                 )
-            except OSError:
-                log.close()
+            except BaseException:
+                try:
+                    log.close()
+                finally:
+                    if lease is not None and log.closed:
+                        lease.finish()
                 raise
             job = Job(
                 identifier,
@@ -211,9 +245,30 @@ class Workspace:
                 process,
                 log,
                 time.monotonic(),
+                initialization,
+                lease,
             )
             self.jobs[identifier] = job
             return job.describe()
+
+    def cleanup(self, *, now: float | None = None) -> dict[str, object]:
+        """Refresh host ownership before expiring generated files and their links."""
+        with self.lock:
+            for job in self.jobs.values():
+                job.refresh()
+            report = cleanup_expired(self.output, now=now)
+            self.jobs = {
+                identifier: job
+                for identifier, job in self.jobs.items()
+                if job.state == "running"
+                or any(path.exists() for path in (job.output, job.initialization, Path(job.log.name)))
+            }
+            self.exports = {
+                identifier: exported
+                for identifier, exported in self.exports.items()
+                if exported[0].is_file()
+            }
+            return report
 
     def close(self) -> None:
         with self.lock:
@@ -227,12 +282,21 @@ class WorkspaceServer(ThreadingHTTPServer):
     def __init__(self, workspace: Workspace, port: int = 8765) -> None:
         self.workspace = workspace
         self.token = secrets.token_urlsafe(32)
+        self._last_cleanup = float("-inf")
         super().__init__(("127.0.0.1", port), WorkspaceHandler)
         self.origin = f"http://127.0.0.1:{self.server_port}"
 
     def server_close(self) -> None:
-        self.workspace.close()
-        super().server_close()
+        try:
+            self.workspace.close()
+        finally:
+            super().server_close()
+
+    def service_actions(self) -> None:
+        now = time.monotonic()
+        if now - self._last_cleanup >= CLEANUP_INTERVAL_SECONDS:
+            self.workspace.cleanup()
+            self._last_cleanup = now
 
 
 class WorkspaceHandler(BaseHTTPRequestHandler):
@@ -278,6 +342,8 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
             self._json({"error": "Only this local workspace may access the server."}, 403)
             return
         path = urlsplit(self.path).path
+        if path.startswith(("/api/runs", "/runs/", "/exports/")):
+            self.server.workspace.cleanup()
         if path in {"/", "/app.js", "/style.css"}:
             name = "index.html" if path == "/" else path[1:]
             content = files("event_universe").joinpath("ui_assets", name).read_bytes()
@@ -301,20 +367,32 @@ class WorkspaceHandler(BaseHTTPRequestHandler):
                 job = self.server.workspace.jobs.get(match[1])
                 self._json(job.describe() if job else {"error": "Run not found"}, 200 if job else 404)
         elif match := EXPORT_ROUTE.fullmatch(path):
-            exported = self.server.workspace.exports.get(match[1])
-            if exported is None:
+            with self.server.workspace.lock:
+                exported = self.server.workspace.exports.get(match[1])
+                try:
+                    download_content = exported[0].read_bytes() if exported else None
+                except FileNotFoundError:
+                    download_content = None
+            if download_content is None or exported is None:
                 self._json({"error": "Export not found"}, 404)
             else:
-                self._send(
-                    exported[0].read_bytes(), "application/json; charset=utf-8", download=exported[1]
-                )
+                self._send(download_content, "application/json; charset=utf-8", download=exported[1])
         elif match := FILE_ROUTE.fullmatch(path):
-            job = self.server.workspace.jobs.get(match[1])
-            if job is None or match[2] not in ARTIFACTS or not (job.output / match[2]).is_file():
+            with self.server.workspace.lock:
+                job = self.server.workspace.jobs.get(match[1])
+                try:
+                    download_content = (
+                        (job.output / match[2]).read_bytes()
+                        if job is not None and match[2] in ARTIFACTS
+                        else None
+                    )
+                except FileNotFoundError:
+                    download_content = None
+            if download_content is None:
                 self._json({"error": "Artifact not found"}, 404)
                 return
             kind = "text/html" if match[2].endswith(".html") else "text/plain"
-            self._send((job.output / match[2]).read_bytes(), kind + "; charset=utf-8")
+            self._send(download_content, kind + "; charset=utf-8")
         else:
             self._json({"error": "Not found"}, 404)
 
@@ -380,8 +458,8 @@ def main() -> None:
         parser.error("port must be between 0 and 65535")
     try:
         server = WorkspaceServer(Workspace(args.configs, args.output), args.port)
-    except OSError as error:
-        parser.exit(1, f"Cannot start workspace: {error}. Try a different --port.\n")
+    except (OSError, ValueError) as error:
+        parser.exit(1, f"Cannot start workspace: {error}\n")
     print(
         f"Universe24 workspace: {server.origin}\nKeep this terminal open. Press Ctrl+C to stop.",
         flush=True,

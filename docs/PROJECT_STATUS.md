@@ -1,9 +1,25 @@
 # Project status and restart guide
 
-Snapshot: 2026-09-11. The generic initialization integration is merged in reviewed
-main [a53e1a2](https://github.com/Closer24/Universe24/commit/a53e1a2f83d4dca898ed827b2f6e4d101932be95).
-Verification for that integration is recorded in [VALIDATION.md](VALIDATION.md).
-This is an orientation snapshot; verify current main and open PRs before work.
+Integration reference: 2026-09-12. [PR #27](https://github.com/Closer24/Universe24/pull/27)
+combines reviewed spatial-field feature head
+`137830fd621b9522598e0719e7bd2055ead595a9` with main
+`15029ba8d02bd7f1bb1dd1148fe55405ec1536b1`, which adds atomic generic interactions
+and the configured unequal-mass elastic example through PR #28, followed by
+main `64d26a89842637ab71517ec45aebfa7c3deae331` and its affected-check selection
+through PR #29. Validation selects changed code and reviewed consumers by default;
+complete audits require explicit `--full`. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+Spatial fields,
+finite budgets, boundaries, output retention and arbitrary-name handling remain
+included. GitHub-supplied blob, tree and commit hashes were verified before local
+integration. Verify live checkout, remote and PR state before continuing; this
+reference is not a claim about the version in another checkout. Identified checks
+and run evidence belong in [VALIDATION.md](VALIDATION.md).
+
+Registered run outputs,
+workspace copies/logs/exports and test reports expire after 24 hours, with live
+writer protection; see [RETENTION.md](RETENTION.md). Idle cleanup requires the
+watcher or a scheduled invocation. Generated evidence paths in older validation
+records are temporary, while their recorded conclusions remain in the repository.
 
 ## What this checkout contains
 
@@ -60,6 +76,36 @@ are initialization choices. The cost output is local; propagating a computation
 influence requires a separate law. Capacity exhaustion stops a run rather than
 discarding content. Gravity, waves, relativity and general energy conservation
 are not established by the framework.
+
+The optional [spatial-field extension](SPATIAL_FIELDS.md) adds independent
+outward emission, baselines and combined balance diagnostics. Its fixed
+field clock is separate from carrier computation delay. The new example selects
+that candidate explicitly; configurations without it preserve their old laws.
+[Spatial couplings](SPATIAL_COUPLINGS.md) add configured exchange and exact
+discrete rotation with an atomic opposite field reaction. The scalar-flux-driven
+rotation has a restricted straight cardinal isolation property. General automatic
+self attribution remains unsupported, particularly after turns or periodic
+return.
+
+The local schema 2 candidate `finite-dissipative-v1` requires completed-link
+integer decay at interior receivers for every spatial field and finite per-record budgets for emitted
+amounts and coupling reactions. [finite_fields.json](../examples/finite_fields.json)
+is the small headless example. Baselines are exempt; dynamic populations vanish
+after their last nonzero input. This candidate explicitly records loss and does
+not conserve physical momentum or energy through decay. Schema 1 preserves its
+conservative transport and unlimited declared sources and responses. Candidate
+identity is selected by schema version, independently of field and model names.
+Verify current validation evidence and the running source version before reusing
+results. No Highlights update is implied by repository edits.
+
+Both schemas support `boundary: "periodic"` (the default) or `boundary: "open"`.
+Periodic particles and fields wrap across every X, Y and Z face without changing
+direction or link time. Open terminal packets leave after full transit and their
+unchanged signed amounts enter an escaped ledger; no exterior cell is simulated.
+See [the boundary contract](DISTURBANCES.md#domain-boundary) and
+[open_world.json](../examples/open_world.json). A host scheduling index skips
+dormant spatial cells while preserving local costs and physical updates. The
+runner records elapsed host seconds separately from simulation ticks.
 
 Software validation and physical acceptance are separate. In particular, the
 [isolated-motion rejection contract](../SIMULATOR_DEFINITIONS.md#reject-isolated-self-force-in-application-runs)

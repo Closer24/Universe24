@@ -6,6 +6,16 @@ selected when initialization is missing. Names and candidate laws come from a
 JSON file. A field named `mass` receives exactly the same treatment as any other
 field with the same declared structure and rules.
 
+Optional [configured spatial fields](SPATIAL_FIELDS.md) separate emitted fields
+from carried records. They add implicit baselines, bounded outward octant
+transport through six faces, continuous declared sources and combined accounting.
+They do not enable an unproved self-field subtraction law.
+
+Optional [spatial couplings](SPATIAL_COUPLINGS.md) connect local spatial values
+or scalar directional flux to a carried field through atomic exchange or exact
+discrete rotation. Their response precedes ordinary updates and movement planning;
+the field receives the opposite change when the frozen carrier proposal commits.
+
 The fixed-physics `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`
 and `CausalStreamSimulation` APIs remain explicitly selected research models.
 Their historical record schemas and physical assumptions do not constrain the
@@ -50,7 +60,7 @@ are illustrative data, not a list of recognized physical entities.
 | Disturbance record | One local occurrence with field values and bounded routing/allocation state |
 | Cell | Fixed resident slots, one pending local proposal and fixed coupling remainders |
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
-| Coupling | Configured local exchange between matching resident records |
+| Coupling | Configured local exchange between records, or between a record and a spatial field |
 
 The six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
 of transport. A vector value still has three components; it is not automatically
@@ -58,17 +68,20 @@ the six port weights. A negative field component and travel through a negative
 axis are independent facts. Oppositely directed transfers retain their separate
 channels rather than being replaced by their net vector.
 
-An absent field is zero. Presence does not create a persistent source unless an
-update rule explicitly says so. Multiple co-resident records need not be merged:
-whole-record movement preserves separate carriers and their different directions.
+An absent carried field is zero. Spatial fields instead use their configured
+baseline, which can be nonzero. Presence alone does not create a persistent
+source: an update rule or an explicit `emissions` rule must declare injection.
+Multiple co-resident records need not be merged: whole-record movement preserves
+separate carriers and their different directions.
 
-## JSON schema version 1
+## JSON schema versions 1 and 2
 
 | Top-level member | Contract |
 | --- | --- |
-| `schema_version` | Exactly `1` |
+| `schema_version` | `1` for conservative spatial laws, or `2` for finite dissipative spatial laws |
 | `model_id` | Explicit identifier for this configured candidate |
-| `shape` | Three positive integer periodic extents |
+| `shape` | Three positive bounded integer domain extents |
+| `boundary` | Optional `"periodic"` or `"open"`, default `"periodic"`, in either schema version |
 | `slots_per_cell` | Fixed positive resident capacity, at most 32 |
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
 | `normal_budget` | Positive ordinary local computation cost `B` |
@@ -79,12 +92,66 @@ whole-record movement preserves separate carriers and their different directions
 | `couplings` | Optional list, at most 32 local exchange rules |
 | `interactions` | Optional list, at most 32 atomic pair transactions |
 | `seeds` | Positions, disturbance type names and optional value overrides |
+| `spatial_fields` | Optional outward fields with baseline and branch weights; version 2 requires decay per field |
+| `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
+| `spatial_seeds` | Optional initial octant populations at named lattice cells |
+| `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 
 Names and unit labels are nonempty strings of at most 128 characters. All names
 must resolve within this file. Unknown keys, duplicate JSON keys,
 duplicate names and incompatible values fail validation. Seeds must lie inside
 the configured shape and fit the local slot capacity. The file is data, not
 Python source; it cannot import a law, evaluate source text or invoke callbacks.
+
+### Schema version and candidate identity
+
+Version 1 records `conservative-outward-v1` for spatial runs and preserves
+conservative spatial transport, unlimited declared emission
+and unlimited spatial response. It rejects `decay` and spatial-rule `budget`
+keys. Version 2 selects the explicit `finite-dissipative-v1` policy: every spatial
+field requires `decay` with bounded integers `0 <= retain_numerator <
+retain_denominator`, and every emission and spatial coupling requires a
+nonnegative scalar/vector `budget` in its target field's units. Omitting these
+keys is an error in version 2. A version 2 configuration without spatial features
+is valid and retains the ordinary disturbance laws.
+
+The runner records this policy from `schema_version`; the user's `model_id`
+remains a free configured identity and cannot select behavior through its name.
+See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
+emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
+whole-action allowances. Neither allowance is a conserved physical reservoir.
+Ordinary local update and paired-exchange rules retain their existing contracts.
+
+### Domain boundary
+
+The top-level `boundary` setting applies equally to carried disturbances and
+spatial-field packets. It is independent of the schema's conservative or
+dissipative policy. Omitting it preserves the existing periodic behavior.
+
+| Setting | Transfer across an outer face |
+| --- | --- |
+| `"periodic"` | Arrives at the opposite side of the same axis, with the same travel direction and payload signs |
+| `"open"` | Leaves the simulated domain and is recorded as escaped quantity |
+
+For shape `[3,4,5]`, a +X step from `[2,1,1]` wraps to `[0,1,1]` under periodic
+boundaries. Under open boundaries it has no destination inside the world. Interior
+steps are identical under both settings. Open does not mean reflection, a growing
+domain, or an unrecorded deletion. No off-grid cell is created, and no escaped
+influence re-enters from an opposite face. An immutable baseline exists only
+inside the declared shape and is not an outgoing source.
+
+An outward transfer remains owned by its terminal link for the normal
+`link_ticks`, then its unchanged signed quantities are recorded as escaped.
+There is no outside receiving cell, so this terminal link performs no destination
+receipt, merge or decay. Schema 2 decay applies only to links with a destination
+inside the domain. For example, a component of 1 with zero retention escapes as
+1 across an open face; the same component delivered to an interior cell instead
+loses 1 to decay. Interior and escaping quantities remain separate in accounting.
+
+Use `"boundary": "open"` alongside the other top-level initialization members.
+Unknown names, null values and non-string values fail validation. Initial
+positions must still lie inside the shape; periodic mode does not wrap invalid
+seed coordinates. Historical research APIs retain their own topology contract.
 
 ### Field definitions
 
@@ -203,6 +270,17 @@ when either participant departs, that pair's remainder resets to zero. A later
 occupant does not inherit it. Retained local split channels keep their remainders.
 These are subquantum rounding registers, not additional conserved quantities.
 
+An optional `"remainder_owner": "left"` instead stores one signed remainder per
+rule/component on the left record. Whole-record movement carries that fraction
+to the next cell. A later matching right record can receive the integer unit
+completed by earlier fractional requests; this is deliberately a sender-owned
+request accumulator, not a persistent ledger for the old pair. Multiple right
+records advance it in the declared local order. This mode requires distinct
+left/right types and a hold/move left type; split emitters are rejected. The
+default `"pair"` preserves the existing pair-local behavior. Both modes exchange
+exactly equal-and-opposite integer components and keep fractional bookkeeping
+separate from conserved inventory.
+
 Configured coupling order followed by fixed slot order is part of the declared
 law. Identical participant types use each distinct unordered pair once. Different
 types use matching ordered pairs. All updates precede couplings; transport uses
@@ -251,16 +329,20 @@ nonintegral results; transactions never round a violated invariant away. Choose
 appropriate integer units or explicitly modeled fraction fields when needed.
 The existing fractional single-field exchange remains available separately.
 
-Order is ordinary updates, exchange couplings, atomic interactions, then routing.
+Order is spatial response when configured, ordinary updates, exchange couplings,
+atomic interactions, then routing. Interaction invariants compare the pair after
+those earlier proposed responses; they preserve its conserved sum while retaining
+the spatial response's prepared opposite reaction.
 Interactions use declared rule order, then fixed slot order, with each unordered
 pair once for equal types and ordered matching pairs for distinct types. Each
 assignment charges `update`, each accepted activation charges `couple`, and AST
 evaluation (including activation and invariants) charges `evaluate`. Every AST
 retains the 64-node/depth-16 bound. State and work remain bounded for fixed schema
 and slot capacity. All proposals obey the existing frozen computation wait and
-simultaneous local commit contract. An invalid proposal faults the run before
-changing the cell's records or pending plan; previously completed independent
-events are not rolled back.
+simultaneous local commit contract. An invalid interaction faults the run before
+committing its carrier proposal or installing its pending plan. Previously
+completed independent events, including field transport and fresh emission with
+its carried allowance metadata, are not rolled back.
 
 ### Configured unequal-mass elastic example
 
@@ -359,9 +441,30 @@ original resident amount + explicit source change
 Delivery transfers ownership from a packet to the destination. At any tick,
 diagnostic totals count resident amounts, including originals waiting for a
 pending cycle, and in-flight packets exactly once. Pending proposals are not
-additional owned stock. Total change equals committed source/sink change;
+additional owned stock. Under schema 1 with periodic boundaries, total change
+equals committed source/sink change;
 source creation is not reported before its proposal commits. Direction/rate
 phases and fractional exchange remainders remain bounded bookkeeping.
+
+Schema 2 additionally subtracts committed signed dissipation from that balance.
+Its declared decay intentionally removes integer magnitude without retaining a
+fraction; it is not a transport conservation claim or a numerical approximation
+to the version 1 law. Baseline values are exempt. Finite remaining allowances are
+bookkeeping owned by records, never extra field stock. These distinctions remain
+visible in run metadata, events and snapshots.
+
+An open boundary additionally records the signed components that leave the world
+as escaped quantity. They are no longer resident or in flight after escape, and
+are not counted a second time as an implicit source or decay loss. For declared
+conserved components the combined diagnostic balance is:
+
+```text
+resident + in flight = initial + committed sources - dissipation - escaped
+```
+
+Periodic boundaries have no escape term; schema 1 has no decay term. This is
+an accounting statement, not a claim that an open world's physical inventory
+stays constant. Global ledgers only verify locally committed events.
 
 Conservation refers to an amount, not a constant throughput. Delaying transfers
 can reduce local flux while preserving every conserved unit. Global totals are

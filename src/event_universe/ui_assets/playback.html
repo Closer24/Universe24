@@ -7,7 +7,7 @@
 <div class="controls"><button id="play" type="button">Play</button><button id="restart" type="button">Restart</button><button id="previous" type="button" aria-label="Previous frame">← Tick</button><button id="next" type="button" aria-label="Next frame">Tick →</button><label>Speed <select id="speed"><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option><option value="4">4x</option></select></label><label>View <select id="plane"><option value="0,1">XY</option><option value="0,2">XZ</option><option value="1,2">YZ</option></select></label><label>Zoom <select id="zoom"><option value="1">Fit</option><option value="2">2x</option><option value="4">4x</option><option value="8">8x</option></select></label></div>
 <p id="grid-info"></p>
 <label for="seek">Timeline <b id="tick"></b></label><input id="seek" aria-label="Recorded frame" type="range" min="0" step="1" value="0">
-<p>Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned; rings are transfers in links. Co-located records use concentric rings. Periodic boundaries wrap. No invented motion between samples.</p>
+<p>Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned; rings are transfers in links. Co-located records use concentric rings. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
 <details><summary>Particle names, field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Particle / type</th><th>Position</th><th>Fields</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
 <script id="recording" type="application/json">__RECORDING__</script><script>
 "use strict";
@@ -23,7 +23,10 @@ $('#sampling').textContent=`${frames.length} samples, ticks ${frames[0].tick}–
 for(const [i,name] of types.entries()){const item=document.createElement('span'),dot=document.createElement('i');dot.style.backgroundColor=palette[i%palette.length];item.append(dot,document.createTextNode(name));$('#legend').append(item);}
 function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
 function visibleRecords(f){const records=f.cells.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Cell':'Waiting cell'})));
-for(const t of f.transfers){const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));p[axis]=(p[axis]+sign*fraction+shape[axis])%shape[axis];records.push({...t,position:p,owner:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`,transfer:true});}return records;}
+const boundary=f.boundary||metadata.boundary||'periodic';
+for(const t of f.transfers){const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
+const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
+records.push({...t,position:p,owner,transfer:true});}return records;}
 let pan=[0,0],drag=null;
 function draw(){
   const rect=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;

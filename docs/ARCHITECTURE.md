@@ -1,5 +1,15 @@
 # Architecture and change boundaries
 
+## Generated output ownership
+
+`retention.py` owns host-only artifact registration, writer leases and expiry.
+Runners own complete fresh output directories; the workspace owns exact input,
+log and export files and declares the child-output dependency for companions.
+Cleanup uses recorded filesystem generations and operating-system locks, with
+recoverable quarantine before removal. The module never imports or changes
+physical engine state. Its one-shot and singleton watcher interfaces share the
+[same retention contract](RETENTION.md).
+
 ## Active generic ownership
 
 `disturbance_api.Simulation(initial: InitialState)` composes the generic engine
@@ -11,16 +21,41 @@ and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
 
+Field, type, model and unit labels are data. Reordering field/type declarations
+must preserve the same resolved behavior; declared update/coupling order and
+spatial axes can be meaningful and are not interchangeable. The executable
+cross-layer checks live in `tests/test_generic_identity.py`. Genericity is scoped
+to the supported integer scalar/vector schema, three-dimensional six-port
+geometry, fixed capacities and declared operation set; it does not imply an
+arbitrary equation interpreter.
+
 Atomic interaction definitions share that path: initialization resolves bounded
 assignments, invariants and activation expressions; `fields/disturbances.py`
 evaluates frozen-pair proposals and exact per-transaction balances before routing.
 They add no per-source memory or alternate commit path. Example physics remains
 JSON data, including vector transforms and the unequal-mass elastic contact law.
+The shared evaluator propagates explicitly supplied spatial flux through nested
+operators. Atomic interactions operate after proposed spatial responses and
+ordinary exchanges, retaining carried emission/reaction allowances and the
+prepared opposite field reaction until the common delayed commit.
 
 The complete source contract is [DISTURBANCES.md](DISTURBANCES.md). Its six-port,
 bounded-record schema replaces the implicit scalar/particle schema for the
 primary API. Global diagnostics never drive physical rules, and rendering is
 absent unless explicitly requested.
+
+The optional spatial extension uses `core/spatial_state.py` for fixed schemas,
+`fields/spatial.py` for bounded emission/splitting and `fields/spatial_plan.py`
+for pure local proposals. `core/spatial_engine.py` schedules and owns field
+packets; `disturbance_api.py` composes its planner without formulas. The shared
+engine combines diagnostics and costs while retaining separate field and
+carrier clocks. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the contract and
+the remaining self-attribution requirement. `fields/spatial_coupling.py` owns
+local sampling, fractional exchange, exact quarter-turn rotation and reaction
+allocation. The injected `SpatialCoupler` protocol keeps those calculations out
+of engine scheduling. Carrier and field owners validate together before committing
+the response; fixed sample registers and departure timestamps prevent future
+reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md).
 
 The remaining scalar, stream, linked, collision and balanced sections describe
 explicitly named research APIs. Their record layouts, extension points, tick

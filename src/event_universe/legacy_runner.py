@@ -14,6 +14,7 @@ from event_universe.models.collisions import LINKED_MODEL_ID as COLLISION_LINKED
 from event_universe.models.collisions import MODEL_ID as COLLISION_MODEL_ID
 from event_universe.models.current_field import MODEL_ID
 from event_universe.models.linked_field import MODEL_ID as LINKED_MODEL_ID
+from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 from event_universe.runner import source_fingerprint
 from event_universe.scenarios import Scenario, get_scenario
 
@@ -36,7 +37,23 @@ def run_scenario(
         raise ValueError("frame_stride must be a positive integer")
     if type(scenario.ticks) is not int or scenario.ticks < 0:
         raise ValueError("ticks must be a non-negative integer")
+    validate_output_path(output)
+    cleanup_expired(output.parent)
+    if output.exists() and any(output.iterdir()):
+        raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
+    with ArtifactLease(output.parent, [output.resolve()]):
+        return _run_with_display(scenario, output, frame_stride, volume, visualize, live)
+
+
+def _run_with_display(
+    scenario: Scenario,
+    output: Path,
+    frame_stride: int,
+    volume: bool,
+    visualize: bool,
+    live: bool,
+) -> Path:
     display = None
     if live:
         from event_universe.diagnostics.live import LiveDisplay

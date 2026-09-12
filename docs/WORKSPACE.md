@@ -69,6 +69,9 @@ records of that type share it. The two-particle presets use distinct types so
 each particle can have its own name. Raw JSON edits and removals still require
 valid references.
 
+Generated field/type names skip names already declared. Template draft keys are
+plain data, including names such as `__proto__` and `constructor`.
+
 Drafts are saved per template in this browser. Switching templates keeps them;
 **Reset** restores a template. **Export JSON** downloads the checked configuration
 for later import or direct CLI execution. Browser storage is not a backup.
@@ -90,16 +93,29 @@ when calculation finishes; Open full view opens the same self-contained HTML.
 Play/Pause, Restart, speed, XY/XZ/YZ projection and the timeline operate only on
 saved samples. Playback stops on the final frame; Replay starts again. Scrubbing
 pauses playback. Reduced-motion preference suppresses automatic playback.
-Detailed field values and ownership remain available in the movie's folded table.
+Carried field values and disturbance ownership remain available in the movie's
+folded table. The movie currently draws disturbances and their link transfers;
+it does not draw spatial field populations or spatial field transfers. Inspect
+those values in the saved state/recording data. Spatial definitions, emissions,
+seeds and responses are editable through the complete JSON editor and remain
+preserved when using forms for other settings.
 
 Filled markers are recorded resident disturbances. Link transfers use their
 recorded origin, port and arrival time with the configured fixed transit time.
+Periodic transfers wrap across the configured domain. Open terminal transfers
+have no receiving address: playback shows their outward transit until exit and
+does not wrap them back into the world. Choose `boundary` in the complete JSON
+editor; omitted boundaries remain periodic.
 Concentric rings distinguish co-located records. The viewer does not invent
 trajectories between snapshots or draw a false trail across a periodic seam.
 The grid uses actual integer lattice nodes and equal axis scale. Tick arrows
 select recorded frames; the default stride records every tick. Zoom and drag
 expose individual nodes at larger scales. A dense view asks for zoom instead of
 substituting a schematic grid. The approaching preset takes two ticks per link.
+
+Result tables distinguish current quantities, committed sources, signed
+dissipation and escaped quantities. A balanced dissipative or open run can change
+its physical totals without failing its accounting checks.
 
 ## Phone layout
 
