@@ -62,7 +62,11 @@ def test_render_capture_has_no_physical_feedback():
     assert plain["frames"] == []
     assert len(captured["frames"]) == 9
     for key in (
-        "events", "balances", "final_state", "final_quantum_state", "query_counts_after_each_tick"
+        "events",
+        "balances",
+        "final_state",
+        "final_quantum_state",
+        "query_counts_after_each_tick",
     ):
         assert plain[key] == captured[key]
 
@@ -79,7 +83,8 @@ def test_unmeasured_transmission_matches_ordinary_engine():
     def routing(trace):
         return [
             (e["tick"], e["position"], e["port"], e["arrival_tick"], e["disturbance"])
-            for e in trace if e["event"] == "sent"
+            for e in trace
+            if e["event"] == "sent"
         ]
 
     assert routing(events) == routing(measured["events"])
