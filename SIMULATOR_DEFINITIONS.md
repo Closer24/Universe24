@@ -661,3 +661,16 @@ The optional `interactions.output_types` contract is defined in
 same two local slots, with complete explicit payload assignments, exact declared
 balances, zero carried routing progress and the documented schema/ownership
 restrictions. Invalid proposals cannot install partial converted records.
+
+## Native causal event programs — NATIVE-EVENTS-1
+
+The optional [native program](docs/NATIVE_QUANTUM_EVENTS.md) binds the selected
+Q-EVENTS-1 owner into the primary Simulation through a generic local protocol.
+Physical causes and computational dependencies retain distinct permissions in
+one bounded immutable identity store. Local cells and packets keep fixed-size
+references only. Path cost includes the selected mechanical law, a local trigger
+inspection and code writes, and one model unit per successful oracle request.
+The existing budget delay applies once to the entire local cycle; neither
+waiting nor commit charges it again. Host work remains separate. Independent
+spatial-field composition is currently rejected for this candidate, not silently
+run without provenance. Existing configurations without event_program are unchanged.

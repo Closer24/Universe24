@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "model_id": "native-quantum-contact-v1",
+  "shape": [
+    13,
+    5,
+    3
+  ],
+  "boundary": "open",
+  "slots_per_cell": 2,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "unit mass",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "unit momentum",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "decision",
+      "components": 1,
+      "units": "0 pending; 1 transmit; 2 exchange",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "Body A",
+      "fields": [
+        "mass",
+        "momentum",
+        "decision"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ],
+        "decision": 0
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum"
+      }
+    },
+    {
+      "name": "Body B",
+      "fields": [
+        "mass",
+        "momentum",
+        "decision"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          -1,
+          0,
+          0
+        ],
+        "decision": 0
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum"
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "name": "quantum_selected_exchange",
+      "left_type": "Body A",
+      "right_type": "Body B",
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "field": "decision",
+            "side": "left"
+          },
+          1
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "right"
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "twice_kinetic_energy_unit_mass",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  },
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "right"
+                  },
+                  {
+                    "field": "momentum",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        2,
+        2,
+        1
+      ],
+      "type": "Body A"
+    },
+    {
+      "position": [
+        10,
+        2,
+        1
+      ],
+      "type": "Body B"
+    }
+  ],
+  "event_program": {
+    "model": "local-quantum-events-v1",
+    "capacity": 10000,
+    "addresses": [
+      [
+        6,
+        2,
+        1
+      ],
+      [
+        6,
+        3,
+        1
+      ]
+    ],
+    "occupied": [
+      0
+    ],
+    "layers": [
+      {
+        "tick": 1,
+        "operations": [
+          {
+            "sites": [
+              0,
+              1
+            ],
+            "matrix": [
+              [
+                1,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                -1,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                1
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "bindings": [
+      {
+        "address": [
+          6,
+          2,
+          1
+        ],
+        "types": [
+          "Body A",
+          "Body B"
+        ],
+        "field": "decision",
+        "codes": [
+          1,
+          2
+        ],
+        "instrument": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ]
+        ]
+      }
+    ],
+    "seed": 17
+  }
+}

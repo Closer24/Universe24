@@ -160,3 +160,12 @@ detects a baseline failure; a passing detector test does not fix that law.
 If GitHub or Highlights cannot be read, say which information is unavailable.
 Do not claim the snapshot is current. Work within verified local contracts where
 the task permits; stop for clarification when a missing decision affects the law.
+
+## Native local event programs
+
+The [native event contract](NATIVE_QUANTUM_EVENTS.md) documents initialization-
+selected quantum instruments in the ordinary Simulation, shared causal identities
+and explicit path-cost accounting. Earlier contact/sweep scripts are reference
+experiments, not the native entry point. The new program does not yet compose
+independent spatial-field clocks. Check the live PR and tested source before
+asserting merged status or acceptance.
