@@ -5,21 +5,18 @@ on:
 permissions:
   contents: read
 jobs:
-  source:
+  runtime:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          ref: 992e0006469bb1156f517ae8273a80a980df7c57
-          fetch-depth: 1
-          persist-credentials: false
-      - name: Archive pinned checkout without credentials
-        run: |
-          test -z "$(git config --local --get-regexp 'extraheader|credential' || true)"
-          tar -czf "$RUNNER_TEMP/directional-source.tar.gz" .
+          python-version: '3.14'
+      - run: python -m pip install 'pytest>=8,<10' 'ruff>=0.16,<0.17' 'mypy>=2.3,<3' 'build>=1,<2'
+      - name: Archive interpreter and development tools only
+        run: tar -czf "$RUNNER_TEMP/directional-runtime.tar.gz" -C "$pythonLocation" .
       - uses: actions/upload-artifact@v4
         with:
-          name: directional-source
-          path: ${{ runner.temp }}/directional-source.tar.gz
+          name: directional-runtime
+          path: ${{ runner.temp }}/directional-runtime.tar.gz
           retention-days: 1
