@@ -1,5 +1,11 @@
 # Project status and restart guide
 
+For a clean machine or deleted conversation, follow
+[recovery without chat history](RECOVERY.md), including the versioned daily
+genericity skill and local retention setup.
+The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
+live specification reconciliation, entity coverage and exact source contracts.
+
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
 [local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
