@@ -5,6 +5,7 @@ from dataclasses import replace
 from types import MappingProxyType
 
 from .disturbance_state import (
+    DEFAULT_TOPOLOGY,
     Address3,
     CellView,
     DisturbanceCell,
@@ -22,7 +23,12 @@ from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
-from .topology import neighbor_address
+from .topology import (
+    inverse_port,
+    neighbor_address,
+    validate_position,
+    validate_topology_configuration,
+)
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
@@ -36,7 +42,7 @@ def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
 
 
 class DisturbanceEngine:
-    """One bounded record schema, one local planner, and six equal-time links.
+    """One bounded record schema, one local planner, and configured equal-time links.
 
     Physical-name semantics are absent. Measurements may inspect totals but never
     drive the planner. A capacity failure stops the run without dropping records.
@@ -56,6 +62,9 @@ class DisturbanceEngine:
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
     ) -> None:
+        validate_topology_configuration(initial)
+        if event_space is not None and initial.topology != DEFAULT_TOPOLOGY:
+            raise ValueError("causal event_space currently requires cardinal-six-v1 topology")
         self.initial = initial
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
@@ -122,6 +131,7 @@ class DisturbanceEngine:
 
     def _at(self, position: Address3) -> DisturbanceCell:
         if position not in self._cells:
+            validate_position(position, self.initial.shape, self.initial.topology)
             capacity = self.initial.slots_per_cell
             self._cells[position] = DisturbanceCell(
                 (None,) * capacity,
@@ -130,7 +140,9 @@ class DisturbanceEngine:
         return self._cells[position]
 
     def neighbor(self, origin: Address3, port: int) -> Address3 | None:
-        return neighbor_address(origin, port, self.initial.shape, self.initial.boundary)
+        return neighbor_address(
+            origin, port, self.initial.shape, self.initial.boundary, self.initial.topology
+        )
 
     def _emit(
         self,
@@ -222,8 +234,11 @@ class DisturbanceEngine:
                 plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
             )
             plan = self._record_policy.report_cost(plan)
-        if len(plan.departures) > self.initial.slots_per_cell * 6:
+        if len(plan.departures) > self.initial.slots_per_cell * self.initial.topology.degree:
             raise ValueError("local rule exceeds fixed outgoing capacity")
+        for departure in plan.departures:
+            if not 0 <= bounded(departure.port) < self.initial.topology.degree:
+                raise ValueError("departure port exceeds configured topology")
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
         work = checked_work(self._model_work + plan.cost)
         cycles = checked_work(self._local_cycles + 1)
@@ -250,7 +265,9 @@ class DisturbanceEngine:
             return
         if self.event_space is not None:
             self.event_space.require_room(2 + len(pending.plan.departures))
-        old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_cell))
+        old_links = self._links.get(
+            position, (None,) * (self.initial.topology.degree * self.initial.slots_per_cell)
+        )
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
         records = list(cell.records)
@@ -418,7 +435,7 @@ class DisturbanceEngine:
                     "received",
                     position,
                     causes=() if packet.cause_id is None else (packet.cause_id,),
-                    port=packet.port ^ 1,
+                    port=inverse_port(packet.port, self.initial.topology),
                     disturbance=self.initial.disturbances[packet.record.type_index].name,
                     values=self.record_values(packet.record),
                 )
@@ -486,8 +503,7 @@ class DisturbanceEngine:
 
     def spatial_values(self, position: Address3) -> dict[str, dict[str, object]]:
         """Read the independent spatial state without inferring source identity."""
-        if any(not 0 <= v < n for v, n in zip(position, self.initial.shape, strict=True)):
-            raise ValueError("spatial sample position must be within shape")
+        validate_position(position, self.initial.shape, self.initial.topology)
         return {} if self._spatial is None else self._spatial.values(position)
 
     def dissipation_totals(self) -> dict[str, tuple[int, ...]]:

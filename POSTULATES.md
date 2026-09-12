@@ -91,9 +91,13 @@ selects its native local-cycle integration without changing unselected worlds.
 
 ## 1. The world consists of locations and events
 
-Space is divided into three-dimensional cells with six directional connections:
-right, left, forward, backward, up and down. A connection reaches one nearest
-neighbor, or exits the simulated domain at an explicitly open boundary.
+The default space has six directional connections per three-dimensional cell:
+right, left, forward, backward, up and down. The explicitly selected
+[configured-port hypothesis](docs/CONFIGURED_TOPOLOGY.md) instead supplies a fixed
+reciprocal list of at most 26 three-dimensional offsets and a closed site pattern.
+A connection reaches its configured neighbor, or exits at an open boundary.
+Every link keeps its positive integer transit time. Equal graph transit does not
+establish equal Euclidean speed across offsets of different lengths.
 
 An event is a local change in a cell at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt.

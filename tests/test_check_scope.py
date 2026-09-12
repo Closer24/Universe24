@@ -22,6 +22,12 @@ def test_local_field_example_selects_state_and_physical_contract_consumers():
     assert "tests/test_local_lorentz_field.py" in selected
 
 
+def test_configured_topology_resource_selects_its_dynamic_invariants():
+    selected, _ = CHECK.select(["examples/topology/bcc_vectors.json"], {})
+    assert "tests/test_topology_example.py" in selected
+    assert "tests/test_directional_wave.py" not in selected
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

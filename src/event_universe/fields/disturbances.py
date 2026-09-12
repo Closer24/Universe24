@@ -3,6 +3,10 @@
 from dataclasses import dataclass, replace
 
 from event_universe.core.disturbance_state import (
+    CARDINAL_OFFSETS,
+    MAX_PORTS,
+    MAX_VALUE,
+    Address3,
     CostMeter,
     CouplingDefinition,
     Departure,
@@ -32,7 +36,7 @@ from event_universe.core.integer import (
 )
 
 from .ratios import PROJECTIONS, evaluate_ratio, project
-from .routing import balanced_port, rate_credit
+from .routing import balanced_port, direction_weights, rate_credit
 from .spatial import split_weighted
 
 
@@ -71,8 +75,13 @@ def evaluate(
         return unpack(spatial_fluxes[expression.field])
     if op in ("received", "outgoing"):
         channels = ports if op == "received" else outgoing
-        if len(channels) != 6 or not 0 <= expression.port < 6:
-            raise ValueError("directional expressions require six explicitly supplied local channels")
+        if (
+            not isinstance(channels, tuple)
+            or not 2 <= len(channels) <= MAX_PORTS
+            or type(expression.port) is not int
+            or not 0 <= expression.port < len(channels)
+        ):
+            raise ValueError("directional expressions require explicitly supplied bounded channels")
         return unpack(channels[expression.port][expression.field])
     operands = tuple(
         evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
@@ -162,6 +171,7 @@ class DisturbanceLaw:
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
     interactions: tuple[InteractionDefinition, ...] = ()
+    port_offsets: tuple[Address3, ...] = CARDINAL_OFFSETS
 
     def _interact(
         self,
@@ -203,7 +213,7 @@ class DisturbanceLaw:
                     or any(code != 1 for payload in carried for code in payload)
                 ):
                     raise ValueError("conversion requires zero carried routing and allowance state")
-                if not 1 <= original.channel_code <= 7:
+                if not 1 <= original.channel_code <= len(self.port_offsets) + 1:
                     raise ValueError("conversion channel must identify the seed or a neighbor port")
                 meter.charge("update")
                 zero = tuple((1,) * field.components for field in self.fields)
@@ -213,6 +223,8 @@ class DisturbanceLaw:
                     candidate[side].values,
                     zero,
                     channel_code=original.channel_code,
+                    route_count_codes=(1,) * len(self.port_offsets),
+                    route_weight_codes=(1,) * len(self.port_offsets),
                 )
         for record in candidate:
             self._validate(record, meter)
@@ -228,6 +240,18 @@ class DisturbanceLaw:
         return first, second
 
     def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
+        if not 2 <= len(self.port_offsets) <= MAX_PORTS:
+            raise ValueError("local transport requires a bounded port schema")
+        if (
+            type(record.channel_code) is not int
+            or not 1 <= record.channel_code <= len(self.port_offsets) + 1
+        ):
+            raise ValueError("record channel must identify the seed or a configured port")
+        for codes in (record.route_count_codes, record.route_weight_codes):
+            if len(codes) != len(self.port_offsets) or any(
+                type(value) is not int or not 1 <= value <= MAX_VALUE + 1 for value in codes
+            ):
+                raise ValueError("record routing state must match the bounded configured ports")
         definition = self.definitions[record.type_index]
         if len(record.values) != len(self.fields):
             raise ValueError("record field count differs from the configured schema")
@@ -259,8 +283,10 @@ class DisturbanceLaw:
         meter.charge("route")
         if rule.mode == "hold":
             return record, ()
+        if len(rule.weights) != len(self.port_offsets):
+            raise ValueError("transport weights must match configured port count")
         if rule.mode == "split":
-            channels = [[list(v) for v in record.values] for _ in range(6)]
+            channels = [[list(v) for v in record.values] for _ in self.port_offsets]
             phases: list[Payload] = []
             for index, value in enumerate(record.values):
                 updated = []
@@ -282,7 +308,14 @@ class DisturbanceLaw:
                     departures.append(
                         Departure(
                             port,
-                            DisturbanceRecord(record.type_index, values, zero, channel_code=port + 2),
+                            DisturbanceRecord(
+                                record.type_index,
+                                values,
+                                zero,
+                                channel_code=port + 2,
+                                route_count_codes=(1,) * len(self.port_offsets),
+                                route_weight_codes=(1,) * len(self.port_offsets),
+                            ),
                         )
                     )
             # Allocation phases belong to the local directional channel.
@@ -296,14 +329,7 @@ class DisturbanceLaw:
                     record.values[rule.direction_field if rule.direction_field is not None else 0]
                 )
             )
-            weights = (
-                max(0, direction[0]),
-                max(0, -direction[0]),
-                max(0, direction[1]),
-                max(0, -direction[1]),
-                max(0, direction[2]),
-                max(0, -direction[2]),
-            )
+            weights = direction_weights(direction, self.port_offsets, rule.direction_policy, meter)
         rate = 1 if rule.rate is None else evaluate(rule.rate, record.values, record.values, meter)[0]
         divisor = rule.rate_denominator
         if rule.rate_divisor is not None:

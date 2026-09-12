@@ -2,6 +2,7 @@
 
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.topology import validate_topology_configuration
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
@@ -14,6 +15,7 @@ class Simulation(DisturbanceEngine):
     """Run the fields, disturbances and integer laws supplied by initialization."""
 
     def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
+        validate_topology_configuration(initial)
         event_space, resolver = None, None
         if initial.event_program is not None:
             from event_universe.integration.event_runtime import build_event_runtime
@@ -27,6 +29,7 @@ class Simulation(DisturbanceEngine):
                 initial.couplings,
                 initial.operation_costs,
                 initial.interactions,
+                port_offsets=initial.topology.offsets,
             ),
             observer,
             SpatialLaw(
@@ -35,6 +38,7 @@ class Simulation(DisturbanceEngine):
                 initial.emissions,
                 initial.operation_costs,
                 initial.field_rules,
+                port_count=len(initial.topology.offsets),
             ),
             (
                 JointSpatialCouplingLaw(
@@ -43,6 +47,7 @@ class Simulation(DisturbanceEngine):
                     initial.operation_costs,
                     initial.spatial_fields,
                     initial.spatial_interactions,
+                    port_offsets=initial.topology.offsets,
                 )
                 if initial.spatial_interactions
                 or (
@@ -54,6 +59,7 @@ class Simulation(DisturbanceEngine):
                     initial.spatial_couplings,
                     initial.operation_costs,
                     initial.spatial_fields,
+                    port_offsets=initial.topology.offsets,
                 )
                 if initial.spatial_couplings
                 else None

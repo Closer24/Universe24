@@ -23,11 +23,39 @@ MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
 MAX_EXPRESSION_NODES = 64
+MAX_PORTS = 26
+MAX_SITE_MODULUS = 2
+MAX_SITE_RESIDUES = 8
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 Payload = tuple[int, ...]
 Values = tuple[Payload, ...]
-Weights = tuple[int, int, int, int, int, int]
+Weights = tuple[int, ...]
 Address3 = tuple[int, int, int]
+CARDINAL_OFFSETS: tuple[Address3, ...] = (
+    (1, 0, 0),
+    (-1, 0, 0),
+    (0, 1, 0),
+    (0, -1, 0),
+    (0, 0, 1),
+    (0, 0, -1),
+)
+
+
+@dataclass(frozen=True, slots=True)
+class PortTopology:
+    """Immutable local geometry, validated against the run's domain before use."""
+
+    offsets: tuple[Address3, ...] = CARDINAL_OFFSETS
+    site_modulus: int = 1
+    site_residues: tuple[Address3, ...] = ((0, 0, 0),)
+    model_id: str = "cardinal-six-v1"
+
+    @property
+    def degree(self) -> int:
+        return len(self.offsets)
+
+
+DEFAULT_TOPOLOGY = PortTopology()
 
 
 def bounded(value: int) -> int:
@@ -102,6 +130,7 @@ class TransportDefinition:
     routing: str = "cyclic"
     direction: Expression | None = None
     rate_divisor: Expression | None = None
+    direction_policy: str = "cardinal"
 
 
 @dataclass(frozen=True, slots=True)
@@ -218,6 +247,7 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    topology: PortTopology = DEFAULT_TOPOLOGY
 
 
 class Departure(NamedTuple):

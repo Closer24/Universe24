@@ -72,7 +72,7 @@ not make a calculation generic, integer or local.
 ### Local inputs and bounded work
 
 A physical rule may read its own fixed local records and information already
-delivered through the six neighbor ports under the transport contract. Neighbor
+delivered through the configured bounded ports under the transport contract. Neighbor
 coordinates do not authorize instantaneous reads of remote physical state.
 Trace every input to its causal owner, including self-field subtraction,
 computation-load fields, energy bookkeeping and collision eligibility.
@@ -127,6 +127,13 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 [same retention contract](RETENTION.md).
 
 ## Active generic ownership
+
+`core/topology.py` validates the immutable `PortTopology`, selected site pattern,
+neighbor destinations, reciprocal ports and supported feature combinations.
+Carriers, spatial scheduling and replay share its offset convention. Port state
+is fixed for the run at D <= 26; field values remain scalar or three-component.
+See [configured topology](CONFIGURED_TOPOLOGY.md) for the default six-port
+compatibility boundary, explicit affinity policy and fixed graph transit meaning.
 
 The engine receives an explicit `core/record_policy.RecordPolicy` alongside its
 local planner. `fields/record_operations.RecordOperations` owns the existing

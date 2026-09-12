@@ -6,6 +6,53 @@ checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
 
+## Configured reciprocal topology — 2026-09-12
+
+Base main: `992e0006469bb1156f517ae8273a80a980df7c57`. The opt-in contract is
+[configured topology](CONFIGURED_TOPOLOGY.md); the omitted six-port model keeps
+its previous geometry and costs. Validation used Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1, with Windows UTF-8 mode and `PYTHONPATH=src`.
+The required affected selection uses the shared state/parser dependencies;
+no full-suite switch was used. Its final result and submitted tree are recorded
+in the PR and CI. The validation checkout was verified byte-identical to the
+working tree, with output under an ordinary workspace path so retention guards
+did not treat an ancestor named `.codex` as a permitted artifact directory.
+
+Independent review covered reciprocal/site closure, BCC/FCC connectivity,
+scalar/vector ownership during delayed transfers and open escapes, local
+momentum/energy guards, nonlinear outgoing-owner guards, delayed revalidation,
+integer bounds, periodic translation, explicit unsupported compositions and
+saved topology playback. Two review findings were fixed with regressions:
+baseline totals must count actual permitted sites, and scalar sampling
+reservation must include all D ports and their projection operations. Exact
+budget and one-unit-short cases verify modeled delay as well as the meter.
+The final focused topology/coupling/invariant gate passed 142 cases.
+
+The [BCC encounter](../examples/topology/README.md) ran ten ticks through the
+normal CLI. Final source fingerprint:
+`202a81cc7473a1d53e0f8b71fe8a831243f715fe9f13631c53132b158acfaa62`.
+Initialization fingerprint:
+`8bb3c3dfb0f0a17c1db53b70731991ffb01e9f0d0ffde3e788037b2b17efa44b`.
+Its final states, events and input exactly reproduce the inspected GIF source.
+The independent test extends to tick 11: 22 actual opposite-port dispatches,
+meetings at ticks 2/6/10, one-tick transit, and restoration of the amplitudes
+after three encounters. Both owned norms stay 18/8; normalized candidate U is
+26 and direction-weighted Q is (10,10,10).
+
+The [inspected GIF](https://drive.google.com/file/d/1lwX1jPoIslURSYYy-RbCX9yE_yvGqssk/view)
+has 33 camera frames of 11 actual states, 720 by 1050 pixels, and 1,694,410 bytes.
+Every frame decoded; the node/axis, encounter, rotation and periodic-boundary
+views were inspected. Camera motion supplies no physical interpolation. U/Q
+are defined normalized diagnostics for two isolated modes, not SI energy or
+momentum, a Maxwell derivation or general same-mode interference accounting.
+
+The configuration and visualization Skills were updated. Boss, shared workflow,
+field-development, architecture and physics-review Skills were reviewed; their
+existing workflows apply without another procedural edit. Live Highlights was
+read at the revision recorded in [its implementation map](HIGHLIGHTS_IMPLEMENTATION.md);
+the user-authorized topology extension is reconciled there without changing
+the live document. Generated outputs remain subject to finite retention.
+
 ## Conservative directional-wave configuration and authoring Skill — 2026-09-12
 
 Based first on main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`, then integrated

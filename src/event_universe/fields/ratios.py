@@ -2,7 +2,14 @@
 
 from dataclasses import dataclass
 
-from event_universe.core.disturbance_state import CostMeter, Expression, Values, bounded, unpack
+from event_universe.core.disturbance_state import (
+    MAX_PORTS,
+    CostMeter,
+    Expression,
+    Values,
+    bounded,
+    unpack,
+)
 
 RATIO_BITS = 127
 TEMP_BITS = 255
@@ -135,8 +142,13 @@ def evaluate_ratio(
         return tuple(Ratio(v) for v in unpack(spatial_fluxes[expression.field]))
     if op in ("received", "outgoing"):
         channels = ports if op == "received" else outgoing
-        if len(channels) != 6:
-            raise ValueError("rational port expression requires six local channels")
+        if (
+            not isinstance(channels, tuple)
+            or not 2 <= len(channels) <= MAX_PORTS
+            or type(expression.port) is not int
+            or not 0 <= expression.port < len(channels)
+        ):
+            raise ValueError("rational port expression requires bounded immutable local channels")
         return tuple(Ratio(v) for v in unpack(channels[expression.port][expression.field]))
     args = tuple(
         evaluate_ratio(a, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)

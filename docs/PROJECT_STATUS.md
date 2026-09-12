@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+Optional [configured topology](CONFIGURED_TOPOLOGY.md) supports 2 to 26 reciprocal
+ports with three-dimensional vectors, bounded site patterns and causal local
+field/carrier transfers. Omitted topology retains the six-cardinal-port model.
+The [BCC vector encounter](../examples/topology/README.md) demonstrates a guarded
+polarization rotation; its normalized diagnostics do not establish Maxwell
+dynamics. Specialized six-port couplings, outward octant transport and the
+native event program explicitly reject unsupported topology combinations.
+
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar

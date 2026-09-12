@@ -284,7 +284,7 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/initialization.py` | Strict JSON schema and typed expression parsing |
 | `src/event_universe/core/disturbance_state.py` | Fixed generic definitions, records and positive payload codes |
 | `src/event_universe/core/disturbance_engine.py` | Local scheduling, fixed transit, ownership and capacity |
-| `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
+| `src/event_universe/core/topology.py` | Shared bounded configured-port geometry and sites; six cardinal ports by default |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
 | `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
@@ -325,7 +325,9 @@ fixed, and no computation debt accumulates between cycles.
 
 ## Preserved rules
 
-- Three dimensions and six causal neighbor links.
+- Three dimensions and six causal neighbor links by default; the explicit
+  [configured topology](docs/CONFIGURED_TOPOLOGY.md) supports bounded reciprocal
+  port lists, including BCC and FCC site patterns, for compatible generic laws.
 - Bounded integer payloads, arithmetic and fixed local storage.
 - Explicit ownership during local waits and transit.
 - Local conservation checks, with no global physical correction.

@@ -1,5 +1,10 @@
 # Documentation index
 
+- [Configured topology](CONFIGURED_TOPOLOGY.md): immutable reciprocal ports and
+  site patterns, default six-port compatibility, supported laws and invariants.
+- [BCC vector encounter](../examples/topology/README.md): complete JSON example
+  with independent normalized energy and directional-norm checks.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured

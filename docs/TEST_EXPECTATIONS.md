@@ -1,5 +1,21 @@
 # Test inputs and expected results
 
+## Configured neighbor topology
+
+`test_configured_topology.py` checks 2/4/6/8/12/18/26 port capacities, actual
+one-link diagonal arrivals, reciprocal/site closure, boundary escape, typed API
+capabilities, integer/rational port access and routing bounds.
+Baseline accounting independently checks 16 BCC and 32 FCC sites in a periodic
+4-cube, and 30 BCC versus 53 FCC sites in an open 5 by 7 by 3 box.
+`test_topology_invariants.py` independently checks all-port scalar/vector totals,
+nonlinear outgoing guards, local collision energy/momentum, delayed guard
+revalidation, integer phase preservation and formula-free evolving state.
+`test_topology_example.py` checks each owned mode and normalized U/Q at every
+tick of the BCC encounter, including actual amplitude rotation and periodic return.
+`test_topology_playback.py` checks metadata, selected-site projections and saved
+diagonal links/local observer channels. The authoritative supported scope and
+remaining physical limits are in [CONFIGURED_TOPOLOGY.md](CONFIGURED_TOPOLOGY.md).
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,

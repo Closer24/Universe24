@@ -68,11 +68,17 @@ are illustrative data, not a list of recognized physical entities.
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
 | Coupling | Configured local exchange between records, or between a record and a spatial field |
 
-The six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
+The default six ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`. They identify the direction
 of transport. A vector value still has three components; it is not automatically
 the six port weights. A negative field component and travel through a negative
 axis are independent facts. Oppositely directed transfers retain their separate
 channels rather than being replaced by their net vector.
+
+An explicit [configured topology](CONFIGURED_TOPOLOGY.md) instead selects D bounded
+reciprocal offsets. All weights, received samples and outgoing buffers then have
+D entries. Direction providers require explicit `direction_policy: "positive-dot"`
+for that model. Vectors still have three components. The topology contract defines
+site selection, capability rejection, integer bounds and calibration limits.
 
 An absent carried field is zero. Spatial fields instead use their configured
 baseline, which can be nonzero. Presence alone does not create a persistent
@@ -87,6 +93,7 @@ separate carriers and their different directions.
 | `schema_version` | `1` for conservative spatial laws, or `2` for finite dissipative spatial laws |
 | `model_id` | Explicit identifier for this configured candidate |
 | `shape` | Three positive bounded integer domain extents |
+| `topology` | Optional immutable `configured-ports-v1` offset list and site pattern; see [topology](CONFIGURED_TOPOLOGY.md) |
 | `boundary` | Optional `"periodic"` or `"open"`, default `"periodic"`, in either schema version |
 | `slots_per_cell` | Fixed positive resident capacity, at most 32 |
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
@@ -103,7 +110,7 @@ separate carriers and their different directions.
 | `spatial_seeds` | Optional initial octant populations at named lattice cells |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
-| `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
+| `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/configured-port-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
 
 The authoritative contract for local field selection, group semantics, rule
@@ -214,9 +221,9 @@ values start at zero. Defaults and seed overrides share the same validation.
 | --- | --- |
 | `hold` | Retain the record in its cell |
 | `move` | Transfer the whole record to one selected neighbor |
-| `split` | Divide extensive field components among up to six outgoing records |
+| `split` | Divide extensive field components among the configured outgoing records |
 
-`move` accepts six nonnegative integer `weights` or a `direction_field`, not
+`move` accepts D nonnegative integer `weights` (six by default) or a `direction_field`, not
 both. Direction `(2,-1,0)` yields port weights `[2,0,0,1,0,0]`. Weighted cyclic
 selection retains phase; it does not require floating-point normalization.
 A zero direction holds the record. Optional scalar `rate` and positive
@@ -225,7 +232,7 @@ retain fractional movement opportunity. A rate outside that range fails. The com
 numerator from `sum(abs(velocity))` and divides by 12, matching that configured
 field's scale. The engine does not supply this relation from the name.
 
-`split` accepts six nonnegative weights with a positive bounded sum. Each
+`split` accepts D nonnegative weights with a positive bounded sum. Each
 component's magnitude is partitioned exactly, then its sign is applied to the
 shares. Equal positive and negative amounts at the same phase therefore use the
 same ports with opposite signs and advance allocation phase identically. Phase

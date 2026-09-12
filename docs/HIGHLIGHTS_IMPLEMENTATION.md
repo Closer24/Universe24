@@ -24,6 +24,26 @@ treating its omissions as current gaps.
 
 ## 10. Implemented entities and rules
 
+### Configured topology reconciliation, 2026-09-12
+
+The live Highlights revision inspected for the user-authorized topology extension
+was `ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Its sections 3.3.3, 10.1 and 10.4 still describe six faces/ports. Section 5 also
+describes equivalent links with equal physical length and causal speed. This
+change retains that six-port default and adds the explicitly selected
+[configured-port hypothesis](CONFIGURED_TOPOLOGY.md) requested by the user.
+It does not rewrite the historical inventory below or claim that the live Google
+Doc was edited. Mixed-length offsets with common `link_ticks` supply a graph
+transit contract, not an established equal-Euclidean-speed law.
+
+Executable owners are `core/topology.py`, the configured carrier/local-field
+engines and their shared vector operations. Independent acceptance is in
+`test_configured_topology.py`, `test_topology_invariants.py` and
+`test_topology_example.py`; saved-offset display is covered by
+`test_topology_playback.py`. Geometry support and declared conservation are
+implemented; arbitrary field-law compatibility, physical isotropy, Maxwell
+emergence and universal energy conservation remain separate questions.
+
 ### 10.1 World, cells and links
 
 - The active world is a bounded three-dimensional lattice with six directed

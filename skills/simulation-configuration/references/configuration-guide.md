@@ -50,6 +50,7 @@ The authoritative top-level table is in
 | `model_id` | A descriptive identity for the selected rules; use a new identity for a new hypothesis |
 | `shape` | Three integer node counts, such as `[9,9,9]` or `[64,64,64]`; the latter is 64 cubed, not a 2D plane |
 | `boundary` | `periodic` connects opposite faces; `open` records escaping stock |
+| `topology` | Omit for six cardinal links, or select [configured offsets and sites](../../../docs/CONFIGURED_TOPOLOGY.md); number alone is insufficient |
 | `slots_per_cell` | Maximum co-resident carried records, 1 through 32; this is not the number of spatial modes |
 | `link_ticks` | Positive travel time for each nearest-neighbor link |
 | `normal_budget` | Positive local computation budget; lowering it can delay carrier commits |
@@ -61,6 +62,15 @@ A +X step from `[8,4,4]` returns at `[0,4,4]` with unchanged signs under periodi
 boundaries. `link_ticks`, transport rate and computation delay can affect motion;
 GIF `frame_ms` cannot. A larger domain does not add resolution to a fixed node.
 Begin with a bounded case before allocating a 64-cubed recorded state.
+
+For eight BCC links and a configured vector encounter, start from
+[bcc_vectors.json](../../../examples/topology/bcc_vectors.json). Its accompanying
+[example explanation](../../../examples/topology/README.md) defines the rotation,
+measured invariants and limits. Use `transport: "local"` for spatial fields in a
+configured topology; the default outward/rotation/native-event paths have separate
+six-port contracts. Port weights and `received`/`outgoing` indices follow the saved
+offset order. A direction provider on this topology explicitly selects
+`direction_policy: "positive-dot"`. Editing these values requires no compilation.
 
 ## 3. Define quantities and reusable entities
 

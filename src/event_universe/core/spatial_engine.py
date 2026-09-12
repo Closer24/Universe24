@@ -15,7 +15,13 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
 )
-from .topology import neighbor_address
+from .topology import (
+    inverse_port,
+    neighbor_address,
+    site_count,
+    validate_position,
+    validate_topology_configuration,
+)
 
 SpatialPlanner = Callable[
     [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
@@ -72,7 +78,9 @@ class SpatialEngine:
         coupler: SpatialCoupler | None = None,
         decayer: SpatialDecayer | None = None,
     ) -> None:
+        validate_topology_configuration(initial)
         self.initial = initial
+        self.port_count = len(initial.topology.offsets)
         self.planner = planner
         self.observer = observer
         self.coupler = coupler
@@ -101,10 +109,11 @@ class SpatialEngine:
         result = []
         for definition in self.initial.spatial_fields:
             zero = pack((0,) * self.initial.fields[definition.field].components)
-            result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6))
+            result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * self.port_count))
         return tuple(result)
 
     def _at(self, position: Address3) -> SpatialCell:
+        validate_position(position, self.initial.shape, self.initial.topology)
         if position not in self.cells:
             self.cells[position] = SpatialCell(self._blank_states())
             self._active.add(position)
@@ -115,7 +124,9 @@ class SpatialEngine:
         return self.cells[position]
 
     def _neighbor(self, position: Address3, port: int) -> Address3 | None:
-        return neighbor_address(position, port, self.initial.shape, self.initial.boundary)
+        return neighbor_address(
+            position, port, self.initial.shape, self.initial.boundary, self.initial.topology
+        )
 
     def _event(self, event: str, tick: int, position: Address3, **details: object) -> None:
         if self.observer is not None:
@@ -159,7 +170,7 @@ class SpatialEngine:
                 cell.states
                 if self.initial.field_rules
                 else tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * self.port_count)
                     for state in cell.states
                 )
             )
@@ -177,7 +188,7 @@ class SpatialEngine:
             active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
             if not active_source and not active_field and cell.received_count == 0:
                 cell.states = tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * self.port_count)
                     for state in states
                 )
                 cell.last_cost = 0
@@ -185,8 +196,10 @@ class SpatialEngine:
                 self._active.discard(position)
                 continue
             plan = self.planner(states, records, cell.received_count)
+            if len(plan.outgoing) != self.port_count:
+                raise ValueError("spatial proposal has incorrect port count")
             cost = bounded(checked_work(plan.cost + cell.received_decay_cost))
-            packets: list[SpatialPacket | None] = [None] * 6
+            packets: list[SpatialPacket | None] = [None] * self.port_count
             for port, bundle in enumerate(plan.outgoing):
                 if any(any(unpack(payload)) for field in bundle for payload in field):
                     packets[port] = SpatialPacket(
@@ -267,7 +280,7 @@ class SpatialEngine:
             return ReactionCommit(states, phases, None)
         # Only this instant's departure buffers are still locally appendable.
         # Packets from an earlier departure are immutable while in transit.
-        old_links = self.links.get(position, (None,) * 6)
+        old_links = self.links.get(position, (None,) * self.port_count)
         arrival = bounded(tick + self.initial.link_ticks)
         if any(packet is not None and packet.arrival_tick != arrival for packet in old_links):
             raise ValueError("reaction cannot alter a spatial packet already in transit")
@@ -377,7 +390,7 @@ class SpatialEngine:
                 field = self.initial.fields[definition.field]
                 old = cell.states[index]
                 populations = [list(unpack(v)) for v in old.populations]
-                directions = [[0] * field.components for _ in range(6)]
+                directions = [[0] * field.components for _ in range(self.port_count)]
                 for packet in surviving:
                     for octant, payload in enumerate(packet.fields[index]):
                         field.validate(payload)
@@ -415,12 +428,14 @@ class SpatialEngine:
             # ports so cancellation is distinct from no completed reception.
             received_fields = [
                 {
-                    self.initial.fields[definition.field].name: unpack(state.delivered[port ^ 1])
+                    self.initial.fields[definition.field].name: unpack(
+                        state.delivered[inverse_port(port, self.initial.topology)]
+                    )
                     for definition, state in zip(self.initial.spatial_fields, states, strict=True)
                 }
-                if any(packet.port == port ^ 1 for packet in arrivals)
+                if any(packet.port == inverse_port(port, self.initial.topology) for packet in arrivals)
                 else {}
-                for port in range(6)
+                for port in range(self.port_count)
             ]
             self._event(
                 "spatial_received",
@@ -448,7 +463,7 @@ class SpatialEngine:
 
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]
-        volume = self.initial.shape[0] * self.initial.shape[1] * self.initial.shape[2]
+        volume = site_count(self.initial.shape, self.initial.topology)
         for index, definition in enumerate(self.initial.spatial_fields):
             for component, value in enumerate(unpack(definition.baseline)):
                 result[definition.field][component] += volume * value
