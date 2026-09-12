@@ -70,6 +70,10 @@ disable the gate, or encode non-English prose as escapes to evade this rule.
 
 ## Change boundaries
 
+- Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)
+  to every physical change, including entity data and prototypes intended for
+  the active engine. It defines generic law ownership, integer intermediates,
+  causal inputs, formula-free payloads and the current tensor-support limit.
 - Enforce LOCALITY-1 in SIMULATOR_DEFINITIONS.md for every physical dependency,
   including self-field estimation and subtraction. Audit the origin of every
   input end-to-end: a local subtraction cannot legalize a global estimator.

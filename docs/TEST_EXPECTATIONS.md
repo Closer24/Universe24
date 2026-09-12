@@ -542,6 +542,18 @@ pair totals larger than individual registers, and renamed fields in a larger
 world. These are classical-candidate and generic-contract checks, not proof of
 an emergent gravitational or universal energy law.
 
+## Standalone generic vector lab
+
+[The lab contract suite](../tools/generic_vector_lab/test_lab.py) checks exact
+rational vectors, energy/momentum/charge accounting, reaction rollback, binding,
+recoil and local quantum examples. [Node-rule tests](../tools/generic_vector_lab/test_node_rules.py)
+check six-way A/A/B/B/C/C composition, forbidden mixtures, configurable limits
+including a 17-input case, deterministic matching and property predicates.
+The six-node example has E=3, p=(0,0,0), q=0 before and after its configured
+cyclic vector map. These are mechanism checks, not real-particle validation.
+[The repository adapter](../tests/test_generic_vector_lab.py) runs all 52 lab
+cases; the check selector maps every lab source/configuration change to it.
+
 
 ## Selected deferred quantum event network
 
@@ -560,6 +572,16 @@ expectations; a passing source identity and command belong in the integration PR
 The legacy quantum, architecture, integer, locality, navigation and language
 suites remain regression requirements. Do not weaken them to accept the new
 candidate. No physical engine behavior or default rendering mode is changed.
+
+## Local field impulse and cell ownership
+
+`tests/test_local_lorentz_field.py` covers a four-link causal pulse, independent
+electric/magnetic impulse directions, neutral response, equal/opposite local
+momentum, delayed commit, field autonomy, renaming and invalid arithmetic.
+`tests/test_cell_state_contract.py` verifies formula-free evolving state and
+rejects injected ASTs, laws, callbacks and formula strings. See
+[the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
+
 ## Executable entity and conversion expectations
 
 `tests/test_entity_compiler.py` validates all 46 profiles, active representative
