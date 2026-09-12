@@ -1,0 +1,37 @@
+name: N-ary reaction visualization
+on:
+  push:
+    branches: [feat/generic-particle-reactions-final]
+permissions:
+  contents: read
+jobs:
+  visualize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[render]'
+      - name: Run and render physical reaction examples
+        run: |
+          rm -rf artifacts/nary-visualization
+          mkdir -p artifacts/nary-visualization
+          for reaction in electron-electron-scattering muon-decay; do
+            python -m event_universe.particle_reactions \
+              --catalog examples/known-entities/catalog.json \
+              --reaction examples/known-entities/${reaction}.json \
+              --output-init artifacts/nary-visualization/${reaction}-init.json \
+              --output-manifest artifacts/nary-visualization/${reaction}-manifest.json
+            python -m event_universe \
+              --init artifacts/nary-visualization/${reaction}-init.json \
+              --output artifacts/nary-visualization/${reaction}-run \
+              --visualize
+            test -f artifacts/nary-visualization/${reaction}-run/run.html
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nary-reaction-html
+          path: artifacts/nary-visualization/
+          retention-days: 1
