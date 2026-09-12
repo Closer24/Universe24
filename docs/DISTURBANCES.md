@@ -1,5 +1,11 @@
 # Initialization-defined disturbances
 
+The optional [bounded rational and balanced-routing contract](RATIONAL_PARTICLES.md)
+defines rational expression projections, exact dynamic movement divisors and
+local consistency checks. Old integer arithmetic and cyclic routing remain
+available with their original behavior; new particle candidates select their
+new settings explicitly in initialization JSON.
+
 This is the contract for the active generic simulator. `Simulation` takes a
 validated `InitialState`; no built-in mass, charge, particle or force law is
 selected when initialization is missing. Names and candidate laws come from a

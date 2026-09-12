@@ -99,6 +99,9 @@ class TransportDefinition:
     direction_field: int | None = None
     rate: Expression | None = None
     rate_denominator: int = 1
+    routing: str = "cyclic"
+    direction: Expression | None = None
+    rate_divisor: Expression | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -109,6 +112,7 @@ class DisturbanceDefinition:
     transport: TransportDefinition
     updates: tuple[UpdateRule, ...] = ()
     cost_field: int | None = None
+    checks: tuple[Invariant, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -178,6 +182,9 @@ class DisturbanceRecord:
     spatial_remainders: Values = ()
     emission_remaining: Values = ()
     spatial_remaining: Values = ()
+    route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
+    route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
+    rate_credit_denominator: int = 1
 
 
 @dataclass(frozen=True, slots=True)

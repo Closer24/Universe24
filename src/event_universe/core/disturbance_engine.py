@@ -138,7 +138,7 @@ class DisturbanceEngine:
                 definition = self.initial.disturbances[record.type_index]
                 if definition.transport.mode == "move" and definition.transport.direction_field is None:
                     return True
-                if definition.updates or definition.cost_field is not None:
+                if definition.updates or definition.checks or definition.cost_field is not None:
                     return True
                 if any(any(unpack(v)) for v in record.values):
                     return True
@@ -494,7 +494,15 @@ class DisturbanceEngine:
             )
             if payloads
         }
-        return {"bookkeeping": values} if values else {}
+        extra: dict[str, object] = dict(values)
+        if any(v != 1 for v in record.route_weight_codes):
+            extra.update(
+                route_counts=tuple(v - 1 for v in record.route_count_codes),
+                route_weights=tuple(v - 1 for v in record.route_weight_codes),
+            )
+        if record.rate_credit_denominator != 1:
+            extra["movement_credit"] = (record.rate_remainder_code - 1, record.rate_credit_denominator)
+        return {"bookkeeping": extra} if extra else {}
 
     def snapshot(self) -> dict[str, object]:
         """Plain data for headless reports or an explicitly requested renderer."""

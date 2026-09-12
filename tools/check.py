@@ -123,6 +123,8 @@ def select(changed, sources):
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
+        if path.startswith("examples/particle-contracts/"):
+            tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         if path.endswith((".md", ".py", ".js", ".html", ".css", ".json")):

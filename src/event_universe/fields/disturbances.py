@@ -24,6 +24,8 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work, signed_divrem
 
+from .ratios import PROJECTIONS, evaluate_ratio, project
+from .routing import balanced_port, rate_credit
 from .spatial import split_weighted
 
 
@@ -54,6 +56,11 @@ def evaluate(
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
     op = expression.op
+    if op in PROJECTIONS:
+        values = evaluate_ratio(
+            expression.arguments[0], left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing
+        )
+        return project(op, values)
     if op == "literal":
         return expression.literal
     if op == "field":
@@ -83,6 +90,8 @@ def evaluate(
         )
     if op == "vector":
         return tuple(operand[0] for operand in operands)
+    if op == "eq":
+        return (int(operands[0][0] == operands[1][0]),)
     if op == "gt":
         return (1 if operands[0][0] > operands[1][0] else 0,)
     if op in ("neg", "abs", "sum", "component"):
@@ -181,7 +190,7 @@ class DisturbanceLaw:
                 candidate[assignment.side], assignment.field, pack(value)
             )
         for record in candidate:
-            self._validate(record)
+            self._validate(record, meter)
         first, second = candidate
         original_totals = _sum_records((left, right), self.fields)
         candidate_totals = _sum_records((first, second), self.fields)
@@ -193,7 +202,7 @@ class DisturbanceLaw:
                 raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
         return first, second
 
-    def _validate(self, record: DisturbanceRecord) -> None:
+    def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
         definition = self.definitions[record.type_index]
         if len(record.values) != len(self.fields):
             raise ValueError("record field count differs from the configured schema")
@@ -201,6 +210,9 @@ class DisturbanceLaw:
             field.validate(record.values[index])
             if index not in definition.fields and any(unpack(record.values[index])):
                 raise ValueError("record carries a field absent from its disturbance type")
+        for check in definition.checks:
+            if evaluate(check.expression, record.values, record.values, meter)[0] <= 0:
+                raise ValueError(f"local check {check.name} failed")
         if record.exchange_remainders:
             if len(record.exchange_remainders) != len(self.couplings):
                 raise ValueError("carried exchange state must match the fixed coupling rules")
@@ -251,8 +263,14 @@ class DisturbanceLaw:
             # Allocation phases belong to the local directional channel.
             return replace(record, values=zero, phase_codes=tuple(phases)), tuple(departures)
         weights = rule.weights
-        if rule.direction_field is not None:
-            direction = unpack(record.values[rule.direction_field])
+        if rule.direction_field is not None or rule.direction is not None:
+            direction = (
+                evaluate(rule.direction, record.values, record.values, meter)
+                if rule.direction is not None
+                else unpack(
+                    record.values[rule.direction_field if rule.direction_field is not None else 0]
+                )
+            )
             weights = (
                 max(0, direction[0]),
                 max(0, -direction[0]),
@@ -261,26 +279,50 @@ class DisturbanceLaw:
                 max(0, direction[2]),
                 max(0, -direction[2]),
             )
-        denominator = bounded(sum(weights))
         rate = 1 if rule.rate is None else evaluate(rule.rate, record.values, record.values, meter)[0]
-        if not 0 <= rate <= rule.rate_denominator:
+        divisor = rule.rate_denominator
+        if rule.rate_divisor is not None:
+            divisor = checked_work(
+                divisor * evaluate(rule.rate_divisor, record.values, record.values, meter)[0]
+            )
+        if not 0 <= rate <= divisor or divisor <= 0:
             raise ValueError("movement rate must be between zero and one hop per base interval")
-        if denominator == 0:
+        if not any(weights):
             return record, ()
-        budget = checked_work(record.rate_remainder_code - 1 + rate)
-        if budget < rule.rate_denominator:
-            return replace(record, rate_remainder_code=budget + 1), ()
-        phase = (record.route_phase_code - 1) % denominator
-        offset = 0
-        selected = 0
-        for port, weight in enumerate(weights):
-            if offset <= phase < offset + weight:
-                selected = port
-            offset += weight
+        if rule.rate_divisor is not None:
+            move, credit, credit_den = rate_credit(
+                record.rate_remainder_code - 1, record.rate_credit_denominator, rate, divisor, meter
+            )
+        else:
+            budget = checked_work(record.rate_remainder_code - 1 + rate)
+            move, credit, credit_den = budget >= divisor, budget % divisor, 1
+        if not move:
+            return replace(
+                record, rate_remainder_code=credit + 1, rate_credit_denominator=credit_den
+            ), ()
+        counts, previous = (
+            tuple(v - 1 for v in record.route_count_codes),
+            tuple(v - 1 for v in record.route_weight_codes),
+        )
+        if rule.routing == "balanced":
+            selected, counts, previous = balanced_port(weights, counts, previous, meter)
+            phase_code = record.route_phase_code
+        else:
+            denominator = bounded(sum(weights))
+            phase = (record.route_phase_code - 1) % denominator
+            offset, selected = 0, 0
+            for port, weight in enumerate(weights):
+                if offset <= phase < offset + weight:
+                    selected = port
+                offset += weight
+            phase_code = (phase + 1) % denominator + 1
         moved = replace(
             record,
-            route_phase_code=(phase + 1) % denominator + 1,
-            rate_remainder_code=budget - rule.rate_denominator + 1,
+            route_phase_code=phase_code,
+            rate_remainder_code=credit + 1,
+            rate_credit_denominator=credit_den,
+            route_count_codes=tuple(v + 1 for v in counts),
+            route_weight_codes=tuple(v + 1 for v in previous),
             channel_code=selected + 2,
         )
         meter.charge("send")
@@ -300,7 +342,7 @@ class DisturbanceLaw:
         for slot, record in enumerate(records):
             if record is None:
                 continue
-            self._validate(record)
+            self._validate(record, meter)
             definition = self.definitions[record.type_index]
             meter.charge("read", len(definition.fields))
             for rule in definition.updates:
@@ -373,8 +415,8 @@ class DisturbanceLaw:
                     if carried:
                         carried[rule_index] = pack(tuple(residuals))
                         left = replace(left, exchange_remainders=tuple(carried))
-                    self._validate(left)
-                    self._validate(right)
+                    self._validate(left, meter)
+                    self._validate(right, meter)
                     updated[left_slot], updated[right_slot] = left, right
 
         # Multi-field transactions follow exchanges and precede all routing.
@@ -423,7 +465,7 @@ class DisturbanceLaw:
         final_records = tuple(r for _, r in replacements) + tuple(d.record for d in departures)
         for record in final_records:
             if record is not None:
-                self._validate(record)
+                self._validate(record, meter)
         final = _sum_records(final_records, self.fields)
         for index, field in enumerate(self.fields):
             if field.conserved:

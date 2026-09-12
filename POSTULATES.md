@@ -12,6 +12,13 @@ Distinguish three categories:
 
 ## Active initialization-defined model
 
+The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
+finite integer state while representing fractional quantities in explicitly
+configured whole/remainder/denominator fields. Its larger finite intermediate
+registers, balanced neighbor selection and exact fractional clock are named
+choices. They do not establish isotropic light propagation or electromagnetic
+energy. The six-neighbor causal boundary remains binding.
+
 The active model treats physical content as configured disturbances carrying
 named fields. The engine supplies integer local updates, causal transport,
 conservation enforcement and scheduling; initialization supplies identities and
