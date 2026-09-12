@@ -8,6 +8,14 @@ transport rule and cost setting. The engine has no hardcoded interpretation of
 mass, charge, velocity or other user-defined physical names. Missing initialization
 does not select a scalar model.
 
+The host [experiment contract](docs/EXPERIMENTS.md) assembles versioned local
+parts into that same runtime JSON. Optional [unit calibration](docs/UNITS.md)
+validates dimensions and coherent integer quanta before execution. It supplies
+no physical formula or implicit runtime conversion. Full
+[checkpoints](docs/CHECKPOINTS.md) preserve owned state, pending proposals,
+transit, scheduling and native event decisions for compatible-source restart;
+ordinary diagnostic snapshots remain observations, not restart files.
+
 New emergence experiments produce states using elementary local vector
 operations rather than supplied continuum physical formulas. Comparisons,
 invariants and independent external benchmarks remain validation tools. Existing

@@ -1,0 +1,15 @@
+{
+  "part_version": 1,
+  "part_kind": "definitions",
+  "includes": ["fields.json"],
+  "data": {
+    "disturbance_types": [
+      {
+        "name": "traveler",
+        "fields": ["quantity", "heading"],
+        "defaults": {"quantity": 1, "heading": [1, 0, 0]},
+        "transport": {"mode": "move", "direction_field": "heading"}
+      }
+    ]
+  }
+}

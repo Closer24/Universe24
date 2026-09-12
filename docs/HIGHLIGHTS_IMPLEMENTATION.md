@@ -24,6 +24,19 @@ treating its omissions as current gaps.
 
 ## 10. Implemented entities and rules
 
+### Experiment contract reconciliation, 2026-09-12
+
+The live document was reread at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 3.3.2 and 3.5 require compatible scales and defined quantities; sections
+4.5 and 10.7 require explicit initialization and preserved run evidence.
+[Experiment packages](EXPERIMENTS.md), [unit validation](UNITS.md) and
+[full restart](CHECKPOINTS.md) implement host-side support for those requirements.
+They preserve integer physical state and the existing configured local laws.
+Calibration is a declared mapping, not a derived fundamental physical scale;
+dimensional validation is not proof that an equation emerges from discrete rules.
+The live Google Doc was not changed, and output format adapters are outside scope.
+
 ### Configured topology reconciliation, 2026-09-12
 
 The live Highlights revision inspected for the user-authorized topology extension

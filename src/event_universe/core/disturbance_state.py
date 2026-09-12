@@ -1,6 +1,6 @@
 """Fixed, domain-neutral schemas for initialization-defined disturbances."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
@@ -16,6 +16,7 @@ if TYPE_CHECKING:
     )
 
 from .integer import checked_work
+from .unit_state import UnitSystem
 
 MAX_VALUE = 1_073_741_823
 MAX_FIELDS = 16
@@ -248,6 +249,8 @@ class InitialState:
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
     topology: PortTopology = DEFAULT_TOPOLOGY
+    unit_system: UnitSystem | None = None
+    source_json: str | None = field(default=None, compare=False, repr=False)
 
 
 class Departure(NamedTuple):

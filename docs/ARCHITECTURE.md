@@ -16,6 +16,21 @@ and delayed engine commit; its ownership restrictions are in
 
 ## Local integer operation contract
 
+Host input and persistence owners are separate from physical updates:
+`experiment.py` resolves bounded local JSON parts; `schemas/` publishes structural
+contracts; `units.py` checks the configured AST and exact SI calibration. Unit
+definitions live in immutable `core/unit_state.py` metadata. Host Fraction-based
+conversion never feeds a physical step except as an explicitly authored integer.
+
+`checkpoint.py` coordinates strict persistence; `checkpoint_codec.py` has a static
+type allowlist; `checkpoint_validation.py` checks state/ownership; and
+`checkpoint_quantum.py` transfers native backend state without querying an outcome.
+Only those two codec/native host modules may import quantum state outside the
+existing integration boundary. Core, fields, dynamics and ordinary diagnostics
+retain their existing import restrictions. The runner owns provenance and fresh
+output leases. See [experiments](EXPERIMENTS.md), [units](UNITS.md) and
+[checkpoint compatibility](CHECKPOINTS.md) for the corresponding contracts.
+
 This contract applies to all new and changed physical code, entity definitions,
 configuration adapters and prototypes intended for the active Simulation.
 Use [DISTURBANCES.md](DISTURBANCES.md) for the supported operation vocabulary

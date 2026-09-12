@@ -5,15 +5,24 @@
 | File | Owns | Consumer |
 | --- | --- | --- |
 | Reusable catalog or law JSON | Type defaults, units, assumptions and explicit rules | Existing entity adapter or example preparation script |
-| Experiment authoring JSON | Selected definitions, placements and parameter choices | That example's preparation script, if one exists |
+| Versioned experiment manifest and parts | Environment, definitions, initial conditions and run controls, with bounded local includes | `python -m event_universe --experiment ...` |
 | Final initialization JSON | Complete validated world and initial state | `python -m event_universe --init ...` |
 | Display JSON | Supported camera, arrows, dimensions and playback controls | The selected renderer, not the simulator |
 | Run output directory | Copied input, metadata, states, events and optional recorded HTML | Inspection and rendering tools |
 
-These are responsibilities, not a new universal package schema. A simple run needs
+The [experiment package contract](../../../docs/EXPERIMENTS.md) defines the manifest
+and reusable parts, with a complete runnable example. A simple run still needs
 only one initialization JSON. There is no generic `include`, `entities_file`, `camera`
 or `display` member in that runtime file. Reusable authoring files must be assembled
 by a supported adapter. Do not put Python expressions or callbacks into JSON.
+
+For reusable files, start with `examples/experiment-package/experiment.json`.
+Run `python -m event_universe --experiment examples/experiment-package/experiment.json --validate`,
+then replace `--validate` with `--output artifacts/package-run`. Export the offline
+editor contract using `python -m event_universe --schema runtime`. Run controls
+in the manifest's run part can be overridden by explicit CLI flags.
+See [checkpoint continuation](../../../docs/CHECKPOINTS.md) for saving complete
+state instead of reconstructing it from a movie or final snapshot.
 
 ## 1. Start with a complete working configuration
 
@@ -55,6 +64,7 @@ The authoritative top-level table is in
 | `link_ticks` | Positive travel time for each nearest-neighbor link |
 | `normal_budget` | Positive local computation budget; lowering it can delay carrier commits |
 | `operation_costs` | Explicit positive prices for all nine operations, as in the template |
+| `unit_system` | Optional [coherent rational SI calibration](../../../docs/UNITS.md); validates dimensional operations before running |
 | `ticks` | Requested physical duration; CLI `--ticks` is an explicit override |
 
 Coordinates start at zero. For shape `[9,9,9]`, every seed component is 0 through 8.
@@ -86,6 +96,13 @@ additive amount, and requires an extensive field (`extensive: true` is the defau
 A direction can be intensive and
 nonconserved. Energy derived from several registers needs its own expression and
 acceptance check. Declaring a field named energy does not calculate it.
+
+With `unit_system`, each field's `units` must resolve to a declared dimension and
+exact rational SI scale. The coherent raw quantum is shared across all fields of
+the same dimension. Use the host conversion helpers for authoring values; they
+reject unrepresentable integers. The runtime gains no automatic conversions or
+hidden mass, energy or momentum formulas. Without `unit_system`, existing labels
+and numerical behavior remain unchanged.
 
 `disturbance_types` owns the fields carried by a reusable type, `defaults`, local
 updates and its `transport`. `seeds` creates occurrences:

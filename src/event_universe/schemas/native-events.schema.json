@@ -1,0 +1,1036 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Closer24/Universe24/main/src/event_universe/schemas/native-events.schema.json",
+  "title": "Universe24 native event program",
+  "description": "Structural contract for causal and native quantum v1/v2 programs. Cross-references, operator validity, ordered ticks, locality and dimensions depending on selected registers are checked by the canonical initialization validator.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/causal"
+    },
+    {
+      "$ref": "#/$defs/v1"
+    },
+    {
+      "$ref": "#/$defs/v2"
+    }
+  ],
+  "$defs": {
+    "integer": {
+      "type": "integer",
+      "minimum": -1073741823,
+      "maximum": 1073741823
+    },
+    "nonnegative": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1073741823
+    },
+    "positive": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1073741823
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "\\S"
+    },
+    "address": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1073741823
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "site": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 29
+    },
+    "coefficient": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": -1073741823,
+          "maximum": 1073741823
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -1073741823,
+            "maximum": 1073741823
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      ]
+    },
+    "matrix": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 5,
+            "maxItems": 5
+          },
+          "minItems": 5,
+          "maxItems": 5
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 6,
+            "maxItems": 6
+          },
+          "minItems": 6,
+          "maxItems": 6
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 7,
+            "maxItems": 7
+          },
+          "minItems": 7,
+          "maxItems": 7
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 8,
+            "maxItems": 8
+          },
+          "minItems": 8,
+          "maxItems": 8
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 9,
+            "maxItems": 9
+          },
+          "minItems": 9,
+          "maxItems": 9
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 10,
+            "maxItems": 10
+          },
+          "minItems": 10,
+          "maxItems": 10
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 11,
+            "maxItems": 11
+          },
+          "minItems": 11,
+          "maxItems": 11
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 12,
+            "maxItems": 12
+          },
+          "minItems": 12,
+          "maxItems": 12
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 13,
+            "maxItems": 13
+          },
+          "minItems": 13,
+          "maxItems": 13
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 14,
+            "maxItems": 14
+          },
+          "minItems": 14,
+          "maxItems": 14
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 15,
+            "maxItems": 15
+          },
+          "minItems": 15,
+          "maxItems": 15
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/coefficient"
+            },
+            "minItems": 16,
+            "maxItems": 16
+          },
+          "minItems": 16,
+          "maxItems": 16
+        }
+      ]
+    },
+    "instrument": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/matrix"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "grouped_instrument": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/instrument"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "operation_v1": {
+      "type": "object",
+      "properties": {
+        "sites": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/site"
+          },
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "matrix": {
+          "$ref": "#/$defs/matrix"
+        }
+      },
+      "required": [
+        "sites",
+        "matrix"
+      ],
+      "additionalProperties": false
+    },
+    "operation_v2": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/operation_v1"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sites": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/site"
+              },
+              "minItems": 1,
+              "maxItems": 1
+            },
+            "channel": {
+              "$ref": "#/$defs/instrument"
+            }
+          },
+          "required": [
+            "sites",
+            "channel"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "layer_v1": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741823
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/operation_v1"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        }
+      },
+      "required": [
+        "tick",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "layer_v2": {
+      "type": "object",
+      "properties": {
+        "tick": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741823
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/operation_v2"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        }
+      },
+      "required": [
+        "tick",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "binding_v1": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/$defs/address"
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "\\S"
+          },
+          "minItems": 1,
+          "maxItems": 2
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "\\S"
+        },
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -1073741823,
+            "maximum": 1073741823
+          },
+          "minItems": 1,
+          "maxItems": 4
+        },
+        "instrument": {
+          "$ref": "#/$defs/instrument"
+        }
+      },
+      "required": [
+        "address",
+        "types",
+        "field",
+        "codes",
+        "instrument"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "instrument": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "codes": {
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "instrument": {
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "codes": {
+                "minItems": 2,
+                "maxItems": 2
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "instrument": {
+                "minItems": 3,
+                "maxItems": 3
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "codes": {
+                "minItems": 3,
+                "maxItems": 3
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "instrument": {
+                "minItems": 4,
+                "maxItems": 4
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "codes": {
+                "minItems": 4,
+                "maxItems": 4
+              }
+            }
+          }
+        }
+      ]
+    },
+    "binding_v2": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/$defs/address"
+            },
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S"
+              },
+              "minItems": 1,
+              "maxItems": 2
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "\\S"
+            },
+            "codes": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -1073741823,
+                "maximum": 1073741823
+              },
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "instrument": {
+              "$ref": "#/$defs/instrument"
+            },
+            "site": {
+              "$ref": "#/$defs/site"
+            }
+          },
+          "required": [
+            "address",
+            "types",
+            "field",
+            "codes",
+            "instrument"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "instrument": {
+                    "minItems": 1,
+                    "maxItems": 1
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 1,
+                    "maxItems": 1
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "instrument": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "instrument": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "instrument": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/$defs/address"
+            },
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S"
+              },
+              "minItems": 1,
+              "maxItems": 2
+            },
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "\\S"
+            },
+            "codes": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": -1073741823,
+                "maximum": 1073741823
+              },
+              "minItems": 1,
+              "maxItems": 4
+            },
+            "grouped_instrument": {
+              "$ref": "#/$defs/grouped_instrument"
+            },
+            "site": {
+              "$ref": "#/$defs/site"
+            }
+          },
+          "required": [
+            "address",
+            "types",
+            "field",
+            "codes",
+            "grouped_instrument"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "grouped_instrument": {
+                    "minItems": 1,
+                    "maxItems": 1
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 1,
+                    "maxItems": 1
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "grouped_instrument": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "grouped_instrument": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 3,
+                    "maxItems": 3
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "grouped_instrument": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "codes": {
+                    "minItems": 4,
+                    "maxItems": 4
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "causal": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "const": "causal-events-v1"
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741823
+        }
+      },
+      "required": [
+        "model",
+        "capacity"
+      ],
+      "additionalProperties": false
+    },
+    "v1": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "const": "local-quantum-events-v1"
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741823
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/address"
+          },
+          "minItems": 1,
+          "maxItems": 30,
+          "uniqueItems": true
+        },
+        "occupied": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/site"
+          },
+          "minItems": 0,
+          "maxItems": 30,
+          "uniqueItems": true
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1073741823
+        },
+        "tickets": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1073741823
+          },
+          "minItems": 0,
+          "maxItems": 1024
+        },
+        "bounds": {
+          "type": "object",
+          "properties": {
+            "max_nodes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_eval_nodes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_terms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_records": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/layer_v1"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding_v1"
+          },
+          "minItems": 0,
+          "maxItems": 30
+        }
+      },
+      "required": [
+        "model",
+        "capacity",
+        "addresses"
+      ],
+      "additionalProperties": false
+    },
+    "v2": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "const": "local-quantum-events-v2"
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1073741823
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/address"
+          },
+          "minItems": 1,
+          "maxItems": 30
+        },
+        "occupied": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/site"
+          },
+          "minItems": 0,
+          "maxItems": 30,
+          "uniqueItems": true
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1073741823
+        },
+        "tickets": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1073741823
+          },
+          "minItems": 0,
+          "maxItems": 1024
+        },
+        "bounds": {
+          "type": "object",
+          "properties": {
+            "max_nodes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_eval_nodes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_terms": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            },
+            "max_records": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1073741823
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "dimensions": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4
+          },
+          "minItems": 0,
+          "maxItems": 30
+        },
+        "initial_levels": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "minItems": 0,
+          "maxItems": 30
+        },
+        "register_names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "\\S"
+          },
+          "minItems": 0,
+          "maxItems": 30,
+          "uniqueItems": true
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/layer_v2"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/binding_v2"
+          },
+          "minItems": 0,
+          "maxItems": 30
+        }
+      },
+      "required": [
+        "model",
+        "capacity",
+        "addresses"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "initial_levels"
+            ],
+            "properties": {
+              "initial_levels": {
+                "minItems": 1
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "occupied": {
+                "maxItems": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "required": [
+                "register_names"
+              ],
+              "properties": {
+                "register_names": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "addresses": {
+                "uniqueItems": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

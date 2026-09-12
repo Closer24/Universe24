@@ -1,5 +1,22 @@
 # Test inputs and expected results
 
+## Experiment, unit and restart contracts
+
+`test_experiment.py` checks bounded composition, reusable definitions, exact
+portable source capture and invalid dependency rejection. `test_json_schema.py`
+validates the shipped runtime examples and versioned package parts using an
+offline registry; `test_native_json_schema.py` covers native branch shapes.
+`test_experiment_runner.py` checks CLI validation, schema export, effective
+overrides and package provenance without changing physical event traces.
+
+`test_units.py` checks exact host conversions, coherent field scales, dimensional
+AST validation in each supported law context and identical calibrated/legacy
+integer results. Its force/time and momentum/energy formulas are explicit test
+inputs, not claimed emergent laws. `test_checkpoint.py` compares future states,
+events and counters across actual saved pending/transit/native boundaries and
+rejects malformed/incompatible state. `test_checkpoint_runner.py` checks exact
+CLI continuation, cumulative accounting and output retention ownership.
+
 ## Configured neighbor topology
 
 `test_configured_topology.py` checks 2/4/6/8/12/18/26 port capacities, actual

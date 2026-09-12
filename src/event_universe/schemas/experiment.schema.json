@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Closer24/Universe24/main/src/event_universe/schemas/experiment.schema.json",
+  "type": "object",
+  "properties": {
+    "experiment_version": {
+      "const": 1
+    },
+    "schema_version": {
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "model_id": {
+      "$ref": "https://raw.githubusercontent.com/Closer24/Universe24/main/src/event_universe/schemas/runtime.schema.json#/$defs/name"
+    },
+    "environment": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?![\\\\/])(?!.*[\\\\:\\u0000])[^\\n]+\\.json$"
+    },
+    "definitions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1024,
+        "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?![\\\\/])(?!.*[\\\\:\\u0000])[^\\n]+\\.json$"
+      },
+      "minItems": 1,
+      "maxItems": 64,
+      "uniqueItems": true
+    },
+    "initial_conditions": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?![\\\\/])(?!.*[\\\\:\\u0000])[^\\n]+\\.json$"
+    },
+    "run": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?![\\\\/])(?!.*[\\\\:\\u0000])[^\\n]+\\.json$"
+    }
+  },
+  "required": [
+    "experiment_version",
+    "schema_version",
+    "model_id",
+    "environment",
+    "definitions",
+    "initial_conditions",
+    "run"
+  ],
+  "additionalProperties": false,
+  "title": "Universe24 reusable experiment manifest"
+}

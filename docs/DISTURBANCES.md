@@ -29,6 +29,14 @@ generic payload schema below.
 
 ## Run and initialize
 
+[Experiment packages](EXPERIMENTS.md) are a host authoring contract that resolves
+environment, definitions, initial conditions and run controls to this runtime
+schema. Export the packaged Draft 2020-12 contract using `--schema runtime`;
+canonical parsing additionally validates references, bounded integer tokens and
+semantic constraints. Optional top-level `unit_system` selects
+[strict dimensional validation](UNITS.md); omitting it preserves free-text labels.
+Use [complete checkpoints](CHECKPOINTS.md) for exact continuation.
+
 ```bash
 python -m event_universe --init examples/basic.json --output artifacts/basic
 python -m event_universe --init examples/basic.json --ticks 20 --output artifacts/basic-20
@@ -184,9 +192,10 @@ seed coordinates. Historical research APIs retain their own topology contract.
 
 `components` is 1 or 3. JSON scalar values are integers; vector values are
 three-element integer arrays. `signed` controls permitted mathematical signs.
-`scale` is a positive declared denominator, default 1. Units and scale describe
-the quantity; the evaluator does not infer dimensional consistency or convert
-between units automatically. Rules must use compatible scales explicitly.
+`scale` is a positive declared denominator, default 1. Without `unit_system`,
+units remain descriptive labels and the model must ensure dimensional consistency.
+The optional [unit validator](UNITS.md) checks configured expressions and coherent
+scales before execution. The physical evaluator never converts units automatically.
 
 `extensive`, default true, means additive amounts may be divided among outgoing
 records. A conserved field must be extensive. A direction or other intensive
@@ -339,8 +348,9 @@ must have exactly equal scalar/vector values before and after the transaction.
 Every field marked `conserved` also retains its pair sum component by component,
 even if the configuration omits an invariant for it. Checks occur per transaction,
 so a later transaction cannot cancel an earlier violation. Units and scales of
-custom expressions must be declared consistently by the model; the evaluator
-does not infer dimensional correctness or prove physical meaning from a label.
+custom expressions must be declared consistently by the model. Optional
+`unit_system` validates their dimensions before execution; a correct dimension
+does not prove physical meaning or establish a conservation law.
 
 The generic expression additions are:
 

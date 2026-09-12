@@ -21,7 +21,9 @@ dependencies or create HTML/GIF unless visualization is explicitly requested.
 Use the existing Python runner and optional renderer; an API-only candidate must
 retain its actual identity in recorded evidence.
 
-For primary runs, require the explicit initialization file and read its field,
+For primary runs, require explicit initialization, an
+[experiment package](../../docs/EXPERIMENTS.md), or a compatible
+[full checkpoint](../../docs/CHECKPOINTS.md), and read its field,
 disturbance, transport, coupling and cost definitions; see
 [DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select a
 historical scalar universe. Historical scenarios belong to the separate
@@ -47,6 +49,15 @@ Frame stride changes recording only, never the physical update interval. On a
 failure retain the trace and failed metadata for the retention period. If visualization was requested,
 also retain the failure frame and FAILED RUN HTML report. Do not smooth the
 trajectory or silently rerun with weaker parameters.
+
+Use `--checkpoint PATH` to persist a successful tick boundary, and `--resume PATH`
+with a fresh output directory to continue it. `--ticks` means additional steps on
+resume; without it the runner completes the remaining configured duration. An
+in-output checkpoint is named `checkpoint.json`. It includes pending work and
+transit, unlike `state.json` or recorded playback. Do not replace a rejected
+checkpoint with a replay or skip its source compatibility checks. Checkpoints
+follow the same artifact retention policy; retain an external copy when needed.
+The package run preserves exact source files and effective run controls.
 
 Inspect metadata and events for every run. Only when visualization was requested,
 inspect the existing standalone HTML and relevant frames. Test-run rendering is

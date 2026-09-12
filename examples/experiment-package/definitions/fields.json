@@ -1,0 +1,10 @@
+{
+  "part_version": 1,
+  "part_kind": "definitions",
+  "data": {
+    "fields": [
+      {"name": "quantity", "components": 1, "units": "count", "signed": false, "conserved": true},
+      {"name": "heading", "components": 3, "units": "direction", "signed": true, "conserved": false, "extensive": false}
+    ]
+  }
+}

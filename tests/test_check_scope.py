@@ -28,6 +28,21 @@ def test_configured_topology_resource_selects_its_dynamic_invariants():
     assert "tests/test_directional_wave.py" not in selected
 
 
+@pytest.mark.parametrize(
+    "path,consumer",
+    [
+        ("src/event_universe/schemas/runtime.schema.json", "tests/test_json_schema.py"),
+        ("src/event_universe/schemas/native-events.schema.json", "tests/test_native_json_schema.py"),
+        ("examples/experiment-package/run.json", "tests/test_experiment_runner.py"),
+        ("src/event_universe/checkpoint_codec.py", "tests/test_quantum_architecture.py"),
+    ],
+)
+def test_experiment_resources_and_persistence_retain_contract_consumers(path, consumer):
+    selected, _ = CHECK.select([path], {})
+    assert consumer in selected
+    assert "tests/test_collisions.py" not in selected
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

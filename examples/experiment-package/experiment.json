@@ -1,0 +1,9 @@
+{
+  "experiment_version": 1,
+  "schema_version": 1,
+  "model_id": "reusable-two-streams-v1",
+  "environment": "environment.json",
+  "definitions": ["definitions/entities.json"],
+  "initial_conditions": "initial.json",
+  "run": "run.json"
+}

@@ -6,6 +6,56 @@ checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
 
+## Reusable experiments, unit validation and full restart — 2026-09-12
+
+Implementation base: `3c739e20e400d3c9e4479cbba523fda9434930b1`, the configured
+topology branch above main `992e0006469bb1156f517ae8273a80a980df7c57`.
+Contracts are [experiments](EXPERIMENTS.md), [units](UNITS.md) and
+[checkpoints](CHECKPOINTS.md). These add host interfaces and input checks without
+new physical operators, automatic runtime unit conversion or output adapters.
+
+Validation uses Python 3.14.7, pytest 9.1.1, Ruff 0.16.7, mypy 2.3.1 and
+jsonschema 4.26.0. Formal Draft 2020-12 references resolve offline; production
+runtime dependencies remain empty. The required `tools/check.py --base
+3c739e20e400d3c9e4479cbba523fda9434930b1` selection expands through shared parser,
+state and package configuration consumers. It also builds distribution artifacts.
+An ordinary workspace validation copy is byte-checked against the source before
+execution, preserving the retention guard on the working tree's `.codex` parent.
+Exact submitted source and the final affected-gate result belong to the PR/CI.
+
+Independent review checks portable source capture and bounded includes, package
+defaults and overrides, recursive schema shapes, unit calibration and dimensional
+operations, and complete checkpoint ownership. Unit tests compare calibrated and
+uncalibrated integer traces, including explicit force/time and momentum/energy
+expressions. Those are declared test laws, not claims of discrete emergence.
+
+Restart cases compare all subsequent events, snapshots, phase/residual state,
+costs and cumulative ledgers after carrier transit, delayed proposals, open
+finite fields, local coupling, configured topology and pure/mixed/grouped native
+decisions. CLI continuation is also tested in a new Python process. Review found
+and corrected source JSON ordering, large unit metadata encoding, sampled-flux
+layout, pending/current quantity balance and native payload consistency issues.
+Corruption checks run before a restored world is returned; checksums are integrity
+evidence, not authentication or proof that an arbitrary edited state has a valid
+physical history.
+
+Configuration and runner Skills link the new contracts. Boss, architecture and
+physics review workflows were applied; the existing local integer law contract
+remains authoritative. The unchanged live Highlights revision was reconciled in
+[its implementation map](HIGHLIGHTS_IMPLEMENTATION.md).
+
+The inspected [18-tick package demo](https://drive.google.com/file/d/1UWdUKHiwzVxQ_VHfRP3gSCKUtcSMa0jm/view)
+uses source fingerprint
+`f704060adae5cb65723712453cb63199070daac8ba9849698e193c85244777c2`
+and merged initialization fingerprint
+`6d6678cfb8cf88284e050b2facaf1a314d327a5c967effd65689ea5270e23b92`.
+Two occurrences of one reusable type share a node at ticks 2/11 and return
+periodically at ticks 9/18. Quantity remains 2. Saving at tick 9 and continuing
+nine steps exactly matches all 19 snapshots and 140 ordered events. No encounter
+law is selected in this authoring demo. The 720 by 960 GIF is 662,744 bytes,
+contains 19 actual states without physical interpolation, and every frame decoded.
+Its digest is `428fab3229e7a69c9cbd06ca251cf8e5d3dd7f8754c9ad0bf5d4c8d3ae09b037`.
+
 ## Configured reciprocal topology — 2026-09-12
 
 Base main: `992e0006469bb1156f517ae8273a80a980df7c57`. The opt-in contract is

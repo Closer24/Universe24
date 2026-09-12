@@ -1,5 +1,7 @@
 """Public assembly of the generic disturbance simulator."""
 
+from pathlib import Path
+
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.topology import validate_topology_configuration
@@ -15,7 +17,10 @@ class Simulation(DisturbanceEngine):
     """Run the fields, disturbances and integer laws supplied by initialization."""
 
     def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
+        from event_universe.units import validate_units
+
         validate_topology_configuration(initial)
+        validate_units(initial)
         event_space, resolver = None, None
         if initial.event_program is not None:
             from event_universe.integration.event_runtime import build_event_runtime
@@ -84,3 +89,28 @@ class Simulation(DisturbanceEngine):
             event_space=event_space,
             resolver=resolver,
         )
+        self._checkpoint_components = (
+            self._planner,
+            self._record_policy,
+            self._spatial,
+            self._spatial.planner if self._spatial else None,
+            self._spatial.coupler if self._spatial else None,
+            self._spatial.decayer if self._spatial else None,
+            self.event_space,
+            self._resolver,
+        )
+
+    def save_checkpoint(self, path: Path, *, initialization: str | bytes | None = None) -> Path:
+        """Save the complete canonical world at its current completed step boundary."""
+        from event_universe.checkpoint import save_checkpoint
+
+        return save_checkpoint(self, path, initialization=initialization)
+
+    @classmethod
+    def from_checkpoint(cls, path: Path, *, observer: EventSink | None = None) -> Simulation:
+        """Restore a saved world without replaying already completed ticks."""
+        from event_universe.checkpoint import load_checkpoint
+
+        if cls is not Simulation:
+            raise ValueError("checkpoint restore requires the canonical Simulation class")
+        return load_checkpoint(path, observer=observer)

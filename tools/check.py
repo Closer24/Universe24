@@ -166,6 +166,26 @@ def select(changed, sources):
         if path.startswith("tools/generic_vector_lab/"):
             tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
+        if path.startswith("src/event_universe/schemas/"):
+            tests.update(
+                ("tests/test_json_schema.py", "tests/test_native_json_schema.py", "tests/test_units.py")
+            )
+        if path.startswith("examples/experiment-package/"):
+            tests.update(
+                (
+                    "tests/test_experiment.py",
+                    "tests/test_json_schema.py",
+                    "tests/test_experiment_runner.py",
+                )
+            )
+        if path.startswith("src/event_universe/checkpoint"):
+            tests.update(
+                (
+                    "tests/test_quantum_architecture.py",
+                    "tests/test_checkpoint.py",
+                    "tests/test_checkpoint_runner.py",
+                )
+            )
         if path.startswith("examples/particle-contracts/"):
             tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":

@@ -1073,6 +1073,7 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_interactions",
             "event_program",
             "topology",
+            "unit_system",
         },
         required,
     )
@@ -1094,6 +1095,8 @@ def parse_initial_state(document: object) -> InitialState:
     fields = _fields(obj["fields"])
     disturbances = _disturbances(obj["disturbance_types"], fields, topology)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
+    from .units import parse_unit_system, validate_units
+
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         shape=shape,
@@ -1122,8 +1125,14 @@ def parse_initial_state(document: object) -> InitialState:
         spatial_interactions=_spatial_interactions(
             obj.get("spatial_interactions", []), fields, disturbances, spatial, port_count
         ),
-        event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
+        event_program=(
+            None
+            if "event_program" not in obj
+            else json.dumps(obj["event_program"], sort_keys=True, separators=(",", ":"), allow_nan=False)
+        ),
         topology=topology,
+        unit_system=parse_unit_system(obj["unit_system"]) if "unit_system" in obj else None,
+        source_json=json.dumps(obj, sort_keys=True, separators=(",", ":"), allow_nan=False),
     )
     validate_topology_configuration(initial)
     if initial.event_program is not None:
@@ -1131,6 +1140,7 @@ def parse_initial_state(document: object) -> InitialState:
 
         parse_event_program(initial)
     _validate_conversions(initial)
+    validate_units(initial)
     return initial
 
 
