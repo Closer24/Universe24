@@ -1,0 +1,25 @@
+name: Directional delay audit
+on:
+  push:
+    branches: [feat/directional-delay]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 992e0006469bb1156f517ae8273a80a980df7c57
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Archive pinned checkout without credentials
+        run: |
+          test -z "$(git config --local --get-regexp 'extraheader|credential' || true)"
+          tar -czf "$RUNNER_TEMP/directional-source.tar.gz" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: directional-source
+          path: ${{ runner.temp }}/directional-source.tar.gz
+          retention-days: 1
