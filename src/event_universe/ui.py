@@ -47,6 +47,7 @@ def validate_source(source: object) -> dict[str, object]:
         "fields": len(initial.fields),
         "types": len(initial.disturbances),
         "seeds": len(initial.seeds),
+        "runtime_injections": len(initial.runtime_injections),
     }
 
 

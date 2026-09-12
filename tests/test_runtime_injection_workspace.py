@@ -35,7 +35,7 @@ def test_workspace_assets_offer_generic_drag_and_touch_timed_placement() -> None
     assert 'data-tab="timeline"' in page
     assert "Timed placement" in page
     assert "runtime_injections" in script
-    assert 'draggable = true' in script
+    assert "draggable = true" in script
     assert 'addEventListener("dragstart"' in script
     assert 'addEventListener("drop"' in script
     assert 'addEventListener("click"' in script

@@ -183,6 +183,7 @@ def _execute_run(
         "disturbance_types": [kind.name for kind in initial.disturbances],
         "shape": initial.shape,
         "link_ticks": initial.link_ticks,
+        "runtime_injections_scheduled": len(initial.runtime_injections),
         "computation": world.computation_report(),
     }
     if world.event_space is not None:

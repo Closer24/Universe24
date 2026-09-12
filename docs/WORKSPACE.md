@@ -56,6 +56,7 @@ is preserved.
 - **Fields:** names, scalar/vector structure, units, signs, scale and conservation.
 - **Disturbances:** owned fields, defaults, transport and local updates.
 - **Initial state:** seed positions, disturbance types and value overrides.
+- **Timed placement:** drag or tap a disturbance onto a selected lattice slice and tick, then edit its exact field values.
 - **Rules & costs:** local exchange couplings and primitive operation prices.
 - **JSON:** the complete schema, including optional members without form controls.
 
@@ -81,6 +82,14 @@ download is unavailable, use the **Download JSON** link shown after export.
 The initial-placement diagram reads configured seed positions, not computed
 motion. It is an isometric projection; concentric rings denote co-located seeds.
 The preview never supplies physical inputs.
+
+The Timed placement tab edits physical input, not playback. Choose XY, XZ or YZ,
+a layer and a positive tick, then drag a disturbance-type token onto the grid. On
+touch devices, select the token and tap a node. The editor writes the exact integer
+address and type into `runtime_injections`; the cards below the grid expose tick,
+coordinates and optional field-value overrides. Initial seeds appear as dashed
+reference rings. Running submits an immutable JSON snapshot, so changing the draft
+does not mutate a child simulation already in progress.
 
 ## Movie and folded settings
 

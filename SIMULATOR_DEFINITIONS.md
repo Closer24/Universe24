@@ -18,7 +18,11 @@ physical inventory, executable probes and remaining classical/quantum gaps.
 [docs/DISTURBANCES.md](docs/DISTURBANCES.md) is the authoritative active schema
 and transition contract: bounded scalar/vector payloads, whole-record or extensive
 transport, atomic local exchange, explicit sources, fixed link transit, local
-computation delay without debt, capacity failures and headless output.
+computation delay without debt, capacity failures and headless output. The optional
+`runtime_injections` schedule is an explicit external source intervention: it inserts
+a prevalidated generic disturbance only at its declared tick and address, contributes
+its payload to source accounting, and then leaves the record to ordinary local laws.
+It is not emergent dynamics, a remote signal or a display-side state mutation.
 
 Optional [spatial fields](docs/SPATIAL_FIELDS.md) add initialization-defined
 baselines, continuous external emission and fixed-clock outward octant transport.

@@ -13,6 +13,7 @@ from .disturbance_state import (
     LocalPlan,
     Packet,
     PendingCycle,
+    RuntimeInjection,
     bounded,
     decode,
     unpack,
@@ -72,6 +73,11 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
+        schedule: dict[int, list[RuntimeInjection]] = {}
+        for injection in initial.runtime_injections:
+            schedule.setdefault(injection.tick, []).append(injection)
+        self._runtime_injections = {tick: tuple(injections) for tick, injections in schedule.items()}
+        self._runtime_injections_applied = 0
         self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
             rule.type_index for rule in initial.spatial_interactions
         }
@@ -164,6 +170,8 @@ class DisturbanceEngine:
         report: dict[str, object] = {
             "model_operations_cost": self._model_work,
             "local_cycles_started": self._local_cycles,
+            "runtime_injections_scheduled": len(self.initial.runtime_injections),
+            "runtime_injections_applied": self._runtime_injections_applied,
         }
         if self.event_space is not None:
             report["causal_events"] = self.event_space.next_id
@@ -423,6 +431,49 @@ class DisturbanceEngine:
                     values=self.record_values(packet.record),
                 )
 
+    def _inject_due(self) -> None:
+        injections = self._runtime_injections.get(self.tick, ())
+        if not injections:
+            return
+        grouped: dict[Address3, list[RuntimeInjection]] = {}
+        for injection in injections:
+            grouped.setdefault(injection.position, []).append(injection)
+        for position, local in grouped.items():
+            cell = self._cells.get(position)
+            if cell is not None and cell.pending is not None:
+                raise ValueError("runtime injection cannot modify a cell with a pending local cycle")
+            free = (
+                self.initial.slots_per_cell
+                if cell is None
+                else sum(record is None for record in cell.records)
+            )
+            if len(local) > free:
+                raise ValueError("runtime injection capacity exceeded")
+        if self.event_space is not None:
+            self.event_space.require_room(len(injections))
+
+        committed: list[RuntimeInjection] = []
+        for injection in injections:
+            cell = self._at(injection.position)
+            records = list(cell.records)
+            slot = records.index(None)
+            records[slot] = injection.record
+            cell.records = tuple(records)
+            for field_index, payload in enumerate(injection.record.values):
+                for component, value in enumerate(unpack(payload)):
+                    self._source_totals[field_index][component] += value
+            committed.append(injection)
+        self._runtime_injections_applied += len(committed)
+
+        # Ownership and accounting commit before diagnostics can fail.
+        for injection in committed:
+            self._emit(
+                "runtime_injected",
+                injection.position,
+                disturbance=self.initial.disturbances[injection.record.type_index].name,
+                values=self.record_values(injection.record),
+            )
+
     def step(self) -> None:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
@@ -443,6 +494,7 @@ class DisturbanceEngine:
             self._deliver()
             for position in sorted(self._cells):
                 self._commit(position, self._cells[position])
+            self._inject_due()
             if self._resolver is not None:
                 self._resolver.advance(self.tick)
         except Exception:

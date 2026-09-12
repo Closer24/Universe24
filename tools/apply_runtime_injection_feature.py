@@ -56,13 +56,13 @@ replace_once(
 )
 replace_once(
     "src/event_universe/initialization.py",
-    "            \"event_program\",\n            \"observer\",\n",
-    "            \"event_program\",\n            \"observer\",\n            \"runtime_injections\",\n",
+    '            "event_program",\n            "observer",\n',
+    '            "event_program",\n            "observer",\n            "runtime_injections",\n',
 )
 replace_once(
     "src/event_universe/initialization.py",
-    "        seeds=_seeds(obj[\"seeds\"], fields, disturbances, shape, capacity),\n        spatial_fields=spatial,\n",
-    "        seeds=_seeds(obj[\"seeds\"], fields, disturbances, shape, capacity),\n        runtime_injections=_runtime_injections(\n            obj.get(\"runtime_injections\", []), fields, disturbances, shape, capacity\n        ),\n        spatial_fields=spatial,\n",
+    '        seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity),\n        spatial_fields=spatial,\n',
+    '        seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity),\n        runtime_injections=_runtime_injections(\n            obj.get("runtime_injections", []), fields, disturbances, shape, capacity\n        ),\n        spatial_fields=spatial,\n',
 )
 
 replace_once(
@@ -77,7 +77,7 @@ replace_once(
 )
 replace_once(
     "src/event_universe/core/disturbance_engine.py",
-    "        report: dict[str, object] = {\n            \"model_operations_cost\": self._model_work,\n            \"local_cycles_started\": self._local_cycles,\n        }\n",
+    '        report: dict[str, object] = {\n            "model_operations_cost": self._model_work,\n            "local_cycles_started": self._local_cycles,\n        }\n',
     """        report: dict[str, object] = {\n            \"model_operations_cost\": self._model_work,\n            \"local_cycles_started\": self._local_cycles,\n            \"runtime_injections_scheduled\": len(self.initial.runtime_injections),\n            \"runtime_injections_applied\": self._runtime_injections_applied,\n        }\n""",
 )
 replace_once(
@@ -121,11 +121,11 @@ replace_once(
 )
 replace_once(
     "src/event_universe/ui_assets/app.js",
-    "  drawPlacement();\n  $(\"#run\").disabled = !configuration || busy || loading || runs.some(run => run.status === \"running\");\n",
-    "  drawPlacement();\n  redrawTimedPlacement();\n  $(\"#run\").disabled = !configuration || busy || loading || runs.some(run => run.status === \"running\");\n",
+    '  drawPlacement();\n  $("#run").disabled = !configuration || busy || loading || runs.some(run => run.status === "running");\n',
+    '  drawPlacement();\n  redrawTimedPlacement();\n  $("#run").disabled = !configuration || busy || loading || runs.some(run => run.status === "running");\n',
 )
 
-TIMED_PLACEMENT = r'''
+TIMED_PLACEMENT = r"""
 const placementPlanes = {XY: [0, 1, 2], XZ: [0, 2, 1], YZ: [1, 2, 0]};
 
 function placementAxes() { return placementPlanes[placementPlane] || placementPlanes.XY; }
@@ -239,7 +239,7 @@ function renderTimedPlacement(doc) {
   block.append(canvas, node("p", "", "preview-caption")); block.lastChild.id = "placement-caption";
   editor.append(block); redrawTimedPlacement();
 }
-'''
+"""
 replace_once(
     "src/event_universe/ui_assets/app.js",
     "function renderEditor() {\n",
@@ -254,7 +254,7 @@ replace_once(
 append_once(
     "src/event_universe/ui_assets/style.css",
     ".timed-placement-editor",
-    r'''
+    r"""
 .timed-placement-editor { margin-bottom: 22px; }
 .placement-toolbar { display: grid; grid-template-columns: repeat(3, minmax(130px, 1fr)); gap: 12px; margin: 12px 0; }
 .placement-palette { display: flex; flex-wrap: wrap; gap: 9px; margin: 10px 0 14px; }
@@ -267,7 +267,7 @@ append_once(
   .placement-token { min-height: 46px; }
   .placement-canvas { max-height: 50vh; }
 }
-''',
+""",
 )
 
 replace_once(
@@ -277,7 +277,7 @@ replace_once(
 )
 replace_once(
     "docs/DISTURBANCES.md",
-    "```json\n{\"position\": [2, 2, 2], \"type\": \"carrier\", \"values\": {\"inventory\": 6}}\n```\n\n### Transport\n",
+    '```json\n{"position": [2, 2, 2], "type": "carrier", "values": {"inventory": 6}}\n```\n\n### Transport\n',
     """```json\n{\"position\": [2, 2, 2], \"type\": \"carrier\", \"values\": {\"inventory\": 6}}\n```\n\n### Runtime injections\n\n`runtime_injections` is an optional bounded schedule of explicit external interventions.\nIt uses the same disturbance type definitions, defaults and value validation as seeds,\nbut each entry has a positive `tick`. Tick zero remains initial state and must use\n`seeds`. A scheduled entry is data, not a remote-state query or a hidden physical law:\n\n```json\n{\"tick\": 5, \"position\": [7, 4, 2], \"type\": \"carrier\",\n \"values\": {\"inventory\": 3, \"heading\": [1, 0, 0]}}\n```\n\nAt tick `T`, completed link deliveries and already-ready local commits are resolved\nfirst. The complete injection batch for `T` is then validated and inserted at its\ndeclared cells. The tick-`T` snapshot includes the new records; their ordinary local\ncycles can begin on the following transition. A target cell with a frozen pending\ncycle rejects an injection, and insufficient resident capacity rejects the whole due\nbatch before any injection is inserted. The schedule contains at most 256 entries,\nand entries at one tick/address cannot exceed `slots_per_cell`.\n\nEvery injected payload is recorded as explicit source input for accounting. This\nallows conserved quantities to change without pretending the change emerged from\nclosed local dynamics. The engine never selects an injection from a physical name,\nglobal measurement or remote state. A run that ends before a future scheduled tick\nsimply leaves that entry unapplied.\n\n### Transport\n""",
 )
 

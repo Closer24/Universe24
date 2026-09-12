@@ -8,6 +8,7 @@ from .core.disturbance_state import (
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
     MAX_RULES,
+    MAX_RUNTIME_INJECTIONS,
     MAX_SLOTS,
     MAX_TYPES,
     MAX_VALUE,
@@ -24,6 +25,7 @@ from .core.disturbance_state import (
     Invariant,
     OperationCosts,
     Payload,
+    RuntimeInjection,
     Seed,
     TransportDefinition,
     UpdateRule,
@@ -610,6 +612,39 @@ def _seeds(
     return tuple(result)
 
 
+def _runtime_injections(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    shape: Address3,
+    capacity: int,
+) -> tuple[RuntimeInjection, ...]:
+    result: list[RuntimeInjection] = []
+    occupied: dict[tuple[int, Address3], int] = {}
+    names = _names(disturbances)
+    phases = tuple(pack((0,) * field.components) for field in fields)
+    for index, raw in enumerate(_array(value, "runtime_injections", MAX_RUNTIME_INJECTIONS)):
+        obj = _object(
+            raw,
+            f"runtime_injections[{index}]",
+            {"tick", "position", "type", "values"},
+            {"tick", "position", "type"},
+        )
+        tick = _integer(obj["tick"], f"runtime_injections[{index}].tick", 1)
+        position = _address(obj["position"], f"runtime_injections[{index}].position", 0)
+        if any(coordinate >= length for coordinate, length in zip(position, shape, strict=True)):
+            raise ValueError("runtime injection position must be within shape")
+        key = (tick, position)
+        occupied[key] = occupied.get(key, 0) + 1
+        if occupied[key] > capacity:
+            raise ValueError("runtime injections at the same tick and position exceed slots_per_cell")
+        type_index = _index(obj["type"], names, f"runtime_injections[{index}].type")
+        definition = disturbances[type_index]
+        values = _values(obj.get("values", {}), fields, definition.fields, definition.defaults)
+        result.append(RuntimeInjection(tick, position, DisturbanceRecord(type_index, values, phases)))
+    return tuple(result)
+
+
 def _decay(value: object) -> DecayDefinition:
     keys = {"retain_numerator", "retain_denominator"}
     obj = _object(value, "spatial decay", keys, keys)
@@ -1004,6 +1039,7 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_interactions",
             "event_program",
             "observer",
+            "runtime_injections",
         },
         required,
     )
@@ -1039,6 +1075,9 @@ def parse_initial_state(document: object) -> InitialState:
             tuple(_integer(costs[name], f"cost of {name}", 1) for name in OPERATIONS)
         ),
         seeds=_seeds(obj["seeds"], fields, disturbances, shape, capacity),
+        runtime_injections=_runtime_injections(
+            obj.get("runtime_injections", []), fields, disturbances, shape, capacity
+        ),
         spatial_fields=spatial,
         emissions=_emissions(obj.get("emissions", []), fields, disturbances, spatial, schema_version),
         spatial_seeds=_spatial_seeds(obj.get("spatial_seeds", []), fields, spatial, shape),

@@ -209,6 +209,14 @@ acceptance requirements, not a statement that a particular source tree passed.
 | Receiving/outgoing capacity or arithmetic bound exceeded | Explicit stopped run with retained ownership, no hidden queue or dropped record |
 | Missing CLI `--init` | Error without implicit built-in physics |
 | Ordinary headless run | Input, event, metadata and final-state files; no frame capture/render import |
+| Runtime injection at tick 1 | Absent at tick 0; inserted after tick-1 deliveries/ready commits; full payload counted as source input; `runtime_injected` event at tick 1 |
+| Runtime injection into full or frozen-pending cell | Whole due batch rejects before injected occupancy or source accounting changes |
+| Timed-placement workspace | Same strict JSON validator; drag/drop and touch placement write only generic `runtime_injections`; direct runner remains the sole engine |
+
+`test_runtime_injections.py` covers parsing, tick-boundary ownership, source
+accounting, capacity/frozen-cycle rejection and explicit visual recording.
+`test_runtime_injection_workspace.py` covers workspace validation and the generic
+drag/touch editor surface.
 
 `test_initialization.py` covers the parser and examples;
 `test_disturbance_engine.py` covers generic ownership, timing and arithmetic;

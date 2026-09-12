@@ -42,9 +42,7 @@ def records_at(world: Simulation, position: tuple[int, int, int]):
 
 def test_runtime_injection_reuses_seed_payload_validation_and_type_defaults() -> None:
     raw = document()
-    raw["runtime_injections"] = [
-        injection(values={"mass": 5, "charge": 3, "velocity": [0, -2, 1]})
-    ]
+    raw["runtime_injections"] = [injection(values={"mass": 5, "charge": 3, "velocity": [0, -2, 1]})]
     initial = parse_initial_state(raw)
     scheduled = initial.runtime_injections[0]
     assert scheduled.tick == 1
@@ -61,9 +59,7 @@ def test_runtime_injection_reuses_seed_payload_validation_and_type_defaults() ->
 
 def test_runtime_injection_appears_exactly_at_tick_and_is_accounted_as_source() -> None:
     raw = document()
-    raw["runtime_injections"] = [
-        injection(values={"mass": 5, "charge": 3, "velocity": [0, 0, 0]})
-    ]
+    raw["runtime_injections"] = [injection(values={"mass": 5, "charge": 3, "velocity": [0, 0, 0]})]
     events: list[dict[str, object]] = []
     world = Simulation(parse_initial_state(raw), observer=events.append)
     target = (8, 8, 8)
@@ -182,9 +178,7 @@ def test_runtime_injection_configuration_has_fixed_global_and_local_capacity() -
 def test_runner_records_runtime_injection_in_visualized_tick(tmp_path: Path) -> None:
     raw = document()
     raw["ticks"] = 2
-    raw["runtime_injections"] = [
-        injection(values={"mass": 5, "charge": 3, "velocity": [0, 0, 0]})
-    ]
+    raw["runtime_injections"] = [injection(values={"mass": 5, "charge": 3, "velocity": [0, 0, 0]})]
     source = tmp_path / "input.json"
     source.write_text(json.dumps(raw), encoding="utf-8")
     output = tmp_path / "run"
@@ -194,9 +188,9 @@ def test_runner_records_runtime_injection_in_visualized_tick(tmp_path: Path) -> 
     assert path == output / "run.html"
     assert path.is_file()
     events = [json.loads(line) for line in (output / "events.jsonl").read_text().splitlines()]
-    assert [(event["event"], event["tick"]) for event in events if event["event"] == "runtime_injected"] == [
-        ("runtime_injected", 1)
-    ]
+    assert [
+        (event["event"], event["tick"]) for event in events if event["event"] == "runtime_injected"
+    ] == [("runtime_injected", 1)]
     metadata = json.loads((output / "run.json").read_text())
     assert metadata["runtime_injections_scheduled"] == 1
     assert metadata["computation"]["runtime_injections_applied"] == 1

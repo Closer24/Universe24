@@ -102,6 +102,7 @@ separate carriers and their different directions.
 | `couplings` | Optional list, at most 32 local exchange rules |
 | `interactions` | Optional list, at most 32 atomic pair transactions |
 | `seeds` | Positions, disturbance type names and optional value overrides |
+| `runtime_injections` | Optional bounded external disturbance placements with a tick, position, type and optional value overrides |
 | `spatial_fields` | Optional outward fields with baseline and branch weights, or schema 1 local fields; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice cells |
@@ -211,6 +212,32 @@ values start at zero. Defaults and seed overrides share the same validation.
 ```json
 {"position": [2, 2, 2], "type": "carrier", "values": {"inventory": 6}}
 ```
+
+### Runtime injections
+
+`runtime_injections` is an optional bounded schedule of explicit external interventions.
+It uses the same disturbance type definitions, defaults and value validation as seeds,
+but each entry has a positive `tick`. Tick zero remains initial state and must use
+`seeds`. A scheduled entry is data, not a remote-state query or a hidden physical law:
+
+```json
+{"tick": 5, "position": [7, 4, 2], "type": "carrier",
+ "values": {"inventory": 3, "heading": [1, 0, 0]}}
+```
+
+At tick `T`, completed link deliveries and already-ready local commits are resolved
+first. The complete injection batch for `T` is then validated and inserted at its
+declared cells. The tick-`T` snapshot includes the new records; their ordinary local
+cycles can begin on the following transition. A target cell with a frozen pending
+cycle rejects an injection, and insufficient resident capacity rejects the whole due
+batch before any injection is inserted. The schedule contains at most 256 entries,
+and entries at one tick/address cannot exceed `slots_per_cell`.
+
+Every injected payload is recorded as explicit source input for accounting. This
+allows conserved quantities to change without pretending the change emerged from
+closed local dynamics. The engine never selects an injection from a physical name,
+global measurement or remote state. A run that ends before a future scheduled tick
+simply leaves that entry unapplied.
 
 ### Transport
 

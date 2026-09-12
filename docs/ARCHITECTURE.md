@@ -159,6 +159,14 @@ and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
 
+The optional runtime-injection schedule is immutable host control input parsed with
+the initialization. The engine owns its tick-boundary commit because scheduling and
+capacity already belong there. The schedule is globally bounded and cannot inspect
+world state to choose a target. At a due tick, each declared record is validated
+against only its configured address capacity and frozen-cycle status; its conserved
+payload is explicit source input. This external intervention is not a local physical
+law and cannot be used to repair a failed trajectory or conservation result.
+
 The opt-in rational extension stays within these owners: `fields/ratios.py`
 owns finite exact arithmetic and projections; `fields/routing.py` owns balanced
 six-port selection and fractional credit. Neither receives world state. Fixed

@@ -22,6 +22,7 @@ MAX_FIELDS = 16
 MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
+MAX_RUNTIME_INJECTIONS = 256
 MAX_EXPRESSION_NODES = 64
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 Payload = tuple[int, ...]
@@ -195,6 +196,13 @@ class Seed:
 
 
 @dataclass(frozen=True, slots=True)
+class RuntimeInjection:
+    tick: int
+    position: Address3
+    record: DisturbanceRecord
+
+
+@dataclass(frozen=True, slots=True)
 class InitialState:
     model_id: str
     shape: Address3
@@ -218,6 +226,7 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    runtime_injections: tuple[RuntimeInjection, ...] = ()
 
 
 class Departure(NamedTuple):

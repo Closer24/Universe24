@@ -6,6 +6,7 @@ const token = $('meta[name="workspace-token"]').content;
 let templates = [], selected = "", source = "", configuration = null, tab = "general";
 let runs = [], selectedRun = null, busy = false, validated = false, loading = false, selectionVersion = 0;
 let moviePath = null;
+let placementType = "", placementPlane = "XY", placementTick = 1, placementLayer = 0;
 let drafts = {};
 try { drafts = JSON.parse(localStorage.getItem("universe24-drafts-v1") || "{}"); } catch { /* Start fresh if local storage is unavailable. */ }
 if (!drafts || typeof drafts !== "object" || Array.isArray(drafts)) drafts = {};
@@ -49,14 +50,16 @@ function refreshSummary() {
   $("#draft-state").className = "draft-tag" + (validated ? " valid" : "");
   $("#model-heading").textContent = configuration?.model_id || "Custom configuration";
   $("#duration-label").textContent = `${configuration?.ticks ?? "—"} ticks`;
-  $("#selected-description").textContent = `${templates.find(t => t.id === selected)?.name || "Custom configuration"} · ${configuration?.seeds?.length || 0} initial particles / records`;
+  const scheduled = configuration?.runtime_injections?.length || 0;
+  $("#selected-description").textContent = `${templates.find(t => t.id === selected)?.name || "Custom configuration"} · ${configuration?.seeds?.length || 0} initial records · ${scheduled} timed injections`;
   $("#template-label").textContent = selected === "custom" ? "CUSTOM CONFIGURATION" : `${selected.toUpperCase()} TEMPLATE`;
   const counts = [[configuration?.fields?.length || 0, "FIELDS"],
-    [configuration?.disturbance_types?.length || 0, "TYPES"], [configuration?.seeds?.length || 0, "SEEDS"]];
+    [configuration?.disturbance_types?.length || 0, "TYPES"], [configuration?.seeds?.length || 0, "SEEDS"], [scheduled, "INJECTIONS"]];
   $("#summary-metrics").replaceChildren(...counts.map(([count, label]) => {
     const cell = node("div"); cell.append(node("strong", String(count)), node("span", label)); return cell;
   }));
   drawPlacement();
+  redrawTimedPlacement();
   $("#run").disabled = !configuration || busy || loading || runs.some(run => run.status === "running");
 }
 
@@ -186,6 +189,121 @@ function nextName(prefix, collection) {
   return `${prefix}_${number}`;
 }
 
+
+const placementPlanes = {XY: [0, 1, 2], XZ: [0, 2, 1], YZ: [1, 2, 0]};
+
+function placementAxes() { return placementPlanes[placementPlane] || placementPlanes.XY; }
+
+function placementPosition(event, canvas) {
+  const shape = configuration?.shape, [first, second, hidden] = placementAxes();
+  if (!Array.isArray(shape) || shape.length !== 3) return null;
+  const rect = canvas.getBoundingClientRect(), pad = 44;
+  const x = (event.clientX - rect.left) * canvas.width / Math.max(1, rect.width);
+  const y = (event.clientY - rect.top) * canvas.height / Math.max(1, rect.height);
+  const usableX = Math.max(1, canvas.width - pad * 2), usableY = Math.max(1, canvas.height - pad * 2);
+  const maxFirst = Math.max(0, shape[first] - 1), maxSecond = Math.max(0, shape[second] - 1);
+  const firstValue = Math.max(0, Math.min(maxFirst, Math.round((x - pad) / usableX * maxFirst)));
+  const secondValue = Math.max(0, Math.min(maxSecond, Math.round((canvas.height - pad - y) / usableY * maxSecond)));
+  const position = [0, 0, 0];
+  position[first] = firstValue; position[second] = secondValue;
+  position[hidden] = Math.max(0, Math.min(shape[hidden] - 1, placementLayer));
+  return position;
+}
+
+function appendRuntimeInjection(typeName, position) {
+  if (!configuration || !typeName || !position) return;
+  if (!Array.isArray(configuration.runtime_injections)) configuration.runtime_injections = [];
+  configuration.runtime_injections.push({tick: placementTick, position, type: typeName});
+  changed(); renderEditor();
+}
+
+function redrawTimedPlacement() {
+  const canvas = document.querySelector("#timed-placement-canvas");
+  if (!canvas || !configuration) return;
+  const ctx = canvas.getContext("2d"), shape = configuration.shape, [first, second, hidden] = placementAxes();
+  const pad = 44, usableX = canvas.width - pad * 2, usableY = canvas.height - pad * 2;
+  const maxFirst = Math.max(0, shape[first] - 1), maxSecond = Math.max(0, shape[second] - 1);
+  const project = position => [
+    pad + (maxFirst ? position[first] / maxFirst : 0.5) * usableX,
+    canvas.height - pad - (maxSecond ? position[second] / maxSecond : 0.5) * usableY,
+  ];
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#f7fbf8"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#d4e4d9"; ctx.lineWidth = 1;
+  const grid = (axisMax, horizontal) => {
+    const steps = Math.min(axisMax, 20);
+    for (let i = 0; i <= steps; i++) {
+      const fraction = steps ? i / steps : 0.5;
+      ctx.beginPath();
+      if (horizontal) { const y = canvas.height - pad - fraction * usableY; ctx.moveTo(pad, y); ctx.lineTo(canvas.width - pad, y); }
+      else { const x = pad + fraction * usableX; ctx.moveTo(x, pad); ctx.lineTo(x, canvas.height - pad); }
+      ctx.stroke();
+    }
+  };
+  grid(maxFirst, false); grid(maxSecond, true);
+  ctx.strokeStyle = "#8fb19a"; ctx.strokeRect(pad, pad, usableX, usableY);
+  ctx.fillStyle = "#557363"; ctx.font = "14px Segoe UI, sans-serif";
+  ctx.fillText(`${"XYZ"[first]} 0–${maxFirst}`, pad, canvas.height - 14);
+  ctx.fillText(`${"XYZ"[second]} 0–${maxSecond}`, pad, 22);
+  ctx.fillText(`${"XYZ"[hidden]} = ${placementLayer} · tick ${placementTick}`, canvas.width - 180, 22);
+
+  const types = Array.isArray(configuration.disturbance_types) ? configuration.disturbance_types : [];
+  const colorFor = name => colors[Math.max(0, types.findIndex(type => type.name === name)) % colors.length];
+  for (const seed of configuration.seeds || []) {
+    if (seed.position?.[hidden] !== placementLayer) continue;
+    const [x, y] = project(seed.position); ctx.beginPath(); ctx.arc(x, y, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = colorFor(seed.type); ctx.lineWidth = 2; ctx.setLineDash([4, 3]); ctx.stroke(); ctx.setLineDash([]);
+  }
+  for (const item of configuration.runtime_injections || []) {
+    if (item.tick !== placementTick || item.position?.[hidden] !== placementLayer) continue;
+    const [x, y] = project(item.position), color = colorFor(item.type);
+    ctx.beginPath(); ctx.arc(x, y, 9, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill();
+    ctx.strokeStyle = "#ffffff"; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = "#294438"; ctx.font = "12px Segoe UI, sans-serif"; ctx.fillText(item.type, x + 12, y - 10);
+  }
+  const caption = document.querySelector("#placement-caption");
+  if (caption) caption.textContent = `Selected ${placementPlane} slice · ${"XYZ"[hidden]}=${placementLayer} · injection tick ${placementTick}. Dashed rings are initial seeds.`;
+}
+
+function renderTimedPlacement(doc) {
+  const editor = $("#editor-panel"), block = node("section", "", "timed-placement-editor");
+  block.append(node("h4", "Timed disturbance placement"));
+  block.append(node("p", "Drag a disturbance type onto a lattice node, or select a type and tap the grid. Each placement writes one generic runtime_injections entry.", "editor-description"));
+  const types = Array.isArray(doc.disturbance_types) ? doc.disturbance_types : [];
+  if (!types.some(type => type.name === placementType)) placementType = types[0]?.name || "";
+
+  const toolbar = node("div", "", "placement-toolbar");
+  const planeLabel = node("label", "", "field"), plane = document.createElement("select");
+  planeLabel.append(node("span", "Projection"));
+  for (const value of Object.keys(placementPlanes)) { const option = node("option", value); option.value = value; plane.append(option); }
+  plane.value = placementPlane; plane.addEventListener("change", () => { placementPlane = plane.value; placementLayer = 0; renderEditor(); }); planeLabel.append(plane);
+  const tickLabel = node("label", "", "field"), tick = document.createElement("input");
+  tickLabel.append(node("span", "Injection tick")); tick.type = "number"; tick.min = "1"; tick.step = "1"; tick.inputMode = "numeric"; tick.value = String(placementTick);
+  tick.addEventListener("input", () => { if (tick.validity.valid) { placementTick = Number(tick.value); redrawTimedPlacement(); } }); tickLabel.append(tick);
+  const [,, hidden] = placementAxes(), layerLabel = node("label", "", "field"), layer = document.createElement("input");
+  layerLabel.append(node("span", `${"XYZ"[hidden]} layer`)); layer.type = "number"; layer.min = "0"; layer.max = String(Math.max(0, doc.shape[hidden] - 1)); layer.step = "1"; layer.inputMode = "numeric";
+  placementLayer = Math.max(0, Math.min(doc.shape[hidden] - 1, placementLayer)); layer.value = String(placementLayer);
+  layer.addEventListener("input", () => { if (layer.validity.valid) { placementLayer = Number(layer.value); redrawTimedPlacement(); } }); layerLabel.append(layer);
+  toolbar.append(planeLabel, tickLabel, layerLabel); block.append(toolbar);
+
+  const palette = node("div", "", "placement-palette");
+  for (const [index, type] of types.entries()) {
+    const button = node("button", type.name, "placement-token" + (type.name === placementType ? " selected" : ""));
+    button.type = "button"; button.draggable = true; button.style.setProperty("--token-color", colors[index % colors.length]);
+    button.addEventListener("dragstart", event => { placementType = type.name; event.dataTransfer?.setData("text/plain", type.name); });
+    button.addEventListener("click", () => { placementType = type.name; renderEditor(); }); palette.append(button);
+  }
+  block.append(palette);
+
+  const canvas = document.createElement("canvas"); canvas.id = "timed-placement-canvas"; canvas.className = "placement-canvas"; canvas.width = 760; canvas.height = 460;
+  canvas.setAttribute("aria-label", "Timed disturbance placement grid");
+  canvas.addEventListener("dragover", event => { event.preventDefault(); });
+  canvas.addEventListener("drop", event => { event.preventDefault(); const typeName = event.dataTransfer?.getData("text/plain") || placementType; appendRuntimeInjection(typeName, placementPosition(event, canvas)); });
+  canvas.addEventListener("click", event => { if (placementType) appendRuntimeInjection(placementType, placementPosition(event, canvas)); });
+  block.append(canvas, node("p", "", "preview-caption")); block.lastChild.id = "placement-caption";
+  editor.append(block); redrawTimedPlacement();
+}
+
 function renderEditor() {
   const editor = $("#editor-panel"); editor.replaceChildren();
   $$("[data-tab]").forEach(button => { button.setAttribute("aria-selected", String(button.dataset.tab === tab)); button.tabIndex = button.dataset.tab === tab ? 0 : -1; });
@@ -245,6 +363,23 @@ function renderEditor() {
       jsonField(grid, "Initial field values", seed, "values", {});
     });
     addButton("Add seed", () => doc.seeds.push({position: [0, 0, 0], type: doc.disturbance_types[0]?.name || ""}));
+  } else if (tab === "timeline") {
+    renderTimedPlacement(doc);
+    const scheduled = Array.isArray(doc.runtime_injections) ? doc.runtime_injections : [];
+    editor.append(node("hr", "", "editor-divider"));
+    if (!scheduled.length) editor.append(node("p", "No timed disturbances are scheduled yet. Drag or tap above to add one.", "editor-description"));
+    scheduled.forEach((item, i) => {
+      const panel = card(`Injection ${i + 1} · tick ${item.tick}`, () => doc.runtime_injections.splice(i, 1)), grid = node("div", "", "field-grid"); panel.append(grid);
+      input(grid, "Disturbance type", item, "type", {text: true, choices: doc.disturbance_types.map(type => type.name), full: true});
+      input(grid, "Tick", item, "tick", {min: 1});
+      const position = node("div", "", "field-grid three field full"); grid.append(position);
+      ["X position", "Y position", "Z position"].forEach((label, j) => input(position, label, item.position, j, {max: Math.max(0, doc.shape[j] - 1)}));
+      jsonField(grid, "Field values at insertion", item, "values", {}, "Values override the selected disturbance type defaults at the configured tick.");
+    });
+    addButton("Add timed injection", () => {
+      if (!Array.isArray(doc.runtime_injections)) doc.runtime_injections = [];
+      doc.runtime_injections.push({tick: placementTick, position: [0, 0, 0], type: doc.disturbance_types[0]?.name || ""});
+    });
   } else if (tab === "rules") {
     let grid = section("Local exchange", "Couplings exchange a configured quantity between records in the same cell.");
     jsonField(grid, "Coupling rules", doc, "couplings", []);
