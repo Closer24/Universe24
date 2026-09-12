@@ -24,6 +24,7 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.fields.disturbances import DisturbanceLaw
+from event_universe.fields.record_operations import RecordOperations
 from event_universe.initialization import parse_initial_json
 from event_universe.quantum import (
     Amplitude,
@@ -163,7 +164,14 @@ def run_trial(
         if event_sink is not None:
             event_sink(event)
 
-    world = DisturbanceEngine(initial, planner, record)
+    world = DisturbanceEngine(
+        initial,
+        planner,
+        record,
+        record_policy=RecordOperations(
+            initial.fields, initial.disturbances, initial.couplings, initial.interactions
+        ),
+    )
     frames = [world.snapshot()] if visualize else []
     balances = [mechanics(world)]
     query_counts = [owner.query_stats.successful_queries]
