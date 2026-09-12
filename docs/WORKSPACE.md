@@ -65,6 +65,21 @@ The initial-placement diagram reads configured seed positions, not computed
 motion. It is an isometric projection; concentric rings denote co-located seeds.
 The preview never supplies physical inputs.
 
+## Phone layout
+
+Narrow screens use stacked panels, wrapping template cards and visible configuration
+tabs. Configure, Run and Results shortcuts jump to the relevant section without
+discarding edits. Form text is at least 16 CSS pixels and buttons have at least
+44 CSS pixels of touch height. Number fields request a numeric keyboard; JSON
+editors keep their own horizontal scrolling. Conserved values wrap inside the
+results table, and safe-area padding leaves room for phone cutouts in landscape.
+Browser zoom remains enabled.
+
+This layout adaptation does not change networking. The default loopback URL is
+reachable only on the computer running the server; opening that same URL on an
+iPhone does not connect to the computer. Phone network access requires a separate
+deployment or connection setup.
+
 ## Run and inspect
 
 **Run simulation** submits an immutable snapshot. Later edits apply to the next

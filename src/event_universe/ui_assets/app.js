@@ -98,7 +98,7 @@ function input(parent, label, object, key, options = {}) {
     for (const value of options.choices) { const option = node("option", String(value)); option.value = String(value); control.append(option); }
   } else {
     control.type = options.text ? "text" : "number";
-    if (!options.text) { control.min = String(options.min ?? 0); control.max = String(options.max ?? 1073741823); control.step = "1"; }
+    if (!options.text) { control.min = String(options.min ?? 0); control.max = String(options.max ?? 1073741823); control.step = "1"; control.inputMode = "numeric"; }
     else control.maxLength = 128;
   }
   control.required = true; control.value = String(object[key] ?? "");

@@ -361,3 +361,8 @@ job conflicts, explicit cancellation, shutdown cleanup and physical failure data
 The browser workflow additionally checks forms, JSON editing, draft persistence,
 selection, validation after editing, imports/exports and optional recorded results.
 Inspect the actual UI; a passing HTTP test is not proof of correct controls.
+For phone layout changes, inspect narrow portrait and landscape viewports, all
+configuration tabs, numeric and JSON editing, shortcuts and completed results.
+Check document overflow, readable input text and touch target size. Record the
+actual browser and dimensions; viewport emulation does not verify native iOS
+keyboard, Safari or safe-area behavior on a physical device.
