@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 
 from event_universe import __version__
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.topology import validate_position
 from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_json
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
@@ -44,6 +45,7 @@ def run_initialization(
         from event_universe.diagnostics.local_observer import ObserverDefinition
 
         observer_definition = ObserverDefinition.load(observer, initial.shape)
+        validate_position(observer_definition.position, initial.shape, initial.topology)
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
@@ -79,7 +81,7 @@ def _execute_run(
     if observer_definition is not None:
         from event_universe.diagnostics.local_observer import LocalObserver
 
-        probe = LocalObserver(observer_definition)
+        probe = LocalObserver(observer_definition, port_count=initial.topology.degree)
         (output / "observer.json").write_text(
             json.dumps(
                 {
@@ -180,6 +182,13 @@ def _execute_run(
         "link_ticks": initial.link_ticks,
         "computation": world.computation_report(),
     }
+    if initial.topology.model_id == "configured-ports-v1":
+        metadata["topology"] = {
+            "model_id": initial.topology.model_id,
+            "offsets": initial.topology.offsets,
+            "site_modulus": initial.topology.site_modulus,
+            "site_residues": initial.topology.site_residues,
+        }
     if world.event_space is not None:
         from dataclasses import asdict
 
@@ -190,7 +199,9 @@ def _execute_run(
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
             spatial_transport=(
-                "configured-six-ports"
+                "configured-ports"
+                if initial.topology.model_id == "configured-ports-v1"
+                else "configured-six-ports"
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "outward-octants"
             ),

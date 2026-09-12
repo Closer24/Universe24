@@ -13,15 +13,21 @@ from tests.test_spatial_coupling import document
 ASSETS = Path(__file__).resolve().parents[1] / "src/event_universe/ui_assets"
 
 
-def javascript(asset, start, end, setup, expression, payload):
+def javascript(asset, start, end, setup, expression, payload, *, dependencies=()):
     executable = shutil.which("node")
     if executable is None:
         pytest.skip("headless JavaScript consumer checks require Node; simulation does not")
     source = (ASSETS / asset).read_text(encoding="utf-8")
     function = source[source.index(start) : source.index(end, source.index(start))]
+    declarations = "\n".join(
+        source[source.index(first) : source.index(last, source.index(first))]
+        for first, last in dependencies
+    )
     script = (
         "const input=JSON.parse(require('node:fs').readFileSync(0,'utf8'));\n"
         + setup
+        + "\n"
+        + declarations
         + "\n"
         + function
         + "\n"
@@ -66,6 +72,7 @@ def test_terminal_playback_preserves_outward_direction_without_wrapping_or_mutat
         "const before=JSON.stringify(input); const records=visibleRecords(input);"
         "console.log(JSON.stringify({records,unchanged:JSON.stringify(input)===before}));",
         frame,
+        dependencies=(("const topology=", "let types="),),
     )
     expected = list(origin)
     expected[port // 2] += (1 if port % 2 == 0 else -1) * 2 / 3
@@ -101,6 +108,7 @@ def test_legacy_periodic_movie_keeps_wrapped_transfer_positions(boundary):
         "const metadata={shape:[5,5,5],link_ticks:3},shape=metadata.shape;",
         "console.log(JSON.stringify(visibleRecords(input)));",
         frame,
+        dependencies=(("const topology=", "let types="),),
     )
     assert records[0]["position"] == pytest.approx([5 - 2 / 3, 2, 2])
     assert records[0]["owner"] == "Link → 4, 2, 2; arrives 3"

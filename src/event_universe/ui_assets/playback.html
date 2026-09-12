@@ -16,14 +16,15 @@
 </div><p id="grid-info"></p>
 <label id="field-control">Spatial field <select id="field"><option value="">All spatial fields</option></select></label><p id="field-info"></p>
 <div id="world-timeline"><div id="playback-timeline"><label for="seek">Timeline <b id="tick"></b></label><input id="seek" aria-label="Recorded frame" type="range" min="0" step="1" value="0"></div></div>
-<p id="world-description">Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned disturbances; rings are disturbance transfers. Squares are node fields; diamonds are field transfers. Field arrows show vector components in the selected projection, scaled separately for each field across the recording. Exact values appear below. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
+<p id="world-description">Dots are projected lattice sites; several layers can overlap. Equal axis scale. Drag when zoomed. Filled circles are cell-owned disturbances; rings are disturbance transfers. Squares are node fields; diamonds are field transfers. Field arrows show vector components in the selected projection, scaled separately for each field across the recording. Exact values appear below. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
 <details id="world-details" open><summary>Disturbances, spatial field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Type / spatial field</th><th>Position</th><th>Values</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
 <script id="recording" type="application/json">__RECORDING__</script><script>
 "use strict";
 const {frames,metadata,observation}=JSON.parse(document.querySelector('#recording').textContent);
 const $=s=>document.querySelector(s),seek=$('#seek'),canvas=$('#scene'),ctx=canvas.getContext('2d');
 const palette=['#83e1b1','#ffc977','#94beff','#edabdf','#ff958a','#bdadff'];
-const ports=['+X','-X','+Y','-Y','+Z','-Z'];
+const topology=metadata.topology||{model_id:'cardinal-six-v1',offsets:[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]],site_modulus:1,site_residues:[[0,0,0]]};
+const ports=topology.offsets.map(offset=>offset.map((value,axis)=>value?`${value>0?'+':'-'}${'XYZ'[axis]}`:'').filter(Boolean).join(' '));
 let types=[],fieldNames=[],fieldScales=new Map(),shape=null,worldInitialized=false;
 let observerMode=Boolean(observation),playing=false,lastTime=null,index=0,clock=observerMode?0:frames[0].tick;
 seek.max=String(frames.length-1);seek.disabled=frames.length<2;$('#play').disabled=frames.length<2;
@@ -54,10 +55,52 @@ $('#previous').textContent=observerMode?'← Sample':'← Tick';$('#next').textC
 function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
 function visibleRecords(f){const records=f.cells.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Cell':'Waiting cell'})));
 for(const t of f.transfers)records.push(transferView(t,f));return records;}
+function portOffset(port){
+if(!Number.isInteger(port)||port<0||port>=topology.offsets.length)throw Error('Recorded port is absent from the topology');
+return topology.offsets[port];
+}
+function selectedSite(position){
+return position.every((value,axis)=>Number.isInteger(value)&&value>=0&&value<shape[axis])&&topology.site_residues.some(residue=>residue.every((value,axis)=>position[axis]%topology.site_modulus===value));
+}
+function neighborPosition(origin,offset,boundary){
+const target=origin.map((value,axis)=>value+offset[axis]);
+if(boundary==='periodic')for(let axis=0;axis<3;axis++)target[axis]=(target[axis]+shape[axis])%shape[axis];
+return selectedSite(target)?target:null;
+}
+function linkSegments(origin,offset,boundary){
+const target=origin.map((value,axis)=>value+offset[axis]);
+if(boundary!=='periodic')return [[origin,target]];
+const shift=target.map((value,axis)=>value<0?shape[axis]:value>=shape[axis]?-shape[axis]:0);
+if(!shift.some(Boolean))return [[origin,target]];
+const seam=origin.map((value,axis)=>value+offset[axis]/2);
+return [[origin,seam],[seam.map((value,axis)=>value+shift[axis]),target.map((value,axis)=>value+shift[axis])]];
+}
+function projectedLattice(axes,bounds,boundary){
+const [x0,x1,y0,y1]=bounds,hidden=[0,1,2].find(axis=>!axes.includes(axis)),nodes=[],segments=new Map();
+for(let x=x0;x<=x1;x++)for(let y=y0;y<=y1;y++){
+  const residues=topology.site_residues.filter(residue=>residue[axes[0]]===x%topology.site_modulus&&residue[axes[1]]===y%topology.site_modulus&&residue[hidden]<shape[hidden]);
+  if(!residues.length)continue;
+  nodes.push([x,y]);
+  for(const residue of residues)for(const offset of topology.offsets){
+    const origin=[0,0,0];origin[axes[0]]=x;origin[axes[1]]=y;origin[hidden]=residue[hidden];
+    // In an open projection a later layer may have this neighbor even when the
+    // first representative lies at the boundary. Find one, without scanning layers.
+    if(boundary==='open'&&origin[hidden]+offset[hidden]<0)origin[hidden]+=topology.site_modulus;
+    if(!selectedSite(origin)||!neighborPosition(origin,offset,boundary))continue;
+    for(const segment of linkSegments(origin,offset,boundary)){
+      const projected=segment.map(point=>axes.map(axis=>point[axis]));
+      if(projected[0].every((value,axis)=>value===projected[1][axis]))continue;
+      const key=projected.map(point=>point.join(',')).sort().join('|');segments.set(key,projected);
+    }
+  }
+}
+return {nodes,segments:[...segments.values()]};
+}
 function transferView(t,f){
 const boundary=f.boundary||metadata.boundary||'periodic';
-const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
-const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
+const offset=portOffset(t.port),fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));
+const p=t.origin.map((value,axis)=>{const coordinate=value+offset[axis]*fraction;return boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];});
+const owner=t.target===null?`Exit through ${ports[t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
 return {...t,position:p,owner,transfer:true};}
 function visibleSpatialFields(f){
 const records=(f.spatial_fields||[]).flatMap(c=>Object.entries(c.fields).map(([name,field])=>({name,position:c.position,value:field.value,baseline:field.baseline,owner:'Node field; value includes baseline'})));
@@ -107,7 +150,13 @@ function draw(){
   const x0=Math.max(0,Math.ceil((pad-ox)/unit)),x1=Math.min(nx-1,Math.floor((w-pad-ox)/unit)),y0=Math.max(0,Math.ceil((oy-h+pad)/unit)),y1=Math.min(ny-1,Math.floor((oy-pad)/unit));
   const dense=(x1-x0+1)*(y1-y0+1)>20000||unit<3;
   ctx.clearRect(0,0,w,h);ctx.save();ctx.beginPath();ctx.rect(pad-8,pad-8,w-2*pad+16,h-2*pad+16);ctx.clip();
-  if(!dense){
+  const boundary=frames[index].boundary||metadata.boundary||'periodic';
+  const lattice=!dense&&metadata.topology?projectedLattice(axes,[x0,x1,y0,y1],boundary):null;
+  if(lattice){
+    ctx.strokeStyle='#244336';ctx.lineWidth=.7;
+    for(const [from,to] of lattice.segments){ctx.beginPath();ctx.moveTo(ox+from[0]*unit,oy-from[1]*unit);ctx.lineTo(ox+to[0]*unit,oy-to[1]*unit);ctx.stroke();}
+    ctx.fillStyle='#648d76';for(const [x,y] of lattice.nodes){ctx.beginPath();ctx.arc(ox+x*unit,oy-y*unit,Math.min(2,unit*.13),0,Math.PI*2);ctx.fill();}
+  }else if(!dense){
     ctx.strokeStyle='#244336';ctx.lineWidth=.7;
     for(let x=x0;x<=x1;x++){ctx.beginPath();ctx.moveTo(ox+x*unit,oy-y0*unit);ctx.lineTo(ox+x*unit,oy-y1*unit);ctx.stroke();}
     for(let y=y0;y<=y1;y++){ctx.beginPath();ctx.moveTo(ox+x0*unit,oy-y*unit);ctx.lineTo(ox+x1*unit,oy-y*unit);ctx.stroke();}
@@ -116,7 +165,7 @@ function draw(){
   const f=frames[index],records=visibleRecords(f),seen=new Map();
   $('#tick').textContent='Tick '+f.tick+' · '+(index+1)+'/'+frames.length;seek.value=String(index);
   $('#previous').disabled=index===0;$('#next').disabled=index===frames.length-1;
-  $('#grid-info').textContent=(dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).')+' Projection includes every '+'XYZ'[[0,1,2].find(axis=>!axes.includes(axis))]+' layer.';
+  $('#grid-info').textContent=(dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).')+' Projection includes every '+'XYZ'[[0,1,2].find(axis=>!axes.includes(axis))]+' layer.'+(metadata.topology?' Configured sites only; '+ports.length+' ports per site. Several layers can share one projected dot. Links split at periodic seams.':'');
   const body=$('#records');body.replaceChildren();
   const fieldSelection=$('#field').value,spatial=visibleSpatialFields(f).filter(r=>!fieldSelection||r.name===fieldSelection);
   $('#field-info').textContent='Uniform baselines across the domain: '+JSON.stringify(f.spatial_baselines||{})+'. Node values already include these baselines; received samples are not additional inventory.';
@@ -133,7 +182,7 @@ function draw(){
   for(const r of records){
     const [x,y]=project(r.position),key=x+','+y,n=seen.get(key)||0;seen.set(key,n+1);
     const color=palette[Math.max(0,types.indexOf(r.type))%palette.length];ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
-    if(r.transfer){const from=project(r.origin),target=[...r.origin];target[Math.floor(r.port/2)]+=r.port%2===0?1:-1;ctx.beginPath();ctx.moveTo(...from);ctx.lineTo(...project(target));ctx.stroke();}
+    if(r.transfer)for(const [from,to] of linkSegments(r.origin,portOffset(r.port),boundary)){ctx.beginPath();ctx.moveTo(...project(from));ctx.lineTo(...project(to));ctx.stroke();}
     ctx.beginPath();ctx.arc(x,y,Math.max(2,Math.min(7,unit*.35))+n*3,0,Math.PI*2);if(!r.transfer&&!n)ctx.fill();ctx.stroke();
     const row=document.createElement('tr');for(const text of [r.type,r.position.map(v=>Number.isInteger(v)?v:v.toFixed(2)).join(', '),JSON.stringify(r.values),r.owner]){const cell=document.createElement('td');cell.textContent=text;row.append(cell);}body.append(row);
   }

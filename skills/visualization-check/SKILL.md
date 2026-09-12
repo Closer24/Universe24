@@ -27,6 +27,16 @@ sampled-frame displacement and actual multi-hop movement are different facts;
 show the recorded distinction rather than interpolating it away. The animation
 must follow the current end-of-playback contract.
 
+For initialization-defined topology, read the saved immutable port offsets and
+site residues. Do not reconstruct directions from `port // 2` or draw excluded
+sites as nodes. Check diagonal transfers, actual neighbor links, periodic seam
+splitting and collapsed layers in a projection. Receiver labels must use the
+receiving port's offset while preserving the local observer's recorded receipt
+prefix; opening an observer view must not initialize a global audit view. Older
+recordings without topology metadata retain the six cardinal directions. See
+[the observer contract](../../docs/LOCAL_OBSERVER.md) and its topology playback
+tests for the current interfaces.
+
 A stream population sum is not scalar phi. Label the displayed quantity and any
 visual transfer explicitly; do not invent per-source attribution from a combined
 field. Ensure metadata and legend describe the actual model and view.
