@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "model_id": "restricted-classical-conjugate-pair-v1",
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "boundary": "open",
+  "slots_per_cell": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 16,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "electron mass unit",
+      "signed": false,
+      "conserved": true,
+      "scale": 1
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "elementary charge",
+      "signed": true,
+      "conserved": true,
+      "scale": 3
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "electron mass unit times c",
+      "signed": true,
+      "conserved": true,
+      "scale": 4
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "electron classical proxy",
+      "fields": [
+        "mass",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": -3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 4
+      }
+    },
+    {
+      "name": "positron classical proxy",
+      "fields": [
+        "mass",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": 3,
+        "momentum": [
+          -1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 4
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "name": "equal_mass_approaching_momentum_permutation",
+      "left_type": "electron classical proxy",
+      "right_type": "positron classical proxy",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              1,
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "mass",
+                            "side": "left"
+                          },
+                          {
+                            "field": "mass",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "mul",
+            "args": [
+              {
+                "op": "gt",
+                "args": [
+                  0,
+                  {
+                    "op": "dot",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      },
+                      {
+                        "field": "momentum",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "component",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "momentum",
+                            "side": "left"
+                          },
+                          {
+                            "field": "momentum",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ],
+                    "index": 0
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "right"
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "left_mass",
+          "expression": {
+            "field": "mass",
+            "side": "left"
+          }
+        },
+        {
+          "name": "left_charge",
+          "expression": {
+            "field": "charge",
+            "side": "left"
+          }
+        },
+        {
+          "name": "right_mass",
+          "expression": {
+            "field": "mass",
+            "side": "right"
+          }
+        },
+        {
+          "name": "right_charge",
+          "expression": {
+            "field": "charge",
+            "side": "right"
+          }
+        },
+        {
+          "name": "total_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "field": "momentum",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sum_squared_momenta",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  },
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "right"
+                  },
+                  {
+                    "field": "momentum",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        3,
+        4,
+        4
+      ],
+      "type": "electron classical proxy"
+    },
+    {
+      "position": [
+        5,
+        4,
+        4
+      ],
+      "type": "positron classical proxy"
+    }
+  ]
+}

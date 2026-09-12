@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The [physical entity inventory](PHYSICAL_ENTITIES.md), based on main
+`09464b41b2c44a191aa2fcbdf4b036680bd646a5`, separates descriptive entities from
+executable mechanics and unestablished emergence. New equal-mass charged-pair
+and two-vector port probes use elementary operations only. They do not provide
+Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
+Use the linked catalog and exact PR evidence instead of treating physical labels
+as implemented laws.
+
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
 [local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent

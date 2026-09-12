@@ -1,0 +1,417 @@
+{
+  "catalog_version": 1,
+  "notes": [
+    "Authoring metadata only: this catalog is not an Initialization input and does not instantiate all listed entities in one world.",
+    "Each runnable example selects bounded scalar/vector state under its own runtime field, rule and slot limits; there is no automatic catalog compiler.",
+    "Electric charges are integer multiples of one third of the elementary positive charge. Twice-spin values are identity metadata, not implemented spin dynamics.",
+    "No numerical masses are assigned here. Neutrino flavor records are not mass eigenstates; their paired IDs distinguish interaction labels without deciding Dirac or Majorana self-conjugacy.",
+    "The gluon entry denotes the eight-generator adjoint multiplet, not eight uncoupled scalar fields or eight additional antiparticle species.",
+    "Conserved component sums do not establish physical field energy or momentum; flux, constraint, dispersion and continuum-limit acceptance remain independent.",
+    "Known microscopic species are not all classical particles. A classical proxy omits their quantum and internal structure.",
+    "Creation and annihilation require local product ownership and total energy-momentum-charge accounting; opposite charge never means negative mass.",
+    "Source references document physical classifications. Runtime support assessments follow the project contracts and do not claim implementation by citation."
+  ],
+  "sources": {
+    "pdg_higgs": {"title": "PDG 2025: Higgs boson physics", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-higgs-boson.pdf"},
+    "cern_standard_model": {"title": "CERN: The Standard Model", "url": "https://home.cern/science/physics/standard-model/"},
+    "pdg_particles": {"title": "PDG 2025: Particle summary tables", "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"},
+    "cern_antimatter": {"title": "CERN: Antimatter", "url": "https://home.cern/science/physics/antimatter/"},
+    "pdg_neutrinos": {"title": "PDG 2025: Neutrino masses, mixing, and oscillations", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-neutrino-mixing.pdf"},
+    "tong_qft": {"title": "David Tong: Quantum Field Theory", "url": "https://davidtong.org/pdfs/teaching/quantum-field-theory/qft.pdf"},
+    "tong_em": {"title": "David Tong: Electromagnetism and Relativity", "url": "https://davidtong.org/pdfs/teaching/electromagnetism/electro4.pdf"},
+    "tong_gr": {"title": "David Tong: General Relativity", "url": "https://davidtong.org/pdfs/teaching/general-relativity/gr.pdf"},
+    "cern_dark_sector": {"title": "CERN: Dark matter and dark energy", "url": "https://home.cern/science/physics/dark-matter/"},
+    "project_postulates": {"title": "Universe24 postulates: computational-field hypothesis", "url": "https://github.com/Closer24/Universe24/blob/main/POSTULATES.md"}
+  },
+  "field_entities": [
+    {
+      "id": "electromagnetic_field",
+      "label": "Electromagnetic field",
+      "physical_status": "established",
+      "representation_status": "component_storage_available",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "One logical E/B group of two three-component vectors at each node, with six directional ports; E and B depend on the reference frame.",
+      "missing_capabilities": ["maxwell_constraint_preservation", "charge_current_continuity", "wave_dispersion_and_isotropy", "lorentz_coupling", "physical_energy_momentum_balance"],
+      "sources": ["tong_em"]
+    },
+    {
+      "id": "strong_field",
+      "label": "Strong gauge field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "SU(3) gauge field with eight internal generators; these are not eight independent classical scalar laws.",
+      "missing_capabilities": ["nonabelian_gauge_transport", "color_dynamics", "confinement"],
+      "sources": ["cern_standard_model", "tong_qft"]
+    },
+    {
+      "id": "weak_field",
+      "label": "Weak sector of the electroweak field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "W+, W- and Z in the broken electroweak description; a scalar/vector grouping does not supply electroweak gauge structure.",
+      "missing_capabilities": ["chiral_coupling", "electroweak_gauge_structure", "species_changing_reactions"],
+      "sources": ["cern_standard_model", "pdg_particles"]
+    },
+    {
+      "id": "higgs_field",
+      "label": "Higgs field",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Complex scalar electroweak doublet; one physical scalar Higgs excitation in the broken phase.",
+      "missing_capabilities": ["symmetry_breaking", "yukawa_coupling", "mass_generation"],
+      "sources": ["pdg_higgs"]
+    },
+    {
+      "id": "quark_fields",
+      "label": "Quark flavor fields",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Six flavors: up, down, charm, strange, top, bottom; spinor fields with color and antiparticle sectors.",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "color_dynamics"],
+      "sources": ["cern_standard_model", "tong_qft"]
+    },
+    {
+      "id": "charged_lepton_fields",
+      "label": "Charged lepton flavor fields",
+      "physical_status": "established",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Electron, muon and tau spinor fields with antiparticle sectors.",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "quantum_electromagnetic_coupling"],
+      "sources": ["cern_standard_model", "tong_qft"]
+    },
+    {
+      "id": "neutrino_fields",
+      "label": "Neutrino flavor and mass fields",
+      "physical_status": "established_with_unresolved_mass_nature",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Electron, muon and tau flavor states mix mass eigenstates; Dirac versus Majorana nature is unresolved.",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"],
+      "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "gravity_metric",
+      "label": "Classical spacetime metric",
+      "physical_status": "established_classical_description",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "A spacetime metric describes gravity in general relativity; a Newtonian scalar potential is a limited approximation.",
+      "missing_capabilities": ["metric_dynamics", "gravitational_constraints", "newtonian_limit", "equivalence_principle"],
+      "sources": ["tong_gr"]
+    },
+    {
+      "id": "computational_field",
+      "label": "Computational Field",
+      "physical_status": "project_hypothesis",
+      "representation_status": "component_storage_available",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "Project-defined local computation influence represented by configured scalar/vector quantities; not identified with the spacetime metric.",
+      "missing_capabilities": ["derived_gravity_law", "physical_calibration", "continuum_limit"],
+      "sources": ["project_postulates"]
+    },
+    {
+      "id": "dark_matter",
+      "label": "Dark matter category",
+      "physical_status": "inferred_component_unknown_identity",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "An observationally inferred matter category; no confirmed microscopic field or particle identity is assigned.",
+      "missing_capabilities": ["identified_microscopic_model"],
+      "sources": ["cern_dark_sector"]
+    },
+    {
+      "id": "dark_energy",
+      "label": "Dark energy category",
+      "physical_status": "inferred_component_unknown_identity",
+      "representation_status": "catalog_only",
+      "dynamics_status": "not_implemented_as_physical_law",
+      "emergence_status": "not_established",
+      "discrete_representation": "An accelerated-expansion category, not a confirmed additional particle field; a cosmological constant is one description.",
+      "missing_capabilities": ["identified_microscopic_model"],
+      "sources": ["cern_dark_sector", "tong_gr"]
+    }
+  ],
+  "particle_entities": [
+    {
+      "id": "up_quark", "label": "Up quark", "category": "quark",
+      "antiparticle_id": "antiup_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antiup_quark", "label": "Antiup quark", "category": "antiquark",
+      "antiparticle_id": "up_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "down_quark", "label": "Down quark", "category": "quark",
+      "antiparticle_id": "antidown_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antidown_quark", "label": "Antidown quark", "category": "antiquark",
+      "antiparticle_id": "down_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "charm_quark", "label": "Charm quark", "category": "quark",
+      "antiparticle_id": "anticharm_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "anticharm_quark", "label": "Anticharm quark", "category": "antiquark",
+      "antiparticle_id": "charm_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "strange_quark", "label": "Strange quark", "category": "quark",
+      "antiparticle_id": "antistrange_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antistrange_quark", "label": "Antistrange quark", "category": "antiquark",
+      "antiparticle_id": "strange_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "top_quark", "label": "Top quark", "category": "quark",
+      "antiparticle_id": "antitop_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antitop_quark", "label": "Antitop quark", "category": "antiquark",
+      "antiparticle_id": "top_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -2, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "bottom_quark", "label": "Bottom quark", "category": "quark",
+      "antiparticle_id": "antibottom_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antibottom_quark", "label": "Antibottom quark", "category": "antiquark",
+      "antiparticle_id": "bottom_quark", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 1, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "color_dynamics", "confinement"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "electron", "label": "Electron", "category": "charged_lepton",
+      "antiparticle_id": "positron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "classical_attributes_available", "dynamics_status": "restricted_classical_proxy_only", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "positron", "label": "Positron", "category": "charged_antilepton",
+      "antiparticle_id": "electron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "classical_attributes_available", "dynamics_status": "restricted_classical_proxy_only", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "muon", "label": "Muon", "category": "charged_lepton",
+      "antiparticle_id": "antimuon", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antimuon", "label": "Antimuon", "category": "charged_antilepton",
+      "antiparticle_id": "muon", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "tau", "label": "Tau", "category": "charged_lepton",
+      "antiparticle_id": "antitau", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antitau", "label": "Antitau", "category": "charged_antilepton",
+      "antiparticle_id": "tau", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "fermion_statistics", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "electron_neutrino", "label": "Electron neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "electron_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "electron_antineutrino", "label": "Electron antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "electron_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "muon_neutrino", "label": "Muon neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "muon_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "muon_antineutrino", "label": "Muon antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "muon_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "tau_neutrino", "label": "Tau neutrino", "category": "neutrino_flavor_state",
+      "antiparticle_id": "tau_antineutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "tau_antineutrino", "label": "Tau antineutrino", "category": "antineutrino_flavor_state",
+      "antiparticle_id": "tau_neutrino", "conjugacy_status": "dirac_majorana_unresolved", "rest_mass_relation": "flavor_state_not_definite_mass",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["spinor_dynamics", "flavor_mixing", "dirac_majorana_decision"], "sources": ["pdg_neutrinos"]
+    },
+    {
+      "id": "photon", "label": "Photon", "category": "gauge_boson",
+      "antiparticle_id": "photon", "conjugacy_status": "self_conjugate", "rest_mass_relation": "massless",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quantized_electromagnetic_excitation", "polarization_dynamics", "photon_detection"], "sources": ["pdg_particles", "tong_qft"]
+    },
+    {
+      "id": "gluon_multiplet", "label": "Gluon multiplet", "category": "gauge_boson_multiplet",
+      "antiparticle_id": "gluon_multiplet", "conjugacy_status": "self_conjugate_multiplet", "rest_mass_relation": "massless_gauge_bosons",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["nonabelian_gauge_transport", "color_dynamics", "confinement"], "sources": ["pdg_particles", "tong_qft"]
+    },
+    {
+      "id": "w_plus", "label": "W+ boson", "category": "gauge_boson",
+      "antiparticle_id": "w_minus", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "w_minus", "label": "W- boson", "category": "gauge_boson",
+      "antiparticle_id": "w_plus", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "z_boson", "label": "Z boson", "category": "gauge_boson",
+      "antiparticle_id": "z_boson", "conjugacy_status": "self_conjugate", "rest_mass_relation": "positive_self_conjugate",
+      "electric_charge_thirds": 0, "twice_spin": 2, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["electroweak_gauge_structure", "chiral_coupling", "decay_channels"], "sources": ["pdg_particles"]
+    },
+    {
+      "id": "higgs_boson", "label": "Higgs boson", "category": "scalar_boson",
+      "antiparticle_id": "higgs_boson", "conjugacy_status": "self_conjugate", "rest_mass_relation": "positive_self_conjugate",
+      "electric_charge_thirds": 0, "twice_spin": 0, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["higgs_dynamics", "mass_generation", "decay_channels"], "sources": ["pdg_particles"]
+    },
+    {
+      "id": "proton", "label": "Proton", "category": "composite_baryon",
+      "antiparticle_id": "antiproton", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antiproton", "label": "Antiproton", "category": "composite_antibaryon",
+      "antiparticle_id": "proton", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": -3, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "annihilation_products"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "neutron", "label": "Neutron", "category": "composite_baryon",
+      "antiparticle_id": "antineutron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "physical_interactions"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "antineutron", "label": "Antineutron", "category": "composite_antibaryon",
+      "antiparticle_id": "neutron", "conjugacy_status": "distinct_antiparticle", "rest_mass_relation": "equal_positive_pair",
+      "electric_charge_thirds": 0, "twice_spin": 1, "physical_status": "established",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quark_binding", "internal_structure", "annihilation_products"], "sources": ["pdg_particles", "cern_antimatter"]
+    },
+    {
+      "id": "graviton", "label": "Hypothetical graviton", "category": "hypothetical_gauge_quantum",
+      "antiparticle_id": "graviton", "conjugacy_status": "self_conjugate_in_standard_candidate", "rest_mass_relation": "massless_in_standard_linearized_candidate",
+      "electric_charge_thirds": 0, "twice_spin": 4, "physical_status": "hypothetical",
+      "representation_status": "catalog_only", "dynamics_status": "not_implemented_as_physical_law", "emergence_status": "not_established",
+      "missing_capabilities": ["quantum_gravity", "experimental_confirmation"], "sources": ["cern_standard_model", "tong_gr"]
+    }
+  ],
+  "examples": [
+    {
+      "path": "examples/known-entities/discrete-pair.json",
+      "entity_ids": ["electron", "positron"],
+      "type_entities": {"electron classical proxy": "electron", "positron classical proxy": "positron"},
+      "claim": "Restricted equal-positive-mass, opposite-charge classical proxies with a configured non-annihilating contact rule.",
+      "not_claimed": ["physical_electron_positron_scattering", "annihilation", "quantum_statistics", "emergent_force_law"]
+    },
+    {
+      "path": "examples/known-entities/field-channel.json",
+      "entity_ids": ["electromagnetic_field"],
+      "claim": "Directed six-port transport of two transverse vector components in a logical group.",
+      "not_claimed": ["maxwell_dynamics", "physical_electromagnetic_energy", "photon", "isotropic_wave_propagation"]
+    },
+    {
+      "path": "examples/known-entities/collision.json",
+      "entity_ids": [],
+      "claim": "Historical continuum-formula benchmark for unequal-mass elastic bodies; not an elementary-rule emergence example.",
+      "not_claimed": ["emergent_collision_law", "quantum_scattering"]
+    }
+  ]
+}

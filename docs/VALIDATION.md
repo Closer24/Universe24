@@ -1,5 +1,43 @@
 # Validation evidence
 
+## Physical inventory and elementary probes — 2026-09-12
+
+Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced
+[entity catalog](../examples/known-entities/catalog.json) contains 11 field
+categories and 35 particle/multiplet entries. These are inventory entries,
+not a count of implemented physical fields. Its definitions and support
+assessment are explained in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
+Highlights was retrieved on 2026-09-12, including its implemented-entities
+section; the user's elementary-vector-operation restriction is binding.
+
+No engine code changes. The two new configurations produce updates only by
+copying, swapping or clearing vector values; guards and dot-product invariants
+validate those proposals. The old unequal-mass formula remains a clearly labeled
+comparison benchmark. No new configuration derives its state from that formula.
+
+The new focused suite passed eight checks: catalog/source/conjugate consistency,
+elementary update assignments, equal-mass contact on 9-cubed/X and 15-cubed/Y
+domains, outgoing/rest/unequal-mass exclusions, and causal two-vector transport.
+The same-local-mechanism checks are not a continuum-limit proof. The final PR
+records the mandatory affected gate and exact submitted tree.
+
+Both new inputs were run with the existing CLI and `--visualize`. The pair
+completed 16 ticks and 17 recorded frames: contact at tick 4, reversed momentum
+in the next sample, final X positions 1 and 7, positive mass 2 in total and zero
+net charge/momentum throughout. Its summed raw squared momentum remains 2.
+The field probe completed six ticks and seven frames, with exactly three
+nearest-neighbor transfers taking two ticks each. Its isolated E/B pulse retains
+raw squared amplitude 18 and has no source or dissipation. Both runs report
+balanced accounting and use unchanged runtime fingerprint
+`b8b0db5aba5c8ee14cfb87be318471f3e1352d0e83b5afb5640e3d49903c37a2`.
+Recorded data and metadata were inspected; no graphical-browser validation is
+claimed. Generated HTML stays outside the source commit.
+
+This verifies restricted classical proxies and a vector transport mechanism,
+not Maxwell dynamics, a photon, gravity or annihilation. Boss and specialist
+Skills already route to the updated postulates and owner contracts; no duplicate
+Skill rule or new agent role is needed.
+
 ## Generic local field rules — 2026-09-12
 
 The extension starts from main `12c85316f011d0601adcd0f4a31f0f52e59eaa27`.

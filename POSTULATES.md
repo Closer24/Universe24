@@ -19,9 +19,12 @@ candidate laws. It does not infer familiar physics from names.
 
 All interactions use generic definitions. A configured local pair transaction
 may transform several fields together only when its declared invariants and
-conserved pair totals hold exactly. Familiar elastic collisions can be supplied
-as explicit example laws; reproducing them does not mean they emerged from a
-computational field. See the atomic interaction contract and example in
+conserved pair totals hold exactly. Existing elastic-collision formulas remain
+explicit reference benchmarks; reproducing them does not mean they emerged from
+a computational field. New emergence experiments must use simple local vector
+operations to produce states, not supplied continuum force or collision formulas.
+Guards and conservation diagnostics validate proposals without replacing this
+elementary rule. See [physical entities](docs/PHYSICAL_ENTITIES.md) and the example in
 [DISTURBANCES.md](docs/DISTURBANCES.md).
 
 The user-defined cost of a local cycle sets a general cell delay above the
@@ -55,8 +58,9 @@ explicit retained and outgoing amounts. Joint field/carrier transactions must
 pass declared balances before both owners commit; delayed transactions cannot
 overwrite intervening field evolution. A logical group of two vectors does not
 itself identify an electromagnetic field or supply a photon. Known physical laws
-remain independent acceptance targets unless a configuration explicitly inserts
-them. This extension is a research interface, not evidence of their emergence.
+remain independent acceptance targets. A historical benchmark that explicitly
+inserts them is not an emergence experiment. This extension is a research
+interface, not evidence of their emergence.
 
 Initialization independently chooses periodic or open boundaries. Periodic space
 connects opposite faces on each of X, Y and Z without changing a carried direction.
