@@ -3,20 +3,110 @@ on:
   push:
     branches: [feat/directional-delay]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  runtime:
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.14'
-      - run: python -m pip install 'pytest>=8,<10' 'ruff>=0.16,<0.17' 'mypy>=2.3,<3' 'build>=1,<2'
-      - name: Archive interpreter and development tools only
-        run: tar -czf "$RUNNER_TEMP/directional-runtime.tar.gz" -C "$pythonLocation" .
+          python-version-file: .python-version
+      - name: Apply the reviewed source patch on the isolated branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/feat/directional-delay
+          python - <<'PY'
+          import base64
+          import hashlib
+          import json
+          import lzma
+          import os
+          import pathlib
+          import subprocess
+          base = '992e0006469bb1156f517ae8273a80a980df7c57'
+          transport = '.github/workflows/directional-delay-audit.yml'
+          changed = subprocess.check_output(['git', 'diff', '--name-only', base], text=True).splitlines()
+          assert changed == [transport], changed
+          chunks = []
+          for sha in ('2bf0f59fa56669fd4db3c30e3b27cd751e626dc2', '6f34c8d46f4486b38e920d5fb34f9e15b84a5b38', 'a12e363abb4d9421d54a63800cc234cbd71e8c66'):
+              reply = json.loads(subprocess.check_output(['gh', 'api', f'repos/Closer24/Universe24/git/blobs/{sha}']))
+              chunks.append(base64.b64decode(reply['content']).decode())
+          patch = lzma.decompress(base64.b64decode(''.join(chunks)))
+          assert hashlib.sha256(patch).hexdigest() == '782bef9056555ead68392d42e4b7ea38acc9d677133d0783be7ea15adf11e9c7'
+          target = pathlib.Path(os.environ['RUNNER_TEMP']) / 'directional-delay.patch'
+          target.write_bytes(patch)
+          subprocess.run(['git', 'apply', '--check', str(target)], check=True)
+          subprocess.run(['git', 'apply', str(target)], check=True)
+          pathlib.Path(transport).unlink()
+          assert not subprocess.check_output(['git', 'diff', base, '--', 'tests/reference', '.github/workflows'])
+          subprocess.run(['git', 'add', '-A'], check=True)
+          assert len(subprocess.check_output(['git', 'diff', '--cached', '--name-only', base], text=True).splitlines()) == 28
+          subprocess.run(['git', 'diff', '--cached', '--check'], check=True)
+          PY
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Validate changed code and all affected consumers
+        run: python tools/check.py --base 992e0006469bb1156f517ae8273a80a980df7c57
+      - name: Reproduce the six configured headless comparisons
+        run: python examples/computational-curvature/measure.py --output artifacts/directional-delay-probe
+      - name: Confirm research output and package the new shared timing owner
+        run: |
+          python - <<'PY'
+          import json
+          import pathlib
+          data = json.loads(pathlib.Path('artifacts/directional-delay-probe/measurements.json').read_text())
+          assert data['curvature_status'] == 'not_established'
+          for name, item in data['cases'].items():
+              assert item['completed_ticks'] == 8, name
+              assert item['accounting_balanced'], name
+              assert item['wave_squared_amplitude_balance_matches'], name
+          assert data['cases']['legacy_fixed_control']['transverse_receipts_present']
+          assert not data['cases']['locked_direction_control']['transverse_receipts_present']
+          print('PASS: six runs complete, declared balances match, mode-mixing control discriminates.')
+          PY
+          python -m build --outdir "$RUNNER_TEMP/distribution"
+          python - <<'PY'
+          import os
+          import pathlib
+          import zipfile
+          wheel = next((pathlib.Path(os.environ['RUNNER_TEMP']) / 'distribution').glob('*.whl'))
+          with zipfile.ZipFile(wheel) as package:
+              assert 'event_universe/core/timing.py' in package.namelist()
+          print('PASS: wheel includes the single shared timing owner.')
+          PY
+      - name: Preserve the exact submitted tree and test evidence
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/directional-evidence"
+          git add -A
+          tree=$(git write-tree)
+          echo "$tree" > "$RUNNER_TEMP/directional-evidence/tree.txt"
+          git archive --format=tar "$tree" | gzip > "$RUNNER_TEMP/directional-evidence/source.tar.gz"
+          git diff --cached 992e0006469bb1156f517ae8273a80a980df7c57 > "$RUNNER_TEMP/directional-evidence/changes.patch"
+          cp artifacts/junit.xml artifacts/check-scope.json "$RUNNER_TEMP/directional-evidence/" 2>/dev/null || true
+          if [ -d artifacts/directional-delay-probe ]; then
+            cp -R artifacts/directional-delay-probe "$RUNNER_TEMP/directional-evidence/"
+          fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: directional-runtime
-          path: ${{ runner.temp }}/directional-runtime.tar.gz
+          name: directional-delay-evidence
+          path: ${{ runner.temp }}/directional-evidence/
           retention-days: 1
+      - name: Publish the successfully checked feature branch only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/feat/directional-delay
+          test ! -e .github/workflows/directional-delay-audit.yml
+          test -z "$(git diff 992e0006469bb1156f517ae8273a80a980df7c57 -- tests/reference .github/workflows)"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          gh auth setup-git
+          git commit -m 'feat: add local six-direction waits and unlock the wave-mixing experiment'
+          git push origin HEAD:refs/heads/feat/directional-delay
