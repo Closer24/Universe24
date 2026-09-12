@@ -1,0 +1,100 @@
+name: Final latest-main reconciliation
+on:
+  push:
+    branches: [chore/repository-consistency-audit]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Restore the exact reviewed tree and fix its relative runner links
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: 85ec120862e5bead2c63eebfc37753b52497c0eb
+          SOURCE_ARTIFACT: '10299546882'
+        shell: bash
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          test "$(git rev-parse origin/main)" = "$BASE"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git merge --no-ff --no-commit -X theirs "$BASE"
+          mkdir -p "$RUNNER_TEMP/reviewed"
+          gh api "repos/Closer24/Universe24/actions/artifacts/$SOURCE_ARTIFACT/zip" > "$RUNNER_TEMP/reviewed.zip"
+          unzip -q "$RUNNER_TEMP/reviewed.zip" -d "$RUNNER_TEMP/reviewed"
+          source_archive=$(find "$RUNNER_TEMP/reviewed" -name source.tar.gz -print -quit)
+          tree_file=$(find "$RUNNER_TEMP/reviewed" -name tree.txt -print -quit)
+          test -n "$source_archive"
+          test -n "$tree_file"
+          reviewed_tree=$(tr -d '\r\n' < "$tree_file")
+          git rm -rf .
+          tar -xzf "$source_archive" -C .
+          git add -A
+          test "$(git write-tree)" = "$reviewed_tree"
+          python - <<'PY'
+          from pathlib import Path
+
+          for directory in (Path('examples/maxwell'), Path('examples/small-space')):
+              for path in directory.rglob('*.md'):
+                  text = path.read_text(encoding='utf-8')
+                  updated = text.replace('run.py', 'run_experiments.py')
+                  if updated != text:
+                      path.write_text(updated, encoding='utf-8')
+
+          for workflow in (
+              Path('.github/workflows/rebase-audit-on-main.yml'),
+              Path('.github/workflows/reconcile-audit-v2.yml'),
+              Path('.github/workflows/reconcile-audit-v3.yml'),
+          ):
+              if workflow.exists():
+                  workflow.unlink()
+          PY
+          test -z "$(git diff --name-only --diff-filter=U)"
+          test -z "$(git diff "$BASE" -- tests/reference)"
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Full final validation
+        env:
+          BASE: 85ec120862e5bead2c63eebfc37753b52497c0eb
+        run: |
+          python -m ruff check --select I --fix .
+          python -m ruff format .
+          git diff --check
+          python tools/check.py --base "$BASE" --full
+      - name: Preserve exact checked tree
+        if: always()
+        env:
+          BASE: 85ec120862e5bead2c63eebfc37753b52497c0eb
+        run: |
+          mkdir -p "$RUNNER_TEMP/final-audit"
+          git add -A
+          tree=$(git write-tree)
+          echo "$tree" > "$RUNNER_TEMP/final-audit/tree.txt"
+          git archive --format=tar "$tree" | gzip > "$RUNNER_TEMP/final-audit/source.tar.gz"
+          git diff --cached "$BASE" > "$RUNNER_TEMP/final-audit/cleanup.diff"
+          cp artifacts/junit.xml artifacts/check-scope.json "$RUNNER_TEMP/final-audit/" 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-audit-final-latest-main
+          path: ${{ runner.temp }}/final-audit/
+          retention-days: 1
+      - name: Publish the fully checked reconciliation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test ! -e .github/workflows/rebase-audit-on-main.yml
+          test ! -e .github/workflows/reconcile-audit-v2.yml
+          test ! -e .github/workflows/reconcile-audit-v3.yml
+          gh auth setup-git
+          git commit -m 'chore: reconcile repository naming audit with current main'
+          git push origin HEAD:refs/heads/chore/repository-consistency-audit
