@@ -353,6 +353,12 @@ does not alter simulation ticks, physical updates or failure detection.
 
 ### Default run display
 
+The optional [local reception probe](docs/LOCAL_OBSERVER.md) records completed
+inputs at one node with a completed-node-cycle counter. Six receiver ports
+identify the last hop, not distant source positions. Archive prefixes are
+captured alongside frames; global tick and state remain audit information.
+This is a passive diagnostic, not human optics or a derived proper-time law.
+
 Runs are headless by default, including ordinary tests. The active CLI requires
 an initialization file. Historical scenarios use the explicitly selected
 `event_universe.legacy_runner` module. Metadata and JSONL events do not depend

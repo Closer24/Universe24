@@ -150,6 +150,17 @@ treating its omissions as current gaps.
 
 ## Coverage map
 
+### Local observer reconciliation
+
+For the [local reception observer](LOCAL_OBSERVER.md), Highlights was reread on
+2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 2.1, 4.6, 5.1-5.2 and 10.7 require discrete connected nodes, causal
+delivery and read-only output. The probe records completed local inputs and
+preserves exact playback prefixes. The user's event-time interpretation
+motivates a local cycle counter; perceived time and a derived spacetime remain
+hypotheses. The live document itself was not edited by this implementation.
+
 ### Directional-wave candidate reconciliation
 
 Read the live Highlights on 2026-09-12 at revision

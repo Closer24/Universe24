@@ -111,6 +111,13 @@ local integer contract.
 
 ## Generated output ownership
 
+The optional [local observer](LOCAL_OBSERVER.md) belongs to diagnostics.
+`diagnostics/local_observer.py` whitelists completed events at one node and
+archives copied reception values plus a cycle counter. The runner captures exact
+receipt prefixes beside playback frames. Enriched spatial reception events are
+emitted after ownership commits. Neither archive, display nor clock count is a
+physical planner input or a quantum oracle query.
+
 `retention.py` owns host-only artifact registration, writer leases and expiry.
 Runners own complete fresh output directories; the workspace owns exact input,
 log and export files and declares the child-output dependency for companions.

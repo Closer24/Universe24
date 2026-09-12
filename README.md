@@ -22,6 +22,10 @@ For a complete authoring walkthrough, use the
 space, reusable entities, field laws, encounters, run commands and display options,
 with a runnable two-stream template.
 
+The optional [local reception observer](docs/LOCAL_OBSERVER.md) shows only
+signals received at one selected node, with a local cycle counter and six
+arrival directions, separately from the global world audit.
+
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.
 Their five-register cell and sixteen-register particle schemas are not the

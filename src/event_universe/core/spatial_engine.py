@@ -410,7 +410,25 @@ class SpatialEngine:
                 links = list(self.links[packet.origin])
                 links[packet.port] = None
                 self.links[packet.origin] = tuple(links)
-            self._event("spatial_received", tick, position, packets=len(arrivals))
+            # Read-only, post-commit summaries. State.delivered uses travel ports;
+            # a receiver sees the opposite side. Retain zero readings on used
+            # ports so cancellation is distinct from no completed reception.
+            received_fields = [
+                {
+                    self.initial.fields[definition.field].name: unpack(state.delivered[port ^ 1])
+                    for definition, state in zip(self.initial.spatial_fields, states, strict=True)
+                }
+                if any(packet.port == port ^ 1 for packet in arrivals)
+                else {}
+                for port in range(6)
+            ]
+            self._event(
+                "spatial_received",
+                tick,
+                position,
+                packets=len(arrivals),
+                received_fields=received_fields,
+            )
             if self.decayer is not None:
                 self._event(
                     "spatial_decayed",

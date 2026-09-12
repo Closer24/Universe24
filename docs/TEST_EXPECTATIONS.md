@@ -1,5 +1,15 @@
 # Test inputs and expected results
 
+## Local observer
+
+The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,
+two-tick periodic transit, signed post-decay readings, zero versus absence,
+unchanged physical states/costs, exact prefixes, clock independence from global
+timestamps and archive exhaustion. `tests/test_local_observer.py` checks these
+paths. `tests/test_observer_playback.py` checks safe labels, backward seeking,
+paused-clock samples and the explicit world-audit switch. These are observation
+contracts, not human vision or Maxwell acceptance tests.
+
 
 ## Local record operations
 
