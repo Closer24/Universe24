@@ -70,9 +70,11 @@ return matters. No universal interaction-to-record trigger follows from this API
 
 ## Entities: explicit finite preparations
 
-Every one of the current catalog's 35 particle/multiplet entries and 11 field
-families now has a `quantum_profile`. This covers the existing inventory, not all
-possible entities or their complete quantum dynamics. Every profile declares
+Each of the original 35 particle/multiplet entries and 11 field families has a
+`quantum_profile` in the explicitly supplied
+[representation-probes.json](../examples/known-entities/representation-probes.json).
+The physical reference catalog contains no executable profiles. Its additional
+disturbance families have no default preparations. Every supplied profile declares
 `finite_mode_representation`, mode names, basis labels, initial levels,
 assumptions and missing dynamics.
 
@@ -100,7 +102,7 @@ an automatically energy-balanced particle-creation process. Its no-transition
 branch is included. All builders produce the same checked matrix data.
 
 ```sh
-python -m event_universe.entities --catalog examples/known-entities/catalog.json --entity electron --entity positron --entity electromagnetic_field --representation quantum --output-init artifacts/quantum-preparation.json
+python -m event_universe.entities --catalog examples/known-entities/catalog.json --profiles examples/known-entities/representation-probes.json --entity electron --entity positron --entity electromagnetic_field --representation quantum --output-init artifacts/quantum-preparation.json
 python -m event_universe --init artifacts/quantum-preparation.json --output artifacts/quantum-preparation
 ```
 

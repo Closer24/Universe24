@@ -1,5 +1,23 @@
 # Highlights implementation coverage
 
+## Physical reference catalog reconciliation — 2026-09-12
+
+The version 2 [entity catalog](ENTITY_CATALOG.md) expands descriptive coverage
+without supplying physical evolution laws. Sourced measured properties remain
+external comparison targets. Possible interactions describe channels and their
+conditions; the simulator still needs explicit elementary operations and evidence
+of emergence. The original 46 experiment profiles move to a separate file.
+
+This implements the Highlights goals of deriving effective laws from local
+operations, preserving generic field/type definitions and separating established
+physics from hypotheses and verified results. The live document was read on
+2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+This repository update does not modify that document or claim additional derived
+physics. Source base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
+
+## Historical implementation inventory
+
 This versioned companion records the implementation inventory added to
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
 Scope: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`.

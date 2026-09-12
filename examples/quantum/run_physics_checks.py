@@ -157,8 +157,12 @@ def main():
                 }
             )
         catalog = json.loads((ROOT / "examples/known-entities/catalog.json").read_text())
+        profiles = json.loads((ROOT / "examples/known-entities/representation-probes.json").read_text())
         profile = compile_entities(
-            catalog, ["electron", "positron", "electromagnetic_field"], representation="quantum"
+            catalog,
+            ["electron", "positron", "electromagnetic_field"],
+            profiles=profiles,
+            representation="quantum",
         )
         init = out / "entity-preparation.json"
         init.write_text(json.dumps(profile, indent=2))
@@ -171,7 +175,7 @@ def main():
             "bell": bell_experiment(),
             "classical_probabilities": markov_experiment(),
             "catalog": {
-                "profiles": len(catalog["field_entities"]) + len(catalog["particle_entities"]),
+                "profiles": len(profiles["profiles"]),
                 "joint_entity_preparation": ["electron", "positron", "electromagnetic_field"],
                 "dimensions": profile["event_program"]["dimensions"],
             },

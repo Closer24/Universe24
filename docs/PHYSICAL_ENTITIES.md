@@ -1,21 +1,28 @@
 # Physical entities and discrete support
 
-The [quantum-mode definitions](QUANTUM_ENTITIES.md) give every current entry a
-finite quantum preparation. The inventory's missing physical dynamics remain
+The [quantum-mode definitions](QUANTUM_ENTITIES.md) give the original 46 entries
+finite quantum preparations in a separate experiment file. Missing physical dynamics remain
 missing: register dimensions and working quantum channels are not a Standard
 Model field theory or a derivation of particle properties.
 
 
 The entity inventory is [catalog.json](../examples/known-entities/catalog.json).
-It contains descriptive metadata and explicit executable representation profiles,
-not a raw simulator initialization file. The [catalog adapter](ENTITY_CATALOG.md)
-compiles selected profiles into ordinary initialization JSON. No catalog label
-selects a hidden engine law. All 46 entries have bounded representation probes;
-their actual physical dynamics and emergence remain separately unestablished.
+It contains sourced physical properties, field/excitation links, 17 interaction
+families and 33 representative channels, without executable formulas. Alongside
+the 11 field families and 35 particle records, 14 disturbance families describe
+bound states, collective modes and observed gravitational waves. The
+[catalog contract](ENTITY_CATALOG.md) defines their status and validation.
+Separate, explicitly supplied representation probes compile to ordinary run
+inputs. No catalog label or measurement selects a hidden engine law.
 
 The scope is the established particle/field families and selected useful
 composites, together with explicitly unresolved or hypothetical entries. It is
-not an assertion that every entity in nature is known or implemented.
+not an assertion that every entity in nature is known or implemented. In
+particular, nuclei, atomic spectra, molecules and material excitations are
+covered by families and cited specialist inventories, not enumerated exhaustively.
+Masses, lifetimes and widths retain units, precision and conventions. Unknown
+neutrino masses and dark-sector identity remain unknown; physical measurements
+are validation targets, not runtime calibrations.
 
 ## Elementary rules first
 

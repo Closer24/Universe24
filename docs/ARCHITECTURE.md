@@ -6,10 +6,13 @@ finite entity-profile compiler in `integration/quantum_entities.py`. The generic
 core is unchanged; native v2 selection extends the existing event-program owner.
 
 
-`entities.py` owns host-only compilation of selected explicit catalog profiles
-into ordinary initialization; it delegates strict JSON and runtime schema
-validation to `initialization.py`. Profiles contain their candidate operations.
-It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
+`entity_catalog.py` validates descriptive reference metadata and its links.
+Its decimal measurement parsing is host-side only and never updates physical
+state. `entities.py` requires separate explicit experiment profiles for version 2
+catalogs, compiles them into ordinary initialization, and delegates runtime schema
+validation to `initialization.py`. Reference properties and interaction lists do
+not enter runtime laws or select species-specific behavior. See
+[entity catalog](ENTITY_CATALOG.md).
 Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).

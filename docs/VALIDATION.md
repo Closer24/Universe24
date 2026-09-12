@@ -1,5 +1,34 @@
 # Validation evidence
 
+## Descriptive physical catalog and explicit profiles — 2026-09-12
+
+Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2
+[physical reference](ENTITY_CATALOG.md) adds sourced properties and possible
+channels without introducing runtime laws. All 46 original classical/quantum
+profile pairs were extracted unchanged into `representation-probes.json`.
+
+An independent baseline worktree produced all 92 compiled configurations and
+three 12-tick worlds: a charged conjugate pair with the electromagnetic field,
+the four-component Higgs field probe, and the finite quantum pair/field
+preparation. The new compiler produces identical configurations, all 39 complete
+snapshots, every event, computation report and spatial accounting record.
+This checks behavior preservation, not the physical validity of those probes.
+
+Reference tests compare the declared PDG 2025 values, conventions and statuses;
+structural checks cover citations, units, aliases, reciprocal links, reaction
+charge balance and rejected executable content. The affected gate is
+`python tools/check.py --base 98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
+The PR records its final count and CI result for the submitted head. Validation
+uses Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Runs are headless;
+no unrelated full-suite audit or visual verification is claimed.
+
+The simulation-configuration guide now requires explicit experiment profiles and
+keeps reference measurements outside runtime laws. Boss, architecture, physics
+review and PR-review Skills already cover these boundaries; no additional Skill
+or workflow is needed. The Highlights revision and reconciliation are recorded
+in its [versioned companion](HIGHLIGHTS_IMPLEMENTATION.md); the live document
+was read, not changed.
+
 
 Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use
