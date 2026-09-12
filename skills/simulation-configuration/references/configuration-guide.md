@@ -4,7 +4,8 @@
 
 | File | Owns | Consumer |
 | --- | --- | --- |
-| Reusable catalog or law JSON | Type defaults, units, assumptions and explicit rules | Existing entity adapter or example preparation script |
+| Physical reference catalog | Descriptive properties, identities and possible interactions; no formulas | Catalog validator and explicit profile adapter |
+| Representation profiles or law JSON | Declared normalization, initial values and explicit experiment rules | Existing entity adapter or example preparation script |
 | Experiment authoring JSON | Selected definitions, placements and parameter choices | That example's preparation script, if one exists |
 | Final initialization JSON | Complete validated world and initial state | `python -m event_universe --init ...` |
 | Display JSON | Supported camera, arrows, dimensions and playback controls | The selected renderer, not the simulator |
@@ -31,9 +32,16 @@ PowerShell, using an existing project Python environment:
 New-Item -ItemType Directory -Force artifacts/inputs | Out-Null
 Copy-Item -LiteralPath skills/simulation-configuration/assets/two-streams.json -Destination artifacts/inputs/my-world.json
 $env:PYTHONPATH = (Resolve-Path src).Path
-python -c "from pathlib import Path; from event_universe import Simulation; from event_universe.initialization import load_initial_state; Simulation(load_initial_state(Path('artifacts/inputs/my-world.json'))); print('valid')"
+python -m event_universe.configuration_validation artifacts/inputs/my-world.json
 python -m event_universe --init artifacts/inputs/my-world.json --output artifacts/my-world-run
 ```
+
+The validation command is read-only. Run the following simulation command only
+when execution or behavioral acceptance is requested. See the
+[validation contract](../../../docs/CONFIGURATION_VALIDATION.md) for supported file
+kinds, explicit profile/catalog and observer/world dependencies, structured errors
+and unsupported authoring formats. A passing preflight does not prove future run
+completion or the physical law.
 
 Choose a new input destination before copying and a new run directory on each run.
 Use the verified project interpreter instead of `python` if PATH resolves another
@@ -108,7 +116,9 @@ The version 2 physical catalog contains no executable expressions. Physical
 properties and possible interactions stay in that reference; experiment profiles
 are supplied through a separate file. Never infer update laws, reaction rates or
 lattice parameters from catalog measurements. Validate reference changes with
-`python -m event_universe.entity_catalog examples/known-entities/catalog.json`.
+`python -m event_universe.configuration_validation examples/known-entities/catalog.json`.
+Check every supplied representation, including unselected entities, with
+`python -m event_universe.configuration_validation examples/known-entities/representation-probes.json --catalog examples/known-entities/catalog.json`.
 The supplied profiles are representation probes, not a mass-calibrated particle
 theory. Do not assume that selecting electron adds Coulomb force, or that its
 inventory register is its SI mass. Reuse or author explicit executable profiles,

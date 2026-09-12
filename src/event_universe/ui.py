@@ -19,7 +19,8 @@ from typing import BinaryIO, cast
 from urllib.parse import urlsplit
 from uuid import uuid4
 
-from event_universe.initialization import parse_initial_json, parse_json_document
+from event_universe.configuration_validation import validate_configuration
+from event_universe.initialization import parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 if sys.platform == "win32":
@@ -39,15 +40,10 @@ def validate_source(source: object) -> dict[str, object]:
     """Use the same strict data validator as the CLI, without executing a simulation."""
     if not isinstance(source, str) or len(source.encode("utf-8")) > MAX_REQUEST:
         raise ValueError("configuration must be JSON text no larger than 1 MiB")
-    initial = parse_initial_json(source)
-    return {
-        "model": initial.model_id,
-        "shape": initial.shape,
-        "ticks": initial.ticks,
-        "fields": len(initial.fields),
-        "types": len(initial.disturbances),
-        "seeds": len(initial.seeds),
-    }
+    report = validate_configuration(source, kind="initialization")
+    if not report.valid:
+        raise ValueError(report.issues[0].message)
+    return report.summary
 
 
 def default_configs() -> Path:

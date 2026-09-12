@@ -27,6 +27,12 @@ disturbance, transport, coupling and cost definitions; see
 historical scalar universe. Historical scenarios belong to the separate
 `event_universe.legacy_runner` entry point.
 
+For configuration-only checks, use the read-only
+[preflight API/CLI](../../docs/CONFIGURATION_VALIDATION.md) and return its report;
+do not launch a simulation. The active runner shares its initialization/observer
+preparation with preflight. A valid report does not certify future capacities or
+physical behavior; actual execution and acceptance remain separate evidence.
+
 Verify the runtime and select explicit initialization or a named historical scenario
 that exercises the requested behavior. Use an isolated checkout and unique output
 directory. Do not run a large parameter sweep when one bounded case resolves the
