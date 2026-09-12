@@ -13,6 +13,49 @@ and transition contract: bounded scalar/vector payloads, whole-record or extensi
 transport, atomic local exchange, explicit sources, fixed link transit, local
 computation delay without debt, capacity failures and headless output.
 
+Optional [spatial fields](docs/SPATIAL_FIELDS.md) add initialization-defined
+baselines, continuous external emission and fixed-clock outward octant transport.
+Their six delivered channels preserve travel direction; eight internal sign
+classes prevent reversal of an emitted branch. The document specifies source
+cadence, bounded residual ownership, cost coupling and periodic/self-field limits.
+
+Optional [spatial couplings](docs/SPATIAL_COUPLINGS.md) add same-field atomic
+exchange and discrete norm-preserving rotation, driven by local values or scalar
+directional flux. Samples precede fresh emission; a delayed carrier proposal
+commits its equal-and-opposite spatial reaction with the carrier. The response
+contract defines same-timestamp packet preparation, fixed local cost and the
+restricted straight-line isolation result without general source attribution.
+
+Schema version 1 retains those conservative spatial laws. Schema version 2
+selects the explicit `finite-dissipative-v1` policy, derived from the schema
+version independently of user-defined names. Every spatial field requires a
+bounded integer ratio `0 <= p < q`; each original packet/octant/component is
+attenuated to `sign(v) * floor(abs(v) * p / q)` on completing an interior link,
+before arrival packets merge. Removed fractions are intentionally not retained.
+Immutable baselines are exempt. Per-record finite allowances bound absolute
+emission and opposite coupling reactions; they are not physical reservoirs.
+The complete laws belong to [spatial fields](docs/SPATIAL_FIELDS.md) and
+[spatial response](docs/SPATIAL_COUPLINGS.md).
+
+The version 2 combined balance is initial inventory plus committed sources minus
+committed signed dissipation and escaped quantity. Integer attenuation can change vector direction and does not
+preserve momentum or energy. Coupling remains equal-and-opposite at its atomic
+commit, before subsequent propagation loss. Fixed finite initial records and
+allowances bound dynamic input; after the last nonzero input, dynamic spatial
+stock vanishes after finitely many links. This does not require carriers to stop
+or immutable backgrounds to disappear. Schema 1 rejects the new decay and budget
+keys, and named historical research models retain their own integer rules.
+
+The optional initialization `boundary` is `periodic` by default or `open`.
+Periodic topology wraps independently across all six faces, preserving port,
+vector, full link time and ownership. Open terminal packets remain counted while
+in flight, then their unchanged payloads leave the simulation at link completion.
+There is no simulated outside receiver, decay or receive cost. The boundary law
+is independent of schema version and named in metadata. Combined accounting is
+`current + dissipated + escaped = initial + sources`; spatial-only accounting
+also includes committed opposite reactions. The escaped ledger is diagnostic,
+never a global repair or a physical input. See [the schema](docs/DISTURBANCES.md).
+
 The source/self-force, scalar cell, particle, turning, variable-link and collision
 laws below remain requirements of explicitly named research APIs. They do not
 define the active generic schema. Shared locality, integer bounds, read-only
@@ -47,7 +90,8 @@ See [the candidate contract](docs/CAUSAL_STREAM_FIELD.md).
 The canonical implementation is the `event_universe` Python package under `src/`.
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
 The historical scalar model identifier is `scalar-field-v10-contact`.
-Active generic model identity is supplied by initialization.
+The active generic user identity is supplied by initialization; its schema version
+separately identifies conservative or finite dissipative spatial policy.
 The plain-language conceptual source is `POSTULATES.md`. If its wording is
 ambiguous, this file defines the executable technical requirement. A deliberate
 change to a postulate must update both files and the relevant regression tests.

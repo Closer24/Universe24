@@ -33,6 +33,17 @@ does not erase all interaction. Keep periodic return distinct from free-space
 acceptance. Define any scalar/stream conversion before exposing an API for it;
 reject unsupported input instead of silently ignoring it.
 
+When moving sources and field packets share explicit transit times, test
+coarrival, turns with alternate paths, and periodic return before asserting
+self exclusion. Field-first callback order alone is not an attribution proof.
+Keep illustrative uniform shells separate from the actual local branching law.
+
+For rotating field response, distinguish conserved combined vector components
+from preserved carrier norm. Require an external transverse-source control when
+parallel self flux produces no rotation. Price delayed atomic reactions without
+rewriting old in-flight packets or claiming reservation tariffs are measured host
+instruction counts; see [spatial response](../../docs/SPATIAL_COUPLINGS.md).
+
 Use local source edits and the existing Python validation tools. Coordinate
 schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and

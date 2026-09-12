@@ -16,6 +16,19 @@ bounded-record schema replaces the implicit scalar/particle schema for the
 primary API. Global diagnostics never drive physical rules, and rendering is
 absent unless explicitly requested.
 
+The optional spatial extension uses `core/spatial_state.py` for fixed schemas,
+`fields/spatial.py` for bounded emission/splitting and `fields/spatial_plan.py`
+for pure local proposals. `core/spatial_engine.py` schedules and owns field
+packets; `disturbance_api.py` composes its planner without formulas. The shared
+engine combines diagnostics and costs while retaining separate field and
+carrier clocks. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the contract and
+the remaining self-attribution requirement. `fields/spatial_coupling.py` owns
+local sampling, fractional exchange, exact quarter-turn rotation and reaction
+allocation. The injected `SpatialCoupler` protocol keeps those calculations out
+of engine scheduling. Carrier and field owners validate together before committing
+the response; fixed sample registers and departure timestamps prevent future
+reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md).
+
 The remaining scalar, stream, linked, collision and balanced sections describe
 explicitly named research APIs. Their record layouts, extension points, tick
 orders and acceptance limits remain scoped to those candidates.

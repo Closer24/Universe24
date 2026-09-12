@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-spatial-quarter-turn-v1",
+  "shape": [31, 31, 31],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 3,
+  "operation_costs": {
+    "receive": 1, "read": 1, "evaluate": 1, "update": 1, "couple": 1,
+    "route": 1, "split": 1, "send": 1, "commit": 1
+  },
+  "fields": [
+    {"name": "inventory", "components": 3, "units": "unit", "signed": true, "conserved": true},
+    {"name": "control", "components": 3, "units": "turn numerator", "signed": true, "conserved": false},
+    {"name": "polarity", "components": 1, "units": "multiplier", "signed": true, "conserved": false, "extensive": false}
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": ["inventory", "polarity"],
+      "defaults": {"inventory": [5, 0, 0], "polarity": 1},
+      "transport": {"mode": "move", "direction_field": "inventory"}
+    }
+  ],
+  "spatial_fields": [
+    {"field": "inventory", "baseline": [0, 0, 0], "transport": "outward"},
+    {"field": "control", "baseline": [0, 0, 1], "transport": "outward"}
+  ],
+  "spatial_couplings": [
+    {
+      "name": "configured_turn",
+      "type": "carrier",
+      "field": "inventory",
+      "mode": "rotation",
+      "rotation": {"op": "mul", "args": [{"field": "polarity"}, {"field": "control", "side": "right"}]},
+      "denominator": 1,
+      "axis_order": [0, 1, 2]
+    }
+  ],
+  "seeds": [{"position": [15, 15, 15], "type": "carrier"}]
+}

@@ -23,6 +23,8 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work, signed_divrem
 
+from .spatial import split_weighted
+
 
 def _broadcast(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
     size = max(len(left), len(right))
@@ -36,6 +38,7 @@ def evaluate(
     left: Values,
     right: Values,
     meter: CostMeter,
+    spatial_fluxes: Values = (),
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
@@ -44,7 +47,11 @@ def evaluate(
         return expression.literal
     if op == "field":
         return unpack((left if expression.side == 0 else right)[expression.field])
-    operands = tuple(evaluate(arg, left, right, meter) for arg in expression.arguments)
+    if op == "flux":
+        if not spatial_fluxes:
+            raise ValueError("spatial flux requires an explicitly supplied local sample")
+        return unpack(spatial_fluxes[expression.field])
+    operands = tuple(evaluate(arg, left, right, meter, spatial_fluxes) for arg in expression.arguments)
     if op in ("neg", "abs", "sum", "component"):
         unary = operands[0]
         if op == "neg":
@@ -102,20 +109,7 @@ def _sum_records(
 
 def _shares(amount: int, weights: Weights, phase: int) -> tuple[tuple[int, ...], int]:
     """Count weighted cyclic intervals in fixed work, including signed amounts."""
-    denominator = sum(weights)
-    magnitude = abs(amount)
-    sign = -1 if amount < 0 else 1
-    left = 0
-    portions = []
-    for width in weights:
-
-        def prefix(position: int, width: int = width, left: int = left) -> int:
-            whole, tail = divmod(position, denominator)
-            return checked_work(whole * width + min(width, max(0, tail - left)))
-
-        portions.append(bounded(sign * (prefix(phase + magnitude) - prefix(phase))))
-        left += width
-    return tuple(portions), (phase + magnitude) % denominator
+    return split_weighted(amount, weights, phase)
 
 
 def _with_value(record: DisturbanceRecord, index: int, value: Payload) -> DisturbanceRecord:
@@ -141,6 +135,19 @@ class DisturbanceLaw:
             field.validate(record.values[index])
             if index not in definition.fields and any(unpack(record.values[index])):
                 raise ValueError("record carries a field absent from its disturbance type")
+        if record.exchange_remainders:
+            if len(record.exchange_remainders) != len(self.couplings):
+                raise ValueError("carried exchange state must match the fixed coupling rules")
+            for coupling, payload in zip(self.couplings, record.exchange_remainders, strict=True):
+                if len(payload) != self.fields[coupling.field].components:
+                    raise ValueError("carried exchange component count differs from the field")
+                residuals = unpack(payload)
+                if any(abs(value) >= coupling.denominator for value in residuals):
+                    raise ValueError("carried exchange residual must be below its denominator")
+                if (
+                    coupling.remainder_owner != "left" or record.type_index != coupling.left_type
+                ) and any(residuals):
+                    raise ValueError("record does not own this coupling's exchange remainder")
 
     def _route(
         self, record: DisturbanceRecord, meter: CostMeter
@@ -248,6 +255,13 @@ class DisturbanceLaw:
         slots = len(records)
         # Configured rule order, then fixed slot order, is the declared local law.
         for rule_index, coupling in enumerate(self.couplings):
+            if coupling.remainder_owner not in ("pair", "left"):
+                raise ValueError("coupling remainder owner must be pair or left")
+            if coupling.remainder_owner == "left" and (
+                coupling.left_type == coupling.right_type
+                or self.definitions[coupling.left_type].transport.mode == "split"
+            ):
+                raise ValueError("left-owned exchange requires distinct types and a whole record")
             for left_slot in range(slots):
                 for right_slot in range(slots):
                     left, right = updated[left_slot], updated[right_slot]
@@ -261,6 +275,15 @@ class DisturbanceLaw:
                     ):
                         continue
                     meter.charge("couple")
+                    carried = []
+                    if coupling.remainder_owner == "left":
+                        carried = list(
+                            left.exchange_remainders
+                            or tuple(
+                                pack((0,) * self.fields[r.field].components) for r in self.couplings
+                            )
+                        )
+                    residuals = list(unpack(carried[rule_index])) if carried else []
                     proposed = evaluate(coupling.amount, left.values, right.values, meter)
                     first, second = (
                         unpack(left.values[coupling.field]),
@@ -269,14 +292,21 @@ class DisturbanceLaw:
                     new_left, new_right = [], []
                     for component, (a, b, delta) in enumerate(zip(first, second, proposed, strict=True)):
                         at = ((rule_index * slots + left_slot) * slots + right_slot) * 3 + component
+                        old_remainder = residuals[component] if carried else decode(remainders[at])
                         quotient, remainder = signed_divrem(
-                            checked_work(delta + decode(remainders[at])), coupling.denominator
+                            checked_work(delta + old_remainder), coupling.denominator
                         )
                         new_left.append(checked_work(a - quotient))
                         new_right.append(checked_work(b + quotient))
-                        remainders[at] = encode(remainder)
+                        if carried:
+                            residuals[component] = remainder
+                        else:
+                            remainders[at] = encode(remainder)
                     left = _with_value(left, coupling.field, pack(tuple(new_left)))
                     right = _with_value(right, coupling.field, pack(tuple(new_right)))
+                    if carried:
+                        carried[rule_index] = pack(tuple(residuals))
+                        left = replace(left, exchange_remainders=tuple(carried))
                     self._validate(left)
                     self._validate(right)
                     updated[left_slot], updated[right_slot] = left, right
@@ -288,7 +318,7 @@ class DisturbanceLaw:
                 continue
             retained, outgoing = self._route(record, meter)
             replacements.append((slot, retained))
-            departures.extend(outgoing)
+            departures.extend(Departure(item.port, item.record, slot) for item in outgoing)
             if self.definitions[record.type_index].cost_field is not None:
                 meter.charge("update")
         meter.charge("commit")

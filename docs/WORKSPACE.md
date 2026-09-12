@@ -89,12 +89,20 @@ Detailed field values and ownership remain available in the movie's folded table
 
 Filled markers are recorded resident disturbances. Link transfers use their
 recorded origin, port and arrival time with the configured fixed transit time.
+Periodic transfers wrap across the configured domain. Open terminal transfers
+have no receiving address: playback shows their outward transit until exit and
+does not wrap them back into the world. Choose `boundary` in the complete JSON
+editor; omitted boundaries remain periodic.
 Concentric rings distinguish co-located records. The viewer does not invent
 trajectories between snapshots or draw a false trail across a periodic seam.
 The grid uses actual integer lattice nodes and equal axis scale. Tick arrows
 select recorded frames; the default stride records every tick. Zoom and drag
 expose individual nodes at larger scales. A dense view asks for zoom instead of
 substituting a schematic grid. The approaching preset takes two ticks per link.
+
+Result tables distinguish current quantities, committed sources, signed
+dissipation and escaped quantities. A balanced dissipative or open run can change
+its physical totals without failing its accounting checks.
 
 ## Phone layout
 

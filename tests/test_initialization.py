@@ -83,7 +83,7 @@ def test_coupling_references_are_resolved_to_owned_fields() -> None:
 @pytest.mark.parametrize(
     ("path", "value", "message"),
     [
-        (("schema_version",), 2, "schema_version"),
+        (("schema_version",), 3, "schema_version"),
         (("ticks",), True, "must be an integer"),
         (("normal_budget",), 0, "must be an integer"),
         (("shape",), [7, 0, 7], "must be an integer"),

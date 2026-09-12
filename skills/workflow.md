@@ -54,6 +54,12 @@ arbitrary host `python` alias. Older-Python and historical API/frozen-v10 equali
 checks are not required. Preserve independent physical invariants and useful
 regression regimes when removing compatibility comparisons or duplicate worlds.
 
+When reusing that environment across worktrees or benchmark snapshots, an editable
+install can still resolve another checkout. Set `PYTHONPATH` to the intended `src`
+directory and verify the imported package path and source fingerprint before the
+run. Recheck the fingerprint afterward; interpreter identity alone does not
+identify the simulated source.
+
 For a physics-engine behavior change, completion requires physics-rule validation,
 necessary tests, an affected simulator run, and regression comparison. Architecture
 reviews interface/schema changes; visualization reviews changed output. Reuse the

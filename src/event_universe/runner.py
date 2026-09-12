@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import time
 from pathlib import Path
 
 from event_universe import __version__
@@ -42,7 +43,9 @@ def run_initialization(
     frames: list[dict[str, object]] = []
     failure: Exception | None = None
     conservation = True
+    accounting = True
     completed = 0
+    started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
@@ -56,13 +59,31 @@ def run_initialization(
             for _ in range(count):
                 world.step()
                 totals, sources = world.totals(), world.source_totals()
+                losses = world.dissipation_totals()
+                escaped = world.escaped_totals()
                 equal = all(
                     totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
                     for name, values in initial_totals.items()
                 )
                 conservation = conservation and equal
-                if not equal:
-                    raise ValueError("declared quantity conservation failed")
+                balanced = all(
+                    tuple(
+                        value + loss + out
+                        for value, loss, out in zip(
+                            totals[name],
+                            losses[name],
+                            escaped[name],
+                            strict=True,
+                        )
+                    )
+                    == tuple(a + b for a, b in zip(values, sources[name], strict=True))
+                    for name, values in initial_totals.items()
+                ) and all(item["balanced"] for item in world.spatial_accounting().values())
+                accounting = accounting and balanced
+                if not balanced:
+                    raise ValueError(
+                        "declared quantity conservation, dissipation or escape accounting failed"
+                    )
                 completed += 1
                 if visualize and world.tick % frame_stride == 0:
                     frames.append(world.snapshot())
@@ -76,6 +97,9 @@ def run_initialization(
         "source_sha256": fingerprint,
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
         "model": initial.model_id,
+        "schema_version": initial.schema_version,
+        "boundary": initial.boundary,
+        "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",
         "error": str(failure) if failure else None,
         "requested_ticks": count,
@@ -86,11 +110,32 @@ def run_initialization(
         "final_totals": world.totals(),
         "source_totals": world.source_totals(),
         "conserved_at_every_completed_tick": conservation,
+        "dissipation_totals": world.dissipation_totals(),
+        "escaped_totals": world.escaped_totals(),
+        "accounting_balanced_at_every_completed_tick": accounting,
         "fields": [field.name for field in initial.fields],
         "disturbance_types": [kind.name for kind in initial.disturbances],
         "shape": initial.shape,
         "link_ticks": initial.link_ticks,
     }
+    if initial.spatial_fields:
+        metadata.update(
+            spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
+            spatial_transport="outward-octants",
+            emission_interval_ticks=initial.link_ticks,
+            self_field_filter="unsupported",
+            spatial_policy=(
+                "finite-dissipative-v1" if initial.schema_version == 2 else "conservative-outward-v1"
+            ),
+            spatial_accounting=world.spatial_accounting(),
+            spatial_background="immutable; excluded from decay",
+        )
+    if initial.spatial_couplings:
+        metadata.update(
+            spatial_couplings=[rule.name for rule in initial.spatial_couplings],
+            spatial_response="local-exchange-or-quarter-turn",
+            spatial_sampling="resident-before-emission",
+        )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     path = output / "run.json"
     path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")

@@ -1,5 +1,44 @@
 # Test inputs and expected results
 
+## Configured boundaries and dormant spatial work
+
+| Suite | Independent expectations |
+| --- | --- |
+| `test_boundary_configuration.py` | Periodic default under both schemas; exact open/periodic setting; every positive and negative face of a 3x4x5 world; single-cell extents; invalid names, coordinates, faces and bounds rejected |
+| `test_open_boundaries.py` | Carrier exits and wrapping on all six faces after full transit; unchanged signed vectors; terminal quantity 1 escapes even with zero retention while an interior copy decays; mixed corner fields/baselines; invalid terminal payloads commit neither loss nor removal; unused emitter allowance does not become physical escape |
+| `test_spatial_scheduling.py` | Optimized and forced full-sweep runs have identical per-tick snapshots, costs, events and balances; dormant history is not enumerated; reactions reactivate known idle cells without delaying their departure; newly created cells are not backdated |
+| `test_disturbance_application.py` | Open example records carried escape 72, spatial escape 20 and dissipation 52; no carrier reentry; zero-tick edge case has empty events and zero escape; runner and snapshot agree |
+| `test_workspace.py`, `test_workspace_integration.py` | Workspace accepts field examples and records open escape; direct/HTTP runs retain equal physical output; open terminal playback does not wrap or dereference a missing target; balanced loss/escape is not a failed check; field renaming updates flux expressions |
+
+Measured performance comparisons use the same 5,000 ticks, configuration,
+per-tick accounting and three-record checks. Record source import paths and
+fingerprints, stepping and diagnostic time separately. Timing is evidence for
+that machine, not a fixed wall-time test threshold or a change to model cost.
+
+## Finite spatial candidate, schema 2
+
+The law is specified in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) and
+[SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md). These tests retain the schema 1
+conservative expectations and add separate dissipative expectations.
+
+| Suite | Independent inputs and required outcomes |
+| --- | --- |
+| `test_dissipative_initialization.py` | Version 2 requires strict integer retention and nonnegative component budgets; version 1 rejects new keys; invalid signs, shapes, bounds, missing fields and splitting sources fail |
+| `test_spatial_decay.py` | Half retention maps 20 through 10, 5, 2, 1 to 0; both signed one-unit tails vanish even at retention `(MAX_VALUE-1)/MAX_VALUE`; unsigned invalid input cannot be erased by decay |
+| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal |
+| `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
+
+The runner must distinguish actual physical conservation from balanced loss
+accounting. It checks tracked combined quantities and every spatial owner,
+including a nonconserved computation field. The public examples
+`finite_fields.json` and `three_mass_finite.json` require no visualization.
+
+An independent periodic 3x3x3 rotation check starts a carrier at `(2,1,0)`.
+With two affordable positive Z turns it becomes `(-1,2,0)`, then `(-2,-1,0)`;
+its squared norm remains 5. Sources total `(5,-3,0)`, signed reaction totals
+`(4,2,0)`, and all dynamic field stock is gone at tick 3 with signed loss
+`(9,-1,0)`. Further prescribed turns cannot spend an exhausted allowance.
+
 ## Active generic disturbance contracts
 
 The primary Simulation follows [DISTURBANCES.md](DISTURBANCES.md). Schema and
@@ -33,6 +72,32 @@ checks; physical invariants remain active without it.
 The remaining scalar, source, stream, collision, link and turning expectations
 are retained for explicitly selected historical research APIs. Their results do
 not establish those laws for arbitrary configured disturbances.
+
+## Configured spatial fields
+
+`test_spatial_transport.py` checks independent signed scalar/vector partitions,
+octant signs, bounded phases, odd weights and overflow rejection.
+`test_spatial_engine.py` checks a 216-unit pulse at successive Manhattan radii,
+continuous stationary/moving injection, fixed transit with carrier delay,
+baseline behavior, signed fractional emission and headless combined accounting.
+Coarrival with a source's own field does not by itself identify its contribution.
+Straight-path and turning behavior are treated separately by the response tests.
+
+`test_emission_residuals.py` checks that independent emitting records retain
+their fractions and that later emission metadata survives a pending carrier
+proposal without changing its physical payload. `test_exchange_residuals.py`
+checks opt-in left-owned fractional exchange across new recipients, signs and
+ordered concurrent matches; pair-owned defaults retain their previous contract.
+
+`test_spatial_coupling.py` checks all signed rotation axes, explicit noncommuting
+axis order, carried fractions, exact carrier norm, equal-and-opposite field
+reaction, pre-emission local samples, frozen delayed proposals, reaction
+overflow atomicity, field/type renaming, scalar flux and headless execution.
+The exact contract is [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md). In the
+straight cardinal flux-driven isolation case, own flux is parallel to the carried
+vector and changes neither it nor its fractional turn state. A transverse-source
+control must still turn the carrier. This does not establish arbitrary self
+attribution after a turn or through periodic boundaries.
 
 ## Causal-stream candidate
 

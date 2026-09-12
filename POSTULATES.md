@@ -22,6 +22,31 @@ normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in
 [the disturbance contract](docs/DISTURBANCES.md).
 
+The optional [outward spatial-field candidate](docs/SPATIAL_FIELDS.md) separates
+source records from the fields they emit. Its field transport uses a fixed
+clock; priced field work contributes to new local carrier cycles while field
+forwarding continues at causal link speed. Schema 1 preserves conservative
+transport. Schema 2 explicitly selects `finite-dissipative-v1`: finite source
+and response allowances bound dynamic input, and declared integer attenuation
+removes magnitude at interior arrivals while exempting immutable background.
+This candidate tracks signed dissipation rather than promising conserved physical
+momentum through decay. Self-field exclusion by arrival order remains an unverified
+hypothesis and is not enabled by this extension.
+
+The optional [spatial response candidate](docs/SPATIAL_COUPLINGS.md) can turn a
+configured vector while preserving its length exactly, transferring the opposite
+vector change to the same spatial field. This is an integer quarter-turn law;
+it does not infer physical names, continuous angles or energy conservation.
+Straight cardinal self flux is parallel to its carrier and cannot turn that
+vector under the flux-driven law. Turns, periodic return and other coupling
+laws require separate self-interaction analysis.
+
+Initialization independently chooses periodic or open boundaries. Periodic space
+connects opposite faces on each of X, Y and Z without changing a carried direction.
+An open terminal link instead removes the original packet after its full transit
+time and records the escaped quantities. No exterior cell or exterior decay is
+simulated. Being spatially closed does not cancel a separately configured decay.
+
 Sections 1–5 and 10–11 state shared locality, arithmetic and evidence principles.
 Sections 6–9 document the source, self-force, momentum and turning requirements
 of the explicitly selected historical research models; they are not implicit
@@ -31,8 +56,9 @@ assumption and does not add an operation to the generic disturbance engine.
 
 ## 1. The world consists of locations and events
 
-Space is divided into three-dimensional cells. Each cell has six nearest neighbors:
-right, left, forward, backward, up and down.
+Space is divided into three-dimensional cells with six directional connections:
+right, left, forward, backward, up and down. A connection reaches one nearest
+neighbor, or exits the simulated domain at an explicitly open boundary.
 
 An event is a local change in a cell at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt.
@@ -95,8 +121,18 @@ Every value affecting simulation evolution is an integer: position, time, field,
 momentum, counter and remainder.
 
 Core calculations contain no floating-point values, trigonometry, roots or vector
-normalization. Nonintegral division retains the missing fraction as an integer
-remainder carried into the next calculation.
+normalization. Conservation-preserving division retains the missing fraction as
+an integer remainder carried into the next calculation.
+
+The explicitly selected schema 2 finite dissipative candidate is an exception
+to fraction retention for decay. Each packet/octant/component reaching an interior receiver changes
+from `v` to `sign(v) * floor(abs(v) * p / q)`, with integer `0 <= p < q`.
+The removed signed quantity is recorded as loss, not saved in a remainder. This
+deliberate law makes integer dynamic fields vanish after their last input; the
+immutable background is exempt. It can change a vector's direction and does not
+preserve momentum or energy. It does not alter conservative splitting, fractional
+source requests or the historical models' remainder rules. See
+[the finite field contract](docs/SPATIAL_FIELDS.md#finite-completed-link-decay).
 
 Numbers have fixed bounds. An out-of-range calculation stops the run with an error
 rather than hiding overflow or distorting the result.

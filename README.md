@@ -69,10 +69,49 @@ duration. Missing input is an error, not a request to load a built-in universe.
 Field definitions, disturbance types, seeds, formulas and cost settings are
 documented with examples in [DISTURBANCES.md](docs/DISTURBANCES.md).
 
+Set the top-level initialization member `"boundary": "periodic"` for a closed
+periodic domain: a transfer leaving one side arrives at the opposite side.
+This is the default. Set `"boundary": "open"` for an absorbing edge: departing
+disturbances and field packets leave the simulated world, with their escaped
+quantities recorded separately. Both settings work with schema versions 1 and 2.
+See [the boundary contract](docs/DISTURBANCES.md#domain-boundary) for geometry and
+accounting. This setting is shared by carriers and fields.
+
+For a moving source that continuously emits a separate conserved outward field:
+
+```bash
+python -m event_universe --init examples/moving_source.json --output artifacts/moving-source
+```
+
+For the schema 2 finite dissipative candidate, with bounded source allowances
+and explicitly configured decay on each completed field link:
+
+```bash
+python -m event_universe --init examples/finite_fields.json --output artifacts/finite-fields
+```
+
+The [finite field contract](docs/SPATIAL_FIELDS.md#finite-completed-link-decay)
+defines integer loss, immutable background and the extinction guarantee. Schema 1
+keeps the conservative behavior. Neither schema is selected by physical names.
+
+For configured field-driven rotation with an equal-and-opposite spatial reaction:
+
+```bash
+python -m event_universe --init examples/spatial_turning.json --output artifacts/spatial-turning
+```
+
+See [the coupling contract](docs/SPATIAL_COUPLINGS.md) for exact integer rotation,
+fractional requests, value/flux sampling, timing and conservation limits.
+
+Read [SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md) for the baseline, eight-octant
+transport through six faces, source cadence, cost accounting and self-field
+limitations. The source moves every link interval while within its normal budget;
+no two-tick movement interval is inserted automatically.
+
 | Output | When written |
 | --- | --- |
 | `initialization.json` | Exact input file copied for reproducibility |
-| `run.json` | Source identity, completion status and conservation diagnostics |
+| `run.json` | Source identity, boundary, elapsed time, completion and quantity accounting |
 | `state.json` | Final resident state and in-flight transfers |
 | `events.jsonl` | Streamed local-cycle and transfer events |
 | Visual artifacts | Only when explicitly requested with `--visualize` |
@@ -80,6 +119,10 @@ documented with examples in [DISTURBANCES.md](docs/DISTURBANCES.md).
 Normal runs do not capture animation frames or import rendering libraries.
 Visualization is read-only and does not change the physical update interval.
 The active runner requires an empty output directory to preserve earlier evidence.
+The reported `elapsed_seconds` includes world construction, simulation steps,
+per-tick accounting, event writing and the final snapshot. Input parsing and final
+artifact serialization are outside that timer. For a small open-boundary run, use
+`--init examples/open_world.json`; its departing carrier is accounted as escaped.
 The display contract is in [definitions](SIMULATOR_DEFINITIONS.md#default-run-display).
 
 ## Simulation configuration UI
@@ -185,6 +228,7 @@ from this README.
 | `src/event_universe/initialization.py` | Strict JSON schema and typed expression parsing |
 | `src/event_universe/core/disturbance_state.py` | Fixed generic definitions, records and positive payload codes |
 | `src/event_universe/core/disturbance_engine.py` | Local scheduling, fixed transit, ownership and capacity |
+| `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
 | `src/event_universe/api.py` | Explicitly named historical research APIs |
@@ -196,6 +240,7 @@ from this README.
 | `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
 | `examples/basic.json` | Complete example initialization; physical names occur only as data |
+| `examples/finite_fields.json` | Schema 2 finite emission, completed-link decay and explicit background |
 | `tests/` | Generic contracts, schema checks and retained research regressions |
 | `tests/reference/` | Historical source archive, not an active engine |
 | `docs/DISTURBANCES.md` | Authoritative generic schema, laws, timing and failure contract |
@@ -211,8 +256,9 @@ from this README.
 Each configured disturbance type carries named scalar/vector fields together.
 Choose whole-record movement for coupled attributes or extensive splitting for
 divisible quantities. Conservation is a declared component-wise local balance,
-including explicit sources and in-flight amounts. Coupling rules exchange a
-shared field between local records atomically. See
+including explicit sources and in-flight amounts. Schema 2 explicitly subtracts
+committed dissipation; its finite allowances are separate from inventory.
+Coupling rules exchange a shared field between local records atomically. See
 [DISTURBANCES.md](docs/DISTURBANCES.md).
 
 Local operation costs set a uniform delay before transfer. Ordinary cost adds no

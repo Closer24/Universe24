@@ -1,5 +1,268 @@
 # Validation evidence
 
+## Publication integration with the configuration workspace — 2026-09-12
+
+The publication candidate combines local field head `d3bb0ce` with exact remote
+main `c252254eecb5e3b090f9ae40667c383db11a14fc`. Remote Git objects were obtained
+through the authorized GitHub connection and their content hashes verified before
+integration; the local Git HTTPS client could not authenticate. Main's workspace,
+movie assets, presets and parser interface are preserved.
+
+The integration fixes three consumers: terminal movie transfers accept a missing
+destination and retain outward coordinates in open worlds; results distinguish
+balanced loss/escape from failed accounting; renaming fields also updates nested
+flux expressions. These changes do not modify physical engine calculations.
+
+| Check | Result |
+| --- | --- |
+| Unchanged full gate | Ruff lint/format, strict mypy, 970 passed; 30 explicitly visual cases skipped |
+| Static scope | 161 formatted Python files; 65 typed package modules |
+| UI regressions | 13 headless JavaScript cases passed, after 10 failed before the fixes; existing periodic/accounting controls retained |
+| Workspace regressions | 19 passed, including real HTTP submission of the finite open example and exact signed escape/loss totals |
+| CLI/workspace equality | All input, state and event bytes remain exact; metadata equality excludes only the validated host elapsed timer |
+| Integrated periodic run | 5,000 ticks in 10.481 host seconds; event and state files byte-identical to the verified pre-integration run |
+| Integrated open run | 12 ticks; event and state files byte-identical, carried escape 72 and spatial escape 20 plus loss 52 |
+| Packaging | Wheel and sdist built; packaged topology and changed UI assets match current source bytes |
+| Visual inspection | Not requested; no visualization generated |
+
+Both integrated runs balanced every completed tick. Their runtime fingerprint is
+`26d7ad18f8eef8581168a6e926d7266605bc286d199437207763a54eb6a67e42`.
+Canonical evidence is in `../runs/publish-periodic-5000/` and
+`../runs/publish-open-12/`. The earlier benchmark still identifies its own source
+and does not imply a new timing comparison. The full gate writes
+`artifacts/junit.xml`; package evidence is outside the checkout in
+`../runs/publish-final-packaging/` and `../runs/publish-final-build.log`.
+
+The first merged gate exposed two obsolete test expectations: the template list
+omitted five new examples and metadata byte equality included elapsed host time.
+The final tests enumerate all intended examples, validate the timer and preserve
+all physical equality checks. No failed physical requirement was removed.
+The publication PR records remote commit and CI status; integration into this
+feature branch is not a claim that the feature is merged into main. Existing
+workflow and specialist guidance already require consumer validation and exact
+source identity, so this integration needed no further Skill change.
+
+## Configured boundaries and spatial scheduling — 2026-09-12
+
+This change continues local `4a976f827ae62e16e5d23e319b1d2ce963227d9e`.
+The user selected opposite-face reentry for a closed world and removal with
+escaped-quantity accounting for an open world. Both schemas default to periodic
+boundaries; the chosen configuration applies to carriers and spatial fields.
+See [the boundary contract](DISTURBANCES.md#domain-boundary).
+
+| Check | Result |
+| --- | --- |
+| Unchanged `python tools/check.py` | Passed: Ruff lint/format, strict mypy, 935 passed and 28 explicitly visual cases skipped |
+| Static scope | 156 formatted Python files; 64 typed package modules |
+| New tests | 121 cases across configuration/topology, open ownership/escape, dormant scheduling and headless boundary output |
+| Independent physics review | 264 affected/regression cases passed; 12 additional open/periodic, transit 1/2/3 and ordinary/delayed-budget runs matched full-sweep snapshots, events and accounting over 90 ticks each |
+| Independent inventory audit | Full cell/link inventory equals indexed totals after every reviewed tick; skipped cells have no populations, pending receive cost or reported local cost |
+| Periodic faces | All six positive/negative faces of a 3x4x5 domain wrap without changing the carried vector; arrivals at ticks 3 and 6 retain the full transit time |
+| Terminal field exit | Original signed payload escapes after full transit; no outside cell, attenuation, merge, receive event or receiver cost |
+| Open CLI example | 12 ticks, carried escape 72; spatial injection 72 = escape 20 + dissipation 52; no remaining carrier, dynamic stock or packet, and no outside address |
+| Three-carrier CLI | 5,000 ticks completed in 10.356 host seconds; three records and mass 10 retained; every completed tick balances |
+| Canonical periodic regression | Full ordered event file is byte-identical to the prior verified finite run; final state matches after removing only new boundary and escaped-ledger metadata |
+| Package build | `python -m build --no-isolation` built wheel and sdist |
+| Visualization | Not requested or generated |
+
+The performance comparison used exactly the same initialization bytes, 5,000
+ticks and per-tick accounting plus three-record checks. The baseline was a
+verified archive of commit `4a976f8`; the candidate was an identified source
+snapshot. Each source was run once for this comparison. Host times were:
+
+| Measured work | Baseline seconds | Candidate seconds |
+| --- | ---: | ---: |
+| Simulation stepping | 34.105 | 9.159 |
+| Separate accounting and record checks | 40.177 | 1.653 |
+| Complete measured loop | 74.393 | 10.920 |
+
+This is approximately 6.8 times faster for that scenario and machine. All nine
+saved checkpoints have equal physical values, event counts and modeled costs;
+the full final state is equal after removing new boundary metadata. The benchmark
+observer did not save an ordered event digest; the separate canonical CLI
+comparison above did compare the complete event files. The optimization skips
+dormant spatial cell planning and resident-population summation. Empty link
+buffers can still be scanned; it does not remove every historical host traversal
+or alter the model's local computation charges.
+
+Runtime fingerprint, unchanged across the final runs and independent review:
+`dd4ac82debd3fb0e28b33ea4a26297930e42c53d627ca2a69d60c8c934dc56b4`.
+The benchmark input fingerprint is
+`a89397e6b87f9605c2e7dcc128925f22da23e26e450ccc6f17136c1e102cc74f`.
+The canonical periodic example now explicitly includes the default boundary key,
+so its input fingerprint is
+`2d0742951aa49cbe88e6ae87ffff74859031ffbde301c4e9ade4bed7b4b540cf`.
+The open example fingerprint is
+`b4e3038d3b0539a7dabc11afd1dd346a272ee51af73c2c81dafd4a65b870d76f`.
+Runtime/tools remain CPython 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1.
+
+Saved evidence is outside the checkout: `../runs/boundary-periodic-5000/`,
+`../runs/boundary-open-12/`, `../runs/boundary-verification.json`,
+`../runs/boundary-performance/baseline-4a976f8-verified/` and
+`../runs/boundary-performance/optimized-working-4a976f8/`. Run directories
+contain exact inputs, metadata, events and final state. Benchmark directories
+contain timing, source identity, checkpoints and comparison reports.
+
+Closed topology does not disable configured decay: combined momentum plus signed
+loss balances, while physical momentum alone is not conserved by that law. Open
+accounting additionally includes escaped quantities. General self-field
+attribution, energy conservation and carrier stopping remain unestablished.
+The existing isolated field branch has not been published or integrated into
+remote main `c252254eecb5e3b090f9ae40667c383db11a14fc`, which was read with no
+open PRs; local fetching remains unavailable. No external Highlights edit is
+implied. Boss and affected Skills were reviewed; the shared workflow now requires
+import-path and source-fingerprint verification when reusing an editable
+environment across worktrees, following a detected wrong-checkout import.
+
+## Finite integer fields and allowances — 2026-09-12
+
+This change continues local `e8e5c4cd59ec3ddd8c191e0faac4468acd0a5d71`.
+Schema 2 selects `finite-dissipative-v1`; schema 1 keeps its separately named
+conservative law. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the law and
+[TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) for independent acceptance inputs.
+
+| Check | Result |
+| --- | --- |
+| Unchanged `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 814 passed and 28 explicitly visual cases skipped |
+| Static scope | 152 formatted Python files; 63 typed package modules |
+| New tests | 108 cases across schema validation, integer decay, finite source integration and finite coupling allowances |
+| Independent physics review | 219 affected/new and retained regression cases passed; separate periodic signed-rotation and single-charge decay-cost checks passed |
+| Finite moving source | 40 headless ticks; lifetime injection 720 and dissipation 720; final dynamic field zero and carried strength 72 |
+| Three carriers with computation field | 5,000 headless ticks in the original 65x65x65 domain; initial rate c/10 and all three first arrivals at tick 10 |
+| Three-carrier balances | Mass 10 throughout; final combined vector `(-1,7,0)` plus signed dissipation `(-1,3,0)` equals initial `(-2,10,0)`; every completed tick balances |
+| Spatial extinction | All 2,160 computation units injected by the three sources dissipated; dynamic computation and reaction populations vanish by tick 12; computation baseline remains 1 |
+| Rotation | Affordable turns retain carrier norm and commit exact opposite reaction; insufficient allowance rejects both sides without changing fractional state |
+| Legacy regression | Existing conservative spatial, movement, coupling, integer, locality, architecture and headless application contracts remain in the full gate |
+| Visualization | Not requested or generated |
+
+Final runtime source fingerprint:
+`faa5de68bdfb0ceb77ddaa8a75d1bdce18333ef5c019d3c8b7572e4e78d268f3`.
+The independent review first recorded fingerprint
+`65782ddf166c906c53f0df2dc6e76fb1491a5163c54e3ff2c3aabd1b3f768659`;
+the subsequent runtime change was Ruff normalization of mixed line endings in
+`initialization.py`, with no arithmetic or scheduling change. The final full
+gate passed after normalization. Saved final-source runs reside outside the
+checkout in `../runs/finite-fields-v2-verified/` and
+`../runs/three-mass-finite-v2-verified/`, with input, metadata, events and state.
+The three-carrier initialization fingerprint is
+`a89397e6b87f9605c2e7dcc128925f22da23e26e450ccc6f17136c1e102cc74f`.
+
+Decay loss is explicitly nonconservative. The runner reports physical conservation
+as false for these dissipative examples while its separate loss-accounting check
+passes. No energy law, general self-field attribution or automatic carrier rest is
+claimed. The old no-decay 5,000-tick experiment remains paused at tick 140 and is
+not resumed under the changed law.
+
+Remote main was read at `c252254eecb5e3b090f9ae40667c383db11a14fc`, with no open
+pull requests. Local fetching was unavailable; this evidence does not claim the
+candidate has been integrated with that main or published to GitHub. The code
+remains on the existing isolated field branch. Boss, field development and physics
+review Skills were reviewed; their existing candidate, locality, ownership and
+independent-validation instructions already cover this change, so no Skill edit
+is needed. The latest user request is the authority for the new law; no external
+Highlights document was modified in this implementation task.
+
+## Generic spatial exchange and rotation — 2026-09-12
+
+The response extension continues local commit `5ff53888413afd421d129ffacb0d749ca0be8f08`
+on base main `a53e1a2f83d4dca898ed827b2f6e4d101932be95`.
+[SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md) defines the selected integer law,
+local sampling, atomic recoil, timing and fixed preparation tariff. This section
+supersedes the earlier outward-only candidate's missing-turning limitation;
+general source attribution is still a separate unimplemented capability.
+
+| Check | Result |
+| --- | --- |
+| Unchanged `python tools/check.py` | Passed: Ruff lint/format, strict mypy, 706 passed and 28 visualization cases skipped |
+| Static scope | 147 formatted Python files; 62 typed package modules |
+| New response suite | 53 passed: signed axes, axis order, zero/invariant axes, carried fractions, scalar flux, routing, frozen samples, exact reaction arrival and atomic overflow |
+| Independent physics review | Scoped pass on final runtime fingerprint; 157 relevant cases and nine additional signed-rotation/transit examples passed |
+| Three-turn CLI example | Completed ticks 1, 2 and 3 at `(15,16,15)`, `(14,16,15)` and `(14,15,15)`; vectors `(0,5,0)`, `(-5,0,0)` and `(0,-5,0)` |
+| Rotation accounting | Carrier squared norm stays 25; total carrier plus field vector stays `(5,0,0)` at every completed tick; source vector remains zero |
+| Moving-source regression | Five ticks; source strength 72, spatial stock and injected amount both 360; all completed ticks conserve |
+| Basic/exchange regression | Saved state and event files remain byte-identical to unmodified-base runs |
+| Visualization | No visualization requested or generated |
+
+Runtime source fingerprint:
+`d06be12cd1a88df93b2cd9f8523344ddce2bc18827ce2839beb147f607056505`.
+The turning initialization fingerprint is
+`6cf38af8b1078cbfb53c9085ead7062c0c338cce97f028f10465645b2a32561f`.
+Saved runs are outside the checkout in `../runs/spatial-coupling-validation/`:
+`spatial_turning/`, `moving_source/`, `basic/` and `exchange/`, each with input,
+metadata, events and final state. The full gate writes `artifacts/junit.xml`.
+Runtime/tool versions remain CPython 3.14.7, pytest 9.1.1, Ruff 0.16.7 and
+mypy 2.3.1. Source fingerprints depend on exact file bytes, including line endings.
+
+The three field reactions are `(5,-5,0)`, `(5,5,0)` and `(-5,5,0)` at their
+respective local commits. Immediate and delayed cases verify first field arrival
+at `commit_tick + link_ticks`, including transit times one and two. The independent
+review also checked transit time three with a non-cardinal `(2,3,4)` vector.
+
+Straight cardinal scalar-flux rotation passes an isolated-source control without
+changing its vector or fractional state, while an external transverse pulse acts.
+This is a geometric property, not a general self-filter. A separate diagnostic
+in `../runs/spatial-coupling-review/` confirms a bounded own-front estimate for ten
+straight steps and a straight/wait sequence. An unpaused turn has actual own stock
+48 but a one-path estimate 42 at tick two; periodic return has actual 24 versus
+estimate zero. These diagnostic references never feed the simulator's physics.
+Continuous-angle rotation, general self attribution and general energy or angular
+momentum conservation are not claimed by the discrete response law.
+
+The field-development Skill now distinguishes combined vector conservation from
+carrier norm and requires an external transverse control, causal reaction packets
+and accurate cost-tariff wording. Shared, Boss, architecture, test and physics
+Skills were reviewed; their existing instructions needed no additional change.
+Highlights was read on 2026-09-12 at the same revision as the preceding integration;
+the new executable contract is persisted here, without modifying that document.
+
+## Configured outward spatial fields — 2026-09-11
+
+This optional candidate is based on main
+`a53e1a2f83d4dca898ed827b2f6e4d101932be95`. Its transport, timing and remaining
+model gaps are defined in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md). The implementation
+separates a continuously emitting carrier from its spatial stock and selects the
+new law explicitly through initialization. This section records local evidence;
+the submitted PR records its exact commit and remote CI result.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint/format, strict mypy, 653 passed and 28 visualization cases skipped |
+| Static scope | 144 formatted Python files, 61 typed source modules |
+| Independent physics review | Scoped pass on the final source fingerprint; 104 relevant cases passed, including fixed transit, signed conservation, delayed proposals and carried fractions |
+| Moving source example | Five completed ticks; carrier advances one cell on each tick, from `(15,15,15)` to `(20,15,15)` |
+| Source accounting | Carried strength stays 72; initial spatial stock 0, committed emission 360 and final spatial stock 360; balance checked after every completed tick |
+| Existing basic/exchange examples | Final state and event files are byte-identical to runs from the unmodified base tree |
+| Paired vector rotation | 16 additional numerical cases passed across eight rotations/sign cases and two computation budgets; component-wise recoil balance preserved |
+| Package build | Wheel and sdist built successfully with `python -m build --no-isolation` |
+| Visualization | No visualization requested or generated; rendering-only tests were skipped |
+
+The moving-source run and independent review identify the runtime source as
+`b1a958835fc92efe8f6a584dfa4c3fae4abd5427d47b77e8664a131185e09c81`.
+The saved initialization fingerprint is
+`3f9fcee4b315698e31794d9eedbcf1ce954010a85b41484f3719f3f70c41a862`.
+Local evidence is preserved outside the source checkout in
+`../runs/spatial-validation/`, including `current-moving_source/`, the two
+baseline/current comparisons, package outputs and the build log. Each run has
+its initialization bytes, events, final state and `run.json`. Additional rotation
+evidence is in `../runs/rotation-conservation/`. The full gate writes
+`artifacts/junit.xml`. Source fingerprints depend on runtime file bytes and may
+differ across platform line endings.
+
+Runtime and tools: CPython 3.14.7, pytest 9.1.1, Ruff 0.16.7, mypy 2.3.1,
+build 1.6.1 and setuptools 84.0.0. The shared, Boss, architecture, test and physics
+Skills were reviewed; their existing rules were sufficient. The field-development
+Skill now requires coarrival, turning and periodic-return checks before claiming
+self attribution, and distinguishes illustrative shells from executable rules.
+
+Automatic self-field subtraction and spatial-field-driven turning are **not
+implemented**. Equal-speed coarrival and alternate field paths invalidate the
+proposed first-arrival proof; merged integer rounding also prevents inferring an
+exact self contribution from a single tracked path. The existing paired-record
+rotation checks do not establish that missing law. The new field clock is fixed
+at one link per `link_ticks`; priced spatial work can delay a new carrier cycle
+but does not throttle spatial forwarding. This timing choice is explicit in the
+candidate contract, not evidence that the earlier uniform-delay law is unchanged.
+
 ## Initialization-defined disturbances — 2026-09-11
 
 The generic implementation was integrated with main
