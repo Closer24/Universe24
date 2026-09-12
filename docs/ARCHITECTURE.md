@@ -154,10 +154,38 @@ ownership and is outside this refactor.
 and local law; it is exported as the primary package Simulation.
 `initialization.py` reads strict JSON data and resolves names to bounded typed
 definitions. `core/disturbance_state.py` owns fixed schemas and payload coding;
-`fields/disturbances.py` owns expression arithmetic, updates, paired coupling
-and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
+`fields/expressions.py` owns prepared expression execution;
+`fields/disturbances.py` owns updates, paired coupling and transport proposals
+and retains the `evaluate` import for existing consumers.
+`core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
+
+Host scheduling retains physical cells and packet ownership while indexing active
+carrier cells, pending completion ticks and occupied link arrival ticks. Equal-time
+deliveries retain the original first-insertion order of origins and fixed slot
+order. Resolver-enabled worlds retain their required per-tick polling. These
+indices are reconstructible host data, not additional physical registers or laws.
+The ordinary tick phases and frozen-proposal semantics remain unchanged.
+
+Prepared expression plans contain only immutable law definitions. A bounded
+identity cache holds at most 1,024 roots and retains each root to prevent identity
+reuse. Cold insertion/eviction is synchronized; execution never caches physical
+inputs or outputs. Every original node still charges its model cost in preorder,
+including failures. Rational regions retain their separate bounded arithmetic.
+This derived host metadata does not authorize mutable global physical state.
+Configuration remains runtime data and requires no executable rebuild.
+
+`inventory_and_spatial_accounting()` shares one read-only spatial reduction within
+a completed observation. It keeps carrier additions separate and never caches a
+tick's physical values across mutations. Existing individual diagnostics remain
+available. The runner still checks every completed tick and records every event.
+
+`batch.py` owns independent-world process scheduling with a bounded spawn pool.
+It freezes all validated inputs before dispatch, calls the ordinary runner per
+job and retains ordered results plus individual failure evidence. Worker count
+does not partition a physical world or change its laws. See the reproduction and
+limits in [performance](PERFORMANCE.md).
 
 The opt-in rational extension stays within these owners: `fields/ratios.py`
 owns finite exact arithmetic and projections; `fields/routing.py` owns balanced

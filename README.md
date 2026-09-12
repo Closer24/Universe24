@@ -236,6 +236,21 @@ reported and does not cancel the physical calculation or its recorded output.
 
 ## Run performance
 
+The active engine indexes due work and prepares generic expression execution while
+preserving model costs. Run several independent configurations in parallel with:
+
+```bash
+python -m event_universe.batch --init examples/basic.json examples/exchange.json --workers 2 --output artifacts/batch
+```
+
+Inputs are validated and copied before workers start. Each run retains complete
+events, state and acceptance checks; `batch.json` records ordered success/failure
+results. The default is at most four workers, bounded by the number of inputs and
+available CPUs. Short runs can cost more to spawn than they save. This increases
+experiment throughput; it does not parallelize one world's physical ticks.
+Configuration changes require no build. See [active engine measurements](docs/PERFORMANCE.md#active-generic-engine)
+for headless benchmarks and current limits.
+
 Reuse the installed environment for later runs; dependency installation is a
 one-time setup step. Ordinary runs capture no animation frames. When historical
 visualization is explicitly requested, stride 1 captures every tick and the 3D
@@ -286,6 +301,8 @@ active contracts, explicit experiments and revision-specific evidence.
 | `src/event_universe/core/disturbance_engine.py` | Local scheduling, fixed transit, ownership and capacity |
 | `src/event_universe/core/topology.py` | Shared six-port periodic/open neighbor geometry for the generic simulator |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
+| `src/event_universe/fields/expressions.py` | Prepared generic integer expression execution |
+| `src/event_universe/batch.py` | Independent headless simulation workers and batch evidence |
 | `src/event_universe/disturbance_api.py` | Active generic Simulation assembly |
 | `src/event_universe/particle_api.py` | Explicitly named historical research APIs |
 | `src/event_universe/core/scalar_engine.py` | Historical scalar-engine scheduling and occupancy |

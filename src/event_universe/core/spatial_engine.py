@@ -6,6 +6,7 @@ from typing import Protocol
 
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
 from .integer import add_components, checked_work
+from .link_schedule import LinkSchedule
 from .spatial_state import (
     FieldInteractionGuard,
     SpatialBundle,
@@ -81,7 +82,12 @@ class SpatialEngine:
         # Host scheduling index only: retain physical registers in self.cells.
         self._active: set[Address3] = set()
         self._field_tick = -1
-        self.links: dict[Address3, tuple[SpatialPacket | None, ...]] = {}
+        self.links: LinkSchedule[SpatialPacket] = LinkSchedule()
+        self._emitter_types = {rule.type_index for rule in initial.emissions}
+        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
+            rule.type_index for rule in initial.spatial_interactions
+        }
+        self._resident_types = self._emitter_types | self._coupled_types
         self.sources = [[0] * field.components for field in initial.fields]
         self.dissipation = [[0] * field.components for field in initial.fields]
         self.reactions = [[0] * field.components for field in initial.fields]
@@ -130,15 +136,10 @@ class SpatialEngine:
         if tick % self.initial.link_ticks:
             return
         self._field_tick = tick
-        emitter_types = {rule.type_index for rule in self.initial.emissions}
-        coupled_types = {rule.type_index for rule in self.initial.spatial_couplings} | {
-            rule.type_index for rule in self.initial.spatial_interactions
-        }
         positions = set(self._active)
         for position, records in residents.items():
             if any(
-                record is not None and record.type_index in emitter_types | coupled_types
-                for record in records
+                record is not None and record.type_index in self._resident_types for record in records
             ):
                 positions.add(position)
         for position in sorted(positions):
@@ -147,7 +148,7 @@ class SpatialEngine:
                 raise ValueError("outgoing spatial links are occupied")
             records = residents.get(position, ())
             if self.coupler is not None and any(
-                record is not None and record.type_index in coupled_types for record in records
+                record is not None and record.type_index in self._coupled_types for record in records
             ):
                 # Freeze only locally delivered input, before fresh source injection.
                 cell.sample_values = self.coupler.sample(cell.states)
@@ -347,7 +348,8 @@ class SpatialEngine:
 
     def deliver(self, tick: int) -> None:
         ready: dict[Address3, list[SpatialPacket]] = {}
-        for packets in self.links.values():
+        for origin in self.links.due(tick):
+            packets = self.links[origin]
             for packet in packets:
                 if packet is not None and packet.arrival_tick == tick:
                     target = self._neighbor(packet.origin, packet.port)
@@ -483,9 +485,10 @@ class SpatialEngine:
             }
         return result
 
-    def accounting(self) -> dict[str, dict[str, object]]:
+    def accounting(self, totals: list[list[int]] | None = None) -> dict[str, dict[str, object]]:
         """Diagnose every spatial owner, including fields without a conservation flag."""
-        totals = self.totals()
+        if totals is None:
+            totals = self.totals()
         result = {}
         for definition in self.initial.spatial_fields:
             index = definition.field

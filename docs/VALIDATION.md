@@ -6,6 +6,42 @@ checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
 
+## Generic host execution and independent batches — 2026-09-12
+
+Started from exact main `992e0006469bb1156f517ae8273a80a980df7c57`, then
+integrated inline observer support from `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
+The integrated source fingerprint is
+`8106018646afcef02f60f1d7f8cd34e805ee1299c8d13d457504f48ea2c3bce4`.
+No physical law, configuration schema, operation price or arithmetic bound changes.
+
+- The first affected gate passed 858 tests with five explicit visualization skips,
+  Ruff and strict mypy on Python 3.14.7. Subsequent integration retains those physical
+  source files and adds observer/batch and safe benchmark-input coverage. The final
+  affected gate and CI counts are recorded against the submitted PR head.
+- Six ordinary configurations (296 ticks, 2,539 events) and two scheduling controls
+  (600 ticks, 22,000 events) matched every compared physical-state hash and ordered
+  event digest against the immutable base. States include pending proposals,
+  packet ownership, field registers, carried fractions, ledgers and model costs.
+- Independent review compared 2,500 generated expressions, including errors and
+  cold/warm costs, and 3,000 link-table mutations against direct reference behavior.
+  Fifteen baseline-world cases covered ordinary execution and injected observer
+  failures, preserving stopped physical states and committed-event order.
+- Real process tests preserve copied inputs, events, states, observer recordings
+  and non-timing metadata. Physical worker failures, pool startup errors and
+  interruption retain terminal evidence; interrupted workers are joined and
+  artifact leases released. No rendering is enabled.
+- [Performance measurements](PERFORMANCE.md#active-generic-engine) distinguish
+  exact regression evidence from host timings. Five-repeat sparse controls improve
+  core stepping 6.62 times and audited execution 2.15 times; dense core stepping is
+  essentially unchanged. Small ordinary runs show no consistent overall speedup.
+
+Boss, architecture, physics-rule, test, regression and PR Skills were reviewed.
+No Skill change is needed: their existing performance contract already requires
+source identity, exact costs, unchanged physical evidence and headless execution.
+The changed ownership and reproducible commands belong in architecture/performance
+documentation. No entity or candidate law was added, so Highlights reconciliation
+does not require a new physical rule or a live-document edit.
+
 ## Conservative directional-wave configuration and authoring Skill — 2026-09-12
 
 Based first on main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`, then integrated

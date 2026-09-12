@@ -506,8 +506,9 @@ a later local event fails; failure metadata must preserve the actual stopped sta
 ## Implementation and evidence
 
 The authoritative implementation owners are `initialization.py` for parsing,
-`core/disturbance_state.py` for fixed schemas, `fields/disturbances.py` for local
-arithmetic/proposals and `core/disturbance_engine.py` for time and ownership.
+`core/disturbance_state.py` for fixed schemas, `fields/expressions.py` for prepared
+expression execution, `fields/disturbances.py` for local proposals and
+`core/disturbance_engine.py` for time and ownership.
 `disturbance_api.py` composes the primary public Simulation. The runner handles
 output without supplying physical inputs.
 

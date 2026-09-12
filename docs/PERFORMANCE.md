@@ -1,5 +1,92 @@
 # Run performance
 
+## Active generic engine
+
+The active engine now indexes active carrier work, delayed completions and link
+arrivals, while retaining physical cells, fixed packet slots and original event
+ordering. Spatial work checks its fixed clock before copying residents. The runner
+shares a spatial reduction within each tick's accounting without dropping checks.
+Prepared integer expression execution selects operators once and charges every
+original operation; exact rational arithmetic is unchanged. These changes improve
+host execution, not the model's computation budget, delay or physical laws.
+
+For independent worlds, `python -m event_universe.batch` uses a bounded process
+pool. It saves validated input copies before starting workers, preserves each
+ordinary run's evidence, reports partial failure and joins interrupted workers.
+Inputs are runtime JSON; changing them requires no package rebuild. Process
+startup may outweigh parallelism for short runs. This is experiment throughput,
+not parallel execution inside one world. GPU, MPI, packed native arrays and
+cross-partition execution remain later work requiring a measured workload and
+the same exact arithmetic/causality acceptance.
+
+### Reproduce active measurements
+
+Use one installed Python 3.14 environment. Set `PYTHONPATH` to the selected
+checkout's `src` directory and verify `package_path` in the report; an editable
+installation may otherwise select a different checkout. Use distinct outputs:
+
+```bash
+python tools/benchmark_engine.py --init examples/basic.json examples/finite_fields.json examples/particle-contracts/electron-proton.json --repeat 3 --output artifacts/engine-benchmark
+python tools/make_scheduling_benchmark_inputs.py --output benchmark-inputs
+python tools/benchmark_engine.py --init benchmark-inputs/sparse.json benchmark-inputs/dense.json --repeat 3 --output artifacts/scheduling-benchmark
+```
+
+The benchmark reports stepping separately from complete audited-run time.
+Stepping excludes setup, event serialization and diagnostics, after one warmup;
+each repetition uses a fresh world. Audited time includes source fingerprinting,
+validation, every event write, all per-tick acceptance checks and final artifacts.
+A separate untimed pass hashes every tick's physical records, pending proposals,
+packet ownership, field registers, ledgers, model costs and events. Compare these
+digests before interpreting a timing ratio. Source/input fingerprints identify the
+tested payloads. No visualization is loaded or generated. No CI wall-time
+threshold is imposed; timings depend on workload and host load.
+
+### Current measured scope
+
+Measured on Windows with Python 3.14.7 and its GIL enabled, comparing main
+`992e0006469bb1156f517ae8273a80a980df7c57` with the optimized source. Three
+repetitions per case, one core warmup, identical inputs and ticks. All six
+complete physical traces and event streams below matched exactly, including
+modeled costs. These small runs do not demonstrate a general speedup:
+
+| Initialization | Ticks | Core before | Core after | Audited before | Audited after |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| basic | 8 | 0.018091 s | 0.017682 s | 0.254285 s | 0.263030 s |
+| exchange | 8 | 0.001171 s | 0.001169 s | 0.264722 s | 0.295227 s |
+| finite_fields | 40 | 0.106828 s | 0.110372 s | 0.354443 s | 0.373928 s |
+| local_lorentz_field | 20 | 0.235470 s | 0.238826 s | 0.479458 s | 0.498264 s |
+| particle-contracts/electron-proton | 180 | 0.190578 s | 0.189664 s | 0.451530 s | 0.448815 s |
+| quantum/native_cost_delay | 40 | 0.004440 s | 0.005416 s | 0.245908 s | 0.246803 s |
+
+Baseline source SHA256:
+`c45f9ee8d8696965414cea77b4d2c13fec0fc9f1b412ff2d7047470176c1b935`.
+Optimized source SHA256:
+`bde2dfc56db7dbb7e4dc44bd8ddb4627bb575317b51010b006d7d840bbb9f818`.
+The millisecond native-event case and runner setup are sensitive to overhead;
+native resolver worlds deliberately retain full cell polling. Do not extrapolate
+the sparse scheduling benefit or expression microbenchmarks to these runs.
+
+The generated scheduling controls use five repetitions per source with the same
+observer-free core timing and separately audited runner protocol:
+
+| Control | Ticks | Core before | Core after | Audited before | Audited after |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| One moving record, accumulating dormant history | 500 | 0.353218 s | 0.053331 s | 0.466814 s | 0.217455 s |
+| 100 held active records | 100 | 0.532673 s | 0.526483 s | 0.906152 s | 0.814282 s |
+
+The sparse control improves core stepping by 6.62 times and complete audited
+execution by 2.15 times; dense core execution is effectively unchanged. Each
+control's complete physical-state hashes and ordered event digest match between
+sources: 2,000 events for the sparse case and 20,000 for the dense case. These
+results apply to the identified host and configurations, not arbitrary worlds.
+
+The implementation was subsequently integrated with main `98b774ac`, which adds
+inline passive observer placement. Scheduler and expression implementation files
+remain byte-identical to the measured optimized version. The final integrated
+source fingerprint and checks are recorded in [validation](VALIDATION.md).
+
+## Historical renderer measurements
+
 These are historical scalar/particle renderer measurements. The optimization
 changes host diagnostics and export without changing that candidate's physical
 engine, scenario inputs, frame sampling or output resolution. It does not measure

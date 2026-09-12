@@ -8,8 +8,9 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    physical module. A postulate change must update both documents and its tests.
 2. Keep scheduling, generic field/dynamics calculations, model choices and output
    code in their documented modules. Reuse the generic arithmetic; choose and
-   select active laws in initialization data. Use `fields/disturbances.py` for
-   initialization-defined expression evaluation; shared bounded arithmetic belongs
+   select active laws in initialization data. Use `fields/expressions.py` for
+   initialization-defined expression evaluation and `fields/disturbances.py` for
+   local proposals; shared bounded arithmetic belongs
    in `core/integer.py`; historical models keep their named owners. Read
    [the disturbance contract](docs/DISTURBANCES.md) for the active API.
    Apply the [local integer operation contract](docs/ARCHITECTURE.md#local-integer-operation-contract)

@@ -20,6 +20,7 @@ from .disturbance_state import (
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
+from .link_schedule import LinkSchedule
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
 from .topology import neighbor_address
@@ -67,7 +68,9 @@ class DisturbanceEngine:
         self._record_policy = record_policy
         self._observer = observer
         self._cells: dict[Address3, DisturbanceCell] = {}
-        self._links: dict[Address3, tuple[Packet | None, ...]] = {}
+        self._active_cells: set[Address3] = set()
+        self._pending_due: dict[int, set[Address3]] = {}
+        self._links: LinkSchedule[Packet] = LinkSchedule()
         self.tick = 0
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
@@ -127,6 +130,7 @@ class DisturbanceEngine:
                 (None,) * capacity,
                 (1,) * (len(self.initial.couplings) * capacity * capacity * 3),
             )
+            self._active_cells.add(position)
         return self._cells[position]
 
     def neighbor(self, origin: Address3, port: int) -> Address3 | None:
@@ -188,6 +192,8 @@ class DisturbanceEngine:
                 )
             )
         ):
+            if self._resolver is None:
+                self._active_cells.discard(position)
             return
         coupled = (
             self._spatial.couple(position, cell.records)
@@ -230,6 +236,8 @@ class DisturbanceEngine:
         pending = PendingCycle(bounded(self.tick + extra), bounded(self.tick + duration), plan)
         # Originals remain in their occupied slots throughout the local wait.
         cell.pending = pending
+        if pending.ready_tick > self.tick:
+            self._pending_due.setdefault(pending.ready_tick, set()).add(position)
         cell.received_count = 0
         cell.last_cost = plan.cost
         self._model_work, self._local_cycles = work, cycles
@@ -282,6 +290,12 @@ class DisturbanceEngine:
         cell.coupling_remainders = pending.plan.coupling_remainders
         cell.available_tick = pending.next_tick
         cell.pending = None
+        due = self._pending_due.get(pending.ready_tick)
+        if due is not None:
+            due.discard(position)
+            if not due:
+                del self._pending_due[pending.ready_tick]
+        self._active_cells.add(position)
         self._links[position] = tuple(links)
         if self._spatial is not None:
             self._spatial.commit_reaction(position, reaction, pending.plan.spatial_reaction)
@@ -357,6 +371,7 @@ class DisturbanceEngine:
             elif self._current_emission_state(before, after) != after:
                 raise ValueError("spatial emission cannot change a disturbance's physical values")
         cell.records = records
+        self._active_cells.add(position)
 
     def _escape(self, origin: Address3, slot: int, packet: Packet) -> None:
         """Complete one terminal link; unused allowances are not physical stock."""
@@ -382,7 +397,8 @@ class DisturbanceEngine:
 
     def _deliver(self) -> None:
         ready: dict[Address3, list[tuple[Address3, int, Packet]]] = {}
-        for origin, packets in self._links.items():
+        for origin in self._links.due(self.tick):
+            packets = self._links[origin]
             for slot, packet in enumerate(packets):
                 if packet is not None and packet.arrival_tick == self.tick:
                     target = self.neighbor(origin, packet.port)
@@ -407,6 +423,7 @@ class DisturbanceEngine:
             received = bounded(cell.received_count + len(deliveries))
             # Validate the whole local arrival event before clearing any packet.
             cell.records = records
+            self._active_cells.add(position)
             cell.received_count = received
             for origin, slot, _packet in deliveries:
                 links = list(self._links[origin])
@@ -427,13 +444,13 @@ class DisturbanceEngine:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
-            if self._spatial is not None:
+            if self._spatial is not None and self.tick % self.initial.link_ticks == 0:
                 self._spatial.begin(
                     self.tick,
                     {p: cell.records for p, cell in self._cells.items()},
                     self._commit_emission_records,
                 )
-            for position in sorted(self._cells):
+            for position in sorted(self._active_cells):
                 cell = self._cells[position]
                 self._begin(position, cell)
                 self._commit(position, cell)
@@ -441,13 +458,16 @@ class DisturbanceEngine:
             if self._spatial is not None:
                 self._spatial.deliver(self.tick)
             self._deliver()
-            for position in sorted(self._cells):
-                self._commit(position, self._cells[position])
+            self._commit_ready()
             if self._resolver is not None:
                 self._resolver.advance(self.tick)
         except Exception:
             self.faulted = True
             raise
+
+    def _commit_ready(self) -> None:
+        for position in sorted(self._pending_due.get(self.tick, ())):
+            self._commit(position, self._cells[position])
 
     def record_values(self, record: DisturbanceRecord) -> dict[str, tuple[int, ...]]:
         return {
@@ -462,6 +482,9 @@ class DisturbanceEngine:
             if self._spatial is None
             else self._spatial.totals()
         )
+        return self._combined_totals(values)
+
+    def _combined_totals(self, values: list[list[int]]) -> dict[str, tuple[int, ...]]:
         records = [r for cell in self._cells.values() for r in cell.records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
         for record in records:
@@ -473,6 +496,16 @@ class DisturbanceEngine:
             for i, field in enumerate(self.initial.fields)
             if field.conserved
         }
+
+    def inventory_and_spatial_accounting(
+        self,
+    ) -> tuple[dict[str, tuple[int, ...]], dict[str, dict[str, object]]]:
+        """Read one spatial inventory for both same-instant diagnostic reports."""
+        if self._spatial is None:
+            return self.totals(), {}
+        spatial = self._spatial.totals()
+        accounting = self._spatial.accounting(spatial)
+        return self._combined_totals([values.copy() for values in spatial]), accounting
 
     def source_totals(self) -> dict[str, tuple[int, ...]]:
         return {

@@ -8,13 +8,11 @@ from event_universe.core.disturbance_state import (
     Departure,
     DisturbanceDefinition,
     DisturbanceRecord,
-    Expression,
     FieldDefinition,
     InteractionDefinition,
     LocalPlan,
     OperationCosts,
     Payload,
-    Values,
     Weights,
     bounded,
     decode,
@@ -24,102 +22,13 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import (
     add_components,
-    checked_sum,
     checked_work,
-    cross_product,
-    dot_product,
     signed_divrem,
 )
 
-from .ratios import PROJECTIONS, evaluate_ratio, project
+from .expressions import evaluate as evaluate
 from .routing import balanced_port, rate_credit
 from .spatial import split_weighted
-
-
-def _broadcast(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
-    size = max(len(left), len(right))
-    if len(left) not in (1, size) or len(right) not in (1, size):
-        raise ValueError("incompatible expression component counts")
-    return left * size if len(left) == 1 else left, right * size if len(right) == 1 else right
-
-
-def evaluate(
-    expression: Expression,
-    left: Values,
-    right: Values,
-    meter: CostMeter,
-    spatial_fluxes: Values = (),
-    *,
-    ports: tuple[Values, ...] = (),
-    outgoing: tuple[Values, ...] = (),
-) -> tuple[int, ...]:
-    """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
-    meter.charge("evaluate")
-    op = expression.op
-    if op in PROJECTIONS:
-        values = evaluate_ratio(
-            expression.arguments[0], left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing
-        )
-        return project(op, values)
-    if op == "literal":
-        return expression.literal
-    if op == "field":
-        return unpack((left if expression.side == 0 else right)[expression.field])
-    if op == "flux":
-        if not spatial_fluxes:
-            raise ValueError("spatial flux requires an explicitly supplied local sample")
-        return unpack(spatial_fluxes[expression.field])
-    if op in ("received", "outgoing"):
-        channels = ports if op == "received" else outgoing
-        if len(channels) != 6 or not 0 <= expression.port < 6:
-            raise ValueError("directional expressions require six explicitly supplied local channels")
-        return unpack(channels[expression.port][expression.field])
-    operands = tuple(
-        evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
-        for arg in expression.arguments
-    )
-    if op == "transform":
-        return tuple(dot_product(row, operands[0]) for row in expression.matrix)
-    if op == "dot":
-        return (dot_product(operands[0], operands[1]),)
-    if op == "cross":
-        return cross_product(operands[0], operands[1])
-    if op == "vector":
-        return tuple(operand[0] for operand in operands)
-    if op == "eq":
-        return (int(operands[0][0] == operands[1][0]),)
-    if op == "gt":
-        return (1 if operands[0][0] > operands[1][0] else 0,)
-    if op in ("neg", "abs", "sum", "component"):
-        unary = operands[0]
-        if op == "neg":
-            return tuple(checked_work(-v) for v in unary)
-        if op == "abs":
-            return tuple(checked_work(abs(v)) for v in unary)
-        if op == "sum":
-            return (checked_sum(unary),)
-        return (unary[expression.component],)
-    first, second = _broadcast(operands[0], operands[1])
-    result = []
-    for a, b in zip(first, second, strict=True):
-        if op == "add":
-            value = checked_work(a + b)
-        elif op == "sub":
-            value = checked_work(a - b)
-        elif op == "mul":
-            value = checked_work(a * b)
-        elif op == "min":
-            value = min(a, b)
-        elif op == "max":
-            value = max(a, b)
-        elif op == "exact_div":
-            if b == 0 or a % b:
-                raise ValueError("exact_div requires a nonzero divisor and an exact integer result")
-            value = checked_work(a // b)
-        else:
-            raise ValueError(f"unknown expression operation: {op}")
-        result.append(value)
-    return tuple(result)
 
 
 def add_values(left: Payload, right: Payload) -> Payload:

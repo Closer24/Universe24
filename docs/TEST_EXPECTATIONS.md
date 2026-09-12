@@ -1,5 +1,29 @@
 # Test inputs and expected results
 
+## Host execution and independent batches
+
+`test_link_scheduling.py` compares indexed execution with full scanning, preserving
+pending proposals, source bookkeeping, origin/port order, same-time arrivals,
+overflow/capacity failures and resolver clock wakeups. Dormant physical registers
+remain present even when the host skips their idle scheduling work.
+
+`test_prepared_expressions.py` checks the generic operator set, current local
+inputs, field replacement, cold/warm/evicted plans, exact preorder operation
+charges and overflow before cancellation. Rational projections retain their
+127-bit magnitude registers, 255-bit intermediate bounds and existing charges.
+
+`test_batch.py` starts real workers and compares input, events, final state and
+all non-timing metadata with direct runs. It covers immutable input copies,
+worker failures, invalid preflight input, preserved prior output, interrupted
+worker cleanup, pool startup failure and artifact retention. The CLI consumes
+runtime configuration without compilation or rendering.
+
+`test_engine_benchmark.py` requires observed events, repeatable complete physical
+traces and detection of changed frozen proposals. Timings exclude trace hashing;
+audited timings retain all ordinary runner checks and event writes. Performance
+reports use identical inputs and source fingerprints; CI has no wall-time
+threshold. See [performance](PERFORMANCE.md) for measured scope and limitations.
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,
