@@ -3,7 +3,7 @@
   "model_id": "catalog-electron-positron-two-photon-conservation-probe-v1",
   "shape": [9, 9, 9],
   "position": [4, 4, 4],
-  "ticks": 5,
+  "ticks": 3,
   "link_ticks": 1,
   "move_outputs": true,
   "inputs": [
