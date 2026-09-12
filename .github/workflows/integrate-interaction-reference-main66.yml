@@ -1,0 +1,32 @@
+name: Integrate interaction reference on latest main
+on:
+  push:
+    branches:
+      - feat/interaction-reference-completeness-main66
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cherry-pick validated interaction reference commit
+        run: |
+          git config user.name 'Closer24'
+          git config user.email 'logic24@gmail.com'
+          git fetch origin feat/interaction-reference-completeness
+          git cherry-pick 2de5921a6ae93ea88744db44ad7711143446197c
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Validate on latest main
+        run: python tools/check.py --base b0988512fa7f42a057c08dee7d6baa83cbf3eef7
+      - name: Remove temporary workflow and publish integrated branch
+        run: |
+          git rm .github/workflows/integrate-interaction-reference-main66.yml
+          git commit -m 'Remove temporary interaction integration workflow'
+          git push origin HEAD:feat/interaction-reference-completeness-main66
