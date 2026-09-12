@@ -79,6 +79,26 @@ def test_conversion_rejection_has_no_partial_type_change_or_pending_plan(failure
 
 
 @pytest.mark.parametrize(
+    "carried",
+    [
+        {"route_count_codes": (2, 1, 1, 1, 1, 1), "route_weight_codes": (2, 1, 2, 1, 1, 1)},
+        {"route_weight_codes": (2, 1, 2, 1, 1, 1)},
+        {"rate_credit_denominator": 2},
+    ],
+)
+def test_conversion_cannot_discard_new_routing_registers(carried):
+    initial = parse_initial_state(document())
+    first, second = initial.seeds
+    initial = replace(initial, seeds=(replace(first, record=replace(first.record, **carried)), second))
+    world = Simulation(initial)
+    before = world.snapshot()
+    with pytest.raises(ValueError, match="zero carried"):
+        world.step()
+    assert world.snapshot() == before
+    assert all(cell.pending is None for cell in world.cells.values())
+
+
+@pytest.mark.parametrize(
     "failure", ["missing_payload", "same_type", "different_fields", "split", "exchange", "capacity"]
 )
 def test_conversion_rejects_unsupported_ownership_at_initialization(failure):

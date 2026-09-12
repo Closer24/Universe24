@@ -153,6 +153,8 @@ def select(changed, sources):
         if path.startswith("tools/generic_vector_lab/"):
             tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
+        if path.startswith("examples/particle-contracts/"):
+            tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         if path.endswith((".md", ".py", ".js", ".html", ".css", ".json")):

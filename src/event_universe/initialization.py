@@ -174,13 +174,17 @@ class _Expressions:
         self.received_fields = received_fields
         self.outgoing_fields = outgoing_fields
 
-    def parse(self, value: object, expected: int | None = None) -> Expression:
-        expression, components = self._node(value, 1)
+    def parse(
+        self, value: object, expected: int | None = None, *, invariant: bool = False
+    ) -> Expression:
+        expression, components = self._node(value, 1, allow_key=invariant)
         if expected is not None and components != expected:
             raise ValueError(f"expression has {components} components; expected {expected}")
         return expression
 
-    def _node(self, value: object, depth: int) -> tuple[Expression, int]:
+    def _node(
+        self, value: object, depth: int, rational: bool = False, *, allow_key: bool = False
+    ) -> tuple[Expression, int]:
         self.nodes += 1
         if self.nodes > MAX_EXPRESSION_NODES or depth > 16:
             raise ValueError("expression exceeds the node or depth limit")
@@ -217,7 +221,22 @@ class _Expressions:
             return self._reference(obj)
         obj = _object(obj, "operation expression", {"op", "args", "index", "matrix"}, {"op", "args"})
         operation = _text(obj["op"], "expression.op")
+        if operation == "rational_key" and not allow_key:
+            raise ValueError("rational_key is only allowed as a top-level invariant")
+        projections = {
+            "rational_whole",
+            "rational_remainder",
+            "rational_denominator",
+            "rational_numerator",
+            "rational_direction",
+            "rational_key",
+            "rational_floor",
+        }
+        if operation == "ratio" and not rational:
+            raise ValueError("ratio requires an explicit rational projection")
         arities = {
+            **dict.fromkeys(projections, 1),
+            "ratio": 2,
             "add": 2,
             "sub": 2,
             "mul": 2,
@@ -231,6 +250,7 @@ class _Expressions:
             "transform": 1,
             "dot": 2,
             "gt": 2,
+            "eq": 2,
             "cross": 2,
             "vector": 3,
         }
@@ -242,7 +262,8 @@ class _Expressions:
             raise ValueError("only transform expressions accept matrix")
         count = arities[operation]
         arguments = tuple(
-            self._node(item, depth + 1) for item in _array(obj["args"], "expression.args", count, count)
+            self._node(item, depth + 1, rational or operation in projections)
+            for item in _array(obj["args"], "expression.args", count, count)
         )
         sizes = tuple(item[1] for item in arguments)
         if operation == "transform":
@@ -257,7 +278,7 @@ class _Expressions:
             raise ValueError(f"{operation} requires two vectors")
         if operation == "vector" and sizes != (1, 1, 1):
             raise ValueError("vector requires three scalars")
-        if operation == "gt" and sizes != (1, 1):
+        if operation in ("gt", "eq") and sizes != (1, 1):
             raise ValueError("gt requires two scalars")
         component = 0
         if operation == "component":
@@ -266,9 +287,15 @@ class _Expressions:
             component = _integer(obj["index"], "expression.index", 0)
             if component >= sizes[0]:
                 raise ValueError("expression.index exceeds the input component count")
-        if operation == "exact_div" and sizes[1] != 1:
+        if operation in ("exact_div", "ratio") and sizes[1] != 1:
             raise ValueError("exact_div requires a scalar denominator")
-        size = 1 if operation in ("sum", "component", "dot", "gt") else max(sizes)
+        size = 1 if operation in ("sum", "component", "dot", "gt", "eq") else max(sizes)
+        if operation == "rational_denominator":
+            size = 1
+        elif operation == "rational_key":
+            size = 2 * sizes[0]
+        elif operation == "rational_direction" and sizes[0] != 3:
+            raise ValueError("rational_direction requires a vector")
         if operation == "vector":
             size = 3
         return Expression(operation, tuple(item[0] for item in arguments), component=component), size
@@ -290,21 +317,50 @@ def _transport(
     value: object, fields: tuple[FieldDefinition, ...], owned: tuple[int, ...]
 ) -> TransportDefinition:
     obj = _object(
-        value, "transport", {"mode", "weights", "direction_field", "rate", "rate_denominator"}, {"mode"}
+        value,
+        "transport",
+        {
+            "mode",
+            "weights",
+            "direction_field",
+            "rate",
+            "rate_denominator",
+            "routing",
+            "direction",
+            "rate_divisor",
+        },
+        {"mode"},
     )
     mode = _text(obj["mode"], "transport.mode")
     allowed = {
         "hold": {"mode"},
         "split": {"mode", "weights"},
-        "move": {"mode", "weights", "direction_field", "rate", "rate_denominator"},
+        "move": {
+            "mode",
+            "weights",
+            "direction_field",
+            "rate",
+            "rate_denominator",
+            "routing",
+            "direction",
+            "rate_divisor",
+        },
     }
     if mode not in allowed:
         raise ValueError("transport.mode must be hold, move or split")
     _object(obj, f"{mode} transport", allowed[mode], {"mode"})
     weights_raw = _array(obj.get("weights", [1, 1, 1, 1, 1, 1]), "transport.weights", 6, 6)
     weights = cast(Weights, tuple(_integer(item, "transport weight", 0) for item in weights_raw))
-    if not 1 <= sum(weights) <= MAX_VALUE:
+    if not 1 <= sum(weights) or (obj.get("routing", "cyclic") == "cyclic" and sum(weights) > MAX_VALUE):
         raise ValueError("transport weights must have a positive bounded sum")
+    routing = _text(obj.get("routing", "cyclic"), "transport.routing")
+    if routing not in ("cyclic", "balanced"):
+        raise ValueError("routing must be cyclic or balanced")
+    direction_expression = (
+        _Expressions(fields, owned).parse(obj["direction"], 3) if "direction" in obj else None
+    )
+    if direction_expression is not None and ("weights" in obj or "direction_field" in obj):
+        raise ValueError("select exactly one direction provider")
     direction: int | None = None
     if "direction_field" in obj:
         if "weights" in obj:
@@ -316,7 +372,12 @@ def _transport(
         raise ValueError("split transport accepts only extensive fields")
     rate = _Expressions(fields, owned).parse(obj["rate"], 1) if "rate" in obj else None
     denominator = _integer(obj.get("rate_denominator", 1), "transport.rate_denominator", 1)
-    return TransportDefinition(mode, weights, direction, rate, denominator)
+    divisor = (
+        _Expressions(fields, owned).parse(obj["rate_divisor"], 1) if "rate_divisor" in obj else None
+    )
+    return TransportDefinition(
+        mode, weights, direction, rate, denominator, routing, direction_expression, divisor
+    )
 
 
 def _updates(
@@ -345,7 +406,7 @@ def _disturbances(
     result: list[DisturbanceDefinition] = []
     names = _names(fields)
     zero = tuple(pack((0,) * field.components) for field in fields)
-    allowed = {"name", "fields", "defaults", "transport", "updates", "cost_field"}
+    allowed = {"name", "fields", "defaults", "transport", "updates", "cost_field", "checks"}
     for raw in _array(value, "disturbance_types", MAX_TYPES, 1):
         obj = _object(raw, "disturbance type", allowed, {"name", "fields", "transport"})
         owned = tuple(
@@ -365,6 +426,13 @@ def _disturbances(
                 raise ValueError("cost_field must be nonconserved and use hold transport")
             if any(rule.field == cost_field for rule in updates):
                 raise ValueError("cost_field cannot also be an update target")
+        checks: list[Invariant] = []
+        for raw_check in _array(obj.get("checks", []), "local checks", MAX_RULES):
+            check = _object(raw_check, "local check", {"name", "expression"}, {"name", "expression"})
+            name = _text(check["name"], "check.name")
+            if any(item.name == name for item in checks):
+                raise ValueError("duplicate local check name")
+            checks.append(Invariant(name, _Expressions(fields, owned).parse(check["expression"], 1)))
         result.append(
             DisturbanceDefinition(
                 name=_text(obj["name"], "disturbance name"),
@@ -373,6 +441,7 @@ def _disturbances(
                 transport=transport,
                 updates=updates,
                 cost_field=cost_field,
+                checks=tuple(checks),
             )
         )
     disturbances = tuple(result)
@@ -478,7 +547,14 @@ def _interactions(
             invariant_name = _text(item["name"], "invariant.name")
             if any(i.name == invariant_name for i in invariants):
                 raise ValueError("duplicate invariant name")
-            invariants.append(Invariant(invariant_name, expression(item["expression"])))
+            invariants.append(
+                Invariant(
+                    invariant_name,
+                    _Expressions(fields, participants[0].fields, participants[1].fields).parse(
+                        item["expression"], invariant=True
+                    ),
+                )
+            )
         when = expression(obj["when"], 1) if "when" in obj else None
         output_types = None
         if "output_types" in obj:
@@ -822,7 +898,7 @@ def _field_rules(
                 raise ValueError("duplicate invariant name")
             invariant_expression = _Expressions(
                 fields, (), spatial_fields, outgoing_fields=local_fields
-            ).parse(item["expression"])
+            ).parse(item["expression"], invariant=True)
             invariants.append(Invariant(invariant_name, invariant_expression))
         when = expression(obj["when"], 1) if "when" in obj else None
         result.append(NodeFieldRuleDefinition(name, tuple(assignments), tuple(invariants), when))
@@ -879,7 +955,7 @@ def _spatial_interactions(
             if any(invariant.name == invariant_name for invariant in invariants):
                 raise ValueError("duplicate invariant name")
             expression = _Expressions(fields, participant.fields, spatial_fields).parse(
-                item["expression"]
+                item["expression"], invariant=True
             )
             invariants.append(Invariant(invariant_name, expression))
         when = (

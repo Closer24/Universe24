@@ -137,6 +137,14 @@ field propagation. It does not yet establish quantum consistency or entanglement
 
 ## Hard physical constraints
 
+The active generic simulator also supports an explicitly selected
+[bounded rational expression candidate](docs/RATIONAL_PARTICLES.md). Only inside
+those opt-in regions, canonical numerators/denominators allow 127 magnitude bits
+and temporaries allow 255 magnitude bits, with bounded integer arithmetic and
+fixed model work charges. Persistent payload bounds, legacy integer expressions,
+and the historical constraints below remain unchanged. This is a numeric
+contract extension, not unbounded host arithmetic or a relaxation of locality.
+
 The numbered record/source/response constraints here describe the historical
 scalar models selected through ScalarSimulation and related named APIs. Their
 five-register cell and sixteen-register particle schema is not universal. The
