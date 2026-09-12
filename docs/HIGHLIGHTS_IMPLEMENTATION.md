@@ -195,6 +195,29 @@ The experiment does not promote full electromagnetic emergence to a verified
 result. This entry records repository coverage; it does not claim a live
 Highlights edit or replace the earlier revision record above.
 
+### Timed external disturbance injection reconciliation
+
+For the bounded `runtime_injections` configuration and the workspace Timed placement
+editor, Highlights was reread on 2026-09-12 at live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Sections 3.5.3, 4.5, 4.5.1, 6.4 and 10.7 already establish explicit sources,
+configuration-defined experiments, editable/reusable configurations and a read-only
+playback boundary. The implementation extends experiment input with a bounded schedule
+of generic disturbance records at positive ticks. Each declared payload is counted as
+an explicit external source; the scheduler never derives a target from world state or
+from a physical type name. After insertion, ordinary configured local laws own the
+record. This is experiment control, not an emergent interaction, faster-than-link
+physical influence or a new physical model identity.
+
+The Timed placement editor is an authoring view of the same JSON schedule: desktop
+users can drag a configured disturbance type onto a selected lattice slice, while
+touch users select a type and tap a node. Tick, exact integer address, type and value
+overrides remain ordinary configuration data and are validated by the same parser as
+headless runs. A launched run receives an immutable configuration snapshot; editing the
+workspace cannot mutate that child process. The live Highlights document was not edited
+for this implementation because its existing configuration/source rules already cover
+the capability; this entry records exact repository coverage.
+
 ### Source contracts and evidence
 
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
@@ -205,5 +228,5 @@ Highlights edit or replace the earlier revision record above.
 | 10.4 | [Local field rules](LOCAL_FIELD_RULES.md), fields/local_field_rules.py | test_local_field_rules.py |
 | 10.5 | [Spatial couplings](SPATIAL_COUPLINGS.md), fields/spatial_interactions.py | test_spatial_interactions.py, test_atomic_interactions.py |
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
-| 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
+| 10.7 | [Workspace](WORKSPACE.md), [Disturbances](DISTURBANCES.md), runner.py, core/disturbance_engine.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py, test_runtime_injection_workspace.py, test_runtime_injections.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
