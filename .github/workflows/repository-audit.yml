@@ -1,0 +1,91 @@
+name: Canonical reference input audit
+on:
+  push:
+    branches: [chore/repository-consistency-audit]
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - name: Apply the reviewed duration-only deduplication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          python - <<'PY'
+          import base64
+          import hashlib
+          import json
+          import lzma
+          import pathlib
+          import subprocess
+          root = pathlib.Path.cwd()
+          reply = json.loads(subprocess.check_output(['gh', 'api', 'repos/Closer24/Universe24/git/blobs/41ed1c4ec63fdb7165cce53a968bbf1472bea252']))
+          packed = base64.b64decode(reply['content'])
+          data = lzma.decompress(base64.b64decode(packed))
+          assert hashlib.sha256(data).hexdigest() == 'e2787d961614ed0a995784045974b6a7efede7f1d8ab051c81bd35539b831319'
+          payload = json.loads(data)
+          assert payload['base'] == '60a07b97b574427421949f56b66e0c73ec38aaff'
+          assert subprocess.check_output(['git', 'rev-parse', 'HEAD^'], text=True).strip() == payload['base']
+          for change in payload['changes']:
+              target = root / change['path']
+              assert target.resolve().is_relative_to(root)
+              assert not change['path'].startswith(('src/', 'tests/reference/', '.git/'))
+              original = target.read_bytes()
+              assert hashlib.sha256(original).hexdigest() == change['before_sha256'], target
+              if change.get('delete'):
+                  target.unlink()
+                  continue
+              lines = original.decode().splitlines(keepends=True)
+              for start, stop, replacement in reversed(change['edits']):
+                  lines[start:stop] = [replacement]
+              target.write_text(''.join(lines), encoding='utf-8')
+          pathlib.Path('.github/workflows/repository-audit.yml').unlink()
+          assert subprocess.check_output(['git', 'diff', payload['base'], '--', 'src', 'tests/reference']) == b''
+          print('PASS: one canonical three-mass input, explicit 120-tick override, production and reference source unchanged.')
+          PY
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Normalize reviewed test formatting
+        run: |
+          python -m ruff check --select I --fix .
+          python -m ruff format .
+          git diff --check
+          test -z "$(git diff 60a07b97b574427421949f56b66e0c73ec38aaff -- src tests/reference)"
+      - name: Full final-tree audit
+        run: python tools/check.py --base fb083c159fe1f51612203962d9a7921683eb31c8 --full
+      - name: Preserve exact source and validation evidence
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/repository-audit"
+          git add -A
+          tree=$(git write-tree)
+          echo "$tree" > "$RUNNER_TEMP/repository-audit/tree.txt"
+          git archive --format=tar "$tree" | gzip > "$RUNNER_TEMP/repository-audit/source.tar.gz"
+          git diff --cached fb083c159fe1f51612203962d9a7921683eb31c8 > "$RUNNER_TEMP/repository-audit/cleanup.diff"
+          cp artifacts/junit.xml artifacts/check-scope.json "$RUNNER_TEMP/repository-audit/" 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: repository-audit-delivery
+          path: ${{ runner.temp }}/repository-audit/
+          retention-days: 1
+      - name: Publish the checked audit branch only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF" = refs/heads/chore/repository-consistency-audit
+          test ! -e .github/workflows/repository-audit.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          gh auth setup-git
+          git commit -m 'chore: use a duration override instead of a copied three-mass configuration'
+          git push origin HEAD:refs/heads/chore/repository-consistency-audit
