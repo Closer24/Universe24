@@ -24,21 +24,24 @@ the example family in the guide for fields, catalog entities or native events.
    meet, where, duration, quantities to measure and whether visual output is wanted.
    Reuse explicit user choices. Resolve routine defaults from an existing example.
 2. Choose the supported schema and mechanism before assigning physical labels.
-   Use schema 1 for local field rules, schema 2 for finite dissipative outward
-   fields. Native event programs currently cannot compose with spatial fields.
+   Ordinary inputs use [closed schema 3](../../docs/ELEMENTARY_FIELDS.md); select
+   per-field `computation_delay`, finite emission/response and declared decay.
+   Schema 1/2 expression programs and native/catalog laws require the explicit
+   reference API/runner and must be labeled as supplied-law experiments.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed
    in range, and distinguish transit time, computation delay and playback speed.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.
 5. Choose carried-record or spatial-field ownership for each amount. Add explicit
-   source, response or encounter rules only as needed. Count resident and actual
+   finite sources and elementary exchange descriptors only as needed; never insert
+   a continuum force through JSON expressions or an unsupported key. Count resident and actual
    in-flight stock once; received projections and display vectors are not new stock.
 6. Write the rule's expected result and conservation definitions. `conserved: true`
    is a linear amount declaration, not proof of kinetic or field energy. For a new
    physical hypothesis, assign a new model identity and use the existing field
    development and physics review workflow; do not invent an unsupported JSON key.
-7. Validate through `load_initial_state`, then construct `Simulation` to check runtime
+7. Validate active inputs through `load_initial_state`, then construct `Simulation` to check runtime
    composition. Run the smallest useful headless acceptance case. Preserve the
    source/config identity and inspect completion, events and declared balances.
 8. When visualization is requested, record the same configured run and render only

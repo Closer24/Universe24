@@ -36,11 +36,17 @@ def run_initialization(
     visualize: bool = False,
     frame_stride: int = 1,
     observer: Path | None = None,
+    reference: bool = False,
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
     source = initialization.read_bytes()
     document = parse_json_document(source)
-    initial = parse_initial_state(document)
+    if reference:
+        from .reference_api import parse_reference_state
+
+        initial = parse_reference_state(document)
+    else:
+        initial = parse_initial_state(document)
     document = cast(dict[str, object], document)
     observer_definition = (
         ObserverDefinition.parse(document["observer"], initial.shape) if "observer" in document else None
@@ -64,7 +70,15 @@ def run_initialization(
     output.mkdir(parents=True, exist_ok=True)
     with ArtifactLease(output.parent, [output.resolve()]):
         return _execute_run(
-            initial, source, output, fingerprint, count, visualize, frame_stride, observer_definition
+            initial,
+            source,
+            output,
+            fingerprint,
+            count,
+            visualize,
+            frame_stride,
+            observer_definition,
+            reference,
         )
 
 
@@ -77,6 +91,7 @@ def _execute_run(
     visualize: bool,
     frame_stride: int,
     observer_definition: ObserverDefinition | None,
+    reference: bool = False,
 ) -> Path:
     (output / "initialization.json").write_bytes(source)
     frames: list[dict[str, object]] = []
@@ -108,7 +123,12 @@ def _execute_run(
             if probe is not None:
                 probe.receive(event)
 
-        world = Simulation(initial, observer=record)
+        if reference:
+            from .reference_api import ReferenceSimulation
+
+            world = ReferenceSimulation(initial, observer=record)
+        else:
+            world = Simulation(initial, observer=record)
         initial_totals = world.totals()
         if visualize:
             frames.append(world.snapshot())
@@ -164,6 +184,7 @@ def _execute_run(
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
         "model": initial.model_id,
         "schema_version": initial.schema_version,
+        "execution_contract": "reference-supplied-laws" if reference else "elementary-local-v1",
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",
@@ -199,17 +220,29 @@ def _execute_run(
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "outward-octants"
             ),
-            emission_interval_ticks=initial.link_ticks,
             self_field_filter="unsupported",
             spatial_policy=(
                 "finite-dissipative-v1"
-                if initial.schema_version == 2
+                if initial.schema_version in (2, 3)
                 else "configured-local-fields-v1"
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "conservative-outward-v1"
             ),
             spatial_accounting=world.spatial_accounting(),
             spatial_background="immutable; excluded from decay",
+            field_computation_delay={
+                initial.fields[d.field].name: d.computation_delay for d in initial.spatial_fields
+            },
+        )
+        if initial.schema_version == 3:
+            metadata["emission_cadence"] = "per-field-activation"
+        else:
+            metadata["emission_interval_ticks"] = initial.link_ticks
+    if initial.elementary_exchanges:
+        metadata.update(
+            elementary_exchanges=[rule.name for rule in initial.elementary_exchanges],
+            spatial_response="finite-local-component-exchange",
+            spatial_sampling="retained-after-local-field-phase",
         )
     if initial.spatial_couplings:
         metadata.update(
@@ -240,7 +273,7 @@ def _execute_run(
     return path
 
 
-def main() -> None:
+def main(*, reference: bool = False) -> None:
     parser = argparse.ArgumentParser(
         description="Run generic disturbances from an initialization JSON file."
     )
@@ -261,6 +294,7 @@ def main() -> None:
             visualize=args.visualize,
             frame_stride=args.frame_stride,
             observer=args.observer,
+            reference=reference,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

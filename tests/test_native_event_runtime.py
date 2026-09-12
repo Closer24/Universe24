@@ -8,10 +8,10 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.core.event_space import CausalEventSpace
-from event_universe.initialization import parse_initial_state
 from event_universe.quantum import Amplitude, DeferredQuantum, EventNetworkConfig, LocalUnitary
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 BASE = Path(__file__).resolve().parents[1] / "examples/quantum/contact.json"
 POSITION = [[[1, 0], [0, 0]], [[0, 0], [0, 1]]]
@@ -287,7 +287,7 @@ def test_selected_mechanical_branch_pays_its_own_work():
 
 
 def test_regular_runner_writes_shared_graph_and_costs_without_rendering(tmp_path):
-    from event_universe.runner import run_initialization
+    from event_universe.reference_runner import run_reference_initialization as run_initialization
 
     initial = tmp_path / "initial.json"
     initial.write_text(json.dumps(configuration(0, 1, 1)))
@@ -435,6 +435,7 @@ def test_classical_control_with_same_operation_cost_matches_delayed_world(budget
         record_policy=RecordOperations(
             initial.fields, initial.disturbances, initial.couplings, initial.interactions
         ),
+        reference=True,
     )
     for _ in range(40):
         quantum.step()
@@ -450,7 +451,15 @@ def test_canonical_cli_actually_emits_native_results(tmp_path):
     output = tmp_path / "native-cli"
     source = BASE.parent / "native_classical.json"
     result = subprocess.run(
-        [sys.executable, "-m", "event_universe", "--init", str(source), "--output", str(output)],
+        [
+            sys.executable,
+            "-m",
+            "event_universe.reference_runner",
+            "--init",
+            str(source),
+            "--output",
+            str(output),
+        ],
         capture_output=True,
         text=True,
         check=False,

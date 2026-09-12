@@ -5,6 +5,14 @@ description: Run and maintain the minimum sufficient Universe24 test suite, diag
 
 # Necessary tests
 
+When schema, field clocks or input consumers change, retain
+`tests/test_elementary_fields.py` plus affected workspace/headless JavaScript
+checks. Verify ordinary-input rejection and explicit reference execution separately.
+Do not migrate every numerical test to the reference path and leave the active
+engine untested; require independent active outcomes and failure cases. New
+JSON resources must register their dynamic consumers in `tools/check.py`.
+
+
 Read [the shared workflow](../workflow.md) and
 [test expectations](../../docs/TEST_EXPECTATIONS.md). Input is the changed
 behavior/risk and exact tree; output is actual commands/results, retained coverage,

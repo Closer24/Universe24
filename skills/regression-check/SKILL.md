@@ -5,6 +5,14 @@ description: Check Universe24 regressions and daily genericity across the active
 
 # Regression check
 
+Include `tests/test_elementary_fields.py` in the daily baseline. Check ordinary
+schema 3 rejection of supplied formulas and compare the explicit reference
+experiments separately. Per-field waiting must appear once at its node in totals
+and playback; no JSON name or flag may bypass the boundary. Follow
+[the elementary contract](../../docs/ELEMENTARY_FIELDS.md) for timing and exchange
+limits. This extends the existing daily procedure without creating a new schedule.
+
+
 ## Formula-free cell check for the daily audit
 
 Include `tests/test_cell_state_contract.py` and `tests/test_local_lorentz_field.py`
@@ -68,7 +76,7 @@ Use the existing project interpreter and set PYTHONPATH to that checkout's src.
 Run the bounded baseline from the repository root:
 
 ```text
-python -m pytest tests/test_generic_identity.py tests/test_architecture.py tests/test_workspace.py tests/test_workspace_integration.py tests/test_recorded_movie.py tests/test_local_field_rules.py tests/test_spatial_interactions.py
+python -m pytest tests/test_elementary_fields.py tests/test_generic_identity.py tests/test_architecture.py tests/test_workspace.py tests/test_workspace_integration.py tests/test_recorded_movie.py tests/test_local_field_rules.py tests/test_spatial_interactions.py
 ```
 
 Ensure Node is available and the headless JavaScript checks actually execute.

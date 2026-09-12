@@ -1,5 +1,24 @@
 # Test inputs and expected results
 
+## Active elementary fields
+
+`tests/test_elementary_fields.py` exercises schema 3 through the ordinary API,
+runner and workspace. Independent expectations cover per-field waits at transit
+1/2, two clock choices in one cell, all six open/periodic seams with signed stock,
+zero-field and insufficient-allowance controls, six actual signed turns, finite
+source exhaustion including its last unit, and dynamic extinction. A three-carrier
+partial exchange preserves vector `(11,16,8)` and joint squared norm 235.
+An intervening arrival during a delayed exchange must fail its invariant before
+carrier, reaction or response allowance changes. All owners remain balanced.
+
+Adversarial labels do not select laws. Duplicate/unknown keys, renamed formulas,
+expression updates, source expressions, nonliteral rates and JSON reference flags
+are rejected before outputs. Typed state cannot bypass the input contract.
+`test_workspace_integration.py` separately verifies waiting stock at its local
+position, signed value aggregation and immutable input in the headless player.
+The previous field/catalog/native numerical suites now use the explicit reference
+API; their physical assertions remain part of affected regression selection.
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,

@@ -9,7 +9,8 @@ from typing import Any
 import pytest
 
 from event_universe.core.disturbance_state import MAX_VALUE, unpack
-from event_universe.initialization import load_initial_state, parse_initial_state
+from event_universe.reference_api import load_reference_state as load_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
 

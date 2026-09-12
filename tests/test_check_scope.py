@@ -16,6 +16,22 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["motion", "contact", "open"])
+def test_elementary_resources_select_input_and_display_consumers(name):
+    selected, _ = CHECK.select([f"examples/elementary_{name}.json"], {})
+    assert {
+        "tests/test_elementary_fields.py",
+        "tests/test_workspace.py",
+        "tests/test_workspace_integration.py",
+    } <= set(selected)
+    assert "tests/test_collisions.py" not in selected
+
+
+def test_configuration_skill_template_selects_its_active_numerical_check():
+    selected, _ = CHECK.select(["skills/simulation-configuration/assets/two-streams.json"], {})
+    assert "tests/test_elementary_fields.py" in selected
+
+
 def test_local_field_example_selects_state_and_physical_contract_consumers():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_cell_state_contract.py" in selected

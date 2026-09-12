@@ -5,7 +5,8 @@ import copy
 import json
 from pathlib import Path
 
-from event_universe.initialization import parse_initial_state, parse_json_document
+from event_universe.initialization import parse_json_document
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 HERE = Path(__file__).resolve().parent
 

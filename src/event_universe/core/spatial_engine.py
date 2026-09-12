@@ -14,12 +14,22 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    WaitingField,
 )
+from .timing import cycle_timing
 from .topology import neighbor_address
 
-SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
-]
+
+class SpatialPlanner(Protocol):
+    def __call__(
+        self,
+        states: tuple[SpatialState, ...],
+        records: tuple[DisturbanceRecord | None, ...],
+        received_count: int = 0,
+        enabled_fields: tuple[bool, ...] = (),
+    ) -> SpatialPlan: ...
+
+
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 EventSink = Callable[[dict[str, object]], None]
 RecordCommit = Callable[[Address3, tuple[DisturbanceRecord | None, ...]], None]
@@ -106,7 +116,11 @@ class SpatialEngine:
 
     def _at(self, position: Address3) -> SpatialCell:
         if position not in self.cells:
-            self.cells[position] = SpatialCell(self._blank_states())
+            self.cells[position] = SpatialCell(
+                self._blank_states(),
+                waiting=(None,) * len(self.initial.spatial_fields),
+                available_ticks=(0,) * len(self.initial.spatial_fields),
+            )
             self._active.add(position)
         elif position not in self._active:
             # An idle known cell completed the empty phase without a host visit.
@@ -131,9 +145,11 @@ class SpatialEngine:
             return
         self._field_tick = tick
         emitter_types = {rule.type_index for rule in self.initial.emissions}
-        coupled_types = {rule.type_index for rule in self.initial.spatial_couplings} | {
-            rule.type_index for rule in self.initial.spatial_interactions
-        }
+        coupled_types = (
+            {rule.type_index for rule in self.initial.spatial_couplings}
+            | {rule.type_index for rule in self.initial.spatial_interactions}
+            | {rule.type_index for rule in self.initial.elementary_exchanges}
+        )
         positions = set(self._active)
         for position, records in residents.items():
             if any(
@@ -146,13 +162,15 @@ class SpatialEngine:
             if any(packet is not None for packet in self.links.get(position, ())):
                 raise ValueError("outgoing spatial links are occupied")
             records = residents.get(position, ())
-            if self.coupler is not None and any(
+            sampling = self.coupler is not None and any(
                 record is not None and record.type_index in coupled_types for record in records
-            ):
+            )
+            if sampling and self.initial.schema_version != 3:
+                assert self.coupler is not None
                 # Freeze only locally delivered input, before fresh source injection.
                 cell.sample_values = self.coupler.sample(cell.states)
                 cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
-                if self.initial.spatial_interactions:
+                if self.initial.spatial_interactions or self.initial.elementary_exchanges:
                     cell.sample_ports = self.coupler.sample_ports(cell.states)
             # Samples describe only the preceding delivery interval, never a permanent trail.
             states = (
@@ -175,19 +193,70 @@ class SpatialEngine:
                 for index, rule in enumerate(self.initial.emissions)
             )
             active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
-            if not active_source and not active_field and cell.received_count == 0:
+            if (
+                not active_source
+                and not active_field
+                and cell.received_count == 0
+                and not any(cell.waiting)
+            ):
                 cell.states = tuple(
                     replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
                     for state in states
                 )
                 cell.last_cost = 0
                 cell.last_begin_tick = tick
+                if sampling and self.initial.schema_version == 3:
+                    assert self.coupler is not None
+                    cell.sample_values = self.coupler.sample(cell.states)
+                    cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                    cell.sample_ports = self.coupler.sample_ports(cell.states)
                 self._active.discard(position)
                 continue
-            plan = self.planner(states, records, cell.received_count)
+            enabled = tuple(
+                waiting is None and ready <= tick
+                for waiting, ready in zip(cell.waiting, cell.available_ticks, strict=True)
+            )
+            plan = (
+                self.planner(states, records, cell.received_count, enabled)
+                if self.initial.schema_version == 3
+                else self.planner(states, records, cell.received_count)
+            )
             cost = bounded(checked_work(plan.cost + cell.received_decay_cost))
+            extra, duration = (
+                cycle_timing(cost, self.initial.normal_budget, self.initial.link_ticks)
+                if any(
+                    allowed and definition.computation_delay
+                    for allowed, definition in zip(enabled, self.initial.spatial_fields, strict=True)
+                )
+                else (0, self.initial.link_ticks)
+            )
+            waiting = list(cell.waiting)
+            available = list(cell.available_ticks)
+            # Prepared outgoing stock remains local until its frozen departure.
+            bundles = [[field for field in bundle] for bundle in plan.outgoing]
+            newly_waiting = []
+            for index, definition in enumerate(self.initial.spatial_fields):
+                old = waiting[index]
+                if old is not None and old.departure_tick <= tick:
+                    for port, populations in enumerate(old.outgoing):
+                        if any(any(unpack(v)) for v in bundles[port][index]):
+                            raise ValueError("a field cannot overwrite its prepared outgoing stock")
+                        bundles[port][index] = populations
+                    waiting[index] = None
+                if not enabled[index] or not definition.computation_delay:
+                    continue
+                available[index] = bounded(tick + duration)
+                if extra and any(any(unpack(v)) for bundle in plan.outgoing for v in bundle[index]):
+                    waiting[index] = WaitingField(
+                        bounded(tick + extra), tuple(bundle[index] for bundle in plan.outgoing)
+                    )
+                    blank = (pack((0,) * self.initial.fields[definition.field].components),) * 8
+                    for buffered in bundles:
+                        buffered[index] = blank
+                    newly_waiting.append(index)
             packets: list[SpatialPacket | None] = [None] * 6
-            for port, bundle in enumerate(plan.outgoing):
+            for port, raw_bundle in enumerate(bundles):
+                bundle = tuple(raw_bundle)
                 if any(any(unpack(payload)) for field in bundle for payload in field):
                     packets[port] = SpatialPacket(
                         bounded(tick + self.initial.link_ticks), position, port, bundle
@@ -195,6 +264,13 @@ class SpatialEngine:
             # All physical calculations and validation precede the local commit.
             commit_records(position, plan.emission_records)
             cell.states = plan.states
+            cell.waiting = tuple(waiting)
+            cell.available_ticks = tuple(available)
+            if sampling and self.initial.schema_version == 3:
+                assert self.coupler is not None
+                cell.sample_values = self.coupler.sample(cell.states)
+                cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                cell.sample_ports = self.coupler.sample_ports(cell.states)
             cell.last_cost = cost
             cell.received_count = 0
             cell.received_decay_cost = 0
@@ -239,6 +315,17 @@ class SpatialEngine:
                         port=packet.port,
                         arrival_tick=packet.arrival_tick,
                     )
+            for index in newly_waiting:
+                pending = cell.waiting[index]
+                assert pending is not None
+                self._event(
+                    "spatial_waiting",
+                    tick,
+                    position,
+                    field=self.initial.fields[self.initial.spatial_fields[index].field].name,
+                    departure_tick=pending.departure_tick,
+                    cost=cost,
+                )
 
     def couple(
         self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
@@ -454,6 +541,13 @@ class SpatialEngine:
                 result[definition.field][component] += volume * value
             inventories = [self.cells[position].states[index].populations for position in self._active]
             inventories.extend(
+                populations
+                for position in self._active
+                for pending in (self.cells[position].waiting[index],)
+                if pending is not None
+                for populations in pending.outgoing
+            )
+            inventories.extend(
                 packet.fields[index]
                 for packets in self.links.values()
                 for packet in packets
@@ -519,6 +613,25 @@ class SpatialEngine:
 
     def snapshot(self) -> dict[str, object]:
         return {
+            **(
+                {
+                    "spatial_waiting": [
+                        {
+                            "position": position,
+                            "field": self.initial.fields[self.initial.spatial_fields[index].field].name,
+                            "departure_tick": waiting.departure_tick,
+                            "outgoing": tuple(
+                                tuple(unpack(v) for v in populations) for populations in waiting.outgoing
+                            ),
+                        }
+                        for position, cell in sorted(self.cells.items())
+                        for index, waiting in enumerate(cell.waiting)
+                        if waiting is not None
+                    ]
+                }
+                if self.initial.schema_version == 3
+                else {}
+            ),
             "spatial_fields": [
                 {"position": position, "fields": self.values(position), "cost": cell.last_cost}
                 for position, cell in sorted(self.cells.items())

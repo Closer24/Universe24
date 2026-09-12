@@ -1,5 +1,11 @@
 # Configured outward spatial fields
 
+Execution scope: this document describes the explicitly supplied-law reference
+path (schemas 1/2). Use `ReferenceSimulation`, the `reference_api` loader and
+`python -m event_universe.reference_runner` for these examples. Ordinary
+initialization accepts only [schema 3 elementary fields](ELEMENTARY_FIELDS.md).
+No physical name or JSON flag promotes a reference equation into that path.
+
 These optional candidates separate a carried disturbance from the spatial fields
 it emits. Select fields through `spatial_fields` in initialization. Schema version
 1 selects `conservative-outward-v1`, with conservative transport and unlimited

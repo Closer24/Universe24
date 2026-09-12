@@ -1,5 +1,11 @@
 # Generic local field rules
 
+Execution scope: this document describes the explicitly supplied-law reference
+path (schemas 1/2). Use `ReferenceSimulation`, the `reference_api` loader and
+`python -m event_universe.reference_runner` for these examples. Ordinary
+initialization accepts only [schema 3 elementary fields](ELEMENTARY_FIELDS.md).
+No physical name or JSON flag promotes a reference equation into that path.
+
 This optional schema 1 extension lets a node retain dynamic field stock, combine
 several scalar/vector components, and choose payloads for its six outgoing
 links. It also supports joint field/carrier transactions. The node reads its

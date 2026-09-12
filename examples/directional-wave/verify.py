@@ -24,8 +24,8 @@ def load_recording(path):
 
 
 def verify(path):
-    from event_universe import Simulation
-    from event_universe.initialization import parse_initial_json
+    from event_universe.reference_api import ReferenceSimulation as Simulation
+    from event_universe.reference_api import parse_reference_json as parse_initial_json
     from event_universe.runner import source_fingerprint
 
     data = load_recording(path)

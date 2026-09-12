@@ -1,5 +1,26 @@
 # API and repository migration
 
+## Closed elementary input (schema 3)
+
+This is an intentional ordinary-input compatibility change. Use
+`Simulation`, `parse_initial_state`/`load_initial_state` and the ordinary CLI only
+with [schema 3](ELEMENTARY_FIELDS.md). Start with `examples/elementary_motion.json`,
+`elementary_contact.json` or `elementary_open.json`. Merely changing a version
+number does not translate a supplied force program into elementary operations.
+
+Existing schema 1/2 configurations remain unchanged as reference inputs. Import
+`ReferenceSimulation`, `parse_reference_state`, `parse_reference_json` and
+`load_reference_state` from `event_universe.reference_api`; execute with
+`python -m event_universe.reference_runner --init examples/basic.json --output
+artifacts/reference-basic`. The Python runner wrapper is `run_reference_initialization`
+in `event_universe.reference_runner`. There is no ordinary CLI or JSON reference
+flag. Workspace templates and validation use the active schema only.
+
+The catalog and native event programs still describe their supplied candidate
+laws. Their compilers and test consumers now select the reference path explicitly;
+their numerical assertions are retained. The earlier migration below concerns
+the original initialization API and separate historical scalar models.
+
 Install from the extracted project first:
 
 ```bash
@@ -13,7 +34,7 @@ implicit scalar Config or built-in particle semantics. Initialize the active
 model with a strict JSON file:
 
 ```bash
-python -m event_universe --init examples/basic.json --output artifacts/basic
+python -m event_universe.reference_runner --init examples/basic.json --output artifacts/basic
 ```
 
 Programmatic users import `Simulation` from `event_universe` and

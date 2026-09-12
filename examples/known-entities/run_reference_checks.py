@@ -6,8 +6,9 @@ from datetime import datetime
 from fractions import Fraction
 from pathlib import Path
 
+from event_universe.reference_runner import run_reference_initialization as run_initialization
 from event_universe.retention import ArtifactLease
-from event_universe.runner import run_initialization, source_fingerprint
+from event_universe.runner import source_fingerprint
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent

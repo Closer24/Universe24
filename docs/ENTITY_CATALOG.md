@@ -1,5 +1,11 @@
 # Executable entity catalog
 
+Execution scope: this document describes the explicitly supplied-law reference
+path (schemas 1/2). Use `ReferenceSimulation`, the `reference_api` loader and
+`python -m event_universe.reference_runner` for these examples. Ordinary
+initialization accepts only [schema 3 elementary fields](ELEMENTARY_FIELDS.md).
+No physical name or JSON flag promotes a reference equation into that path.
+
 An explicit `--representation quantum` now compiles each entry's
 [finite quantum profile](QUANTUM_ENTITIES.md) into the native event program.
 Classical profiles are unchanged. A field's quantum mode profile is not its

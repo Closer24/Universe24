@@ -8,14 +8,14 @@ English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
 define coordinated work and independent checks.
 
-The active simulator runs **initialization-defined disturbances**. A JSON file
-defines field names and values, disturbance types, local updates, couplings,
-transport, operation costs, normal cost and initial placements. The engine does
-not recognize mass, charge or velocity by name or supply a hidden physical model.
-Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
-Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
-local quantum decisions to that same engine and charge the executed mechanical
-path. They currently cannot be combined with spatial fields.
+The active simulator runs **elementary initialization-defined disturbances**.
+Schema 3 declares generic fields, values, routing, finite emissions and local
+component exchanges. Each spatial field selects `computation_delay`. Ordinary
+JSON cannot contain supplied force/update expressions or choose a reference mode.
+Read [the elementary contract](docs/ELEMENTARY_FIELDS.md) before defining a run.
+Schema 1/2 expression programs and native quantum/catalog experiments remain
+available through the explicit `event_universe.reference_runner` and
+`event_universe.reference_api` interfaces, with their own physical limitations.
 
 For a complete authoring walkthrough, use the
 [simulation configuration Skill](skills/simulation-configuration/SKILL.md):
@@ -61,7 +61,7 @@ the package has no rendering dependency:
 python3.14 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e .
-python -m event_universe --init examples/basic.json --output artifacts/basic
+python -m event_universe --init examples/elementary_motion.json --output artifacts/elementary-motion
 ```
 
 On Windows:
@@ -69,7 +69,7 @@ On Windows:
 ```powershell
 py -3.14 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e .
-.\.venv\Scripts\python.exe -m event_universe --init examples/basic.json --output artifacts/basic
+.\.venv\Scripts\python.exe -m event_universe --init examples/elementary_motion.json --output artifacts/elementary-motion
 ```
 
 Select the environment's interpreter explicitly if activation is unavailable.
@@ -78,28 +78,32 @@ helper tests use the optional libraries even when no animation is generated.
 
 The initialization file is required. It supplies `ticks`; `--ticks` can override
 duration. Missing input is an error, not a request to load a built-in universe.
-Field definitions, disturbance types, seeds, formulas and cost settings are
-documented with examples in [DISTURBANCES.md](docs/DISTURBANCES.md).
+Active field definitions, finite exchanges, seeds and field clock settings are
+documented in [ELEMENTARY_FIELDS.md](docs/ELEMENTARY_FIELDS.md).
 
 Set the top-level initialization member `"boundary": "periodic"` for a closed
 periodic domain: a transfer leaving one side arrives at the opposite side.
 This is the default. Set `"boundary": "open"` for an absorbing edge: departing
 disturbances and field packets leave the simulated world, with their escaped
-quantities recorded separately. Both settings work with schema versions 1 and 2.
+quantities recorded separately. Both settings work with active schema 3 and reference schemas 1/2.
 See [the boundary contract](docs/DISTURBANCES.md#domain-boundary) for geometry and
 accounting. This setting is shared by carriers and fields.
 
-For a moving source that continuously emits a separate conserved outward field:
+The examples below use the explicit supplied-law reference path. For an active
+finite encounter use `examples/elementary_contact.json`; for finite open emission
+use `examples/elementary_open.json` with the ordinary runner.
+
+For a reference moving source that continuously emits a separate conserved outward field:
 
 ```bash
-python -m event_universe --init examples/moving_source.json --output artifacts/moving-source
+python -m event_universe.reference_runner --init examples/moving_source.json --output artifacts/moving-source
 ```
 
 For the schema 2 finite dissipative candidate, with bounded source allowances
 and explicitly configured decay on each completed field link:
 
 ```bash
-python -m event_universe --init examples/finite_fields.json --output artifacts/finite-fields
+python -m event_universe.reference_runner --init examples/finite_fields.json --output artifacts/finite-fields
 ```
 
 The [finite field contract](docs/SPATIAL_FIELDS.md#finite-completed-link-decay)
@@ -109,7 +113,7 @@ keeps the conservative behavior. Neither schema is selected by physical names.
 For configured field-driven rotation with an equal-and-opposite spatial reaction:
 
 ```bash
-python -m event_universe --init examples/spatial_turning.json --output artifacts/spatial-turning
+python -m event_universe.reference_runner --init examples/spatial_turning.json --output artifacts/spatial-turning
 ```
 
 See [the coupling contract](docs/SPATIAL_COUPLINGS.md) for exact integer rotation,

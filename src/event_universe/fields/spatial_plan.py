@@ -14,6 +14,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    ElementaryExchange,
     EmissionDefinition,
     NodeFieldRuleDefinition,
     SpatialFieldDefinition,
@@ -24,8 +25,10 @@ from event_universe.core.spatial_state import (
 )
 
 from .disturbances import evaluate
+from .elementary import exchange_spend, route_stock
 from .local_field_rules import apply_field_rules
 from .spatial import add_populations, bounded_emission_amount, emission_amount, emit, split_outward
+from .spatial_coupling import sample_values
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +38,7 @@ class SpatialLaw:
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
+    elementary_exchanges: tuple[ElementaryExchange, ...] = ()
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -88,6 +92,7 @@ class SpatialLaw:
         states: tuple[SpatialState, ...],
         records: tuple[DisturbanceRecord | None, ...],
         received_count: int = 0,
+        enabled_fields: tuple[bool, ...] = (),
     ) -> SpatialPlan:
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
@@ -98,6 +103,9 @@ class SpatialLaw:
         # Each delivered component updates its population and directional sample.
         meter.charge("update", received_count * 16 * received_components)
         working = list(states)
+        enabled = enabled_fields or (True,) * len(self.definitions)
+        if len(enabled) != len(self.definitions):
+            raise ValueError("field activity mask differs from the fixed schema")
         emitters = tuple(rule.type_index for rule in self.emissions)
         updated_records = [
             self._emitter(record) if record is not None and record.type_index in emitters else record
@@ -105,6 +113,8 @@ class SpatialLaw:
         ]
         source = [[0] * field.components for field in self.fields]
         for index, rule in enumerate(self.emissions):
+            if not enabled[rule.spatial_field]:
+                continue
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
             for slot, record in enumerate(updated_records):
@@ -146,7 +156,8 @@ class SpatialLaw:
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
-        if has_local:
+        elementary = any(d.routing_weights for d in self.definitions)
+        if has_local and not elementary:
             ruled_states, local_outgoing = apply_field_rules(
                 self.fields, self.definitions, self.field_rules, tuple(working), meter
             )
@@ -154,10 +165,42 @@ class SpatialLaw:
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
+        exchange_values = (
+            sample_values(tuple(working), self.definitions, self.fields, meter)
+            if self.elementary_exchanges
+            else ()
+        )
         for index, definition in enumerate(self.definitions):
             field = self.fields[definition.field]
             channels: SpatialOutgoing
-            if definition.transport == "local":
+            if not enabled[index]:
+                blank = pack((0,) * field.components)
+                channels = ((blank,) * 8,) * 6
+                state = working[index]
+            elif definition.routing_weights:
+                held = False
+                for rule_index, exchange in enumerate(self.elementary_exchanges):
+                    if exchange.field != definition.field:
+                        continue
+                    for record in updated_records:
+                        if (
+                            record is not None
+                            and exchange_spend(
+                                record, exchange_values, self.elementary_exchanges, rule_index, meter
+                            )
+                            is not None
+                        ):
+                            held = True
+                if held:
+                    blank = pack((0,) * field.components)
+                    channels = ((blank,) * 8,) * 6
+                    state = working[index]
+                    meter.charge("read")
+                else:
+                    state, channels = route_stock(
+                        working[index], field, definition.routing_weights, meter
+                    )
+            elif definition.transport == "local":
                 blank = pack((0,) * field.components)
                 channels = tuple(
                     (channel[definition.field],) + (blank,) * 7 for channel in local_outgoing
@@ -167,7 +210,7 @@ class SpatialLaw:
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
-            if has_local:
+            if has_local and enabled[index]:
                 state = replace(state, delivered=(pack((0,) * field.components),) * 6)
             retained.append(state)
             for port, payloads in enumerate(channels):

@@ -3,7 +3,7 @@
 import pytest
 
 from event_universe.core.disturbance_state import MAX_VALUE, OPERATIONS
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 
 def initialization(baseline, populations):

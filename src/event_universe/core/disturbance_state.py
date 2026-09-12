@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
     from .spatial_state import (
+        ElementaryExchange,
         EmissionDefinition,
         FieldGroupDefinition,
         FieldInteractionGuard,
@@ -186,6 +187,7 @@ class DisturbanceRecord:
     route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     rate_credit_denominator: int = 1
+    interaction_remaining: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -218,6 +220,7 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    elementary_exchanges: tuple[ElementaryExchange, ...] = ()
 
 
 class Departure(NamedTuple):

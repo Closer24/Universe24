@@ -1,5 +1,11 @@
 # Local field impulse and formula-free cells
 
+Execution scope: this document describes the explicitly supplied-law reference
+path (schemas 1/2). Use `ReferenceSimulation`, the `reference_api` loader and
+`python -m event_universe.reference_runner` for these examples. Ordinary
+initialization accepts only [schema 3 elementary fields](ELEMENTARY_FIELDS.md).
+No physical name or JSON flag promotes a reference equation into that path.
+
 The active `Simulation` can run
 [the local pulse configuration](../examples/local_lorentz_field.json) without a
 new physical engine or compilation. It uses the existing

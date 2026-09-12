@@ -10,9 +10,10 @@ from pathlib import Path
 
 from experiments import ROOT, candidates
 
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
+from event_universe.reference_runner import run_reference_initialization as run_initialization
 from event_universe.retention import ArtifactLease, validate_output_path
-from event_universe.runner import run_initialization, source_fingerprint
+from event_universe.runner import source_fingerprint
 
 
 def records(frame):

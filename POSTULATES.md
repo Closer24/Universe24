@@ -1,5 +1,23 @@
 # Simulator postulates in plain language
 
+## Active elementary input boundary
+
+The primary `Simulation` and ordinary JSON/CLI/workspace use schema 3 under
+[the elementary field contract](docs/ELEMENTARY_FIELDS.md). Initialization chooses
+field/type labels, bounded initial values, local routing, finite allowances and
+each spatial field's `computation_delay`; it cannot supply a force expression.
+Fields own resident and prepared waiting stock separately from fixed-time links.
+The fixed local component exchange preserves joint vector sums and squared norms
+before declared propagation decay. These are candidate invariants, not derived
+Lorentz, gravitational or mass-dependent energy laws. Delayed stale encounters
+fail atomically. No global source estimator or computation debt is introduced.
+
+Schema 1/2 expression programs, local field rules, catalog profiles and native
+quantum programs remain explicitly named reference experiments. They require
+`ReferenceSimulation`/`load_reference_state` or `event_universe.reference_runner`.
+They cannot be selected from ordinary JSON, including by a reference flag.
+The sections describing those programs below document their reference contracts.
+
 This document explains the ideas underlying the simulator without programming
 details. Consult it before any change. A change contradicting a binding principle
 requires an explicit decision to change the model.
@@ -10,7 +28,7 @@ Distinguish three categories:
 - **Candidate law:** a specific hypothesis under evaluation, not a proven law of nature.
 - **Open question:** an idea that has not been implemented or established.
 
-## Active initialization-defined model
+## Supplied-law reference candidates
 
 The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
 finite integer state while representing fractional quantities in explicitly
@@ -19,7 +37,7 @@ registers, balanced neighbor selection and exact fractional clock are named
 choices. They do not establish isotropic light propagation or electromagnetic
 energy. The six-neighbor causal boundary remains binding.
 
-The active model treats physical content as configured disturbances carrying
+The supplied-law reference model treats physical content as configured disturbances carrying
 named fields. The engine supplies integer local updates, causal transport,
 conservation enforcement and scheduling; initialization supplies identities and
 candidate laws. It does not infer familiar physics from names.

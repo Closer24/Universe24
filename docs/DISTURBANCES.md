@@ -2,7 +2,18 @@
 
 The optional top-level `observer` member configures a passive reception probe in
 the same input file. See [local observer](LOCAL_OBSERVER.md) for placement, limits
-and runner behavior. It is validated for both schemas and excluded from physical state.
+and runner behavior. It is validated for every schema and excluded from physical state.
+
+## Active schema 3 and explicit reference schemas
+
+[ELEMENTARY_FIELDS.md](ELEMENTARY_FIELDS.md) is the authoritative active schema.
+Ordinary `Simulation`, `load_initial_state`, CLI and workspace reject supplied
+expressions, including formulas encoded as JSON trees. The schema 1/2 programs
+below now require the explicit reference API/runner named in that contract.
+Shared field declarations, bounds, costs and boundary semantics remain applicable.
+In reference examples below, read `Simulation` as `ReferenceSimulation`, parser
+and loader imports as their `reference_api` counterparts, and run through
+`python -m event_universe.reference_runner`.
 
 The optional [bounded rational and balanced-routing contract](RATIONAL_PARTICLES.md)
 defines rational expression projections, exact dynamic movement divisors and
@@ -10,7 +21,7 @@ local consistency checks. Old integer arithmetic and cyclic routing remain
 available with their original behavior; new particle candidates select their
 new settings explicitly in initialization JSON.
 
-This is the contract for the active generic simulator. `Simulation` takes a
+The sections below describe the supplied-law reference simulator. Its API takes a
 validated `InitialState`; no built-in mass, charge, particle or force law is
 selected when initialization is missing. Names and candidate laws come from a
 JSON file. A field named `mass` receives exactly the same treatment as any other

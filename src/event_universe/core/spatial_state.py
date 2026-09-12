@@ -1,5 +1,7 @@
 """Fixed local records for optional initialization-defined spatial fields."""
 
+from __future__ import annotations
+
 from dataclasses import dataclass
 
 from .disturbance_state import (
@@ -34,6 +36,19 @@ class SpatialFieldDefinition:
     octant_weights: tuple[int, ...] = (1, 1, 1, 1, 1, 1, 1, 1)
     decay: DecayDefinition | None = None
     transport: str = "outward"
+    computation_delay: bool = False
+    routing_weights: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class ElementaryExchange:
+    """An immutable component exchange, with no configurable expression."""
+
+    name: str
+    type_index: int
+    field: int
+    components: tuple[int, ...]
+    budget: Payload
 
 
 @dataclass(frozen=True, slots=True)
@@ -152,6 +167,16 @@ class SpatialCell:
     last_begin_tick: int = -1
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
+    waiting: tuple[WaitingField | None, ...] = ()
+    available_ticks: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class WaitingField:
+    """Prepared local outgoing stock; it is not yet owned by a link."""
+
+    departure_tick: int
+    outgoing: tuple[SpatialPopulations, ...]
 
 
 @dataclass(frozen=True, slots=True)

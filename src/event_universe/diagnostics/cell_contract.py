@@ -18,6 +18,7 @@ from event_universe.core.spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    WaitingField,
 )
 
 # Shared immutable initialization definitions intentionally do not belong here.
@@ -33,6 +34,7 @@ STATE_RECORDS = (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    WaitingField,
 )
 
 

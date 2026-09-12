@@ -1,0 +1,100 @@
+{
+  "schema_version": 3,
+  "model_id": "elementary-finite-open-v1",
+  "shape": [
+    7,
+    7,
+    7
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 12,
+  "boundary": "open",
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "strength",
+      "components": 1,
+      "units": "owned unit",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "radiation",
+      "components": 1,
+      "units": "owned unit",
+      "signed": false,
+      "conserved": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "source",
+      "fields": [
+        "strength"
+      ],
+      "defaults": {
+        "strength": 9
+      },
+      "transport": {
+        "mode": "move",
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        5,
+        3,
+        3
+      ],
+      "type": "source"
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "radiation",
+      "routing_weights": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "computation_delay": false,
+      "decay": {
+        "retain_numerator": 1,
+        "retain_denominator": 2
+      }
+    }
+  ],
+  "emissions": [
+    {
+      "type": "source",
+      "field": "radiation",
+      "amount": 4,
+      "source": true,
+      "budget": 8
+    }
+  ]
+}

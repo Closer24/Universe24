@@ -190,7 +190,7 @@ function renderEditor() {
   const editor = $("#editor-panel"); editor.replaceChildren();
   $$("[data-tab]").forEach(button => { button.setAttribute("aria-selected", String(button.dataset.tab === tab)); button.tabIndex = button.dataset.tab === tab ? 0 : -1; });
   if (tab === "json" || !configuration) {
-    editor.append(node("p", "Edit the complete initialization, including custom fields, local laws and couplings. Check it before switching back to forms.", "editor-description"));
+    editor.append(node("p", "Edit fields, finite sources, local exchanges and initial values. Check the configuration before switching back to forms.", "editor-description"));
     const raw = document.createElement("textarea"); raw.className = "json-editor"; raw.value = source; raw.spellcheck = false;
     raw.setAttribute("aria-label", "Configuration JSON");
     raw.addEventListener("input", () => { source = raw.value; validated = false; remember(); $("#draft-state").textContent = "Unchecked JSON"; $("#draft-state").className = "draft-tag"; });
@@ -224,14 +224,19 @@ function renderEditor() {
       check(checks, "Signed", field, "signed"); check(checks, "Conserved", field, "conserved"); check(checks, "Extensive", field, "extensive", true);
     });
     addButton("Add field", () => doc.fields.push({name: nextName("field", doc.fields), components: 1, units: "unit", signed: false, conserved: false}));
+    for (const spatial of doc.spatial_fields || []) {
+      const grid = section(`Spatial field · ${spatial.field}`);
+      check(grid, "Wait for local computation before transfer", spatial, "computation_delay");
+      jsonField(grid, "Six routing weights", spatial, "routing_weights", [1, 0, 0, 0, 0, 0]);
+      jsonField(grid, "Finite decay", spatial, "decay", {retain_numerator: 1, retain_denominator: 2});
+    }
   } else if (tab === "types") {
-    editor.append(node("p", "Define which fields travel together, their defaults, and their transport and update rules.", "editor-description"));
+    editor.append(node("p", "Define which fields travel together, their defaults and transport.", "editor-description"));
     doc.disturbance_types.forEach((type, i) => {
       const item = card(`Disturbance ${i + 1} · ${type.name}`, () => doc.disturbance_types.splice(i, 1)), grid = node("div", "", "field-grid"); item.append(grid);
       input(grid, "Type name", type, "name", { text: true, full: true, rename: "type" });
       jsonField(grid, "Owned fields", type, "fields", []); jsonField(grid, "Default field values", type, "defaults", {});
       jsonField(grid, "Transport rule", type, "transport", { mode: "hold" }, "Modes: hold, move or split. Ports: +X, −X, +Y, −Y, +Z, −Z.");
-      jsonField(grid, "Local update rules", type, "updates", []);
       if (type.cost_field !== undefined) input(grid, "Computation cost field", type, "cost_field", { text: true, full: true });
     });
     addButton("Add disturbance type", () => doc.disturbance_types.push({name: nextName("type", doc.disturbance_types), fields: doc.fields.length ? [doc.fields[0].name] : [], transport: {mode: "hold"}}));
@@ -246,10 +251,10 @@ function renderEditor() {
     });
     addButton("Add seed", () => doc.seeds.push({position: [0, 0, 0], type: doc.disturbance_types[0]?.name || ""}));
   } else if (tab === "rules") {
-    let grid = section("Local exchange", "Couplings exchange a configured quantity between records in the same cell.");
-    jsonField(grid, "Coupling rules", doc, "couplings", []);
-    grid = section("Atomic interactions", "Update several fields together and enforce declared invariants for each local pair.");
-    jsonField(grid, "Interaction rules", doc, "interactions", []);
+    let grid = section("Local exchange", "Exchange selected components between a carrier and field stock in the same cell.");
+    jsonField(grid, "Local component exchanges", doc, "exchanges", [], "Select a carrier type, field, components and finite budget.");
+    grid = section("Finite sources", "Every source has a finite allowance for each emitted component.");
+    jsonField(grid, "Emissions", doc, "emissions", []);
     editor.append(node("hr", "", "editor-divider")); grid = section("Operation prices", "Positive integer costs used by the model's local timing law."); grid.classList.add("three");
     Object.keys(doc.operation_costs).forEach(key => input(grid, key[0].toUpperCase() + key.slice(1), doc.operation_costs, key, { min: 1 }));
   }

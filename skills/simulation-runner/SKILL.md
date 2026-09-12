@@ -5,6 +5,13 @@ description: Execute reproducible Universe24 runs and inspect outcomes and trace
 
 # Simulator execution
 
+Ordinary runs require [elementary schema 3](../../docs/ELEMENTARY_FIELDS.md).
+Use the existing `event_universe.reference_runner` only for an explicitly selected
+supplied-law reference experiment; native event/catalog programs currently target
+that path. JSON cannot choose it. Inspect metadata `execution_contract` and
+`field_computation_delay`, and include waiting field stock in balances.
+
+
 For creating or changing the input, use
 [simulation-configuration](../simulation-configuration/SKILL.md), including its
 complete file map and runnable template. This skill executes the resulting input.

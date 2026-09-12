@@ -9,11 +9,11 @@ from typing import Union, get_args, get_origin, get_type_hints
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.core import disturbance_state, spatial_state
 from event_universe.core.disturbance_state import Expression
 from event_universe.diagnostics.cell_contract import STATE_RECORDS, cell_state_violations
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples/local_lorentz_field.json"
 

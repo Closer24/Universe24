@@ -24,7 +24,9 @@ for the daily engine/result-consumer audit and schedule restoration.
 
 At the start of relevant work, reconcile the applicable project rules and hypotheses with this document. When the user changes a durable project rule, update the relevant repository Skill(s) as part of the same work when authorized, so the rule does not depend on chat history.
 
-The primary model contract is [initialization-defined disturbances](../../docs/DISTURBANCES.md).
+The primary model contract is [elementary fields](../../docs/ELEMENTARY_FIELDS.md).
+Supplied-law schemas remain an explicit reference path; a JSON expression is not
+an elementary operation merely because it is configuration data.
 Scope historical scalar/particle assumptions to their explicitly named APIs.
 Preserve user-defined field names as data and use headless execution by default;
 do not route ordinary simulation work into mandatory visualization.

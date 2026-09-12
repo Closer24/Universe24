@@ -61,6 +61,7 @@ const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.po
 return {...t,position:p,owner,transfer:true};}
 function visibleSpatialFields(f){
 const records=(f.spatial_fields||[]).flatMap(c=>Object.entries(c.fields).map(([name,field])=>({name,position:c.position,value:field.value,baseline:field.baseline,owner:'Node field; value includes baseline'})));
+for(const w of f.spatial_waiting||[]){const populations=w.outgoing.flat();if(!populations.length)continue;const value=populations[0].map((_,component)=>populations.reduce((total,payload)=>total+payload[component],0));records.push({name:w.field,position:w.position,value,baseline:null,owner:`Waiting field; departs ${w.departure_tick}`});}
 for(const t of f.spatial_transfers||[])for(const [name,populations] of Object.entries(t.fields)){
 if(!populations.some(payload=>payload.some(value=>value!==0)))continue;
 const value=populations[0].map((_,component)=>populations.reduce((total,payload)=>total+payload[component],0));

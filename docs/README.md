@@ -1,5 +1,10 @@
 # Documentation index
 
+Active input: [Elementary fields](ELEMENTARY_FIELDS.md) defines closed schema 3,
+per-field clocks, finite local exchange, ordinary-input rejection and the explicit
+reference boundary. [Migration](MIGRATION.md#closed-elementary-input-schema-3)
+lists the changed imports and runner commands.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured

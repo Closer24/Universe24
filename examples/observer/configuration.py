@@ -16,7 +16,7 @@ import json
 from pathlib import Path
 
 from event_universe.core.disturbance_state import OPERATIONS, bounded
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 MODEL_ID = "observer-transport-demo-v1"
 LINK_TICKS = 2

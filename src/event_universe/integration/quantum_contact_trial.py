@@ -25,7 +25,6 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
-from event_universe.initialization import parse_initial_json
 from event_universe.quantum import (
     Amplitude,
     DeferredQuantum,
@@ -35,6 +34,7 @@ from event_universe.quantum import (
     NetworkRecord,
 )
 from event_universe.quantum.event_network import EventNetwork
+from event_universe.reference_api import parse_reference_json as parse_initial_json
 from event_universe.retention import ArtifactLease, validate_output_path
 from event_universe.runner import source_fingerprint
 
@@ -171,6 +171,7 @@ def run_trial(
         record_policy=RecordOperations(
             initial.fields, initial.disturbances, initial.couplings, initial.interactions
         ),
+        reference=True,
     )
     frames = [world.snapshot()] if visualize else []
     balances = [mechanics(world)]

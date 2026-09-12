@@ -17,22 +17,17 @@ from .disturbance_state import (
     decode,
     unpack,
 )
+from .elementary_contract import validate_elementary
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
-from .integer import ceil_div, checked_work
+from .integer import checked_work
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
+from .timing import cycle_timing
 from .topology import neighbor_address
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
-
-
-def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
-    if min(budget, link_ticks) < 1 or cost < 0:
-        raise ValueError("invalid cost, normal budget, or fixed link time")
-    cycles = max(1, ceil_div(cost, budget))
-    return bounded(checked_work((cycles - 1) * link_ticks)), bounded(checked_work(cycles * link_ticks))
 
 
 class DisturbanceEngine:
@@ -55,7 +50,10 @@ class DisturbanceEngine:
         record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
+        reference: bool = False,
     ) -> None:
+        if not reference or initial.schema_version == 3:
+            validate_elementary(initial)
         self.initial = initial
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
@@ -72,15 +70,19 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
-            rule.type_index for rule in initial.spatial_interactions
-        }
+        self._coupled_types = (
+            {rule.type_index for rule in initial.spatial_couplings}
+            | {rule.type_index for rule in initial.spatial_interactions}
+            | {rule.type_index for rule in initial.elementary_exchanges}
+        )
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
-        if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
+        if (
+            initial.spatial_couplings or initial.spatial_interactions or initial.elementary_exchanges
+        ) and spatial_coupler is None:
             raise ValueError("spatial couplings require an explicitly composed response law")
-        if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
-            raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
+        if initial.schema_version in (2, 3) and initial.spatial_fields and spatial_decayer is None:
+            raise ValueError("finite spatial fields require an explicitly composed decay law")
         self._spatial = (
             None
             if spatial_planner is None or not initial.spatial_fields
@@ -526,6 +528,7 @@ class DisturbanceEngine:
                 ("spatial_remainders", record.spatial_remainders),
                 ("emission_remaining", record.emission_remaining),
                 ("spatial_remaining", record.spatial_remaining),
+                ("interaction_remaining", record.interaction_remaining),
             )
             if payloads
         }

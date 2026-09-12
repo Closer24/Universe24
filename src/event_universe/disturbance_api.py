@@ -3,6 +3,7 @@
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
 from event_universe.fields.disturbances import DisturbanceLaw
+from event_universe.fields.elementary import ElementarySpatialCouplingLaw, exchange_rules
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
 from event_universe.fields.spatial_decay import SpatialDecayLaw
@@ -10,7 +11,7 @@ from event_universe.fields.spatial_interactions import JointSpatialCouplingLaw
 from event_universe.fields.spatial_plan import SpatialLaw
 
 
-class Simulation(DisturbanceEngine):
+class ReferenceSimulation(DisturbanceEngine):
     """Run the fields, disturbances and integer laws supplied by initialization."""
 
     def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
@@ -35,9 +36,19 @@ class Simulation(DisturbanceEngine):
                 initial.emissions,
                 initial.operation_costs,
                 initial.field_rules,
+                initial.elementary_exchanges,
             ),
             (
-                JointSpatialCouplingLaw(
+                ElementarySpatialCouplingLaw(
+                    initial.fields,
+                    (),
+                    initial.operation_costs,
+                    initial.spatial_fields,
+                    exchange_rules(initial.elementary_exchanges, initial.fields),
+                    initial.elementary_exchanges,
+                )
+                if initial.elementary_exchanges
+                else JointSpatialCouplingLaw(
                     initial.fields,
                     initial.spatial_couplings,
                     initial.operation_costs,
@@ -60,7 +71,7 @@ class Simulation(DisturbanceEngine):
             ),
             (
                 SpatialDecayLaw(initial.fields, initial.spatial_fields, initial.operation_costs)
-                if initial.schema_version == 2
+                if initial.schema_version in (2, 3)
                 else None
             ),
             record_policy=RecordOperations(
@@ -72,9 +83,21 @@ class Simulation(DisturbanceEngine):
                     (
                         *(rule.type_index for rule in initial.spatial_couplings),
                         *(rule.type_index for rule in initial.spatial_interactions),
+                        *(rule.type_index for rule in initial.elementary_exchanges),
                     )
                 ),
             ),
             event_space=event_space,
             resolver=resolver,
+            reference=True,
         )
+
+
+class Simulation(ReferenceSimulation):
+    """Run only elementary initialization through the same generic components."""
+
+    def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
+        from event_universe.core.elementary_contract import validate_elementary
+
+        validate_elementary(initial)
+        super().__init__(initial, observer=observer)

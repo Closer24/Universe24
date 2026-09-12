@@ -1,5 +1,48 @@
 # Validation evidence
 
+## Elementary fields and closed ordinary input - 2026-09-12
+
+Based on main `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`, including inline passive
+observers. The [schema 3 contract](ELEMENTARY_FIELDS.md) states the supported
+operations and explicit reference boundary. The exact submitted tree and CI
+results belong to the companion PR; this section records reproducible run evidence.
+
+Python 3.14.7 reused the existing environment; pytest 9.1.1, Ruff 0.16.7 and
+mypy 2.3.1 provided the affected checks. No simulator compilation, environment
+reinstall or visualization was used. The source fingerprint for these Windows
+runtime bytes was `631fb1a66a2c6339f369e854024b6b1ca16eb36879fac5d772fed213e0d6aaae`.
+It was checked before and after the runs; Git canonical line endings can produce
+a different byte fingerprint without changing the tracked source tree.
+
+- Active `elementary_motion` completed 8 ticks, `elementary_contact` and
+  `elementary_open` completed 12 ticks each, and the configuration Skill's
+  `two-streams.json` completed 18 ticks. Each saved its exact input and reported
+  completed, headless, per-tick balanced accounting. Stepping/output times were
+  approximately 0.002, 0.012, 0.003 and 0.007 seconds on this host; these are
+  measurements of these small runs, not a scalability result.
+- The open run's radiation source 8 split into escape 6 and dissipation 2;
+  carried strength 9 escaped completely. Local encounter expectations and
+  finite response limits are in the dedicated elementary tests.
+- Seven existing reference worlds (`basic`, `exchange`, `finite_fields`,
+  `open_world`, `spatial_turning`, `local_lorentz_field`, `local_field_rules`)
+  were compared with the same inputs against main at ticks 0 through 12.
+  All 91 complete snapshots per runtime and every emitted event matched exactly.
+  Existing reference numerical assertions were preserved when imports changed.
+- Skills retain input rejection, fixed waiting ownership and the daily genericity
+  procedure. Skill Creator validation uses a separate local PyYAML 6.0.3 target;
+  it does not modify the simulator environment or its package dependencies.
+- Independent physics/architecture review found and verified fixes for extreme
+  unaffordable exchange, legal signed partial-sum cancellation and typed schema
+  bypasses. The final review passed all 73 then-existing elementary cases and
+  separately checked axis/octant rejection. A subsequent template regression
+  covers the configuration Skill without changing production code. The final
+  affected gate and CI counts are recorded on the PR.
+
+Normalized component/norm guards are candidate invariants. This evidence does
+not derive Lorentz/Maxwell equations, general kinetic energy, self-field exclusion
+or a quantum-to-classical transition. The delayed stale-arrival rejection remains
+an explicit tested composition limit.
+
 
 Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use

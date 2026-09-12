@@ -972,7 +972,7 @@ def _spatial_interactions(
     return tuple(result)
 
 
-def parse_initial_state(document: object) -> InitialState:
+def parse_reference_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
         "schema_version",
@@ -1093,6 +1093,13 @@ def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
 def load_initial_state(path: Path) -> InitialState:
     """Read a strict JSON initialization file and parse its generic definitions."""
     return parse_initial_json(path.read_bytes())
+
+
+def parse_initial_state(document: object) -> InitialState:
+    """The ordinary API accepts only the closed elementary operation vocabulary."""
+    from .elementary_initialization import parse_elementary
+
+    return parse_elementary(document)
 
 
 def parse_initial_json(source: str | bytes) -> InitialState:

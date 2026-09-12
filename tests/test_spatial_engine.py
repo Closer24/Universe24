@@ -6,10 +6,10 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.core.disturbance_state import MAX_VALUE, OPERATIONS
-from event_universe.initialization import parse_initial_state
-from event_universe.runner import run_initialization
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
+from event_universe.reference_runner import run_reference_initialization as run_initialization
 
 ORIGIN = (15, 15, 15)
 PORTS = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))

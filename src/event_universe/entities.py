@@ -12,7 +12,8 @@ from pathlib import Path
 from typing import Any
 
 from event_universe.core.disturbance_state import OPERATIONS
-from event_universe.initialization import parse_initial_state, parse_json_document
+from event_universe.initialization import parse_json_document
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 JsonObject = dict[str, Any]
 

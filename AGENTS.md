@@ -29,7 +29,8 @@ One repository does not require one runtime process or a new package hierarchy.
 | Scope | Authoritative source |
 | --- | --- |
 | Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
-| Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
+| Active initialization and per-field delay | [docs/ELEMENTARY_FIELDS.md](docs/ELEMENTARY_FIELDS.md) |
+| Supplied-law reference disturbance programs | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
@@ -97,7 +98,8 @@ responsibilities. Keep renames, consumers, migration notes and the
   Models select policies and compose components without copying formulas. The engine
   schedules work and validates contracts.
 - The active Simulation requires initialization-defined disturbance types and
-  fields. Do not branch on physical field names or reintroduce an implicit scalar
+  fields under closed schema 3. JSON syntax alone cannot legalize a supplied
+  continuum force; keep formula programs in the explicit reference API. Do not branch on physical field names or reintroduce an implicit scalar
   default. Named historical research APIs retain their own contracts.
 - Displays and measurements only read state. Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render

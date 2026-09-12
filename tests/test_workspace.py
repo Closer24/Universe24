@@ -70,19 +70,9 @@ def test_workspace_serves_assets_and_current_example_data(server):
     status, payload = request(server, "/api/templates")
     assert status == 200
     assert {item["id"] for item in payload["templates"]} == {
-        "01-two-approaching-particles",
-        "02-parallel-particle-beams",
-        "03-spreading-pulse",
-        "04-unequal-mass-collision",
-        "basic",
-        "exchange",
-        "finite_fields",
-        "local_field_rules",
-        "local_lorentz_field",
-        "moving_source",
-        "open_world",
-        "spatial_turning",
-        "three_mass_finite",
+        "elementary_motion",
+        "elementary_contact",
+        "elementary_open",
     }
     for template in payload["templates"]:
         assert template["source"] == (ROOT / "examples" / f"{template['id']}.json").read_text(
@@ -110,7 +100,7 @@ def test_invalid_configuration_is_rejected_before_start(server, source):
     ],
 )
 def test_other_sites_cannot_launch_a_local_process(server, headers):
-    source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
+    source = (ROOT / "examples/elementary_motion.json").read_text(encoding="utf-8")
     assert request(server, "/api/runs", {"source": source}, headers)[0] == 403
     assert not server.workspace.jobs
 
@@ -134,7 +124,7 @@ def test_editor_fragments_keep_the_strict_json_key_policy(server):
 
 
 def test_export_saves_a_validated_download_with_the_exact_input(server):
-    source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
+    source = (ROOT / "examples/elementary_motion.json").read_text(encoding="utf-8")
     status, exported = request(server, "/api/export", {"source": source})
     assert status == 200
     connection = http.client.HTTPConnection("127.0.0.1", server.server_port)
@@ -150,7 +140,7 @@ def test_export_saves_a_validated_download_with_the_exact_input(server):
 
 def test_changed_configuration_is_loaded_without_build_and_runs_match_cli(server, tmp_path):
     files = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT / "src").rglob("*.py")}
-    document = json.loads((ROOT / "examples/exchange.json").read_bytes())
+    document = json.loads((ROOT / "examples/elementary_motion.json").read_bytes())
     identities = []
     for ticks in (2, 5):
         document["ticks"] = ticks
@@ -191,7 +181,7 @@ def test_changed_configuration_is_loaded_without_build_and_runs_match_cli(server
 
 
 def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_accounting(server):
-    source = (ROOT / "examples/open_world.json").read_text(encoding="utf-8")
+    source = (ROOT / "examples/elementary_open.json").read_text(encoding="utf-8")
     status, checked = request(server, "/api/validate", {"source": source})
     assert status == 200 and checked["valid"]
     assert checked["summary"]["ticks"] == 12
@@ -201,14 +191,14 @@ def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_account
     assert job["status"] == "completed"
     metadata = job["metadata"]
     without_elapsed(metadata)
-    assert metadata["schema_version"] == 2
+    assert metadata["schema_version"] == 3
     assert metadata["boundary"] == "open"
     assert metadata["display"] == "none"
     assert metadata["completed_ticks"] == metadata["tick"] == 12
-    assert metadata["initial_totals"] == {"strength": [72], "radiation": [0]}
-    assert metadata["source_totals"] == {"strength": [0], "radiation": [72]}
-    assert metadata["escaped_totals"] == {"strength": [72], "radiation": [20]}
-    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [52]}
+    assert metadata["initial_totals"] == {"strength": [9], "radiation": [0]}
+    assert metadata["source_totals"] == {"strength": [0], "radiation": [8]}
+    assert metadata["escaped_totals"] == {"strength": [9], "radiation": [6]}
+    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [2]}
     assert metadata["final_totals"] == {"strength": [0], "radiation": [0]}
     assert metadata["accounting_balanced_at_every_completed_tick"]
     assert not metadata["conserved_at_every_completed_tick"]
@@ -226,8 +216,13 @@ def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_account
 
 
 def test_failed_engine_run_keeps_its_failure_metadata(server):
-    document = json.loads((ROOT / "examples/exchange.json").read_bytes())
-    document["couplings"][0]["amount"] = {"op": "exact_div", "args": [1, 0]}
+    document = json.loads((ROOT / "examples/elementary_motion.json").read_bytes())
+    document["slots_per_cell"] = 1
+    opposite = json.loads(json.dumps(document["disturbance_types"][0]))
+    opposite["name"] = "opposite"
+    opposite["transport"]["weights"] = [0, 1, 0, 0, 0, 0]
+    document["disturbance_types"].append(opposite)
+    document["seeds"].append({"position": [4, 2, 2], "type": "opposite"})
     status, started = request(server, "/api/runs", {"source": json.dumps(document)})
     assert status == 202
     job = wait_for_run(server, started["id"])
@@ -237,7 +232,7 @@ def test_failed_engine_run_keeps_its_failure_metadata(server):
 
 
 def test_stop_and_duplicate_run_requests_are_explicit(server):
-    document = json.loads((ROOT / "examples/exchange.json").read_bytes())
+    document = json.loads((ROOT / "examples/elementary_motion.json").read_bytes())
     document["ticks"] = 1000000000
     payload = {"source": json.dumps(document)}
     status, started = request(server, "/api/runs", payload)
@@ -254,14 +249,14 @@ def test_stop_and_duplicate_run_requests_are_explicit(server):
     "settings", [{"visualize": "false"}, {"frame_stride": 0}, {"frame_stride": True}]
 )
 def test_run_options_are_validated_before_spawning(server, settings):
-    source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
+    source = (ROOT / "examples/elementary_motion.json").read_text(encoding="utf-8")
     assert request(server, "/api/runs", {"source": source, **settings})[0] == 400
     assert not server.workspace.jobs
 
 
 def test_workspace_shutdown_reaps_active_children(tmp_path):
     workspace = Workspace(ROOT / "examples", tmp_path)
-    document = json.loads((ROOT / "examples/exchange.json").read_bytes())
+    document = json.loads((ROOT / "examples/elementary_motion.json").read_bytes())
     document["ticks"] = 1000000000
     started = workspace.start(json.dumps(document), False, 1)
     workspace.close()

@@ -9,9 +9,10 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
-from event_universe.initialization import parse_initial_json
-from event_universe.runner import main, run_initialization
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_json as parse_initial_json
+from event_universe.reference_runner import run_reference_initialization as run_initialization
+from event_universe.runner import main
 
 ROOT = Path(__file__).resolve().parents[1]
 

@@ -2,8 +2,8 @@
 
 import pytest
 
-from event_universe import Simulation
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 from tests.test_finite_spatial_engine import finite_document
 from tests.test_spatial_coupling import document as coupling_document
 from tests.test_spatial_engine import ORIGIN

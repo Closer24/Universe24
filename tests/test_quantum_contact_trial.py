@@ -5,8 +5,6 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.disturbance_api import Simulation
-from event_universe.initialization import parse_initial_json
 from event_universe.integration.quantum_contact_trial import (
     CONTACT,
     ContactPlanner,
@@ -15,6 +13,8 @@ from event_universe.integration.quantum_contact_trial import (
     run_trial,
 )
 from event_universe.quantum import DeferredQuantum, EventNetworkConfig
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_json as parse_initial_json
 
 FIXTURE = Path(__file__).resolve().parents[1] / "examples/quantum/contact.json"
 

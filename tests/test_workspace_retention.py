@@ -58,7 +58,7 @@ def workspace(tmp_path, monkeypatch):
     # Put originals inside the scanned root to prove only registered outputs expire.
     configs = tmp_path / "templates"
     configs.mkdir()
-    source = (ROOT / "examples/basic.json").read_bytes()
+    source = (ROOT / "examples/elementary_motion.json").read_bytes()
     (configs / "original.json").write_bytes(source)
     monkeypatch.setattr(ui.subprocess, "Popen", Child)
     workspace = ui.Workspace(configs, tmp_path)
@@ -333,7 +333,7 @@ def test_generated_linked_subdirectories_are_rejected_before_any_write(
     directory_link(output / linked_child, outside)
     launched = []
     monkeypatch.setattr(ui.subprocess, "Popen", lambda *args, **kwargs: launched.append(args))
-    source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
+    source = (ROOT / "examples/elementary_motion.json").read_text(encoding="utf-8")
     with pytest.raises(ValueError, match="symlink|reparse"):
         if linked_child == "exports":
             workspace.export(source)

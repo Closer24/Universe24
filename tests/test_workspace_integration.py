@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 from tests.test_spatial_coupling import document
 
 ASSETS = Path(__file__).resolve().parents[1] / "src/event_universe/ui_assets"
@@ -37,6 +37,42 @@ def javascript(asset, start, end, setup, expression, payload):
         timeout=10,
     )
     return json.loads(result.stdout)
+
+
+def test_waiting_field_is_visible_at_its_node_without_in_flight_interpolation():
+    frame = {
+        "tick": 3,
+        "cells": [],
+        "spatial_fields": [],
+        "spatial_waiting": [
+            {
+                "position": [2, 1, 0],
+                "field": "__proto__",
+                "departure_tick": 9,
+                "outgoing": [[[3, -2, 0]] + [[0, 0, 0]] * 7]
+                + [[[-1, 4, 5]] + [[0, 0, 0]] * 7]
+                + [[[0, 0, 0]] * 8] * 4,
+            }
+        ],
+    }
+    result = javascript(
+        "playback.html",
+        "function visibleSpatialFields(",
+        "let pan=",
+        "const metadata={shape:[7,7,7],link_ticks:2},shape=metadata.shape;",
+        "const before=JSON.stringify(input);console.log(JSON.stringify({records:visibleSpatialFields(input),unchanged:before===JSON.stringify(input)}));",
+        frame,
+    )
+    assert result["records"] == [
+        {
+            "name": "__proto__",
+            "position": [2, 1, 0],
+            "value": [2, 2, 5],
+            "baseline": None,
+            "owner": "Waiting field; departs 9",
+        }
+    ]
+    assert result["unchanged"] is True
 
 
 @pytest.mark.parametrize("port", range(6))

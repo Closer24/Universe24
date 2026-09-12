@@ -1,8 +1,26 @@
 # Event Universe — active modular 3D integer simulator
 
-## Active generic disturbance model
+## Active elementary input boundary
 
-The primary API is `Simulation(initial: InitialState)`. An initialization JSON
+The primary `Simulation` and ordinary JSON/CLI/workspace use schema 3 under
+[the elementary field contract](docs/ELEMENTARY_FIELDS.md). Initialization chooses
+field/type labels, bounded initial values, local routing, finite allowances and
+each spatial field's `computation_delay`; it cannot supply a force expression.
+Fields own resident and prepared waiting stock separately from fixed-time links.
+The fixed local component exchange preserves joint vector sums and squared norms
+before declared propagation decay. These are candidate invariants, not derived
+Lorentz, gravitational or mass-dependent energy laws. Delayed stale encounters
+fail atomically. No global source estimator or computation debt is introduced.
+
+Schema 1/2 expression programs, local field rules, catalog profiles and native
+quantum programs remain explicitly named reference experiments. They require
+`ReferenceSimulation`/`load_reference_state` or `event_universe.reference_runner`.
+They cannot be selected from ordinary JSON, including by a reference flag.
+The sections describing those programs below document their reference contracts.
+
+## Supplied-law reference disturbance model
+
+The explicit reference API is `ReferenceSimulation(initial: InitialState)`. Its JSON
 file supplies every field/type name, seed, allowed local expression, coupling,
 transport rule and cost setting. The engine has no hardcoded interpretation of
 mass, charge, velocity or other user-defined physical names. Missing initialization
@@ -15,7 +33,7 @@ formula-based reference configurations are labeled separately; they do not
 establish emergence. The [entity audit](docs/PHYSICAL_ENTITIES.md) records the
 physical inventory, executable probes and remaining classical/quantum gaps.
 
-[docs/DISTURBANCES.md](docs/DISTURBANCES.md) is the authoritative active schema
+[docs/DISTURBANCES.md](docs/DISTURBANCES.md) describes the reference schema
 and transition contract: bounded scalar/vector payloads, whole-record or extensive
 transport, atomic local exchange, explicit sources, fixed link transit, local
 computation delay without debt, capacity failures and headless output.

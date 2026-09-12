@@ -54,6 +54,11 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
 
     interactions: tuple[SpatialInteractionDefinition, ...] = ()
 
+    def _activate(
+        self, index: int, record: DisturbanceRecord, values: Values, meter: CostMeter
+    ) -> DisturbanceRecord | None:
+        return record
+
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
         return received_values(self.fields, self.spatial_definitions, states)
 
@@ -133,6 +138,9 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         for index, rule in enumerate(self.interactions):
             for slot, record in enumerate(working):
                 if record is None or record.type_index != rule.type_index:
+                    continue
+                record = self._activate(index, record, field_values, meter)
+                if record is None:
                     continue
                 if (
                     rule.when is not None

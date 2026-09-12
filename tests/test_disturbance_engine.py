@@ -6,9 +6,9 @@ import pytest
 
 from event_universe.core.disturbance_engine import cycle_timing
 from event_universe.core.disturbance_state import OPERATIONS, CostMeter, decode, unpack
-from event_universe.disturbance_api import Simulation
 from event_universe.fields.disturbances import evaluate
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 
 def field(name="inventory", components=1, *, conserved=True, signed=True, extensive=True):

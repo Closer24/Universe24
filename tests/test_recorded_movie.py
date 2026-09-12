@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
-from event_universe.initialization import load_initial_state
-from event_universe.runner import run_initialization
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import load_reference_state as load_initial_state
+from event_universe.reference_runner import run_reference_initialization as run_initialization
 
 ROOT = Path(__file__).resolve().parents[1]
 

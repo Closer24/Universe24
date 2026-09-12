@@ -1,5 +1,22 @@
 # Architecture and change boundaries
 
+## Active schema boundary and elementary ownership
+
+`elementary_initialization.py` owns the closed schema 3 JSON compiler;
+`core/elementary_contract.py` rechecks it for typed initialization before assembly.
+`fields/elementary.py` owns fixed exchange, finite response allowance and weighted
+field routing. Immutable generated guards reuse the existing field interaction
+evaluator. Cells, records, pending proposals and packets contain no expression trees.
+`core/timing.py` owns shared cost timing. `core/spatial_engine.py` owns one bounded
+outbound waiting register and activation tick per field, separate from resident
+and fixed-link stock. Diagnostics count and display each owner exactly once.
+
+The ordinary API/runner accepts only [elementary fields](ELEMENTARY_FIELDS.md).
+`reference_api.py` and `reference_runner.py` expose the preserved supplied-law
+research path; both reuse the same schedulers. There is no JSON opt-in to it.
+Catalog/native-program compilers explicitly target that reference path. Their
+older architecture descriptions below do not broaden the active vocabulary.
+
 The [quantum-register extension](QUANTUM_ENTITIES.md) keeps density arithmetic in
 `quantum/mixed.py`, reusable matrix builders in `quantum/operations.py`, and the
 finite entity-profile compiler in `integration/quantum_entities.py`. The generic
@@ -7,7 +24,7 @@ core is unchanged; native v2 selection extends the existing event-program owner.
 
 
 `entities.py` owns host-only compilation of selected explicit catalog profiles
-into ordinary initialization; it delegates strict JSON and runtime schema
+into explicit reference initialization; it delegates strict JSON and runtime schema
 validation to `initialization.py`. Profiles contain their candidate operations.
 It adds no runtime species lookup. See [entity catalog](ENTITY_CATALOG.md).
 Optional two-record type conversion follows the existing frozen pair proposal
@@ -24,8 +41,8 @@ LOCALITY-1 and the numeric bounds in SIMULATOR_DEFINITIONS.md remain authoritati
 
 ### Generic operations and law ownership
 
-Express active laws as initialization-defined compositions of supported scalar
-and vector operations. Particle names, charges, masses, couplings, thresholds,
+Active initialization selects the closed elementary operations. Supplied scalar
+and vector expression compositions belong to the explicit reference path. Particle names, charges, masses, couplings, thresholds,
 interaction eligibility and participant limits are data; names must not select
 hidden physical equations. Reuse generic operators instead of adding a special
 electron, proton, electromagnetic or computation-load branch to the engine.
@@ -62,7 +79,7 @@ Keep documented integer split/quantization policies explicit and test their
 accounting. Arithmetic failure must not leave a partially committed transaction.
 
 The active field schema currently supports scalars and three-component vectors.
-Its constant 3-by-3 integer matrix transform is not general tensor-valued state.
+The reference path's constant 3-by-3 integer matrix transform is not general tensor-valued state.
 Do not claim arbitrary tensor support or silently flatten an unsupported shape.
 A future tensor extension must declare fixed rank and dimensions, component
 bounds, generic operators, transport coding and all state/diagnostic consumers,

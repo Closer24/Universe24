@@ -1,5 +1,18 @@
 # Project status and restart guide
 
+## Elementary field implementation
+
+The working implementation adds closed schema 3, per-field computation waiting,
+finite emission/response and built-in local component exchanges. See
+[the contract and limitations](ELEMENTARY_FIELDS.md) and
+[migration](MIGRATION.md#closed-elementary-input-schema-3).
+Ordinary JSON rejects formula programs. Existing schema 1/2 experiments, catalog
+profiles and native quantum programs retain their explicit reference path.
+This change is based on main `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`, including
+its shared inline-observer validation in ordinary and reference initialization;
+verify its actual PR/merge status. Variable-port topology and other open PRs are
+not implied to be integrated. The dated feature inventory below retains history.
+
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node configured in the ordinary initialization JSON, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar

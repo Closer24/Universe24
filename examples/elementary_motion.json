@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "model_id": "elementary-motion-v1",
+  "shape": [
+    7,
+    7,
+    7
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 8,
+  "boundary": "periodic",
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "balance",
+      "components": 1,
+      "units": "owned unit",
+      "signed": true,
+      "conserved": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": [
+        "balance"
+      ],
+      "defaults": {
+        "balance": 12
+      },
+      "transport": {
+        "mode": "move",
+        "weights": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "carrier"
+    }
+  ]
+}

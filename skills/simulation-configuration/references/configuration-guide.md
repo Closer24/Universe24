@@ -1,5 +1,18 @@
 # Universe24 configuration guide
 
+## Choose active or reference execution first
+
+The ordinary CLI/API/workspace now accepts only
+[elementary schema 3](../../../docs/ELEMENTARY_FIELDS.md). The two-stream template
+below uses this schema. Active fields require explicit `computation_delay`, routing
+weights and decay; local encounters use finite `exchanges` descriptors. JSON force
+expressions are rejected, including when renamed or nested in another setting.
+
+The later catalog, expression-rule and native-event examples in this guide are
+explicit reference experiments. Use `ReferenceSimulation`, `load_reference_state`
+and `python -m event_universe.reference_runner` for them. A schema-version edit
+does not convert their supplied laws into an elementary model.
+
 ## File map
 
 | File | Owns | Consumer |
@@ -47,7 +60,7 @@ The authoritative top-level table is in
 
 | Key | How to choose it |
 | --- | --- |
-| `schema_version` | `1` for conservative outward or configured local fields; `2` for finite dissipative outward fields |
+| `schema_version` | `3` for ordinary elementary runs; `1`/`2` only with the explicit reference runner |
 | `model_id` | A descriptive identity for the selected rules; use a new identity for a new hypothesis |
 | `shape` | Three integer node counts, such as `[9,9,9]` or `[64,64,64]`; the latter is 64 cubed, not a 2D plane |
 | `boundary` | `periodic` connects opposite faces; `open` records escaping stock |

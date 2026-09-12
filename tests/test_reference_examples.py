@@ -3,16 +3,11 @@
 import importlib.util
 from pathlib import Path
 
-from event_universe import (
-    BalancedSimulation,
-    CausalStreamSimulation,
-    LinkedSimulation,
-    ScalarSimulation,
-    Simulation,
-)
+from event_universe import BalancedSimulation, CausalStreamSimulation, LinkedSimulation, ScalarSimulation
 from event_universe.core.scalar_engine import ScalarEngine
-from event_universe.disturbance_api import Simulation as GenericSimulation
 from event_universe.particle_api import ScalarSimulation as HistoricalSimulation
+from event_universe.reference_api import ReferenceSimulation as GenericSimulation
+from event_universe.reference_api import ReferenceSimulation as Simulation
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "examples/known-entities/run_reference_checks.py"

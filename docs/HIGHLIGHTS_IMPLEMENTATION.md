@@ -1,5 +1,39 @@
 # Highlights implementation coverage
 
+## Current implementation reconciliation: elementary fields
+
+Reconciled against live **Universe 24 Highlights**, modified
+`2026-09-12T09:48:37.649Z`, and implementation base main
+`98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`, including its passive inline-observer
+configuration. The live document was read for this
+change; this versioned companion records the proposed implementation update and
+does not claim a new live-document revision or a completed merge.
+
+- Every field/type label remains initialization data. Active schema 3 accepts a
+  closed operation vocabulary and rejects supplied force expressions in JSON,
+  including alternative update, emission, transport and reference-flag paths.
+- A spatial field explicitly selects `computation_delay`, local six-link routing
+  and finite integer decay. Prepared waiting stock, resident stock and transit
+  stock have distinct owners; fixed link time never changes.
+- A local carrier/field component exchange has finite allowance and atomic joint
+  vector/norm guards. Three-carrier, signed turn and stale-arrival cases distinguish
+  supported behavior from rejected composition. This is a candidate operation,
+  not an emergent Lorentz law or general mass-dependent energy conservation.
+- Finite sources and response allowances prevent infinite input. Interior decay
+  removes even the final unit; open exits and periodic returns keep explicit
+  balances. No source history, global repair or general self-field attribution
+  is added. Uniform baselines remain immutable background.
+- Ordinary runner/workspace use schema 3 and remain headless. Existing formula,
+  collision, Maxwell, catalog and quantum experiments retain explicit reference
+  runners and tests; no new general quantum-to-classical result is claimed.
+- The reconstructable source is [ELEMENTARY_FIELDS.md](ELEMENTARY_FIELDS.md),
+  its three canonical examples, linked implementation/tests, and the updated
+  field, configuration, physics review and daily regression Skills. Temporary
+  run artifacts retain the existing 24-hour ownership policy.
+
+The dated section 10 below remains a historical inventory. Its supplied expression
+programs now belong to the explicit reference scope described above.
+
 This versioned companion records the implementation inventory added to
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
 Scope: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`.

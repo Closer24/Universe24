@@ -5,6 +5,15 @@ description: Implement or repair Universe24 local field transport and response c
 
 # Field development
 
+For ordinary runs use [closed schema 3](../../docs/ELEMENTARY_FIELDS.md).
+JSON syntax alone does not make a supplied force elementary. Keep new operations
+in the generic field owner and reject unsupported JSON programs at the ordinary
+boundary. Per-field computation delay holds outbound stock locally; test resident,
+waiting and in-flight owners separately and preserve full link transit. Retain
+finite allowances and final-unit decay. Keep supplied-law experiments in the
+explicit reference API and preserve their numerical assertions.
+
+
 Read [the shared workflow](../workflow.md), [field interfaces](../../docs/SCALAR_FIELDS.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 

@@ -5,6 +5,15 @@ description: Independently validate every changed Universe24 physics-engine rule
 
 # Physics-rule validation
 
+Audit the ordinary schema 3 boundary as well as formula-free payloads; see
+[elementary fields](../../docs/ELEMENTARY_FIELDS.md). Attempt supplied expressions
+through updates, transport, emissions, exchange descriptors and typed initialization.
+Reference validation is a separate contract. For local component exchanges check
+joint sums and squared norms, finite spending, actual signed turns and stale
+delayed arrivals. Distinguish those normalized invariants from physical kinetic
+energy. For per-field waiting verify ownership, cost, arrival and final-unit decay.
+
+
 Read [the shared workflow](../workflow.md), [postulates](../../POSTULATES.md),
 [definitions](../../SIMULATOR_DEFINITIONS.md) and the
 [feature procedure](../../docs/PHYSICAL_FEATURES.md). This review is mandatory

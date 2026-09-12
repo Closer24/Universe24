@@ -1,0 +1,151 @@
+{
+  "schema_version": 3,
+  "model_id": "elementary-vector-contact-v1",
+  "shape": [
+    9,
+    9,
+    3
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 12,
+  "boundary": "periodic",
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "flow",
+      "components": 3,
+      "units": "normalized vector unit",
+      "signed": true,
+      "conserved": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": [
+        "flow"
+      ],
+      "defaults": {
+        "flow": [
+          3,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "flow",
+        "routing": "balanced"
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        3,
+        4,
+        1
+      ],
+      "type": "carrier"
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "flow",
+      "routing_weights": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "computation_delay": true,
+      "decay": {
+        "retain_numerator": 1,
+        "retain_denominator": 2
+      }
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        4,
+        3,
+        1
+      ],
+      "field": "flow",
+      "populations": [
+        [
+          0,
+          6,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "local_component_exchange",
+      "type": "carrier",
+      "field": "flow",
+      "components": [
+        0,
+        1,
+        2
+      ],
+      "budget": [
+        3,
+        3,
+        0
+      ]
+    }
+  ]
+}

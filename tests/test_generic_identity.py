@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples"
 FIELD_LABELS = ("__proto__", "constructor", "toString", "prototype", "add", "hold", "field")

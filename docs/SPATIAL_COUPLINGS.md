@@ -1,5 +1,11 @@
 # Generic local field response
 
+Execution scope: this document describes the explicitly supplied-law reference
+path (schemas 1/2). Use `ReferenceSimulation`, the `reference_api` loader and
+`python -m event_universe.reference_runner` for these examples. Ordinary
+initialization accepts only [schema 3 elementary fields](ELEMENTARY_FIELDS.md).
+No physical name or JSON flag promotes a reference equation into that path.
+
 The optional `spatial_couplings` list connects a carried field to local spatial
 input. It selects integer operations, not physical identities. The complete
 turning example is [spatial_turning.json](../examples/spatial_turning.json).

@@ -9,7 +9,8 @@ from collections.abc import Sequence
 from typing import Any
 
 from event_universe.core.disturbance_state import OPERATIONS
-from event_universe.initialization import _array, _integer, _object, _text, parse_initial_state
+from event_universe.initialization import _array, _integer, _object, _text
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 from .event_program import parse_event_program
 

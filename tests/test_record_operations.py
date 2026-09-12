@@ -8,7 +8,7 @@ from event_universe.core.disturbance_engine import DisturbanceEngine
 from event_universe.core.disturbance_state import MAX_VALUE, pack, unpack
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 from tests.test_disturbance_engine import document, field, kind
 
 
@@ -113,7 +113,7 @@ def test_engine_uses_injected_activity_policy_without_interpreting_fields():
     initial, _, _ = fixture("move")
     law = DisturbanceLaw(initial.fields, initial.disturbances, (), initial.operation_costs)
     world = DisturbanceEngine(
-        initial, law, record_policy=SleepingPolicy(initial.fields, initial.disturbances)
+        initial, law, record_policy=SleepingPolicy(initial.fields, initial.disturbances), reference=True
     )
     world.step()
     assert world.computation_report()["local_cycles_started"] == 0
@@ -130,7 +130,7 @@ def test_engine_rejects_policy_capacity_change_before_clearing_arrivals():
     initial = replace(initial, link_ticks=2)
     law = DisturbanceLaw(initial.fields, initial.disturbances, (), initial.operation_costs)
     world = DisturbanceEngine(
-        initial, law, record_policy=InvalidPolicy(initial.fields, initial.disturbances)
+        initial, law, record_policy=InvalidPolicy(initial.fields, initial.disturbances), reference=True
     )
     world.step()
     before = dict(world.links)

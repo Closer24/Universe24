@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.core.disturbance_state import MAX_VALUE, CostMeter, OperationCosts
 from event_universe.fields.ratios import Ratio, project
 from event_universe.fields.routing import balanced_port, rate_credit
-from event_universe.initialization import parse_initial_state
+from event_universe.reference_api import ReferenceSimulation as Simulation
+from event_universe.reference_api import parse_reference_state as parse_initial_state
 
 HERE = Path(__file__).resolve().parents[1] / "examples/particle-contracts"
 
