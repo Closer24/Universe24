@@ -79,9 +79,7 @@ def _spatial_cost(snapshot: dict[str, object], position: tuple[int, int, int]) -
     return 0
 
 
-def _spatial_value(
-    world: Simulation, position: tuple[int, int, int], field: str
-) -> int:
+def _spatial_value(world: Simulation, position: tuple[int, int, int], field: str) -> int:
     return int(world.spatial_values(position)[field]["value"][0])
 
 
@@ -141,9 +139,7 @@ def run_case(name: str, mass: int, normal_budget: int, output: Path) -> dict[str
                 ),
                 "near_spatial_cost": _spatial_cost(snapshot, NEAR_CLOCK),
                 "far_spatial_cost": _spatial_cost(snapshot, FAR_CLOCK),
-                "near_clock": _record_value(
-                    snapshot, NEAR_CLOCK, "local_clock", "clock_count"
-                ),
+                "near_clock": _record_value(snapshot, NEAR_CLOCK, "local_clock", "clock_count"),
                 "far_clock": _record_value(snapshot, FAR_CLOCK, "local_clock", "clock_count"),
                 "near_measured_cycle_cost": _record_value(
                     snapshot, NEAR_CLOCK, "local_clock", "measured_cycle_cost"
@@ -164,8 +160,7 @@ def run_case(name: str, mass: int, normal_budget: int, output: Path) -> dict[str
         (
             int(event["tick"])
             for event in ray_events
-            if event["event"] == "received"
-            and _position(event["position"]) == (DETECTOR_X, *RAY_LINE)
+            if event["event"] == "received" and _position(event["position"]) == (DETECTOR_X, *RAY_LINE)
         ),
         None,
     )
@@ -253,11 +248,7 @@ def classify(results: list[dict[str, object]]) -> dict[str, object]:
     steady_clock_gradient = int(strong["near_clock_steady_cycles"]) < int(
         strong["far_clock_steady_cycles"]
     )
-    amplitude_scaling = (
-        weak_ray_delay is not None
-        and strong_ray_delay is not None
-        and strong_ray_delay > weak_ray_delay
-    )
+    amplitude_scaling = weak_ray_delay is not None and strong_ray_delay is not None and strong_ray_delay > weak_ray_delay
     full_curvature_signature = all(
         (
             strong_ray_delay is not None and strong_ray_delay > 0,
