@@ -36,8 +36,12 @@ from .core.integer import checked_work
 from .core.spatial_state import (
     DecayDefinition,
     EmissionDefinition,
+    FieldAssignment,
+    FieldGroupDefinition,
+    NodeFieldRuleDefinition,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
+    SpatialInteractionDefinition,
     SpatialSeed,
 )
 
@@ -159,12 +163,16 @@ class _Expressions:
         left: tuple[int, ...],
         right: tuple[int, ...] | None = None,
         flux_fields: tuple[int, ...] = (),
+        received_fields: tuple[int, ...] = (),
+        outgoing_fields: tuple[int, ...] = (),
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
         self.owned = (left, right)
         self.nodes = 0
         self.flux_fields = flux_fields
+        self.received_fields = received_fields
+        self.outgoing_fields = outgoing_fields
 
     def parse(self, value: object, expected: int | None = None) -> Expression:
         expression, components = self._node(value, 1)
@@ -185,8 +193,21 @@ class _Expressions:
             literal = tuple(_integer(item, "expression literal component") for item in items)
             return Expression("literal", literal=literal), len(literal)
         obj = _object(
-            value, "expression", {"field", "side", "op", "args", "index", "flux", "matrix"}, set()
+            value,
+            "expression",
+            {"field", "side", "op", "args", "index", "flux", "matrix", "received", "outgoing", "port"},
+            set(),
         )
+        if "received" in obj or "outgoing" in obj:
+            operation = "received" if "received" in obj else "outgoing"
+            obj = _object(obj, "directional expression", {operation, "port"}, {operation, "port"})
+            owned = self.received_fields if operation == "received" else self.outgoing_fields
+            names = {self.fields[index].name: index for index in owned}
+            index = _index(obj[operation], names, f"{operation} spatial field")
+            port = _integer(obj["port"], "expression.port", 0)
+            if port >= 6:
+                raise ValueError("expression.port must be from 0 through 5")
+            return Expression(operation, field=index, port=port), self.fields[index].components
         if "flux" in obj:
             obj = _object(obj, "flux expression", {"flux"}, {"flux"})
             names = {self.fields[index].name: index for index in self.flux_fields}
@@ -210,6 +231,8 @@ class _Expressions:
             "transform": 1,
             "dot": 2,
             "gt": 2,
+            "cross": 2,
+            "vector": 3,
         }
         if operation not in arities:
             raise ValueError(f"unsupported expression operation {operation!r}")
@@ -230,8 +253,10 @@ class _Expressions:
                 for row in _array(obj["matrix"], "matrix", 3, 3)
             )
             return Expression(operation, tuple(item[0] for item in arguments), matrix=matrix), 3
-        if operation == "dot" and sizes != (3, 3):
-            raise ValueError("dot requires two vectors")
+        if operation in ("dot", "cross") and sizes != (3, 3):
+            raise ValueError(f"{operation} requires two vectors")
+        if operation == "vector" and sizes != (1, 1, 1):
+            raise ValueError("vector requires three scalars")
         if operation == "gt" and sizes != (1, 1):
             raise ValueError("gt requires two scalars")
         component = 0
@@ -244,6 +269,8 @@ class _Expressions:
         if operation == "exact_div" and sizes[1] != 1:
             raise ValueError("exact_div requires a scalar denominator")
         size = 1 if operation in ("sum", "component", "dot", "gt") else max(sizes)
+        if operation == "vector":
+            size = 3
         return Expression(operation, tuple(item[0] for item in arguments), component=component), size
 
     def _reference(self, obj: dict[str, object]) -> tuple[Expression, int]:
@@ -530,8 +557,11 @@ def _spatial_fields(
         field = fields[index]
         if not field.extensive:
             raise ValueError("spatial transport requires extensive field components")
-        if obj["transport"] != "outward":
-            raise ValueError("spatial transport must be outward")
+        transport = _text(obj["transport"], "spatial transport")
+        if transport not in ("outward", "local"):
+            raise ValueError("spatial transport must be outward or local")
+        if transport == "local" and schema_version != 1:
+            raise ValueError("local spatial transport requires schema_version 1")
         axis = tuple(
             _integer(v, "axis weight", 0)
             for v in _array(obj.get("axis_weights", [1, 1, 1]), "axis_weights", 3, 3)
@@ -552,6 +582,7 @@ def _spatial_fields(
                 cast(tuple[int, int, int], axis),
                 octants,
                 _decay(obj["decay"]) if schema_version == 2 else None,
+                transport,
             )
         )
     return tuple(result)
@@ -706,6 +737,145 @@ def _spatial_couplings(
     return tuple(result)
 
 
+def _field_groups(
+    value: object, fields: tuple[FieldDefinition, ...]
+) -> tuple[FieldGroupDefinition, ...]:
+    result: list[FieldGroupDefinition] = []
+    names = _names(fields)
+    for raw in _array(value, "field_groups", MAX_FIELDS):
+        obj = _object(raw, "field group", {"name", "fields"}, {"name", "fields"})
+        name = _text(obj["name"], "field group.name")
+        if any(group.name == name for group in result):
+            raise ValueError("duplicate field group name")
+        members = tuple(
+            _index(item, names, "field group member")
+            for item in _array(obj["fields"], "field group.fields", MAX_FIELDS, 1)
+        )
+        if len(set(members)) != len(members):
+            raise ValueError("duplicate field group member")
+        result.append(FieldGroupDefinition(name, members))
+    return tuple(result)
+
+
+def _field_rules(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+) -> tuple[NodeFieldRuleDefinition, ...]:
+    result: list[NodeFieldRuleDefinition] = []
+    spatial_fields = tuple(definition.field for definition in spatial)
+    local_fields = tuple(definition.field for definition in spatial if definition.transport == "local")
+    names = {fields[index].name: index for index in local_fields}
+
+    def expression(raw: object, expected: int | None = None) -> Expression:
+        return _Expressions(
+            fields, (), spatial_fields, received_fields=spatial_fields, outgoing_fields=local_fields
+        ).parse(raw, expected)
+
+    required = {"name", "assignments", "invariants"}
+    for raw in _array(value, "field_rules", MAX_RULES):
+        obj = _object(raw, "field rule", required | {"when"}, required)
+        name = _text(obj["name"], "field rule.name")
+        if any(rule.name == name for rule in result):
+            raise ValueError("duplicate field rule name")
+        assignments: list[FieldAssignment] = []
+        for raw_assignment in _array(obj["assignments"], "field assignments", MAX_RULES, 1):
+            item = _object(
+                raw_assignment,
+                "field assignment",
+                {"field", "expression", "port"},
+                {"field", "expression"},
+            )
+            field = _index(item["field"], names, "local spatial assignment field")
+            port = _integer(item["port"], "field assignment.port", 0) if "port" in item else -1
+            if port >= 6:
+                raise ValueError("field assignment.port must be from 0 through 5")
+            if any(a.field == field and a.port == port for a in assignments):
+                raise ValueError("duplicate field assignment target")
+            assignments.append(
+                FieldAssignment(field, expression(item["expression"], fields[field].components), port)
+            )
+        invariants: list[Invariant] = []
+        for raw_invariant in _array(obj["invariants"], "field invariants", MAX_FIELDS, 1):
+            item = _object(raw_invariant, "invariant", {"name", "expression"}, {"name", "expression"})
+            invariant_name = _text(item["name"], "invariant.name")
+            if any(invariant.name == invariant_name for invariant in invariants):
+                raise ValueError("duplicate invariant name")
+            invariant_expression = _Expressions(
+                fields, (), spatial_fields, outgoing_fields=local_fields
+            ).parse(item["expression"])
+            invariants.append(Invariant(invariant_name, invariant_expression))
+        when = expression(obj["when"], 1) if "when" in obj else None
+        result.append(NodeFieldRuleDefinition(name, tuple(assignments), tuple(invariants), when))
+    return tuple(result)
+
+
+def _spatial_interactions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+) -> tuple[SpatialInteractionDefinition, ...]:
+    result: list[SpatialInteractionDefinition] = []
+    type_names, field_names = _names(disturbances), _names(fields)
+    spatial_fields = tuple(definition.field for definition in spatial)
+    local_fields = tuple(definition.field for definition in spatial if definition.transport == "local")
+    required = {"name", "type", "assignments", "invariants"}
+    for raw in _array(value, "spatial_interactions", MAX_RULES):
+        if not spatial:
+            raise ValueError("spatial interactions require at least one spatial field")
+        obj = _object(raw, "spatial interaction", required | {"when"}, required)
+        name = _text(obj["name"], "spatial interaction.name")
+        if any(rule.name == name for rule in result):
+            raise ValueError("duplicate spatial interaction name")
+        kind = _index(obj["type"], type_names, "spatial interaction.type")
+        participant = disturbances[kind]
+        if participant.transport.mode == "split":
+            raise ValueError("spatial interaction requires a whole-record hold or move type")
+        assignments: list[Assignment] = []
+        for raw_assignment in _array(obj["assignments"], "spatial assignments", MAX_FIELDS * 2, 1):
+            item = _object(
+                raw_assignment,
+                "spatial assignment",
+                {"side", "field", "expression"},
+                {"side", "field", "expression"},
+            )
+            if item["side"] not in ("left", "right"):
+                raise ValueError("assignment.side must be left or right")
+            side = 0 if item["side"] == "left" else 1
+            field = _index(item["field"], field_names, "spatial assignment.field")
+            owned = participant.fields if side == 0 else local_fields
+            if field not in owned or (side == 0 and field == participant.cost_field):
+                raise ValueError("spatial assignment requires an owned non-cost or local spatial field")
+            if any(a.side == side and a.field == field for a in assignments):
+                raise ValueError("duplicate spatial assignment target")
+            expression = _Expressions(
+                fields, participant.fields, spatial_fields, received_fields=spatial_fields
+            ).parse(item["expression"], fields[field].components)
+            assignments.append(Assignment(side, field, expression))
+        invariants: list[Invariant] = []
+        for raw_invariant in _array(obj["invariants"], "spatial invariants", MAX_FIELDS, 1):
+            item = _object(raw_invariant, "invariant", {"name", "expression"}, {"name", "expression"})
+            invariant_name = _text(item["name"], "invariant.name")
+            if any(invariant.name == invariant_name for invariant in invariants):
+                raise ValueError("duplicate invariant name")
+            expression = _Expressions(fields, participant.fields, spatial_fields).parse(
+                item["expression"]
+            )
+            invariants.append(Invariant(invariant_name, expression))
+        when = (
+            _Expressions(
+                fields, participant.fields, spatial_fields, received_fields=spatial_fields
+            ).parse(obj["when"], 1)
+            if "when" in obj
+            else None
+        )
+        result.append(
+            SpatialInteractionDefinition(name, kind, tuple(assignments), tuple(invariants), when)
+        )
+    return tuple(result)
+
+
 def parse_initial_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
@@ -733,12 +903,17 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_seeds",
             "spatial_couplings",
             "boundary",
+            "field_groups",
+            "field_rules",
+            "spatial_interactions",
         },
         required,
     )
     schema_version = _integer(obj["schema_version"], "schema_version", 1)
     if schema_version not in (1, 2):
         raise ValueError("unsupported schema_version; expected 1 or 2")
+    if schema_version != 1 and ({"field_rules", "spatial_interactions"} & obj.keys()):
+        raise ValueError("field rules and spatial interactions require schema_version 1")
     boundary = _text(obj.get("boundary", "periodic"), "boundary")
     if boundary not in ("periodic", "open"):
         raise ValueError("boundary must be periodic or open")
@@ -773,6 +948,11 @@ def parse_initial_state(document: object) -> InitialState:
         schema_version=schema_version,
         boundary=boundary,
         interactions=_interactions(obj.get("interactions", []), fields, disturbances),
+        field_groups=_field_groups(obj.get("field_groups", []), fields),
+        field_rules=_field_rules(obj.get("field_rules", []), fields, spatial),
+        spatial_interactions=_spatial_interactions(
+            obj.get("spatial_interactions", []), fields, disturbances, spatial
+        ),
     )
 
 

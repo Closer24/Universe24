@@ -7,6 +7,7 @@ from typing import Protocol
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
 from .integer import checked_work
 from .spatial_state import (
+    FieldInteractionGuard,
     SpatialBundle,
     SpatialCell,
     SpatialCouplingResult,
@@ -29,12 +30,22 @@ class SpatialCoupler(Protocol):
 
     def sample_fluxes(self, states: tuple[SpatialState, ...]) -> Values: ...
 
+    def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]: ...
+
     def __call__(
         self,
         records: tuple[DisturbanceRecord | None, ...],
         sample: Values,
         fluxes: Values = (),
+        ports: tuple[Values, ...] = (),
     ) -> SpatialCouplingResult: ...
+
+    def validate_guards(
+        self,
+        states: tuple[SpatialState, ...],
+        reaction: Values,
+        guards: tuple[FieldInteractionGuard, ...],
+    ) -> None: ...
 
     def deposit(
         self, states: tuple[SpatialState, ...], phases: Values, reaction: Values
@@ -74,6 +85,7 @@ class SpatialEngine:
         self.sources = [[0] * field.components for field in initial.fields]
         self.dissipation = [[0] * field.components for field in initial.fields]
         self.reactions = [[0] * field.components for field in initial.fields]
+        self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
         for seed in initial.spatial_seeds:
             cell = self._at(seed.position)
@@ -119,7 +131,9 @@ class SpatialEngine:
             return
         self._field_tick = tick
         emitter_types = {rule.type_index for rule in self.initial.emissions}
-        coupled_types = {rule.type_index for rule in self.initial.spatial_couplings}
+        coupled_types = {rule.type_index for rule in self.initial.spatial_couplings} | {
+            rule.type_index for rule in self.initial.spatial_interactions
+        }
         positions = set(self._active)
         for position, records in residents.items():
             if any(
@@ -138,10 +152,16 @@ class SpatialEngine:
                 # Freeze only locally delivered input, before fresh source injection.
                 cell.sample_values = self.coupler.sample(cell.states)
                 cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                if self.initial.spatial_interactions:
+                    cell.sample_ports = self.coupler.sample_ports(cell.states)
             # Samples describe only the preceding delivery interval, never a permanent trail.
-            states = tuple(
-                replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
-                for state in cell.states
+            states = (
+                cell.states
+                if self.initial.field_rules
+                else tuple(
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                    for state in cell.states
+                )
             )
             active_source = any(
                 record is not None
@@ -156,7 +176,10 @@ class SpatialEngine:
             )
             active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
             if not active_source and not active_field and cell.received_count == 0:
-                cell.states = states
+                cell.states = tuple(
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                    for state in states
+                )
                 cell.last_cost = 0
                 cell.last_begin_tick = tick
                 self._active.discard(position)
@@ -182,6 +205,9 @@ class SpatialEngine:
             for index, payload in enumerate(plan.source_delta):
                 for component, value in enumerate(payload):
                     self.sources[index][component] += value
+            for index, payload in enumerate(plan.rule_delta):
+                for component, value in enumerate(payload):
+                    self.transformations[index][component] += value
             self._event(
                 "spatial_cycle",
                 tick,
@@ -192,6 +218,17 @@ class SpatialEngine:
                     for i, field in enumerate(self.initial.fields)
                     if any(plan.source_delta[i])
                 },
+                **(
+                    {
+                        "rule_delta": {
+                            field.name: plan.rule_delta[i]
+                            for i, field in enumerate(self.initial.fields)
+                            if any(plan.rule_delta[i])
+                        }
+                    }
+                    if plan.rule_delta
+                    else {}
+                ),
             )
             for packet in packets:
                 if packet is not None:
@@ -209,7 +246,15 @@ class SpatialEngine:
         if self.coupler is None:
             raise ValueError("spatial coupling requires an explicitly composed law")
         cell = self._at(position)
-        return self.coupler(records, cell.sample_values, cell.sample_fluxes)
+        return self.coupler(records, cell.sample_values, cell.sample_fluxes, cell.sample_ports)
+
+    def validate_guards(
+        self, position: Address3, reaction: Values, guards: tuple[FieldInteractionGuard, ...]
+    ) -> None:
+        if guards:
+            if self.coupler is None:
+                raise ValueError("spatial interaction guards require a configured response law")
+            self.coupler.validate_guards(self._at(position).states, reaction, guards)
 
     def prepare_reaction(self, position: Address3, tick: int, reaction: Values) -> ReactionCommit | None:
         if not reaction or not any(any(payload) for payload in reaction):
@@ -432,11 +477,12 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction - loss - escaped
-                for start, source, reaction, loss, escaped in zip(
+                start + source + reaction + transformed - loss - escaped
+                for start, source, reaction, transformed, loss, escaped in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
+                    self.transformations[index],
                     self.dissipation[index],
                     self.escaped[index],
                     strict=True,
@@ -450,6 +496,11 @@ class SpatialEngine:
                 "dissipated": tuple(self.dissipation[index]),
                 "escaped": tuple(self.escaped[index]),
                 "balanced": tuple(totals[index]) == expected,
+                **(
+                    {"transformations": tuple(self.transformations[index])}
+                    if self.initial.field_rules
+                    else {}
+                ),
             }
         return result
 

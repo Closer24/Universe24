@@ -92,10 +92,18 @@ separate carriers and their different directions.
 | `couplings` | Optional list, at most 32 local exchange rules |
 | `interactions` | Optional list, at most 32 atomic pair transactions |
 | `seeds` | Positions, disturbance type names and optional value overrides |
-| `spatial_fields` | Optional outward fields with baseline and branch weights; version 2 requires decay per field |
+| `spatial_fields` | Optional outward fields with baseline and branch weights, or schema 1 local fields; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice cells |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
+| `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
+| `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
+| `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
+
+The authoritative contract for local field selection, group semantics, rule
+expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
+Those rules can read existing outward fields while writing only fields explicitly
+configured with local transport. Their absence preserves existing behavior.
 
 Names and unit labels are nonempty strings of at most 128 characters. All names
 must resolve within this file. Unknown keys, duplicate JSON keys,
@@ -105,8 +113,9 @@ Python source; it cannot import a law, evaluate source text or invoke callbacks.
 
 ### Schema version and candidate identity
 
-Version 1 records `conservative-outward-v1` for spatial runs and preserves
-conservative spatial transport, unlimited declared emission
+Version 1 records `conservative-outward-v1` for outward-only spatial runs and
+`configured-local-fields-v1` when local transport is selected. Existing outward
+runs preserve conservative spatial transport, unlimited declared emission
 and unlimited spatial response. It rejects `decay` and spatial-rule `budget`
 keys. Version 2 selects the explicit `finite-dissipative-v1` policy: every spatial
 field requires `decay` with bounded integers `0 <= retain_numerator <
@@ -240,11 +249,16 @@ order, so later updates in a record see earlier updates to that record.
 
 Expressions are bounded JSON trees, at most 64 nodes and depth 16. Available
 operations are `add`, `sub`, `mul`, `exact_div`, `min`, `max`, `neg`, `abs`,
-`sum`, `component`, `dot`, `transform` and `gt`. Literals and field references are also nodes. Binary
+`sum`, `component`, `dot`, `transform`, `gt`, `cross` and `vector`. Literals and field references are also nodes. Binary
 component operations may broadcast a scalar to a vector. `sum` reduces to a
 scalar; `component` takes a zero-based `index`. `exact_div` requires a nonzero
 scalar divisor and an exact integer result. There is no truncating division,
 floating-point value, string expression, function call or arbitrary code.
+
+`cross` takes two three-component vectors and checks the working bounds of each
+product before subtraction. `vector` constructs a vector from exactly three
+scalar expressions. The `received` and `outgoing` leaves have deliberately
+restricted local field-rule contexts; see [their contract](LOCAL_FIELD_RULES.md#read-views-and-ownership).
 
 Ordinary update and movement expressions read fields owned by that record.
 Coupling expressions can reference the declared participant with `side: "left"`

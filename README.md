@@ -103,6 +103,14 @@ python -m event_universe --init examples/spatial_turning.json --output artifacts
 See [the coupling contract](docs/SPATIAL_COUPLINGS.md) for exact integer rotation,
 fractional requests, value/flux sampling, timing and conservation limits.
 
+For generic retained fields, coupled scalar/vector components and explicit
+six-port outputs, use [LOCAL_FIELD_RULES.md](docs/LOCAL_FIELD_RULES.md) and
+[local_field_rules.json](examples/local_field_rules.json). Schema 1 can combine
+this opt-in local transport with existing outward fields. The same contract
+defines atomic field/carrier transactions and guarded delayed commits. These
+are configurable building blocks; the example does not claim electromagnetic
+or quantum behavior.
+
 Read [SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md) for the baseline, eight-octant
 transport through six faces, source cadence, cost accounting and self-field
 limitations. The source moves every link interval while within its normal budget;
@@ -262,6 +270,7 @@ from this README.
 | `tests/` | Generic contracts, schema checks and retained research regressions |
 | `tests/reference/` | Historical source archive, not an active engine |
 | `docs/DISTURBANCES.md` | Authoritative generic schema, laws, timing and failure contract |
+| `docs/LOCAL_FIELD_RULES.md` | Local retained/output rules, component groups and joint field/carrier transactions |
 | `POSTULATES.md`, `SIMULATOR_DEFINITIONS.md` | Shared principles and scoped candidate requirements |
 | `docs/ARCHITECTURE.md` | Ownership and dependency boundaries |
 | `docs/FIELDS.md` | Active field definition and historical component extension |

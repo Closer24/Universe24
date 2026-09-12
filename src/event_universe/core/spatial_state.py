@@ -4,8 +4,10 @@ from dataclasses import dataclass
 
 from .disturbance_state import (
     Address3,
+    Assignment,
     DisturbanceRecord,
     Expression,
+    Invariant,
     Payload,
     Values,
     bounded,
@@ -31,6 +33,46 @@ class SpatialFieldDefinition:
     axis_weights: tuple[int, int, int] = (1, 1, 1)
     octant_weights: tuple[int, ...] = (1, 1, 1, 1, 1, 1, 1, 1)
     decay: DecayDefinition | None = None
+    transport: str = "outward"
+
+
+@dataclass(frozen=True, slots=True)
+class FieldGroupDefinition:
+    name: str
+    fields: tuple[int, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class FieldAssignment:
+    field: int
+    expression: Expression
+    port: int = -1
+
+
+@dataclass(frozen=True, slots=True)
+class NodeFieldRuleDefinition:
+    name: str
+    assignments: tuple[FieldAssignment, ...]
+    invariants: tuple[Invariant, ...]
+    when: Expression | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class SpatialInteractionDefinition:
+    name: str
+    type_index: int
+    assignments: tuple[Assignment, ...]
+    invariants: tuple[Invariant, ...]
+    when: Expression | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class FieldInteractionGuard:
+    rule_index: int
+    slot: int
+    before: Values
+    after: Values
+    delta: Values
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,6 +101,7 @@ class SpatialCouplingResult:
     records: tuple[DisturbanceRecord | None, ...]
     reaction: Values
     cost: int
+    guards: tuple[FieldInteractionGuard, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -108,6 +151,7 @@ class SpatialCell:
     sample_fluxes: Values = ()
     last_begin_tick: int = -1
     received_decay_cost: int = 0
+    sample_ports: tuple[Values, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -117,6 +161,7 @@ class SpatialPlan:
     emission_records: tuple[DisturbanceRecord | None, ...]
     source_delta: Values
     cost: int
+    rule_delta: Values = ()
 
 
 @dataclass(frozen=True, slots=True)

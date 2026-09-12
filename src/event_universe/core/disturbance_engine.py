@@ -61,10 +61,12 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings}
+        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
+            rule.type_index for rule in initial.spatial_interactions
+        }
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
-        if initial.spatial_couplings and spatial_coupler is None:
+        if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
             raise ValueError("spatial couplings require an explicitly composed response law")
         if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
             raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
@@ -160,6 +162,7 @@ class DisturbanceEngine:
             plan = replace(
                 plan,
                 spatial_reaction=coupled.reaction,
+                spatial_guards=coupled.guards,
                 cost=bounded(checked_work(plan.cost + coupled.cost)),
             )
         if self._spatial is not None:
@@ -215,6 +218,10 @@ class DisturbanceEngine:
                 assert merged is not None
                 record = merged
             links[index] = Packet(departure_tick, position, departure.port, record)
+        if self._spatial is not None:
+            self._spatial.validate_guards(
+                position, pending.plan.spatial_reaction, pending.plan.spatial_guards
+            )
         reaction = (
             None
             if self._spatial is None

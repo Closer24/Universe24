@@ -3,30 +3,45 @@
 <style>
 *{box-sizing:border-box}body{margin:0;background:#10241f;color:#e0eee6;font:15px system-ui;padding:16px}h1{font-size:17px;margin:0;overflow-wrap:anywhere}p{font-size:12px;color:#b0cbbb;line-height:1.5}.heading,.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.heading{justify-content:space-between}.stage{margin:12px 0;background:#0b1b17;border:1px solid #345145;border-radius:12px}canvas{display:block;width:100%;height:340px}.controls{margin:12px 0}button,select{font:inherit;min-height:44px;border:1px solid #668776;background:#254c3b;color:white;border-radius:7px;padding:8px 12px}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}input[type=range]{width:100%;min-height:44px;accent-color:#81d8a3}label{display:flex;align-items:center;gap:8px;min-height:44px}select{font-size:16px}.controls label{font-size:13px}#tick{font-variant-numeric:tabular-nums}.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px}.legend span{overflow-wrap:anywhere}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}.facts{max-height:260px;overflow:auto}table{border-collapse:collapse;table-layout:fixed;width:100%;font-size:12px}td,th{padding:8px;text-align:left;overflow-wrap:anywhere;border-bottom:1px solid #355243}summary{cursor:pointer;min-height:44px;padding:12px 0}#status{color:#e4cb88}button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #ace4c2;outline-offset:3px}@media(max-width:500px){body{padding:12px}canvas{height:280px}.controls{gap:8px}.controls button{flex:1}h1{font-size:15px}}
 </style></head><body>
-<div class="heading"><h1 id="title">Simulation movie</h1><span id="status"></span></div><div class="stage"><canvas id="scene" aria-label="Recorded particle positions on the selected lattice plane"></canvas></div><div id="legend" class="legend"></div>
+<div class="heading"><h1 id="title">Simulation movie</h1><span id="status"></span></div><div class="stage"><canvas id="scene" aria-label="Recorded disturbance positions and spatial field values on the selected lattice projection"></canvas></div><div id="legend" class="legend"></div>
 <div class="controls"><button id="play" type="button">Play</button><button id="restart" type="button">Restart</button><button id="previous" type="button" aria-label="Previous frame">← Tick</button><button id="next" type="button" aria-label="Next frame">Tick →</button><label>Speed <select id="speed"><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option><option value="4">4x</option></select></label><label>View <select id="plane"><option value="0,1">XY</option><option value="0,2">XZ</option><option value="1,2">YZ</option></select></label><label>Zoom <select id="zoom"><option value="1">Fit</option><option value="2">2x</option><option value="4">4x</option><option value="8">8x</option></select></label></div>
 <p id="grid-info"></p>
+<label id="field-control">Spatial field <select id="field"><option value="">All spatial fields</option></select></label><p id="field-info"></p>
 <label for="seek">Timeline <b id="tick"></b></label><input id="seek" aria-label="Recorded frame" type="range" min="0" step="1" value="0">
-<p>Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned; rings are transfers in links. Co-located records use concentric rings. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
-<details><summary>Particle names, field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Particle / type</th><th>Position</th><th>Fields</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
+<p>Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are cell-owned disturbances; rings are disturbance transfers. Squares are node fields; diamonds are field transfers. Field arrows show vector components in the selected projection, scaled separately for each field across the recording. Exact values appear below. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
+<details open><summary>Disturbances, spatial field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Type / spatial field</th><th>Position</th><th>Values</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
 <script id="recording" type="application/json">__RECORDING__</script><script>
 "use strict";
 const {frames,metadata}=JSON.parse(document.querySelector('#recording').textContent);
 const $=s=>document.querySelector(s),seek=$('#seek'),canvas=$('#scene'),ctx=canvas.getContext('2d');
 const palette=['#83e1b1','#ffc977','#94beff','#edabdf','#ff958a','#bdadff'];
 const types=[...new Set(frames.flatMap(f=>[...f.cells.flatMap(c=>c.disturbances.map(d=>d.type)),...f.transfers.map(d=>d.type)]))];
-const shape=metadata.shape||[1,1,1].map((_,i)=>Math.max(1,...frames.flatMap(f=>f.cells.map(c=>c.position[i]+1))));
+const fieldNames=[...new Set(frames.flatMap(f=>[...Object.keys(f.spatial_baselines||{}),...(f.spatial_fields||[]).flatMap(c=>Object.keys(c.fields)),...(f.spatial_transfers||[]).flatMap(t=>Object.keys(t.fields))]))];
+const fieldScales=new Map(fieldNames.map(name=>[name,1]));
+const shape=metadata.shape||[1,1,1].map((_,i)=>Math.max(1,...frames.flatMap(f=>[...f.cells,...(f.spatial_fields||[])].map(c=>c.position[i]+1))));
+for(const frame of frames)for(const record of visibleSpatialFields(frame))for(const value of record.value)fieldScales.set(record.name,Math.max(fieldScales.get(record.name)||1,Math.abs(value)));
 let playing=false,lastTime=null,clock=frames[0].tick,index=0;
 seek.max=String(frames.length-1);seek.disabled=frames.length<2;$('#play').disabled=frames.length<2;
 $('#title').textContent=metadata.model;$('#status').textContent=metadata.status==='failed'?'Failed run · partial recording':'Recorded run';
 $('#sampling').textContent=`${frames.length} samples, ticks ${frames[0].tick}–${frames.at(-1).tick}. Playback speed changes viewing only. ${metadata.error||''}`;
 for(const [i,name] of types.entries()){const item=document.createElement('span'),dot=document.createElement('i');dot.style.backgroundColor=palette[i%palette.length];item.append(dot,document.createTextNode(name));$('#legend').append(item);}
+for(const [i,name] of fieldNames.entries()){const option=document.createElement('option');option.value=name;option.textContent=name;$('#field').append(option);const item=document.createElement('span'),dot=document.createElement('i');dot.style.backgroundColor=palette[(types.length+i)%palette.length];dot.style.borderRadius='0';item.append(dot,document.createTextNode('Field: '+name));$('#legend').append(item);}
+$('#field-control').hidden=fieldNames.length===0;$('#field-info').hidden=fieldNames.length===0;
 function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
 function visibleRecords(f){const records=f.cells.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Cell':'Waiting cell'})));
+for(const t of f.transfers)records.push(transferView(t,f));return records;}
+function transferView(t,f){
 const boundary=f.boundary||metadata.boundary||'periodic';
-for(const t of f.transfers){const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
+const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
 const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
-records.push({...t,position:p,owner,transfer:true});}return records;}
+return {...t,position:p,owner,transfer:true};}
+function visibleSpatialFields(f){
+const records=(f.spatial_fields||[]).flatMap(c=>Object.entries(c.fields).map(([name,field])=>({name,position:c.position,value:field.value,baseline:field.baseline,owner:'Node field; value includes baseline'})));
+for(const t of f.spatial_transfers||[])for(const [name,populations] of Object.entries(t.fields)){
+if(!populations.some(payload=>payload.some(value=>value!==0)))continue;
+const value=populations[0].map((_,component)=>populations.reduce((total,payload)=>total+payload[component],0));
+const view=transferView(t,f);records.push({...view,name,value,baseline:null,owner:'Field '+view.owner});}
+return records;}
 let pan=[0,0],drag=null;
 function draw(){
   const rect=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
@@ -46,8 +61,20 @@ function draw(){
   const f=frames[index],records=visibleRecords(f),seen=new Map();
   $('#tick').textContent='Tick '+f.tick+' · '+(index+1)+'/'+frames.length;seek.value=String(index);
   $('#previous').disabled=index===0;$('#next').disabled=index===frames.length-1;
-  $('#grid-info').textContent=dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).';
+  $('#grid-info').textContent=(dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).')+' Projection includes every '+'XYZ'[[0,1,2].find(axis=>!axes.includes(axis))]+' layer.';
   const body=$('#records');body.replaceChildren();
+  const fieldSelection=$('#field').value,spatial=visibleSpatialFields(f).filter(r=>!fieldSelection||r.name===fieldSelection);
+  $('#field-info').textContent='Uniform baselines across the domain: '+JSON.stringify(f.spatial_baselines||{})+'. Node values already include these baselines; received samples are not additional inventory.';
+  for(const r of spatial){
+    const [x,y]=project(r.position),color=palette[(types.length+fieldNames.indexOf(r.name))%palette.length],size=Math.max(3,Math.min(6,unit*.25));
+    ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;ctx.beginPath();
+    if(r.transfer){ctx.moveTo(x,y-size);ctx.lineTo(x+size,y);ctx.lineTo(x,y+size);ctx.lineTo(x-size,y);ctx.closePath();}else ctx.rect(x-size,y-size,2*size,2*size);
+    ctx.stroke();
+    if(r.value.length===3){const factor=Math.min(34,unit*.8)/(fieldScales.get(r.name)||1),dx=r.value[axes[0]]*factor,dy=-r.value[axes[1]]*factor,length=Math.hypot(dx,dy);
+      if(length>0){const ex=x+dx,ey=y+dy,ux=dx/length,uy=dy/length;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.moveTo(ex-ux*6-uy*3,ey-uy*6+ux*3);ctx.lineTo(ex,ey);ctx.lineTo(ex-ux*6+uy*3,ey-uy*6-ux*3);ctx.stroke();}}
+    ctx.font='11px system-ui';ctx.fillText(r.name+': '+r.value.join(', '),x+size+4,y-size-4-fieldNames.indexOf(r.name)*13);
+    const row=document.createElement('tr');for(const text of ['Field: '+r.name,r.position.map(v=>Number.isInteger(v)?v:v.toFixed(2)).join(', '),JSON.stringify(r.value),r.owner]){const cell=document.createElement('td');cell.textContent=text;row.append(cell);}body.append(row);
+  }
   for(const r of records){
     const [x,y]=project(r.position),key=x+','+y,n=seen.get(key)||0;seen.set(key,n+1);
     const color=palette[Math.max(0,types.indexOf(r.type))%palette.length];ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
@@ -59,6 +86,7 @@ function draw(){
 }
 function selectFrame(next){index=Math.max(0,Math.min(frames.length-1,next));clock=frames[index].tick;setPlaying(false);draw();}
 $('#previous').onclick=()=>selectFrame(index-1);$('#next').onclick=()=>selectFrame(index+1);
+$('#field').onchange=draw;
 $('#zoom').onchange=()=>{pan=[0,0];canvas.style.touchAction=Number($('#zoom').value)>1?'none':'pan-y';draw();};
 canvas.style.touchAction='pan-y';
 canvas.onpointerdown=event=>{if(Number($('#zoom').value)===1)return;drag=[event.clientX,event.clientY,...pan];canvas.setPointerCapture(event.pointerId);};

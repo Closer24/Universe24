@@ -47,6 +47,9 @@ def evaluate(
     right: Values,
     meter: CostMeter,
     spatial_fluxes: Values = (),
+    *,
+    ports: tuple[Values, ...] = (),
+    outgoing: tuple[Values, ...] = (),
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
@@ -59,11 +62,27 @@ def evaluate(
         if not spatial_fluxes:
             raise ValueError("spatial flux requires an explicitly supplied local sample")
         return unpack(spatial_fluxes[expression.field])
-    operands = tuple(evaluate(arg, left, right, meter, spatial_fluxes) for arg in expression.arguments)
+    if op in ("received", "outgoing"):
+        channels = ports if op == "received" else outgoing
+        if len(channels) != 6 or not 0 <= expression.port < 6:
+            raise ValueError("directional expressions require six explicitly supplied local channels")
+        return unpack(channels[expression.port][expression.field])
+    operands = tuple(
+        evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        for arg in expression.arguments
+    )
     if op == "transform":
         return tuple(_dot(row, operands[0]) for row in expression.matrix)
     if op == "dot":
         return (_dot(operands[0], operands[1]),)
+    if op == "cross":
+        first, second = operands
+        return tuple(
+            checked_work(checked_work(first[a] * second[b]) - checked_work(first[b] * second[a]))
+            for a, b in ((1, 2), (2, 0), (0, 1))
+        )
+    if op == "vector":
+        return tuple(operand[0] for operand in operands)
     if op == "gt":
         return (1 if operands[0][0] > operands[1][0] else 0,)
     if op in ("neg", "abs", "sum", "component"):

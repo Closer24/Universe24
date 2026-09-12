@@ -26,6 +26,18 @@ commits its equal-and-opposite spatial reaction with the carrier. The response
 contract defines same-timestamp packet preparation, fixed local cost and the
 restricted straight-line isolation result without general source attribution.
 
+Optional [generic local field rules](docs/LOCAL_FIELD_RULES.md) add schema 1
+local transport alongside existing outward fields. A node can retain dynamic
+stock, read six delivered scalar/vector channels independently, and assign
+several retained/outgoing values from one frozen rule view. Groups are metadata
+over existing field definitions. Joint carrier/field assignments store additive
+field deltas and revalidate declared invariants against live stock before delayed
+commit, while immutable baseline and ongoing source bookkeeping keep their own
+owners. Fixed capacities, integer bounds and priced local work still apply.
+The linked contract defines quiescent scheduling and records nonconserved field
+conversions as transformations rather than external sources. It supplies no
+Maxwell, Lorentz or quantum law, and does not alter schema 2 finite decay.
+
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects the explicit `finite-dissipative-v1` policy, derived from the schema
 version independently of user-defined names. Every spatial field requires a
@@ -52,8 +64,9 @@ vector, full link time and ownership. Open terminal packets remain counted while
 in flight, then their unchanged payloads leave the simulation at link completion.
 There is no simulated outside receiver, decay or receive cost. The boundary law
 is independent of schema version and named in metadata. Combined accounting is
-`current + dissipated + escaped = initial + sources`; spatial-only accounting
-also includes committed opposite reactions. The escaped ledger is diagnostic,
+`current + dissipated + escaped = initial + sources` for declared conserved
+quantities; spatial-only accounting also includes committed reactions and, for
+nonconserved local fields, configured transformations. The escaped ledger is diagnostic,
 never a global repair or a physical input. See [the schema](docs/DISTURBANCES.md).
 
 Optional atomic pair `interactions` assign multiple fields from one frozen input

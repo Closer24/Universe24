@@ -7,6 +7,7 @@ from event_universe.core.disturbance_state import (
     DisturbanceRecord,
     FieldDefinition,
     OperationCosts,
+    Values,
     bounded,
     pack,
     unpack,
@@ -14,13 +15,16 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     EmissionDefinition,
+    NodeFieldRuleDefinition,
     SpatialFieldDefinition,
+    SpatialOutgoing,
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
 )
 
 from .disturbances import evaluate
+from .local_field_rules import apply_field_rules
 from .spatial import add_populations, bounded_emission_amount, emission_amount, emit, split_outward
 
 
@@ -30,6 +34,7 @@ class SpatialLaw:
     definitions: tuple[SpatialFieldDefinition, ...]
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
+    field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -138,25 +143,52 @@ class SpatialLaw:
                     source[definition.field][component] = checked_work(
                         source[definition.field][component] + value
                     )
+        before_rules = tuple(working)
+        has_local = any(definition.transport == "local" for definition in self.definitions)
+        local_outgoing: tuple[Values, ...] = ()
+        if has_local:
+            ruled_states, local_outgoing = apply_field_rules(
+                self.fields, self.definitions, self.field_rules, tuple(working), meter
+            )
+            working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         retained = []
+        rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
             field = self.fields[definition.field]
-            channels, state = split_outward(working[index], definition, field, meter)
+            channels: SpatialOutgoing
+            if definition.transport == "local":
+                blank = pack((0,) * field.components)
+                channels = tuple(
+                    (channel[definition.field],) + (blank,) * 7 for channel in local_outgoing
+                )
+                state = working[index]
+                meter.charge("route")
+                meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
+            else:
+                channels, state = split_outward(working[index], definition, field, meter)
+            if has_local:
+                state = replace(state, delivered=(pack((0,) * field.components),) * 6)
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)
-            if field.conserved:
-                for component in range(field.components):
-                    before = source[definition.field][component]
-                    for payload in states[index].populations:
-                        before = checked_work(before + unpack(payload)[component])
-                    after = 0
-                    for channel in channels:
-                        for payload in channel:
-                            after = checked_work(after + unpack(payload)[component])
+            for component in range(field.components):
+                before = source[definition.field][component]
+                for payload in states[index].populations:
+                    before = checked_work(before + unpack(payload)[component])
+                after = 0
+                for payload in state.populations:
+                    after = checked_work(after + unpack(payload)[component])
+                for channel in channels:
+                    for payload in channel:
+                        after = checked_work(after + unpack(payload)[component])
+                if field.conserved:
                     if before != after:
-                        raise ValueError("outward transport violates declared conservation")
+                        raise ValueError("spatial transport violates declared conservation")
+                pre_rule = 0
+                for payload in before_rules[index].populations:
+                    pre_rule = checked_work(pre_rule + unpack(payload)[component])
+                rule_delta[definition.field][component] = bounded(checked_work(after - pre_rule))
             # Validate the observable resident value before changing ownership.
             local = list(unpack(definition.baseline))
             for payload in working[index].populations:
@@ -170,4 +202,5 @@ class SpatialLaw:
             tuple(updated_records),
             tuple(tuple(v) for v in source),
             meter.total,
+            tuple(tuple(v) for v in rule_delta) if has_local else (),
         )

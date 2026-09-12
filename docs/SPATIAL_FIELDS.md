@@ -10,6 +10,13 @@ is [finite_fields.json](../examples/finite_fields.json). Names such as `radiatio
 `strength` and `heading` remain configuration data. The runner derives the policy
 from `schema_version`, never from words in the user's `model_id`.
 
+Schema 1 also offers opt-in `"transport": "local"` fields through
+[LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md). They retain dynamic stock and use
+configured six-port output assignments instead of outward octant splitting.
+Local and outward fields can coexist. The sections below describe the outward
+candidate; the linked contract owns the local mode, field groups, multi-field
+rules and transformation accounting. Schema 2 remains unchanged.
+
 ## Local state and propagation
 
 Each spatial field references an existing scalar/vector field definition, with

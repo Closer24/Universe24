@@ -1,5 +1,24 @@
 # Test inputs and expected results
 
+## Generic local field rules
+
+These are focused acceptance requirements for
+[LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md), not claims that a particular tree
+passed. Reuse the affected run and tests when collecting integration evidence.
+
+| Suite | Independent inputs and required outcomes |
+| --- | --- |
+| `test_local_field_rules.py` | Two-vector exchange/rotation reads one frozen rule snapshot and preserves its named invariant; existing outward 216-unit pulse still sends 36 to each axial neighbor; retained and six outgoing owners count stock once and wait a full link; signed counterflows remain separately observable; cross-field changes appear as transformations rather than sources; invalid shapes, bounds, schema 2 rules and broken invariants fail before local commit |
+| `test_spatial_interactions.py` | Multiple field/carrier assignments commit together; conserved combined components hold; delayed field evolution is preserved when a frozen delta commits; an invariant invalidated by live field changes rejects the whole transaction; pending source bookkeeping is not restored from old carrier state |
+| `test_workspace_integration.py` | Field/type renaming preserves groups and directional/joint references; field-only playback reads node values once, keeps field packets separate, and does not mutate the recording or add received samples as inventory |
+
+Check both a nonzero baseline with no dynamic work and actual received channels
+whose net stock is zero. The first must stay quiescent; the second must activate
+the local rule. Field-only and carrier-coupled checks must distinguish sampled
+input, retained stock, outgoing ownership and actual delayed-commit views.
+Generic labels do not establish electromagnetic behavior, and these tests do not
+claim a Maxwell, Lorentz or quantum result.
+
 ## Generated-output lifetime
 
 These are host filesystem contracts; they do not change simulated time or costs.

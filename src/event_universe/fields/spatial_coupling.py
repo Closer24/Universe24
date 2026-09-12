@@ -17,6 +17,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work, signed_divrem
 from event_universe.core.spatial_state import (
+    FieldInteractionGuard,
     SpatialCouplingDefinition,
     SpatialCouplingResult,
     SpatialFieldDefinition,
@@ -237,6 +238,18 @@ class SpatialCouplingLaw:
     def sample_fluxes(self, states: tuple[SpatialState, ...]) -> Values:
         return sample_fluxes(states, self.spatial_definitions, self.fields)
 
+    def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
+        raise ValueError("port-aware interactions require a configured joint law")
+
+    def validate_guards(
+        self,
+        states: tuple[SpatialState, ...],
+        reaction: Values,
+        guards: tuple[FieldInteractionGuard, ...],
+    ) -> None:
+        if guards:
+            raise ValueError("spatial interaction guards require a configured joint law")
+
     def deposit(
         self,
         states: tuple[SpatialState, ...],
@@ -321,6 +334,7 @@ class SpatialCouplingLaw:
         records: tuple[DisturbanceRecord | None, ...],
         sample: Values,
         fluxes: Values = (),
+        ports: tuple[Values, ...] = (),
     ) -> SpatialCouplingResult:
         if len(records) > MAX_SLOTS or len(self.definitions) > MAX_RULES:
             raise ValueError("spatial coupling exceeds the fixed local capacity")
