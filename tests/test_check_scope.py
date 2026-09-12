@@ -106,6 +106,14 @@ def test_runpy_acceptance_tool_retains_application_consumer():
     assert "tests/test_collisions.py" not in tests
 
 
+@pytest.mark.parametrize(
+    "filename", ["law.json", "definition.json", "experiments.json", "prepare.py", "observe.py"]
+)
+def test_directional_field_resources_select_the_candidate_consumer(filename):
+    tests, _ = CHECK.select([f"examples/directional-wave/{filename}"], {})
+    assert "tests/test_directional_wave.py" in tests
+
+
 def no_change_main(monkeypatch, tmp_path, *arguments):
     monkeypatch.setattr(CHECK, "ROOT", tmp_path)
     monkeypatch.setattr(CHECK, "git", lambda *args: "base" if args[0] == "merge-base" else "")

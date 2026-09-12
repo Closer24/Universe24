@@ -1,5 +1,10 @@
 # Project status and restart guide
 
+An optional [directional-wave candidate](DIRECTIONAL_WAVE.md) supplies six modes
+and a configured polarization encounter with exact normalized energy/momentum
+guards. It uses the existing local field engine and does not replace the catalog
+probes or establish Maxwell dynamics. Check its PR for integration status.
+
 The [small-space comparisons](../examples/small-space/README.md) record 24
 9-cubed/15-cubed entity, source and response experiments. Local accounting and
 selected mechanisms pass; field/particle physical laws remain incomplete.

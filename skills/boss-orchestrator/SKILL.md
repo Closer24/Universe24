@@ -48,6 +48,7 @@ Before completion, review Boss itself and every participating or affected Skill.
 
 | Need | Skill | Expected handoff |
 | --- | --- | --- |
+| Author space, entities, fields, run or display configuration | [simulation-configuration](../simulation-configuration/SKILL.md) | Validated input, reusable definitions and exact invocation |
 | Field law or response implementation | [field-development](../field-development/SKILL.md) | Explicit candidate contract and focused change |
 | State, interfaces or dependency boundaries | [architecture-review](../architecture-review/SKILL.md) | Compatible ownership/schema assessment |
 | Any physical-engine behavior change | [physics-rule-validation](../physics-rule-validation/SKILL.md) | Rule-by-rule acceptance or concrete blockers |
