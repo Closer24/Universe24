@@ -94,8 +94,15 @@ def _particle_fact(indexed: dict[str, JsonObject], identity: str) -> ParticleFac
     conjugacy = row.get("conjugacy_status")
     rest_mass = row.get("rest_mass_relation")
     status = row.get("physical_status")
-    if not all(
-        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)
+    if (
+        not isinstance(antiparticle, str)
+        or not antiparticle
+        or not isinstance(conjugacy, str)
+        or not conjugacy
+        or not isinstance(rest_mass, str)
+        or not rest_mass
+        or not isinstance(status, str)
+        or not status
     ):
         raise ValueError(f"particle {identity} has incomplete identity metadata")
     charge = _integer(row.get("electric_charge_thirds"), f"{identity}.electric_charge_thirds")
@@ -130,16 +137,29 @@ def _leg(value: object, label: str, indexed: dict[str, JsonObject]) -> ReactionL
     _particle_fact(indexed, entity)
     energy = _integer(obj["energy"], f"{label}.energy", minimum=0)
     momentum_raw = _array(obj["momentum"], f"{label}.momentum", 3)
-    momentum = tuple(_integer(component, f"{label}.momentum") for component in momentum_raw)
-    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]
+    momentum = (
+        _integer(momentum_raw[0], f"{label}.momentum"),
+        _integer(momentum_raw[1], f"{label}.momentum"),
+        _integer(momentum_raw[2], f"{label}.momentum"),
+    )
+    return ReactionLeg(entity, energy, momentum)
 
 
-def _sum_scalar(values: tuple[int, int]) -> int:
+def _sum_scalar(values: tuple[int, ...]) -> int:
+    if len(values) != 2:
+        raise ValueError("reaction scalar sum requires exactly two values")
     return checked(checked_work(values[0] + values[1]))
 
 
-def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tuple[int, int, int]:
-    return tuple(checked(checked_work(a + b)) for a, b in zip(*values, strict=True))  # type: ignore[return-value]
+def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:
+    if len(values) != 2:
+        raise ValueError("reaction vector sum requires exactly two values")
+    left, right = values
+    return (
+        checked(checked_work(left[0] + right[0])),
+        checked(checked_work(left[1] + right[1])),
+        checked(checked_work(left[2] + right[2])),
+    )
 
 
 def _reaction_document(
@@ -157,15 +177,17 @@ def _reaction_document(
         raise ValueError("unsupported reaction_version")
     if not isinstance(raw["model_id"], str) or not raw["model_id"]:
         raise ValueError("reaction.model_id must be a nonempty string")
-    inputs = tuple(
-        _leg(item, f"inputs[{index}]", indexed)
-        for index, item in enumerate(_array(raw["inputs"], "inputs", 2))
+    input_rows = _array(raw["inputs"], "inputs", 2)
+    output_rows = _array(raw["outputs"], "outputs", 2)
+    inputs = (
+        _leg(input_rows[0], "inputs[0]", indexed),
+        _leg(input_rows[1], "inputs[1]", indexed),
     )
-    outputs = tuple(
-        _leg(item, f"outputs[{index}]", indexed)
-        for index, item in enumerate(_array(raw["outputs"], "outputs", 2))
+    outputs = (
+        _leg(output_rows[0], "outputs[0]", indexed),
+        _leg(output_rows[1], "outputs[1]", indexed),
     )
-    return raw, indexed, inputs, outputs  # type: ignore[return-value]
+    return raw, indexed, inputs, outputs
 
 
 def reaction_manifest(catalog: object, reaction: object) -> JsonObject:
