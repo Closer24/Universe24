@@ -19,7 +19,8 @@ current origin/main; use isolated worktrees for concurrent tasks and submit a PR
    A change to a physical hypothesis needs a separate model identity and review;
    do not change physical expectations merely to make a test pass. Historical
    API/frozen-v10 equality and older-Python compatibility are no longer gates.
-6. Run `python tools/check.py`. Inspect metadata and traces for affected runs.
+6. Run `python tools/check.py` for changed code and affected consumers only.
+   Inspect metadata and traces for affected runs.
    Capture and inspect HTML only when visualization was explicitly requested.
    Test reusable calculations in `test_scalar_field.py` and `test_turning.py`,
    current choices in `test_current_field.py`, and public component replacement
@@ -72,6 +73,33 @@ protection exists without verifying it.
 
 
 ## Code and test quality
+
+### Select the affected checks
+
+`python tools/check.py` compares the worktree, staged changes and untracked files
+with the merge base of `origin/main`. Use `--base REVISION` for another recorded
+base, including `--base HEAD^` when reviewing the latest commit on main.
+`--dry-run` prints the changed files and selected commands without running them.
+The executed selection is saved in `artifacts/check-scope.json`.
+
+Only changed Python files receive Ruff checks. Type checking covers affected
+production modules; pytest covers changed tests and transitive consumers in both
+the old and current import graphs. Explicit rules cover examples, UI assets,
+documentation links/language and repository architecture/locality scanners.
+Changing a shared fixture, interpreter or package configuration can affect all
+tests. This wider scope must follow a shared dependency, not routine reassurance.
+
+Static imports cannot prove every runtime dependency. Review the printed scope
+and add specific related paths or pytest node IDs with `--tests` for dynamic
+imports, subprocesses or external data not covered by the selector. Keep needed
+regressions for shared interfaces; never drop a related failing test. A newly
+introduced non-import dependency must update the selector and its focused tests.
+
+`--full` is available only for an explicitly justified complete audit. Do not run
+it by default or to compensate for an unexamined dependency. CI uses the PR base
+or the previous main commit and the same selector. It no longer unconditionally
+runs the Basic/Exchange worlds or a package build for unrelated changes.
+
 
 - Give each component one responsibility, clear names and a small typed interface.
   Prefer composition and short functions over deep inheritance or unnecessary
