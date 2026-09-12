@@ -558,3 +558,17 @@ and packet ancestry, repeated encounters, bounded failures, code/type renaming,
 normal runner output and per-cycle cost-dependent delay without repeated charges.
 Existing quantum, locality, generic initialization and physical regression suites
 remain affected consumers. These checks do not derive a classical limit.
+
+## Shared integer arithmetic
+
+`test_integer_arithmetic.py` covers decoded scalar/vector addition and
+subtraction, ordered sums, dot/cross products and integer rounding. Independent
+examples include (3,-4,2) dot (-1,7,-2) = -35, (2,-3,4) cross (-1,5,2) =
+(-26,-8,7), and (3,4,0) squared norm = 25. Empty reductions, unequal component
+counts, cross-product orientation/parallel vectors, signed limits and overflow
+before cancellation are separate boundaries. Ceiling 15/7 is 3; signed division
+-7/3 returns (-2,-1). Ceiling division rejects an overflowing adjusted numerator
+even when the quotient would fit, preserving existing timing behavior.
+
+Existing expression, spatial transaction, rotation, engine timing and link
+transport suites remain the integration coverage for callers and operation costs.
