@@ -7,9 +7,9 @@ from typing import cast
 from .core.disturbance_state import (
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
-    MAX_RULES,
     MAX_REACTION_INPUTS,
     MAX_REACTION_OUTPUTS,
+    MAX_RULES,
     MAX_SLOTS,
     MAX_TYPES,
     MAX_VALUE,
@@ -636,12 +636,11 @@ def _reactions(
         input_owned = tuple(kind.fields for kind in inputs)
         output_owned = tuple(kind.fields for kind in outputs)
 
-        def input_expression(raw_value: object, expected: int | None = None) -> Expression:
-            return _Expressions(
-                fields,
-                input_owned[0],
-                participants=input_owned,
-            ).parse(raw_value, expected)
+        input_expressions = _Expressions(
+            fields,
+            input_owned[0],
+            participants=input_owned,
+        )
 
         assignments: list[ReactionAssignment] = []
         for raw_assignment in _array(
@@ -665,7 +664,7 @@ def _reactions(
                 ReactionAssignment(
                     output,
                     field,
-                    input_expression(item["expression"], fields[field].components),
+                    input_expressions.parse(item["expression"], fields[field].components),
                 )
             )
         expected = {(output, field) for output, kind in enumerate(outputs) for field in kind.fields}
@@ -683,14 +682,14 @@ def _reactions(
             invariant_name = _text(item["name"], "reaction invariant.name")
             if any(invariant.name == invariant_name for invariant in invariants):
                 raise ValueError("duplicate reaction invariant name")
-            before = input_expression(item["before"], 1)
+            before = input_expressions.parse(item["before"], 1)
             after = _Expressions(
                 fields,
                 output_owned[0],
                 participants=output_owned,
             ).parse(item["after"], 1)
             invariants.append(ReactionInvariant(invariant_name, before, after))
-        when = input_expression(obj["when"], 1) if "when" in obj else None
+        when = input_expressions.parse(obj["when"], 1) if "when" in obj else None
         result.append(
             ReactionDefinition(
                 name, input_types, output_types, tuple(assignments), tuple(invariants), when
