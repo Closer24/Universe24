@@ -16,7 +16,7 @@ jobs:
         with:
           python-version-file: .python-version
       - run: python -m pip install -e '.[dev]'
-      - name: Apply contract documentation and formatting once
+      - name: Apply one-time contract cleanup
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -52,6 +52,92 @@ jobs:
               '"pdg_particles": {"title": "PDG 2026: Particle summary tables", "url": "https://pdg.lbl.gov/2026/tables/contents_tables.html"}',
           )
           catalog.write_text(text)
+
+          source = Path('src/event_universe/particle_reactions.py')
+          text = source.read_text()
+          old = '''    if not all(
+        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)
+    ):
+        raise ValueError(f"particle {identity} has incomplete identity metadata")
+'''
+          new = '''    if (
+        not isinstance(antiparticle, str)
+        or not antiparticle
+        or not isinstance(conjugacy, str)
+        or not conjugacy
+        or not isinstance(rest_mass, str)
+        or not rest_mass
+        or not isinstance(status, str)
+        or not status
+    ):
+        raise ValueError(f"particle {identity} has incomplete identity metadata")
+'''
+          if old in text:
+              text = text.replace(old, new, 1)
+
+          old = '''    momentum = tuple(_integer(component, f"{label}.momentum") for component in momentum_raw)
+    return ReactionLeg(entity, energy, momentum)  # type: ignore[arg-type]
+
+
+def _sum_scalar(values: tuple[int, int]) -> int:
+    return checked(checked_work(values[0] + values[1]))
+
+
+def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tuple[int, int, int]:
+    return tuple(checked(checked_work(a + b)) for a, b in zip(*values, strict=True))  # type: ignore[return-value]
+'''
+          new = '''    momentum = (
+        _integer(momentum_raw[0], f"{label}.momentum"),
+        _integer(momentum_raw[1], f"{label}.momentum"),
+        _integer(momentum_raw[2], f"{label}.momentum"),
+    )
+    return ReactionLeg(entity, energy, momentum)
+
+
+def _sum_scalar(values: tuple[int, ...]) -> int:
+    if len(values) != 2:
+        raise ValueError("reaction scalar sum requires exactly two values")
+    return checked(checked_work(values[0] + values[1]))
+
+
+def _sum_vector(values: tuple[tuple[int, int, int], ...]) -> tuple[int, int, int]:
+    if len(values) != 2:
+        raise ValueError("reaction vector sum requires exactly two values")
+    left, right = values
+    return (
+        checked(checked_work(left[0] + right[0])),
+        checked(checked_work(left[1] + right[1])),
+        checked(checked_work(left[2] + right[2])),
+    )
+'''
+          if old in text:
+              text = text.replace(old, new, 1)
+
+          old = '''    inputs = tuple(
+        _leg(item, f"inputs[{index}]", indexed)
+        for index, item in enumerate(_array(raw["inputs"], "inputs", 2))
+    )
+    outputs = tuple(
+        _leg(item, f"outputs[{index}]", indexed)
+        for index, item in enumerate(_array(raw["outputs"], "outputs", 2))
+    )
+    return raw, indexed, inputs, outputs  # type: ignore[return-value]
+'''
+          new = '''    input_rows = _array(raw["inputs"], "inputs", 2)
+    output_rows = _array(raw["outputs"], "outputs", 2)
+    inputs = (
+        _leg(input_rows[0], "inputs[0]", indexed),
+        _leg(input_rows[1], "inputs[1]", indexed),
+    )
+    outputs = (
+        _leg(output_rows[0], "outputs[0]", indexed),
+        _leg(output_rows[1], "outputs[1]", indexed),
+    )
+    return raw, indexed, inputs, outputs
+'''
+          if old in text:
+              text = text.replace(old, new, 1)
+          source.write_text(text)
           PY
           python -m ruff format src/event_universe/particle_reactions.py tests/test_particle_reactions.py
           git diff --check
@@ -59,7 +145,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add docs/ARCHITECTURE.md POSTULATES.md docs/TEST_EXPECTATIONS.md examples/known-entities/catalog.json src/event_universe/particle_reactions.py tests/test_particle_reactions.py
-            git commit -m 'Document and format generic particle reaction contract'
+            git commit -m 'Resolve particle reaction validation typing'
             git push origin HEAD:feat/generic-particle-reactions
           fi
       - name: Validate affected scope
