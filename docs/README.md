@@ -50,6 +50,7 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
 | [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
+| [Local observer](LOCAL_OBSERVER.md) | Completed node receptions, cycle counter and local playback prefixes |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |
 | [Test expectations](TEST_EXPECTATIONS.md) | Independent expected results and coverage ownership |

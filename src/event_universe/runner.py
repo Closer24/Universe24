@@ -5,12 +5,16 @@ import hashlib
 import json
 import time
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from event_universe import __version__
 from event_universe.core.disturbance_state import InitialState
 from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_json
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
+
+if TYPE_CHECKING:
+    from event_universe.diagnostics.local_observer import LocalObserver, ObserverDefinition
 
 
 def source_fingerprint() -> str:
@@ -30,10 +34,16 @@ def run_initialization(
     ticks: int | None = None,
     visualize: bool = False,
     frame_stride: int = 1,
+    observer: Path | None = None,
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
     source = initialization.read_bytes()
     initial = parse_initial_json(source)
+    observer_definition = None
+    if observer is not None:
+        from event_universe.diagnostics.local_observer import ObserverDefinition
+
+        observer_definition = ObserverDefinition.load(observer, initial.shape)
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
@@ -41,12 +51,16 @@ def run_initialization(
     validate_output_path(output)
     if initialization.resolve().is_relative_to(output.resolve()):
         raise ValueError("the original initialization must be outside the output directory")
+    if observer is not None and observer.resolve().is_relative_to(output.resolve()):
+        raise ValueError("the original observer configuration must be outside the output directory")
     cleanup_expired(output.parent)
     if output.exists() and any(output.iterdir()):
         raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
     with ArtifactLease(output.parent, [output.resolve()]):
-        return _execute_run(initial, source, output, fingerprint, count, visualize, frame_stride)
+        return _execute_run(
+            initial, source, output, fingerprint, count, visualize, frame_stride, observer_definition
+        )
 
 
 def _execute_run(
@@ -57,9 +71,26 @@ def _execute_run(
     count: int,
     visualize: bool,
     frame_stride: int,
+    observer_definition: ObserverDefinition | None,
 ) -> Path:
     (output / "initialization.json").write_bytes(source)
     frames: list[dict[str, object]] = []
+    probe: LocalObserver | None = None
+    if observer_definition is not None:
+        from event_universe.diagnostics.local_observer import LocalObserver
+
+        probe = LocalObserver(observer_definition)
+        (output / "observer.json").write_text(
+            json.dumps(
+                {
+                    "position": observer_definition.position,
+                    "max_receipts": observer_definition.max_receipts,
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
     failure: Exception | None = None
     conservation = True
     accounting = True
@@ -69,11 +100,16 @@ def _execute_run(
 
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")
+            if probe is not None:
+                probe.receive(event)
 
         world = Simulation(initial, observer=record)
         initial_totals = world.totals()
         if visualize:
             frames.append(world.snapshot())
+        if probe is not None:
+            probe.capture(world.tick)
+        sampled_tick = world.tick
         try:
             for _ in range(count):
                 world.step()
@@ -106,11 +142,17 @@ def _execute_run(
                 completed += 1
                 if visualize and world.tick % frame_stride == 0:
                     frames.append(world.snapshot())
+                if world.tick % frame_stride == 0:
+                    sampled_tick = world.tick
+                    if probe is not None:
+                        probe.capture(world.tick)
         except Exception as error:
             failure = error
         final = world.snapshot()
         if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
             frames.append(final)
+        if probe is not None and (sampled_tick != world.tick or failure is not None):
+            probe.capture(world.tick)
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": fingerprint,
@@ -171,12 +213,23 @@ def _execute_run(
             spatial_sampling="resident-before-emission",
         )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
+    observation = None if probe is None else probe.recording()
+    if observation is not None:
+        metadata["observer"] = {
+            "model": observation["model"],
+            "position": observation["position"],
+            "clock_kind": observation["clock_kind"],
+            "receipt_count": len(probe.receipts) if probe is not None else 0,
+        }
+        (output / "observations.json").write_text(
+            json.dumps(observation, indent=2) + "\n", encoding="utf-8"
+        )
     path = output / "run.json"
     path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     if visualize:
         from event_universe.diagnostics.disturbance_render import render_disturbances
 
-        path = render_disturbances(frames, output / "run.html", metadata)
+        path = render_disturbances(frames, output / "run.html", metadata, observation=observation)
     if failure is not None:
         raise failure
     return path
@@ -193,6 +246,7 @@ def main() -> None:
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
     parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
+    parser.add_argument("--observer", type=Path, help="Local reception probe placement JSON")
     args = parser.parse_args()
     try:
         artifact = run_initialization(
@@ -201,6 +255,7 @@ def main() -> None:
             ticks=args.ticks,
             visualize=args.visualize,
             frame_stride=args.frame_stride,
+            observer=args.observer,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

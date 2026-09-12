@@ -129,6 +129,9 @@ def normalize(value, fields, types, context=None):
             return {fields.get(key, key): normalize(item, fields, types) for key, item in value.items()}
         return {key: normalize(item, fields, types, key) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
+        if context == "received_fields":
+            # Each receiver port contains a named field map, including zeros.
+            return tuple(normalize(item, fields, types, "values") for item in value)
         return tuple(normalize(item, fields, types) for item in value)
     if context in {"type", "disturbance"}:
         return types.get(value, value)
