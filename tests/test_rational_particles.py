@@ -148,6 +148,77 @@ def test_massless_mass_shell_and_common_half_speed(name, expected):
         world.step()
 
 
+@pytest.mark.parametrize("name", list(load("entities")["entities"]))
+@pytest.mark.parametrize("port", [None, *range(6)], ids=["rest", "px", "mx", "py", "my", "pz", "mz"])
+def test_free_species_have_measured_fractional_velocity_and_periodic_arrivals(name, port):
+    """Seven distinct masses/charges share p/m motion; no species interaction is inferred."""
+    raw = load("electron-proton")
+    entity = load("entities")["entities"][name]
+    raw["interactions"] = []
+    raw["disturbance_types"] = raw["disturbance_types"][:1]
+    raw["seeds"] = raw["seeds"][:1]
+    raw["shape"] = [5, 6, 7]
+    kind = raw["disturbance_types"][0]
+    kind["name"] = raw["seeds"][0]["type"] = name
+    mass = entity["mass"]
+    whole, remainder = [0] * 3, [0] * 3
+    origin = [2, 2, 2]
+    if port is not None:
+        axis, sign = port // 2, 1 if port % 2 == 0 else -1
+        whole[axis], remainder[axis] = sign * (mass // 3), sign * (mass % 3)
+        origin[axis] = raw["shape"][axis] - 1 if sign == 1 else 0
+    kind["defaults"].update(
+        mass=mass, charge=entity["charge"], whole=whole, remainder=remainder, denominator=3
+    )
+    raw["seeds"][0]["position"] = origin
+    world = Simulation(parse_initial_state(raw))
+    initial = totals(world)
+    # p/m = +/-1/3 and the configured time unit is twelve ticks: one hop per 36 ticks.
+    for tick in range(1, 73):
+        world.step()
+        frame = world.snapshot()
+        expected = list(origin)
+        if port is not None:
+            expected[axis] = (origin[axis] + sign * (tick // 36)) % raw["shape"][axis]
+        residents = [(c["position"], r) for c in frame["cells"] for r in c["disturbances"]]
+        assert len(residents) == 1 and not frame["transfers"]
+        assert tuple(residents[0][0]) == tuple(expected)
+        assert totals(world) == initial
+        assert bodies(world)[0]["mass"] == (mass,)
+        assert bodies(world)[0]["charge"] == (entity["charge"],)
+
+
+@pytest.mark.parametrize("port", range(6), ids=["px", "mx", "py", "my", "pz", "mz"])
+@pytest.mark.parametrize("direction", ["axis", "three-four", "mixed-sign"])
+def test_massless_speed_uses_completed_arrivals_in_signed_planes(port, direction):
+    raw = load("massless-oblique")
+    axis, sign = port // 2, 1 if port % 2 == 0 else -1
+    p = [0, 0, 0]
+    p[axis] = sign * (10 if direction == "axis" else 6)
+    if direction != "axis":
+        p[(axis + 1) % 3] = sign * (8 if direction == "three-four" else -8)
+    raw["disturbance_types"][0]["defaults"]["whole"] = p
+    events = []
+    world = Simulation(parse_initial_state(raw), observer=events.append)
+    for _ in range(100):
+        world.step()
+        assert len(bodies(world)) == 1
+        assert momentum(bodies(world)[0]) == tuple(p)
+        assert bodies(world)[0]["energy"] == (5,)
+    displacement = [0, 0, 0]
+    arrivals = [e for e in events if e["event"] == "received"]
+    for e in arrivals:
+        # The receive port is the incoming face, opposite to travel direction.
+        displacement[e["port"] // 2] += -1 if e["port"] % 2 == 0 else 1
+    # E=5, |p|=10 and c=1/2: 100 ticks gives 50 Euclidean cells in every case.
+    assert displacement == [5 * v for v in p]
+    assert sum(v * v for v in displacement) == 2500
+    frame = world.snapshot()
+    residents = [c["position"] for c in frame["cells"] if c["disturbances"]]
+    assert residents == [tuple((8 + d) % 17 for d in displacement)]
+    assert not frame["transfers"]
+
+
 def test_joint_energy_and_momentum_reservoir_including_transit():
     raw = load("energy-reservoir")
     raw["link_ticks"] = 2

@@ -1,5 +1,14 @@
 # Highlights implementation coverage
 
+The [physical scenario audit](PHYSICS_COVERAGE.md) maps the later model families
+at main `992e0006469bb1156f517ae8273a80a980df7c57` and its test extensions.
+Catalog representation and supplied-law tests are separate from physical
+acceptance; magnetic-energy, Maxwell Gauss and species-interaction gaps remain
+explicit. Highlights was read again on 2026-09-12 (Drive modified time
+2026-09-12T09:48:37.649Z); sections 6.3 and 10.8 already require this distinction.
+This audit changes tests and contributor procedures, not physical laws or the
+live Highlights document. The dated inventory below retains its original scope.
+
 This versioned companion records the implementation inventory added to
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
 Scope: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`.

@@ -18,6 +18,12 @@ counterexample test. Review does not grant permission to change a physical law.
 An undefined or contradictory contract, or missing evidence for the exact source,
 means incomplete or blocked; do not fill the gap with an assumed pass.
 
+Use the [physical scenario matrix](../../docs/PHYSICS_COVERAGE.md) for cross-family
+reviews. Require distinct control states and a physically meaningful independent
+target for each claimed law. Balance of configured registers, catalog identity,
+or one successful orientation cannot certify dispersion, scattering or field
+dynamics. Preserve known physical failures separately from implementation passes.
+
 For initialization-defined simulation, use
 [DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
 whole-record versus extensive transport, exact source accounting, paired

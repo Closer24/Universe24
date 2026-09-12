@@ -86,6 +86,11 @@ Check that presentation reads recorded state without repairing or driving it.
 Add focused checks when new consumers or configuration mechanisms change coverage.
 Finite tests do not prove every possible configuration generic.
 
+For newly added or changed physical families, consult the
+[scenario coverage map](../../docs/PHYSICS_COVERAGE.md) and report missing control
+regimes and unsupported physical targets. Reuse unchanged evidence and add only
+affected checks; this does not expand the daily baseline into all simulations.
+
 Report pass, failure or incomplete coverage with the exact tree, commands,
 passed/failed/skipped counts and findings with file/line and reproduction.
 Do not publish, merge or change physical laws as part of the scheduled audit.

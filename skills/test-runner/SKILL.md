@@ -17,6 +17,13 @@ Do not add a test merely because a function was added, or derive the expected
 answer by repeating the implementation. Do not add old-Python, historical API or
 frozen-engine compatibility gates. Keep the archived frozen source untouched.
 
+For an entity/physics coverage request, use the
+[scenario matrix](../../docs/PHYSICS_COVERAGE.md#review-protocol-for-every-contributor).
+Map the claim to distinct field/particle regimes and independent targets; report
+representation-only, untested and physically failing cases separately. Verify
+dynamic configuration consumers are selected and measure completed arrivals when
+claiming velocity. Do not count a counterexample reproduction as physical acceptance.
+
 When reducing tests, map each removed assertion or parameter regime to retained
 evidence before deletion. Combine identical model/config/seed/tick runs and keep
 their useful assertions together. Preserve distinct low-rate, saturated, signed,

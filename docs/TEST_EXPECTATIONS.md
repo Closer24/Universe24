@@ -1,5 +1,18 @@
 # Test inputs and expected results
 
+Use the [physical scenario matrix](PHYSICS_COVERAGE.md) when auditing coverage
+across contributors or model families. It separates representation, configured-law
+acceptance and physical targets; a test count does not replace this distinction.
+
+The rational suite additionally covers seven reference mass/charge pairs at rest
+and in six signed directions, fractional velocity and every-tick periodic resident
+positions. Eighteen massless axis/3:4/mixed-sign cases use completed receive events and actual
+positions to check 50 Euclidean cells in 100 ticks at the selected c=1/2.
+The local pulse suite runs eleven independently tabulated E/B/velocity regimes
+for all three charge classes and both transit times. Known magnetic-energy and
+compact Maxwell Gauss counterexamples are preserved as failed stronger physical
+targets, separately from their passing reproduction checks.
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,

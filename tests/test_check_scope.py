@@ -22,6 +22,14 @@ def test_local_field_example_selects_state_and_physical_contract_consumers():
     assert "tests/test_local_lorentz_field.py" in selected
 
 
+@pytest.mark.parametrize("filename", ["native_classical.json", "native_cost_delay.json"])
+def test_native_control_changes_select_the_dynamic_quantum_physics_harness(filename):
+    selected, _ = CHECK.select(["examples/quantum/" + filename], {})
+    assert "tests/test_native_event_runtime.py" in selected
+    assert "tests/test_native_quantum_channels.py" in selected
+    assert "tests/test_directional_wave.py" not in selected
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

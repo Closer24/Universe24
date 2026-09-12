@@ -54,6 +54,7 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |
 | [Test expectations](TEST_EXPECTATIONS.md) | Independent expected results and coverage ownership |
+| [Physical scenario coverage](PHYSICS_COVERAGE.md) | Entity/model coverage, independent physical targets and known counterexamples |
 | [Validation evidence](VALIDATION.md) | Dated, source-identified check results; not timeless certification |
 | [Migration](MIGRATION.md) | Public API transitions and internal path renames |
 | [Physical features](PHYSICAL_FEATURES.md) | Contract and review procedure for a new physical hypothesis |

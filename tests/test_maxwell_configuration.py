@@ -106,3 +106,21 @@ def test_divergence_includes_empty_neighbors_of_a_sparse_field(measurements):
     values = {(4, 4, 4): ((0, 4, 0), (0, 0, 0))}
     assert measurements.centered_divergence(values, (9, 9, 9), 0) == 4
     assert measurements.centered_divergence(values, (9, 9, 9), 1) == 0
+
+
+def test_known_gauss_counterexample_from_a_compact_integer_curl(measurements):
+    """Reproduce a failed physical target; this is not Maxwell acceptance."""
+    # Centered curl of one nonzero Z potential. Commuting differences give div(E)=0.
+    seeds = [
+        ((4, 3, 4), (4, 0, 0), (0, 0, 0)),
+        ((4, 5, 4), (-4, 0, 0), (0, 0, 0)),
+        ((3, 4, 4), (0, -4, 0), (0, 0, 0)),
+        ((5, 4, 4), (0, 4, 0), (0, 0, 0)),
+    ]
+    world = Simulation(parse_initial_state(CONFIGURATION.build_configuration((9, 9, 9), 1, seeds)))
+    before, norm = measurements.moments(world.snapshot())
+    assert measurements.centered_divergence(before, (9, 9, 9), 0) == 0
+    world.step()
+    after, after_norm = measurements.moments(world.snapshot())
+    assert after_norm == norm
+    assert measurements.centered_divergence(after, (9, 9, 9), 0) > 0
