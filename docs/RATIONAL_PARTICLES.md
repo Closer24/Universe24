@@ -35,6 +35,10 @@ accepts a three-component expression in place of `direction_field` or weights.
 When present, fractional credit is reduced and preserved through rate changes.
 This adds one positive denominator register alongside the existing credit code.
 Old constant-divisor transport retains its old cost and credit convention.
+Type conversion retains its zero-carried-state requirement: balanced counters,
+remembered weights and the fractional-credit denominator must also be in their
+initial state before a new routing law can take ownership. Conversion rejects
+noninitial registers atomically instead of silently resetting them.
 
 Use a `rational_*` projection to enter an exact rational region. `ratio(a,b)`
 performs exact division by a nonzero scalar inside that region. Existing add,

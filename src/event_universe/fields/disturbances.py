@@ -197,6 +197,9 @@ class DisturbanceLaw:
                 if (
                     original.route_phase_code != 1
                     or original.rate_remainder_code != 1
+                    or original.rate_credit_denominator != 1
+                    or any(code != 1 for code in original.route_count_codes)
+                    or any(code != 1 for code in original.route_weight_codes)
                     or any(code != 1 for payload in carried for code in payload)
                 ):
                     raise ValueError("conversion requires zero carried routing and allowance state")
