@@ -126,7 +126,7 @@ or quantum behavior.
 For the physical field/particle inventory, matter and antimatter, and the exact
 limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.md)
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
-profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
+experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
 Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
 The [local Maxwell experiment](examples/maxwell/README.md) tests a configured

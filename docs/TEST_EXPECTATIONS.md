@@ -89,6 +89,12 @@ pass must not be relabeled as physical acceptance.
 
 ## Physical entity catalog and elementary probes
 
+`tests/test_entity_catalog.py` checks coverage of the Standard Model inventory,
+disturbance families and representative interactions, alongside sourced values,
+unknowns, units and reciprocal identity links. Negative inputs cover executable
+content, invalid references, measurement descriptors, alias cycles and reaction
+charge imbalance. These tests validate a reference, not a physical derivation.
+
 `tests/test_physical_entities.py` covers the sourced catalog and only its new
 runtime probes. Antiparticle references must be reciprocal where applicable,
 charges conjugate and neutrino ambiguity explicit. Example references and
@@ -643,7 +649,9 @@ rejects injected ASTs, laws, callbacks and formula strings. See
 
 `tests/test_entity_compiler.py` validates all 46 profiles, active representative
 carrier/vector and scalar transport, generic name selection, capacity rejection,
-conflicting declarations and malformed profiles. Profile compilation is distinct
+conflicting declarations and malformed profiles. Version 2 requires explicit
+separate profiles; version 1 retains embedded-profile compatibility. Metadata
+changes must not change compiled laws. Profile compilation is distinct
 from physical-law acceptance; do not multiply identical runs across labels.
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress.

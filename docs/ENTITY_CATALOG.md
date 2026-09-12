@@ -1,84 +1,111 @@
-# Executable entity catalog
+# Physical entity catalog and explicit representation probes
 
-An explicit `--representation quantum` now compiles each entry's
-[finite quantum profile](QUANTUM_ENTITIES.md) into the native event program.
-Classical profiles are unchanged. A field's quantum mode profile is not its
-classical spatial-field clock; those two runtime policies are not silently mixed.
+[catalog.json](../examples/known-entities/catalog.json) is a version 2 physical
+reference. It contains identities, sourced properties and possible interaction
+families, with no executable profiles, update formulas, rates or Hamiltonians.
+Measured properties are external comparison targets; the engine does not load
+them as laws or convert them into lattice parameters.
 
+The catalog covers 11 field families, 35 particle or multiplet records, and 14
+composite, collective and gravitational disturbance families. The established
+Standard Model species include antiparticles. Gravity, unresolved dark-sector
+identity and project hypotheses retain distinct evidence statuses. Composite
+spectra and material excitations have no finite exhaustive list: family entries
+state their scope and point to specialist catalogs. This is neither a complete
+list of nature nor a claim that these entities have emerged in the simulator.
+See [physical support and limitations](PHYSICAL_ENTITIES.md).
 
-All 46 current catalog entries have explicit executable representation profiles:
-11 field families and 35 particle or multiplet records. This is the scope of this
-inventory, not a claim that every physical entity in nature is known or simulated.
-The sourced limitations remain in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md)
-and each entry's `missing_capabilities`.
+## Reference data contract
 
-`event_universe.entities` is a host-side authoring adapter. It selects profiles
-by ID, combines exactly compatible field declarations, assembles seed positions,
-and delegates the result to the ordinary initialization validator. It neither
-executes Python supplied by data nor branches on physical names. The generated
-JSON works with the existing CLI and configuration workspace without another
-engine. Catalog IDs select data only.
+Every entity declares sourced `physical_properties` and `interaction_ids`.
+Fields link to `excitation_ids`; elementary particles link back with `field_ids`.
+Bound states describe their constituents separately. Particle/antiparticle
+relations are reciprocal, with conjugate electric charge and equal spin and
+mass status. Neutrino flavor records do not invent absolute masses or settle
+the Dirac/Majorana question.
 
-## Run selected entities
+A physical property has a `status`, `sources` and a value or explicit context.
+Measurements use decimal strings, a unit and measurement context. Uncertainty,
+precision, bounds and confidence levels are recorded when supplied by the source;
+unknown values are not zero. Quark mass conventions and medium-dependent
+collective properties must retain their context. Decimal parsing is confined to
+host-side reference validation, outside physical state and integer operations.
 
-From the checkout with the project interpreter:
+Intrinsic charge and doubled spin use `metadata_key` to reference their one
+canonical integer value. A property with `status: reference` and `entity_id`
+refers to the same property on another entity, such as an antiparticle's mass.
+Reference cycles and unresolved identities are rejected.
+
+The 17 `interaction_families` specify participants, mediators, conditions and
+evidence status. The 33 `representative_channels` list incoming and outgoing
+entities; repeated IDs encode multiplicity. They are descriptive possibilities,
+not an exhaustive reaction table or a request to perform a conversion. Kinematic
+availability, environment and selection rules still matter. No cross section,
+branching probability or dynamical law is inferred from a listed channel.
+
+Validate the reference without creating a simulation:
 
 ```sh
-python -m event_universe.entities --catalog examples/known-entities/catalog.json --entity electron --entity positron --entity electromagnetic_field --output-init artifacts/selected-entities.json
-python -m event_universe --init artifacts/selected-entities.json --output artifacts/selected-entities-run --visualize
+python -m event_universe.entity_catalog examples/known-entities/catalog.json
 ```
 
-Use new output paths. The first command only writes configuration; the second
-runs that exact configuration and uses the existing recorded HTML generator.
-`compile_entities(catalog, entity_ids, shape=(9,9,9), ticks=4, link_ticks=1)` is
-the corresponding Python authoring API. Original profiles stay in Git; generated
-inputs and reports are experiment outputs.
+`validate_catalog(catalog)` checks the schema, citations, measurements, aliases,
+reciprocal links, channel membership and electric-charge balance where all
+participants carry a definite catalog charge. It rejects executable content.
+These structural checks do not prove scientific completeness or measured values;
+independent inventory and physical-property tests supplement them.
 
-## Profile data and limits
+## Run a selected representation experiment
 
-Every `executable_profile` declares its `kind`, ordinary `fields`, exact
-`seed_values`, nonempty `assumptions` and `claim_level: representation_probe`.
-Carrier profiles supply an ordinary `disturbance` definition. Local-field
-profiles supply ordered `components`, `spatial_fields` and `field_rules` using
-the existing schema. Rules are explicit data, not inferred from labels.
+The original 46 classical and quantum probes live unchanged in
+[representation-probes.json](../examples/known-entities/representation-probes.json).
+Its `profiles` array identifies each row by `entity_id`, separately from the
+physical reference. There is no automatic profile lookup or species dispatch.
 
-The supplied carrier probes copy abstract inventory, signed charge and a momentum
-register under an explicit half-rate movement policy. Inventory is not mass or
-energy. The rate is not inferred from species, momentum or mass. In particular,
-the photon entry is a kinematic record probe, not a physical light-speed photon.
-There is no numerical neutrino mass assumption or negative antimatter mass.
+```sh
+python -m event_universe.entities --catalog examples/known-entities/catalog.json --profiles examples/known-entities/representation-probes.json --entity electron --entity positron --entity electromagnetic_field --output-init artifacts/selected-entities.json
+python -m event_universe --init artifacts/selected-entities.json --output artifacts/selected-entities-run
+```
 
-The supplied field probes copy each register toward +X and clear its previous
-owner, preserving retained-plus-outgoing component totals. Their fixed direction,
-initial values and link time are explicit experiment choices. The E/B sample
-registers do not constitute a physical Maxwell wave. Strong-field registers omit
-gauge evolution; spinor registers omit their transformations and statistics;
-metric registers do not guarantee a valid spacetime metric. Computational and
-dark-sector profiles retain their hypothesis status. The computational register
-probe does not add a new coupling to the computation clock.
+Use new output paths. Add `--representation quantum` to compile an explicit
+[finite quantum preparation](QUANTUM_ENTITIES.md). Add `--visualize` to the
+runner only when visual output is wanted. The Python API is
+`compile_entities(catalog, entity_ids, profiles=profiles, shape=(9,9,9), ticks=4, link_ticks=1)`.
+Both documents must be passed explicitly. Legacy version 1 catalogs retain their
+embedded-profile API; mixing embedded and separate profiles is rejected.
 
-Limits remain 16 fields, 16 types and fixed local slot/rule capacities per world.
-Each entry compiles separately. Compatible subsets compose; selecting the full
-catalog in one world fails explicitly. Duplicate IDs, conflicting shared field
-definitions, duplicate spatial ownership, malformed profiles and invalid integer
-values fail before execution. JSON parsing rejects duplicate keys.
+`event_universe.entities` only selects profiles, combines compatible field
+declarations, places seeds and delegates to ordinary initialization validation.
+It does not use reference masses, spins or possible interactions to derive any
+runtime operation. A family without a supplied experiment profile cannot compile;
+absence of a profile never creates an implicit physical model.
 
-This adapter supports the ordinary schema's operations; it is not an independent
-proof that arbitrary user-authored expressions obey the elementary-emergence
-restriction. The supplied new profiles generate updates by copy/clear only.
+Each classical profile declares `kind`, `fields`, `seed_values`, nonempty
+`assumptions` and `claim_level: representation_probe`. Carrier profiles add a
+`disturbance`; field probes declare their components and explicit local rules.
+Quantum profiles declare finite modes and missing dynamics, without inferring
+a Hamiltonian from particle names. Duplicate or orphan profile IDs, incompatible
+declarations, malformed profiles and exceeded runtime capacities fail explicitly.
+Subset profile documents are allowed when every selected entity is covered.
 
-## Conversions and evidence
+The carrier probes copy inventory, charge and momentum registers with an explicit
+half-rate movement policy. Inventory is not physical mass or energy. The photon
+probe is not a physical light-speed photon. Field probes copy registers toward
++X and clear the previous owner. They do not establish Maxwell waves, gauge
+dynamics, spinor transformations or a valid spacetime metric. Their supplied
+updates remain elementary copy/clear operations. Limits remain 16 fields and
+16 types per world; compatible subsets compose, not the full catalog at once.
 
-The engine additionally accepts the data-defined
-[bounded local conversion](LOCAL_CONVERSIONS.md) extension. Its current scope
-is exactly two records to two records with full explicit output assignments and
-exact declared conservation. It does not create arbitrary reaction products.
-Use the standalone `examples/known-entities/conversion.json` through the same
-runner. This example deliberately does not label its configured transformation
-as matter annihilation.
+## Evidence and conversion limits
 
-`tests/test_entity_compiler.py` validates every profile, composed carrier/vector
-and multi-scalar transport, name independence and rejection boundaries. Shared
-mechanisms are exercised by representative active worlds instead of running
-35 identical carrier dynamics tests. `tests/test_local_conversions.py` checks
-the changed conversion contract. Physical emergence remains unestablished.
+`tests/test_entity_catalog.py` checks reference coverage, sourced physical
+properties and invalid metadata. `tests/test_entity_compiler.py` checks explicit
+profile selection, legacy compatibility, rejection cases and active representative
+worlds. Quantum and small-space consumers use the same separated profiles.
+Changing reference metadata must not change compiled laws or resulting physics.
+
+The separate [bounded local conversion](LOCAL_CONVERSIONS.md) interface supports
+explicit two-record to two-record assignments and declared conservation. The
+standalone `examples/known-entities/conversion.json` is an abstract conversion
+probe, not a realization of the catalog's particle reactions. Physical emergence
+remains unestablished.

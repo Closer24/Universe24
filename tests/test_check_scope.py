@@ -198,5 +198,15 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
     assert "tests/test_quantum_entities.py" in tests
     assert "tests/test_native_quantum_channels.py" in tests
     assert "tests/test_small_space_experiments.py" in tests
+    assert "tests/test_entity_catalog.py" in tests
+    assert "tests/test_entity_compiler.py" in tests
+    assert "tests/test_physical_entities.py" in tests
+    tests, _ = CHECK.select(["examples/known-entities/representation-probes.json"], {})
+    assert {
+        "tests/test_entity_compiler.py",
+        "tests/test_quantum_entities.py",
+        "tests/test_native_quantum_channels.py",
+        "tests/test_small_space_experiments.py",
+    } <= set(tests)
     tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
     assert "tests/test_native_quantum_channels.py" in tests

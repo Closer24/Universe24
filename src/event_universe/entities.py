@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from event_universe.core.disturbance_state import OPERATIONS
+from event_universe.entity_catalog import ENTITY_SECTIONS, validate_catalog
 from event_universe.initialization import parse_initial_state, parse_json_document
 
 JsonObject = dict[str, Any]
@@ -29,33 +30,75 @@ def _rows(value: object, label: str) -> list[JsonObject]:
     return [_object(row, label) for row in value]
 
 
+def _profile_index(
+    indexed: dict[str, JsonObject], profiles: object, version: int
+) -> dict[str, JsonObject]:
+    """Bind explicit experiment data without interpreting physical metadata."""
+    profile_keys = {"executable_profile", "quantum_profile"}
+    embedded = any(profile_keys.intersection(entry) for entry in indexed.values())
+    if embedded and (profiles is not None or version == 2):
+        raise ValueError("embedded profiles cannot be combined with external profiles or catalog v2")
+    if profiles is None:
+        if version == 2:
+            raise ValueError("catalog v2 requires explicit profiles")
+        return copy.deepcopy(indexed)
+    document = _object(profiles, "profiles document")
+    if type(document.get("profile_version")) is not int or document["profile_version"] != 1:
+        raise ValueError("unsupported profile_version")
+    if set(document) != {"profile_version", "purpose", "profiles"}:
+        raise ValueError("unsupported or incomplete profiles document")
+    purpose = document["purpose"]
+    if not isinstance(purpose, str) or not purpose.strip():
+        raise ValueError("profiles purpose must be explicit")
+    result: dict[str, JsonObject] = {}
+    for row in _rows(document["profiles"], "profiles"):
+        identity = row.get("entity_id")
+        if not isinstance(identity, str) or not identity or identity in result:
+            raise ValueError("profile entity IDs must be unique nonempty strings")
+        if identity not in indexed:
+            raise ValueError(f"orphan profile entity ID: {identity}")
+        if set(row) - profile_keys != {"entity_id"} or not profile_keys.intersection(row):
+            raise ValueError("unsupported or incomplete profile binding")
+        result[identity] = {
+            key: copy.deepcopy(_object(row[key], key)) for key in profile_keys.intersection(row)
+        }
+    return result
+
+
 def compile_entities(
     catalog: object,
     entity_ids: Sequence[str],
     *,
+    profiles: object = None,
     shape: tuple[int, int, int] = (9, 9, 9),
     ticks: int = 4,
     link_ticks: int = 1,
     representation: str = "classical",
 ) -> JsonObject:
-    """Select bounded explicit profiles; retain physical claims in the catalog.
+    """Select explicit experiments separately from physical descriptors.
+
+    Catalog v2 requires an external profiles document supplied by the caller.
+    Legacy v1 authoring documents may still contain their explicit profiles.
 
     Carrier definitions and local-field operations are copied from profiles.
     The supplied field probes preserve retained-plus-outgoing component balances.
     Extending the domain is not a continuum-limit or physical-law claim.
     """
     source = _object(catalog, "catalog")
-    if type(source.get("catalog_version")) is not int or source["catalog_version"] != 1:
+    version = source.get("catalog_version")
+    if type(version) is not int or version not in (1, 2):
         raise ValueError("unsupported catalog_version")
-    entries = _rows(source.get("field_entities"), "field_entities") + _rows(
-        source.get("particle_entities"), "particle_entities"
-    )
+    sections = ENTITY_SECTIONS if version == 2 else ENTITY_SECTIONS[:2]
+    entries = [entry for section in sections for entry in _rows(source.get(section), section)]
     indexed: dict[str, JsonObject] = {}
     for entry in entries:
         identity = entry.get("id")
         if not isinstance(identity, str) or not identity or identity in indexed:
             raise ValueError("entity IDs must be unique nonempty strings")
         indexed[identity] = entry
+    experiments = _profile_index(indexed, profiles, version)
+    if version == 2:
+        validate_catalog(source)
     if (
         isinstance(entity_ids, str)
         or not entity_ids
@@ -67,11 +110,17 @@ def compile_entities(
         raise ValueError("representation probes require three integer dimensions of at least five")
     if representation not in ("classical", "quantum"):
         raise ValueError("representation must be classical or quantum")
+    profile_key = "executable_profile" if representation == "classical" else "quantum_profile"
+    for identity in entity_ids:
+        if identity not in indexed:
+            raise ValueError(f"unknown entity: {identity}")
+        if identity not in experiments or profile_key not in experiments[identity]:
+            raise ValueError(f"unsupported {representation} representation: no profile for {identity}")
     if representation == "quantum":
         from event_universe.integration.quantum_entities import compile_quantum_entities
 
         return compile_quantum_entities(
-            indexed, entity_ids, shape=shape, ticks=ticks, link_ticks=link_ticks
+            experiments, entity_ids, shape=shape, ticks=ticks, link_ticks=link_ticks
         )
     fields: dict[str, JsonObject] = {}
     types: dict[str, JsonObject] = {}
@@ -94,9 +143,7 @@ def compile_entities(
     }
     position = [2, shape[1] // 2, shape[2] // 2]
     for identity in entity_ids:
-        if identity not in indexed:
-            raise ValueError(f"unknown entity: {identity}")
-        profile = copy.deepcopy(_object(indexed[identity].get("executable_profile"), "profile"))
+        profile = _object(experiments[identity]["executable_profile"], "profile")
         if profile.get("claim_level") != "representation_probe":
             raise ValueError("profiles must explicitly declare representation_probe")
         kind = profile.get("kind")
@@ -179,6 +226,7 @@ def main() -> None:
     """Write a validated input for the existing runner and configuration UI."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--catalog", type=Path, required=True)
+    parser.add_argument("--profiles", type=Path, help="explicit representation experiment document")
     parser.add_argument("--entity", action="append", required=True)
     parser.add_argument("--output-init", type=Path, required=True)
     parser.add_argument("--ticks", type=int, default=4)
@@ -187,6 +235,7 @@ def main() -> None:
     initial = compile_entities(
         parse_json_document(args.catalog.read_bytes()),
         args.entity,
+        profiles=parse_json_document(args.profiles.read_bytes()) if args.profiles is not None else None,
         ticks=args.ticks,
         representation=args.representation,
     )

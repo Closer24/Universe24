@@ -30,6 +30,15 @@ RESOURCE_CONSUMERS = {
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
     "examples/known-entities/catalog.json": (
+        "tests/test_entity_catalog.py",
+        "tests/test_entity_compiler.py",
+        "tests/test_physical_entities.py",
+        "tests/test_small_space_experiments.py",
+        "tests/test_quantum_entities.py",
+        "tests/test_native_quantum_channels.py",
+    ),
+    "examples/known-entities/representation-probes.json": (
+        "tests/test_entity_compiler.py",
         "tests/test_small_space_experiments.py",
         "tests/test_quantum_entities.py",
         "tests/test_native_quantum_channels.py",

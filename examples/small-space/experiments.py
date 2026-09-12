@@ -33,9 +33,10 @@ def relocate(raw, size):
 
 def candidates():
     catalog = read("examples/known-entities/catalog.json")
+    profiles = read("examples/known-entities/representation-probes.json")
     cases = {}
     for identity in ("electron", "proton", "photon"):
-        cases[identity + "-free"] = compile_entities(catalog, [identity])
+        cases[identity + "-free"] = compile_entities(catalog, [identity], profiles=profiles)
     raw = copy.deepcopy(cases["photon-free"])
     raw["model_id"] = "one-link-per-tick-ray-candidate-v1"
     raw["disturbance_types"][0]["transport"]["rate_denominator"] = 1
@@ -48,12 +49,14 @@ def candidates():
     cases["electron-double-momentum"] = raw
 
     for identity in ("electromagnetic_field", "higgs_field", "strong_field", "computational_field"):
-        cases[identity] = compile_entities(catalog, [identity])
+        cases[identity] = compile_entities(catalog, [identity], profiles=profiles)
     raw = copy.deepcopy(cases["electromagnetic_field"])
     raw["spatial_seeds"][1]["populations"] = [[0, 0, 0]] * 8
     cases["electric-only-pulse"] = raw
 
-    raw = compile_entities(catalog, ["electron", "positron", "neutron", "electromagnetic_field"])
+    raw = compile_entities(
+        catalog, ["electron", "positron", "neutron", "electromagnetic_field"], profiles=profiles
+    )
     raw["spatial_seeds"] = []
     raw["field_rules"] = []
     raw["spatial_fields"][0]["baseline"] = [1, 0, 0]
@@ -118,7 +121,7 @@ def candidates():
 
     # An explicitly separate candidate transfers finite stock to a field.
     # Stock is abstract inventory, not an assumed physical energy variable.
-    raw = compile_entities(catalog, ["computational_field"])
+    raw = compile_entities(catalog, ["computational_field"], profiles=profiles)
     name = raw["fields"][0]["name"]
     raw["fields"][0]["conserved"] = True
     raw["model_id"] = "closed-reservoir-transfer-candidate-v1"
