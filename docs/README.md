@@ -11,6 +11,7 @@ result are different claims. Revision-specific results are not a live status fee
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
+| [Directional delay](DIRECTIONAL_DELAY.md) | Six port waits, causal vector controls and cell-owned delayed outputs |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |

@@ -351,6 +351,15 @@ needed for that. Visual test sessions use unique output directories, and CI
 diagnostic uploads have one-day retention. This is a host storage policy and
 does not alter simulation ticks, physical updates or failure detection.
 
+### Optional directional waits
+
+The [directional timing contract](docs/DIRECTIONAL_DELAY.md) is authoritative for
+six port coefficients, optional local unsigned vector controls and delayed
+cell-owned dispatch. The absent/unit fixed-mode case preserves prior timing.
+Spatial cost mode is explicit: output waiting and field-batch eligibility are
+not silently substituted for every historical fixed-clock field law. No new
+geometrical units or physical-name semantics are inferred.
+
 ### Default run display
 
 The optional [local reception probe](docs/LOCAL_OBSERVER.md) records completed

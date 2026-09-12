@@ -148,6 +148,19 @@ treating its omissions as current gaps.
 - Preserve source, specifications, skills and original configurations in Git.
   Generated results expire under the 24-hour policy; idle cleanup needs a scheduler.
 
+## Directional timing reconciliation
+
+Read the live Highlights on 2026-09-12 at revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The user's explicit directional-delay request extends the scalar scheduling
+choice in sections 4.2/4.4 and the separate field-clock choice in 10.6. Defaults
+retain those rules. The selected [contract](DIRECTIONAL_DELAY.md) specifies the
+new common atomic prefix, cell-owned output registers, causal vector controls
+and delayed spatial batches. Sections 3.2/3.5/5.2 continue to require six local
+channels, exactly-once ownership and immutable dispatched link times. The live
+Google document was not edited; this versioned reconciliation records the
+explicit extension rather than relabeling it as an already proven metric.
+
 ## Coverage map
 
 ### Local observer reconciliation

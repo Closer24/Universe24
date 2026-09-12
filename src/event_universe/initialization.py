@@ -15,6 +15,7 @@ from .core.disturbance_state import (
     Address3,
     Assignment,
     CouplingDefinition,
+    DirectionalDelayDefinition,
     DisturbanceDefinition,
     DisturbanceRecord,
     Expression,
@@ -971,6 +972,45 @@ def _spatial_interactions(
     return tuple(result)
 
 
+def _directional_delay(
+    value: object, fields: tuple[FieldDefinition, ...], spatial: tuple[SpatialFieldDefinition, ...]
+) -> DirectionalDelayDefinition:
+    obj = _object(
+        value,
+        "directional_delay",
+        {"weights", "denominator", "spatial_mode", "positive_field", "negative_field"},
+        set(),
+    )
+
+    def reference(key: str) -> int | None:
+        if key not in obj:
+            return None
+        name = _text(obj[key], key)
+        for index, definition in enumerate(spatial):
+            field = fields[definition.field]
+            if field.name == name:
+                if field.components != 3 or field.signed:
+                    raise ValueError("directional delay controls require unsigned spatial three-vectors")
+                return index
+        raise ValueError("directional delay control must name a declared spatial field")
+
+    raw = obj.get("weights", 1)
+    weights: tuple[int, ...]
+    if type(raw) is int:
+        weights = (_integer(raw, "directional delay weight", 0),) * 6
+    else:
+        if not isinstance(raw, list) or len(raw) != 6:
+            raise ValueError("directional delay requires an integer or exactly six weights")
+        weights = tuple(_integer(item, "directional delay weight", 0) for item in raw)
+    return DirectionalDelayDefinition(
+        cast(Weights, weights),
+        _integer(obj.get("denominator", 1), "directional delay denominator", 1),
+        _text(obj.get("spatial_mode", "fixed"), "directional delay spatial_mode"),
+        reference("positive_field"),
+        reference("negative_field"),
+    )
+
+
 def parse_initial_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
@@ -1002,6 +1042,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_rules",
             "spatial_interactions",
             "event_program",
+            "directional_delay",
         },
         required,
     )
@@ -1050,6 +1091,7 @@ def parse_initial_state(document: object) -> InitialState:
             obj.get("spatial_interactions", []), fields, disturbances, spatial
         ),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
+        directional_delay=_directional_delay(obj.get("directional_delay", {}), fields, spatial),
     )
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program

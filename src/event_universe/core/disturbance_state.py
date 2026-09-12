@@ -195,6 +195,31 @@ class Seed:
 
 
 @dataclass(frozen=True, slots=True)
+class DirectionalDelayDefinition:
+    """Fixed port coefficients; these are not a three-vector or a spacetime metric."""
+
+    weights: Weights = (1, 1, 1, 1, 1, 1)
+    denominator: int = 1
+    spatial_mode: str = "fixed"
+    positive_field: int | None = None
+    negative_field: int | None = None
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.weights, tuple) or len(self.weights) != 6:
+            raise ValueError("directional delay requires exactly six weights")
+        for value in self.weights:
+            if bounded(value) < 0:
+                raise ValueError("directional delay weights must be nonnegative")
+        if bounded(self.denominator) < 1:
+            raise ValueError("directional delay denominator must be positive")
+        for index in (self.positive_field, self.negative_field):
+            if index is not None and not 0 <= bounded(index) < MAX_FIELDS:
+                raise ValueError("directional delay field index is outside the schema bound")
+        if self.spatial_mode not in ("fixed", "cost"):
+            raise ValueError("directional delay spatial_mode must be fixed or cost")
+
+
+@dataclass(frozen=True, slots=True)
 class InitialState:
     model_id: str
     shape: Address3
@@ -218,6 +243,7 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    directional_delay: DirectionalDelayDefinition = DirectionalDelayDefinition()
 
 
 class Departure(NamedTuple):
@@ -244,6 +270,7 @@ class PendingCycle:
     next_tick: int
     plan: LocalPlan
     cause_id: int | None = None
+    release_ticks: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -253,6 +280,7 @@ class Packet:
     port: int
     record: DisturbanceRecord
     cause_id: int | None = None
+    release_tick: int | None = None
 
 
 @dataclass(slots=True)

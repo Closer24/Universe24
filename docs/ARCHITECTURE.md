@@ -126,6 +126,16 @@ recoverable quarantine before removal. The module never imports or changes
 physical engine state. Its one-shot and singleton watcher interfaces share the
 [same retention contract](RETENTION.md).
 
+## Directional wait ownership
+
+[Directional timing](DIRECTIONAL_DELAY.md) is owned by `core/timing.py`; strict
+configuration resolves immutable coefficients and local vector-control indices.
+Dynamic state adds only bounded wait timestamps and six-value read views.
+The engines keep cell-owned output staging separate from actual dispatch and
+never mutate an in-flight packet. Waiting sources remain in the bounded local
+emission-owner view. A field control and wave mixing law are ordinary configured
+field rules, not field-name branches in either scheduler.
+
 ## Active generic ownership
 
 The engine receives an explicit `core/record_policy.RecordPolicy` alongside its

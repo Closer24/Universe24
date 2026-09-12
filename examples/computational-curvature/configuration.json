@@ -1,0 +1,142 @@
+{
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "ticks": 8,
+  "normal_budget": 768,
+  "link_ticks": 1,
+  "source_position": [
+    4,
+    4,
+    2
+  ],
+  "source_strength": 64,
+  "wave_seed_positions": [
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      2,
+      4,
+      4
+    ],
+    [
+      2,
+      5,
+      4
+    ]
+  ],
+  "near_clock": [
+    4,
+    4,
+    3
+  ],
+  "far_clock": [
+    4,
+    7,
+    3
+  ],
+  "observer_position": [
+    6,
+    4,
+    4
+  ],
+  "directional_delay": {
+    "weights": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "denominator": 1,
+    "spatial_mode": "cost",
+    "positive_field": "axis_delay_control",
+    "negative_field": "axis_delay_control"
+  },
+  "delay_control": {
+    "field": {
+      "name": "axis_delay_control",
+      "components": 3,
+      "units": "additional wait multiplier from completed directional receipts",
+      "signed": false,
+      "conserved": false,
+      "extensive": true
+    },
+    "spatial_field": {
+      "field": "axis_delay_control",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    "rule": {
+      "name": "derive_axis_delays_from_received_source_stock",
+      "assignments": [
+        {
+          "field": "axis_delay_control",
+          "expression": {
+            "op": "vector",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "received": "computation_field",
+                    "port": 0
+                  },
+                  {
+                    "received": "computation_field",
+                    "port": 1
+                  }
+                ]
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "received": "computation_field",
+                    "port": 2
+                  },
+                  {
+                    "received": "computation_field",
+                    "port": 3
+                  }
+                ]
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "received": "computation_field",
+                    "port": 4
+                  },
+                  {
+                    "received": "computation_field",
+                    "port": 5
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "source_stock_unchanged_by_readout",
+          "expression": {
+            "field": "computation_field",
+            "side": "right"
+          }
+        }
+      ]
+    }
+  }
+}

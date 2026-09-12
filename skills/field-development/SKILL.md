@@ -49,3 +49,7 @@ schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and
 simulation. Do not claim completion while a retained acceptance assertion fails;
 return the precise remaining law/contract problem to Boss.
+
+When timing is selected per direction, follow [directional delay](../../docs/DIRECTIONAL_DELAY.md).
+Distinguish retained state, cell-owned waiting outputs and dispatched links;
+include causal controls, source persistence and the mixing-disabled control in review.

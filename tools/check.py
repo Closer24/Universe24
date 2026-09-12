@@ -15,7 +15,13 @@ RESOURCE_CONSUMERS = {
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/prepare.py": ("tests/test_directional_wave.py",),
     "examples/directional-wave/observe.py": ("tests/test_directional_wave.py",),
-    "examples/maxwell/configuration.py": ("tests/test_maxwell_configuration.py",),
+    "examples/maxwell/configuration.py": (
+        "tests/test_maxwell_configuration.py",
+        "tests/test_curvature_delay_experiment.py",
+    ),
+    "examples/computational-curvature/configuration.json": ("tests/test_curvature_delay_experiment.py",),
+    "examples/computational-curvature/configuration.py": ("tests/test_curvature_delay_experiment.py",),
+    "examples/computational-curvature/measure.py": ("tests/test_curvature_delay_experiment.py",),
     "examples/maxwell/measurements.py": ("tests/test_maxwell_configuration.py",),
     "examples/local_lorentz_field.json": (
         "tests/test_cell_state_contract.py",

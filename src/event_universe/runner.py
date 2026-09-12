@@ -179,6 +179,22 @@ def _execute_run(
         "shape": initial.shape,
         "link_ticks": initial.link_ticks,
         "computation": world.computation_report(),
+        "directional_delay": {
+            "weights": initial.directional_delay.weights,
+            "denominator": initial.directional_delay.denominator,
+            "spatial_mode": initial.directional_delay.spatial_mode,
+            **{
+                key: initial.fields[initial.spatial_fields[index].field].name
+                for key, index in (
+                    ("positive_field", initial.directional_delay.positive_field),
+                    ("negative_field", initial.directional_delay.negative_field),
+                )
+                if index is not None
+            },
+            "port_order": ["+X", "-X", "+Y", "-Y", "+Z", "-Z"],
+            "waiting_owner": "cell",
+            "link_transit_ticks": initial.link_ticks,
+        },
     }
     if world.event_space is not None:
         from dataclasses import asdict
@@ -194,7 +210,14 @@ def _execute_run(
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "outward-octants"
             ),
-            emission_interval_ticks=initial.link_ticks,
+            emission_interval_ticks=(
+                initial.link_ticks if initial.directional_delay.spatial_mode == "fixed" else None
+            ),
+            spatial_timing=(
+                "fixed-clock"
+                if initial.directional_delay.spatial_mode == "fixed"
+                else "cost-delayed-output-batches"
+            ),
             self_field_filter="unsupported",
             spatial_policy=(
                 "finite-dissipative-v1"

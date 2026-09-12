@@ -10,6 +10,16 @@ Distinguish three categories:
 - **Candidate law:** a specific hypothesis under evaluation, not a proven law of nature.
 - **Open question:** an idea that has not been implemented or established.
 
+## Explicit directional timing candidate
+
+The user-selected [directional delay](docs/DIRECTIONAL_DELAY.md) replaces one
+extra wait with six port waits, optionally sampled from local vector fields.
+Unit coefficients with no controls preserve the old behavior. Its separately
+selected spatial cost mode prepares a field batch and delays its outgoing
+bundles; it changes emission cadence and is not a universal proper-time law.
+Fixed link transit, local inputs, bounded integer ownership and exact declared
+balances remain binding. No curvature claim follows from this selection alone.
+
 ## Active initialization-defined model
 
 The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves

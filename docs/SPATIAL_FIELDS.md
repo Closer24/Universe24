@@ -1,4 +1,9 @@
 # Configured outward spatial fields
+The explicitly selected [directional cost policy](DIRECTIONAL_DELAY.md) extends
+output timing while retaining the fixed transit of dispatched links. The
+fixed-clock statements below describe the default `spatial_mode: "fixed"`;
+`cost` uses delayed batches and its separately specified source cadence.
+
 
 These optional candidates separate a carried disturbance from the spatial fields
 it emits. Select fields through `spatial_fields` in initialization. Schema version

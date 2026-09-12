@@ -449,6 +449,15 @@ cell's general delay; storing a number in an unrelated field does not itself
 slow the cell. Propagating computation disturbance as a physical influence is a
 separate configured-law question, not an implicit feature of this cost output.
 
+## Optional directional timing
+
+`directional_delay` explicitly extends the scalar rule above. Unit coefficients
+with no field references and spatial mode `fixed` preserve it exactly. The
+[directional timing contract](DIRECTIONAL_DELAY.md) owns the six-port schema,
+local unsigned vector controls, atomic carrier prefix, waiting-output ownership
+and opt-in spatial cost timing. Link transit remains fixed. This candidate is
+not a derived gravitational or proper-time law.
+
 ## Conservation, capacity and failure
 
 For each conserved component, a local plan must satisfy:

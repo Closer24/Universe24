@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Directional delay and wave-test eligibility
+
+The [directional contract](DIRECTIONAL_DELAY.md) maps to
+`tests/test_directional_delay.py`, `tests/test_directional_delay_controls.py`
+and `tests/test_curvature_delay_experiment.py`. Independent targets include
+cost 7 with budget 4 giving +X/-X arrivals at ticks 2/4 for weights 1/3;
+unchanged per-link transit; one owner for pending, waiting and in-flight stock;
+emission at the origin until actual release; accumulated causal control reads;
+unchanged frozen schedules; and reciprocal vector controls with priced reads.
+Uniform shorthand and six unit weights must reproduce full original snapshots
+and events. A single +X wave mode must generate the four independently specified
+transverse amplitudes under mixing, while its no-mixing control stays +X.
+Censored detector arrivals are unknown, never falsely classified as zero delay.
+
 ## Local observer
 
 The [observer contract](LOCAL_OBSERVER.md) specifies causal receipt withholding,

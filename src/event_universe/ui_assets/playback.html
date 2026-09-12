@@ -55,6 +55,7 @@ function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=va
 function visibleRecords(f){const records=f.cells.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Cell':'Waiting cell'})));
 for(const t of f.transfers)records.push(transferView(t,f));return records;}
 function transferView(t,f){
+if(t.departure_tick!==undefined && f.tick<t.departure_tick)return {...t,position:[...t.origin],owner:`Waiting at node; dispatches ${t.departure_tick}; arrives ${t.arrival_tick}`,transfer:false};
 const boundary=f.boundary||metadata.boundary||'periodic';
 const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
 const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;

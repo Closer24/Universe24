@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The optional [directional-delay candidate](DIRECTIONAL_DELAY.md) supports six
+port coefficients and causally sampled unsigned vector controls. Defaults
+preserve scalar carrier timing and fixed spatial forwarding. Selected spatial
+cost mode delays output batches. The [revised probe](../examples/computational-curvature/README.md)
+uses locally mixing modes rather than a locked +X trajectory. It does not
+establish spacetime curvature or universal clock/energy behavior.
+
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node, using a completed local-cycle counter and the existing HTML player.
 Global state remains available as an explicit audit view. Optical images, radar
