@@ -71,7 +71,22 @@ jobs:
                   'when = input_expression(obj["when"], 1) if "when" in obj else None',
                   'when = input_expressions.parse(obj["when"], 1) if "when" in obj else None',
               )
-              path.write_text(text)
+          text = text.replace(
+              '    for rule in initial.reactions:\n        if initial.schema_version != 1:\n',
+              '    for reaction in initial.reactions:\n        if initial.schema_version != 1:\n',
+              1,
+          )
+          text = text.replace(
+              '        if max(len(rule.input_types), len(rule.output_types)) > initial.slots_per_cell:\n',
+              '        if max(len(reaction.input_types), len(reaction.output_types)) > initial.slots_per_cell:\n',
+              1,
+          )
+          text = text.replace(
+              '        kinds = {*rule.input_types, *rule.output_types}\n',
+              '        kinds = {*reaction.input_types, *reaction.output_types}\n',
+              1,
+          )
+          path.write_text(text)
           PY
           python -m ruff check --fix src/event_universe/initialization.py
           python -m ruff format src/event_universe/core/disturbance_state.py src/event_universe/initialization.py src/event_universe/fields/ratios.py src/event_universe/fields/disturbances.py src/event_universe/fields/record_operations.py src/event_universe/disturbance_api.py src/event_universe/integration/event_program.py src/event_universe/particle_reactions.py tests/test_particle_reactions.py tests/test_nary_reactions.py
@@ -80,7 +95,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git add src/event_universe/core/disturbance_state.py src/event_universe/initialization.py src/event_universe/fields/ratios.py src/event_universe/fields/disturbances.py src/event_universe/fields/record_operations.py src/event_universe/disturbance_api.py src/event_universe/integration/event_program.py src/event_universe/particle_reactions.py tests/test_particle_reactions.py tests/test_nary_reactions.py examples/known-entities/electron-electron-scattering.json examples/known-entities/muon-decay.json docs/PARTICLE_REACTIONS.md docs/LOCAL_CONVERSIONS.md POSTULATES.md SIMULATOR_DEFINITIONS.md docs/TEST_EXPECTATIONS.md docs/ARCHITECTURE.md
-            git commit -m 'Fix bounded n-to-m reaction parser'
+            git commit -m 'Fix bounded n-to-m reaction validation typing'
             git push origin HEAD:feat/generic-particle-reactions-final
           fi
       - name: Validate focused reaction scope
