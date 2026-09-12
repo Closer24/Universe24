@@ -1,5 +1,11 @@
 # Architecture and change boundaries
 
+The [quantum-register extension](QUANTUM_ENTITIES.md) keeps density arithmetic in
+`quantum/mixed.py`, reusable matrix builders in `quantum/operations.py`, and the
+finite entity-profile compiler in `integration/quantum_entities.py`. The generic
+core is unchanged; native v2 selection extends the existing event-program owner.
+
+
 `entities.py` owns host-only compilation of selected explicit catalog profiles
 into ordinary initialization; it delegates strict JSON and runtime schema
 validation to `initialization.py`. Profiles contain their candidate operations.

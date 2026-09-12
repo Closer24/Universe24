@@ -30,6 +30,12 @@ Global numbering is bookkeeping, not a preferred physical signal. Coherent quant
 operations preserve the existing disjoint local-layer contract; the native binder
 also checks actual parent times against the world's fixed link transit.
 
+## Finite quantum-register extension
+
+The explicit [v2 register/channel contract](QUANTUM_ENTITIES.md) adds dimensions,
+initial levels, colocated named registers, unobserved channels and grouped
+measurement outcomes. It uses this same resolver and preserves path cost rules.
+
 ## Initialization
 
 `event_program` is a JSON object stored as one immutable bounded configuration
@@ -144,9 +150,9 @@ Independent spatial-field clocks and joint field/carrier proposals are not yet
 bound into this shared event program: combining `event_program` with
 `spatial_fields` is rejected explicitly. Existing spatial configurations without
 an event program remain supported and unchanged. This avoids pretending that
-unrecorded field dependencies form a complete unified graph. Multiple Kraus
-operators per indistinguishable outcome, infinite-time finite memory and a
-universal objective event trigger also remain outside the selected contract.
+unrecorded field dependencies form a complete unified graph. Infinite-time finite memory and a universal objective event trigger remain
+outside the selected contract. Multiple indistinguishable Kraus terms are now
+supported by the explicit v2 mixed-state extension.
 
 ## Run through the normal engine
 

@@ -122,6 +122,8 @@ and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
 Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
+reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.
 

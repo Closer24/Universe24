@@ -1,5 +1,11 @@
 # Physical entities and discrete support
 
+The [quantum-mode definitions](QUANTUM_ENTITIES.md) give every current entry a
+finite quantum preparation. The inventory's missing physical dynamics remain
+missing: register dimensions and working quantum channels are not a Standard
+Model field theory or a derivation of particle properties.
+
+
 The entity inventory is [catalog.json](../examples/known-entities/catalog.json).
 It contains descriptive metadata and explicit executable representation profiles,
 not a raw simulator initialization file. The [catalog adapter](ENTITY_CATALOG.md)
