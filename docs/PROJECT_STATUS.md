@@ -1,5 +1,11 @@
 # Project status and restart guide
 
+For a clean machine or deleted conversation, follow
+[recovery without chat history](RECOVERY.md), including the versioned daily
+genericity skill and local retention setup.
+The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
+live specification reconciliation, entity coverage and exact source contracts.
+
 The [small-space comparisons](../examples/small-space/README.md) record 24
 9-cubed/15-cubed entity, source and response experiments. Local accounting and
 selected mechanisms pass; field/particle physical laws remain incomplete.

@@ -5,7 +5,7 @@ from dataclasses import dataclass, replace
 from typing import Protocol
 
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
-from .integer import checked_work
+from .integer import add_components, checked_work
 from .spatial_state import (
     FieldInteractionGuard,
     SpatialBundle,
@@ -287,12 +287,7 @@ class SpatialEngine:
                     continue
                 combined = []
                 for before, added in zip(previous, populations, strict=True):
-                    payload = pack(
-                        tuple(
-                            checked_work(a + b)
-                            for a, b in zip(unpack(before), unpack(added), strict=True)
-                        )
-                    )
+                    payload = pack(add_components(unpack(before), unpack(added)))
                     field.validate(payload)
                     combined.append(payload)
                 merged.append(tuple(combined))
