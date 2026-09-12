@@ -1,0 +1,638 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-local-kinetic-reservoir-v1",
+  "shape": [
+    17,
+    17,
+    17
+  ],
+  "boundary": "periodic",
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "ticks": 12,
+  "normal_budget": 100000000,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "configured unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "whole",
+      "components": 3,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "remainder",
+      "components": 3,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "denominator",
+      "components": 1,
+      "units": "configured unit",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "reservoir",
+      "components": 1,
+      "units": "kinetic energy unit",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "reaction",
+      "components": 3,
+      "units": "momentum unit",
+      "signed": true,
+      "conserved": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "probe",
+      "fields": [
+        "mass",
+        "charge",
+        "whole",
+        "remainder",
+        "denominator"
+      ],
+      "defaults": {
+        "mass": 2,
+        "charge": 1,
+        "whole": [
+          4,
+          0,
+          0
+        ],
+        "remainder": [
+          0,
+          0,
+          0
+        ],
+        "denominator": 1
+      },
+      "transport": {
+        "mode": "move",
+        "routing": "balanced",
+        "direction": {
+          "op": "rational_direction",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "field": "whole",
+                  "side": "left"
+                },
+                {
+                  "op": "ratio",
+                  "args": [
+                    {
+                      "field": "remainder",
+                      "side": "left"
+                    },
+                    {
+                      "field": "denominator",
+                      "side": "left"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "rate": 1
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "type": "probe",
+      "position": [
+        8,
+        8,
+        8
+      ]
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "reservoir",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "reaction",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "field": "reservoir",
+      "position": [
+        8,
+        8,
+        8
+      ],
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "spatial_interactions": [
+    {
+      "name": "configured_energy_exchange",
+      "type": "probe",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "whole",
+          "expression": {
+            "op": "rational_whole",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "left"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "left"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  [
+                    2,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "remainder",
+          "expression": {
+            "op": "rational_remainder",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "left"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "left"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  [
+                    2,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "denominator",
+          "expression": {
+            "op": "rational_denominator",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "left"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "left"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  [
+                    2,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "reservoir",
+          "expression": {
+            "op": "rational_numerator",
+            "args": [
+              {
+                "op": "sub",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "reservoir",
+                        "side": "right"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "op": "dot",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "whole",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "op": "ratio",
+                                    "args": [
+                                      {
+                                        "field": "remainder",
+                                        "side": "left"
+                                      },
+                                      {
+                                        "field": "denominator",
+                                        "side": "left"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "whole",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "op": "ratio",
+                                    "args": [
+                                      {
+                                        "field": "remainder",
+                                        "side": "left"
+                                      },
+                                      {
+                                        "field": "denominator",
+                                        "side": "left"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "args": [
+                              2,
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "ratio",
+                    "args": [
+                      {
+                        "op": "dot",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "whole",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "op": "ratio",
+                                    "args": [
+                                      {
+                                        "field": "remainder",
+                                        "side": "left"
+                                      },
+                                      {
+                                        "field": "denominator",
+                                        "side": "left"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              [
+                                2,
+                                0,
+                                0
+                              ]
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "whole",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "op": "ratio",
+                                    "args": [
+                                      {
+                                        "field": "remainder",
+                                        "side": "left"
+                                      },
+                                      {
+                                        "field": "denominator",
+                                        "side": "left"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              [
+                                2,
+                                0,
+                                0
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          2,
+                          {
+                            "field": "mass",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "reaction",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "reaction",
+                "side": "right"
+              },
+              [
+                2,
+                0,
+                0
+              ]
+            ]
+          }
+        }
+      ],
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "field": "reservoir",
+            "side": "right"
+          },
+          0
+        ]
+      },
+      "invariants": [
+        {
+          "name": "joint_energy",
+          "expression": {
+            "op": "rational_key",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "ratio",
+                    "args": [
+                      {
+                        "op": "dot",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "whole",
+                                "side": "left"
+                              },
+                              {
+                                "op": "ratio",
+                                "args": [
+                                  {
+                                    "field": "remainder",
+                                    "side": "left"
+                                  },
+                                  {
+                                    "field": "denominator",
+                                    "side": "left"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          2,
+                          {
+                            "field": "mass",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "field": "reservoir",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "joint_momentum",
+          "expression": {
+            "op": "rational_key",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "field": "whole",
+                        "side": "left"
+                      },
+                      {
+                        "op": "ratio",
+                        "args": [
+                          {
+                            "field": "remainder",
+                            "side": "left"
+                          },
+                          {
+                            "field": "denominator",
+                            "side": "left"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "field": "reaction",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
