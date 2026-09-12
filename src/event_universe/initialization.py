@@ -1194,12 +1194,12 @@ def _validate_conversions(initial: InitialState) -> None:
         )
         if spatial_types & kinds:
             raise ValueError("conversion types cannot participate in spatial responses or emission")
-    for rule in initial.reactions:
+    for reaction in initial.reactions:
         if initial.schema_version != 1:
             raise ValueError("reaction requires schema_version 1")
-        if max(len(rule.input_types), len(rule.output_types)) > initial.slots_per_cell:
+        if max(len(reaction.input_types), len(reaction.output_types)) > initial.slots_per_cell:
             raise ValueError("reaction arity exceeds slots_per_cell")
-        kinds = {*rule.input_types, *rule.output_types}
+        kinds = {*reaction.input_types, *reaction.output_types}
         if any(c.left_type in kinds or c.right_type in kinds for c in initial.couplings):
             raise ValueError("reaction types cannot participate in exchange couplings")
         spatial_types = (
