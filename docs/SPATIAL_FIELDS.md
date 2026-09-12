@@ -242,3 +242,9 @@ A future self filter must provide a bounded local attribution law and pass both
 isolated-source and external-source controls. Shadow worlds, source histories
 and global isolation checks may be diagnostic references only, never physical
 inputs. The transport candidate does not establish a general force law.
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

@@ -68,6 +68,7 @@ def _components(world: Simulation) -> tuple[Any, ...]:
         spatial.planner if spatial else None,
         spatial.coupler if spatial else None,
         spatial.decayer if spatial else None,
+        spatial.port_waiter if spatial else None,
         world.event_space,
         world._resolver,
     )
@@ -90,7 +91,15 @@ def _canonical(world: Simulation, fresh: Simulation) -> None:
     if spatial is not None and baseline is not None:
         if type(spatial) is not type(baseline) or set(vars(spatial)) != set(vars(baseline)):
             raise ValueError("checkpoint spatial engine contains unknown mutable state")
-        for name in ("initial", "port_count", "planner", "coupler", "decayer", "_initial_totals"):
+        for name in (
+            "initial",
+            "port_count",
+            "planner",
+            "coupler",
+            "decayer",
+            "port_waiter",
+            "_initial_totals",
+        ):
             if getattr(spatial, name) != getattr(baseline, name):
                 raise ValueError("checkpoint spatial law composition was changed")
         if spatial.observer != world._observer:

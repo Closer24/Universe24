@@ -748,3 +748,11 @@ even when the quotient would fit, preserving existing timing behavior.
 
 Existing expression, spatial transaction, rotation, engine timing and link
 transport suites remain the integration coverage for callers and operation costs.
+
+## Directional waiting
+
+`test_directional_delay.py` independently expects waits (3,0,0,2,0,0) for
+L=(6,-4,0), divisor 2. It verifies fixed link time, reversal, conservation,
+checkpoint schedule integrity, unchanged carrier port sequence, signed cancellation,
+frozen waits after new arrivals, finite held-source backpressure and arrival-only
+decay/escape. `examples/directional-delay` compares 32 ticks with a no-delay control.

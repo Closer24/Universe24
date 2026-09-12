@@ -538,3 +538,9 @@ The top-level `event_program` selects [native causal events and local instrument
 It leaves existing configurations unchanged. It can supply a locally recorded
 control code to an existing generic law; all resulting moves retain ordinary
 operation costs, frozen proposals, conservation checks and causal transit.
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

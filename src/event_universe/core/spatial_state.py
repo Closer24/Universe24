@@ -157,6 +157,7 @@ class SpatialCell:
     last_begin_tick: int = -1
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
+    port_waits: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -175,6 +176,8 @@ class SpatialPacket:
     origin: Address3
     port: int
     fields: SpatialBundle
+    dispatch_tick: int | None = None
+    dispatched: int = 1
 
 
 def zero_spatial_state(components: int, port_count: int = 6) -> SpatialState:

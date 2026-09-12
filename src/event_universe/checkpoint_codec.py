@@ -35,6 +35,7 @@ RECORDS: tuple[type[Any], ...] = (
     d.DisturbanceRecord,
     d.Seed,
     d.InitialState,
+    d.DirectionalDelayDefinition,
     d.Departure,
     d.LocalPlan,
     d.PendingCycle,

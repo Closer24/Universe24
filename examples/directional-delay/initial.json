@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "model_id": "directional-pulse-comparison-v1",
+  "shape": [
+    64,
+    64,
+    64
+  ],
+  "boundary": "open",
+  "slots_per_cell": 8,
+  "link_ticks": 1,
+  "normal_budget": 1000000,
+  "ticks": 32,
+  "directional_delay": {
+    "model_id": "positive-projection-origin-wait-v1",
+    "field": "load",
+    "divisor": 2
+  },
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "test unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "test unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "load",
+      "components": 3,
+      "units": "test unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "pulse",
+      "components": 3,
+      "units": "test unit",
+      "signed": true,
+      "conserved": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "right",
+      "fields": [
+        "mass",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum"
+      }
+    },
+    {
+      "name": "left",
+      "fields": [
+        "mass",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          -1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "load",
+      "baseline": [
+        6,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "pulse",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "outward"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        32,
+        32,
+        32
+      ],
+      "field": "pulse",
+      "populations": [
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ],
+        [
+          24,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        32,
+        30,
+        32
+      ],
+      "type": "right"
+    },
+    {
+      "position": [
+        32,
+        34,
+        32
+      ],
+      "type": "left"
+    }
+  ]
+}

@@ -40,6 +40,9 @@
     "normal_budget": {
       "$ref": "#/$defs/positive"
     },
+    "directional_delay": {
+      "$ref": "#/$defs/directional_delay"
+    },
     "operation_costs": {
       "$ref": "#/$defs/operation_costs"
     },
@@ -185,6 +188,16 @@
   "title": "Universe24 runtime initialization",
   "description": "Structural schema for versions 1 and 2. The canonical parser additionally validates names, ownership, expression types/depth, exact integer inputs, topology closure, conserved quantities and supported capability composition.",
   "$defs": {
+    "directional_delay": {
+      "type": "object",
+      "properties": {
+        "model_id": {"const": "positive-projection-origin-wait-v1"},
+        "field": {"$ref": "#/$defs/name"},
+        "divisor": {"$ref": "#/$defs/positive"}
+      },
+      "required": ["model_id", "field", "divisor"],
+      "additionalProperties": false
+    },
     "name": {
       "type": "string",
       "minLength": 1,
@@ -2042,6 +2055,9 @@
         },
         "normal_budget": {
           "$ref": "#/$defs/positive"
+        },
+        "directional_delay": {
+          "$ref": "#/$defs/directional_delay"
         },
         "operation_costs": {
           "$ref": "#/$defs/operation_costs"

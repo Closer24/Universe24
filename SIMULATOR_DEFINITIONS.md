@@ -718,3 +718,9 @@ still incur native cycle cost; zero oracle ticks do not imply zero host work.
 The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](docs/DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

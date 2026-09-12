@@ -73,3 +73,5 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+- [Directional origin waiting](DIRECTIONAL_DELAY.md): optional vector timing for carriers and spatial fields.

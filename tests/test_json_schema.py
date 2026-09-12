@@ -119,3 +119,14 @@ def test_schema_api_returns_fresh_documents_and_rejects_unknown_names():
     assert schema_document()["additionalProperties"] is False
     with pytest.raises(ValueError, match="unknown schema"):
         schema_document("../secret")
+
+
+def test_directional_timing_runtime_and_environment_schema(validators):
+    raw = json.loads((ROOT / "examples/directional-delay/initial.json").read_text())
+    validators["runtime"].validate(raw)
+    environment = json.loads((ROOT / "examples/computational-star/environment.json").read_text())
+    environment["data"]["directional_delay"] = raw["directional_delay"]
+    validators["environment"].validate(environment)
+    raw["directional_delay"]["divisor"] = 0
+    with pytest.raises(ValidationError):
+        validators["runtime"].validate(raw)

@@ -225,6 +225,12 @@ class Seed:
 
 
 @dataclass(frozen=True, slots=True)
+class DirectionalDelayDefinition:
+    field: int
+    divisor: int
+
+
+@dataclass(frozen=True, slots=True)
 class InitialState:
     model_id: str
     shape: Address3
@@ -250,6 +256,7 @@ class InitialState:
     event_program: str | None = None
     topology: PortTopology = DEFAULT_TOPOLOGY
     unit_system: UnitSystem | None = None
+    directional_delay: DirectionalDelayDefinition | None = None
     source_json: str | None = field(default=None, compare=False, repr=False)
 
 
@@ -269,6 +276,7 @@ class LocalPlan:
     spatial_reaction: Values = ()
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
     cause_id: int | None = None
+    port_waits: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -286,6 +294,8 @@ class Packet:
     port: int
     record: DisturbanceRecord
     cause_id: int | None = None
+    dispatch_tick: int | None = None
+    dispatched: int = 1
 
 
 @dataclass(slots=True)

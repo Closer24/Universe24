@@ -2,9 +2,11 @@
 
 from pathlib import Path
 
+from event_universe.core.directional_state import validate_directional_delay
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.topology import validate_topology_configuration
+from event_universe.fields.directional_delay import DirectionalWaitLaw
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
@@ -20,8 +22,23 @@ class Simulation(DisturbanceEngine):
         from event_universe.units import validate_units
 
         validate_topology_configuration(initial)
+        validate_directional_delay(initial)
         validate_units(initial)
         event_space, resolver = None, None
+        waiter = None
+        if initial.directional_delay is not None:
+            delay = initial.directional_delay
+            index = next(
+                i for i, field in enumerate(initial.spatial_fields) if field.field == delay.field
+            )
+            waiter = DirectionalWaitLaw(
+                index,
+                initial.spatial_fields[index].baseline,
+                initial.topology.offsets,
+                delay.divisor,
+                initial.link_ticks,
+                initial.operation_costs,
+            )
         if initial.event_program is not None:
             from event_universe.integration.event_runtime import build_event_runtime
 
@@ -88,6 +105,7 @@ class Simulation(DisturbanceEngine):
             ),
             event_space=event_space,
             resolver=resolver,
+            port_waiter=waiter,
         )
         self._checkpoint_components = (
             self._planner,
@@ -96,6 +114,7 @@ class Simulation(DisturbanceEngine):
             self._spatial.planner if self._spatial else None,
             self._spatial.coupler if self._spatial else None,
             self._spatial.decayer if self._spatial else None,
+            self._spatial.port_waiter if self._spatial else None,
             self.event_space,
             self._resolver,
         )

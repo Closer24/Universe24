@@ -385,3 +385,9 @@ component. Local supports, integer bounds, classical cycle charges and zero
 direct oracle ticks remain unchanged. This is a representation/channel extension,
 not a new collapse law or a derived physical species Hamiltonian. See
 [QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md).
+
+## Optional directional origin waiting
+
+The explicit [directional timing hypothesis](docs/DIRECTIONAL_DELAY.md) adds frozen waiting at
+the origin for both carrier and spatial transfers. Link transit remains fixed.
+Omitting the configuration preserves the existing timing contract.

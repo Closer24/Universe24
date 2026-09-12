@@ -26,6 +26,7 @@ PART_KEYS = {
         "normal_budget",
         "operation_costs",
         "unit_system",
+        "directional_delay",
     },
     "definitions": {
         "fields",

@@ -41,6 +41,32 @@ SPATIAL_FIELDS = (
 )
 
 
+def _waits(world: Simulation, waits: tuple[int, ...], *, required: bool = False) -> None:
+    if not waits and not (required and world.initial.directional_delay is not None):
+        return
+    if world.initial.directional_delay is None or len(waits) != world.initial.topology.degree:
+        raise ValueError("checkpoint port waits do not match the configured law")
+    for wait in waits:
+        _integer(wait)
+        if wait % world.initial.link_ticks:
+            raise ValueError("checkpoint port wait is not a whole link interval")
+
+
+def _dispatch(world: Simulation, tick: int | None, dispatched: int, arrival: int) -> None:
+    if type(dispatched) is not int or dispatched not in (0, 1):
+        raise ValueError("checkpoint dispatch marker must be a binary integer")
+    if world.initial.directional_delay is None:
+        if tick is not None or not dispatched:
+            raise ValueError("checkpoint unconfigured departure wait")
+        return
+    _integer(tick)
+    assert tick is not None
+    if arrival != tick + world.initial.link_ticks:
+        raise ValueError("checkpoint packet violates fixed link transit")
+    if not world.faulted and dispatched != (tick <= world.tick):
+        raise ValueError("checkpoint waiting/transit phase is inconsistent")
+
+
 def _integer(value: Any, minimum: int = 0, maximum: int = MAX_VALUE) -> None:
     if type(value) is not int or not minimum <= value <= maximum:
         raise ValueError("checkpoint integer is outside its state bound")
@@ -142,6 +168,7 @@ def _cause(world: Simulation, value: int | None) -> None:
 
 
 def _plan(world: Simulation, plan: LocalPlan) -> None:
+    _waits(world, plan.port_waits, required=True)
     capacity, degree = world.initial.slots_per_cell, world.initial.topology.degree
     if len(plan.replacements) > capacity or len({slot for slot, _ in plan.replacements}) != len(
         plan.replacements
@@ -253,6 +280,7 @@ def validate_world(world: Simulation) -> None:
                 raise ValueError("checkpoint carrier packet ownership is invalid")
             _integer(packet.port, 0, initial.topology.degree - 1)
             _integer(packet.arrival_tick)
+            _dispatch(world, packet.dispatch_tick, packet.dispatched, packet.arrival_tick)
             if not world.faulted and packet.arrival_tick <= world.tick:
                 raise ValueError("checkpoint contains an overdue carrier packet")
             _record(world, packet.record)
@@ -295,6 +323,7 @@ def _validate_spatial(world: Simulation) -> None:
                 initial.fields[definition.field].validate(payload)
         for value in (cell.last_cost, cell.received_count, cell.received_decay_cost):
             _integer(value)
+        _waits(world, cell.port_waits)
         _integer(cell.last_begin_tick, -1, world.tick)
         if cell.reaction_phases:
             if len(cell.reaction_phases) != len(initial.spatial_fields):
@@ -337,6 +366,7 @@ def _validate_spatial(world: Simulation) -> None:
                 raise ValueError("checkpoint spatial packet ownership is invalid")
             _integer(packet.port, 0, initial.topology.degree - 1)
             _integer(packet.arrival_tick)
+            _dispatch(world, packet.dispatch_tick, packet.dispatched, packet.arrival_tick)
             if not world.faulted and packet.arrival_tick <= world.tick:
                 raise ValueError("checkpoint contains an overdue spatial packet")
             for definition, populations in zip(initial.spatial_fields, packet.fields, strict=False):

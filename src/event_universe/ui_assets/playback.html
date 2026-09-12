@@ -98,9 +98,9 @@ return {nodes,segments:[...segments.values()]};
 }
 function transferView(t,f){
 const boundary=f.boundary||metadata.boundary||'periodic';
-const offset=portOffset(t.port),fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));
+const offset=portOffset(t.port),fraction=t.phase==='waiting'?0:Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));
 const p=t.origin.map((value,axis)=>{const coordinate=value+offset[axis]*fraction;return boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];});
-const owner=t.target===null?`Exit through ${ports[t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
+const owner=t.phase==='waiting'?`Origin departure buffer; dispatches ${t.dispatch_tick}`:t.target===null?`Exit through ${ports[t.port]}; leaves ${t.arrival_tick}`:`Link → ${t.target.join(', ')}; arrives ${t.arrival_tick}`;
 return {...t,position:p,owner,transfer:true};}
 function visibleSpatialFields(f){
 const records=(f.spatial_fields||[]).flatMap(c=>Object.entries(c.fields).map(([name,field])=>({name,position:c.position,value:field.value,baseline:field.baseline,owner:'Node field; value includes baseline'})));

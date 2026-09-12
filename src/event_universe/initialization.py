@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import cast
 
+from .core.directional_state import validate_directional_delay
 from .core.disturbance_state import (
     DEFAULT_TOPOLOGY,
     MAX_EXPRESSION_NODES,
@@ -17,6 +18,7 @@ from .core.disturbance_state import (
     Address3,
     Assignment,
     CouplingDefinition,
+    DirectionalDelayDefinition,
     DisturbanceDefinition,
     DisturbanceRecord,
     Expression,
@@ -1074,6 +1076,7 @@ def parse_initial_state(document: object) -> InitialState:
             "event_program",
             "topology",
             "unit_system",
+            "directional_delay",
         },
         required,
     )
@@ -1095,6 +1098,22 @@ def parse_initial_state(document: object) -> InitialState:
     fields = _fields(obj["fields"])
     disturbances = _disturbances(obj["disturbance_types"], fields, topology)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
+    delay = None
+    if "directional_delay" in obj:
+        rule = _object(
+            obj["directional_delay"],
+            "directional_delay",
+            {"model_id", "field", "divisor"},
+            {"model_id", "field", "divisor"},
+        )
+        if rule["model_id"] != "positive-projection-origin-wait-v1":
+            raise ValueError("unsupported directional delay model")
+        index = _index(
+            rule["field"], {f.name: i for i, f in enumerate(fields)}, "directional delay field"
+        )
+        delay = DirectionalDelayDefinition(
+            index, _integer(rule["divisor"], "directional delay divisor", 1)
+        )
     from .units import parse_unit_system, validate_units
 
     initial = InitialState(
@@ -1133,8 +1152,10 @@ def parse_initial_state(document: object) -> InitialState:
         topology=topology,
         unit_system=parse_unit_system(obj["unit_system"]) if "unit_system" in obj else None,
         source_json=json.dumps(obj, sort_keys=True, separators=(",", ":"), allow_nan=False),
+        directional_delay=delay,
     )
     validate_topology_configuration(initial)
+    validate_directional_delay(initial)
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program
 

@@ -1,0 +1,10 @@
+{
+  "width": 720,
+  "height": 960,
+  "frame_duration_ms": 100,
+  "view": [
+    0,
+    64
+  ],
+  "camera_rotation_degrees": 16
+}

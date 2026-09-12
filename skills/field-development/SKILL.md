@@ -55,3 +55,11 @@ schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and
 simulation. Do not claim completion while a retained acceptance assertion fails;
 return the precise remaining law/contract problem to Boss.
+
+### Configured directional waiting
+
+Use [the directional timing contract](../../docs/DIRECTIONAL_DELAY.md) for the
+optional positive-projection-origin-wait-v1 candidate. Preserve frozen origin
+ownership for carrier and field packets, fixed transit after actual dispatch,
+and the declared composition exclusions. Timing-only investigations must not
+reroute packets or add a momentum response to produce a desired trajectory.

@@ -268,3 +268,14 @@ reconciliation changes neither the engine nor the live Highlights document.
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
 | 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
+
+### Directional timing candidate
+
+Highlights was reread on 2026-09-12 at the same revision recorded above.
+Sections 10.3 and 10.6 retain local ownership and fixed transit after dispatch.
+The [optional directional wait](DIRECTIONAL_DELAY.md) is an explicit new candidate
+extending the origin timing rule to spatial transfers, not a claim already made
+by the live document. Sign-sensitive waiting is implemented and independently
+tested; mass-derived work, curvature and gravitational binding remain unverified.
+The live document was not edited. The field-development Skill now points to the
+new scheduling contract; Boss needs no change because its review workflow applies.
