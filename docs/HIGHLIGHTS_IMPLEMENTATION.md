@@ -238,3 +238,14 @@ Highlights edit or replace the earlier revision record above.
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
 | 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
+
+### Physical interaction reference reconciliation
+
+The live Universe 24 Highlights document was updated on 2026-09-13 at revision
+`ANLCKQnlGcfI5Hekr5rAloaCmlkTH1Hx93N9f971g9RU2VXKU_3GFTPy3oFd1yNqShTyQB30MkMBsDlCbO4-pt69jP5f6xYGQyEsjWmS7A8`
+with section 10.9. It records that the canonical physical reference covers the
+established interaction families of the represented sectors while keeping
+exclusive reaction channels non-exhaustive and non-executable. The repository
+catalog supplies at least one representative channel for each established family.
+Catalog identities and interaction names never select a simulator law; executable
+experiments remain separately configured and validated.

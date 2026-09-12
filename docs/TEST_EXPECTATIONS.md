@@ -107,8 +107,9 @@ pass must not be relabeled as physical acceptance.
 ## Physical entity catalog and elementary probes
 
 `tests/test_entity_catalog.py` checks coverage of the Standard Model inventory,
-disturbance families and representative interactions, alongside sourced values,
-unknowns, units and reciprocal identity links. Negative inputs cover executable
+disturbance families and the established interaction-family taxonomy. It requires
+at least one representative channel for every established family, alongside sourced
+values, unknowns, units and reciprocal identity links. Negative inputs cover executable
 content, invalid references, measurement descriptors, alias cycles and reaction
 charge imbalance. These tests validate a reference, not a physical derivation.
 

@@ -692,3 +692,47 @@ def test_nucleon_composition_is_valence_metadata_with_distinct_antimatter(
     assert properties["baryon_number"]["value"] == baryon_number
     assert "sea components" in properties["composition"]["context"]
     assert particle["field_ids"] == []
+
+
+def test_shipped_catalog_covers_established_interaction_family_taxonomy(shipped):
+    families = {row["id"]: row for row in shipped["interaction_families"]}
+    required = {
+        "electromagnetic_scattering",
+        "electromagnetic_radiation",
+        "pair_creation_annihilation",
+        "strong_color_interactions",
+        "strong_binding",
+        "weak_charged_current",
+        "weak_neutral_current",
+        "electroweak_gauge_interactions",
+        "higgs_couplings",
+        "neutrino_flavor_mixing",
+        "gravitational_interaction",
+        "nuclear_reactions",
+        "atomic_molecular_transitions",
+        "collective_medium_interactions",
+    }
+    established = {
+        identity for identity, row in families.items() if row["physical_status"] == "established"
+    }
+    assert established == required
+
+
+def test_every_established_interaction_family_has_a_representative_channel(shipped):
+    established = {
+        row["id"] for row in shipped["interaction_families"] if row["physical_status"] == "established"
+    }
+    represented = {row["interaction_id"] for row in shipped["representative_channels"]}
+    assert established <= represented
+    assert len(shipped["representative_channels"]) == 38
+
+
+def test_every_established_particle_is_in_gravitational_interaction(shipped):
+    gravity = next(
+        row for row in shipped["interaction_families"] if row["id"] == "gravitational_interaction"
+    )
+    participants = set(gravity["participant_ids"])
+    established_particles = {
+        row["id"] for row in shipped["particle_entities"] if row["physical_status"] == "established"
+    }
+    assert established_particles <= participants

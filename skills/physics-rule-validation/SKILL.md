@@ -24,6 +24,12 @@ whole-record versus extensive transport, exact source accounting, paired
 exchange, fixed transit and cost-dependent frozen local commits. Historical
 self-force and particle-momentum laws apply only to their named candidates.
 
+The physical entity catalog is reference evidence, not an executable rule source.
+When an experiment claims a known interaction, first verify that its entity and
+interaction-family/channel references are physically applicable, then independently
+validate the configured runtime operation, conservation policy and outcome. A
+catalog membership or representative channel never proves the simulator law.
+
 For each changed rule, verify:
 
 - the operation, units, parameters, assumptions and expected behavior are explicit

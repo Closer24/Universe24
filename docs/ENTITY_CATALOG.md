@@ -37,11 +37,19 @@ refers to the same property on another entity, such as an antiparticle's mass.
 Reference cycles and unresolved identities are rejected.
 
 The 17 `interaction_families` specify participants, mediators, conditions and
-evidence status. The 33 `representative_channels` list incoming and outgoing
-entities; repeated IDs encode multiplicity. They are descriptive possibilities,
-not an exhaustive reaction table or a request to perform a conversion. Kinematic
-availability, environment and selection rules still matter. No cross section,
-branching probability or dynamical law is inferred from a listed channel.
+evidence status. Fourteen are established physical families, one is a Standard Model
+theoretical Higgs self-interaction entry, and two are explicitly labeled project or
+quantum-gravity hypotheses. The established taxonomy covers the four fundamental
+interactions and the represented Higgs, electroweak-gauge, neutrino-mixing,
+production/annihilation, strong-binding, nuclear, atomic/molecular and collective
+sectors. Every established family has at least one of the 38 `representative_channels`.
+
+This is interaction-family completeness for the represented sectors, not an
+exhaustive reaction table. Exclusive scattering states are continuous, and nuclear,
+atomic, molecular and material spectra are open-ended specialist catalogs. Repeated
+IDs encode multiplicity. Kinematic availability, environment and selection rules
+still matter. No cross section, branching probability or dynamical law is inferred
+from a listed channel.
 
 Validate the reference without creating a simulation:
 
@@ -105,7 +113,8 @@ updates remain elementary copy/clear operations. Limits remain 16 fields and
 ## Evidence and conversion limits
 
 `tests/test_entity_catalog.py` checks reference coverage, sourced physical
-properties and invalid metadata. `tests/test_entity_compiler.py` checks explicit
+properties, the established interaction-family taxonomy, representative coverage
+for every established family and invalid metadata. `tests/test_entity_compiler.py` checks explicit
 profile selection, legacy compatibility, rejection cases and active representative
 worlds. Quantum and small-space consumers use the same separated profiles.
 Changing reference metadata must not change compiled laws or resulting physics.

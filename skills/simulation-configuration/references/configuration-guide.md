@@ -114,8 +114,11 @@ which also supports `shape`, `ticks` and
 
 The version 2 physical catalog contains no executable expressions. Physical
 properties and possible interactions stay in that reference; experiment profiles
-are supplied through a separate file. Never infer update laws, reaction rates or
-lattice parameters from catalog measurements. Validate reference changes with
+are supplied through a separate file. Its canonical interaction taxonomy includes
+every established family relevant to the represented sectors, with at least one
+descriptive representative channel per established family. Individual exclusive
+channels remain non-exhaustive. Never infer update laws, reaction rates or lattice
+parameters from catalog measurements or interaction names. Validate reference changes with
 `python -m event_universe.configuration_validation examples/known-entities/catalog.json`.
 Check every supplied representation, including unselected entities, with
 `python -m event_universe.configuration_validation examples/known-entities/representation-probes.json --catalog examples/known-entities/catalog.json`.

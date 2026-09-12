@@ -8,11 +8,12 @@
     "field_coverage": "Standard Model field families and classical geometry; inferred dark-sector categories and project hypotheses are distinguished.",
     "selected_composites": "Proton, neutron and their antiparticles have individual entries.",
     "composite_and_collective_completeness": "Non-exhaustive families, not every hadron, resonance, nuclide, atom, ion, molecule, material phase or excited state.",
-    "interaction_completeness": "Major families and representative channels, not every allowed mode or contribution.",
+    "interaction_completeness": "All established interaction families needed by the represented Standard Model, gravitational, nuclear, atomic/molecular and collective-medium sectors are enumerated. Individual exclusive reaction channels remain non-exhaustive because allowed states and continuous kinematics are not finite catalogs.",
     "numerical_role": "External reference targets, without simulator calibration or update selection.",
     "channel_multiplicity": "Repeated IDs denote separate participants of the same species.",
     "property_references": "An entity_id within a property refers to the same property on that entity. A metadata_key refers to a current-entity intrinsic attribute.",
-    "field_link_semantics": "Particle and field links are reciprocal excitation links. Composites identify constituents instead; family field_ids identify underlying fields."
+    "field_link_semantics": "Particle and field links are reciprocal excitation links. Composites identify constituents instead; family field_ids identify underlying fields.",
+    "interaction_family_coverage": "The established-family taxonomy covers electromagnetic, strong, weak and gravitational interactions, plus Higgs-sector couplings, electroweak gauge interactions, neutrino flavor mixing, production/annihilation, strong binding/hadronization, and effective nuclear, atomic/molecular and collective-medium interactions."
   },
   "notes": [
     "Descriptive reference data only: no executable profiles, formulas, transition rates or update rules.",
@@ -24,7 +25,8 @@
     "Antimatter has positive mass. Anticolor is a conjugate representation, not electric-like negative charge.",
     "Possible channels require suitable states and applicable energy, momentum, angular momentum and charge conditions.",
     "Rest mass and particle count are not universal reaction invariants. Products carry the applicable conserved quantities.",
-    "Evidence statuses separate measurements, theoretical classifications, unknown identity and hypotheses."
+    "Evidence statuses separate measurements, theoretical classifications, unknown identity and hypotheses.",
+    "Interaction-family completeness is a taxonomy claim for the represented established sectors, not a claim that every exclusive reaction, resonance, isotope, atomic line, molecular transition or material mode is enumerated."
   ],
   "sources": {
     "pdg_higgs": {
@@ -6996,6 +6998,114 @@
         "pdg_electroweak"
       ],
       "physical_status": "theoretical",
+      "claim_level": "descriptive_only"
+    },
+    {
+      "id": "quark_antiquark_hadronization",
+      "interaction_id": "strong_binding",
+      "incoming_ids": [
+        "up_quark",
+        "antiup_quark"
+      ],
+      "outgoing_ids": [
+        "mesons"
+      ],
+      "conditions": [
+        "Inclusive family-level hadronization into color-singlet hadrons; this does not select one exclusive meson final state.",
+        "Partonic energy, momentum, flavor and color constraints still apply."
+      ],
+      "sources": [
+        "pdg_qcd",
+        "pdg_meson_table"
+      ],
+      "physical_status": "established",
+      "claim_level": "descriptive_only"
+    },
+    {
+      "id": "compact_binary_gravitational_radiation",
+      "interaction_id": "gravitational_interaction",
+      "incoming_ids": [
+        "compact_gravitating_bodies",
+        "compact_gravitating_bodies"
+      ],
+      "outgoing_ids": [
+        "compact_gravitating_bodies",
+        "compact_gravitating_bodies",
+        "gravitational_waves"
+      ],
+      "conditions": [
+        "A bound or scattering compact system with changing mass quadrupole can radiate gravitational waves.",
+        "The family-level channel does not encode a waveform, merger model or graviton."
+      ],
+      "sources": [
+        "ligo_waves",
+        "tong_gr"
+      ],
+      "physical_status": "established",
+      "claim_level": "descriptive_only"
+    },
+    {
+      "id": "radiative_neutron_capture",
+      "interaction_id": "nuclear_reactions",
+      "incoming_ids": [
+        "neutron",
+        "nuclei_and_isotopes"
+      ],
+      "outgoing_ids": [
+        "nuclei_and_isotopes",
+        "photon"
+      ],
+      "conditions": [
+        "The target nuclide and incident neutron energy must permit capture into an allowed final nuclear state.",
+        "The family ID does not select a particular isotope or gamma cascade."
+      ],
+      "sources": [
+        "iaea_nuclides",
+        "pdg_baryon_table"
+      ],
+      "physical_status": "established",
+      "claim_level": "descriptive_only"
+    },
+    {
+      "id": "atomic_radiative_transition",
+      "interaction_id": "atomic_molecular_transitions",
+      "incoming_ids": [
+        "atoms_and_ions"
+      ],
+      "outgoing_ids": [
+        "atoms_and_ions",
+        "photon"
+      ],
+      "conditions": [
+        "The initial and final atomic states and selection rules must permit photon emission.",
+        "The repeated atom-family identity denotes a state change, not creation of a second atom."
+      ],
+      "sources": [
+        "nist_atoms"
+      ],
+      "physical_status": "established",
+      "claim_level": "descriptive_only"
+    },
+    {
+      "id": "electron_collective_mode_scattering",
+      "interaction_id": "collective_medium_interactions",
+      "incoming_ids": [
+        "electron",
+        "condensed_matter_quasiparticles"
+      ],
+      "outgoing_ids": [
+        "electron",
+        "condensed_matter_quasiparticles"
+      ],
+      "conditions": [
+        "The material state and available collective mode determine the allowed exchange.",
+        "This family-level example does not assign a universal material coupling or dispersion law."
+      ],
+      "sources": [
+        "tong_solid_state",
+        "nist_collective_modes"
+      ],
+      "physical_status": "established",
       "claim_level": "descriptive_only"
     }
   ],
