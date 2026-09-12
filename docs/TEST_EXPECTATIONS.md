@@ -1,5 +1,21 @@
 # Test inputs and expected results
 
+## Physical entity catalog and elementary probes
+
+`tests/test_physical_entities.py` covers the sourced catalog and only its new
+runtime probes. Antiparticle references must be reciprocal where applicable,
+charges conjugate and neutrino ambiguity explicit. Example references and
+particle properties must agree with their catalog mappings.
+
+The equal-mass contact swaps momenta without a continuum update formula;
+individual positive masses/opposite charges and joint momentum/norm persist.
+Equivalent local trials on 9-cubed and 15-cubed domains and different lattice
+axes must agree before any boundary can matter. Rest and separated states must
+not trigger the contact. Two transverse field payloads travel one neighbor per
+two ticks with retained and in-flight ownership counted once. These checks do
+not establish Maxwell dynamics, annihilation or general classical emergence.
+See [the acceptance limits](PHYSICAL_ENTITIES.md).
+
 ## Generic local field rules
 
 These are focused acceptance requirements for

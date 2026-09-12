@@ -8,6 +8,13 @@ transport rule and cost setting. The engine has no hardcoded interpretation of
 mass, charge, velocity or other user-defined physical names. Missing initialization
 does not select a scalar model.
 
+New emergence experiments produce states using elementary local vector
+operations rather than supplied continuum physical formulas. Comparisons,
+invariants and independent external benchmarks remain validation tools. Existing
+formula-based reference configurations are labeled separately; they do not
+establish emergence. The [entity audit](docs/PHYSICAL_ENTITIES.md) records the
+physical inventory, executable probes and remaining classical/quantum gaps.
+
 [docs/DISTURBANCES.md](docs/DISTURBANCES.md) is the authoritative active schema
 and transition contract: bounded scalar/vector payloads, whole-record or extensive
 transport, atomic local exchange, explicit sources, fixed link transit, local

@@ -1,5 +1,15 @@
 # Known entity configurations
 
+The physical inventory is [catalog.json](catalog.json). It describes fields,
+particles and antiparticles with separate representation, dynamics and emergence
+status; it is not an initialization file. See
+[physical entities and discrete support](../../docs/PHYSICAL_ENTITIES.md) for
+the sourced audit, the elementary-rule restriction and the two new executable
+probes: [discrete-pair.json](discrete-pair.json) and
+[field-channel.json](field-channel.json). The original five-run wrapper below
+does not include these probes. The existing collision formula is a reference
+benchmark, not evidence of emergence from elementary vector operations.
+
 From a repository checkout with the project Python environment already available:
 
 ```powershell
