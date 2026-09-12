@@ -13,6 +13,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
+| [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
 | [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
 | [Entity catalog](ENTITY_CATALOG.md) | Compilation of bounded entity profiles into initialization data |
 | [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
@@ -42,6 +43,8 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 
 | Document | Responsibility |
 | --- | --- |
+| [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | Dated implementation inventory and specification coverage, not a live status feed |
+| [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
 | [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |

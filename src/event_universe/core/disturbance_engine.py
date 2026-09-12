@@ -22,7 +22,7 @@ from .disturbance_state import (
 )
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
-from .integer import checked_work
+from .integer import add_components, ceil_div, checked_work
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
 from .topology import neighbor_address
 
@@ -33,7 +33,7 @@ EventSink = Callable[[dict[str, object]], None]
 def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
     if min(budget, link_ticks) < 1 or cost < 0:
         raise ValueError("invalid cost, normal budget, or fixed link time")
-    cycles = max(1, checked_work(cost + budget - 1) // budget)
+    cycles = max(1, ceil_div(cost, budget))
     return bounded(checked_work((cycles - 1) * link_ticks)), bounded(checked_work(cycles * link_ticks))
 
 
@@ -417,9 +417,7 @@ class DisturbanceEngine:
                 assert old is not None
                 combined: list[tuple[int, ...]] = []
                 for index, (a, b) in enumerate(zip(old.values, incoming.values, strict=True)):
-                    value = pack(
-                        tuple(checked_work(x + y) for x, y in zip(unpack(a), unpack(b), strict=True))
-                    )
+                    value = pack(add_components(unpack(a), unpack(b)))
                     self.initial.fields[index].validate(value)
                     combined.append(value)
                 records[match] = replace(old, values=tuple(combined))

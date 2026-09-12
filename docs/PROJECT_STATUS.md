@@ -1,6 +1,6 @@
 # Project status and restart guide
 
-Audit reference: 2026-09-12, main `fb083c159fe1f51612203962d9a7921683eb31c8`.
+Audit reference: 2026-09-12, main `99b9f5f0034ea288f7de0a2a8d7645220c45d8aa`.
 The names below include the repository-consistency cleanup based on that revision.
 Verify the current checkout, main and open PRs before continuing. A dated source
 map does not certify another checkout or turn an unmerged branch into implemented work.
@@ -18,6 +18,10 @@ Use the [documentation index](README.md) for each subject's authoritative owner.
 | Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
 | Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |
 | Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
+| Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
+| Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
+| Formula-free state diagnostic | [cell_contract.py](../src/event_universe/diagnostics/cell_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
+| Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the active generic Simulation |
 | Historical particle APIs | [particle_api.py](../src/event_universe/particle_api.py) | Explicit `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`, `CausalStreamSimulation` |
 | Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
 
@@ -88,11 +92,14 @@ are explicit configuration solutions, not changed entity defaults or derived
 universal laws. Their limitations and revision-specific results remain in the
 experiment README.
 
-As of the audit reference, PRs #31, #33, #37 and #38 are separate unmerged work:
-standalone vector lab, Highlights/skill reconciliation, rational particle contracts
-and local E/B response probes respectively.
-Consult [live PRs](https://github.com/Closer24/Universe24/pulls); do not infer their
-integration from their descriptions or overwrite their shared files during cleanup.
+The audit reference now includes the standalone vector laboratory, shared bounded
+arithmetic, the local E/B pulse and formula-free cell-state guard, and the
+Highlights/recovery documentation. Their appearance in the checkout does not
+promote reference experiments into the active physical engine. The
+[Highlights coverage record](HIGHLIGHTS_IMPLEMENTATION.md) preserves its stated
+historical revision; use this map and current contracts for later additions.
+Consult [live PRs](https://github.com/Closer24/Universe24/pulls) for any subsequent
+work rather than inferring integration from a branch description.
 Historical integration chronology remains in Git and [validation records](VALIDATION.md),
 not a competing current-status list.
 

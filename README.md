@@ -346,3 +346,10 @@ world.add_particle(1, 18, 6, 6, px=-6, mass=2)
 
 `BalancedSimulation` and `CausalStreamSimulation` likewise select explicit
 research laws. See [migration](docs/MIGRATION.md) and their candidate contracts.
+
+## Standalone generic vector lab
+
+The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
+configured N-to-M node reactions, bounded rational vector arithmetic and exact
+conservation tests. It is an independent experiment, not the active simulator.
+Run `python -m tools.generic_vector_lab.run_demo` from this repository.
