@@ -1,5 +1,6 @@
 """Generic departure and integer transit duration; no access to cells or the world."""
 
+from event_universe.core.integer import ceil_div
 from event_universe.core.state import Vector, checked, checked_work
 from event_universe.dynamics.movement import MovementResult, choose_axis, speed_ratio
 
@@ -38,4 +39,4 @@ def transit_ticks(
     if not speed:
         raise ValueError("a resting particle cannot start a transit")
     required = checked_work(checked_work(length * speed_cap) * denominator)
-    return checked(checked_work(required + speed - 1) // speed)
+    return checked(ceil_div(required, speed))

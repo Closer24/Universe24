@@ -22,16 +22,16 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work, signed_divrem
+from event_universe.core.integer import (
+    add_components,
+    checked_sum,
+    checked_work,
+    cross_product,
+    dot_product,
+    signed_divrem,
+)
 
 from .spatial import split_weighted
-
-
-def _dot(left: tuple[int, ...], right: tuple[int, ...]) -> int:
-    total = 0
-    for a, b in zip(left, right, strict=True):
-        total = checked_work(total + checked_work(a * b))
-    return total
 
 
 def _broadcast(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
@@ -72,15 +72,11 @@ def evaluate(
         for arg in expression.arguments
     )
     if op == "transform":
-        return tuple(_dot(row, operands[0]) for row in expression.matrix)
+        return tuple(dot_product(row, operands[0]) for row in expression.matrix)
     if op == "dot":
-        return (_dot(operands[0], operands[1]),)
+        return (dot_product(operands[0], operands[1]),)
     if op == "cross":
-        first, second = operands
-        return tuple(
-            checked_work(checked_work(first[a] * second[b]) - checked_work(first[b] * second[a]))
-            for a, b in ((1, 2), (2, 0), (0, 1))
-        )
+        return cross_product(operands[0], operands[1])
     if op == "vector":
         return tuple(operand[0] for operand in operands)
     if op == "gt":
@@ -92,10 +88,7 @@ def evaluate(
         if op == "abs":
             return tuple(checked_work(abs(v)) for v in unary)
         if op == "sum":
-            total = 0
-            for value in unary:
-                total = checked_work(total + value)
-            return (total,)
+            return (checked_sum(unary),)
         return (unary[expression.component],)
     first, second = _broadcast(operands[0], operands[1])
     result = []
@@ -123,7 +116,7 @@ def evaluate(
 def add_values(left: Payload, right: Payload) -> Payload:
     if len(left) != len(right):
         raise ValueError("field component mismatch")
-    return pack(tuple(checked_work(a + b) for a, b in zip(unpack(left), unpack(right), strict=True)))
+    return pack(add_components(unpack(left), unpack(right)))
 
 
 def _sum_records(

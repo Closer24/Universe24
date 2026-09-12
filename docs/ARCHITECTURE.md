@@ -136,7 +136,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 
 | Module | Allowed dependencies |
 | --- | --- |
-| `core/integer` | Standard-library types; owns shared working bounds and signed division |
+| `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
 | `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
@@ -189,6 +189,16 @@ binding, Host/Origin checks and a session token constrain HTTP access.
 See [WORKSPACE.md](WORKSPACE.md) for lifecycle and persistence behavior.
 
 ## Generic calculations and model choices
+
+`core/integer.py` owns shared decoded component addition/subtraction, ordered
+sums, dot/cross products and nonnegative ceiling division. Products and ordered
+partial sums retain their working-register checks, including overflow before
+cancellation. Ceiling division retains the existing adjusted-numerator bound;
+`signed_divrem` instead rounds toward zero and returns a signed remainder.
+Callers supply schema-bounded components and retain payload encoding, field
+validation, operation pricing and atomic commit ownership. The expression
+interpreter delegates arithmetic while retaining broadcasting and AST costs.
+See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 
 `ScalarFieldRule.advance(sample, neighbors, source=..., denominator=...)`
 returns a `ScalarSample(value, remainder)`. The built-in `ScalarField` implements

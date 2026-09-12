@@ -10,7 +10,7 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work
+from event_universe.core.integer import add_components, checked_work, subtract_components
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
     SpatialCouplingResult,
@@ -36,15 +36,14 @@ def _add_delta(values: Values, delta: Values, meter: CostMeter) -> Values:
         raise ValueError("field transaction delta has the wrong schema")
     _delta_cost(meter, values)
     return tuple(
-        pack(tuple(checked_work(a + b) for a, b in zip(unpack(value), change, strict=True)))
-        for value, change in zip(values, delta, strict=True)
+        pack(add_components(unpack(value), change)) for value, change in zip(values, delta, strict=True)
     )
 
 
 def _difference(after: Values, before: Values, meter: CostMeter) -> Values:
     _delta_cost(meter, before)
     return tuple(
-        tuple(bounded(checked_work(a - b)) for a, b in zip(unpack(new), unpack(old), strict=True))
+        tuple(bounded(value) for value in subtract_components(unpack(new), unpack(old)))
         for new, old in zip(after, before, strict=True)
     )
 
