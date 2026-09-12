@@ -57,6 +57,7 @@ def test_invalid_ticket_is_rejected(ticket):
         run_trial(FIXTURE, ticket)
 
 
+@pytest.mark.visualization
 def test_render_capture_has_no_physical_feedback():
     plain, captured = run_trial(FIXTURE, 24), run_trial(FIXTURE, 24, visualize=True)
     assert plain["frames"] == []

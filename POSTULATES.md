@@ -1,5 +1,12 @@
 # Simulator postulates in plain language
 
+The optional [local coherent mode experiments](docs/COHERENT_EXPERIMENTS.md)
+bind finite quantum degrees of freedom to moving local supports. Coherent
+collisions preserve declared additive sectors; observation and terminal escape
+are different actions. Local cost can delay departure but cannot shorten transit
+or erase returning correlations. These supplied finite candidates do not
+establish a physical electromagnetic field or an emergent classical trajectory.
+
 This document explains the ideas underlying the simulator without programming
 details. Consult it before any change. A change contradicting a binding principle
 requires an explicit decision to change the model.

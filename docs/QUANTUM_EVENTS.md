@@ -1,5 +1,12 @@
 # Selected quantum method: deferred event network
 
+The opt-in [coherent mode extension](COHERENT_EXPERIMENTS.md) adds moving supports,
+local 8x8/16x16 interactions and a declarative controller using this same owner.
+The default remains one mode per distinct unwrapped cell. Extended capacity,
+shaped geometry, joint initial preparation and atomic transfer/record batches
+require explicit selection. Read that contract for new bounds; the original
+interfaces below retain their scope and default behavior.
+
 ## Status and scope
 
 `deferred-event-network-v1` is the selected finite quantum-state implementation

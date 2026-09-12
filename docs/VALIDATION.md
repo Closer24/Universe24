@@ -1,5 +1,73 @@
 # Validation evidence
 
+## Local coherent mode experiments — 2026-09-12
+
+Initial base: main `2e753fed1f6922d9d2082d6d43c9e150f237bdd6`. Integrated base:
+`0af7e04559278a00ef2244bd815957d5d89d3879`, including native event programs,
+the shared causal namespace and the local integer operation contract. The source contract is
+[COHERENT_EXPERIMENTS.md](COHERENT_EXPERIMENTS.md), Q-MODES-1. Python 3.14.7 uses
+the prepared environment with this checkout explicitly on `PYTHONPATH`.
+The feature PR records the final tested source/tree and affected-gate result.
+
+Six explicit JSON configurations ran through `python -m event_universe --init`
+without compilation or rendering. Exact results: third weak-contact coherence
+27/250 and purity 8177/15625; return-only coherence zero; local inverse restores
+1/2; observed target follows its conditioned configured path; recoil preserves
+(E,p)=(18,6); open escape accounts for radiation number 1 and energy 6. Run inputs,
+source fingerprints, completion metadata, events and observations were inspected.
+The nine-tick three-probe run took about 0.40 seconds of host time including
+exact reports. This is a finite candidate benchmark, not a scaling guarantee.
+
+A separate source export of the pinned base produced identical physical records,
+events, totals and balances for eight ticks of Basic, open and finite-field
+worlds, plus both quantum-selected native contact outcomes (tickets 0 and 24).
+The comparison did not build or alter the baseline. Generated evidence uses
+the existing 24-hour leases; only inputs and acceptance conclusions belong in Git.
+
+Integration preserves native payload ownership and the shared event ledger.
+Focused checks cover completed two-tick arrivals across a host checkpoint,
+destination metadata, stale staging after another owner's append and atomic
+failure without partial records. The final affected gate and current-base
+regression results are recorded on the PR; earlier-base evidence above remains
+scoped to that earlier source.
+
+On integrated native base `fb083c159fe1f51612203962d9a7921683eb31c8`, the affected
+gate passed 948 tests with six explicit visualization skips in 55.98 seconds;
+Ruff and mypy on 25 affected production modules passed. Nine baseline comparisons
+also covered all four native JSON programs and their shared causal ledgers.
+Physical results and model costs matched; the added record address was verified
+against causal metadata and compared separately. Rechecking the later integrated
+base is required before reusing those results as current-main evidence.
+
+The next integrated source (`75ca8f895e62f0da013c2b241883d215011b39a7` on main
+`99b9f5f0034ea288f7de0a2a8d7645220c45d8aa`) passed 968 affected tests with the
+same six visualization skips in 55.66 seconds, plus Ruff and mypy. All nine
+baseline comparisons and six headless examples passed again. Each example took
+0.39–0.48 seconds; their active-source fingerprint was
+`2d440ff4ccd8bb63215db32d688374f87d3270d9da404858b29e6f63be9ef06d`.
+The subsequent main commit `0af7e04559278a00ef2244bd815957d5d89d3879` added only
+the separate Maxwell experiment, its documentation and test selection. Integration
+retains identical active source bytes; its affected checks are reported separately
+on the PR. No additional numerical-world run is needed for that unchanged source.
+
+Local physics review traced static schedules to bounded co-located matrices,
+directed fixed arrivals and same-owner atomic commits. Independent numerical
+expectations cover density entries, channel balances, phase reversal and failed
+tick rollback. No external reviewer or merged-main acceptance is claimed by
+this implementation record. The PR remains available for independent review.
+
+Highlights sections 4.7 and 10.8 were reconciled against native revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The finite-model and classical-emergence limitations remain explicit. This task
+does not claim a new edit to the live Google document. The physics-review Skill
+now links the new contract and distinguishes channel invariants from physical
+momentum. Boss, architecture, run and regression Skills needed no extra copied
+rules; their existing ownership, exact-source and headless requirements apply.
+The versioned [Highlights map](HIGHLIGHTS_IMPLEMENTATION.md) includes the new
+entities, interactions, evidence owners and unestablished physical claims.
+The authoring Skill validator passed using a temporary PyYAML wheel; simulator
+dependencies and the prepared environment were unchanged.
+
 ## Physical inventory and elementary probes — 2026-09-12
 
 Base: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`. The sourced

@@ -166,3 +166,27 @@ Highlights edit or replace the earlier revision record above.
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
 | 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
+| 4.7 / 10.8 coherent experiments | [Coherent mode contract](COHERENT_EXPERIMENTS.md), quantum/event_network.py, integration/quantum_initialization.py, core/event_space.py | test_quantum_experiment.py and the six examples/quantum JSON candidates |
+
+## Coherent experiment reconciliation — 2026-09-12
+
+The coherent-mode feature integrates main
+`0af7e04559278a00ef2244bd815957d5d89d3879`. Sections 4.7 and 10.8 were read at
+live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+This entry updates repository coverage; it does not claim a new live-document edit.
+
+The selected finite quantum owner now represents moving target/probe modes,
+coherent co-located scattering, repeated contact, returning environments and
+explicit local observation records. JSON supplies all mode identities, integer
+matrix laws, additive quantities, costs and finite causal routes. Every allowed
+transition preserves its declared sectors; completed links preserve correlations.
+Open escape retains a bounded quantum environment and reports exited quantities.
+All event identities share the native causal ledger. Headless diagnostics read
+the joint state and exact reduced density matrices without controlling movement.
+
+The examples test gradual loss of target coherence, its restoration by an inverse
+local encounter, record-conditioned paths and a supplied recoil channel. They do
+not derive an autonomous classical trajectory, a photon field, arbitrary particle
+production or a universal decoherence rate. Global joint-state evaluation stays
+inside Q-ORACLE-1; it cannot feed a nonlocal ordinary field or force.

@@ -6,9 +6,11 @@ supplied local instrument can commit an outcome. This is an opt-in finite
 quantum candidate, not a field law or an Engine-native event producer.
 """
 
+from copy import copy
 from dataclasses import dataclass
 
 from event_universe.core.event_space import CausalEventSpace
+from event_universe.core.lattice import PeriodicLattice
 from event_universe.core.state import Address, checked, checked_work
 
 from .event_rules import (
@@ -34,14 +36,28 @@ class EventNetworkConfig:
     max_eval_nodes: int = 10_000
     max_terms: int = 4_096
     max_records: int = 1_024
+    modes_per_cell: int = 1
+    shape: Address | None = None
+    boundary: str = "open"
+    initial_state: State | None = None
 
     def __post_init__(self) -> None:
         if type(self.addresses) is not tuple or not 1 <= len(self.addresses) <= 30:
             raise ValueError("one to thirty immutable addresses are supported")
         for address in self.addresses:
             checked_address(address)
-        if len(set(self.addresses)) != len(self.addresses):
-            raise ValueError("cell addresses must be distinct")
+        if not 1 <= checked(self.modes_per_cell) <= 8:
+            raise ValueError("one to eight modes per cell are supported")
+        if any(self.addresses.count(a) > self.modes_per_cell for a in self.addresses):
+            raise ValueError("cell addresses must be distinct unless local modes are selected")
+        if self.boundary not in ("open", "periodic"):
+            raise ValueError("unknown quantum boundary policy")
+        if self.boundary == "periodic" and self.shape is None:
+            raise ValueError("periodic modes require an explicit shape")
+        if self.shape is not None:
+            lattice = PeriodicLattice(self.shape)
+            if any(lattice.wrap(a) != a for a in self.addresses):
+                raise ValueError("mode address outside declared shape")
         if type(self.occupied) is not tuple:
             raise TypeError("occupied cells must be immutable")
         for site in self.occupied:
@@ -55,6 +71,22 @@ class EventNetworkConfig:
                 raise ValueError("positive quantum resource budgets required")
         if self.max_nodes < len(self.addresses):
             raise ValueError("node budget cannot hold initial sources")
+        if self.initial_state is not None:
+            if self.occupied or type(self.initial_state) is not tuple:
+                raise ValueError("supply either occupations or an immutable joint initial state")
+            if not 1 <= len(self.initial_state) <= self.max_terms:
+                raise ValueError("initial state exceeds the term capacity")
+            seen: set[int] = set()
+            for bits, amp in self.initial_state:
+                if not 0 <= checked(bits) < 1 << len(self.addresses) or bits in seen:
+                    raise ValueError("invalid or duplicate initial occupation mask")
+                seen.add(bits)
+                if type(amp) is not Amplitude or amp == (0, 0):
+                    raise ValueError("nonzero bounded initial amplitude required")
+                checked(amp.real)
+                checked(amp.imag)
+            if squared_norm(self.initial_state) <= 0:
+                raise ValueError("nonzero initial state required")
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,6 +120,7 @@ class EventDecision:
     evaluated_nodes: int
     model_cost: int = 1
     world_ticks: int = 0
+    address: Address = (0, 0, 0)
     cause: int | None = None
 
     @property
@@ -125,35 +158,54 @@ class EventNetwork:
         if type(config) is not EventNetworkConfig:
             raise TypeError("immutable EventNetworkConfig required")
         self._config = config
+        self._addresses = config.addresses
         self._tick = 0
         self._revision = 0
-        self.event_space = event_space if event_space is not None else CausalEventSpace()
-        self.event_space.require_room(len(config.addresses))
+        self.event_space = (
+            event_space
+            if event_space is not None
+            else CausalEventSpace(shape=config.shape, boundary=config.boundary)
+        )
+        self.event_space.require_room(1 if config.initial_state is not None else len(config.addresses))
         self._payloads: dict[int, QuantumPayload] = {}
         self._heads: dict[int, int] = {}
-        for q in range(len(config.addresses)):
+        if config.initial_state is not None:
             node = NetworkEvent(
                 self.event_space.next_id,
                 0,
-                (q,),
-                state=(((1 << q) if q in config.occupied else 0, Amplitude(1, 0)),),
+                tuple(range(len(config.addresses))),
+                state=reduce_state(config.initial_state),
             )
             self._store(node)
-            self._heads[q] = node.id
+            self._heads = dict.fromkeys(node.sites, node.id)
+        else:
+            for q in range(len(config.addresses)):
+                node = NetworkEvent(
+                    self.event_space.next_id,
+                    0,
+                    (q,),
+                    state=(((1 << q) if q in config.occupied else 0, Amplitude(1, 0)),),
+                )
+                self._store(node)
+                self._heads[q] = node.id
+        self._support_heads = self._heads.copy()
         self._constraints: dict[int, tuple[frozenset[int], frozenset[int]]] = {}
         self._prepared: dict[int, EventDecision] = {}
         self._records: dict[int, NetworkRecord] = {}
         self._queries = 0
         self._evaluated = 0
 
-    def _store(self, node: NetworkEvent, cause: int | None = None) -> None:
+    def _store(
+        self, node: NetworkEvent, cause: int | None = None, *, physical_parents: tuple[int, ...] = ()
+    ) -> None:
         parents = node.parents if cause is None else (*node.parents, cause)
         event = self.event_space.append(
             tick=node.tick,
-            addresses=tuple(self.config.addresses[q] for q in node.sites),
+            addresses=tuple(self.addresses[q] for q in node.sites),
             owner="quantum",
             kind="record" if node.outcome >= 0 else "state" if node.state is not None else "operation",
             parents=parents,
+            physical_parents=physical_parents,
             payload_ref=node.id,
         )
         if event.id != node.id:
@@ -176,6 +228,10 @@ class EventNetwork:
     @property
     def config(self) -> EventNetworkConfig:
         return self._config
+
+    @property
+    def addresses(self) -> tuple[Address, ...]:
+        return self._addresses
 
     @property
     def node_count(self) -> int:
@@ -228,17 +284,24 @@ class EventNetwork:
         for rule, sites in operations:
             if type(rule) is not LocalUnitary or type(sites) is not tuple:
                 raise TypeError("local coherent rule and immutable sites required")
-            if len(sites) not in (1, 2) or len(rule.matrix) != 1 << len(sites):
+            limit = 4 if self.config.modes_per_cell > 1 else 2
+            if not 1 <= len(sites) <= limit or len(rule.matrix) != 1 << len(sites):
                 raise ValueError("rule dimension and sites disagree")
             for site in sites:
                 self._site(site)
                 if site in used:
                     raise ValueError("a site cannot occur twice in a physical tick")
                 used.add(site)
+            addresses = tuple(self.addresses[q] for q in sites)
+            if len(sites) > 2 and len(set(addresses)) != 1:
+                raise ValueError("multi-mode interactions must be in one cell")
             if len(sites) == 2:
-                a, b = (self.config.addresses[q] for q in sites)
+                a, b = (self.addresses[q] for q in sites)
                 distance = sum(abs(checked_work(x - y)) for x, y in zip(a, b, strict=True))
-                if distance != 1:
+                local = a == b and self.config.modes_per_cell > 1
+                if self.config.shape is not None and self.config.boundary == "periodic":
+                    distance = 1 if b in PeriodicLattice(self.config.shape).neighbors(a) else distance
+                if not local and distance != 1:
                     raise ValueError("only cardinal nearest-neighbor operations are allowed")
             parents = tuple(dict.fromkeys(self._heads[q] for q in sites))
             nodes.append(
@@ -248,7 +311,76 @@ class EventNetwork:
             self._store(node)
             for site in node.sites:
                 self._heads[site] = node.id
+                self._support_heads[site] = node.id
         self._tick, self._revision = tick, revision
+
+    def advance(
+        self,
+        operations: tuple[tuple[LocalUnitary, tuple[int, ...]], ...],
+        observations: tuple[tuple[int, int, LocalInstrument, int | None], ...] = (),
+        transfers: tuple[tuple[int, Address], ...] = (),
+    ) -> None:
+        """Atomically install one tick and explicit records in this quantum owner.
+
+        Staging copies host graph containers, not another physical world. Failed
+        tickets, arithmetic or capacity checks leave all committed state unchanged.
+        Callers must reserve local modes before supplying the disjoint batch.
+        """
+        staged = copy(self)
+        staged.event_space = self.event_space.stage()
+        staged._payloads = self._payloads.copy()
+        staged._heads = self._heads.copy()
+        staged._support_heads = self._support_heads.copy()
+        staged._constraints = self._constraints.copy()
+        staged._prepared = self._prepared.copy()
+        staged._records = self._records.copy()
+        used = {site for _, sites in operations for site in sites}
+        destinations = list(self.addresses)
+        moving: set[int] = set()
+        for site, destination in transfers:
+            self._site(site)
+            checked_address(destination)
+            if site in used or site in moving:
+                raise ValueError("a transferred mode cannot interact in the same tick")
+            moving.add(site)
+            origin = self.addresses[site]
+            if self.config.shape is not None and self.config.boundary == "periodic":
+                valid = destination in PeriodicLattice(self.config.shape).neighbors(origin)
+            else:
+                valid = (
+                    sum(abs(checked_work(a - b)) for a, b in zip(origin, destination, strict=True)) == 1
+                )
+                if self.config.shape is not None:
+                    valid = valid and PeriodicLattice(self.config.shape).wrap(destination) == destination
+            if not valid or destination == origin:
+                raise ValueError("a mode transfer must cross one declared neighbor link")
+            support = self.event_space.event(self._support_heads[site])
+            if checked(self.tick + 1) - support.tick < self.event_space.link_ticks:
+                raise ValueError("a mode transfer requires a completed local link")
+            destinations[site] = destination
+        if any(destinations.count(a) > self.config.modes_per_cell for a in destinations):
+            raise OverflowError("arrival exceeds the local mode capacity")
+        observed: set[int] = set()
+        for _, site, _, _ in observations:
+            if site in used or site in observed or site in moving:
+                raise ValueError("observation overlaps another operation in this tick")
+            observed.add(site)
+        from .mode_rules import IDENTITY
+
+        staged._room(len(operations) + len(moving) + len(observations))
+        staged.step(operations)
+        staged._addresses = tuple(destinations)
+        for site, _ in transfers:
+            parents = (staged._heads[site],)
+            node = NetworkEvent(staged.event_space.next_id, staged.tick, (site,), parents, IDENTITY)
+            staged._store(node, physical_parents=(staged._support_heads[site],))
+            staged._heads[site] = node.id
+            staged._support_heads[site] = node.id
+        for record_id, site, instrument, ticket in observations:
+            staged.commit(staged.prepare(record_id, site, instrument), ticket)
+        self.event_space.adopt(staged.event_space)
+        staged.event_space = self.event_space
+        self.__dict__.update(staged.__dict__)
 
     def _ancestors(self, roots: tuple[int, ...]) -> tuple[set[int], set[int]]:
         found: set[int] = set()
@@ -341,7 +473,7 @@ class EventNetwork:
         self._site(site)
         if cause is not None:
             causal = self.event_space.event(cause)
-            if causal.tick != self.tick or self.config.addresses[site] not in causal.addresses:
+            if causal.tick != self.tick or self.addresses[site] not in causal.addresses:
                 raise ValueError("instrument trigger must be local and current")
         old = self._prepared.get(record_id)
         if old is not None:
@@ -360,7 +492,15 @@ class EventNetwork:
             for matrix in instrument.branches
         )
         decision = EventDecision(
-            record_id, self.tick, self._revision, site, instrument, weights, len(ids), cause=cause
+            record_id,
+            self.tick,
+            self._revision,
+            site,
+            instrument,
+            weights,
+            len(ids),
+            address=self.addresses[site],
+            cause=cause,
         )
         if decision.total_weight == 0:
             raise ArithmeticError("zero total branch weight")
@@ -412,6 +552,7 @@ class EventNetwork:
         record = NetworkRecord(decision, outcome, i)
         self._store(node, decision.cause)
         self._heads[decision.site] = i
+        self._support_heads[decision.site] = i
         self._constraints[i] = (frozenset(ids | {i}), frozenset(sites))
         self._records[decision.record_id] = record
         self._revision = revision

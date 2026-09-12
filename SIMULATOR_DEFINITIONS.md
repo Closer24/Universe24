@@ -1,5 +1,18 @@
 # Event Universe — active modular 3D integer simulator
 
+## Opt-in local coherent modes — Q-MODES-1
+
+[COHERENT_EXPERIMENTS.md](docs/COHERENT_EXPERIMENTS.md) defines the explicit
+`local-coherent-modes-v1` initialization extension to the existing quantum owner:
+at most eight modes at a cell, matrices on up to four co-located modes, strict
+additive-sector guards, directed one-neighbor transit, correlated return, bounded
+escaped-environment ownership and conditional observations. Amplitudes stay in
+Q-ORACLE-1. The shared local cost wait never reads remote work or edits a fixed
+arrival. A failed atomic quantum tick installs neither recipes nor records.
+Immutable schedule data and read-only diagnostics cannot supply nonlocal ordinary
+field, force or movement inputs. The ordinary disturbance schema and historical
+quantum defaults retain their contracts.
+
 ## Active generic disturbance model
 
 The primary API is `Simulation(initial: InitialState)`. An initialization JSON

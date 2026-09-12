@@ -1,0 +1,444 @@
+{
+  "schema": "local-coherent-modes-v1",
+  "model_id": "supplied-integer-compton-sector-v1",
+  "shape": [
+    4,
+    3,
+    1
+  ],
+  "boundary": "periodic",
+  "link_ticks": 1,
+  "normal_budget": 16,
+  "ticks": 4,
+  "quantities": [
+    "target_number",
+    "radiation_number",
+    "energy",
+    "px",
+    "py",
+    "pz"
+  ],
+  "modes": [
+    {
+      "name": "rest target",
+      "position": [
+        2,
+        1,
+        0
+      ],
+      "quantities": {
+        "target_number": 1,
+        "radiation_number": 0,
+        "energy": 12,
+        "px": 0,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "recoil target",
+      "position": [
+        2,
+        1,
+        0
+      ],
+      "quantities": {
+        "target_number": 1,
+        "radiation_number": 0,
+        "energy": 15,
+        "px": 9,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "incoming radiation",
+      "position": [
+        1,
+        1,
+        0
+      ],
+      "quantities": {
+        "target_number": 0,
+        "radiation_number": 1,
+        "energy": 6,
+        "px": 6,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "outgoing radiation",
+      "position": [
+        2,
+        1,
+        0
+      ],
+      "quantities": {
+        "target_number": 0,
+        "radiation_number": 1,
+        "energy": 3,
+        "px": -3,
+        "py": 0,
+        "pz": 0
+      }
+    }
+  ],
+  "state": [
+    {
+      "occupied": [
+        "rest target",
+        "incoming radiation"
+      ],
+      "amplitude": [
+        1,
+        0
+      ]
+    }
+  ],
+  "rules": {
+    "collision": {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    }
+  },
+  "actions": [
+    {
+      "tick": 0,
+      "kind": "link",
+      "modes": [
+        "incoming radiation"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 1,
+      "kind": "local",
+      "modes": [
+        "rest target",
+        "recoil target",
+        "incoming radiation",
+        "outgoing radiation"
+      ],
+      "rule": "collision",
+      "cost": 1
+    },
+    {
+      "tick": 2,
+      "kind": "link",
+      "modes": [
+        "outgoing radiation"
+      ],
+      "port": 1,
+      "cost": 1
+    },
+    {
+      "tick": 3,
+      "kind": "link",
+      "modes": [
+        "outgoing radiation"
+      ],
+      "port": 1,
+      "cost": 1
+    }
+  ],
+  "groups": {
+    "target": [
+      "rest target",
+      "recoil target"
+    ],
+    "radiation": [
+      "incoming radiation",
+      "outgoing radiation"
+    ]
+  }
+}

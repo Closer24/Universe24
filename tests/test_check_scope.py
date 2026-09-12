@@ -96,6 +96,15 @@ def test_shared_fixture_includes_all_its_consumers():
     assert {"tests/test_a.py", "tests/test_b.py"} <= set(tests)
 
 
+def test_coherent_configuration_selects_the_headless_experiment_consumer():
+    tests, _ = CHECK.select(
+        ["examples/quantum/photon-return.json"],
+        {"tests/test_quantum_experiment.py": "def document(name): pass"},
+    )
+    assert "tests/test_quantum_experiment.py" in tests
+    assert "tests/test_native_event_runtime.py" not in tests
+
+
 @pytest.mark.parametrize(
     "example", ["basic", "exchange", "finite_fields", "open_world", "spatial_turning"]
 )

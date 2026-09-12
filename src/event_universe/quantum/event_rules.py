@@ -28,8 +28,8 @@ def plus(a: Amplitude, b: Amplitude) -> Amplitude:
 
 
 def matrix_shape(matrix: Matrix) -> int:
-    if type(matrix) is not tuple or len(matrix) not in (2, 4):
-        raise ValueError("local matrix must have dimension two or four")
+    if type(matrix) is not tuple or len(matrix) not in (2, 4, 8, 16):
+        raise ValueError("local matrix must have dimension two, four, eight or sixteen")
     size = len(matrix)
     for row in matrix:
         if type(row) is not tuple or len(row) != size:

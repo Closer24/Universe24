@@ -1,5 +1,13 @@
 # Architecture and change boundaries
 
+The [coherent mode experiment](COHERENT_EXPERIMENTS.md) extends the existing
+quantum owner. `quantum/mode_rules.py` owns bounded additive-sector checks;
+`integration/quantum_initialization.py` binds names, rules and timed reservations,
+reusing `PeriodicLattice` and `cycle_timing`. `quantum_experiment.py` advances that
+single owner; `quantum_observations.py` only reads joint state. The ordinary runner
+selects this explicit schema lazily. No classical record duplicates an unresolved
+quantum branch, and ordinary runs do not load quantum/render dependencies.
+
 `entities.py` owns host-only compilation of selected explicit catalog profiles
 into ordinary initialization; it delegates strict JSON and runtime schema
 validation to `initialization.py`. Profiles contain their candidate operations.

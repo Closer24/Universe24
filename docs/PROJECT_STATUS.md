@@ -6,6 +6,14 @@ genericity skill and local retention setup.
 The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
 live specification reconciliation, entity coverage and exact source contracts.
 
+The [local coherent experiment contract](COHERENT_EXPERIMENTS.md) defines a
+schema-selected extension using the existing quantum owner: moving finite modes,
+coherent repeated contact, fixed local transport, declared sector conservation,
+explicit records and read-only reductions. Six JSON inputs separate polarization
+decoherence, coherent return/erasure, conditioned paths, recoil and open escape.
+Check the exact feature PR/tree for integration evidence; supplied candidates
+are not a claim of physical electromagnetic or universal classical emergence.
+
 The [local Maxwell experiment](../examples/maxwell/README.md) selects a
 six-population reflection and causal streaming through configuration only.
 Its conditional long-wavelength vacuum generator and eleven small-world runs

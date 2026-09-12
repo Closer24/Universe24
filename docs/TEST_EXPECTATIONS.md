@@ -1,5 +1,20 @@
 # Test inputs and expected results
 
+## Local coherent experiments
+
+[COHERENT_EXPERIMENTS.md](COHERENT_EXPERIMENTS.md) defines Q-MODES-1 and the six
+finite JSON candidates. `tests/test_quantum_experiment.py` checks relative
+coherence 3/5, 9/25 and 27/125; return with and without inverse interaction;
+phase/checkpoint preservation; equal-weight conditioned paths and their unread
+marginal; exact recoil totals (E,p)=(18,6); open escaped energy 6; all six axis
+orientations; shared local cost wait and fixed transit; name/order independence;
+forbidden nonlocal or nonconserving operations; bounds and atomic failed ticks.
+The ordinary runner remains headless and records input, source and failure.
+These targets certify the named finite models, not universal classical emergence.
+Shared-metadata integration also preserves the original event-space identity,
+rejects stale staged updates, records destination supports and retains completed
+two-tick physical links across a host checkpoint.
+
 ## Local reflection and Maxwell-limit experiment
 
 `tests/test_maxwell_configuration.py` checks the selected six-population

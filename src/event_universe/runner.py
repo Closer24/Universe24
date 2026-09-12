@@ -9,7 +9,7 @@ from pathlib import Path
 from event_universe import __version__
 from event_universe.core.disturbance_state import InitialState
 from event_universe.disturbance_api import Simulation
-from event_universe.initialization import parse_initial_json
+from event_universe.initialization import parse_initial_json, parse_json_document
 from event_universe.retention import ArtifactLease, cleanup_expired, validate_output_path
 
 
@@ -33,6 +33,16 @@ def run_initialization(
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
     source = initialization.read_bytes()
+    document = parse_json_document(source)
+    if isinstance(document, dict) and document.get("schema") == "local-coherent-modes-v1":
+        from event_universe.integration.quantum_experiment import run_experiment
+
+        if ticks is not None or visualize or frame_stride != 1:
+            raise ValueError(
+                "coherent experiments use their declared duration and headless quantum reports"
+            )
+        run_experiment(initialization, output)
+        return output / "result.json"
     initial = parse_initial_json(source)
     fingerprint = source_fingerprint()
     count = initial.ticks if ticks is None else ticks

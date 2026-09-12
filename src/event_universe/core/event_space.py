@@ -52,6 +52,36 @@ class CausalEventSpace:
         self.link_ticks = link_ticks
         self._events: list[CausalEvent] = []
         self._cost = 0
+        self._origin: tuple[CausalEventSpace, int] | None = None
+
+    def stage(self) -> CausalEventSpace:
+        """Copy bounded host metadata for an all-or-nothing owner update."""
+        staged = CausalEventSpace(
+            self.capacity, shape=self.shape, boundary=self.boundary, link_ticks=self.link_ticks
+        )
+        staged._events = self._events.copy()
+        staged._cost = self._cost
+        staged._origin = (self, self.next_id)
+        return staged
+
+    def adopt(self, staged: CausalEventSpace) -> None:
+        """Publish one valid staged suffix without replacing the shared owner.
+
+        A concurrent append invalidates the stage. Existing provenance cannot be
+        replaced or removed. Staging is host work, not a physical cell operation.
+        """
+        if staged._origin != (self, self.next_id):
+            raise ValueError("staged causal events are stale or belong to another owner")
+        if (
+            (self.capacity, self.shape, self.boundary, self.link_ticks)
+            != (staged.capacity, staged.shape, staged.boundary, staged.link_ticks)
+            or staged.next_id < self.next_id
+            or staged._events[: self.next_id] != self._events
+        ):
+            raise ValueError("staged causal events must retain the original contract and prefix")
+        self._events = staged._events.copy()
+        self._cost = staged._cost
+        staged._origin = None
 
     @property
     def next_id(self) -> int:

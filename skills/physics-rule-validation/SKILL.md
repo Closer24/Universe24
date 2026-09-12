@@ -42,6 +42,13 @@ Q-ORACLE-1 applies only to the explicit quantum owner and its reported host work
 it does not exempt ordinary field, force, movement or geometry inputs. Diagnostics
 may inspect global state and reject a run but must not supply physical repairs.
 
+For [coherent mode experiments](../../docs/COHERENT_EXPERIMENTS.md), audit declared
+conserved sectors separately from physical interpretation. Channel inventory is
+not automatically canonical momentum. Returning environment modes must retain
+their joint state; a conditioned path or supplied collision benchmark does not
+establish emergent classical dynamics. Trace local cost and completed arrivals
+without importing a destination's work into the source delay.
+
 Do not infer a universal causal proof from a one-hop test or fixed callback size.
 Separate tested finite cases, analytic arguments and unestablished physics. A
 passing candidate does not resolve a failing baseline. For a blocker, preserve

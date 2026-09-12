@@ -14,6 +14,11 @@ transport, operation costs, normal cost and initial placements. The engine does
 not recognize mass, charge or velocity by name or supply a hidden physical model.
 Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
 
+The explicitly selected [coherent experiment schema](docs/COHERENT_EXPERIMENTS.md)
+uses the same command-line entry point for finite moving quantum modes, local
+scattering, returning probes and conditional records. Its examples are in
+`examples/quantum/`; normal runs save quantum JSON reports without visualization.
+
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.
 Their five-register cell and sixteen-register particle schemas are not the

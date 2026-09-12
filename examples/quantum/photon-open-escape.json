@@ -1,0 +1,394 @@
+{
+  "schema": "local-coherent-modes-v1",
+  "model_id": "open-coherent-escape-probe-v1",
+  "shape": [
+    4,
+    3,
+    1
+  ],
+  "boundary": "open",
+  "link_ticks": 1,
+  "normal_budget": 16,
+  "ticks": 6,
+  "quantities": [
+    "target_number",
+    "radiation_number",
+    "energy",
+    "px",
+    "py",
+    "pz"
+  ],
+  "modes": [
+    {
+      "name": "target A",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quantities": {
+        "target_number": 1,
+        "radiation_number": 0,
+        "energy": 12,
+        "px": 0,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "target B",
+      "position": [
+        0,
+        1,
+        0
+      ],
+      "quantities": {
+        "target_number": 1,
+        "radiation_number": 0,
+        "energy": 12,
+        "px": 0,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "probe 0 polarization 0",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quantities": {
+        "target_number": 0,
+        "radiation_number": 1,
+        "energy": 6,
+        "px": 6,
+        "py": 0,
+        "pz": 0
+      }
+    },
+    {
+      "name": "probe 0 polarization 1",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "quantities": {
+        "target_number": 0,
+        "radiation_number": 1,
+        "energy": 6,
+        "px": 6,
+        "py": 0,
+        "pz": 0
+      }
+    }
+  ],
+  "state": [
+    {
+      "occupied": [
+        "target A",
+        "probe 0 polarization 0"
+      ],
+      "amplitude": [
+        1,
+        0
+      ]
+    },
+    {
+      "occupied": [
+        "target B",
+        "probe 0 polarization 0"
+      ],
+      "amplitude": [
+        1,
+        0
+      ]
+    }
+  ],
+  "rules": {
+    "scatter": {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "inverse": {
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      ]
+    },
+    "position observation": {
+      "branches": [
+        [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      ]
+    }
+  },
+  "actions": [
+    {
+      "tick": 0,
+      "kind": "local",
+      "modes": [
+        "target A",
+        "probe 0 polarization 0",
+        "probe 0 polarization 1"
+      ],
+      "rule": "scatter",
+      "cost": 1
+    },
+    {
+      "tick": 1,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 0"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 1,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 1"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 2,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 0"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 2,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 1"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 3,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 0"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 3,
+      "kind": "link",
+      "modes": [
+        "probe 0 polarization 1"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 4,
+      "kind": "escape",
+      "modes": [
+        "probe 0 polarization 0"
+      ],
+      "port": 0,
+      "cost": 1
+    },
+    {
+      "tick": 4,
+      "kind": "escape",
+      "modes": [
+        "probe 0 polarization 1"
+      ],
+      "port": 0,
+      "cost": 1
+    }
+  ],
+  "groups": {
+    "target": [
+      "target A",
+      "target B"
+    ]
+  }
+}
