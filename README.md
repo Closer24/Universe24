@@ -117,8 +117,14 @@ and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 profiles using [the executable catalog guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
 Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
+reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
 external validation targets rather than supplied update formulas.
+
+For opt-in exact fractional representation, balanced routing, massless transport
+and joint-energy reference benchmarks, see [RATIONAL_PARTICLES.md](docs/RATIONAL_PARTICLES.md).
+These examples test supplied mechanical contracts, not emergent physical laws.
 
 Read [SPATIAL_FIELDS.md](docs/SPATIAL_FIELDS.md) for the baseline, eight-octant
 transport through six faces, source cadence, cost accounting and self-field

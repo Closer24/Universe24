@@ -119,6 +119,13 @@ def test_runpy_acceptance_tool_retains_application_consumer():
     assert "tests/test_collisions.py" not in tests
 
 
+@pytest.mark.parametrize("resource", ["entities.json", "build.py", "electron-proton.json"])
+def test_particle_resources_select_the_dynamic_contract_consumer(resource):
+    tests, _ = CHECK.select(["examples/particle-contracts/" + resource], {})
+    assert "tests/test_rational_particles.py" in tests
+    assert "tests/test_collisions.py" not in tests
+
+
 def no_change_main(monkeypatch, tmp_path, *arguments):
     monkeypatch.setattr(CHECK, "ROOT", tmp_path)
     monkeypatch.setattr(CHECK, "git", lambda *args: "base" if args[0] == "merge-base" else "")
@@ -173,3 +180,12 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     finished = cleanup_expired(report.parent, now=time.time() + MAX_AGE_SECONDS + 1)
     assert not finished["errors"] and finished["deleted"] == [str(report)]
     assert selected.exists()
+
+
+def test_quantum_profile_and_experiment_resources_select_consumers():
+    tests, _ = CHECK.select(["examples/known-entities/catalog.json"], {})
+    assert "tests/test_quantum_entities.py" in tests
+    assert "tests/test_native_quantum_channels.py" in tests
+    assert "tests/test_small_space_experiments.py" in tests
+    tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
+    assert "tests/test_native_quantum_channels.py" in tests

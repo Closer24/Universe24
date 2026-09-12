@@ -6,6 +6,20 @@ genericity skill and local retention setup.
 The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
 live specification reconciliation, entity coverage and exact source contracts.
 
+The [finite quantum-register extension](QUANTUM_ENTITIES.md) adds unobserved
+channels, mixed conditional states, grouped outcomes, finite multilevel registers
+and quantum preparation profiles for the existing 46 catalog entries. Species
+dynamics, spatial-field clock composition and general classical emergence are
+not established. Reproduce with `examples/quantum/run_physics_checks.py`.
+
+
+The [local Maxwell experiment](../examples/maxwell/README.md) selects a
+six-population reflection and causal streaming through configuration only.
+Its conditional long-wavelength vacuum generator and eleven small-world runs
+give two transverse modes with leading speed one half link per tick. Centered
+Gauss conservation, exact macro electromagnetic energy and indefinite integer
+mixing remain explicit blockers; this is not a complete electromagnetic law.
+
 The [small-space comparisons](../examples/small-space/README.md) record 24
 9-cubed/15-cubed entity, source and response experiments. Local accounting and
 selected mechanisms pass; field/particle physical laws remain incomplete.

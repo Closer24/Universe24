@@ -28,8 +28,8 @@ def plus(a: Amplitude, b: Amplitude) -> Amplitude:
 
 
 def matrix_shape(matrix: Matrix) -> int:
-    if type(matrix) is not tuple or len(matrix) not in (2, 4):
-        raise ValueError("local matrix must have dimension two or four")
+    if type(matrix) is not tuple or not 2 <= len(matrix) <= 16:
+        raise ValueError("local matrix dimension must be between two and sixteen")
     size = len(matrix)
     for row in matrix:
         if type(row) is not tuple or len(row) != size:
@@ -43,8 +43,8 @@ def matrix_shape(matrix: Matrix) -> int:
 
 def common_scale(matrices: tuple[Matrix, ...]) -> int:
     """Validate completeness with bounded work, including off-diagonal terms."""
-    if type(matrices) is not tuple or not 1 <= len(matrices) <= 4:
-        raise ValueError("one to four matrices are supported")
+    if type(matrices) is not tuple or not 1 <= len(matrices) <= 16:
+        raise ValueError("one to sixteen Kraus matrices are supported")
     size = matrix_shape(matrices[0])
     if any(matrix_shape(matrix) != size for matrix in matrices):
         raise ValueError("all branch matrices must have the same dimension")
@@ -82,17 +82,19 @@ class LocalUnitary:
 class LocalInstrument:
     """Explicit one-cell instrument, including every no-event branch.
 
-    One Kraus matrix per outcome is the supported pure conditional-state
-    contract. Multiple indistinguishable Kraus branches need a mixed-state
-    extension and must not be represented as the same sampled record here.
+    This compatibility form has one Kraus matrix per outcome. Use
+    GroupedInstrument for indistinguishable terms within one recorded outcome;
+    their density contributions are added without a hidden random draw.
     """
 
     branches: tuple[Matrix, ...]
 
     def __post_init__(self) -> None:
         common_scale(self.branches)
-        if len(self.branches[0]) != 2:
-            raise ValueError("instruments act on one cell only")
+        if len(self.branches) > 4 or len(self.branches[0]) > 4:
+            raise ValueError(
+                "instruments support at most four outcomes on one register of dimension at most four"
+            )
 
 
 def squared_norm(state: State) -> int:
@@ -114,17 +116,23 @@ def reduce_state(state: State) -> State:
     return tuple((bits, checked_amp(amp.real // divisor, amp.imag // divisor)) for bits, amp in state)
 
 
-def apply_matrix(state: State, matrix: Matrix, sites: tuple[int, ...], max_terms: int) -> State:
+def apply_matrix(
+    state: State,
+    matrix: Matrix,
+    sites: tuple[int, ...],
+    max_terms: int,
+    dimensions: tuple[int, ...] = (),
+) -> State:
     """Host evaluation on a bounded sparse joint state; never a local-cell loop."""
     out: dict[int, Amplitude] = {}
-    mask = sum(1 << q for q in sites)
+    layout = BasisLayout(dimensions or (2,) * (max(sites) + 1))
     for bits, amp in state:
-        column = sum(((bits >> q) & 1) << j for j, q in enumerate(sites))
+        column = layout.extract(bits, sites)
         for row in range(len(matrix)):
             value = multiply(matrix[row][column], amp)
             if value == (0, 0):
                 continue
-            target = (bits & ~mask) | sum(((row >> j) & 1) << q for j, q in enumerate(sites))
+            target = layout.replace(bits, sites, row)
             if target not in out and len(out) >= max_terms:
                 raise OverflowError("quantum term budget exceeded")
             value = plus(out.get(target, Amplitude(0, 0)), value)
@@ -133,3 +141,83 @@ def apply_matrix(state: State, matrix: Matrix, sites: tuple[int, ...], max_terms
             else:
                 out[target] = value
     return tuple(sorted(out.items()))
+
+
+@dataclass(frozen=True, slots=True)
+class BasisLayout:
+    """Bounded mixed-radix basis; binary defaults preserve existing state keys."""
+
+    dimensions: tuple[int, ...]
+
+    def __post_init__(self) -> None:
+        if type(self.dimensions) is not tuple or not 1 <= len(self.dimensions) <= 30:
+            raise ValueError("one to thirty immutable register dimensions required")
+        size = 1
+        for dimension in self.dimensions:
+            if not 2 <= checked(dimension) <= 4:
+                raise ValueError("register dimension must be two, three or four")
+            size = checked(size * dimension)
+
+    def stride(self, site: int) -> int:
+        value = 1
+        for d in self.dimensions[:site]:
+            value = checked(value * d)
+        return value
+
+    def digit(self, index: int, site: int) -> int:
+        return (index // self.stride(site)) % self.dimensions[site]
+
+    def extract(self, index: int, sites: tuple[int, ...]) -> int:
+        local, stride = 0, 1
+        for site in sites:
+            local = checked(local + self.digit(index, site) * stride)
+            stride = checked(stride * self.dimensions[site])
+        return local
+
+    def replace(self, index: int, sites: tuple[int, ...], local: int) -> int:
+        for site in sites:
+            local, value = divmod(local, self.dimensions[site])
+            index = checked(index + (value - self.digit(index, site)) * self.stride(site))
+        return index
+
+
+@dataclass(frozen=True, slots=True)
+class LocalChannel:
+    """Unobserved trace-preserving local operation: no outcome is sampled."""
+
+    kraus: tuple[Matrix, ...]
+
+    def __post_init__(self) -> None:
+        common_scale(self.kraus)
+        if len(self.kraus) > 4 or len(self.kraus[0]) > 4:
+            raise ValueError("channel requires at most four Kraus matrices on one register")
+
+
+@dataclass(frozen=True, slots=True)
+class GroupedInstrument:
+    """Observed outcomes may each retain several indistinguishable Kraus terms.
+
+    The group is an incoherent sum, NOT a coherent sum of matrices and NOT a
+    second random draw of a hidden Kraus label. All matrices share one scale.
+    """
+
+    outcomes: tuple[tuple[Matrix, ...], ...]
+
+    def __post_init__(self) -> None:
+        if type(self.outcomes) is not tuple or not 1 <= len(self.outcomes) <= 4:
+            raise ValueError("one to four immutable outcome groups required")
+        for group in self.outcomes:
+            if type(group) is not tuple or not 1 <= len(group) <= 4:
+                raise ValueError("one to four immutable Kraus matrices per outcome required")
+        matrices = tuple(m for group in self.outcomes for m in group)
+        common_scale(matrices)
+        if len(matrices[0]) > 4:
+            raise ValueError("grouped instrument acts on one register")
+
+
+def outcome_groups(instrument: LocalInstrument | GroupedInstrument) -> tuple[tuple[Matrix, ...], ...]:
+    return (
+        instrument.outcomes
+        if isinstance(instrument, GroupedInstrument)
+        else tuple((matrix,) for matrix in instrument.branches)
+    )

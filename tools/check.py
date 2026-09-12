@@ -10,14 +10,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/maxwell/configuration.py": ("tests/test_maxwell_configuration.py",),
+    "examples/maxwell/measurements.py": ("tests/test_maxwell_configuration.py",),
     "examples/local_lorentz_field.json": (
         "tests/test_cell_state_contract.py",
         "tests/test_local_lorentz_field.py",
     ),
+    "examples/quantum/interference.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/phase_reversal.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/dephasing.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/partial_dephasing.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/run_physics_checks.py": ("tests/test_native_quantum_channels.py",),
     "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
-    "examples/known-entities/catalog.json": ("tests/test_small_space_experiments.py",),
+    "examples/known-entities/catalog.json": (
+        "tests/test_small_space_experiments.py",
+        "tests/test_quantum_entities.py",
+        "tests/test_native_quantum_channels.py",
+    ),
     "examples/known-entities/discrete-pair.json": ("tests/test_small_space_experiments.py",),
     "examples/quantum/contact.json": (
         "tests/test_native_event_runtime.py",
@@ -142,6 +153,8 @@ def select(changed, sources):
         if path.startswith("tools/generic_vector_lab/"):
             tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
+        if path.startswith("examples/particle-contracts/"):
+            tests.add("tests/test_rational_particles.py")
         if path.endswith(".md") or path == "MANIFEST.in":
             tests.add("tests/test_repository_navigation.py")
         if path.endswith((".md", ".py", ".js", ".html", ".css", ".json")):

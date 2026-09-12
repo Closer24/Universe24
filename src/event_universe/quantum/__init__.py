@@ -9,7 +9,7 @@ from .event_network import (
     NetworkQuery,
     NetworkRecord,
 )
-from .event_rules import LocalInstrument, LocalUnitary
+from .event_rules import BasisLayout, GroupedInstrument, LocalChannel, LocalInstrument, LocalUnitary
 from .focus import (
     FocusCandidate,
     FocusEvent,
@@ -21,6 +21,7 @@ from .focus import (
     region_from_shape,
     split_region,
 )
+from .mixed import DensityState
 from .postulates import ORACLE_COST, QUANTUM_MODEL_ID, OracleCost
 from .query import QuantumQuery, QuantumQueryStats, QuantumReply
 from .state import Amplitude, QuantumConfig, amplitude_weight
@@ -30,6 +31,10 @@ __all__ = [
     "ORACLE_COST",
     "QUANTUM_MODEL_ID",
     "Amplitude",
+    "BasisLayout",
+    "DensityState",
+    "GroupedInstrument",
+    "LocalChannel",
     "DeferredQuantum",
     "EventDecision",
     "EventNetworkConfig",

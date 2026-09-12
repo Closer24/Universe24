@@ -69,6 +69,20 @@ def test_zero_records_wake_only_for_configured_work():
     assert moving.has_work((moving_record,))
 
 
+def test_zero_held_records_wake_for_configured_checks():
+    raw = document(
+        [kind("parcel", mode="hold", values={"quantity": 0})],
+        [((0, 0, 0), "parcel")],
+        fields=[field("quantity")],
+    )
+    raw["disturbance_types"][0]["checks"] = [
+        {"name": "positive", "expression": {"op": "gt", "args": [{"field": "quantity"}, 0]}}
+    ]
+    initial = parse_initial_state(raw)
+    policy = RecordOperations(initial.fields, initial.disturbances)
+    assert policy.has_work((initial.seeds[0].record,))
+
+
 def test_cost_report_changes_only_the_configured_reporter_without_repricing():
     raw = document(
         [kind("counter", values={"work": 0, "other": 7})],

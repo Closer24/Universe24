@@ -1,5 +1,11 @@
 # Architecture and change boundaries
 
+The [quantum-register extension](QUANTUM_ENTITIES.md) keeps density arithmetic in
+`quantum/mixed.py`, reusable matrix builders in `quantum/operations.py`, and the
+finite entity-profile compiler in `integration/quantum_entities.py`. The generic
+core is unchanged; native v2 selection extends the existing event-program owner.
+
+
 `entities.py` owns host-only compilation of selected explicit catalog profiles
 into ordinary initialization; it delegates strict JSON and runtime schema
 validation to `initialization.py`. Profiles contain their candidate operations.
@@ -142,6 +148,14 @@ definitions. `core/disturbance_state.py` owns fixed schemas and payload coding;
 and transport proposals; `core/disturbance_engine.py` owns addresses, capacity,
 fixed transit and delayed atomic commits. No layer branches on a physical field
 name or imports Python code named by initialization.
+
+The opt-in rational extension stays within these owners: `fields/ratios.py`
+owns finite exact arithmetic and projections; `fields/routing.py` owns balanced
+six-port selection and fractional credit. Neither receives world state. Fixed
+carrier bookkeeping travels through the existing scheduler. The numerical and
+cost amendment is explicit in [RATIONAL_PARTICLES.md](RATIONAL_PARTICLES.md).
+Physical formulas in its examples are reference benchmarks, separate from the
+elementary emergence probes in [PHYSICAL_ENTITIES.md](PHYSICAL_ENTITIES.md).
 
 Field, type, model and unit labels are data. Reordering field/type declarations
 must preserve the same resolved behavior; declared update/coupling order and

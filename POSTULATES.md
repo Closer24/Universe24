@@ -12,6 +12,13 @@ Distinguish three categories:
 
 ## Active initialization-defined model
 
+The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
+finite integer state while representing fractional quantities in explicitly
+configured whole/remainder/denominator fields. Its larger finite intermediate
+registers, balanced neighbor selection and exact fractional clock are named
+choices. They do not establish isotropic light propagation or electromagnetic
+energy. The six-neighbor causal boundary remains binding.
+
 The active model treats physical content as configured disturbances carrying
 named fields. The engine supplies integer local updates, causal transport,
 conservation enforcement and scheduling; initialization supplies identities and
@@ -363,3 +370,14 @@ is one additional model operation, with zero direct world ticks; total local
 cycle cost may still produce the ordinary computation delay. No cost is erased
 to manufacture the classical endpoint. See [the native contract](docs/NATIVE_QUANTUM_EVENTS.md).
 This extends section 14 only for the declared candidate, not all interactions.
+
+## 17. Explicit finite-register and unobserved-channel extension
+
+The selected native v2 candidate permits finite local registers, complete
+unobserved channels and grouped measurement outcomes. An unobserved Kraus label
+is not a classical record and is not sampled. Preserve its density sum and all
+remaining coherent information. Mixed checkpoints represent the complete live
+component. Local supports, integer bounds, classical cycle charges and zero
+direct oracle ticks remain unchanged. This is a representation/channel extension,
+not a new collapse law or a derived physical species Hamiltonian. See
+[QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md).
