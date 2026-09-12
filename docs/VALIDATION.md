@@ -1,5 +1,31 @@
 # Validation evidence
 
+## Merge follow-up: affected checks — 2026-09-12
+
+While combined feature head `4dfc1df7543aa7e7568f5112e2e2eb879e464714` passed
+GitHub Actions run `34678735217`, main advanced to
+`64d26a89842637ab71517ec45aebfa7c3deae331` through PR #29. That change affects
+validation selection and contributor guidance, not simulation code. The merge
+preserves its default affected-code checks, full-history checkout and explicit
+base selection, together with one-day CI artifact retention. Unconditional
+example runs and package builds are removed from CI as required by current main.
+
+The new check-scope report uses the existing exact-file retention lease; it does
+not claim the whole artifacts directory. Explicit selector edges retain the
+generic identity suite's dynamically selected examples and the historical
+runpy tool's application consumer. Dry-run selection creates no output.
+Current contributor and specialist guidance already defer to the check command
+and affected dependencies; no additional Skill change is required.
+
+`python tools/check.py --base 4dfc1df7543aa7e7568f5112e2e2eb879e464714` selected
+the selector, language and navigation suites: 29 tests passed in 4.57 seconds,
+with Ruff lint/format passing for both affected Python files. Seven selector and
+report regressions failed before the integration corrections; all 15 selector
+tests now pass, including active writer protection and failed-command expiry.
+No `src/event_universe` file changed: runtime fingerprint `cf684492a86605a68c29aba0a169a6e992478b2f7f7b3d70804e8fce7f2d4f4a`
+and the preceding simulation, full-gate and packaging evidence remain applicable.
+The exact selected commands are recorded in the leased `artifacts/check-scope.json`.
+
 ## Merge with atomic interactions — 2026-09-12
 
 The authorized PR #27 merge found that main had advanced through PR #28 to

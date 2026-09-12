@@ -13,6 +13,9 @@ Each workspace run uses a separate output directory. Visual test sessions write
 to a unique `artifacts/test-runs/<session-id>` directory and update the generated
 `artifacts/test-runs.html` summary. CI diagnostic uploads use a one-day retention
 setting in [the check workflow](../.github/workflows/check.yml).
+The affected-check selector owns only its `artifacts/check-scope.json` report;
+its lease is separate from JUnit and run directories. A dry selection creates
+neither the report nor a retention registry.
 
 ## Ownership and active writes
 
