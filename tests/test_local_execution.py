@@ -7,7 +7,7 @@ from dataclasses import replace
 import pytest
 
 from event_universe import Simulation
-from event_universe.core.local_execution import validate_execution_options
+from event_universe.core.local_execution import ProposalInput, validate_execution_options
 from event_universe.initialization import parse_initial_state
 from event_universe.local_execution import worker_initializer
 from tools.benchmark_engine import physical_state
@@ -101,6 +101,29 @@ def test_owner_failure_discards_only_a_bounded_amount_of_speculative_work():
     assert report["submitted_chunks"] <= 5
     assert report["evaluated_proposals"] <= 5
     assert world.tick == 0
+
+
+def test_worker_window_consumes_only_bounded_inputs_from_a_large_iterator():
+    with Simulation(held_initial(1), workers=2, parallel_threshold=1, chunk_size=3) as world:
+        cell = next(iter(world.cells.values()))
+        consumed = []
+
+        def inputs():
+            for index in range(10000):
+                consumed.append(index)
+                yield ProposalInput(cell.records, cell.coupling_remainders, 0)
+
+        results = world._local_execution.evaluate(inputs())
+        first = next(results).result()
+        assert first.replacements[0][1] == cell.records[0]
+        # Two pending chunks per worker, plus the chunk currently being yielded.
+        assert len(consumed) <= (2 * 2 + 1) * 3
+        before_close = len(consumed)
+        results.close()
+        assert len(consumed) == before_close
+        report = world.execution_report()
+        assert report["submitted_chunks"] <= 5
+        assert report["evaluated_proposals"] <= 15
 
 
 def test_factory_receives_canonical_planner_and_retains_executor_ownership():

@@ -4,10 +4,12 @@ import argparse
 import hashlib
 import json
 import time
+from contextlib import ExitStack
 from pathlib import Path
 from typing import TYPE_CHECKING, cast
 
 from event_universe import __version__
+from event_universe.archive import JsonArchive, write_json
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.local_execution import validate_execution_options
 from event_universe.disturbance_api import Simulation
@@ -73,7 +75,7 @@ def run_initialization(
     if output.exists() and any(output.iterdir()):
         raise ValueError("use an empty output directory to preserve earlier run artifacts")
     output.mkdir(parents=True, exist_ok=True)
-    with ArtifactLease(output.parent, [output.resolve()]):
+    with ArtifactLease(output.parent, [output.resolve()]), ExitStack() as histories:
         return _execute_run(
             initial,
             source,
@@ -88,6 +90,7 @@ def run_initialization(
             chunk_size,
             executor_factory,
             execution_backend,
+            histories,
         )
 
 
@@ -105,14 +108,21 @@ def _execute_run(
     chunk_size: int,
     executor_factory: Callable[[Planner], Executor] | None,
     execution_backend: str,
+    histories: ExitStack,
 ) -> Path:
     (output / "initialization.json").write_bytes(source)
-    frames: list[dict[str, object]] = []
+    frames: list[dict[str, object]] | JsonArchive[dict[str, object]] = (
+        histories.enter_context(JsonArchive()) if visualize else []
+    )
     probe: LocalObserver | None = None
     if observer_definition is not None:
         from event_universe.diagnostics.local_observer import LocalObserver
 
-        probe = LocalObserver(observer_definition)
+        probe = LocalObserver(
+            observer_definition,
+            receipts=histories.enter_context(JsonArchive()),
+            samples=histories.enter_context(JsonArchive()),
+        )
         (output / "observer.json").write_text(
             json.dumps(
                 {
@@ -193,7 +203,7 @@ def _execute_run(
         finally:
             world.close()
         final = world.snapshot()
-        if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
+        if visualize and (sampled_tick != world.tick or failure is not None):
             frames.append(final)
         if probe is not None and (sampled_tick != world.tick or failure is not None):
             probe.capture(world.tick)
@@ -257,7 +267,9 @@ def _execute_run(
             spatial_response="local-exchange-or-quarter-turn",
             spatial_sampling="resident-before-emission",
         )
-    (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
+    with (output / "state.json").open("w", encoding="utf-8") as state_stream:
+        json.dump(final, state_stream, indent=2)
+        state_stream.write("\n")
     observation = None if probe is None else probe.recording()
     if observation is not None:
         metadata["observer"] = {
@@ -266,9 +278,9 @@ def _execute_run(
             "clock_kind": observation["clock_kind"],
             "receipt_count": len(probe.receipts) if probe is not None else 0,
         }
-        (output / "observations.json").write_text(
-            json.dumps(observation, indent=2) + "\n", encoding="utf-8"
-        )
+        with (output / "observations.json").open("w", encoding="utf-8") as observation_stream:
+            write_json(observation_stream, observation)
+            observation_stream.write("\n")
     path = output / "run.json"
     path.write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
     if visualize:

@@ -1,6 +1,6 @@
 """Immutable proposal messages and the scheduler-facing execution protocol."""
 
-from collections.abc import Generator, Sequence
+from collections.abc import Generator, Iterable
 from dataclasses import dataclass
 from typing import Protocol
 
@@ -54,7 +54,7 @@ class LocalExecutor(Protocol):
 
     def record_serial(self, reason: str) -> None: ...
 
-    def evaluate(self, inputs: Sequence[ProposalInput]) -> Generator[ProposalResult]: ...
+    def evaluate(self, inputs: Iterable[ProposalInput]) -> Generator[ProposalResult]: ...
 
     def report(self) -> dict[str, object]: ...
 

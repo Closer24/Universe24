@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+MANDATORY_REVIEW_TESTS = ("tests/test_architecture.py", "tests/test_memory_contracts.py")
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
     "examples/particle-contracts/electron-proton.json": ("tests/test_parallel_runner.py",),
@@ -170,6 +171,9 @@ def affected(changed, sources):
 def select(changed, sources):
     impacted = affected(changed, sources)
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
+    if changed:
+        # Every submitted change retains system and memory architecture coverage.
+        tests.update(MANDATORY_REVIEW_TESTS)
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
         if path.startswith("tools/generic_vector_lab/"):

@@ -1,5 +1,59 @@
 # Validation evidence
 
+## Memory ownership, bounded recording and permanent review — 2026-09-13
+
+Extends PR #60 head `206cb0aad123abfb941b6bdec84fe1a3f44cd1dc`, with main
+`521b63567d186bab2fac982a1e1f9d0a592a73a5` unchanged at verification. The measured
+source fingerprint is
+`60ffc824f38ba7ed5834b349a7eea38cdb825b7b5c0c1c85c0a8ce7e9ec8c58f`.
+No physical law, integer bound, operation price or delivery/commit order changes.
+The [memory contract](MEMORY.md) records ownership and remaining limits.
+
+Independent comparison against the frozen predecessor covered 12 ordinary/failure
+cases, 172 complete per-tick state hashes and 2,178 ordered events. All physical
+state, exception type/message and modeled computation costs matched. Six short
+permanent memory-contract checks cover immutable maximum-capacity defaults,
+nonzero pending residual isolation, periodic storage stabilization, observer
+prefix/capacity behavior, failed-run archives and bounded export buffers.
+
+Measured with Python 3.14.7 on the same Windows host and identical configurations:
+
+| Probe | Before | After | Scope |
+| --- | ---: | ---: | --- |
+| 64 cells, 32 slots and 32 coupling rules | 50,334,720 bytes | 786,480 bytes | Unique immutable default coupling-tuple storage; one occupant per cell |
+| Same construction | 50,368,720 bytes | 822,368 bytes | Current traced Python allocation after collection, excluding pre-parsed input |
+| One moving record after 4,000 ticks | 2,729,440 bytes | 1,450,000 bytes | Current traced allocation; all 4,001 visited cells and 4,000 link origins preserved |
+| Empty 10,000-tick observer run | 5,174,352 bytes | 1,121,745 bytes | Peak traced Python allocation during complete runner/export |
+
+Both observer runs retain zero receptions and all 10,001 time samples. The new
+archive changes observations to compact JSON, reducing whitespace without
+discarding values. Exact playback embedding, serialization failure rollback,
+archive handles and runner export-failure cleanup have focused tests. Disk and
+browser recording size still grow with history; current frame memory, retained
+physical metadata and nondefault residuals retain their documented costs.
+
+Measurements use `tracemalloc` for Python allocations, not total RSS or MPI child
+memory. The predecessor archive's actual measured source fingerprint is
+`a1a96b09b4dc8b6fd8ba264276eea209abdd89ebedf4e4d74554c57f29750e83`;
+all 95 source files match the committed predecessor after CRLF-to-LF
+normalization, with identical syntax trees. The normalized fingerprint is
+`850fca3929769bd3a2b80aac83decf52b393d413526f0c69ba0b52f16772bcde`.
+Original measurement fingerprints are not relabeled.
+The new memory benchmark separately reports scoped OS resident/private readings,
+optional owned serial Python tracing, source/input hashes and actual worker use.
+
+Every changed submission now runs system-architecture and memory-contract checks,
+including configuration and documentation changes. AGENTS, contributor guidance,
+the shared workflow and architecture/test Skills persist this user requirement.
+Boss routing remains suitable; no new Skill or physical Highlights rule is needed.
+The final affected gate (`python tools/check.py`, without `--full`) passed 1,895
+tests with 30 opt-in visualization skips, Ruff/format on 288 Python files, strict
+mypy on 97 source files, and wheel/sdist builds. All 14 optional MPI tests ran
+locally against Intel MPI. Package changes already in PR #60 selected package-wide
+consumers; the scope was not expanded just for reassurance. The PR records CI for
+the submitted head. Ordinary verification is headless and no GIF or visual
+simulation was requested.
+
 ## Descriptive physical catalog and explicit profiles — 2026-09-12
 
 Base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`. The version 2

@@ -1,5 +1,10 @@
 # Project status and restart guide
 
+The [memory contract](MEMORY.md) now requires system/memory architecture checks
+for every change. Generic defaults share immutable storage; proposal/batch queues
+and disk-backed histories bound avoidable RAM retention. Visited physical
+metadata and complete disk/browser histories retain their documented growth.
+
 The [host execution options](PERFORMANCE.md#parallel-local-work-inside-one-world)
 include optional local-proposal workers within one world and prelaunched MPI
 processes. Physical commits retain their existing owner/order; spatial and

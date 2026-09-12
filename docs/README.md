@@ -1,5 +1,8 @@
 # Documentation index
 
+The [memory architecture contract](MEMORY.md) owns storage lifetimes, bounded
+work/recording and the mandatory per-change memory review and measurement guide.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured

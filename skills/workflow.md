@@ -86,6 +86,26 @@ a run but may not repair physical state. Consult
 [the active disturbance contract](../docs/DISTURBANCES.md) before applying old
 scalar/particle assumptions to the primary Simulation API.
 
+## Memory and system architecture
+
+For every change, review both the overall system architecture and memory
+architecture, even when only configuration or documentation changes. Identify
+owners, consumers, immutable shared definitions, mutable state, pending work,
+capacities, retained history, copies and cleanup on failure. The ordinary gate
+always selects the system-architecture and memory-contract tests for changed work;
+retain their source-level review as well as automated evidence.
+
+For memory-sensitive changes, record identical source/configuration identities
+and representative before/after peak allocations, including maximum capacities,
+long periodic runs and failed-run cleanup. Report Python heap tracing separately
+from process resident/private memory, worker copies and disk archive growth.
+Distinguish live elements, allocated capacity and intentionally retained physical
+metadata. Reuse verified evidence only after assessing the relevant diff.
+Do not claim memory is bounded by worker count if all inputs, futures, snapshots
+or results are still retained. Do not reclaim residuals, causes, timestamps or
+ordering metadata merely because a node contains no current particle. Preserve
+exact integer operations, delays, conservation, event order and failure prefixes.
+
 ## Performance work
 
 Initialization configuration is runtime data. UI and configuration changes must

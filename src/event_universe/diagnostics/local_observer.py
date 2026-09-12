@@ -3,6 +3,7 @@
 from collections.abc import Mapping
 from typing import TypedDict
 
+from event_universe.archive import JsonArchive
 from event_universe.observer_configuration import ObserverDefinition as ObserverDefinition
 
 MODEL = "local-reception-observer-v1"
@@ -47,11 +48,19 @@ class LocalObserver:
     belong to the host and never become cell state or a planner input.
     """
 
-    def __init__(self, definition: ObserverDefinition) -> None:
+    def __init__(
+        self,
+        definition: ObserverDefinition,
+        *,
+        receipts: list[Receipt] | JsonArchive[Receipt] | None = None,
+        samples: list[ObserverSample] | JsonArchive[ObserverSample] | None = None,
+    ) -> None:
         self.definition = definition
         self.clock = 0
-        self.receipts: list[Receipt] = []
-        self.samples: list[ObserverSample] = []
+        self.receipts: list[Receipt] | JsonArchive[Receipt] = [] if receipts is None else receipts
+        self.samples: list[ObserverSample] | JsonArchive[ObserverSample] = (
+            [] if samples is None else samples
+        )
 
     def receive(self, event: dict[str, object]) -> None:
         position = event.get("position")

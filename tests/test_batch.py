@@ -167,3 +167,55 @@ def test_pool_startup_failure_is_terminal_and_keeps_frozen_inputs(tmp_path, monk
     assert report["status"] == report["jobs"][0]["status"] == "failed"
     assert "worker pool creation unavailable" in report["jobs"][0]["error"]
     assert (output / "inputs/0000.json").is_file()
+
+
+def test_batch_dispatch_keeps_only_a_window_of_futures(tmp_path, monkeypatch):
+    from concurrent.futures import Future
+
+    outstanding = set()
+    peak = 0
+    submitted = 0
+
+    class Pool:
+        def __init__(self, **kwargs):
+            assert kwargs["max_workers"] == 2
+
+        def submit(self, fn, source, destination, ticks):
+            nonlocal peak, submitted
+            assert len(outstanding) < 4, "all jobs were retained instead of a bounded window"
+            future = Future()
+            future.set_result({"status": "completed", "error": None, "worker_pid": 42})
+            outstanding.add(future)
+            submitted += 1
+            peak = max(peak, len(outstanding))
+            return future
+
+        def shutdown(self, **kwargs):
+            assert not outstanding
+
+        def terminate_workers(self):
+            outstanding.clear()
+
+    def completed(futures):
+        future = next(iter(futures))
+        outstanding.remove(future)
+        yield future
+
+    monkeypatch.setattr(batch_module, "ProcessPoolExecutor", Pool)
+    monkeypatch.setattr(batch_module, "as_completed", completed)
+    output = tmp_path / "window"
+    result = json.loads(
+        run_batch([ROOT / "examples/basic.json"] * 20, output, workers=2, ticks=0).read_text()
+    )
+    assert submitted == 20 and peak == 4
+    assert [job["index"] for job in result["jobs"]] == list(range(20))
+    assert result["status"] == "completed"
+
+
+def test_invalid_late_input_keeps_output_uncreated(tmp_path):
+    invalid = tmp_path / "invalid.json"
+    invalid.write_text("{}")
+    output = tmp_path / "no-partial-batch"
+    with pytest.raises(ValueError):
+        run_batch([ROOT / "examples/basic.json", invalid], output, workers=1)
+    assert not output.exists()

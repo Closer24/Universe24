@@ -134,6 +134,11 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 
 ## Active generic ownership
 
+The [memory architecture contract](MEMORY.md) defines shared immutable defaults,
+bounded work windows, disk-backed recording and retained physical metadata.
+Every changed submission includes system-architecture and memory-contract tests;
+source review and representative measurements remain necessary.
+
 The engine receives an explicit `core/record_policy.RecordPolicy` alongside its
 local planner. `fields/record_operations.RecordOperations` owns the existing
 activity predicate, delivered-record merging and configured cost reporting.
@@ -206,8 +211,10 @@ tick's physical values across mutations. Existing individual diagnostics remain
 available. The runner still checks every completed tick and records every event.
 
 `batch.py` owns independent-world process scheduling with a bounded spawn pool.
-It freezes all validated inputs before dispatch, calls the ordinary runner per
-job and retains ordered results plus individual failure evidence. Worker count
+It freezes validated inputs to temporary files one at a time before dispatch,
+retains at most two pending jobs per worker, calls the ordinary runner per
+job and retains ordered results plus individual failure evidence. Input bytes
+are released after freezing; compact job metadata still grows with job count. Worker count
 does not partition a physical world or change its laws. See the reproduction and
 limits in [performance](PERFORMANCE.md).
 
@@ -533,6 +540,13 @@ physical failures keep their original exception and failed report. A final redir
 is registered only for the current run's successfully written artifact, preserving
 failure status and avoiding a stale report left by an earlier run. Preview work,
 IPC and page updates are host costs, not part of the physical model.
+
+Active generic recordings use `archive.JsonArchive`: temporary JSON data and a
+fixed-width on-disk index retain complete history without a growing RAM index.
+The runner owns archive cleanup, and JSON/HTML export streams bounded chunks.
+Each individual snapshot still requires its own memory; complete playback data
+still grows on disk and in the consuming browser. Direct in-memory observers and
+historical renderers retain their explicitly documented history costs.
 
 Sparse world storage is distinct from constant-size physical state. Existing
 materialized cells and occupancy-address order are retained for exact legacy

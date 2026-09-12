@@ -27,6 +27,11 @@ Run focused checks while resolving a concrete failure. For submission run the
 existing `python tools/check.py` gate on the submitted version. Standard tests
 are headless. Use `pytest --visualize-runs` and inspect visual artifacts only when
 visual checks were requested; preserve physical assertions in ordinary tests.
+
+Keep the mandatory system-architecture and memory-contract checks in every
+changed submission, including documentation changes. Follow the shared
+[memory review procedure](../workflow.md#memory-and-system-architecture) and
+distinguish fixed-capacity behavioral tests from measured allocator/RSS evidence.
 Report pass/fail counts, not-run checks and the source tree. Reuse results
 for an unchanged tree; do not repeat unrelated worlds merely for reassurance.
 

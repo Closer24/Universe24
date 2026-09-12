@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Permanent system and memory architecture checks
+
+Every changed submission selects `test_architecture.py` and
+`test_memory_contracts.py`, including configuration/documentation changes.
+The six memory cases independently cover maximum valid shared default storage,
+pending nonzero residual isolation, periodic address stabilization, same-tick
+observer prefixes and capacity rejection, failed-run complete archives and
+bounded raw export. `test_archive.py` covers indexed access, rollback, exact
+JSON/playback output and cleanup; `test_memory_benchmark.py` verifies scoped OS
+readings, source/input identities, serial tracing ownership and failed-run evidence.
+Batch tests require a pending window proportional to workers and frozen inputs.
+These are behavioral bounds, not absolute cross-platform RSS promises. See
+[memory architecture](MEMORY.md) for measured review requirements and remaining limits.
+
 ## Host execution and independent batches
 
 `test_local_execution.py` and `test_parallel_execution.py` verify isolated worker

@@ -69,15 +69,23 @@ def test_deleted_module_retains_old_consumers_and_cycles_terminate():
     assert "tests/test_old.py" in tests
 
 
-def test_docs_and_validation_changes_do_not_schedule_simulations():
+def test_docs_and_validation_changes_retain_required_architecture_and_memory_checks():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     assert tests == [
+        "tests/test_architecture.py",
         "tests/test_check_scope.py",
+        "tests/test_memory_contracts.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
     ]
     assert not typed
+
+
+@pytest.mark.parametrize("path", ["README.md", "data.json", "src/domain.py", "tests/test_one.py"])
+def test_every_change_keeps_system_and_memory_architecture_review(path):
+    selected, _ = CHECK.select([path], {})
+    assert set(CHECK.MANDATORY_REVIEW_TESTS) <= set(selected)
 
 
 def test_example_selects_its_consumers_and_not_other_collision_candidates():

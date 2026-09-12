@@ -1,5 +1,9 @@
 # Universe24 — a three-dimensional event simulator
 
+Every changed submission includes system and memory architecture checks.
+See [memory ownership and measurement](docs/MEMORY.md) for bounded worker queues,
+disk-backed recording, remaining capacity limits and `tools/benchmark_memory.py`.
+
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
 branch `main`. The Python package remains `event_universe`.
 

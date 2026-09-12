@@ -293,7 +293,9 @@ class DisturbanceLaw:
                 record = _with_value(record, rule.field, payload)
             updated[slot] = record
 
-        remainders = list(coupling_remainders)
+        # The fixed table is immutable until an exchange changes a component.
+        # This shares dormant defaults without discarding fractional ownership.
+        remainders: tuple[int, ...] | list[int] = coupling_remainders
         slots = len(records)
         # Configured rule order, then fixed slot order, is the declared local law.
         for rule_index, coupling in enumerate(self.couplings):
@@ -343,7 +345,11 @@ class DisturbanceLaw:
                         if carried:
                             residuals[component] = remainder
                         else:
-                            remainders[at] = encode(remainder)
+                            code = encode(remainder)
+                            if code != remainders[at]:
+                                if isinstance(remainders, tuple):
+                                    remainders = list(remainders)
+                                remainders[at] = code
                     left = _with_value(left, coupling.field, pack(tuple(new_left)))
                     right = _with_value(right, coupling.field, pack(tuple(new_right)))
                     if carried:
@@ -390,7 +396,10 @@ class DisturbanceLaw:
                 for right_slot in range(slots):
                     if left_slot in departed_slots or right_slot in departed_slots:
                         at = ((rule_index * slots + left_slot) * slots + right_slot) * 3
-                        remainders[at : at + 3] = [1, 1, 1]
+                        if any(remainders[index] != 1 for index in range(at, at + 3)):
+                            if isinstance(remainders, tuple):
+                                remainders = list(remainders)
+                            remainders[at : at + 3] = [1, 1, 1]
         for item, (slot, record) in enumerate(replacements):
             if record is not None:
                 target = self.definitions[record.type_index].cost_field
@@ -406,10 +415,13 @@ class DisturbanceLaw:
                 for c in range(field.components):
                     if final[index][c] != checked_work(original[index][c] + source_delta[index][c]):
                         raise ValueError(f"local rule violates conservation of {field.name}")
+        final_remainders = tuple(remainders)
+        if final_remainders == coupling_remainders:
+            final_remainders = coupling_remainders
         return LocalPlan(
             tuple(replacements),
             tuple(departures),
-            tuple(remainders),
+            final_remainders,
             tuple(tuple(v) for v in source_delta),
             meter.total,
         )

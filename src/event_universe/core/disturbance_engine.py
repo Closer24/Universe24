@@ -72,6 +72,10 @@ class DisturbanceEngine:
         self._planner = planner
         self._record_policy = record_policy
         self._observer = observer
+        capacity = initial.slots_per_cell
+        self._empty_records: tuple[DisturbanceRecord | None, ...] = (None,) * capacity
+        self._empty_remainders = (1,) * (len(initial.couplings) * capacity * capacity * 3)
+        self._empty_links: tuple[Packet | None, ...] = (None,) * (6 * capacity)
         self._cells: dict[Address3, DisturbanceCell] = {}
         self._active_cells: set[Address3] = set()
         self._pending_due: dict[int, set[Address3]] = {}
@@ -130,10 +134,9 @@ class DisturbanceEngine:
 
     def _at(self, position: Address3) -> DisturbanceCell:
         if position not in self._cells:
-            capacity = self.initial.slots_per_cell
             self._cells[position] = DisturbanceCell(
-                (None,) * capacity,
-                (1,) * (len(self.initial.couplings) * capacity * capacity * 3),
+                self._empty_records,
+                self._empty_remainders,
             )
             self._active_cells.add(position)
         return self._cells[position]
@@ -251,6 +254,13 @@ class DisturbanceEngine:
                 if self._resolver is None
                 else self._resolver.resolve(context, self._planner)
             )
+        # Worker serialization may copy immutable defaults. Share equal values,
+        # never erase a nonzero remainder or change a pending proposal's inputs.
+        if plan.coupling_remainders is not cell.coupling_remainders:
+            if plan.coupling_remainders == cell.coupling_remainders:
+                plan = replace(plan, coupling_remainders=cell.coupling_remainders)
+            elif plan.coupling_remainders == self._empty_remainders:
+                plan = replace(plan, coupling_remainders=self._empty_remainders)
         if coupled is not None:
             plan = replace(
                 plan,
@@ -293,7 +303,7 @@ class DisturbanceEngine:
             return
         if self.event_space is not None:
             self.event_space.require_room(2 + len(pending.plan.departures))
-        old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_cell))
+        old_links = self._links.get(position, self._empty_links)
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
         records = list(cell.records)
@@ -321,7 +331,9 @@ class DisturbanceEngine:
             else self._spatial.prepare_reaction(position, self.tick, pending.plan.spatial_reaction)
         )
         # All proposal validation has succeeded; commit coupled records together.
-        cell.records = tuple(records)
+        cell.records = (
+            tuple(records) if any(record is not None for record in records) else self._empty_records
+        )
         cell.coupling_remainders = pending.plan.coupling_remainders
         cell.available_tick = pending.next_tick
         cell.pending = None
@@ -525,16 +537,24 @@ class DisturbanceEngine:
                 self._begin(position, cell)
                 self._commit(position, cell)
             return
-        inputs = [
+        # Normal begin/commit only changes its own carrier cell; neighbor arrivals
+        # and source emission have separate phases. Capture immutable local inputs
+        # as the bounded worker window consumes them, rather than retaining a
+        # second complete tick's records and residuals on the coordinator.
+        inputs = (
             ProposalInput(cell.records, cell.coupling_remainders, cell.received_count)
             for position in candidates
             for cell in (self._cells[position],)
-        ]
-        eligible = set(candidates)
+        )
+        eligible = iter(candidates)
+        next_eligible = next(eligible, None)
         proposals = execution.evaluate(inputs)
         try:
             for position in positions:
-                prepared = next(proposals) if position in eligible else None
+                prepared = None
+                if position == next_eligible:
+                    prepared = next(proposals)
+                    next_eligible = next(eligible, None)
                 cell = self._cells[position]
                 self._begin(position, cell, prepared)
                 self._commit(position, cell)

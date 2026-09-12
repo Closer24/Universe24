@@ -42,6 +42,12 @@ defaults and every consumer. Inspect movement, transit, field exchange,
 recording/rendering and current state contracts when affected. Separate model
 local cost from dictionary/frontier/history costs on the host.
 
+Apply the [per-change memory and system review](../workflow.md#memory-and-system-architecture)
+to every change. Use [the memory contract](../../docs/MEMORY.md) to distinguish
+live state, reserved capacity, retained metadata, worker copies and disk archives.
+The permanent tests complement source review; neither a worker limit nor fixed
+local registers establish bounded total host memory.
+
 Map PR overlaps before combining them. Preserve both sides of an API extension
 when resolving an import conflict; do not overwrite a newer component with an
 older full file. Recommend one writer for a shared interface during integration.

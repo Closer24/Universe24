@@ -15,6 +15,7 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    zero_spatial_state,
 )
 from .topology import neighbor_address
 
@@ -78,6 +79,10 @@ class SpatialEngine:
         self.observer = observer
         self.coupler = coupler
         self.decayer = decayer
+        self._empty_states = tuple(
+            zero_spatial_state(initial.fields[definition.field].components)
+            for definition in initial.spatial_fields
+        )
         self.cells: dict[Address3, SpatialCell] = {}
         # Host scheduling index only: retain physical registers in self.cells.
         self._active: set[Address3] = set()
@@ -104,11 +109,7 @@ class SpatialEngine:
         self._initial_totals = self.totals()
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
-        result = []
-        for definition in self.initial.spatial_fields:
-            zero = pack((0,) * self.initial.fields[definition.field].components)
-            result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6))
-        return tuple(result)
+        return self._empty_states
 
     def _at(self, position: Address3) -> SpatialCell:
         if position not in self.cells:
@@ -181,6 +182,8 @@ class SpatialEngine:
                     replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
                     for state in states
                 )
+                if cell.states == self._empty_states:
+                    cell.states = self._empty_states
                 cell.last_cost = 0
                 cell.last_begin_tick = tick
                 self._active.discard(position)

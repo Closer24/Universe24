@@ -25,13 +25,15 @@ class LinkSchedule[PacketType: TimedPacket](MutableMapping[Address3, tuple[Packe
         self._ticks: dict[Address3, set[int]] = {}
         self._order: dict[Address3, int] = {}
         self._next_order = 0
+        # Link width is fixed in each physical owner. Cache only one width, so
+        # arbitrary public mapping writes cannot create an unbounded intern pool.
+        self._empty_packets: tuple[PacketType | None, ...] | None = None
 
     def __getitem__(self, position: Address3) -> tuple[PacketType | None, ...]:
         return self._packets[position]
 
     def __setitem__(self, position: Address3, packets: tuple[PacketType | None, ...]) -> None:
         if packets == self._packets.get(position):
-            self._packets[position] = packets
             return
         old_ticks = self._ticks.get(position)
         new_ticks = {packet.arrival_tick for packet in packets if packet is not None}
@@ -52,6 +54,12 @@ class LinkSchedule[PacketType: TimedPacket](MutableMapping[Address3, tuple[Packe
         if position not in self._packets:
             self._order[position] = self._next_order
             self._next_order += 1
+        if not new_ticks:
+            if self._empty_packets is None:
+                if packets:
+                    self._empty_packets = packets
+            elif len(packets) == len(self._empty_packets):
+                packets = self._empty_packets
         self._packets[position] = packets
 
     def __delitem__(self, position: Address3) -> None:

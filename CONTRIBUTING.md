@@ -94,6 +94,12 @@ documentation links/language and repository architecture/locality scanners.
 Changing a shared fixture, interpreter or package configuration can affect all
 tests. This wider scope must follow a shared dependency, not routine reassurance.
 
+Every change also runs the permanent system-architecture and memory-contract
+tests, including documentation/configuration changes. This is an explicit project
+requirement. Review the affected memory ownership and lifetime using
+[the memory contract](docs/MEMORY.md); use measured before/after evidence for
+memory-sensitive changes, rather than treating a passing static scan as proof.
+
 Static imports cannot prove every runtime dependency. Review the printed scope
 and add specific related paths or pytest node IDs with `--tests` for dynamic
 imports, subprocesses or external data not covered by the selector. Keep needed

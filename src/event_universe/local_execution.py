@@ -1,8 +1,9 @@
 """Host workers for immutable local proposals, without publishing physical state."""
 
 from collections import deque
-from collections.abc import Callable, Generator, Sequence
+from collections.abc import Callable, Generator, Iterable
 from dataclasses import dataclass, fields, is_dataclass
+from itertools import batched
 from typing import TYPE_CHECKING
 
 from .core.event_resolution import Planner
@@ -152,7 +153,7 @@ class LocalExecution:
         self._evaluated_proposals += len(result.proposals)
         return result.proposals
 
-    def evaluate(self, inputs: Sequence[ProposalInput]) -> Generator[ProposalResult]:
+    def evaluate(self, inputs: Iterable[ProposalInput]) -> Generator[ProposalResult]:
         if self.closed:
             raise RuntimeError("local execution is closed")
         if self._pool is None:
@@ -165,10 +166,7 @@ class LocalExecution:
                 initargs=initargs,
                 thread_name_prefix="event-universe-local",
             )
-        chunks = (
-            tuple(inputs[start : start + self.chunk_size])
-            for start in range(0, len(inputs), self.chunk_size)
-        )
+        chunks = batched(inputs, self.chunk_size, strict=False)
         pending: deque[tuple[Future[WorkerResult], int]] = deque()
 
         def submit() -> None:

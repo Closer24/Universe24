@@ -116,6 +116,15 @@ Passing code checks does not establish a real-world physical law.
 
 ## Completion
 
+Every change requires a review of overall system architecture, memory ownership,
+capacity, lifetime and peak allocation. The standard gate always includes
+`tests/test_architecture.py` and `tests/test_memory_contracts.py` for changed work,
+including configuration and documentation changes. Review the affected source as
+well: these checks cannot prove every architecture property. For memory-sensitive
+changes, measure representative before/after workloads and distinguish Python
+allocations, process memory, worker copies, disk archives and local model cost.
+The permanent procedure is in [shared workflow](skills/workflow.md#memory-and-system-architecture).
+
 Use `python tools/check.py` before submission. It selects changed files and
 affected consumers, rather than running unrelated suites. Inspect its reported
 scope; use `--tests` to add a related test whose dependency is not statically
