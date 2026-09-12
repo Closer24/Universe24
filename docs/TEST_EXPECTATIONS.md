@@ -348,3 +348,29 @@ headless and retain physical assertions.
   observed phases and saved image changes. First-image latency and whole-run
   duration are distinct measurements; browser refresh and recorded-frame
   equivalence are separate checks. Never infer concurrency from a callback name.
+
+## Local configuration workspace
+
+`test_workspace.py` drives a real loopback HTTP server and isolated runner children.
+Edited tick counts, model labels and initial amounts must reach saved metadata;
+two configurations must use distinct outputs and match direct CLI input, events,
+state and metadata byte for byte without changing source files. Invalid inputs
+and duplicate keys, including nested editor fragments, fail before execution.
+Tests cover cross-origin/token/Host rejection, restricted artifact paths, active
+job conflicts, explicit cancellation, shutdown cleanup and physical failure data.
+The browser workflow additionally checks forms, JSON editing, draft persistence,
+selection, validation after editing, imports/exports and optional recorded results.
+Inspect the actual UI; a passing HTTP test is not proof of correct controls.
+For phone layout changes, inspect narrow portrait and landscape viewports, all
+configuration tabs, numeric and JSON editing, shortcuts and completed results.
+Check document overflow, readable input text and touch target size. Record the
+actual browser and dimensions; viewport emulation does not verify native iOS
+keyboard, Safari or safe-area behavior on a physical device.
+
+`test_recorded_movie.py` checks that the approaching pair meets at the declared
+cell and passes without an invented collision, that parallel speeds differ and
+the pulse spreads while declared inventory remains conserved. Its explicitly
+marked visualization tests check exact sampled/final payloads, headless event
+parity, escaped names and partial failures. Browser checks must cover movie
+play/pause/restart/final hold, scrubbing, projection/speed, folded settings and
+renaming references without resetting an already loaded movie during polling.

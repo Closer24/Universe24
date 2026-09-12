@@ -139,7 +139,7 @@ def _values(
 
 
 class _Expressions:
-    """Compile a bounded, typed expression tree from JSON data only."""
+    """Parse a bounded, typed expression tree from JSON data only."""
 
     def __init__(
         self,
@@ -434,11 +434,16 @@ def _unique_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
 
 
 def load_initial_state(path: Path) -> InitialState:
-    """Read a strict JSON initialization file and compile its generic definitions."""
+    """Read a strict JSON initialization file and parse its generic definitions."""
     return parse_initial_json(path.read_bytes())
 
 
 def parse_initial_json(source: str | bytes) -> InitialState:
-    """Compile one immutable JSON payload, rejecting duplicate keys."""
+    """Parse one immutable JSON payload, rejecting duplicate keys."""
+    return parse_initial_state(parse_json_document(source))
+
+
+def parse_json_document(source: str | bytes) -> object:
+    """Read data with the same duplicate-key policy for full inputs and editor fragments."""
     document: object = json.loads(source, object_pairs_hook=_unique_object)
-    return parse_initial_state(document)
+    return document

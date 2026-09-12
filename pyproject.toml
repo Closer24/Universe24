@@ -16,6 +16,7 @@ dev = ["pytest>=8,<10", "ruff>=0.16,<0.17", "mypy>=2.3,<3", "build>=1,<2"]
 
 [project.scripts]
 event-universe = "event_universe.runner:main"
+event-universe-ui = "event_universe.ui:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -23,6 +24,12 @@ where = ["src"]
 [tool.setuptools]
 package-dir = {"" = "src"}
 py-modules = ["persistent_source_field"]
+
+[tool.setuptools.package-data]
+event_universe = ["ui_assets/*.html", "ui_assets/*.css", "ui_assets/*.js"]
+
+[tool.setuptools.data-files]
+"share/event-universe/examples" = ["examples/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

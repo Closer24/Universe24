@@ -82,6 +82,31 @@ Visualization is read-only and does not change the physical update interval.
 The active runner requires an empty output directory to preserve earlier evidence.
 The display contract is in [definitions](SIMULATOR_DEFINITIONS.md#default-run-display).
 
+## Simulation configuration UI
+
+Start the local workspace with the same installed Python environment:
+
+```bash
+python -m event_universe.ui
+```
+
+Open the printed local URL, normally `http://127.0.0.1:8765`. Choose a template,
+edit the configuration, check it, and select **Run simulation**. Forms cover world
+dimensions, duration, fields, disturbance types, seeds, rules and operation costs;
+a complete JSON editor and import/export cover every initialization member.
+Each run reads a saved JSON snapshot at runtime. Configuration changes require
+no compilation, package rebuild, dependency installation or server restart.
+
+The interface stays responsive while the runner executes in another process.
+**Run & watch** records a movie with play/pause, timeline, speed and plane controls.
+Prepared examples show approaching particles, parallel beams and a spreading
+pulse using idealized configured laws. Advanced settings start folded; the Names
+tab updates particle/type and field references together. Disable recording for
+a headless UI run; the CLI remains headless by default. Results include
+conservation checks and links to the input, state and events. Use `--configs`
+to select your own template folder, or `--port 0` to choose an available port.
+See the [workspace guide](docs/WORKSPACE.md) for drafts, files and interruption.
+
 ## Optional historical live display
 
 The historical scalar/particle renderer supports an explicitly requested live
@@ -157,7 +182,7 @@ from this README.
 
 | Path | Responsibility |
 | --- | --- |
-| `src/event_universe/initialization.py` | Strict JSON schema and typed expression compilation |
+| `src/event_universe/initialization.py` | Strict JSON schema and typed expression parsing |
 | `src/event_universe/core/disturbance_state.py` | Fixed generic definitions, records and positive payload codes |
 | `src/event_universe/core/disturbance_engine.py` | Local scheduling, fixed transit, ownership and capacity |
 | `src/event_universe/fields/disturbances.py` | Generic updates, paired exchange and transport proposals |
@@ -168,6 +193,7 @@ from this README.
 | `src/event_universe/diagnostics/` | Read-only measurements, recording and optional output |
 | `src/event_universe/scenarios.py` | Explicit historical research scenarios |
 | `src/event_universe/runner.py` | Initialization-based execution and optional visualization |
+| `src/event_universe/ui.py`, `ui_assets/` | Local configuration workspace, templates and isolated CLI jobs |
 | `src/event_universe/legacy_runner.py` | Explicit historical scenarios and optional recorded/live visualization |
 | `examples/basic.json` | Complete example initialization; physical names occur only as data |
 | `tests/` | Generic contracts, schema checks and retained research regressions |
