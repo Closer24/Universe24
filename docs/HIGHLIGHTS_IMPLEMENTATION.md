@@ -243,6 +243,21 @@ capacity remain explicit gaps. The engine and live Highlights are unchanged.
 
 ### Source evidence table
 
+### Measured computational-field delay
+
+Highlights was reread on 2026-09-12 at the same live revision
+`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The [computational-star candidate](../examples/computational-star/README.md)
+uses sections 10.3, 10.6 and 10.7: emitted vector processing drives the existing
+uniform carrier delay. It has no momentum response. Five 128-tick cases show
+slowing with unchanged node sequences and exact inventory accounting. Mass
+magnitude and vector sign controls preserve timing, so mass-derived load,
+directional delay, path curvature and gravitational binding remain gaps.
+The scoped no-force rule is retained in field-development. This repository
+reconciliation changes neither the engine nor the live Highlights document.
+
+### Source evidence links
+
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |
 | 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_open_boundaries.py, test_boundary_configuration.py and architecture tests |

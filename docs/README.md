@@ -1,5 +1,7 @@
 # Documentation index
 
+- [Computational star](../examples/computational-star/README.md): vector-field
+  processing delay without momentum changes, with mass and sign controls.
 - [Star-cluster encounters](../examples/star-cluster/README.md): configuration-only
   attraction tests, independent orbital acceptance and retained failure evidence.
 - [Configured topology](CONFIGURED_TOPOLOGY.md): immutable reciprocal ports and

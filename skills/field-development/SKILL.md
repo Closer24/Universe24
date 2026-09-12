@@ -44,6 +44,12 @@ parallel self flux produces no rotation. Price delayed atomic reactions without
 rewriting old in-flight packets or claiming reservation tariffs are measured host
 instruction counts; see [spatial response](../../docs/SPATIAL_COUPLINGS.md).
 
+For a delay-only computational-gravity experiment, preserve momentum and routing
+inputs: do not substitute a direct force, prescribed turn or load-dependent
+direction. Measure actual processing costs and compare node sequences at equal
+hop count. A vector payload does not imply directional timing; see the
+[computational-star example](../../examples/computational-star/README.md).
+
 Use local source edits and the existing Python validation tools. Coordinate
 schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and

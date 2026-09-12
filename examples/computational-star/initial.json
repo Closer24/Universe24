@@ -1,0 +1,329 @@
+{
+  "part_version": 1,
+  "part_kind": "initial_conditions",
+  "data": {
+    "seeds": [
+      {
+        "position": [
+          31,
+          31,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          31,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          31,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          32,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          32,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          32,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          33,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          33,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          31,
+          33,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          31,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          31,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          31,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          32,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          32,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 1000000
+        }
+      },
+      {
+        "position": [
+          32,
+          32,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          33,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          33,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          32,
+          33,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          31,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          31,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          31,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          32,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          32,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          32,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          33,
+          31
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          33,
+          32
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          33,
+          33,
+          33
+        ],
+        "type": "star_constituent",
+        "values": {
+          "mass": 10000
+        }
+      },
+      {
+        "position": [
+          24,
+          34,
+          32
+        ],
+        "type": "inner"
+      },
+      {
+        "position": [
+          24,
+          37,
+          32
+        ],
+        "type": "middle"
+      },
+      {
+        "position": [
+          24,
+          41,
+          32
+        ],
+        "type": "outer"
+      }
+    ]
+  }
+}

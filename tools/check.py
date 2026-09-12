@@ -163,6 +163,8 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        if path.startswith("examples/computational-star/"):
+            tests.add("tests/test_computational_star.py")
         if path.startswith("examples/star-cluster/"):
             tests.add("tests/test_star_cluster.py")
         if path.startswith("tools/generic_vector_lab/"):

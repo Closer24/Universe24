@@ -1,5 +1,12 @@
 # Test inputs and expected results
 
+`tests/test_computational_star.py` prohibits force/routing substitutions in the
+delay-only candidate and checks an independently specified arriving vector
+pulse: local cost 106 exceeds budget 80, so departure ticks shift from 3/7 to
+4/8 while mass, momentum and +X ports stay unchanged. The accompanying
+[five-case study](../examples/computational-star/README.md) verifies exact
+mass/sign controls and separates elapsed waiting from scheduled future waits.
+
 The star-cluster candidate is covered by `tests/test_star_cluster.py`: all 40
 configurations parse, the equal-velocity mass control preserves p/m, a local
 delivered signal causes attraction with opposite momentum accounting, and a

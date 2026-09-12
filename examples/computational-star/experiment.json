@@ -1,0 +1,11 @@
+{
+  "experiment_version": 1,
+  "schema_version": 2,
+  "model_id": "measured-vector-work-delay-only-v1",
+  "environment": "environment.json",
+  "definitions": [
+    "definitions.json"
+  ],
+  "initial_conditions": "initial.json",
+  "run": "run.json"
+}

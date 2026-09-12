@@ -1,0 +1,239 @@
+{
+  "part_version": 1,
+  "part_kind": "definitions",
+  "data": {
+    "fields": [
+      {
+        "name": "mass",
+        "components": 1,
+        "signed": false,
+        "conserved": true,
+        "extensive": true,
+        "units": "configured lattice units"
+      },
+      {
+        "name": "momentum",
+        "components": 3,
+        "signed": true,
+        "conserved": true,
+        "extensive": true,
+        "units": "configured lattice units"
+      },
+      {
+        "name": "work",
+        "components": 1,
+        "signed": false,
+        "conserved": false,
+        "extensive": false,
+        "units": "configured lattice units"
+      },
+      {
+        "name": "ordinary_work",
+        "components": 1,
+        "signed": false,
+        "conserved": false,
+        "extensive": false,
+        "units": "configured lattice units"
+      },
+      {
+        "name": "load_axis",
+        "components": 3,
+        "signed": true,
+        "conserved": false,
+        "extensive": false,
+        "units": "configured lattice units"
+      },
+      {
+        "name": "computational_load",
+        "components": 3,
+        "signed": true,
+        "conserved": true,
+        "extensive": true,
+        "units": "configured lattice units"
+      }
+    ],
+    "disturbance_types": [
+      {
+        "name": "star_constituent",
+        "fields": [
+          "mass",
+          "momentum",
+          "work",
+          "ordinary_work",
+          "load_axis"
+        ],
+        "defaults": {
+          "mass": 10000,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "work": 0,
+        "ordinary_work": 64,
+          "load_axis": [
+            1,
+            1,
+            1
+          ]
+        },
+        "transport": {
+          "mode": "hold"
+        },
+        "cost_field": "work"
+      },
+      {
+        "name": "inner",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 4,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "move",
+          "direction_field": "momentum",
+          "rate": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum"
+                  }
+                ]
+              }
+            ]
+          },
+          "rate_denominator": 4
+        }
+      },
+      {
+        "name": "middle",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 4,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "move",
+          "direction_field": "momentum",
+          "rate": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum"
+                  }
+                ]
+              }
+            ]
+          },
+          "rate_denominator": 4
+        }
+      },
+      {
+        "name": "outer",
+        "fields": [
+          "mass",
+          "momentum"
+        ],
+        "defaults": {
+          "mass": 4,
+          "momentum": [
+            1,
+            0,
+            0
+          ]
+        },
+        "transport": {
+          "mode": "move",
+          "direction_field": "momentum",
+          "rate": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum"
+                  }
+                ]
+              }
+            ]
+          },
+          "rate_denominator": 4
+        }
+      }
+    ],
+    "spatial_fields": [
+      {
+        "field": "computational_load",
+        "baseline": [
+          0,
+          0,
+          0
+        ],
+        "transport": "outward",
+        "decay": {
+          "retain_numerator": 1,
+          "retain_denominator": 2
+        }
+      }
+    ],
+    "emissions": [
+      {
+        "type": "star_constituent",
+        "field": "computational_load",
+        "amount": {
+          "op": "mul",
+          "args": [
+            {
+              "op": "max",
+              "args": [
+                {
+                  "op": "sub",
+                  "args": [
+                    {
+                      "field": "work"
+                    },
+                    {
+                      "field": "ordinary_work"
+                    }
+                  ]
+                },
+                0
+              ]
+            },
+            {
+              "field": "load_axis"
+            }
+          ]
+        },
+        "denominator": 1,
+        "source": true,
+        "budget": [
+          1000000,
+          1000000,
+          1000000
+        ]
+      }
+    ]
+  }
+}
