@@ -1,0 +1,210 @@
+{
+  "schema_version": 2,
+  "boundary": "periodic",
+  "model_id": "three-carrier-finite-computation-v1",
+  "shape": [
+    65,
+    65,
+    65
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 100,
+  "ticks": 120,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "mass unit",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "momentum unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "computation",
+      "components": 1,
+      "units": "load unit",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "emission",
+      "components": 1,
+      "units": "load per interval",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "carrier",
+      "fields": [
+        "mass",
+        "momentum",
+        "emission"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "emission": 72
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 10
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "momentum",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "outward",
+      "decay": {
+        "retain_numerator": 9,
+        "retain_denominator": 10
+      }
+    },
+    {
+      "field": "computation",
+      "baseline": 1,
+      "transport": "outward",
+      "decay": {
+        "retain_numerator": 9,
+        "retain_denominator": 10
+      }
+    }
+  ],
+  "emissions": [
+    {
+      "type": "carrier",
+      "field": "computation",
+      "amount": {
+        "field": "emission"
+      },
+      "source": true,
+      "budget": 720
+    }
+  ],
+  "spatial_couplings": [
+    {
+      "name": "load_response",
+      "type": "carrier",
+      "field": "momentum",
+      "mode": "exchange",
+      "amount": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "momentum"
+          },
+          {
+            "op": "min",
+            "args": [
+              64,
+              {
+                "op": "max",
+                "args": [
+                  0,
+                  {
+                    "op": "sub",
+                    "args": [
+                      {
+                        "field": "computation",
+                        "side": "right"
+                      },
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "denominator": 64,
+      "budget": [
+        64,
+        64,
+        64
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        31,
+        32,
+        32
+      ],
+      "type": "carrier",
+      "values": {
+        "mass": 2,
+        "momentum": [
+          4,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        33,
+        32,
+        32
+      ],
+      "type": "carrier",
+      "values": {
+        "mass": 3,
+        "momentum": [
+          -6,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        32,
+        31,
+        32
+      ],
+      "type": "carrier",
+      "values": {
+        "mass": 5,
+        "momentum": [
+          0,
+          10,
+          0
+        ]
+      }
+    }
+  ]
+}
