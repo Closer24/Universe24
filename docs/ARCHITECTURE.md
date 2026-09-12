@@ -14,6 +14,12 @@ Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).
 
+`particle_reactions.py` is a host-only catalog authoring adapter layered on that
+conversion owner. It validates selected established particle metadata and exact
+charge/configured-energy/momentum totals, then emits ordinary role-named types and
+conserved fields. The engine receives no particle identity and has no species
+dispatch. See [particle reactions](PARTICLE_REACTIONS.md).
+
 ## Local integer operation contract
 
 This contract applies to all new and changed physical code, entity definitions,

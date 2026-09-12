@@ -93,6 +93,19 @@ two ticks with retained and in-flight ownership counted once. These checks do
 not establish Maxwell dynamics, annihilation or general classical emergence.
 See [the acceptance limits](PHYSICAL_ENTITIES.md).
 
+## Generic particle reactions
+
+`tests/test_particle_reactions.py` uses the catalog plus the explicit electron/positron
+to two-photon conservation probe. Selected particle/antiparticle charge and doubled-spin
+metadata must be reciprocal and established; electron/positron classify as fermions and
+photon as a boson. Authoring rejects charge, configured-energy or momentum imbalance.
+The compiled generic conversion keeps all three totals exact while products move, and a
+post-compilation tamper is rejected atomically at runtime. Arbitrary species renaming
+must leave the compiled physical initialization identical, and a new established catalog
+particle with compatible metadata must compile without engine code. The current adapter is
+strictly `2 -> 2`; it does not establish QED dynamics, arbitrary product counts, exchange
+antisymmetry or a relativistic dispersion law. See [PARTICLE_REACTIONS.md](PARTICLE_REACTIONS.md).
+
 ## Generic local field rules
 
 These are focused acceptance requirements for

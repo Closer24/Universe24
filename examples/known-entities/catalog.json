@@ -15,7 +15,7 @@
   "sources": {
     "pdg_higgs": {"title": "PDG 2025: Higgs boson physics", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-higgs-boson.pdf"},
     "cern_standard_model": {"title": "CERN: The Standard Model", "url": "https://home.cern/science/physics/standard-model/"},
-    "pdg_particles": {"title": "PDG 2025: Particle summary tables", "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"},
+    "pdg_particles": {"title": "PDG 2026: Particle summary tables", "url": "https://pdg.lbl.gov/2026/tables/contents_tables.html"},
     "cern_antimatter": {"title": "CERN: Antimatter", "url": "https://home.cern/science/physics/antimatter/"},
     "pdg_neutrinos": {"title": "PDG 2025: Neutrino masses, mixing, and oscillations", "url": "https://pdg.lbl.gov/2025/reviews/rpp2025-rev-neutrino-mixing.pdf"},
     "tong_qft": {"title": "David Tong: Quantum Field Theory", "url": "https://davidtong.org/pdfs/teaching/quantum-field-theory/qft.pdf"},

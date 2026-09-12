@@ -21,7 +21,9 @@ def read(path):
 
 def owned(world):
     records = [record for cell in world.cells.values() for record in cell.records if record is not None]
-    records += [packet.record for packets in world.links.values() for packet in packets if packet is not None]
+    records += [
+        packet.record for packets in world.links.values() for packet in packets if packet is not None
+    ]
     return sorted((record.type_index, world.record_values(record)) for record in records)
 
 
@@ -66,7 +68,12 @@ def test_compiled_reaction_replaces_local_inputs_and_runtime_balances_stay_exact
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
-        (lambda raw: raw["outputs"].__setitem__(1, {"entity": "electron", "energy": 5, "momentum": [-5, 0, 0]}), "charge"),
+        (
+            lambda raw: raw["outputs"].__setitem__(
+                1, {"entity": "electron", "energy": 5, "momentum": [-5, 0, 0]}
+            ),
+            "charge",
+        ),
         (lambda raw: raw["outputs"][0].__setitem__("energy", 4), "energy"),
         (lambda raw: raw["outputs"][0].__setitem__("momentum", [4, 0, 0]), "momentum"),
     ],
@@ -100,11 +107,7 @@ def test_species_names_do_not_select_reaction_physics():
     baseline, _ = compile_particle_reaction(catalog, reaction)
     renamed = copy.deepcopy(catalog)
     mapping = {"electron": "left arbitrary", "positron": "right arbitrary", "photon": "output arbitrary"}
-    selected = {
-        row["id"]: row
-        for row in renamed["particle_entities"]
-        if row["id"] in mapping
-    }
+    selected = {row["id"]: row for row in renamed["particle_entities"] if row["id"] in mapping}
     for old, new in mapping.items():
         selected[old]["id"] = new
     selected["electron"]["antiparticle_id"] = mapping["positron"]

@@ -94,7 +94,9 @@ def _particle_fact(indexed: dict[str, JsonObject], identity: str) -> ParticleFac
     conjugacy = row.get("conjugacy_status")
     rest_mass = row.get("rest_mass_relation")
     status = row.get("physical_status")
-    if not all(isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)):
+    if not all(
+        isinstance(value, str) and value for value in (antiparticle, conjugacy, rest_mass, status)
+    ):
         raise ValueError(f"particle {identity} has incomplete identity metadata")
     charge = _integer(row.get("electric_charge_thirds"), f"{identity}.electric_charge_thirds")
     twice_spin = _integer(row.get("twice_spin"), f"{identity}.twice_spin", minimum=0)
@@ -142,7 +144,9 @@ def _sum_vector(values: tuple[tuple[int, int, int], tuple[int, int, int]]) -> tu
 
 def _reaction_document(
     catalog: object, reaction: object
-) -> tuple[JsonObject, dict[str, JsonObject], tuple[ReactionLeg, ReactionLeg], tuple[ReactionLeg, ReactionLeg]]:
+) -> tuple[
+    JsonObject, dict[str, JsonObject], tuple[ReactionLeg, ReactionLeg], tuple[ReactionLeg, ReactionLeg]
+]:
     indexed = _particle_index(catalog)
     raw = _object(reaction, "reaction")
     required = {"reaction_version", "model_id", "inputs", "outputs"}
@@ -285,7 +289,9 @@ def compile_particle_reaction(catalog: object, reaction: object) -> tuple[JsonOb
         "reaction output right",
     )
     types: list[JsonObject] = []
-    for index, (leg, fact) in enumerate(zip((*inputs, *outputs), (*input_facts, *output_facts), strict=True)):
+    for index, (leg, fact) in enumerate(
+        zip((*inputs, *outputs), (*input_facts, *output_facts), strict=True)
+    ):
         output = index >= 2
         transport: JsonObject = {"mode": "hold"}
         if output and move_outputs:
