@@ -3,20 +3,20 @@
 from collections.abc import Callable
 from typing import NamedTuple, Protocol
 
-from .state import CellState, Config, Neighbors, ParticleState, Vector
+from .state import Config, Neighbors, NodeState, ParticleState, Vector
 
 
 class ParticleUpdate(NamedTuple):
     particle: ParticleState
-    cell: CellState
+    node: NodeState
     direction: int
     gradient: Vector
     impulse: Vector
 
 
-FieldRule = Callable[[CellState, Neighbors, int, Config], CellState]
-FieldActivity = Callable[[CellState, CellState, int], bool]
-ParticleRule = Callable[[ParticleState, CellState, Neighbors, Config, int], ParticleUpdate]
+FieldRule = Callable[[NodeState, Neighbors, int, Config], NodeState]
+FieldActivity = Callable[[NodeState, NodeState, int], bool]
+ParticleRule = Callable[[ParticleState, NodeState, Neighbors, Config, int], ParticleUpdate]
 CollisionRule = Callable[[ParticleState, ParticleState], tuple[ParticleState, ParticleState]]
 
 
@@ -30,7 +30,7 @@ class CollisionRecord(NamedTuple):
     after_second: ParticleState
 
 
-LocalCellRule = Callable[[CellState], CellState]
+LocalCellRule = Callable[[NodeState], NodeState]
 
 
 class MoveRecord(NamedTuple):

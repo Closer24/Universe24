@@ -201,7 +201,7 @@ Prespecified checks for a clean linear mode are a normalized recurrence residual
 below `1e-8`, frequency within `1e-8` of the independent matrix forecast,
 matching axial polarizations/axis permutations, and smaller oblique speed error
 for period 15 than period 9. The Fourier analysis and trigonometry are read-only
-host diagnostics. None of their values enters a cell update.
+host diagnostics. None of their values enters a node update.
 
 The matrix comparison checks implementation. The comparison against the
 continuum speed, transverse behavior, conservation and convergence checks the
@@ -221,7 +221,7 @@ the initial moment
 E=(\delta_y\phi,-\delta_x\phi,0),\qquad B=0,
 \]
 
-where each `delta` is the difference of values one cell forward and one cell
+where each `delta` is the difference of values one node forward and one node
 backward. These commuting integer differences make the initial centered
 divergence exactly zero. They are initial preparation and diagnostic operators,
 not physical nonlocal reads in the update rule.

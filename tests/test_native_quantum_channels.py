@@ -25,11 +25,11 @@ def config(middle=None):
         register_names=["path"],
     )
     p["layers"] = [
-        {"tick": 1, "operations": [{"sites": [0], "matrix": H}]},
-        {"tick": 3, "operations": [{"sites": [0], "matrix": H}]},
+        {"tick": 1, "operations": [{"register_indices": [0], "matrix": H}]},
+        {"tick": 3, "operations": [{"register_indices": [0], "matrix": H}]},
     ]
     if middle:
-        p["layers"].insert(1, {"tick": 2, "operations": [dict(sites=[0], **middle)]})
+        p["layers"].insert(1, {"tick": 2, "operations": [dict(register_indices=[0], **middle)]})
     p["bindings"][0]["instrument"] = POSITION
     p["tickets"] = [0]
     return raw
@@ -98,7 +98,7 @@ def test_native_validation_rejects_ambiguous_or_invalid_extensions(error):
     if error == "v1":
         p["model"] = "local-quantum-events-v1"
     if error == "badmap":
-        p["layers"][0]["operations"][0] = {"sites": [0], "channel": [[[1, 1], [0, 1]]]}
+        p["layers"][0]["operations"][0] = {"register_indices": [0], "channel": [[[1, 1], [0, 1]]]}
     if error == "ambiguous":
         p["addresses"] *= 2
         p["dimensions"] *= 2
@@ -109,7 +109,7 @@ def test_native_validation_rejects_ambiguous_or_invalid_extensions(error):
     if error == "unknown":
         p["layers"][0]["operations"][0]["unrecognized"] = 1
     if error == "remote":
-        p["bindings"][0]["site"] = 1
+        p["bindings"][0]["register_index"] = 1
     with pytest.raises((ValueError, TypeError)):
         Simulation(parse_initial_state(raw))
 
@@ -123,12 +123,15 @@ def test_explicit_colocated_binding_and_local_gate_avoid_artificial_link_delay()
     p["dimensions"] *= 2
     p["initial_levels"] *= 2
     p["register_names"] = ["a", "b"]
-    p["bindings"][0]["site"] = 0
+    p["bindings"][0]["register_index"] = 0
     p["layers"] = [
         {
             "tick": 1,
             "operations": [
-                {"sites": [0, 1], "matrix": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, -1]]}
+                {
+                    "register_indices": [0, 1],
+                    "matrix": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, -1]],
+                }
             ],
         }
     ]

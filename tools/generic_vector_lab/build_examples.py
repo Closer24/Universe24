@@ -173,7 +173,7 @@ rules["mix_fields"] = reaction(
 )
 data = {
     "limits": {
-        "cell_capacity": 6,
+        "node_capacity": 6,
         "max_participants": 6,
         "max_products": 6,
         "link_capacity": 12,

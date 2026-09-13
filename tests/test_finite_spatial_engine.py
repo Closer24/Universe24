@@ -28,7 +28,7 @@ def finite_document(**kwargs):
 
 
 def all_records(world):
-    records = [r for cell in world.cells.values() for r in cell.records if r is not None]
+    records = [r for node in world.nodes.values() for r in node.records if r is not None]
     records.extend(p.record for links in world.links.values() for p in links if p is not None)
     return records
 
@@ -76,7 +76,7 @@ def test_emission_budget_travels_and_stays_exhausted(moving):
         assert_balanced(world, initial)
     assert world.totals()["radiation"] == (0,)
     assert world.dissipation_totals()["radiation"] == (5,)
-    assert all(cell.last_cost == 0 for cell in world._spatial.cells.values())
+    assert all(node.last_cost == 0 for node in world._spatial.nodes.values())
 
 
 def test_fractional_emission_finishes_once_and_does_not_leave_debt():
@@ -98,7 +98,7 @@ def test_frozen_delayed_departure_does_not_restore_spent_emission_budget():
     world = Simulation(parse_initial_state(raw))
     initial = world.totals()
     world.step()
-    pending = world.cells[ORIGIN].pending
+    pending = world.nodes[ORIGIN].pending
     assert pending is not None and pending.ready_tick > 3
     for _ in range(pending.ready_tick + 5):
         world.step()
@@ -106,7 +106,7 @@ def test_frozen_delayed_departure_does_not_restore_spent_emission_budget():
     record = all_records(world)[0]
     assert unpack(record.emission_remaining[0]) == (0,)
     assert world.source_totals()["radiation"] == (5,)
-    assert world.cells[ORIGIN].records == (None,) * 4
+    assert world.nodes[ORIGIN].records == (None,) * 4
 
 
 def test_neighbor_packets_decay_separately_before_they_merge():
@@ -155,13 +155,13 @@ def test_failed_delivery_commits_neither_loss_nor_packet_removal():
     population = (pack((MAX_VALUE,)),) + (pack((0,)),) * 7
     packet = SpatialPacket(1, source, 0, (population,))
     engine.links[source] = (packet,) + (None,) * 5
-    old_states = engine.cells[ORIGIN].states
+    old_states = engine.nodes[ORIGIN].states
     with pytest.raises(ValueError, match="bound"):
         engine.deliver(1)
-    assert engine.cells[ORIGIN].states == old_states
+    assert engine.nodes[ORIGIN].states == old_states
     assert engine.links[source][0] == packet
     assert world.dissipation_totals()["radiation"] == (0,)
-    assert engine.cells[ORIGIN].received_decay_cost == 0
+    assert engine.nodes[ORIGIN].received_decay_cost == 0
 
 
 def test_unsigned_packet_is_validated_before_decay_can_erase_it():
@@ -183,7 +183,7 @@ def test_partial_budget_metadata_cannot_reinitialize_an_exhausted_emitter():
     world = Simulation(parse_initial_state(raw))
     world.step()
     record = all_records(world)[0]
-    world._cells[ORIGIN].records = (
+    world._nodes[ORIGIN].records = (
         replace(record, emission_remainders=(), emission_phases=()),
         None,
         None,
@@ -191,7 +191,7 @@ def test_partial_budget_metadata_cannot_reinitialize_an_exhausted_emitter():
     )
     # Invoke the law directly: an exhausted source need not be scheduled again.
     with pytest.raises(ValueError, match="partial"):
-        world._spatial.planner(world._spatial.cells[ORIGIN].states, world._cells[ORIGIN].records, 0)
+        world._spatial.planner(world._spatial.nodes[ORIGIN].states, world._nodes[ORIGIN].records, 0)
 
 
 def test_runner_distinguishes_dissipation_accounting_from_physical_conservation(tmp_path):

@@ -27,10 +27,10 @@ declared accounting and causal neighbor send/arrival times.
 
 | Question | Measured result | Interpretation |
 | --- | --- | --- |
-| Rest | Electron proxy remains at its initial cell with zero momentum | Restricted rest agreement |
-| Momentum magnitude / species | Momentum 1 and 2 both move two cells in four ticks; electron and proton proxies share the supplied rate | Missing derived inertia and mass-dependent motion |
-| Photon | Catalog proxy moves two cells in four ticks | Half-rate record, not physical light |
-| Ray-speed candidate | Changing only the transport denominator from 2 to 1 gives four cells in four ticks | Correct configured causal speed; no quantum photon dynamics |
+| Rest | Electron proxy remains at its initial node with zero momentum | Restricted rest agreement |
+| Momentum magnitude / species | Momentum 1 and 2 both move two nodes in four ticks; electron and proton proxies share the supplied rate | Missing derived inertia and mass-dependent motion |
+| Photon | Catalog proxy moves two nodes in four ticks | Half-rate record, not physical light |
+| Ray-speed candidate | Changing only the transport denominator from 2 to 1 gives four nodes in four ticks | Correct configured causal speed; no quantum photon dynamics |
 | Charged response | Positive, negative and neutral records retain zero momentum in a nonzero electric background | No charge-to-field coupling in those catalog profiles |
 | Electric-only pulse | E propagates, B remains zero | No Maxwell mixing/constraint law supplied; this is not a free EM wave |
 | Equal masses | Configured head-on momentum swap returns both bodies | Restricted classical permutation |

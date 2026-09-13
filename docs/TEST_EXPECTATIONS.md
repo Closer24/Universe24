@@ -217,9 +217,9 @@ render completion. Neither test collection nor cleanup enables rendering.
 
 | Suite | Independent expectations |
 | --- | --- |
-| `test_boundary_configuration.py` | Periodic default under both schemas; exact open/periodic setting; every positive and negative face of a 3x4x5 world; single-cell extents; invalid names, coordinates, faces and bounds rejected |
+| `test_boundary_configuration.py` | Periodic default under both schemas; exact open/periodic setting; every positive and negative face of a 3x4x5 world; single-node extents; invalid names, coordinates, faces and bounds rejected |
 | `test_open_boundaries.py` | Carrier exits and wrapping on all six faces after full transit; unchanged signed vectors; terminal quantity 1 escapes even with zero retention while an interior copy decays; mixed corner fields/baselines; invalid terminal payloads commit neither loss nor removal; unused emitter allowance does not become physical escape |
-| `test_spatial_scheduling.py` | Optimized and forced full-sweep runs have identical per-tick snapshots, costs, events and balances; dormant history is not enumerated; reactions reactivate known idle cells without delaying their departure; newly created cells are not backdated |
+| `test_spatial_scheduling.py` | Optimized and forced full-sweep runs have identical per-tick snapshots, costs, events and balances; dormant history is not enumerated; reactions reactivate known idle nodes without delaying their departure; newly created nodes are not backdated |
 | `test_disturbance_application.py` | Open example records carried escape 72, spatial escape 20 and dissipation 52; no carrier reentry; zero-tick edge case has empty events and zero escape; runner and snapshot agree |
 | `test_workspace.py`, `test_workspace_integration.py` | Workspace accepts field examples and records open escape; direct/HTTP runs retain equal physical output; open terminal playback does not wrap or dereference a missing target; balanced loss/escape is not a failed check; field renaming updates flux expressions |
 
@@ -392,7 +392,7 @@ Field arithmetic lives in `fields/scalar.py`; turning and movement in `dynamics/
 remainder accumulation and division live in `core/state.py` and serve all three
 turning components.
 
-Cell activity is an injected decision. The original model explicitly keeps its
+Node activity is an injected decision. The original model explicitly keeps its
 old value-based activity. Supplying `ScalarSimulation(field=...)` tracks remainder
 changes by default; `field_activity=` selects another policy.
 
@@ -400,7 +400,7 @@ Model, API and compatibility assembly contain no independent arithmetic.
 Architecture checks reject runtime formulas in these modules. Configuration and
 initial conditions are intentionally specific and tested through the behavior
 they produce. The framework remains constrained to 3D, six neighbors and the
-declared fixed cell schema.
+declared fixed node schema.
 
 ## Running and validating changes
 
@@ -503,7 +503,7 @@ proof against arbitrary dynamic Python or a proof of physical locality.
 `test_locality.py` supplies a read spy at (3,3,3) in extents 8 and 1,000,000.
 Both calls must read the same six cardinal neighbors once each and return the
 six supplied values in order. This test creates no world and advances no time.
-Negative source examples in fields, dynamics and models must reject global cell
+Negative source examples in fields, dynamics and models must reject global node
 or particle access, occupancy/history reads and shadow step/run calls. The
 normal architecture test scans all production modules with the same guard.
 LOCALITY-1 also requires manual end-to-end provenance and loop-bound review;
@@ -529,8 +529,8 @@ still requires review. No physical calculation changes as part of translation.
   produces (3.24,4.32,0), length 5.4. Rest or a missing scale shows no arrow;
   invalid scales are rejected. These are display-only numerical calculations.
 - Periodic display fixtures cover both directions and every axis. The move
-  x=63 to x=0 in a 64-cell axis is a boundary crossing, not a multi-cell jump.
-  The move x=63 to x=1 is both a boundary crossing and a two-cell jump;
+  x=63 to x=0 in a 64-node axis is a boundary crossing, not a multi-node jump.
+  The move x=63 to x=1 is both a boundary crossing and a two-node jump;
   the renderer must preserve both indicators. Two simultaneous seam crossings
   likewise cannot hide a two-cardinal-step displacement.
 - `test_playback.py`: two distinct synthetic snapshots are rendered in both
@@ -557,7 +557,7 @@ Total momentum conservation does not excuse the particle's self-impulse. A stati
 isolated run passes; a two-particle contact run is not subject to isolated classification.
 These tests verify the detector, not success of the physical inertial-motion gate.
 
-## Mass and elastic same-cell contact
+## Mass and elastic same-node contact
 
 `test_collisions.py` independently evaluates total momentum and classical kinetic
 energy with diagnostic Fraction arithmetic, never using those values in physics.
@@ -572,12 +572,12 @@ energy with diagnostic Fraction arithmetic, never using those values in physics.
 | 54 rational input pairs across unequal masses | Exact energy/momentum, reversibility and input-exchange symmetry |
 | Momentum 1, mass 2, cap 12 | Half-unit budget credit, first hop after 24 ticks |
 | Length 5, momentum numerator 1, denominator 3, mass 2, cap 12 | Transit 360 ticks |
-| Same-cell head-on arrival at completed tick 4 | One collision, no extra hop; separation at tick 8 |
+| Same-node head-on arrival at completed tick 4 | One collision, no extra hop; separation at tick 8 |
 | Heavy stationary target | Fractional outgoing momenta persist and the target eventually moves |
 | Local links of length 2 at half c | No collision in flight; one on arrival at event tick 4 |
-| One-cell periodic self-loop | One contact, stable slot identity across four ticks |
+| One-node periodic self-loop | One contact, stable slot identity across four ticks |
 | Independent transparent contact callable | Replacement preserves momentum instead of backscattering |
-| Periodic four-cell axis | Contact at x=0, then another at x=2 after separation |
+| Periodic four-node axis | Contact at x=0, then another at x=2 after separation |
 | Different simultaneous addresses | No collision despite visiting the same address at different times |
 | Four co-residents | Fixed 16 flags, conserved totals and at most one collision per particle per tick |
 | Invalid mass or bound overflow | Failure before insertion or atomic pair commit; faulted world rejects continuation |
@@ -585,7 +585,7 @@ energy with diagnostic Fraction arithmetic, never using those values in physics.
 Integration worlds are headless unless visualization is requested. Historical
 fixed-schema, numeric and collision checks cover those research records and defaults.
 
-## Balanced movement and twelve-cell halo candidate
+## Balanced movement and twelve-node halo candidate
 
 `test_balanced_movement.py` checks all 342 signed nonzero directions in [-3,3]^3
 for exact cycle counts, bounded prefix error, scaling, rate, invalid inputs and
@@ -656,7 +656,7 @@ actual browser and dimensions; viewport emulation does not verify native iOS
 keyboard, Safari or safe-area behavior on a physical device.
 
 `test_recorded_movie.py` checks that the approaching pair meets at the declared
-cell and passes without an invented collision, that parallel speeds differ and
+node and passes without an invented collision, that parallel speeds differ and
 the pulse spreads while declared inventory remains conserved. Its explicitly
 marked visualization tests check exact sampled/final payloads, headless event
 parity, escaped names and partial failures. Browser checks must cover movie
@@ -698,19 +698,19 @@ expectations; a passing source identity and command belong in the integration PR
 | `test_quantum_event_network.py` | Existing-owner selection; 3:4 split gives 9:16 weights; deferred/eager agreement using independently lifted dense matrices; prior correlated records are included; a postponed phase becomes necessary at recombination; partial records and exact checkpoints preserve remaining entanglement |
 | `test_quantum_event_network.py` | No-transfer changes excitation from 1/2 to 9/34; early projection changes coherent return from 1 to 337/625; fresh-environment contacts use no detector call; immutable and stale decision guards; certain outcomes require no random ticket |
 | `test_quantum_event_network.py` | A 2,000-operation queried chain leaves a disconnected 2,000-operation chain unevaluated; zero extra world ticks; nearest-neighbor/disjoint supports; matrix completeness; node/term/traversal/record/register failures do not commit an outcome |
-| `test_quantum_event_network.py` | A single occupied site has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
+| `test_quantum_event_network.py` | A single occupied Node has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
 | `test_quantum_event_trial.py` | Reproducible 4x4 headless controller through the existing owner, explicit ticket choice, fixed event time, and preserved legacy scalar query API |
 
 The legacy quantum, architecture, integer, locality, navigation and language
 suites remain regression requirements. Do not weaken them to accept the new
 candidate. No physical engine behavior or default rendering mode is changed.
 
-## Local field impulse and cell ownership
+## Local field impulse and node ownership
 
 `tests/test_local_lorentz_field.py` covers a four-link causal pulse, independent
 electric/magnetic impulse directions, neutral response, equal/opposite local
 momentum, delayed commit, field autonomy, renaming and invalid arithmetic.
-`tests/test_cell_state_contract.py` verifies formula-free evolving state and
+`tests/test_node_state_contract.py` verifies formula-free evolving state and
 rejects injected ASTs, laws, callbacks and formula strings. See
 [the scoped candidate contract](LOCAL_LORENTZ_FIELD.md).
 

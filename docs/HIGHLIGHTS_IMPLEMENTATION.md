@@ -98,11 +98,11 @@ treating its omissions as current gaps.
 
 ## 10. Implemented entities and rules
 
-### 10.1 World, cells and links
+### 10.1 World, nodes and links
 
 - The active world is a bounded three-dimensional lattice with six directed
   neighbor ports: +X, -X, +Y, -Y, +Z, -Z.
-- A cell owns bounded resident records, field stock, residuals and pending local
+- A node owns bounded resident records, field stock, residuals and pending local
   proposals. A link owns dispatched payloads until their fixed arrival tick.
 - Periodic boundaries wrap all three coordinates. Open boundaries remove outgoing
   contents and record their escaped quantities; they do not reflect or reinsert them.
@@ -158,7 +158,7 @@ treating its omissions as current gaps.
 - Assignments replace retained dynamic stock or an explicitly selected outgoing
   payload. Background is not an assignable stock.
 - Expressions, conditions, ordering and invariants are bounded configuration data.
-  No arbitrary Python or hidden neighboring-cell read is accepted.
+  No arbitrary Python or hidden neighboring-node read is accepted.
 
 ### 10.5 Couplings, interactions and rotation
 

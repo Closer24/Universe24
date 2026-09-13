@@ -52,14 +52,14 @@ def test_configured_limit_rejects_oversized_rule(lab, setting):
 
 @pytest.mark.parametrize("value", [0, -1, True, 1.5])
 def test_invalid_limits(lab, value):
-    lab.definitions["limits"]["cell_capacity"] = value
+    lab.definitions["limits"]["node_capacity"] = value
     with pytest.raises(ValueError):
         Lab(lab.definitions)
 
 
 def test_more_than_sixteen_is_configuration_only(lab):
     definitions = copy.deepcopy(lab.definitions)
-    definitions["limits"].update(cell_capacity=17, max_participants=17, max_products=17)
+    definitions["limits"].update(node_capacity=17, max_participants=17, max_products=17)
     rule = {"inputs": [], "outputs": []}
     for i in range(17):
         alias = f"r{i}"

@@ -1,4 +1,4 @@
-# Balanced motion and twelve-cell local halo candidate
+# Balanced motion and twelve-node local halo candidate
 
 Base: upstream `76676d48ffbe7fc53913f4d26464921cb20f72df`.
 Candidate: `scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`
@@ -11,26 +11,26 @@ their existing behavior.
 | --- | --- |
 | Motion law | Interleave cardinal steps using integer prefix counts; retain the shared speed budget |
 | Halo law | After every particle has responded and moved, cancel scalar value and residue in the six neighbors of its old position and the six neighbors of its current position |
-| Local inputs | Momentum, budget and phase for motion; one local cell record for each scheduled halo operation |
-| Evolving state | Existing particle, cell, budget and phase records; no source identity map or history |
+| Local inputs | Momentum, budget and phase for motion; one local node record for each scheduled halo operation |
+| Evolving state | Existing particle, node, budget and phase records; no source identity map or history |
 | Parameters | Existing positive `c_units`; no angle-specific or speed-specific branch |
-| Outputs | Zero or one hop, updated phase and budget; up to twelve validated local cell proposals per particle |
+| Outputs | Zero or one hop, updated phase and budget; up to twelve validated local node proposals per particle |
 | Bounds | Momentum L1 sum fits one 32-bit register; products use checked 64-bit work registers |
 | Timing | Every particle reads the same post-field state before the halo phase; all halo proposals validate before commit |
-| Tests | 342 signed directions, six 200-tick isolated runs, exact halo cells, external seed response, two-source response, momentum and baseline comparison |
+| Tests | 342 signed directions, six 200-tick isolated runs, exact halo nodes, external seed response, two-source response, momentum and baseline comparison |
 
 The halo phase runs after the particle phase. Clearing before particle response
 would remove every gradient, including an external one. Clearing immediately
 after each particle would make later particles see a different state. The
 synchronous phase avoids both errors: all particles respond first, then the
 engine schedules the union of the old and current six-neighbor halos. A cardinal
-move has twelve distinct target cells in a normal-sized lattice. Rest or periodic
+move has twelve distinct target nodes in a normal-sized lattice. Rest or periodic
 small dimensions can make targets overlap; each address receives one proposal.
 
 This scheduling has host work proportional to the number of particles, just as
 the existing particle phase does. Each particle contributes at most twelve local
-targets, every local transformation takes one fixed cell record, and the state
-stored per cell and particle is unchanged. It therefore preserves the fixed
+targets, every local transformation takes one fixed node record, and the state
+stored per node and particle is unchanged. It therefore preserves the fixed
 local O(1) physical bound for fixed K. No world object, remote search, shadow
 simulation, source history or per-source field map enters the halo calculation.
 
@@ -42,7 +42,7 @@ integer construction. Three absolute values, fixed arithmetic and at most two
 axis decisions are needed. The existing phase stores n modulo T.
 
 For constant momentum and phase initially zero, x error is less than one lattice
-cell and y/z error is less than two cells on an unwrapped chart without blocked
+node and y/z error is less than two nodes on an unwrapped chart without blocked
 moves. This is a bounded digital staircase rather than exact rotational
 invariance. Coordinate priority remains explicit. Momentum changes reuse phase
 modulo the new total.
@@ -74,8 +74,8 @@ tested runs.
 ## Scope of the result
 
 The rule implements the proposed moving local exclusion zone. It cancels the
-combined scalar value in those cells rather than identifying a source-specific
-component, because the five-register scalar cell contains no source identity.
+combined scalar value in those nodes rather than identifying a source-specific
+component, because the five-register scalar node contains no source identity.
 Consequently it changes how external scalar fields propagate through a
 particle's immediate halo. The tests establish that an adjacent seeded field
 and the contact scenario still act; they do not establish an unchanged force

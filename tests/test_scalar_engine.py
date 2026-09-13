@@ -2,7 +2,7 @@ import pytest
 
 from event_universe import Config
 from event_universe import ScalarSimulation as Simulation
-from event_universe.core.state import DIRECTIONS, MAX_CORE_INT, ZERO_CELL
+from event_universe.core.state import DIRECTIONS, MAX_CORE_INT, ZERO_NODE
 from event_universe.diagnostics.frames import Slice, capture_frame
 from event_universe.diagnostics.measurements import audit, total_momentum
 from event_universe.diagnostics.recorder import TraceRecorder
@@ -29,8 +29,8 @@ def test_field_change_cannot_cross_more_than_one_edge_per_tick():
         world.step()
         assert all(
             sum(abs(p[i] - origin[i]) for i in range(3)) <= tick
-            for p, cell in world.cells.items()
-            if cell.phi
+            for p, node in world.nodes.items()
+            if node.phi
         )
         assert world.phi((10 + tick, 10, 10)) > 0
 
@@ -46,7 +46,7 @@ def test_one_speed_law_and_at_most_one_hop_per_tick(speed):
         assert world.particles[0].x == 4 + tick * min(speed, 12) // 12
 
 
-def test_particle_entering_later_occupied_cell_updates_only_once():
+def test_particle_entering_later_occupied_node_updates_only_once():
     trace = TraceRecorder()
     world = Simulation(Config(nx=16, ny=8, nz=8, c_units=1, source_strength=0), observer=trace)
     world.add_particle(0, 2, 4, 4, 1)
@@ -56,10 +56,10 @@ def test_particle_entering_later_occupied_cell_updates_only_once():
     assert [(r.tick, r.pid) for r in trace.force_records] == [(0, 0), (0, 1)]
 
 
-def test_full_cell_blocks_without_growing_slots_or_dropping_particle():
+def test_full_node_blocks_without_growing_slots_or_dropping_particle():
     trace = TraceRecorder()
     world = Simulation(
-        Config(nx=16, ny=8, nz=8, c_units=1, source_strength=0, max_particles_per_cell=1), observer=trace
+        Config(nx=16, ny=8, nz=8, c_units=1, source_strength=0, max_particles_per_node=1), observer=trace
     )
     world.add_particle(0, 2, 4, 4, 1)
     world.add_particle(1, 3, 4, 4)
@@ -79,7 +79,7 @@ def test_periodic_boundary():
     assert audit(world)["occupancy_consistent"]
 
 
-def test_single_cell_dimension_keeps_exactly_one_occupancy_entry():
+def test_single_node_dimension_keeps_exactly_one_occupancy_entry():
     world = Simulation(Config(nx=1, ny=8, nz=8, c_units=1, source_strength=0))
     world.add_particle(0, 0, 4, 4, 1)
     world.run(4)
@@ -91,15 +91,15 @@ def test_state_views_and_diagnostic_copies_cannot_modify_physics():
     world = Simulation(Config(nx=8, ny=8, nz=8))
     world.add_particle(0, 4, 4, 4)
     world.step()
-    before = dict(world.cells)
+    before = dict(world.nodes)
     with pytest.raises(TypeError):
-        world.cells[(4, 4, 4)] = ZERO_CELL
+        world.nodes[(4, 4, 4)] = ZERO_NODE
     with pytest.raises(AttributeError):
         world.particles[0].px = 10
     frame = capture_frame(world, Slice("XY", 4))
     frame.field.clear()
     frame.particles.clear()
-    assert dict(world.cells) == before
+    assert dict(world.nodes) == before
 
 
 def test_seed_api_cannot_rewrite_evolving_field():
@@ -111,13 +111,13 @@ def test_seed_api_cannot_rewrite_evolving_field():
 
 def test_field_overflow_is_terminal_and_field_commit_is_atomic():
     world = Simulation(
-        Config(nx=8, ny=8, nz=8, source_strength=MAX_CORE_INT, field_den=1, max_particles_per_cell=2)
+        Config(nx=8, ny=8, nz=8, source_strength=MAX_CORE_INT, field_den=1, max_particles_per_node=2)
     )
     world.add_particle(0, 4, 4, 4)
     world.add_particle(1, 4, 4, 4)
     with pytest.raises(OverflowError):
         world.step()
-    assert not world.cells and world.tick == 0 and world.faulted
+    assert not world.nodes and world.tick == 0 and world.faulted
     with pytest.raises(RuntimeError):
         world.step()
 
@@ -133,7 +133,7 @@ def test_recording_and_measurements_do_not_change_any_physical_state():
         observed.step()
         capture_frame(observed, Slice("XY", 8))
         audit(observed)
-        assert plain.cells == observed.cells
+        assert plain.nodes == observed.nodes
         assert plain.particles == observed.particles
         assert plain.occupancy == observed.occupancy
         assert plain.active == observed.active

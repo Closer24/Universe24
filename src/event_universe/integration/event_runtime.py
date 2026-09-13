@@ -18,7 +18,7 @@ from .event_program import Program, parse_event_program
 
 
 class NativeEventResolver:
-    """One configured bounded rule per site; new local arrivals can trigger again."""
+    """One configured bounded rule per register_index; new local arrivals can trigger again."""
 
     def __init__(self, initial: InitialState, program: Program, events: CausalEventSpace) -> None:
         if program.network is None:
@@ -92,7 +92,9 @@ class NativeEventResolver:
             kind="request",
             physical_parents=() if context.cause is None else (context.cause,),
         )
-        decision = self.space.prepare(trigger.id, binding.site, binding.instrument, cause=trigger.id)
+        decision = self.space.prepare(
+            trigger.id, binding.register_index, binding.instrument, cause=trigger.id
+        )
         ticket = None
         if sum(weight > 0 for weight in decision.weights) > 1:
             if self.program.tickets is None:
@@ -110,12 +112,13 @@ class NativeEventResolver:
         if tick != self.space.tick + 1:
             raise ValueError("native scheduler must advance the recipe clock once")
         layer = self.layers.get(tick, ())
-        for _, sites in layer:
+        for _, register_indices in layer:
             if (
-                len(sites) == 2
-                and self.space.config.addresses[sites[0]] != self.space.config.addresses[sites[1]]
+                len(register_indices) == 2
+                and self.space.config.addresses[register_indices[0]]
+                != self.space.config.addresses[register_indices[1]]
             ):
-                for q in sites:
+                for q in register_indices:
                     previous = self.events.event(self.space.heads[q])
                     if tick - previous.tick < self.initial.link_ticks:
                         raise ValueError("coherent neighbor operation precedes physical link time")

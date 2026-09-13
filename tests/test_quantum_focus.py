@@ -70,7 +70,7 @@ def test_non_unit_axes_only_are_split():
     assert _leaf_addresses(region) == {(0, y, z) for y in range(5) for z in range(2)}
 
 
-def test_1024_cube_focus_reaches_one_cell_in_ten_levels():
+def test_1024_cube_focus_reaches_one_node_in_ten_levels():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     address = (1000, 777, 513)
@@ -232,14 +232,14 @@ def test_focus_does_not_advance_or_mutate_main_world():
             (FocusCandidate(roots[0], (1, 1, 1), 10), FocusCandidate(roots[1], (9, 9, 9), 20)),
         ),
     )
-    before = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
+    before = (world.tick, dict(world.nodes), dict(world.particles), dict(world.occupancy), world.active)
     reply = bridge.focus_event(FocusRequest(99, 1, world.tick, 3))
-    after = (world.tick, dict(world.cells), dict(world.particles), dict(world.occupancy), world.active)
+    after = (world.tick, dict(world.nodes), dict(world.particles), dict(world.occupancy), world.active)
     assert reply.event is not None and reply.event.address == (9, 9, 9)
     assert before == after
     assert after == (
         baseline.tick,
-        dict(baseline.cells),
+        dict(baseline.nodes),
         dict(baseline.particles),
         dict(baseline.occupancy),
         baseline.active,
@@ -269,7 +269,7 @@ def test_invalid_ticket_does_not_consume_request_or_cache_capacity():
     assert bridge.focus_event(FocusRequest(50, 7, 0, 0)).repeated == 1
 
 
-def test_multiple_outcomes_at_one_cell_keep_their_distinct_weights():
+def test_multiple_outcomes_at_one_node_keep_their_distinct_weights():
     q = DeferredQuantum()
     bridge = QuantumBridge(q)
     address = (0, 0, 0)

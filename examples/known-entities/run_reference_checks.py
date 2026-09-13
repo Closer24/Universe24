@@ -66,7 +66,7 @@ def main():
         assert (folder / "initialization.json").read_bytes() == config.read_bytes()
         assert not list(folder.glob("*.html"))
         records = [
-            (cell["position"], record) for cell in state["cells"] for record in cell["disturbances"]
+            (node["position"], record) for node in state["nodes"] for record in node["disturbances"]
         ]
         if name == "collision":
             bodies = {r["type"]: (p, r["values"]) for p, r in records}

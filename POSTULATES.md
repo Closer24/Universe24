@@ -41,7 +41,7 @@ emergent annihilation. [Executable entity profiles](docs/ENTITY_CATALOG.md)
 describe bounded representations; physical identity and dynamics cannot be
 inferred solely from the ability to store or transport their registers.
 
-The user-defined cost of a local cycle sets a general cell delay above the
+The user-defined cost of a local cycle sets a general node delay above the
 normal cost. Neighbor transit is fixed, and no computation debt accumulates
 between cycles. The exact schema, exchange, timing and source rules are in
 [the disturbance contract](docs/DISTURBANCES.md).
@@ -85,7 +85,7 @@ interface, not evidence of their emergence.
 Initialization independently chooses periodic or open boundaries. Periodic space
 connects opposite faces on each of X, Y and Z without changing a carried direction.
 An open terminal link instead removes the original packet after its full transit
-time and records the escaped quantities. No exterior cell or exterior decay is
+time and records the escaped quantities. No exterior node or exterior decay is
 simulated. Being spatially closed does not cancel a separately configured decay.
 
 Sections 1–5 and 10–11 state shared locality, arithmetic and evidence principles.
@@ -108,11 +108,11 @@ physical energy, momentum or an emergent field law.
 
 ## 1. The world consists of locations and events
 
-Space is divided into three-dimensional cells with six directional connections:
+Space is divided into three-dimensional nodes with six directional connections:
 right, left, forward, backward, up and down. A connection reaches one nearest
 neighbor, or exits the simulated domain at an explicitly open boundary.
 
-An event is a local change in a cell at a particular time: a field update, a particle
+An event is a local change in a node at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt.
 
 The simulator does not assume every familiar physical phenomenon is fundamental.
@@ -121,12 +121,12 @@ if they arise from local events and laws, rather than being inserted under anoth
 
 ## 2. Every location has only bounded local information
 
-A physical cell does not store a picture of the entire universe. It stores a fixed
+A physical node does not store a picture of the entire universe. It stores a fixed
 amount of information and reads its own state and information already delivered
 by its six neighbors. Section 14
 explicitly adds an optional shared quantum query primitive, not a neighbor read.
 
-Local disturbance capacity is fixed in advance. A cell has no list that grows with the
+Local disturbance capacity is fixed in advance. A node has no list that grows with the
 number of sources in the universe and does not retain its entire history.
 
 Physical work per local update is therefore bounded and constant. Total host
@@ -134,7 +134,7 @@ runtime for a large world is not constant: all active locations still require up
 
 This includes estimating or subtracting a particle's own field. A second simulated
 world or a search through source histories cannot supply a physical input merely
-because its final subtraction happens in one cell. LOCALITY-1 in the definitions
+because its final subtraction happens in one node. LOCALITY-1 in the definitions
 document specifies this end-to-end rule and its test/reference boundary.
 
 ## 3. Consistency is maintained locally and causally
@@ -152,7 +152,7 @@ Global consistency emerges from consistent local updates. New information does
 not rewrite completed events; it becomes causal input to future events.
 
 **Active contract:** disturbance transfers cross one neighbor link after its
-fixed transit time; updates use already available local records. Extra cell delay
+fixed transit time; updates use already available local records. Extra node delay
 can make propagation slower. There is no global correction at the end of a tick.
 
 **Not established:** that these local laws suffice for every kind of physical
@@ -160,7 +160,7 @@ consistency, particularly quantum consistency and entanglement.
 
 ## 4. There is a maximum causal speed
 
-Physical influence cannot skip cells. It travels at most one neighboring cell per
+Physical influence cannot skip nodes. It travels at most one neighboring node per
 elementary step. This is the role of c: the maximum propagation speed of causal
 influence in the simulator. Oracle evaluation is not physical propagation.
 
@@ -194,8 +194,8 @@ results feed back into the simulation.
 
 ## 6. A resident source remains a source
 
-A particle occupying a cell remains a source every tick even without moving.
-Its presence in that cell represents the source.
+A particle occupying a node remains a source every tick even without moving.
+Its presence in that node represents the source.
 
 The simulator does not repeatedly add a source's own new emission to itself.
 A stationary source should form a persistent surrounding state, rather than grow
@@ -282,7 +282,7 @@ the simulator solves quantum collapse or entanglement consistency.
 
 ## Overall principle
 
-Physical cells keep bounded local state and exchange influence with neighbors.
+Physical nodes keep bounded local state and exchange influence with neighbors.
 Section 14 adds an explicitly authorized shared computation primitive alongside
 that local world. It does not turn host evaluation into physical communication.
 
@@ -293,7 +293,7 @@ that local world. It does not turn host evaluation into physical communication.
 
 This historical candidate is selected explicitly through LinkedSimulation. It
 does not replace the active disturbance model's fixed neighbor transit time.
-In this candidate, each cell also stores fixed information about its six links.
+In this candidate, each node also stores fixed information about its six links.
 It owns the three positive-direction links and keeps local copies of the other
 three. Ownership organizes storage; it must not privilege a physical direction.
 
@@ -336,7 +336,7 @@ the same shared record. This does not implement general measurement or establish
 no-signalling. The test controller's record is not an Engine-native event.
 
 Only the main engine may eventually commit physical events through an explicit
-interface. That interface, automatic cell polling and quantum-field feedback are
+interface. That interface, automatic node polling and quantum-field feedback are
 not implemented by this addition. Exact contracts and ownership are specified in
 `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
 
@@ -348,7 +348,7 @@ one. This mass is a model input; it has not emerged from events. At the same
 momentum a heavier particle moves more slowly, subject to the existing causal
 speed limit. Mass does not silently replace the source-strength or field laws.
 
-In the opt-in collision candidate, particles meeting at the same cell and tick
+In the opt-in collision candidate, particles meeting at the same node and tick
 undergo elastic backscattering. For equal and opposite momenta both return in the
 opposite direction. With unequal masses the result is calculated in the pair's
 center-of-mass frame, preserving the pair's total momentum and classical kinetic
@@ -357,7 +357,7 @@ denominators. No global correction supplies missing momentum or energy.
 
 A contact occurs once per encounter, without an extra position jump. Link transit
 particles can collide only after arrival. Fixed local flags distinguish a new
-encounter from particles still occupying the same cell. The exact two-body law,
+encounter from particles still occupying the same node. The exact two-body law,
 multiparticle ordering, schema extension and limits are in the v13 section of
 SIMULATOR_DEFINITIONS.md. This classical lattice hypothesis does not establish
 relativistic physics or energy conservation of the existing field law.
@@ -366,7 +366,7 @@ relativistic physics or energy conservation of the existing field law.
 ### Selected event-network method
 
 `deferred-event-network-v1` extends the existing quantum owner, not the ordinary
-physical cells. Its detailed contract is [QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md).
+physical nodes. Its detailed contract is [QUANTUM_EVENTS.md](docs/QUANTUM_EVENTS.md).
 Queries compute possibilities without choosing historical paths. Only an explicit
 instrument request can select a result; it retains the conditional joint state,
 including a no-event branch. No universal interaction-to-collapse trigger is claimed.

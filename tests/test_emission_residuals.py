@@ -1,4 +1,4 @@
-"""Carried source fractions survive frozen proposals and moving between cells."""
+"""Carried source fractions survive frozen proposals and moving between nodes."""
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import OPERATIONS, unpack
@@ -12,7 +12,7 @@ def initialization(*, reporter=False):
         "schema_version": 1,
         "model_id": "delayed-carried-source-residual-v1",
         "shape": [19, 19, 19],
-        "slots_per_cell": 3,
+        "slots_per_node": 3,
         "link_ticks": 1,
         "normal_budget": 10,
         "ticks": 12,
@@ -49,15 +49,15 @@ def initialization(*, reporter=False):
 def test_delayed_departure_uses_latest_carried_fraction_but_frozen_physical_values():
     world = Simulation(parse_initial_state(initialization()))
     world.step()
-    pending = world.cells[ORIGIN].pending
+    pending = world.nodes[ORIGIN].pending
     assert pending is not None
     ready = pending.ready_tick
     assert 2 <= ready < 101
     while world.tick < ready:
-        record = next(record for record in world.cells[ORIGIN].records if record is not None)
+        record = next(record for record in world.nodes[ORIGIN].records if record is not None)
         assert world.record_values(record) == {"stock": (2,)}
         assert unpack(record.emission_remainders[0]) == (world.tick,)
-        assert world.cells[ORIGIN].pending == pending
+        assert world.nodes[ORIGIN].pending == pending
         world.step()
     packet = next(packet for packet in world.links[ORIGIN] if packet is not None)
     assert world.record_values(packet.record) == {"stock": (99,)}
@@ -65,10 +65,10 @@ def test_delayed_departure_uses_latest_carried_fraction_but_frozen_physical_valu
     assert world.source_totals() == {"stock": (97,), "radiation": (0,)}
     world.step()
     destination = (4, 3, 3)
-    record = next(record for record in world.cells[destination].records if record is not None)
+    record = next(record for record in world.nodes[destination].records if record is not None)
     assert unpack(record.emission_remainders[0]) == (ready,)
     world.step()
-    record = next(record for record in world.cells[destination].records if record is not None)
+    record = next(record for record in world.nodes[destination].records if record is not None)
     assert unpack(record.emission_remainders[0]) == (ready + 1,)
     assert world.source_totals()["radiation"] == (0,)
 
@@ -83,11 +83,11 @@ def test_co_resident_emitters_keep_independent_fractional_ownership():
     world = Simulation(parse_initial_state(raw))
     world.step()
     assert world.source_totals()["radiation"] == (0,)
-    records = [record for record in world.cells[ORIGIN].records if record is not None]
+    records = [record for record in world.nodes[ORIGIN].records if record is not None]
     assert [unpack(record.emission_remainders[0]) for record in records] == [(1,), (1,)]
     world.step()
     assert world.source_totals()["radiation"] == (2,)
-    records = [record for record in world.cells[ORIGIN].records if record is not None]
+    records = [record for record in world.nodes[ORIGIN].records if record is not None]
     assert [unpack(record.emission_remainders[0]) for record in records] == [(0,), (0,)]
 
 
@@ -100,7 +100,7 @@ def test_configured_cost_reporter_matches_full_cost_used_for_delay():
     cycle = next(
         event for event in events if event["event"] == "cycle_started" and event["position"] == ORIGIN
     )
-    reporter = next(record for record in world.cells[ORIGIN].records if record is not None)
+    reporter = next(record for record in world.nodes[ORIGIN].records if record is not None)
     assert world.record_values(reporter) == {"work": (cycle["cost"],)}
     field_cycle = next(
         event for event in events if event["event"] == "spatial_cycle" and event["position"] == ORIGIN

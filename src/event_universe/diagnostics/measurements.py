@@ -7,16 +7,16 @@ from event_universe.core.linked_engine import LinkedEngine
 from event_universe.core.links import LINK_REGISTERS
 from event_universe.core.scalar_engine import ScalarEngine
 from event_universe.core.state import (
-    CELL_REGISTERS,
     EMPTY_SLOT,
+    NODE_REGISTERS,
     PARTICLE_REGISTERS,
     Vector,
     checked,
-    validate_cell,
+    validate_node,
     validate_particle,
 )
 from event_universe.core.streaming_engine import StreamingEngine
-from event_universe.core.streams import STREAM_CELL_REGISTERS
+from event_universe.core.streams import STREAM_NODE_REGISTERS
 
 ExactVector = tuple[int | Fraction, int | Fraction, int | Fraction]
 
@@ -39,9 +39,9 @@ def particle_momentum(world: ScalarEngine) -> ExactVector:
 
 def field_momentum(world: ScalarEngine) -> Vector:
     return (
-        sum(c.px for c in world.cells.values()),
-        sum(c.py for c in world.cells.values()),
-        sum(c.pz for c in world.cells.values()),
+        sum(c.px for c in world.nodes.values()),
+        sum(c.py for c in world.nodes.values()),
+        sum(c.pz for c in world.nodes.values()),
     )
 
 
@@ -56,14 +56,14 @@ def audit(world: ScalarEngine) -> dict[str, bool]:
     if isinstance(world, StreamingEngine):
         world.streams.validate()
     seen: set[int] = set()
-    for address, cell in world.cells.items():
-        validate_cell(cell)
+    for address, node in world.nodes.items():
+        validate_node(node)
         if address != world.addr(*address):
             raise ValueError("non-canonical field address")
-        if abs(cell.remainder) >= world.config.field_den:
+        if abs(node.remainder) >= world.config.field_den:
             raise ValueError("invalid field remainder")
     for address, slots in world.occupancy.items():
-        if address != world.addr(*address) or len(slots) != world.config.max_particles_per_cell:
+        if address != world.addr(*address) or len(slots) != world.config.max_particles_per_node:
             raise ValueError("invalid occupancy address or capacity")
         for pid in slots:
             checked(pid)
@@ -117,8 +117,8 @@ def report(world: ScalarEngine) -> dict[str, object]:
         "config": asdict(world.config),
         "faulted": world.faulted,
         "particles": len(world.particles),
-        "active_cells": len(world.active),
-        "materialized_cells": len(world.cells),
+        "active_nodes": len(world.active),
+        "materialized_nodes": len(world.nodes),
         "particle_momentum": particle_momentum(world),
         "field_momentum": field_momentum(world),
         "total_momentum": total_momentum(world),
@@ -126,11 +126,11 @@ def report(world: ScalarEngine) -> dict[str, object]:
         "architecture": {
             "dimensions": 3,
             "nearest_neighbors": 6,
-            "cell_registers": CELL_REGISTERS,
-            "stream_registers_per_cell": (
-                STREAM_CELL_REGISTERS if isinstance(world, StreamingEngine) else 0
+            "node_registers": NODE_REGISTERS,
+            "stream_registers_per_node": (
+                STREAM_NODE_REGISTERS if isinstance(world, StreamingEngine) else 0
             ),
-            "link_registers_per_cell": LINK_REGISTERS if isinstance(world, LinkedEngine) else 0,
+            "link_registers_per_node": LINK_REGISTERS if isinstance(world, LinkedEngine) else 0,
             "transit_registers_per_particle": 4 if isinstance(world, LinkedEngine) else 0,
             "particle_registers": PARTICLE_REGISTERS,
             "local_work_bound": "six neighbors and K fixed slots",

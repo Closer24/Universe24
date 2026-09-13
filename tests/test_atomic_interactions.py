@@ -21,7 +21,7 @@ def collision():
 
 
 def owned(world):
-    records = [r for cell in world.cells.values() for r in cell.records if r is not None]
+    records = [r for node in world.nodes.values() for r in node.records if r is not None]
     records += [p.record for packets in world.links.values() for p in packets if p is not None]
     return {world.initial.disturbances[r.type_index].name: world.record_values(r) for r in records}
 
@@ -42,7 +42,7 @@ def test_unequal_mass_collision_reverses_both_bodies_and_preserves_physical_bala
         )
         assert energy == Fraction(35, 2)
         if world.tick == 120:
-            assert len([r for r in world.cells[(7, 7, 7)].records if r is not None]) == 2
+            assert len([r for r in world.nodes[(7, 7, 7)].records if r is not None]) == 2
             assert values["Light body"]["momentum"] == (8, 0, 0)
             contact_seen = True
         if 121 <= world.tick < 160:
@@ -51,7 +51,7 @@ def test_unequal_mass_collision_reverses_both_bodies_and_preserves_physical_bala
             separating_seen = True  # No repeated reversal while still co-resident.
     assert contact_seen and separating_seen
     for position, expected in [((3, 7, 7), (-4, 0, 0)), ((13, 7, 7), (9, 0, 0))]:
-        record = next(r for r in world.cells[position].records if r is not None)
+        record = next(r for r in world.nodes[position].records if r is not None)
         assert world.record_values(record)["momentum"] == expected
     for event in events:
         if event["event"] == "sent":
@@ -150,7 +150,7 @@ def test_rejected_transaction_changes_no_record_or_pending_state(failure):
         world.step()
     assert world.snapshot() == snapshot
     assert world.faulted
-    assert all(cell.pending is None for cell in world.cells.values())
+    assert all(node.pending is None for node in world.nodes.values())
 
 
 def test_conserved_pair_total_may_exceed_individual_payload_bound():

@@ -22,14 +22,14 @@ from .contracts import (
 from .lattice import PeriodicLattice
 from .state import (
     EMPTY_SLOT,
-    ZERO_CELL,
+    ZERO_NODE,
     Address,
-    CellState,
     Config,
     Neighbors,
+    NodeState,
     ParticleState,
     checked,
-    validate_cell,
+    validate_node,
     validate_particle,
 )
 
@@ -57,7 +57,7 @@ class ScalarEngine:
         self._lattice = PeriodicLattice((config.nx, config.ny, config.nz))
         self._particle_rule = particle_rule
         self._observer = observer if observer is not None else NullObserver()
-        self._cells: dict[Address, CellState] = {}
+        self._nodes: dict[Address, NodeState] = {}
         self._particles: dict[int, ParticleState] = {}
         self._occupancy: dict[Address, tuple[int, ...]] = {}
         self._active: set[Address] = set()
@@ -77,8 +77,8 @@ class ScalarEngine:
         return self._faulted
 
     @property
-    def cells(self) -> Mapping[Address, CellState]:
-        return MappingProxyType(self._cells)
+    def nodes(self) -> Mapping[Address, NodeState]:
+        return MappingProxyType(self._nodes)
 
     @property
     def particles(self) -> Mapping[int, ParticleState]:
@@ -90,24 +90,24 @@ class ScalarEngine:
 
     @property
     def active(self) -> frozenset[Address]:
-        """Diagnostic copy, with O(number of active cells) cost."""
+        """Diagnostic copy, with O(number of active nodes) cost."""
         return frozenset(self._active)
 
     def addr(self, x: int, y: int, z: int) -> Address:
         return self._lattice.wrap((x, y, z))
 
-    def cell_at(self, position: Address) -> CellState:
-        return self._cells.get(self.addr(*position), ZERO_CELL)
+    def node_at(self, position: Address) -> NodeState:
+        return self._nodes.get(self.addr(*position), ZERO_NODE)
 
     def phi(self, position: Address) -> int:
-        return self.cell_at(position).phi
+        return self.node_at(position).phi
 
     def _activate(self, position: Address) -> None:
         self._active.add(position)
         self._active.update(self._lattice.neighbors(position))
 
     def _empty_slots(self) -> tuple[int, ...]:
-        return (EMPTY_SLOT,) * self.config.max_particles_per_cell
+        return (EMPTY_SLOT,) * self.config.max_particles_per_node
 
     def _ensure_healthy(self) -> None:
         if self._faulted:
@@ -120,10 +120,10 @@ class ScalarEngine:
             raise RuntimeError("seed_field is only available before the first tick")
         for value in position:
             checked(value)
-        cell = CellState(phi=checked(phi))
-        validate_cell(cell)
+        node = NodeState(phi=checked(phi))
+        validate_node(node)
         address = self.addr(*position)
-        self._cells[address] = cell
+        self._nodes[address] = node
         self._activate(address)
 
     def add_particle(
@@ -139,7 +139,7 @@ class ScalarEngine:
         position = self.addr(x, y, z)
         slots = self._occupancy.get(position, self._empty_slots())
         if EMPTY_SLOT not in slots:
-            raise ValueError("cell particle capacity exceeded")
+            raise ValueError("node particle capacity exceeded")
         slot = slots.index(EMPTY_SLOT)
         particle = ParticleState(*position, px, py, pz, mass=mass)
         validate_particle(particle)
@@ -154,20 +154,20 @@ class ScalarEngine:
         work = set(self._active)
         for position in tuple(self._active):
             work.update(self._lattice.neighbors(position))
-        old_phi = {position: self.cell_at(position).phi for position in work}
+        old_phi = {position: self.node_at(position).phi for position in work}
 
         def previous_value(position: Address) -> int:
             return old_phi.get(position, 0)
 
-        updates: list[tuple[Address, CellState, bool]] = []
+        updates: list[tuple[Address, NodeState, bool]] = []
         for position in work:
-            old = self.cell_at(position)
+            old = self.node_at(position)
             sources = sum(pid >= 0 for pid in self._occupancy.get(position, ()))
             new = self._field_rule(
                 old, self._lattice.sample(position, previous_value), sources, self.config
             )
-            validate_cell(new)
-            # Without a quiescence policy, conservatively retain every visited cell.
+            validate_node(new)
+            # Without a quiescence policy, conservatively retain every visited node.
             keep_active = (
                 True if self._field_activity is None else self._field_activity(old, new, sources)
             )
@@ -178,7 +178,7 @@ class ScalarEngine:
         self._active = set()
         next_active = set()
         for position, new, keep_active in updates:
-            self._cells[position] = new
+            self._nodes[position] = new
             if keep_active:
                 next_active.add(position)
         for position in next_active:
@@ -197,11 +197,11 @@ class ScalarEngine:
             targets.update(self._lattice.neighbors(self._particles[pid].position))
         proposals = []
         for address in targets:
-            cell = self._post_motion_halo(self.cell_at(address))
-            validate_cell(cell)
-            proposals.append((address, cell))
-        for address, cell in proposals:
-            self._cells[address] = cell
+            node = self._post_motion_halo(self.node_at(address))
+            validate_node(node)
+            proposals.append((address, node))
+        for address, node in proposals:
+            self._nodes[address] = node
             self._activate(address)
 
     def _particle_ready(self, pid: int) -> bool:
@@ -210,8 +210,8 @@ class ScalarEngine:
     def _particle_neighbors(self, position: Address) -> Neighbors:
         return self._lattice.sample(position, self.phi)
 
-    def _particle_step_in_cell(self, position: Address) -> None:
-        for slot in range(self.config.max_particles_per_cell):
+    def _particle_step_in_node(self, position: Address) -> None:
+        for slot in range(self.config.max_particles_per_node):
             # Re-read this fixed slot: an earlier move may have freed or filled it.
             pid = self._occupancy[position][slot]
             if pid == EMPTY_SLOT:
@@ -221,12 +221,12 @@ class ScalarEngine:
                 continue
             result = self._particle_rule(
                 old,
-                self.cell_at(position),
+                self.node_at(position),
                 self._particle_neighbors(position),
                 self.config,
                 self.tick,
             )
-            validate_cell(result.cell)
+            validate_node(result.node)
             validate_particle(result.particle)
             if result.direction not in (-1, 0, 1, 2, 3, 4, 5):
                 raise ValueError("a particle proposal must request at most one cardinal hop")
@@ -234,7 +234,7 @@ class ScalarEngine:
                 raise ValueError("laws must leave position to the engine and mark the current tick")
             if result.particle.mass != old.mass or result.particle.momentum_den != old.momentum_den:
                 raise ValueError("particle-field law must preserve mass and momentum representation")
-            self._cells[position] = result.cell
+            self._nodes[position] = result.node
             self._particles[pid] = result.particle
             self._observer.on_force(
                 ForceRecord(
@@ -263,7 +263,7 @@ class ScalarEngine:
         free = target_slots.index(EMPTY_SLOT)
         origin_slots = self._occupancy[origin]
         self._occupancy[origin] = origin_slots[:slot] + (EMPTY_SLOT,) + origin_slots[slot + 1 :]
-        # A one-cell periodic dimension can make target == origin.
+        # A one-node periodic dimension can make target == origin.
         target_slots = self._occupancy[target]
         self._occupancy[target] = target_slots[:free] + (pid,) + target_slots[free + 1 :]
         self._particles[pid] = self._particles[pid]._replace(x=target[0], y=target[1], z=target[2])
@@ -277,7 +277,7 @@ class ScalarEngine:
     def _clear_contact_slot(self, position: Address, slot: int) -> None:
         if self._collision_rule is None or position not in self._contacts:
             return
-        capacity = self.config.max_particles_per_cell
+        capacity = self.config.max_particles_per_node
         flags = list(self._contacts[position])
         for other in range(capacity):
             flags[slot * capacity + other] = 0
@@ -287,14 +287,14 @@ class ScalarEngine:
     def _collision_step(self) -> None:
         if self._collision_rule is None:
             return
-        # This is a host address sweep; each visited cell reads only its K local slots.
+        # This is a host address sweep; each visited node reads only its K local slots.
         for position, slots in self._occupancy.items():
-            self._collide_in_cell(position, slots)
+            self._collide_in_node(position, slots)
 
-    def _collide_in_cell(self, position: Address, slots: tuple[int, ...]) -> None:
+    def _collide_in_node(self, position: Address, slots: tuple[int, ...]) -> None:
         if self._collision_rule is None:
             return
-        capacity = self.config.max_particles_per_cell
+        capacity = self.config.max_particles_per_node
         flags = list(self._contacts.get(position, (0,) * (capacity * capacity)))
         for a in range(capacity):
             first_pid = slots[a]
@@ -353,7 +353,7 @@ class ScalarEngine:
             self._field_step()
             # Legacy order is part of this model's movement/conflict semantics.
             for position in tuple(self._occupancy):
-                self._particle_step_in_cell(position)
+                self._particle_step_in_node(position)
             self._collision_step()
             self._apply_post_motion_halos(previous_positions)
             self._tick = next_tick

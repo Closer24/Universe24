@@ -34,7 +34,7 @@ class ScalarFieldRule(Protocol):
 class ScalarField:
     """Weighted six-neighbor stencil with optional local retention and exact residue.
 
-    Weights are immutable policy, not per-cell state. Signed values are supported;
+    Weights are immutable policy, not per-node state. Signed values are supported;
     a nonnegative-field policy belongs to the consuming model.
     """
 

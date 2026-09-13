@@ -17,7 +17,7 @@ def test_neighbor_order_and_sampling_wrap_each_face_consistently():
     assert lattice.sample((0, 0, 0), values.__getitem__) == (10, 20, 30, 40, 50, 60)
 
 
-def test_one_cell_dimensions_retain_six_directional_neighbor_slots():
+def test_one_node_dimensions_retain_six_directional_neighbor_slots():
     lattice = PeriodicLattice((1, 1, 1))
     assert lattice.neighbors((0, 0, 0)) == ((0, 0, 0),) * 6
     assert lattice.sample((0, 0, 0), lambda address: 7) == (7, 7, 7, 7, 7, 7)

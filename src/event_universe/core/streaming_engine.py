@@ -4,16 +4,16 @@ from collections.abc import Callable
 
 from .contracts import NullObserver, Observer, ParticleRule
 from .scalar_engine import ScalarEngine
-from .state import Address, CellState, Config, Neighbors
+from .state import Address, Config, Neighbors, NodeState
 from .streams import Octants, Outgoing, StreamTransport
 
 StreamRule = Callable[[Octants, int, int, int], Outgoing]
 SampleRule = Callable[[Neighbors], Neighbors]
 
 
-def _unused_field_rule(cell: CellState, neighbors: Neighbors, sources: int, config: Config) -> CellState:
+def _unused_field_rule(node: NodeState, neighbors: Neighbors, sources: int, config: Config) -> NodeState:
     """Streaming transport replaces the scalar field phase in this candidate."""
-    return cell
+    return node
 
 
 class StreamingEngine(ScalarEngine):

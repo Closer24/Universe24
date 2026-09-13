@@ -28,7 +28,7 @@ arrival directions, separately from the global world audit.
 
 Explicitly named scalar, stretched-link, balanced-motion and causal-stream
 research APIs remain available with their own historical laws and tests.
-Their five-register cell and sixteen-register particle schemas are not the
+Their five-register node and sixteen-register particle schemas are not the
 generic disturbance schema.
 
 ## Project specification (Google Docs)

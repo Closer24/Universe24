@@ -43,7 +43,7 @@ def document(fields, seeds=()):
         "schema_version": 1,
         "model_id": "configured-local-field-contract-v1",
         "shape": [5, 5, 5],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": 4,

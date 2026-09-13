@@ -9,7 +9,7 @@ import pytest
 from event_universe import Simulation
 from event_universe.core.disturbance_state import pack, unpack
 from event_universe.core.spatial_state import SpatialPacket
-from event_universe.diagnostics.cell_contract import cell_state_violations
+from event_universe.diagnostics.node_contract import node_state_violations
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
@@ -83,7 +83,7 @@ def test_shared_budget_counts_field_and_carrier_work_once_and_defers_emission(mo
     world._planner = lambda *args: replace(carrier_planner(*args), cost=20)
     initial_record = all_records(world)[0]
     world.step()
-    pending = next(cell.pending for cell in world.cells.values() if cell.pending is not None)
+    pending = next(node.pending for node in world.nodes.values() if node.pending is not None)
     assert (pending.plan.cost, pending.ready_tick, pending.next_tick) == (72, 2, 4)
     assert all_records(world) == [initial_record]
     assert world.source_totals()["radiation"] == (0,)
@@ -107,9 +107,9 @@ def test_arrival_during_joint_wait_is_preserved_without_changing_the_frozen_samp
     field_planner = world._spatial.planner
     world._spatial.planner = lambda *args: replace(field_planner(*args), cost=1)
     world.step()
-    pending = world.cells[ORIGIN].pending
+    pending = world.nodes[ORIGIN].pending
     assert pending is not None and pending.ready_tick > 1
-    assert world._spatial.cells[ORIGIN].incoming
+    assert world._spatial.nodes[ORIGIN].incoming
     assert carrier(world) == (5,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (2,)
     assert world.totals()["quantity"] == (8,)
@@ -121,7 +121,7 @@ def test_arrival_during_joint_wait_is_preserved_without_changing_the_frozen_samp
         assert world.totals()["quantity"] == (8,)
     assert carrier(world) == (2,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (6,)
-    assert not world._spatial.cells[ORIGIN].incoming
+    assert not world._spatial.nodes[ORIGIN].incoming
     joint = next(e for e in events.events if e.kind == "spatial_coupled")
     assert arrival.id in events.ancestors(joint.id)
 
@@ -133,17 +133,17 @@ def test_late_merge_cannot_bypass_a_joint_nonlinear_guard():
     planner = world._spatial.planner
     world._spatial.planner = lambda *args: replace(planner(*args), cost=1)
     world.step()
-    ready = world.cells[ORIGIN].pending.ready_tick
+    ready = world.nodes[ORIGIN].pending.ready_tick
     while world.tick < ready - 1:
         world.step()
-    before = world._spatial.cells[ORIGIN].states
-    incoming = world._spatial.cells[ORIGIN].incoming
+    before = world._spatial.nodes[ORIGIN].states
+    incoming = world._spatial.nodes[ORIGIN].incoming
     with pytest.raises(ValueError, match="invariant"):
         world.step()
-    assert world.faulted and world.cells[ORIGIN].pending is not None
+    assert world.faulted and world.nodes[ORIGIN].pending is not None
     assert carrier(world) == (5,)
-    assert world._spatial.cells[ORIGIN].states == before
-    assert world._spatial.cells[ORIGIN].incoming == incoming
+    assert world._spatial.nodes[ORIGIN].states == before
+    assert world._spatial.nodes[ORIGIN].incoming == incoming
     assert world.totals()["quantity"] == (8,)
 
 
@@ -155,7 +155,7 @@ def test_ready_commit_reserves_all_events_before_mutating_field_stock(capacity):
     planner = world._spatial.planner
     world._spatial.planner = lambda *args: replace(planner(*args), cost=169)
     world.step()
-    original = world._spatial.cells[(2, 0, 0)].states
+    original = world._spatial.nodes[(2, 0, 0)].states
     for _ in range(2):
         world.step()
     assert world.event_space.next_id == 2
@@ -163,13 +163,13 @@ def test_ready_commit_reserves_all_events_before_mutating_field_stock(capacity):
         with pytest.raises(OverflowError, match="causal event capacity"):
             world.step()
         assert world.faulted and world.event_space.next_id == 2
-        assert world._spatial.cells[(2, 0, 0)].states == original
-        assert world.cells[(2, 0, 0)].pending is not None
+        assert world._spatial.nodes[(2, 0, 0)].states == original
+        assert world.nodes[(2, 0, 0)].pending is not None
         assert not world.snapshot()["spatial_transfers"]
     else:
         world.step()
         assert world.event_space.next_id == 5
-        assert world.cells[(2, 0, 0)].pending is None
+        assert world.nodes[(2, 0, 0)].pending is None
         packet = next(p for p in world._spatial.links[(2, 0, 0)] if p)
         assert packet.arrival_tick == 6
         assert world.event_space.event(packet.cause_id).kind == "spatial_sent"
@@ -187,7 +187,7 @@ def test_invalid_joint_proposal_changes_neither_original_owner():
     assert world.totals() == stock
     assert carrier(world) == (5,)
     assert world.spatial_values(ORIGIN)["quantity"]["value"] == (2,)
-    assert not world._spatial.cells[ORIGIN].pending
+    assert not world._spatial.nodes[ORIGIN].pending
     assert world.event_space.next_id == 2
 
 
@@ -198,8 +198,8 @@ def test_pending_and_idle_owners_remain_formula_free(enabled):
     world = Simulation(parse_initial_state(raw))
     for _ in range(60):
         world.step()
-        for owner in (*world.cells.values(), *world._spatial.cells.values()):
-            assert cell_state_violations(owner) == ()
+        for owner in (*world.nodes.values(), *world._spatial.nodes.values()):
+            assert node_state_violations(owner) == ()
         assert len(all_records(world)) == 1
         assert all(row["balanced"] for row in world.spatial_accounting().values())
 
@@ -247,7 +247,7 @@ def test_causal_graph_does_not_change_delayed_physics_or_work():
             == recorded.computation_report()["model_operations_cost"]
         )
         assert plain.totals()["radiation"] == (8,)
-    assert len(plain._spatial.cells) <= 3
+    assert len(plain._spatial.nodes) <= 3
     assert (
         recorded.computation_report()["event_ledger_cost"]
         == recorded.computation_report()["model_operations_cost"]
@@ -310,7 +310,7 @@ def test_continuous_port_input_can_be_empty_without_retiming_frozen_output():
     planner = world._spatial.planner
     world._spatial.planner = lambda *args: replace(planner(*args), cost=369)
     world.step()
-    pending = world.cells[(2, 0, 0)].pending
+    pending = world.nodes[(2, 0, 0)].pending
     assert pending.ready_tick == 4  # C = 369 + 32; ceil(C/100) = 5.
     origin = (1, 0, 0)
     for tick, amount in ((2, 3), (3, 0), (4, 3)):
@@ -319,7 +319,7 @@ def test_continuous_port_input_can_be_empty_without_retiming_frozen_output():
             world._spatial.links[origin] = (SpatialPacket(tick, origin, 0, bundle),) + (None,) * 5
         world.step()
         if tick < 4:
-            assert world.cells[(2, 0, 0)].pending is pending
+            assert world.nodes[(2, 0, 0)].pending is pending
             assert world.spatial_values((2, 0, 0))["radiation"]["value"] == (8,)
     receipts = [e for e in events if e["event"] == "spatial_received"]
     assert [(e["tick"], e["received_fields"][1]["radiation"]) for e in receipts] == [

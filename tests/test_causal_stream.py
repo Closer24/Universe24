@@ -15,8 +15,8 @@ def test_scalar_seed_is_rejected_without_mutating_stream_world():
     world = CausalStreamSimulation()
     with pytest.raises(NotImplementedError, match="scalar field seeds"):
         world.seed_field((1, 2, 3), 64)
-    assert not world.cells
-    assert not world.streams.cells
+    assert not world.nodes
+    assert not world.streams.nodes
 
 
 def test_stream_candidate_preserves_mass_aware_movement_and_state_audit():
@@ -34,7 +34,7 @@ def test_stream_candidate_preserves_mass_aware_movement_and_state_audit():
         assert particle.position == (20 + tick // 2, 20, 20)
         assert (particle.force_rx, particle.force_ry, particle.force_rz) == (0, 0, 0)
         assert audit(world)["bounded_integer_state"]
-    assert report(world)["architecture"]["stream_registers_per_cell"] == 14
+    assert report(world)["architecture"]["stream_registers_per_node"] == 14
 
 
 def test_stream_split_conserves_every_integer_and_uses_six_ports():

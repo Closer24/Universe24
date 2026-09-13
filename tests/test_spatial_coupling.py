@@ -19,7 +19,7 @@ def document(*, vector=(5, 0, 0), control=(0, 0, 1), moving=False, denominator=1
         "schema_version": 1,
         "model_id": "configured-spatial-coupling-contract-v1",
         "shape": [31, 31, 31],
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": 3,
@@ -87,7 +87,7 @@ def document(*, vector=(5, 0, 0), control=(0, 0, 1), moving=False, denominator=1
 def resident(world, position=ORIGIN):
     return next(
         world.record_values(record)
-        for record in world.cells[position].records
+        for record in world.nodes[position].records
         if record is not None and world.initial.disturbances[record.type_index].name == "carrier"
     )
 
@@ -100,8 +100,8 @@ def field_inventory(world):
     snapshot = world.snapshot()
     payloads = [
         payload
-        for cell in snapshot["spatial_fields"]
-        for payload in cell["fields"]["inventory"]["populations"]
+        for node in snapshot["spatial_fields"]
+        for payload in node["fields"]["inventory"]["populations"]
     ]
     payloads.extend(
         payload for packet in snapshot["spatial_transfers"] for payload in packet["fields"]["inventory"]
@@ -193,7 +193,7 @@ def test_rotation_changes_routing_in_the_same_committed_local_cycle():
     world = Simulation(parse_initial_state(document(moving=True)))
     world.step()
     assert resident(world, (15, 16, 15))["inventory"] == (0, 5, 0)
-    assert not any(record is not None for record in world.cells[ORIGIN].records)
+    assert not any(record is not None for record in world.nodes[ORIGIN].records)
     assert field_inventory(world) == (5, -5, 0)
     assert world.totals()["inventory"] == (5, 0, 0)
 
@@ -227,7 +227,7 @@ def test_delayed_rotation_keeps_its_original_sample_and_commits_reaction_atomica
     events = []
     world = Simulation(parse_initial_state(raw), observer=events.append)
     world.step()
-    ready = world.cells[ORIGIN].pending.ready_tick
+    ready = world.nodes[ORIGIN].pending.ready_tick
     assert ready > 2
     assert field_value(world, ORIGIN, "control") == (0, 0, 2)
     while world.tick < ready:
@@ -253,7 +253,7 @@ def test_reaction_overflow_cannot_commit_only_the_carrier_rotation():
     world = Simulation(parse_initial_state(raw))
     before = world.totals()
     world.step()
-    ready = world.cells[ORIGIN].pending.ready_tick
+    ready = world.nodes[ORIGIN].pending.ready_tick
     with pytest.raises((ValueError, OverflowError)):
         while world.tick < ready:
             world.step()
@@ -356,7 +356,7 @@ def test_isolated_cardinal_source_parallel_flux_does_not_turn_or_accumulate_frac
         assert field_inventory(world) == (0, 0, 0)
         assert world.spatial_values(position)["radiation"]["directions"][0][0] > 0
         assert world.totals() == {"inventory": (5, 0, 0), "radiation": (72 * tick,)}
-        record = next(record for record in world.cells[position].records if record is not None)
+        record = next(record for record in world.nodes[position].records if record is not None)
         assert all(not any(unpack(payload)) for payload in record.spatial_remainders)
 
 
@@ -485,8 +485,8 @@ def test_spatial_turning_example_is_headless_and_preserves_vector_inventory(tmp_
     assert metadata["initial_totals"] == metadata["final_totals"] == {"inventory": [5, 0, 0]}
     assert metadata["source_totals"] == {"inventory": [0, 0, 0]}
     assert metadata["conserved_at_every_completed_tick"]
-    occupied = [cell for cell in state["cells"] if cell["disturbances"]]
-    assert [cell["position"] for cell in occupied] == [[14, 15, 15]]
+    occupied = [node for node in state["nodes"] if node["disturbances"]]
+    assert [node["position"] for node in occupied] == [[14, 15, 15]]
     assert occupied[0]["disturbances"][0]["values"]["inventory"] == [0, -5, 0]
     assert {path.name for path in tmp_path.iterdir()} == {
         "initialization.json",

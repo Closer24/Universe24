@@ -5,7 +5,7 @@ from importlib.util import resolve_name
 
 GENERIC_LAYERS = {"core", "fields", "dynamics"}
 COMPOSITION_MODULES = {"particle_api", "compat", "disturbance_api"}
-FORBIDDEN_GENERIC_TYPES = {"Config", "CellState", "ParticleState", "ScalarEngine", "Simulation"}
+FORBIDDEN_GENERIC_TYPES = {"Config", "NodeState", "ParticleState", "ScalarEngine", "Simulation"}
 
 
 def import_targets(tree, module):
@@ -64,7 +64,7 @@ def violations(source, module):
     found = []
     if layer in {"fields", "dynamics", "models"}:
         forbidden_world_members = {
-            "cells",
+            "nodes",
             "particles",
             "occupancy",
             "active",

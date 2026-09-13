@@ -145,7 +145,9 @@ class SpatialState:
 
 
 @dataclass(slots=True)
-class SpatialCell:
+class SpatialNodeState:
+    """Mutable spatial-field state owned by one Node."""
+
     states: tuple[SpatialState, ...]
     last_cost: int = 0
     received_count: int = 0

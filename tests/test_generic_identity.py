@@ -196,14 +196,14 @@ def assert_exercised(case, world, events):
         assert any(event["event"] == "sent" and event["disturbance"] == "pulse" for event in events)
         reporter = next(
             record
-            for cell in world.snapshot()["cells"]
-            for record in cell["disturbances"]
+            for node in world.snapshot()["nodes"]
+            for record in node["disturbances"]
             if record["type"] == "local_work"
         )
         assert reporter["values"]["computation"][0] > 0
         assert world.source_totals()["mass"][0] > 0
     elif case == "exchange":
-        records = world.snapshot()["cells"][0]["disturbances"]
+        records = world.snapshot()["nodes"][0]["disturbances"]
         assert [record["values"]["balance"] for record in records] == [(6,), (2,)]
     elif case == "finite_fields":
         assert world.source_totals()["radiation"] == (144,)
@@ -221,7 +221,7 @@ def assert_exercised(case, world, events):
             for event in events
         )
         records = [
-            record for cell in world.snapshot()["cells"] for record in cell["disturbances"]
+            record for node in world.snapshot()["nodes"] for record in node["disturbances"]
         ] + world.snapshot()["transfers"]
         assert records and all(sum(v * v for v in r["values"]["inventory"]) == 25 for r in records)
 

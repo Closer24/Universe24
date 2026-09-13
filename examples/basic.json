@@ -2,7 +2,7 @@
   "schema_version": 1,
   "model_id": "configured-disturbance-demo-v1",
   "shape": [17, 17, 17],
-  "slots_per_cell": 32,
+  "slots_per_node": 32,
   "link_ticks": 1,
   "normal_budget": 10000,
   "ticks": 8,

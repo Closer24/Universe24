@@ -9,6 +9,7 @@ result are different claims. Revision-specific results are not a live status fee
 
 | Document | Responsibility |
 | --- | --- |
+| [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Scalar, Vector, Port, Link, Event and LocalRule vocabulary |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Event graph configuration](EVENT_GRAPH_CONFIGURATION.md) | Enable or disable the causal graph, distinguish quantum programs, set capacity and locate saved records |
@@ -19,7 +20,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
 | [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
 | [Property couplings](PROPERTY_COUPLINGS.md) | Property eligibility, shared entity profiles and legacy selectors |
-| [Local conservation](LOCAL_CONSERVATION.md) | Passive energy/momentum measurement across node events and link flux |
+| [Local conservation](LOCAL_CONSERVATION.md) | Passive energy/momentum measurement across Node Events and Link flux |
 | [Entity catalog](ENTITY_CATALOG.md) | Sourced physical properties and interactions, plus explicitly selected experiment profiles |
 | [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
 | [Rational particle candidates](RATIONAL_PARTICLES.md) | Opt-in bounded ratios, balanced routes, fractional credit and local checks |
@@ -41,6 +42,9 @@ result are different claims. Revision-specific results are not a live status fee
 ## Historical particle candidates
 
 These named APIs remain testable; none is the implicit active `Simulation`.
+Historical documents may quote legacy identifiers that predate the canonical
+Node vocabulary; those names are compatibility references, not separate physical
+concepts.
 
 | Document | Responsibility |
 | --- | --- |
@@ -56,7 +60,7 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
 | [Workspace](WORKSPACE.md) | Local configuration UI, templates and recorded playback |
-| [Local observer](LOCAL_OBSERVER.md) | Completed node receptions, cycle counter and local playback prefixes |
+| [Local observer](LOCAL_OBSERVER.md) | Completed Node receptions, cycle counter and local playback prefixes |
 | [Retention](RETENTION.md) | Generated-output ownership, lifetime and cleanup |
 | [Performance](PERFORMANCE.md) | Revision-specific host-time measurements and reproduction |
 | [Test expectations](TEST_EXPECTATIONS.md) | Independent expected results and coverage ownership |

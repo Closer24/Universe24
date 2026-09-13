@@ -35,7 +35,7 @@ instead of maintaining conflicting representations of the same quantity.
   enters as input and leaves as output; it is not hidden inside a law object.
 - `core/`: fixed state contracts, addresses, scheduling, validation and commits.
   Extending state requires an explicit decision. Never add growing per-source or
-  per-cell maps.
+  per-node maps.
 - Initialization data selects active disturbance fields, types and expressions.
   Extend the validated generic expression/transport primitives only when needed;
   never use field-name branches or arbitrary Python loading as configuration.
@@ -54,7 +54,7 @@ sharing an atomic contract together, such as particle impulse and opposite field
 ## 3. Existing example: link stretching
 
 This is an explicitly named historical candidate. The active disturbance engine
-uses fixed link transit and computation-dependent local cell delay instead.
+uses fixed link transit and computation-dependent local node delay instead.
 
 `fields/geometry.py:MeanStretch` stores fixed base, numerator and denominator
 parameters. A call takes the local field value and a value delivered from the

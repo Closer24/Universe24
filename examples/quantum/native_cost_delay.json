@@ -7,7 +7,7 @@
     3
   ],
   "boundary": "open",
-  "slots_per_cell": 2,
+  "slots_per_node": 2,
   "link_ticks": 1,
   "normal_budget": 2,
   "ticks": 40,
@@ -202,7 +202,7 @@
         "tick": 1,
         "operations": [
           {
-            "sites": [
+            "register_indices": [
               0,
               1
             ],

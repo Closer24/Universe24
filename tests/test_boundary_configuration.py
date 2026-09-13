@@ -14,7 +14,7 @@ def document(version: int) -> dict[str, Any]:
         "schema_version": version,
         "model_id": "arbitrary-boundary-contract",
         "shape": [3, 4, 5],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": 1,
         "normal_budget": 10000,
         "ticks": 1,
@@ -92,7 +92,7 @@ def test_periodic_faces_wrap_opposite_while_open_faces_have_no_destination(
 
 
 @pytest.mark.parametrize("port", range(6))
-def test_single_cell_periodic_self_neighbor_and_open_escape(port: int) -> None:
+def test_single_node_periodic_self_neighbor_and_open_escape(port: int) -> None:
     assert neighbor_address((0, 0, 0), port, (1, 1, 1), "periodic") == (0, 0, 0)
     assert neighbor_address((0, 0, 0), port, (1, 1, 1), "open") is None
 

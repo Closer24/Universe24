@@ -16,7 +16,7 @@ subtraction, or a particle-count special case.
 
 ## Local law
 
-Each materialized stream cell has a fixed 14-integer stream record:
+Each materialized stream node has a fixed 14-integer stream record:
 
 - eight nonnegative octant populations;
 - six directional amounts delivered in the current tick.
@@ -35,7 +35,7 @@ nearest-neighbor link in that field phase. The source emits the same configured
 integer amount into each octant; `source_per_octant` is an explicit model choice,
 not a calibrated physical constant.
 
-The particle reads only the six amounts delivered to its current cell in that
+The particle reads only the six amounts delivered to its current node in that
 field phase. For the attractive candidate, opposite ports are swapped before the
 existing central-difference response. The response then uses the existing bounded
 integer impulse/remainder exchange and movement code.

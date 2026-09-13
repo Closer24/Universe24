@@ -1,6 +1,6 @@
 """Small bridge for legacy notebook imports and diagnostic method names.
 
-State is now read-only. Replace private `_cell(...)[PHI] = value` initialization
+State is now read-only. Replace private `_node(...)[PHI] = value` initialization
 with `seed_field(...)`. self_tests lives in pytest; report checks are explicit.
 """
 

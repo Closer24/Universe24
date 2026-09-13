@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 class Simulation(DisturbanceEngine):
-    """Run the fields, disturbances and integer laws supplied by initialization."""
+    """Run configured local rules over Nodes connected by Links."""
 
     def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
         event_space, resolver = None, None

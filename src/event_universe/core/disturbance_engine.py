@@ -8,11 +8,11 @@ from .conservation_state import InventoryNode, InventoryPacket, InventoryView
 from .coupling_selectors import selected_type_set
 from .disturbance_state import (
     Address3,
-    CellView,
-    DisturbanceCell,
+    DisturbanceNodeState,
     DisturbanceRecord,
     InitialState,
     LocalPlan,
+    NodeView,
     Packet,
     PendingCycle,
     bounded,
@@ -69,7 +69,7 @@ class DisturbanceEngine:
         self._planner = planner
         self._record_policy = record_policy
         self._observer = observer
-        self._cells: dict[Address3, DisturbanceCell] = {}
+        self._nodes: dict[Address3, DisturbanceNodeState] = {}
         self._links: dict[Address3, tuple[Packet | None, ...]] = {}
         self.tick = 0
         self.faulted = False
@@ -100,50 +100,50 @@ class DisturbanceEngine:
             )
         )
         for seed in initial.seeds:
-            cell = self._at(seed.position)
-            records = list(cell.records)
+            node = self._at(seed.position)
+            records = list(node.records)
             try:
                 slot = records.index(None)
             except ValueError as error:
                 raise ValueError("initial disturbance capacity exceeded") from error
             records[slot] = seed.record
-            cell.records = tuple(records)
+            node.records = tuple(records)
         if self.event_space is not None:
-            self.event_space.require_room(len(self._cells))
-            for position in sorted(self._cells):
+            self.event_space.require_room(len(self._nodes))
+            for position in sorted(self._nodes):
                 self._emit("source", position)
 
     @property
-    def cells(self) -> Mapping[Address3, CellView]:
+    def nodes(self) -> Mapping[Address3, NodeView]:
         return MappingProxyType(
             {
-                position: CellView(
-                    cell.records,
-                    cell.coupling_remainders,
-                    cell.pending,
-                    cell.available_tick,
-                    cell.received_count,
-                    cell.last_cost,
+                position: NodeView(
+                    node.records,
+                    node.coupling_remainders,
+                    node.pending,
+                    node.available_tick,
+                    node.received_count,
+                    node.last_cost,
                 )
-                for position, cell in self._cells.items()
+                for position, node in self._nodes.items()
             }
         )
 
     def inventory_view(self) -> InventoryView:
         """Expose immutable actual owners for host audits, excluding proposal views."""
         spatial = self._spatial
-        positions = self._cells.keys() | ({} if spatial is None else spatial.cells).keys()
+        positions = self._nodes.keys() | ({} if spatial is None else spatial.nodes).keys()
         blank = () if spatial is None else spatial._blank_states()
         nodes = tuple(
             InventoryNode(
                 position,
-                () if position not in self._cells else self._cells[position].records,
+                () if position not in self._nodes else self._nodes[position].records,
                 blank
-                if spatial is None or position not in spatial.cells
-                else spatial.cells[position].states,
+                if spatial is None or position not in spatial.nodes
+                else spatial.nodes[position].states,
                 ()
-                if spatial is None or position not in spatial.cells
-                else spatial.cells[position].incoming,
+                if spatial is None or position not in spatial.nodes
+                else spatial.nodes[position].incoming,
             )
             for position in sorted(positions)
         )
@@ -170,14 +170,14 @@ class DisturbanceEngine:
     def links(self) -> Mapping[Address3, tuple[Packet | None, ...]]:
         return MappingProxyType(self._links)
 
-    def _at(self, position: Address3) -> DisturbanceCell:
-        if position not in self._cells:
-            capacity = self.initial.slots_per_cell
-            self._cells[position] = DisturbanceCell(
+    def _at(self, position: Address3) -> DisturbanceNodeState:
+        if position not in self._nodes:
+            capacity = self.initial.slots_per_node
+            self._nodes[position] = DisturbanceNodeState(
                 (None,) * capacity,
                 (1,) * (len(self.initial.couplings) * capacity * capacity * 3),
             )
-        return self._cells[position]
+        return self._nodes[position]
 
     def neighbor(self, origin: Address3, port: int) -> Address3 | None:
         return neighbor_address(origin, port, self.initial.shape, self.initial.boundary)
@@ -194,8 +194,8 @@ class DisturbanceEngine:
     ) -> int | None:
         identity = None
         if self.event_space is not None:
-            cell = self._at(position)
-            parents = causes if cell.cause_id is None else (*causes, cell.cause_id)
+            node = self._at(position)
+            parents = causes if node.cause_id is None else (*causes, node.cause_id)
             entry = self.event_space.append(
                 tick=self.tick,
                 addresses=(position,),
@@ -204,7 +204,7 @@ class DisturbanceEngine:
                 physical_parents=parents,
                 model_cost=event_cost,
             )
-            identity = cell.cause_id = entry.id
+            identity = node.cause_id = entry.id
             data = {**data, "event_id": identity, "parents": entry.parents}
         if self._observer is not None:
             message = {"event": event, "tick": self.tick, "position": position, **data}
@@ -215,11 +215,11 @@ class DisturbanceEngine:
         return identity
 
     def _record_cause(self, position: Address3) -> int | None:
-        cell = self._cells.get(position)
-        return None if cell is None else cell.cause_id
+        node = self._nodes.get(position)
+        return None if node is None else node.cause_id
 
     def _commit_emission_cause(self, position: Address3, cause: int) -> None:
-        self._cells[position].cause_id = cause
+        self._nodes[position].cause_id = cause
 
     def computation_report(self) -> dict[str, object]:
         """Every begun local cycle is charged once, even while waiting or in flight."""
@@ -235,30 +235,30 @@ class DisturbanceEngine:
             report["resolver"] = self._resolver.report()
         return report
 
-    def _begin(self, position: Address3, cell: DisturbanceCell) -> None:
-        if cell.pending is not None or cell.available_tick > self.tick:
+    def _begin(self, position: Address3, node: DisturbanceNodeState) -> None:
+        if node.pending is not None or node.available_tick > self.tick:
             return
         if self.initial.spatial_computation_delay:
-            self._begin_node(position, cell)
+            self._begin_node(position, node)
             return
-        if not self._record_policy.has_work(cell.records) and not (
+        if not self._record_policy.has_work(node.records) and not (
             self._resolver is not None
             and self._resolver.has_work(
                 LocalContext(
                     self.tick,
                     position,
-                    cell.records,
-                    cell.coupling_remainders,
-                    cell.received_count,
-                    cell.cause_id,
+                    node.records,
+                    node.coupling_remainders,
+                    node.received_count,
+                    node.cause_id,
                 )
             )
         ):
             return
         coupled = (
-            self._spatial.couple(position, cell.records)
+            self._spatial.couple(position, node.records)
             if self._spatial is not None
-            and any(r is not None and r.type_index in self._coupled_types for r in cell.records)
+            and any(r is not None and r.type_index in self._coupled_types for r in node.records)
             else None
         )
         if self.event_space is not None:
@@ -266,10 +266,10 @@ class DisturbanceEngine:
         context = LocalContext(
             self.tick,
             position,
-            cell.records if coupled is None else coupled.records,
-            cell.coupling_remainders,
-            cell.received_count,
-            cell.cause_id,
+            node.records if coupled is None else coupled.records,
+            node.coupling_remainders,
+            node.received_count,
+            node.cause_id,
         )
         plan = (
             self._planner(context.records, context.residuals, context.received)
@@ -288,16 +288,16 @@ class DisturbanceEngine:
                 plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
             )
             plan = self._record_policy.report_cost(plan)
-        if len(plan.departures) > self.initial.slots_per_cell * 6:
+        if len(plan.departures) > self.initial.slots_per_node * 6:
             raise ValueError("local rule exceeds fixed outgoing capacity")
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
         work = checked_work(self._model_work + plan.cost)
         cycles = checked_work(self._local_cycles + 1)
         pending = PendingCycle(bounded(self.tick + extra), bounded(self.tick + duration), plan)
         # Originals remain in their occupied slots throughout the local wait.
-        cell.pending = pending
-        cell.received_count = 0
-        cell.last_cost = plan.cost
+        node.pending = pending
+        node.received_count = 0
+        node.last_cost = plan.cost
         self._model_work, self._local_cycles = work, cycles
         cause = self._emit(
             "cycle_started",
@@ -315,23 +315,23 @@ class DisturbanceEngine:
             ready_tick=pending.ready_tick,
             next_tick=pending.next_tick,
         )
-        cell.pending = replace(pending, cause_id=cause)
+        node.pending = replace(pending, cause_id=cause)
 
-    def _begin_node(self, position: Address3, cell: DisturbanceCell) -> None:
+    def _begin_node(self, position: Address3, node: DisturbanceNodeState) -> None:
         """Freeze one field/carrier transaction and charge its combined work once."""
         spatial = self._spatial
         assert spatial is not None
-        field_plan = spatial.node_plan(position, cell.records)
-        has_carriers = self._record_policy.has_work(cell.records)
+        field_plan = spatial.node_plan(position, node.records)
+        has_carriers = self._record_policy.has_work(node.records)
         if not has_carriers and field_plan.cost == 0:
-            spatial.cells[position].last_cost = 0
-            spatial.cells[position].cost_cause_id = None
+            spatial.nodes[position].last_cost = 0
+            spatial.nodes[position].cost_cause_id = None
             spatial._active.discard(position)
             return
         field_plan = replace(
             field_plan, cost=bounded(checked_work(field_plan.cost + spatial.node_merge_cost))
         )
-        self._validate_emission_records(cell.records, field_plan.emission_records)
+        self._validate_emission_records(node.records, field_plan.emission_records)
         records = field_plan.emission_records
         coupled = (
             spatial.node_coupling(position, records)
@@ -342,11 +342,11 @@ class DisturbanceEngine:
         plan = (
             self._planner(
                 records if coupled is None else coupled.records,
-                cell.coupling_remainders,
-                cell.received_count,
+                node.coupling_remainders,
+                node.received_count,
             )
             if has_carriers
-            else LocalPlan((), (), cell.coupling_remainders, zero, 0)
+            else LocalPlan((), (), node.coupling_remainders, zero, 0)
         )
         if coupled is not None:
             plan = replace(
@@ -358,7 +358,7 @@ class DisturbanceEngine:
         plan = self._record_policy.report_cost(
             replace(plan, cost=bounded(checked_work(plan.cost + field_plan.cost)))
         )
-        if len(plan.departures) > self.initial.slots_per_cell * 6:
+        if len(plan.departures) > self.initial.slots_per_node * 6:
             raise ValueError("local rule exceeds fixed outgoing capacity")
         if plan.spatial_guards:
             assert spatial.coupler is not None
@@ -367,7 +367,7 @@ class DisturbanceEngine:
             )
         guard_states = field_plan.states if plan.spatial_guards else ()
         reaction = spatial.prepare_reaction(position, self.tick, plan.spatial_reaction, plan=field_plan)
-        phases = spatial.cells[position].reaction_phases
+        phases = spatial.nodes[position].reaction_phases
         if reaction is not None:
             assert reaction.links is not None
             blank = tuple(s.populations for s in spatial._blank_states())
@@ -389,11 +389,11 @@ class DisturbanceEngine:
         work, cycles = checked_work(self._model_work + plan.cost), checked_work(self._local_cycles + 1)
         if self.event_space is not None:
             self.event_space.require_room(1)
-        field_cell = spatial.cells[position]
-        field_cause = field_cell.cause_id
-        cell.pending, cell.received_count, cell.last_cost = pending, 0, plan.cost
-        field_cell.pending = 1
-        field_cell.last_cost = field_plan.cost
+        field_node = spatial.nodes[position]
+        field_cause = field_node.cause_id
+        node.pending, node.received_count, node.last_cost = pending, 0, plan.cost
+        field_node.pending = 1
+        field_node.last_cost = field_plan.cost
         self._model_work, self._local_cycles = work, cycles
         cause = self._emit(
             "cycle_started",
@@ -405,10 +405,10 @@ class DisturbanceEngine:
             next_tick=pending.next_tick,
             spatial_cost=field_plan.cost,
         )
-        cell.pending = replace(pending, cause_id=cause)
+        node.pending = replace(pending, cause_id=cause)
 
-    def _commit(self, position: Address3, cell: DisturbanceCell) -> None:
-        pending = cell.pending
+    def _commit(self, position: Address3, node: DisturbanceNodeState) -> None:
+        pending = node.pending
         if pending is None or pending.ready_tick > self.tick:
             return
         spatial = self._spatial
@@ -420,7 +420,7 @@ class DisturbanceEngine:
             if any(packet is not None for packet in spatial.links.get(position, ())):
                 raise ValueError("outgoing spatial links are occupied")
             field_states = spatial.node_states(position, field_plan)
-            if pending.spatial_guard_states and spatial.cells[position].incoming:
+            if pending.spatial_guard_states and spatial.nodes[position].incoming:
                 assert spatial.coupler is not None
                 guarded = spatial.node_states(
                     position, replace(field_plan, states=pending.spatial_guard_states)
@@ -437,10 +437,10 @@ class DisturbanceEngine:
                 + int(field_plan is not None)
                 + sum(p is not None for p in field_packets)
             )
-        old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_cell))
+        old_links = self._links.get(position, (None,) * (6 * self.initial.slots_per_node))
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
-        source_records = list(cell.records)
+        source_records = list(node.records)
         if field_plan is not None:
             for slot, emitted in enumerate(field_plan.emission_records):
                 if emitted is not None:
@@ -453,7 +453,7 @@ class DisturbanceEngine:
         for index, departure in enumerate(pending.plan.departures):
             record = departure.record
             if departure.origin_slot != -1:
-                if not 0 <= departure.origin_slot < len(cell.records):
+                if not 0 <= departure.origin_slot < len(node.records):
                     raise ValueError("departure origin slot exceeds local capacity")
                 current = source_records[departure.origin_slot]
                 merged = self._current_emission_state(record, current)
@@ -479,10 +479,10 @@ class DisturbanceEngine:
             else ()
         )
         # All proposal validation has succeeded; commit coupled records together.
-        cell.records = tuple(records)
-        cell.coupling_remainders = pending.plan.coupling_remainders
-        cell.available_tick = pending.next_tick
-        cell.pending = None
+        node.records = tuple(records)
+        node.coupling_remainders = pending.plan.coupling_remainders
+        node.available_tick = pending.next_tick
+        node.pending = None
         self._links[position] = tuple(links)
         if field_plan is not None:
             assert spatial is not None
@@ -529,7 +529,7 @@ class DisturbanceEngine:
                     if field_plan.rule_delta and any(field_plan.rule_delta[i])
                 },
             )
-            spatial.cells[position].cause_id = spatial.cells[position].cost_cause_id = cause
+            spatial.nodes[position].cause_id = spatial.nodes[position].cost_cause_id = cause
         if pending.plan.spatial_reaction:
             cause = self._emit(
                 "spatial_coupled",
@@ -558,7 +558,7 @@ class DisturbanceEngine:
             )
             if cause is not None and field_plan is not None:
                 assert spatial is not None
-                spatial.cells[position].cause_id = cause
+                spatial.nodes[position].cause_id = cause
             elif cause is not None and self._spatial is not None:
                 self._spatial.link_reaction(position, reaction, cause)
         if field_plan is not None:
@@ -570,7 +570,7 @@ class DisturbanceEngine:
                         "spatial_sent",
                         self.tick,
                         position,
-                        causes=(spatial.cells[position].cause_id,),
+                        causes=(spatial.nodes[position].cause_id,),
                         notifications=notifications,
                         port=field_packet.port,
                         arrival_tick=field_packet.arrival_tick,
@@ -617,13 +617,13 @@ class DisturbanceEngine:
         position: Address3,
         records: tuple[DisturbanceRecord | None, ...],
     ) -> None:
-        cell = self._cells.get(position)
-        if cell is None:
+        node = self._nodes.get(position)
+        if node is None:
             if records:
                 raise ValueError("spatial emission cannot create disturbance records")
             return
-        self._validate_emission_records(cell.records, records)
-        cell.records = records
+        self._validate_emission_records(node.records, records)
+        node.records = records
 
     @staticmethod
     def _validate_emission_records(
@@ -673,27 +673,27 @@ class DisturbanceEngine:
         for position, deliveries in sorted(ready.items()):
             if self.event_space is not None:
                 self.event_space.require_room(len(deliveries))
-            cell = self._at(position)
+            node = self._at(position)
             locked = (
                 frozenset()
-                if cell.pending is None
-                else frozenset(slot for slot, _ in cell.pending.plan.replacements)
+                if node.pending is None
+                else frozenset(slot for slot, _ in node.pending.plan.replacements)
             )
-            if cell.pending is not None and cell.pending.spatial_plan is not None:
+            if node.pending is not None and node.pending.spatial_plan is not None:
                 locked |= frozenset(
                     slot
-                    for slot, record in enumerate(cell.pending.spatial_plan.emission_records)
+                    for slot, record in enumerate(node.pending.spatial_plan.emission_records)
                     if record is not None
                 )
             records = self._record_policy.receive(
-                cell.records, tuple(packet.record for _, _, packet in deliveries), locked
+                node.records, tuple(packet.record for _, _, packet in deliveries), locked
             )
-            if len(records) != len(cell.records):
+            if len(records) != len(node.records):
                 raise ValueError("record policy cannot change local capacity")
-            received = bounded(cell.received_count + len(deliveries))
+            received = bounded(node.received_count + len(deliveries))
             # Validate the whole local arrival event before clearing any packet.
-            cell.records = records
-            cell.received_count = received
+            node.records = records
+            node.received_count = received
             for origin, slot, _packet in deliveries:
                 links = list(self._links[origin])
                 links[slot] = None
@@ -716,24 +716,24 @@ class DisturbanceEngine:
             if self._spatial is not None and not self.initial.spatial_computation_delay:
                 self._spatial.begin(
                     self.tick,
-                    {p: cell.records for p, cell in self._cells.items()},
+                    {p: node.records for p, node in self._nodes.items()},
                     self._commit_emission_records,
                     record_cause=self._record_cause if self.event_space is not None else None,
                     commit_cause=self._commit_emission_cause if self.event_space is not None else None,
                 )
-            positions = set(self._cells)
+            positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
             for position in sorted(positions):
-                cell = self._at(position)
-                self._begin(position, cell)
-                self._commit(position, cell)
+                node = self._at(position)
+                self._begin(position, node)
+                self._commit(position, node)
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
                 self._spatial.deliver(self.tick)
             self._deliver()
-            for position in sorted(self._cells):
-                self._commit(position, self._cells[position])
+            for position in sorted(self._nodes):
+                self._commit(position, self._nodes[position])
             if self._resolver is not None:
                 self._resolver.advance(self.tick)
         except Exception:
@@ -753,7 +753,7 @@ class DisturbanceEngine:
             if self._spatial is None
             else self._spatial.totals()
         )
-        records = [r for cell in self._cells.values() for r in cell.records if r is not None]
+        records = [r for node in self._nodes.values() for r in node.records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
         for record in records:
             for i, components in enumerate(record.values):
@@ -837,12 +837,12 @@ class DisturbanceEngine:
             "tick": self.tick,
             "boundary": self.initial.boundary,
             "escaped_totals": self.escaped_totals(),
-            "cells": [
+            "nodes": [
                 {
                     "position": position,
-                    "cost": cell.last_cost,
-                    "available_tick": cell.available_tick,
-                    "waiting_until": None if cell.pending is None else cell.pending.ready_tick,
+                    "cost": node.last_cost,
+                    "available_tick": node.available_tick,
+                    "waiting_until": None if node.pending is None else node.pending.ready_tick,
                     "disturbances": [
                         {
                             "type": self.initial.disturbances[r.type_index].name,
@@ -850,11 +850,11 @@ class DisturbanceEngine:
                             "channel": r.channel_code - 1,
                             **self._bookkeeping(r),
                         }
-                        for r in cell.records
+                        for r in node.records
                         if r is not None
                     ],
                 }
-                for position, cell in sorted(self._cells.items())
+                for position, node in sorted(self._nodes.items())
             ],
             "transfers": [
                 {

@@ -66,11 +66,11 @@ def test_carrier_exits_each_face_only_after_its_complete_link(port, amount):
         world.step()
         assert_balance(world, initial)
         assert all_records(world) == []
-    assert all(all(0 <= value < 5 for value in position) for position in world.cells)
+    assert all(all(0 <= value < 5 for value in position) for position in world.nodes)
 
 
 @pytest.mark.parametrize("boundary, remaining, escaped", [("open", 0, 24), ("periodic", 24, 0)])
-def test_single_cell_domain_handles_all_six_spatial_faces(boundary, remaining, escaped):
+def test_single_node_domain_handles_all_six_spatial_faces(boundary, remaining, escaped):
     raw = document(travel=2)
     raw.update(boundary=boundary, shape=[1, 1, 1])
     raw["spatial_seeds"] = [{"position": [0, 0, 0], "field": "radiation", "populations": [3] * 8}]
@@ -86,7 +86,7 @@ def test_single_cell_domain_handles_all_six_spatial_faces(boundary, remaining, e
     world.step()
     assert world.totals()["radiation"] == (remaining,)
     assert world.escaped_totals()["radiation"] == (escaped,)
-    assert set(world._spatial.cells) == {(0, 0, 0)}
+    assert set(world._spatial.nodes) == {(0, 0, 0)}
     assert_balance(world, initial)
 
 
@@ -162,7 +162,7 @@ def test_corner_partitions_signed_vector_and_unsigned_stock_between_inside_and_o
     assert world.totals()["count"] == (7 * 125 + 12,)
     assert world.escaped_totals()["count"] == (24,)
     assert world.dissipation_totals()["count"] == (12,)
-    assert set(world._spatial.cells) == {(0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)}
+    assert set(world._spatial.nodes) == {(0, 0, 0), (1, 0, 0), (0, 1, 0), (0, 0, 1)}
     assert_balance(world, initial)
 
 
@@ -179,7 +179,7 @@ def test_invalid_unsigned_component_rejects_complete_multi_field_exit_atomically
     assert engine.links[(0, 0, 0)][1] == packet
     assert world.escaped_totals() == before
     assert not any(any(values) for values in engine.dissipation)
-    assert engine.cells == {}
+    assert engine.nodes == {}
 
 
 def test_invalid_unsigned_carrier_cannot_escape_before_validation():
@@ -187,9 +187,9 @@ def test_invalid_unsigned_carrier_cannot_escape_before_validation():
     raw["fields"][0]["signed"] = False
     world = Simulation(parse_initial_state(raw))
     position = face_position(1)
-    original = world.cells[position].records[0]
+    original = world.nodes[position].records[0]
     packet = Packet(3, position, 1, replace(original, values=(pack((-1,)),)))
-    world._cells[position].records = (None,) * 2
+    world._nodes[position].records = (None,) * 2
     world._links[position] = (packet,) + (None,) * 11
     world.tick = 3
     with pytest.raises(ValueError, match="negative"):
@@ -217,10 +217,10 @@ def test_terminal_field_has_no_exterior_decay_receive_event_or_carried_cost():
     assert world.dissipation_totals()["radiation"] == (0,)
     assert [event["tick"] for event in events if event["event"] == "spatial_escaped"] == [3]
     assert not any(event["event"] in ("spatial_received", "spatial_decayed") for event in events)
-    assert set(world._spatial.cells) == {(4, 2, 2)}
-    assert world._spatial.cells[(4, 2, 2)].received_decay_cost == 0
+    assert set(world._spatial.nodes) == {(4, 2, 2)}
+    assert world._spatial.nodes[(4, 2, 2)].received_decay_cost == 0
     world.step()
-    assert world._spatial.cells[(4, 2, 2)].last_cost == 0
+    assert world._spatial.nodes[(4, 2, 2)].last_cost == 0
 
 
 def test_exiting_emitter_removes_unused_allowance_without_reemission():

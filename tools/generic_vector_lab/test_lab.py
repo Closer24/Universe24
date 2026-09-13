@@ -13,20 +13,20 @@ def lab():
     return Lab(json.loads(Path(__file__).with_name("definitions.json").read_text(encoding="utf-8")))
 
 
-def massive(lab, kind, mass=1, E=1, p=None, q=0, cell=0):
-    return lab.insert(cell, lab.record(kind, {"mass": mass, "E": E, "p": p or [0, 0, 0], "q": q}))
+def massive(lab, kind, mass=1, E=1, p=None, q=0, node=0):
+    return lab.insert(node, lab.record(kind, {"mass": mass, "E": E, "p": p or [0, 0, 0], "q": q}))
 
 
-def pulse(lab, E, p, cell=0):
-    return lab.insert(cell, lab.record("pulse", {"E": E, "p": p}))
+def pulse(lab, E, p, node=0):
+    return lab.insert(node, lab.record("pulse", {"E": E, "p": p}))
 
 
 def state(lab):
-    return copy.deepcopy((lab.cells, lab.links, lab.next_id))
+    return copy.deepcopy((lab.nodes, lab.links, lab.next_id))
 
 
 def values(lab, identifier, field):
-    return dict(dict(lab.cells[0])[identifier].fields)[field]
+    return dict(dict(lab.nodes[0])[identifier].fields)[field]
 
 
 @pytest.mark.parametrize("n,d", [(0, 1), (-3, 5), (6, -8), (LIMIT, 1), (-LIMIT, 1)])
@@ -114,12 +114,12 @@ def test_atomic_failure(lab, fault):
         lab.definitions["reactions"]["annihilate"]["outputs"][1]["fields"]["p"]["value"] = [1, 0, 0]
     elif fault == "charge":
         # Valid records, but incoming charge no longer sums to zero.
-        lab.cells[0] = (
+        lab.nodes[0] = (
             (
                 ids[0],
                 lab.record("electron", {"mass": 1, "E": 1, "p": [0, 0, 0], "q": 0}),
             ),
-            lab.cells[0][1],
+            lab.nodes[0][1],
         )
     elif fault == "capacity":
         lab.capacity = 1
@@ -216,16 +216,16 @@ def test_coupled_fields(lab):
 def test_transport_ownership_and_backpressure(lab):
     lab.capacity = 1
     a = massive(lab, "electron", q=-1)
-    b = massive(lab, "positron", q=1, cell=1)
+    b = massive(lab, "positron", q=1, node=1)
     before = lab.totals()
     lab.send(0, 1, a)
-    assert not lab.cells[0] and lab.totals() == before
+    assert not lab.nodes[0] and lab.totals() == before
     lab.advance_transport()
     assert len(lab.links) == 1 and lab.totals() == before
     lab.send(1, 2, b)
     lab.advance_transport()
-    assert not lab.links and dict(lab.cells[1])[a].kind == "electron"
-    assert dict(lab.cells[2])[b].kind == "positron" and lab.totals() == before
+    assert not lab.links and dict(lab.nodes[1])[a].kind == "electron"
+    assert dict(lab.nodes[2])[b].kind == "positron" and lab.totals() == before
     with pytest.raises(ValueError):
         lab.send(1, 3, a)
 

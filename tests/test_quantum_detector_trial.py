@@ -23,7 +23,7 @@ def snapshot(world, trace):
     return (
         world.tick,
         world.faulted,
-        dict(world.cells),
+        dict(world.nodes),
         dict(world.particles),
         dict(world.occupancy),
         world.active,

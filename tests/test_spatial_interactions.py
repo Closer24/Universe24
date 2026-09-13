@@ -14,7 +14,7 @@ from .test_local_field_rules import ORIGIN, document, field, invariant, local, o
 def carrier(world):
     return next(
         world.record_values(record)["quantity"]
-        for record in world.cells[ORIGIN].records
+        for record in world.nodes[ORIGIN].records
         if record is not None
     )
 
@@ -68,7 +68,7 @@ def test_carrier_and_local_field_swap_atomically_with_exact_joint_invariants(del
     world = Simulation(parse_initial_state(exchange(delayed=delayed)))
     world.step()
     if delayed:
-        pending = world.cells[ORIGIN].pending
+        pending = world.nodes[ORIGIN].pending
         assert pending is not None and pending.ready_tick > 1
         ready = pending.ready_tick
         while world.tick < ready:
@@ -88,7 +88,7 @@ def test_carrier_and_local_field_swap_atomically_with_exact_joint_invariants(del
 def test_arrival_during_delay_cannot_commit_a_stale_nonlinear_invariant():
     world = Simulation(parse_initial_state(exchange(delayed=True, incoming=True)))
     world.step()
-    pending = world.cells[ORIGIN].pending
+    pending = world.nodes[ORIGIN].pending
     assert pending is not None and pending.ready_tick > 1
     ready = pending.ready_tick
     assert value(world, "quantity") == (3,)
@@ -113,7 +113,7 @@ def test_delayed_linear_exchange_preserves_stock_received_after_its_original_sam
     raw["spatial_interactions"][0]["invariants"] = raw["spatial_interactions"][0]["invariants"][:1]
     world = Simulation(parse_initial_state(raw))
     world.step()
-    pending = world.cells[ORIGIN].pending
+    pending = world.nodes[ORIGIN].pending
     assert pending is not None and pending.ready_tick > 1
     ready = pending.ready_tick
     while world.tick < ready:
@@ -164,7 +164,7 @@ def test_active_field_and_joint_rules_keep_results_after_rename_and_declaration_
         original.step()
         renamed.step()
         assert carrier(original) == (particle,)
-        renamed_record = next(record for record in renamed.cells[ORIGIN].records if record is not None)
+        renamed_record = next(record for record in renamed.nodes[ORIGIN].records if record is not None)
         assert renamed.record_values(renamed_record)[names["quantity"]] == (particle,)
         for name, expected in (("quantity", (stock,)), ("signal", vector)):
             assert value(original, name) == value(renamed, names[name]) == expected
@@ -197,7 +197,7 @@ def test_zero_net_joint_chain_keeps_both_guards_and_prices_its_frozen_delay():
         raw["operation_costs"]["read"] = read_price
         world = Simulation(parse_initial_state(raw))
         world.step()
-        pending = world.cells[ORIGIN].pending
+        pending = world.nodes[ORIGIN].pending
         assert pending is not None and pending.ready_tick > 1
         assert pending.plan.spatial_reaction == ((0,),)
         assert len(pending.plan.spatial_guards) == 2
@@ -276,7 +276,7 @@ def test_invalid_joint_proposal_commits_neither_carrier_nor_field(failure):
     assert carrier(world) == (5,)
     assert value(world, "quantity") == (2,)
     assert world.totals()["quantity"] == (7,)
-    assert world.cells[ORIGIN].pending is None
+    assert world.nodes[ORIGIN].pending is None
     assert world.spatial_accounting()["quantity"]["reactions"] == (0,)
 
 

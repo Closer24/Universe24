@@ -2,7 +2,7 @@
 
 The opt-in [shared field computation cycle](SPATIAL_COMPUTATION_DELAY.md)
 extends `PendingCycle` with one immutable spatial proposal, reaction phases
-and cached joint-guard input. `SpatialCell` retains fixed incoming populations,
+and cached joint-guard input. `SpatialNodeState` retains fixed incoming populations,
 port readings, counts and decay cost while pending. Inventory includes these
 actual input owners once and excludes proposals. No expressions or histories
 enter evolving state. The existing scheduler coordinates both owners atomically.
@@ -66,7 +66,7 @@ are necessary bookkeeping, not permission to hide physical laws in the scheduler
 An externally configured equation is still a chosen law, not evidence that it
 emerged from the lattice.
 
-Keep immutable parsed law definitions outside dynamic cell, disturbance,
+Keep immutable parsed law definitions outside dynamic node, disturbance,
 pending-proposal and packet payloads. Payloads carry bounded state values and
 declared identifiers, never copied expression trees, formula strings, Python
 callbacks or executable code. Read-only diagnostics may calculate global
@@ -370,14 +370,14 @@ See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 returns a `ScalarSample(value, remainder)`. The built-in `ScalarField` implements
 one weighted six-neighbor stencil, with optional local retention. It supports
 signed values and retains integer division residues. It knows neither source
-occupancy nor particle or cell records. A different local scalar law can satisfy
+occupancy nor particle or node records. A different local scalar law can satisfy
 the same protocol without inheriting from it.
 
 `FieldTurning.apply(...)` takes particle momentum, field momentum, a supplied
 local vector and carried residues. The selected direction function receives
 only momentum and that vector. The component performs the bounded impulse
 calculation and equal-and-opposite exchange once, regardless of the selected
-direction policy. It does not compute or store a field, or interpret cell state.
+direction policy. It does not compute or store a field, or interpret node state.
 `full_response` and `dominant_axis_transverse` are available policies; neither is
 an implicit default. The transverse policy is a discrete dominant-axis filter,
 not a geometric rotation or orthogonal projection.
@@ -385,10 +385,10 @@ not a geometric rotation or orthogonal projection.
 `ScalarFieldModel` is the single adapter for the existing physical state. It
 maps occupancy to source strength, enforces the current nonnegative scalar
 policy, obtains a gradient, calls turning and movement, and builds validated
-cell and particle proposals. `SCALAR_MODEL` explicitly selects six unit
+node and particle proposals. `SCALAR_MODEL` explicitly selects six unit
 neighbor weights, no local retention and dominant-axis transverse response.
 Denominators come from `Config` so arithmetic and state audits share one value.
-The reusable components never import `Config`, `CellState` or `ParticleState`.
+The reusable components never import `Config`, `NodeState` or `ParticleState`.
 Source multiplication, nonnegative clipping and scalar activity predicates live
 in `fields/policies`; the adapter selects and calls them. Bounded scaling with a
 carried remainder is implemented once in `core/state.scaled_divrem`, including
@@ -399,12 +399,12 @@ scheduling. Supplying `ScalarSimulation(field=...)` instead selects
 `sample_changed_or_source`, which also tracks remainder-only evolution. Callers
 can override either choice with `field_activity=`. The engine validates the
 boolean result before committing any field proposal. Direct `ScalarEngine` callers
-that omit an activity predicate conservatively retain every visited cell.
+that omit an activity predicate conservatively retain every visited node.
 Custom scalar laws must preserve a zero sample with zero neighbors and zero
 source; this is the quiescent state assumed by sparse scheduling. They must not
 depend on an unstated time input or on private evolving state.
 
-These extension points preserve the current five-register scalar cell schema.
+These extension points preserve the current five-register scalar node schema.
 A signed field can be calculated by the generic primitive, but the current
 adapter clamps negative results. A vector field or several simultaneous fields
 requires another schema rather than a replacement scalar callable. The active
@@ -414,8 +414,8 @@ The practical extension guide is `SCALAR_FIELDS.md`.
 
 ## Local contracts
 
-`update_field(cell, six_neighbor_values, source_count, config)` returns one new
-five-field cell record. `update_particle(particle, cell, six_neighbor_values,
+`update_field(node, six_neighbor_values, source_count, config)` returns one new
+five-field node record. `update_particle(particle, node, six_neighbor_values,
 config, tick)` returns new particle and field records, a hop direction, gradient
 and impulse. Their inputs are immutable and their output size is fixed.
 
@@ -464,7 +464,7 @@ Run and test visualization is opt-in. When explicitly requested for a historical
 scalar run, the renderer captures independent `VolumeFrame` records with full XYZ
 coordinates and renders at 1500×1275; `volume=False` chooses a plane slice.
 The authoritative headless/default output rule is in `SIMULATOR_DEFINITIONS.md`.
-The volume renderer shows nonzero scalar cells, sampled particle trails and
+The volume renderer shows nonzero scalar nodes, sampled particle trails and
 momentum arrows with a rotating camera. Plane and volume renderers share one
 GIF/HTML output function. Camera rotation, color and marker scaling are purely
 diagnostic; they do not change the engine or particle motion.
@@ -511,7 +511,7 @@ failure status and avoiding a stale report left by an earlier run. Preview work,
 IPC and page updates are host costs, not part of the physical model.
 
 Sparse world storage is distinct from constant-size physical state. Existing
-materialized cells and occupancy-address order are retained for exact legacy
+materialized nodes and occupancy-address order are retained for exact legacy
 equivalence. Reclaiming them is a separate scheduler change requiring physical
 contract checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
@@ -539,14 +539,14 @@ Python. The bridge does not duplicate evaluation or maintain another quantum cac
 
 Queries are explicit, not automatically polled. Only DeferredQuantum evaluates
 histories or chooses the terminal output. Replies are immutable. The test
-controller records that result without writing CellState, ParticleState, time or
+controller records that result without writing NodeState, ParticleState, time or
 Engine events. A future native physical commit needs an explicit engine contract;
 it cannot be added by turning a diagnostic observer into a second state owner.
 
 ### Selected joint-state event backend
 
 `DeferredQuantum.bind_event_network` composes the selected finite backend from
-`quantum/event_network.py`. That module owns the per-cell heads, immutable event
+`quantum/event_network.py`. That module owns the per-node heads, immutable event
 DAG, conditional-record closure and exact host checkpoints. `quantum/event_rules.py`
 owns generic bounded local matrix validation/evaluation. It does not infer a
 physical law from a name. The existing scalar-expression backend is preserved;
@@ -573,11 +573,11 @@ their explicitly separate host costs.
 
 | Reviewed path | Local bound | Separate host cost |
 | --- | --- | --- |
-| Generic disturbance local cycle | Fixed fields/types/rules and resident slots; up to six outgoing channels per record | Sparse scheduler and diagnostic totals grow with materialized cells and packets |
-| Baseline scalar update | Six neighbor samples, five cell registers and at most K source slots | Work/frontier sweeps grow with visited cells |
+| Generic disturbance local cycle | Fixed fields/types/rules and resident slots; up to six outgoing channels per record | Sparse scheduler and diagnostic totals grow with materialized nodes and packets |
+| Baseline scalar update | Six neighbor samples, five node registers and at most K source slots | Work/frontier sweeps grow with visited nodes |
 | Field response and movement | Three vector components; one hop request; at most K destination slots | Occupancy-address scheduling grows with retained addresses |
-| One cell's particle phase | At most K particles, each with at most K slot work | K is fixed; no all-source search supplies force inputs |
-| Link transport and geometry | Six ports per cell, one packet per port, at most two delivered proposals per edge | `advance` visits materialized link cells |
+| One node's particle phase | At most K particles, each with at most K slot work | K is fixed; no all-source search supplies force inputs |
+| Link transport and geometry | Six ports per node, one packet per port, at most two delivered proposals per edge | `advance` visits materialized link nodes |
 | Matter transit | Four integers per in-flight particle; one neighbor destination | Tick scheduling visits in-flight particles |
 | Diagnostics and rendering | Not a physical update; cannot feed state repairs | Full-state audits, histories and rendering are not O(1) |
 
@@ -634,7 +634,7 @@ schedules an integer arrival. Its motion and scalar inputs use delivered local
 mailboxes. `ScalarEngine` adds extension hooks without copying its occupancy, local
 impulse exchange, record validation or observer logic.
 
-Each cell owns its three positive edges. The opposite endpoint keeps a copy of
+Each node owns its three positive edges. The opposite endpoint keeps a copy of
 the active length. Ownership is storage identity, not a privileged physical
 source. Either endpoint sends a proposed length on the current edge. At expiry,
 both ends know that delivered proposal: the sender from its own old timer,
@@ -657,12 +657,12 @@ of full parallel particle scheduling. In-flight particles remain resident
 sources and do not receive new impulses until arrival. This is explicit model
 behavior, not continuous geodesic integration.
 
-A materialized cell adds exactly 30 integer link registers to its five scalar
+A materialized node adds exactly 30 integer link registers to its five scalar
 registers. Each in-flight particle adds four integer registers, bounded by K
-resident slots per cell. Dictionary storage and full work-set iteration remain
+resident slots per node. Dictionary storage and full work-set iteration remain
 host costs, not strict worst-case O(1). There is no per-source field map or
 unbounded local message queue. Busy channels retain one snapshot; intermediate
-versions are coalesced to the current cell value after delivery.
+versions are coalesced to the current node value after delivery.
 
 
 ## Adding physical features
@@ -762,7 +762,7 @@ Only primary API assembly and initialization reference that integration owner;
 core and ordinary field arithmetic never import quantum.
 
 The [generic graph contract](EVENT_GRAPH_CONFIGURATION.md#spatial-provenance-and-resource-bounds)
-also covers the independent spatial scheduler. `SpatialCell` owns three optional
+also covers the independent spatial scheduler. `SpatialNodeState` owns three optional
 host IDs for state, frozen response sample and charged field phase; `SpatialPacket`
 owns one final-departure cause. These IDs never enter the pure field planners.
 Carrier emission bookkeeping and joint responses connect the owners through

@@ -12,7 +12,7 @@ def initialization(*, travel=1):
         "schema_version": 1,
         "model_id": "zero-carrier-fixed-route-v1",
         "shape": [23, 7, 7],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": travel,
         "normal_budget": 10000,
         "ticks": 8,
@@ -35,8 +35,8 @@ def initialization(*, travel=1):
 def carriers(world):
     return [
         (position, record)
-        for position, cell in world.cells.items()
-        for record in cell.records
+        for position, node in world.nodes.items()
+        for record in node.records
         if record is not None and record.type_index == 0
     ]
 
@@ -59,7 +59,7 @@ def test_zero_payload_carrier_moves_at_the_configured_link_time(travel):
         assert world.record_values(record) == {"stock": (0,)}
 
 
-def test_carried_exchange_fraction_crosses_empty_cells_before_later_receivers():
+def test_carried_exchange_fraction_crosses_empty_nodes_before_later_receivers():
     raw = initialization()
     raw["couplings"] = [
         {
@@ -85,7 +85,7 @@ def test_carried_exchange_fraction_crosses_empty_cells_before_later_receivers():
     receipts = [
         world.record_values(record)["stock"]
         for x in (3, 6, 9)
-        for record in world.cells[(x, 3, 3)].records
+        for record in world.nodes[(x, 3, 3)].records
         if record is not None and record.type_index == 1
     ]
     assert receipts == [(0,), (0,), (1,)]
@@ -100,5 +100,5 @@ def test_zero_split_channel_remains_idle():
     [(position, record)] = carriers(world)
     assert position == (3, 3, 3)
     assert world.record_values(record) == {"stock": (0,)}
-    assert world.cells[position].last_cost == 0
+    assert world.nodes[position].last_cost == 0
     assert not world.links

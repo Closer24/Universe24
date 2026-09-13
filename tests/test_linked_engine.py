@@ -25,7 +25,7 @@ def test_actual_c_transit_and_rest_with_fixed_local_state():
     audit(w)
 
 
-def test_far_change_cannot_affect_local_cell_before_two_edge_deliveries():
+def test_far_change_cannot_affect_local_node_before_two_edge_deliveries():
     a = LinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
     b = LinkedSimulation(small(force_num=0), links=LinkConfig(3, 0))
     b.seed_field((6, 4, 4), 100)
@@ -33,11 +33,11 @@ def test_far_change_cannot_affect_local_cell_before_two_edge_deliveries():
     for _ in range(6):
         a.step()
         b.step()
-        assert a.cell_at(target) == b.cell_at(target)
+        assert a.node_at(target) == b.node_at(target)
         assert a.links.at(target) == b.links.at(target)
     a.step()
     b.step()
-    assert a.cell_at(target).phi == 0 < b.cell_at(target).phi
+    assert a.node_at(target).phi == 0 < b.node_at(target).phi
 
 
 def test_no_direct_remote_scalar_reads_and_all_versions_agree():

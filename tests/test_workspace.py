@@ -111,7 +111,7 @@ def test_invalid_configuration_is_rejected_before_start(server, source):
         {"Sec-Fetch-Site": "cross-site"},
     ],
 )
-def test_other_sites_cannot_launch_a_local_process(server, headers):
+def test_other_origins_cannot_launch_a_local_process(server, headers):
     source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
     assert request(server, "/api/runs", {"source": source}, headers)[0] == 403
     assert not server.workspace.jobs
@@ -220,7 +220,7 @@ def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_account
     assert (saved / "initialization.json").read_bytes() == source.encode("utf-8")
     state = json.loads((saved / "state.json").read_bytes())
     assert state["transfers"] == state["spatial_transfers"] == []
-    assert all(not cell["disturbances"] for cell in state["cells"])
+    assert all(not node["disturbances"] for node in state["nodes"])
     events = [json.loads(line) for line in (saved / "events.jsonl").read_bytes().splitlines()]
     assert any(event["event"] == "escaped" for event in events)
     assert any(event["event"] == "spatial_escaped" for event in events)

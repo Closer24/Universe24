@@ -71,6 +71,13 @@ per-source history or unbounded computation-debt queue. Bounded receipt counts
 and completed decay costs are charged in the next cycle.
 Carrier inputs use free record slots; captured slots stay reserved.
 
+NodeState retains octant totals; configured LocalRules read aggregate retained
+field values and six port totals, including opposite-port contributions whose
+scalar sum is zero.
+These projections do not preserve a packet's octant-to-port identity or the
+arrival-tick groups accumulated during a wait. Rules requiring exact simultaneous
+packet identity need a separately specified bounded interface.
+
 At ready time, validate the complete proposal and reserve its event capacity
 before changing either owner. Commit the retained fields, carrier updates,
 source allowances and directional departures together. Merge later input into

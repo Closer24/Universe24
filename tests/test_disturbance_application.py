@@ -202,6 +202,6 @@ def test_names_do_not_change_any_simulation_values_or_timing():
     for _ in range(12):
         first.step()
         second.step()
-        assert first.cells == second.cells
+        assert first.nodes == second.nodes
         assert first.links == second.links
         assert list(first.totals().values()) == list(second.totals().values())

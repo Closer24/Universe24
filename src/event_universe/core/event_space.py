@@ -1,7 +1,7 @@
 """Bounded, domain-neutral event identities and explicitly typed causal edges.
 
 This host ledger stores provenance, not physical inventories or wave amplitudes.
-A dependency edge never grants a physical cell permission to read its ancestor.
+A dependency edge never grants a physical node permission to read its ancestor.
 """
 
 from dataclasses import dataclass

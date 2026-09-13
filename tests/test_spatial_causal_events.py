@@ -88,10 +88,10 @@ def test_tracing_preserves_field_carrier_states_costs_and_waits(moving):
         recorded.step()
         assert ordinary.snapshot() == recorded.snapshot()
         assert all_records(ordinary) == all_records(recorded)
-        for position, cell in recorded._spatial.cells.items():
+        for position, node in recorded._spatial.nodes.items():
             assert (
-                replace(cell, cause_id=None, sample_cause_id=None, cost_cause_id=None)
-                == ordinary._spatial.cells[position]
+                replace(node, cause_id=None, sample_cause_id=None, cost_cause_id=None)
+                == ordinary._spatial.nodes[position]
             )
         assert ordinary.spatial_accounting() == recorded.spatial_accounting()
         for key, value in ordinary.computation_report().items():
@@ -228,7 +228,7 @@ def test_delayed_joint_commit_keeps_frozen_sample_and_later_field_causes_distinc
     world = Simulation(parse_initial_state(traced(raw)))
     world.step()
     ordinary.step()
-    pending = world.cells[JOINT_ORIGIN].pending
+    pending = world.nodes[JOINT_ORIGIN].pending
     events = world.event_space
     start = events.event(pending.cause_id)
     seed = next(
@@ -244,7 +244,7 @@ def test_delayed_joint_commit_keeps_frozen_sample_and_later_field_causes_distinc
         assert world.snapshot() == ordinary.snapshot()
     joint = next(e for e in events.events if e.kind == "spatial_coupled")
     assert {start.id, later.id}.issubset(events.ancestors(joint.id))
-    assert world._spatial.cells[JOINT_ORIGIN].cause_id == joint.id
+    assert world._spatial.nodes[JOINT_ORIGIN].cause_id == joint.id
     assert world.totals()["quantity"] == (8,)
     assert world.spatial_values(JOINT_ORIGIN)["quantity"]["value"] == (6,)
 
@@ -318,7 +318,7 @@ def test_joint_capacity_failure_keeps_both_owners_and_original_packet_causes():
     with pytest.raises(OverflowError, match="causal event capacity"):
         world.step()
     assert world.event_space.next_id == 6
-    assert world.cells[ORIGIN].pending is not None
+    assert world.nodes[ORIGIN].pending is not None
     assert world.spatial_accounting()["inventory"]["reactions"] == (0, 0, 0)
     assert world.totals()["inventory"] == (24, 0, 0)
     assert all(
@@ -342,8 +342,8 @@ def test_classical_recording_never_queries_quantum_or_traverses_ancestors(monkey
         for _ in range(100):
             world.step()
     assert world.faulted and world.event_space.next_id <= 100
-    assert len(world._spatial.cells) == 3
-    assert not world._cells
+    assert len(world._spatial.nodes) == 3
+    assert not world._nodes
     assert max(len(e.parents) for e in world.event_space.events) <= 2
 
 

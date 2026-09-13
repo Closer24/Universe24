@@ -68,7 +68,7 @@ are illustrative data, not a list of recognized physical entities.
 | Field definition | Named scalar or three-component vector, units, sign, scale, extensivity and conservation declaration |
 | Disturbance type | Fields carried together, defaults, local updates and transport rule |
 | Disturbance record | One local occurrence with field values and bounded routing/allocation state |
-| Cell | Fixed resident slots, one pending local proposal and fixed coupling remainders |
+| Node | Fixed resident slots, one pending local proposal and fixed coupling remainders |
 | Transfer | A record owned by an outgoing link, with type, values, port and arrival time |
 | Coupling | Configured local exchange between records, or between a record and a spatial field |
 
@@ -92,7 +92,7 @@ separate carriers and their different directions.
 | `model_id` | Explicit identifier for this configured candidate |
 | `shape` | Three positive bounded integer domain extents |
 | `boundary` | Optional `"periodic"` or `"open"`, default `"periodic"`, in either schema version |
-| `slots_per_cell` | Fixed positive resident capacity, at most 32 |
+| `slots_per_node` | Fixed positive resident capacity, at most 32 |
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
 | `normal_budget` | Positive ordinary local computation cost `B` |
 | `spatial_computation_delay` | Optional strict boolean, default false; apply one [shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) to fields and carriers; true requires spatial fields |
@@ -105,7 +105,7 @@ separate carriers and their different directions.
 | `seeds` | Positions, disturbance type names and optional value overrides |
 | `spatial_fields` | Optional outward fields with baseline and branch weights, or schema 1 local fields; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
-| `spatial_seeds` | Optional initial octant populations at named lattice cells |
+| `spatial_seeds` | Optional initial octant populations at named lattice nodes |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
@@ -157,16 +157,16 @@ dissipative policy. Omitting it preserves the existing periodic behavior.
 For shape `[3,4,5]`, a +X step from `[2,1,1]` wraps to `[0,1,1]` under periodic
 boundaries. Under open boundaries it has no destination inside the world. Interior
 steps are identical under both settings. Open does not mean reflection, a growing
-domain, or an unrecorded deletion. No off-grid cell is created, and no escaped
+domain, or an unrecorded deletion. No off-grid node is created, and no escaped
 influence re-enters from an opposite face. An immutable baseline exists only
 inside the declared shape and is not an outgoing source.
 
 An outward transfer remains owned by its terminal link for the normal
 `link_ticks`, then its unchanged signed quantities are recorded as escaped.
-There is no outside receiving cell, so this terminal link performs no destination
+There is no outside receiving node, so this terminal link performs no destination
 receipt, merge or decay. Schema 2 decay applies only to links with a destination
 inside the domain. For example, a component of 1 with zero retention escapes as
-1 across an open face; the same component delivered to an interior cell instead
+1 across an open face; the same component delivered to an interior node instead
 loses 1 to decay. Interior and escaping quantities remain separate in accounting.
 
 Use `"boundary": "open"` alongside the other top-level initialization members.
@@ -218,7 +218,7 @@ values start at zero. Defaults and seed overrides share the same validation.
 
 | Mode | Result |
 | --- | --- |
-| `hold` | Retain the record in its cell |
+| `hold` | Retain the record in its node |
 | `move` | Transfer the whole record to one selected neighbor |
 | `split` | Divide extensive field components among up to six outgoing records |
 
@@ -274,7 +274,7 @@ restricted local field-rule contexts; see [their contract](LOCAL_FIELD_RULES.md#
 
 Ordinary update and movement expressions read fields owned by that record.
 Coupling expressions can reference the declared participant with `side: "left"`
-or `side: "right"`; left is the default. Remote cells, global totals, clocks
+or `side: "right"`; left is the default. Remote nodes, global totals, clocks
 outside the modeled scheduler and diagnostic histories are not expression inputs.
 
 ### Paired exchange couplings
@@ -298,7 +298,7 @@ These are subquantum rounding registers, not additional conserved quantities.
 
 An optional `"remainder_owner": "left"` instead stores one signed remainder per
 rule/component on the left record. Whole-record movement carries that fraction
-to the next cell. A later matching right record can receive the integer unit
+to the next node. A later matching right record can receive the integer unit
 completed by earlier fractional requests; this is deliberately a sender-owned
 request accumulator, not a persistent ledger for the old pair. Multiple right
 records advance it in the declared local order. This mode requires distinct
@@ -388,7 +388,7 @@ D.x>0 for the named incoming roles. It keeps each mass unchanged and preserves
 P and `mR*dot(pL,pL)+mL*dot(pR,pR)`, which is proportional to classical kinetic
 energy for the fixed pair masses. It therefore does not fire again while this
 outgoing pair remains co-resident. Arbitrary 3D contact normals, crossing between
-cells, species creation and relativistic scattering are not supplied by this example.
+nodes, species creation and relativistic scattering are not supplied by this example.
 
 Independent expected values: masses (2,3), momenta (8,-3) become (-4,9), hence
 velocity numerators (4,-1) become (-2,3). Total momentum is 5 and kinetic energy
@@ -400,7 +400,7 @@ universal energy conservation or emergence of real-world physics.
 
 Physical reference: [OpenStax, Types of collisions](https://openstax.org/books/university-physics-volume-1/pages/9-4-types-of-collisions).
 
-## Computation cost and uniform cell delay
+## Computation cost and uniform node delay
 
 Every modeled local cycle meters these primitives using `operation_costs`:
 
@@ -434,7 +434,7 @@ Let `C` be the summed cost of this local cycle, `B = normal_budget` and
 
 ```text
 k = max(1, ceil(C / B))
-extra cell delay = (k - 1) * tau
+extra node delay = (k - 1) * tau
 link transit = tau
 earliest arrival after cycle start = k * tau
 ```
@@ -447,7 +447,7 @@ There is no accumulated computation debt between cycles and no global mean-load
 normalization. A fresh cycle has its own measured cost.
 
 One frozen local proposal includes updates, coupling results and departures.
-The original records remain owned by the cell while it waits. All proposal
+The original records remain owned by the node while it waits. All proposal
 changes become effective together after the extra delay; the source cannot start
 another cycle before the full interval ends. Arrivals into available unlocked
 slots wait for a later cycle and cannot alter the frozen proposal.
@@ -461,8 +461,8 @@ A type may name an owned scalar `cost_field` to store the measured `C`:
 
 That field must be nonconserved, held locally, and cannot also be an update or
 coupling target. Its label is arbitrary. It reports the cost that drives the
-cell's general delay; storing a number in an unrelated field does not itself
-slow the cell. Propagating computation disturbance as a physical influence is a
+node's general delay; storing a number in an unrelated field does not itself
+slow the node. Propagating computation disturbance as a physical influence is a
 separate configured-law question, not an implicit feature of this cost output.
 
 ## Conservation, capacity and failure
@@ -507,7 +507,7 @@ can reduce local flux while preserving every conserved unit. Global totals are
 read-only verification and cannot correct the local law.
 
 Local records, outgoing packet capacity and rule/remainder storage have fixed
-bounds from the schema. More world cells increase total host storage and runtime;
+bounds from the schema. More world nodes increase total host storage and runtime;
 the complete world step is not constant-time. Receiving capacity exhaustion,
 occupied outgoing capacity, overflow, invalid division, wrong component counts,
 forbidden signs or failed conservation stop the run explicitly. No disturbance

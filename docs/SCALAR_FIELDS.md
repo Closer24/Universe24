@@ -16,12 +16,12 @@ Start each new physical feature with the [extension procedure](PHYSICAL_FEATURES
 
 | Component | Responsibility | Historical scalar choice |
 | --- | --- | --- |
-| `ScalarField` | Weight six neighbors, the local value and the supplied source, retaining division residues | Neighbor weights 1, local weight 0, source from cell occupancy |
+| `ScalarField` | Weight six neighbors, the local value and the supplied source, retaining division residues | Neighbor weights 1, local weight 0, source from node occupancy |
 | `gradient` | Opposite-neighbor differences on three axes | Use the scalar gradient as turning input |
 | `FieldTurning` | Impulse calculation, remainder accumulation and equal-and-opposite momentum exchange | Remove the gradient component along the dominant momentum axis |
 | `advance_movement` | Movement budget and one neighbor step | Speed cap from simulation configuration |
 | `fields/policies.py` | Source, range and activity calculations | Uniform occupancy source, nonnegative clipping and legacy activity |
-| `ScalarFieldModel` | Connect calculations to cell and particle records | Nonnegative field and the choices listed above |
+| `ScalarFieldModel` | Connect calculations to node and particle records | Nonnegative field and the choices listed above |
 
 Turning means a momentum response to a field. The historical scalar policy removes a
 dominant-axis component; it is not a geometric angle rotation and uses no trigonometry.
@@ -51,7 +51,7 @@ required. Values must be bounded integers, with absolute remainder below the den
 The component cannot access the world, source identities or history, and retains
 no private evolving state. Source calculation happens outside it; the historical scalar
 model derives the source from occupancy. Zero sample, neighbors and source must
-produce a zero sample. This lets the engine skip unaffected empty cells.
+produce a zero sample. This lets the engine skip unaffected empty nodes.
 
 A field injected through `field=` stays active when only its remainder changes,
 allowing small changes to accumulate across ticks. The original model explicitly
@@ -97,7 +97,7 @@ remain. Test worlds are headless unless `--visualize-runs` is requested.
 
 ## Scalar extension limit
 
-The adapter supports one scalar field within a fixed cell schema. The generic
+The adapter supports one scalar field within a fixed node schema. The generic
 calculation can return negative values, but the current adapter clips a negative
 result and its remainder to zero. This limit is specific to the historical scalar adapter. Vector and simultaneous
 fields use the active disturbance contract instead; a different sign policy is

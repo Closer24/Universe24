@@ -49,7 +49,7 @@ def run_trial(ticket: int = 24) -> dict[str, object]:
     return {
         "model": EVENT_NETWORK_MODEL_ID,
         "grid": [4, 4, 1],
-        "source_site": 5,
+        "source_register_index": 5,
         "source_tick": 0,
         "example_split_amplitudes": [3, 4],
         "weights_before_empty_occupied": before.weights,

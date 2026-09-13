@@ -82,8 +82,8 @@ def combined(*, budget=100000, couple_price=1):
 def records(world):
     return {
         world.initial.disturbances[record.type_index].name: record
-        for cell in world.cells.values()
-        for record in cell.records
+        for node in world.nodes.values()
+        for record in node.records
         if record is not None
     }
 
@@ -190,7 +190,7 @@ def test_rejected_atomic_transaction_does_not_undo_an_independently_committed_em
     with pytest.raises(ValueError, match="conservation"):
         world.step()
     assert world.faulted and vectors(world) == BEFORE
-    assert all(cell.pending is None for cell in world.cells.values())
+    assert all(node.pending is None for node in world.nodes.values())
     assert world.spatial_accounting()["p"]["reactions"] == (0, 0, 0)
     assert world.source_totals()["signal"] == (1,)
     assert unpack(records(world)["left"].emission_remaining[0]) == (2,)
