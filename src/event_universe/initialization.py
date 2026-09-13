@@ -45,6 +45,8 @@ from .core.disturbance_state import (
 from .core.integer import checked_work
 from .core.spatial_state import (
     DECAY_RESIDUES,
+    MAX_HEADINGS,
+    MAX_RAY_SLOTS,
     DecayDefinition,
     EmissionDefinition,
     FieldAssignment,
@@ -54,6 +56,7 @@ from .core.spatial_state import (
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
     SpatialSeed,
+    validate_heading,
 )
 from .json_documents import parse_json_document as parse_json_document
 from .observer_configuration import ObserverDefinition
@@ -887,6 +890,7 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
+            | {"headings", "rays_per_tick", "ray_slots"}
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -899,10 +903,36 @@ def _spatial_fields(
         if field.aggregation not in (None, "sum", "vector_sum"):
             raise ValueError("spatial ownership requires additive field aggregation")
         transport = _text(obj["transport"], "spatial transport")
-        if transport not in ("outward", "local"):
-            raise ValueError("spatial transport must be outward or local")
+        if transport not in ("outward", "local", "ray"):
+            raise ValueError("spatial transport must be outward, local or ray")
         if transport == "local" and schema_version != 1:
             raise ValueError("local spatial transport requires schema_version 1")
+        ray_keys = {"headings", "rays_per_tick", "ray_slots"}
+        if transport == "ray":
+            missing = ray_keys - obj.keys()
+            if missing:
+                raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
+            if field.components != 1:
+                raise ValueError("ray transport requires a scalar field")
+            if "axis_weights" in obj or "octant_weights" in obj:
+                raise ValueError("ray transport does not use axis or octant weights")
+            headings = tuple(
+                cast(
+                    tuple[int, int, int],
+                    tuple(_integer(v, "ray heading component") for v in _array(h, "ray heading", 3, 3)),
+                )
+                for h in _array(obj["headings"], "headings", MAX_HEADINGS, 1)
+            )
+            for heading in headings:
+                validate_heading(heading)
+            ray_slots = _integer(obj["ray_slots"], "ray_slots", 1)
+            rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
+            if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
+                raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
+        elif ray_keys & obj.keys():
+            raise ValueError("headings, rays_per_tick and ray_slots require ray transport")
+        else:
+            headings, rays_per_tick, ray_slots = (), 0, 0
         axis = tuple(
             _integer(v, "axis weight", 0)
             for v in _array(obj.get("axis_weights", [1, 1, 1]), "axis_weights", 3, 3)
@@ -924,6 +954,9 @@ def _spatial_fields(
                 octants,
                 _decay(obj["decay"]) if schema_version == 2 else None,
                 transport,
+                headings,
+                rays_per_tick,
+                ray_slots,
             )
         )
     return tuple(result)
@@ -997,6 +1030,8 @@ def _spatial_seeds(
         if any(v >= n for v, n in zip(position, shape, strict=True)):
             raise ValueError("spatial seed position must be within shape")
         index = _index(obj["field"], names, "spatial seed field")
+        if spatial[index].rays:
+            raise ValueError("ray transport fields take no octant seeds; use an emitting source")
         if (position, index) in occupied:
             raise ValueError("duplicate spatial seed at the same node and field")
         occupied.add((position, index))
@@ -1393,6 +1428,11 @@ def parse_initial_state(document: object) -> InitialState:
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
+    if any(definition.rays for definition in initial.spatial_fields):
+        if node_execution or initial.spatial_computation_delay:
+            raise ValueError("ray transport requires the fixed field clock without node_execution")
+        if initial.spatial_interactions or initial.field_rules:
+            raise ValueError("ray transport does not support field rules or spatial interactions")
     if node_execution:
         if "conservation_contract" not in obj:
             raise ValueError("node_execution requires an explicit conservation_contract")

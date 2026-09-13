@@ -179,6 +179,131 @@ def run(raw: dict) -> Simulation:
     return world
 
 
+RAY_HEADINGS = 4096
+RAY_SCALE = 24
+RAYS_PER_TICK = 64
+
+
+def golden_headings(count: int, scale: int) -> list[list[int]]:
+    """Integer headings spread evenly over the observer's sphere by a golden spiral."""
+    ratio = (1 + 5**0.5) / 2
+    result = []
+    for i in range(count):
+        z = 1 - 2 * (i + 0.5) / count
+        radius = math.sqrt(1 - z * z)
+        angle = 2 * math.pi * i / ratio
+        heading = [
+            round(scale * radius * math.cos(angle)),
+            round(scale * radius * math.sin(angle)),
+            round(scale * z),
+        ]
+        result.append(heading if any(heading) else [scale, 0, 0])
+    return result
+
+
+def ray_document() -> dict:
+    """Straight rays through an open boundary; one full sweep of the heading sequence."""
+    raw = base_document()
+    raw.update(model_id="isotropic-ray-host-probe-v1", boundary="open")
+    raw["spatial_fields"][0] = {
+        "field": "radiation",
+        "baseline": 0,
+        "transport": "ray",
+        "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+        "rays_per_tick": RAYS_PER_TICK,
+        "ray_slots": 512,
+    }
+    raw["spatial_couplings"] = []
+    raw["ticks"] = 2 * (RAY_HEADINGS // RAYS_PER_TICK)
+    return raw
+
+
+def solid_angle(o) -> float:
+    """Projected area of one lattice node on the Manhattan shell face, seen from the source."""
+    r2 = sum(v * v for v in o)
+    manhattan_radius = manhattan(o)
+    cos_theta = manhattan_radius / (math.sqrt(3) * math.sqrt(r2))
+    return cos_theta * math.sqrt(3) / r2
+
+
+def isotropy_table(arrived: dict, ticks: int, radii: tuple[int, ...]) -> list[dict]:
+    """Observer's test: share of flux per node against the solid angle the node subtends."""
+    rows = []
+    for radius in radii:
+        nodes = []
+        for a in range(-radius, radius + 1):
+            for b in range(-radius + abs(a), radius - abs(a) + 1):
+                for c in {radius - abs(a) - abs(b), -(radius - abs(a) - abs(b))}:
+                    o = (a, b, c)
+                    r = euclid(o)
+                    theta, phi = math.acos(c / r), math.atan2(b, a) % (2 * math.pi)
+                    nodes.append((arrived.get(o, 0) / ticks, solid_angle(o), theta, phi))
+        flux_total = sum(n[0] for n in nodes)
+        omega_total = sum(n[1] for n in nodes)
+        rho = [(f / flux_total) / (om / omega_total) for f, om, _, _ in nodes]
+        patches: dict[tuple[int, int], list[float]] = {}
+        for f, om, theta, phi in nodes:
+            key = (min(int(theta / math.pi * 6), 5), min(int(phi / (2 * math.pi) * 12), 11))
+            patches.setdefault(key, [0.0, 0.0])
+            patches[key][0] += f
+            patches[key][1] += om
+        patch_rho = [(f / flux_total) / (om / omega_total) for f, om in patches.values()]
+
+        def cv(values: list[float]) -> float:
+            mean = sum(values) / len(values)
+            return math.sqrt(sum((v - mean) ** 2 for v in values) / len(values)) / mean
+
+        rows.append(
+            {
+                "manhattan_radius": radius,
+                "shell_nodes": len(nodes),
+                "mean_flux_times_r2_over_emission": sum(
+                    f * (r2)
+                    for (f, _, _, _), r2 in zip(
+                        nodes,
+                        [
+                            euclid((a, b, c)) ** 2
+                            for a in range(-radius, radius + 1)
+                            for b in range(-radius + abs(a), radius - abs(a) + 1)
+                            for c in {radius - abs(a) - abs(b), -(radius - abs(a) - abs(b))}
+                        ],
+                        strict=True,
+                    )
+                )
+                / len(nodes)
+                / STRENGTH,
+                "cv_rho_nodes": round(cv(rho), 4),
+                "cv_rho_72_patches": round(cv(patch_rho), 4),
+                "min_patch_rho": round(min(patch_rho), 3),
+                "max_patch_rho": round(max(patch_rho), 3),
+                "empty_nodes": sum(1 for n in nodes if n[0] == 0),
+            }
+        )
+    return rows
+
+
+def run_rays(raw: dict) -> tuple[Simulation, dict, int]:
+    """Step the ray world; after one sweep, accumulate host-read node values per tick."""
+    world = Simulation(parse_initial_state(raw))
+    warm = RAY_HEADINGS // RAYS_PER_TICK
+    arrived: dict[tuple[int, int, int], int] = {}
+    radii = tuple(range(1, TICKS))
+    for tick in range(raw["ticks"]):
+        world.step()
+        if tick < warm:
+            continue
+        for radius in radii:
+            for a in range(-radius, radius + 1):
+                for b in range(-radius + abs(a), radius - abs(a) + 1):
+                    for c in {radius - abs(a) - abs(b), -(radius - abs(a) - abs(b))}:
+                        value = world.spatial_values((CENTER + a, CENTER + b, CENTER + c))["radiation"][
+                            "value"
+                        ][0]
+                        if value:
+                            arrived[(a, b, c)] = arrived.get((a, b, c), 0) + value
+    return world, arrived, raw["ticks"] - warm
+
+
 def offset(position) -> tuple[int, int, int]:
     return tuple(v - CENTER for v in position)
 
@@ -339,6 +464,46 @@ def main() -> None:
             if a["direction"] == b["direction"] == "body_diagonal"
         ],
     }
+    world, arrived, measured = run_rays(ray_document())
+    ray_rays = []
+    for name, direction in DIRECTIONS.items():
+        for k in range(1, TICKS):
+            o = tuple(k * d for d in direction)
+            r = euclid(o)
+            value = arrived.get(o, 0) / measured
+            ray_rays.append(
+                {
+                    "direction": name,
+                    "steps": k,
+                    "manhattan_radius": manhattan(o),
+                    "euclidean_r": round(r, 4),
+                    "mean_value": round(value, 2),
+                    "value_times_r2_over_emission": round(value * r * r / STRENGTH, 5),
+                }
+            )
+    ray_fits = {
+        name: fit_exponent(
+            [
+                (row["euclidean_r"], row["mean_value"])
+                for row in ray_rays
+                if row["direction"] == name and row["manhattan_radius"] <= 16
+            ]
+        )
+        for name in DIRECTIONS
+    }
+    result["rays"] = {
+        "headings": RAY_HEADINGS,
+        "heading_scale": RAY_SCALE,
+        "rays_per_tick": RAYS_PER_TICK,
+        "measured_ticks": measured,
+        "totals": world.totals(),
+        "sources": world.source_totals(),
+        "escaped": world.escaped_totals(),
+        "rays": ray_rays,
+        "log_log_slopes_R_1_to_16": ray_fits,
+        "isotropy": isotropy_table(arrived, measured, (4, 8, 12, 16)),
+    }
+    print(json.dumps({"ray_slopes": ray_fits, "isotropy": result["rays"]["isotropy"]}))
     (args.output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"slopes": fits, "localized_totals": result["localizing"]["localized"]}))
     print("PASS: " + str(args.output / "summary.json"))

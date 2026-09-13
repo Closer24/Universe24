@@ -134,7 +134,7 @@ separate carriers and their different directions.
 | `couplings` | Optional list, at most 32 local exchange rules |
 | `interactions` | Optional list, at most 32 atomic pair transactions |
 | `seeds` | Positions, disturbance type names and optional value overrides |
-| `spatial_fields` | Optional outward fields with baseline and branch weights, or schema 1 local fields; version 2 requires decay per field |
+| `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
 | `spatial_seeds` | Optional initial octant populations at named lattice nodes |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |

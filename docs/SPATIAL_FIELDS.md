@@ -125,6 +125,42 @@ delivered populations as specified below. For vector fields each entry is an int
 Spatial fields must be extensive. Unsupported laws, wrong shapes, nonintegral
 values, duplicate seeds and unknown keys are rejected.
 
+## Straight-ray transport (`isotropic-ray-field-v1`)
+
+`"transport": "ray"` replaces octant splitting by straight-moving rays for a
+scalar field. Each ray carries its heading index, three integer accumulators and
+an amount. On every completed link it steps along the axis that is furthest
+behind its heading (an integer digital differential analyzer), so all units of
+one ray follow the same lattice line and never spread. A Node keeps a ray only
+between arrival and the next cycle; there is no octant stock.
+
+```json
+{"field": "radiation", "baseline": 0, "transport": "ray",
+ "headings": [[24, 0, 0], [-7, 22, 5], ...], "rays_per_tick": 64, "ray_slots": 512}
+```
+
+| Key | Contract |
+| --- | --- |
+| `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
+| `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
+| `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
+
+An emitting record keeps a cursor into the heading sequence in its emission
+phase register and advances it by `rays_per_tick` each tick, so a long sequence
+spread evenly over the observer's sphere is swept over time. Rays with the same
+heading and phase merge exactly at a Node because they share one line. Delivered
+samples and the `flux` leaf see ray arrivals per port, resident ray stock is the
+local `value`, and node values report `ray_count`. Schema 2 decay attenuates each
+ray on arrival with the same ratio and residue rules as octant stock. Open
+boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
+weights, vector fields, field rules, spatial interactions, `node_execution` and
+the shared field clock. Host work per Node is bounded by `ray_slots`.
+
+The [inverse-square probe](../examples/inverse-square/README.md) measures the
+result: every Manhattan shell still carries exactly one tick of emission, and
+with an evenly spread heading sequence the time-averaged flux per node follows the
+solid angle the node subtends from the source, in every direction.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

@@ -1191,3 +1191,26 @@ records above were produced under that law and now name it explicitly.
 Deposits are never transported, decayed, sampled or read by rules, and the
 schema 1 conservation audits still do not cover schema 2. This is a configured
 integer law, not a derived particle, absorption or energy model.
+
+## Straight-ray field candidate and the inverse-square probe — 2026-09-13
+
+Base: `ca51869` on this branch. `"transport": "ray"` (`isotropic-ray-field-v1`)
+adds straight-moving rays that carry an integer heading and three accumulators,
+a per-Node ray slot capacity, emission over a configured heading sequence, and
+attenuation, deposits, escape and flux samples through the existing accounting.
+The [probe](../examples/inverse-square/README.md) measured it from outside the
+event space at the observer's Euclidean distance.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 2,022 tests with five explicit visualization skips |
+| New tests | `tests/test_ray_field.py`: DDA period, emission shares and cursor, per-tick totals and Gauss shells, receiver flux, localize/dissipate attenuation, explicit slot failure, open-boundary escape, configuration limits, runner identity; parallel/serial equivalence on `isotropic_rays.json` |
+| Ray probe | 41-cubed open world, 4,096 headings at scale 24, 64 rays per tick, one 64-tick sweep measured: log-log slopes -2.25 (axis), -2.05 (face diagonal), -1.92 (body diagonal); flux per solid angle uniform to a 6 to 8 percent coefficient of variation over 72 detector patches at R = 4, 8, 12, 16; no empty nodes through R = 12 |
+| Octant law on the same probe | Slopes -4.96, -3.40, -0.90; shell means exact `emission / (4R^2 + 2)` |
+| Accounting | 544,195,584 emitted units resident, in flight or escaped; zero dissipation; balanced at every tick |
+| Visualization | Not requested or generated |
+
+The result is geometric dilution of straight rays, not a gravitational law: no
+constant, mass coupling or attraction is claimed, and node-level graininess at
+large radius is finite direction sampling.
+
