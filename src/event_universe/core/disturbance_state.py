@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
+    from .conservation_state import ConservationDefinition
     from .spatial_state import (
         EmissionDefinition,
         FieldGroupDefinition,
@@ -124,6 +125,8 @@ class CouplingDefinition:
     amount: Expression
     denominator: int = 1
     remainder_owner: str = "pair"
+    left_types: tuple[int, ...] = ()
+    right_types: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -148,6 +151,8 @@ class InteractionDefinition:
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
     output_types: tuple[int, int] | None = None
+    left_types: tuple[int, ...] = ()
+    right_types: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -218,6 +223,7 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
+    conservation: ConservationDefinition | None = None
 
 
 class Departure(NamedTuple):

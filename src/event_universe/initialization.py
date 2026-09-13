@@ -1,9 +1,17 @@
 """Validate declarative initial conditions without importing physical model laws."""
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from typing import cast
 
+from .core.conservation_state import CarrierMeasurement, ConservationDefinition, QuantityExpressions
+from .core.coupling_selectors import (
+    selected_left_types,
+    selected_right_types,
+    selected_type_set,
+    selected_types,
+)
 from .core.disturbance_state import (
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
@@ -453,29 +461,60 @@ def _disturbances(
     return disturbances
 
 
+def _selection(
+    obj: dict[str, object],
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    type_key: str,
+    requires_key: str,
+    label: str,
+) -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """Resolve property layouts once and expose only guaranteed carrier properties."""
+    if (type_key in obj) == (requires_key in obj):
+        raise ValueError(f"{label} requires exactly one of {type_key} or {requires_key}")
+    if type_key in obj:
+        kind = _index(obj[type_key], _names(disturbances), f"{label}.{type_key}")
+        return (kind,), disturbances[kind].fields
+    required = tuple(
+        _index(item, _names(fields), f"{label}.{requires_key}")
+        for item in _array(obj[requires_key], requires_key, MAX_FIELDS, 1)
+    )
+    if len(set(required)) != len(required):
+        raise ValueError(f"{label}.{requires_key} contains duplicate properties")
+    kinds = tuple(i for i, kind in enumerate(disturbances) if set(required) <= set(kind.fields))
+    if not kinds:
+        raise ValueError(f"{label}.{requires_key} has no compatible disturbance layout")
+    return kinds, required
+
+
 def _couplings(
     value: object,
     fields: tuple[FieldDefinition, ...],
     disturbances: tuple[DisturbanceDefinition, ...],
 ) -> tuple[CouplingDefinition, ...]:
     result: list[CouplingDefinition] = []
-    type_names = _names(disturbances)
     field_names = _names(fields)
-    required = {"name", "left_type", "right_type", "field", "amount"}
+    required = {"name", "field", "amount"}
+    selectors = {"left_type", "right_type", "left_requires", "right_requires"}
     for raw in _array(value, "couplings", MAX_RULES):
-        obj = _object(raw, "coupling", required | {"denominator", "remainder_owner"}, required)
+        obj = _object(
+            raw, "coupling", required | selectors | {"denominator", "remainder_owner"}, required
+        )
         name = _text(obj["name"], "coupling.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate coupling name")
-        left = _index(obj["left_type"], type_names, "coupling.left_type")
-        right = _index(obj["right_type"], type_names, "coupling.right_type")
+        left, left_fields = _selection(
+            obj, fields, disturbances, "left_type", "left_requires", "coupling"
+        )
+        right, right_fields = _selection(
+            obj, fields, disturbances, "right_type", "right_requires", "coupling"
+        )
         field = _index(obj["field"], field_names, "coupling.field")
-        participants = (disturbances[left], disturbances[right])
-        if any(field not in participant.fields for participant in participants):
+        if field not in left_fields or field not in right_fields:
             raise ValueError("coupling field must be owned by both participants")
-        if any(field == participant.cost_field for participant in participants):
+        if any(field == disturbances[kind].cost_field for kind in (*left, *right)):
             raise ValueError("cost_field cannot also be a coupling target")
-        amount = _Expressions(fields, participants[0].fields, participants[1].fields).parse(
+        amount = _Expressions(fields, left_fields, right_fields).parse(
             obj["amount"], fields[field].components
         )
         denominator = _integer(obj.get("denominator", 1), "coupling.denominator", 1)
@@ -483,11 +522,25 @@ def _couplings(
         if owner not in ("pair", "left"):
             raise ValueError("coupling.remainder_owner must be pair or left")
         if owner == "left":
-            if left == right:
-                raise ValueError("left-owned exchange remainders require distinct participant types")
-            if disturbances[left].transport.mode == "split":
+            if set(left) & set(right):
+                raise ValueError(
+                    "left-owned exchange remainders require distinct participant types or disjoint property selections"
+                )
+            if any(disturbances[kind].transport.mode == "split" for kind in left):
                 raise ValueError("left-owned exchange remainders require whole-record hold or move")
-        result.append(CouplingDefinition(name, left, right, field, amount, denominator, owner))
+        result.append(
+            CouplingDefinition(
+                name,
+                left[0],
+                right[0],
+                field,
+                amount,
+                denominator,
+                owner,
+                left if "left_requires" in obj else (),
+                right if "right_requires" in obj else (),
+            )
+        )
     return tuple(result)
 
 
@@ -505,24 +558,28 @@ def _interactions(
 ) -> tuple[InteractionDefinition, ...]:
     result: list[InteractionDefinition] = []
     type_names, field_names = _names(disturbances), _names(fields)
-    required = {"name", "left_type", "right_type", "assignments", "invariants"}
+    required = {"name", "assignments", "invariants"}
+    selectors = {"left_type", "right_type", "left_requires", "right_requires"}
     for raw in _array(value, "interactions", MAX_RULES):
-        obj = _object(raw, "interaction", required | {"when", "output_types"}, required)
+        obj = _object(raw, "interaction", required | selectors | {"when", "output_types"}, required)
         name = _text(obj["name"], "interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate interaction name")
-        left = _index(obj["left_type"], type_names, "interaction.left_type")
-        right = _index(obj["right_type"], type_names, "interaction.right_type")
-        participants = (disturbances[left], disturbances[right])
+        left, left_fields = _selection(
+            obj, fields, disturbances, "left_type", "left_requires", "interaction"
+        )
+        right, right_fields = _selection(
+            obj, fields, disturbances, "right_type", "right_requires", "interaction"
+        )
+        participants = (disturbances[left[0]], disturbances[right[0]])
 
         def expression(
             raw: object,
             expected: int | None = None,
-            participants: tuple[DisturbanceDefinition, DisturbanceDefinition] = participants,
+            left_fields: tuple[int, ...] = left_fields,
+            right_fields: tuple[int, ...] = right_fields,
         ) -> Expression:
-            return _Expressions(fields, participants[0].fields, participants[1].fields).parse(
-                raw, expected
-            )
+            return _Expressions(fields, left_fields, right_fields).parse(raw, expected)
 
         assignments: list[Assignment] = []
         for raw_assignment in _array(obj["assignments"], "assignments", MAX_FIELDS * 2, 1):
@@ -536,7 +593,9 @@ def _interactions(
                 raise ValueError("assignment.side must be left or right")
             side = 0 if item["side"] == "left" else 1
             field = _index(item["field"], field_names, "assignment.field")
-            if field not in participants[side].fields or field == participants[side].cost_field:
+            if field not in (left_fields, right_fields)[side] or any(
+                field == disturbances[kind].cost_field for kind in (left, right)[side]
+            ):
                 raise ValueError("assignment requires an owned field other than cost_field")
             if any(a.side == side and a.field == field for a in assignments):
                 raise ValueError("duplicate assignment target")
@@ -552,7 +611,7 @@ def _interactions(
             invariants.append(
                 Invariant(
                     invariant_name,
-                    _Expressions(fields, participants[0].fields, participants[1].fields).parse(
+                    _Expressions(fields, left_fields, right_fields).parse(
                         item["expression"], invariant=True
                     ),
                 )
@@ -560,12 +619,14 @@ def _interactions(
         when = expression(obj["when"], 1) if "when" in obj else None
         output_types = None
         if "output_types" in obj:
+            if "left_requires" in obj or "right_requires" in obj:
+                raise ValueError("conversion requires explicit type selectors")
             outputs = _object(obj["output_types"], "output_types", {"left", "right"}, {"left", "right"})
             output_types = (
                 _index(outputs["left"], type_names, "output_types.left"),
                 _index(outputs["right"], type_names, "output_types.right"),
             )
-            if set(output_types) & {left, right}:
+            if set(output_types) & {left[0], right[0]}:
                 raise ValueError("conversion output types must differ from both input types")
             involved = (*participants, *(disturbances[index] for index in output_types))
             if any(set(kind.fields) != set(participants[0].fields) for kind in involved):
@@ -577,7 +638,15 @@ def _interactions(
                 raise ValueError("conversion requires explicit assignments for every output field")
         result.append(
             InteractionDefinition(
-                name, left, right, tuple(assignments), tuple(invariants), when, output_types
+                name,
+                left[0],
+                right[0],
+                tuple(assignments),
+                tuple(invariants),
+                when,
+                output_types,
+                left if "left_requires" in obj else (),
+                right if "right_requires" in obj else (),
             )
         )
     return tuple(result)
@@ -698,19 +767,22 @@ def _emissions(
         obj = _object(
             raw,
             "emission",
-            {"type", "field", "amount", "denominator", "source"}
+            {"type", "requires", "field", "amount", "denominator", "source"}
             | ({"budget"} if schema_version == 2 else set()),
-            {"type", "field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
+            {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
         )
         if not _boolean(obj["source"], "emission.source"):
             raise ValueError("emission requires explicit source: true")
-        kind = _index(obj["type"], _names(disturbances), "emission.type")
+        kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
+        kind = kinds[0]
         index = _index(obj["field"], names, "emission.field")
-        if disturbances[kind].transport.mode == "split":
+        if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
-        if any(item.type_index == kind and item.spatial_field == index for item in result):
+        if any(
+            set(selected_types(item)) & set(kinds) and item.spatial_field == index for item in result
+        ):
             raise ValueError("duplicate emission for the same disturbance type and field")
-        amount = _Expressions(fields, disturbances[kind].fields).parse(
+        amount = _Expressions(fields, owned).parse(
             obj["amount"], fields[spatial[index].field].components
         )
         result.append(
@@ -722,6 +794,7 @@ def _emissions(
                 _allowance(obj["budget"], fields[spatial[index].field], "emission.budget")
                 if schema_version == 2
                 else None,
+                kinds if "requires" in obj else (),
             )
         )
     return tuple(result)
@@ -773,42 +846,45 @@ def _spatial_couplings(
     schema_version: int = 1,
 ) -> tuple[SpatialCouplingDefinition, ...]:
     result: list[SpatialCouplingDefinition] = []
-    field_names, type_names = _names(fields), _names(disturbances)
+    field_names = _names(fields)
     spatial_fields = tuple(definition.field for definition in spatial)
     flux_fields = tuple(index for index in spatial_fields if fields[index].components == 1)
-    required = {"name", "type", "field", "mode"} | ({"budget"} if schema_version == 2 else set())
+    required = {"name", "field", "mode"} | ({"budget"} if schema_version == 2 else set())
     for raw in _array(value, "spatial_couplings", MAX_RULES):
         obj = _object(
             raw,
             "spatial coupling",
-            required | {"amount", "rotation", "denominator", "axis_order"},
+            required | {"type", "requires", "amount", "rotation", "denominator", "axis_order"},
             required,
         )
         name = _text(obj["name"], "spatial coupling.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate spatial coupling name")
-        kind = _index(obj["type"], type_names, "spatial coupling.type")
+        kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "spatial coupling")
+        kind = kinds[0]
         target = _index(obj["field"], field_names, "spatial coupling.field")
         mode = _text(obj["mode"], "spatial coupling.mode")
         if mode not in ("exchange", "rotation"):
             raise ValueError("spatial coupling.mode must be exchange or rotation")
         parameter = "amount" if mode == "exchange" else "rotation"
         allowed = (
-            required | {parameter, "denominator"} | ({"axis_order"} if mode == "rotation" else set())
+            required
+            | {"type", "requires", parameter, "denominator"}
+            | ({"axis_order"} if mode == "rotation" else set())
         )
         obj = _object(obj, "spatial coupling", allowed, required | {parameter})
-        if target not in disturbances[kind].fields or target not in spatial_fields:
+        if target not in owned or target not in spatial_fields:
             raise ValueError("spatial coupling target must be both carried and spatial")
         field = fields[target]
         if not field.signed or not field.extensive:
             raise ValueError("spatial coupling target must be signed and extensive")
-        if disturbances[kind].transport.mode == "split":
+        if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("spatial coupling requires a whole-record hold or move type")
-        if disturbances[kind].cost_field == target:
+        if any(disturbances[index].cost_field == target for index in kinds):
             raise ValueError("cost_field cannot also be a spatial coupling target")
         if mode == "rotation" and field.components != 3:
             raise ValueError("spatial rotation requires a three-component target")
-        expression = _Expressions(fields, disturbances[kind].fields, spatial_fields, flux_fields).parse(
+        expression = _Expressions(fields, owned, spatial_fields, flux_fields).parse(
             obj[parameter], field.components
         )
         axes = tuple(
@@ -829,6 +905,7 @@ def _spatial_couplings(
                 _allowance(obj["budget"], field, "spatial coupling.budget")
                 if schema_version == 2
                 else None,
+                kinds if "requires" in obj else (),
             )
         )
     return tuple(result)
@@ -914,20 +991,22 @@ def _spatial_interactions(
     spatial: tuple[SpatialFieldDefinition, ...],
 ) -> tuple[SpatialInteractionDefinition, ...]:
     result: list[SpatialInteractionDefinition] = []
-    type_names, field_names = _names(disturbances), _names(fields)
+    field_names = _names(fields)
     spatial_fields = tuple(definition.field for definition in spatial)
     local_fields = tuple(definition.field for definition in spatial if definition.transport == "local")
-    required = {"name", "type", "assignments", "invariants"}
+    required = {"name", "assignments", "invariants"}
     for raw in _array(value, "spatial_interactions", MAX_RULES):
         if not spatial:
             raise ValueError("spatial interactions require at least one spatial field")
-        obj = _object(raw, "spatial interaction", required | {"when"}, required)
+        obj = _object(raw, "spatial interaction", required | {"type", "requires", "when"}, required)
         name = _text(obj["name"], "spatial interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate spatial interaction name")
-        kind = _index(obj["type"], type_names, "spatial interaction.type")
-        participant = disturbances[kind]
-        if participant.transport.mode == "split":
+        kinds, carrier_fields = _selection(
+            obj, fields, disturbances, "type", "requires", "spatial interaction"
+        )
+        kind = kinds[0]
+        if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("spatial interaction requires a whole-record hold or move type")
         assignments: list[Assignment] = []
         for raw_assignment in _array(obj["assignments"], "spatial assignments", MAX_FIELDS * 2, 1):
@@ -941,13 +1020,15 @@ def _spatial_interactions(
                 raise ValueError("assignment.side must be left or right")
             side = 0 if item["side"] == "left" else 1
             field = _index(item["field"], field_names, "spatial assignment.field")
-            owned = participant.fields if side == 0 else local_fields
-            if field not in owned or (side == 0 and field == participant.cost_field):
+            owned = carrier_fields if side == 0 else local_fields
+            if field not in owned or (
+                side == 0 and any(field == disturbances[index].cost_field for index in kinds)
+            ):
                 raise ValueError("spatial assignment requires an owned non-cost or local spatial field")
             if any(a.side == side and a.field == field for a in assignments):
                 raise ValueError("duplicate spatial assignment target")
             expression = _Expressions(
-                fields, participant.fields, spatial_fields, received_fields=spatial_fields
+                fields, carrier_fields, spatial_fields, received_fields=spatial_fields
             ).parse(item["expression"], fields[field].components)
             assignments.append(Assignment(side, field, expression))
         invariants: list[Invariant] = []
@@ -956,19 +1037,26 @@ def _spatial_interactions(
             invariant_name = _text(item["name"], "invariant.name")
             if any(invariant.name == invariant_name for invariant in invariants):
                 raise ValueError("duplicate invariant name")
-            expression = _Expressions(fields, participant.fields, spatial_fields).parse(
+            expression = _Expressions(fields, carrier_fields, spatial_fields).parse(
                 item["expression"], invariant=True
             )
             invariants.append(Invariant(invariant_name, expression))
         when = (
-            _Expressions(
-                fields, participant.fields, spatial_fields, received_fields=spatial_fields
-            ).parse(obj["when"], 1)
+            _Expressions(fields, carrier_fields, spatial_fields, received_fields=spatial_fields).parse(
+                obj["when"], 1
+            )
             if "when" in obj
             else None
         )
         result.append(
-            SpatialInteractionDefinition(name, kind, tuple(assignments), tuple(invariants), when)
+            SpatialInteractionDefinition(
+                name,
+                kind,
+                tuple(assignments),
+                tuple(invariants),
+                when,
+                kinds if "requires" in obj else (),
+            )
         )
     return tuple(result)
 
@@ -1005,6 +1093,7 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_interactions",
             "event_program",
             "observer",
+            "conservation",
         },
         required,
     )
@@ -1061,7 +1150,77 @@ def parse_initial_state(document: object) -> InitialState:
 
         parse_event_program(initial)
     _validate_conversions(initial)
+    if "conservation" in obj:
+        initial = replace(initial, conservation=_conservation(obj["conservation"], initial))
+        from .diagnostics.local_conservation import validate_empty_measurement
+
+        validate_empty_measurement(initial)
     return initial
+
+
+def _conservation(value: object, initial: InitialState) -> ConservationDefinition:
+    """Parse explicit measurement expressions without executing a law or world."""
+    required = {"name", "energy_units", "momentum_units", "carriers"}
+    obj = _object(value, "conservation", required | {"spatial"}, required)
+    if initial.event_program is not None:
+        raise ValueError("conservation audit does not support native event programs")
+    if initial.emissions or any(
+        update.source for kind in initial.disturbances for update in kind.updates
+    ):
+        raise ValueError("conservation audit requires closed internal transfers, not explicit sources")
+    if any(any(unpack(field.baseline)) for field in initial.spatial_fields):
+        raise ValueError("conservation audit requires zero spatial baselines")
+    if any(
+        field.decay is not None and field.decay.retain_numerator != field.decay.retain_denominator
+        for field in initial.spatial_fields
+    ):
+        raise ValueError("conservation audit requires lossless transport or an owned reservoir")
+    field_names = {field.name: index for index, field in enumerate(initial.fields)}
+    measurements: list[CarrierMeasurement] = []
+    covered: set[int] = set()
+    for value in _array(obj["carriers"], "conservation.carriers", MAX_TYPES):
+        row = _object(
+            value,
+            "carrier measurement",
+            {"requires", "energy", "momentum"},
+            {"requires", "energy", "momentum"},
+        )
+        names = _array(row["requires"], "conservation requires", MAX_FIELDS, 1)
+        owned = tuple(_index(name, field_names, "conservation property") for name in names)
+        if len(set(owned)) != len(owned):
+            raise ValueError("duplicate conservation property")
+        kinds = tuple(i for i, kind in enumerate(initial.disturbances) if set(owned) <= set(kind.fields))
+        if not kinds or covered.intersection(kinds):
+            raise ValueError("each disturbance layout must match exactly one conservation measurement")
+        if any(initial.disturbances[i].cost_field in owned for i in kinds):
+            raise ValueError("conservation measurements cannot depend on a computation cost reporter")
+        quantities = QuantityExpressions(
+            _Expressions(initial.fields, owned, ()).parse(row["energy"], 1),
+            _Expressions(initial.fields, owned, ()).parse(row["momentum"], 3),
+        )
+        covered.update(kinds)
+        measurements.append(CarrierMeasurement(kinds, quantities))
+    if covered != set(range(len(initial.disturbances))):
+        raise ValueError("conservation measurements must cover every disturbance layout")
+    if bool(initial.spatial_fields) != ("spatial" in obj):
+        raise ValueError("conservation spatial measurement must match spatial field presence")
+    spatial = None
+    if "spatial" in obj:
+        row = _object(
+            obj["spatial"], "spatial measurement", {"energy", "momentum"}, {"energy", "momentum"}
+        )
+        owned = tuple(field.field for field in initial.spatial_fields)
+        spatial = QuantityExpressions(
+            _Expressions(initial.fields, (), owned).parse(row["energy"], 1),
+            _Expressions(initial.fields, (), owned).parse(row["momentum"], 3),
+        )
+    return ConservationDefinition(
+        _text(obj["name"], "conservation.name"),
+        _text(obj["energy_units"], "energy_units"),
+        _text(obj["momentum_units"], "momentum_units"),
+        tuple(measurements),
+        spatial,
+    )
 
 
 def _validate_conversions(initial: InitialState) -> None:
@@ -1071,12 +1230,12 @@ def _validate_conversions(initial: InitialState) -> None:
         if initial.schema_version != 1:
             raise ValueError("conversion requires schema_version 1")
         kinds = {rule.left_type, rule.right_type, *rule.output_types}
-        if any(c.left_type in kinds or c.right_type in kinds for c in initial.couplings):
+        if any(
+            set((*selected_left_types(c), *selected_right_types(c))) & kinds for c in initial.couplings
+        ):
             raise ValueError("conversion types cannot participate in exchange couplings")
-        spatial_types = (
-            {r.type_index for r in initial.emissions}
-            | {r.type_index for r in initial.spatial_couplings}
-            | {r.type_index for r in initial.spatial_interactions}
+        spatial_types = selected_type_set(
+            initial.emissions, initial.spatial_couplings, initial.spatial_interactions
         )
         if spatial_types & kinds:
             raise ValueError("conversion types cannot participate in spatial responses or emission")

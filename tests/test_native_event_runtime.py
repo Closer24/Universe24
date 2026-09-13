@@ -277,8 +277,10 @@ def test_dependency_is_not_a_physical_link_and_capacity_is_atomic():
 def test_selected_mechanical_branch_pays_its_own_work():
     straight, _, _ = run(configuration(0, 1, 1))
     reflected, _, _ = run(configuration(1, 0, 1))
+    # Reflection adds one couple and two update/evaluate assignments: five units.
+    # Its seven-node invariant is checked twice without the former 14 clock charges.
     assert straight.computation_report()["model_operations_cost"] == 116
-    assert reflected.computation_report()["model_operations_cost"] == 135
+    assert reflected.computation_report()["model_operations_cost"] == 121
     for world in (straight, reflected):
         report = world.computation_report()["resolver"]
         assert report["controller_overhead_cost"] == 4
@@ -373,8 +375,8 @@ def test_renaming_labels_does_not_select_hidden_mechanics():
     "name,expected",
     [
         ("native_classical", 116),
-        ("native_quantum", 135),
-        ("native_reflection", 135),
+        ("native_quantum", 121),
+        ("native_reflection", 121),
         ("native_cost_delay", 130),
     ],
 )

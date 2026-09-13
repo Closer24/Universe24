@@ -2,6 +2,11 @@
 
 from dataclasses import dataclass, replace
 
+from event_universe.core.coupling_selectors import (
+    matches_pair,
+    selected_left_types,
+    selected_right_types,
+)
 from event_universe.core.disturbance_state import (
     CostMeter,
     CouplingDefinition,
@@ -30,6 +35,7 @@ from event_universe.core.integer import (
     dot_product,
     signed_divrem,
 )
+from event_universe.core.validation import ValidationMeter
 
 from .ratios import PROJECTIONS, evaluate_ratio, project
 from .routing import balanced_port, rate_credit
@@ -173,7 +179,10 @@ class DisturbanceLaw:
         if rule.when is not None and evaluate(rule.when, left.values, right.values, meter)[0] <= 0:
             return left, right
         meter.charge("couple")
-        before = tuple(evaluate(i.expression, left.values, right.values, meter) for i in rule.invariants)
+        checks = ValidationMeter(self.operation_costs)
+        before = tuple(
+            evaluate(i.expression, left.values, right.values, checks) for i in rule.invariants
+        )
         candidate = [left, right]
         for assignment in rule.assignments:
             meter.charge("update")
@@ -223,7 +232,7 @@ class DisturbanceLaw:
             if field.conserved and original_totals[index] != candidate_totals[index]:
                 raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
         for invariant, expected in zip(rule.invariants, before, strict=True):
-            if evaluate(invariant.expression, first.values, second.values, meter) != expected:
+            if evaluate(invariant.expression, first.values, second.values, checks) != expected:
                 raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
         return first, second
 
@@ -236,7 +245,12 @@ class DisturbanceLaw:
             if index not in definition.fields and any(unpack(record.values[index])):
                 raise ValueError("record carries a field absent from its disturbance type")
         for check in definition.checks:
-            if evaluate(check.expression, record.values, record.values, meter)[0] <= 0:
+            if (
+                evaluate(
+                    check.expression, record.values, record.values, ValidationMeter(self.operation_costs)
+                )[0]
+                <= 0
+            ):
                 raise ValueError(f"local check {check.name} failed")
         if record.exchange_remainders:
             if len(record.exchange_remainders) != len(self.couplings):
@@ -248,7 +262,8 @@ class DisturbanceLaw:
                 if any(abs(value) >= coupling.denominator for value in residuals):
                     raise ValueError("carried exchange residual must be below its denominator")
                 if (
-                    coupling.remainder_owner != "left" or record.type_index != coupling.left_type
+                    coupling.remainder_owner != "left"
+                    or record.type_index not in selected_left_types(coupling)
                 ) and any(residuals):
                     raise ValueError("record does not own this coupling's exchange remainder")
 
@@ -391,8 +406,11 @@ class DisturbanceLaw:
             if coupling.remainder_owner not in ("pair", "left"):
                 raise ValueError("coupling remainder owner must be pair or left")
             if coupling.remainder_owner == "left" and (
-                coupling.left_type == coupling.right_type
-                or self.definitions[coupling.left_type].transport.mode == "split"
+                set(selected_left_types(coupling)) & set(selected_right_types(coupling))
+                or any(
+                    self.definitions[kind].transport.mode == "split"
+                    for kind in selected_left_types(coupling)
+                )
             ):
                 raise ValueError("left-owned exchange requires distinct types and a whole record")
             for left_slot in range(slots):
@@ -402,9 +420,11 @@ class DisturbanceLaw:
                         left is None
                         or right is None
                         or left_slot == right_slot
-                        or left.type_index != coupling.left_type
-                        or right.type_index != coupling.right_type
-                        or (coupling.left_type == coupling.right_type and right_slot < left_slot)
+                        or not matches_pair(coupling, left.type_index, right.type_index)
+                        or (
+                            right_slot < left_slot
+                            and matches_pair(coupling, right.type_index, left.type_index)
+                        )
                     ):
                         continue
                     meter.charge("couple")
@@ -453,9 +473,11 @@ class DisturbanceLaw:
                         left is None
                         or right is None
                         or left_slot == right_slot
-                        or left.type_index != interaction.left_type
-                        or right.type_index != interaction.right_type
-                        or (interaction.left_type == interaction.right_type and right_slot < left_slot)
+                        or not matches_pair(interaction, left.type_index, right.type_index)
+                        or (
+                            right_slot < left_slot
+                            and matches_pair(interaction, right.type_index, left.type_index)
+                        )
                     ):
                         continue
                     updated[left_slot], updated[right_slot] = self._interact(

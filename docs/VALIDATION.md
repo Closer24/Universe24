@@ -1,5 +1,55 @@
 # Validation evidence
 
+## Property-selected couplings and passive local conservation - 2026-09-13
+
+Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The
+[property contract](PROPERTY_COUPLINGS.md) covers all supported single-carrier
+and pair selectors, shared property ownership, overlapping matches and sequential
+drivers. The [audit contract](LOCAL_CONSERVATION.md) measures configured energy
+and all three momentum components from committed owners and actual link flux.
+Independent physics review passed this declared additive-owner scope; it does
+not establish physical quantity identification or universal field laws.
+
+The ordinary entities CLI compiled electron, positron and electron-neutrino
+bindings from `examples/known-entities/property-coupling-probes.json`. Canonical
+preflight returned valid, then the ordinary headless runner completed four ticks.
+Run metadata recorded source SHA-256
+`9b268934fcd4f11e5852778ce628626d0d40b3bc29f239ae4e8945ac31054dc2`
+and initialization SHA-256
+`faf0f6c3883396095d16c8d0fe52750d3638936bd1e2f552013587b32cb4fd4d`.
+Six node audits passed: combined energy remained 14, momentum remained (0, 0, 0),
+and escaped energy/momentum were zero. Two finite local reservoirs transferred
+to both charged carriers; the neutral control remained unchanged. These are
+explicit supplied inventory probes, not derived electromagnetic dynamics.
+
+The final affected gate completed with 1,656 passed and five visual-only skips:
+
+```sh
+python tools/check.py --base ed65f829a6ddc797cafec1bf34156ca59bdcb7dd
+```
+
+Ruff and strict mypy passed. Tools: Python 3.14.7, pytest 9.1.1, Ruff 0.16.7
+and mypy 2.3.1. This was dependency-selected validation, not `--full` or visual
+validation. Regression coverage includes missing properties versus zero values,
+shared drivers, delayed commits, open-boundary flux, nonlinear packet merging,
+late ordinary updates, each momentum component, passive audit timing, and UI
+renames. Deliberate conservation failures preserve the offending state and saved
+failure report. Independent review also checked the earlier coupled-excitation
+candidate and its rejected packet-overlap case.
+
+Native reflection cost changes from 135 to 121 because two seven-operation
+invariant evaluations no longer add physical work; transmission remains 116.
+The physical operation difference is still five, and the established outcome,
+probability and causal safety assertions remain in the regression suites.
+
+Architecture, field-development, physics-rule-validation and configuration Skills
+now link the property/audit contracts and require passive measurement with
+explicit quantity assumptions. Boss and PR-review Skills were reviewed; their
+existing routing and merge requirements remain sufficient. Skill frontmatter
+is unchanged; repository language and link checks passed. The live Highlights
+revision is reconciled in its [coverage map](HIGHLIGHTS_IMPLEMENTATION.md), without
+editing the live document. The PR records the submitted head/tree and final CI.
+
 ## Coupled unit-excitation candidate - 2026-09-13
 
 Base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`.

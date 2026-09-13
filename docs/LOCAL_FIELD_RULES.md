@@ -241,14 +241,20 @@ products and sums must fit the working register before any later cancellation;
 physical payload bounds are checked before commit. `exact_div` remains exact,
 with no implicit truncation or floating-point normalization.
 
-Field evaluation contributes priced work to new carrier cycles without delaying
-the fixed field clock. Joint transaction evaluation, six-channel sampling and
-validation contribute to the frozen carrier cost. The proposal also reserves
-actual-commit field sampling, delta reconstruction/replay and invariant checks,
-including chains whose net reaction is zero. Local deposit and post-deposit
-sampling have a separate reservation when stock changes. Proposal delta
-arithmetic is priced as well. No later computation debt is added to an already
-frozen carrier proposal.
+Field state generation contributes priced work to new carrier cycles without
+delaying the fixed field clock. Joint activation and assignment evaluation,
+six-channel physical sampling, proposal delta construction and reaction
+accumulation contribute to the frozen carrier cost. Local deposit and
+post-deposit sampling retain their separate fixed reservation when stock changes.
+No later computation debt is added to an already frozen carrier proposal.
+
+Named invariants, automatic conserved-field comparisons and delayed guard replay
+are passive validation. Their bounded arithmetic and rejection behavior remain,
+but they add no model work or waiting time. Replay-only field sampling and delta
+reconstruction have no physical-cost reservation. This differs from the sampling
+and delta construction used to generate a physical proposal. The optional
+[energy/momentum audit](LOCAL_CONSERVATION.md) separately observes complete
+committed ownership transitions without replacing those precommit checks.
 
 A node runs field rules when it owns nonzero local dynamic stock or has nonzero
 received directional samples. A nonzero baseline alone does not activate empty

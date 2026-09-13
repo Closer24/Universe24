@@ -52,6 +52,14 @@ the example family in the guide for fields, catalog entities or native events.
    its saved state. Keep camera, arrows and playback in the selected display format.
    Inspect the encounter and boundary frames and decode the exported GIF.
 
+For explicit energy/momentum acceptance, use the supported
+[`conservation` declaration](../../docs/LOCAL_CONSERVATION.md). Declare physical
+owners and units independently of labels, and preserve the requested source and
+boundary scope. A source rejected by the closed audit is an unsupported
+composition, not permission to remove that source or invent a residual reservoir.
+Measurement expressions do not supply the physical law; a passing configuration
+or audit is not a derivation of catalog interactions.
+
 ## Deliver reusable files
 
 Keep reusable definitions and experiment inputs separate from disposable run outputs.

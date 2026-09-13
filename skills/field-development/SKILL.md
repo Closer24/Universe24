@@ -44,6 +44,14 @@ parallel self flux produces no rotation. Price delayed atomic reactions without
 rewriting old in-flight packets or claiming reservation tariffs are measured host
 instruction counts; see [spatial response](../../docs/SPATIAL_COUPLINGS.md).
 
+When a candidate claims energy and momentum conservation, define all owner
+contributions and actual six-port flux under the
+[local conservation contract](../../docs/LOCAL_CONSERVATION.md). Show that the
+same quantities survive scattering, transport, merging and the complete coupled
+update. A component transformation ledger is not an energy reservoir. Keep the
+elementary state-generating rule independent of the measurement and of any
+repair that would force its residual to zero.
+
 Use local source edits and the existing Python validation tools. Coordinate
 schema edits with architecture. Hand the changed law and its dependency path to
 [physics-rule-validation](../physics-rule-validation/SKILL.md), then tests and

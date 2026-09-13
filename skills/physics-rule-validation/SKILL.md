@@ -41,6 +41,17 @@ proper time, optical appearance or an emergent relativistic spacetime from the
 current reception probe or an audit snapshot. This framing uses the declared
 model contracts and does not add a new physical law.
 
+## Review energy and momentum claims
+
+Use the [local conservation contract](../../docs/LOCAL_CONSERVATION.md) when a
+model claims joint energy and momentum balance. Identify all actual owners and
+fluxes, and inspect the complete update chain, including arrival merging and
+later carrier rules. Distinguish declared component sums, normalized probe
+quantities and independently justified physical energy. A passive audit may
+report a committed violation; it neither repairs that event nor proves closure
+of all admitted inputs. Require a separate scope statement for omitted energy
+terms, external reservoirs and unimplemented field or spin dynamics.
+
 ## Review the declared rules
 
 For initialization-defined simulation, use

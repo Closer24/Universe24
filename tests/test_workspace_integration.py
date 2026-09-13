@@ -410,3 +410,72 @@ def test_old_conservative_metadata_still_reports_success():
     assert any(
         item["text"] == "Declared quantities conserved at every completed tick." for item in nodes
     )
+
+
+def test_editor_field_rename_preserves_property_selectors_and_conservation_measurements():
+    from tests.test_property_entity_profiles import compiled
+
+    raw = compiled()
+    renamed = javascript(
+        "app.js",
+        "function renameReferences(",
+        "function check(",
+        "",
+        "renameReferences(input,'field','energy','requires');"
+        "renameReferences(input,'field','reservoir_r_energy','__proto__');"
+        "input.fields.find(field=>field.name==='energy').name='requires';"
+        "input.fields.find(field=>field.name==='reservoir_r_energy').name='__proto__';"
+        "console.log(JSON.stringify(input));",
+        raw,
+    )
+    assert renamed["spatial_interactions"][0]["requires"] == ["requires", "momentum", "coupling"]
+    measurement = renamed["conservation"]["carriers"][0]
+    assert measurement["requires"] == ["requires", "momentum", "coupling"]
+    assert measurement["energy"] == {"field": "requires", "side": "left"}
+    assert renamed["conservation"]["spatial"]["energy"]["args"][0] == {
+        "field": "__proto__",
+        "side": "right",
+    }
+    assert renamed["conservation"]["energy_units"] == raw["conservation"]["energy_units"]
+    assert renamed["spatial_interactions"][0]["assignments"][0]["expression"]["op"] == "add"
+    parse_initial_state(renamed)
+
+
+@pytest.mark.parametrize("collection", ["couplings", "interactions"])
+def test_editor_field_rename_updates_both_property_selected_pair_roles(collection):
+    from tests.test_property_couplings import pair_configuration
+
+    raw = pair_configuration(collection)
+    renamed = javascript(
+        "app.js",
+        "function renameReferences(",
+        "function check(",
+        "",
+        "renameReferences(input,'field','quantity','right_requires');"
+        "input.fields[0].name='right_requires';console.log(JSON.stringify(input));",
+        raw,
+    )
+    assert renamed[collection][0]["left_requires"] == ["right_requires"]
+    assert renamed[collection][0]["right_requires"] == ["right_requires"]
+    parse_initial_state(renamed)
+
+
+def test_editor_type_rename_preserves_conversion_output_role_references():
+    from tests.test_local_conversions import document as conversion_document
+
+    raw = conversion_document()
+    renamed = javascript(
+        "app.js",
+        "function renameReferences(",
+        "function check(",
+        "",
+        "const before=input.disturbance_types[2].name;"
+        "renameReferences(input,'type',before,'left_type');"
+        "input.disturbance_types[2].name='left_type';console.log(JSON.stringify(input));",
+        raw,
+    )
+    assert renamed["interactions"][0]["output_types"] == {
+        "left": "left_type",
+        "right": raw["interactions"][0]["output_types"]["right"],
+    }
+    parse_initial_state(renamed)

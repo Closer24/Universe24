@@ -9,6 +9,7 @@ from event_universe.core.spatial_state import (
     SpatialFieldDefinition,
     SpatialState,
 )
+from event_universe.core.validation import ValidationMeter
 
 from .disturbances import evaluate
 
@@ -93,6 +94,7 @@ def apply_field_rules(
     writes dynamic stock only; it never replaces or spends the immutable baseline.
     Each incoming channel is a readonly projection of already received inventory.
     """
+    checks = ValidationMeter(meter.definitions)
     zero = tuple(pack((0,) * field.components) for field in fields)
     outgoing: tuple[Values, ...] = (zero,) * 6
     stock = _stock(fields, definitions, states, meter)
@@ -112,7 +114,7 @@ def apply_field_rules(
             ):
                 continue
             before = tuple(
-                evaluate(invariant.expression, zero, right, meter, ports=ports, outgoing=outgoing)
+                evaluate(invariant.expression, zero, right, checks, ports=ports, outgoing=outgoing)
                 for invariant in rule.invariants
             )
             proposed_stock = list(stock)
@@ -136,12 +138,11 @@ def apply_field_rules(
             next_right = _observable(fields, definitions, next_stock, meter)
             for index, field in enumerate(fields):
                 if field.conserved:
-                    meter.charge("evaluate", 12 * field.components)
                     if _total(stock, outgoing, index) != _total(next_stock, next_outgoing, index):
                         raise ValueError(f"field rule {rule.name} violates conservation of {field.name}")
             for invariant, expected in zip(rule.invariants, before, strict=True):
                 actual = evaluate(
-                    invariant.expression, zero, next_right, meter, ports=ports, outgoing=next_outgoing
+                    invariant.expression, zero, next_right, checks, ports=ports, outgoing=next_outgoing
                 )
                 if actual != expected:
                     raise ValueError(f"field rule {rule.name} violates invariant {invariant.name}")

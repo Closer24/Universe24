@@ -1,5 +1,19 @@
 # Highlights implementation coverage
 
+## Property coupling and local conservation reconciliation - 2026-09-13
+
+The live Highlights document was read at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Source base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. Sections 10.2, 10.5,
+10.6 and 10.7 map to [property selection](PROPERTY_COUPLINGS.md), shared explicit
+entity profiles and [passive local conservation](LOCAL_CONSERVATION.md).
+The clarified user rule requires joint energy/momentum and actual boundary flux;
+internal transfer is not an external source and checking cannot repair a law.
+The audit detects violations after committed owner changes. Per-rule validation
+no longer sets computation delay. Catalog metadata remains formula-free;
+experiment profiles define their own quantities and elementary assignments.
+No physical species law or universal proof follows. The live document was not edited.
+
 ## Coupled excitation candidate reconciliation - 2026-09-13
 
 The [unit-excitation probe](COUPLED_EXCITATIONS.md) applies Highlights sections

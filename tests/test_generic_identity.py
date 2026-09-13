@@ -30,6 +30,10 @@ FIELD_MAPS = {
 
 
 def configured_example(case):
+    if case == "property_fields":
+        from tests.test_property_entity_profiles import compiled
+
+        return compiled()
     name = "spatial_turning" if case in {"rotation", "flux"} else case
     raw = json.loads((EXAMPLES / f"{name}.json").read_text(encoding="utf-8"))
     raw["normal_budget"] = {"basic": 10, "exchange": 5, "rotation": 150}.get(case, 100000)
@@ -68,7 +72,7 @@ def renamed_document(raw):
     def expression(value):
         if not isinstance(value, dict):
             return
-        for key in ("field", "flux"):
+        for key in ("field", "flux", "received", "outgoing"):
             if key in value:
                 value[key] = fields[value[key]]
         for argument in value.get("args", []):
@@ -93,16 +97,47 @@ def renamed_document(raw):
         for update in kind.get("updates", []):
             update["field"] = fields[update["field"]]
             expression(update["expression"])
-    for group in ("couplings", "spatial_couplings", "emissions"):
+        for check in kind.get("checks", []):
+            expression(check["expression"])
+    for group in (
+        "couplings",
+        "spatial_couplings",
+        "emissions",
+        "interactions",
+        "spatial_interactions",
+        "field_rules",
+    ):
         for index, rule in enumerate(result.get(group, [])):
             if "name" in rule:
                 rule["name"] = f"rule label {index}"
             for key in ("type", "left_type", "right_type"):
                 if key in rule:
                     rule[key] = types[rule[key]]
-            rule["field"] = fields[rule["field"]]
-            for key in ("amount", "rotation"):
+            if "field" in rule:
+                rule["field"] = fields[rule["field"]]
+            for key in ("requires", "left_requires", "right_requires"):
+                if key in rule:
+                    rule[key] = [fields[name] for name in rule[key]]
+            if "output_types" in rule:
+                rule["output_types"] = {role: types[name] for role, name in rule["output_types"].items()}
+            for key in ("amount", "rotation", "when"):
                 expression(rule.get(key))
+            for assignment in rule.get("assignments", []):
+                assignment["field"] = fields[assignment["field"]]
+                expression(assignment["expression"])
+            for invariant in rule.get("invariants", []):
+                expression(invariant["expression"])
+    for group in result.get("field_groups", []):
+        group["fields"] = [fields[name] for name in group["fields"]]
+    if "conservation" in result:
+        measurement = result["conservation"]
+        for row in measurement["carriers"]:
+            row["requires"] = [fields[name] for name in row["requires"]]
+            expression(row["energy"])
+            expression(row["momentum"])
+        if "spatial" in measurement:
+            expression(measurement["spatial"]["energy"])
+            expression(measurement["spatial"]["momentum"])
     for group in ("spatial_fields", "spatial_seeds"):
         for item in result.get(group, []):
             item["field"] = fields[item["field"]]
@@ -147,6 +182,7 @@ def observation(world, events):
         "losses": world.dissipation_totals(),
         "escapes": world.escaped_totals(),
         "accounting": world.spatial_accounting(),
+        "conservation": world.conservation_report(),
     }
 
 
@@ -175,6 +211,10 @@ def assert_exercised(case, world, events):
         assert world.snapshot()["spatial_baselines"]["radiation"] == (3,)
     elif case == "open_world":
         assert world.escaped_totals() == {"strength": (72,), "radiation": (20,)}
+    elif case == "property_fields":
+        report = world.conservation_report()
+        assert report["status"] == "passed"
+        assert report["current"] == {"energy": 14, "momentum": (0, 0, 0)}
     elif case in {"rotation", "flux"}:
         assert any(
             event["event"] == "spatial_coupled" and any(event["reaction"].get("inventory", ()))
@@ -187,7 +227,7 @@ def assert_exercised(case, world, events):
 
 
 @pytest.mark.parametrize(
-    "case", ["basic", "exchange", "finite_fields", "open_world", "rotation", "flux"]
+    "case", ["basic", "exchange", "finite_fields", "open_world", "rotation", "flux", "property_fields"]
 )
 @pytest.mark.parametrize("change", ["rename", "reorder", "both"])
 def test_generic_runtime_uses_references_instead_of_names_or_declaration_indices(case, change):

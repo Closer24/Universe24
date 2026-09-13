@@ -127,7 +127,8 @@ function renameReferences(value, kind, before, after) {
   for (const [key, child] of Object.entries(value)) {
     const references = kind === "field" ? ["field", "flux", "received", "outgoing", "direction_field", "cost_field"] : ["type", "left_type", "right_type"];
     if (references.includes(key) && child === before) value[key] = after;
-    else if (kind === "field" && key === "fields" && Array.isArray(child) && child.every(item => typeof item === "string")) value[key] = child.map(name => name === before ? after : name);
+    else if (kind === "field" && ["fields", "requires", "left_requires", "right_requires"].includes(key) && Array.isArray(child) && child.every(item => typeof item === "string")) value[key] = child.map(name => name === before ? after : name);
+    else if (kind === "type" && key === "output_types" && child && typeof child === "object") value[key] = Object.fromEntries(Object.entries(child).map(([role, name]) => [role, name === before ? after : name]));
     else if (kind === "field" && ["defaults", "values"].includes(key) && child && typeof child === "object" && Object.hasOwn(child, before)) {
       const fields = Object.fromEntries(Object.entries(child).map(([name, payload]) => [name === before ? after : name, payload])); value[key] = fields;
     } else renameReferences(child, kind, before, after);
