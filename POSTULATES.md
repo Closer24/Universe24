@@ -280,6 +280,12 @@ A phenomenon seen once in an animation is not a general model result. Check that
 
 Failure is information about the model. Do not add a special correction just to hide it.
 
+The outward octant candidate conserves flux through every closed shell but
+concentrates it near body diagonals. The straight-ray candidate keeps the same
+shell conservation and makes the time-averaged flux follow solid angle in every
+direction, because each ray carries its own heading and phase and never spreads.
+Neither derives a gravitational constant, a mass coupling or attraction.
+
 ## 12. Quantum behavior and entanglement remain open
 
 The physical core describes discrete fields and particles. The selected quantum

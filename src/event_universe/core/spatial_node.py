@@ -5,7 +5,16 @@ from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Protocol
 
 from .coupling_selectors import matches_type, selected_type_set
-from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
+from .disturbance_state import (
+    Address3,
+    CostMeter,
+    DisturbanceRecord,
+    InitialState,
+    Values,
+    bounded,
+    pack,
+    unpack,
+)
 from .integer import add_components, checked_work
 from .node_boundary import (
     validate_decay,
@@ -27,12 +36,17 @@ from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
     FieldInteractionGuard,
+    Rays,
     SpatialBundle,
     SpatialCouplingResult,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    attenuate_rays,
+    merge_rays,
+    ray_stock,
+    validate_rays,
     zero_spatial_state,
 )
 from .topology import neighbor_address
@@ -41,7 +55,14 @@ if TYPE_CHECKING:
     from .disturbance_node import DisturbanceNode
 
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int, int], SpatialPlan
+    [
+        tuple[SpatialState, ...],
+        tuple[DisturbanceRecord | None, ...],
+        int,
+        int,
+        tuple[Rays, ...],
+    ],
+    SpatialPlan,
 ]
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 SpatialFieldGuard = Callable[[tuple[SpatialState, ...], SpatialPlan], None]
@@ -215,6 +236,21 @@ class SpatialNode(SpatialNodeState):
     def catch_up_idle(self, tick: int) -> None:
         self.last_begin_tick = tick
 
+    def _sampled_states(self, services: SpatialServices) -> tuple[SpatialState, ...]:
+        """Resident ray stock is local value for a carrier reading a ray field."""
+        if not any(self.rays):
+            return self.states
+        result = []
+        for index, (definition, state) in enumerate(
+            zip(services.initial.spatial_fields, self.states, strict=True)
+        ):
+            if definition.rays and index < len(self.rays) and self.rays[index]:
+                populations = (pack((ray_stock(self.rays[index]),)),) + state.populations[1:]
+                result.append(replace(state, populations=populations))
+            else:
+                result.append(state)
+        return tuple(result)
+
     def advance(self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices) -> None:
         finish_local_cycle(self.plan_cycle(tick, carrier, services), None, services.planner)
 
@@ -253,7 +289,7 @@ class SpatialNode(SpatialNodeState):
             record is not None and record.type_index in coupled_types for record in records
         ):
             # Freeze only locally delivered input, before fresh source injection.
-            sample_values = services.coupler.sample(self.states)
+            sample_values = services.coupler.sample(self._sampled_states(services))
             sample_fluxes = services.coupler.sample_fluxes(self.states)
             sample_cause = self.cause_id
             if services.initial.spatial_interactions:
@@ -280,7 +316,9 @@ class SpatialNode(SpatialNodeState):
             for record in records
             for index, rule in enumerate(services.initial.emissions)
         )
-        active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
+        active_field = any(
+            any(unpack(payload)) for state in states for payload in state.populations
+        ) or any(self.rays)
         if not active_source and not active_field and self.received_count == 0:
             self.states = tuple(
                 replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6, received_mask=0)
@@ -301,7 +339,7 @@ class SpatialNode(SpatialNodeState):
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
-        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost)
+        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost, self.rays)
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
         validate_spatial_plan(services.initial, plan, len(records), records)
@@ -396,9 +434,14 @@ class SpatialNode(SpatialNodeState):
         records = () if carrier is None else carrier.records
         packets: list[SpatialPacket | None] = [None] * 6
         for port, bundle in enumerate(plan.outgoing):
-            if any(any(unpack(payload)) for field in bundle for payload in field):
+            port_rays = plan.rays[port] if plan.rays else ()
+            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
                 packets[port] = SpatialPacket(
-                    bounded(tick + services.initial.link_ticks), self.position, port, bundle
+                    bounded(tick + services.initial.link_ticks),
+                    self.position,
+                    port,
+                    bundle,
+                    rays=port_rays if any(port_rays) else (),
                 )
         # All physical calculations and validation precede the local commit.
         if services.balance_guard is not None:
@@ -422,6 +465,9 @@ class SpatialNode(SpatialNodeState):
         else:
             carrier.accept_emission(plan.emission_records)
         self.states = plan.states
+        if self.rays:
+            # Every resident ray left on this cycle along its own line.
+            self.rays = tuple(() for _ in self.rays)
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -792,6 +838,28 @@ class SpatialNode(SpatialNodeState):
             for index, dissipated_values in enumerate(dissipated):
                 for component, value in enumerate(dissipated_values):
                     losses[index][component] = checked_work(losses[index][component] + value)
+        resident_rays = list(self.rays) or [() for _ in services.initial.spatial_fields]
+        ray_arrivals = [[0] * 6 for _ in services.initial.spatial_fields]
+        for packet in arrivals:
+            for index, packet_rays in enumerate(packet.rays):
+                if not packet_rays:
+                    continue
+                definition = services.initial.spatial_fields[index]
+                field = services.initial.fields[definition.field]
+                if not definition.rays:
+                    raise ValueError("rays delivered to a field without ray transport")
+                incoming_rays = packet_rays
+                if services.decayer is not None and definition.decay is not None:
+                    meter = CostMeter(services.initial.operation_costs)
+                    incoming_rays, removed = attenuate_rays(packet_rays, definition.decay, meter)
+                    losses[definition.field][0] = checked_work(losses[definition.field][0] + removed)
+                    decay_cost = bounded(checked_work(decay_cost + meter.total))
+                    arrival_cost = bounded(checked_work(arrival_cost + meter.total))
+                ray_arrivals[index][packet.port] = checked_work(
+                    ray_arrivals[index][packet.port] + ray_stock(incoming_rays)
+                )
+                resident_rays[index] = merge_rays(tuple(resident_rays[index]) + incoming_rays)
+                validate_rays(resident_rays[index], definition, field)
         localized = list(self.localized) or [
             pack((0,) * services.initial.fields[d.field].components)
             for d in services.initial.spatial_fields
@@ -819,6 +887,9 @@ class SpatialNode(SpatialNodeState):
                 if services.initial.node_execution
                 else [[0] * field.components for _ in range(6)]
             )
+            for port, stock in enumerate(ray_arrivals[index]):
+                if stock:
+                    directions[port][0] = checked_work(directions[port][0] + stock)
             for packet in surviving:
                 for octant, payload in enumerate(packet.fields[index]):
                     field.validate(payload)
@@ -881,6 +952,8 @@ class SpatialNode(SpatialNodeState):
                 decay_cost,
             )
         self.localized = tuple(localized)
+        if any(definition.rays for definition in services.initial.spatial_fields):
+            self.rays = tuple(tuple(rays) for rays in resident_rays)
         services.activity.mark(self.position, True)
         services.accounting.record_dissipation(tuple(tuple(values) for values in losses))
         if any(any(values) for values in deposited):

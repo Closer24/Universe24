@@ -212,7 +212,9 @@ def _execute_run(
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
             spatial_transport=(
-                "configured-six-ports"
+                "straight-rays"
+                if any(field.rays for field in initial.spatial_fields)
+                else "configured-six-ports"
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "outward-octants"
             ),
@@ -228,6 +230,8 @@ def _execute_run(
                     else "finite-dissipative-v1"
                 )
                 if initial.schema_version == 2
+                else "isotropic-ray-field-v1"
+                if any(field.rays for field in initial.spatial_fields)
                 else "configured-local-fields-v1"
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "conservative-outward-v1"

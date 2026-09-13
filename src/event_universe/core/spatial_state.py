@@ -1,13 +1,15 @@
 """Fixed local records for optional initialization-defined spatial fields."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 from .disturbance_state import (
     MAX_COMPONENTS,
     Address3,
     Assignment,
+    CostMeter,
     DisturbanceRecord,
     Expression,
+    FieldDefinition,
     Invariant,
     Payload,
     Values,
@@ -15,6 +17,7 @@ from .disturbance_state import (
     pack,
     unpack,
 )
+from .integer import checked_work
 
 SpatialPopulations = tuple[Payload, ...]
 SpatialOutgoing = tuple[SpatialPopulations, ...]
@@ -46,6 +49,28 @@ class DecayDefinition:
         return self.residue == "localize"
 
 
+Heading = tuple[int, int, int]
+MAX_HEADINGS = 65536
+MAX_HEADING_COMPONENT = 4096
+MAX_RAY_SLOTS = 4096
+
+
+@dataclass(frozen=True, slots=True)
+class Ray:
+    """One straight-moving share of a ray field: heading index, DDA state and amount.
+
+    The three accumulators travel with the ray, so every unit of one ray follows the
+    same lattice line. They are bounded by the heading's Manhattan length.
+    """
+
+    heading: int
+    accumulators: tuple[int, int, int]
+    amount: int
+
+
+Rays = tuple[Ray, ...]
+
+
 @dataclass(frozen=True, slots=True)
 class SpatialFieldDefinition:
     field: int
@@ -54,6 +79,15 @@ class SpatialFieldDefinition:
     octant_weights: tuple[int, ...] = (1, 1, 1, 1, 1, 1, 1, 1)
     decay: DecayDefinition | None = None
     transport: str = "outward"
+    # Ray transport only: the fixed heading sequence, rays emitted per source per
+    # tick, and the resident ray capacity of one Node.
+    headings: tuple[Heading, ...] = ()
+    rays_per_tick: int = 0
+    ray_slots: int = 0
+
+    @property
+    def rays(self) -> bool:
+        return self.transport == "ray"
 
 
 @dataclass(frozen=True, slots=True)
@@ -206,6 +240,9 @@ class SpatialNodeState:
     # Stationary stock per spatial field, deposited by localizing decay. It is
     # owned inventory at a known Node: never transported, decayed or sampled.
     localized: tuple[Payload, ...] = ()
+    # Resident rays per spatial field (empty for non-ray fields). They arrived on
+    # the previous link and leave on the next cycle along their own lines.
+    rays: tuple[Rays, ...] = ()
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0
@@ -221,6 +258,8 @@ class SpatialPlan:
     rule_delta: Values = ()
     interaction_ticks: int = 0
     field_guards: tuple[FieldRuleGuard, ...] = ()
+    # Outgoing rays per port, each entry holding one tuple per spatial field.
+    rays: tuple[tuple[Rays, ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -230,6 +269,7 @@ class SpatialPacket:
     port: int
     fields: SpatialBundle
     cause_id: int | None = None
+    rays: tuple[Rays, ...] = ()
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -238,3 +278,86 @@ def zero_spatial_state(components: int) -> SpatialState:
         raise ValueError("spatial fields require one to thirty-two components")
     zero = pack((0,) * components)
     return SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6)
+
+
+# Ray state rules. A ray carries its heading index and three integer accumulators.
+# On every link it steps along the axis that is furthest behind its heading (an
+# integer digital differential analyzer), so all rays of one heading and phase
+# trace the same lattice line. Nothing here reads another Node or a global value.
+
+
+def validate_heading(heading: Heading) -> int:
+    """Return the Manhattan length of a bounded nonzero integer heading."""
+    if type(heading) is not tuple or len(heading) != 3:
+        raise ValueError("a ray heading requires three integer components")
+    length = 0
+    for component in heading:
+        if type(component) is not int or abs(component) > MAX_HEADING_COMPONENT:
+            raise ValueError("ray heading components must be bounded integers")
+        length += abs(component)
+    if length == 0:
+        raise ValueError("a ray heading must not be the zero vector")
+    return length
+
+
+def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDefinition) -> None:
+    if type(rays) is not tuple or len(rays) > definition.ray_slots:
+        raise ValueError("ray slot budget exceeded")
+    for ray in rays:
+        if type(ray) is not Ray:
+            raise ValueError("ray transport requires immutable Ray entries")
+        if type(ray.heading) is not int or not 0 <= ray.heading < len(definition.headings):
+            raise ValueError("ray heading index is outside the configured sequence")
+        length = validate_heading(definition.headings[ray.heading])
+        if type(ray.accumulators) is not tuple or len(ray.accumulators) != 3:
+            raise ValueError("a ray requires three integer accumulators")
+        if any(type(a) is not int or not -length < a <= length for a in ray.accumulators):
+            raise ValueError("ray accumulators must stay within the heading length")
+        if bounded(ray.amount) == 0:
+            raise ValueError("a resident ray must carry a nonzero amount")
+        field.validate(pack((ray.amount,)))
+
+
+def advance_ray(ray: Ray, heading: Heading) -> tuple[int, Ray]:
+    """Choose the port of the axis furthest behind the heading; ties take the lowest axis."""
+    length = validate_heading(heading)
+    accumulators = [a + abs(h) for a, h in zip(ray.accumulators, heading, strict=True)]
+    axis = max(range(3), key=lambda i: (accumulators[i], -i))
+    accumulators[axis] -= length
+    port = 2 * axis + (0 if heading[axis] > 0 else 1)
+    return port, replace(ray, accumulators=(accumulators[0], accumulators[1], accumulators[2]))
+
+
+def merge_rays(rays: Rays) -> Rays:
+    """Combine rays that share heading and phase; they follow one line, so this is exact."""
+    combined: dict[tuple[int, tuple[int, int, int]], int] = {}
+    for ray in rays:
+        key = (ray.heading, ray.accumulators)
+        combined[key] = checked_work(combined.get(key, 0) + ray.amount)
+    return tuple(
+        Ray(heading, accumulators, bounded(amount))
+        for (heading, accumulators), amount in sorted(combined.items())
+        if amount
+    )
+
+
+def ray_stock(rays: Rays) -> int:
+    total = 0
+    for ray in rays:
+        total = checked_work(total + ray.amount)
+    return bounded(total)
+
+
+def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tuple[Rays, int]:
+    """Apply the completed-link ratio to each ray; return survivors and the removed total."""
+    numerator, denominator = decay.retain_numerator, decay.retain_denominator
+    survivors, removed = [], 0
+    for ray in rays:
+        meter.charge("read")
+        magnitude = checked_work(abs(ray.amount) * numerator) // denominator
+        kept = -magnitude if ray.amount < 0 else magnitude
+        removed = checked_work(removed + ray.amount - kept)
+        meter.charge("update", 3)
+        if kept:
+            survivors.append(replace(ray, amount=kept))
+    return tuple(survivors), bounded(removed)
