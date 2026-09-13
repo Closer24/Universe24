@@ -520,10 +520,6 @@ def main() -> None:
     print("Wrote report: " + str(args.output / "summary.json"))
 
 
-if __name__ == "__main__":
-    main()
-
-
 def radiation_pressure_document(ticks: int, headings: list[list[int]], rays_per_tick: int) -> dict:
     """Energy-closed push: a funded emitter, an absorbing body, and the conservation audit.
 
@@ -667,3 +663,7 @@ def radiation_pressure(ticks: int = 40) -> dict:
         "lamp_final": lamp[-1] if lamp else history["lamp"][-1],
         "totals": {name: list(values) for name, values in world.totals().items()},
     }
+
+
+if __name__ == "__main__":
+    main()
