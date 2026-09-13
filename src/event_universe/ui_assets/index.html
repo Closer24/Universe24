@@ -20,7 +20,21 @@
 <details id="configuration" class="configuration panel fold-panel"><summary><span>Names &amp; configuration</span><span id="draft-state" class="draft-tag">Draft</span></summary><div class="config-summary"><div><span class="overline" id="template-label">SELECT A TEMPLATE</span><h3 id="model-heading">Choose your simulation</h3></div><button id="reset" class="text-button" type="button">Reset</button></div>
 <div id="tabs" class="tabs" role="tablist" aria-label="Configuration sections">
 <button role="tab" aria-selected="true" aria-controls="editor-panel" data-tab="names">Names</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="general">General</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="fields">Fields</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="types">Disturbances</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="seeds">Initial state</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="rules">Rules &amp; costs</button><button role="tab" aria-selected="false" aria-controls="editor-panel" data-tab="json">JSON</button></div>
-<form id="editor-panel" role="tabpanel" class="editor" autocomplete="off" autocapitalize="none"></form><div class="configuration-footer"><button id="export" class="button secondary" type="button">↓ Export JSON</button><button id="validate" class="button secondary" type="button">Check configuration</button></div></details>
+<form id="editor-panel" role="tabpanel" class="editor" autocomplete="off" autocapitalize="none"></form>
+<details id="event-graph-help" class="event-graph-help"><summary>How to enable the event graph</summary>
+<p>The causal graph records which actions caused later actions. You can enable it without quantum rules.</p>
+<ol><li>Open the <strong>JSON</strong> tab above.</li><li>Add this member to the outermost object, beside <code>model_id</code>. Use a comma between members.</li></ol>
+<pre><code>"event_program": {
+  "model": "causal-events-v1",
+  "capacity": 100000
+}</code></pre>
+<p>This is a member fragment, not a complete configuration. Keep one <code>event_program</code> key, then press <strong>Check configuration</strong>.</p>
+<p><strong>Turn off:</strong> remove the entire <code>event_program</code> member. There is no <code>enabled: false</code> switch. Removing a quantum program also removes its quantum behavior.</p>
+<p><strong>Capacity:</strong> maximum retained causal records for the whole run. It is not the number of ticks; exceeding the limit fails the run.</p>
+<p><strong>Compatibility:</strong> nonempty <code>spatial_fields</code> cannot currently be combined with an event program. Do not remove intended fields just to enable the graph.</p>
+<p><strong>Results:</strong> the runner saves <code>causal-events.jsonl</code> when enabled. The ordinary <code>events.jsonl</code> log is also written when the graph is off. The movie does not automatically draw the causal graph.</p>
+</details>
+<div class="configuration-footer"><button id="export" class="button secondary" type="button">↓ Export JSON</button><button id="validate" class="button secondary" type="button">Check configuration</button></div></details>
 <details class="panel initial-preview fold-panel"><summary>Initial placement &amp; field counts</summary><canvas id="preview" width="680" height="430" aria-label="Isometric preview of configured seed positions"></canvas><div id="seed-legend" class="seed-legend"></div><p class="preview-caption">Configured seeds · not the movie</p><div id="summary-metrics" class="summary-metrics"></div></details>
 <details id="run-results" class="panel results-panel fold-panel"><summary><span>Run results &amp; files</span><span id="run-count" class="draft-tag">This session</span></summary><div id="results" aria-live="polite"><div class="empty-results"><p>Completed runs include conservation checks and saved files.</p></div></div><div id="history"></div></details>
 <footer class="page-footer"><span>UNIVERSE24 / Recorded local simulation</span><span>Configuration stays on this computer.</span></footer>

@@ -190,9 +190,13 @@ direction-weighted sum, including in-flight modes. The 3Y/2Y opposite pair has
 U=13 and P=5X. Its encounter rotates polarization, not trajectories.
 See the complete [candidate contract](../../../docs/DIRECTIONAL_WAVE.md).
 
-Native causal/quantum experiments use the separate optional `event_program` in
-[NATIVE_QUANTUM_EVENTS.md](../../../docs/NATIVE_QUANTUM_EVENTS.md). Start from its
-supplied examples. Their composition with spatial fields is currently rejected.
+For the optional `event_program`, use
+[event graph configuration](../../../docs/EVENT_GRAPH_CONFIGURATION.md): choose
+graph off, classical graph only, or a complete quantum program. It gives the exact
+JSON placement, UI steps, capacity meaning and output files. Explain that omission
+disables the native program, while `events.jsonl` remains an ordinary action log.
+Quantum behavior is not required for a causal graph. Preserve the documented
+spatial-field and directional-wait composition limits.
 
 ## 6. Execute, record and display
 

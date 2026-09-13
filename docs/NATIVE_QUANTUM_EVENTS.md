@@ -38,6 +38,10 @@ measurement outcomes. It uses this same resolver and preserves path cost rules.
 
 ## Initialization
 
+For the on/off choice, a copyable JSON member, UI steps, capacity and output
+files, start with [event graph configuration](EVENT_GRAPH_CONFIGURATION.md).
+The graph can be enabled without quantum rules.
+
 `event_program` is a JSON object stored as one immutable bounded configuration
 string in `InitialState`. Its contents are validated during initialization and
 again when composed. It never stores executable code or callbacks in cells.
