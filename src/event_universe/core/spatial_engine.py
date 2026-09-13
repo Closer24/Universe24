@@ -30,15 +30,25 @@ from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
+    Rays,
     SpatialBundle,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    ray_stock,
+    validate_rays,
 )
 from .topology import neighbor_address
 
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int, int], SpatialPlan
+    [
+        tuple[SpatialState, ...],
+        tuple[DisturbanceRecord | None, ...],
+        int,
+        int,
+        tuple[Rays, ...],
+    ],
+    SpatialPlan,
 ]
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 EventSink = Callable[[dict[str, object]], None]
@@ -147,6 +157,7 @@ class SpatialEngine:
                 arrival_mask=(0,) * 6,
                 delay_counts=(0,) * 6,
                 localized=self._blank_localized(),
+                rays=tuple(() for _ in self.initial.spatial_fields),
             )
             self._active.add(position)
         elif position not in self._active:
@@ -154,6 +165,15 @@ class SpatialEngine:
             # New nodes stay active, so this cannot backdate their creation.
             self.nodes[position].last_begin_tick = self._field_tick
         return self.nodes[position]
+
+    def _validate_packet_rays(self, rays: tuple[Rays, ...]) -> None:
+        if not rays:
+            return
+        if len(rays) != len(self.initial.spatial_fields):
+            raise ValueError("spatial packet ray count differs from its definitions")
+        for definition, field_rays in zip(self.initial.spatial_fields, rays, strict=True):
+            if field_rays:
+                validate_rays(field_rays, definition, self.initial.fields[definition.field])
 
     def _neighbor(self, position: Address3, port: int) -> Address3 | None:
         return neighbor_address(position, port, self.initial.shape, self.initial.boundary)
@@ -240,6 +260,12 @@ class SpatialEngine:
                     amounts[definition.field][component] = checked_work(
                         amounts[definition.field][component] + value
                     )
+        for index, rays in enumerate(packet.rays):
+            if rays:
+                definition = self.initial.spatial_fields[index]
+                amounts[definition.field][0] = checked_work(
+                    amounts[definition.field][0] + ray_stock(rays)
+                )
         for index, values in enumerate(amounts):
             for component, value in enumerate(values):
                 self.escaped[index][component] += value
@@ -267,6 +293,7 @@ class SpatialEngine:
                     if packet.origin != origin or packet.port != port:
                         raise ValueError("spatial packet provenance differs from its link owner")
                     validate_spatial_bundle(self.initial, packet.fields)
+                    self._validate_packet_rays(packet.rays)
                     target = self._neighbor(packet.origin, packet.port)
                     if target is None:
                         self._escape(packet, tick)
@@ -317,6 +344,16 @@ class SpatialEngine:
             # without enumerating idle history.
             for component, value in enumerate(self.localized[definition.field]):
                 result[definition.field][component] += value
+            if definition.rays:
+                # Rays never rest at an idle Node: they leave on every cycle.
+                for position in self._active:
+                    node = self.nodes[position]
+                    if node.rays:
+                        result[definition.field][0] += ray_stock(node.rays[index])
+                for packets in self.links.values():
+                    for packet in packets:
+                        if packet is not None and packet.rays:
+                            result[definition.field][0] += ray_stock(packet.rays[index])
         return result
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
@@ -331,12 +368,19 @@ class SpatialEngine:
                 for component, value in enumerate(unpack(payload)):
                     local[component] = checked_work(local[component] + value)
             field.validate(pack(tuple(local)))
+            if definition.rays:
+                node_rays = self.nodes[position].rays if position in self.nodes else ()
+                rays = node_rays[index] if node_rays else ()
+                local[0] = checked_work(local[0] + ray_stock(rays))
+                field.validate(pack(tuple(local)))
             result[field.name] = {
                 "baseline": unpack(definition.baseline),
                 "value": tuple(local),
                 "directions": tuple(unpack(v) for v in state.delivered),
                 "populations": tuple(unpack(v) for v in state.populations),
             }
+            if definition.rays:
+                result[field.name]["ray_count"] = len(rays)
             if definition.decay is not None and definition.decay.localizes:
                 localized = (
                     self.nodes[position].localized if position in self.nodes else self._blank_localized()
@@ -406,6 +450,7 @@ class SpatialEngine:
                         self.initial.fields[d.field].name: tuple(unpack(v) for v in p.fields[i])
                         for i, d in enumerate(self.initial.spatial_fields)
                     },
+                    "rays": sum(len(r) for r in p.rays),
                 }
                 for packets in self.links.values()
                 for p in packets

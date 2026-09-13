@@ -6,11 +6,18 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
-from .spatial_state import SpatialPlan, SpatialState
+from .spatial_state import Rays, SpatialPlan, SpatialState
 
 DisturbancePlanner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int, int], SpatialPlan
+    [
+        tuple[SpatialState, ...],
+        tuple[DisturbanceRecord | None, ...],
+        int,
+        int,
+        tuple[Rays, ...],
+    ],
+    SpatialPlan,
 ]
 
 MAX_NODE_WORKERS = 64
@@ -30,6 +37,7 @@ class SpatialPlanningInput:
     records: tuple[DisturbanceRecord | None, ...]
     received: int
     node_cost: int = 0
+    rays: tuple[Rays, ...] = ()
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -53,7 +61,9 @@ def finish_local_cycle(
                 result = disturbance(request.records, request.residuals, request.received)
             elif isinstance(request, SpatialPlanningInput):
                 assert spatial is not None
-                result = spatial(request.states, request.records, request.received, request.node_cost)
+                result = spatial(
+                    request.states, request.records, request.received, request.node_cost, request.rays
+                )
             else:
                 result = None
     finally:
@@ -69,7 +79,9 @@ def _plan_disturbance_batch(
 def _plan_spatial_batch(
     planner: SpatialPlanner, items: tuple[SpatialPlanningInput, ...]
 ) -> tuple[SpatialPlan, ...]:
-    return tuple(planner(item.states, item.records, item.received, item.node_cost) for item in items)
+    return tuple(
+        planner(item.states, item.records, item.received, item.node_cost, item.rays) for item in items
+    )
 
 
 class NodeExecution:

@@ -251,3 +251,26 @@ def validate_spatial_plan(
         raise ValueError("node I/O cost must be nonnegative")
     if bounded(plan.interaction_ticks) < 0:
         raise ValueError("node I/O interaction duration must be nonnegative")
+    validate_plan_rays(initial, plan)
+
+
+def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
+    """Outgoing rays: six ports, one tuple per spatial field, each within its slot budget."""
+    from .spatial_state import validate_rays
+
+    has_rays = any(definition.rays for definition in initial.spatial_fields)
+    if not plan.rays:
+        if has_rays:
+            raise ValueError("ray transport requires outgoing rays for every port")
+        return
+    if not has_rays:
+        raise ValueError("outgoing rays require a ray transport field")
+    degree = port_count(initial)
+    _tuple(plan.rays, degree, degree)
+    count = len(initial.spatial_fields)
+    for port_rays in plan.rays:
+        _tuple(port_rays, count, count)
+        for definition, rays in zip(initial.spatial_fields, port_rays, strict=True):
+            if rays and not definition.rays:
+                raise ValueError("outgoing rays on a field without ray transport")
+            validate_rays(rays, definition, initial.fields[definition.field])
