@@ -180,6 +180,33 @@ solid angle the node subtends from the source, in every direction. The
 bodies to that flux with `mass x flux / D` and reports attraction, an inverse
 square in every direction, and mass-independent acceleration.
 
+### Funded emission and absorption
+
+A ray field whose emitting type also carries a scalar field of the same name may
+emit with `"source": false`: the emitted amount is paid from the record's own
+stock, clipped to what it holds, and no external source is recorded. An optional
+`"recoil_field"` names an owned signed vector that loses `amount x heading` for
+every emitted ray. The reverse is the `absorb` coupling mode: a record of the
+absorbing type takes every ray resident at its Node on the cycle after arrival,
+adds each amount to its own field of the same name and, with `momentum_field`,
+`amount x heading` to that vector. Absorption happens before forwarding and
+before this cycle's emission joins the residents, so a record never swallows its
+fresh rays; with `self_exclusion` the rays of its own last departure are left
+alone by exact heading and phase. Absorbers take the whole residue in slot order.
+
+```json
+"emissions": [{"type": "lamp", "field": "quanta", "amount": 2048, "source": false,
+               "recoil_field": "momentum"}],
+"spatial_couplings": [{"name": "sail_absorbs", "type": "sail", "field": "quanta",
+                       "mode": "absorb", "momentum_field": "momentum"}]
+```
+
+Together with the [conservation audit](LOCAL_CONSERVATION.md), which measures
+rays as quanta, this closes the ledger: energy is the amount, momentum is amount
+times heading, and both move only between records and rays. Radiation pressure
+follows; attraction does not, because absorbing a ray pushes a body away from
+its source. Schema 2 attenuation of such fields is not supported.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

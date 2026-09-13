@@ -22,6 +22,7 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work
+from event_universe.core.spatial_state import Rays
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
@@ -91,29 +92,55 @@ class LocalConservationAudit:
                 return self._evaluate(measurement.quantities, record.values)
         raise ValueError("conservation measurement missing for a disturbance layout")
 
-    def _spatial(self, populations: tuple[tuple[tuple[int, ...], ...], ...]) -> Quantity:
+    def _spatial(
+        self,
+        populations: tuple[tuple[tuple[int, ...], ...], ...],
+        rays: tuple[Rays, ...] = (),
+    ) -> Quantity:
+        """Octant stock feeds the declared expressions; rays add their own quanta.
+
+        A ray of amount a carries energy a through the declared spatial energy
+        expression (its amount joins the field value) and momentum a x heading
+        intrinsically, in amount times heading units, which no field expression
+        can see. The spatial momentum expression must not count ray fields.
+        """
         if self.definition.spatial is None:
             return ZERO
         values = [pack((0,) * field.components) for field in self.initial.fields]
-        for definition, owned in zip(self.initial.spatial_fields, populations, strict=True):
+        intrinsic = [0, 0, 0]
+        for index, (definition, owned) in enumerate(
+            zip(self.initial.spatial_fields, populations, strict=True)
+        ):
             components = [0] * self.initial.fields[definition.field].components
             for payload in owned:
-                for index, value in enumerate(unpack(payload)):
-                    components[index] = checked_work(components[index] + value)
+                for component, value in enumerate(unpack(payload)):
+                    components[component] = checked_work(components[component] + value)
+            if definition.rays and rays and index < len(rays):
+                for ray in rays[index]:
+                    components[0] = checked_work(components[0] + ray.amount)
+                    heading = definition.headings[ray.heading]
+                    for axis in range(3):
+                        intrinsic[axis] = checked_work(intrinsic[axis] + ray.amount * heading[axis])
             values[definition.field] = pack(tuple(components))
-        return self._evaluate(self.definition.spatial, tuple(values))
+        energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
+        return (
+            energy,
+            checked_work(px + intrinsic[0]),
+            checked_work(py + intrinsic[1]),
+            checked_work(pz + intrinsic[2]),
+        )
 
     def _packet(self, packet: InventoryPacket) -> Quantity:
         if packet.record is not None:
             return self._carrier(packet.record)
-        return self._spatial(packet.spatial)
+        return self._spatial(packet.spatial, packet.rays)
 
     def _measure(
         self, view: InventoryView
     ) -> tuple[dict[Address3, Quantity], dict[PacketKey, tuple[InventoryPacket, Quantity]]]:
         nodes: dict[Address3, Quantity] = {}
         for node in view.nodes:
-            amount = self._spatial(tuple(state.populations for state in node.spatial))
+            amount = self._spatial(tuple(state.populations for state in node.spatial), node.rays)
             if node.incoming_spatial:
                 amount = _add(amount, self._spatial(tuple(s.populations for s in node.incoming_spatial)))
             for record in node.records:

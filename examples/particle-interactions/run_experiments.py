@@ -484,6 +484,7 @@ def main() -> None:
             "like": light_beside_heavy(3),
         },
         "proton_emission": proton_emission(),
+        "radiation_pressure": radiation_pressure(),
     }
     (args.output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     for name, run in result["head_on"].items():  # type: ignore[union-attr]
@@ -505,6 +506,15 @@ def main() -> None:
             run["heavy_final"].get("offset"),
             run["heavy_final"].get("momentum"),
         )
+    pressure = result["radiation_pressure"]
+    print(
+        "radiation pressure audit",
+        pressure["audit"]["status"],
+        "sail",
+        pressure["sail_final"],  # type: ignore[index]
+        "lamp",
+        pressure["lamp_final"],
+    )  # type: ignore[index]
     emission = result["proton_emission"]
     print("emission tick", emission["emission_tick"], "totals", emission["totals"])  # type: ignore[index]
     print("Wrote report: " + str(args.output / "summary.json"))
@@ -512,3 +522,148 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def radiation_pressure_document(ticks: int, headings: list[list[int]], rays_per_tick: int) -> dict:
+    """Energy-closed push: a funded emitter, an absorbing body, and the conservation audit.
+
+    Rays are quanta: energy is their amount and momentum is amount x heading. The
+    emitter pays every quantum from its own stock and recoils; the absorber banks
+    each quantum it swallows and takes its momentum. Nothing else changes energy.
+    """
+    move = {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": {
+            "op": "min",
+            "args": [
+                {"op": "mul", "args": [{"field": "mass"}, SPEED_SCALE]},
+                {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]},
+            ],
+        },
+        "rate_denominator": SPEED_SCALE,
+        "rate_divisor": {"field": "mass"},
+    }
+    return {
+        "schema_version": 1,
+        "model_id": "funded-ray-radiation-pressure-probe-v1",
+        "shape": [SIZE, SIZE, SIZE],
+        "boundary": "open",
+        "slots_per_node": 2,
+        "link_ticks": 1,
+        "normal_budget": 100000,
+        "ticks": ticks,
+        "operation_costs": COSTS,
+        "fields": [
+            {
+                "name": "mass",
+                "components": 1,
+                "units": "mass unit",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            },
+            {
+                "name": "quanta",
+                "components": 1,
+                "units": "quantum",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            },
+            {
+                "name": "momentum",
+                "components": 3,
+                "units": "quantum times heading",
+                "signed": True,
+                "conserved": True,
+                "extensive": True,
+            },
+        ],
+        "disturbance_types": [
+            {
+                "name": "lamp",
+                "fields": ["mass", "quanta", "momentum"],
+                "defaults": {"mass": 4096, "quanta": 200000, "momentum": [0, 0, 0]},
+                "transport": move,
+            },
+            {
+                "name": "sail",
+                "fields": ["mass", "quanta", "momentum"],
+                "defaults": {"mass": 64, "quanta": 0, "momentum": [0, 0, 0]},
+                "transport": move,
+            },
+        ],
+        "spatial_fields": [
+            {
+                "field": "quanta",
+                "baseline": 0,
+                "transport": "ray",
+                "headings": headings,
+                "rays_per_tick": rays_per_tick,
+                "ray_slots": 4096,
+                "self_exclusion": True,
+            },
+        ],
+        "emissions": [
+            {
+                "type": "lamp",
+                "field": "quanta",
+                "amount": 2048,
+                "denominator": 1,
+                "source": False,
+                "recoil_field": "momentum",
+            }
+        ],
+        "spatial_couplings": [
+            {
+                "name": "sail_absorbs",
+                "type": "sail",
+                "field": "quanta",
+                "mode": "absorb",
+                "momentum_field": "momentum",
+            }
+        ],
+        "seeds": [
+            {"position": [CENTER] * 3, "type": "lamp"},
+            {"position": [CENTER + 4, CENTER, CENTER], "type": "sail"},
+        ],
+        "conservation": {
+            "name": "ray quanta",
+            "energy_units": "quantum",
+            "momentum_units": "quantum times heading",
+            "carriers": [
+                {
+                    "requires": ["quanta", "momentum"],
+                    "energy": {"field": "quanta"},
+                    "momentum": {"field": "momentum"},
+                }
+            ],
+            "spatial": {
+                "energy": {"field": "quanta", "side": "right"},
+                "momentum": {"op": "vector", "args": [0, 0, 0]},
+            },
+        },
+    }
+
+
+def radiation_pressure(ticks: int = 40) -> dict:
+    raw = radiation_pressure_document(ticks, golden_headings(HEADINGS, HEADING_SCALE), RAYS_PER_TICK)
+    world, history = track(raw)
+
+    def path(name):
+        return [(e["tick"], e["offset"][0], e["momentum"][0]) for e in history[name] if e.get("offset")]
+
+    report = world.conservation_report()
+    sail = [e for e in history["sail"] if e.get("offset")]
+    lamp = [e for e in history["lamp"] if e.get("offset")]
+    return {
+        "audit": {
+            k: report[k] for k in ("status", "checked_node_events", "initial", "current", "escaped")
+        },
+        "sail_x": path("sail")[::4],
+        "lamp_x": path("lamp")[::8],
+        "sail_final": sail[-1] if sail else history["sail"][-1],
+        "lamp_final": lamp[-1] if lamp else history["lamp"][-1],
+        "totals": {name: list(values) for name, values in world.totals().items()},
+    }

@@ -339,7 +339,12 @@ class DisturbanceNode(DisturbanceNodeState):
         field_plan = replace(
             field_plan, cost=bounded(checked_work(field_plan.cost + spatial_services.node_merge_cost))
         )
-        self._validate_emission_records(self.records, field_plan.emission_records)
+        self._validate_emission_records(
+            self.records,
+            field_plan.emission_records,
+            funded=any(rule.funded for rule in spatial_services.initial.emissions)
+            or any(rule.mode == "absorb" for rule in spatial_services.initial.spatial_couplings),
+        )
         records = field_plan.emission_records
         coupled = (
             spatial.node_coupling(records, spatial_services)
@@ -694,13 +699,18 @@ class DisturbanceNode(DisturbanceNodeState):
     def accept_emission(
         self,
         records: tuple[DisturbanceRecord | None, ...],
+        *,
+        funded: bool = False,
     ) -> None:
-        self._validate_emission_records(self.records, records)
+        self._validate_emission_records(self.records, records, funded=funded)
         self.records = records
 
     @staticmethod
     def _validate_emission_records(
-        originals: tuple[DisturbanceRecord | None, ...], records: tuple[DisturbanceRecord | None, ...]
+        originals: tuple[DisturbanceRecord | None, ...],
+        records: tuple[DisturbanceRecord | None, ...],
+        *,
+        funded: bool = False,
     ) -> None:
         if len(records) != len(originals):
             raise ValueError("spatial emission cannot change disturbance capacity")
@@ -708,5 +718,10 @@ class DisturbanceNode(DisturbanceNodeState):
             if before is None or after is None:
                 if before is not after:
                     raise ValueError("spatial emission cannot change disturbance occupancy")
+            elif funded:
+                # Funded emission and absorption move the record's own stock; the
+                # type and every other register must still be untouched.
+                if before.type_index != after.type_index or len(before.values) != len(after.values):
+                    raise ValueError("spatial emission cannot change a disturbance's identity")
             elif DisturbanceNode._current_emission_state(before, after) != after:
                 raise ValueError("spatial emission cannot change a disturbance's physical values")

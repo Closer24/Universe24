@@ -94,7 +94,11 @@ identified beyond the configured `1 / D`. The
 all charged bodies one signed ray field with the local one-link `self_exclusion`
 rule: like charges repel head-on, opposite charges attract, neutral bodies
 cross, and a timed two-record conversion emits a proton with a recoiling core.
-Energy has no representation in these rules, so kicks near a source are unbounded.
+Energy has no representation in the exchange rules, so kicks near a source are
+unbounded. The [conservation audit](LOCAL_CONSERVATION.md) now measures rays as
+quanta, funded emission with recoil and the `absorb` coupling move energy and
+momentum only between records and rays, and the radiation-pressure probe runs
+with that audit closed.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

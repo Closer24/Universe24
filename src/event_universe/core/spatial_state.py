@@ -156,6 +156,11 @@ class EmissionDefinition:
     denominator: int = 1
     budget: Payload | None = None
     types: tuple[int, ...] = ()
+    # Ray fields only: pay the emitted amount from the record's own field of the
+    # same name (clipped to its stock) instead of declaring an external source,
+    # and subtract the emitted rays' amount x heading from an owned vector field.
+    funded: bool = False
+    recoil_field: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,6 +174,8 @@ class SpatialCouplingDefinition:
     axis_order: tuple[int, int, int] = (0, 1, 2)
     budget: Payload | None = None
     types: tuple[int, ...] = ()
+    # Absorb mode only: the owned vector field that receives amount x heading.
+    momentum_field: int | None = None
 
 
 @dataclass(frozen=True, slots=True)

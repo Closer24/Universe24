@@ -27,6 +27,13 @@ the flux it samples on arrival, from its own registers only, in work bounded by
 `rays_per_tick`. Self-field returning from any other distance is not excluded;
 a general self-field law is still the open hypothesis named in `POSTULATES.md`.
 
+The fourth probe closes the energy ledger. A lamp pays every ray quantum from
+its own `quanta` stock and recoils by `amount x heading`; a sail absorbs the
+quanta that reach it, banking each amount and taking its momentum; the
+[conservation audit](../../docs/LOCAL_CONSERVATION.md) measures rays as quanta
+and checks every event. Absorption pushes the sail away from the lamp: this is
+radiation pressure, not attraction.
+
 The third probe uses no field. Two held records, a bound proton and a residual
 core, share a Node; a local update counts ticks on the proton, and a
 [two-record conversion](../../docs/LOCAL_CONVERSIONS.md) fires when the count

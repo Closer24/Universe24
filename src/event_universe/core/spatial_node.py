@@ -463,7 +463,11 @@ class SpatialNode(SpatialNodeState):
             if plan.emission_records:
                 raise ValueError("spatial emission cannot create disturbance records")
         else:
-            carrier.accept_emission(plan.emission_records)
+            carrier.accept_emission(
+                plan.emission_records,
+                funded=any(rule.funded for rule in services.initial.emissions)
+                or any(rule.mode == "absorb" for rule in services.initial.spatial_couplings),
+            )
         self.states = plan.states
         if self.rays:
             # Every resident ray left on this cycle along its own line.
