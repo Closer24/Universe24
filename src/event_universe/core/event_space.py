@@ -4,9 +4,13 @@ This host ledger stores provenance, not physical inventories or wave amplitudes.
 A dependency edge never grants a physical node permission to read its ancestor.
 """
 
+from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass
+from threading import RLock
 
 from .disturbance_state import Address3, bounded
+from .event_links import EventCursor, EventReferences
 from .integer import checked_work
 from .topology import neighbor_address
 
@@ -22,6 +26,14 @@ class CausalEvent:
     physical_parents: tuple[int, ...]
     payload_ref: int
     model_cost: int = 0
+
+
+@dataclass(frozen=True, slots=True)
+class EventStream:
+    address: Address3
+    owner: str
+    slot: int
+    cursor: EventCursor
 
 
 class CausalEventSpace:
@@ -51,7 +63,85 @@ class CausalEventSpace:
         self.boundary = boundary
         self.link_ticks = link_ticks
         self._events: list[CausalEvent] = []
+        self._resolutions: list[int | None] = []
         self._cost = 0
+        self._streams: list[EventStream] = []
+        self._node_cursors: dict[Address3, tuple[EventCursor, ...]] = {}
+        self._node_references: dict[Address3, EventReferences] = {}
+        self._streams_sealed = False
+        self._transaction_lock = RLock()
+
+    @contextmanager
+    def transaction(self) -> Iterator[None]:
+        """Serialize owner publication with every append; add no model-time cost."""
+        with self._transaction_lock:
+            yield
+
+    def bind_streams(self, owner: str, addresses: tuple[Address3, ...]) -> tuple[EventCursor, ...]:
+        """Declare a fixed local head bank before this owner's source events."""
+        if self._streams_sealed:
+            raise ValueError("event streams are fixed after Node assembly")
+        if not owner or len(owner) > 128 or any(s.owner == owner for s in self._streams):
+            raise ValueError("bounded distinct stream owner required")
+        if type(addresses) is not tuple or not 1 <= len(addresses) <= 30:
+            raise ValueError("one to thirty immutable stream addresses required")
+        if len(self._streams) + len(addresses) > self.capacity:
+            raise OverflowError("event stream capacity exceeded")
+        for address in addresses:
+            self._validate_address(address)
+            if len(self.cursors_at(address)) + addresses.count(address) > 30:
+                raise ValueError("local event stream capacity exceeded")
+        cursors = tuple(EventCursor(len(self._streams) + q) for q in range(len(addresses)))
+        for slot, (address, cursor) in enumerate(zip(addresses, cursors, strict=True)):
+            self._streams.append(EventStream(address, owner, slot, cursor))
+            self._node_cursors[address] = (*self.cursors_at(address), cursor)
+        return cursors
+
+    def seal_streams(self) -> None:
+        """Finish assembly; existing Nodes must never acquire untracked handles."""
+        self._streams_sealed = True
+
+    def bind_references(self, addresses: tuple[Address3, ...]) -> tuple[EventReferences, ...]:
+        """Declare fixed origin banks before Node assembly, shared by address."""
+        if self._streams_sealed:
+            raise ValueError("event references are fixed after Node assembly")
+        if type(addresses) is not tuple or not 1 <= len(addresses) <= self.capacity:
+            raise ValueError("bounded immutable reference addresses required")
+        for address in addresses:
+            self._validate_address(address)
+        if len(set(addresses)) != len(addresses):
+            raise ValueError("distinct reference addresses required")
+        if len(self._node_references.keys() | set(addresses)) > self.capacity:
+            raise OverflowError("event reference capacity exceeded")
+        for address in addresses:
+            self._node_references.setdefault(address, EventReferences())
+        return tuple(self._node_references[address] for address in addresses)
+
+    def references_at(self, address: Address3) -> EventReferences | None:
+        return self._node_references.get(address)
+
+    @property
+    def stream_addresses(self) -> tuple[Address3, ...]:
+        return tuple(dict.fromkeys((*self._node_cursors, *self._node_references)))
+
+    def cursors_at(self, address: Address3) -> tuple[EventCursor, ...]:
+        return self._node_cursors.get(address, ())
+
+    def _stream(self, cursor: EventCursor) -> EventStream:
+        if type(cursor) is not EventCursor or not 0 <= bounded(cursor.stream_id) < len(self._streams):
+            raise ValueError("unknown event cursor")
+        stream = self._streams[cursor.stream_id]
+        if stream.cursor is not cursor:
+            raise ValueError("event cursor belongs to another space")
+        return stream
+
+    def _validate_address(self, address: Address3) -> None:
+        if type(address) is not tuple or len(address) != 3:
+            raise ValueError("three integer coordinates required")
+        for axis, value in enumerate(address):
+            bounded(value)
+            if self.shape is not None and not 0 <= value < self.shape[axis]:
+                raise ValueError("event outside physical domain")
 
     @property
     def next_id(self) -> int:
@@ -69,6 +159,35 @@ class CausalEventSpace:
         if not 0 <= bounded(event_id) < self.next_id:
             raise ValueError("unknown causal event identity")
         return self._events[event_id]
+
+    def resolution(self, origin_id: int) -> int | None:
+        """Read one origin's status directly; never traverse events or Node banks."""
+        with self.transaction():
+            self.event(origin_id)
+            return self._resolutions[origin_id]
+
+    def resolve(self, origins: tuple[int, ...], event_id: int) -> None:
+        """Publish a bounded write-once decision without changing past events.
+
+        The domain owner determines whether an interaction resolves these origins.
+        Repeating the same decision is harmless; a competing decision is rejected.
+        """
+        with self.transaction():
+            if type(origins) is not tuple or not 1 <= len(origins) <= 6:
+                raise ValueError("one to six immutable origin identities required")
+            decision = self.event(event_id)
+            sources = tuple(self.event(origin) for origin in origins)
+            if len(set(origins)) != len(origins):
+                raise ValueError("distinct origin identities required")
+            for source in sources:
+                if source.owner != decision.owner:
+                    raise ValueError("origin and resolution owners must match")
+                if source.id >= decision.id or source.tick > decision.tick:
+                    raise ValueError("resolution must follow its origin event")
+                if self._resolutions[source.id] not in (None, event_id):
+                    raise ValueError("origin already has another resolution")
+            for origin in origins:
+                self._resolutions[origin] = event_id
 
     def require_room(self, count: int) -> None:
         if bounded(count) < 0 or self.next_id + count > self.capacity:
@@ -99,49 +218,64 @@ class CausalEventSpace:
         physical_parents: tuple[int, ...] = (),
         payload_ref: int = 0,
         model_cost: int = 0,
+        cursors: tuple[EventCursor, ...] = (),
+        advance_stream_time: bool = True,
     ) -> CausalEvent:
-        self.require_room(1)
-        if bounded(tick) < 0 or bounded(model_cost) < 0 or bounded(payload_ref) < 0:
-            raise ValueError("negative event time, cost or payload reference")
-        if not owner or not kind or len(owner) > 128 or len(kind) > 128:
-            raise ValueError("bounded nonempty owner and kind required")
-        if type(addresses) is not tuple or not 1 <= len(addresses) <= 30:
-            raise ValueError("bounded immutable event support required")
-        for address in addresses:
-            if type(address) is not tuple or len(address) != 3:
-                raise ValueError("three integer coordinates required")
-            for axis, value in enumerate(address):
-                bounded(value)
-                if self.shape is not None and not 0 <= value < self.shape[axis]:
-                    raise ValueError("event outside physical domain")
-        if type(parents) is not tuple or type(physical_parents) is not tuple:
-            raise TypeError("immutable parent tuples required")
-        if len(parents) + len(physical_parents) > 256:
-            raise ValueError("event parent inputs exceed fixed bound")
-        all_parents = tuple(dict.fromkeys((*parents, *physical_parents)))
-        if len(all_parents) > 256:
-            raise ValueError("event parent fan-in exceeds fixed bound")
-        for identity in all_parents:
-            parent = self.event(identity)
-            if parent.tick > tick:
-                raise ValueError("event cannot depend on a future record")
-            if identity in physical_parents and not self._causal(parent, addresses, tick):
-                raise ValueError("physical cause lacks a completed local link")
-        cost = checked_work(self._cost + model_cost)
-        event = CausalEvent(
-            self.next_id,
-            tick,
-            addresses,
-            owner,
-            kind,
-            all_parents,
-            tuple(dict.fromkeys(physical_parents)),
-            payload_ref,
-            model_cost,
-        )
-        self._events.append(event)
-        self._cost = cost
-        return event
+        with self.transaction():
+            self.require_room(1)
+            if bounded(tick) < 0 or bounded(model_cost) < 0 or bounded(payload_ref) < 0:
+                raise ValueError("negative event time, cost or payload reference")
+            if not owner or not kind or len(owner) > 128 or len(kind) > 128:
+                raise ValueError("bounded nonempty owner and kind required")
+            if type(addresses) is not tuple or not 1 <= len(addresses) <= 30:
+                raise ValueError("bounded immutable event support required")
+            for address in addresses:
+                self._validate_address(address)
+            if type(cursors) is not tuple or len(cursors) > 30 or type(advance_stream_time) is not bool:
+                raise ValueError("bounded immutable event cursors and explicit clock policy required")
+            seen_cursors: set[int] = set()
+            for cursor in cursors:
+                stream = self._stream(cursor)
+                if stream.owner != owner or stream.address not in addresses:
+                    raise ValueError("event cursor owner or address mismatch")
+                if cursor.stream_id in seen_cursors:
+                    raise ValueError("duplicate event cursor")
+                if cursor.head is not None and self.event(cursor.head).tick > tick:
+                    raise ValueError("local event time cannot move backwards")
+                seen_cursors.add(cursor.stream_id)
+            if type(parents) is not tuple or type(physical_parents) is not tuple:
+                raise TypeError("immutable parent tuples required")
+            if len(parents) + len(physical_parents) > 256:
+                raise ValueError("event parent inputs exceed fixed bound")
+            all_parents = tuple(dict.fromkeys((*parents, *physical_parents)))
+            if len(all_parents) > 256:
+                raise ValueError("event parent fan-in exceeds fixed bound")
+            for identity in all_parents:
+                parent = self.event(identity)
+                if parent.tick > tick:
+                    raise ValueError("event cannot depend on a future record")
+                if identity in physical_parents and not self._causal(parent, addresses, tick):
+                    raise ValueError("physical cause lacks a completed local link")
+            cost = checked_work(self._cost + model_cost)
+            event = CausalEvent(
+                self.next_id,
+                tick,
+                addresses,
+                owner,
+                kind,
+                all_parents,
+                tuple(dict.fromkeys(physical_parents)),
+                payload_ref,
+                model_cost,
+            )
+            self._events.append(event)
+            self._resolutions.append(None)
+            self._cost = cost
+            for cursor in cursors:
+                cursor._event_id = event.id
+                if advance_stream_time:
+                    cursor._physical_tick = tick
+            return event
 
     def ancestors(self, root: int) -> tuple[int, ...]:
         """Read-only diagnostic traversal; no physical result or clock mutation."""

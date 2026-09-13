@@ -3,9 +3,12 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
+from .event_links import EventCursor, EventReferences
+
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
+    from .source_emission_node import EmittingEnvelopeNode
     from .spatial_state import (
         EmissionDefinition,
         FieldGroupDefinition,
@@ -272,6 +275,7 @@ class LocalPlan:
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
     cause_id: int | None = None
     interaction_ticks: int = 0
+    resolution_token: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -305,6 +309,9 @@ class DisturbanceNodeState:
     received_count: int = 0
     last_cost: int = 0
     cause_id: int | None = None
+    event_cursors: tuple[EventCursor, ...] = ()
+    event_references: EventReferences | None = None
+    source_envelope: EmittingEnvelopeNode | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -320,3 +327,5 @@ class NodeView:
     arrival_mask: tuple[int, ...] = ()
     delay_counts: tuple[int, ...] = ()
     committed_cost: int = 0
+    event_heads: tuple[tuple[int, int | None], ...] = ()
+    event_origins: tuple[int, ...] = ()
