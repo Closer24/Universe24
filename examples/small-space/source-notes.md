@@ -26,8 +26,8 @@ units until an open boundary is reached. Total scalar inventory grows by the
 explicitly recorded 216-unit injection each interval; it is not constant.
 
 After two completed hops, the first cohort gives 12 units to each of six axial
-sites at Manhattan radius two and 12 units to each of twelve edge sites at that
-radius. It has 216 units in 18 sites. Those two sets have different Euclidean
+Nodes at Manhattan radius two and 12 units to each of twelve edge Nodes at that
+radius. It has 216 units in 18 Nodes. Those two sets have different Euclidean
 distances despite equal node intensity. This is an explicit lattice-anisotropy
 control, not an inverse-square or spherical-isotropy claim.
 

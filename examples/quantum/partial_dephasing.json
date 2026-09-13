@@ -195,7 +195,7 @@
         "tick": 1,
         "operations": [
           {
-            "sites": [
+            "register_indices": [
               0
             ],
             "matrix": [
@@ -215,7 +215,7 @@
         "tick": 2,
         "operations": [
           {
-            "sites": [
+            "register_indices": [
               0
             ],
             "channel": [
@@ -257,7 +257,7 @@
         "tick": 3,
         "operations": [
           {
-            "sites": [
+            "register_indices": [
               0
             ],
             "matrix": [

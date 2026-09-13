@@ -91,26 +91,29 @@ def _add(
 def evolve(
     state: QuantumState,
     matrices: tuple[Matrix, ...],
-    sites: tuple[int, ...],
+    register_indices: tuple[int, ...],
     limit: int,
     dimensions: tuple[int, ...],
 ) -> QuantumState:
     """Apply sum K rho K* WITHOUT branch normalization before summing weights."""
     if not isinstance(state, DensityState) and len(matrices) == 1:
-        return apply_matrix(state, matrices[0], sites, limit, dimensions)
+        return apply_matrix(state, matrices[0], register_indices, limit, dimensions)
     source = density(state, limit)
     layout = BasisLayout(dimensions)
     out: dict[tuple[int, int], Amplitude] = {}
     for matrix in matrices:
         for a, b, amp in source.entries:
-            col_a, col_b = layout.extract(a, sites), layout.extract(b, sites)
+            col_a, col_b = layout.extract(a, register_indices), layout.extract(b, register_indices)
             for r, row in enumerate(matrix):
                 left = multiply(row[col_a], amp)
                 if left == (0, 0):
                     continue
                 for s, other in enumerate(matrix):
                     value = multiply(left, conjugate(other[col_b]))
-                    key = (layout.replace(a, sites, r), layout.replace(b, sites, s))
+                    key = (
+                        layout.replace(a, register_indices, r),
+                        layout.replace(b, register_indices, s),
+                    )
                     _add(out, key, value, limit)
     return DensityState(tuple((a, b, v) for (a, b), v in sorted(out.items())))
 
@@ -135,31 +138,36 @@ def tensor(a: QuantumState, b: QuantumState, limit: int) -> QuantumState:
     )
 
 
-def marginal(state: QuantumState, site: int, dimensions: tuple[int, ...]) -> tuple[int, ...]:
+def marginal(state: QuantumState, register_index: int, dimensions: tuple[int, ...]) -> tuple[int, ...]:
     layout = BasisLayout(dimensions)
-    weights = [0] * dimensions[site]
+    weights = [0] * dimensions[register_index]
     rows = (
         ((a, v.real) for a, b, v in state.entries if a == b)
         if isinstance(state, DensityState)
         else ((a, squared_norm(((a, v),))) for a, v in state)
     )
     for index, value in rows:
-        level = layout.digit(index, site)
+        level = layout.digit(index, register_index)
         weights[level] = checked(weights[level] + value)
     checked(sum(weights))
     return tuple(weights)
 
 
 def partial_trace(
-    state: QuantumState, sites: tuple[int, ...], dimensions: tuple[int, ...], limit: int
+    state: QuantumState, register_indices: tuple[int, ...], dimensions: tuple[int, ...], limit: int
 ) -> DensityState:
     """Read-only reduced state; never supplied to an ordinary remote physical node."""
     layout = BasisLayout(dimensions)
-    outside = tuple(q for q in range(len(dimensions)) if q not in sites)
+    outside = tuple(q for q in range(len(dimensions)) if q not in register_indices)
     out: dict[tuple[int, int], Amplitude] = {}
     for a, b, value in density(state, limit).entries:
         if layout.extract(a, outside) == layout.extract(b, outside):
-            _add(out, (layout.extract(a, sites), layout.extract(b, sites)), value, limit)
+            _add(
+                out,
+                (layout.extract(a, register_indices), layout.extract(b, register_indices)),
+                value,
+                limit,
+            )
     result = reduce_quantum(DensityState(tuple((a, b, v) for (a, b), v in sorted(out.items()))))
     assert isinstance(result, DensityState)
     return result

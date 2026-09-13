@@ -49,9 +49,9 @@ again when composed. It never stores executable code or callbacks in nodes.
 Choose `model: "causal-events-v1"` and a positive `capacity` for a classical-only
 causal ledger. Choose `model: "local-quantum-events-v1"` to additionally supply:
 
-- `addresses` (1-30 distinct in-domain sites), optional `occupied` site indices,
+- `addresses` (1-30 distinct in-domain registers), optional `occupied` register indices,
   optional quantum `bounds`, and strictly increasing `layers`. Each layer names
-  a tick and disjoint one/two-site `operations` with exact integer `matrix` data.
+  a tick and disjoint one/two-register `operations` with exact integer `matrix` data.
   A complex coefficient is `[real, imag]`; a real coefficient may be one integer.
 - `bindings` (at most one per address). Each names one or two local `types`, an
   owned nonconserved/nonextensive scalar `field`, one `code` per outcome via

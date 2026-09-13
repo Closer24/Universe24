@@ -38,9 +38,9 @@ document owns the finite quantum state and instrument semantics.
 | State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical nodes |
 | Resource contract | Bounded nodes, discovered dependencies, sparse terms, decisions and existing 32/64-bit arithmetic; explicit failure, never a guessed no-event result |
 
-`EventNetworkConfig` accepts 1–30 addresses; the 30-site cap keeps occupation
+`EventNetworkConfig` accepts 1–30 addresses; the 30-register cap keeps occupation
 masks inside the signed register range. This does not imply full states on 30
-sites are tractable. Default caps are 10,000 stored nodes, 10,000 visited nodes,
+registers are tractable. Default caps are 10,000 stored nodes, 10,000 visited nodes,
 4,096 terms and 1,024 decision identities. These are computational capacities,
 not physical constants. Configuration is immutable once bound.
 
@@ -101,7 +101,7 @@ commits; a universal physical trigger has not been inferred from uncertainty.
 
 ## Closing the past without deleting the wave
 
-`checkpoint(site)` resolves the full live correlated component and saves an exact
+`checkpoint(register)` resolves the full live correlated component and saves an exact
 joint replacement state. Only then can old recipes be removed. The host operation
 creates no measurement, advances no world tick and preserves remaining phases.
 A local marginal is not a sufficient checkpoint for a correlated component.
@@ -130,7 +130,7 @@ Zero world time is the selected oracle postulate, not zero elapsed machine time.
 An event has a definite recorded location at its recorded time. Its continuing
 quantum state need not have a definite next location or a sharp momentum.
 Position and lattice-Fourier diagnostics use the same amplitudes and phases.
-For a one-excitation 4x4 periodic Fourier diagnostic, one occupied site produces
+For a one-excitation 4x4 periodic Fourier diagnostic, one occupied register produces
 16 equal momentum weights. The finite entropic bound is `H(position)+H(Fourier)>=4`.
 This tests complementary bases; it does not validate a free-particle Hamiltonian.
 

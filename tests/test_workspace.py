@@ -110,7 +110,7 @@ def test_invalid_configuration_is_rejected_before_start(server, source):
         {"Sec-Fetch-Site": "cross-site"},
     ],
 )
-def test_other_sites_cannot_launch_a_local_process(server, headers):
+def test_other_origins_cannot_launch_a_local_process(server, headers):
     source = (ROOT / "examples/basic.json").read_text(encoding="utf-8")
     assert request(server, "/api/runs", {"source": source}, headers)[0] == 403
     assert not server.workspace.jobs

@@ -124,7 +124,7 @@ def test_quantum_node_budget_remains_separate_from_shared_event_capacity():
 def test_startup_validation_does_not_reserve_capacity_for_future_events():
     raw = configuration([], capacity=1, addresses=[[0, 0, 0]], model="local-quantum-events-v1")
     raw["event_program"]["layers"] = [
-        {"tick": 1, "operations": [{"sites": [0], "matrix": [[0, 1], [1, 0]]}]}
+        {"tick": 1, "operations": [{"register_indices": [0], "matrix": [[0, 1], [1, 0]]}]}
     ]
     initial = parse_initial_state(raw)
     assert parse_event_program(initial).capacity == 1

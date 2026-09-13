@@ -685,7 +685,7 @@ expectations; a passing source identity and command belong in the integration PR
 | `test_quantum_event_network.py` | Existing-owner selection; 3:4 split gives 9:16 weights; deferred/eager agreement using independently lifted dense matrices; prior correlated records are included; a postponed phase becomes necessary at recombination; partial records and exact checkpoints preserve remaining entanglement |
 | `test_quantum_event_network.py` | No-transfer changes excitation from 1/2 to 9/34; early projection changes coherent return from 1 to 337/625; fresh-environment contacts use no detector call; immutable and stale decision guards; certain outcomes require no random ticket |
 | `test_quantum_event_network.py` | A 2,000-operation queried chain leaves a disconnected 2,000-operation chain unevaluated; zero extra world ticks; nearest-neighbor/disjoint supports; matrix completeness; node/term/traversal/record/register failures do not commit an outcome |
-| `test_quantum_event_network.py` | A single occupied site has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
+| `test_quantum_event_network.py` | A single occupied Node has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
 | `test_quantum_event_trial.py` | Reproducible 4x4 headless controller through the existing owner, explicit ticket choice, fixed event time, and preserved legacy scalar query API |
 
 The legacy quantum, architecture, integer, locality, navigation and language

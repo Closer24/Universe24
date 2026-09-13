@@ -16,10 +16,10 @@ law, default Simulation or existing read-only QuantumBridge is modified.
 Two unit-mass bodies start at (2,2,1) and (10,2,1), with momenta (+1,0,0)
 and (-1,0,0). One neighbor transit takes one tick. At tick 4 both reach (6,2,1).
 Only their local co-residence invokes the explicit position instrument on a
-three-site quantum sidecar. No distant particle search triggers the decision.
+three-register quantum sidecar. No distant particle search triggers the decision.
 
-The source begins at quantum site 0. An explicitly supplied 3:4 local mixing
-matrix at tick 1 gives weights 16 for empty and 9 for occupied at site 0.
+The source begins at quantum register 0. An explicitly supplied 3:4 local mixing
+matrix at tick 1 gives weights 16 for empty and 9 for occupied at register 0.
 One supplied ticket in [0,25) selects transmission (0..15) or momentum exchange
 (16..24). Tickets are reproducible test inputs, not a verified random source.
 Enumeration of all tickets tests this exact distribution without RNG claims.

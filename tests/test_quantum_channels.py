@@ -40,13 +40,13 @@ def space(dimensions=(2,), levels=None, **kwargs):
     return DeferredQuantum().bind_event_network(config)
 
 
-def probs(g, site=0):
-    w = g.query(site).weights
+def probs(g, register_index=0):
+    w = g.query(register_index).weights
     return tuple(Fraction(v, sum(w)) for v in w)
 
 
-def density(g, sites=None):
-    entries = g.joint_density(sites).entries
+def density(g, register_indices=None):
+    entries = g.joint_density(register_indices).entries
     trace = sum(v.real for a, b, v in entries if a == b)
     return {(a, b): (Fraction(v.real, trace), Fraction(v.imag, trace)) for a, b, v in entries}
 

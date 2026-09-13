@@ -17,7 +17,7 @@ from event_universe.quantum.event_rules import GroupedInstrument, LocalChannel, 
 @dataclass(frozen=True, slots=True)
 class Binding:
     address: Address3
-    site: int
+    register_index: int
     types: tuple[int, ...]
     field: int
     codes: tuple[int, ...]
@@ -105,7 +105,8 @@ def parse_event_program(initial: InitialState) -> Program:
         if any(v >= n for v, n in zip(address, initial.shape, strict=True)):
             raise ValueError("quantum address outside physical domain")
     occupied = tuple(
-        _integer(q, "occupied site", 0) for q in _array(obj.get("occupied", []), "occupied", 30)
+        _integer(q, "occupied register_index", 0)
+        for q in _array(obj.get("occupied", []), "occupied", 30)
     )
     bounds = _object(
         obj.get("bounds", {}),
@@ -147,36 +148,42 @@ def parse_event_program(initial: InitialState) -> Program:
             op = _object(
                 raw_op,
                 "operation",
-                {"sites", "matrix", "channel"} if v2 else {"sites", "matrix"},
-                {"sites"},
+                {"register_indices", "matrix", "channel"} if v2 else {"register_indices", "matrix"},
+                {"register_indices"},
             )
             if ("matrix" in op) == ("channel" in op):
                 raise ValueError("operation must supply exactly one matrix or channel")
-            sites = tuple(
-                _integer(q, "operation site", 0) for q in _array(op["sites"], "operation sites", 2, 1)
+            register_indices = tuple(
+                _integer(q, "operation register_index", 0)
+                for q in _array(op["register_indices"], "operation register_indices", 2, 1)
             )
-            if any(q >= len(addresses) or q in used for q in sites) or len(set(sites)) != len(sites):
-                raise ValueError("overlapping or invalid operation sites")
-            used.update(sites)
+            if any(q >= len(addresses) or q in used for q in register_indices) or len(
+                set(register_indices)
+            ) != len(register_indices):
+                raise ValueError("overlapping or invalid operation register_indices")
+            used.update(register_indices)
             rule: LocalOperation
             if "matrix" in op:
                 rule = LocalUnitary(_matrix(op["matrix"]))
                 size = len(rule.matrix)
             else:
                 rule = LocalChannel(tuple(_matrix(m) for m in _array(op["channel"], "channel", 4, 1)))
-                if len(sites) != 1:
+                if len(register_indices) != 1:
                     raise ValueError("a local channel acts on one register")
                 size = len(rule.kraus[0])
             dimension = 1
-            for site in sites:
-                dimension *= network.local_dimensions[site]
+            for register_index in register_indices:
+                dimension *= network.local_dimensions[register_index]
             if size != dimension:
                 raise ValueError("matrix dimension disagrees with operation support")
-            if len(sites) == 2 and sum(
-                abs(a - b) for a, b in zip(addresses[sites[0]], addresses[sites[1]], strict=True)
+            if len(register_indices) == 2 and sum(
+                abs(a - b)
+                for a, b in zip(
+                    addresses[register_indices[0]], addresses[register_indices[1]], strict=True
+                )
             ) not in ((0, 1) if v2 else (1,)):
                 raise ValueError("quantum operations require cardinal nearest neighbors")
-            operations.append((rule, sites))
+            operations.append((rule, register_indices))
         layers.append((tick, tuple(operations)))
     names = {kind.name: q for q, kind in enumerate(initial.disturbances)}
     field_names = {field.name: q for q, field in enumerate(initial.fields)}
@@ -186,7 +193,7 @@ def parse_event_program(initial: InitialState) -> Program:
         b = _object(
             raw,
             "binding",
-            {"address", "types", "field", "codes", "instrument", "grouped_instrument", "site"}
+            {"address", "types", "field", "codes", "instrument", "grouped_instrument", "register_index"}
             if v2
             else {"address", "types", "field", "codes", "instrument"},
             {"address", "types", "field", "codes"},
@@ -221,23 +228,23 @@ def parse_event_program(initial: InitialState) -> Program:
                     for group in _array(b["grouped_instrument"], "grouped instrument", 4, 1)
                 )
             )
-        if "site" in b:
-            site = _integer(b["site"], "binding site", 0)
-            if site >= len(addresses) or addresses[site] != address:
+        if "register_index" in b:
+            register_index = _integer(b["register_index"], "binding register_index", 0)
+            if register_index >= len(addresses) or addresses[register_index] != address:
                 raise ValueError("binding register must be at its physical address")
         else:
             if addresses.count(address) != 1:
-                raise ValueError("colocated registers require an explicit binding site")
-            site = addresses.index(address)
+                raise ValueError("colocated registers require an explicit binding register_index")
+            register_index = addresses.index(address)
         groups = outcome_groups(instrument)
-        if len(groups[0][0]) != network.local_dimensions[site]:
+        if len(groups[0][0]) != network.local_dimensions[register_index]:
             raise ValueError("instrument dimension disagrees with binding register")
         codes = tuple(
             _integer(c, "outcome code") for c in _array(b["codes"], "codes", len(groups), len(groups))
         )
         if not definition.signed and any(c < 0 for c in codes):
             raise ValueError("negative code for unsigned outcome field")
-        bindings.append(Binding(address, site, types, field, codes, instrument))
+        bindings.append(Binding(address, register_index, types, field, codes, instrument))
     tickets = (
         None
         if "tickets" not in obj

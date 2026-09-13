@@ -30,7 +30,7 @@ def configuration(r=3, t=4, n=5):
                 "tick": 1,
                 "operations": [
                     {
-                        "sites": [0, 1],
+                        "register_indices": [0, 1],
                         "matrix": [
                             [n, 0, 0, 0],
                             [0, r, -t, 0],

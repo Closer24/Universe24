@@ -119,20 +119,20 @@ def reduce_state(state: State) -> State:
 def apply_matrix(
     state: State,
     matrix: Matrix,
-    sites: tuple[int, ...],
+    register_indices: tuple[int, ...],
     max_terms: int,
     dimensions: tuple[int, ...] = (),
 ) -> State:
     """Host evaluation on a bounded sparse joint state; never a local-node loop."""
     out: dict[int, Amplitude] = {}
-    layout = BasisLayout(dimensions or (2,) * (max(sites) + 1))
+    layout = BasisLayout(dimensions or (2,) * (max(register_indices) + 1))
     for bits, amp in state:
-        column = layout.extract(bits, sites)
+        column = layout.extract(bits, register_indices)
         for row in range(len(matrix)):
             value = multiply(matrix[row][column], amp)
             if value == (0, 0):
                 continue
-            target = layout.replace(bits, sites, row)
+            target = layout.replace(bits, register_indices, row)
             if target not in out and len(out) >= max_terms:
                 raise OverflowError("quantum term budget exceeded")
             value = plus(out.get(target, Amplitude(0, 0)), value)
@@ -158,26 +158,28 @@ class BasisLayout:
                 raise ValueError("register dimension must be two, three or four")
             size = checked(size * dimension)
 
-    def stride(self, site: int) -> int:
+    def stride(self, register_index: int) -> int:
         value = 1
-        for d in self.dimensions[:site]:
+        for d in self.dimensions[:register_index]:
             value = checked(value * d)
         return value
 
-    def digit(self, index: int, site: int) -> int:
-        return (index // self.stride(site)) % self.dimensions[site]
+    def digit(self, index: int, register_index: int) -> int:
+        return (index // self.stride(register_index)) % self.dimensions[register_index]
 
-    def extract(self, index: int, sites: tuple[int, ...]) -> int:
+    def extract(self, index: int, register_indices: tuple[int, ...]) -> int:
         local, stride = 0, 1
-        for site in sites:
-            local = checked(local + self.digit(index, site) * stride)
-            stride = checked(stride * self.dimensions[site])
+        for register_index in register_indices:
+            local = checked(local + self.digit(index, register_index) * stride)
+            stride = checked(stride * self.dimensions[register_index])
         return local
 
-    def replace(self, index: int, sites: tuple[int, ...], local: int) -> int:
-        for site in sites:
-            local, value = divmod(local, self.dimensions[site])
-            index = checked(index + (value - self.digit(index, site)) * self.stride(site))
+    def replace(self, index: int, register_indices: tuple[int, ...], local: int) -> int:
+        for register_index in register_indices:
+            local, value = divmod(local, self.dimensions[register_index])
+            index = checked(
+                index + (value - self.digit(index, register_index)) * self.stride(register_index)
+            )
         return index
 
 

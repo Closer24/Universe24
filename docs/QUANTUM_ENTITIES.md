@@ -20,7 +20,7 @@ belong to the shared owner, not to individual physical nodes.
 A register has an in-domain address, dimension 2, 3 or 4, and an initial basis
 level. Optional `register_names` distinguish multiple degrees of freedom at one
 node; names select no update law. With repeated addresses, every register must
-have a distinct bounded name. A binding there must specify its `site` index.
+have a distinct bounded name. A binding there must specify its `register_index` index.
 Different registers at the same node are different degrees of freedom, not cloned
 copies of a particle. Operations between colocated registers are local and do not
 pay a fictitious neighbor transit. Actual neighbor operations still respect link
