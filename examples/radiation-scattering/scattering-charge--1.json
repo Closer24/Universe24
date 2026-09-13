@@ -1,0 +1,999 @@
+{
+  "schema_version": 1,
+  "model_id": "directional-quanta-charge-scattering-v1",
+  "boundary": "open",
+  "shape": [
+    17,
+    5,
+    5
+  ],
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 1000000,
+  "ticks": 14,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "mass unit",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "charge unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "quantum momentum unit",
+      "signed": true,
+      "conserved": false,
+      "extensive": true
+    },
+    {
+      "name": "presence",
+      "components": 1,
+      "units": "charge squared",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "held_px",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_px",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_mx",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_py",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_my",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_pz",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    },
+    {
+      "name": "rad_mz",
+      "components": 1,
+      "units": "radiation quantum",
+      "signed": false,
+      "conserved": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "scatterer",
+      "fields": [
+        "mass",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": -1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "presence",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "held_px",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_px",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_mx",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_py",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_my",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_pz",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "rad_mz",
+      "baseline": 0,
+      "transport": "local"
+    }
+  ],
+  "emissions": [
+    {
+      "type": "scatterer",
+      "field": "presence",
+      "amount": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "charge"
+          },
+          {
+            "field": "charge"
+          }
+        ]
+      },
+      "denominator": 1,
+      "source": true
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "position": [
+        3,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "position": [
+        4,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "position": [
+        5,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "position": [
+        6,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "position": [
+        7,
+        2,
+        2
+      ],
+      "field": "rad_px",
+      "populations": [
+        10,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "field_rules": [
+    {
+      "name": "hold_scattered_quanta",
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "mul",
+            "args": [
+              {
+                "field": "presence",
+                "side": "right"
+              },
+              {
+                "field": "rad_px",
+                "side": "right"
+              }
+            ]
+          },
+          0
+        ]
+      },
+      "assignments": [
+        {
+          "field": "held_px",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "held_px",
+                "side": "right"
+              },
+              {
+                "op": "min",
+                "args": [
+                  {
+                    "field": "rad_px",
+                    "side": "right"
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "presence",
+                        "side": "right"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "field": "rad_px",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "rad_px",
+                "side": "right"
+              },
+              {
+                "op": "min",
+                "args": [
+                  {
+                    "field": "rad_px",
+                    "side": "right"
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "presence",
+                        "side": "right"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "quanta",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "rad_px",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "rad_mx",
+                                    "side": "right"
+                                  }
+                                ]
+                              },
+                              {
+                                "field": "rad_py",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "rad_my",
+                            "side": "right"
+                          }
+                        ]
+                      },
+                      {
+                        "field": "rad_pz",
+                        "side": "right"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "rad_mz",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "field": "held_px",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "stream_quanta",
+      "assignments": [
+        {
+          "field": "rad_px",
+          "expression": 0
+        },
+        {
+          "field": "rad_px",
+          "port": 0,
+          "expression": {
+            "field": "rad_px",
+            "side": "right"
+          }
+        },
+        {
+          "field": "rad_mx",
+          "expression": 0
+        },
+        {
+          "field": "rad_mx",
+          "port": 1,
+          "expression": {
+            "field": "rad_mx",
+            "side": "right"
+          }
+        },
+        {
+          "field": "rad_py",
+          "expression": 0
+        },
+        {
+          "field": "rad_py",
+          "port": 2,
+          "expression": {
+            "field": "rad_py",
+            "side": "right"
+          }
+        },
+        {
+          "field": "rad_my",
+          "expression": 0
+        },
+        {
+          "field": "rad_my",
+          "port": 3,
+          "expression": {
+            "field": "rad_my",
+            "side": "right"
+          }
+        },
+        {
+          "field": "rad_pz",
+          "expression": 0
+        },
+        {
+          "field": "rad_pz",
+          "port": 4,
+          "expression": {
+            "field": "rad_pz",
+            "side": "right"
+          }
+        },
+        {
+          "field": "rad_mz",
+          "expression": 0
+        },
+        {
+          "field": "rad_mz",
+          "port": 5,
+          "expression": {
+            "field": "rad_mz",
+            "side": "right"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "quanta",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "add",
+                                    "args": [
+                                      {
+                                        "op": "add",
+                                        "args": [
+                                          {
+                                            "op": "add",
+                                            "args": [
+                                              {
+                                                "op": "add",
+                                                "args": [
+                                                  {
+                                                    "op": "add",
+                                                    "args": [
+                                                      {
+                                                        "op": "add",
+                                                        "args": [
+                                                          {
+                                                            "field": "rad_px",
+                                                            "side": "right"
+                                                          },
+                                                          {
+                                                            "field": "rad_mx",
+                                                            "side": "right"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "field": "rad_py",
+                                                        "side": "right"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "field": "rad_my",
+                                                    "side": "right"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "field": "rad_pz",
+                                                "side": "right"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "field": "rad_mz",
+                                            "side": "right"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "field": "held_px",
+                                        "side": "right"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "outgoing": "rad_px",
+                                    "port": 0
+                                  }
+                                ]
+                              },
+                              {
+                                "outgoing": "rad_mx",
+                                "port": 1
+                              }
+                            ]
+                          },
+                          {
+                            "outgoing": "rad_py",
+                            "port": 2
+                          }
+                        ]
+                      },
+                      {
+                        "outgoing": "rad_my",
+                        "port": 3
+                      }
+                    ]
+                  },
+                  {
+                    "outgoing": "rad_pz",
+                    "port": 4
+                  }
+                ]
+              },
+              {
+                "outgoing": "rad_mz",
+                "port": 5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "clear_presence",
+      "assignments": [
+        {
+          "field": "presence",
+          "expression": 0
+        }
+      ],
+      "invariants": [
+        {
+          "name": "quanta",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "rad_px",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "rad_mx",
+                                    "side": "right"
+                                  }
+                                ]
+                              },
+                              {
+                                "field": "rad_py",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "rad_my",
+                            "side": "right"
+                          }
+                        ]
+                      },
+                      {
+                        "field": "rad_pz",
+                        "side": "right"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "rad_mz",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "field": "held_px",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "spatial_interactions": [
+    {
+      "name": "scatter_held_quanta",
+      "type": "scatterer",
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "field": "held_px",
+            "side": "right"
+          },
+          0
+        ]
+      },
+      "assignments": [
+        {
+          "side": "right",
+          "field": "held_px",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "rad_mx",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "rad_mx",
+                "side": "right"
+              },
+              {
+                "field": "held_px",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum"
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "held_px",
+                        "side": "right"
+                      },
+                      2
+                    ]
+                  },
+                  [
+                    1,
+                    0,
+                    0
+                  ]
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "quanta",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "field": "rad_px",
+                                    "side": "right"
+                                  },
+                                  {
+                                    "field": "rad_mx",
+                                    "side": "right"
+                                  }
+                                ]
+                              },
+                              {
+                                "field": "rad_py",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          {
+                            "field": "rad_my",
+                            "side": "right"
+                          }
+                        ]
+                      },
+                      {
+                        "field": "rad_pz",
+                        "side": "right"
+                      }
+                    ]
+                  },
+                  {
+                    "field": "rad_mz",
+                    "side": "right"
+                  }
+                ]
+              },
+              {
+                "field": "held_px",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "total_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum"
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "op": "add",
+                                "args": [
+                                  {
+                                    "op": "add",
+                                    "args": [
+                                      {
+                                        "op": "mul",
+                                        "args": [
+                                          {
+                                            "field": "rad_px",
+                                            "side": "right"
+                                          },
+                                          [
+                                            1,
+                                            0,
+                                            0
+                                          ]
+                                        ]
+                                      },
+                                      {
+                                        "op": "mul",
+                                        "args": [
+                                          {
+                                            "field": "rad_mx",
+                                            "side": "right"
+                                          },
+                                          [
+                                            -1,
+                                            0,
+                                            0
+                                          ]
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "op": "mul",
+                                    "args": [
+                                      {
+                                        "field": "rad_py",
+                                        "side": "right"
+                                      },
+                                      [
+                                        0,
+                                        1,
+                                        0
+                                      ]
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "op": "mul",
+                                "args": [
+                                  {
+                                    "field": "rad_my",
+                                    "side": "right"
+                                  },
+                                  [
+                                    0,
+                                    -1,
+                                    0
+                                  ]
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "field": "rad_pz",
+                                "side": "right"
+                              },
+                              [
+                                0,
+                                0,
+                                1
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "field": "rad_mz",
+                            "side": "right"
+                          },
+                          [
+                            0,
+                            0,
+                            -1
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "held_px",
+                        "side": "right"
+                      },
+                      [
+                        1,
+                        0,
+                        0
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        8,
+        2,
+        2
+      ],
+      "type": "scatterer"
+    }
+  ]
+}
