@@ -1,0 +1,652 @@
+{
+  "incoming_positive": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            0,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 1
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "incoming_negative": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            0,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": -1
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "incoming_zero": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            0,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 0
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "occupied_exchange": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            1,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 1
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "emission": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            1,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 1
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  "delayed": {
+    "seeds": [
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "type": "excitation",
+        "values": {
+          "internal": [
+            0,
+            0,
+            0
+          ],
+          "recoil": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 1
+        }
+      }
+    ],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "normal_budget": 200,
+    "ticks": 30
+  },
+  "free": {
+    "seeds": [],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    ]
+  },
+  "absent_carrier": {
+    "seeds": [],
+    "spatial_seeds": [
+      {
+        "position": [
+          2,
+          2,
+          2
+        ],
+        "field": "amplitude",
+        "populations": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "position": [
+          4,
+          2,
+          2
+        ],
+        "field": "gate",
+        "populations": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+}

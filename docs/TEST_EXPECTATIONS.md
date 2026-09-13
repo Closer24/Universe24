@@ -1,5 +1,18 @@
 # Test inputs and expected results
 
+## Coupled unit excitations
+
+`tests/test_coupled_excitations.py` owns the independent expectations for the
+[local coupling candidate](COUPLED_EXCITATIONS.md). Positive absorption of Y into
+an empty receiver gives internal Y and recoil +X; negative coupling gives -Y
+with the same recoil. Zero coupling forwards unchanged. Positive emission of
+internal Y gives spatial -Y and recoil -X; occupied Y/Z exchange gives internal Z
+and spatial -Y without recoil. All admissible cases retain the declared U/P at
+every tick, counting actual in-flight owners once. Delays preserve original state
+until atomic commit; send/arrival and release follow causal event order. Invalid
+state and a deliberately out-of-envelope concurrent arrival test rejection,
+without claiming energy conservation through an invalid same-mode merge.
+
 ## Configuration preflight
 
 The [validation contract](CONFIGURATION_VALIDATION.md) is covered by
