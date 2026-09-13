@@ -35,7 +35,7 @@ pair and routes the actual outgoing packets. Thus the outcome changes native
 The fixture binder restricts shape, occupancy, initial records, link time and
 run length. Its positional roles are field 0 mass, field 1 momentum, field 2
 outcome code, and types 0/1 the two bodies. This is an eight-tick, one-contact
-experiment, not a general dispatcher for arbitrary cells or repeated encounters.
+experiment, not a general dispatcher for arbitrary nodes or repeated encounters.
 Names are labels; the ordinary engine has no quantum or particle-name branch.
 
 The classical local planner receives exactly two local slots. Its quantum call
@@ -60,7 +60,7 @@ quantum continuation. No second measurement or rerandomization is introduced.
 
 ## Checks and interpretation
 
-The read-only balance check counts cell-owned and in-flight bodies exactly once:
+The read-only balance check counts node-owned and in-flight bodies exactly once:
 mass 2, total momentum (0,0,0), and twice unit-mass classical kinetic energy 2.
 Failure rejects the run without repairing any state. These balances concern the
 two classical bodies; quantum/environment energy and recoil are not modeled.

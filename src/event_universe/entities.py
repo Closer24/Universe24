@@ -206,7 +206,7 @@ def compile_entities(
         "model_id": "catalog-representation-probes-v1",
         "shape": list(shape),
         "boundary": "open",
-        "slots_per_cell": 16,
+        "slots_per_node": 16,
         "link_ticks": link_ticks,
         "normal_budget": 1000000,
         "ticks": ticks,

@@ -30,7 +30,7 @@ def test_nodes_and_pending_transactions_remain_formula_free_through_delivery():
             assert not node_state_violations(node)
             pending_seen |= node.pending is not None
         assert world._spatial is not None
-        for node in world._spatial.cells.values():  # legacy internal map pending versioned migration
+        for node in world._spatial.nodes.values():  # legacy internal map pending versioned migration
             assert not node_state_violations(node)
         for packets in (*world.links.values(), *world._spatial.links.values()):
             assert not node_state_violations(packets)
@@ -73,7 +73,7 @@ def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
             inspect(annotation)
 
 
-def test_legacy_cell_names_are_aliases_not_physical_types():
-    assert disturbance_state.DisturbanceCell is disturbance_state.DisturbanceNodeState
-    assert disturbance_state.CellView is disturbance_state.NodeView
-    assert spatial_state.SpatialCell is spatial_state.SpatialNodeState
+def test_legacy_node_names_are_aliases_not_physical_types():
+    assert disturbance_state.DisturbanceNodeState is disturbance_state.DisturbanceNodeState
+    assert disturbance_state.NodeView is disturbance_state.NodeView
+    assert spatial_state.SpatialNodeState is spatial_state.SpatialNodeState

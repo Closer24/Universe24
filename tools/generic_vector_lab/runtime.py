@@ -16,7 +16,7 @@ class Lab:
     def __init__(self, definitions):
         limits = definitions["limits"]
         required = {
-            "cell_capacity",
+            "node_capacity",
             "max_participants",
             "max_products",
             "link_capacity",
@@ -25,7 +25,7 @@ class Lab:
         if set(limits) != required or any(type(v) is not int or v < 1 for v in limits.values()):
             raise ValueError("Limits must be positive configuration integers")
         self.definitions = definitions
-        self.capacity = limits["cell_capacity"]
+        self.capacity = limits["node_capacity"]
         for rule in definitions["reactions"].values():
             if (
                 len(rule["inputs"]) > limits["max_participants"]
@@ -38,7 +38,7 @@ class Lab:
             for spec in rule["inputs"]:
                 if not spec["types"] or any(kind not in definitions["types"] for kind in spec["types"]):
                     raise ValueError("Each input must explicitly list known allowed types")
-        self.cells = {}
+        self.nodes = {}
         self.links = ()
         self.next_id = 0
 
@@ -90,19 +90,19 @@ class Lab:
         self.context(record)
         return record
 
-    def insert(self, cell, record):
+    def insert(self, node, record):
         self.context(record)
-        current = self.cells.get(cell, ())
+        current = self.nodes.get(node, ())
         if len(current) >= self.capacity:
-            raise ValueError("Cell capacity exceeded")
+            raise ValueError("Node capacity exceeded")
         identifier = self.next_id
-        self.cells[cell] = current + ((identifier, record),)
+        self.nodes[node] = current + ((identifier, record),)
         self.next_id += 1
         return identifier
 
     def totals(self, records=None):
         if records is None:
-            records = [r for occupants in self.cells.values() for _, r in occupants]
+            records = [r for occupants in self.nodes.values() for _, r in occupants]
             records += [r for _, _, _, r in self.links]
         totals = {
             name: self.eval(spec["zero"], {}) for name, spec in self.definitions["balances"].items()
@@ -113,7 +113,7 @@ class Lab:
                 totals[name] = totals[name].add(self.eval(spec["expression"], context))
         return totals
 
-    def react(self, cell, rule_name, identifiers, parameters=None):
+    def react(self, node, rule_name, identifiers, parameters=None):
         rule = self.definitions["reactions"][rule_name]
         inputs, outputs = rule["inputs"], rule["outputs"]
         limits = self.definitions["limits"]
@@ -123,7 +123,7 @@ class Lab:
             raise ValueError("Expression budget exceeded")
         if len(identifiers) != len(inputs) or len(set(identifiers)) != len(identifiers):
             raise ValueError("Invalid participant list")
-        occupants = self.cells.get(cell, ())
+        occupants = self.nodes.get(node, ())
         local = dict(occupants)
         participants = [local[i] for i in identifiers]  # remote records are inaccessible
         # Caller order is irrelevant. Bind each distinct record to one allowed role.
@@ -187,32 +187,32 @@ class Lab:
             raise ValueError("Product capacity exceeded")
         new = tuple((self.next_id + j, r) for j, r in enumerate(products))
         # Commit only after every field, law, balance and capacity check succeeded.
-        self.cells[cell] = remaining + new
+        self.nodes[node] = remaining + new
         self.next_id += len(products)
         return tuple(i for i, _ in new)
 
     def send(self, source, destination, identifier):
         if type(source) is not int or type(destination) is not int or abs(destination - source) != 1:
-            raise ValueError("Transport is restricted to one adjacent cell")
-        occupants = self.cells[source]
+            raise ValueError("Transport is restricted to one adjacent node")
+        occupants = self.nodes[source]
         record = dict(occupants)[identifier]
         if len(self.links) >= self.definitions["limits"]["link_capacity"]:
             raise ValueError("Link capacity exceeded")
         self.links += ((source, destination, identifier, record),)
-        self.cells[source] = tuple((i, r) for i, r in occupants if i != identifier)
+        self.nodes[source] = tuple((i, r) for i, r in occupants if i != identifier)
 
     def advance_transport(self):
-        cells = dict(self.cells)
+        nodes = dict(self.nodes)
         waiting = []
         for source, destination, identifier, record in self.links:
-            occupants = cells.get(destination, ())
+            occupants = nodes.get(destination, ())
             if len(occupants) >= self.capacity:
                 waiting.append((source, destination, identifier, record))
             else:
-                cells[destination] = occupants + ((identifier, record),)
-        self.cells, self.links = cells, tuple(waiting)
+                nodes[destination] = occupants + ((identifier, record),)
+        self.nodes, self.links = nodes, tuple(waiting)
 
-    def scheduled(self, cell, schedule_name, identifiers, stream):
+    def scheduled(self, node, schedule_name, identifiers, stream):
         schedule = self.definitions["schedules"][schedule_name]
         weights, branches = schedule["weights"], schedule["branches"]
         choose(weights, 0)  # validate before any state transition
@@ -224,7 +224,7 @@ class Lab:
         branch = branches[choose(weights, ticket)]
         if branch is None:
             return following, ()
-        products = self.react(cell, branch, identifiers)
+        products = self.react(node, branch, identifiers)
         return following, products
 
 
@@ -322,12 +322,12 @@ class QuantumState:
             raise OverflowError("Born ticket budget exceeded")
         return [p.numerator * (denominator // p.denominator) for p in probabilities]
 
-    def measure_into(self, lab, cell, branches, identifiers, ticket):
+    def measure_into(self, lab, node, branches, identifiers, ticket):
         if len(branches) != len(self.amplitudes):
             raise ValueError("Each basis state needs one reaction branch")
         selected = choose(self.weights(), ticket)
         collapsed = QuantumState(
             tuple(Complex(ONE if i == selected else ZERO) for i in range(len(branches)))
         )
-        products = lab.react(cell, branches[selected], identifiers)
+        products = lab.react(node, branches[selected], identifiers)
         return collapsed, products

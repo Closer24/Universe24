@@ -1,4 +1,4 @@
-"""Optional observers. Growing history belongs here, never in physical cell state."""
+"""Optional observers. Growing history belongs here, never in physical node state."""
 
 import json
 from collections import defaultdict

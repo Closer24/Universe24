@@ -50,8 +50,8 @@ def test_field_and_turning_are_independently_replaceable():
         assert audit(world)["occupancy_consistent"]
     assert transverse.particles[0].momentum == (3, 0, 0)
     assert full.particles[0].momentum == (4, 0, 0)
-    assert transverse.cells[(4, 4, 4)].px == 0
-    assert full.cells[(4, 4, 4)].px == -1
+    assert transverse.nodes[(4, 4, 4)].px == 0
+    assert full.nodes[(4, 4, 4)].px == -1
 
 
 def test_invalid_custom_field_result_is_rejected_before_commit():
@@ -63,7 +63,7 @@ def test_invalid_custom_field_result_is_rejected_before_commit():
     world.add_particle(0, 4, 4, 4)
     with pytest.raises(ValueError, match="invalid remainder"):
         world.step()
-    assert not world.cells and world.tick == 0 and world.faulted
+    assert not world.nodes and world.tick == 0 and world.faulted
 
 
 def test_custom_field_continues_remainder_only_evolution_until_value_changes():
@@ -76,8 +76,8 @@ def test_custom_field_continues_remainder_only_evolution_until_value_changes():
     samples = []
     for _ in range(7):
         world.step()
-        cell = world.cells[origin]
-        samples.append(ScalarSample(cell.phi, cell.remainder))
+        node = world.nodes[origin]
+        samples.append(ScalarSample(node.phi, node.remainder))
     assert samples == [
         ScalarSample(1, 1),
         ScalarSample(1, 2),
@@ -94,4 +94,4 @@ def test_activity_policy_is_replaceable_and_an_invalid_decision_cannot_commit():
     world.add_particle(0, 4, 4, 4)
     with pytest.raises(TypeError, match="must return bool"):
         world.step()
-    assert not world.cells and world.tick == 0 and world.faulted
+    assert not world.nodes and world.tick == 0 and world.faulted

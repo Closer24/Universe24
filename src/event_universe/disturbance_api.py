@@ -1,11 +1,10 @@
 """Public assembly of the generic disturbance simulator."""
 
-from collections.abc import Mapping
 from typing import TYPE_CHECKING
 
 from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
-from event_universe.core.disturbance_state import Address3, InitialState, NodeView
+from event_universe.core.disturbance_state import InitialState
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
@@ -90,11 +89,6 @@ class Simulation(DisturbanceEngine):
             self._observer = self._observe_conservation
             if self._spatial is not None:
                 self._spatial.observer = self._observe_conservation
-
-    @property
-    def nodes(self) -> Mapping[Address3, NodeView]:
-        """Canonical public view of the local NodeState map."""
-        return self.cells
 
     def _observe_conservation(self, event: dict[str, object]) -> None:
         assert self._audit is not None

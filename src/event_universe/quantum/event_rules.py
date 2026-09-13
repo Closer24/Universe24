@@ -80,7 +80,7 @@ class LocalUnitary:
 
 @dataclass(frozen=True, slots=True)
 class LocalInstrument:
-    """Explicit one-cell instrument, including every no-event branch.
+    """Explicit one-node instrument, including every no-event branch.
 
     This compatibility form has one Kraus matrix per outcome. Use
     GroupedInstrument for indistinguishable terms within one recorded outcome;
@@ -123,7 +123,7 @@ def apply_matrix(
     max_terms: int,
     dimensions: tuple[int, ...] = (),
 ) -> State:
-    """Host evaluation on a bounded sparse joint state; never a local-cell loop."""
+    """Host evaluation on a bounded sparse joint state; never a local-node loop."""
     out: dict[int, Amplitude] = {}
     layout = BasisLayout(dimensions or (2,) * (max(sites) + 1))
     for bits, amp in state:

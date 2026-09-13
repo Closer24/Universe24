@@ -39,7 +39,7 @@ class Packet(NamedTuple):
 Ports = tuple[Packet, Packet, Packet, Packet, Packet, Packet]
 
 
-class LinkCell(NamedTuple):
+class LinkNodeState(NamedTuple):
     received: Neighbors
     lengths: Neighbors  # positive authoritative lengths, negative received copies
     outgoing: Ports
@@ -51,7 +51,7 @@ LINK_REGISTERS = 30  # 6 received + 6 lengths + 6 * 3 packet integers
 
 
 class LinkTransport:
-    """Six bounded serial ports per cell; no queues or source-tagged histories."""
+    """Six bounded serial ports per node; no queues or source-tagged histories."""
 
     def __init__(
         self,
@@ -64,15 +64,15 @@ class LinkTransport:
         self.config = config
         self.length_rule = length_rule
         self.merge_rule = merge_rule
-        self._cells: dict[Address, LinkCell] = {}
-        self._zero = LinkCell(ZERO_VALUES, (config.base_length,) * 6, EMPTY_PORTS)
+        self._nodes: dict[Address, LinkNodeState] = {}
+        self._zero = LinkNodeState(ZERO_VALUES, (config.base_length,) * 6, EMPTY_PORTS)
 
     @property
-    def cells(self) -> Mapping[Address, LinkCell]:
-        return MappingProxyType(self._cells)
+    def nodes(self) -> Mapping[Address, LinkNodeState]:
+        return MappingProxyType(self._nodes)
 
-    def at(self, position: Address) -> LinkCell:
-        return self._cells.get(position, self._zero)
+    def at(self, position: Address) -> LinkNodeState:
+        return self._nodes.get(position, self._zero)
 
     def owner(self, position: Address, direction: int) -> tuple[Address, int]:
         if type(direction) is not int or not 0 <= direction < 6:
@@ -83,10 +83,10 @@ class LinkTransport:
 
     def advance(self) -> set[Address]:
         """Deliver only packets already in flight; commit all mailbox changes together."""
-        updates: dict[Address, LinkCell] = {}
+        updates: dict[Address, LinkNodeState] = {}
         arrivals: set[Address] = set()
         geometry: dict[tuple[Address, int], int] = {}
-        for origin, old in self._cells.items():
+        for origin, old in self._nodes.items():
             for direction, packet in enumerate(old.outgoing):
                 if packet.remaining == 0:
                     continue
@@ -119,11 +119,11 @@ class LinkTransport:
                 lengths = list(endpoint.lengths)
                 lengths[port] = length
                 updates[address] = endpoint._replace(lengths=cast(Neighbors, tuple(lengths)))
-        self._cells.update(updates)
+        self._nodes.update(updates)
         return arrivals
 
     def publish(self, position: Address, value: int) -> None:
-        """Compute from this cell and its delivered inbox, never raw remote state."""
+        """Compute from this node and its delivered inbox, never raw remote state."""
         checked(value)
         if value < 0:
             raise ValueError("nonnegative field required")
@@ -141,22 +141,22 @@ class LinkTransport:
             outgoing[direction] = Packet(value, announced, old.lengths[direction])
         new = old._replace(outgoing=cast(Ports, tuple(outgoing)))
         if new != self._zero:
-            self._cells[position] = new
+            self._nodes[position] = new
 
     def validate(self) -> None:
         """Global read-only diagnostic, never used as a physical correction."""
-        for position, cell in self._cells.items():
-            if len(cell.received) != 6 or len(cell.lengths) != 6 or len(cell.outgoing) != 6:
+        for position, node in self._nodes.items():
+            if len(node.received) != 6 or len(node.lengths) != 6 or len(node.outgoing) != 6:
                 raise ValueError("fixed six-port schema required")
-            for value in (*cell.received, *cell.lengths):
+            for value in (*node.received, *node.lengths):
                 checked(value)
-            for direction, packet in enumerate(cell.outgoing):
+            for direction, packet in enumerate(node.outgoing):
                 for value in packet:
                     checked(value)
                 if min(packet) < 0:
                     raise ValueError("invalid packet")
-                if cell.lengths[direction] < self.config.base_length:
+                if node.lengths[direction] < self.config.base_length:
                     raise ValueError("invalid length")
                 other = self.at(self.lattice.neighbor(position, direction))
-                if cell.lengths[direction] != other.lengths[direction ^ 1]:
+                if node.lengths[direction] != other.lengths[direction ^ 1]:
                     raise ValueError("edge endpoints disagree about active geometry")

@@ -104,7 +104,7 @@ def choose_balanced_axis(momentum: Vector, phase: int) -> tuple[int, int]:
 
     First distribute x versus yz, then y versus z among the remaining hops.
     For fixed momentum starting at phase zero, x differs from its ideal hop
-    count by less than one cell; y and z differ by less than two cells.
+    count by less than one node; y and z differ by less than two nodes.
     Axis ordering is explicit: this is not exact rotational invariance.
     """
     if len(momentum) != 3:

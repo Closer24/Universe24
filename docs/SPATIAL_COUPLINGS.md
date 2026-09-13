@@ -89,7 +89,7 @@ conservation of general energy or angular momentum under spatial transport.
 Each matching record owns the configured component budget for each rule. This is
 an allowance on cumulative absolute field reaction, not physical stock and not a
 reservoir of energy or momentum. Remaining allowances are fixed registers carried
-with whole-record movement; a new cell does not reset them. An exchange of either
+with whole-record movement; a new node does not reset them. An exchange of either
 sign spends `abs(old_component - proposed_component)` on each component. A rotation
 spends the same component-wise magnitude of its complete vector change.
 

@@ -203,7 +203,7 @@ class Seed:
 class InitialState:
     model_id: str
     shape: Address3
-    slots_per_cell: int
+    slots_per_node: int
     link_ticks: int
     normal_budget: int
     ticks: int
@@ -224,11 +224,6 @@ class InitialState:
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
     conservation: ConservationDefinition | None = None
-
-    @property
-    def slots_per_node(self) -> int:
-        """Canonical name for the legacy ``slots_per_cell`` configuration field."""
-        return self.slots_per_cell
 
 
 class Departure(NamedTuple):
@@ -289,9 +284,3 @@ class NodeView:
     available_tick: int
     received_count: int
     last_cost: int
-
-
-# Legacy compatibility names. They are not separate physical concepts; new code
-# must use DisturbanceNodeState and NodeView.
-DisturbanceCell = DisturbanceNodeState
-CellView = NodeView

@@ -20,7 +20,7 @@ rules and transformation accounting. Schema 2 remains unchanged.
 ## Local state and propagation
 
 Each spatial field references an existing scalar/vector field definition, with
-its units, scale, sign, extensivity and `conserved` flag. Each materialized cell
+its units, scale, sign, extensivity and `conserved` flag. Each materialized node
 has eight octant populations, bounded allocation phases and six delivered
 directional samples. All payloads use positive integer encoding. These are
 independent of the disturbance slots; there are no source IDs or histories.
@@ -29,7 +29,7 @@ Octants are `+++`, `++-`, `+-+`, `+--`, `-++`, `-+-`, `--+`, `---`. An octant
 splits only among its three sign-compatible cardinal directions. Each hop
 therefore increases unwrapped Manhattan distance from its emission point by
 one. Sideways branches cannot reverse an octant's signs. Travel through +X
-enters the next cell through -X while remaining +X travel; the face does not
+enters the next node through -X while remaining +X travel; the face does not
 negate the payload. Periodic boundary return is a separate effect.
 
 The six delivered samples are a projection of inventory, never extra stock.
@@ -62,10 +62,10 @@ This fragment uses schema version 1:
 }]
 ```
 
-`baseline` is immutable local background, zero when omitted. Untouched cells
+`baseline` is immutable local background, zero when omitted. Untouched nodes
 return it without creating active records. Only deviations propagate. The local
 value is baseline plus resident populations. Diagnostics count baseline once
-per lattice cell, not once per materialized sparse record.
+per lattice node, not once per materialized sparse record.
 
 `axis_weights` contains three nonnegative integers with a positive bounded sum;
 `octant_weights` contains eight. Both default to equal weights. They select
@@ -124,7 +124,7 @@ values, duplicate seeds and unknown keys are rejected.
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with
 `p = retain_numerator` and `q = retain_denominator`. On completing a link with an
-interior receiving cell, each original packet's octant component `v` becomes:
+interior receiving node, each original packet's octant component `v` becomes:
 
 ```text
 retained = sign(v) * floor(abs(v) * p / q)
@@ -136,7 +136,7 @@ separate incoming components of 1 with `p/q = 1/2` both disappear; merging them
 first and retaining 1 would implement a different law. The six delivered samples
 are built from the attenuated arrivals. Resident seeds and newly committed
 reactions first traverse a full link before this loss is applied. There is no
-loss merely because a carrier waits or a diagnostic reads a cell.
+loss merely because a carrier waits or a diagnostic reads a node.
 
 No decay remainder is retained. This is an explicit dissipative integer law,
 not conservation-preserving division. The immutable baseline is exempt and
@@ -153,11 +153,11 @@ nonzero input has occurred, all dynamic spatial populations therefore disappear
 after finitely many links, including on the periodic lattice. This does not
 promise that carriers stop moving or that unused allowances reach zero, nor a
 universal extinction tick independent of the source schedule. Allocation phases
-may remain in sparse cells after their physical stock vanishes.
+may remain in sparse nodes after their physical stock vanishes.
 
 ## Event order and cost
 
-At interval start `t`, each active cell evaluates resident sources and combines
+At interval start `t`, each active node evaluates resident sources and combines
 them with its owned octants. It validates the complete local proposal, moves
 ownership into six fixed link packets and records injection. Delivery occurs
 at `t + link_ticks`. In schema 2, decay is evaluated separately on each packet
@@ -174,26 +174,26 @@ A baseline never enters a packet or the escaped ledger. See
 [the boundary contract](DISTURBANCES.md#domain-boundary).
 
 The candidate has a separate fixed field clock. Priced spatial work contributes
-to a new carrier cycle at the same cell and interval; spatial forwarding itself
+to a new carrier cycle at the same node and interval; spatial forwarding itself
 does not wait for the carrier. Thus `normal_budget` controls carrier delay and
 does not bound the field stage's throughput. This is an explicit change from
 the old single uniform-delay stage, supported by the requested fixed-c field.
 Configurations without spatial fields retain the old timing contract.
 
 Every field operation, including receipt and configured decay, has a price.
-Completed-link decay cost is accumulated at the receiving cell and charged once
+Completed-link decay cost is accumulated at the receiving node and charged once
 in its next spatial cycle, alongside receipt and merge work. This does not change
-link speed. Inactive empty cells retain their allocation phases without repeatedly
+link speed. Inactive empty nodes retain their allocation phases without repeatedly
 charging old field work.
 
-The host scheduler indexes cells with field work or one pending cleanup phase,
-plus resident emitters and spatially coupled carriers. A known idle cell retains
+The host scheduler indexes nodes with field work or one pending cleanup phase,
+plus resident emitters and spatially coupled carriers. A known idle node retains
 its octant allocation phases and zero cost without a full history scan. New
-arrivals and committed reactions reactivate their local cell. An idle cell's
+arrivals and committed reactions reactivate their local node. An idle node's
 empty-phase timestamp is resolved from the field clock when accessed; a newly
-created cell is never backdated. This is host bookkeeping, not a skipped physical
+created node is never backdated. This is host bookkeeping, not a skipped physical
 tick or a changed delay. Inventory diagnostics may use this index because idle
-cells own no dynamic populations. Neither the index nor measured totals supplies
+nodes own no dynamic populations. Neither the index nor measured totals supplies
 values to a field law.
 A previously frozen carrier proposal retains its original physical values and
 cost; later field activity does not create computation debt. Carriers within

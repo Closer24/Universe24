@@ -1,19 +1,19 @@
 """The historical v10-contact scalar model: local source meaning, nonnegative field and response choices.
 
 Reusable arithmetic lives in fields/ and dynamics/. This adapter alone maps
-their records to the simulator's fixed cell and particle state.
+their records to the simulator's fixed node and particle state.
 """
 
 from dataclasses import dataclass
 
 from event_universe.core.contracts import ParticleUpdate
 from event_universe.core.state import (
-    CellState,
     Config,
     Neighbors,
+    NodeState,
     ParticleState,
     checked,
-    validate_cell,
+    validate_node,
     validate_particle,
 )
 from event_universe.dynamics.movement import MovementRule, advance_movement
@@ -46,37 +46,37 @@ class ScalarFieldModel:
     movement: MovementRule = advance_movement
 
     def update_field(
-        self, cell: CellState, neighbors: Neighbors, sources: int, config: Config
-    ) -> CellState:
+        self, node: NodeState, neighbors: Neighbors, sources: int, config: Config
+    ) -> NodeState:
         sample = self.field.advance(
-            ScalarSample(cell.phi, cell.remainder),
+            ScalarSample(node.phi, node.remainder),
             neighbors,
             source=uniform_source(sources, config.source_strength),
             denominator=config.field_den,
         )
         validate_sample(sample, config.field_den)
         selected = nonnegative_sample(sample)
-        return cell._replace(phi=selected.value, remainder=selected.remainder)
+        return node._replace(phi=selected.value, remainder=selected.remainder)
 
-    def field_is_active(self, previous: CellState, current: CellState, sources: int) -> bool:
+    def field_is_active(self, previous: NodeState, current: NodeState, sources: int) -> bool:
         return self.activity(
             ScalarSample(previous.phi, previous.remainder),
             ScalarSample(current.phi, current.remainder),
             sources,
         )
 
-    def cancel_scalar_halo(self, cell: CellState) -> CellState:
-        """Map the selected local halo policy back to the fixed cell record."""
-        sample = cancel_scalar_sample(ScalarSample(cell.phi, cell.remainder))
-        return cell._replace(phi=sample.value, remainder=sample.remainder)
+    def cancel_scalar_halo(self, node: NodeState) -> NodeState:
+        """Map the selected local halo policy back to the fixed node record."""
+        sample = cancel_scalar_sample(ScalarSample(node.phi, node.remainder))
+        return node._replace(phi=sample.value, remainder=sample.remainder)
 
     def update_particle(
-        self, particle: ParticleState, cell: CellState, neighbors: Neighbors, config: Config, tick: int
+        self, particle: ParticleState, node: NodeState, neighbors: Neighbors, config: Config, tick: int
     ) -> ParticleUpdate:
         raw_gradient = gradient(neighbors)
         response = self.turning.apply(
             particle.momentum,
-            (cell.px, cell.py, cell.pz),
+            (node.px, node.py, node.pz),
             raw_gradient,
             (particle.force_rx, particle.force_ry, particle.force_rz),
             numerator=config.force_num,
@@ -92,7 +92,7 @@ class ScalarFieldModel:
             momentum_den=particle.momentum_den,
             budget_den=particle.move_budget_den,
         )
-        next_cell = cell._replace(
+        next_node = node._replace(
             px=response.field_momentum[0], py=response.field_momentum[1], pz=response.field_momentum[2]
         )
         next_particle = particle._replace(
@@ -107,9 +107,9 @@ class ScalarFieldModel:
             axis_phase=move.phase,
             last_update_tick=checked(tick),
         )
-        validate_cell(next_cell)
+        validate_node(next_node)
         validate_particle(next_particle)
-        return ParticleUpdate(next_particle, next_cell, move.direction, raw_gradient, response.impulse)
+        return ParticleUpdate(next_particle, next_node, move.direction, raw_gradient, response.impulse)
 
 
 # Model choices are explicit here; generic primitives have no defaults for this model.

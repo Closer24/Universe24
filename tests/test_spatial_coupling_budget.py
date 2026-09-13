@@ -243,7 +243,7 @@ def initialization(*, delayed=False, emitting=False):
         "schema_version": 2,
         "model_id": "finite-spatial-reaction-v2",
         "shape": [31, 31, 31],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": 2,
         "normal_budget": 100 if delayed else 100000,
         "ticks": 8,
@@ -311,14 +311,14 @@ def accounted_inventory(world):
 @pytest.mark.parametrize(("delayed", "emitting"), [(False, False), (True, False), (True, True)])
 def test_finite_allowance_commits_with_the_carrier_and_survives_movement(delayed, emitting):
     world = Simulation(parse_initial_state(initialization(delayed=delayed, emitting=emitting)))
-    original = next(record for record in world.cells[(15, 15, 15)].records if record is not None)
+    original = next(record for record in world.nodes[(15, 15, 15)].records if record is not None)
     world.step()
     if delayed:
-        ready = world.cells[(15, 15, 15)].pending.ready_tick
+        ready = world.nodes[(15, 15, 15)].pending.ready_tick
         assert ready >= 2
         emission_remaining = []
         while world.tick < ready:
-            resident = next(record for record in world.cells[(15, 15, 15)].records if record is not None)
+            resident = next(record for record in world.nodes[(15, 15, 15)].records if record is not None)
             assert resident.spatial_remaining == original.spatial_remaining
             assert amount(resident) == (5, 0, 0)
             if emitting:
@@ -337,18 +337,18 @@ def test_finite_allowance_commits_with_the_carrier_and_survives_movement(delayed
     while world.tick < arrival:
         assert accounted_inventory(world) == (5, 0, 0)
         world.step()
-    arrived = next(record for record in world.cells[(15, 16, 15)].records if record is not None)
+    arrived = next(record for record in world.nodes[(15, 16, 15)].records if record is not None)
     assert amount(arrived) == (0, 5, 0)
     assert remaining(arrived) == ((0, 0, 0),)
     for _ in range(40):
-        cell = world.cells.get((15, 17, 15))
-        if cell is not None and any(record is not None for record in cell.records):
+        node = world.nodes.get((15, 17, 15))
+        if node is not None and any(record is not None for record in node.records):
             break
         world.step()
         assert accounted_inventory(world) == (5, 0, 0)
     else:
         pytest.fail("the exhausted carrier did not continue along its unchanged direction")
-    later = next(record for record in world.cells[(15, 17, 15)].records if record is not None)
+    later = next(record for record in world.nodes[(15, 17, 15)].records if record is not None)
     assert amount(later) == (0, 5, 0)
     assert remaining(later) == ((0, 0, 0),)
     assert accounted_inventory(world) == (5, 0, 0)

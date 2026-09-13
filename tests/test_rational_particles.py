@@ -26,7 +26,7 @@ def load(name):
 
 def bodies(world):
     snap = world.snapshot()
-    return [r["values"] for c in snap["cells"] for r in c["disturbances"]] + [
+    return [r["values"] for c in snap["nodes"] for r in c["disturbances"]] + [
         r["values"] for r in snap["transfers"]
     ]
 
@@ -105,8 +105,8 @@ def test_fractional_elastic_contact_preserves_decoded_values_every_tick(name):
         assert totals(world) == initial
         assert all(
             all(0 < code for code in record.route_count_codes)
-            for cell in world.cells.values()
-            for record in cell.records
+            for node in world.nodes.values()
+            for record in node.records
             if record is not None
         )
 

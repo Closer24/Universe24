@@ -32,7 +32,7 @@ def document(*, moving=False, source=False, baseline=0, components=1, travel=1, 
         "schema_version": 1,
         "model_id": "configured-outward-integration-v1",
         "shape": [31, 31, 31],
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": travel,
         "normal_budget": budget,
         "ticks": 5,
@@ -88,8 +88,8 @@ def value(world, position):
 
 
 def residents(world, position):
-    cell = world.cells.get(position)
-    return [] if cell is None else [world.record_values(r) for r in cell.records if r is not None]
+    node = world.nodes.get(position)
+    return [] if node is None else [world.record_values(r) for r in node.records if r is not None]
 
 
 def test_isolated_pulse_keeps_exact_inventory_on_an_outward_causal_shell():
@@ -113,7 +113,7 @@ def test_isolated_pulse_keeps_exact_inventory_on_an_outward_causal_shell():
         if distance == 1:
             assert observed == {port: 36 for port in PORTS}
         elif distance == 2:
-            # Six axial cells and twelve diagonal cells, each with twelve units.
+            # Six axial nodes and twelve diagonal nodes, each with twelve units.
             assert len(observed) == 18 and set(observed.values()) == {12}
         else:
             assert observed[(3, 0, 0)] == 4
@@ -175,7 +175,7 @@ def test_field_front_keeps_fixed_transit_while_the_source_waits_for_computation(
     for tick in range(1, 4):
         world.step()
         assert residents(world, ORIGIN) == [{"strength": (72,), "heading": (1, 0, 0)}]
-        assert world.cells[ORIGIN].pending is not None
+        assert world.nodes[ORIGIN].pending is not None
         assert world.totals() == {"strength": (72,), "radiation": (72 * tick,)}
     assert value(world, offset(ORIGIN, (3, 0, 0)))[0] > 0
     origin_cost = next(
@@ -208,7 +208,7 @@ def test_uniform_baseline_is_implicit_and_neither_emits_nor_decays(baseline):
         assert world.source_totals() == {"strength": (0,), "radiation": (0,)}
     assert world.snapshot()["spatial_fields"] == before["spatial_fields"]
     assert world.snapshot()["spatial_transfers"] == []
-    assert not world.cells
+    assert not world.nodes
 
 
 def test_pulse_inventory_is_owned_once_during_multitick_transit():
@@ -258,8 +258,8 @@ def test_moving_source_example_records_headless_source_and_spatial_evidence(tmp_
     assert metadata["conserved_at_every_completed_tick"]
     assert state["spatial_fields"]
     assert "spatial_transfers" in state
-    occupied = [cell for cell in state["cells"] if cell["disturbances"]]
-    assert [cell["position"] for cell in occupied] == [[20, 15, 15]]
+    occupied = [node for node in state["nodes"] if node["disturbances"]]
+    assert [node["position"] for node in occupied] == [[20, 15, 15]]
     assert {path.name for path in tmp_path.iterdir()} == {
         "initialization.json",
         "events.jsonl",
@@ -377,7 +377,7 @@ def test_renaming_fields_and_source_type_does_not_change_spatial_physics_or_timi
     for _ in range(4):
         for world in worlds:
             world.step()
-        assert worlds[0].cells == worlds[1].cells
+        assert worlds[0].nodes == worlds[1].nodes
         assert worlds[0].links == worlds[1].links
         first = json.dumps(worlds[0].snapshot(), sort_keys=True)
         for before, after in mapping.items():
@@ -387,7 +387,7 @@ def test_renaming_fields_and_source_type_does_not_change_spatial_physics_or_timi
         assert list(worlds[0].source_totals().values()) == list(worlds[1].source_totals().values())
 
 
-def test_departed_pulse_leaves_no_permanent_computation_load_at_a_visited_cell():
+def test_departed_pulse_leaves_no_permanent_computation_load_at_a_visited_node():
     traces = []
     for pulse in (False, True):
         raw = document(source=True)

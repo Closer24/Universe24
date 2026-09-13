@@ -1,6 +1,6 @@
 """Demand-driven joint-state backend owned by DeferredQuantum.
 
-Acyclic per-cell heads describe the wave; read-only queries never select old paths.
+Acyclic per-node heads describe the wave; read-only queries never select old paths.
 Recorded constraints close the conservative backward cone. Only an explicitly
 supplied local instrument can commit an outcome. This is an opt-in finite
 quantum candidate, not a derived field law; native integration shares the causal metadata owner.
@@ -71,7 +71,7 @@ class EventNetworkConfig:
             ):
                 raise ValueError("register names must be distinct bounded strings")
         elif len(set(self.addresses)) != len(self.addresses):
-            raise ValueError("cell addresses must be distinct without explicit register names")
+            raise ValueError("node addresses must be distinct without explicit register names")
         if type(self.dimensions) is not tuple or (
             self.dimensions and len(self.dimensions) != len(self.addresses)
         ):
@@ -88,11 +88,11 @@ class EventNetworkConfig:
                 if not 0 <= checked(level) < dimension:
                     raise ValueError("initial level outside register basis")
         if type(self.occupied) is not tuple:
-            raise TypeError("occupied cells must be immutable")
+            raise TypeError("occupied nodes must be immutable")
         for site in self.occupied:
             checked(site)
             if not 0 <= site < len(self.addresses):
-                raise ValueError("occupied cell outside network")
+                raise ValueError("occupied node outside network")
         if len(set(self.occupied)) != len(self.occupied):
             raise ValueError("duplicate initial occupation")
         for value in (self.max_nodes, self.max_eval_nodes, self.max_terms, self.max_records):
@@ -401,7 +401,7 @@ class EventNetwork:
         return reply
 
     def joint_state(self) -> State:
-        """Read-only host diagnostic, not a fixed-size physical cell reply."""
+        """Read-only host diagnostic, not a fixed-size physical node reply."""
         ids, _ = self._plan(tuple(range(len(self.config.addresses))))
         state = self._evaluate(ids)[0]
         if isinstance(state, DensityState):

@@ -67,7 +67,7 @@ class Config:
     field_den: int = 7
     force_num: int = 1
     force_den: int = 64
-    max_particles_per_cell: int = 4
+    max_particles_per_node: int = 4
 
     def __post_init__(self) -> None:
         for field in fields(self):
@@ -80,7 +80,7 @@ class Config:
                 self.c_units,
                 self.field_den,
                 self.force_den,
-                self.max_particles_per_cell,
+                self.max_particles_per_node,
             )
             <= 0
         ):
@@ -89,7 +89,7 @@ class Config:
             raise ValueError("source strength and coupling must be non-negative")
 
 
-class CellState(NamedTuple):
+class NodeState(NamedTuple):
     phi: int = 0
     px: int = 0
     py: int = 0
@@ -124,15 +124,15 @@ class ParticleState(NamedTuple):
         return self.px, self.py, self.pz
 
 
-CELL_REGISTERS = len(CellState._fields)
+NODE_REGISTERS = len(NodeState._fields)
 PARTICLE_REGISTERS = len(ParticleState._fields)
-ZERO_CELL = CellState()
+ZERO_NODE = NodeState()
 
 
-def validate_cell(cell: CellState) -> None:
-    for value in cell:
+def validate_node(node: NodeState) -> None:
+    for value in node:
         checked(value)
-    if cell.phi < 0:
+    if node.phi < 0:
         raise ValueError("scalar field must be non-negative")
 
 

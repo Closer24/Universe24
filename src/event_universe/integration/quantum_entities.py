@@ -87,7 +87,7 @@ def compile_quantum_entities(
         "model_id": "catalog-finite-quantum-modes-v1",
         "shape": list(shape),
         "boundary": "open",
-        "slots_per_cell": 1,
+        "slots_per_node": 1,
         "link_ticks": link_ticks,
         "normal_budget": 10000,
         "ticks": ticks,

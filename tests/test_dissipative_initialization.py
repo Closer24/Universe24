@@ -5,7 +5,7 @@ from typing import Any
 import pytest
 
 from event_universe.core.disturbance_state import MAX_VALUE, OPERATIONS, unpack
-from event_universe.core.spatial_state import DecayDefinition, SpatialCell
+from event_universe.core.spatial_state import DecayDefinition, SpatialNodeState
 from event_universe.initialization import parse_initial_state
 
 
@@ -14,7 +14,7 @@ def document(*, version: int = 2) -> dict[str, Any]:
         "schema_version": version,
         "model_id": "arbitrary-configured-identity",
         "shape": [9, 9, 9],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": 1,
         "normal_budget": 10000,
         "ticks": 4,
@@ -84,7 +84,7 @@ def test_v2_parses_finite_laws_without_interpreting_model_identity() -> None:
         )
     record = initial.seeds[0].record
     assert record.emission_remaining == record.spatial_remaining == ()
-    assert SpatialCell(()).received_decay_cost == 0
+    assert SpatialNodeState(()).received_decay_cost == 0
 
 
 def test_v1_retains_unbounded_source_and_conservative_field_defaults() -> None:

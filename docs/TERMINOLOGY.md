@@ -47,11 +47,11 @@ Directional delay belongs to a Node's outgoing scheduling. It is an integer mult
 
 ## Terms that are not canonical physical concepts
 
-`Cell` and `Site` are not separate physical entities in the active model.
+`Node` and `Site` are not separate physical entities in the active model.
 
 - New active code, documentation, tests and diagnostics must use `Node` or `NodeState` when referring to a simulation location or its local state.
 - `Site` may appear only when describing a mathematical topology set or a quoted external/historical API where changing the word would change that API's identity.
-- `Cell` may appear only inside explicitly historical compatibility APIs or migration notes that name an old identifier. Such text must say that the identifier is legacy; it must not define a second physical concept.
+- `Node` may appear only inside explicitly historical compatibility APIs or migration notes that name an old identifier. Such text must say that the identifier is legacy; it must not define a second physical concept.
 - Historical identifiers are migrated toward `Node` / `NodeState` when their public compatibility contract allows it.
 
 ## Naming rule
@@ -64,6 +64,6 @@ When adding or renaming active implementation symbols:
 - use `link` for in-transit ownership;
 - use `event` for a local transition;
 - use `scalar` / `vector` for physical value shape;
-- do not introduce `cell`, `site`, `input state`, or `output state` as alternative physical nouns.
+- do not introduce `node`, `site`, `input state`, or `output state` as alternative physical nouns.
 
 Configuration keys that predate this contract may remain temporarily for backward compatibility. Their documentation must describe them using the canonical Node vocabulary and migration must not silently change physical behavior.

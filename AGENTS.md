@@ -36,7 +36,7 @@ and output are roles of Scalars/Vectors, not additional physical value types.
 Nodes are connected by **Links** through directional **Ports**; local changes are
 **Events** and configured local logic is a **LocalRule**.
 
-Do not introduce `Cell` or `Site` as alternative active physical nouns. They may
+Do not introduce `Node` or `Site` as alternative active physical nouns. They may
 appear only in explicitly historical compatibility identifiers, migration notes,
 or a mathematical topology set where the term has a distinct established meaning.
 New active identifiers use `node`, `nodes` and `NodeState`.

@@ -99,8 +99,8 @@ def test_repeated_pure_queries_do_not_resample_or_grow_history():
 def test_bridges_share_one_owner_and_one_cache():
     q, root = interferometer(0)
     a, b = QuantumBridge(q), QuantumBridge(q)
-    one = a.query_cell(root, (1, 0, 1), 8)
-    two = b.query_cell(root, (1, 0, 1), 8)
+    one = a.query_node(root, (1, 0, 1), 8)
+    two = b.query_node(root, (1, 0, 1), 8)
     assert one.amplitude == two.amplitude == (2, 0)
     assert (one.cache_hit, two.cache_hit) == (0, 1)
     assert q.query_stats.successful_queries == 2
@@ -111,7 +111,7 @@ def test_legacy_measure_uses_same_oracle_not_another_evaluator():
     q, root = interferometer(2)
     bridge = QuantumBridge(q)
     first = bridge.measure(100, root)
-    second = bridge.query_cell(root, (1, 0, 1), 8)
+    second = bridge.query_node(root, (1, 0, 1), 8)
     assert first.weight == second.weight == 0
     assert first.cost == second.cost == (1, 0)
     assert second.cache_hit == 1
@@ -183,7 +183,7 @@ def test_future_query_is_rejected_without_caching_or_successful_accounting():
     assert q.query_stats.successful_queries == 0
 
 
-def test_query_for_wrong_cell_is_rejected():
+def test_query_for_wrong_node_is_rejected():
     q, root = interferometer()
     with pytest.raises(ValueError, match="local quantum"):
         q.query(QuantumQuery(root, (20, 20, 20), 8))
@@ -314,18 +314,18 @@ def test_real_world_unchanged_by_many_unit_cost_queries_and_keeps_evolving():
         integrated.step()
     before = (
         integrated.tick,
-        dict(integrated.cells),
+        dict(integrated.nodes),
         dict(integrated.particles),
         dict(integrated.occupancy),
         integrated.active,
         total_momentum(integrated),
     )
     for _ in range(20):
-        reply = bridge.query_cell(root, (1, 0, 1), integrated.tick)
+        reply = bridge.query_node(root, (1, 0, 1), integrated.tick)
         assert reply.cost == (1, 0)
     after = (
         integrated.tick,
-        dict(integrated.cells),
+        dict(integrated.nodes),
         dict(integrated.particles),
         dict(integrated.occupancy),
         integrated.active,
@@ -336,7 +336,7 @@ def test_real_world_unchanged_by_many_unit_cost_queries_and_keeps_evolving():
         baseline.step()
         integrated.step()
         assert baseline.tick == integrated.tick
-        assert dict(baseline.cells) == dict(integrated.cells)
+        assert dict(baseline.nodes) == dict(integrated.nodes)
         assert dict(baseline.particles) == dict(integrated.particles)
         assert dict(baseline.occupancy) == dict(integrated.occupancy)
         assert baseline.active == integrated.active

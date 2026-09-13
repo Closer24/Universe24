@@ -46,7 +46,7 @@ recording. The modern `ScalarSimulation` has no retained history by default.
 | --- | --- |
 | `world.particles[pid][PX]` | Still supported for reading; prefer `.px` |
 | `world.particles[pid][PX] = value` | State is immutable; supply momentum in initial conditions |
-| `world._cell(address)[PHI] = value` | `world.seed_field(address, value)` before the first tick |
+| `world._node(address)[PHI] = value` | `world.seed_field(address, value)` before the first tick |
 | `world.config = other_config` | Create a new world; configuration is immutable |
 | `self_tests()` | `python -m pytest` or `python tools/check.py` |
 | `regression_two_particle_plane()` | `test_original_180_tick_two_particle_regression` |
@@ -81,8 +81,8 @@ Activity decisions are now injected into `ScalarEngine` with the optional
 `ScalarSimulation(field=...)` tracks both value and remainder changes by default.
 This fixes prematurely stopped remainder-only evolution for replacement fields.
 Explicit `ScalarSimulation(field_activity=...)` accepts a predicate over two scalar
-samples and a source count. Direct `ScalarEngine` predicates receive two cell records
-and a source count; omitting one retains visited cells conservatively.
+samples and a source count. Direct `ScalarEngine` predicates receive two node records
+and a source count; omitting one retains visited nodes conservatively.
 Periodic geometry is shared by all engine operations in `core/lattice.py`.
 
 ## Version history

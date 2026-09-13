@@ -17,7 +17,7 @@ def document():
 
 
 def owned(world):
-    records = [r for c in world.cells.values() for r in c.records if r is not None]
+    records = [r for c in world.nodes.values() for r in c.records if r is not None]
     records += [p.record for ps in world.links.values() for p in ps if p is not None]
     return sorted((r.type_index, world.record_values(r)) for r in records)
 
@@ -35,8 +35,8 @@ def test_conversion_preserves_inventory_and_transports_two_outputs_causally():
         ]
     sent = [e for e in events if e["event"] == "sent"]
     assert sent and all(e["arrival_tick"] == e["tick"] + 2 for e in sent)
-    assert any(r is not None for r in world.cells[(7, 4, 4)].records)
-    assert any(r is not None for r in world.cells[(1, 4, 4)].records)
+    assert any(r is not None for r in world.nodes[(7, 4, 4)].records)
+    assert any(r is not None for r in world.nodes[(1, 4, 4)].records)
 
 
 def test_conversion_wait_keeps_original_owners_and_does_not_apply_output_defaults():
@@ -46,8 +46,8 @@ def test_conversion_wait_keeps_original_owners_and_does_not_apply_output_default
         kind["defaults"]["stock"] = 999
     world = Simulation(parse_initial_state(raw))
     world.step()
-    cell = world.cells[(4, 4, 4)]
-    assert cell.pending is not None
+    node = world.nodes[(4, 4, 4)]
+    assert node.pending is not None
     assert [i for i, _ in owned(world)] == [0, 1]
     for _ in range(200):
         world.step()
@@ -75,7 +75,7 @@ def test_conversion_rejection_has_no_partial_type_change_or_pending_plan(failure
     with pytest.raises(ValueError, match="conservation|invariant|zero carried"):
         world.step()
     assert world.snapshot() == before
-    assert all(cell.pending is None for cell in world.cells.values())
+    assert all(node.pending is None for node in world.nodes.values())
 
 
 @pytest.mark.parametrize(
@@ -95,7 +95,7 @@ def test_conversion_cannot_discard_new_routing_registers(carried):
     with pytest.raises(ValueError, match="zero carried"):
         world.step()
     assert world.snapshot() == before
-    assert all(cell.pending is None for cell in world.cells.values())
+    assert all(node.pending is None for node in world.nodes.values())
 
 
 @pytest.mark.parametrize(
@@ -124,7 +124,7 @@ def test_conversion_rejects_unsupported_ownership_at_initialization(failure):
             }
         ]
     else:
-        raw["slots_per_cell"] = 1
+        raw["slots_per_node"] = 1
     with pytest.raises(ValueError):
         parse_initial_state(raw)
 
@@ -177,7 +177,7 @@ def test_incoming_carriers_convert_after_real_neighbor_arrival_and_reverse():
     world.step()
     assert [i for i, _ in owned(world)] == [0, 1]
     world.step()
-    arrivals = [r for r in world.cells[(4, 4, 4)].records if r is not None]
+    arrivals = [r for r in world.nodes[(4, 4, 4)].records if r is not None]
     assert {r.channel_code for r in arrivals} == {2, 3}
     assert {r.type_index for r in arrivals} == {0, 1}
     for _ in range(4):
@@ -187,7 +187,7 @@ def test_incoming_carriers_convert_after_real_neighbor_arrival_and_reverse():
             (3, {"stock": (3,), "momentum": (1, 0, 0)}),
         ]
         assert world.totals() == {"stock": (5,), "momentum": (0, 0, 0)}
-    assert any(r is not None for r in world.cells[(2, 4, 4)].records)
-    assert any(r is not None for r in world.cells[(6, 4, 4)].records)
+    assert any(r is not None for r in world.nodes[(2, 4, 4)].records)
+    assert any(r is not None for r in world.nodes[(6, 4, 4)].records)
     sent = [e for e in events if e["event"] == "sent"]
     assert sent and all(e["arrival_tick"] == e["tick"] + 2 for e in sent)

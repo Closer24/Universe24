@@ -19,14 +19,14 @@ def test_all_small_directions_have_bounded_prefix_error():
             direction, phase = choose_balanced_axis(momentum, phase)
             for axis, delta in enumerate(DIRECTIONS[direction]):
                 position[axis] += delta
-                # Strict cell bounds, checked without floating-point tolerances.
+                # Strict node bounds, checked without floating-point tolerances.
                 bound = total if axis == 0 else 2 * total
                 assert abs(position[axis] * total - hop * momentum[axis]) < bound
         assert position == [2 * v for v in momentum]
         assert phase == 0
 
 
-def test_large_diagonal_does_not_walk_hundreds_of_cells_on_one_axis():
+def test_large_diagonal_does_not_walk_hundreds_of_nodes_on_one_axis():
     phase = 0
     counts = [0, 0, 0]
     for _ in range(10):

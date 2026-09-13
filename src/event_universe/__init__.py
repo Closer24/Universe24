@@ -19,7 +19,7 @@ def __getattr__(name: str) -> Any:
         "BalancedSimulation": ".particle_api",
         "CausalStreamSimulation": ".particle_api",
         "Config": ".core.state",
-        "CellState": ".core.state",
+        "NodeState": ".core.state",
         "ParticleState": ".core.state",
         "LinkConfig": ".core.links",
         "CausalStreamConfig": ".models.causal_stream",

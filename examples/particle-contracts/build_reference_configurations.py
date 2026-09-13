@@ -41,7 +41,7 @@ def base():
         "model_id": "bounded-rational-particle-candidate-v1",
         "shape": [17, 17, 17],
         "boundary": "periodic",
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "ticks": 180,
         "normal_budget": 100000000,

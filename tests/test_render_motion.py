@@ -68,7 +68,7 @@ def test_periodic_crossing_uses_domain_size(before, after, shape, expected):
         ((4, 5, 31), (4, 5, 1), True),
     ],
 )
-def test_periodic_marker_does_not_hide_a_multi_cell_jump(before, after, expected):
+def test_periodic_marker_does_not_hide_a_multi_node_jump(before, after, expected):
     shape = (64, 48, 32)
     assert _periodic_crossing(before, after, shape)
     assert _display_jump(before, after, shape) is expected

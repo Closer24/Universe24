@@ -46,7 +46,7 @@ def test_terminal_playback_preserves_outward_direction_without_wrapping_or_mutat
     frame = {
         "tick": 2,
         "boundary": "open",
-        "cells": [],
+        "nodes": [],
         "transfers": [
             {
                 "origin": origin,
@@ -80,7 +80,7 @@ def test_terminal_playback_preserves_outward_direction_without_wrapping_or_mutat
 def test_legacy_periodic_movie_keeps_wrapped_transfer_positions(boundary):
     frame = {
         "tick": 2,
-        "cells": [],
+        "nodes": [],
         "transfers": [
             {
                 "origin": [0, 2, 2],
@@ -109,7 +109,7 @@ def test_legacy_periodic_movie_keeps_wrapped_transfer_positions(boundary):
 def test_field_only_movie_draws_node_vectors_and_separate_transfer_values_without_mutation():
     frame = {
         "tick": 0,
-        "cells": [],
+        "nodes": [],
         "transfers": [],
         "spatial_baselines": {"a": [2, 0, 0], "b": [0, 0, 0]},
         "spatial_fields": [
@@ -159,7 +159,7 @@ def test_field_only_movie_draws_node_vectors_and_separate_transfer_values_withou
         "const window={devicePixelRatio:1},location={search:''};"
         "class ResizeObserver{observe(){}}function requestAnimationFrame(){}",
         "console.log(JSON.stringify({rows:elements.get('#records').children.map(row=>"
-        "row.children.map(cell=>cell.textContent)),labels:calls.filter(call=>call[0]==='fillText'),"
+        "row.children.map(node=>node.textContent)),labels:calls.filter(call=>call[0]==='fillText'),"
         "rectangles:calls.filter(call=>call[0]==='rect').length,"
         "values:visibleSpatialFields(frames[0]).map(record=>record.value),"
         "unchanged:JSON.stringify({frames,metadata})===JSON.stringify(input)}));",
@@ -305,7 +305,7 @@ def test_add_editor_item_uses_an_unused_name_without_changing_existing_defaults(
         "schema_version": 1,
         "model_id": "editor-name-check",
         "shape": [3, 3, 3],
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 1000,
         "ticks": 0,

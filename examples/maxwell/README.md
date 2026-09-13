@@ -77,7 +77,7 @@ The eleven runs were repeated after the shared-vector refactor in main
 `2fe9c43b9ffe6033e428d83861ca4c3461651347`; all frames and entire event traces
 were identical to the earlier runs. Integration then included main
 `99b9f5f0034ea288f7de0a2a8d7645220c45d8aa`. Its only added source module is
-the unreferenced read-only `diagnostics/cell_contract.py`; the executed source
+the unreferenced read-only `diagnostics/node_contract.py`; the executed source
 files and candidate inputs are unchanged, so the recorded physical evidence
 is reused without relabeling its source fingerprint.
 

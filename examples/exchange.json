@@ -2,7 +2,7 @@
   "schema_version": 1,
   "model_id": "configured-local-exchange-demo-v1",
   "shape": [7, 7, 7],
-  "slots_per_cell": 4,
+  "slots_per_node": 4,
   "link_ticks": 1,
   "normal_budget": 1000,
   "ticks": 8,

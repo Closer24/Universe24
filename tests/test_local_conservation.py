@@ -25,7 +25,7 @@ def configuration(boundary="periodic"):
         "schema_version": 1,
         "model_id": "local-conservation-test-v1",
         "shape": [5, 5, 5],
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": 2,
         "normal_budget": 10000,
         "ticks": 12,
@@ -120,7 +120,7 @@ def test_later_update_is_measured_after_commit_without_repair(tmp_path):
     assert failure["event"] == "cycle_committed"
     assert failure["residual"] == {"energy": -4, "momentum": (0, 0, 0)}
     assert world.conservation_report()["current"]["energy"] == 0
-    assert world.snapshot()["cells"][0]["disturbances"][0]["values"]["inventory"] == (0,)
+    assert world.snapshot()["nodes"][0]["disturbances"][0]["values"]["inventory"] == (0,)
     path = tmp_path / "input.json"
     path.write_text(json.dumps(raw))
     with pytest.raises(ValueError, match="local energy/momentum"):

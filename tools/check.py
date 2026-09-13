@@ -23,7 +23,7 @@ RESOURCE_CONSUMERS = {
     "examples/maxwell/configuration.py": ("tests/test_maxwell_configuration.py",),
     "examples/maxwell/measurements.py": ("tests/test_maxwell_configuration.py",),
     "examples/local_lorentz_field.json": (
-        "tests/test_cell_state_contract.py",
+        "tests/test_node_state_contract.py",
         "tests/test_local_lorentz_field.py",
     ),
     "examples/quantum/interference.json": ("tests/test_native_quantum_channels.py",),

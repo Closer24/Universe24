@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def residents(frame):
     return {
-        record["type"]: cell["position"] for cell in frame["cells"] for record in cell["disturbances"]
+        record["type"]: node["position"] for node in frame["nodes"] for record in node["disturbances"]
     }
 
 
@@ -43,7 +43,7 @@ def test_other_presets_conserve_and_change_distribution(name):
         assert positions["Fast beam"] == (40, 4, 4)
         assert positions["Slow beam"] == (24, 12, 4)
     else:
-        assert len([cell for cell in frame["cells"] if cell["disturbances"]]) > 1
+        assert len([node for node in frame["nodes"] if node["disturbances"]]) > 1
 
 
 @pytest.mark.visualization
@@ -69,7 +69,7 @@ def test_movie_embeds_exact_samples_and_final_state_without_changing_events(tmp_
 def test_movie_escapes_names_and_preserves_partial_failure(tmp_path):
     from event_universe.diagnostics.disturbance_render import render_disturbances
 
-    frames = [{"tick": 0, "cells": [], "transfers": []}]
+    frames = [{"tick": 0, "nodes": [], "transfers": []}]
     name = '</script><img src=x onerror="bad()">'
     output = render_disturbances(
         frames, tmp_path / "run.html", {"model": name, "status": "failed", "error": name}

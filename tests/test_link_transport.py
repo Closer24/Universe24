@@ -49,8 +49,8 @@ def test_busy_channel_has_one_snapshot_not_a_growing_queue_and_zero_is_delivered
         net.advance()
     assert net.at(q).received[1] == 0
     net.validate()
-    cell = net.at(p)
-    assert len(cell.received) + len(cell.lengths) + sum(len(p) for p in cell.outgoing) == LINK_REGISTERS
+    node = net.at(p)
+    assert len(node.received) + len(node.lengths) + sum(len(p) for p in node.outgoing) == LINK_REGISTERS
 
 
 def test_multiple_deliveries_and_owner_updates_are_iteration_order_independent():
@@ -63,7 +63,7 @@ def test_multiple_deliveries_and_owner_updates_are_iteration_order_independent()
     for _ in range(3):
         a.advance()
         b.advance()
-        assert a.cells == b.cells
+        assert a.nodes == b.nodes
         a.validate()
         b.validate()
 

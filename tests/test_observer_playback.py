@@ -50,7 +50,7 @@ function textTree(node){return [node.textContent,...(node.children||[]).map(text
 def recording():
     return {
         "frames": [
-            {"tick": tick, "cells": [], "transfers": [], "spatial_baselines": {"remote": [99]}}
+            {"tick": tick, "nodes": [], "transfers": [], "spatial_baselines": {"remote": [99]}}
             for tick in [100, 102, 107]
         ],
         "metadata": {"model": "distant world", "shape": [9, 9, 9], "link_ticks": 1},

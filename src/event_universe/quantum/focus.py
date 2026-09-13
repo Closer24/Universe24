@@ -43,7 +43,7 @@ class WeightedFocusCandidate(NamedTuple):
 
 @dataclass(frozen=True, slots=True)
 class FocusSet:
-    """Quantum-owned bounded configuration, never sent by a physical cell query."""
+    """Quantum-owned bounded configuration, never sent by a physical node query."""
 
     region: Region3D
     candidates: tuple[FocusCandidate, ...]
@@ -69,7 +69,7 @@ class FocusSet:
                 raise ValueError("focus candidate lies outside the root region")
             key = (candidate.address, candidate.outcome)
             if key in seen:
-                raise ValueError("focus candidates must identify distinct cell outcomes")
+                raise ValueError("focus candidates must identify distinct node outcomes")
             seen.add(key)
 
 

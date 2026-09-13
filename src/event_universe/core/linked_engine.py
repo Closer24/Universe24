@@ -7,7 +7,7 @@ from typing import NamedTuple
 from .contracts import CollisionRule, FieldActivity, FieldRule, Observer, ParticleRule
 from .links import LengthRule, LinkConfig, LinkTransport
 from .scalar_engine import ScalarEngine
-from .state import Address, CellState, Config, Neighbors, Vector, checked, validate_cell
+from .state import Address, Config, Neighbors, NodeState, Vector, checked, validate_node
 
 TransitRule = Callable[[int, Vector, int, int, int], int]
 
@@ -20,11 +20,11 @@ class Transit(NamedTuple):
 
 
 class LinkedEngine(ScalarEngine):
-    """Cell-owned links, delivered neighbor values and frozen integer transits.
+    """Node-owned links, delivered neighbor values and frozen integer transits.
 
     The base scalar record and the extended particle record are shared with ScalarEngine.
-    Extra state: thirty link registers per materialized cell; four per transit.
-    Fixed K occupancy also bounds in-flight residents per departure cell.
+    Extra state: thirty link registers per materialized node; four per transit.
+    Fixed K occupancy also bounds in-flight residents per departure node.
     """
 
     def __init__(
@@ -79,22 +79,22 @@ class LinkedEngine(ScalarEngine):
         arrivals = self.links.advance()
         if self.tick == 0:
             # Initial field records must be published before a source-free law replaces them.
-            for position, cell in self._cells.items():
-                self.links.publish(position, cell.phi)
-        work = self._active | arrivals | set(self.links.cells)
-        updates: list[tuple[Address, CellState, bool]] = []
+            for position, node in self._nodes.items():
+                self.links.publish(position, node.phi)
+        work = self._active | arrivals | set(self.links.nodes)
+        updates: list[tuple[Address, NodeState, bool]] = []
         for position in work:
-            old = self.cell_at(position)
+            old = self.node_at(position)
             sources = sum(pid >= 0 for pid in self._occupancy.get(position, ()))
             new = self._field_rule(old, self.links.at(position).received, sources, self.config)
-            validate_cell(new)
+            validate_node(new)
             keep = True if self._field_activity is None else self._field_activity(old, new, sources)
             if type(keep) is not bool:
                 raise TypeError("field activity policy must return bool")
             updates.append((position, new, keep))
         self._active = set()
         for position, new, keep in updates:
-            self._cells[position] = new
+            self._nodes[position] = new
             if keep:
                 self._active.add(position)
         for position, new, _ in updates:

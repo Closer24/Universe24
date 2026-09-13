@@ -27,15 +27,15 @@ document owns the finite quantum state and instrument semantics.
 
 | Part | Definition |
 | --- | --- |
-| Physical input | Immutable unwrapped 3D cell addresses and a layer of disjoint one-cell or cardinal nearest-neighbor operations |
-| Initial state | Binary occupation per configured cell; source amplitudes define the joint state, not hidden classical paths |
-| Wave storage | Joint source/checkpoint state plus local matrix operations and per-cell predecessor links |
+| Physical input | Immutable unwrapped 3D node addresses and a layer of disjoint one-node or cardinal nearest-neighbor operations |
+| Initial state | Binary occupation per configured node; source amplitudes define the joint state, not hidden classical paths |
+| Wave storage | Joint source/checkpoint state plus local matrix operations and per-node predecessor links |
 | Coherent law | Explicit 2x2 or 4x4 Gaussian-integer matrix satisfying `U* U = scale I`, with positive common scale |
-| Instrument | Explicit one-cell family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
+| Instrument | Explicit one-node family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
 | Query | Conservative backward dependency closure, including relevant earlier recorded constraints, then forward amplitude evaluation |
 | Result | Local Born weights; no RNG, historical path selection, or physical-clock advance |
 | Decision | First compute every branch weight, then supply one uniform integer ticket; update only the selected conditional state |
-| State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical cells |
+| State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical nodes |
 | Resource contract | Bounded nodes, discovered dependencies, sparse terms, decisions and existing 32/64-bit arithmetic; explicit failure, never a guessed no-event result |
 
 `EventNetworkConfig` accepts 1–30 addresses; the 30-site cap keeps occupation
@@ -72,7 +72,7 @@ The links are not the wave by themselves: states and operation laws are essentia
 The traversal is conservative, not an optimal tensor-network contraction solver.
 No query of an uncomputed coherent branch chooses which historical route occurred.
 
-A decision is tied to its owner, record identity, cell, instrument and graph
+A decision is tied to its owner, record identity, node, instrument and graph
 revision. A graph change makes an uncommitted decision stale; use a fresh identity.
 Prepared identities consume the decision budget even if not committed. Callers
 must not accumulate unlimited abandoned requests. Past records remain available
@@ -83,7 +83,7 @@ in an immutable audit ledger; no API silently reuses their identities.
 The controller supplies a local instrument request. This can represent an
 explicit measurement or a configured contact with a fresh nonreturning environment.
 It is not conditional on a guessed sharp occupation, and no detector object must
-be planted in every cell. Both transfer and no-transfer are possible outcomes.
+be planted in every node. Both transfer and no-transfer are possible outcomes.
 
 A coherent interaction is a local unitary recipe and does not sample. A returning
 environment must remain in the joint coherent model. Choosing an outcome at every
@@ -95,7 +95,7 @@ terms as a mixed continuation rather than a fake sharp record.
 
 The controller knows its previous records and can compute conditional marginals.
 These weights are host information, not a classical signal available to a remote
-cell. No native Engine or generic field law consumes them in this addition. A
+node. No native Engine or generic field law consumes them in this addition. A
 future native bridge must define accessible records, scheduling and physical
 commits; a universal physical trigger has not been inferred from uncertainty.
 

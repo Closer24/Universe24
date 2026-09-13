@@ -21,7 +21,7 @@ class RecordOperations:
     """Activity, delivered-record combination and configured cost reporting.
 
     The scheduler supplies fixed local slots, pending locks and delivered values.
-    No method receives positions, time, packets, a cell owner or the whole world.
+    No method receives positions, time, packets, a node owner or the whole world.
     Existing arithmetic, slot order and cost accounting are preserved.
     """
 

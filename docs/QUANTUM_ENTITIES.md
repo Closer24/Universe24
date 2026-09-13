@@ -13,15 +13,15 @@ retains deferred dependencies, conditional constraints and checkpoints.
 `integration/event_program.py` validates serialized definitions.
 `integration/quantum_entities.py` compiles explicit catalog profiles; `entities.py`
 selects the representation without interpreting physical species. Definitions
-belong to the shared owner, not to individual physical cells.
+belong to the shared owner, not to individual physical nodes.
 
 ## Register definition
 
 A register has an in-domain address, dimension 2, 3 or 4, and an initial basis
 level. Optional `register_names` distinguish multiple degrees of freedom at one
-cell; names select no update law. With repeated addresses, every register must
+node; names select no update law. With repeated addresses, every register must
 have a distinct bounded name. A binding there must specify its `site` index.
-Different registers at the same cell are different degrees of freedom, not cloned
+Different registers at the same node are different degrees of freedom, not cloned
 copies of a particle. Operations between colocated registers are local and do not
 pay a fictitious neighbor transit. Actual neighbor operations still respect link
 travel time. Distant operations are rejected.

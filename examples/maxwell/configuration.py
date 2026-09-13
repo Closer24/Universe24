@@ -230,7 +230,7 @@ def build_configuration(
         "model_id": f"transverse-six-port-{mode}-v1",
         "shape": list(shape),
         "boundary": boundary,
-        "slots_per_cell": 1,
+        "slots_per_node": 1,
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": ticks,

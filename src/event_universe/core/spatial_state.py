@@ -188,8 +188,3 @@ def zero_spatial_state(components: int) -> SpatialState:
         raise ValueError("spatial fields require one or three components")
     zero = pack((0,) * components)
     return SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6)
-
-
-# Legacy compatibility name. It is not a separate physical concept; new code
-# must use SpatialNodeState.
-SpatialCell = SpatialNodeState

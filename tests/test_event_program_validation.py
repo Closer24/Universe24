@@ -32,7 +32,7 @@ def configuration(positions, *, capacity=1, addresses=None, model="causal-events
         "model_id": "static-native-validation-fixture",
         "shape": [5, 5, 5],
         "boundary": "open",
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 10000,
         "ticks": 10,
@@ -74,7 +74,7 @@ def test_empty_causal_program_needs_no_initial_source_event():
     assert parse_event_program(initial).capacity == 1
 
 
-def test_classical_sources_count_distinct_cells_and_accept_exact_capacity():
+def test_classical_sources_count_distinct_nodes_and_accept_exact_capacity():
     initial = parse_initial_state(configuration([(0, 0, 0), (0, 0, 0), (1, 0, 0)], capacity=2))
     assert len(initial.seeds) == 3
     assert parse_event_program(initial).capacity == 2

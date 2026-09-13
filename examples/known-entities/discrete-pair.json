@@ -7,7 +7,7 @@
     9
   ],
   "boundary": "open",
-  "slots_per_cell": 2,
+  "slots_per_node": 2,
   "link_ticks": 1,
   "normal_budget": 100000,
   "ticks": 16,

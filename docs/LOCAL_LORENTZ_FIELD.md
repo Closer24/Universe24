@@ -60,7 +60,7 @@ field/dynamics components or configured entity laws.
 walks the full reachable NodeState graph. [Its tests](../tests/test_node_state_contract.py)
 inspect declared state fields as well as live Nodes, pending transactions and
 packets, and inject forbidden objects to verify rejection. The old
-`diagnostics/cell_contract.py` path remains only as an explicit compatibility
+`diagnostics/node_contract.py` path remains only as an explicit compatibility
 shim. New state owner types require review rather than being accepted
 automatically. This finite structural guard supplements the existing architecture
 and locality audits; it cannot prove arbitrary code behavior.

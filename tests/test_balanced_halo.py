@@ -35,8 +35,8 @@ def test_old_and_new_six_neighbor_halos_are_quiescent_after_a_move():
     assert current != origin
     targets = {*world._lattice.neighbors(origin), *world._lattice.neighbors(current)}
     assert len(targets) <= 12
-    assert all(world.cell_at(address).phi == 0 for address in targets)
-    assert all(world.cell_at(address).remainder == 0 for address in targets)
+    assert all(world.node_at(address).phi == 0 for address in targets)
+    assert all(world.node_at(address).remainder == 0 for address in targets)
 
 
 def test_external_seed_still_changes_particle_momentum():

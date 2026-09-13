@@ -19,12 +19,12 @@ The core `EventResolver` protocol receives only a local immutable context and
 the existing local planner. `integration/event_runtime.py` composes the selected
 quantum owner with that protocol. Generic core and field modules do not import
 quantum. Initialization resolves arbitrary type/field labels to indices. Carrier
-cells, packets and pending cycles acquire only one optional event ID each; they never
+nodes, packets and pending cycles acquire only one optional event ID each; they never
 hold a growing history or a wave vector. Global counters and the bounded ledger
 are host bookkeeping, not a nonlocal input to local physics.
 
 Dependencies must refer to existing, nonfuture event IDs. Physical parent edges
-additionally require the same cell or a completed nearest-neighbor link, including
+additionally require the same node or a completed nearest-neighbor link, including
 configured periodic seams. Dependency-only edges confer no physical read access.
 Global numbering is bookkeeping, not a preferred physical signal. Coherent quantum
 operations preserve the existing disjoint local-layer contract; the native binder
@@ -44,7 +44,7 @@ The graph can be enabled without quantum rules.
 
 `event_program` is a JSON object stored as one immutable bounded configuration
 string in `InitialState`. Its contents are validated during initialization and
-again when composed. It never stores executable code or callbacks in cells.
+again when composed. It never stores executable code or callbacks in nodes.
 
 Choose `model: "causal-events-v1"` and a positive `capacity` for a classical-only
 causal ledger. Choose `model: "local-quantum-events-v1"` to additionally supply:
@@ -55,7 +55,7 @@ causal ledger. Choose `model: "local-quantum-events-v1"` to additionally supply:
   A complex coefficient is `[real, imag]`; a real coefficient may be one integer.
 - `bindings` (at most one per address). Each names one or two local `types`, an
   owned nonconserved/nonextensive scalar `field`, one `code` per outcome via
-  `codes`, and a complete one-cell `instrument`. A duplicate type selects two
+  `codes`, and a complete one-node `instrument`. A duplicate type selects two
   distinct records. The first matching distinct slots are used; this is not an
   all-pairs collision search. Other locally present records are unchanged.
 - A simulated RNG `seed`, or a bounded `tickets` stream for reproducible tests.

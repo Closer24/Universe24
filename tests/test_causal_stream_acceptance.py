@@ -25,8 +25,8 @@ def test_active_stream_matches_free_trajectory_at_every_tick(momentum):
         assert actual.momentum == free.momentum == momentum
         assert actual.position == free.position
         assert (actual.force_rx, actual.force_ry, actual.force_rz) == (0, 0, 0)
-        assert any(any(cell.populations) for cell in active.streams.cells.values())
-        assert not any(any(cell.populations) for cell in control.streams.cells.values())
+        assert any(any(node.populations) for node in active.streams.nodes.values())
+        assert not any(any(node.populations) for node in control.streams.nodes.values())
         if tick % 12 == 0:
             expected = tuple(origin[axis] + tick // 12 * momentum[axis] for axis in range(3))
             assert free.position == expected

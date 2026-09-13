@@ -67,7 +67,7 @@ def test_carried_remainder_cannot_conceal_overflow_in_the_product():
         {"nx": 0},
         {"force_den": 0},
         {"force_num": -1},
-        {"max_particles_per_cell": 0},
+        {"max_particles_per_node": 0},
         {"source_strength": MAX_CORE_INT + 1},
     ],
 )
@@ -76,7 +76,7 @@ def test_invalid_config_rejected(kwargs):
         Config(**kwargs)
 
 
-def test_invalid_particle_does_not_partially_occupy_cell():
+def test_invalid_particle_does_not_partially_occupy_node():
     world = Simulation()
     for pid, momentum in [(-1, 0), (1, MAX_CORE_INT + 1)]:
         with pytest.raises((ValueError, OverflowError)):

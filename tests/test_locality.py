@@ -12,14 +12,14 @@ from .architecture_rules import violations
 
 
 @pytest.mark.parametrize("extent", [8, 1_000_000])
-def test_particle_neighborhood_reads_exactly_six_cells_independent_of_world_extent(extent):
+def test_particle_neighborhood_reads_exactly_six_nodes_independent_of_world_extent(extent):
     # This is a read spy, not a simulated world or an evolution run.
     position = (3, 3, 3)
     expected = ((4, 3, 3), (2, 3, 3), (3, 4, 3), (3, 2, 3), (3, 3, 4), (3, 3, 2))
     reads = []
 
     def read(address):
-        assert address in expected, "A remote cell was read"
+        assert address in expected, "A remote node was read"
         reads.append(address)
         return expected.index(address) + 1
 
@@ -32,7 +32,7 @@ def test_particle_neighborhood_reads_exactly_six_cells_independent_of_world_exte
 @pytest.mark.parametrize(
     "source",
     [
-        "def estimate(state):\n    return sum(state.cells.values())",
+        "def estimate(state):\n    return sum(state.nodes.values())",
         "def estimate(state):\n    return state.particles.values()",
         "def estimate(shadow):\n    shadow.step()",
         "def estimate(shadow):\n    shadow.run(100)",

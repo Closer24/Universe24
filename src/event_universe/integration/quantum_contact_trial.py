@@ -3,7 +3,7 @@
 The fixture has two unit-mass bodies and one contact at (6,2,1), tick 4.
 A supplied instrument selects identity or momentum exchange, both defined by
 initialization. This is a measured classical-control experiment, not coherent
-quantum scattering or a generic per-cell quantum dispatcher.
+quantum scattering or a generic per-node quantum dispatcher.
 """
 
 import argparse
@@ -104,7 +104,7 @@ def validate_fixture(initial: InitialState) -> None:
     """The positional role mapping is scoped to this one experiment, not general JSON."""
     if (
         initial.shape != (13, 5, 3)
-        or initial.slots_per_cell != 2
+        or initial.slots_per_node != 2
         or initial.link_ticks != 1
         or initial.normal_budget != 10000
         or initial.ticks != 8
@@ -124,7 +124,7 @@ def validate_fixture(initial: InitialState) -> None:
 
 def mechanics(world: DisturbanceEngine) -> dict[str, object]:
     """Read-only balances include records in flight exactly once."""
-    records = [r for c in world.cells.values() for r in c.records if r is not None]
+    records = [r for c in world.nodes.values() for r in c.records if r is not None]
     records += [p.record for link in world.links.values() for p in link if p is not None]
     momentum = tuple(sum(unpack(r.values[1])[a] for r in records) for a in range(3))
     twice_energy = sum(sum(p * p for p in unpack(r.values[1])) for r in records)

@@ -11,7 +11,7 @@ def initialization(baseline, populations):
         "schema_version": 1,
         "model_id": "spatial-seed-boundary-v1",
         "shape": [3, 3, 3],
-        "slots_per_cell": 1,
+        "slots_per_node": 1,
         "link_ticks": 1,
         "normal_budget": 1000,
         "ticks": 0,

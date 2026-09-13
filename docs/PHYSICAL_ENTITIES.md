@@ -147,8 +147,8 @@ already present in Universe24.
 
 Comparing matching local experiments on 9-cubed and 15-cubed lattices tests
 independence from the total domain before boundaries can influence the result.
-It does not prove a continuum limit. Increasing domain size at fixed cell size
-and decreasing cell size at fixed physical scales are different experiments.
+It does not prove a continuum limit. Increasing domain size at fixed node size
+and decreasing node size at fixed physical scales are different experiments.
 Large-scale emergence requires a defined mapping of lattice units and additional
 long-wavelength evidence; no dimension-dependent repair is permitted.
 

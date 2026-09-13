@@ -75,7 +75,7 @@ def build_configuration(
     This is a schedule forecast, not a substitute for recording the actual run.
     Arriving information remains locally available
     while the frozen cycle waits. The moving record continues only when this
-    cell can process it; arrival does not promise immediate onward departure.
+    node can process it; arrival does not promise immediate onward departure.
     Other budgets deliberately change carrier/clock timing, not field transit.
     """
     center = observer_position(size)
@@ -90,7 +90,7 @@ def build_configuration(
         "observer": {"position": list(center), "max_receipts": 100000},
         "shape": [size, size, size],
         "boundary": "open",
-        "slots_per_cell": 2,
+        "slots_per_node": 2,
         "link_ticks": LINK_TICKS,
         "normal_budget": normal_budget,
         "ticks": ticks,

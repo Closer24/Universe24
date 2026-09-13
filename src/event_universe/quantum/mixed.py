@@ -2,7 +2,7 @@
 
 Only pure sources and completely positive local maps construct these states.
 The common positive trace is implicit; reduce only a GLOBAL integer factor.
-No eigensolver, root, float, random hidden label or physical-cell history is used.
+No eigensolver, root, float, random hidden label or physical-node history is used.
 """
 
 from dataclasses import dataclass
@@ -153,7 +153,7 @@ def marginal(state: QuantumState, site: int, dimensions: tuple[int, ...]) -> tup
 def partial_trace(
     state: QuantumState, sites: tuple[int, ...], dimensions: tuple[int, ...], limit: int
 ) -> DensityState:
-    """Read-only reduced state; never supplied to an ordinary remote physical cell."""
+    """Read-only reduced state; never supplied to an ordinary remote physical node."""
     layout = BasisLayout(dimensions)
     outside = tuple(q for q in range(len(dimensions)) if q not in sites)
     out: dict[tuple[int, int], Amplitude] = {}

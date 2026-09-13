@@ -51,7 +51,7 @@ def _matrix(value: object) -> Matrix:
 
 def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sources: int = 0) -> None:
     """Check the deterministic startup requirement without allocating event state."""
-    # Carrier and field owners each record one source per seeded cell.
+    # Carrier and field owners each record one source per seeded node.
     required = (
         len({seed.position for seed in initial.seeds})
         + len({seed.position for seed in initial.spatial_seeds})
