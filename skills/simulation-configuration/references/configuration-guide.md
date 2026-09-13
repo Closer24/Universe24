@@ -61,7 +61,7 @@ The authoritative top-level table is in
 
 | Key | How to choose it |
 | --- | --- |
-| `schema_version` | `1` for conservative outward or configured local fields; `2` for finite dissipative outward fields |
+| `schema_version` | `1` for conservative outward or configured local fields; `2` for finite attenuating outward fields whose removed fractions come to rest at the receiving node (`"residue": "dissipate"` selects loss instead) |
 | `model_id` | A descriptive identity for the selected rules; use a new identity for a new hypothesis |
 | `shape` | Three integer node counts, such as `[9,9,9]` or `[64,64,64]`; the latter is 64 cubed, not a 2D plane |
 | `boundary` | `periodic` connects opposite faces; `open` records escaping stock |

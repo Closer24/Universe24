@@ -1169,3 +1169,25 @@ workers. It completed with balanced accounting, eight disturbance Node tasks,
 The run reported `display: none` and created no visualization. These checks
 establish deterministic barrier behavior for the tested inputs; they do not
 claim that parallel host scheduling speeds up small or inexpensive worlds.
+
+## Localizing decay residue as the schema 2 default — 2026-09-13
+
+Base: `5a2e21d` (main after PR #89). Schema 2 decay gained an optional
+`residue` key. The default `"localize"` keeps the completed-link attenuation of
+moving stock but deposits every removed fraction as stationary stock owned by
+the receiving Node, so total spatial inventory is preserved and a thinning wave
+comes to rest as whole units at known Nodes. The explicit `"dissipate"` value
+selects the earlier loss law unchanged; the historical dissipative tests and the
+records above were produced under that law and now name it explicitly.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| Finite moving source | `finite_fields.json`, 40 headless ticks: injection 720, dissipation 0, localized deposits 720, final field total 720, conserved and balanced at every completed tick |
+| Open example | `open_world.json`, 12 ticks: carried escape 72, spatial escape 20, localized deposits 52, dissipation 0 |
+| New tests | 20-unit pulse keeps total 20 with deposits 10, 5, 3, 1, 1 under both field clocks; separate deposits before merging; deposits survive later arrivals; residue validation; runner identity `finite-localizing-v1`; parallel/serial equivalence on `finite_fields.json` and `three_mass_finite.json` |
+| Visualization | Not requested or generated |
+
+Deposits are never transported, decayed, sampled or read by rules, and the
+schema 1 conservation audits still do not cover schema 2. This is a configured
+integer law, not a derived particle, absorption or energy model.

@@ -20,10 +20,12 @@ FIELD_MAPS = {
     "source_delta",
     "reaction",
     "dissipated",
+    "localized",
     "escaped",
     "totals",
     "sources",
     "losses",
+    "deposits",
     "escapes",
     "accounting",
 }
@@ -51,7 +53,7 @@ def configured_example(case):
     if case in {"rotation", "flux"}:
         raw["schema_version"] = 2
         for field in raw["spatial_fields"]:
-            field["decay"] = {"retain_numerator": 1, "retain_denominator": 2}
+            field["decay"] = {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"}
         raw["spatial_couplings"][0]["budget"] = [20, 20, 20]
     if case == "flux":
         raw["fields"][1]["components"] = 1
@@ -180,6 +182,7 @@ def observation(world, events):
         "totals": world.totals(),
         "sources": world.source_totals(),
         "losses": world.dissipation_totals(),
+        "deposits": world.localized_totals(),
         "escapes": world.escaped_totals(),
         "accounting": world.spatial_accounting(),
         "conservation": world.conservation_report(),
@@ -207,7 +210,8 @@ def assert_exercised(case, world, events):
         assert [record["values"]["balance"] for record in records] == [(6,), (2,)]
     elif case == "finite_fields":
         assert world.source_totals()["radiation"] == (144,)
-        assert world.dissipation_totals()["radiation"][0] > 0
+        assert world.dissipation_totals()["radiation"] == (0,)
+        assert world.localized_totals()["radiation"][0] > 0
         assert world.snapshot()["spatial_baselines"]["radiation"] == (3,)
     elif case == "open_world":
         assert world.escaped_totals() == {"strength": (72,), "radiation": (20,)}

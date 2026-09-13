@@ -7,7 +7,7 @@ import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import MAX_VALUE, pack, unpack
-from event_universe.core.spatial_state import SpatialPacket
+from event_universe.core.spatial_state import DecayDefinition, SpatialPacket
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 from tests.test_spatial_engine import ORIGIN, document, offset, value
@@ -20,7 +20,7 @@ def finite_document(**kwargs):
     raw["spatial_fields"][0].update(
         axis_weights=[1, 0, 0],
         octant_weights=[1, 0, 0, 0, 0, 0, 0, 0],
-        decay={"retain_numerator": 1, "retain_denominator": 2},
+        decay={"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
     )
     for rule in raw["emissions"]:
         rule["budget"] = 5
@@ -214,7 +214,8 @@ def test_runner_distinguishes_dissipation_accounting_from_physical_conservation(
 def localizing_document(**kwargs):
     raw = finite_document(**kwargs)
     raw["model_id"] = "finite-localizing-contract-v1"
-    raw["spatial_fields"][0]["decay"]["residue"] = "localize"
+    # The default residue: omit the key to select localizing decay.
+    del raw["spatial_fields"][0]["decay"]["residue"]
     return raw
 
 
@@ -326,6 +327,7 @@ def test_decay_residue_is_validated_and_recorded(tmp_path):
     metadata = json.loads((tmp_path / "out" / "run.json").read_text())
     assert metadata["spatial_policy"] == "finite-localizing-v1"
     assert metadata["spatial_decay_residue"] == ["localize"]
+    assert DecayDefinition(1, 2) == DecayDefinition(1, 2, "localize")
     assert metadata["dissipation_totals"]["radiation"] == [0]
     assert metadata["localized_totals"]["radiation"] == [5]
     assert metadata["final_totals"]["radiation"] == [5]

@@ -331,11 +331,12 @@ function renderResults() {
       : "Quantity accounting balances at every completed tick, including dissipation and escaped quantities.";
     result.append(node("p", balanceText, balanced ? "result-meta" : "result-error"));
     const table = node("table", "", "totals"), head = node("tr");
-    ["TRACKED FIELD", "INITIAL", "FINAL", "SOURCE CHANGE", "DISSIPATED", "ESCAPED"].forEach(label => head.append(node("th", label))); table.append(head);
+    ["TRACKED FIELD", "INITIAL", "FINAL", "SOURCE CHANGE", "DISSIPATED", "LOCALIZED", "ESCAPED"].forEach(label => head.append(node("th", label))); table.append(head);
     for (const [name, value] of Object.entries(metadata.initial_totals || {})) {
       const row = node("tr"), zero = value.map(() => 0);
       [name, JSON.stringify(value), JSON.stringify(metadata.final_totals[name]), JSON.stringify(metadata.source_totals[name]),
-        JSON.stringify(metadata.dissipation_totals?.[name] ?? zero), JSON.stringify(metadata.escaped_totals?.[name] ?? zero)
+        JSON.stringify(metadata.dissipation_totals?.[name] ?? zero), JSON.stringify(metadata.localized_totals?.[name] ?? zero),
+        JSON.stringify(metadata.escaped_totals?.[name] ?? zero)
       ].forEach(v => row.append(node("td", v))); table.append(row);
     }
     result.append(table);

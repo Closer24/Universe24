@@ -140,7 +140,7 @@ def mixed_fields():
             "field": "count",
             "baseline": 0,
             "transport": "outward",
-            "decay": {"retain_numerator": 1, "retain_denominator": 2},
+            "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
         }
     )
     return raw

@@ -857,7 +857,7 @@ def _decay(value: object) -> DecayDefinition:
     denominator = _integer(obj["retain_denominator"], "decay.retain_denominator", 1)
     if numerator >= denominator:
         raise ValueError("decay requires retain_numerator < retain_denominator")
-    residue = _text(obj.get("residue", "dissipate"), "decay.residue")
+    residue = _text(obj.get("residue", "localize"), "decay.residue")
     if residue not in DECAY_RESIDUES:
         raise ValueError("decay.residue must be dissipate or localize")
     return DecayDefinition(numerator, denominator, residue)

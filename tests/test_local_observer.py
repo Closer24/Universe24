@@ -35,7 +35,8 @@ def pulse_document():
     raw = document(components=3, baseline=[0, 0, 0], travel=2)
     raw.update(schema_version=2, shape=[5, 5, 5], ticks=3)
     raw["spatial_fields"][0].update(
-        axis_weights=[1, 0, 0], decay={"retain_numerator": 1, "retain_denominator": 2}
+        axis_weights=[1, 0, 0],
+        decay={"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
     )
     raw["spatial_seeds"] = [
         {"position": [4, 2, 2], "field": "radiation", "populations": [[8, -4, 12], *([[0, 0, 0]] * 7)]}

@@ -119,7 +119,7 @@ separate carriers and their different directions.
 
 | Top-level member | Contract |
 | --- | --- |
-| `schema_version` | `1` for conservative spatial laws, or `2` for finite dissipative spatial laws |
+| `schema_version` | `1` for conservative spatial laws, or `2` for finite attenuating spatial laws (localizing by default, dissipative on request) |
 | `model_id` | Explicit identifier for this configured candidate |
 | `shape` | Three positive bounded integer domain extents |
 | `boundary` | Optional `"periodic"` or `"open"`, default `"periodic"`, in either schema version |
@@ -160,12 +160,14 @@ Version 1 records `conservative-outward-v1` for outward-only spatial runs and
 `configured-local-fields-v1` when local transport is selected. Existing outward
 runs preserve conservative spatial transport, unlimited declared emission
 and unlimited spatial response. It rejects `decay` and spatial-rule `budget`
-keys. Version 2 selects the explicit `finite-dissipative-v1` policy: every spatial
-field requires `decay` with bounded integers `0 <= retain_numerator <
-retain_denominator` and an optional `residue` of `"dissipate"` (default) or
-`"localize"`, and every emission and spatial coupling requires a
-nonnegative scalar/vector `budget` in its target field's units. When every
-spatial field localizes, the runner records `finite-localizing-v1` instead. Omitting these
+keys. Version 2 selects finite attenuation: every spatial field requires `decay`
+with bounded integers `0 <= retain_numerator < retain_denominator` and an
+optional `residue` of `"localize"` (default) or `"dissipate"`, and every
+emission and spatial coupling requires a nonnegative scalar/vector `budget` in
+its target field's units. The default records the `finite-localizing-v1`
+policy: removed fractions become stationary stock at the receiving node and no
+flux is lost. An explicit `"dissipate"` on any field records the historical
+`finite-dissipative-v1` policy for the run. Omitting these
 keys is an error in version 2. A version 2 configuration without spatial features
 is valid and retains the ordinary disturbance laws.
 
@@ -180,7 +182,7 @@ Ordinary local update and paired-exchange rules retain their existing contracts.
 
 The top-level `boundary` setting applies equally to carried disturbances and
 spatial-field packets. It is independent of the schema's conservative or
-dissipative policy. Omitting it preserves the existing periodic behavior.
+attenuating policy. Omitting it preserves the existing periodic behavior.
 
 | Setting | Transfer across an outer face |
 | --- | --- |
@@ -200,7 +202,8 @@ There is no outside receiving node, so this terminal link performs no destinatio
 receipt, merge or decay. Schema 2 decay applies only to links with a destination
 inside the domain. For example, a component of 1 with zero retention escapes as
 1 across an open face; the same component delivered to an interior node instead
-loses 1 to decay. Interior and escaping quantities remain separate in accounting.
+comes to rest there as a deposit, or is lost under `"residue": "dissipate"`.
+Interior, deposited and escaping quantities remain separate in accounting.
 
 Use `"boundary": "open"` alongside the other top-level initialization members.
 Unknown names, null values and non-string values fail validation. Initial
@@ -515,10 +518,11 @@ equals committed source/sink change;
 source creation is not reported before its proposal commits. Direction/rate
 phases and fractional exchange remainders remain bounded bookkeeping.
 
-Schema 2 additionally subtracts committed signed dissipation from that balance.
-Its declared decay intentionally removes integer magnitude without retaining a
-fraction; it is not a transport conservation claim or a numerical approximation
-to the version 1 law. Baseline values are exempt. Finite remaining allowances are
+Schema 2 counts localized deposits as resident stock, so the default residue
+keeps that balance without a loss term. With `"residue": "dissipate"` it instead
+subtracts committed signed dissipation: that declared decay intentionally removes
+integer magnitude without retaining a fraction; it is not a transport
+conservation claim or a numerical approximation to the version 1 law. Baseline values are exempt. Finite remaining allowances are
 bookkeeping owned by records, never extra field stock. These distinctions remain
 visible in run metadata, events and snapshots.
 

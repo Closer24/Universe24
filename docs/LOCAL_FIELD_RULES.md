@@ -29,12 +29,13 @@ contracts when the new features are absent.
 
 Local transport, `field_rules` and `spatial_interactions` require schema 1.
 Schema 2 rejects the two rule keys even when their lists are empty and continues
-to use its finite dissipative candidate. The new rules do not bypass schema 2
+to use its finite attenuation candidate. The new rules do not bypass schema 2
 allowances or remove its required decay.
 
 Run metadata identifies local transport as `configured-local-fields-v1`.
-Outward-only schema 1 runs keep `conservative-outward-v1`; schema 2 keeps
-`finite-dissipative-v1`. Physical field names do not select any of these policies.
+Outward-only schema 1 runs keep `conservative-outward-v1`; schema 2 records
+`finite-localizing-v1`, or `finite-dissipative-v1` when a field selects
+`"residue": "dissipate"`. Physical field names do not select any of these policies.
 
 Optional `field_groups` describe logical grouping without allocating new physical
 stock or selecting a law:

@@ -21,20 +21,21 @@ SpatialOutgoing = tuple[SpatialPopulations, ...]
 SpatialBundle = tuple[SpatialPopulations, ...]
 
 
-DECAY_RESIDUES = ("dissipate", "localize")
+DECAY_RESIDUES = ("localize", "dissipate")
 
 
 @dataclass(frozen=True, slots=True)
 class DecayDefinition:
     """Completed-link attenuation ratio and the fate of the removed fraction.
 
-    ``dissipate`` records the removed quantity as loss. ``localize`` keeps it as
-    stationary stock owned by the receiving Node, so total flux is preserved.
+    ``localize`` (default) keeps the removed quantity as stationary stock owned
+    by the receiving Node, so total flux is preserved. ``dissipate`` is the
+    explicit historical option that records it as loss instead.
     """
 
     retain_numerator: int
     retain_denominator: int
-    residue: str = "dissipate"
+    residue: str = "localize"
 
     def __post_init__(self) -> None:
         if self.residue not in DECAY_RESIDUES:

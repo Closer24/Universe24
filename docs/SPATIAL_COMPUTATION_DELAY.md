@@ -2,7 +2,7 @@
 
 Set the top-level boolean `"spatial_computation_delay": true` in an initialization
 with spatial fields to select the `shared-field-carrier-cycle-v1` timing candidate.
-It works with schema 1 local/outward fields and schema 2 finite dissipative fields.
+It works with schema 1 local/outward fields and schema 2 finite attenuating fields.
 This cost-derived clock cannot be combined with `node_execution: true`, whose
 interaction durations are configured independently of operation cost.
 The default is false: existing fixed-clock field transport keeps its timing.

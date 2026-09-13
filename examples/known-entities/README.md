@@ -51,7 +51,7 @@ Historical local validation on 2026-09-12 using Python 3.14.7 (source hash below
 
 The standard runner checked quantity accounting at every tick, including spatial sources, decay, and escape. Additional acceptance checks verify exact collision results, movement timing, delay arithmetic, all six boundary positions, original input preservation, and unchanged simulator source fingerprint.
 
-The decaying momentum field does not preserve physical momentum indefinitely: normal-budget final momentum (-1,7,0) plus recorded dissipation (-1,3,0) equals initial (-2,10,0). This is balanced accounting with dissipation, not a claim of conserved physical momentum. The computation background is 1 per node, so its aggregate baseline is 274625; excess field returned to zero.
+The decaying momentum field does not preserve physical momentum indefinitely: normal-budget final momentum (-1,7,0) plus recorded dissipation (-1,3,0) equals initial (-2,10,0). This is balanced accounting with dissipation, not a claim of conserved physical momentum. Those figures were recorded under the earlier dissipative default; with the current localizing default the same removed fractions are reported as `localized_totals` deposits and remain inside `final_totals`. The computation background is 1 per node, so its aggregate baseline is 274625; excess field returned to zero.
 
 An initial diagnostic incorrectly required a nonzero field exchange in both budget settings. The low-budget run completed successfully but that assertion failed. The corrected checks require a nonzero exchange in the normal-budget case and observed computation delays in the low-budget case; they report both reaction counts without assuming identical trajectories.
 

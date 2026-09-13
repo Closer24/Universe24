@@ -252,7 +252,7 @@ render completion. Neither test collection nor cleanup enables rendering.
 | `test_boundary_configuration.py` | Periodic default under both schemas; exact open/periodic setting; every positive and negative face of a 3x4x5 world; single-node extents; invalid names, coordinates, faces and bounds rejected |
 | `test_open_boundaries.py` | Carrier exits and wrapping on all six faces after full transit; unchanged signed vectors; terminal quantity 1 escapes even with zero retention while an interior copy decays; mixed corner fields/baselines; invalid terminal payloads commit neither loss nor removal; unused emitter allowance does not become physical escape |
 | `test_spatial_scheduling.py` | Optimized and forced full-sweep runs have identical per-tick snapshots, costs, events and balances; dormant history is not enumerated; reactions reactivate known idle nodes without delaying their departure; newly created nodes are not backdated |
-| `test_disturbance_application.py` | Open example records carried escape 72, spatial escape 20 and dissipation 52; no carrier reentry; zero-tick edge case has empty events and zero escape; runner and snapshot agree |
+| `test_disturbance_application.py` | Open example records carried escape 72, spatial escape 20 and 52 localized deposits with zero dissipation; no carrier reentry; zero-tick edge case has empty events and zero escape; runner and snapshot agree |
 | `test_workspace.py`, `test_workspace_integration.py` | Workspace accepts field examples and records open escape; direct/HTTP runs retain equal physical output; open terminal playback does not wrap or dereference a missing target; balanced loss/escape is not a failed check; field renaming updates flux expressions |
 
 Measured performance comparisons use the same 5,000 ticks, configuration,
@@ -264,13 +264,15 @@ that machine, not a fixed wall-time test threshold or a change to model cost.
 
 The law is specified in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) and
 [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md). These tests retain the schema 1
-conservative expectations and add separate dissipative expectations.
+conservative expectations and add separate finite attenuation expectations. The
+historical dissipative cases select `"residue": "dissipate"` explicitly; omitting
+the key selects the default localizing residue.
 
 | Suite | Independent inputs and required outcomes |
 | --- | --- |
 | `test_dissipative_initialization.py` | Version 2 requires strict integer retention and nonnegative component budgets; version 1 rejects new keys; invalid signs, shapes, bounds, missing fields and splitting sources fail |
 | `test_spatial_decay.py` | Half retention maps 20 through 10, 5, 2, 1 to 0; both signed one-unit tails vanish even at retention `(MAX_VALUE-1)/MAX_VALUE`; unsigned invalid input cannot be erased by decay |
-| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal; localizing residue keeps a 20-unit pulse at total 20 with deposits 10, 5, 3, 1, 1 along its path and zero dissipation, deposits two separate 1-unit arrivals before merging, leaves deposits in place under later arrivals, and rejects unknown residues while the runner records `finite-localizing-v1` |
+| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal; the default localizing residue keeps a 20-unit pulse at total 20 with deposits 10, 5, 3, 1, 1 along its path and zero dissipation under both field clocks, deposits two separate 1-unit arrivals before merging, leaves deposits in place under later arrivals, and rejects unknown residues while the runner records `finite-localizing-v1` |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 
 The runner must distinguish actual physical conservation from balanced loss

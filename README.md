@@ -104,8 +104,9 @@ For a moving source that continuously emits a separate conserved outward field:
 python -m event_universe --init examples/moving_source.json --output artifacts/moving-source
 ```
 
-For the schema 2 finite dissipative candidate, with bounded source allowances
-and explicitly configured decay on each completed field link:
+For the schema 2 finite attenuation candidate, with bounded source allowances and
+explicitly configured decay on each completed field link, where removed fractions
+come to rest at the receiving node instead of being lost:
 
 ```bash
 python -m event_universe --init examples/finite_fields.json --output artifacts/finite-fields
@@ -327,8 +328,9 @@ active contracts, explicit experiments and revision-specific evidence.
 Each configured disturbance type carries named scalar/vector fields together.
 Choose whole-record movement for coupled attributes or extensive splitting for
 divisible quantities. Conservation is a declared component-wise local balance,
-including explicit sources and in-flight amounts. Schema 2 explicitly subtracts
-committed dissipation; its finite allowances are separate from inventory.
+including explicit sources and in-flight amounts. Schema 2 counts localized
+deposits as inventory and subtracts committed dissipation only under the explicit
+`"residue": "dissipate"` option; its finite allowances are separate from inventory.
 Coupling rules exchange a shared field between local records atomically. See
 [DISTURBANCES.md](docs/DISTURBANCES.md).
 
