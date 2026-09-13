@@ -42,10 +42,16 @@ for disagreement and revise your view when the evidence changes.
 
 For a meaningful design, performance, dependency or process change:
 
-- Establish the observed problem, current behavior and measurable acceptance
-  target. Separate an actual bottleneck or failure from an assumed future need.
-  Compare the proposal with keeping the current design and the smallest useful
-  correction; consider a larger redesign only when it addresses a concrete need.
+- Establish necessity before implementation: identify a current user need,
+  observed problem or explicit research question, current behavior and a measurable
+  acceptance target. A suggestion or list of possible features is not a mandate
+  to implement everything. Check whether existing behavior, configuration or reuse
+  already meets the goal. Keeping the system unchanged, simplifying it or deferring
+  an addition are valid recommendations when more code has no justified benefit.
+  Separate a real bottleneck from an assumed future need. Implement the smallest
+  justified scope; do not add speculative features, abstractions or dependencies
+  merely because they are possible. A novel research idea may justify a bounded
+  experiment without a proven production benefit.
 - Examine what worked and failed in comparable real systems. Prefer original
   engineering reports, reproducible benchmarks, official documentation and
   incident or rollback reports. Verify material external claims against their
