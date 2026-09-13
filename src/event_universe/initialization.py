@@ -44,6 +44,7 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
+    DECAY_RESIDUES,
     DecayDefinition,
     EmissionDefinition,
     FieldAssignment,
@@ -851,12 +852,15 @@ def _seeds(
 
 def _decay(value: object) -> DecayDefinition:
     keys = {"retain_numerator", "retain_denominator"}
-    obj = _object(value, "spatial decay", keys, keys)
+    obj = _object(value, "spatial decay", keys | {"residue"}, keys)
     numerator = _integer(obj["retain_numerator"], "decay.retain_numerator", 0)
     denominator = _integer(obj["retain_denominator"], "decay.retain_denominator", 1)
     if numerator >= denominator:
         raise ValueError("decay requires retain_numerator < retain_denominator")
-    return DecayDefinition(numerator, denominator)
+    residue = _text(obj.get("residue", "dissipate"), "decay.residue")
+    if residue not in DECAY_RESIDUES:
+        raise ValueError("decay.residue must be dissipate or localize")
+    return DecayDefinition(numerator, denominator, residue)
 
 
 def _allowance(value: object, field: FieldDefinition, label: str) -> Payload:

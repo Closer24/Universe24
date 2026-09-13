@@ -67,7 +67,10 @@ selects the explicit `finite-dissipative-v1` policy, derived from the schema
 version independently of user-defined names. Every spatial field requires a
 bounded integer ratio `0 <= p < q`; each original packet/octant/component is
 attenuated to `sign(v) * floor(abs(v) * p / q)` on completing an interior link,
-before arrival packets merge. Removed fractions are intentionally not retained.
+before arrival packets merge. Removed fractions are intentionally not retained,
+unless the field's decay selects `"residue": "localize"`: then each removed
+fraction is deposited as stationary stock at the receiving Node, total inventory
+is preserved, and the runner records `finite-localizing-v1` when every field does so.
 Immutable baselines are exempt. Per-record finite allowances bound absolute
 emission and opposite coupling reactions; they are not physical reservoirs.
 The complete laws belong to [spatial fields](docs/SPATIAL_FIELDS.md) and

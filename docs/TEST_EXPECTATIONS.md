@@ -270,7 +270,7 @@ conservative expectations and add separate dissipative expectations.
 | --- | --- |
 | `test_dissipative_initialization.py` | Version 2 requires strict integer retention and nonnegative component budgets; version 1 rejects new keys; invalid signs, shapes, bounds, missing fields and splitting sources fail |
 | `test_spatial_decay.py` | Half retention maps 20 through 10, 5, 2, 1 to 0; both signed one-unit tails vanish even at retention `(MAX_VALUE-1)/MAX_VALUE`; unsigned invalid input cannot be erased by decay |
-| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal |
+| `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal; localizing residue keeps a 20-unit pulse at total 20 with deposits 10, 5, 3, 1, 1 along its path and zero dissipation, deposits two separate 1-unit arrivals before merging, leaves deposits in place under later arrivals, and rejects unknown residues while the runner records `finite-localizing-v1` |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 
 The runner must distinguish actual physical conservation from balanced loss

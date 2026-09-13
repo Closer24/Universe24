@@ -192,6 +192,7 @@ def _execute_run(
         "source_totals": world.source_totals(),
         "conserved_at_every_completed_tick": conservation,
         "dissipation_totals": world.dissipation_totals(),
+        "localized_totals": world.localized_totals(),
         "escaped_totals": world.escaped_totals(),
         "accounting_balanced_at_every_completed_tick": accounting,
         "fields": [field.name for field in initial.fields],
@@ -218,7 +219,14 @@ def _execute_run(
             emission_interval_ticks=initial.link_ticks,
             self_field_filter="unsupported",
             spatial_policy=(
-                "finite-dissipative-v1"
+                (
+                    "finite-localizing-v1"
+                    if all(
+                        field.decay is not None and field.decay.localizes
+                        for field in initial.spatial_fields
+                    )
+                    else "finite-dissipative-v1"
+                )
                 if initial.schema_version == 2
                 else "configured-local-fields-v1"
                 if any(field.transport == "local" for field in initial.spatial_fields)
@@ -226,6 +234,9 @@ def _execute_run(
             ),
             spatial_accounting=world.spatial_accounting(),
             spatial_background="immutable; excluded from decay",
+            spatial_decay_residue=[
+                None if field.decay is None else field.decay.residue for field in initial.spatial_fields
+            ],
         )
         if initial.spatial_computation_delay:
             metadata.update(

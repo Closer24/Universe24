@@ -152,15 +152,21 @@ class SpatialAccounting:
         dissipation: list[list[int]],
         reactions: list[list[int]],
         transformations: list[list[int]],
+        localized: list[list[int]] | None = None,
     ) -> None:
         self.__sources, self.__dissipation = sources, dissipation
         self.__reactions, self.__transformations = reactions, transformations
+        self.__localized = [] if localized is None else localized
 
     def record_sources(self, values: Values) -> None:
         add_audit_delta(self.__sources, values)
 
     def record_dissipation(self, values: Values) -> None:
         add_audit_delta(self.__dissipation, values)
+
+    def record_localized(self, values: Values) -> None:
+        """Deposits stay owned stock; this ledger only avoids scanning idle Nodes."""
+        add_audit_delta(self.__localized, values)
 
     def record_reactions(self, values: Values) -> None:
         add_audit_delta(self.__reactions, values)
@@ -786,6 +792,22 @@ class SpatialNode(SpatialNodeState):
             for index, dissipated_values in enumerate(dissipated):
                 for component, value in enumerate(dissipated_values):
                     losses[index][component] = checked_work(losses[index][component] + value)
+        localized = list(self.localized) or [
+            pack((0,) * services.initial.fields[d.field].components)
+            for d in services.initial.spatial_fields
+        ]
+        deposited = [[0] * field.components for field in services.initial.fields]
+        for index, definition in enumerate(services.initial.spatial_fields):
+            if definition.decay is None or not definition.decay.localizes:
+                continue
+            field = services.initial.fields[definition.field]
+            # The removed fraction stays owned here as stationary stock, not loss.
+            deposited[definition.field] = losses[definition.field]
+            losses[definition.field] = [0] * field.components
+            localized[index] = pack(
+                add_components(unpack(localized[index]), tuple(deposited[definition.field]))
+            )
+            field.validate(localized[index])
         states = []
         arrival_readings = []
         for index, definition in enumerate(services.initial.spatial_fields):
@@ -858,8 +880,11 @@ class SpatialNode(SpatialNodeState):
                 received_count,
                 decay_cost,
             )
+        self.localized = tuple(localized)
         services.activity.mark(self.position, True)
         services.accounting.record_dissipation(tuple(tuple(values) for values in losses))
+        if any(any(values) for values in deposited):
+            services.accounting.record_localized(tuple(tuple(values) for values in deposited))
         # Read-only, post-commit summaries. State.delivered uses travel ports;
         # a receiver sees the opposite side. Retain zero readings on used
         # ports so cancellation is distinct from no completed reception.
@@ -895,6 +920,11 @@ class SpatialNode(SpatialNodeState):
                     field.name: tuple(losses[i])
                     for i, field in enumerate(services.initial.fields)
                     if any(losses[i])
+                },
+                localized={
+                    field.name: tuple(deposited[i])
+                    for i, field in enumerate(services.initial.fields)
+                    if any(deposited[i])
                 },
                 cost=arrival_cost,
             )

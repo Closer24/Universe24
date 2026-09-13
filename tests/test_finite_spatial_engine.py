@@ -209,3 +209,124 @@ def test_runner_distinguishes_dissipation_accounting_from_physical_conservation(
     assert metadata["dissipation_totals"]["radiation"] == [5]
     assert metadata["spatial_accounting"]["radiation"]["balanced"] is True
     assert not list(output.glob("*.html"))
+
+
+def localizing_document(**kwargs):
+    raw = finite_document(**kwargs)
+    raw["model_id"] = "finite-localizing-contract-v1"
+    raw["spatial_fields"][0]["decay"]["residue"] = "localize"
+    return raw
+
+
+def localized(world, position):
+    return world.spatial_values(position)["radiation"]["localized"]
+
+
+@pytest.mark.parametrize(("travel", "shared_clock"), [(1, False), (2, False), (1, True)])
+def test_localizing_decay_preserves_total_flux_and_deposits_stationary_stock(travel, shared_clock):
+    raw = localizing_document(travel=travel)
+    raw["spatial_computation_delay"] = shared_clock
+    raw["fields"][-1]["signed"] = False
+    raw["spatial_seeds"] = [
+        {"position": list(ORIGIN), "field": "radiation", "populations": [20, 0, 0, 0, 0, 0, 0, 0]}
+    ]
+    world = Simulation(parse_initial_state(raw))
+    initial = world.totals()
+    moving = (20, 10, 5, 2, 1, 0)
+    deposits = (0, 10, 5, 3, 1, 1)
+    for tick in range(1, 8 * travel + 1):
+        world.step()
+        links = min(tick // travel, 5)
+        # Total flux never changes: moving stock plus stationary deposits is 20.
+        assert world.totals()["radiation"] == (20,)
+        assert world.dissipation_totals()["radiation"] == (0,)
+        assert world.localized_totals()["radiation"] == (sum(deposits[: links + 1]),)
+        assert_balanced(world, initial)
+        if tick % travel == 0 and moving[links]:
+            assert value(world, offset(ORIGIN, (links, 0, 0))) == (moving[links],)
+    for links, deposit in enumerate(deposits):
+        assert localized(world, offset(ORIGIN, (links, 0, 0))) == (deposit,)
+    assert localized(world, offset(ORIGIN, (6, 0, 0))) == (0,)
+    assert not world.snapshot()["spatial_transfers"]
+    accounting = world.spatial_accounting()["radiation"]
+    assert accounting["localized"] == (20,) and accounting["dissipated"] == (0,)
+    assert accounting["balanced"]
+
+
+def test_localizing_neighbor_packets_deposit_separately_before_they_merge():
+    raw = localizing_document()
+    raw["spatial_seeds"] = [
+        {
+            "position": list(offset(ORIGIN, (-1, 0, 0))),
+            "field": "radiation",
+            "populations": [1, 0, 0, 0, 0, 0, 0, 0],
+        },
+        {
+            "position": list(offset(ORIGIN, (-2, 0, 0))),
+            "field": "radiation",
+            "populations": [2, 0, 0, 0, 0, 0, 0, 0],
+        },
+    ]
+    events = []
+    world = Simulation(parse_initial_state(raw), observer=events.append)
+    initial = world.totals()
+    world.step()
+    # Both single units become stationary at the receiving Nodes; nothing merges first.
+    assert value(world, ORIGIN) == (0,) and localized(world, ORIGIN) == (1,)
+    assert value(world, offset(ORIGIN, (-1, 0, 0))) == (1,)
+    assert localized(world, offset(ORIGIN, (-1, 0, 0))) == (1,)
+    world.step()
+    assert localized(world, ORIGIN) == (2,) and value(world, ORIGIN) == (0,)
+    assert world.totals()["radiation"] == (3,)
+    assert world.dissipation_totals()["radiation"] == (0,)
+    assert_balanced(world, initial)
+    decayed = [event for event in events if event["event"] == "spatial_decayed"]
+    assert decayed and all(event["dissipated"] == {} for event in decayed)
+    assert [event["localized"] for event in decayed if event["tick"] == 1] == [
+        {"radiation": (1,)},
+        {"radiation": (1,)},
+    ]
+
+
+def test_localizing_deposit_is_not_transported_by_later_arrivals():
+    raw = localizing_document()
+    raw["spatial_seeds"] = [
+        {"position": list(ORIGIN), "field": "radiation", "populations": [4, 0, 0, 0, 0, 0, 0, 0]},
+        {
+            "position": list(offset(ORIGIN, (-2, 0, 0))),
+            "field": "radiation",
+            "populations": [8, 0, 0, 0, 0, 0, 0, 0],
+        },
+    ]
+    world = Simulation(parse_initial_state(raw))
+    world.step()
+    first = offset(ORIGIN, (1, 0, 0))
+    assert localized(world, first) == (2,) and value(world, first) == (2,)
+    for _ in range(2):
+        world.step()
+    # The second pulse reaches this Node as 2 and deposits 1 more, while the
+    # earlier deposit stayed put instead of leaving with the moving stock.
+    assert localized(world, first) == (3,) and value(world, first) == (1,)
+    assert world.totals()["radiation"] == (12,)
+
+
+def test_decay_residue_is_validated_and_recorded(tmp_path):
+    raw = localizing_document()
+    raw["spatial_fields"][0]["decay"]["residue"] = "evaporate"
+    with pytest.raises(ValueError, match="residue"):
+        parse_initial_state(raw)
+    raw["spatial_fields"][0]["decay"]["residue"] = 1
+    with pytest.raises(ValueError, match="residue"):
+        parse_initial_state(raw)
+    raw = localizing_document(source=True)
+    raw["disturbance_types"][0]["defaults"]["strength"] = 2
+    path = tmp_path / "localizing.json"
+    path.write_text(json.dumps(raw), encoding="utf-8")
+    run_initialization(path, tmp_path / "out", ticks=6)
+    metadata = json.loads((tmp_path / "out" / "run.json").read_text())
+    assert metadata["spatial_policy"] == "finite-localizing-v1"
+    assert metadata["spatial_decay_residue"] == ["localize"]
+    assert metadata["dissipation_totals"]["radiation"] == [0]
+    assert metadata["localized_totals"]["radiation"] == [5]
+    assert metadata["final_totals"]["radiation"] == [5]
+    assert metadata["accounting_balanced_at_every_completed_tick"]

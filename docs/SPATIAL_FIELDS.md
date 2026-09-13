@@ -155,6 +155,34 @@ promise that carriers stop moving or that unused allowances reach zero, nor a
 universal extinction tick independent of the source schedule. Allocation phases
 may remain in sparse nodes after their physical stock vanishes.
 
+### Localizing residue
+
+An optional decay key `"residue"` selects what happens to the removed fraction.
+The default `"dissipate"` is the law above. `"localize"` keeps the same retained
+quantity moving, but the removed fraction `v - retained` is deposited as
+stationary stock owned by the receiving Node instead of being recorded as loss:
+
+```json
+"decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "localize"}
+```
+
+The deposit is computed per original packet/octant/component before merging,
+exactly like dissipation, so two separate arrivals of 1 with `p/q = 1/2` deposit
+two stationary units at that Node. A deposit stays at its Node: it is never
+transported, split, decayed, sampled into the six delivered readings or read by
+field rules and couplings, and it does not enter `value`. Localizing fields
+report it separately as `localized` in node values, snapshots and accounting.
+Under this residue the dissipation ledger stays zero and total field inventory,
+moving stock plus deposits, is preserved: a wave that thins below one unit ends
+as whole units at known Nodes rather than as recorded loss. Idle Nodes keep their
+deposits; a committed-deposit ledger totals them without scanning idle history. The runner
+records `finite-localizing-v1` when every spatial field localizes and lists each
+field's residue in `spatial_decay_residue`. The conservation audit still rejects
+schema 2 decay; the engine accounting `balanced` flag checks the preserved total.
+This is a configured integer law, not a derived particle or absorption model.
+[localizing_fields.json](../examples/localizing_fields.json) is the moving-source
+example with this residue: every emitted unit ends at rest at a known Node.
+
 ## Event order and cost
 
 At interval start `t`, each active node evaluates resident sources and combines

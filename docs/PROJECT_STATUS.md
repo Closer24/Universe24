@@ -182,7 +182,9 @@ Capacity exhaustion rejects a run rather than silently losing state.
 [Spatial fields](SPATIAL_FIELDS.md) and [couplings](SPATIAL_COUPLINGS.md) retain
 candidate-specific behavior. Schema 2 (`finite-dissipative-v1`) records completed-link
 loss and finite source/response allowances; accounting for decay is not physical
-energy or momentum conservation through decay. Periodic and open boundaries have
+energy or momentum conservation through decay. Its `"residue": "localize"` option
+(`finite-localizing-v1`) deposits removed fractions as stationary stock at the
+receiving Node so total inventory is preserved. Periodic and open boundaries have
 separate explicit contracts. General automatic self-field attribution after turns
 or periodic return remains unsupported. A passing isolated-motion rejection test
 identifies invalid behavior; it does not repair the underlying candidate law.

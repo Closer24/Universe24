@@ -20,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
         ("basic.json", 8, False),
         ("finite_fields.json", 8, False),
         ("finite_fields.json", 8, True),
+        ("localizing_fields.json", 8, False),
+        ("localizing_fields.json", 8, True),
         ("spatial_turning.json", 4, False),
         ("local_lorentz_field.json", 8, False),
         ("open_world.json", 8, False),

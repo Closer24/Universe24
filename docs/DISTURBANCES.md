@@ -162,8 +162,10 @@ runs preserve conservative spatial transport, unlimited declared emission
 and unlimited spatial response. It rejects `decay` and spatial-rule `budget`
 keys. Version 2 selects the explicit `finite-dissipative-v1` policy: every spatial
 field requires `decay` with bounded integers `0 <= retain_numerator <
-retain_denominator`, and every emission and spatial coupling requires a
-nonnegative scalar/vector `budget` in its target field's units. Omitting these
+retain_denominator` and an optional `residue` of `"dissipate"` (default) or
+`"localize"`, and every emission and spatial coupling requires a
+nonnegative scalar/vector `budget` in its target field's units. When every
+spatial field localizes, the runner records `finite-localizing-v1` instead. Omitting these
 keys is an error in version 2. A version 2 configuration without spatial features
 is valid and retains the ordinary disturbance laws.
 

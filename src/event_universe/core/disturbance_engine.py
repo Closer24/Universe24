@@ -497,6 +497,16 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def localized_totals(self) -> dict[str, tuple[int, ...]]:
+        """Stationary stock deposited by localizing decay; it is counted in totals()."""
+        return {
+            field.name: (
+                (0,) * field.components if self._spatial is None else tuple(self._spatial.localized[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
     def escaped_totals(self) -> dict[str, tuple[int, ...]]:
         """Read quantities that completed an open exit, excluding internal bookkeeping."""
         return {

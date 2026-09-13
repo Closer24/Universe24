@@ -79,6 +79,7 @@ def test_workspace_serves_assets_and_current_example_data(server):
         "finite_fields",
         "local_field_rules",
         "local_lorentz_field",
+        "localizing_fields",
         "moving_source",
         "open_world",
         "spatial_causal_events",

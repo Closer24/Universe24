@@ -194,7 +194,10 @@ to fraction retention for decay. Each packet/octant/component reaching an interi
 from `v` to `sign(v) * floor(abs(v) * p / q)`, with integer `0 <= p < q`.
 The removed signed quantity is recorded as loss, not saved in a remainder. This
 deliberate law makes integer dynamic fields vanish after their last input; the
-immutable background is exempt. It can change a vector's direction and does not
+immutable background is exempt. The explicit `"residue": "localize"` option keeps
+the same attenuation of moving stock but deposits each removed fraction as
+stationary stock at the receiving node, so total inventory is preserved and a
+thinning wave ends as whole units at known nodes. It can change a vector's direction and does not
 preserve momentum or energy. It does not alter conservative splitting, fractional
 source requests or the historical models' remainder rules. See
 [the finite field contract](docs/SPATIAL_FIELDS.md#finite-completed-link-decay).
