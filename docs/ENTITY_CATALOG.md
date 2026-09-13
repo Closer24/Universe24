@@ -76,6 +76,12 @@ independent inventory and physical-property tests supplement them.
 
 ## Run a selected representation experiment
 
+The [catalog contact experiment](../examples/catalog-contact/README.md) binds all
+34 established particle/multiplet records to the existing causal quantum source
+and contact mechanism. It reuses catalog charge/mass with shared reference units,
+preserves unassigned flavor-neutrino mass explicitly and keeps species-specific
+physics as reference metadata. No engine law is added by selecting an entity.
+
 The original 46 classical and quantum probes live unchanged in
 [representation-probes.json](../examples/known-entities/representation-probes.json).
 Its `profiles` array identifies each row by `entity_id`, separately from the

@@ -942,3 +942,17 @@ mass-dependent dynamics. `tests/test_entity_catalog.py` pins PDG 2026 masses and
 widths, CODATA 2022 electron magnetic moment, signed antiparticle references and
 the distinction between omitted and inapplicable lifetimes. See
 [reference units](REFERENCE_UNITS.md) for calibration and evidence boundaries.
+
+## Catalog contact bindings
+
+`tests/test_catalog_contact.py` exercises all 34 established particle/multiplet
+bindings through the existing causal contact rule for 16 ticks each. Charge and
+encoded mass inventory keep one owner through preparation and capture; spatial
+source/loss/escape accounting remains balanced. The default three-domain world
+retains charge -2 in charge-thirds and mass reference inventory 7371 keV/c2.
+Positive, negative and neutral source signs, antiparticle references, duplicate
+placements, metadata preservation and the ten-domain schema bound are checked.
+Unassigned flavor-neutrino mass is distinguished from theoretical zero mass.
+This is configuration integration, not QCD, spin dynamics, physical total mass
+or field/matter energy closure. The [example guide](../examples/catalog-contact/README.md)
+owns the setup and limitations.
