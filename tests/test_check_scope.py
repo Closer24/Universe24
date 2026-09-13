@@ -231,3 +231,9 @@ def test_profile_validation_retains_explicit_data_dependencies(name):
     tests, _ = CHECK.select(["examples/known-entities/" + name], {})
     assert "tests/test_profile_validation.py" in tests
     assert "tests/test_configuration_validation.py" in tests
+
+
+def test_canonical_collision_selects_external_newton_measurement_consumer():
+    tests, _ = CHECK.select(["examples/04-unequal-mass-collision.json"], {})
+    assert "tests/test_newton_output_checks.py" in tests
+    assert "tests/test_reference_examples.py" in tests

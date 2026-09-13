@@ -729,3 +729,12 @@ transport suites remain the integration coverage for callers and operation costs
 Inline observer input is covered by `tests/test_local_observer.py`: normal schema
 validation, rejection before output creation, ambiguous placement rejection, exact
 saved initialization and unchanged physical results with recording enabled.
+
+## Newtonian output acceptance
+
+`tests/test_newton_output_checks.py` tests the external read-only verifier with
+synthetic positive and negative measurements. It does not prove Newtonian emergence.
+The [measurement contract](NEWTON_OUTPUT_VALIDATION.md) defines first/second/third-law,
+kinematic, elastic-energy and inverse-square checks, exact identities, numerical
+resolution and explicit missing-evidence verdicts. Run capture and output comparison
+as separate processes; never add the expected formula to runtime to make it pass.

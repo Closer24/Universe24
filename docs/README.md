@@ -62,3 +62,8 @@ These named APIs remain testable; none is the implicit active `Simulation`.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+## Output-only physical acceptance
+
+[Newtonian output validation](NEWTON_OUTPUT_VALIDATION.md) compares finished measurements
+with known formulas, independently of simulator execution.

@@ -69,3 +69,12 @@ work, not a simulator benchmark.
 Historical live previews require explicit `--live` or API `live=True`, which
 also requests recorded visualization. A performance investigation alone does not request
 visualization, a live preview or visual test execution.
+
+## Output-only physical-law acceptance
+
+Use the [Newtonian measurement contract](../../docs/NEWTON_OUTPUT_VALIDATION.md)
+when comparing finished output with known formulas. Run the external checker only
+after capture finishes; do not add a target formula to the engine or initialization.
+Preserve raw measurements, source/input fingerprints, predeclared windows and
+missing-evidence verdicts. Separate configured-reference agreement from emergence,
+and require an independent force measurement before claiming a second-law result.

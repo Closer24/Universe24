@@ -59,7 +59,10 @@ RESOURCE_CONSUMERS = {
     "examples/finite_fields.json": ("tests/test_generic_identity.py",),
     "examples/open_world.json": ("tests/test_generic_identity.py",),
     "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
-    "examples/04-unequal-mass-collision.json": ("tests/test_reference_examples.py",),
+    "examples/04-unequal-mass-collision.json": (
+        "tests/test_reference_examples.py",
+        "tests/test_newton_output_checks.py",
+    ),
     "examples/three_mass_finite.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/three-masses-low-budget.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/boundary-periodic.json": ("tests/test_reference_examples.py",),
