@@ -27,6 +27,7 @@ result are different claims. Revision-specific results are not a live status fee
 | Document | Responsibility |
 | --- | --- |
 | [Native event programs](NATIVE_QUANTUM_EVENTS.md) | Shared causal ledger, optional quantum composition, repeated triggers and charged mechanical paths |
+| [Photon preparation](PHOTON.md) | Field-owned number modes, explicit preparation frequency and derived energy; no propagation law |
 | [Quantum entities](QUANTUM_ENTITIES.md) | Quantum entity definitions and native integration ownership |
 | [Quantum events](QUANTUM_EVENTS.md) | Selected deferred joint-state event backend and decision semantics |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |

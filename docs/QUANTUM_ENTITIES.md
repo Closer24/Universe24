@@ -164,3 +164,10 @@ Primary physical acceptance references:
 [IBM CHSH tutorial](https://quantum.cloud.ibm.com/docs/en/tutorials/chsh-inequality),
 and [Tong on fermions](https://www.damtp.cam.ac.uk/user/tong/qft/qfthtml/S5.html).
 Species metadata retains the catalog's existing primary sources.
+
+## Field-owned photon preparation
+
+The [photon preparation contract](PHOTON.md) reuses the electromagnetic parent's
+two finite number-mode registers, not a second particle register set. Frequency
+and its derived excitation energy are explicit preparation readouts. The helper
+does not add phase evolution, propagation or native spatial-field composition.

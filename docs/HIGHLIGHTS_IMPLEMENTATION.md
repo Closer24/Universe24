@@ -238,3 +238,18 @@ Highlights edit or replace the earlier revision record above.
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
 | 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |
+
+### Field-owned photon preparation reconciliation
+
+On 2026-09-13, the live Highlights was read at revision
+`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`,
+against main `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. The user's selected
+[photon definition](PHOTON.md) extends preparation/readout coverage for sections
+3.2, 3.4 and 4.7: the parent electromagnetic finite-mode state is the sole owner,
+frequency is declared in a named preparation frame/time unit and energy is
+derived above vacuum, not independently stored. E=h*f is an explicit selected
+physical relation, not a derived result of local dynamics. No force, speed,
+phase generator, observer calibration or spatial-quantum integration is added.
+Existing generic preparation, configuration and validation skills cover this
+change; no postulate or Skill is changed. This reconciliation does not edit
+the external Google document or promote photon dynamics to verified status.

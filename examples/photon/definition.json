@@ -1,0 +1,19 @@
+{
+  "definition_version": 1,
+  "representation": "finite_quantum_field_preparation",
+  "entity_id": "photon",
+  "field_id": "electromagnetic_field",
+  "frequency": {
+    "numerator": 1,
+    "denominator": 8,
+    "reference_frame": "preparation_frame",
+    "time_unit": "preparation_time_unit"
+  },
+  "occupations": {
+    "transverse-1": 1,
+    "transverse-2": 0
+  },
+  "shape": [9, 9, 9],
+  "link_ticks": 1,
+  "ticks": 4
+}

@@ -231,3 +231,17 @@ def test_profile_validation_retains_explicit_data_dependencies(name):
     tests, _ = CHECK.select(["examples/known-entities/" + name], {})
     assert "tests/test_profile_validation.py" in tests
     assert "tests/test_configuration_validation.py" in tests
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "examples/photon/definition.json",
+        "examples/photon/prepare.py",
+        "examples/known-entities/catalog.json",
+        "examples/known-entities/representation-probes.json",
+    ],
+)
+def test_photon_preparation_resources_select_their_consumer(path):
+    tests, _ = CHECK.select([path], {})
+    assert "tests/test_photon_configuration.py" in tests

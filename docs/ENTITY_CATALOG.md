@@ -102,6 +102,11 @@ dynamics, spinor transformations or a valid spacetime metric. Their supplied
 updates remain elementary copy/clear operations. Limits remain 16 fields and
 16 types per world; compatible subsets compose, not the full catalog at once.
 
+The opt-in [photon preparation](PHOTON.md) binds an excitation to its reciprocal
+catalog field and prepares the parent's number modes once. It records a declared
+frequency and derived energy in a preparation manifest; it does not change these
+historical profiles, add propagation or turn reference metadata into dynamics.
+
 ## Evidence and conversion limits
 
 `tests/test_entity_catalog.py` checks reference coverage, sourced physical

@@ -10,6 +10,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/photon/definition.json": ("tests/test_photon_configuration.py",),
+    "examples/photon/prepare.py": ("tests/test_photon_configuration.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
@@ -30,6 +32,7 @@ RESOURCE_CONSUMERS = {
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
     "examples/known-entities/catalog.json": (
+        "tests/test_photon_configuration.py",
         "tests/test_entity_catalog.py",
         "tests/test_profile_validation.py",
         "tests/test_entity_compiler.py",
@@ -39,6 +42,7 @@ RESOURCE_CONSUMERS = {
         "tests/test_native_quantum_channels.py",
     ),
     "examples/known-entities/representation-probes.json": (
+        "tests/test_photon_configuration.py",
         "tests/test_profile_validation.py",
         "tests/test_entity_compiler.py",
         "tests/test_small_space_experiments.py",

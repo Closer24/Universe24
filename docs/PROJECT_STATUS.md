@@ -43,6 +43,12 @@ Finite owned-reservoir transfer, a ray-speed parameter and a restricted
 zero-total-momentum unequal-mass candidate are explicit configuration solutions,
 not replacements for the default entity profiles or derived universal laws.
 
+The opt-in [photon preparation](PHOTON.md) now links a selected excitation to
+its parent field's existing quantum number modes and records preparation-frame
+frequency with derived energy. No extra photon carrier is created. This is
+preparation/metadata only; phase evolution, propagation and detector frequency
+measurement remain unimplemented. Historical carrier profiles are unchanged.
+
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
 It covers 11 field families, 35 particle records and 14 disturbance families, with

@@ -729,3 +729,21 @@ transport suites remain the integration coverage for callers and operation costs
 Inline observer input is covered by `tests/test_local_observer.py`: normal schema
 validation, rejection before output creation, ambiguous placement rejection, exact
 saved initialization and unchanged physical results with recording enabled.
+
+## Field-owned photon preparation
+
+`tests/test_photon_configuration.py` owns the opt-in example definition and
+authoring adapter. No physics run or rendered frame is needed for these checks.
+
+- The supplied photon prepares exactly two electromagnetic 3-level registers
+  at levels (1,0), with no additional photon registers or classical seeds.
+- Frequency 1/8 gives energy 1/8 in units h/T. Frequency 2/8 gives 1/4 without
+  changing the runtime initialization. At frequency 1/8, levels (1,1) give
+  total energy 1/4 while per-quantum energy remains 1/8; vacuum energy is 0/1.
+- Nonreciprocal/missing field references, non-number bases, invalid occupations,
+  unknown keys, nonpositive ratios, booleans/floats and 64-bit overflow fail.
+- Preparation preserves all input documents and the historical classical proxy.
+  CLI output is reproducible, byte-hash-bound and never replaces existing output.
+
+These controls verify representation and readouts, not an emerged Planck law,
+spatial photon, phase evolution, local observer frequency or Lorentz symmetry.
