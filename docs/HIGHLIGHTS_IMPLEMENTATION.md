@@ -228,9 +228,10 @@ treating its omissions as current gaps.
 
 ## Proposed amendments of 2026-09-13
 
-Status: proposed from repository evidence; not yet applied to the live Google
-document. Section 10 above is unchanged so that it remains the recorded
-snapshot. Each bullet below is written in the document's style and names the
+Status: applied to the live Google document on 2026-09-13 as an appended
+section 11 with subsections 11.1 to 11.7, each naming the section it amends;
+earlier paragraphs were preserved. Section 10 above is unchanged so that it
+remains the recorded snapshot. Each bullet below is written in the document's style and names the
 heading it belongs under. Evidence: `examples/collisions`, `examples/charged-pair`,
 `tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
 `tests/test_rotation_self_interaction.py`.
