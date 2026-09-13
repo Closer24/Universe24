@@ -10,6 +10,37 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/coarse-graining/configuration.py": (
+        "tests/test_momentum_routing_candidate.py",
+        "tests/test_field_coupling_candidate.py",
+        "tests/test_coarse_closure.py",
+        "tests/test_coarse_workflow.py",
+    ),
+    "examples/coarse-graining/routing.py": (
+        "tests/test_momentum_routing_candidate.py",
+        "tests/test_field_coupling_candidate.py",
+        "tests/test_coarse_workflow.py",
+    ),
+    "examples/coarse-graining/coupling.py": (
+        "tests/test_field_coupling_candidate.py",
+        "tests/test_coarse_workflow.py",
+    ),
+    "examples/coarse-graining/properties.py": (
+        "tests/test_coarse_properties.py",
+        "tests/test_coarse_closure.py",
+        "tests/test_coarse_workflow.py",
+    ),
+    "examples/coarse-graining/closure.py": (
+        "tests/test_coarse_closure.py",
+        "tests/test_coarse_workflow.py",
+    ),
+    "examples/coarse-graining/run_experiments.py": (
+        "tests/test_coarse_closure.py",
+        "tests/test_field_coupling_candidate.py",
+        "tests/test_momentum_routing_candidate.py",
+        "tests/test_coarse_properties.py",
+        "tests/test_coarse_workflow.py",
+    ),
     "examples/known-entities/property-coupling-probes.json": ("tests/test_property_entity_profiles.py",),
     "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),

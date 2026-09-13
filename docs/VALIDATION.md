@@ -1,5 +1,59 @@
 # Validation evidence
 
+## Disturbance routing and restricted coarse-graining - 2026-09-13
+
+Base main: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. The
+[research package](../examples/coarse-graining/README.md) changes no production
+source. Runtime SHA-256 remains
+`979ddc4b6f6b98ee2c3500681fa2517583f5e906b9e98e16bdc11673eee2617c`;
+experiment Python SHA-256 is
+`b3f8f2d95c4d713bc16ade32436e097c2434a25c21a962b8fda4808ce0ff9d0e`.
+The runner computes both fingerprints before and after its identified run.
+
+On Python 3.14.7, pytest 9.1.1, the affected `tools/check.py --base bb177121`
+selection plus explicit architecture, NodeState, integer, locality and rational
+particle regressions passed **314 tests**, with two opt-in visual skips in
+28.09 seconds. Ruff lint/format passed on 13 changed Python files. No production
+typing scope changed; strict mypy separately passed for the aggregation module.
+The five new candidate/workflow suites contain 91 tests. Six resource-selection
+cases keep their dynamic consumers in future checks.
+
+Eight saved canonical headless runs completed: routing/rest at 28 ticks each,
+positive/zero/negative property coupling at four each, and 4/16/64-Node parallel
+blocks at two/four/eight ticks. Metadata, events, final states and input hashes
+were inspected. Accounting passed throughout; all five configured local E/P
+audits passed. Open-block raw in-domain equality is false after escape, while
+the escaped-inclusive balances pass. No frames, GIF or renderer were produced.
+
+The independent physics/architecture reviewer ran 89 focused candidate tests
+and verified all eight saved directories against the final report and exact
+fingerprints. A receiving-capacity counterexample exposed an overbroad initial
+admission; compression now rejects more than two mixed-direction owners without
+a capacity proof. Three converging microscopic arrivals preserve stock and fail
+at the actual two-slot boundary. No assertion or physical law was weakened.
+
+Free-block comparisons match every tick's actual boundary flux and remaining
+E/P, including full terminal transit. Exhaustive 325-case/650-transition search
+rejects totals and direction-only summaries but accepts direction/phase within
+the stated finite free family. Encounter geometry disproves general interacting
+closure. The readout discards transverse boundary position, so it cannot yet
+replace a composable block network. The normalized opposite-pair mass-squared
+readout is 36; it does not derive elementary masses.
+
+Memory review: fixed bounded metadata, no formulas in physical payloads, no
+microscopic references or member lists in the evolving free macro. Compression
+of 4/16/64 parallel owners retains 2/4/8 bins and 424/756/1,364 traced Python
+bytes; respective peaks are 14,832/35,552/115,392 bytes. Input construction
+predates tracing; parsing/compression temporaries are included. This is not RSS,
+a total-world bound or an engine speedup. Unchanged production bytes and retained
+routing/locality/state regressions support the unchanged runtime contract.
+
+Reproduce with `python -m examples.coarse-graining.run_experiments --output
+artifacts/disturbance-study`, on one line. Generated evidence follows the existing
+24-hour policy. The original exact report used `artifacts/task82-final/report.json`.
+Full unrelated suites, visual validation, production macro integration and
+physical dispersion/field-law derivations were not performed or claimed.
+
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The

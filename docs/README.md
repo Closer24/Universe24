@@ -25,6 +25,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Rational particle candidates](RATIONAL_PARTICLES.md) | Opt-in bounded ratios, balanced routes, fractional credit and local checks |
 | [Coupled excitation probe](COUPLED_EXCITATIONS.md) | Unit-state exchange between a held internal excitation and a traveling field, with local capture and release |
 | [Directional-wave candidate](DIRECTIONAL_WAVE.md) | Six transverse modes and configured conservative polarization encounters |
+| [Disturbance coarse-graining research](../examples/coarse-graining/README.md) | Momentum routing, property transfers and restricted free-block closure with counterexamples |
 | [Physical entities](PHYSICAL_ENTITIES.md) | Inventory, representation coverage and unestablished physical behavior |
 
 ## Explicit quantum experiments

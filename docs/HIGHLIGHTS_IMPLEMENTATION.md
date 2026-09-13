@@ -1,5 +1,18 @@
 # Highlights implementation coverage
 
+## Disturbance aggregation research reconciliation - 2026-09-13
+
+Live Highlights content was consulted with provider modification time
+`2026-09-13T05:10:29.655Z`, against source base `bb177121ec2efdc6c998a8290b9e7b09c7706c62`.
+Its refinement/aggregation target and sections 10.2, 10.5 and 10.6 are compared
+with the [restricted disturbance experiment](../examples/coarse-graining/README.md).
+Configured owned properties, local coupled transfers and actual transit remain
+in the existing simulator. The free-block readout preserves E/P and delay bins;
+interaction geometry and capacity disprove a general totals-only replacement.
+Neither hierarchical Focus integration nor a computational-field feedback law
+is established. Research metadata stays outside engine initialization and does
+not authorize physical merging. The live document was not edited.
+
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
 The live Highlights document was read at revision

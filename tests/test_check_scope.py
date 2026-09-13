@@ -27,6 +27,35 @@ def test_spatial_graph_example_selects_its_causal_contract():
     assert "tests/test_spatial_causal_events.py" in selected
 
 
+@pytest.mark.parametrize(
+    "resource,expected",
+    [
+        (
+            "configuration.py",
+            {"momentum_routing_candidate", "field_coupling_candidate", "coarse_closure"},
+        ),
+        ("routing.py", {"momentum_routing_candidate", "field_coupling_candidate"}),
+        ("coupling.py", {"field_coupling_candidate"}),
+        ("properties.py", {"coarse_properties", "coarse_closure"}),
+        ("closure.py", {"coarse_closure"}),
+        (
+            "run_experiments.py",
+            {
+                "momentum_routing_candidate",
+                "field_coupling_candidate",
+                "coarse_properties",
+                "coarse_closure",
+            },
+        ),
+    ],
+)
+def test_disturbance_research_resources_retain_their_dynamic_consumers(resource, expected):
+    selected, typed = CHECK.select(["examples/coarse-graining/" + resource], {})
+    assert {"tests/test_" + name + ".py" for name in expected} <= set(selected)
+    assert "tests/test_quantum_channels.py" not in selected
+    assert not typed
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

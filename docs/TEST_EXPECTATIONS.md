@@ -1,5 +1,21 @@
 # Test inputs and expected results
 
+## Disturbance routing and restricted coarse-graining
+
+The [research package](../examples/coarse-graining/README.md) has independent
+expectations in `test_momentum_routing_candidate.py`,
+`test_field_coupling_candidate.py`, `test_coarse_properties.py`,
+`test_coarse_closure.py` and `test_coarse_workflow.py`.
+They cover the exact 5:2 cardinal route and frozen registers; a local E+1,
+P+(-1,1,0) transfer with opposite field reaction and next +Y route; complete
+bounded metadata; exact 4/16/64-Node free boundary traces; delayed release;
+amplitude-energy distinction; collision/capacity counterexamples; 325 finite
+configurations and 650 transitions; diagnostic mass squared; and eight canonical
+headless runs with failed-run rejection and shared retention ownership.
+Dynamic resource dependencies are declared in `tools/check.py` and tested by
+`test_check_scope.py`. These are restricted candidate checks, not general
+interacting closure or real-world physical validation.
+
 ## Property coupling and passive local conservation
 
 `test_property_couplings.py` requires property compatibility across differently

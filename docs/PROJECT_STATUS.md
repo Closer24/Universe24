@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The [disturbance coarse-graining experiment](../examples/coarse-graining/README.md)
+reuses balanced routing and property-selected field reactions on base `bb177121`.
+An autonomous readout predicts an initialized isolated free block's directional
+boundary flux with delay bins. Interaction geometry and receiving capacity give
+explicit counterexamples to general compression; this is not a replacement
+physical engine or a composable macro backend. Production defaults are unchanged.
+Consult its current PR and exact validation evidence before integrating it.
+
 The [property coupling extension](PROPERTY_COUPLINGS.md) selects compatible
 disturbances by owned properties, retaining explicit types for existing inputs.
 Entity probes share two local energy/momentum reservoirs. The optional
