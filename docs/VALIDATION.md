@@ -1,5 +1,47 @@
 # Validation evidence
 
+## Coupled unit-excitation candidate - 2026-09-13
+
+Base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`.
+The [candidate contract](COUPLED_EXCITATIONS.md) uses saved initialization rules,
+with no changes under `src/` or to the physical reference catalog. Independent
+physics review checked local ownership, elementary state generation, fixed
+bounds, live delayed-commit guards and the explicit single-packet envelope.
+The review found and closed an emission/input-overlap hole in the authoring check.
+
+Four ordinary headless CLI runs completed: `incoming_positive`, `incoming_zero`
+and `emission` for 8 ticks each; `delayed` for 30 ticks. Each ran canonical
+configuration preflight first. Saved input bytes matched the prepared cases,
+and every run recorded source SHA-256
+`7dac1815abbdcbbd78f1ab175901bc04d9280d76a570eb2d9458032417ed1378`.
+Final internal/recoil values were Y/+X for both absorption runs, zero/zero for
+zero coupling, and zero/-X with spatial -Y for emission. Ordinary spatial
+accounting was balanced. The independent tests additionally check the candidate's
+nonlinear U/P at each tick; the ordinary runner's empty conserved-field totals
+are not evidence of those nonlinear balances.
+
+The incoming packet reached the receiver at audit tick 2. Immediate absorption
+committed at that same audit tick, after receipt; its changed state is visible
+in the post-step snapshot labeled tick 3. Delayed absorption committed at tick 7.
+Emission committed at audit tick 0, sent at tick 1 and arrived at tick 2. These are
+world/event audit times, distinct from local observer counters and playback.
+Generated outputs use the existing 24-hour retention contract; the saved law,
+cases, tests and commands reproduce the evidence after output expiry.
+
+All 38 focused candidate cases passed, including CLI preparation and overwrite
+protection. The affected gate uses the recorded base plus the existing local-field
+and spatial transaction suites for regression:
+
+```sh
+python tools/check.py --base 6a2816526083c23069bf3b0f3fcb6a9dc5b17944 --tests tests/test_local_field_rules.py tests/test_spatial_interactions.py
+```
+ The PR records the exact final count,
+head/tree and CI result. Tools: Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and
+mypy 2.3.1. No full-suite or visual audit is claimed. Boss, configuration, runner,
+field-development, architecture, physics, test, regression and merge Skills were
+reviewed: their existing scope, hypothesis and event-time rules remain sufficient;
+new technical knowledge is linked through this candidate's contract and maps.
+
 ## Read-only configuration preflight - 2026-09-13
 
 Base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. The
