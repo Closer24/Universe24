@@ -1,0 +1,25 @@
+name: Photon definition audit
+on:
+  push:
+    branches: [feat/photon-field-frequency]
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 6a2816526083c23069bf3b0f3fcb6a9dc5b17944
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Archive pinned source without authentication configuration
+        run: |
+          test -z "$(git config --local --get-regexp 'extraheader|credential' || true)"
+          tar -czf "$RUNNER_TEMP/photon-definition-source.tar.gz" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: photon-definition-source
+          path: ${{ runner.temp }}/photon-definition-source.tar.gz
+          retention-days: 1
