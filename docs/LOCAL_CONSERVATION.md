@@ -155,7 +155,9 @@ the fixed configured field and slot bounds. The audit obtains host-wide
 read-only inventory snapshots and computes a residual for each affected node.
 This is an analyst's world/event audit, not information available to a physical
 node or local reception observer. Snapshot traversal, storage and report
-aggregation scale with the inspected world and are host work.
+aggregation scale with the inspected world and are host work: every checked
+event re-measures every active Node and in-flight packet, so a run with many
+active Nodes and many events per tick costs their product in host time.
 
 The expressions and comparisons cannot become inputs to physical selection,
 routing, updates, timing or local cost. Enabling measurement adds no model

@@ -643,8 +643,12 @@ def radiation_pressure_document(ticks: int, headings: list[list[int]], rays_per_
     }
 
 
-def radiation_pressure(ticks: int = 40) -> dict:
-    raw = radiation_pressure_document(ticks, golden_headings(HEADINGS, HEADING_SCALE), RAYS_PER_TICK)
+PRESSURE_HEADINGS = 256  # the audit re-measures every owner per event, so this probe stays small
+PRESSURE_TICKS = 12
+
+
+def radiation_pressure(ticks: int = PRESSURE_TICKS, headings: int = PRESSURE_HEADINGS) -> dict:
+    raw = radiation_pressure_document(ticks, golden_headings(headings, HEADING_SCALE), headings)
     world, history = track(raw)
 
     def path(name):
@@ -657,8 +661,8 @@ def radiation_pressure(ticks: int = 40) -> dict:
         "audit": {
             k: report[k] for k in ("status", "checked_node_events", "initial", "current", "escaped")
         },
-        "sail_x": path("sail")[::4],
-        "lamp_x": path("lamp")[::8],
+        "sail_x": path("sail"),
+        "lamp_x": path("lamp"),
         "sail_final": sail[-1] if sail else history["sail"][-1],
         "lamp_final": lamp[-1] if lamp else history["lamp"][-1],
         "totals": {name: list(values) for name, values in world.totals().items()},
