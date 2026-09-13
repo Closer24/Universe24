@@ -81,3 +81,56 @@ def test_falling_body_oscillates_through_the_source():
     assert offsets[second_turn] >= 5 and momenta[second_turn + 1] < 0
     # Edge case: no momentum leaks; carrier plus local field momentum stays zero.
     assert world.totals()["momentum"] == (0, 0, 0)
+
+
+def closed_axis_world(mass: int, ticks: int = 8, stock: int | None = None, audit: bool = False):
+    small_world()
+    raw = PROBE.closed_document(ticks, 6, audit=audit)
+    raw["spatial_fields"][0]["headings"] = axis_headings()
+    raw["disturbance_types"].append(PROBE.closed_body("held_body", {"mode": "hold"}))
+    raw["spatial_couplings"].append(PROBE.closed_attraction("held_body"))
+    quanta = mass * PROBE.CLOSED_STOCK if stock is None else stock
+    for k in (2, 4):
+        raw["seeds"].append(
+            {
+                "position": [PROBE.CENTER + k, PROBE.CENTER, PROBE.CENTER],
+                "type": "held_body",
+                "values": {"mass": mass, "quanta": quanta},
+            }
+        )
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(ticks):
+        world.step()
+    found = {position[0] - PROBE.CENTER: values for position, values in PROBE.bodies(world, 1)}
+    return world, found, 2 * quanta
+
+
+def test_signed_quanta_pull_bodies_toward_the_source_and_they_pay_their_own_stock():
+    pulled = {}
+    for mass in (1, 2):
+        world, found, initial = closed_axis_world(mass)
+        near, far = found[2], found[4]
+        # Each -x-bound quantum share moves momentum toward the source by share x (1,0,0),
+        # and the body pays exactly that share from its stock: nothing else changes.
+        assert near["momentum"][0] < 0 and near["momentum"][1:] == (0, 0)
+        assert mass * PROBE.CLOSED_STOCK - near["quanta"][0] == -near["momentum"][0]
+        # The far body takes its share of what the near one left on the same ray.
+        assert 0 < -far["momentum"][0] <= -near["momentum"][0]
+        # The source is credited with every quantum it emits and recoils by nothing:
+        # the six axis rays cancel exactly.
+        (_, source), *_ = PROBE.bodies(world, 0)
+        assert source["quanta"] == (8 * 65536,) and source["momentum"] == (0, 0, 0)
+        assert PROBE.closure(world, initial)["quanta_closed"]
+        pulled[mass] = -near["momentum"][0]
+    # The share is proportional to mass: the same acceleration up to one unit per hit.
+    assert abs(pulled[2] - 2 * pulled[1]) <= 8
+
+
+def test_a_body_with_no_stock_left_is_not_pulled_and_the_audit_stays_closed():
+    world, found, initial = closed_axis_world(1, ticks=8, stock=50, audit=True)
+    assert found[2]["quanta"] == (0,) and found[2]["momentum"] == (-50, 0, 0)
+    report = world.conservation_report()
+    assert report["status"] == "passed" and report["checked_node_events"] > 0
+    assert report["current"]["energy"] + report["escaped"]["energy"] == initial
+    current, escaped = report["current"]["momentum"], report["escaped"]["momentum"]
+    assert tuple(a + b for a, b in zip(current, escaped, strict=True)) == (0, 0, 0)

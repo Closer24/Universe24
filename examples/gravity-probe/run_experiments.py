@@ -11,6 +11,14 @@ Euclidean distance; no operational observer is modeled.
 Measured: momentum gained per tick per unit mass (the host's "acceleration")
 against distance and direction, its independence from the mass, and a moving
 body that falls inward under the same rule.
+
+The closed variant replaces the exchange with signed quanta. The source emits
+negative `quanta`, funded, so it is credited with what it emits and each ray's
+momentum points back at it; a body absorbs the share `mass / D` of every ray
+that crosses its Node, pays that share from its own stock and gains the share's
+momentum toward the source. Energy and momentum are exact at every event, a
+body with no stock left is not pulled, and the acceleration is again the same
+for every mass.
 """
 
 from __future__ import annotations
@@ -314,6 +322,267 @@ def fall_trajectory(mass: int, start: int, ticks: int) -> list[dict]:
     return trajectory
 
 
+CLOSED_STRENGTH = 65536  # quanta per tick over 64 rays: 1024 per ray, 4 x mass absorbed per hit
+CLOSED_DENOMINATOR = 256  # absorbed share of each crossing ray is mass / 256
+CLOSED_STOCK = 4096  # quanta a body of unit mass can pay for its pull
+
+
+def mirrored_headings(count: int, scale: int) -> list[list[int]]:
+    """Golden-spiral headings, each followed by its negative: every sweep sums to zero."""
+    result: list[list[int]] = []
+    for heading in golden_headings(count // 2, scale):
+        mirror = [-c for c in heading]
+        if heading not in result and mirror not in result:
+            result.extend([heading, mirror])
+    return result
+
+
+def closed_document(ticks: int, rays_per_tick: int = RAYS_PER_TICK, audit: bool = False) -> dict:
+    """A funded source of negative quanta; bodies absorb a mass share and pay for it."""
+    raw = base_document(ticks)
+    raw["model_id"] = "signed-quanta-gravity-host-probe-v1"
+    raw["fields"] = [
+        {
+            "name": "quanta",
+            "components": 1,
+            "units": "quantum",
+            "signed": True,
+            "conserved": True,
+            "extensive": True,
+        },
+        *(field for field in raw["fields"] if field["name"] in ("mass", "momentum")),
+    ]
+    raw["disturbance_types"] = [
+        {
+            "name": "source",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        }
+    ]
+    raw["spatial_fields"] = [
+        {
+            "field": "quanta",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": mirrored_headings(HEADINGS, HEADING_SCALE),
+            "rays_per_tick": rays_per_tick,
+            "ray_slots": 512,
+        }
+    ]
+    raw["emissions"] = [
+        {
+            "type": "source",
+            "field": "quanta",
+            "amount": -CLOSED_STRENGTH * rays_per_tick // RAYS_PER_TICK,
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+        }
+    ]
+    if audit:
+        raw["conservation"] = {
+            "name": "signed quanta",
+            "energy_units": "quantum",
+            "momentum_units": "quantum times heading",
+            "carriers": [
+                {
+                    "requires": ["quanta", "momentum"],
+                    "energy": {"field": "quanta"},
+                    "momentum": {"field": "momentum"},
+                }
+            ],
+            "spatial": {
+                "energy": {"field": "quanta", "side": "right"},
+                "momentum": {"op": "vector", "args": [0, 0, 0]},
+            },
+        }
+    return raw
+
+
+def closed_body(name: str, transport: dict) -> dict:
+    return {
+        "name": name,
+        "fields": ["quanta", "mass", "momentum"],
+        "defaults": {"quanta": CLOSED_STOCK, "mass": 1, "momentum": [0, 0, 0]},
+        "transport": transport,
+    }
+
+
+def closed_attraction(type_name: str) -> dict:
+    """Absorb mass / D of each crossing ray: momentum toward the source, paid from stock."""
+    return {
+        "name": f"pull_{type_name}",
+        "type": type_name,
+        "field": "quanta",
+        "mode": "absorb",
+        "momentum_field": "momentum",
+        "fraction": {"field": "mass"},
+        "fraction_denominator": CLOSED_DENOMINATOR,
+    }
+
+
+def closed_held_document(ticks: int, mass: int) -> dict:
+    """One mass per world: bodies on one line shadow each other by mass / D per body."""
+    raw = closed_document(ticks)
+    raw["disturbance_types"].append(closed_body("held_body", {"mode": "hold"}))
+    raw["spatial_couplings"].append(closed_attraction("held_body"))
+    for name, direction in DIRECTIONS.items():
+        for k in STEPS[name]:
+            raw["seeds"].append(
+                {
+                    "position": [CENTER + k * d for d in direction],
+                    "type": "held_body",
+                    "values": {"mass": mass, "quanta": mass * CLOSED_STOCK},
+                }
+            )
+    return raw
+
+
+def closed_falling_document(ticks: int, mass: int, start: int) -> dict:
+    raw = closed_document(ticks)
+    raw["disturbance_types"].append(
+        closed_body(
+            "falling_body",
+            {
+                "mode": "move",
+                "direction_field": "momentum",
+                "rate": {
+                    "op": "min",
+                    "args": [
+                        mass * FALL_SCALE,
+                        {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]},
+                    ],
+                },
+                "rate_denominator": mass * FALL_SCALE,
+            },
+        )
+    )
+    raw["spatial_couplings"].append(closed_attraction("falling_body"))
+    raw["seeds"].append(
+        {
+            "position": [CENTER + start, CENTER, CENTER],
+            "type": "falling_body",
+            "values": {"mass": mass, "quanta": mass * CLOSED_STOCK},
+        }
+    )
+    return raw
+
+
+def closure(world: Simulation, initial_quanta: int) -> dict:
+    """Records plus rays in flight plus escaped quanta must equal the initial stock, exactly.
+
+    Momentum of the records alone is reported; the rays in flight carry the rest,
+    which only the event audit sums.
+    """
+    totals, escaped = world.totals(), world.escaped_totals()
+    return {
+        "quanta_in_world": totals["quanta"][0],
+        "quanta_escaped": escaped["quanta"][0],
+        "quanta_closed": totals["quanta"][0] + escaped["quanta"][0] == initial_quanta,
+        "momentum_of_records": list(totals["momentum"]),
+        "momentum_escaped": list(escaped["momentum"]),
+    }
+
+
+def closed_held_table(ticks_measured: int) -> tuple[list[dict], dict]:
+    warm = HEADINGS // RAYS_PER_TICK
+    rows, closures = [], {}
+    for mass in MASSES:
+        raw = closed_held_document(warm + ticks_measured, mass)
+        world = Simulation(parse_initial_state(raw))
+        initial_quanta = sum(seed["values"]["quanta"] for seed in raw["seeds"] if "values" in seed)
+        for _ in range(warm):
+            world.step()
+        baseline = {position: values for position, values in bodies(world, 1)}
+        for _ in range(ticks_measured):
+            world.step()
+        for position, values in bodies(world, 1):
+            before = baseline[position]
+            gained = tuple(a - b for a, b in zip(values["momentum"], before["momentum"], strict=True))
+            offset = tuple(v - CENTER for v in position)
+            r = euclid(offset)
+            radial = sum(g * o for g, o in zip(gained, offset, strict=True)) / r
+            name = next(
+                n
+                for n, d in DIRECTIONS.items()
+                if all(o * d[0] == offset[0] * dd for o, dd in zip(offset, d, strict=True))
+                and offset != (0, 0, 0)
+            )
+            rows.append(
+                {
+                    "direction": name,
+                    "euclidean_r": round(r, 4),
+                    "mass": mass,
+                    "momentum_gained": gained,
+                    "quanta_paid": before["quanta"][0] - values["quanta"][0],
+                    "radial_momentum_per_tick": round(radial / ticks_measured, 4),
+                    "acceleration": round(radial / ticks_measured / mass, 5),
+                    "acceleration_times_r2_times_D_over_emission": round(
+                        -radial / ticks_measured / mass * r * r * CLOSED_DENOMINATOR / CLOSED_STRENGTH,
+                        5,
+                    ),
+                }
+            )
+        closures[f"mass_{mass}"] = closure(world, initial_quanta)
+    rows.sort(key=lambda row: (row["direction"], row["euclidean_r"], row["mass"]))
+    return rows, closures
+
+
+def closed_fall_trajectory(mass: int, start: int, ticks: int) -> dict:
+    raw = closed_falling_document(ticks, mass, start)
+    world = Simulation(parse_initial_state(raw))
+    trajectory = []
+    for tick in range(1, ticks + 1):
+        world.step()
+        found = bodies(world, 1)
+        if not found:
+            trajectory.append({"tick": tick, "escaped": True})
+            break
+        position, values = found[0]
+        trajectory.append(
+            {
+                "tick": tick,
+                "x_offset": None if position is None else position[0] - CENTER,
+                "momentum": values["momentum"],
+                "quanta": values["quanta"][0],
+            }
+        )
+    return {"trajectory": trajectory, "closure": closure(world, mass * CLOSED_STOCK)}
+
+
+def closed_audit(ticks: int = 16, rays_per_tick: int = 16) -> dict:
+    """A short audited world: a held body of mass 4 one link above the source.
+
+    The heading sequence starts at the poles, so the first sweep ticks fire near
+    the z axis and the body sits on it.
+    """
+    raw = closed_document(ticks, rays_per_tick, audit=True)
+    raw["disturbance_types"].append(closed_body("held_body", {"mode": "hold"}))
+    raw["spatial_couplings"].append(closed_attraction("held_body"))
+    raw["seeds"].append(
+        {
+            "position": [CENTER, CENTER, CENTER + 1],
+            "type": "held_body",
+            "values": {"mass": 4, "quanta": 4 * CLOSED_STOCK},
+        }
+    )
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(ticks):
+        world.step()
+    report = world.conservation_report()
+    (_, body), *_ = bodies(world, 1)
+    (_, source), *_ = bodies(world, 0)
+    return {
+        "audit": {
+            k: report[k] for k in ("status", "checked_node_events", "initial", "current", "escaped")
+        },
+        "body": {"quanta": body["quanta"][0], "momentum": list(body["momentum"])},
+        "source": {"quanta": source["quanta"][0], "momentum": list(source["momentum"])},
+        "closure": closure(world, 4 * CLOSED_STOCK),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
@@ -344,6 +613,40 @@ def main() -> None:
         for (d, r), values in sorted(mass_ratios.items())
     ]
     falls = {f"mass_{m}": fall_trajectory(m, 8, FALL_TICKS) for m in (1, 2)}
+    closed_rows, closed_closures = closed_held_table(measured)
+    closed_fits = {
+        name: fit_exponent(
+            [
+                (row["euclidean_r"], -row["acceleration"])
+                for row in closed_rows
+                if row["direction"] == name and row["mass"] == 1
+            ]
+        )
+        for name in DIRECTIONS
+    }
+    closed_ratios: dict = {}
+    for row in closed_rows:
+        closed_ratios.setdefault((row["direction"], row["euclidean_r"]), {})[row["mass"]] = row[
+            "acceleration"
+        ]
+    closed = {
+        "emission_per_tick": -CLOSED_STRENGTH,
+        "denominator": CLOSED_DENOMINATOR,
+        "stock_per_unit_mass": CLOSED_STOCK,
+        "held": closed_rows,
+        "held_closure": closed_closures,
+        "log_log_slopes_of_acceleration_mass_1": closed_fits,
+        "equivalence": [
+            {
+                "direction": d,
+                "euclidean_r": r,
+                "acceleration_by_mass": {str(m): a for m, a in sorted(values.items())},
+            }
+            for (d, r), values in sorted(closed_ratios.items())
+        ],
+        "falls": {f"mass_{m}": closed_fall_trajectory(m, 8, FALL_TICKS) for m in (1, 2)},
+        "audited": closed_audit(),
+    }
     result = {
         "source_sha256": source_fingerprint(),
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -357,9 +660,14 @@ def main() -> None:
         "log_log_slopes_of_acceleration_mass_1": fits,
         "equivalence": equivalence,
         "falls": falls,
+        "closed": closed,
     }
     (args.output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"slopes": fits, "totals": totals}))
+    print(json.dumps({"closed_slopes": closed_fits, "closed_closure": closed_closures}))
+    print("closed audit", closed["audited"])
+    for name, fall in closed["falls"].items():
+        print("closed", name, "final", fall["trajectory"][-1], fall["closure"])
     for name, trajectory in falls.items():
         arrival = next((t["tick"] for t in trajectory if t.get("x_offset") == 0), None)
         print(name, "arrival_tick", arrival, "final", trajectory[-1])
