@@ -117,6 +117,33 @@ def rename_paths(paths: list[str]) -> None:
         subprocess.run(["git", "mv", source, target], cwd=ROOT, check=True)
 
 
+def fix_breaking_contract_tests() -> None:
+    path = ROOT / "tests/test_node_terminology.py"
+    text = path.read_text(encoding="utf-8")
+    text = text.replace(
+        "def test_canonical_state_types_use_node_names_with_legacy_aliases_only():",
+        "def test_canonical_state_types_use_node_names_after_breaking_migration():",
+    )
+    text = text.replace(
+        "    assert disturbance_state.InitialState.slots_per_node.fget is not None\n",
+        '    assert "slots_per_node" in disturbance_state.InitialState.__dataclass_fields__\n',
+    )
+    # These assertions were useful only while compatibility aliases existed.
+    text = text.replace(
+        "    assert disturbance_state.DisturbanceNodeState is disturbance_state.DisturbanceNodeState\n",
+        "",
+    )
+    text = text.replace(
+        "    assert disturbance_state.NodeView is disturbance_state.NodeView\n",
+        "",
+    )
+    text = text.replace(
+        "    assert spatial_state.SpatialNodeState is spatial_state.SpatialNodeState\n",
+        "",
+    )
+    path.write_text(text, encoding="utf-8")
+
+
 def main() -> None:
     paths = tracked_files()
 
@@ -140,6 +167,7 @@ def main() -> None:
             file_path.write_text(after, encoding="utf-8")
 
     rename_paths(paths)
+    fix_breaking_contract_tests()
 
     # The canonical active contract no longer describes compatibility aliases.
     terminology = ROOT / "docs/TERMINOLOGY.md"
