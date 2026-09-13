@@ -34,6 +34,7 @@ class InventoryNode:
     position: Address3
     records: tuple[DisturbanceRecord | None, ...]
     spatial: tuple[SpatialState, ...]
+    incoming_spatial: tuple[SpatialState, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

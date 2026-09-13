@@ -47,7 +47,7 @@ between cycles. The exact schema, exchange, timing and source rules are in
 [the disturbance contract](docs/DISTURBANCES.md).
 
 The optional [outward spatial-field candidate](docs/SPATIAL_FIELDS.md) separates
-source records from the fields they emit. Its field transport uses a fixed
+source records from the fields they emit. By default its field transport uses a fixed
 clock; priced field work contributes to new local carrier cycles while field
 forwarding continues at causal link speed. Schema 1 preserves conservative
 transport. Schema 2 explicitly selects `finite-dissipative-v1`: finite source
@@ -56,6 +56,12 @@ removes magnitude at interior arrivals while exempting immutable background.
 This candidate tracks signed dissipation rather than promising conserved physical
 momentum through decay. Self-field exclusion by arrival order remains an unverified
 hypothesis and is not enabled by this extension.
+
+The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
+the same budget delay to all local fields and carriers. It freezes updates and
+directional departures together; later input belongs to the next cycle.
+The integer link transit remains fixed. This alternative timing candidate is
+selected with `spatial_computation_delay`; existing inputs keep the default.
 
 The optional [spatial response candidate](docs/SPATIAL_COUPLINGS.md) can turn a
 configured vector while preserving its length exactly, transferring the opposite

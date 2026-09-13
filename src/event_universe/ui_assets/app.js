@@ -214,6 +214,10 @@ function renderEditor() {
     editor.append(node("hr", "", "editor-divider")); grid = section("Local timing");
     input(grid, "Link transit ticks", doc, "link_ticks", { min: 1, hint: "Fixed time between neighboring nodes" });
     input(grid, "Normal computation budget", doc, "normal_budget", { min: 1, hint: "Ordinary local work before added delay" });
+    if (doc.spatial_fields?.length) {
+      check(grid, "Apply computation delay to fields too", doc, "spatial_computation_delay", false);
+      grid.append(node("p", "Fields and carriers share one local computation budget. Updates, emission and departures wait together; packets still take the configured link transit time.", "hint"));
+    }
   } else if (tab === "fields") {
     editor.append(node("p", "Names are your labels. Declare the structure and conservation properties of each quantity.", "editor-description"));
     doc.fields.forEach((field, i) => {

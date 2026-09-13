@@ -34,6 +34,8 @@ the example family in the guide for fields, catalog entities or native events.
    for provenance granularity, capacity and failure behavior.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed
    in range, and distinguish transit time, computation delay and playback speed.
+   Select [shared field computation delay](../../docs/SPATIAL_COMPUTATION_DELAY.md)
+   explicitly when fields must wait under the same budget as carriers.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.

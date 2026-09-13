@@ -1,5 +1,10 @@
 # Project status and restart guide
 
+The [shared field computation delay](SPATIAL_COMPUTATION_DELAY.md) candidate
+adds an explicit configuration switch and bounded later-input ownership.
+Existing inputs keep fixed-clock spatial transport. See its contract and
+focused tests for supported timing and conservation limits.
+
 The [property coupling extension](PROPERTY_COUPLINGS.md) selects compatible
 disturbances by owned properties, retaining explicit types for existing inputs.
 Entity probes share two local energy/momentum reservoirs. The optional
