@@ -14,6 +14,14 @@ Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
 Read only affected contracts and Skills after the root entry point. Use one
 authoritative definition per concept; Skills link to laws rather than copy them.
 
+For changes to the system or its capabilities, read the current live
+[Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
+before implementation, record its revision/date, and reconcile affected sections
+in the [coverage map](../docs/HIGHLIGHTS_IMPLEMENTATION.md). A cached copy is not
+evidence of a live read; disclose unavailable access. Explicit user instructions
+take precedence over older specification text. Do not claim a live-document edit
+from a repository-only reconciliation.
+
 Keep model rules, hypotheses to test and verified results distinct. A hypothesis
 needs a test and pass condition; a verified result needs an identified tree and
 completed evidence. A high-level target or a passing detector is not proof that
@@ -120,6 +128,13 @@ a run but may not repair physical state. Consult
 scalar/particle assumptions to the primary Simulation API.
 
 ## Performance work
+
+Every change reviews general architecture and [memory ownership](../docs/MEMORY.md).
+The submission gate retains architecture and node-memory checks. For changed
+ownership or capacity, measure representative allocations and check retained
+references, failure cleanup and host limits. A bounded local snapshot does not
+bound the world or caller-owned history. Use the canonical
+[node testing contract](../docs/NODE_TESTING.md) for local I/O and clock changes.
 
 Initialization configuration is runtime data. UI and configuration changes must
 not introduce a compilation, package rebuild or server restart for each edit.

@@ -1,5 +1,10 @@
 # Documentation index
 
+- [Configured topology](CONFIGURED_TOPOLOGY.md): immutable reciprocal ports and
+  site patterns, default six-port compatibility, supported laws and invariants.
+- [BCC vector encounter](../examples/topology/README.md): complete JSON example
+  with independent normalized energy and directional-norm checks.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
@@ -10,12 +15,14 @@ result are different claims. Revision-specific results are not a live status fee
 | Document | Responsibility |
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Node testing](NODE_TESTING.md) | Real-engine single-node and multi-node port I/O, clocks and compatibility |
+| [Memory](MEMORY.md) | State ownership, diagnostic bounds and per-change review |
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
-| [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
+| [Local field rules](LOCAL_FIELD_RULES.md) | Configured-port read views and joint field/carrier proposals |
 | [Property couplings](PROPERTY_COUPLINGS.md) | Property eligibility, shared entity profiles and legacy selectors |
 | [Local conservation](LOCAL_CONSERVATION.md) | Passive energy/momentum measurement across node events and link flux |
 | [Entity catalog](ENTITY_CATALOG.md) | Sourced physical properties and interactions, plus explicitly selected experiment profiles |

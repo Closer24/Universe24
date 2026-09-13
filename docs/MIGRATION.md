@@ -34,6 +34,15 @@ CLI does not accept `--scenario`. The old runner function is
 `event_universe.legacy_runner.run_scenario`, headless unless `visualize=True`.
 The following notebook/component notes concern only those historical APIs.
 
+## Active node names
+
+New active code names the local unit `node`. Use `DisturbanceNode`, `SpatialNode`,
+`NodeView`, `.nodes` and `slots_per_node`; use `world.node_view(position)` for a
+point observation without copying the world. The
+[node contract](NODE_TESTING.md) lists retained class/read aliases, legacy JSON
+capacity support and the unchanged saved snapshot `cells` key. Supplying both
+capacity names is invalid. Direct typed constructors use `slots_per_node`.
+
 ## Existing notebook imports
 
 `from persistent_source_field import IntegerO1Field3D, Config, PX` still works.

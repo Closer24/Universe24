@@ -31,6 +31,8 @@ One repository does not require one runtime process or a new package hierarchy.
 | Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
 | Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
+| Local node state, port I/O and clock transitions | [docs/NODE_TESTING.md](docs/NODE_TESTING.md) |
+| Memory ownership and per-change architecture review | [docs/MEMORY.md](docs/MEMORY.md) |
 | Any edit, validation, publishing or merge | [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Test coverage and numerical expectations | [docs/TEST_EXPECTATIONS.md](docs/TEST_EXPECTATIONS.md) |
 | New physical feature | [docs/PHYSICAL_FEATURES.md](docs/PHYSICAL_FEATURES.md) |
@@ -91,7 +93,9 @@ responsibilities. Keep renames, consumers, migration notes and the
   Require fixed local work and storage for fixed K; report total host costs
   separately. Q-ORACLE-1 is confined to the explicit quantum owner and cannot
   supply an exception for ordinary fields, forces, movement or geometry.
-- Physical calculations use bounded integers, fixed local state and six neighbors.
+- Physical calculations use bounded integers and fixed local state. Neighbor ports
+  follow the [configured topology contract](docs/CONFIGURED_TOPOLOGY.md), with six
+  cardinal neighbors as the unchanged default.
   Measure host computation and storage separately from the model's local cost.
 - Field, response, movement and transit calculations belong in generic components.
   Models select policies and compose components without copying formulas. The engine
@@ -115,6 +119,13 @@ A new hypothesis needs an explicit model identity and independent expectations.
 Passing code checks does not establish a real-world physical law.
 
 ## Completion
+
+The active physical unit is a **node**. Follow the node contract for new names;
+historical aliases and recorded formats remain explicit compatibility boundaries.
+Every change includes a system-architecture and memory-ownership review. The
+check selector always retains architecture and node-memory tests for changed
+submissions. Record allocation measurements when ownership or capacity changes;
+passing these focused tests is not proof that the whole world's memory is bounded.
 
 Use `python tools/check.py` before submission. It selects changed files and
 affected consumers, rather than running unrelated suites. Inspect its reported

@@ -1,5 +1,51 @@
 # Validation evidence
 
+## Node ports, clocks and memory - 2026-09-13
+
+Base: `503d1ba11de1ee07eb12d49d35f44e73296f20e0`, integrating configured topology
+`3c739e20e400d3c9e4479cbba523fda9434930b1`. Final production source SHA-256:
+`15d83b8c7e89872959441f5593b5b31d70e371810a06dc4b7d8b3fef69e240f1`.
+Independent physics/architecture review passed the declared local integer,
+causal port and passive-observer scope. The node probe supplies no physical law;
+the inherited configured topology retains its explicit positive-dot routing and
+offset-weighted scalar flux choices. No distributed runtime or arbitrary physical
+law is certified.
+
+The affected gate passed: **1,824 tests passed, seven visual-only tests skipped**
+in 113.31 seconds. Ruff check/format and strict mypy (49 source files) passed.
+Command: `python tools/check.py --base 503d1ba11de1ee07eb12d49d35f44e73296f20e0`.
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used. A subsequent
+focused architecture/memory/link/language pass covered the explicit UTF-8 scanner
+read and documentation updates: 68 tests passed. No physical expectations were
+weakened; old test accessors and error labels were migrated to canonical node names.
+
+The ordinary CLI validated and ran
+[`three_nodes.json`](../examples/node-clock/three_nodes.json) headlessly for nine
+ticks. Initialization SHA-256:
+`38583d86223f7ef4705fabc29f1d480b368aedc726344f6510d2adfda6b87cb9`.
+Real receipts occurred at (1,0,0)/tick 3, (2,0,0)/tick 6 and (3,0,0)/tick 9.
+Resident plus in-flight inventory stayed 7 at every completed tick; modeled
+operation cost was 14 across three started carrier cycles. The independent
+example test checks that same input and trace expectation.
+
+The allocation audit used Python 3.14.7, 26 ports, 32 slots, 16 vector fields,
+16 warmup ticks and 80 measured ticks on the same final source. Traced steady
+Python-allocation peaks were 383,320 bytes without a probe, 647,112 bytes for one
+selected node and 945,976 bytes for eight. All three final physical snapshot
+hashes matched. Each retained 576 extra bytes across the measurement window,
+including measurement bookkeeping. Empty-world peaks were 22,664/24,736 bytes
+without/with one probe. Ten thousand point reads peaked at 1,280 bytes and created
+no nodes. Weak-reference checks verified callback frame release on failure.
+These finite measurements exclude RSS, native memory, parsed inputs and final
+serialization; they do not bound visited-world or caller-retained history growth.
+
+The shared workflow, architecture-review, test-runner and simulation-configuration
+Skills retain the node/memory procedure and live Highlights reconciliation.
+Boss was reviewed; its existing routing and persistence rules already cover this
+work. Three changed Skill frontmatters passed the Skill validator. The project
+gate also checks links and English repository prose. No GIF, browser visual
+validation or routine full-suite override was requested.
+
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The
@@ -174,6 +220,53 @@ Each record applies to its identified source and configuration, not all future
 checkouts. Original paths and hashes in historical results are retained. Use
 [the migration map](MIGRATION.md#explicit-historical-component-names) after a rename
 and [project status](PROJECT_STATUS.md) for the current source map.
+
+## Configured reciprocal topology — 2026-09-12
+
+Base main: `992e0006469bb1156f517ae8273a80a980df7c57`. The opt-in contract is
+[configured topology](CONFIGURED_TOPOLOGY.md); the omitted six-port model keeps
+its previous geometry and costs. Validation used Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1, with Windows UTF-8 mode and `PYTHONPATH=src`.
+The required affected selection uses the shared state/parser dependencies;
+no full-suite switch was used. Its final result and submitted tree are recorded
+in the PR and CI. The validation checkout was verified byte-identical to the
+working tree, with output under an ordinary workspace path so retention guards
+did not treat an ancestor named `.codex` as a permitted artifact directory.
+
+Independent review covered reciprocal/site closure, BCC/FCC connectivity,
+scalar/vector ownership during delayed transfers and open escapes, local
+momentum/energy guards, nonlinear outgoing-owner guards, delayed revalidation,
+integer bounds, periodic translation, explicit unsupported compositions and
+saved topology playback. Two review findings were fixed with regressions:
+baseline totals must count actual permitted sites, and scalar sampling
+reservation must include all D ports and their projection operations. Exact
+budget and one-unit-short cases verify modeled delay as well as the meter.
+The final focused topology/coupling/invariant gate passed 142 cases.
+
+The [BCC encounter](../examples/topology/README.md) ran ten ticks through the
+normal CLI. Final source fingerprint:
+`202a81cc7473a1d53e0f8b71fe8a831243f715fe9f13631c53132b158acfaa62`.
+Initialization fingerprint:
+`8bb3c3dfb0f0a17c1db53b70731991ffb01e9f0d0ffde3e788037b2b17efa44b`.
+Its final states, events and input exactly reproduce the inspected GIF source.
+The independent test extends to tick 11: 22 actual opposite-port dispatches,
+meetings at ticks 2/6/10, one-tick transit, and restoration of the amplitudes
+after three encounters. Both owned norms stay 18/8; normalized candidate U is
+26 and direction-weighted Q is (10,10,10).
+
+The [inspected GIF](https://drive.google.com/file/d/1lwX1jPoIslURSYYy-RbCX9yE_yvGqssk/view)
+has 33 camera frames of 11 actual states, 720 by 1050 pixels, and 1,694,410 bytes.
+Every frame decoded; the node/axis, encounter, rotation and periodic-boundary
+views were inspected. Camera motion supplies no physical interpolation. U/Q
+are defined normalized diagnostics for two isolated modes, not SI energy or
+momentum, a Maxwell derivation or general same-mode interference accounting.
+
+The configuration and visualization Skills were updated. Boss, shared workflow,
+field-development, architecture and physics-review Skills were reviewed; their
+existing workflows apply without another procedural edit. Live Highlights was
+read at the revision recorded in [its implementation map](HIGHLIGHTS_IMPLEMENTATION.md);
+the user-authorized topology extension is reconciled there without changing
+the live document. Generated outputs remain subject to finite retention.
 
 ## Conservative directional-wave configuration and authoring Skill — 2026-09-12
 

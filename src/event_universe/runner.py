@@ -88,7 +88,7 @@ def _execute_run(
     if observer_definition is not None:
         from event_universe.diagnostics.local_observer import LocalObserver
 
-        probe = LocalObserver(observer_definition)
+        probe = LocalObserver(observer_definition, port_count=initial.topology.degree)
         (output / "observer.json").write_text(
             json.dumps(
                 {
@@ -190,6 +190,13 @@ def _execute_run(
         "link_ticks": initial.link_ticks,
         "computation": world.computation_report(),
     }
+    if initial.topology.model_id == "configured-ports-v1":
+        metadata["topology"] = {
+            "model_id": initial.topology.model_id,
+            "offsets": initial.topology.offsets,
+            "site_modulus": initial.topology.site_modulus,
+            "site_residues": initial.topology.site_residues,
+        }
     if world.event_space is not None:
         from dataclasses import asdict
 
@@ -200,7 +207,9 @@ def _execute_run(
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
             spatial_transport=(
-                "configured-six-ports"
+                "configured-ports"
+                if initial.topology.model_id == "configured-ports-v1"
+                else "configured-six-ports"
                 if any(field.transport == "local" for field in initial.spatial_fields)
                 else "outward-octants"
             ),

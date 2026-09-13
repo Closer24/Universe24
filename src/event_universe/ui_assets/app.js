@@ -207,12 +207,12 @@ function renderEditor() {
     let grid = section("Experiment", "All settings are read from JSON when a run starts.");
     input(grid, "Model identifier", doc, "model_id", { text: true, full: true });
     input(grid, "Simulation ticks", doc, "ticks", { hint: "Number of base time intervals" });
-    input(grid, "Slots per cell", doc, "slots_per_cell", { min: 1, max: 32, hint: "Fixed local record capacity · up to 32" });
+    input(grid, "Slots per node", doc, Object.hasOwn(doc, "slots_per_node") ? "slots_per_node" : "slots_per_cell", { min: 1, max: 32, hint: "Fixed local record capacity · up to 32" });
     editor.append(node("hr", "", "editor-divider"));
     grid = section("World dimensions", "Configured lattice extents. Seed positions must be inside this volume."); grid.classList.add("three");
     ["X extent", "Y extent", "Z extent"].forEach((label, i) => input(grid, label, doc.shape, i, { min: 1 }));
     editor.append(node("hr", "", "editor-divider")); grid = section("Local timing");
-    input(grid, "Link transit ticks", doc, "link_ticks", { min: 1, hint: "Fixed time between neighboring cells" });
+    input(grid, "Link transit ticks", doc, "link_ticks", { min: 1, hint: "Fixed time between neighboring nodes" });
     input(grid, "Normal computation budget", doc, "normal_budget", { min: 1, hint: "Ordinary local work before added delay" });
   } else if (tab === "fields") {
     editor.append(node("p", "Names are your labels. Declare the structure and conservation properties of each quantity.", "editor-description"));
@@ -247,7 +247,7 @@ function renderEditor() {
     });
     addButton("Add seed", () => doc.seeds.push({position: [0, 0, 0], type: doc.disturbance_types[0]?.name || ""}));
   } else if (tab === "rules") {
-    let grid = section("Local exchange", "Couplings exchange a configured quantity between records in the same cell.");
+    let grid = section("Local exchange", "Couplings exchange a configured quantity between records in the same node.");
     jsonField(grid, "Coupling rules", doc, "couplings", []);
     grid = section("Atomic interactions", "Update several fields together and enforce declared invariants for each local pair.");
     jsonField(grid, "Interaction rules", doc, "interactions", []);

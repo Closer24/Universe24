@@ -1,5 +1,21 @@
 # Highlights implementation coverage
 
+## Node and clock reconciliation - 2026-09-13
+
+Live Highlights was read at 06:12:43 UTC, revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Base: `503d1ba11de1ee07eb12d49d35f44e73296f20e0`, integrating the configured-topology
+extension `3c739e20e400d3c9e4479cbba523fda9434930b1`. Sections 1.1.4, 3.1, 3.2
+and 3.3 map to equal local-input behavior, fixed node owners, causal port exchange
+and generic operations. The user's current instruction names the unit **node**
+and makes degree configurable. It supersedes the document's fixed-six wording;
+six remains the default, with reciprocal even degrees 2 through 26 supported.
+The [node testing contract](NODE_TESTING.md) tests the real scheduler and phases,
+including multi-node causality and world-size independence. It adds no physical
+law or distributed process runtime. The [memory contract](MEMORY.md) records
+bounded diagnostic ownership separately from total host storage. This repository
+reconciliation does not edit the live document or claim physical emergence.
+
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
 The live Highlights document was read at revision
@@ -83,6 +99,26 @@ and [migration](MIGRATION.md). Preserve this record as historical evidence rathe
 treating its omissions as current gaps.
 
 ## 10. Implemented entities and rules
+
+### Configured topology reconciliation, 2026-09-12
+
+The live Highlights revision inspected for the user-authorized topology extension
+was `ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Its sections 3.3.3, 10.1 and 10.4 still describe six faces/ports. Section 5 also
+describes equivalent links with equal physical length and causal speed. This
+change retains that six-port default and adds the explicitly selected
+[configured-port hypothesis](CONFIGURED_TOPOLOGY.md) requested by the user.
+It does not rewrite the historical inventory below or claim that the live Google
+Doc was edited. Mixed-length offsets with common `link_ticks` supply a graph
+transit contract, not an established equal-Euclidean-speed law.
+
+Executable owners are `core/topology.py`, the configured carrier/local-field
+engines and their shared vector operations. Independent acceptance is in
+`test_configured_topology.py`, `test_topology_invariants.py` and
+`test_topology_example.py`; saved-offset display is covered by
+`test_topology_playback.py`. Geometry support and declared conservation are
+implemented; arbitrary field-law compatibility, physical isotropy, Maxwell
+emergence and universal energy conservation remain separate questions.
 
 ### 10.1 World, cells and links
 

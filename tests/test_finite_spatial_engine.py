@@ -183,7 +183,7 @@ def test_partial_budget_metadata_cannot_reinitialize_an_exhausted_emitter():
     world = Simulation(parse_initial_state(raw))
     world.step()
     record = all_records(world)[0]
-    world._cells[ORIGIN].records = (
+    world._nodes[ORIGIN].records = (
         replace(record, emission_remainders=(), emission_phases=()),
         None,
         None,
@@ -191,7 +191,7 @@ def test_partial_budget_metadata_cannot_reinitialize_an_exhausted_emitter():
     )
     # Invoke the law directly: an exhausted source need not be scheduled again.
     with pytest.raises(ValueError, match="partial"):
-        world._spatial.planner(world._spatial.cells[ORIGIN].states, world._cells[ORIGIN].records, 0)
+        world._spatial.planner(world._spatial.cells[ORIGIN].states, world._nodes[ORIGIN].records, 0)
 
 
 def test_runner_distinguishes_dissipation_accounting_from_physical_conservation(tmp_path):

@@ -1,4 +1,4 @@
-"""Atomic local field proposals using retained stock and six causal input channels."""
+"""Atomic local field proposals using retained stock and configured causal channels."""
 
 from dataclasses import replace
 
@@ -8,6 +8,7 @@ from event_universe.core.spatial_state import (
     NodeFieldRuleDefinition,
     SpatialFieldDefinition,
     SpatialState,
+    validate_port_count,
 )
 from event_universe.core.validation import ValidationMeter
 
@@ -18,11 +19,14 @@ def received_values(
     fields: tuple[FieldDefinition, ...],
     definitions: tuple[SpatialFieldDefinition, ...],
     states: tuple[SpatialState, ...],
+    port_count: int = 6,
 ) -> tuple[Values, ...]:
     """Project existing delivered samples by travel port, without creating inventory."""
+    validate_port_count(port_count)
     zero = tuple(pack((0,) * field.components) for field in fields)
-    channels = [list(zero) for _ in range(6)]
+    channels = [list(zero) for _ in range(port_count)]
     for definition, state in zip(definitions, states, strict=True):
+        state.validate(fields[definition.field].components, port_count)
         for port, payload in enumerate(state.delivered):
             channels[port][definition.field] = payload
     return tuple(tuple(channel) for channel in channels)
@@ -33,12 +37,13 @@ def _stock(
     definitions: tuple[SpatialFieldDefinition, ...],
     states: tuple[SpatialState, ...],
     meter: CostMeter,
+    port_count: int,
 ) -> Values:
     # Signed work integers permit a baseline to offset a larger octant total.
     values = [(0,) * field.components for field in fields]
     for definition, state in zip(definitions, states, strict=True):
         field = fields[definition.field]
-        state.validate(field.components)
+        state.validate(field.components, port_count)
         total = [0] * field.components
         for payload in state.populations:
             meter.charge("read")
@@ -87,6 +92,7 @@ def apply_field_rules(
     rules: tuple[NodeFieldRuleDefinition, ...],
     states: tuple[SpatialState, ...],
     meter: CostMeter,
+    port_count: int = 6,
 ) -> tuple[tuple[SpatialState, ...], tuple[Values, ...]]:
     """Replace local retained stock and outgoing buffers from frozen rule inputs.
 
@@ -94,11 +100,12 @@ def apply_field_rules(
     writes dynamic stock only; it never replaces or spends the immutable baseline.
     Each incoming channel is a readonly projection of already received inventory.
     """
+    validate_port_count(port_count)
     checks = ValidationMeter(meter.definitions)
     zero = tuple(pack((0,) * field.components) for field in fields)
-    outgoing: tuple[Values, ...] = (zero,) * 6
-    stock = _stock(fields, definitions, states, meter)
-    ports = received_values(fields, definitions, states)
+    outgoing: tuple[Values, ...] = (zero,) * port_count
+    stock = _stock(fields, definitions, states, meter, port_count)
+    ports = received_values(fields, definitions, states, port_count)
     local_fields = tuple(d.field for d in definitions if d.transport == "local")
     active = any(any(stock[index]) for index in local_fields) or any(
         any(unpack(payload)) for channel in ports for payload in channel
@@ -107,7 +114,7 @@ def apply_field_rules(
     if active:
         for rule in rules:
             right = _observable(fields, definitions, stock, meter)
-            meter.charge("read", 6 * len(definitions))
+            meter.charge("read", port_count * len(definitions))
             if (
                 rule.when is not None
                 and evaluate(rule.when, zero, right, meter, ports=ports, outgoing=outgoing)[0] <= 0
@@ -120,9 +127,9 @@ def apply_field_rules(
             proposed_stock = list(stock)
             proposed_outgoing = [list(channel) for channel in outgoing]
             for assignment in rule.assignments:
-                if assignment.field not in local_fields or not -1 <= assignment.port < 6:
+                if assignment.field not in local_fields or not -1 <= assignment.port < port_count:
                     raise ValueError(
-                        "field rules can write only local stock or its six outgoing buffers"
+                        "field rules can write only local stock or configured outgoing buffers"
                     )
                 value = pack(
                     evaluate(assignment.expression, zero, right, meter, ports=ports, outgoing=outgoing)

@@ -30,8 +30,15 @@ the example family in the guide for fields, catalog entities or native events.
 2. Choose the supported schema and mechanism before assigning physical labels.
    Use schema 1 for local field rules, schema 2 for finite dissipative outward
    fields. Native event programs currently cannot compose with spatial fields.
-3. Define the space and run envelope. Set boundary explicitly, keep every seed
-   in range, and distinguish transit time, computation delay and playback speed.
+3. Define the space and run envelope. For nondefault links, use the
+   [configured topology contract](../../docs/CONFIGURED_TOPOLOGY.md): supply offsets
+   and the site pattern, rather than a neighbor count alone. Check seed membership,
+   supported field laws and reciprocal links. Distinguish three vector components
+   from D ports, and graph transit from Euclidean speed. Set boundary explicitly
+   and distinguish transit time, computation delay and playback speed.
+   New files use `slots_per_node`; legacy JSON `slots_per_cell` remains readable,
+   but supplying both keys is invalid. Follow the
+   [node contract](../../docs/NODE_TESTING.md) for clocks and a small relay example.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.

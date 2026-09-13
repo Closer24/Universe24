@@ -1,7 +1,8 @@
 # Local reception observer
 
 `local-reception-observer-v1` is an optional passive probe at one configured node.
-It records what has actually arrived through the six links. This operational
+It records what has actually arrived through the configured links, with six
+cardinal links as the default. This operational
 observation layer does not establish human optics, proper time, an emergent
 spacetime, Maxwell equations or a new Gauss constraint.
 
@@ -28,6 +29,10 @@ region or list of observers. Placement is validated by the ordinary initializati
 loader but is not part of physical `InitialState`. The runner activates it.
 The older separate `--observer` option remains available; supplying both sources
 is rejected before creating output. The generated example uses only one input.
+
+The selected position must also belong to the configured topology. A BCC
+probe must lie on a selected same-parity site; both embedded and separate
+observer inputs reject excluded sites before creating output artifacts.
 Without `--visualize`, the same observer produces JSON without physical frame
 capture. No GIF is required.
 
@@ -66,12 +71,26 @@ and never reveals later records. Frame stride changes sampling, not receptions.
 
 ## Interpretation and limits
 
-The six panels identify the last incoming link, not a remote source location
+The receiver panels identify the last incoming link, not a remote source location
 after turns. They do not infer distance, emission time or current source state.
 Signed scalar/vector payloads retain configured labels and units; labels do not
 supply color, intensity, photons or electromagnetic meaning. Field summaries
 aggregate populations on each port; their sum does not reconstruct microscopic
 population information.
+
+With explicit `configured-ports-v1` topology, the runner records the immutable
+port offsets and site residues in run metadata. The number of receiver panels
+matches that port list, and their labels show the receiving side's configured
+direction. For example, travel along `(+1,+1,+1)` arrives on the `-X -Y -Z`
+side. The probe accepts the configured count from 2 through 26; it does not
+choose routing or read neighbor state. Recordings without topology metadata
+retain the original six cardinal receiver labels.
+
+The world audit uses these same recorded offsets for transfer positions and
+neighbor links. Its lattice projection includes only selected sites; multiple
+layers can share one projected dot. Periodic links split at the coordinate seam
+instead of being drawn as long links across the box. These are display choices,
+not additional measurements available to the local probe.
 
 This is a reception probe, not periodic sampling of static fields or resident
 records. No signal is different from zero signal and from a resident field.
@@ -94,6 +113,9 @@ overflow, copied payloads, exact capture prefixes, clock independence from globa
 timestamps, frame-stride independence and unchanged physical results/costs.
 `tests/test_observer_playback.py` checks backward seeking, paused-clock samples,
 safe labels, zero versus unknown and explicit global audit access.
+`tests/test_topology_playback.py` checks configured receiver counts and directions,
+exact diagonal transfer geometry, selected BCC/FCC sites, seam splitting, saved
+topology metadata, invalid probe placement and unchanged observed run state.
 
 The example uses the same simple rules in 9-cubed and 15-cubed worlds. Two
 conserved fields and one configured disturbance approach a held phase-toggle

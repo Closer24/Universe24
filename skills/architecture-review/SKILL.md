@@ -10,6 +10,12 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
+Apply the [node interface](../../docs/NODE_TESTING.md) and
+[memory ownership](../../docs/MEMORY.md) contracts. Verify point reads do not
+materialize or scan the world, port order remains configured, and diagnostics
+cannot supply physical inputs. Distinguish a tested local boundary from an
+implemented distributed runtime; preserve explicit legacy format aliases.
+
 For the active API, read [DISTURBANCES.md](../../docs/DISTURBANCES.md).
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
 to the complete physical dependency path. Report unsupported tensor shapes and

@@ -12,12 +12,19 @@ Distinguish three categories:
 
 ## Active initialization-defined model
 
+The elementary spatial unit is a **node**, historically called a cell. New active
+interfaces use node terminology. Each node owns local bounded state and exchanges
+inputs/outputs through configured reciprocal ports; six cardinal ports are the
+default. The [node contract](docs/NODE_TESTING.md) distinguishes audit ticks from
+completed local computations and verifies both single-node and multi-node behavior.
+
 The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
 finite integer state while representing fractional quantities in explicitly
 configured whole/remainder/denominator fields. Its larger finite intermediate
 registers, balanced neighbor selection and exact fractional clock are named
 choices. They do not establish isotropic light propagation or electromagnetic
-energy. The six-neighbor causal boundary remains binding.
+energy. The configured-neighbor causal boundary remains binding, with six
+cardinal neighbors as the default.
 
 The active model treats physical content as configured disturbances carrying
 named fields. The engine supplies integer local updates, causal transport,
@@ -102,9 +109,13 @@ physical energy, momentum or an emergent field law.
 
 ## 1. The world consists of locations and events
 
-Space is divided into three-dimensional cells with six directional connections:
-right, left, forward, backward, up and down. A connection reaches one nearest
-neighbor, or exits the simulated domain at an explicitly open boundary.
+The default space has six directional connections per three-dimensional cell:
+right, left, forward, backward, up and down. The explicitly selected
+[configured-port hypothesis](docs/CONFIGURED_TOPOLOGY.md) instead supplies a fixed
+reciprocal list of at most 26 three-dimensional offsets and a closed site pattern.
+A connection reaches its configured neighbor, or exits at an open boundary.
+Every link keeps its positive integer transit time. Equal graph transit does not
+establish equal Euclidean speed across offsets of different lengths.
 
 An event is a local change in a cell at a particular time: a field update, a particle
 momentum change, a move to a neighbor or a blocked move attempt.

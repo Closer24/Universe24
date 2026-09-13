@@ -104,7 +104,7 @@ def validate_fixture(initial: InitialState) -> None:
     """The positional role mapping is scoped to this one experiment, not general JSON."""
     if (
         initial.shape != (13, 5, 3)
-        or initial.slots_per_cell != 2
+        or initial.slots_per_node != 2
         or initial.link_ticks != 1
         or initial.normal_budget != 10000
         or initial.ticks != 8

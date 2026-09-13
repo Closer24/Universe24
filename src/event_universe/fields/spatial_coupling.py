@@ -1,11 +1,15 @@
 """Bounded local field exchange and exact lattice rotations with opposite reaction."""
 
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
 
 from event_universe.core.coupling_selectors import matches_type
 from event_universe.core.disturbance_state import (
+    CARDINAL_OFFSETS,
+    MAX_PORTS,
     MAX_RULES,
     MAX_SLOTS,
+    Address3,
     CostMeter,
     DisturbanceRecord,
     FieldDefinition,
@@ -23,6 +27,7 @@ from event_universe.core.spatial_state import (
     SpatialCouplingResult,
     SpatialFieldDefinition,
     SpatialState,
+    validate_port_count,
     zero_spatial_state,
 )
 
@@ -35,6 +40,8 @@ def sample_values(
     definitions: tuple[SpatialFieldDefinition, ...],
     fields: tuple[FieldDefinition, ...],
     meter: CostMeter | None = None,
+    *,
+    port_count: int = 6,
 ) -> Values:
     """Read only the resident spatial inventory and immutable local background."""
     if len(states) != len(definitions):
@@ -42,7 +49,7 @@ def sample_values(
     result = [pack((0,) * field.components) for field in fields]
     for state, definition in zip(states, definitions, strict=True):
         field = fields[definition.field]
-        state.validate(field.components)
+        state.validate(field.components, port_count)
         field.validate(definition.baseline)
         local = list(unpack(definition.baseline))
         for payload in state.populations:
@@ -57,11 +64,21 @@ def sample_values(
     return tuple(result)
 
 
+def _charge_flux_sample(meter: CostMeter, port_offsets: tuple[Address3, ...]) -> None:
+    """Price the same scalar projection during sampling and frozen reservation."""
+    if not 2 <= len(port_offsets) <= MAX_PORTS:
+        raise ValueError("scalar flux sampling requires a bounded port list")
+    meter.charge("read", len(port_offsets))
+    meter.charge("update", 3 if port_offsets == CARDINAL_OFFSETS else 6 * len(port_offsets))
+
+
 def sample_fluxes(
     states: tuple[SpatialState, ...],
     definitions: tuple[SpatialFieldDefinition, ...],
     fields: tuple[FieldDefinition, ...],
     meter: CostMeter | None = None,
+    *,
+    port_offsets: tuple[Address3, ...] = CARDINAL_OFFSETS,
 ) -> Values:
     """Project scalar delivered channels into a signed three-component travel vector."""
     if len(states) != len(definitions):
@@ -71,16 +88,23 @@ def sample_fluxes(
         field = fields[definition.field]
         if field.components != 1:
             continue
-        state.validate(1)
+        state.validate(1, len(port_offsets))
         for payload in state.delivered:
             field.validate(payload)
         delivered = tuple(unpack(payload)[0] for payload in state.delivered)
-        result[definition.field] = pack(
-            tuple(checked_work(delivered[2 * axis] - delivered[2 * axis + 1]) for axis in range(3))
-        )
+        if port_offsets == CARDINAL_OFFSETS:
+            vector = tuple(
+                checked_work(delivered[2 * axis] - delivered[2 * axis + 1]) for axis in range(3)
+            )
+        else:
+            totals = [0, 0, 0]
+            for amount, offset in zip(delivered, port_offsets, strict=True):
+                for axis, component in enumerate(offset):
+                    totals[axis] = checked_work(totals[axis] + checked_work(amount * component))
+            vector = tuple(totals)
+        result[definition.field] = pack(vector)
         if meter is not None:
-            meter.charge("read", 6)
-            meter.charge("update", 3)
+            _charge_flux_sample(meter, port_offsets)
     return tuple(result)
 
 
@@ -117,6 +141,7 @@ def deposit_reaction(
     meter: CostMeter,
     *,
     validate_local: bool = True,
+    port_count: int = 6,
 ) -> tuple[tuple[SpatialState, ...], Values]:
     """Add opposite reaction to owned populations without declaring an external source."""
     if len(states) != len(definitions):
@@ -133,14 +158,14 @@ def deposit_reaction(
         if not field.signed or not field.extensive:
             raise ValueError("spatial reaction requires a signed extensive field")
         state = states[index]
-        state.validate(field.components)
+        state.validate(field.components, port_count)
         populations, allocation[index] = emit(
             pack(reaction[definition.field]), allocation[index], definition, field, meter
         )
         combined = add_populations(state.populations, populations, field, meter)
         updated[index] = replace(state, populations=combined)
         if validate_local:
-            sample_values((updated[index],), (definition,), fields)
+            sample_values((updated[index],), (definition,), fields, port_count=port_count)
     return tuple(updated), tuple(allocation)
 
 
@@ -232,12 +257,21 @@ class SpatialCouplingLaw:
     definitions: tuple[SpatialCouplingDefinition, ...]
     costs: OperationCosts
     spatial_definitions: tuple[SpatialFieldDefinition, ...] = ()
+    port_offsets: tuple[Address3, ...] = dataclass_field(default=CARDINAL_OFFSETS, kw_only=True)
+
+    @property
+    def port_count(self) -> int:
+        count = len(self.port_offsets)
+        validate_port_count(count)
+        return count
 
     def sample(self, states: tuple[SpatialState, ...]) -> Values:
-        return sample_values(states, self.spatial_definitions, self.fields)
+        return sample_values(states, self.spatial_definitions, self.fields, port_count=self.port_count)
 
     def sample_fluxes(self, states: tuple[SpatialState, ...]) -> Values:
-        return sample_fluxes(states, self.spatial_definitions, self.fields)
+        return sample_fluxes(
+            states, self.spatial_definitions, self.fields, port_offsets=self.port_offsets
+        )
 
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
         raise ValueError("port-aware interactions require a configured joint law")
@@ -258,7 +292,13 @@ class SpatialCouplingLaw:
         reaction: Values,
     ) -> tuple[tuple[SpatialState, ...], Values]:
         return deposit_reaction(
-            states, phases, reaction, self.spatial_definitions, self.fields, CostMeter(self.costs)
+            states,
+            phases,
+            reaction,
+            self.spatial_definitions,
+            self.fields,
+            CostMeter(self.costs),
+            port_count=self.port_count,
         )
 
     def forward_reaction(
@@ -274,17 +314,26 @@ class SpatialCouplingLaw:
         )
         meter = CostMeter(self.costs)
         deposited, next_phases = deposit_reaction(
-            blank, phases, reaction, self.spatial_definitions, self.fields, meter, validate_local=False
+            blank,
+            phases,
+            reaction,
+            self.spatial_definitions,
+            self.fields,
+            meter,
+            validate_local=False,
+            port_count=self.port_count,
         )
         updated = list(states)
-        outgoing: list[list[tuple[Payload, ...]]] = [[] for _ in range(6)]
+        outgoing: list[list[tuple[Payload, ...]]] = [[] for _ in range(self.port_count)]
         for index, definition in enumerate(self.spatial_definitions):
             field = self.fields[definition.field]
             if any(reaction[definition.field]):
                 channels, cleared = split_outward(deposited[index], definition, field, meter)
                 updated[index] = replace(states[index], allocation_phases=cleared.allocation_phases)
             else:
-                channels = (zero_spatial_state(field.components).populations,) * 6
+                channels = (
+                    zero_spatial_state(field.components, self.port_count).populations,
+                ) * self.port_count
             for port, populations in enumerate(channels):
                 outgoing[port].append(populations)
         return tuple(updated), next_phases, tuple(tuple(bundle) for bundle in outgoing)
@@ -351,8 +400,10 @@ class SpatialCouplingLaw:
         meter = CostMeter(self.costs)
         for spatial_definition in self.spatial_definitions:
             components = self.fields[spatial_definition.field].components
-            meter.charge("read", 9 + (6 if components == 1 else 0))
-            meter.charge("update", 8 * components + (3 if components == 1 else 0))
+            meter.charge("read", 9)
+            meter.charge("update", 8 * components)
+            if components == 1:
+                _charge_flux_sample(meter, self.port_offsets)
         updated = list(records)
         reaction = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):

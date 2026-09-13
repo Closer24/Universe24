@@ -65,6 +65,9 @@ def violations(source, module):
     if layer in {"fields", "dynamics", "models"}:
         forbidden_world_members = {
             "cells",
+            "nodes",
+            "node_view",
+            "inventory_view",
             "particles",
             "occupancy",
             "active",

@@ -164,7 +164,9 @@ class LocalConservationAudit:
                 continue
             if old.arrival_tick != tick:
                 raise ValueError("conservation audit found a packet removed before arrival")
-            target = neighbor_address(old.origin, old.port, self.initial.shape, self.initial.boundary)
+            target = neighbor_address(
+                old.origin, old.port, self.initial.shape, self.initial.boundary, self.initial.topology
+            )
             if target is None:
                 escaped = _add(escaped, amount)
             else:

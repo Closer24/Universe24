@@ -10,11 +10,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/node-clock/three_nodes.json": ("tests/test_node_example.py",),
     "examples/known-entities/property-coupling-probes.json": ("tests/test_property_entity_profiles.py",),
     "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
+    "examples/topology/bcc_vectors.json": ("tests/test_topology_example.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
@@ -212,6 +214,9 @@ def select(changed, sources):
                 for p, text in sources.items()
                 if p.startswith("tests/test_") and "event_universe" in text
             )
+    if changed:
+        # Every submission reviews system boundaries and bounded diagnostic ownership.
+        tests.update(("tests/test_architecture.py", "tests/test_node_memory.py"))
     return sorted(tests), sorted(
         p for p in impacted if p.startswith("src/") and p.endswith(".py") and p in sources
     )

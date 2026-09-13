@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from .disturbance_state import (
+    MAX_PORTS,
     Address3,
     Assignment,
     DisturbanceRecord,
@@ -18,6 +19,12 @@ from .disturbance_state import (
 SpatialPopulations = tuple[Payload, ...]
 SpatialOutgoing = tuple[SpatialPopulations, ...]
 SpatialBundle = tuple[SpatialPopulations, ...]
+
+
+def validate_port_count(port_count: int) -> None:
+    """Reject invalid local channel capacity before allocating any port buffers."""
+    if type(port_count) is not int or not 2 <= port_count <= MAX_PORTS:
+        raise ValueError("spatial port count must be from 2 through 26")
 
 
 @dataclass(frozen=True, slots=True)
@@ -116,7 +123,7 @@ class SpatialSeed:
 
 @dataclass(frozen=True, slots=True)
 class SpatialState:
-    """Eight owned populations, eight allocation phases, and six delivered samples.
+    """Eight owned populations/phases and a configured count of delivered samples.
 
     All entries use the ordinary positive payload coding, including phases.
     Delivered samples project already owned inventory and are never extra stock.
@@ -126,16 +133,19 @@ class SpatialState:
     allocation_phases: SpatialPopulations
     delivered: tuple[Payload, ...]
 
-    def validate(self, components: int) -> None:
+    def validate(self, components: int, port_count: int = 6) -> None:
         if components not in (1, 3):
             raise ValueError("spatial fields require one or three components")
+        validate_port_count(port_count)
         for values, size in (
             (self.populations, 8),
             (self.allocation_phases, 8),
-            (self.delivered, 6),
+            (self.delivered, port_count),
         ):
             if len(values) != size:
-                raise ValueError("spatial state requires eight octants and six delivered channels")
+                raise ValueError(
+                    "spatial state requires eight octants and configured delivered channels"
+                )
             for value in values:
                 if len(value) != components:
                     raise ValueError("spatial state component count differs from the field")
@@ -145,7 +155,7 @@ class SpatialState:
 
 
 @dataclass(slots=True)
-class SpatialCell:
+class SpatialNode:
     states: tuple[SpatialState, ...]
     last_cost: int = 0
     received_count: int = 0
@@ -175,9 +185,16 @@ class SpatialPacket:
     fields: SpatialBundle
 
 
-def zero_spatial_state(components: int) -> SpatialState:
+def zero_spatial_state(components: int, port_count: int = 6) -> SpatialState:
     bounded(components)
     if components not in (1, 3):
         raise ValueError("spatial fields require one or three components")
+    validate_port_count(port_count)
     zero = pack((0,) * components)
-    return SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6)
+    state = SpatialState((zero,) * 8, (zero,) * 8, (zero,) * port_count)
+    state.validate(components, port_count)
+    return state
+
+
+# Historical import alias; spatial state has one node owner.
+SpatialCell = SpatialNode

@@ -189,7 +189,7 @@ def test_invalid_unsigned_carrier_cannot_escape_before_validation():
     position = face_position(1)
     original = world.cells[position].records[0]
     packet = Packet(3, position, 1, replace(original, values=(pack((-1,)),)))
-    world._cells[position].records = (None,) * 2
+    world._nodes[position].records = (None,) * 2
     world._links[position] = (packet,) + (None,) * 11
     world.tick = 3
     with pytest.raises(ValueError, match="negative"):

@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "model_id": "three-node-clock-relay-v1",
+  "shape": [5, 1, 1],
+  "boundary": "periodic",
+  "slots_per_node": 1,
+  "link_ticks": 3,
+  "normal_budget": 100,
+  "ticks": 9,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "inventory",
+      "components": 1,
+      "units": "configured unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "parcel",
+      "fields": ["inventory"],
+      "defaults": {"inventory": 7},
+      "transport": {"mode": "move", "weights": [1, 0, 0, 0, 0, 0]}
+    }
+  ],
+  "seeds": [{"position": [0, 0, 0], "type": "parcel"}]
+}

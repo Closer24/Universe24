@@ -1,5 +1,25 @@
 # Test inputs and expected results
 
+## Node input/output and clock boundaries
+
+The [node contract](NODE_TESTING.md) is exercised through the real Simulation.
+`test_node_probe.py` assigns distinct scalar/vector inputs to every configured
+port in 2/6/8-port worlds at transit lengths 1 and 3, including permuted reciprocal
+indices. It checks one-node periodic return, three-node relay, no instantaneous
+chain, frozen pending work with late arrivals, failed atomic output, world-size
+independence and bounded observer failure prefixes. Audit ticks, carrier commits
+and spatial cycles are asserted separately.
+`test_node_contract.py` checks canonical capacity, legacy JSON/read aliases,
+conflicting keys, bounds and unchanged physical output.
+`test_node_integration.py` covers real port-25 property-selected responses,
+passive invariant cost parity, periodic/open carrier and spatial conservation,
+and excluded-site observer rejection before output creation.
+`test_node_memory.py` checks point-only lookup, shared immutable maximum-width
+views, retained packet ownership, latest-only history and callback frame release.
+`test_node_example.py` checks the runnable relay's independently expected arrival
+ticks. The architecture gate prevents diagnostic point/world views from becoming
+physical-rule inputs. These tests do not prove arbitrary distributed execution.
+
 ## Property coupling and passive local conservation
 
 `test_property_couplings.py` requires property compatibility across differently
@@ -43,6 +63,21 @@ UI and runner tests retain accepted output and physical execution contracts.
 capacity for distinct/colocated classical seeds and quantum registers, including
 mixed worlds. Future exhaustion remains a separate runtime test.
 
+## Configured neighbor topology
+
+`test_configured_topology.py` checks 2/4/6/8/12/18/26 port capacities, actual
+one-link diagonal arrivals, reciprocal/site closure, boundary escape, typed API
+capabilities, integer/rational port access and routing bounds.
+Baseline accounting independently checks 16 BCC and 32 FCC sites in a periodic
+4-cube, and 30 BCC versus 53 FCC sites in an open 5 by 7 by 3 box.
+`test_topology_invariants.py` independently checks all-port scalar/vector totals,
+nonlinear outgoing guards, local collision energy/momentum, delayed guard
+revalidation, integer phase preservation and formula-free evolving state.
+`test_topology_example.py` checks each owned mode and normalized U/Q at every
+tick of the BCC encounter, including actual amplitude rotation and periodic return.
+`test_topology_playback.py` checks metadata, selected-site projections and saved
+diagonal links/local observer channels. The authoritative supported scope and
+remaining physical limits are in [CONFIGURED_TOPOLOGY.md](CONFIGURED_TOPOLOGY.md).
 
 ## Local observer
 

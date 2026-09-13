@@ -1,12 +1,17 @@
 # Generic local field rules
 
 This optional schema 1 extension lets a node retain dynamic field stock, combine
-several scalar/vector components, and choose payloads for its six outgoing
+several scalar/vector components, and choose payloads for its configured outgoing
 links. It also supports joint field/carrier transactions. The node reads its
 own state and information already delivered through those links. It never reads
 another node's current state, a global measurement or a source history.
 
 These are configurable operations, not a supplied electromagnetic model.
+
+Let D be the number of ports: six by default, or the fixed degree selected by
+the optional [configured topology](CONFIGURED_TOPOLOGY.md). That contract defines
+permitted links and sites, numerical bounds and currently unsupported combinations.
+Changing D does not change the number of components in a scalar or vector field.
 
 The optional [directional-wave example](DIRECTIONAL_WAVE.md) composes the existing
 operations into a transverse-mode candidate with explicit conserved energy and
@@ -22,8 +27,11 @@ and validation evidence.
 Declare ordinary scalar/vector fields through `fields`, then select
 `"transport": "local"` for the corresponding `spatial_fields` entries. These
 fields retain their stock unless a rule assigns another value or sends it out.
-They may coexist with existing `"transport": "outward"` fields. Rules can read
-both kinds but can assign only local fields. Existing outward transport,
+With the default six-port topology they may coexist with existing
+`"transport": "outward"` fields. Rules can read both kinds but can assign only
+local fields. Configured topologies currently require all spatial fields to use
+local transport and use generic `spatial_interactions` for joint transactions.
+Existing outward transport,
 emissions, pair interactions and spatial exchange/rotation retain their own
 contracts when the new features are absent.
 
@@ -53,13 +61,16 @@ names. Group names are metadata; different groups may overlap without counting
 their members twice. There are at most 16 groups with 1 to 16 distinct existing
 members each. The existing total field limit remains 16.
 
-The node has six ordered ports `[+X, -X, +Y, -Y, +Z, -Z]`. The index identifies
-travel direction, independently of the scalar/vector payload. For example,
-travel through +X arrives at the next node with port index 0 even though that
-node is approached from its negative-X side. No geometric face or edge record
-is introduced.
+The default ordered ports are `[+X, -X, +Y, -Y, +Z, -Z]`; configured topologies
+instead use their declared offset order. Port indices range from 0 through D-1
+and identify travel direction, independently of the scalar/vector payload.
+For example, on the default topology, travel through +X arrives at the next
+node with travel index 0 even though that node is approached from its negative-X
+side. No geometric face or edge record is introduced.
 
 ## Read views and ownership
+
+The port-0 examples below use the default cardinal order.
 
 | Expression or target | Meaning |
 | --- | --- |
@@ -92,6 +103,8 @@ the phase so old arrivals do not become a permanent input trail.
 
 `field_rules` is an optional list of at most 32 named rules. Each rule has 1 to
 32 `assignments`, 1 to 16 named `invariants`, and an optional scalar `when`.
+The assignment limit remains 32 when D changes; independent fields can use
+separate ordered rules.
 Absent `when` means active whenever the node has relevant work; otherwise a
 strictly positive result activates the rule. Assignment targets must be unique
 within one rule. Unsupported names, directions, shapes and duplicate targets
@@ -122,7 +135,7 @@ or assert that this value is energy.
 
 At each field interval, existing source emission first adds its explicitly
 accounted injection. Outgoing local buffers initially contain zero. Every rule
-reads a frozen view of retained values, six received samples and currently
+reads a frozen view of retained values, D received samples and currently
 proposed outgoing buffers. All its right-hand sides use that same view. After
 validation, the next rule sees the accepted retained values and outgoing
 buffers. Received samples remain fixed for the whole phase. An omitted target
@@ -132,11 +145,11 @@ A rule can move stock into a selected outgoing buffer by assigning both owners:
 set retained stock to zero and the outgoing payload to the old stock. Assigning
 only the outgoing payload while retaining the same stock would duplicate it
 and fails a conserved-field balance. Outgoing ownership crosses exactly one
-nearest-neighbor link after the existing `link_ticks` transit time. It cannot
+configured neighbor link after the existing `link_ticks` transit time. It cannot
 be read as an arrival at its destination during the same event.
 
 After every rule, each `conserved` field must preserve the component-wise total
-of retained dynamic stock plus all six outgoing payloads. Named invariant
+of retained dynamic stock plus all D outgoing payloads. Named invariant
 expressions are also compared exactly before and after that rule. If an
 invariant is intended to include outgoing content, its expression must include
 the relevant `outgoing` leaves. A local-value expression alone observes retained
@@ -195,7 +208,7 @@ proposed changes. Named invariants and automatic conserved-field combined sums
 must hold. The initial spatial samples precede fresh emission and field-rule
 updates in that interval, matching the existing carrier response contract.
 
-Assignments and `when` may read six received channels. Joint invariants use
+Assignments and `when` may read all D received channels. Joint invariants use
 carrier and field values only; received and outgoing leaves are rejected there.
 The frozen transaction stores each carrier before/after view and its additive
 field delta. A pending proposal is not new inventory.
@@ -225,7 +238,7 @@ includes initial stock, committed sources, reactions and transformations, minus
 dissipation and escaped quantities. Conserved fields require zero transformation
 change in their own totals. Named cross-field invariants can describe additional
 configured relations, but the diagnostics do not infer energy or compatible
-units from names. Immutable baselines remain counted once per world node.
+units from names. Immutable baselines remain counted once per permitted world node.
 
 When visualization is requested, the shared recording player shows node field
 values and field transfers alongside disturbances. Node values already include
@@ -236,14 +249,19 @@ component values. These display calculations never update the physical state.
 
 Every new rule uses the bounded integer expression evaluator, including generic
 `cross` of two vectors and `vector` construction from three scalar expressions.
-Existing limits of 64 nodes and depth 16 per expression apply. Intermediate
+Expressions with port context allow at most `max(64, 8*D+16)` nodes, up to 224
+when D is 26. The six-port limit remains 64. Expressions without port context,
+including joint transaction invariants, retain the 64-node bound. Every
+expression still has maximum depth 16. Balanced sum trees can include all
+outgoing owners within these limits; increasing the expression budget does not
+increase the 32-assignment limit per rule. Intermediate
 products and sums must fit the working register before any later cancellation;
 physical payload bounds are checked before commit. `exact_div` remains exact,
 with no implicit truncation or floating-point normalization.
 
 Field state generation contributes priced work to new carrier cycles without
 delaying the fixed field clock. Joint activation and assignment evaluation,
-six-channel physical sampling, proposal delta construction and reaction
+D-channel physical sampling, proposal delta construction and reaction
 accumulation contribute to the frozen carrier cost. Local deposit and
 post-deposit sampling retain their separate fixed reservation when stock changes.
 No later computation debt is added to an already frozen carrier proposal.
@@ -261,7 +279,7 @@ received directional samples. A nonzero baseline alone does not activate empty
 space; outward resident stock alone does not activate local rules. Source
 emission can provide local stock and activate the phase. Zero-input creation
 must use an explicit source law, not an unscheduled rule on untouched nodes.
-Node work and registers are bounded by the configured field/rule/slot limits;
+Node work and registers are bounded by D and the configured field/rule/slot limits;
 host frontier indices and diagnostic history are not physical inputs.
 
 The focused acceptance requirements are in

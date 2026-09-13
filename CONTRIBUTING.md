@@ -99,6 +99,12 @@ imports, subprocesses or external data not covered by the selector. Keep needed
 regressions for shared interfaces; never drop a related failing test. A newly
 introduced non-import dependency must update the selector and its focused tests.
 
+All changed submissions retain `tests/test_architecture.py` and
+`tests/test_node_memory.py`. Review [memory ownership](docs/MEMORY.md) and general
+system boundaries on every change; measure affected allocations when ownership,
+capacity or lifetime changes. These small permanent checks do not select unrelated
+physical experiments.
+
 `--full` is available only for an explicitly justified complete audit. Do not run
 it by default or to compensate for an unexamined dependency. CI uses the PR base
 or the previous main commit and the same selector. It no longer unconditionally

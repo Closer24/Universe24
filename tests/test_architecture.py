@@ -38,7 +38,7 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
     root = Path(event_universe.__file__).parent
     for path in root.rglob("*.py"):
         module = "event_universe." + ".".join(path.relative_to(root).with_suffix("").parts)
-        assert not violations(path.read_text(), module), str(path)
+        assert not violations(path.read_text(encoding="utf-8"), module), str(path)
 
 
 @pytest.mark.parametrize(
@@ -61,6 +61,9 @@ def test_all_production_modules_respect_dependency_and_composition_boundaries():
         ("models.experimental.custom", "def update(x):\n    return x + 1"),
         ("particle_api", "def calculate(momentum):\n    return -momentum"),
         ("compat", "def update(value):\n    value += 1\n    return value"),
+        ("fields.local", "def update(world):\n    return world.nodes"),
+        ("fields.local", "def update(world):\n    return world.node_view((0, 0, 0))"),
+        ("fields.local", "def update(world):\n    return world.inventory_view()"),
     ],
 )
 def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source):

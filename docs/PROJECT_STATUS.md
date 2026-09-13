@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The active local unit is now named **node**. The
+[node testing interface](NODE_TESTING.md) wraps the actual Simulation, exposing
+immutable point snapshots, per-port arrivals/departures and completed local-cycle
+counters across clock transitions. Single-node and multi-node tests cover causal
+delays, frozen pending work, failures and configured reciprocal ports. The
+[memory contract](MEMORY.md) separates bounded diagnostic retention from growing
+host world storage. This is a local testing boundary, not network distribution.
+
 The [property coupling extension](PROPERTY_COUPLINGS.md) selects compatible
 disturbances by owned properties, retaining explicit types for existing inputs.
 Entity probes share two local energy/momentum reservoirs. The optional
@@ -19,6 +27,13 @@ and simulator code are unchanged.
 physical reference catalogs, all supplied representation profiles and observer
 sidecars without running a world. It shares parsing and preparation with runtime
 entry points. Configuration validity is separate from run and physics acceptance.
+Optional [configured topology](CONFIGURED_TOPOLOGY.md) supports 2 to 26 reciprocal
+ports with three-dimensional vectors, bounded site patterns and causal local
+field/carrier transfers. Omitted topology retains the six-cardinal-port model.
+The [BCC vector encounter](../examples/topology/README.md) demonstrates a guarded
+polarization rotation; its normalized diagnostics do not establish Maxwell
+dynamics. Specialized six-port couplings, outward octant transport and the
+native event program explicitly reject unsupported topology combinations.
 
 The optional [local reception observer](LOCAL_OBSERVER.md) records arrivals at
 one node configured in the ordinary initialization JSON, using a completed local-cycle counter and the existing HTML player.

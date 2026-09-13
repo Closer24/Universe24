@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Never, cast
 
 from event_universe.core.disturbance_state import InitialState
+from event_universe.core.topology import validate_position
 from event_universe.entities import validate_profiles
 from event_universe.entity_catalog import validate_catalog
 from event_universe.initialization import parse_initial_state
@@ -38,6 +39,8 @@ def prepare_initialization(
     validate_observer_selection(document, external=observer_document is not _UNSET)
     raw = data.get("observer", _UNSET) if observer_document is _UNSET else observer_document
     observer = None if raw is _UNSET else ObserverDefinition.parse(raw, initial.shape)
+    if observer is not None:
+        validate_position(observer.position, initial.shape, initial.topology)
     return PreparedInitialization(initial, observer)
 
 

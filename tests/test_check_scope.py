@@ -22,6 +22,12 @@ def test_local_field_example_selects_state_and_physical_contract_consumers():
     assert "tests/test_local_lorentz_field.py" in selected
 
 
+def test_configured_topology_resource_selects_its_dynamic_invariants():
+    selected, _ = CHECK.select(["examples/topology/bcc_vectors.json"], {})
+    assert "tests/test_topology_example.py" in selected
+    assert "tests/test_directional_wave.py" not in selected
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})
@@ -69,15 +75,29 @@ def test_deleted_module_retains_old_consumers_and_cycles_terminate():
     assert "tests/test_old.py" in tests
 
 
-def test_docs_and_validation_changes_do_not_schedule_simulations():
+def test_docs_and_validation_changes_keep_mandatory_architecture_and_memory_checks():
     tests, typed = CHECK.select(["AGENTS.md", "tools/check.py", ".github/workflows/check.yml"], {})
     assert tests == [
+        "tests/test_architecture.py",
         "tests/test_check_scope.py",
+        "tests/test_node_memory.py",
         "tests/test_repository_hygiene.py",
         "tests/test_repository_language.py",
         "tests/test_repository_navigation.py",
     ]
     assert not typed
+
+
+@pytest.mark.parametrize("path", ["README.md", "examples/new.json", "src/demo.py", "tests/test_a.py"])
+def test_every_changed_submission_retains_architecture_and_memory_checks(path):
+    selected, _ = CHECK.select([path], {})
+    assert {"tests/test_architecture.py", "tests/test_node_memory.py"} <= set(selected)
+    assert CHECK.select([], {}) == ([], [])
+
+
+def test_node_example_selects_its_causal_trace_consumer():
+    selected, _ = CHECK.select(["examples/node-clock/three_nodes.json"], {})
+    assert "tests/test_node_example.py" in selected
 
 
 def test_example_selects_its_consumers_and_not_other_collision_candidates():

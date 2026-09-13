@@ -7,16 +7,23 @@ from typing import Protocol
 from .coupling_selectors import matches_type, selected_type_set
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
 from .integer import add_components, checked_work
+from .node_state import SpatialNodeView
 from .spatial_state import (
     FieldInteractionGuard,
     SpatialBundle,
-    SpatialCell,
     SpatialCouplingResult,
+    SpatialNode,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
 )
-from .topology import neighbor_address
+from .topology import (
+    inverse_port,
+    neighbor_address,
+    site_count,
+    validate_position,
+    validate_topology_configuration,
+)
 
 SpatialPlanner = Callable[
     [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
@@ -73,50 +80,78 @@ class SpatialEngine:
         coupler: SpatialCoupler | None = None,
         decayer: SpatialDecayer | None = None,
     ) -> None:
+        validate_topology_configuration(initial)
         self.initial = initial
+        self.port_count = len(initial.topology.offsets)
         self.planner = planner
         self.observer = observer
         self.coupler = coupler
         self.decayer = decayer
-        self.cells: dict[Address3, SpatialCell] = {}
-        # Host scheduling index only: retain physical registers in self.cells.
+        self.nodes: dict[Address3, SpatialNode] = {}
+        # Host scheduling index only: retain physical registers in self.nodes.
         self._active: set[Address3] = set()
         self._field_tick = -1
         self.links: dict[Address3, tuple[SpatialPacket | None, ...]] = {}
+        self.empty_links: tuple[SpatialPacket | None, ...] = (None,) * self.port_count
         self.sources = [[0] * field.components for field in initial.fields]
         self.dissipation = [[0] * field.components for field in initial.fields]
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
         for seed in initial.spatial_seeds:
-            cell = self._at(seed.position)
-            states = list(cell.states)
+            node = self._at(seed.position)
+            states = list(node.states)
             states[seed.spatial_field] = replace(
                 states[seed.spatial_field], populations=seed.populations
             )
-            cell.states = tuple(states)
+            node.states = tuple(states)
             self.values(seed.position)
         self._initial_totals = self.totals()
+
+    @property
+    def cells(self) -> Mapping[Address3, SpatialNode]:
+        """Legacy read alias for the canonical node state mapping."""
+        return self.nodes
+
+    def node_view(self, position: Address3) -> SpatialNodeView | None:
+        """Read local immutable references without materializing a node."""
+        node = self.nodes.get(position)
+        if node is None:
+            return None
+        return SpatialNodeView(
+            node.states,
+            node.last_cost,
+            node.received_count,
+            node.reaction_phases,
+            node.sample_values,
+            node.sample_fluxes,
+            node.last_begin_tick,
+            node.received_decay_cost,
+            node.sample_ports,
+        )
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
         result = []
         for definition in self.initial.spatial_fields:
             zero = pack((0,) * self.initial.fields[definition.field].components)
-            result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6))
+            result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * self.port_count))
         return tuple(result)
 
-    def _at(self, position: Address3) -> SpatialCell:
-        if position not in self.cells:
-            self.cells[position] = SpatialCell(self._blank_states())
+    def _at(self, position: Address3) -> SpatialNode:
+        validate_position(position, self.initial.shape, self.initial.topology)
+        if position not in self.nodes:
+            self.nodes[position] = SpatialNode(self._blank_states())
             self._active.add(position)
         elif position not in self._active:
-            # An idle known cell completed the empty phase without a host visit.
-            # New cells stay active, so this cannot backdate their creation.
-            self.cells[position].last_begin_tick = self._field_tick
-        return self.cells[position]
+            # An idle known node completed the empty phase without a host visit.
+            # New nodes stay active, so this cannot backdate their creation.
+            self.nodes[position].last_begin_tick = self._field_tick
+        return self.nodes[position]
 
     def _neighbor(self, position: Address3, port: int) -> Address3 | None:
-        return neighbor_address(position, port, self.initial.shape, self.initial.boundary)
+        return neighbor_address(
+            position, port, self.initial.shape, self.initial.boundary, self.initial.topology
+        )
 
     def _event(self, event: str, tick: int, position: Address3, **details: object) -> None:
         if self.observer is not None:
@@ -143,7 +178,7 @@ class SpatialEngine:
             ):
                 positions.add(position)
         for position in sorted(positions):
-            cell = self._at(position)
+            node = self._at(position)
             if any(packet is not None for packet in self.links.get(position, ())):
                 raise ValueError("outgoing spatial links are occupied")
             records = residents.get(position, ())
@@ -151,17 +186,17 @@ class SpatialEngine:
                 record is not None and record.type_index in coupled_types for record in records
             ):
                 # Freeze only locally delivered input, before fresh source injection.
-                cell.sample_values = self.coupler.sample(cell.states)
-                cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                node.sample_values = self.coupler.sample(node.states)
+                node.sample_fluxes = self.coupler.sample_fluxes(node.states)
                 if self.initial.spatial_interactions:
-                    cell.sample_ports = self.coupler.sample_ports(cell.states)
+                    node.sample_ports = self.coupler.sample_ports(node.states)
             # Samples describe only the preceding delivery interval, never a permanent trail.
             states = (
-                cell.states
+                node.states
                 if self.initial.field_rules
                 else tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
-                    for state in cell.states
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * self.port_count)
+                    for state in node.states
                 )
             )
             active_source = any(
@@ -176,18 +211,20 @@ class SpatialEngine:
                 for index, rule in enumerate(self.initial.emissions)
             )
             active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
-            if not active_source and not active_field and cell.received_count == 0:
-                cell.states = tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+            if not active_source and not active_field and node.received_count == 0:
+                node.states = tuple(
+                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * self.port_count)
                     for state in states
                 )
-                cell.last_cost = 0
-                cell.last_begin_tick = tick
+                node.last_cost = 0
+                node.last_begin_tick = tick
                 self._active.discard(position)
                 continue
-            plan = self.planner(states, records, cell.received_count)
-            cost = bounded(checked_work(plan.cost + cell.received_decay_cost))
-            packets: list[SpatialPacket | None] = [None] * 6
+            plan = self.planner(states, records, node.received_count)
+            if len(plan.outgoing) != self.port_count:
+                raise ValueError("spatial proposal has incorrect port count")
+            cost = bounded(checked_work(plan.cost + node.received_decay_cost))
+            packets: list[SpatialPacket | None] = [None] * self.port_count
             for port, bundle in enumerate(plan.outgoing):
                 if any(any(unpack(payload)) for field in bundle for payload in field):
                     packets[port] = SpatialPacket(
@@ -195,11 +232,11 @@ class SpatialEngine:
                     )
             # All physical calculations and validation precede the local commit.
             commit_records(position, plan.emission_records)
-            cell.states = plan.states
-            cell.last_cost = cost
-            cell.received_count = 0
-            cell.received_decay_cost = 0
-            cell.last_begin_tick = tick
+            node.states = plan.states
+            node.last_cost = cost
+            node.received_count = 0
+            node.received_decay_cost = 0
+            node.last_begin_tick = tick
             self.links[position] = tuple(packets)
             # One following phase clears the reported cost before becoming idle.
             self._active.add(position)
@@ -246,8 +283,8 @@ class SpatialEngine:
     ) -> SpatialCouplingResult:
         if self.coupler is None:
             raise ValueError("spatial coupling requires an explicitly composed law")
-        cell = self._at(position)
-        return self.coupler(records, cell.sample_values, cell.sample_fluxes, cell.sample_ports)
+        node = self._at(position)
+        return self.coupler(records, node.sample_values, node.sample_fluxes, node.sample_ports)
 
     def validate_guards(
         self, position: Address3, reaction: Values, guards: tuple[FieldInteractionGuard, ...]
@@ -262,18 +299,18 @@ class SpatialEngine:
             return None
         if self.coupler is None:
             raise ValueError("a spatial reaction requires its configured coupling law")
-        cell = self._at(position)
-        if cell.last_begin_tick != tick:
-            states, phases = self.coupler.deposit(cell.states, cell.reaction_phases, reaction)
+        node = self._at(position)
+        if node.last_begin_tick != tick:
+            states, phases = self.coupler.deposit(node.states, node.reaction_phases, reaction)
             return ReactionCommit(states, phases, None)
         # Only this instant's departure buffers are still locally appendable.
         # Packets from an earlier departure are immutable while in transit.
-        old_links = self.links.get(position, (None,) * 6)
+        old_links = self.links.get(position, (None,) * self.port_count)
         arrival = bounded(tick + self.initial.link_ticks)
         if any(packet is not None and packet.arrival_tick != arrival for packet in old_links):
             raise ValueError("reaction cannot alter a spatial packet already in transit")
         states, phases, outgoing = self.coupler.forward_reaction(
-            cell.states, cell.reaction_phases, reaction
+            node.states, node.reaction_phases, reaction
         )
         links: list[SpatialPacket | None] = []
         for port, (old, bundle) in enumerate(zip(old_links, outgoing, strict=True)):
@@ -305,9 +342,9 @@ class SpatialEngine:
     ) -> None:
         if proposal is None:
             return
-        cell = self._at(position)
-        cell.states = proposal.states
-        cell.reaction_phases = proposal.phases
+        node = self._at(position)
+        node.states = proposal.states
+        node.reaction_phases = proposal.phases
         self._active.add(position)
         if proposal.links is not None:
             self.links[position] = proposal.links
@@ -316,7 +353,7 @@ class SpatialEngine:
                 self.reactions[index][component] += value
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
-        """No receiving cell exists outside; terminal stock escapes without exterior decay."""
+        """No receiving node exists outside; terminal stock escapes without exterior decay."""
         amounts = [[0] * field.components for field in self.initial.fields]
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
@@ -357,9 +394,9 @@ class SpatialEngine:
                     else:
                         ready.setdefault(target, []).append(packet)
         for position, arrivals in sorted(ready.items()):
-            cell = self._at(position)
+            node = self._at(position)
             losses = [[0] * field.components for field in self.initial.fields]
-            decay_cost = cell.received_decay_cost
+            decay_cost = node.received_decay_cost
             arrival_cost = 0
             surviving = []
             for packet in arrivals:
@@ -376,9 +413,9 @@ class SpatialEngine:
             states = []
             for index, definition in enumerate(self.initial.spatial_fields):
                 field = self.initial.fields[definition.field]
-                old = cell.states[index]
+                old = node.states[index]
                 populations = [list(unpack(v)) for v in old.populations]
-                directions = [[0] * field.components for _ in range(6)]
+                directions = [[0] * field.components for _ in range(self.port_count)]
                 for packet in surviving:
                     for octant, payload in enumerate(packet.fields[index]):
                         field.validate(payload)
@@ -399,10 +436,10 @@ class SpatialEngine:
                         local[component] = checked_work(local[component] + value)
                 field.validate(pack(tuple(local)))
                 states.append(SpatialState(packed, old.allocation_phases, delivered))
-            received_count = bounded(checked_work(cell.received_count + len(arrivals)))
-            cell.states = tuple(states)
-            cell.received_count = received_count
-            cell.received_decay_cost = decay_cost
+            received_count = bounded(checked_work(node.received_count + len(arrivals)))
+            node.states = tuple(states)
+            node.received_count = received_count
+            node.received_decay_cost = decay_cost
             self._active.add(position)
             for index, lost_values in enumerate(losses):
                 for component, value in enumerate(lost_values):
@@ -416,12 +453,14 @@ class SpatialEngine:
             # ports so cancellation is distinct from no completed reception.
             received_fields = [
                 {
-                    self.initial.fields[definition.field].name: unpack(state.delivered[port ^ 1])
+                    self.initial.fields[definition.field].name: unpack(
+                        state.delivered[inverse_port(port, self.initial.topology)]
+                    )
                     for definition, state in zip(self.initial.spatial_fields, states, strict=True)
                 }
-                if any(packet.port == port ^ 1 for packet in arrivals)
+                if any(packet.port == inverse_port(port, self.initial.topology) for packet in arrivals)
                 else {}
-                for port in range(6)
+                for port in range(self.port_count)
             ]
             self._event(
                 "spatial_received",
@@ -444,16 +483,16 @@ class SpatialEngine:
                 )
 
     def cost(self, position: Address3, tick: int) -> int:
-        cell = self.cells.get(position)
-        return 0 if cell is None or tick % self.initial.link_ticks else cell.last_cost
+        node = self.nodes.get(position)
+        return 0 if node is None or tick % self.initial.link_ticks else node.last_cost
 
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]
-        volume = self.initial.shape[0] * self.initial.shape[1] * self.initial.shape[2]
+        volume = site_count(self.initial.shape, self.initial.topology)
         for index, definition in enumerate(self.initial.spatial_fields):
             for component, value in enumerate(unpack(definition.baseline)):
                 result[definition.field][component] += volume * value
-            inventories = [self.cells[position].states[index].populations for position in self._active]
+            inventories = [self.nodes[position].states[index].populations for position in self._active]
             inventories.extend(
                 packet.fields[index]
                 for packets in self.links.values()
@@ -467,7 +506,7 @@ class SpatialEngine:
         return result
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
-        states = self.cells[position].states if position in self.cells else self._blank_states()
+        states = self.nodes[position].states if position in self.nodes else self._blank_states()
         result: dict[str, dict[str, object]] = {}
         for definition, state in zip(self.initial.spatial_fields, states, strict=True):
             field = self.initial.fields[definition.field]
@@ -521,8 +560,8 @@ class SpatialEngine:
     def snapshot(self) -> dict[str, object]:
         return {
             "spatial_fields": [
-                {"position": position, "fields": self.values(position), "cost": cell.last_cost}
-                for position, cell in sorted(self.cells.items())
+                {"position": position, "fields": self.values(position), "cost": node.last_cost}
+                for position, node in sorted(self.nodes.items())
             ],
             "spatial_baselines": {
                 self.initial.fields[d.field].name: unpack(d.baseline)

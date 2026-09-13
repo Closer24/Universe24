@@ -22,6 +22,7 @@ from event_universe.core.spatial_state import (
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
+    validate_port_count,
 )
 
 from .disturbances import evaluate
@@ -36,6 +37,7 @@ class SpatialLaw:
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
+    port_count: int = 6
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -90,6 +92,7 @@ class SpatialLaw:
         records: tuple[DisturbanceRecord | None, ...],
         received_count: int = 0,
     ) -> SpatialPlan:
+        validate_port_count(self.port_count)
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         meter = CostMeter(self.costs)
@@ -149,10 +152,10 @@ class SpatialLaw:
         local_outgoing: tuple[Values, ...] = ()
         if has_local:
             ruled_states, local_outgoing = apply_field_rules(
-                self.fields, self.definitions, self.field_rules, tuple(working), meter
+                self.fields, self.definitions, self.field_rules, tuple(working), meter, self.port_count
             )
             working = list(ruled_states)
-        outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
+        outgoing: list[list[SpatialPopulations]] = [[] for _ in range(self.port_count)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -167,9 +170,11 @@ class SpatialLaw:
                 meter.charge("route")
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
             else:
+                if self.port_count != 6:
+                    raise ValueError("outward transport requires six cardinal ports")
                 channels, state = split_outward(working[index], definition, field, meter)
             if has_local:
-                state = replace(state, delivered=(pack((0,) * field.components),) * 6)
+                state = replace(state, delivered=(pack((0,) * field.components),) * self.port_count)
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)

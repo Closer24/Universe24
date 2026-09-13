@@ -11,6 +11,12 @@ behavior/risk and exact tree; output is actual commands/results, retained covera
 failure evidence, metadata and traces. Visual reports are optional output only
 when visualization has been explicitly requested.
 
+For local engine changes, use the [node testing contract](../../docs/NODE_TESTING.md)
+to test real per-port input/output across audit ticks and completed local cycles.
+Retain multi-node causal timing and world-size independence checks; a separate
+toy update function cannot establish the engine's behavior. Every submission
+keeps the architecture and memory checks selected by the shared workflow.
+
 Choose tests for independent numerical outcomes, distinct bounds/errors,
 component replacement, causal timing, local conservation and known regressions.
 Do not add a test merely because a function was added, or derive the expected
