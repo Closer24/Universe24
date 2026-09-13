@@ -304,3 +304,4 @@ class NodeView:
     last_cost: int
     arrival_mask: tuple[int, ...] = ()
     delay_counts: tuple[int, ...] = ()
+    committed_cost: int = 0

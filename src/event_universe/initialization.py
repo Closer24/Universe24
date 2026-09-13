@@ -190,6 +190,7 @@ class _Expressions:
         received_fields: tuple[int, ...] = (),
         outgoing_fields: tuple[int, ...] = (),
         participants: tuple[tuple[int, ...], ...] = (),
+        node_cost: bool = False,
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
@@ -199,6 +200,7 @@ class _Expressions:
         self.received_fields = received_fields
         self.outgoing_fields = outgoing_fields
         self.participants = participants
+        self.node_cost = node_cost
         self.max_components = max(field.components for field in fields)
 
     def parse(
@@ -239,9 +241,15 @@ class _Expressions:
                 "outgoing",
                 "received_present",
                 "port",
+                "node",
             },
             set(),
         )
+        if "node" in obj:
+            _object(obj, "node expression", {"node"}, {"node"})
+            if not self.node_cost or obj["node"] != "committed_cost":
+                raise ValueError("node.committed_cost is available only to emission expressions")
+            return Expression("node_cost"), 1
         if {"received", "outgoing", "received_present"}.intersection(obj):
             operation = (
                 "received_present"
@@ -945,7 +953,7 @@ def _emissions(
             set(selected_types(item)) & set(kinds) and item.spatial_field == index for item in result
         ):
             raise ValueError("duplicate emission for the same disturbance type and field")
-        amount = _Expressions(fields, owned).parse(
+        amount = _Expressions(fields, owned, node_cost=True).parse(
             obj["amount"], fields[spatial[index].field].components
         )
         result.append(

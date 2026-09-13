@@ -1,5 +1,15 @@
 # Test inputs and expected results
 
+## Computational response
+
+`test_node_work_emission.py` checks committed local work, zero startup, pending
+cycles, moving-carrier arrival without transported cost, bounded readout inputs
+and emission-only expression scope. `test_computational_response.py` checks real
+one-link delivery on all six ports: a unit reaction opposite travel, its exact
+local field counter-reaction, no early/repeated response, cancellation and a zero
+or reversed property coupling. These tests establish the configured mechanism,
+not a Newtonian or energy-conserving physical model.
+
 ## Integer Node execution
 
 `test_node_rule_contract.py` checks six-record frozen permutations, generic vector

@@ -61,6 +61,7 @@ def evaluate(
     outgoing: tuple[Values, ...] = (),
     participants: tuple[Values, ...] = (),
     received_masks: tuple[int, ...] = (),
+    node_cost: int | None = None,
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
@@ -76,10 +77,15 @@ def evaluate(
             outgoing=outgoing,
             participants=participants,
             received_masks=received_masks,
+            node_cost=node_cost,
         )
         return project(op, values)
     if op == "literal":
         return expression.literal
+    if op == "node_cost":
+        if node_cost is None or bounded(node_cost) < 0:
+            raise ValueError("node cost requires an explicitly supplied committed local value")
+        return (node_cost,)
     if op == "field":
         owners = participants or (left, right)
         if not 0 <= expression.side < len(owners):
@@ -112,6 +118,7 @@ def evaluate(
             outgoing=outgoing,
             participants=participants,
             received_masks=received_masks,
+            node_cost=node_cost,
         )
         for arg in expression.arguments
     )

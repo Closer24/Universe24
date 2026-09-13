@@ -93,6 +93,7 @@ class SpatialLaw:
         states: tuple[SpatialState, ...],
         records: tuple[DisturbanceRecord | None, ...],
         received_count: int = 0,
+        node_cost: int | None = None,
     ) -> SpatialPlan:
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
@@ -118,7 +119,9 @@ class SpatialLaw:
                 meter.charge("read")
                 if rule.budget is not None and not any(unpack(record.emission_remaining[index])):
                     continue
-                proposed = evaluate(rule.amount, record.values, record.values, meter)
+                proposed = evaluate(
+                    rule.amount, record.values, record.values, meter, node_cost=node_cost
+                )
                 residuals, allocation = list(record.emission_remainders), list(record.emission_phases)
                 remaining = list(record.emission_remaining)
                 if rule.budget is None:

@@ -40,6 +40,7 @@ class DisturbanceNode(DisturbanceNodeState):
     output: PortBank[Packet] = field(default_factory=lambda: PortBank(()), compare=False)
     arrival_mask: tuple[int, ...] = ()
     delay_counts: tuple[int, ...] = ()
+    committed_cost: int = 0
 
     def advance(
         self,
@@ -342,6 +343,7 @@ class DisturbanceNode(DisturbanceNodeState):
             )
         # All proposal validation has succeeded; commit coupled records together.
         self.records = tuple(records)
+        self.committed_cost = pending.plan.cost
         self.coupling_remainders = pending.plan.coupling_remainders
         self.available_tick = pending.next_tick
         self.pending = None
