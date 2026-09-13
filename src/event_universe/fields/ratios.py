@@ -119,16 +119,31 @@ def evaluate_ratio(
     *,
     ports: tuple[Values, ...] = (),
     outgoing: tuple[Values, ...] = (),
+    participants: tuple[Values, ...] = (),
+    received_masks: tuple[int, ...] = (),
+    node_cost: int | None = None,
 ) -> tuple[Ratio, ...]:
     # Fixed worst-case arithmetic tariff, independent of numerator magnitude.
     meter.charge("evaluate", 65536)
     op = expression.op
     if op == "literal":
         return tuple(Ratio(v) for v in expression.literal)
+    if op == "node_cost":
+        if node_cost is None or bounded(node_cost) < 0:
+            raise ValueError("node cost requires an explicitly supplied committed local value")
+        return (Ratio(node_cost),)
     if op == "field":
-        return tuple(
-            Ratio(v) for v in unpack((left if expression.side == 0 else right)[expression.field])
-        )
+        owners = participants or (left, right)
+        if not 0 <= expression.side < len(owners):
+            raise ValueError("rational field expression participant is unavailable")
+        return tuple(Ratio(v) for v in unpack(owners[expression.side][expression.field]))
+    if op == "received_present":
+        if not 0 <= expression.field < len(received_masks) or not 0 <= expression.port < 6:
+            raise ValueError("received presence requires explicitly supplied local port masks")
+        mask = received_masks[expression.field]
+        if type(mask) is not int or not 0 <= mask < 64:
+            raise ValueError("received mask requires six bounded port bits")
+        return (Ratio(int(bool(mask & (1 << expression.port)))),)
     if op == "flux":
         if not spatial_fluxes:
             raise ValueError("rational flux requires an explicit sample")
@@ -139,7 +154,18 @@ def evaluate_ratio(
             raise ValueError("rational port expression requires six local channels")
         return tuple(Ratio(v) for v in unpack(channels[expression.port][expression.field]))
     args = tuple(
-        evaluate_ratio(a, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        evaluate_ratio(
+            a,
+            left,
+            right,
+            meter,
+            spatial_fluxes,
+            ports=ports,
+            outgoing=outgoing,
+            participants=participants,
+            received_masks=received_masks,
+            node_cost=node_cost,
+        )
         for a in expression.arguments
     )
     if op in PROJECTIONS:

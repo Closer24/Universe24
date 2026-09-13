@@ -4,6 +4,19 @@ This document explains the ideas underlying the simulator without programming
 details. Consult it before any change. A change contradicting a binding principle
 requires an explicit decision to change the model.
 
+The user-authorized [Node execution profile](docs/NODE_VECTOR_PROCESSOR.md)
+declares h as one adjacent-node transit step and each interaction's k as an
+explicit positive integer duration in h units. Sequential fired interactions add
+their durations; link transit follows local completion. Operation cost is measured
+separately. The earlier cost-budget delay contract below still describes profiles
+without `node_execution: true`. Conserved readouts remain selected assumptions
+until independently derived physical behavior is demonstrated.
+Its generic reaction contract admits several local disturbances and fields in
+one frozen proposal. Declared invariants and persistent validity conditions must
+hold at actual commit, including after a local arrival during the wait. A consumed
+start trigger is not a persistent condition. Every affected owner commits together
+or remains unchanged; a failed check reports an error without repairing the law.
+
 Distinguish three categories:
 
 - **Binding principle:** a rule the simulator must satisfy.

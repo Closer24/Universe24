@@ -4,6 +4,7 @@ from dataclasses import dataclass, replace
 
 from event_universe.core.coupling_selectors import (
     matches_pair,
+    participant_groups,
     selected_left_types,
     selected_right_types,
 )
@@ -58,19 +59,45 @@ def evaluate(
     *,
     ports: tuple[Values, ...] = (),
     outgoing: tuple[Values, ...] = (),
+    participants: tuple[Values, ...] = (),
+    received_masks: tuple[int, ...] = (),
+    node_cost: int | None = None,
 ) -> tuple[int, ...]:
     """Evaluate a validated, fixed-size integer AST without Python eval or imports."""
     meter.charge("evaluate")
     op = expression.op
     if op in PROJECTIONS:
         values = evaluate_ratio(
-            expression.arguments[0], left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing
+            expression.arguments[0],
+            left,
+            right,
+            meter,
+            spatial_fluxes,
+            ports=ports,
+            outgoing=outgoing,
+            participants=participants,
+            received_masks=received_masks,
+            node_cost=node_cost,
         )
         return project(op, values)
     if op == "literal":
         return expression.literal
+    if op == "node_cost":
+        if node_cost is None or bounded(node_cost) < 0:
+            raise ValueError("node cost requires an explicitly supplied committed local value")
+        return (node_cost,)
     if op == "field":
-        return unpack((left if expression.side == 0 else right)[expression.field])
+        owners = participants or (left, right)
+        if not 0 <= expression.side < len(owners):
+            raise ValueError("field expression participant is unavailable")
+        return unpack(owners[expression.side][expression.field])
+    if op == "received_present":
+        if not 0 <= expression.field < len(received_masks) or not 0 <= expression.port < 6:
+            raise ValueError("received presence requires explicitly supplied local port masks")
+        mask = received_masks[expression.field]
+        if type(mask) is not int or not 0 <= mask < 64:
+            raise ValueError("received mask requires six bounded port bits")
+        return (int(bool(mask & (1 << expression.port))),)
     if op == "flux":
         if not spatial_fluxes:
             raise ValueError("spatial flux requires an explicitly supplied local sample")
@@ -81,7 +108,18 @@ def evaluate(
             raise ValueError("directional expressions require six explicitly supplied local channels")
         return unpack(channels[expression.port][expression.field])
     operands = tuple(
-        evaluate(arg, left, right, meter, spatial_fluxes, ports=ports, outgoing=outgoing)
+        evaluate(
+            arg,
+            left,
+            right,
+            meter,
+            spatial_fluxes,
+            ports=ports,
+            outgoing=outgoing,
+            participants=participants,
+            received_masks=received_masks,
+            node_cost=node_cost,
+        )
         for arg in expression.arguments
     )
     if op == "transform":
@@ -169,6 +207,40 @@ class DisturbanceLaw:
     operation_costs: OperationCosts
     interactions: tuple[InteractionDefinition, ...] = ()
 
+    def _interact_group(
+        self, rule: InteractionDefinition, records: tuple[DisturbanceRecord, ...], meter: CostMeter
+    ) -> tuple[DisturbanceRecord, ...]:
+        """Apply simultaneous assignments against one frozen indexed input group."""
+        before = tuple(record.values for record in records)
+        if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+            return records
+        meter.advance(rule.k)
+        meter.charge("couple")
+        candidate = list(records)
+        for assignment in rule.assignments:
+            value = evaluate(assignment.expression, (), (), meter, participants=before)
+            candidate[assignment.side] = _with_value(
+                candidate[assignment.side], assignment.field, pack(value)
+            )
+            meter.charge("update")
+        for record in candidate:
+            self._validate(record, meter)
+        originals, outputs = (
+            _sum_records(records, self.fields),
+            _sum_records(tuple(candidate), self.fields),
+        )
+        for index, field in enumerate(self.fields):
+            if field.conserved and originals[index] != outputs[index]:
+                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
+        checks = ValidationMeter(self.operation_costs)
+        after = tuple(record.values for record in candidate)
+        for invariant in rule.invariants:
+            if evaluate(invariant.expression, (), (), checks, participants=before) != evaluate(
+                invariant.expression, (), (), checks, participants=after
+            ):
+                raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
+        return tuple(candidate)
+
     def _interact(
         self,
         rule: InteractionDefinition,
@@ -178,6 +250,7 @@ class DisturbanceLaw:
     ) -> tuple[DisturbanceRecord, DisturbanceRecord]:
         if rule.when is not None and evaluate(rule.when, left.values, right.values, meter)[0] <= 0:
             return left, right
+        meter.advance(rule.k)
         meter.charge("couple")
         checks = ValidationMeter(self.operation_costs)
         before = tuple(
@@ -466,6 +539,15 @@ class DisturbanceLaw:
 
         # Multi-field transactions follow exchanges and precede all routing.
         for interaction in self.interactions:
+            if interaction.participants:
+                for group in participant_groups(interaction, tuple(updated)):
+                    records_in_group = tuple(updated[slot] for slot in group)
+                    assert all(record is not None for record in records_in_group)
+                    participants = tuple(record for record in records_in_group if record is not None)
+                    outputs = self._interact_group(interaction, participants, meter)
+                    for slot, output in zip(group, outputs, strict=True):
+                        updated[slot] = output
+                continue
             for left_slot in range(slots):
                 for right_slot in range(slots):
                     left, right = updated[left_slot], updated[right_slot]
@@ -525,4 +607,5 @@ class DisturbanceLaw:
             tuple(remainders),
             tuple(tuple(v) for v in source_delta),
             meter.total,
+            interaction_ticks=meter.interaction_ticks,
         )

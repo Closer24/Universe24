@@ -1,5 +1,37 @@
 # Test inputs and expected results
 
+## Computational response
+
+`test_node_work_emission.py` checks committed local work, zero startup, pending
+cycles, moving-carrier arrival without transported cost, bounded readout inputs
+and emission-only expression scope. Shared-clock integration checks the same
+Node-owned cost across a moving emission and rejects conflicting clock selections. `test_computational_response.py` checks real
+one-link delivery on all six ports: a unit reaction opposite travel, its exact
+local field counter-reaction, no early/repeated response, cancellation and a zero
+or reversed property coupling. These tests establish the configured mechanism,
+not a Newtonian or energy-conserving physical model.
+
+## Integer Node execution
+
+`test_node_rule_contract.py` checks six-record frozen permutations, generic vector
+widths, explicit fired-rule duration, nonadditive policy rejection and independent
+arrival presence. `test_node_conservation.py` checks complete-owner readouts and
+rejects nonlinear merge drift (13 becomes 25), unequal momentum, overflow and
+capacity errors without modifying inputs. `test_node_conservation_configuration.py`
+checks exact layout coverage and rejection through the read-only preflight.
+`test_node_runtime.py` checks isolated Node boundaries; `test_node_vector_integration.py`
+checks public execution, timing and failed-transition atomicity.
+`test_joint_reaction_configuration.py` checks role ownership, capacity, ambiguous
+references and rejection of transient commit guards. `test_joint_node_reactions.py`
+checks distinct property layouts, deterministic disjoint selection, all 32 local
+slots, frozen group/field updates, guard invalidation and participant locks.
+`test_field_commit_guards.py` reproduces a delayed norm violation (32 to 34),
+including a zero-net-delta phase, and requires rejection before any owner changes.
+It also covers valid arrivals, ordered guards, consumed triggers and direct
+assembly boundaries. `test_node_vector_examples.py` owns the three example configurations and their
+independently known declared readouts. These are correctness contracts for the
+[selected model](NODE_VECTOR_PROCESSOR.md), not proofs of quantum dynamics.
+
 ## Shared field computation delay
 
 `test_spatial_computation_delay.py` checks the opt-in
@@ -792,3 +824,9 @@ on local rule cost, active Node count and interpreter serialization overhead.
 Inline observer input is covered by `tests/test_local_observer.py`: normal schema
 validation, rejection before output creation, ambiguous placement rejection, exact
 saved initialization and unchanged physical results with recording enabled.
+
+
+Parallel integration also compares indexed field-only and joint Node profiles,
+and work-driven emissions, against serial snapshots, committed-cost readouts,
+modeled work and complete event order. Worker planning keeps the same local
+proposal validation and field/carrier commit boundaries.

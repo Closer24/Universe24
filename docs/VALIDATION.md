@@ -1,5 +1,163 @@
 # Validation evidence
 
+## Joint reactions and delayed rule validity - 2026-09-13
+
+Incremental base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`, continuing PR 86
+on main `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Final active source SHA-256:
+`1c85d9200fc57378c971fc7409532555713be04916139027eb9c08439cc918c8`.
+The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates indexed
+participant/field proposals, consumed triggers and persistent conditions.
+The final affected gate passed: **1,879 tests passed and five visual-only tests
+were skipped**. Ruff, formatting and strict mypy (55 affected modules) passed.
+The final documentation checks also passed (28 cases).
+
+The focused regressions include 23 parser cases, 16 joint-reaction cases and
+21 field-guard cases. The independent reviewer ran 85 related cases before the
+final read-only audit registration, then all 10 NodeState checks afterward.
+The declaration audit initially rejected the new `FieldRuleGuard` owner. It now
+recursively audits that record; a negative test rejects a hidden expression in
+its outgoing metadata. The check was extended, not bypassed.
+
+```sh
+python tools/check.py --base a7a0000e3005ae41b37639f5dcf76e56532be69f
+python -m event_universe --init examples/node-vector/joint-reaction.json --output artifacts/joint-reaction-final-run
+python tools/profile_node_vectors.py . artifacts/joint-reaction-memory/report.json reactions
+```
+
+Python: 3.14.7. The first gate hit access-denied errors in the existing Windows
+pytest temporary root. The final gate uses a fresh external temporary directory
+and cache through `PYTEST_ADDOPTS`; no test or engine behavior is changed to
+work around filesystem permissions. Both modified Skills passed `quick_validate.py`
+using a separate PyYAML 6.0.3 validation dependency directory.
+
+The final headless run completed 8/8 ticks on the final source, with commits at
+ticks 3 and 7. Saved initialization matches the checked-in configuration. Both
+spatial ledgers balance; externally defined squared-length and vector-sum
+readouts remain 34 and (4, 6, 2). Final carriers are (0, 2, 0) and (1, 0, 0);
+the local fields are (0, 0, 2) and (3, 4, 0). This is a supplied register
+permutation, not a derivation of physical energy or particle interactions.
+
+All five host-memory cases used source
+`44640835b60c5623fdc0104b3a95f927b1a1fd7856e3d52dce0c3af5d7ac2342`.
+The only subsequent production change registers `FieldRuleGuard` with the
+read-only NodeState auditor; reconstructing that file's earlier bytes reproduces
+the measured source hash exactly. No evolving-state or stepping code changed.
+The joint owner graph remains constant at ticks 16/32/64/128/256:
+
+| Nodes | Reachable owner graph bytes |
+| --- | ---: |
+| 1 | 5,908 |
+| 8 | 40,068 |
+| 27 | 132,712 |
+
+The field-rule probes measured 6,892 bytes for one Node and 48,248 to 48,444
+bytes for eight Nodes; the latter change reflects Python integer object sharing
+at later clock values. The largest traced interval peak was 485,116 bytes.
+These are reachable Python allocations and tracemalloc observations, excluding
+native allocator/RSS coverage. Pending rule metadata is bounded by configured
+rules, slots, components and six outputs. Host indexes still scale with visited
+Nodes; no whole-world O(1) or speedup claim follows.
+
+The established joint reaction delta limit is unchanged: an extreme endpoint
+swap can fail if the transfer itself exceeds `MAX_VALUE`, even when each
+endpoint fits. Failure is explicit. Physics-validation and regression Skills
+now cover delayed substep checks; Boss and architecture Skills already route
+this work correctly, so no new Skill or scheduler was introduced.
+
+## Guarded integer Node execution - 2026-09-13
+
+Base: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Tested active source SHA-256:
+`68cec05fc6463e4ef2ced0f1d0d2ff1b63de4d1cb30b6b011424e26245bebf9f`.
+The [Node contract](NODE_VECTOR_PROCESSOR.md) defines the supported scope and
+separates imposed constraints from unestablished physical emergence.
+
+The dependency-selected gate completed with **1,814 passed and five visual-only
+skips**. Ruff, formatting and strict mypy passed. The default package import
+regression initially caught an eagerly loaded diagnostic module; the report now
+loads it only when requested, and the final gate passes that original assertion.
+
+```sh
+python tools/check.py --base bb177121ec2efdc6c998a8290b9e7b09c7706c62
+```
+
+Python was 3.14.7. Coverage includes existing carrier/spatial/causal/quantum
+regressions, locality and formula-free state, bounded indexed rules, generic
+renaming, k timing, zero/canceling arrivals, pending field deltas and paired
+reactions. The new pre-commit guard tests reject nonlinear merging and changes
+to momentum or charge without changing actual owners or accounting. Constructor
+and direct-service tests prevent silently omitting the mandatory guard.
+Known initial readout overflow is rejected in preflight without constructing a
+world or creating output. Failed diagnostic projection reports an explicit error
+and no partial values. Named host totals include actual owners once and do not
+apply the local capacity limit to an entire multi-Node world.
+
+Two ordinary headless CLI runs each completed eight requested ticks on that
+source. `six-records.json` (input SHA-256
+`12d3464890ff80df034aa5ea4bcead6fbef31a2ff916c06789b5f18fedc9ae2e`)
+committed at ticks 3 and 7 and retained declared E=21, P=(3,0,0), Q=0,
+J=(0,15,0). `two-fields.json` (input SHA-256
+`faf174035d96cc66d2382dc600cc2c06131087cb50dfddad9d4d42d8e6b38605`)
+performed the paired exchange at tick 2 and retained E=7 and zero P/Q/J.
+Run metadata and event logs were inspected; display was `none`.
+These are externally defined register readouts and permutation/exchange laws,
+not derived electromagnetic or quantum dynamics.
+
+### Memory and architecture
+
+The reproducible host probe is [profile_node_vectors.py](../tools/profile_node_vectors.py):
+
+```sh
+python tools/profile_node_vectors.py . artifacts/node-vector-memory/report.json
+```
+
+Use `PYTHONPATH=src` and a new output file. It records source/configuration identity,
+plain stepping time, traced peaks and unique reachable owner allocations for
+nine fixed-degree cases through 256 ticks. On the tested source, carrier owner
+graphs at equivalent cycle checkpoints remained unchanged from tick 16 to 256:
+
+| Nodes | Components | Slots per Node | Retained owner bytes |
+| ---: | ---: | ---: | ---: |
+| 1 | 8 | 8 | 3,680 |
+| 8 | 8 | 8 | 24,008 |
+| 27 | 8 | 8 | 79,184 |
+| 8 | 16 | 8 | 27,144 |
+| 8 | 32 | 8 | 33,416 |
+| 8 | 8 | 16 | 27,592 |
+| 8 | 8 | 32 | 34,760 |
+
+Eight colocated carrier/field Nodes retained 48,444 bytes at tick 256. Their
+196-byte rise from tick 128 reflects seven additional 28-byte Python integer
+objects after clock values leave the shared small-integer cache. A separate
+1,024-tick follow-up on source `785c9ec2b01b7caf8756906eb24075f067fa73f2f88e9b6f248b9150a4c9081e`
+held exactly 48,444 bytes at ticks 256, 512 and 1,024; that earlier source precedes
+the final initial-readout and receipt-bound checks and is identified separately.
+
+The largest final-source measured interval peak was 363,444 traced bytes.
+Measurements exclude native allocator/RSS, configuration allocation before tracing,
+observers and recorded history. Shared Python objects are counted once; these
+numbers are not physical register counts. Timing is a single host sample and
+tracing adds substantial overhead; no simulation speedup is claimed.
+
+State and output capacity are fixed per Node, and shared definitions/services are
+outside evolving Node payloads. However, the host retains maps and port banks for
+all visited positions. Whole-host memory therefore scales with visited Nodes,
+not just currently active Nodes. Repeated sorting and immutable temporary tuples
+also remain runtime costs. The fixed-Node probes do not establish bounded memory
+for unbounded exploration or generic graph/coarse-graining support.
+
+### Review and workflow
+
+Independent reviews checked schema/aggregation, local clock/field ownership,
+nonlinear balances, API bypasses, and current-value reporting. Review findings
+were fixed with retained regressions: nonadditive spatial ownership rejection,
+unrelated-field merge eligibility, received-mask consumption, missing guards and
+initial-readout overflow. The regression Skill now links the Node contract and
+the focused checks; its frontmatter validator passed using existing local
+validation dependencies. Other reviewed Skills already express the needed
+architecture and physical-evidence boundaries. No schedule or live Highlights
+document was changed. The [Highlights map](HIGHLIGHTS_IMPLEMENTATION.md) records
+the explicit user clarification of h and k.
+
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The

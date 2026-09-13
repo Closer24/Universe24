@@ -1,5 +1,33 @@
 # Highlights implementation coverage
 
+## Joint local reaction contract - 2026-09-13
+
+The live source was reread at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Implementation base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`.
+Sections 3.1, 3.3 and 4.3 motivate the bounded property-selected
+[joint Node reaction](NODE_VECTOR_PROCESSOR.md#local-rules). The user's explicit
+reaction contract refines delayed execution: one group reads several carriers
+and fields from one snapshot, and each frozen substep must still pass its
+declared invariants and optional persistent condition before atomic commit.
+Start triggers remain separate. The supplied register-rotation example checks
+externally defined readouts; it does not derive physical species, energy laws or
+quantum behavior. No live Highlights text was edited.
+
+## Integer Node timing reconciliation - 2026-09-13
+
+The live Highlights source was read again with modification timestamp
+`2026-09-13T05:10:29.655Z`; integration started from main
+`bb177121ec2efdc6c998a8290b9e7b09c7706c62`.
+Sections 3.2, 3.3 and 4.3 motivate bounded generic local properties and rules.
+The user's subsequent explicit h/k clarification selects the new
+[Node profile](NODE_VECTOR_PROCESSOR.md): h is one hop; k is configured per
+interaction, independently of operation cost. This supersedes the cost-derived
+k description in section 10.6 for the opt-in profile only. Node vector width is
+also explicitly generalized while world topology remains the current six-port
+lattice. Section 1.3's distinction between assumptions, tested consequences and
+emergence claims remains binding. The live document was not edited.
+
 ## Shared field computation cycle reconciliation - 2026-09-13
 
 The live Highlights revision

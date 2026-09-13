@@ -1,5 +1,18 @@
 # Initialization-defined disturbances
 
+Emission expressions may read `{"node": "committed_cost"}` from the colocated
+Node's last completed carrier cycle, including local field processing. See
+[computational response](COMPUTATIONAL_RESPONSE.md) for ownership, timing,
+moving-emitter behavior and the explicitly configured directional candidate.
+
+For `node_execution: true`, see the [integer Node profile](NODE_VECTOR_PROCESSOR.md):
+each field needs explicit `aggregation`, each local interaction rule needs positive
+integer `k`, and `conservation_contract` defines nonempty scalar/vector readouts.
+Indexed `participants` enable bounded n-record interactions. The profile admits
+1..32-component properties and requires schema 1 with `link_ticks: 1`; unsupported
+unpriced legacy mechanisms fail preflight. The original scalar/3-vector defaults
+and cost-budget delay remain available without this opt-in.
+
 The optional top-level `observer` member configures a passive reception probe in
 the same input file. See [local observer](LOCAL_OBSERVER.md) for placement, limits
 and runner behavior. It is validated for both schemas and excluded from physical state.

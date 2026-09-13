@@ -3,6 +3,8 @@
 Set the top-level boolean `"spatial_computation_delay": true` in an initialization
 with spatial fields to select the `shared-field-carrier-cycle-v1` timing candidate.
 It works with schema 1 local/outward fields and schema 2 finite dissipative fields.
+This cost-derived clock cannot be combined with `node_execution: true`, whose
+interaction durations are configured independently of operation cost.
 The default is false: existing fixed-clock field transport keeps its timing.
 The option applies to every configured field at a node, including vector fields.
 It does not select individual physical field names or add a force.
@@ -121,8 +123,9 @@ The state remains formula-free; laws stay in immutable initialization.
 
 ## Contract ownership and evidence
 
-Scheduling belongs to `core/disturbance_engine.py`; field proposals, receipt
-owners and commit preparation belong to `core/spatial_engine.py`. Generic
+Local shared-cycle preparation and commit belong to `core/disturbance_node.py`;
+field proposals, receipt owners and commit preparation belong to
+`core/spatial_node.py`. The engines route clock notices and adjacent delivery. Generic
 field and carrier laws retain their existing owners. The new state has fixed
 size for fixed fields, components and record capacity.
 

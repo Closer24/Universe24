@@ -2,6 +2,20 @@
 
 ## Active generic disturbance model
 
+The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
+active engine with indexed bounded interactions, 1..32-component properties,
+explicit aggregation and pre-commit conserved readouts. In this profile one hop
+takes one h and local rules take their declared k*h before dispatch. Existing
+cost-budget timing below applies to configurations without that opt-in.
+Indexed spatial reactions read n resident records and local fields from one
+frozen view; n is separate from duration k. Optional `commit_when` is checked at
+selection and against the rebased pre-substep state before committing, while
+`when` remains a start trigger. Each delayed field-only or joint substep must
+preserve its declared invariants on its actual before/after values. A failed
+condition, invariant or bound faults before any owner in the proposal changes.
+The [local rule contract](docs/NODE_VECTOR_PROCESSOR.md#local-rules) defines
+bounded selection, stored guard metadata and the complete-owner balance check.
+
 The primary API is `Simulation(initial: InitialState)`. An initialization JSON
 file supplies every field/type name, seed, allowed local expression, coupling,
 transport rule and cost setting. The engine has no hardcoded interpretation of

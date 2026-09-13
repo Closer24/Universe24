@@ -3,6 +3,7 @@
 from dataclasses import fields, is_dataclass
 from typing import cast
 
+from event_universe.core.disturbance_node import DisturbanceNode
 from event_universe.core.disturbance_state import (
     Departure,
     DisturbanceNodeState,
@@ -12,8 +13,11 @@ from event_universe.core.disturbance_state import (
     Packet,
     PendingCycle,
 )
+from event_universe.core.node_ports import PortBank
+from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
+    FieldRuleGuard,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
@@ -21,6 +25,10 @@ from event_universe.core.spatial_state import (
 )
 
 STATE_RECORDS = (
+    DisturbanceNode,
+    SpatialNode,
+    PortBank,
+    PendingSpatialCycle,
     NodeView,
     DisturbanceNodeState,
     DisturbanceRecord,
@@ -28,6 +36,7 @@ STATE_RECORDS = (
     Packet,
     PendingCycle,
     FieldInteractionGuard,
+    FieldRuleGuard,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,

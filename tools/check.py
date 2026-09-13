@@ -10,6 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/node-vector/six-records.json": (
+        "tests/test_node_vector_examples.py",
+        "tests/test_node_vector_integration.py",
+    ),
+    "examples/node-vector/two-fields.json": (
+        "tests/test_node_vector_examples.py",
+        "tests/test_node_vector_integration.py",
+    ),
     "examples/known-entities/property-coupling-probes.json": ("tests/test_property_entity_profiles.py",),
     "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),

@@ -1,11 +1,28 @@
 # Architecture and change boundaries
 
+[Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
+pending completion and publication in `core/disturbance_node.py` and
+`core/spatial_node.py`. Shared services contain seed-free immutable definitions,
+local law providers and write-side accounting; Nodes receive no world lookup.
+Transport indexes local fixed output banks and validates adjacent delivery.
+`core/node_conservation.py` is a DTO/protocol boundary; generic readout arithmetic
+lives in `fields/node_conservation.py`, and its parser reuses initialization's
+expression grammar. A configured exact balance check precedes physical mutation.
+The profile's declared k and counted operation cost are separate quantities.
+Indexed spatial rules reuse carrier role selection and the existing expression
+evaluator with an additional local field owner. Pending proposals contain bounded
+slot snapshots and deltas, never executable expressions. Field-only pending
+proposals similarly retain per-rule deltas and outgoing views. Shared immutable
+law services revalidate them before Node-owned commits; they receive local state
+only. The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates consumed
+start triggers from persistent conditions and defines their failure behavior.
+
 The opt-in [shared field computation cycle](SPATIAL_COMPUTATION_DELAY.md)
 extends `PendingCycle` with one immutable spatial proposal, reaction phases
 and cached joint-guard input. `SpatialNodeState` retains fixed incoming populations,
 port readings, counts and decay cost while pending. Inventory includes these
 actual input owners once and excludes proposals. No expressions or histories
-enter evolving state. The existing scheduler coordinates both owners atomically.
+enter evolving state. The carrier Node coordinates both local owners atomically.
 
 [Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
 sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
@@ -770,3 +787,13 @@ Carrier emission bookkeeping and joint responses connect the owners through
 local event IDs, with fixed parent fan-in and capacity checked before local
 ownership commits. Shared history remains a bounded host audit; quantum-plus-field
 clock composition and observer inference are separate features.
+
+
+Parallel planning preserves Node-owned transitions. A transient scheduler-thread
+continuation yields only immutable carrier or spatial planning records; the spatial
+request includes the colocated committed-cost scalar. Worker interpreters receive
+no Node, continuation, world or event graph. After each bounded planning phase,
+the scheduler resumes owners in address order. Each owner performs its existing
+validation and atomic commit. Continuations are closed and discarded every tick;
+they are never part of NodeState. Shared-clock cycles use two planning barriers,
+while ordinary carrier and field phases each use one.

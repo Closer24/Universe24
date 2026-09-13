@@ -54,6 +54,13 @@ terms, external reservoirs and unimplemented field or spin dynamics.
 
 ## Review the declared rules
 
+For [delayed Node rules](../../docs/NODE_VECTOR_PROCESSOR.md#local-rules),
+distinguish a consumed start trigger from a persistent commit condition. Exercise
+an arrival during the wait and inspect every frozen substep against live stock,
+including chains with zero net delta. A balanced final component sum does not
+prove each nonlinear rule invariant remained valid. Check that rejected proposals
+leave all actual owners and already received inventory intact.
+
 For initialization-defined simulation, use
 [DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
 whole-record versus extensive transport, exact source accounting, paired
