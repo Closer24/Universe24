@@ -50,7 +50,10 @@ not count ray fields. A [funded emission](SPATIAL_FIELDS.md#funded-emission-and-
 is admitted: the emitter pays each quantum from its own field of the same name
 and, with `recoil_field`, loses the emitted `a x heading`, so the transfer is
 internal and the audit stays closed. An `absorb` coupling is the reverse
-transfer. Unfunded `source: true` emissions remain rejected.
+transfer, of a whole ray or of a share of it. Quanta may be negative on a signed
+field: the emitter is then credited, the ray's momentum points back at it, and
+the absorber pays the share it takes from its own stock, so attraction closes
+the same way. Unfunded `source: true` emissions remain rejected.
 These restrictions describe supported measurement composition, not a claim that
 the excluded physics is impossible.
 

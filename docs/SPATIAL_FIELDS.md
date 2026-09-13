@@ -187,12 +187,21 @@ emit with `"source": false`: the emitted amount is paid from the record's own
 stock, clipped to what it holds, and no external source is recorded. An optional
 `"recoil_field"` names an owned signed vector that loses `amount x heading` for
 every emitted ray. The reverse is the `absorb` coupling mode: a record of the
-absorbing type takes every ray resident at its Node on the cycle after arrival,
-adds each amount to its own field of the same name and, with `momentum_field`,
-`amount x heading` to that vector. Absorption happens before forwarding and
-before this cycle's emission joins the residents, so a record never swallows its
-fresh rays; with `self_exclusion` the rays of its own last departure are left
-alone by exact heading and phase. Absorbers take the whole residue in slot order.
+absorbing type takes a share of every ray resident at its Node on the cycle
+after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
+adds it to its own field of the same name and, with `momentum_field`,
+`share x heading` to that vector; the rest of the ray is forwarded. Absorption
+happens before forwarding and before this cycle's emission joins the residents,
+so a record never swallows its fresh rays; with `self_exclusion` the rays of its
+own last departure are left alone by exact heading and phase. Absorbers act in
+slot order.
+
+Quanta are signed when the field is. A funded emission of a negative amount
+credits the emitter with what it emits, and the ray's momentum `amount x heading`
+points back at the emitter; a record that absorbs a share of such a ray pays it
+from its own stock, never beyond what it holds, and gains momentum toward the
+source. That is attraction with the ledger closed: the pulled body pays for its
+pull, and a body with nothing left is not pulled.
 
 ```json
 "emissions": [{"type": "lamp", "field": "quanta", "amount": 2048, "source": false,
@@ -203,9 +212,9 @@ alone by exact heading and phase. Absorbers take the whole residue in slot order
 
 Together with the [conservation audit](LOCAL_CONSERVATION.md), which measures
 rays as quanta, this closes the ledger: energy is the amount, momentum is amount
-times heading, and both move only between records and rays. Radiation pressure
-follows; attraction does not, because absorbing a ray pushes a body away from
-its source. Schema 2 attenuation of such fields is not supported.
+times heading, and both move only between records and rays. Positive quanta
+give radiation pressure; negative quanta give attraction paid by the absorber.
+Schema 2 attenuation of such fields is not supported.
 
 ## Finite completed-link decay
 

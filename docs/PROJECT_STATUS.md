@@ -97,7 +97,9 @@ cross, and a timed two-record conversion emits a proton with a recoiling core.
 Energy has no representation in the exchange rules, so kicks near a source are
 unbounded. The [conservation audit](LOCAL_CONSERVATION.md) now measures rays as
 quanta, funded emission with recoil and the `absorb` coupling move energy and
-momentum only between records and rays, and the radiation-pressure probe runs
+momentum only between records and rays; signed quanta with a mass-proportional
+absorbed share give attraction that the pulled body pays for, and the
+radiation-pressure probe runs
 with that audit closed.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties

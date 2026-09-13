@@ -287,7 +287,11 @@ The outward octant candidate conserves flux through every closed shell but
 concentrates it near body diagonals. The straight-ray candidate keeps the same
 shell conservation and makes the time-averaged flux follow solid angle in every
 direction, because each ray carries its own heading and phase and never spreads.
-Neither derives a gravitational constant, a mass coupling or attraction.
+Signed quanta are the attraction hypothesis under test: a source emits negative
+quanta paid into its own stock, a body absorbs a share proportional to its mass
+and pays for the momentum it gains toward the source. Energy and momentum stay
+exact at every event; no gravitational constant is derived, and a source's stock
+rises by what it emits.
 
 ## 12. Quantum behavior and entanglement remain open
 

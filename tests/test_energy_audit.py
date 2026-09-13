@@ -8,7 +8,9 @@ from event_universe.initialization import parse_initial_state
 CENTER = 7
 
 
-def document(*, headings, rays_per_tick, energy=600, amount=2, ticks=6, source=False, recoil=True):
+def document(
+    *, headings, rays_per_tick, energy=600, amount=2, ticks=6, source=False, recoil=True, signed=False
+):
     raw = {
         "schema_version": 1,
         "model_id": "funded-ray-emission-audit-v1",
@@ -37,7 +39,7 @@ def document(*, headings, rays_per_tick, energy=600, amount=2, ticks=6, source=F
                 "name": "energy",
                 "components": 1,
                 "units": "quantum",
-                "signed": False,
+                "signed": signed,
                 "conserved": True,
                 "extensive": True,
             },
@@ -150,13 +152,17 @@ def test_audit_still_rejects_external_sources_and_recoil_needs_funding():
     assert tuple(report["escaped"]["momentum"]) == (12 - CENTER, 0, 0)
 
 
-def absorbing_document(*, headings, rays_per_tick, absorber_position, ticks=8, mover=False):
-    raw = document(headings=headings, rays_per_tick=rays_per_tick, ticks=ticks)
+def absorbing_document(
+    *, headings, rays_per_tick, absorber_position, ticks=8, mover=False, amount=2, stock=0, signed=False
+):
+    raw = document(
+        headings=headings, rays_per_tick=rays_per_tick, ticks=ticks, amount=amount, signed=signed
+    )
     raw["disturbance_types"].append(
         {
             "name": "absorber",
             "fields": ["energy", "momentum"],
-            "defaults": {"energy": 0, "momentum": [0, 0, 0]},
+            "defaults": {"energy": stock, "momentum": [0, 0, 0]},
             "transport": {"mode": "hold"}
             if not mover
             else {"mode": "move", "direction_field": "momentum", "rate": 1, "rate_denominator": 1},
@@ -244,4 +250,79 @@ def test_absorb_mode_is_validated():
     raw = absorbing_document(headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[2, 0, 0])
     raw["spatial_couplings"][0]["amount"] = 1
     with pytest.raises(ValueError, match="unknown keys"):
+        parse_initial_state(raw)
+
+
+def test_a_fraction_absorbs_part_of_each_ray_and_forwards_the_rest():
+    raw = absorbing_document(
+        headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[3, 0, 0], amount=4, ticks=8
+    )
+    raw["spatial_couplings"][0].update({"fraction": 1, "fraction_denominator": 4})
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(8):
+        world.step()
+    absorber = records_of(world, 1)[0]
+    # Five rays of 4 quanta arrive from tick 4 on; one quantum of each is absorbed
+    # and three continue: the Node beyond holds the 3-quantum remainder in flight.
+    assert absorber["energy"] == (5,) and absorber["momentum"] == (5, 0, 0)
+    assert world.spatial_values((CENTER + 4, CENTER, CENTER))["energy"]["value"] == (3,)
+    report = world.conservation_report()
+    assert report["status"] == "passed"
+    assert world.totals()["energy"][0] + report["escaped"]["energy"] == 600
+    # A fraction at or above one absorbs whole rays; a bare denominator is rejected.
+    raw["spatial_couplings"][0].update({"fraction": 8, "fraction_denominator": 4})
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(8):
+        world.step()
+    assert records_of(world, 1)[0]["energy"] == (20,)
+    del raw["spatial_couplings"][0]["fraction"]
+    with pytest.raises(ValueError, match="fraction_denominator requires"):
+        parse_initial_state(raw)
+
+
+def test_negative_quanta_pull_the_absorber_toward_the_emitter_and_it_pays_from_its_stock():
+    raw = absorbing_document(
+        headings=[[1, 0, 0]],
+        rays_per_tick=1,
+        absorber_position=[3, 0, 0],
+        amount=-2,
+        stock=3,
+        signed=True,
+        ticks=8,
+    )
+    world = Simulation(parse_initial_state(raw))
+    stocks, momenta = [], []
+    for _ in range(8):
+        world.step()
+        absorber = records_of(world, 1)[0]
+        stocks.append(absorber["energy"][0])
+        momenta.append(absorber["momentum"][0])
+    # The first pull costs 2, the second is clipped to the last quantum and its
+    # remainder of -1 continues; with nothing left to pay the rays pass untouched.
+    assert stocks == [3, 3, 3, 1, 0, 0, 0, 0]
+    assert momenta == [0, 0, 0, -2, -3, -3, -3, -3]
+    assert world.spatial_values((CENTER + 4, CENTER, CENTER))["energy"]["value"] == (-2,)
+    source = records_of(world, 0)[0]
+    # The emitter is credited with every signed quantum and recoils along the heading.
+    assert source["energy"] == (616,) and source["momentum"] == (16, 0, 0)
+    report = world.conservation_report()
+    assert report["status"] == "passed"
+    assert world.totals()["energy"][0] + report["escaped"]["energy"] == 603
+
+
+def test_a_ray_field_is_absorbed_or_exchanged_but_not_both():
+    raw = absorbing_document(
+        headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[2, 0, 0], signed=True
+    )
+    raw["spatial_couplings"].append(
+        {
+            "name": "also_exchange",
+            "type": "absorber",
+            "field": "energy",
+            "mode": "exchange",
+            "amount": 1,
+            "denominator": 1,
+        }
+    )
+    with pytest.raises(ValueError, match="both absorbed and exchanged"):
         parse_initial_state(raw)

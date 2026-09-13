@@ -1086,7 +1086,17 @@ def _spatial_couplings(
             raw,
             "spatial coupling",
             required
-            | {"type", "requires", "amount", "rotation", "denominator", "axis_order", "momentum_field"},
+            | {
+                "type",
+                "requires",
+                "amount",
+                "rotation",
+                "denominator",
+                "axis_order",
+                "momentum_field",
+                "fraction",
+                "fraction_denominator",
+            },
             required,
         )
         name = _text(obj["name"], "spatial coupling.name")
@@ -1100,7 +1110,10 @@ def _spatial_couplings(
             raise ValueError("spatial coupling.mode must be exchange, rotation or absorb")
         if mode == "absorb":
             obj = _object(
-                obj, "spatial coupling", required | {"type", "requires", "momentum_field"}, required
+                obj,
+                "spatial coupling",
+                required | {"type", "requires", "momentum_field", "fraction", "fraction_denominator"},
+                required,
             )
             definition = next((d for d in spatial if d.field == target), None)
             if definition is None or not definition.rays or target not in owned:
@@ -1120,6 +1133,16 @@ def _spatial_couplings(
                     raise ValueError(
                         "momentum_field must be a signed vector owned by the absorbing type"
                     )
+            fraction: Expression | None = None
+            fraction_denominator = 1
+            if "fraction" in obj:
+                fraction = _Expressions(fields, owned).parse(obj["fraction"], 1)
+                if "fraction_denominator" in obj:
+                    fraction_denominator = _integer(
+                        obj["fraction_denominator"], "spatial coupling.fraction_denominator", 1
+                    )
+            elif "fraction_denominator" in obj:
+                raise ValueError("fraction_denominator requires an absorb fraction")
             result.append(
                 SpatialCouplingDefinition(
                     name,
@@ -1132,6 +1155,8 @@ def _spatial_couplings(
                     None,
                     kinds if "requires" in obj else (),
                     momentum,
+                    fraction,
+                    fraction_denominator,
                 )
             )
             continue
@@ -1177,6 +1202,9 @@ def _spatial_couplings(
                 kinds if "requires" in obj else (),
             )
         )
+    absorbed = {rule.field for rule in result if rule.mode == "absorb"}
+    if any(rule.mode != "absorb" and rule.field in absorbed for rule in result):
+        raise ValueError("a ray field cannot be both absorbed and exchanged or rotated")
     return tuple(result)
 
 

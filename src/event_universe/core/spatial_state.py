@@ -176,6 +176,11 @@ class SpatialCouplingDefinition:
     types: tuple[int, ...] = ()
     # Absorb mode only: the owned vector field that receives amount x heading.
     momentum_field: int | None = None
+    # Absorb mode only: the share of each arriving ray that is absorbed, as a
+    # nonnegative owned-field expression over fraction_denominator; the rest of
+    # the ray is forwarded. None absorbs whole rays.
+    fraction: Expression | None = None
+    fraction_denominator: int = 1
 
 
 @dataclass(frozen=True, slots=True)

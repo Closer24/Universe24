@@ -76,11 +76,14 @@ class SpatialLaw:
         records: list[DisturbanceRecord | None],
         meter: CostMeter,
     ) -> int:
-        """Absorbing records take the resident rays of one field, in slot order.
+        """Absorbing records take a share of the resident rays of one field, in slot order.
 
-        Each absorbed ray adds its amount to the record's own field of the same name
-        and amount x heading to its momentum field. A record's own rays that arrived
-        with it are left for forwarding. Returns the total amount absorbed.
+        The share of each ray is amount x fraction / fraction_denominator, truncated
+        toward zero, or the whole ray without a fraction. A negative share is paid
+        from the record's own stock and never beyond it. The share adds to the
+        record's field of the same name and share x heading to its momentum field;
+        the rest of the ray stays resident and is forwarded. A record's own rays
+        that arrived with it are left alone. Returns the total amount absorbed.
         """
         definition = self.definitions[index]
         absorbed_total = 0
@@ -91,10 +94,8 @@ class SpatialLaw:
                 if record is None or not matches_type(rule, record.type_index) or not resident:
                     continue
                 own = self._own_departed_keys(record, index, meter)
-                taken = [ray for ray in resident if (ray.heading, ray.accumulators) not in own]
-                if not taken:
+                if all((ray.heading, ray.accumulators) in own for ray in resident):
                     continue
-                resident[:] = [ray for ray in resident if (ray.heading, ray.accumulators) in own]
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -102,15 +103,36 @@ class SpatialLaw:
                     if rule.momentum_field is not None
                     else None
                 )
-                for ray in taken:
+                numerator = None
+                if rule.fraction is not None:
+                    numerator = evaluate(rule.fraction, record.values, record.values, meter)[0]
+                    if numerator < 0:
+                        raise ValueError("absorb fraction must not be negative")
+                remaining: list[Ray] = []
+                for ray in resident:
+                    if (ray.heading, ray.accumulators) in own:
+                        remaining.append(ray)
+                        continue
                     meter.charge("read")
                     meter.charge("couple")
-                    stock = checked_work(stock + ray.amount)
-                    absorbed_total = checked_work(absorbed_total + ray.amount)
+                    share = ray.amount
+                    if numerator is not None and numerator < rule.fraction_denominator:
+                        magnitude = (
+                            checked_work(abs(ray.amount) * numerator) // rule.fraction_denominator
+                        )
+                        share = -magnitude if ray.amount < 0 else magnitude
+                    if share < 0:
+                        # A pull is paid from the record's own stock, never borrowed.
+                        share = max(share, -max(stock, 0))
+                    stock = checked_work(stock + share)
+                    absorbed_total = checked_work(absorbed_total + share)
                     if momentum is not None:
                         heading = definition.headings[ray.heading]
                         for axis in range(3):
-                            momentum[axis] = checked_work(momentum[axis] + ray.amount * heading[axis])
+                            momentum[axis] = checked_work(momentum[axis] + share * heading[axis])
+                    if ray.amount != share:
+                        remaining.append(replace(ray, amount=checked_work(ray.amount - share)))
+                resident[:] = remaining
                 values[definition.field] = pack((stock,))
                 self.fields[definition.field].validate(values[definition.field])
                 if momentum is not None and rule.momentum_field is not None:
@@ -244,11 +266,10 @@ class SpatialLaw:
                 if rule.funded:
                     # The record pays from its own stock of the same field; a request
                     # beyond that stock is clipped, never borrowed.
+                    # A negative amount is a signed quantum: the emitter is credited.
                     stock = unpack(record.values[definition.field])[0]
                     requested = unpack(amount)[0]
-                    if requested < 0:
-                        raise ValueError("funded emission cannot emit a negative amount")
-                    paid = min(requested, max(stock, 0))
+                    paid = requested if requested < 0 else min(requested, max(stock, 0))
                     amount = pack((paid,))
                     values = list(record.values)
                     values[definition.field] = pack((checked_work(stock - paid),))
