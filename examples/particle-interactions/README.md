@@ -1,6 +1,6 @@
-# Particle interaction probes: charge, recoil and proton emission
+# Particle interaction probes: charge, recoil, proton emission and radiation pressure
 
-Three probes composed from existing rules only. Labels such as proton,
+Four probes composed from existing rules only. Labels such as proton,
 electron and charge are configuration data: the engine dispatches no law by
 name, and no physical constant, unit or species is identified. Every number is
 a read-only world/event audit at host lattice coordinates.
@@ -99,9 +99,11 @@ law with exact invariants, not a decay rate or a nuclear model.
 
 Signed straight-ray fields plus an exchange coupling give the charge-sign
 structure of electrostatics: repulsion, attraction, and no effect on neutral
-bodies, with head-on backscatter for like charges. Two things are missing for
-more than that: a representation of energy, without which close encounters are
-unbounded, and a local rule that keeps a body from responding to its own field
-without a separate field per body. Proton emission is a configured conversion
-that conserves what its invariants declare and nothing more.
+bodies, with head-on backscatter for like charges. The charge probes carry no
+energy, so close encounters are unbounded there. The radiation-pressure probe
+shows the closed form: a funded emitter, an absorber and the audit keep energy
+and momentum exact at every event, and the only force that closes this way is
+repulsive. An attraction that pays for the kinetic energy it creates is still
+open. Proton emission is a configured conversion that conserves what its
+invariants declare and nothing more.
 
