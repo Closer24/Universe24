@@ -150,3 +150,8 @@ expectations; completed checks and the exact tested source belong in
 acceptance and `test_causal_contact_fields.py` owns the integrated candidate,
 with coverage in
 [test expectations](TEST_EXPECTATIONS.md#causal-quantum-sources).
+
+The [many-contact experiment](../examples/quantum/many_contacts.md) exercises six
+simultaneous one-shot domains and 1,200 captures across 200 independent trials.
+It records the distinction between local captures, retarded ordinary fields and
+the unsupported next step of repeated hopping after capture.

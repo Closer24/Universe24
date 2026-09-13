@@ -30,6 +30,13 @@ Changing only one frozen operand is forbidden because it can increase the norm.
 
 ## Localized quantum contacts
 
+`test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
+target separation and its fixed-seed one-shot result: three A captures at event
+tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,
+finite dissipative field accounting and unchanged headless output. The actual
+200-trial evidence belongs to the
+[experiment report](../examples/quantum/many_contacts.md).
+
 `test_localized_quantum_contact.py` owns the
 [contact hybrid expectations](LOCALIZED_QUANTUM_CONTACT.md#numerical-acceptance):
 actual source birth, delayed single ownership, finite classical emission and Link

@@ -29,8 +29,12 @@ the example family in the guide for fields, catalog entities or native events.
    Reuse explicit user choices. Resolve routine defaults from an existing example.
 2. Choose the supported schema and mechanism before assigning physical labels.
    Use schema 1 for local field rules, schema 2 for finite attenuating outward
-   fields that keep total flux as deposits at known nodes. The classical causal graph supports both; native quantum programs
-   still reject spatial fields. Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
+   fields with explicitly selected localization or dissipation of attenuated flux.
+   The classical causal graph supports both. Quantum spatial-field composition
+   requires an explicit [localized-contact](../../docs/LOCALIZED_QUANTUM_CONTACT.md)
+   or [causal-source](../../docs/CAUSAL_QUANTUM_SOURCES.md) profile and its restrictions;
+   other native quantum profiles still reject spatial fields.
+   Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
    for provenance granularity, capacity and failure behavior.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed
    in range, and distinguish transit time, computation delay and playback speed.

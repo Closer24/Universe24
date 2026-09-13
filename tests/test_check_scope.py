@@ -27,6 +27,12 @@ def test_spatial_graph_example_selects_its_causal_contract():
     assert "tests/test_spatial_causal_events.py" in selected
 
 
+def test_many_contacts_selects_its_experiment_contract():
+    selected, _ = CHECK.select(["examples/quantum/many_contacts.json"], {})
+    assert "tests/test_many_contacts.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
 def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():
     selected, typed = CHECK.select(["examples/quantum/causal_charge.json"], {})
     assert "tests/test_causal_contact_fields.py" in selected
