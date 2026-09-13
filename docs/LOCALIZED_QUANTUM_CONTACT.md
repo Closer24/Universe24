@@ -10,6 +10,9 @@ The separately selected [causal source extension](CAUSAL_QUANTUM_SOURCES.md),
 Link-delivered cancellation. The localized-only contract on this page remains
 the behavior of `localized-contact-quantum-v1`.
 
+The [recurrent extension](RECURRENT_QUANTUM_CONTACT.md) separately selects
+complete outcome instruments and fresh local continuations after interactions.
+
 | Part | Contract |
 | --- | --- |
 | Law | A local contact with an explicit unknown-momentum marker transfers one configured disturbance into a vacuum quantum domain. Configured number-preserving neighbor gates propagate it. A complete local absorption instrument transfers it back into one localized disturbance. |

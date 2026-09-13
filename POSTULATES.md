@@ -485,3 +485,22 @@ Previously emitted fields remain causal, finite source allowances do not refill,
 and charge inventory is counted separately from field-source weights. This
 extends section 19 only for `causal-contact-fields-v1`, preserving its older
 localized-only selection and making no new quantum-field or energy-closure claim.
+
+## 21. Configured recurrent contact outcomes
+
+The explicit [recurrent contact candidate](docs/RECURRENT_QUANTUM_CONTACT.md),
+`recurrent-contact-fields-v1`, extends section 20 with complete configured local
+outcome instruments. A source encounter can retain its localized record or
+transfer it into a vacuum domain. A capture can leave vacuum, localize the
+inventory, continue the conditional wave, or resolve its origin and begin a new
+local continuation. Only the instrument and current conditional state determine
+the lottery; a certain result consumes no random ticket.
+
+One inventory owner survives each transfer. New-wave creation and old-origin
+resolution are atomic, with immutable event history and bounded current references.
+At most six explicitly preallocated source generations retain separate causal
+packets and finite allowances. A local vacuum result clears every nonretired
+local envelope; remote quantum generation changes cannot choose an ordinary
+source bank. Existing field stock follows its configured transport and decay.
+This is a finite configured hypothesis, preserving the older profiles and their
+limits; it does not derive the matrices or establish physical energy closure.

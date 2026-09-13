@@ -1,5 +1,15 @@
 # Project status and restart guide
 
+The explicit [recurrent contact profile](RECURRENT_QUANTUM_CONTACT.md) adds
+configured localized, continued-wave and new-wave outcomes to local encounters.
+Complete instruments determine probabilities; a new wave atomically receives a
+fresh event-space origin while retaining one inventory owner. Finite preallocated
+ordinary envelope generations keep cancellation causal and source allowances
+bounded. The [48-tick input](../examples/quantum/repeated_contacts.md) exercises
+three new-wave encounters, several continuations, final localization and field
+decay. Existing one-shot profiles remain supported. This is a finite configured
+candidate; source identity and completed checks are in [validation](VALIDATION.md).
+
 The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
 the contact path with bounded source envelopes attached to participating Nodes.
 Local squared weights scale finite ordinary emission; amplitude updates and

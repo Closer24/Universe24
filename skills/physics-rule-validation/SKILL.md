@@ -76,6 +76,14 @@ terms, external reservoirs and unimplemented field or spin dynamics.
 
 ## Review the declared rules
 
+For [recurrent contact outcomes](../../docs/RECURRENT_QUANTUM_CONTACT.md),
+enumerate complete instrument weights and validate every output before drawing.
+Exercise occupied-domain preparation, capacity exhaustion, same-tick replay after
+resolution and several local origins without inventory duplication. Compare
+remote ordinary prefixes across outcomes that change the quantum generation;
+a local vacuum result must not select its ordinary source bank from remote
+quantum progress. Keep finite allowances and stale packets isolated by generation.
+
 For [delayed Node rules](../../docs/NODE_VECTOR_PROCESSOR.md#local-rules),
 distinguish a consumed start trigger from a persistent commit condition. Exercise
 an arrival during the wait and inspect every frozen substep against live stock,

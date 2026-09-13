@@ -1,5 +1,70 @@
 # Validation evidence
 
+## Recurrent local contact outcomes - 2026-09-14
+
+Recorded task base: `3e5eaea5ad88688b2509ec34f5d43246dc62d15e`. The branch then
+fast-forwarded to `31915ae805a18a125483fb92ef36ad81062d691f`; that main update only
+changes citation/README text. The tested active source SHA-256 remains
+`cddaff84568049b2c7fdf88355476a9e57657440052bf944b93874a1bb39cd95`.
+
+The mandatory affected gate passed **2,297 tests with five opt-in visual skips**
+in 174.86 seconds. Ruff and formatting passed for 14 changed Python files;
+strict mypy passed for 71 affected source files. Sixteen new recurrent tests are
+included. Shared NodeState and resolver changes select carrier/field/quantum,
+locality, boundaries, headless output and retention consumers. No full-suite flag,
+package build or visualization was used. Interpreter/tool versions remain
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Windows tests used a fresh
+explicit `PYTEST_ADDOPTS=--basetemp=...` path because the default temp root has an
+existing enumeration-permission failure.
+
+After the citation-only main update and final documentation edits, all 28
+repository language, hygiene and navigation checks passed. The Windows checkout
+has mixed checkout line endings; Git's source archive differs only by CRLF/LF
+encoding. Every archived source file was compared with the tested source after
+newline normalization. An additional actual run from the exact staged Git source
+archive completed 48 ticks in 0.1714972 seconds, with source SHA-256
+`141d41edc8854adad5f5c1d64ed4db7be6cfd3f11ed99041b84646204b90e5f6`.
+Its event files, state, input, model costs and accounting exactly match the first
+run; only source byte identity and elapsed host time differ. The second run's
+outputs retain the ordinary 24-hour registration. Automatic approval review
+blocked removal of the disposable source snapshot; it remains outside Git at
+`artifacts/recurrent-index-source-0914` and is not enrolled for automatic cleanup
+because the retention guard protects source directories.
+
+```sh
+python tools/check.py --base 3e5eaea5ad88688b2509ec34f5d43246dc62d15e
+python -m event_universe --init examples/quantum/repeated_contacts.json --output artifacts/repeated-contacts-0914-verified
+```
+
+The actual primary-runner example completed **48/48 ticks in 0.1671985 seconds**
+with `display=none`, eight random draws and reported model cost 7,632. Its input
+SHA-256 is `f73311793174e383d3dcd513e875d10fba40820cf2744706df79f15afa627c3e`.
+The [event sequence](../examples/quantum/repeated_contacts.md) has new-wave results
+at ticks 3, 9 and 21, continuation at 6/12/15/18 and localization at 24. Charge -1
+and mass 1 retain one owner at every tick. Ordinary injection -36 and dissipation
+-36 leave zero final field stock, with every-tick accounting balanced. Saved
+metadata, causal events and final state were inspected; generated files stay
+outside Git under the runner's 24-hour retention registration.
+
+Independent physics review supplied three passing counterexamples: remote
+generation changes cannot choose a local null's ordinary emitter before a causal
+notice arrives; a resolved new-wave result cannot be replayed into another
+origin; source preparation requires complete-domain vacuum, not just local
+vacuum. Exhaustive instruments independently yield source counts 9/16 out of 25
+and capture counts 9/16/144 out of 169. A renamed configuration with an additional
+signed conserved vector and alternate localized output retains the same events,
+inventory and finite emission. Existing one-shot, conditional-state, origin and
+field regressions pass on this source.
+
+The implementation contract, postulates, definitions, architecture, restart guide,
+Highlights map and numerical expectations accompany the code. The physics-review
+Skill gains the demonstrated remote-generation/replay checks; the configuration
+Skill routes complete instruments and finite capacities. Boss, field-development
+and architecture-review were reviewed: their existing ownership and evidence
+rules cover this extension, so no duplicate workflow was added. The scope remains
+finite supplied one-excitation domains and retarded ordinary sources, not a
+derived Hamiltonian, reciprocal field action or physical energy/momentum closure.
+
 ## Causal quantum source envelopes - 2026-09-13
 
 Recorded change base: `d8261d4d239e524d18011166f6372ec2949cbe42`; integrated

@@ -1,5 +1,25 @@
 # Test inputs and expected results
 
+## Recurrent quantum contacts
+
+`test_recurrent_quantum_contact.py` owns the
+[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
+matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
+Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
+and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
+Check no extra draw for a certain outcome, one scalar/vector inventory owner,
+renamed entities/fields, equal-inventory alternate outputs, finite original
+source allowances and capacity rejection before RNG. The checked-in 48-tick
+example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
+-36 and eventual zero field stock under explicit dissipation.
+
+`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
+a remote event at tick 3 cannot select which ordinary local bank clears before
+the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
+It also rejects preparation into local vacuum when another mode is occupied and
+checks same-tick result replay after absorption without origin resurrection.
+Retain all affected localized/causal contact, origin, state and field regressions.
+
 ## Causal quantum sources
 
 The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing

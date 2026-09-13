@@ -6,6 +6,11 @@ spacetime. It adds no linked history per Node or wave and no second simulator.
 The [quantum-state contract](QUANTUM_EVENTS.md) still supplies exact joint state,
 phases, conditional records and bounded deferred evaluation.
 
+The separately selected [recurrent contact profile](RECURRENT_QUANTUM_CONTACT.md)
+uses these origin cells for successive finite continuations. New origin creation
+is atomic with its local result; replay returns the same origin even after it
+has resolved. Historical origins remain events, not growing per-Node lists.
+
 ## Local state and ownership
 
 | Part | Contract |

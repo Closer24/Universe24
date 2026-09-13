@@ -33,6 +33,12 @@ def test_many_contacts_selects_its_experiment_contract():
     assert "tests/test_collisions.py" not in selected
 
 
+def test_repeated_contacts_selects_its_runtime_input_consumer():
+    selected, _ = CHECK.select(["examples/quantum/repeated_contacts.json"], {})
+    assert "tests/test_recurrent_quantum_contact.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
 def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():
     selected, typed = CHECK.select(["examples/quantum/causal_charge.json"], {})
     assert "tests/test_causal_contact_fields.py" in selected

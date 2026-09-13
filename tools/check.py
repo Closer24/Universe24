@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/quantum/repeated_contacts.json": ("tests/test_recurrent_quantum_contact.py",),
     "examples/quantum/many_contacts.json": ("tests/test_many_contacts.py",),
     "examples/quantum/many_contacts.py": ("tests/test_many_contacts.py",),
     "examples/quantum/many_contacts_view.py": ("tests/test_many_contacts.py",),

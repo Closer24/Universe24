@@ -1,5 +1,31 @@
 # Highlights implementation coverage
 
+## Recurrent local contact outcomes - 2026-09-14
+
+Live Highlights section **4.7.8, Configured recurrent local outcomes**, now records
+the complete configured instrument, local/new-wave/continuing outcomes, single
+inventory ownership, atomic new origins, finite ordinary source generations and
+causal cancellation. It retains the finite-candidate and physical-closure limits.
+The document was read through the trusted file-backed control inventory before
+this targeted addition; no protected controls were present. Connector readback
+verified the new heading and body in the original tab without changing adjacent
+sections. The prior revision was
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`;
+the verified updated revision is
+`ANLCKQkHRRrlLk-0HV9uWe-o47GgA6Dzbugy7caBZLF1JV9slR4tKuGLUzLZS6xS9qpWNw7kmF1VLFQvA8X58ZaqdYd4yuLvEtke55nPntc`.
+
+| Highlights rule | Authoritative owner | Acceptance |
+| --- | --- | --- |
+| Complete local outcomes with no separate random switch | [Recurrent contract](RECURRENT_QUANTUM_CONTACT.md), postulate 21 and Q-RECURRENT-1 | Exact source 9/16 and capture 9/16/144 ticket counts |
+| Fresh origin without duplicate inventory or replay | [Quantum event network](../src/event_universe/quantum/event_network.py) | Occupied-domain rejection, atomic result and same-tick replay tests |
+| Local ordinary source banks and causal cancellation | [Recurrent resolver](../src/event_universe/integration/recurrent_contact_runtime.py) | Remote-prefix equality, finite allowances and signed vector inventory |
+| Repeated encounters followed by localization | [Initialization and recorded expectations](../examples/quantum/repeated_contacts.md) | Fresh-wave ticks 3/9/21, localization 24, balanced field decay |
+
+The [validation record](VALIDATION.md) binds these results to the exact tested
+source. This is not a general many-body Hamiltonian, physical energy closure or
+a completed derivation of the classical limit. Older dated rows below retain
+their own source revisions and do not describe this addition.
+
 ## Causal quantum source envelopes - 2026-09-13
 
 The user's latest selection extends the preceding localized-source choice:

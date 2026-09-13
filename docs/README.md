@@ -41,6 +41,8 @@ result are different claims. Revision-specific results are not a live status fee
 | [Quantum origin cells](WAVE_ORIGINS.md) | Six local origin references, atomic terminal decisions and next-tick local invalidation in event spacetime |
 | [Localized quantum contacts](LOCALIZED_QUANTUM_CONTACT.md) | Commit-time inventory transfer, finite localized field sources and repeating coherent propagation |
 | [Causal quantum sources](CAUSAL_QUANTUM_SOURCES.md) | Locally retained complex source envelopes, finite weighted ordinary emission and Link-delivered termination |
+| [Recurrent quantum contacts](RECURRENT_QUANTUM_CONTACT.md) | Configured outcome instruments, atomic new origins and finite isolated source generations |
+| [Repeated-contact experiment](../examples/quantum/repeated_contacts.md) | Reproducible local continuations, fresh origins, final localization and finite field decay |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |

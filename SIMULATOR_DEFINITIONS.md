@@ -791,6 +791,21 @@ continues under its configured laws and separate injection accounting. The linke
 contract defines the finite domain, clock, transport and conservation limitations;
 the older localized-only profile is unchanged.
 
+## Recurrent contact outcomes - Q-RECURRENT-1
+
+The separate [recurrent contact profile](docs/RECURRENT_QUANTUM_CONTACT.md),
+`recurrent-contact-fields-v1`, composes Q-CONTACT-1 and Q-CAUSAL-SOURCE-1 with
+configured outcome effects. Its source supports localized retention and new-wave
+transfer; its capture supports null, localization, continuation and a fresh local
+origin. Matrix support, completeness, full-domain vacuum and conserved output
+inventory are validated before sampling. Conditional commit atomically resolves
+the prior origin and creates a new one when selected. Replaying a result cannot
+resurrect it. Explicit `max_generations` in 1..6 bounds separately preallocated
+ordinary envelope banks. Fixed round-robin emission, causal cancellation,
+finite allowances and locally applied nulls cannot use remote generation status
+to choose ordinary field values or clocks. See the linked contract for exact
+schema, cost, capacity and representation limits.
+
 ## Quantum origin cells in event spacetime - Q-ORIGINS-3
 
 The explicit native v3 candidate is specified in
