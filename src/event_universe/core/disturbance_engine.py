@@ -1,8 +1,10 @@
 """Local scheduling and ownership for initialization-defined disturbances."""
 
 from collections.abc import Callable, Mapping
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from threading import Lock
 from types import MappingProxyType
+from typing import Self
 
 from .conservation_state import InventoryNode, InventoryPacket, InventoryView
 from .coupling_selectors import selected_type_set
@@ -22,13 +24,28 @@ from .disturbance_state import (
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
+from .node_execution import DisturbancePlanningInput, NodeExecution, SpatialPlanningInput
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
-from .spatial_state import SpatialPacket, SpatialState
+from .spatial_state import SpatialCouplingResult, SpatialPacket, SpatialPlan, SpatialState
 from .topology import neighbor_address
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
+
+
+@dataclass(frozen=True, slots=True)
+class _PreparedCycle:
+    context: LocalContext
+    coupled: SpatialCouplingResult | None
+    spatial_cost: int
+
+
+@dataclass(frozen=True, slots=True)
+class _PreparedNodeCycle:
+    field_plan: SpatialPlan
+    has_carriers: bool
+    coupled: SpatialCouplingResult | None
 
 
 def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
@@ -58,12 +75,17 @@ class DisturbanceEngine:
         record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
+        node_workers: int = 1,
     ) -> None:
         self.initial = initial
+        self._execution = NodeExecution(node_workers, planner, spatial_planner)
+        self._step_lock = Lock()
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
         self.event_space = event_space
         self._resolver = resolver
+        if self._execution.parallel and resolver is not None:
+            raise ValueError("parallel Node execution does not support an event program")
         self._model_work = 0
         self._local_cycles = 0
         self._planner = planner
@@ -235,12 +257,48 @@ class DisturbanceEngine:
             report["resolver"] = self._resolver.report()
         return report
 
+    def execution_report(self) -> dict[str, object]:
+        """Report host scheduling separately from modeled local computation cost."""
+        return self._execution.report()
+
+    def close(self) -> None:
+        """Release host worker interpreters without changing simulation state."""
+        if not self._step_lock.acquire(blocking=False):
+            raise RuntimeError("cannot close a simulation while a tick is running")
+        try:
+            self._execution.close()
+        finally:
+            self._step_lock.release()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, _type: object, _value: object, _traceback: object) -> None:
+        self.close()
+
     def _begin(self, position: Address3, node: DisturbanceNodeState) -> None:
         if node.pending is not None or node.available_tick > self.tick:
             return
         if self.initial.spatial_computation_delay:
             self._begin_node(position, node)
             return
+        prepared = self._prepare_begin(position, node)
+        if prepared is None:
+            return
+        plan = (
+            self._planner(
+                prepared.context.records,
+                prepared.context.residuals,
+                prepared.context.received,
+            )
+            if self._resolver is None
+            else self._resolver.resolve(prepared.context, self._planner)
+        )
+        self._finish_begin(position, node, prepared, plan)
+
+    def _prepare_begin(self, position: Address3, node: DisturbanceNodeState) -> _PreparedCycle | None:
+        if node.pending is not None or node.available_tick > self.tick:
+            return None
         if not self._record_policy.has_work(node.records) and not (
             self._resolver is not None
             and self._resolver.has_work(
@@ -254,15 +312,13 @@ class DisturbanceEngine:
                 )
             )
         ):
-            return
+            return None
         coupled = (
             self._spatial.couple(position, node.records)
             if self._spatial is not None
             and any(r is not None and r.type_index in self._coupled_types for r in node.records)
             else None
         )
-        if self.event_space is not None:
-            self.event_space.require_room(1)
         context = LocalContext(
             self.tick,
             position,
@@ -271,11 +327,19 @@ class DisturbanceEngine:
             node.received_count,
             node.cause_id,
         )
-        plan = (
-            self._planner(context.records, context.residuals, context.received)
-            if self._resolver is None
-            else self._resolver.resolve(context, self._planner)
-        )
+        spatial_cost = 0 if self._spatial is None else self._spatial.cost(position, self.tick)
+        return _PreparedCycle(context, coupled, spatial_cost)
+
+    def _finish_begin(
+        self,
+        position: Address3,
+        node: DisturbanceNodeState,
+        prepared: _PreparedCycle,
+        plan: LocalPlan,
+    ) -> None:
+        coupled = prepared.coupled
+        if self.event_space is not None:
+            self.event_space.require_room(1)
         if coupled is not None:
             plan = replace(
                 plan,
@@ -284,9 +348,7 @@ class DisturbanceEngine:
                 cost=bounded(checked_work(plan.cost + coupled.cost)),
             )
         if self._spatial is not None:
-            plan = replace(
-                plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
-            )
+            plan = replace(plan, cost=bounded(checked_work(plan.cost + prepared.spatial_cost)))
             plan = self._record_policy.report_cost(plan)
         if len(plan.departures) > self.initial.slots_per_node * 6:
             raise ValueError("local rule exceeds fixed outgoing capacity")
@@ -321,13 +383,31 @@ class DisturbanceEngine:
         """Freeze one field/carrier transaction and charge its combined work once."""
         spatial = self._spatial
         assert spatial is not None
-        field_plan = spatial.node_plan(position, node.records)
+        prepared = self._prepare_node_cycle(position, node, spatial.node_plan(position, node.records))
+        if prepared is None:
+            return
+        request = self._node_planning_input(node, prepared)
+        plan = (
+            self._empty_local_plan(node)
+            if request is None
+            else self._planner(request.records, request.residuals, request.received)
+        )
+        self._finish_begin_node(position, node, prepared, plan)
+
+    def _prepare_node_cycle(
+        self,
+        position: Address3,
+        node: DisturbanceNodeState,
+        field_plan: SpatialPlan,
+    ) -> _PreparedNodeCycle | None:
+        spatial = self._spatial
+        assert spatial is not None
         has_carriers = self._record_policy.has_work(node.records)
         if not has_carriers and field_plan.cost == 0:
             spatial.nodes[position].last_cost = 0
             spatial.nodes[position].cost_cause_id = None
             spatial._active.discard(position)
-            return
+            return None
         field_plan = replace(
             field_plan, cost=bounded(checked_work(field_plan.cost + spatial.node_merge_cost))
         )
@@ -338,16 +418,35 @@ class DisturbanceEngine:
             if any(record is not None and record.type_index in self._coupled_types for record in records)
             else None
         )
-        zero = tuple((0,) * field.components for field in self.initial.fields)
-        plan = (
-            self._planner(
-                records if coupled is None else coupled.records,
-                node.coupling_remainders,
-                node.received_count,
-            )
-            if has_carriers
-            else LocalPlan((), (), node.coupling_remainders, zero, 0)
+        return _PreparedNodeCycle(field_plan, has_carriers, coupled)
+
+    @staticmethod
+    def _node_planning_input(
+        node: DisturbanceNodeState, prepared: _PreparedNodeCycle
+    ) -> DisturbancePlanningInput | None:
+        if not prepared.has_carriers:
+            return None
+        records = (
+            prepared.field_plan.emission_records
+            if prepared.coupled is None
+            else prepared.coupled.records
         )
+        return DisturbancePlanningInput(records, node.coupling_remainders, node.received_count)
+
+    def _empty_local_plan(self, node: DisturbanceNodeState) -> LocalPlan:
+        zero = tuple((0,) * field.components for field in self.initial.fields)
+        return LocalPlan((), (), node.coupling_remainders, zero, 0)
+
+    def _finish_begin_node(
+        self,
+        position: Address3,
+        node: DisturbanceNodeState,
+        prepared: _PreparedNodeCycle,
+        plan: LocalPlan,
+    ) -> None:
+        spatial = self._spatial
+        assert spatial is not None
+        field_plan, coupled = prepared.field_plan, prepared.coupled
         if coupled is not None:
             plan = replace(
                 plan,
@@ -709,7 +808,59 @@ class DisturbanceEngine:
                     values=self.record_values(packet.record),
                 )
 
+    def _parallel_shared_plans(
+        self, positions: tuple[Address3, ...]
+    ) -> dict[Address3, tuple[_PreparedNodeCycle, LocalPlan]]:
+        """Plan shared field/carrier cycles behind two immutable host barriers."""
+        spatial = self._spatial
+        assert spatial is not None
+        candidates = tuple(
+            (position, self._at(position))
+            for position in positions
+            if self._at(position).pending is None and self._at(position).available_tick <= self.tick
+        )
+        spatial_positions: list[Address3] = []
+        spatial_requests: list[SpatialPlanningInput] = []
+        field_plans: dict[Address3, SpatialPlan] = {}
+        for position, node in candidates:
+            spatial_request = spatial.node_planning_input(position, node.records)
+            if spatial_request is None:
+                field_plans[position] = spatial.idle_node_plan(position, node.records)
+            else:
+                spatial_positions.append(position)
+                spatial_requests.append(spatial_request)
+        planned_fields = self._execution.plan_spatial(tuple(spatial_requests))
+        for position, plan in zip(spatial_positions, planned_fields, strict=True):
+            field_plans[position] = spatial.complete_node_plan(position, plan)
+
+        prepared: dict[Address3, _PreparedNodeCycle] = {}
+        carrier_positions: list[Address3] = []
+        carrier_requests: list[DisturbancePlanningInput] = []
+        for position, node in candidates:
+            cycle = self._prepare_node_cycle(position, node, field_plans[position])
+            if cycle is None:
+                continue
+            prepared[position] = cycle
+            carrier_request = self._node_planning_input(node, cycle)
+            if carrier_request is not None:
+                carrier_positions.append(position)
+                carrier_requests.append(carrier_request)
+        carrier_plans = self._execution.plan_disturbances(tuple(carrier_requests))
+        plans = {position: plan for position, plan in zip(carrier_positions, carrier_plans, strict=True)}
+        return {
+            position: (cycle, plans.get(position, self._empty_local_plan(self._at(position))))
+            for position, cycle in prepared.items()
+        }
+
     def step(self) -> None:
+        if not self._step_lock.acquire(blocking=False):
+            raise RuntimeError("only one caller may advance a simulation tick")
+        try:
+            self._step()
+        finally:
+            self._step_lock.release()
+
+    def _step(self) -> None:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
@@ -720,13 +871,51 @@ class DisturbanceEngine:
                     self._commit_emission_records,
                     record_cause=self._record_cause if self.event_space is not None else None,
                     commit_cause=self._commit_emission_cause if self.event_space is not None else None,
+                    execution=self._execution,
                 )
             positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
-            for position in sorted(positions):
+            ordered_positions = tuple(sorted(positions))
+            shared_plans: dict[Address3, tuple[_PreparedNodeCycle, LocalPlan]] = {}
+            disturbance_plans: dict[Address3, tuple[_PreparedCycle, LocalPlan]] = {}
+            if self._execution.parallel and self.initial.spatial_computation_delay:
+                shared_plans = self._parallel_shared_plans(ordered_positions)
+            elif self._execution.parallel:
+                prepared_cycles = tuple(
+                    (position, cycle)
+                    for position in ordered_positions
+                    if (cycle := self._prepare_begin(position, self._nodes[position])) is not None
+                )
+                plans = self._execution.plan_disturbances(
+                    tuple(
+                        DisturbancePlanningInput(
+                            cycle.context.records,
+                            cycle.context.residuals,
+                            cycle.context.received,
+                        )
+                        for _, cycle in prepared_cycles
+                    )
+                )
+                disturbance_plans = {
+                    position: (cycle, plan)
+                    for (position, cycle), plan in zip(prepared_cycles, plans, strict=True)
+                }
+            for position in ordered_positions:
                 node = self._at(position)
-                self._begin(position, node)
+                if self._execution.parallel:
+                    if self.initial.spatial_computation_delay:
+                        shared = shared_plans.get(position)
+                        if shared is not None:
+                            prepared_node, plan = shared
+                            self._finish_begin_node(position, node, prepared_node, plan)
+                    else:
+                        prepared = disturbance_plans.get(position)
+                        if prepared is not None:
+                            cycle, plan = prepared
+                            self._finish_begin(position, node, cycle, plan)
+                else:
+                    self._begin(position, node)
                 self._commit(position, node)
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:

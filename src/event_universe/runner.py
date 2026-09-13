@@ -40,6 +40,7 @@ def run_initialization(
     visualize: bool = False,
     frame_stride: int = 1,
     observer: Path | None = None,
+    node_workers: int = 1,
 ) -> Path:
     """Preserve input, events, final state, and conservation evidence."""
     source = initialization.read_bytes()
@@ -68,7 +69,15 @@ def run_initialization(
     output.mkdir(parents=True, exist_ok=True)
     with ArtifactLease(output.parent, [output.resolve()]):
         return _execute_run(
-            initial, source, output, fingerprint, count, visualize, frame_stride, observer_definition
+            initial,
+            source,
+            output,
+            fingerprint,
+            count,
+            visualize,
+            frame_stride,
+            observer_definition,
+            node_workers,
         )
 
 
@@ -81,6 +90,7 @@ def _execute_run(
     visualize: bool,
     frame_stride: int,
     observer_definition: ObserverDefinition | None,
+    node_workers: int,
 ) -> Path:
     (output / "initialization.json").write_bytes(source)
     frames: list[dict[str, object]] = []
@@ -112,56 +122,56 @@ def _execute_run(
             if probe is not None:
                 probe.receive(event)
 
-        world = Simulation(initial, observer=record)
-        initial_totals = world.totals()
-        if visualize:
-            frames.append(world.snapshot())
-        if probe is not None:
-            probe.capture(world.tick)
-        sampled_tick = world.tick
-        try:
-            for _ in range(count):
-                world.step()
-                totals, sources = world.totals(), world.source_totals()
-                losses = world.dissipation_totals()
-                escaped = world.escaped_totals()
-                equal = all(
-                    totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
-                    for name, values in initial_totals.items()
-                )
-                conservation = conservation and equal
-                balanced = all(
-                    tuple(
-                        value + loss + out
-                        for value, loss, out in zip(
-                            totals[name],
-                            losses[name],
-                            escaped[name],
-                            strict=True,
+        with Simulation(initial, observer=record, node_workers=node_workers) as world:
+            initial_totals = world.totals()
+            if visualize:
+                frames.append(world.snapshot())
+            if probe is not None:
+                probe.capture(world.tick)
+            sampled_tick = world.tick
+            try:
+                for _ in range(count):
+                    world.step()
+                    totals, sources = world.totals(), world.source_totals()
+                    losses = world.dissipation_totals()
+                    escaped = world.escaped_totals()
+                    equal = all(
+                        totals[name] == tuple(a + b for a, b in zip(values, sources[name], strict=True))
+                        for name, values in initial_totals.items()
+                    )
+                    conservation = conservation and equal
+                    balanced = all(
+                        tuple(
+                            value + loss + out
+                            for value, loss, out in zip(
+                                totals[name],
+                                losses[name],
+                                escaped[name],
+                                strict=True,
+                            )
                         )
-                    )
-                    == tuple(a + b for a, b in zip(values, sources[name], strict=True))
-                    for name, values in initial_totals.items()
-                ) and all(item["balanced"] for item in world.spatial_accounting().values())
-                accounting = accounting and balanced
-                if not balanced:
-                    raise ValueError(
-                        "declared quantity conservation, dissipation or escape accounting failed"
-                    )
-                completed += 1
-                if visualize and world.tick % frame_stride == 0:
-                    frames.append(world.snapshot())
-                if world.tick % frame_stride == 0:
-                    sampled_tick = world.tick
-                    if probe is not None:
-                        probe.capture(world.tick)
-        except Exception as error:
-            failure = error
-        final = world.snapshot()
-        if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
-            frames.append(final)
-        if probe is not None and (sampled_tick != world.tick or failure is not None):
-            probe.capture(world.tick)
+                        == tuple(a + b for a, b in zip(values, sources[name], strict=True))
+                        for name, values in initial_totals.items()
+                    ) and all(item["balanced"] for item in world.spatial_accounting().values())
+                    accounting = accounting and balanced
+                    if not balanced:
+                        raise ValueError(
+                            "declared quantity conservation, dissipation or escape accounting failed"
+                        )
+                    completed += 1
+                    if visualize and world.tick % frame_stride == 0:
+                        frames.append(world.snapshot())
+                    if world.tick % frame_stride == 0:
+                        sampled_tick = world.tick
+                        if probe is not None:
+                            probe.capture(world.tick)
+            except Exception as error:
+                failure = error
+            final = world.snapshot()
+            if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
+                frames.append(final)
+            if probe is not None and (sampled_tick != world.tick or failure is not None):
+                probe.capture(world.tick)
     metadata: dict[str, object] = {
         "package_version": __version__,
         "source_sha256": fingerprint,
@@ -189,6 +199,7 @@ def _execute_run(
         "shape": initial.shape,
         "link_ticks": initial.link_ticks,
         "computation": world.computation_report(),
+        "execution": world.execution_report(),
     }
     if world.event_space is not None:
         from dataclasses import asdict
@@ -264,6 +275,12 @@ def main() -> None:
     parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
     parser.add_argument("--observer", type=Path, help="Local reception probe placement JSON")
+    parser.add_argument(
+        "--node-workers",
+        type=int,
+        default=1,
+        help="Isolated Python interpreters used for per-Node planning (1-64)",
+    )
     args = parser.parse_args()
     try:
         artifact = run_initialization(
@@ -273,6 +290,7 @@ def main() -> None:
             visualize=args.visualize,
             frame_stride=args.frame_stride,
             observer=args.observer,
+            node_workers=args.node_workers,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

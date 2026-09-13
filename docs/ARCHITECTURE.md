@@ -306,6 +306,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
+| `core/node_execution` | Host-only isolated-interpreter Node tasks and execution measurements; no physical state ownership |
 | `fields/disturbances` | Generic records and bounded integer arithmetic; no world or diagnostics |
 | `initialization` | JSON input and generic typed definitions; no arbitrary execution |
 | `core/contracts` | State types |

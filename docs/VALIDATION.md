@@ -986,3 +986,28 @@ The cleanup consolidates that input, explicitly names historical scalar owners,
 extends source-language/navigation/hygiene coverage and preserves reference files.
 Final submitted-tree validation is recorded in its PR/CI, not inferred from this
 baseline result. No visual inspection or newly derived physical law is claimed.
+
+
+## Parallel Node tick planning — 2026-09-13
+
+Base: `db5fd9f2518d8551fdeaacd64a583e9fa6d5dd62`. The affected gate ran on
+CPython 3.14.7 with pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Ruff lint and
+format passed, strict mypy passed 12 source modules, and pytest passed 1,183
+cases with five explicit visualization skips. The selected suite included the
+generic disturbance engine, spatial fields, conservation and accounting,
+open boundaries, quantum consumers, runners, repository architecture and
+language rules.
+
+Six initialization modes across five independent profiles were compared after
+every tick with one worker and two isolated interpreter workers, including the
+shared delayed field/carrier Node clock. Snapshots, event order, local and global
+totals, sources, dissipation, escaped quantities and modeled computation cost
+were identical. Bounds, native event-program rejection and concurrent host caller
+rejection were also exercised.
+
+A headless acceptance run used `finite_fields.json` for eight ticks with four
+workers. It completed with balanced accounting, eight disturbance Node tasks,
+117 spatial Node tasks, 16 planning batches and a largest active batch of 19.
+The run reported `display: none` and created no visualization. These checks
+establish deterministic barrier behavior for the tested inputs; they do not
+claim that parallel host scheduling speeds up small or inexpensive worlds.

@@ -19,7 +19,15 @@ if TYPE_CHECKING:
 class Simulation(DisturbanceEngine):
     """Run configured local rules over Nodes connected by Links."""
 
-    def __init__(self, initial: InitialState, *, observer: EventSink | None = None) -> None:
+    def __init__(
+        self,
+        initial: InitialState,
+        *,
+        observer: EventSink | None = None,
+        node_workers: int = 1,
+    ) -> None:
+        if type(node_workers) is int and node_workers > 1 and initial.event_program is not None:
+            raise ValueError("parallel Node execution does not support an event program")
         event_space, resolver = None, None
         if initial.event_program is not None:
             from event_universe.integration.event_runtime import build_event_runtime
@@ -78,6 +86,7 @@ class Simulation(DisturbanceEngine):
             ),
             event_space=event_space,
             resolver=resolver,
+            node_workers=node_workers,
         )
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:
