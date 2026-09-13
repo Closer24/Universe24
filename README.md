@@ -138,7 +138,9 @@ limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.m
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
-Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+Compare selected behavior using the [small-space physics suite](examples/small-space/README.md),
+or probe the outward field from outside the event space with the
+[inverse-square experiment](examples/inverse-square/README.md).
 The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
 reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
