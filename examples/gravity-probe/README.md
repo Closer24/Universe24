@@ -53,3 +53,45 @@ In these units the coupling constant is the configured `1 / D`: a body's
 acceleration is about `0.08 x emission / (D x r^2)`, where the emission per tick
 plays the role of the source mass. Nothing identifies `D` or the emission with
 physical quantities.
+
+### A moving body in the sparse field: discrete kicks, the same path for every mass
+
+A body of mass 1 or 2 starts eight links out on the axis with zero momentum and
+moves along its momentum at `min(1, |p| / (64 m))` hops per tick. With 64 rays
+per tick spread over 4,096 headings, a single Node is hit only now and then, so
+the fall is a sequence of discrete kicks rather than a smooth curve:
+
+| Tick | Offset, mass 1 | Momentum, mass 1 | Offset, mass 2 | Momentum, mass 2 |
+| --- | --- | --- | --- | --- |
+| 32 | 8 | 0 | 8 | 0 |
+| 40 | 8 | -8 | 8 | -16 |
+| 48 | 6 | -20 | 6 | -40 |
+| 64 | 1 | -20 | 1 | -40 |
+| 66 | 0 | -20 | 0 | -40 |
+| 96 | -9 | -20 | -9 | -40 |
+| 112 | -14 | -16 | -14 | -32 |
+| 139 | left the open boundary | | left the open boundary | |
+
+Both masses occupy the same Node on every tick, with the mass-2 momentum exactly
+twice the mass-1 momentum: the rule is mass independent by construction. Past the
+source the body received a single outward kick and left through the open
+boundary at 0.3 hops per tick; the inbound kicks it collected were too few to be
+undone by the equally sparse outbound field. The small-world test in
+`tests/test_gravity_probe.py`, where six axis rays hit every axis Node on every
+tick, shows the dense-field limit: the body falls through the source, turns
+between five and seven links past it with zero momentum, and comes back, a bound
+oscillation with combined momentum still zero. An earlier configuration with
+rate scale 8 let the body reach one hop per tick, where a ray moving the same
+way can never catch it; that is why the scale is 64 here.
+
+## Conclusion
+
+Three statements follow from configuration on top of the straight-ray field:
+momentum moves toward the source, its rate falls as `1/r^2` in every host
+direction to within the finite direction sampling, and the acceleration does not
+depend on the body's mass. The coupling constant is the configured `1 / D` and
+the emission per tick stands in for the source mass. The reaction never reaches
+the source, so this is attraction toward a fixed source, not a two-body law; a
+smooth orbit in the sparse field needs more rays per tick or a slower body. No
+physical constant, unit or mass is identified.
+
