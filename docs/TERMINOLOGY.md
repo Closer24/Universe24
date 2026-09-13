@@ -1,6 +1,6 @@
 # Canonical simulation terminology
 
-Universe24 uses one canonical vocabulary for the active simulator. These names describe the model, documentation, new identifiers, diagnostics and configuration concepts.
+Universe24 uses one canonical vocabulary for the active simulator. These names describe the model, documentation, identifiers, diagnostics and configuration concepts.
 
 ## Core terms
 
@@ -45,14 +45,14 @@ A Node may receive values from several neighboring Nodes on the same tick. Those
 
 Directional delay belongs to a Node's outgoing scheduling. It is an integer multiple of `link_ticks`. A waiting value remains owned by its Node until dispatch. Link transit begins only after dispatch and always takes the configured fixed Link time.
 
-## Terms that are not canonical physical concepts
+## No second physical-location noun
 
-`Node` and `Site` are not separate physical entities in the active model.
+Node is the only active physical-location noun. `Site` is not a synonym for Node.
 
-- New active code, documentation, tests and diagnostics must use `Node` or `NodeState` when referring to a simulation location or its local state.
-- `Site` may appear only when describing a mathematical topology set or a quoted external/historical API where changing the word would change that API's identity.
-- `Node` may appear only inside explicitly historical compatibility APIs or migration notes that name an old identifier. Such text must say that the identifier is legacy; it must not define a second physical concept.
-- Historical identifiers are migrated toward `Node` / `NodeState` when their public compatibility contract allows it.
+- Active code, documentation, tests and diagnostics use `Node` or `NodeState` for a simulation location or its local state.
+- `Site` may appear only when it is part of an external standard name or when it denotes a distinct non-physical mathematical/register concept. In quantum code, prefer `register` or `register_index` when that is the actual meaning.
+- Retired pre-migration location identifiers are not retained as active API aliases.
+- Historical evidence may preserve old literal names when changing them would falsify the recorded source; such evidence does not define the active vocabulary.
 
 ## Naming rule
 
@@ -64,6 +64,7 @@ When adding or renaming active implementation symbols:
 - use `link` for in-transit ownership;
 - use `event` for a local transition;
 - use `scalar` / `vector` for physical value shape;
-- do not introduce `node`, `site`, `input state`, or `output state` as alternative physical nouns.
+- use `register` / `register_index` for a quantum algebra register when it is not a physical-location name;
+- do not introduce `site`, `input state`, or `output state` as alternative physical nouns.
 
-Configuration keys that predate this contract may remain temporarily for backward compatibility. Their documentation must describe them using the canonical Node vocabulary and migration must not silently change physical behavior.
+The active API and configuration use the canonical Node vocabulary directly. Breaking migrations are explicit and must update all active consumers rather than preserving a parallel physical vocabulary.
