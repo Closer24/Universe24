@@ -44,6 +44,12 @@ parallel self flux produces no rotation. Price delayed atomic reactions without
 rewriting old in-flight packets or claiming reservation tariffs are measured host
 instruction counts; see [spatial response](../../docs/SPATIAL_COUPLINGS.md).
 
+For shared computation timing, keep original stock, frozen proposals and later
+input distinct. Test input arriving during a wait and at the ready tick,
+including empty intervals. Price bounded physical merges before freezing the
+ready time; revalidate joint guards before ownership changes. See the
+[shared-cycle contract](../../docs/SPATIAL_COMPUTATION_DELAY.md).
+
 When a candidate claims energy and momentum conservation, define all owner
 contributions and actual six-port flux under the
 [local conservation contract](../../docs/LOCAL_CONSERVATION.md). Show that the

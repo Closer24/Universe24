@@ -1094,6 +1094,7 @@ def parse_initial_state(document: object) -> InitialState:
             "event_program",
             "observer",
             "conservation",
+            "spatial_computation_delay",
         },
         required,
     )
@@ -1144,6 +1145,9 @@ def parse_initial_state(document: object) -> InitialState:
             obj.get("spatial_interactions", []), fields, disturbances, spatial
         ),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
+        spatial_computation_delay=_boolean(
+            obj.get("spatial_computation_delay", False), "spatial_computation_delay"
+        ),
     )
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program

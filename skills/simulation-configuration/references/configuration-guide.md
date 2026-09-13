@@ -19,6 +19,12 @@ by a supported adapter. Do not put Python expressions or callbacks into JSON.
 
 ## 1. Start with a complete working configuration
 
+For fields that count as local computation, use
+[`spatial_computation_delay`](../../../docs/SPATIAL_COMPUTATION_DELAY.md).
+It selects the shared node cycle; `link_ticks: 1` gives one-tick neighbor transit.
+Empty port input is zero, while nonzero input received during a wait is retained
+for the next cycle. The linked contract owns the complete timing and example.
+
 From the repository root, copy
 [two-streams.json](../assets/two-streams.json) to a new input path such as
 `artifacts/inputs/my-world.json`. It defines one reusable moving type and places two

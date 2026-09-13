@@ -159,6 +159,11 @@ class SpatialCell:
     cause_id: int | None = None
     sample_cause_id: int | None = None
     cost_cause_id: int | None = None
+    # Later arrivals have destination ownership but cannot enter a frozen cycle.
+    pending: int = 0
+    incoming: tuple[SpatialState, ...] = ()
+    incoming_count: int = 0
+    incoming_decay_cost: int = 0
 
 
 @dataclass(frozen=True, slots=True)

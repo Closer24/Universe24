@@ -173,12 +173,18 @@ are not decayed, merged or sampled outside because no exterior receiver exists.
 A baseline never enters a packet or the escaped ledger. See
 [the boundary contract](DISTURBANCES.md#domain-boundary).
 
-The candidate has a separate fixed field clock. Priced spatial work contributes
+By default the candidate has a separate fixed field clock. Priced spatial work contributes
 to a new carrier cycle at the same cell and interval; spatial forwarding itself
 does not wait for the carrier. Thus `normal_budget` controls carrier delay and
 does not bound the field stage's throughput. This is an explicit change from
 the old single uniform-delay stage, supported by the requested fixed-c field.
 Configurations without spatial fields retain the old timing contract.
+
+Set `spatial_computation_delay: true` for the alternative
+[shared field/carrier clock](SPATIAL_COMPUTATION_DELAY.md). In that mode all
+local work determines one wait, emission happens at commit, and later input is
+retained separately. The following fixed-clock scheduling details describe the
+default mode; receipt decay and integer inventory rules apply to both modes.
 
 Every field operation, including receipt and configured decay, has a price.
 Completed-link decay cost is accumulated at the receiving cell and charged once

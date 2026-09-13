@@ -1,5 +1,18 @@
 # Test inputs and expected results
 
+## Shared field computation delay
+
+`test_spatial_computation_delay.py` checks the opt-in
+[shared-cycle contract](SPATIAL_COMPUTATION_DELAY.md). With unit scalar merge
+cost 32, field costs 68/69/169 and B=100,h=2, departures occur at 0/2/4 and
+receipts at 2/4/6. Field/carrier costs 20+20 plus merge32 share C=72, giving
+one wait at B=40. Later arrivals cannot alter the frozen result or deadline;
+their original owners, source allowances and declared linear inventory remain
+exact through commit. Nonlinear guards and event-capacity failures stop before
+the affected transaction mutates stock. Real scalar/vector costs, empty input
+intervals, moving sources, finite decay, formula-free state, graph controls
+and passive conservation are covered. These are timing and inventory claims.
+
 ## Property coupling and passive local conservation
 
 `test_property_couplings.py` requires property compatibility across differently

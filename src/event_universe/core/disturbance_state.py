@@ -13,7 +13,9 @@ if TYPE_CHECKING:
         SpatialCouplingDefinition,
         SpatialFieldDefinition,
         SpatialInteractionDefinition,
+        SpatialPlan,
         SpatialSeed,
+        SpatialState,
     )
 
 from .integer import checked_work
@@ -224,6 +226,13 @@ class InitialState:
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
     conservation: ConservationDefinition | None = None
+    spatial_computation_delay: bool = False
+
+    def __post_init__(self) -> None:
+        if type(self.spatial_computation_delay) is not bool:
+            raise ValueError("spatial_computation_delay must be boolean")
+        if self.spatial_computation_delay and not self.spatial_fields:
+            raise ValueError("spatial_computation_delay requires spatial fields")
 
 
 class Departure(NamedTuple):
@@ -250,6 +259,9 @@ class PendingCycle:
     next_tick: int
     plan: LocalPlan
     cause_id: int | None = None
+    spatial_plan: SpatialPlan | None = None
+    spatial_phases: Values = ()
+    spatial_guard_states: tuple[SpatialState, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

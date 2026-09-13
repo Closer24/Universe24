@@ -114,6 +114,8 @@ class LocalConservationAudit:
         nodes: dict[Address3, Quantity] = {}
         for node in view.nodes:
             amount = self._spatial(tuple(state.populations for state in node.spatial))
+            if node.incoming_spatial:
+                amount = _add(amount, self._spatial(tuple(s.populations for s in node.incoming_spatial)))
             for record in node.records:
                 if record is not None:
                     amount = _add(amount, self._carrier(record))

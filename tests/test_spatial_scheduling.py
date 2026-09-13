@@ -31,8 +31,10 @@ def test_active_scheduling_matches_a_full_cell_sweep(boundary, travel, budget):
     assert events == reference_events
 
 
-def test_empty_history_is_not_scanned_by_steps_or_inventory_checks():
+@pytest.mark.parametrize("shared_clock", [False, True])
+def test_empty_history_is_not_scanned_by_steps_or_inventory_checks(shared_clock):
     raw = finite_document()
+    raw["spatial_computation_delay"] = shared_clock
     raw["spatial_seeds"] = [
         {"position": list(ORIGIN), "field": "radiation", "populations": [1, 0, 0, 0, 0, 0, 0, 0]}
     ]

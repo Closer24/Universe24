@@ -1,5 +1,12 @@
 # Architecture and change boundaries
 
+The opt-in [shared field computation cycle](SPATIAL_COMPUTATION_DELAY.md)
+extends `PendingCycle` with one immutable spatial proposal, reaction phases
+and cached joint-guard input. `SpatialCell` retains fixed incoming populations,
+port readings, counts and decay cost while pending. Inventory includes these
+actual input owners once and excludes proposals. No expressions or histories
+enter evolving state. The existing scheduler coordinates both owners atomically.
+
 [Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
 sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
 `core/validation.py` retains bounded checks without charging the physical clock.

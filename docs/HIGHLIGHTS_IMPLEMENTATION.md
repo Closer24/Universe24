@@ -1,5 +1,19 @@
 # Highlights implementation coverage
 
+## Shared field computation cycle reconciliation - 2026-09-13
+
+The live Highlights revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`
+was read against source base `1784acdd140f260c0fb5e568b2e28241df573fa2`.
+Section 4.4 maps to the opt-in
+[shared field/carrier cycle](SPATIAL_COMPUTATION_DELAY.md): C counts combined
+local work once, one integer ceiling sets the entire cycle, proposals stay
+frozen and later input belongs to the next cycle. Section 3.5.3 maps to
+distinct waiting, input-buffer and transit owners in inventory.
+The empty-input stream is implicit zero and allocates no event history.
+This timing candidate does not establish nonlinear energy conservation,
+gravity or quantum/spatial composition. The live document was not edited.
+
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
 The live Highlights document was read at revision
