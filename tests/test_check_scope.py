@@ -22,6 +22,11 @@ def test_local_field_example_selects_state_and_physical_contract_consumers():
     assert "tests/test_local_lorentz_field.py" in selected
 
 
+def test_spatial_graph_example_selects_its_causal_contract():
+    selected, _ = CHECK.select(["examples/spatial_causal_events.json"], {})
+    assert "tests/test_spatial_causal_events.py" in selected
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

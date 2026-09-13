@@ -81,6 +81,7 @@ def test_workspace_serves_assets_and_current_example_data(server):
         "local_lorentz_field",
         "moving_source",
         "open_world",
+        "spatial_causal_events",
         "spatial_turning",
         "three_mass_finite",
     }

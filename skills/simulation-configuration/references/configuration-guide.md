@@ -195,8 +195,9 @@ For the optional `event_program`, use
 graph off, classical graph only, or a complete quantum program. It gives the exact
 JSON placement, UI steps, capacity meaning and output files. Explain that omission
 disables the native program, while `events.jsonl` remains an ordinary action log.
-Quantum behavior is not required for a causal graph. Preserve the documented
-spatial-field and directional-wait composition limits.
+Quantum behavior is not required for a causal graph. Classical spatial runs use
+the same bounded graph; preserve the separate quantum/spatial and directional-wait
+composition limits. Capacity is retained events, not bytes or a physical clock.
 
 ## 6. Execute, record and display
 

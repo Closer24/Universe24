@@ -18,8 +18,8 @@ There are not two competing authoritative copies of that metadata.
 The core `EventResolver` protocol receives only a local immutable context and
 the existing local planner. `integration/event_runtime.py` composes the selected
 quantum owner with that protocol. Generic core and field modules do not import
-quantum. Initialization resolves arbitrary type/field labels to indices. Cells,
-packets and pending cycles acquire only one optional event ID each; they never
+quantum. Initialization resolves arbitrary type/field labels to indices. Carrier
+cells, packets and pending cycles acquire only one optional event ID each; they never
 hold a growing history or a wave vector. Global counters and the bounded ledger
 are host bookkeeping, not a nonlocal input to local physics.
 
@@ -150,11 +150,11 @@ and 135 for reflection. The budget-2 example meets at tick 15, has local contact
 cost 20, commits at tick 24 and sends packets that arrive at tick 25. These are
 finite expectations of the declared candidate, not a Newtonian emergence proof.
 
-Independent spatial-field clocks and joint field/carrier proposals are not yet
-bound into this shared event program: combining `event_program` with
-`spatial_fields` is rejected explicitly. Existing spatial configurations without
-an event program remain supported and unchanged. This avoids pretending that
-unrecorded field dependencies form a complete unified graph. Infinite-time finite memory and a universal objective event trigger remain
+The classical `causal-events-v1` graph supports spatial clocks and joint
+field/carrier provenance under the [generic graph contract](EVENT_GRAPH_CONFIGURATION.md#spatial-provenance-and-resource-bounds).
+Both native quantum models still reject `spatial_fields`; their independent
+physical and quantum clocks have not been composed. Existing spatial
+configurations without a graph remain unchanged. Infinite-time finite memory and a universal objective event trigger remain
 outside the selected contract. Multiple indistinguishable Kraus terms are now
 supported by the explicit v2 mixed-state extension.
 

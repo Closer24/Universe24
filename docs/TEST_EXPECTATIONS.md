@@ -16,6 +16,15 @@ UI and runner tests retain accepted output and physical execution contracts.
 capacity for distinct/colocated classical seeds and quantum registers, including
 mixed worlds. Future exhaustion remains a separate runtime test.
 
+`test_spatial_causal_events.py` covers two-tick field transport and periodic return,
+two-parent cancellation and complete decay, frozen samples versus later field
+arrivals, emission allowances, joint packet creation/amendment/cancellation,
+exact and one-short transaction capacities, runner failure evidence, and on/off
+equality of physical state, bookkeeping, costs and timing. The shipped signed
+encounter reaches zero at tick 6 while retaining both histories and 20 events.
+Stepping must not traverse ancestry or instantiate a quantum resolver. Existing
+native quantum/runtime tests retain their own inverse, checkpoint and cost checks.
+
 
 ## Local observer
 

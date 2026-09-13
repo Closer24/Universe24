@@ -109,6 +109,7 @@ separate carriers and their different directions.
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
+| `event_program` | Optional bounded causal graph; `causal-events-v1` records carrier and spatial events without quantum rules; see [graph configuration](EVENT_GRAPH_CONFIGURATION.md) |
 
 The authoritative contract for local field selection, group semantics, rule
 expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).

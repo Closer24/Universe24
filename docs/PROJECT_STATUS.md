@@ -103,7 +103,7 @@ records are temporary, while their recorded conclusions remain in the repository
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
 | Entity reference and representation | [entity_catalog.py](../src/event_universe/entity_catalog.py), [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | Sourced properties and interactions are validated separately; 46 explicitly supplied experiment profiles compile without deriving laws from labels |
 | Quantum event backend | [event_network.py](../src/event_universe/quantum/event_network.py) | Deferred joint-state evaluation and explicit instruments under the quantum owner |
-| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Optional shared causal identities, repeated local triggers and charged executed paths; rejects spatial fields |
+| Native event programs | [event_runtime.py](../src/event_universe/integration/event_runtime.py), [event_space.py](../src/event_universe/core/event_space.py) | Bounded classical carrier/spatial graph; optional quantum triggers and charged paths; quantum programs still reject spatial fields |
 | Historical contact experiment | [quantum_contact_trial.py](../src/event_universe/integration/quantum_contact_trial.py) | One bounded eight-tick contact trial selects a real local mechanical proposal; not a general dispatcher |
 | Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
 | Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
@@ -160,7 +160,9 @@ now composes the optional quantum owner through the ordinary `Simulation` and
 runner, with shared causal identities, repeated local encounters and explicit
 computation charges. Configured deterministic endpoints reproduce an ordinary
 mechanical path when both costs fit the budget; resolver overhead is not hidden.
-Combining an event program with spatial fields is rejected. These finite controls
+The [classical causal graph](EVENT_GRAPH_CONFIGURATION.md) also records spatial
+transport, emission, frozen samples and joint reactions without changing their
+physics. Quantum programs still reject spatial fields. These finite controls
 do not derive universal scattering, an objective collapse criterion, a general
 classical limit or quantum-plus-matter energy conservation. The earlier
 [contact trial](QUANTUM_CONTACT_TRIAL.md) remains a historical eight-tick fixture,
