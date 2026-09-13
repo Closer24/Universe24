@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "Universe24: a local integer three-dimensional event simulator"
+type: software
+version: 0.2.0
+date-released: 2026-09-13
+license: MIT
+repository-code: "https://github.com/Closer24/Universe24"
+authors:
+  - family-names: Gonen
+    given-names: Alon
+    email: logic24@gmail.com
+keywords:
+  - event simulator
+  - integer lattice
+  - local causality
+  - computational physics
+  - cellular automata
+abstract: >-
+  A research simulator in which physical content is expressed as configured
+  disturbances on a three-dimensional lattice with six-neighbor causal links,
+  bounded integer arithmetic and explicit local conservation checks. Field
+  laws, transport candidates and quantum event programs are supplied by
+  initialization data rather than inferred from physical names.

@@ -385,3 +385,9 @@ The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
 configured N-to-M node reactions, bounded rational vector arithmetic and exact
 conservation tests. It is an independent experiment, not the active simulator.
 Run `python -m tools.generic_vector_lab.run_demo` from this repository.
+
+## License and citation
+
+Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
+Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
+citation entry on the repository page.
