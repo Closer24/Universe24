@@ -1,6 +1,6 @@
 """A bounded Node owns spatial transitions and its own field output bank."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Generator
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Protocol
 
@@ -16,6 +16,13 @@ from .node_boundary import (
     validate_spatial_plan,
 )
 from .node_conservation import LocalInventory, NodeConservationGuard
+from .node_execution import (
+    PlanningCycle,
+    PlanningRequest,
+    PlanningResult,
+    SpatialPlanningInput,
+    finish_local_cycle,
+)
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
@@ -203,12 +210,18 @@ class SpatialNode(SpatialNodeState):
         self.last_begin_tick = tick
 
     def advance(self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices) -> None:
+        finish_local_cycle(self.plan_cycle(tick, carrier, services), None, services.planner)
+
+    def plan_cycle(
+        self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices
+    ) -> PlanningCycle:
         if bounded(tick) < 0:
             raise ValueError("node clock must be nonnegative")
         if carrier is not None and carrier.position != self.position:
             raise ValueError("carrier and spatial components must belong to the same Node")
         if services.initial.node_execution:
             if self.pending is not None:
+                yield None
                 self.commit_ready(tick, carrier, services)
                 return
             # A completed field cycle gives the colocated carrier one turn before
@@ -282,7 +295,9 @@ class SpatialNode(SpatialNodeState):
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
-        plan = services.planner(states, records, self.received_count, node_cost)
+        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost)
+        if not isinstance(plan, SpatialPlan):
+            raise ValueError("spatial planning requires a SpatialPlan")
         validate_spatial_plan(services.initial, plan, len(records), records)
         services.validate_field_guards(self.states, plan)
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))
@@ -523,12 +538,12 @@ class SpatialNode(SpatialNodeState):
         self.sample_received_masks = (0,) * len(self.sample_received_masks)
         self.arrival_mask = (0,) * len(self.arrival_mask)
 
-    def node_plan(
+    def plan_shared_fields(
         self,
         records: tuple[DisturbanceRecord | None, ...],
         services: SpatialServices,
         node_cost: int = 0,
-    ) -> SpatialPlan:
+    ) -> Generator[PlanningRequest, PlanningResult, SpatialPlan]:
         """Prepare a bounded field proposal without changing any physical owner."""
         active_source = any(
             record is not None
@@ -555,7 +570,9 @@ class SpatialNode(SpatialNodeState):
             )
         )
         if active:
-            plan = services.planner(states, records, self.received_count, node_cost)
+            plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost)
+            if not isinstance(plan, SpatialPlan):
+                raise ValueError("spatial planning requires a SpatialPlan")
             validate_spatial_plan(services.initial, plan, len(records), records)
             return replace(plan, cost=bounded(checked_work(plan.cost + self.received_decay_cost)))
         blank = tuple(
@@ -566,6 +583,7 @@ class SpatialNode(SpatialNodeState):
             )
         )
         zero = tuple((0,) * field.components for field in services.initial.fields)
+        yield None
         return SpatialPlan(states, (blank,) * 6, records, zero, 0)
 
     def node_coupling(

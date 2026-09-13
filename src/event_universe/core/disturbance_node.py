@@ -18,6 +18,7 @@ from .event_resolution import LocalContext
 from .integer import checked_work
 from .node_boundary import validate_local_plan, validate_record, validate_records
 from .node_conservation import LocalInventory
+from .node_execution import DisturbancePlanningInput, PlanningCycle, PlanningResult, finish_local_cycle
 from .node_ports import PortBank
 from .node_services import NodeServices, cycle_timing, port_count
 from .spatial_state import SpatialPacket, SpatialState, zero_spatial_state
@@ -176,11 +177,58 @@ class DisturbanceNode(DisturbanceNodeState):
         spatial: SpatialNode | None,
         spatial_services: SpatialServices | None,
     ) -> None:
+        finish_local_cycle(
+            self.plan_cycle(tick, services, spatial, spatial_services),
+            services.planner,
+            None if spatial_services is None else spatial_services.planner,
+        )
+
+    def parallel_cycle(
+        self,
+        tick: int,
+        services: NodeServices,
+        spatial: SpatialNode | None,
+        spatial_services: SpatialServices | None,
+    ) -> PlanningCycle:
+        """Keep the start/commit event order after each common planning barrier."""
+        child = self.plan_cycle(tick, services, spatial, spatial_services)
+        result: PlanningResult = None
+        completed = False
+        try:
+            for _ in range(2 if services.initial.spatial_computation_delay else 1):
+                try:
+                    request = None if completed else child.send(result)
+                except StopIteration:
+                    completed, request = True, None
+                result = yield request
+            if not completed:
+                try:
+                    child.send(result)
+                except StopIteration:
+                    pass
+                else:
+                    raise RuntimeError("local planning exceeded its fixed phase count")
+            self.advance(
+                tick, services, window_closed=True, spatial=spatial, spatial_services=spatial_services
+            )
+        finally:
+            child.close()
+
+    def plan_cycle(
+        self,
+        tick: int,
+        services: NodeServices,
+        spatial: SpatialNode | None,
+        spatial_services: SpatialServices | None,
+    ) -> PlanningCycle:
+        """Own the transition and expose only frozen local planning inputs to workers."""
+        if spatial is not None and spatial.position != self.position:
+            raise ValueError("carrier and spatial components must belong to the same Node")
         if self.pending is not None or self.available_tick > tick:
             return
         if services.initial.spatial_computation_delay:
             assert spatial is not None and spatial_services is not None
-            self._begin_shared(tick, services, spatial, spatial_services)
+            yield from self._begin_shared(tick, services, spatial, spatial_services)
             return
         if services.initial.node_execution and spatial is not None and spatial.pending is not None:
             return
@@ -215,11 +263,12 @@ class DisturbanceNode(DisturbanceNodeState):
             self.received_count,
             self.cause_id,
         )
-        plan = (
-            services.planner(context.records, context.residuals, context.received)
-            if services.resolver is None
-            else services.resolver.resolve(context, services.planner)
-        )
+        if services.resolver is None:
+            plan = yield DisturbancePlanningInput(context.records, context.residuals, context.received)
+            if not isinstance(plan, LocalPlan):
+                raise ValueError("carrier planning requires a LocalPlan")
+        else:
+            plan = services.resolver.resolve(context, services.planner)
         if coupled is not None:
             validate_records(services.initial, coupled.records, len(self.records), self.records)
             plan = replace(
@@ -275,9 +324,11 @@ class DisturbanceNode(DisturbanceNodeState):
 
     def _begin_shared(
         self, tick: int, services: NodeServices, spatial: SpatialNode, spatial_services: SpatialServices
-    ) -> None:
+    ) -> PlanningCycle:
         """Freeze one field/carrier transaction and charge its combined work once."""
-        field_plan = spatial.node_plan(self.records, spatial_services, self.committed_cost)
+        field_plan = yield from spatial.plan_shared_fields(
+            self.records, spatial_services, self.committed_cost
+        )
         has_carriers = services.record_policy.has_work(self.records)
         if not has_carriers and field_plan.cost == 0:
             spatial.last_cost = 0
@@ -297,15 +348,22 @@ class DisturbanceNode(DisturbanceNodeState):
             else None
         )
         zero = tuple((0,) * field.components for field in services.initial.fields)
-        plan = (
-            services.planner(
+        request = (
+            DisturbancePlanningInput(
                 records if coupled is None else coupled.records,
                 self.coupling_remainders,
                 self.received_count,
             )
             if has_carriers
-            else LocalPlan((), (), self.coupling_remainders, zero, 0)
+            else None
         )
+        proposed = yield request
+        if has_carriers:
+            if not isinstance(proposed, LocalPlan):
+                raise ValueError("carrier planning requires a LocalPlan")
+            plan = proposed
+        else:
+            plan = LocalPlan((), (), self.coupling_remainders, zero, 0)
         if coupled is not None:
             plan = replace(
                 plan,

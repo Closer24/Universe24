@@ -323,6 +323,7 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
+| `core/node_execution` | Host-only isolated-interpreter Node tasks and execution measurements; no physical state ownership |
 | `fields/disturbances` | Generic records and bounded integer arithmetic; no world or diagnostics |
 | `initialization` | JSON input and generic typed definitions; no arbitrary execution |
 | `core/contracts` | State types |
@@ -786,3 +787,13 @@ Carrier emission bookkeeping and joint responses connect the owners through
 local event IDs, with fixed parent fan-in and capacity checked before local
 ownership commits. Shared history remains a bounded host audit; quantum-plus-field
 clock composition and observer inference are separate features.
+
+
+Parallel planning preserves Node-owned transitions. A transient scheduler-thread
+continuation yields only immutable carrier or spatial planning records; the spatial
+request includes the colocated committed-cost scalar. Worker interpreters receive
+no Node, continuation, world or event graph. After each bounded planning phase,
+the scheduler resumes owners in address order. Each owner performs its existing
+validation and atomic commit. Continuations are closed and discarded every tick;
+they are never part of NodeState. Shared-clock cycles use two planning barriers,
+while ordinary carrier and field phases each use one.

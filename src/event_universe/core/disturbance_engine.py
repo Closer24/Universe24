@@ -2,7 +2,9 @@
 
 from collections.abc import Callable, Mapping
 from dataclasses import replace
+from threading import Lock
 from types import MappingProxyType
+from typing import Self
 
 from .conservation_state import InventoryNode, InventoryPacket, InventoryView
 from .coupling_selectors import selected_type_set
@@ -22,6 +24,7 @@ from .event_resolution import EventResolver
 from .event_space import CausalEventSpace
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
+from .node_execution import NodeExecution
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
@@ -33,6 +36,7 @@ from .spatial_engine import (
     SpatialFieldGuard,
     SpatialPlanner,
 )
+from .spatial_node import SpatialNode
 from .topology import neighbor_address
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
@@ -59,12 +63,17 @@ class DisturbanceEngine:
         record_policy: RecordPolicy,
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
+        node_workers: int = 1,
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
         self.initial = initial
+        self._execution = NodeExecution(node_workers, planner, spatial_planner)
+        self._step_lock = Lock()
+        if self._execution.parallel and resolver is not None:
+            raise ValueError("parallel Node execution does not support an event program")
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
         self.event_space = event_space
@@ -270,7 +279,26 @@ class DisturbanceEngine:
             report["resolver"] = self._resolver.report()
         return report
 
-    def _begin(self, position: Address3, node: DisturbanceNode) -> None:
+    def execution_report(self) -> dict[str, object]:
+        """Report host scheduling separately from modeled local computation cost."""
+        return self._execution.report()
+
+    def close(self) -> None:
+        """Release host worker interpreters without changing simulation state."""
+        if not self._step_lock.acquire(blocking=False):
+            raise RuntimeError("cannot close a simulation while a tick is running")
+        try:
+            self._execution.close()
+        finally:
+            self._step_lock.release()
+
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, _type: object, _value: object, _traceback: object) -> None:
+        self.close()
+
+    def _local_spatial(self, position: Address3, node: DisturbanceNode) -> SpatialNode | None:
         spatial = None if self._spatial is None else self._spatial.nodes.get(position)
         if (
             self._spatial is not None
@@ -284,6 +312,10 @@ class DisturbanceEngine:
             )
         ):
             spatial = self._spatial._at(position)
+        return spatial
+
+    def _begin(self, position: Address3, node: DisturbanceNode) -> None:
+        spatial = self._local_spatial(position, node)
         services = None if self._spatial is None else self._spatial._services
         node._begin(self.tick, self._services, spatial, services)
 
@@ -360,6 +392,14 @@ class DisturbanceEngine:
             node.acknowledge_receipt(batch, self.tick, self._services)
 
     def step(self) -> None:
+        if not self._step_lock.acquire(blocking=False):
+            raise RuntimeError("only one caller may advance a simulation tick")
+        try:
+            self._step()
+        finally:
+            self._step_lock.release()
+
+    def _step(self) -> None:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
@@ -367,14 +407,31 @@ class DisturbanceEngine:
                 self._spatial.begin(
                     self.tick,
                     self._nodes,
+                    execution=self._execution,
                 )
             positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
-            for position in sorted(positions):
-                node = self._at(position)
-                self._begin(position, node)
-                self._commit(position, node)
+            ordered = tuple(sorted(positions))
+            if self._execution.parallel:
+                cycles = []
+                for position in ordered:
+                    node = self._at(position)
+                    spatial = self._local_spatial(position, node)
+                    cycles.append(
+                        node.parallel_cycle(
+                            self.tick,
+                            self._services,
+                            spatial,
+                            None if self._spatial is None else self._spatial._services,
+                        )
+                    )
+                self._execution.finish_cycles(tuple(cycles))
+            else:
+                for position in ordered:
+                    node = self._at(position)
+                    self._begin(position, node)
+                    self._commit(position, node)
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
                 self._spatial.deliver(self.tick, self._nodes)

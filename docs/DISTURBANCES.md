@@ -49,6 +49,7 @@ generic payload schema below.
 ```bash
 python -m event_universe --init examples/basic.json --output artifacts/basic
 python -m event_universe --init examples/basic.json --ticks 20 --output artifacts/basic-20
+python -m event_universe --init examples/basic.json --node-workers 8 --output artifacts/basic-parallel
 ```
 
 The file contains the run duration; `--ticks` explicitly overrides it. Missing
@@ -59,6 +60,23 @@ The active runner writes `initialization.json`, `run.json`, `state.json` and
 and local events. Runs are headless by default. Visualization requires
 `--visualize`; ordinary execution does not capture frames or import optional
 rendering dependencies. The active runner rejects a nonempty output directory.
+
+`--node-workers N` is a host execution option, not a physical initialization
+parameter. `N=1` preserves serial planning. Values from 2 through 64 partition
+the active Nodes that can start local work in the current tick across isolated
+Python interpreters and at most `N` CPU workers. Spatial-field planning uses the
+same pool. Every Node calculation receives only immutable local records and field
+state. The scheduler then validates and commits returned proposals in canonical
+address order before advancing the tick, so worker completion order cannot change
+state, events, costs or conservation accounting. Empty Nodes remain sparse and do
+not consume a worker. Native event programs currently require `N=1` because their
+resolver owns ordered oracle and ticket state. `run.json.execution` records the
+backend, worker count and submitted task totals separately from modeled operation
+cost and local delay.
+
+With `spatial_computation_delay`, each eligible Node first completes its immutable
+field plan behind one barrier and then its carrier plan behind a second barrier.
+The scheduler commits the combined field/carrier proposal only after both barriers.
 
 ```python
 from pathlib import Path

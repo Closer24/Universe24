@@ -13,6 +13,7 @@ from .event_space import CausalEventSpace
 from .integer import checked_work
 from .node_boundary import validate_spatial_bundle
 from .node_conservation import NodeConservationGuard
+from .node_execution import NodeExecution
 from .node_ports import PortTable
 from .node_services import NodeEvents
 from .spatial_node import NodeActivity, SpatialAccounting, SpatialNode, SpatialServices
@@ -176,6 +177,8 @@ class SpatialEngine:
         self,
         tick: int,
         residents: Mapping[Address3, DisturbanceNode],
+        *,
+        execution: NodeExecution | None = None,
     ) -> None:
         if tick % self.initial.link_ticks:
             return
@@ -192,8 +195,16 @@ class SpatialEngine:
                 for record in records
             ):
                 positions.add(position)
-        for position in sorted(positions):
-            self._at(position).advance(tick, residents.get(position), self._services)
+        if execution is not None and execution.parallel:
+            execution.finish_cycles(
+                tuple(
+                    self._at(position).plan_cycle(tick, residents.get(position), self._services)
+                    for position in sorted(positions)
+                )
+            )
+        else:
+            for position in sorted(positions):
+                self._at(position).advance(tick, residents.get(position), self._services)
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving node exists outside; terminal stock escapes without exterior decay."""
