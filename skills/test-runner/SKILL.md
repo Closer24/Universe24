@@ -11,6 +11,11 @@ behavior/risk and exact tree; output is actual commands/results, retained covera
 failure evidence, metadata and traces. Visual reports are optional output only
 when visualization has been explicitly requested.
 
+Use the shared [critical review](../workflow.md#critical-review-of-proposed-changes)
+to turn a proposed benefit into an independently checkable expectation and a
+counterexample or failure boundary. Report when results contradict the proposal;
+do not select only favorable workloads or rewrite expectations to endorse it.
+
 For local engine changes, use the [node testing contract](../../docs/NODE_TESTING.md)
 to test real per-port input/output across audit ticks and completed local cycles.
 Retain multi-node causal timing and world-size independence checks; a separate

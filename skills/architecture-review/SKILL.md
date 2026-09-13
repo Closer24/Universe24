@@ -10,6 +10,11 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
+Apply the shared [critical review](../workflow.md#critical-review-of-proposed-changes)
+to proposed architecture changes. Evaluate claimed industry practice under the
+actual workload, ownership and failure conditions, including the simpler baseline.
+Recommend a design from evidence and tradeoffs, not from its label or adoption count.
+
 Apply the [node interface](../../docs/NODE_TESTING.md) and
 [memory ownership](../../docs/MEMORY.md) contracts. Verify point reads do not
 materialize or scan the world, port order remains configured, and diagnostics

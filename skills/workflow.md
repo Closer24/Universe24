@@ -33,6 +33,56 @@ in Issues/PRs. For permitted publishing, persist the handoff there rather than o
 in chat. If publishing is unavailable or unauthorized, report the unsaved handoff.
 Do not claim personal Skills were installed merely because repository files exist.
 
+## Critical review of proposed changes
+
+Treat a proposed solution, including your own, as a hypothesis to assess rather
+than a conclusion to endorse. Preserve the user's goal and constraints while
+questioning whether the proposed mechanism achieves them. Give concrete reasons
+for disagreement and revise your view when the evidence changes.
+
+For a meaningful design, performance, dependency or process change:
+
+- Establish the observed problem, current behavior and measurable acceptance
+  target. Separate an actual bottleneck or failure from an assumed future need.
+  Compare the proposal with keeping the current design and the smallest useful
+  correction; consider a larger redesign only when it addresses a concrete need.
+- Examine what worked and failed in comparable real systems. Prefer original
+  engineering reports, reproducible benchmarks, official documentation and
+  incident or rollback reports. Verify material external claims against their
+  sources; record relevant versions, workload, scale, hardware and operating
+  constraints. Explain the mechanism and why those conditions do or do not match
+  this project. Popularity, novelty and a famous adopter are not proof of fit.
+- Look for counterevidence and failure conditions as well as success stories.
+  Account for unreported failures and selection bias; do not manufacture a failure
+  example to balance a success. Missing precedent or unavailable evidence means
+  uncertainty, not proof that a new idea will fail. Distinguish sourced experience,
+  measurements here, inference and an untested hypothesis.
+- Weigh the expected gain against complexity, maintenance, migration, compatibility,
+  memory ownership and operational failure modes. Follow the existing architecture
+  and memory reviews. Experience with a software architecture does not establish a
+  physical law or authorize changing the simulator's local integer contracts.
+- Resolve material uncertainty with the smallest useful experiment when feasible.
+  Define the baseline, expected benefit, correctness requirements and an outcome
+  that would disprove the claim before measuring. For risky changes, identify a
+  reversible trial and a concrete stop or rollback condition. Compare equivalent
+  workloads and preserve physical behavior when claiming an implementation gain.
+
+Scale the review to the decision. A small, reversible correction normally needs
+local evidence and existing checks, not a new literature review. For substantial
+choices, bound research to the uncertainties that could change the recommendation;
+say when useful evidence could not be found. Do not turn this review into a new
+approval gate or silently replace an explicitly chosen user goal or implementation
+constraint.
+
+State the recommendation plainly: adopt, modify, defer or reject, with the decisive
+reason, remaining uncertainty and next verification. For an already authorized
+implementation, continue within scope using the justified approach; raise a
+material conflict rather than pretending to agree or changing the goal silently.
+Record consequential decisions and sources in the PR or responsible design
+document. After validation, compare observed results with the prediction and keep
+durable lessons, including unsuccessful approaches and their conditions, in the
+existing owner. Change a recommendation when new evidence warrants it.
+
 ## Configuration tasks and implementation scope
 
 Checking a configuration uses the existing simulator and validator. It does not

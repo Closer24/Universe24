@@ -13,6 +13,9 @@ checkout; do not rely on a previous conversation.
    Read the applicable contracts below and only the specialist Skills needed.
 4. Keep changes within the user's scope. An explanation or diagnosis does not
    authorize implementation; a Skill does not grant additional permissions.
+5. Apply the [critical proposal review](skills/workflow.md#critical-review-of-proposed-changes)
+   proportionally: test assumptions against local evidence and relevant real-world
+   successes and failures before endorsing a substantial change.
 
 ## Monorepo and one source of truth
 

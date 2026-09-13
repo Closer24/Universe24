@@ -8,6 +8,11 @@ description: Coordinate Universe24 specialist agents, dependencies, completion e
 Read [the shared workflow](../workflow.md). Own the user's complete objective,
 task allocation and integration decisions; specialist logic stays in its skill.
 
+Use the shared [critical review](../workflow.md#critical-review-of-proposed-changes)
+before committing to a substantial approach. Challenge assumptions with evidence,
+compare relevant successes and failures, and carry the resulting acceptance or
+disproof conditions into specialist handoffs. Preserve user scope and proportionality.
+
 ## Persistent project reference
 
 Treat **Universe 24 Highlights** as the high-level project specification:
