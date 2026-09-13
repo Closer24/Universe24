@@ -32,7 +32,7 @@ document owns the finite quantum state and instrument semantics.
 | Wave storage | Joint source/checkpoint state plus local matrix operations and per-node predecessor links |
 | Coherent law | Explicit 2x2 or 4x4 Gaussian-integer matrix satisfying `U* U = scale I`, with positive common scale |
 | Instrument | Explicit one-node family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
-| Query | Conservative backward dependency closure, including relevant earlier recorded constraints, then forward amplitude evaluation |
+| Query | Bounded collection of required stored dependencies and relevant recorded constraints, then forward amplitude evaluation |
 | Result | Local Born weights; no RNG, historical path selection, or physical-clock advance |
 | Decision | First compute every branch weight, then supply one uniform integer ticket; update only the selected conditional state |
 | State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical nodes |
@@ -55,7 +55,7 @@ prototype is not copied as an exception to the register contract.
 
 1. `step` validates a whole disjoint local layer before appending its recipes.
    It advances the physical tick once. No amplitudes or random tickets are needed.
-2. `query` follows the target head backwards. It includes previously committed
+2. `query` collects the stored dependencies required by the target head. It includes previously committed
    constraints that overlap the dependency component, repeating to closure.
    Disconnected product histories and irrelevant unitaries may remain unevaluated.
 3. The quantum owner evaluates the selected recipes forward from source or
@@ -71,6 +71,26 @@ prototype is not copied as an exception to the register contract.
 The links are not the wave by themselves: states and operation laws are essential.
 The traversal is conservative, not an optimal tensor-network contraction solver.
 No query of an uncomputed coherent branch chooses which historical route occurred.
+
+### Time direction and origin lookup
+
+There is no reverse physical-time computation: the evaluator applies recorded
+recipes in causal order from source or checkpoint states. Collecting their
+dependencies is host bookkeeping, not evolving a node into its past or rewriting
+an earlier outcome. A read-only query adds zero world ticks; its host work and
+memory are still bounded and charged separately.
+
+The latest reported `Quantom -> Classic` candidate is
+[PR #91](https://github.com/Closer24/Universe24/pull/91), head
+`49bcbc74c69a47814945efce8600edbc824ee04f`, open and unmerged at this review.
+Its `local-quantum-events-v3` origin relevance check reads an event ID's status
+directly. It removes separate chronological predecessor lists and the
+`history(register)` traversal API. It retains immutable events, exact quantum
+dependencies, current register heads and checkpoint timing. Resolving a source
+records a later write-once status; it does not change the source event's original
+address, time or parents. Only the direct origin status lookup is O(1); preparing
+quantum weights or certifying cancellation may still evaluate a bounded retained
+joint state. These candidate changes are not claims about merged-main APIs.
 
 A decision is tied to its owner, record identity, node, instrument and graph
 revision. A graph change makes an uncommitted decision stale; use a fresh identity.
