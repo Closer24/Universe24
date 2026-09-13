@@ -248,6 +248,8 @@ Under 3.3.1 Discrete directional-flux conservation:
   the units; `"rotate"` cycles the axes and is Manhattan-isotropic but slows
   axial propagation to a third; `"node"` retains the legacy behavior.
   See [spatial fields](SPATIAL_FIELDS.md#carried-allocation-phases).
+  Reported to the live document on 2026-09-14 as two bullets under 11.8
+  (the `allocation_phase` modes and PR #93 head `8f04758`).
 
 Under 3.5.2 Local collisions:
 
