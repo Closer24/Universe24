@@ -12,10 +12,14 @@ flux coupling sees the same numbers as the host projection.
 python examples/inverse-square/run_experiments.py --output artifacts/inverse-square
 ```
 
-Three headless runs on a periodic 41-cubed lattice, one link per tick, with a
-stationary source that emits `8 * 3**12 = 4,251,528` units per tick so that the
-octant/axis splitting stays exact for twelve links. Eighteen ticks reach a steady
-state on every Manhattan shell up to radius 17 before any periodic return.
+Four headless runs on a 41-cubed lattice, one link per tick, with a stationary
+source that emits `8 * 3**12 = 4,251,528` units per tick so that the octant/axis
+splitting stays exact for twelve links. The three octant-law runs are periodic
+and use eighteen ticks, a steady state on every Manhattan shell up to radius 17
+before any periodic return. The straight-ray run uses an open boundary, 4,096
+golden-spiral headings at integer scale 24, 64 rays per tick, and measures the
+host-read node value on every tick of one full 64-tick sweep of the heading
+sequence after a first sweep has filled the domain.
 
 ## Observed outcomes on 2026-09-13
 
@@ -91,14 +95,59 @@ eighteen ticks left 68,044,736 units at rest and zero dissipation. The moving
 stock attenuates under the configured per-hop rule. Deposits remain at their
 Nodes but continue accumulating during emission; neither is Newton's law.
 
+### Straight rays give an inverse square in every host direction
+
+The [ray candidate](../../docs/SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1)
+gives each emitted share its own heading and integer accumulators, so it moves
+along one lattice line and never spreads. Time-averaged over one sweep of the
+heading sequence, the host-read value at host Euclidean distance `r`:
+
+| Direction | Steps k | R | Host r | Mean node value | value x r^2 / emission |
+| --- | --- | --- | --- | --- | --- |
+| axis | 2 | 2 | 2.00 | 110,025 | 0.104 |
+| axis | 4 | 4 | 4.00 | 20,759 | 0.078 |
+| axis | 8 | 8 | 8.00 | 5,190 | 0.078 |
+| axis | 12 | 12 | 12.00 | 3,114 | 0.105 |
+| face diagonal | 3 | 6 | 4.24 | 29,063 | 0.123 |
+| face diagonal | 8 | 16 | 11.31 | 4,152 | 0.125 |
+| body diagonal | 2 | 6 | 3.46 | 41,519 | 0.117 |
+| body diagonal | 5 | 15 | 8.66 | 7,266 | 0.128 |
+
+Log-log slopes against host `r` over positive samples within Manhattan radii 1
+to 16: axis -2.25, face diagonal -2.05, body diagonal -1.92. All three rays are
+close to `1/r^2` within this finite range; the octant law gave -4.96, -3.40 and
+-0.90 on the same three rays.
+
+The angular test compares each node's share of the time-averaged stock with the
+solid angle the node subtends from the source (`rho = 1` is perfect isotropy),
+node by node and in 72 detector patches of 6 polar by 12 azimuthal bins:
+
+| R | Nodes on shell | CV of rho per node | CV of rho per patch | Patch min / max | Empty nodes |
+| --- | --- | --- | --- | --- | --- |
+| 4 | 66 | 0.107 | 0.064 | 0.90 / 1.16 | 0 |
+| 8 | 258 | 0.111 | 0.071 | 0.89 / 1.25 | 0 |
+| 12 | 578 | 0.182 | 0.072 | 0.87 / 1.26 | 0 |
+| 16 | 1026 | 0.335 | 0.078 | 0.81 / 1.20 | 5 |
+
+At patch resolution the stock is isotropic to within about 7 percent at every
+tested radius, and `mean value x r^2 / emission` stays at 0.115 from R = 4 to 16. The
+remaining node-level graininess grows with R because 4,096 lines cannot cover
+every one of 1,026 nodes evenly; it is finite sampling of directions, not a
+directional bias, and shrinks with more headings. Every Manhattan shell still
+carries exactly one tick of emission, and 544,195,584 emitted units were fully
+accounted as resident, in flight or escaped through the open boundary.
+
 ## Conclusion
 
 For this tested transport regime, conserved moving stock distributed across
-growing Manhattan shells gives exactly
-`emission / (4R^2 + 2)` per node on average. Newton's pointwise, direction-free
-`1/r^2` requires additional physical mechanisms and evidence. The present law
-is anisotropic and concentrates stock near body diagonals. A different transport
-candidate would need angular tests over host-defined spheres and
-its own model identity, not a parameter of this one, and it must still satisfy
-the locality and fixed-cost rules. No gravitational constant, mass coupling or
-attraction law is claimed.
+growing Manhattan shells gives exactly `emission / (4R^2 + 2)` per node on
+average under both candidates; this is a shell-count identity, not a physical
+Gauss law. The octant law is anisotropic and concentrates stock near body
+diagonals. The straight-ray candidate, with its own model identity, adds the
+one mechanism the pointwise direction-free `1/r^2` needs: shares that carry
+their own heading and phase and dilute purely by line geometry. Its angular
+test over host-defined spheres passes to within the resolution of its finite
+heading set. Finite fitted slopes are not proofs of asymptotic scaling. No
+gravitational constant, mass coupling or attraction law is claimed; the field is
+a transported stock, and a receiver's response to it remains a separately
+configured rule.

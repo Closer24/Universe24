@@ -97,8 +97,10 @@ not replacements for the default entity profiles or derived universal laws.
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 outward field from outside the event space: every Manhattan shell carries exactly
 one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
-values are anisotropic (geometric on axes, about `1/r` on body diagonals). Newton's
-pointwise law would need an isotropic transport candidate that does not exist yet.
+values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
+straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
+anisotropy: rays carry their heading and phase, and the time-averaged flux per
+node follows solid angle. Mass coupling and attraction remain unaddressed.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

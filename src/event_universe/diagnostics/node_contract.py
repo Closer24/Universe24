@@ -19,6 +19,7 @@ from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
     FieldRuleGuard,
+    Ray,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
@@ -40,6 +41,7 @@ STATE_RECORDS = (
     PendingCycle,
     FieldInteractionGuard,
     FieldRuleGuard,
+    Ray,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,

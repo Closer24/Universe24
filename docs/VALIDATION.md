@@ -1314,3 +1314,25 @@ The integration affected check passed Ruff, formatting and strict mypy, with
 Windows file-replacement permission error; rerunning its entire 17-test module
 in a fresh temporary directory passed. All 28 repository language, navigation
 and hygiene checks also passed. Required CI is checked on the published head.
+
+## Straight-ray field candidate and the inverse-square probe — 2026-09-13
+
+Base: `ca51869` on this branch. `"transport": "ray"` (`isotropic-ray-field-v1`)
+adds straight-moving rays that carry an integer heading and three accumulators,
+a per-Node ray slot capacity, emission over a configured heading sequence, and
+attenuation, deposits, escape and flux samples through the existing accounting.
+The [probe](../examples/inverse-square/README.md) measured it as a read-only
+world/event audit at host Euclidean distance, not as an operational observer.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 2,022 tests with five explicit visualization skips |
+| New tests | `tests/test_ray_field.py`: DDA period, emission shares and cursor, per-tick totals and shell stock, receiver flux, localize/dissipate attenuation, explicit slot failure, open-boundary escape, configuration limits, runner identity; parallel/serial equivalence on `isotropic_rays.json` |
+| Ray probe | 41-cubed open world, 4,096 headings at scale 24, 64 rays per tick, one 64-tick sweep measured: log-log slopes -2.25 (axis), -2.05 (face diagonal), -1.92 (body diagonal); flux per solid angle uniform to a 6 to 8 percent coefficient of variation over 72 detector patches at R = 4, 8, 12, 16; no empty nodes through R = 12 |
+| Octant law on the same probe | Slopes -4.96, -3.40, -0.90; shell means exact `emission / (4R^2 + 2)` |
+| Accounting | 544,195,584 emitted units resident, in flight or escaped; zero dissipation; balanced at every tick; finite fitted slopes, not asymptotic proofs |
+| Visualization | Not requested or generated |
+
+The result is geometric dilution of straight rays, not a gravitational law: no
+constant, mass coupling or attraction is claimed, and node-level graininess at
+large radius is finite direction sampling.
