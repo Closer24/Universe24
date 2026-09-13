@@ -18,6 +18,18 @@ SKIP_FILES = {
     "tools/breaking_register_terminology_migration.py",
 }
 
+# Underscore-separated identifiers are not matched by word-boundary replacement.
+# Rename each by its actual responsibility rather than mechanically calling it a Node.
+IDENTIFIER_REPLACEMENTS = (
+    ("source_site", "source_register_index"),
+    ("record_sites", "record_register_indices"),
+    ("local_sites", "local_register_indices"),
+    ("another_site", "another_register"),
+    ("other_sites", "other_origins"),
+    ("def _site(", "def _validate_register_index("),
+    ("self._site(", "self._validate_register_index("),
+)
+
 
 def tracked_files() -> list[str]:
     return subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).splitlines()
@@ -48,6 +60,9 @@ def replace_words(text: str, plural: str, singular: str) -> str:
 
 
 def migrate(path: str, text: str) -> str:
+    for old, new in IDENTIFIER_REPLACEMENTS:
+        text = text.replace(old, new)
+
     suffix = Path(path).suffix.lower()
     if quantum_register_context(path):
         if suffix in {".py", ".json"}:
