@@ -1,4 +1,4 @@
-"""Host-side inverse-square probe: exact Gauss shells, anisotropic node values."""
+"""Host-side shell-stock probe and anisotropic node values."""
 
 import importlib.util
 from pathlib import Path
@@ -33,7 +33,7 @@ def test_node_values_are_anisotropic_geometric_on_axes_and_slow_on_body_diagonal
     # Same Manhattan radius 6: the body diagonal node holds far more than the axis node.
     assert rays[("body_diagonal", 2)]["manhattan_radius"] == rays[("axis", 6)]["manhattan_radius"]
     assert rays[("body_diagonal", 2)]["value"] > 10 * rays[("axis", 6)]["value"]
-    # Edge case: the host flux projection is radial on every ray.
+    # Edge case: the host flux projection has a positive outward component.
     for row in rays.values():
         if row["value"]:
             assert row["radial_flux"] > 0

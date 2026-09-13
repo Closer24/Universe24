@@ -1,8 +1,8 @@
 """Host-side test of whether an inverse-square law follows from outward field transport.
 
-The observer is not the event space: every measurement here is a read-only host
-sample of node state after the run, compared against the observer's Euclidean
-distance from the source. Nothing is planted in the world to observe it; the
+Every measurement here is a read-only world/event audit of node state after
+the run, compared against host Euclidean distance from the source. This is not
+an operational local observer measurement. No detector is planted; the
 optional held receivers only check that the in-world flux coupling agrees with
 the host projection. Schema 1 conservative transport and schema 2 localizing
 attenuation are compared. No physical law is inferred from names.
@@ -11,12 +11,14 @@ attenuation are compared. No physical law is inferred from names.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
 
 from event_universe import Simulation
 from event_universe.initialization import parse_initial_state
+from event_universe.runner import source_fingerprint
 
 ROOT = Path(__file__).resolve().parents[2]
 SIZE = 41
@@ -324,7 +326,7 @@ def sample(world: Simulation, position) -> dict:
 
 
 def shell_table(world: Simulation, max_radius: int) -> list[dict]:
-    """Gauss check: total moving stock on each Manhattan shell after steady state."""
+    """Total moving stock on each Manhattan shell, not oriented surface flux."""
     rows = []
     for radius in range(1, max_radius + 1):
         stock, nodes, values = 0, 0, []
@@ -379,7 +381,7 @@ def direction_table(world: Simulation, max_steps: int) -> list[dict]:
 
 
 def fit_exponent(points: list[tuple[float, float]]) -> float | None:
-    """Least-squares slope of log(value) against log(r); None if any value is nonpositive."""
+    """Least-squares slope over positive samples; report their support separately."""
     usable = [(math.log(r), math.log(v)) for r, v in points if v > 0 and r > 0]
     if len(usable) < 2:
         return None
@@ -417,7 +419,14 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    result: dict[str, object] = {"size": SIZE, "ticks": TICKS, "emission_per_tick": STRENGTH}
+    result: dict[str, object] = {
+        "size": SIZE,
+        "ticks": TICKS,
+        "emission_per_tick": STRENGTH,
+        "source_sha256": source_fingerprint(),
+        "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "measurement_scope": "read-only world/event audit",
+    }
 
     world = run(conservative_document(with_receivers=False))
     shells = shell_table(world, TICKS - 1)
@@ -445,6 +454,17 @@ def main() -> None:
         "shells": shells,
         "rays": rays,
         "log_log_slopes_steps_1_to_12": fits,
+        "fit_support": {
+            name: {
+                "positive_sample_steps": [
+                    row["steps"]
+                    for row in rays
+                    if row["direction"] == name and 1 <= row["steps"] <= 12 and row["value"] > 0
+                ],
+                "selection": "positive samples only; unreached zero values are excluded",
+            }
+            for name in DIRECTIONS
+        },
     }
 
     world = run(conservative_document(with_receivers=True))
@@ -458,7 +478,7 @@ def main() -> None:
         "dissipation": world.dissipation_totals(),
         "localized": world.localized_totals(),
         "rays": rays,
-        "moving_value_ratio_per_link_body_diagonal": [
+        "moving_value_ratio_per_diagonal_step_body_diagonal": [
             round(b["value"] / a["value"], 4) if a["value"] else None
             for a, b in zip(rays, rays[1:], strict=False)
             if a["direction"] == b["direction"] == "body_diagonal"
@@ -501,12 +521,25 @@ def main() -> None:
         "escaped": world.escaped_totals(),
         "rays": ray_rays,
         "log_log_slopes_R_1_to_16": ray_fits,
+        "fit_support": {
+            name: {
+                "positive_sample_steps": [
+                    row["steps"]
+                    for row in ray_rays
+                    if row["direction"] == name
+                    and row["manhattan_radius"] <= 16
+                    and row["mean_value"] > 0
+                ],
+                "selection": "positive samples only; unreached zero values are excluded",
+            }
+            for name in DIRECTIONS
+        },
         "isotropy": isotropy_table(arrived, measured, (4, 8, 12, 16)),
     }
     print(json.dumps({"ray_slopes": ray_fits, "isotropy": result["rays"]["isotropy"]}))
     (args.output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"slopes": fits, "localized_totals": result["localizing"]["localized"]}))
-    print("PASS: " + str(args.output / "summary.json"))
+    print("Wrote report: " + str(args.output / "summary.json"))
 
 
 if __name__ == "__main__":

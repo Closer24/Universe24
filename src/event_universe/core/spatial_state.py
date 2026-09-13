@@ -32,7 +32,7 @@ class DecayDefinition:
     """Completed-link attenuation ratio and the fate of the removed fraction.
 
     ``localize`` (default) keeps the removed quantity as stationary stock owned
-    by the receiving Node, so total flux is preserved. ``dissipate`` is the
+    by the receiving Node, so total signed inventory is preserved. ``dissipate`` is the
     explicit historical option that records it as loss instead.
     """
 

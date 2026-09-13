@@ -1,4 +1,4 @@
-"""Straight-moving ray fields: lines, Gauss shells, receivers, decay, capacity and limits."""
+"""Straight-moving ray fields: lines, shell stock, receivers, decay, capacity and limits."""
 
 import json
 import math

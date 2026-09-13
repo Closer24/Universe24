@@ -834,6 +834,13 @@ and work-driven emissions, against serial snapshots, committed-cost readouts,
 modeled work and complete event order. Worker planning keeps the same local
 proposal validation and field/carrier commit boundaries.
 
+## Localizing-residue integration boundaries
+
+Localizing-residue integration also covers a signed (5, -3, 0) pulse under both
+field clocks, independent localize/dissipate fields, and deposit overflow that
+preserves all receiver state and leaves the original packet on its Link. These
+are component-inventory and atomicity checks, not physical energy proofs.
+
 ## Reference unit authoring
 
 `tests/test_reference_units.py` independently checks SI dimensions and exact defining
