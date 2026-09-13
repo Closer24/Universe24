@@ -162,9 +162,15 @@ with distance, so the extra cost decays with the field itself. With a mass
 emitting 24000 units per interval and `normal_budget` 100, held clocks at
 distances 1, 2, 3, 4 and 8 completed 2, 6, 12, 23 and 40 of 40 cycles; a large
 budget restores 40 everywhere without changing the field. A moving carrier
-crossing such a region is delayed the same way. This is the local delay law
-applied to a configured field, not a derived gravitational potential; whether
-the resulting profile matches any physical law is a separate measurement.
+crossing such a region is delayed the same way. Under the
+[shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) the same load also
+prices field forwarding, so other fields crossing the region are delayed: with
+budget 200 a light pulse reached a node 16 links behind an emitting mass at
+tick 16 without the mass and not within 40 ticks with it, while a node six
+links off that line saw its first light at the same tick in both cases. This
+is the local delay law applied to a configured field, not a derived
+gravitational potential; whether the resulting profile matches any physical
+law is a separate measurement.
 
 ### Directional delay
 

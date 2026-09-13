@@ -127,6 +127,88 @@ def test_rejected_computation_field_selections(patch, message):
         parse_initial_state(doc)
 
 
+def light_arrivals(mass_emission, observer=(22, 12, 1), budget=200, ticks=40):
+    doc = {
+        "schema_version": 1,
+        "model_id": "computation-field-shared-clock-light-v1",
+        "boundary": "open",
+        "shape": [29, 25, 3],
+        "slots_per_node": 2,
+        "link_ticks": 1,
+        "normal_budget": budget,
+        "ticks": ticks,
+        "spatial_computation_delay": True,
+        "computation_field": "computation",
+        "operation_costs": {name: 1 for name in OPERATIONS},
+        "fields": [
+            {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
+            {
+                "name": "computation",
+                "components": 1,
+                "units": "load unit",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            },
+            {
+                "name": "light",
+                "components": 1,
+                "units": "unit",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            },
+        ],
+        "disturbance_types": [
+            {
+                "name": "mass body",
+                "fields": ["mass"],
+                "defaults": {"mass": 1},
+                "transport": {"mode": "hold"},
+            },
+            {"name": "lamp", "fields": ["mass"], "defaults": {"mass": 1}, "transport": {"mode": "hold"}},
+        ],
+        "spatial_fields": [
+            {"field": "computation", "baseline": 0, "transport": "outward"},
+            {"field": "light", "baseline": 0, "transport": "outward"},
+        ],
+        "emissions": [
+            {
+                "type": "mass body",
+                "field": "computation",
+                "amount": mass_emission,
+                "denominator": 1,
+                "source": True,
+            },
+            {"type": "lamp", "field": "light", "amount": 2400, "denominator": 1, "source": True},
+        ],
+        "seeds": [
+            {"position": [14, 12, 1], "type": "mass body"},
+            {"position": [6, 12, 1], "type": "lamp"},
+        ],
+    }
+    events = []
+    world = Simulation(parse_initial_state(doc), observer=events.append)
+    for _ in range(ticks):
+        world.step()
+    return sorted(
+        e["tick"]
+        for e in events
+        if e.get("event") == "spatial_received"
+        and tuple(e["position"]) == observer
+        and any(f.get("light", (0,))[0] for f in e.get("received_fields", []))
+    )
+
+
+def test_under_the_shared_clock_the_load_delays_light_behind_the_mass():
+    free = light_arrivals(0)
+    assert free and free[0] == 16
+    behind = light_arrivals(24000)
+    assert not behind or behind[0] > 16
+    beside = light_arrivals(24000, observer=(22, 18, 1))
+    assert beside and beside[0] == light_arrivals(0, observer=(22, 18, 1))[0]
+
+
 def test_signed_or_nonconserved_field_is_rejected():
     doc = document(budget=100, emission=10)
     doc["fields"][2]["conserved"] = False

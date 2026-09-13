@@ -437,8 +437,20 @@ class DisturbanceEngine:
             spatial.nodes[position].cost_cause_id = None
             spatial._active.discard(position)
             return None
+        load = 0
+        if self.initial.computation_field is not None:
+            # Under the shared clock the computation load delays field forwarding too.
+            index = next(
+                i
+                for i, d in enumerate(self.initial.spatial_fields)
+                if d.field == self.initial.computation_field
+            )
+            state = spatial.nodes[position].states[index]
+            spatial.nodes[position].load = sum(unpack(p)[0] for p in state.populations)
+            load = spatial.load(position)
         field_plan = replace(
-            field_plan, cost=bounded(checked_work(field_plan.cost + spatial.node_merge_cost))
+            field_plan,
+            cost=bounded(checked_work(field_plan.cost + spatial.node_merge_cost + load)),
         )
         self._validate_emission_records(node.records, field_plan.emission_records)
         records = field_plan.emission_records
