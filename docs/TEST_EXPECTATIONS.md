@@ -778,6 +778,17 @@ even when the quotient would fit, preserving existing timing behavior.
 Existing expression, spatial transaction, rotation, engine timing and link
 transport suites remain the integration coverage for callers and operation costs.
 
+## Parallel Node execution
+
+`test_parallel_node_execution.py` compares serial and two-worker execution after
+every tick for carried disturbances, finite spatial fields and the shared delayed
+field/carrier Node cycle. Snapshots, events, model costs, conserved totals, sources,
+dissipation and escape must remain exactly equal. Separate checks require bounded
+worker counts, explicit rejection of native event programs, saved host-execution
+metadata and actual disturbance/spatial task submission. The tests do not claim a
+speedup for small worlds; performance depends
+on local rule cost, active Node count and interpreter serialization overhead.
+
 Inline observer input is covered by `tests/test_local_observer.py`: normal schema
 validation, rejection before output creation, ambiguous placement rejection, exact
 saved initialization and unchanged physical results with recording enabled.

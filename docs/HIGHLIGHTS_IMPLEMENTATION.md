@@ -199,6 +199,10 @@ treating its omissions as current gaps.
   and incompatible policies fail explicitly.
 - Normal runs save the input, event trace, final state and run metadata. They check
   combined quantity accounting at each completed tick and retain failure evidence.
+- The runner can submit each active Node's immutable disturbance and spatial-field
+  plan to isolated Python interpreters. A tick barrier and address-ordered commit
+  preserve the serial result. Shared delayed field/carrier cycles use two planning
+  barriers before their joint commit. Host worker counts never change modeled local cost.
 - Visualization is opt-in. Playback and workspace consumers read recorded labels,
   values, groups, positions and transfers without changing physical state.
 - Views distinguish resident records from fields and in-transit payloads, and

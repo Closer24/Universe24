@@ -1,6 +1,6 @@
 """Spatial ownership with fixed or shared computation cycle scheduling."""
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Mapping, Set
 from dataclasses import dataclass, replace
 from typing import Protocol
 
@@ -17,6 +17,7 @@ from .disturbance_state import (
 )
 from .event_space import CausalEventSpace
 from .integer import add_components, checked_work
+from .node_execution import NodeExecution, SpatialPlanningInput
 from .spatial_state import (
     FieldInteractionGuard,
     SpatialBundle,
@@ -74,6 +75,18 @@ class ReactionCommit:
     states: tuple[SpatialState, ...]
     phases: Values
     links: tuple[SpatialPacket | None, ...] | None
+
+
+@dataclass(frozen=True, slots=True)
+class _PreparedSpatialCycle:
+    position: Address3
+    node: SpatialNodeState
+    states: tuple[SpatialState, ...]
+    records: tuple[DisturbanceRecord | None, ...]
+    sample_values: Values
+    sample_fluxes: Values
+    sample_ports: tuple[Values, ...]
+    sample_cause: int | None
 
 
 class SpatialEngine:
@@ -186,6 +199,7 @@ class SpatialEngine:
         *,
         record_cause: RecordCause | None = None,
         commit_cause: CauseCommit | None = None,
+        execution: NodeExecution | None = None,
     ) -> None:
         if tick % self.initial.link_ticks:
             return
@@ -201,139 +215,193 @@ class SpatialEngine:
                 for record in records
             ):
                 positions.add(position)
-        for position in sorted(positions):
-            node = self._at(position)
-            if any(packet is not None for packet in self.links.get(position, ())):
-                raise ValueError("outgoing spatial links are occupied")
-            records = residents.get(position, ())
-            sample_values, sample_fluxes, sample_ports = (
-                node.sample_values,
-                node.sample_fluxes,
-                node.sample_ports,
+        ordered = sorted(positions)
+        if execution is not None and execution.parallel:
+            prepared = tuple(
+                cycle
+                for position in ordered
+                if (cycle := self._prepare_cycle(tick, position, residents, coupled_types)) is not None
             )
-            sample_cause = node.sample_cause_id
-            if self.coupler is not None and any(
-                record is not None and record.type_index in coupled_types for record in records
-            ):
-                # Freeze only locally delivered input, before fresh source injection.
-                sample_values = self.coupler.sample(node.states)
-                sample_fluxes = self.coupler.sample_fluxes(node.states)
-                sample_cause = node.cause_id
-                if self.initial.spatial_interactions:
-                    sample_ports = self.coupler.sample_ports(node.states)
-            # Samples describe only the preceding delivery interval, never a permanent trail.
-            states = (
-                node.states
-                if self.initial.field_rules
-                else tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
-                    for state in node.states
+            plans = execution.plan_spatial(
+                tuple(
+                    SpatialPlanningInput(cycle.states, cycle.records, cycle.node.received_count)
+                    for cycle in prepared
                 )
             )
-            active_source = any(
-                record is not None
-                and matches_type(rule, record.type_index)
-                and (
-                    rule.budget is None
-                    or not record.emission_remaining
-                    or any(unpack(record.emission_remaining[index]))
+            for cycle, plan in zip(prepared, plans, strict=True):
+                self._commit_cycle(tick, cycle, plan, commit_records, record_cause, commit_cause)
+            return
+        for position in ordered:
+            cycle = self._prepare_cycle(tick, position, residents, coupled_types)
+            if cycle is not None:
+                self._commit_cycle(
+                    tick,
+                    cycle,
+                    self.planner(cycle.states, cycle.records, cycle.node.received_count),
+                    commit_records,
+                    record_cause,
+                    commit_cause,
                 )
-                for record in records
-                for index, rule in enumerate(self.initial.emissions)
+
+    def _prepare_cycle(
+        self,
+        tick: int,
+        position: Address3,
+        residents: Mapping[Address3, tuple[DisturbanceRecord | None, ...]],
+        coupled_types: Set[int],
+    ) -> _PreparedSpatialCycle | None:
+        node = self._at(position)
+        if any(packet is not None for packet in self.links.get(position, ())):
+            raise ValueError("outgoing spatial links are occupied")
+        records = residents.get(position, ())
+        sample_values, sample_fluxes, sample_ports = (
+            node.sample_values,
+            node.sample_fluxes,
+            node.sample_ports,
+        )
+        sample_cause = node.sample_cause_id
+        if self.coupler is not None and any(
+            record is not None and record.type_index in coupled_types for record in records
+        ):
+            # Freeze only locally delivered input, before fresh source injection.
+            sample_values = self.coupler.sample(node.states)
+            sample_fluxes = self.coupler.sample_fluxes(node.states)
+            sample_cause = node.cause_id
+            if self.initial.spatial_interactions:
+                sample_ports = self.coupler.sample_ports(node.states)
+        # Samples describe only the preceding delivery interval, never a permanent trail.
+        states = (
+            node.states
+            if self.initial.field_rules
+            else tuple(
+                replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                for state in node.states
             )
-            active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
-            if not active_source and not active_field and node.received_count == 0:
-                node.states = tuple(
-                    replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
-                    for state in states
-                )
-                node.last_cost = 0
-                node.cost_cause_id = None
-                node.sample_values, node.sample_fluxes, node.sample_ports = (
-                    sample_values,
-                    sample_fluxes,
-                    sample_ports,
-                )
-                node.sample_cause_id = sample_cause
-                node.last_begin_tick = tick
-                self._active.discard(position)
-                continue
-            plan = self.planner(states, records, node.received_count)
-            cost = bounded(checked_work(plan.cost + node.received_decay_cost))
-            packets: list[SpatialPacket | None] = [None] * 6
-            for port, bundle in enumerate(plan.outgoing):
-                if any(any(unpack(payload)) for field in bundle for payload in field):
-                    packets[port] = SpatialPacket(
-                        bounded(tick + self.initial.link_ticks), position, port, bundle
-                    )
-            # All physical calculations and validation precede the local commit.
-            if self.event_space is not None:
-                self.event_space.require_room(1 + sum(p is not None for p in packets))
-            carrier_cause = None if record_cause is None else record_cause(position)
-            commit_records(position, plan.emission_records)
-            node.states = plan.states
-            node.last_cost = cost
-            node.received_count = 0
-            node.received_decay_cost = 0
-            node.last_begin_tick = tick
+        )
+        active_source = any(
+            record is not None
+            and matches_type(rule, record.type_index)
+            and (
+                rule.budget is None
+                or not record.emission_remaining
+                or any(unpack(record.emission_remaining[index]))
+            )
+            for record in records
+            for index, rule in enumerate(self.initial.emissions)
+        )
+        active_field = any(any(unpack(payload)) for state in states for payload in state.populations)
+        if not active_source and not active_field and node.received_count == 0:
+            node.states = tuple(
+                replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                for state in states
+            )
+            node.last_cost = 0
+            node.cost_cause_id = None
             node.sample_values, node.sample_fluxes, node.sample_ports = (
                 sample_values,
                 sample_fluxes,
                 sample_ports,
             )
             node.sample_cause_id = sample_cause
-            self.links[position] = tuple(packets)
-            # One following phase clears the reported cost before becoming idle.
-            self._active.add(position)
-            for index, payload in enumerate(plan.source_delta):
-                for component, value in enumerate(payload):
-                    self.sources[index][component] += value
-            for index, payload in enumerate(plan.rule_delta):
-                for component, value in enumerate(payload):
-                    self.transformations[index][component] += value
-            notifications: list[dict[str, object]] = []
-            cause = self._event(
-                "spatial_cycle",
-                tick,
-                position,
-                causes=(node.cause_id, carrier_cause),
-                notifications=notifications,
-                cost=cost,
-                source_delta={
-                    field.name: plan.source_delta[i]
-                    for i, field in enumerate(self.initial.fields)
-                    if any(plan.source_delta[i])
-                },
-                **(
-                    {
-                        "rule_delta": {
-                            field.name: plan.rule_delta[i]
-                            for i, field in enumerate(self.initial.fields)
-                            if any(plan.rule_delta[i])
-                        }
+            node.last_begin_tick = tick
+            self._active.discard(position)
+            return None
+        return _PreparedSpatialCycle(
+            position,
+            node,
+            states,
+            records,
+            sample_values,
+            sample_fluxes,
+            sample_ports,
+            sample_cause,
+        )
+
+    def _commit_cycle(
+        self,
+        tick: int,
+        cycle: _PreparedSpatialCycle,
+        plan: SpatialPlan,
+        commit_records: RecordCommit,
+        record_cause: RecordCause | None,
+        commit_cause: CauseCommit | None,
+    ) -> None:
+        position, node = cycle.position, cycle.node
+        cost = bounded(checked_work(plan.cost + node.received_decay_cost))
+        packets: list[SpatialPacket | None] = [None] * 6
+        for port, bundle in enumerate(plan.outgoing):
+            if any(any(unpack(payload)) for field in bundle for payload in field):
+                packets[port] = SpatialPacket(
+                    bounded(tick + self.initial.link_ticks), position, port, bundle
+                )
+        # Worker results are immutable proposals. Only this scheduler thread commits them.
+        if self.event_space is not None:
+            self.event_space.require_room(1 + sum(p is not None for p in packets))
+        carrier_cause = None if record_cause is None else record_cause(position)
+        commit_records(position, plan.emission_records)
+        node.states = plan.states
+        node.last_cost = cost
+        node.received_count = 0
+        node.received_decay_cost = 0
+        node.last_begin_tick = tick
+        node.sample_values, node.sample_fluxes, node.sample_ports = (
+            cycle.sample_values,
+            cycle.sample_fluxes,
+            cycle.sample_ports,
+        )
+        node.sample_cause_id = cycle.sample_cause
+        self.links[position] = tuple(packets)
+        # One following phase clears the reported cost before becoming idle.
+        self._active.add(position)
+        for index, payload in enumerate(plan.source_delta):
+            for component, value in enumerate(payload):
+                self.sources[index][component] += value
+        for index, payload in enumerate(plan.rule_delta):
+            for component, value in enumerate(payload):
+                self.transformations[index][component] += value
+        notifications: list[dict[str, object]] = []
+        cause = self._event(
+            "spatial_cycle",
+            tick,
+            position,
+            causes=(node.cause_id, carrier_cause),
+            notifications=notifications,
+            cost=cost,
+            source_delta={
+                field.name: plan.source_delta[i]
+                for i, field in enumerate(self.initial.fields)
+                if any(plan.source_delta[i])
+            },
+            **(
+                {
+                    "rule_delta": {
+                        field.name: plan.rule_delta[i]
+                        for i, field in enumerate(self.initial.fields)
+                        if any(plan.rule_delta[i])
                     }
-                    if plan.rule_delta
-                    else {}
-                ),
-            )
-            node.cause_id = node.cost_cause_id = cause
-            if cause is not None and commit_cause is not None and plan.emission_records != records:
-                commit_cause(position, cause)
-            for index, packet in enumerate(packets):
-                if packet is not None:
-                    sent = self._event(
-                        "spatial_sent",
-                        tick,
-                        position,
-                        causes=(cause,),
-                        notifications=notifications,
-                        port=packet.port,
-                        arrival_tick=packet.arrival_tick,
-                    )
-                    if sent is not None:
-                        packets[index] = replace(packet, cause_id=sent)
-            self.links[position] = tuple(packets)
-            self._notify(notifications)
+                }
+                if plan.rule_delta
+                else {}
+            ),
+        )
+        node.cause_id = node.cost_cause_id = cause
+        if cause is not None and commit_cause is not None and plan.emission_records != cycle.records:
+            commit_cause(position, cause)
+        for index, packet in enumerate(packets):
+            if packet is not None:
+                sent = self._event(
+                    "spatial_sent",
+                    tick,
+                    position,
+                    causes=(cause,),
+                    notifications=notifications,
+                    port=packet.port,
+                    arrival_tick=packet.arrival_tick,
+                )
+                if sent is not None:
+                    packets[index] = replace(packet, cause_id=sent)
+        self.links[position] = tuple(packets)
+        self._notify(notifications)
 
     def cycle_causes(self, position: Address3, tick: int, *, sampled: bool) -> tuple[int, ...]:
         """IDs of the exact frozen sample and current cost consumed by a carrier."""
@@ -378,6 +446,20 @@ class SpatialEngine:
         self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
     ) -> SpatialPlan:
         """Prepare a bounded field proposal without changing any physical owner."""
+        planning_input = self.node_planning_input(position, records)
+        if planning_input is None:
+            return self.idle_node_plan(position, records)
+        plan = self.planner(
+            planning_input.states,
+            planning_input.records,
+            planning_input.received,
+        )
+        return self.complete_node_plan(position, plan)
+
+    def node_planning_input(
+        self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
+    ) -> SpatialPlanningInput | None:
+        """Freeze the local input consumed by a shared field/carrier cycle."""
         node = self._at(position)
         active_source = any(
             record is not None
@@ -403,9 +485,23 @@ class SpatialEngine:
                 for state in node.states
             )
         )
-        if active:
-            plan = self.planner(states, records, node.received_count)
-            return replace(plan, cost=bounded(checked_work(plan.cost + node.received_decay_cost)))
+        return SpatialPlanningInput(states, records, node.received_count) if active else None
+
+    def complete_node_plan(self, position: Address3, plan: SpatialPlan) -> SpatialPlan:
+        """Add locally received decay work to an already computed field proposal."""
+        node = self._at(position)
+        return replace(plan, cost=bounded(checked_work(plan.cost + node.received_decay_cost)))
+
+    def idle_node_plan(
+        self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
+    ) -> SpatialPlan:
+        """Return the formula-free proposal for a Node with no field work."""
+        states = self._at(position).states
+        if not self.initial.field_rules:
+            states = tuple(
+                replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6)
+                for state in states
+            )
         blank = tuple(state.populations for state in self._blank_states())
         zero = tuple((0,) * field.components for field in self.initial.fields)
         return SpatialPlan(states, (blank,) * 6, records, zero, 0)

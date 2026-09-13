@@ -166,6 +166,10 @@ Both active and historical runners require a new or empty output directory.
 Generated output expires 24 hours after writing finishes; active writers remain
 protected. Original initialization files and templates are preserved. See
 [output retention](docs/RETENTION.md) for ownership and interrupted runs.
+For CPU-parallel active-Node planning, pass `--node-workers N` with `N` from 2
+through 64. Each tick commits the isolated worker proposals in deterministic Node
+order. The default is one worker, and native event programs remain serial. The
+worker setting affects host execution only and is recorded in `run.json`.
 The reported `elapsed_seconds` includes world construction, simulation steps,
 per-tick accounting, event writing and the final snapshot. Input parsing and final
 artifact serialization are outside that timer. For a small open-boundary run, use

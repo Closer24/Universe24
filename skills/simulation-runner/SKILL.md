@@ -43,6 +43,15 @@ that exercises the requested behavior. Use an isolated checkout and unique outpu
 directory. Do not run a large parameter sweep when one bounded case resolves the
 current question. Reuse a matching test run instead of duplicating it.
 
+For CPU-parallel active Simulation runs, pass `--node-workers N` with a bounded
+value from 2 through 64. This is a host scheduling choice and must not be inserted
+into the physical initialization JSON. Verify `run.json.execution`, and compare a
+bounded serial control when accepting scheduler work: state, ordered events,
+modeled costs and declared accounting must match exactly at every tick. Native
+event programs remain serial because their resolver owns ordered oracle state.
+Include a `spatial_computation_delay` control when the shared field/carrier clock
+is affected; both planning barriers must still lead to one joint Node commit.
+
 Both runners require a new or empty output directory. Follow
 [output retention](../../docs/RETENTION.md): generated output is registered for
 24-hour cleanup after writing finishes, while active leases protect ongoing
