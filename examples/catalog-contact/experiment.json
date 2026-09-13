@@ -1,0 +1,32 @@
+{
+  "catalog": "examples/known-entities/catalog.json",
+  "units": "examples/known-entities/physical-units.json",
+  "template": "examples/quantum/causal_charge.json",
+  "model_id": "catalog-causal-contact-probe-v1",
+  "ticks": 16,
+  "ticket": 9,
+  "default_entities": ["electron", "up_quark", "down_quark"],
+  "particle_ids": [
+    "up_quark", "antiup_quark", "down_quark", "antidown_quark",
+    "charm_quark", "anticharm_quark", "strange_quark", "antistrange_quark",
+    "top_quark", "antitop_quark", "bottom_quark", "antibottom_quark",
+    "electron", "positron", "muon", "antimuon", "tau", "antitau",
+    "electron_neutrino", "electron_antineutrino",
+    "muon_neutrino", "muon_antineutrino", "tau_neutrino", "tau_antineutrino",
+    "photon", "gluon_multiplet", "w_plus", "w_minus", "z_boson", "higgs_boson",
+    "proton", "antiproton", "neutron", "antineutron"
+  ],
+  "charge_field": {"components": 1, "units": "charge_third", "scale": 1, "signed": true},
+  "mass_field": {"components": 1, "units": "keV/c2", "scale": 1, "signed": false},
+  "mass_error_by_source_unit": {"eV/c2": "500", "MeV/c2": "0.0005", "GeV/c2": "0.0000005"},
+  "missing_mass_policy": "marked_unassigned",
+  "source_budget": 150,
+  "capture_budget": 150,
+  "notes": [
+    "All entries select the same existing contact and causal envelope law; labels never select species dynamics.",
+    "Mass is encoded to the nearest keV/c2 with at most half a unit error. These are central reference values, not a universal mass quantum.",
+    "mass_assigned=0 marks an unassigned mass: its zero storage placeholder is not a zero physical mass. Flavor neutrinos have no single definite catalog rest mass.",
+    "One gluon multiplet entry is a generic probe, not an implementation of eight color modes. Spin is a passive quantum number, not a spatial vector or exchange-statistics law.",
+    "All other catalog properties and interaction families remain linked reference metadata. No QCD, weak decay or reciprocal electromagnetic response is supplied by this experiment."
+  ]
+}

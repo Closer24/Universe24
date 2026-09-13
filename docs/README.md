@@ -33,6 +33,9 @@ result are different claims. Revision-specific results are not a live status fee
 
 ## Explicit quantum experiments
 
+The [catalog contact example](../examples/catalog-contact/README.md) connects
+established particle references to the existing causal source/contact mechanism.
+
 | Document | Responsibility |
 | --- | --- |
 | [Native event programs](NATIVE_QUANTUM_EVENTS.md) | Shared causal ledger, optional quantum composition, repeated triggers and charged mechanical paths |

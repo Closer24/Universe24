@@ -11,12 +11,21 @@ ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
     "examples/quantum/repeated_contacts.json": ("tests/test_recurrent_quantum_contact.py",),
+    "examples/catalog-contact/experiment.json": ("tests/test_catalog_contact.py",),
+    "examples/catalog-contact/prepare.py": ("tests/test_catalog_contact.py",),
+    "examples/known-entities/physical-units.json": (
+        "tests/test_reference_units.py",
+        "tests/test_catalog_contact.py",
+    ),
     "examples/quantum/many_contacts.json": ("tests/test_many_contacts.py",),
     "examples/quantum/many_contacts.py": ("tests/test_many_contacts.py",),
     "examples/quantum/many_contacts_view.py": ("tests/test_many_contacts.py",),
     "examples/quantum/event_paths.json": ("tests/test_quantum_node_events.py",),
     "examples/quantum/wave_origins.json": ("tests/test_native_wave_origins.py",),
-    "examples/quantum/causal_charge.json": ("tests/test_causal_contact_fields.py",),
+    "examples/quantum/causal_charge.json": (
+        "tests/test_causal_contact_fields.py",
+        "tests/test_catalog_contact.py",
+    ),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",
         "tests/test_node_vector_integration.py",
@@ -51,6 +60,7 @@ RESOURCE_CONSUMERS = {
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
     "examples/known-entities/catalog.json": (
+        "tests/test_catalog_contact.py",
         "tests/test_property_entity_profiles.py",
         "tests/test_entity_catalog.py",
         "tests/test_profile_validation.py",

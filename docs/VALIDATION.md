@@ -31,6 +31,14 @@ blocked removal of the disposable source snapshot; it remains outside Git at
 `artifacts/recurrent-index-source-0914` and is not enrolled for automatic cleanup
 because the retention guard protects source directories.
 
+Main subsequently advanced to `1c782390456ea9629eb0f73c030095574d80e454` with the
+catalog-contact authoring example. Integration preserves both resource-consumer
+registrations and selector tests; production source fingerprints are unchanged.
+The additional affected gate, `python tools/check.py --base 1c04760194b8dd60c24305620450608dfae30893`,
+passed **382 tests with two opt-in visual skips** in 67.32 seconds, including all
+39 catalog-contact cases. Ruff and formatting on its four affected Python files
+passed. The earlier production/physics evidence remains applicable.
+
 ```sh
 python tools/check.py --base 3e5eaea5ad88688b2509ec34f5d43246dc62d15e
 python -m event_universe --init examples/quantum/repeated_contacts.json --output artifacts/repeated-contacts-0914-verified
