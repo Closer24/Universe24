@@ -1,5 +1,17 @@
 # Test inputs and expected results
 
+## Node-owned execution
+
+`tests/test_node_execution.py` checks completion from clock notices without
+arrivals: cost 21, budget 10 and transit 3 produce uniform `h=6`, commit at 6
+and delivery at 9, with one charged cycle. Both 6 and 26 ports are covered.
+Execution still works after removing host maps from its scheduler. Foreign
+carrier/spatial partners, wrong destinations, early arrivals, mutable/oversized
+batches and noninteger clocks fail before mutation. An invalid causal identity
+at receipt fails after transfer; inventory stays one and the sender slot is empty.
+Existing node, conservation, topology and quantum tests retain phase and event
+ordering checks. State audits inspect executing nodes and their local packet banks.
+
 ## Local provider protection
 
 `tests/test_node_boundary.py` tests the actual engine boundary with faulty local

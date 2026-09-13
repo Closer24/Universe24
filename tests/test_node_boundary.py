@@ -46,7 +46,7 @@ def world():
 )
 def test_bad_planner_output_never_enters_pending_or_link_state(defect):
     simulation = world()
-    original = simulation._planner
+    original = simulation._services.planner
     record = simulation.node_view((2, 2, 2)).carrier.records[0]
 
     def broken(records, residuals, received):
@@ -68,7 +68,7 @@ def test_bad_planner_output_never_enters_pending_or_link_state(defect):
         }
         return replace(plan, **changes[defect])
 
-    simulation._planner = broken
+    simulation._services = replace(simulation._services, planner=broken)
     before = simulation.snapshot()
     with pytest.raises(ValueError, match="node I/O"):
         simulation.step()
@@ -79,7 +79,7 @@ def test_bad_planner_output_never_enters_pending_or_link_state(defect):
 
 def test_local_planner_cannot_mutate_inputs_or_read_world_through_them():
     simulation = world()
-    original = simulation._planner
+    original = simulation._services.planner
     calls = []
 
     def inspecting(records, residuals, received):
@@ -95,7 +95,7 @@ def test_local_planner_cannot_mutate_inputs_or_read_world_through_them():
         calls.append(received)
         return original(records, residuals, received)
 
-    simulation._planner = inspecting
+    simulation._services = replace(simulation._services, planner=inspecting)
     simulation.step()
     assert calls == [0]
     assert simulation.totals() == {"inventory": (1,)}
@@ -118,8 +118,7 @@ def test_repository_gate_rejects_hidden_world_and_graph_access(member, layer):
 
 def test_carrier_rejects_packet_owned_by_a_different_origin():
     simulation = world()
-    simulation._begin((2, 2, 2), simulation._nodes[(2, 2, 2)])
-    simulation._commit((2, 2, 2), simulation._nodes[(2, 2, 2)])
+    simulation._nodes[(2, 2, 2)].advance(0, simulation._services)
     links = list(simulation._links[(2, 2, 2)])
     links[0] = replace(links[0], origin=(9, 9, 9))
     simulation._links[(2, 2, 2)] = tuple(links)
@@ -141,10 +140,14 @@ def test_receive_policy_cannot_overwrite_pending_inputs_or_retain_mutable_state(
             )
         )
     )
-    for position in ((1, 2, 2), (2, 2, 2)):
-        simulation._begin(position, simulation._nodes[position])
-    simulation._commit((1, 2, 2), simulation._nodes[(1, 2, 2)])
-    original = simulation._record_policy
+    simulation._nodes[(1, 2, 2)].advance(0, simulation._services)
+    planner = simulation._services.planner
+
+    def waiting(records, residuals, received):
+        return replace(planner(records, residuals, received), cost=simulation.initial.normal_budget + 1)
+
+    simulation._nodes[(2, 2, 2)].advance(0, replace(simulation._services, planner=waiting))
+    original = simulation._services.record_policy
 
     class BrokenReceiver:
         def receive(self, residents, arrivals, locked):
@@ -155,7 +158,7 @@ def test_receive_policy_cannot_overwrite_pending_inputs_or_retain_mutable_state(
             proposed[0] = replace(proposed[0], values=(pack((99,)),))
             return tuple(proposed)
 
-    simulation._record_policy = BrokenReceiver()
+    simulation._services = replace(simulation._services, record_policy=BrokenReceiver())
     simulation.tick = 1
     before = simulation.snapshot()
     with pytest.raises(ValueError):
@@ -171,7 +174,7 @@ def test_spatial_receiver_rejects_foreign_origin_or_mismatched_port(change):
     raw["spatial_seeds"] = [_spatial_seed("stock", 70, ORIGIN)]
     simulation = Simulation(parse_initial_state(raw))
     spatial = simulation._spatial
-    spatial.begin(0, {}, simulation._commit_emission_records)
+    spatial.begin(0, {})
     packets = list(spatial.links[ORIGIN])
     assert packets[0] is not None
     packets[0] = replace(packets[0], **change)
@@ -182,7 +185,10 @@ def test_spatial_receiver_rejects_foreign_origin_or_mismatched_port(change):
     assert simulation.snapshot() == before
 
 
-@pytest.mark.parametrize("module", ["spatial_engine", "event_space"])
+@pytest.mark.parametrize(
+    "module",
+    ["spatial_engine", "event_space", "disturbance_node", "spatial_node", "node_services", "node_ports"],
+)
 def test_models_cannot_import_world_or_graph_owners(module):
     assert violations(f"from event_universe.core.{module} import Owner", "event_universe.models.law")
 
@@ -207,7 +213,7 @@ def test_mutable_coupling_output_cannot_enter_node_state(method):
     ]
     simulation = Simulation(parse_initial_state(raw))
     spatial = simulation._spatial
-    original = spatial.coupler
+    original = spatial.services.coupler
 
     class BrokenCoupler:
         def __getattr__(self, name):
@@ -223,7 +229,7 @@ def test_mutable_coupling_output_cannot_enter_node_state(method):
 
             return broken
 
-    spatial.coupler = BrokenCoupler()
+    spatial.services = replace(spatial.services, coupler=BrokenCoupler())
     before = simulation.node_view(position)
     with pytest.raises(ValueError, match="node I/O"):
         if method in ("sample", "sample_fluxes"):
@@ -232,7 +238,7 @@ def test_mutable_coupling_output_cannot_enter_node_state(method):
             node = spatial.nodes[position]
             node.last_begin_tick = 0 if method == "forward_reaction" else -1
             before = simulation.node_view(position)
-            spatial.prepare_reaction(position, 0, ((1, 0, 0), (0, 0, 0), (0,)))
+            node.prepare_reaction(0, ((1, 0, 0), (0, 0, 0), (0,)), spatial.services)
     assert simulation.node_view(position) == before
 
 
@@ -241,16 +247,14 @@ def test_mutable_decay_output_cannot_enter_receiving_node():
 
     simulation = Simulation(parse_initial_state(finite_document(source=True)))
     spatial = simulation._spatial
-    spatial.begin(
-        0, {p: n.records for p, n in simulation._nodes.items()}, simulation._commit_emission_records
-    )
-    original = spatial.decayer
+    spatial.begin(0, simulation._nodes)
+    original = spatial.services.decayer
 
     def broken(bundle):
         fields, losses, cost = original(bundle)
         return list(fields), losses, cost
 
-    spatial.decayer = broken
+    spatial.services = replace(spatial.services, decayer=broken)
     packets = dict(spatial.links)
     with pytest.raises(ValueError, match="node I/O"):
         spatial.deliver(simulation.initial.link_ticks)
@@ -266,7 +270,7 @@ def test_spatial_output_is_validated_before_commit(defect):
     raw["spatial_seeds"] = [_spatial_seed("stock", 7, ORIGIN)]
     simulation = Simulation(parse_initial_state(raw))
     spatial = simulation._spatial
-    original = spatial.planner
+    original = spatial.services.planner
 
     def broken(states, records, received):
         plan = original(states, records, received)
@@ -279,7 +283,7 @@ def test_spatial_output_is_validated_before_commit(defect):
         }
         return replace(plan, **changes[defect])
 
-    spatial.planner = broken
+    spatial.services = replace(spatial.services, planner=broken)
     before = simulation.snapshot()
     with pytest.raises(ValueError, match="node I/O"):
         simulation.step()

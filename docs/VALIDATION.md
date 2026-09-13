@@ -1,5 +1,49 @@
 # Validation evidence
 
+## Node-owned execution - 2026-09-13
+
+Base: `4d4f56ff4d2646b1fc5fcb0d321a062485b8fe43` (PR #80).
+Production source SHA-256:
+`3b49fd7f6de5be84697a460b53c76b90918c58181438c995e8cc264cbbbc76eb`.
+The final affected gate passed: 1,850 tests, five opt-in visual skips, Ruff and
+strict mypy on 54 affected source files. The final headless relay records this
+same fingerprint, completes nine ticks and preserves inventory seven throughout.
+Independent architecture/physics review passed this scope, with 73 focused tests.
+The review corrected readable global audit references, foreign local partners,
+receipt recording before source release, and the custom D*D*K arrival bound.
+No computation-field feedback law or independent per-port timing was introduced.
+
+Six headless comparisons against the base preserve every tick snapshot, event,
+computation report and native causal-graph entry. Workloads are the three-node
+relay (9 ticks), maximum-width node fixture (26 ports/32 records, 10 ticks),
+`examples/local_lorentz_field.json` (32 ticks), the native event-runtime
+`configuration()` fixture (8 ticks), and 1,000 single-slot held or idle carriers
+on a 10-cubed seed region (3 ticks; inventory respectively one or zero).
+The idle case starts zero cycles and emits zero events. The relay preserves
+inventory 7 with cost 14 and three cycles; the coupled case records 624 events,
+cost 33,207 and 96 cycles. Native quantum records retain the same 69 causal IDs.
+
+Python 3.14.7 timings are sequential medians of five batches. Relay/wide batches
+contain 30 fresh runs; the others contain three. Tracemalloc starts before a fresh
+construction, includes the listed ticks and collects garbage before retained
+measurement. These are Python allocation measurements, not process RSS limits.
+
+| Workload | Before / after batch milliseconds | Before / after retained bytes | Before / after peak bytes |
+| --- | --- | --- | --- |
+| Relay | 17.84 / 22.76 | 2,480 / 3,512 | 8,564 / 10,076 |
+| Wide node | 718.04 / 757.73 | 57,056 / 58,736 | 107,272 / 108,936 |
+| Coupled field | 1,404.03 / 1,427.77 | 28,168 / 29,936 | 54,020 / 54,788 |
+| Native quantum | 16.37 / 17.66 | 22,696 / 24,304 | 45,704 / 47,720 |
+| 1,000 held nodes | 605.71 / 651.15 | 370,864 / 443,608 | 397,020 / 470,036 |
+| 1,000 idle nodes | 82.50 / 94.72 | 182,280 / 291,912 | 196,972 / 306,972 |
+
+The extra port-bank owner and receiving checks have real host cost; this change
+does not claim a speedup or constant whole-world memory. Definitions are shared,
+port banks are not packet copies, and per-node closures/history are absent.
+The existing architecture/physics Skills already require local provenance,
+necessity, allocation evidence and explicit unresolved laws; no duplicate Skill
+rule was added. No GIF or render was requested or produced.
+
 ## Local node I/O protection - 2026-09-13
 
 Base: `876cbedf6f88dcbf4db01a63933f46e8f9582f57` (pending node-contract PR).

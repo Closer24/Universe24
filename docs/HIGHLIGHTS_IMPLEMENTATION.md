@@ -1,5 +1,21 @@
 # Highlights implementation coverage
 
+## Node execution and delay representation - 2026-09-13
+
+The live document was read with provider modification time
+`2026-09-13T05:10:29.655Z`. Sections 3.1, 3.3.1 and 4.4 map to local ownership,
+received inputs and cost-dependent whole-cycle wait. Execution now belongs to
+the [node classes](NODE_TESTING.md#node-owned-execution); transport retains the
+neighbor index. The user's integer per-port `h` request is represented by the
+existing uniform extra wait. Highlights does not define an independent h-vector
+law. The requested computation-field feedback still needs its local response
+operation; this change does not claim reduced work or supply an assumed gain.
+
+Base is node I/O guard head `4d4f56ff4d2646b1fc5fcb0d321a062485b8fe43`
+(PR #80, stacked on #78). Main remains `1784acdd140f260c0fb5e568b2e28241df573fa2`;
+its separate spatial causal-event extension is not integrated in this stack.
+The live document was not edited.
+
 ## Node I/O boundary reconciliation - 2026-09-13
 
 Live Highlights was fetched on 2026-09-13; the provider reports modification

@@ -305,6 +305,7 @@ class DisturbanceNode:
     received_count: int = 0
     last_cost: int = 0
     cause_id: int | None = None
+    h: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -316,6 +317,7 @@ class NodeView:
     received_count: int
     last_cost: int
     cause_id: int | None = None
+    h: tuple[int, ...] = ()
 
 
 # Historical imports remain aliases of the canonical node classes.

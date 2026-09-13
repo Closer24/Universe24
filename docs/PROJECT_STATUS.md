@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The [node execution contract](NODE_TESTING.md#node-owned-execution) now places
+local transitions on the carrier/spatial node owners. The schedulers dispatch
+clock notices and transport; nodes reject misaddressed input and foreign local
+partners. The integer `h` view records existing uniform extra carrier wait.
+Computation-field feedback and independently varying port delays still require
+specified laws. This work is stacked on PR #80; it does not include main's
+separate spatial causal-event extension. See exact evidence in [VALIDATION.md](VALIDATION.md).
+
 The active local unit is now named **node**. The
 [node testing interface](NODE_TESTING.md) wraps the actual Simulation, exposing
 immutable point snapshots, per-port arrivals/departures and completed local-cycle

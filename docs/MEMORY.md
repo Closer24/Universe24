@@ -9,6 +9,18 @@ worker-process or distributed backend. General boundaries remain in
 
 ## Immutable definitions and evolving owners
 
+Executing nodes extend the slotted state schemas with their own address and a
+reference to a `PortBank`; carrier state also holds its D-entry integer `h`.
+`PortTable` owns the host address index and references the same banks. A bank has
+fixed packet slots and an integer publication flag. Unpublished empty banks share
+the engine's empty tuple, and zero delay vectors share a run default. There is
+one extra bank object per materialized lane, including nodes that never send.
+Port-table iteration filters these banks; whole-world memory and scan costs
+therefore grow with materialized nodes. Node methods add no per-instance closures,
+copied laws, queues or history. Shared services are passed for an update rather
+than stored in the evolving node graph. The structural state audit covers both
+executing subclasses and their packet banks, including bounded generic annotations.
+
 `InitialState` owns the parsed field/type definitions, configured expression
 trees, operation prices and topology. The world and composed law providers
 reference these immutable definitions. Nodes, records, pending plans and

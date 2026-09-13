@@ -129,6 +129,15 @@ def violations(source, module):
                 or dependency.startswith("core.spatial_engine.")
                 or dependency == "core.event_space"
                 or dependency.startswith("core.event_space.")
+                or any(
+                    dependency == owner or dependency.startswith(owner + ".")
+                    for owner in (
+                        "core.disturbance_node",
+                        "core.spatial_node",
+                        "core.node_services",
+                        "core.node_ports",
+                    )
+                )
             ):
                 found.append((line, "model imports world or application code"))
         elif layer in GENERIC_LAYERS | {"models"} and target.split(".")[0] in {

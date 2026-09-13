@@ -1,5 +1,12 @@
 # Architecture and change boundaries
 
+The active [node execution contract](NODE_TESTING.md#node-owned-execution)
+places carrier and spatial transitions on their local node classes. Host engines
+schedule clock notices and route packets through shared local port banks.
+Write-side event/accounting services expose no global totals or graph reads to
+ordinary node execution. Generic physical arithmetic remains with the configured
+law providers; this extraction introduces no new physical response law.
+
 The [local I/O boundary](NODE_TESTING.md#local-input-and-output-protection)
 checks provider proposals before retention and commit. Local calculation
 interfaces expose immutable local inputs, while the scheduler owns neighbor

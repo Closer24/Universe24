@@ -1,5 +1,46 @@
 # Node inputs, outputs and clocks
 
+## Node-owned execution
+
+The executing classes in `core/disturbance_node.py` and `core/spatial_node.py`
+own local sampling, planning, validation, reception and commits. They extend
+the slotted state schemas without retaining a world, graph, law definition or
+callback. Shared run services provide seed-free definitions, generic laws and
+write-side accounting. The optional quantum resolver remains explicit; the
+node-facing definition does not contain its serialized event program.
+
+The scheduler sends `advance` clock notices and transports packets. Carrier
+open notices may begin work and finish it; closing notices only finish earlier
+work, including when no packet arrives. It does not call the node's private
+begin/commit methods. Spatial and carrier components can cooperate only at the
+same address. Reception checks the destination and exact arrival tick again,
+so a misdispatched batch fails at the node boundary. The transport releases
+sender slots before receipt acknowledgment invokes causal recording or observers.
+A later recording failure stops the run without duplicating physical inventory.
+
+Each node's output bank contains only its fixed local slots. The transport keeps
+the address index and shares that same bank; it does not duplicate the packets.
+Carrier output has D*K slots. Existing custom planners may direct all of those
+slots to one port, so a receiving batch is bounded by D*D*K, not D*K. Spatial
+batches have at most D packets. The ordinary law still receives only immutable
+local payloads and samples. These are bug-prevention boundaries, not protection
+against hostile Python reflection or private-attribute mutation.
+
+`NodeView.h` exposes D bounded integers: the **last planned extra local carrier
+wait** for each configured port. Initially all entries are zero. The existing
+whole-cycle timing law gives every port the same extra wait; for cost 21,
+budget 10 and link time 3 the vector is `(6, 6, 6, 6, 6, 6)`, the proposal
+commits at tick 6, and sent packets arrive at tick 9. It is not a countdown or
+the link transit time. It remains readable while later clock notices complete
+that cycle. Independent per-port delays are not implemented by this refactor.
+
+The existing `cost_field` reports operation cost C, and configured emissions
+and responses can couple that property to a local field. Naming the wait `h`
+does not redefine C or supply a field-to-computation response law. A reduction
+of modeled work, delay or host CPU cost needs a separately specified mechanism;
+no sign, gain or threshold is inferred here. Spatial forwarding retains its
+existing fixed cadence.
+
 ## Local input and output protection
 
 `core/node_boundary.py` validates local provider results before the scheduler

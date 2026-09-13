@@ -92,9 +92,7 @@ class Simulation(DisturbanceEngine):
             self._audit = LocalConservationAudit(initial, self.inventory_view)
         self._external_observer = observer
         if self._audit is not None:
-            self._observer = self._observe_conservation
-            if self._spatial is not None:
-                self._spatial.observer = self._observe_conservation
+            self.set_observer(self._observe_conservation)
 
     def _observe_conservation(self, event: dict[str, object]) -> None:
         assert self._audit is not None

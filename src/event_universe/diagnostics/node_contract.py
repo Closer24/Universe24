@@ -3,6 +3,7 @@
 from dataclasses import fields, is_dataclass
 from typing import cast
 
+from event_universe.core.disturbance_node import DisturbanceNode as ExecutingDisturbanceNode
 from event_universe.core.disturbance_state import (
     Departure,
     DisturbanceNode,
@@ -12,7 +13,9 @@ from event_universe.core.disturbance_state import (
     Packet,
     PendingCycle,
 )
+from event_universe.core.node_ports import PortBank
 from event_universe.core.node_state import NodeSnapshot, SpatialNodeView
+from event_universe.core.spatial_node import SpatialNode as ExecutingSpatialNode
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
     SpatialNode,
@@ -23,6 +26,9 @@ from event_universe.core.spatial_state import (
 
 # Shared immutable initialization definitions intentionally do not belong here.
 STATE_RECORDS = (
+    ExecutingDisturbanceNode,
+    ExecutingSpatialNode,
+    PortBank,
     NodeSnapshot,
     SpatialNodeView,
     NodeView,
