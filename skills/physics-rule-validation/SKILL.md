@@ -18,6 +18,31 @@ counterexample test. Review does not grant permission to change a physical law.
 An undefined or contradictory contract, or missing evidence for the exact source,
 means incomplete or blocked; do not fill the gap with an assumed pass.
 
+## Always start from event spacetime
+
+Ground every physical review in the modeled space of events and causal time:
+event locations, state transitions, occurrence order and causal dependencies.
+The object of analysis is what happens in that model, not the image an observer
+sees. Distinguish the event at its source, later reception of information about
+it, and its recorded or rendered appearance. Reception is itself a separate local
+event; it does not relocate or retime the source event.
+
+Label evidence as world/event audit, local observer record or display projection.
+Global state, remote origins and causal IDs may support an analyst's audit but
+are not automatically available to a local observer or physical update. Establish
+observer claims from information that could actually arrive through the configured
+causal paths; a receiving port identifies the last hop, not the remote source.
+
+For each timing claim, identify the model/audit tick, completed local-cycle counter
+or playback time being used. Equal local-counter readings do not prove simultaneous
+events, and playback sampling or speed does not change physical event order.
+Apply the [local observer contract](../../docs/LOCAL_OBSERVER.md); do not infer
+proper time, optical appearance or an emergent relativistic spacetime from the
+current reception probe or an audit snapshot. This framing uses the declared
+model contracts and does not add a new physical law.
+
+## Review the declared rules
+
 For initialization-defined simulation, use
 [DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
 whole-record versus extensive transport, exact source accounting, paired
