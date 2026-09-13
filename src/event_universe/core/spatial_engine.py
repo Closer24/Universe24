@@ -265,6 +265,7 @@ class SpatialEngine:
                 if d.field == self.initial.computation_field
             )
             node.load = sum(unpack(payload)[0] for payload in node.states[spatial].populations)
+            node.load_channels = tuple(unpack(payload)[0] for payload in node.states[spatial].delivered)
         sample_values, sample_fluxes, sample_ports = (
             node.sample_values,
             node.sample_fluxes,
@@ -902,19 +903,34 @@ class SpatialEngine:
 
     def cost(self, position: Address3, tick: int) -> int:
         node = self.nodes.get(position)
+        # Under a directional delay the load prices departures, not the whole cycle.
+        load = 0 if self.initial.delay_direction is not None else self.load(position)
         if node is None or tick % self.initial.link_ticks:
-            return self.load(position)
-        return bounded(checked_work(node.last_cost + self.load(position)))
+            return load
+        return bounded(checked_work(node.last_cost + load))
 
-    def load(self, position: Address3) -> int:
-        """Local value of the configured computation field: baseline plus stock present this interval."""
+    def _baseline_load(self) -> int:
         index = self.initial.computation_field
         if index is None:
             return 0
         spatial = next(i for i, d in enumerate(self.initial.spatial_fields) if d.field == index)
-        baseline = unpack(self.initial.spatial_fields[spatial].baseline)[0]
+        return unpack(self.initial.spatial_fields[spatial].baseline)[0]
+
+    def load(self, position: Address3) -> int:
+        """Local value of the configured computation field: baseline plus stock present this interval."""
+        if self.initial.computation_field is None:
+            return 0
         node = self.nodes.get(position)
-        return bounded(checked_work(baseline + (0 if node is None else node.load)))
+        return bounded(checked_work(self._baseline_load() + (0 if node is None else node.load)))
+
+    def directional_load(self, position: Address3, port: int) -> int:
+        """Load pricing a departure through `port`: field travelling along it, or against it."""
+        if self.initial.computation_field is None or self.initial.delay_direction is None:
+            return 0
+        node = self.nodes.get(position)
+        channels = (0,) * 6 if node is None else node.load_channels
+        channel = port if self.initial.delay_direction == "along" else port ^ 1
+        return bounded(checked_work(self._baseline_load() + channels[channel]))
 
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]

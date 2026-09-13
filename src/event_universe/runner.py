@@ -256,7 +256,11 @@ def _execute_run(
     if initial.computation_field is not None:
         metadata.update(
             computation_field=initial.fields[initial.computation_field].name,
-            local_delay="computation-field-load-v1",
+            local_delay=(
+                "computation-field-load-v1"
+                if initial.delay_direction is None
+                else f"directional-departure-delay-{initial.delay_direction}-v1"
+            ),
         )
     if initial.spatial_fields:
         metadata.update(

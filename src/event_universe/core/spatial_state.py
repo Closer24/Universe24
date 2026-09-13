@@ -161,6 +161,8 @@ class SpatialNodeState:
     sample_delivered: tuple[tuple[Payload, ...], ...] = ()
     # Computation-field stock present at this node before its last forwarding.
     load: int = 0
+    # The same stock split by the six travel channels it was delivered through.
+    load_channels: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
     # Fixed host provenance references; never inputs to a physical field law.
     cause_id: int | None = None
     sample_cause_id: int | None = None

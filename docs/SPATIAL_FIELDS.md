@@ -166,6 +166,28 @@ crossing such a region is delayed the same way. This is the local delay law
 applied to a configured field, not a derived gravitational potential; whether
 the resulting profile matches any physical law is a separate measurement.
 
+### Directional delay
+
+The six delivered channels of the computation field carry more than its local
+sum. With `"delay_direction": "along"` or `"against"`, the load no longer
+delays the whole cycle. Local updates commit after the bare cycle time, and
+each departure through a port waits for its own `k`, computed from the cycle
+cost plus the baseline plus the load delivered through one channel: the field
+travelling in the same direction as the departure (`along`), or the field
+arriving from the side the departure heads to (`against`). The extra wait is
+spent before the transfer's arrival, the `sent` event reports that arrival,
+and the node starts no new cycle until its slowest departure has arrived.
+
+The two conventions have opposite consequences. Under `along` a probe moving
+towards the emitting mass is never delayed while a probe moving away stalls
+where the outward field is dense: falling in is free and climbing out is
+slow. Under `against` the approach slows and the climb out is free. With a
+mass emitting 24000 units per interval, budget 100 and probes at half link
+speed, `along` left the inward probe on its two-tick cadence through the mass
+and stalled the outward probe for seven ticks, and `against` did the reverse.
+A resting body is never moved. Both are configured hypotheses; neither is a
+derived force, and the option requires the default clock.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

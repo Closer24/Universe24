@@ -231,8 +231,16 @@ class InitialState:
     arrival_port_blind: bool = False
     carried_allocation_phase: bool = True
     computation_field: int | None = None
+    delay_direction: str | None = None
 
     def __post_init__(self) -> None:
+        if self.delay_direction is not None:
+            if self.delay_direction not in ("along", "against"):
+                raise ValueError("delay_direction must be along or against")
+            if self.computation_field is None:
+                raise ValueError("delay_direction requires computation_field")
+            if self.spatial_computation_delay:
+                raise ValueError("delay_direction requires the default clock")
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
         if type(self.carried_allocation_phase) is not bool:
@@ -294,6 +302,8 @@ class PendingCycle:
     next_tick: int
     plan: LocalPlan
     cause_id: int | None = None
+    # Extra ticks each departure spends before arrival under a directional delay.
+    departure_delays: tuple[int, ...] = ()
     spatial_plan: SpatialPlan | None = None
     spatial_phases: Values = ()
     spatial_guard_states: tuple[SpatialState, ...] = ()

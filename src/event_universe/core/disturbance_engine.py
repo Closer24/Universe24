@@ -361,7 +361,30 @@ class DisturbanceEngine:
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
         work = checked_work(self._model_work + plan.cost)
         cycles = checked_work(self._local_cycles + 1)
-        pending = PendingCycle(bounded(self.tick + extra), bounded(self.tick + duration), plan)
+        delays: tuple[int, ...] = ()
+        if self.initial.delay_direction is not None and self._spatial is not None:
+            # Each departure prices the computation load travelling along or against it;
+            # the extra wait beyond the local cycle is spent before its arrival.
+            delays = tuple(
+                max(
+                    0,
+                    cycle_timing(
+                        bounded(
+                            checked_work(
+                                plan.cost + self._spatial.directional_load(position, departure.port)
+                            )
+                        ),
+                        self.initial.normal_budget,
+                        self.initial.link_ticks,
+                    )[0]
+                    - extra,
+                )
+                for departure in plan.departures
+            )
+            duration = bounded(checked_work(duration + max(delays, default=0)))
+        pending = PendingCycle(
+            bounded(self.tick + extra), bounded(self.tick + duration), plan, departure_delays=delays
+        )
         # Originals remain in their occupied slots throughout the local wait.
         node.pending = pending
         node.received_count = 0
@@ -564,7 +587,10 @@ class DisturbanceEngine:
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
-            links[index] = Packet(departure_tick, position, departure.port, record)
+            delay = pending.departure_delays[index] if pending.departure_delays else 0
+            links[index] = Packet(
+                bounded(checked_work(departure_tick + delay)), position, departure.port, record
+            )
         if self._spatial is not None and field_plan is None:
             self._spatial.validate_guards(
                 position, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -690,7 +716,12 @@ class DisturbanceEngine:
                 port=departure.port,
                 disturbance=self.initial.disturbances[departure.record.type_index].name,
                 values=self.record_values(departure.record),
-                arrival_tick=departure_tick,
+                arrival_tick=bounded(
+                    checked_work(
+                        departure_tick
+                        + (pending.departure_delays[index] if pending.departure_delays else 0)
+                    )
+                ),
             )
             if cause is not None:
                 linked = list(self._links[position])

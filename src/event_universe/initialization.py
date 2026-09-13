@@ -1099,6 +1099,7 @@ def parse_initial_state(document: object) -> InitialState:
             "arrival_port_blind",
             "carried_allocation_phase",
             "computation_field",
+            "delay_direction",
         },
         required,
     )
@@ -1161,6 +1162,9 @@ def parse_initial_state(document: object) -> InitialState:
             None
             if "computation_field" not in obj
             else _index(obj["computation_field"], _names(fields), "computation_field")
+        ),
+        delay_direction=(
+            None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
         ),
     )
     if initial.event_program is not None:
