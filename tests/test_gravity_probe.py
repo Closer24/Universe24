@@ -117,9 +117,11 @@ def test_signed_quanta_pull_bodies_toward_the_source_and_they_pay_their_own_stoc
         # The far body takes its share of what the near one left on the same ray.
         assert 0 < -far["momentum"][0] <= -near["momentum"][0]
         # The source is credited with every quantum it emits and recoils by nothing:
-        # the six axis rays cancel exactly.
+        # the six axis rays cancel exactly. Credited quanta are bounded integers
+        # like any other stock; a source that emits forever eventually fails loudly.
         (_, source), *_ = PROBE.bodies(world, 0)
-        assert source["quanta"] == (8 * 65536,) and source["momentum"] == (0, 0, 0)
+        assert source["quanta"] == (8 * PROBE.CLOSED_STRENGTH,)
+        assert source["momentum"] == (0, 0, 0)
         assert PROBE.closure(world, initial)["quanta_closed"]
         pulled[mass] = -near["momentum"][0]
     # The share is proportional to mass: the same acceleration up to one unit per hit.

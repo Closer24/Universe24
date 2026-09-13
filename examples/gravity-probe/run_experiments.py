@@ -322,9 +322,10 @@ def fall_trajectory(mass: int, start: int, ticks: int) -> list[dict]:
     return trajectory
 
 
-CLOSED_STRENGTH = 65536  # quanta per tick over 64 rays: 1024 per ray, 4 x mass absorbed per hit
+CLOSED_STRENGTH = 1048576  # quanta per tick over 64 rays: 16384 per ray, 64 x mass absorbed per hit
 CLOSED_DENOMINATOR = 256  # absorbed share of each crossing ray is mass / 256
-CLOSED_STOCK = 4096  # quanta a body of unit mass can pay for its pull
+CLOSED_STOCK = 65536  # quanta a body of unit mass can pay for its pull
+CLOSED_FALL_SCALE = 16384  # a share's momentum is about 64 x mass x 24: one hit is 3/32 hop per tick
 
 
 def mirrored_headings(count: int, scale: int) -> list[list[int]]:
@@ -450,11 +451,11 @@ def closed_falling_document(ticks: int, mass: int, start: int) -> dict:
                 "rate": {
                     "op": "min",
                     "args": [
-                        mass * FALL_SCALE,
+                        mass * CLOSED_FALL_SCALE,
                         {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]},
                     ],
                 },
-                "rate_denominator": mass * FALL_SCALE,
+                "rate_denominator": mass * CLOSED_FALL_SCALE,
             },
         )
     )

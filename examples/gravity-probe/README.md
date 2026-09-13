@@ -1,7 +1,9 @@
 # Gravity probe: mass-proportional attraction toward a straight-ray source
 
-This experiment composes existing rules only; it adds no engine law. A
-stationary source emits the [straight-ray field](../../docs/SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1)
+This experiment composes existing rules only; it adds no engine law. Two
+variants are run: an `exchange` coupling that moves momentum without any
+energy, and a closed variant on signed quanta in which the pulled body pays for
+its pull. In the first, a stationary source emits the [straight-ray field](../../docs/SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1)
 `radiation`. A test body of mass `m` responds through an `exchange` coupling
 whose amount is `m x flux(radiation) / D` with `D = 16`. The delivered flux
 points away from the source, so the body's momentum moves toward it by `m`
@@ -19,6 +21,18 @@ headings at scale 24, 64 rays per tick. Held bodies of mass 1, 2 and 4 sit at
 the same Nodes along the axis, a face diagonal and a body diagonal. After one
 64-tick sweep fills the domain, momentum gained over the next full sweep is
 divided by the tick count and the mass: the host's "acceleration".
+
+The closed variant keeps the world and the sweep but replaces the exchange with
+[signed quanta](../../docs/SPATIAL_FIELDS.md#funded-emission-and-absorption).
+The source emits `-1,048,576` quanta per tick, funded, over 4,096 mirrored
+headings (2,048 golden-spiral headings and their exact negatives, so each
+sweep's recoil is zero): it is credited with what it emits and every ray's
+momentum, `amount x heading`, points back at it. A body absorbs the share
+`mass / 256` of every ray that crosses its Node, pays that share from its own
+`quanta` stock of `65,536 x mass`, and gains the share's momentum toward the
+source. One mass per world, because bodies on one line shadow each other by
+their share. A short world with the event audit on checks that every event is
+closed.
 
 ## Observed outcomes on 2026-09-13
 
