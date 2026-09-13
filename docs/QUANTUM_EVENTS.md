@@ -118,9 +118,12 @@ dependencies is host bookkeeping, not evolving a node into its past or rewriting
 an earlier outcome. A read-only query adds zero world ticks; its host work and
 memory are still bounded and charged separately.
 
-The latest reported `Quantom -> Classic` candidate is
+The historical `Quantom -> Classic` review snapshot examined
 [PR #91](https://github.com/Closer24/Universe24/pull/91), head
-`49bcbc74c69a47814945efce8600edbc824ee04f`, open and unmerged at this review.
+`49bcbc74c69a47814945efce8600edbc824ee04f`, open and unmerged at that review.
+Later contact integration is described in the
+[localized contact contract](LOCALIZED_QUANTUM_CONTACT.md), with exact source
+and test evidence in [validation](VALIDATION.md).
 Its `local-quantum-events-v3` origin relevance check reads an event ID's status
 directly. It removes separate chronological predecessor lists and the
 `history(register)` traversal API. It retains immutable events, exact quantum

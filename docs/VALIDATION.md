@@ -1,5 +1,67 @@
 # Validation evidence
 
+## Localized contact, quantum propagation and classical fields - 2026-09-13
+
+Integrated base: `523b39804e8be78ec2069b7af8b6498ccb19810a`. Implementation
+commit `8cd2156` and integration commit `b459a45` have active source SHA-256
+`fc69868e9e282e7c157258f8a454653e095fa366f077dab403652c58009effca`.
+The affected gate passed **2,195 tests with seven opt-in visual skips** in
+147.94 seconds. Ruff, formatting on 23 changed Python files and strict mypy on
+63 affected production modules passed. The scope includes contact conversion,
+quantum origins, ordinary fields, movement, boundaries, locality, genericity,
+interfaces, headless output and retention. Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1 were used; no full-suite flag or package build was used.
+
+```sh
+python tools/check.py --base origin/main
+python -m event_universe --init examples/quantum/localized_charge.json --output artifacts/localized-contact-final
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/wave-origins-contact-regression
+```
+
+The 51 focused contact cases are included in the gate. They check committed
+ownership transfer, valid zero versus undefined momentum, null/click instruments,
+finite classical sources, delayed cycles, Link timing, all six periodic seams,
+split/recombination, exhaustive capture tickets, label substitution and rejection
+before drawing. A third coupled resident retains its quantity and the common
+field reaction in every capture alternative. Public concurrent readouts cannot
+observe a half-completed ordinary/quantum transfer. A moving disturbance creates
+no origin before arrival; its actual source and capture events occur at ticks 1
+and 4. A legacy capacity-boundary regression was corrected by restricting early
+preflight to the contact profile; the original legacy test remains unchanged.
+
+Independent physics review passed 50 focused cases and a separate moving-arrival
+probe, then reviewed the final delta at `b459a45` and passed both targeted checks.
+The later source changes add the public read lock, scope the early preflight and
+retain the moving-arrival regression. Merged main's quantum changes clarify
+terminology without changing physical behavior. The final affected gate above
+covers the complete integrated source.
+
+The localized example completed **8/8 ticks in 0.0245987 seconds**, with
+`display=none`. Source conversion occurs at tick 0 and capture two Links away at
+tick 2. Charge -1 and mass 1 are conserved at every completed tick, including the
+quantum inventory exactly once. Classical source injection is -6 before conversion
+and -12 after capture; it is zero during the delocalized interval. The final -18
+field quantity is localized residue under the selected schema-2 field law, with
+zero escaped or dissipated quantity. Source accounting balances at every tick;
+it is not an equality between charge and field energy. The deterministic example
+uses no random draws and records total model cost 268, including carrier cost 246.
+
+The existing origin example completed **5/5 ticks in 0.0074054 seconds** on the
+same source, preserving one random draw and three oracle calls. Origin 3 resolves
+to record 13 at tick 2; origin 4 remains active. Both runs are headless and their
+generated outputs remain outside Git under the 24-hour retention policy.
+
+The [contact contract](LOCALIZED_QUANTUM_CONTACT.md), postulates, definitions,
+architecture, test expectations and Highlights coverage describe the same finite
+hybrid model. The physics-review Skill now requires commit-time ownership,
+complete alternative validation and explicit field-source accounting. Boss,
+architecture and test-runner Skills already cover the necessary workflow and
+need no additional role or procedure. Live Highlights was reconciled read-only.
+This candidate does not derive QED, a physical momentum observable, field/matter
+energy conservation or a universal classical limit. Optional playback references
+are conservative support, not localized charge or probability; no visualization
+was generated or visually inspected.
+
 ## Quantum origin cells and certified cancellation - 2026-09-13
 
 The final submission integrates main `cc042ce6c51a34775c292371538c5cd6acd4e423`

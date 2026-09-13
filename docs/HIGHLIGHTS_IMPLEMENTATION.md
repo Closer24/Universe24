@@ -87,7 +87,7 @@ host work; their recipes evaluate forward from sources or exact checkpoints.
 Earlier events and outcomes are not rewritten or resampled.
 
 This terminology review uses merged main
-`63983788140bc06d5e8f581e3609c0520c00f43b` and the latest reported
+`63983788140bc06d5e8f581e3609c0520c00f43b` and the then-reported
 `Quantom -> Classic` run in [PR #91](https://github.com/Closer24/Universe24/pull/91),
 head `49bcbc74c69a47814945efce8600edbc824ee04f`. PR #91 was open and unmerged
 at review. Its `local-quantum-events-v3` candidate removes separate chronological
