@@ -570,8 +570,14 @@ it cannot be added by turning a diagnostic observer into a second state owner.
 ### Selected joint-state event backend
 
 `DeferredQuantum.bind_event_network` composes the selected finite backend from
-`quantum/event_network.py`. That module owns the per-node heads, immutable event
-DAG, conditional-record closure and exact host checkpoints. `quantum/event_rules.py`
+`quantum/event_network.py`. That module owns immutable quantum payloads,
+conditional-record closure and exact host checkpoints. `core/event_space.py`
+owns event identities and linked per-stream predecessors. Each native Node and
+the quantum backend share the same bounded `EventCursor` handles, rather than
+maintaining independent copies of current heads. Chronology is separate from
+causal dependencies; no traversal or quantum payload enters ordinary NodeState.
+See [local linked histories](QUANTUM_EVENTS.md#local-linked-histories), including
+checkpoint preservation of per-register physical times. `quantum/event_rules.py`
 owns generic bounded local matrix validation/evaluation. It does not infer a
 physical law from a name. The existing scalar-expression backend is preserved;
 an owner cannot mix the two representations or silently switch a live history.

@@ -77,6 +77,8 @@ class DisturbanceEngine:
         if resolver is not None and event_space is None:
             raise ValueError("an event resolver requires a shared event space")
         self.event_space = event_space
+        if event_space is not None:
+            event_space.seal_streams()
         self._resolver = resolver
         self._work = WorkLedger()
         self._planner = planner
@@ -139,6 +141,10 @@ class DisturbanceEngine:
             self.event_space.require_room(len(self._nodes))
             for position in sorted(self._nodes):
                 self._emit("source", position)
+            # Quantum-only Nodes own the same bounded local handles, without
+            # inventing carrier source events or activating ordinary cycles.
+            for position in self.event_space.stream_addresses:
+                self._at(position)
 
     @property
     def _observer(self) -> EventSink | None:
@@ -164,6 +170,7 @@ class DisturbanceEngine:
                     node.arrival_mask,
                     node.delay_counts,
                     node.committed_cost,
+                    tuple((cursor.stream_id, cursor.head) for cursor in node.event_cursors),
                 )
                 for position, node in self._nodes.items()
             }
@@ -220,6 +227,7 @@ class DisturbanceEngine:
                 output=self._links.bank(position),
                 arrival_mask=(0,) * 6,
                 delay_counts=(0,) * 6,
+                event_cursors=() if self.event_space is None else self.event_space.cursors_at(position),
             )
         return self._nodes[position]
 
@@ -564,6 +572,7 @@ class DisturbanceEngine:
                     ],
                 }
                 for position, node in sorted(self._nodes.items())
+                if not node.event_cursors or node.cause_id is not None
             ],
             "transfers": [
                 {

@@ -1,5 +1,23 @@
 # Highlights implementation coverage
 
+## Local quantum event lists - 2026-09-13
+
+Live Highlights revision
+`ANLCKQm21ChtG5HceOfGOhoBYGoFe1Cevq9Birt---q9RtLGv682cdVsad6nwquwgJtGWbHqSKP2pw9ExatR-Mlf533Guti25QsAZLMtJ0c`
+was reread against main base `5a2e21d892eba82c5aaff0582152e79f94c0fdc5`.
+Sections 1.2.7 and 4.7.1-4.7.6 map to the
+[local linked history contract](QUANTUM_EVENTS.md#local-linked-histories): each
+configured register has one shared bounded handle at its physical Node; immutable
+events retain the per-stream predecessor, separate from physical and evaluation
+parents. Branches and joins form a DAG. Queries evaluate dependencies without
+sampling a past path; explicit instruments retain conditional continuation.
+Exact component checkpoints preserve phases, audit links and individual Link
+readiness times. The four-Node example and its phase/record/checkpoint variants
+exercise these requirements through the primary Simulation. Missing information
+does not create a wave automatically; propagation laws remain configured, and
+full Focus, general field composition and a universal classical limit remain
+open. The live Google document was not edited.
+
 ## Joint local reaction contract - 2026-09-13
 
 The live source was reread at revision

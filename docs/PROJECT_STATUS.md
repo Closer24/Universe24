@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The native [local linked quantum histories](QUANTUM_EVENTS.md#local-linked-histories)
+now attach fixed stream handles to the same physical Node owners. Events retain
+explicit per-stream predecessors through branches and joins; checkpoints redirect
+heads without restarting physical link waits. Reproduce the four-Node example
+with `examples/quantum/linked_paths.json`. This remains the finite configured
+register candidate, with explicit propagation and interaction matrices.
+
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
 of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
 uses existing received-port interactions and paired momentum updates. The impulse
