@@ -128,18 +128,27 @@ def fix_breaking_contract_tests() -> None:
         "    assert disturbance_state.InitialState.slots_per_node.fget is not None\n",
         '    assert "slots_per_node" in disturbance_state.InitialState.__dataclass_fields__\n',
     )
-    # These assertions were useful only while compatibility aliases existed.
-    text = text.replace(
+    # Alias-identity assertions disappear because this migration intentionally
+    # removes the compatibility names rather than preserving a second vocabulary.
+    for assertion in (
         "    assert disturbance_state.DisturbanceNodeState is disturbance_state.DisturbanceNodeState\n",
-        "",
-    )
-    text = text.replace(
         "    assert disturbance_state.NodeView is disturbance_state.NodeView\n",
-        "",
+        "    assert spatial_state.SpatialNodeState is spatial_state.SpatialNodeState\n",
+    ):
+        text = text.replace(assertion, "")
+    # The old negative checks were transformed mechanically from the alias names;
+    # after the breaking migration the canonical classes must be present.
+    text = text.replace(
+        '    assert "class DisturbanceNodeState" not in disturbance_source\n',
+        '    assert "class DisturbanceNodeState" in disturbance_source\n',
     )
     text = text.replace(
-        "    assert spatial_state.SpatialNodeState is spatial_state.SpatialNodeState\n",
-        "",
+        '    assert "class NodeView" not in disturbance_source\n',
+        '    assert "class NodeView" in disturbance_source\n',
+    )
+    text = text.replace(
+        '    assert "class SpatialNodeState" not in spatial_source\n',
+        '    assert "class SpatialNodeState" in spatial_source\n',
     )
     path.write_text(text, encoding="utf-8")
 
