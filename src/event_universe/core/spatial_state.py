@@ -155,6 +155,10 @@ class SpatialCell:
     last_begin_tick: int = -1
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
+    # Fixed host provenance references; never inputs to a physical field law.
+    cause_id: int | None = None
+    sample_cause_id: int | None = None
+    cost_cause_id: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -173,6 +177,7 @@ class SpatialPacket:
     origin: Address3
     port: int
     fields: SpatialBundle
+    cause_id: int | None = None
 
 
 def zero_spatial_state(components: int) -> SpatialState:

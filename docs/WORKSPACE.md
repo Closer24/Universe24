@@ -59,6 +59,11 @@ is preserved.
 - **Rules & costs:** local exchange couplings and primitive operation prices.
 - **JSON:** the complete schema, including optional members without form controls.
 
+Open **How to enable the event graph** below the editor for the classical-only
+JSON member, disabling instructions, capacity and saved-file meanings. The
+[event graph guide](EVENT_GRAPH_CONFIGURATION.md) also provides a complete
+compatible example and explains quantum programs and unsupported combinations.
+
 Nested rule/value editors accept JSON data. Both those editors and full inputs
 reject duplicate JSON keys. Configuration cannot execute Python or JavaScript.
 Check it before running or switching from raw JSON to forms. Errors identify

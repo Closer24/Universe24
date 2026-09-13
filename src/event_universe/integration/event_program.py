@@ -51,8 +51,12 @@ def _matrix(value: object) -> Matrix:
 
 def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sources: int = 0) -> None:
     """Check the deterministic startup requirement without allocating event state."""
-    # The engine records one source per seeded cell; quantum records one per register.
-    required = len({seed.position for seed in initial.seeds}) + quantum_sources
+    # Carrier and field owners each record one source per seeded cell.
+    required = (
+        len({seed.position for seed in initial.seeds})
+        + len({seed.position for seed in initial.spatial_seeds})
+        + quantum_sources
+    )
     if required > capacity:
         raise ValueError(f"initial sources require {required} events but event capacity is {capacity}")
 
@@ -60,6 +64,8 @@ def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sour
 def parse_event_program(initial: InitialState) -> Program:
     if initial.event_program is None or len(initial.event_program) > 1_000_000:
         raise ValueError("bounded event program required")
+    if initial.conservation is not None:
+        raise ValueError("conservation audit does not support native event programs")
     obj = _object(
         json.loads(initial.event_program),
         "event program",
@@ -81,12 +87,12 @@ def parse_event_program(initial: InitialState) -> Program:
     )
     model = _text(obj["model"], "event program model")
     capacity = _integer(obj["capacity"], "event capacity", 1)
-    if initial.spatial_fields:
-        raise ValueError("native event program does not yet bind independent spatial-field clocks")
     if model == "causal-events-v1":
         _object(obj, "causal program", {"model", "capacity"}, {"model", "capacity"})
         _require_initial_capacity(initial, capacity)
         return Program(capacity, None, (), (), 0, None)
+    if initial.spatial_fields:
+        raise ValueError("native quantum program does not yet bind independent spatial-field clocks")
     if model not in ("local-quantum-events-v1", "local-quantum-events-v2"):
         raise ValueError("unknown event program model")
     v2 = model == "local-quantum-events-v2"

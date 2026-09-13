@@ -6,6 +6,7 @@ from typing import Protocol
 
 from .coupling_selectors import matches_type, selected_type_set
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
+from .event_space import CausalEventSpace
 from .integer import add_components, checked_work
 from .spatial_state import (
     FieldInteractionGuard,
@@ -24,6 +25,8 @@ SpatialPlanner = Callable[
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 EventSink = Callable[[dict[str, object]], None]
 RecordCommit = Callable[[Address3, tuple[DisturbanceRecord | None, ...]], None]
+RecordCause = Callable[[Address3], int | None]
+CauseCommit = Callable[[Address3, int], None]
 
 
 class SpatialCoupler(Protocol):
@@ -72,12 +75,15 @@ class SpatialEngine:
         observer: EventSink | None,
         coupler: SpatialCoupler | None = None,
         decayer: SpatialDecayer | None = None,
+        *,
+        event_space: CausalEventSpace | None = None,
     ) -> None:
         self.initial = initial
         self.planner = planner
         self.observer = observer
         self.coupler = coupler
         self.decayer = decayer
+        self.event_space = event_space
         self.cells: dict[Address3, SpatialCell] = {}
         # Host scheduling index only: retain physical registers in self.cells.
         self._active: set[Address3] = set()
@@ -97,6 +103,10 @@ class SpatialEngine:
             cell.states = tuple(states)
             self.values(seed.position)
         self._initial_totals = self.totals()
+        if self.event_space is not None:
+            self.event_space.require_room(len(self.cells))
+            for position, cell in sorted(self.cells.items()):
+                cell.cause_id = self._event("spatial_source", 0, position)
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
         result = []
@@ -118,15 +128,48 @@ class SpatialEngine:
     def _neighbor(self, position: Address3, port: int) -> Address3 | None:
         return neighbor_address(position, port, self.initial.shape, self.initial.boundary)
 
-    def _event(self, event: str, tick: int, position: Address3, **details: object) -> None:
+    def _event(
+        self,
+        event: str,
+        tick: int,
+        position: Address3,
+        *,
+        causes: tuple[int | None, ...] = (),
+        notifications: list[dict[str, object]] | None = None,
+        **details: object,
+    ) -> int | None:
+        identity = None
+        if self.event_space is not None:
+            entry = self.event_space.append(
+                tick=tick,
+                addresses=(position,),
+                owner="spatial",
+                kind=event,
+                physical_parents=tuple(dict.fromkeys(c for c in causes if c is not None)),
+            )
+            identity = entry.id
+            details = {**details, "event_id": identity, "parents": entry.parents}
         if self.observer is not None:
-            self.observer({"event": event, "tick": tick, "position": position, **details})
+            data = {"event": event, "tick": tick, "position": position, **details}
+            if notifications is None:
+                self.observer(data)
+            else:
+                notifications.append(data)
+        return identity
+
+    def _notify(self, notifications: list[dict[str, object]]) -> None:
+        if self.observer is not None:
+            for event in notifications:
+                self.observer(event)
 
     def begin(
         self,
         tick: int,
         residents: Mapping[Address3, tuple[DisturbanceRecord | None, ...]],
         commit_records: RecordCommit,
+        *,
+        record_cause: RecordCause | None = None,
+        commit_cause: CauseCommit | None = None,
     ) -> None:
         if tick % self.initial.link_ticks:
             return
@@ -147,14 +190,21 @@ class SpatialEngine:
             if any(packet is not None for packet in self.links.get(position, ())):
                 raise ValueError("outgoing spatial links are occupied")
             records = residents.get(position, ())
+            sample_values, sample_fluxes, sample_ports = (
+                cell.sample_values,
+                cell.sample_fluxes,
+                cell.sample_ports,
+            )
+            sample_cause = cell.sample_cause_id
             if self.coupler is not None and any(
                 record is not None and record.type_index in coupled_types for record in records
             ):
                 # Freeze only locally delivered input, before fresh source injection.
-                cell.sample_values = self.coupler.sample(cell.states)
-                cell.sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                sample_values = self.coupler.sample(cell.states)
+                sample_fluxes = self.coupler.sample_fluxes(cell.states)
+                sample_cause = cell.cause_id
                 if self.initial.spatial_interactions:
-                    cell.sample_ports = self.coupler.sample_ports(cell.states)
+                    sample_ports = self.coupler.sample_ports(cell.states)
             # Samples describe only the preceding delivery interval, never a permanent trail.
             states = (
                 cell.states
@@ -182,6 +232,13 @@ class SpatialEngine:
                     for state in states
                 )
                 cell.last_cost = 0
+                cell.cost_cause_id = None
+                cell.sample_values, cell.sample_fluxes, cell.sample_ports = (
+                    sample_values,
+                    sample_fluxes,
+                    sample_ports,
+                )
+                cell.sample_cause_id = sample_cause
                 cell.last_begin_tick = tick
                 self._active.discard(position)
                 continue
@@ -194,12 +251,21 @@ class SpatialEngine:
                         bounded(tick + self.initial.link_ticks), position, port, bundle
                     )
             # All physical calculations and validation precede the local commit.
+            if self.event_space is not None:
+                self.event_space.require_room(1 + sum(p is not None for p in packets))
+            carrier_cause = None if record_cause is None else record_cause(position)
             commit_records(position, plan.emission_records)
             cell.states = plan.states
             cell.last_cost = cost
             cell.received_count = 0
             cell.received_decay_cost = 0
             cell.last_begin_tick = tick
+            cell.sample_values, cell.sample_fluxes, cell.sample_ports = (
+                sample_values,
+                sample_fluxes,
+                sample_ports,
+            )
+            cell.sample_cause_id = sample_cause
             self.links[position] = tuple(packets)
             # One following phase clears the reported cost before becoming idle.
             self._active.add(position)
@@ -209,10 +275,13 @@ class SpatialEngine:
             for index, payload in enumerate(plan.rule_delta):
                 for component, value in enumerate(payload):
                     self.transformations[index][component] += value
-            self._event(
+            notifications: list[dict[str, object]] = []
+            cause = self._event(
                 "spatial_cycle",
                 tick,
                 position,
+                causes=(cell.cause_id, carrier_cause),
+                notifications=notifications,
                 cost=cost,
                 source_delta={
                     field.name: plan.source_delta[i]
@@ -231,15 +300,55 @@ class SpatialEngine:
                     else {}
                 ),
             )
-            for packet in packets:
+            cell.cause_id = cell.cost_cause_id = cause
+            if cause is not None and commit_cause is not None and plan.emission_records != records:
+                commit_cause(position, cause)
+            for index, packet in enumerate(packets):
                 if packet is not None:
-                    self._event(
+                    sent = self._event(
                         "spatial_sent",
                         tick,
                         position,
+                        causes=(cause,),
+                        notifications=notifications,
                         port=packet.port,
                         arrival_tick=packet.arrival_tick,
                     )
+                    if sent is not None:
+                        packets[index] = replace(packet, cause_id=sent)
+            self.links[position] = tuple(packets)
+            self._notify(notifications)
+
+    def cycle_causes(self, position: Address3, tick: int, *, sampled: bool) -> tuple[int, ...]:
+        """IDs of the exact frozen sample and current cost consumed by a carrier."""
+        cell = self.cells.get(position)
+        if cell is None:
+            return ()
+        causes = (
+            cell.sample_cause_id if sampled else None,
+            cell.cost_cause_id if tick % self.initial.link_ticks == 0 else None,
+        )
+        return tuple(dict.fromkeys(c for c in causes if c is not None))
+
+    def reaction_causes(self, position: Address3, *, outgoing: bool) -> tuple[int, ...]:
+        """Bounded owners read by a joint commit, including departure amendments."""
+        cell = self.cells.get(position)
+        if cell is None:
+            return ()
+        causes = (cell.cause_id,) + (
+            tuple(p.cause_id for p in self.links.get(position, ()) if p is not None) if outgoing else ()
+        )
+        return tuple(dict.fromkeys(c for c in causes if c is not None))
+
+    def link_reaction(self, position: Address3, proposal: ReactionCommit | None, cause: int) -> None:
+        """The joint event owns the new stock and any amended departure bundle."""
+        if proposal is None:
+            return
+        self.cells[position].cause_id = cause
+        if proposal.links is not None:
+            self.links[position] = tuple(
+                None if p is None else replace(p, cause_id=cause) for p in proposal.links
+            )
 
     def couple(
         self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
@@ -318,6 +427,8 @@ class SpatialEngine:
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving cell exists outside; terminal stock escapes without exterior decay."""
         amounts = [[0] * field.components for field in self.initial.fields]
+        if self.event_space is not None:
+            self.event_space.require_room(1)
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
                 raise ValueError("a terminal spatial packet requires eight octants")
@@ -338,6 +449,7 @@ class SpatialEngine:
             "spatial_escaped",
             tick,
             packet.origin,
+            causes=(packet.cause_id,),
             port=packet.port,
             escaped={
                 field.name: tuple(amounts[i])
@@ -357,6 +469,8 @@ class SpatialEngine:
                     else:
                         ready.setdefault(target, []).append(packet)
         for position, arrivals in sorted(ready.items()):
+            if self.event_space is not None:
+                self.event_space.require_room(1 + int(self.decayer is not None))
             cell = self._at(position)
             losses = [[0] * field.components for field in self.initial.fields]
             decay_cost = cell.received_decay_cost
@@ -423,18 +537,23 @@ class SpatialEngine:
                 else {}
                 for port in range(6)
             ]
-            self._event(
+            notifications: list[dict[str, object]] = []
+            cell.cause_id = self._event(
                 "spatial_received",
                 tick,
                 position,
+                causes=(cell.cause_id, *(p.cause_id for p in arrivals)),
+                notifications=notifications,
                 packets=len(arrivals),
                 received_fields=received_fields,
             )
             if self.decayer is not None:
-                self._event(
+                cell.cause_id = self._event(
                     "spatial_decayed",
                     tick,
                     position,
+                    causes=(cell.cause_id,),
+                    notifications=notifications,
                     dissipated={
                         field.name: tuple(losses[i])
                         for i, field in enumerate(self.initial.fields)
@@ -442,6 +561,7 @@ class SpatialEngine:
                     },
                     cost=arrival_cost,
                 )
+            self._notify(notifications)
 
     def cost(self, position: Address3, tick: int) -> int:
         cell = self.cells.get(position)

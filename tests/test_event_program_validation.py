@@ -128,3 +128,27 @@ def test_startup_validation_does_not_reserve_capacity_for_future_events():
     ]
     initial = parse_initial_state(raw)
     assert parse_event_program(initial).capacity == 1
+
+
+def test_classical_spatial_sources_count_each_owner_without_expanding_baselines():
+    raw = configuration([(0, 0, 0)], capacity=3)
+    raw["shape"] = [1000, 1000, 1000]
+    raw["spatial_fields"] = [{"field": "stock", "baseline": 7, "transport": "outward"}]
+    raw["spatial_seeds"] = [
+        {"position": p, "field": "stock", "populations": [1] * 8} for p in ([0, 0, 0], [1, 0, 0])
+    ]
+    assert parse_event_program(parse_initial_state(raw)).network is None
+    raw["event_program"]["capacity"] = 2
+    with pytest.raises(ValueError, match="initial sources.*3.*capacity.*2"):
+        parse_initial_state(raw)
+    raw["spatial_seeds"] = []
+    raw["event_program"]["capacity"] = 1
+    parse_initial_state(raw)
+
+
+@pytest.mark.parametrize("model", ["local-quantum-events-v1", "local-quantum-events-v2"])
+def test_quantum_spatial_composition_remains_explicitly_unsupported(model):
+    raw = configuration([], addresses=[[0, 0, 0]], model=model)
+    raw["spatial_fields"] = [{"field": "stock", "baseline": 0, "transport": "outward"}]
+    with pytest.raises(ValueError, match="quantum.*spatial-field clocks"):
+        parse_initial_state(raw)

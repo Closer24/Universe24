@@ -57,6 +57,7 @@ RESOURCE_CONSUMERS = {
         "tests/test_quantum_contact_trial.py",
     ),
     "examples/quantum/native_classical.json": ("tests/test_native_event_runtime.py",),
+    "examples/spatial_causal_events.json": ("tests/test_spatial_causal_events.py",),
     "examples/quantum/native_quantum.json": ("tests/test_native_event_runtime.py",),
     "examples/quantum/native_reflection.json": ("tests/test_native_event_runtime.py",),
     "examples/quantum/native_cost_delay.json": ("tests/test_native_event_runtime.py",),

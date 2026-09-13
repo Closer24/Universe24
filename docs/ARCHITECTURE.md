@@ -753,3 +753,12 @@ ledger and local resolver protocol under core. The integration owner composes
 quantum payloads, initialization-selected instruments and classical control codes.
 Only primary API assembly and initialization reference that integration owner;
 core and ordinary field arithmetic never import quantum.
+
+The [generic graph contract](EVENT_GRAPH_CONFIGURATION.md#spatial-provenance-and-resource-bounds)
+also covers the independent spatial scheduler. `SpatialCell` owns three optional
+host IDs for state, frozen response sample and charged field phase; `SpatialPacket`
+owns one final-departure cause. These IDs never enter the pure field planners.
+Carrier emission bookkeeping and joint responses connect the owners through
+local event IDs, with fixed parent fan-in and capacity checked before local
+ownership commits. Shared history remains a bounded host audit; quantum-plus-field
+clock composition and observer inference are separate features.
