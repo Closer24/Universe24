@@ -1,4 +1,4 @@
-"""Native Nodes share wave-history heads; compaction preserves physical continuation."""
+"""Native Nodes share current event references; spacetime retains the immutable past."""
 
 import json
 from fractions import Fraction
@@ -14,7 +14,7 @@ from event_universe.quantum import DeferredQuantum, EventNetworkConfig
 
 from .test_quantum_event_network import CX, POSITION, H, Z, probability
 
-EXAMPLE = Path(__file__).resolve().parents[1] / "examples/quantum/linked_paths.json"
+EXAMPLE = Path(__file__).resolve().parents[1] / "examples/quantum/event_paths.json"
 
 
 def configuration():
@@ -29,7 +29,7 @@ def resolver(world):
 @pytest.mark.parametrize("phase", [False, True])
 @pytest.mark.parametrize("recorded", [None, 0, 1])
 @pytest.mark.parametrize("checkpoint", [False, True])
-def test_four_node_wave_links_interference_and_local_record(phase, recorded, checkpoint):
+def test_four_node_event_paths_interference_and_local_record(phase, recorded, checkpoint):
     raw = configuration()
     if phase:
         raw["event_program"]["layers"].insert(
@@ -54,10 +54,11 @@ def test_four_node_wave_links_interference_and_local_record(phase, recorded, che
         assert all(not node_state_violations(n) for n in world._nodes.values())
         if tick == 2:
             assert space.host_evaluated_nodes == 0
-            assert space.history(2)[1] != space.history(3)[1]
             assert world.event_space.ancestors(cursors[2].head) != world.event_space.ancestors(
                 cursors[3].head
             )
+            assert world.event_space.event(cursors[2].head).addresses == (addresses[0], addresses[2])
+            assert world.event_space.event(cursors[3].head).addresses == (addresses[1], addresses[3])
             if recorded is not None:
                 decision = space.prepare(70, 2, POSITION)
                 assert probability(decision) == Fraction(1, 2)
@@ -75,8 +76,9 @@ def test_four_node_wave_links_interference_and_local_record(phase, recorded, che
                 assert space.physical_ticks == old_ticks
                 assert space.joint_density() == before
                 assert world.event_space.events[: len(old_events)] == old_events
-                assert all(space.history(q)[1] == old_heads[q] for q in range(4))
+                assert all(world.event_space.event(head) is old_events[head] for head in old_heads)
                 assert world.event_space.event(replacement).parents == ()
+                assert world.event_space.ancestors(replacement) == (replacement,)
             assert space.tick == world.tick == 2
     assert tuple(initial_views[a].event_heads[0][1] for a in addresses) == initial_heads
     before = space.tick, space.heads, space.physical_ticks, space.events, space.records, world.nodes
@@ -150,13 +152,14 @@ def test_independent_colocated_registers_join_as_a_joint_state():
     space.step(((H, (0,)),))
     assert probability(space.query(0)) == Fraction(1, 2)
     assert probability(space.query(1)) == 0
-    assert not set(space.history(0)).intersection(space.history(1))
+    assert not set(space.event_space.ancestors(a.head)).intersection(space.event_space.ancestors(b.head))
     space.step(((CX, (0, 1)),))
     joint = space.heads[0]
     assert a.head == b.head == joint
     space.step(((Z, (0,)),))
     assert a.head != b.head
-    assert space.history(0)[1] == space.history(1)[0] == joint
+    assert space.event_space.event(a.head).parents == (joint,)
+    assert b.head == joint
     density = space.joint_density()
     space.checkpoint(0)
     assert space.physical_ticks == (3, 2)
@@ -167,15 +170,22 @@ def test_independent_colocated_registers_join_as_a_joint_state():
     assert probability(space.query(0)) == probability(space.query(1)) == 0
 
 
-def test_long_local_history_uses_links_and_retains_fixed_cursor_storage():
+def test_long_event_spacetime_retains_fixed_cursor_storage_without_local_history():
     space = DeferredQuantum().bind_event_network(EventNetworkConfig(((0, 0, 0),)))
     cursor = space.event_space.cursors_at((0, 0, 0))[0]
     width = cursor.__sizeof__()
     for _ in range(2000):
         space.step(((Z, (0,)),))
-    assert len(space.history(0)) == 2001
+    assert len(space.event_space.ancestors(cursor.head)) == 2001
+    assert len(space.event_space.events) == 2001
+    assert not hasattr(space, "history")
+    assert all(not hasattr(event, "predecessors") for event in space.event_space.events)
     assert cursor.__sizeof__() == width
     assert not hasattr(cursor, "__dict__")
     assert space.host_evaluated_nodes == 0
-    space.checkpoint(0)
-    assert space.node_count == 1 and len(space.history(0)) == 2002
+    old_events = space.event_space.events
+    replacement = space.checkpoint(0)
+    assert space.node_count == 1 and len(space.event_space.events) == 2002
+    assert space.event_space.events[: len(old_events)] == old_events
+    assert space.event_space.ancestors(replacement) == (replacement,)
+    assert cursor.__sizeof__() == width

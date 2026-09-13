@@ -1,22 +1,48 @@
 # Highlights implementation coverage
 
-## Local quantum event lists - 2026-09-13
+## Quantum origin cells and event spacetime - 2026-09-13
 
 Live Highlights revision
 `ANLCKQm21ChtG5HceOfGOhoBYGoFe1Cevq9Birt---q9RtLGv682cdVsad6nwquwgJtGWbHqSKP2pw9ExatR-Mlf533Guti25QsAZLMtJ0c`
-was reread against main base `5a2e21d892eba82c5aaff0582152e79f94c0fdc5`.
-Sections 1.2.7 and 4.7.1-4.7.6 map to the
-[local linked history contract](QUANTUM_EVENTS.md#local-linked-histories): each
-configured register has one shared bounded handle at its physical Node; immutable
-events retain the per-stream predecessor, separate from physical and evaluation
-parents. Branches and joins form a DAG. Queries evaluate dependencies without
-sampling a past path; explicit instruments retain conditional continuation.
-Exact component checkpoints preserve phases, audit links and individual Link
-readiness times. The four-Node example and its phase/record/checkpoint variants
-exercise these requirements through the primary Simulation. Missing information
-does not create a wave automatically; propagation laws remain configured, and
-full Focus, general field composition and a universal classical limit remain
-open. The live Google document was not edited.
+was reread; its modification time was `2026-09-13T15:06:39.393Z`. Implementation
+starts from `fb54f3306ce8172f5ed3f2d3a65eb03cb021a6b7`, integrating current main
+`2c20d00094639263fbe387c0a62420dcef108285` with the prior Node-event work.
+
+The user's later explicit contract replaces the separate per-stream predecessor
+list. Sections 1.2.7 and 4.7.1-4.7.6 now map to
+[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
+[origin cells](WAVE_ORIGINS.md): immutable events are the sole history, each
+participating Node stores up to six origin IDs, and a direct origin status check
+does not traverse a history. Current virtual-register heads remain separate
+bounded state. One conditional terminal decision atomically resolves its selected
+origins; peers prune their local references on their next native tick. Every v3
+gate declares participating origins. Unarrived support cannot execute the gate;
+suppression after resolution requires unchanged complete correlated density.
+A retired instrument also needs an explicit `null_outcome` that is certain and
+preserves that density. Unsafe suppression fails. One origin may describe several
+disturbances; interaction lists accept one to six names, not a particle count.
+Untagged gates and the older carrier bindings are rejected in
+this profile. Continuing outcomes retain the conditional state and do not assign
+sharp momentum after a position record. Origin bookkeeping does not grant an
+ordinary remote field read.
+
+Explicit matrices and exact joint state retain interference and correlation.
+Component checkpoints preserve phases, origin identity and individual Link
+readiness. `examples/quantum/event_paths.json` retains the four-Node coherent,
+phase, record and checkpoint cases; the v3 origin contract specifies the new
+local-capacity, contention, conditional-sampling and pruning acceptance checks.
+The terminal policy stops future operations requiring its named origins; it does
+so only through the guarded contract. The example instrument explicitly resets
+occupation on its terminal branch; this is not a derived absorption or energy law.
+Direct origin lookup is O(1); cancellation certification is separately counted
+quantum-owner work, without an added physical observer or carrier-delay channel.
+Check results require the exact tested tree and completed validation evidence.
+
+This is a finite configured candidate. It does not establish spontaneous free
+dynamics, a universal trigger or conservation law, general field composition,
+full Focus, host O(1) evaluation or bounded total memory for infinite spacetime.
+The live Google document was read only; its text was not changed by this
+repository reconciliation.
 
 ## Joint local reaction contract - 2026-09-13
 

@@ -1,11 +1,20 @@
 # Project status and restart guide
 
-The native [local linked quantum histories](QUANTUM_EVENTS.md#local-linked-histories)
-now attach fixed stream handles to the same physical Node owners. Events retain
-explicit per-stream predecessors through branches and joins; checkpoints redirect
-heads without restarting physical link waits. Reproduce the four-Node example
-with `examples/quantum/linked_paths.json`. This remains the finite configured
-register candidate, with explicit propagation and interaction matrices.
+The native [quantum origin cells](WAVE_ORIGINS.md) use the shared immutable event
+spacetime as their history. Each participating physical Node holds up to six
+origin IDs and checks their resolution on every native tick. A terminal configured
+outcome closes its selected origins atomically; other Nodes discard those IDs
+on their next tick, without an eager sweep at commit. Later gates requiring
+resolved origins may be suppressed only when a full-density check proves them
+inert; retired instruments additionally require a certain explicit null outcome.
+Unsafe cancellation fails. One origin can describe several disturbances, and
+continuing outcomes keep the conditional joint state. Separate linked histories
+have been removed.
+Current register heads and individual Link readiness still survive checkpoints.
+Reproduce coherent paths with `examples/quantum/event_paths.json`; native v3 adds
+explicit origin and interaction definitions. This remains the finite configured
+register candidate, with supplied propagation and instrument matrices. Exact
+source, passing checks and remaining blockers require current validation evidence.
 
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
 of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate

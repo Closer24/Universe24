@@ -12,6 +12,7 @@ from event_universe.initialization import _address, _array, _index, _integer, _o
 from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
 from event_universe.quantum.event_network import Instrument, LocalOperation
 from event_universe.quantum.event_rules import GroupedInstrument, LocalChannel, Matrix, outcome_groups
+from event_universe.quantum.wave_origins import WaveDefinition
 
 
 @dataclass(frozen=True, slots=True)
@@ -25,6 +26,17 @@ class Binding:
 
 
 @dataclass(frozen=True, slots=True)
+class WaveBinding:
+    address: Address3
+    register_index: int
+    origins: tuple[str, ...]
+    instrument: Instrument
+    terminal_origins: tuple[str, ...]
+    terminal_outcomes: tuple[int, ...]
+    null_outcome: int | None
+
+
+@dataclass(frozen=True, slots=True)
 class Program:
     capacity: int
     network: EventNetworkConfig | None
@@ -32,6 +44,8 @@ class Program:
     bindings: tuple[Binding, ...]
     seed: int
     tickets: tuple[int, ...] | None
+    wave_interactions: tuple[WaveBinding, ...] = ()
+    layer_origins: tuple[tuple[int, tuple[tuple[str, ...], ...]], ...] = ()
 
 
 def _matrix(value: object) -> Matrix:
@@ -47,6 +61,19 @@ def _matrix(value: object) -> Matrix:
                 values.append(Amplitude(*(_integer(v, "coefficient") for v in pair)))
         result.append(tuple(values))
     return tuple(result)
+
+
+def _instrument(obj: dict[str, object]) -> Instrument:
+    if ("instrument" in obj) == ("grouped_instrument" in obj):
+        raise ValueError("binding requires exactly one instrument definition")
+    if "instrument" in obj:
+        return LocalInstrument(tuple(_matrix(m) for m in _array(obj["instrument"], "instrument", 4, 1)))
+    return GroupedInstrument(
+        tuple(
+            tuple(_matrix(m) for m in _array(group, "unobserved Kraus terms", 4, 1))
+            for group in _array(obj["grouped_instrument"], "grouped instrument", 4, 1)
+        )
+    )
 
 
 def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sources: int = 0) -> None:
@@ -82,6 +109,8 @@ def parse_event_program(initial: InitialState) -> Program:
             "dimensions",
             "initial_levels",
             "register_names",
+            "waves",
+            "wave_interactions",
         },
         {"model", "capacity"},
     )
@@ -93,9 +122,14 @@ def parse_event_program(initial: InitialState) -> Program:
         return Program(capacity, None, (), (), 0, None)
     if initial.spatial_fields:
         raise ValueError("native quantum program does not yet bind independent spatial-field clocks")
-    if model not in ("local-quantum-events-v1", "local-quantum-events-v2"):
+    if model not in ("local-quantum-events-v1", "local-quantum-events-v2", "local-quantum-events-v3"):
         raise ValueError("unknown event program model")
-    v2 = model == "local-quantum-events-v2"
+    v3 = model == "local-quantum-events-v3"
+    v2 = model != "local-quantum-events-v1"
+    if not v3 and {"waves", "wave_interactions"} & obj.keys():
+        raise ValueError("wave origin definitions require local-quantum-events-v3")
+    if v3 and obj.get("bindings"):
+        raise ValueError("legacy carrier bindings do not support wave origin lifecycles")
     if not v2 and {"dimensions", "initial_levels", "register_names"} & obj.keys():
         raise ValueError("register definitions require local-quantum-events-v2")
     addresses = tuple(
@@ -108,6 +142,14 @@ def parse_event_program(initial: InitialState) -> Program:
         _integer(q, "occupied register_index", 0)
         for q in _array(obj.get("occupied", []), "occupied", 30)
     )
+    waves = []
+    for raw in _array(obj.get("waves", []), "waves", 180, 1 if v3 else 0):
+        wave = _object(raw, "wave", {"name", "register_index"}, {"name", "register_index"})
+        waves.append(
+            WaveDefinition(
+                _text(wave["name"], "wave name"), _integer(wave["register_index"], "wave register", 0)
+            )
+        )
     bounds = _object(
         obj.get("bounds", {}),
         "quantum bounds",
@@ -132,9 +174,12 @@ def parse_event_program(initial: InitialState) -> Program:
             _text(n, "register name")
             for n in _array(obj.get("register_names", []), "register_names", 30)
         ),
+        waves=tuple(waves),
     )
-    _require_initial_capacity(initial, capacity, len(network.addresses))
+    _require_initial_capacity(initial, capacity, len(network.addresses) + len(network.waves))
     layers = []
+    layer_origins = []
+    wave_names = {wave.name for wave in waves}
     prior_tick = 0
     for raw in _array(obj.get("layers", []), "layers", 4096):
         layer = _object(raw, "layer", {"tick", "operations"}, {"tick", "operations"})
@@ -144,13 +189,26 @@ def parse_event_program(initial: InitialState) -> Program:
         prior_tick = tick
         used: set[int] = set()
         operations: list[tuple[LocalOperation, tuple[int, ...]]] = []
+        origin_groups: list[tuple[str, ...]] = []
         for raw_op in _array(layer["operations"], "operations", 30, 1):
             op = _object(
                 raw_op,
                 "operation",
-                {"register_indices", "matrix", "channel"} if v2 else {"register_indices", "matrix"},
-                {"register_indices"},
+                {"register_indices", "matrix", "channel", "origins"}
+                if v3
+                else {"register_indices", "matrix", "channel"}
+                if v2
+                else {"register_indices", "matrix"},
+                {"register_indices", "origins"} if v3 else {"register_indices"},
             )
+            if v3:
+                origins = tuple(
+                    _text(n, "operation origin")
+                    for n in _array(op["origins"], "operation origins", 6, 1)
+                )
+                if len(set(origins)) != len(origins) or any(n not in wave_names for n in origins):
+                    raise ValueError("wave operations require distinct declared origins")
+                origin_groups.append(origins)
             if ("matrix" in op) == ("channel" in op):
                 raise ValueError("operation must supply exactly one matrix or channel")
             register_indices = tuple(
@@ -185,6 +243,8 @@ def parse_event_program(initial: InitialState) -> Program:
                 raise ValueError("quantum operations require cardinal nearest neighbors")
             operations.append((rule, register_indices))
         layers.append((tick, tuple(operations)))
+        if v3:
+            layer_origins.append((tick, tuple(origin_groups)))
     names = {kind.name: q for q, kind in enumerate(initial.disturbances)}
     field_names = {field.name: q for q, field in enumerate(initial.fields)}
     bindings = []
@@ -214,20 +274,7 @@ def parse_event_program(initial: InitialState) -> Program:
             for t in types
         ):
             raise ValueError("every participant must own a separate outcome field")
-        if ("instrument" in b) == ("grouped_instrument" in b):
-            raise ValueError("binding requires exactly one instrument definition")
-        instrument: Instrument
-        if "instrument" in b:
-            instrument = LocalInstrument(
-                tuple(_matrix(m) for m in _array(b["instrument"], "instrument", 4, 1))
-            )
-        else:
-            instrument = GroupedInstrument(
-                tuple(
-                    tuple(_matrix(m) for m in _array(group, "unobserved Kraus terms", 4, 1))
-                    for group in _array(b["grouped_instrument"], "grouped instrument", 4, 1)
-                )
-            )
+        instrument = _instrument(b)
         if "register_index" in b:
             register_index = _integer(b["register_index"], "binding register_index", 0)
             if register_index >= len(addresses) or addresses[register_index] != address:
@@ -245,6 +292,62 @@ def parse_event_program(initial: InitialState) -> Program:
         if not definition.signed and any(c < 0 for c in codes):
             raise ValueError("negative code for unsigned outcome field")
         bindings.append(Binding(address, register_index, types, field, codes, instrument))
+    wave_bindings = []
+    wave_bound: set[Address3] = set()
+    for raw in _array(obj.get("wave_interactions", []), "wave interactions", 30):
+        b = _object(
+            raw,
+            "wave interaction",
+            {
+                "address",
+                "register_index",
+                "origins",
+                "instrument",
+                "grouped_instrument",
+                "terminal_origins",
+                "terminal_outcomes",
+                "null_outcome",
+            },
+            {"address", "register_index", "origins"},
+        )
+        address = _address(b["address"], "wave interaction address", 0)
+        register = _integer(b["register_index"], "wave interaction register", 0)
+        if register >= len(addresses) or addresses[register] != address or address in wave_bound:
+            raise ValueError("one wave interaction per local configured address required")
+        wave_bound.add(address)
+        origins = tuple(
+            _text(n, "wave origin name") for n in _array(b["origins"], "interaction origins", 6, 1)
+        )
+        if len(set(origins)) != len(origins) or any(n not in wave_names for n in origins):
+            raise ValueError("distinct declared interaction origins required")
+        instrument = _instrument(b)
+        groups = outcome_groups(instrument)
+        null = None if "null_outcome" not in b else _integer(b["null_outcome"], "null outcome", 0)
+        if null is not None and null >= len(groups):
+            raise ValueError("null outcome outside instrument")
+        if len(groups[0][0]) != network.local_dimensions[register]:
+            raise ValueError("wave instrument dimension disagrees with local register")
+        terminal = tuple(
+            _integer(v, "terminal outcome", 0)
+            for v in _array(b.get("terminal_outcomes", []), "terminal outcomes", len(groups))
+        )
+        if len(set(terminal)) != len(terminal) or any(v >= len(groups) for v in terminal):
+            raise ValueError("distinct terminal outcomes must belong to instrument")
+        selected = tuple(
+            _text(n, "terminal origin")
+            for n in _array(
+                b.get("terminal_origins", list(origins) if terminal else []), "terminal origins", 6
+            )
+        )
+        if (
+            len(set(selected)) != len(selected)
+            or any(n not in origins for n in selected)
+            or bool(selected) != bool(terminal)
+        ):
+            raise ValueError("terminal outcomes require a declared interaction origin subset")
+        wave_bindings.append(
+            WaveBinding(address, register, origins, instrument, selected, terminal, null)
+        )
     tickets = (
         None
         if "tickets" not in obj
@@ -257,4 +360,6 @@ def parse_event_program(initial: InitialState) -> Program:
         tuple(bindings),
         _integer(obj.get("seed", 0), "seed", 0),
         tickets,
+        tuple(wave_bindings),
+        tuple(layer_origins),
     )

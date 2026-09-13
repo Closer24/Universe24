@@ -572,12 +572,19 @@ it cannot be added by turning a diagnostic observer into a second state owner.
 `DeferredQuantum.bind_event_network` composes the selected finite backend from
 `quantum/event_network.py`. That module owns immutable quantum payloads,
 conditional-record closure and exact host checkpoints. `core/event_space.py`
-owns event identities and linked per-stream predecessors. Each native Node and
-the quantum backend share the same bounded `EventCursor` handles, rather than
-maintaining independent copies of current heads. Chronology is separate from
-causal dependencies; no traversal or quantum payload enters ordinary NodeState.
-See [local linked histories](QUANTUM_EVENTS.md#local-linked-histories), including
-checkpoint preservation of per-register physical times. `quantum/event_rules.py`
+owns immutable event identities, dependency edges and write-once origin-resolution
+slots. It stores no separate predecessor list. Each native Node and the quantum
+backend share fixed `EventCursor` handles for current register state, preserving
+each register's physical time across checkpoints. Native v3 also gives each
+participating Node a bank of at most six integer wave-origin references. These
+are distinct from the finite virtual register heads, never amplitudes or a local
+history. `quantum/wave_origins.py` owns their configured quantum lifecycle;
+ordinary field rules cannot consume remote resolution state. See
+[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
+[origin cells](WAVE_ORIGINS.md) for the transaction, polling and cost contracts.
+Retired-gate and null-instrument cancellation require exact correlated-density
+certificates in the quantum owner; direct origin lookup does not replace them.
+`quantum/event_rules.py`
 owns generic bounded local matrix validation/evaluation. It does not infer a
 physical law from a name. The existing scalar-expression backend is preserved;
 an owner cannot mix the two representations or silently switch a live history.

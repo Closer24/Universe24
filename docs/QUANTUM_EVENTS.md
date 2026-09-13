@@ -6,6 +6,9 @@ same owner. The binary pure-state contract below describes the original v1 subse
 its old limitation on indistinguishable Kraus terms is removed only by that
 explicit extension. The shared [native runtime](NATIVE_QUANTUM_EVENTS.md) supplies
 classical feedback; the standalone backend does not own a physical engine.
+The explicit [origin-cell extension](WAVE_ORIGINS.md) adds up to six local wave
+references and terminal or continuing interactions. It uses the same event
+spacetime and joint-state owner, without a separate linked history per Node.
 
 ## Status and scope
 
@@ -29,7 +32,7 @@ document owns the finite quantum state and instrument semantics.
 | --- | --- |
 | Physical input | Immutable unwrapped 3D node addresses and a layer of disjoint one-node or cardinal nearest-neighbor operations |
 | Initial state | Binary occupation per configured node; source amplitudes define the joint state, not hidden classical paths |
-| Wave storage | Joint source/checkpoint state plus local matrix operations and per-node predecessor links |
+| Wave storage | Joint source/checkpoint state and immutable operations in the shared event dependency DAG |
 | Coherent law | Explicit 2x2 or 4x4 Gaussian-integer matrix satisfying `U* U = scale I`, with positive common scale |
 | Instrument | Explicit one-node family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
 | Query | Conservative backward dependency closure, including relevant earlier recorded constraints, then forward amplitude evaluation |
@@ -53,39 +56,38 @@ prototype is not copied as an exception to the register contract.
 
 ## Algorithm
 
-### Local linked histories
+### Event spacetime and current references
 
-Each configured register has one `EventCursor` in `core/event_links.py`. The
-shared event space owns its stream identity, latest event ID and last modeled
-operation tick. The native physical Node holds that same handle in a fixed
-local tuple; the quantum backend does not maintain a second head dictionary.
-Colocated registers have distinct handles. A stream bank is sealed when the
-physical engine is assembled, and contains at most thirty handles per Node.
-Each handle contains three integers, independent of history length.
+History is the immutable shared event spacetime. Its event IDs directly identify
+source states, configured operations, channels, records and checkpoints. `parents`
+record computational dependencies; `physical_parents` additionally enforce the
+locality and travel-time contract. There are no per-stream predecessor records,
+per-Node history lists or `history(register)` traversal API.
 
-Every appended event stores immutable `predecessors`, one previous ID per
-participating stream. A local chain can branch into separate later operations
-and meet another chain in a shared event. The overall structure is a DAG, not
-an independent tree per Node. The shared event store retains the old records;
-changing a current head never changes a past event's data or links.
+Each configured virtual register retains one `EventCursor` containing its stream
+identity, current event ID and last modeled operation tick. Colocated registers
+have distinct handles. The native Node shares these current-state handles with
+the quantum owner; no second head dictionary exists. They are fixed at assembly,
+with at most thirty configured registers globally. They are distinct from the
+[six local origin references](WAVE_ORIGINS.md), which identify unresolved wave
+continuations. Neither kind of handle stores amplitudes or an expandable history.
 
-Predecessors describe local history. `parents` describe dependencies required
-for evaluation, while `physical_parents` additionally require physical locality.
-These are different contracts: chronological adjacency cannot authorize a
-remote read or introduce an extra quantum dependency. `history(register)` walks
-the local chain newest first; queries walk dependency parents and the required
-record constraints. Both traversals are host work, outside ordinary local rules.
+Appending an event validates owner, address, time, capacity, handles and parents
+before publishing it and advancing current heads. Earlier event data never
+changes. Public cursor properties and `NodeView.event_heads` snapshots expose
+read-only IDs. A source's later resolution is a separate write-once status in
+the event space; it does not modify the source event's physical data or time.
 
-Append validates participating handles, owners, addresses, time, capacities and
-parent references before publishing any event or head. Read-only public cursor
-properties and immutable `NodeView.event_heads` snapshots expose IDs only. This
-is an internal ownership boundary, not a sandbox against hostile Python code.
+Queries traverse the dependency DAG and necessary recorded constraints inside
+the quantum owner. Looking up an origin status directly does not traverse it.
+Chronology alone cannot authorize a remote physical read. These ownership APIs
+are not a sandbox against arbitrary Python reflection.
 
-Configured sources, coherent local operations, channels and explicit result
-records all use these links. Missing knowledge does not automatically create a
-wave or select an outcome. Distinct registers start in a tensor-product state;
-a joint operation can correlate them. Interference combines amplitudes of
-coherent alternatives, never probabilities from unrelated particles.
+Missing knowledge does not automatically create a wave or select an outcome.
+Explicit preparation and local operations define the quantum state. Distinct
+registers start in a tensor-product state; a configured joint operation may
+correlate them. Interference combines coherent amplitudes within that joint
+state, not independent probability values stored on local origin references.
 
 ### Deferred evaluation
 
@@ -104,7 +106,7 @@ coherent alternatives, never probabilities from unrelated particles.
 6. A later operation uses the conditional joint state. It does not acquire sharp
    values for all unmeasured quantities, and it does not resample the past.
 
-The links are not the wave by themselves: states and operation laws are essential.
+Event references are not the wave by themselves: states and operation laws are essential.
 The traversal is conservative, not an optimal tensor-network contraction solver.
 No query of an uncomputed coherent branch chooses which historical route occurred.
 
@@ -144,9 +146,10 @@ A local marginal is not a sufficient checkpoint for a correlated component.
 A branch omitted by one query may become necessary at a future recombination.
 
 The replacement is marked `checkpoint` in the shared audit. Its dependency
-parents are empty because its complete state replaces that computation; its
-per-stream predecessor links retain the audit history. All participating heads
-redirect together, preserving their handle identities and each register's own
+parents are empty because its complete state replaces that computation. Earlier
+events remain directly addressable in the immutable spacetime; no new chronology
+list is retained. All participating heads redirect together, preserving their
+handle identities, wave-origin identities and each register's own
 last modeled operation tick. A checkpoint must neither restart a Link's wait nor
 make an otherwise premature Link operation admissible. Old quantum payloads may
 be reclaimed; the bounded append-only causal audit is not reclaimed by this call.
@@ -205,7 +208,7 @@ A complete small controller is available as:
 
 ```shell
 python -m event_universe.integration.quantum_event_trial --ticket 24
-python -m event_universe --init examples/quantum/linked_paths.json --output artifacts/linked-paths
+python -m event_universe --init examples/quantum/event_paths.json --output artifacts/event-paths
 python tools/check.py --base origin/main
 ```
 
@@ -214,7 +217,7 @@ not claimed to come from a real quantum device. The integration PR records the
 actual interpreter, source tree, executed checks and limitations. Required finite
 expectations are listed in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
 
-`linked_paths.json` is ordinary initialization for a four-Node, four-tick
+`event_paths.json` is ordinary initialization for a four-Node, four-tick
 one-excitation interferometer. Its configured mixer splits A/B on tick 1,
 configured swaps move those modes to C/D on tick 2, tick 3 is idle, and a mixer
 recombines at C/D on tick 4. The final occupation probabilities are C=0, D=1;

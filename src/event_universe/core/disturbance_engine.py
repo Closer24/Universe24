@@ -171,6 +171,7 @@ class DisturbanceEngine:
                     node.delay_counts,
                     node.committed_cost,
                     tuple((cursor.stream_id, cursor.head) for cursor in node.event_cursors),
+                    () if node.event_references is None else node.event_references.origins,
                 )
                 for position, node in self._nodes.items()
             }
@@ -228,6 +229,9 @@ class DisturbanceEngine:
                 arrival_mask=(0,) * 6,
                 delay_counts=(0,) * 6,
                 event_cursors=() if self.event_space is None else self.event_space.cursors_at(position),
+                event_references=None
+                if self.event_space is None
+                else self.event_space.references_at(position),
             )
         return self._nodes[position]
 
@@ -280,6 +284,8 @@ class DisturbanceEngine:
             "local_cycles_started": self._work.cycles,
         }
         if self.event_space is not None:
+            report["carrier_model_operations_cost"] = self._work.work
+            report["model_operations_cost"] = self.event_space.model_cost
             report["causal_events"] = self.event_space.next_id
             report["causal_event_capacity"] = self.event_space.capacity
             report["event_ledger_cost"] = self.event_space.model_cost

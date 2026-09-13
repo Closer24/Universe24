@@ -85,11 +85,30 @@ Q-ORACLE-1 applies only to the explicit quantum owner and its reported host work
 it does not exempt ordinary field, force, movement or geometry inputs. Diagnostics
 may inspect global state and reject a run but must not supply physical repairs.
 
-For deferred-history changes, follow the
-[local linked history and checkpoint contract](../../docs/QUANTUM_EVENTS.md#local-linked-histories).
-Check future physical admissibility as well as equal amplitudes: exact host
-compaction must preserve each local register's Link readiness, and chronological
-predecessors must not become new physical dependencies.
+For quantum event storage, follow the
+[event-spacetime contract](../../docs/QUANTUM_EVENTS.md#event-spacetime-and-current-references)
+and [origin-cell contract](../../docs/WAVE_ORIGINS.md). The immutable spacetime
+is the history; do not add a second linked list per Node or wave. Distinguish
+six local origin IDs from finite virtual-register heads and exact joint state.
+An origin is a continuation identity, not a disturbance count; one-origin joint
+interactions require explicit state/coupling/instrument evidence like any other.
+Check atomic conditional sampling and terminal marking, next-tick local pruning,
+no-click/continuation semantics, and unchanged source events. Independent stale
+lotteries followed by first-writer selection do not prove correct probabilities.
+Require origin-tagged gates and instrument requests in the wave profile. Verify
+that unarrived support cannot execute a gate. Retired-gate suppression must preserve
+the complete retained correlated density, not only one marginal; otherwise it
+must fail before publication. A retired instrument additionally needs its explicit
+null outcome to be the sole possible result with unchanged full density. Exercise
+an unsafe remote X, a deterministic non-null record and a state-changing null.
+Check native recertification when a target head changes without a fresh arrival.
+Count guard queries/audit costs separately from O(1) origin lookup; neither audit
+cost nor suppression metadata is an ordinary physical observer or delay channel.
+Check that no older untagged binding bypasses the lifecycle. Distinguish retained
+conditional audit state from a claim of physical
+absorption. Verify Link readiness, phase and correlation preservation across checkpoints.
+Keep shared quantum bookkeeping out of ordinary fields and physical remote
+observables; bounded origin lookup does not make the complete host query O(1).
 
 Do not infer a universal causal proof from a one-hop test or fixed callback size.
 Separate tested finite cases, analytic arguments and unestablished physics. A

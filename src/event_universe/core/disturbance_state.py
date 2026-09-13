@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
-from .event_links import EventCursor
+from .event_links import EventCursor, EventReferences
 
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
@@ -308,6 +308,7 @@ class DisturbanceNodeState:
     last_cost: int = 0
     cause_id: int | None = None
     event_cursors: tuple[EventCursor, ...] = ()
+    event_references: EventReferences | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -324,3 +325,4 @@ class NodeView:
     delay_counts: tuple[int, ...] = ()
     committed_cost: int = 0
     event_heads: tuple[tuple[int, int | None], ...] = ()
+    event_origins: tuple[int, ...] = ()

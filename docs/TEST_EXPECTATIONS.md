@@ -723,18 +723,46 @@ cases; the check selector maps every lab source/configuration change to it.
 
 ## Selected deferred quantum event network
 
-`test_event_links.py` checks distinct local chains through a split/join, immutable
-predecessors, host checkpoint chronology without added causal parents, foreign
-and forged handle rejection, failed-append atomicity and fixed stream capacity.
-`test_quantum_linked_nodes.py` runs the native four-Node initialization: final
+`test_event_links.py` checks immutable event spacetime through a split/join,
+direct event lookup without separate predecessor lists, current-head updates,
+foreign and forged handle rejection, failed-append atomicity and fixed capacity.
+`test_quantum_node_events.py` runs the native four-Node initialization: final
 C/D weights are 0/1, reversed by a phase, and 1/2 each after either intermediate
 position outcome. Exact correlated checkpoints preserve those cases, audit
 records, handle identity and individual modeled times. A two-tick link must
 remain admissible after compaction, while a prematurely reused register remains
-inadmissible. Colocated registers retain separate histories until their configured
-joint operation. A 2,000-event chain leaves cursor storage fixed. Empty quantum
+inadmissible. Colocated registers retain disjoint dependency components until
+their configured joint operation. A 2,000-event DAG leaves cursor storage fixed
+and stores its past solely in immutable spacetime events. Empty quantum
 Nodes introduce no carrier source, cycle, inventory, transport or model cost;
 public head snapshots stay immutable and queries never change physical state.
+
+The [origin-cell contract](WAVE_ORIGINS.md) additionally requires a six-origin
+local capacity, causal support propagation without multi-Link same-tick relay,
+one terminal commit under competing requests, conditional retry after no-click,
+and local invalidation at the next tick without a commit-time bank sweep. A
+continuing outcome must preserve conditional state and remaining coherence; a
+position result must not fabricate a sharp momentum, and this extension does not
+claim a physical momentum observable. A seventh origin fails before
+partial publication. Origins and immutable source events survive checkpoints.
+Unarrived support cannot execute a gate. Retired gates may be skipped only when
+the complete retained correlated density is invariant; otherwise reject before
+layer publication. A certified skip adds no operation payload, phase change or
+physical-ready-time write. A retired instrument requires one possible outcome,
+equal to its declared `null_outcome`, and unchanged complete density. An arbitrary
+remote X, deterministic click or state-changing null must fail cancellation.
+Recheck native null certificates when the target head changes even without a
+fresh arrival marker. One-origin joint states are valid interaction definitions;
+origin count never supplies evidence of a two-disturbance collision.
+Untagged v3 gates, instrument requests without participant IDs and origin-unaware carrier
+bindings are rejected. Active tagged continuations preserve the configured
+interference. Event provenance names origins without treating them as extra
+quantum amplitude sources. Cancellation guards and their one-unit audit events
+must be included once in total model cost and reported in `host_cancellation_checks`.
+The carrier subtotal remains separate. Direct status checks are bounded local
+work; certification, tensor evaluation, locking and total audit size have separate
+host costs. Finite passing cases do not prove
+universal physical locality, conservation or a classical limit.
 
 The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
 definitions, and the existing Q-ORACLE-1 exception. This table defines required

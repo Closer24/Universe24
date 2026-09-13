@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "model_id": "configured-linked-quantum-paths-v1",
+  "model_id": "configured-quantum-event-paths-v1",
   "shape": [2, 2, 1],
   "boundary": "open",
   "slots_per_node": 1,

@@ -1,5 +1,58 @@
 # Validation evidence
 
+## Quantum origin cells and certified cancellation - 2026-09-13
+
+Base: `2c20d00094639263fbe387c0a62420dcef108285`. Validated active source SHA-256:
+`25be12915099c34f027563bb6844bf0dcf99299787fad1ba1b7e5dd9460b4ed2`.
+The affected gate passed **2,114 tests with five opt-in visual skips** in
+159.43 seconds. Five additional native cancellation regressions added after
+selection passed separately in 0.32 seconds. Ruff, formatting and strict mypy
+on 59 affected production modules passed. The final documentation, navigation,
+language and hygiene checks passed all 28 cases in 16.46 seconds. Python 3.14.7,
+pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used.
+The shared NodeState/event interfaces select broad carrier, field, boundary,
+locality, genericity, retention and quantum consumers; no `--full`, package build
+or visualization was requested.
+
+```sh
+python tools/check.py --base origin/main
+python -m pytest tests/test_native_wave_cancellation.py
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/wave-origins-verified
+```
+
+The new origin tests exercise six-entry Node banks, a rejected seventh arrival,
+simultaneous one-Link propagation, concurrent first claims, both detector orders,
+conditional Born weights, phase reversal, exact checkpoints, continuing outcomes
+and next-tick retirement. Direct status lookup needs no historical traversal.
+The separate chronological predecessor list and its traversal API are removed;
+immutable events, causal dependencies and current register heads remain.
+
+Independent physics review passed 45 focused tests in 0.59 seconds on the exact
+source above. It also independently reproduced target-head invalidation of a
+cached null certificate. The initial proposal could suppress a remote X gate or
+an observable instrument through shared retirement status. The final code rejects
+that composition: a skipped gate must preserve the complete joint density; a
+skipped instrument must have only its declared null outcome, also preserving that
+density. Tests include phase changes invisible in local marginals and random
+records from an unchanged unobserved channel. Quantum certification is extra
+bounded host work; only the origin relevance lookup is O(1).
+
+The ordinary runner completed 5/5 ticks in 0.0072459 seconds, with `display=none`.
+The saved initialization matches the checked-in example. Origin 3 resolves to
+record 13 at tick 2; other Nodes remove its reference at tick 3. Origin 4 remains
+active. The final report has one random draw, three oracle calls including two
+cancellation certifications, 23 causal events, total model cost 17 and carrier
+cost zero. The configured terminal instrument resets occupation to vacuum;
+the continuing test variant explicitly uses a position instrument. This finite
+candidate does not derive a physical momentum observable, generic absorption
+exchange, a universal classical limit or unrestricted no-signalling.
+
+The [origin contract](WAVE_ORIGINS.md), postulates, definitions, Highlights coverage
+and physics-review Skill describe the same supported scope and rejection paths.
+Boss and test-runner instructions already cover bounded ownership and proportional
+verification. Generated outputs and validation logs remain outside source commits
+and are enrolled in 24-hour retention.
+
 ## Linked quantum histories on native Nodes - 2026-09-13
 
 Base: `5a2e21d892eba82c5aaff0582152e79f94c0fdc5`. Active source SHA-256:
@@ -49,7 +102,7 @@ The physics-review Skill now links to the checkpoint/readiness contract;
 Boss, architecture and test-runner instructions already cover ownership,
 independent expectations and proportional checks; no extra role or Skill is
 needed. Live Highlights reconciliation is recorded in
-[the coverage map](HIGHLIGHTS_IMPLEMENTATION.md#local-quantum-event-lists---2026-09-13).
+[the coverage map](HIGHLIGHTS_IMPLEMENTATION.md#quantum-origin-cells-and-event-spacetime---2026-09-13).
 Generated artifacts stay outside source commits and retain their 24-hour leases.
 
 ## Joint reactions and delayed rule validity - 2026-09-13
