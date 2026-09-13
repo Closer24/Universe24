@@ -221,3 +221,64 @@ def split_outward(
             meter.charge("send")
     cleared = zero_spatial_state(field.components)
     return outgoing, replace(state, populations=cleared.populations, allocation_phases=tuple(updated))
+
+
+def carried_phases(magnitude: int, weights: tuple[int, ...], phase: int) -> tuple[int, ...]:
+    """Phase each nonzero portion carries onward: the slot after its last allocated slot."""
+    denominator = _weight_sum(weights)
+    if magnitude <= 0:
+        return (0,) * len(weights)
+    last = (phase + magnitude - 1) % denominator
+    result, offset = [], 0
+    for weight in weights:
+        if offset <= last < offset + weight:
+            result.append((phase + magnitude) % denominator)
+        else:
+            result.append((offset + weight) % denominator)
+        offset += weight
+    return tuple(result)
+
+
+def split_outward_carried(
+    state: SpatialState,
+    definition: SpatialFieldDefinition,
+    field: FieldDefinition,
+    meter: CostMeter,
+) -> tuple[SpatialOutgoing, SpatialState, SpatialOutgoing]:
+    """Split like split_outward, but every portion carries its own allocation phase.
+
+    The node keeps no phase: the remainder of each integer division leaves with
+    the portion that owns it, so an indivisible unit continues its own cycle at
+    the next node instead of taking that node's first axis.
+    """
+    _validate_definition(definition, field)
+    state.validate(field.components)
+    for payload in (*state.populations, *state.delivered):
+        field.validate(payload)
+    buckets = [[[0] * field.components for _ in range(8)] for _ in range(6)]
+    phases = [[[0] * field.components for _ in range(8)] for _ in range(6)]
+    for octant, payload in enumerate(state.populations):
+        meter.charge("read")
+        meter.charge("route")
+        for component, (value, phase) in enumerate(
+            zip(unpack(payload), unpack(state.allocation_phases[octant]), strict=True)
+        ):
+            meter.charge("split")
+            portions, _ = split_weighted(value, definition.axis_weights, phase)
+            onward = carried_phases(abs(value), definition.axis_weights, phase)
+            for axis, portion in enumerate(portions):
+                port = 2 * axis + (0 if OCTANT_SIGNS[octant][axis] > 0 else 1)
+                buckets[port][octant][component] = portion
+                if portion:
+                    phases[port][octant][component] = onward[axis]
+    outgoing = tuple(tuple(pack(tuple(payload)) for payload in port) for port in buckets)
+    outgoing_phases = tuple(tuple(pack(tuple(payload)) for payload in port) for port in phases)
+    for port_values in buckets:
+        if any(any(payload) for payload in port_values):
+            meter.charge("send")
+    cleared = zero_spatial_state(field.components)
+    return (
+        outgoing,
+        replace(state, populations=cleared.populations, allocation_phases=cleared.allocation_phases),
+        outgoing_phases,
+    )

@@ -229,10 +229,13 @@ class InitialState:
     spatial_computation_delay: bool = False
     field_phase_first: bool = False
     arrival_port_blind: bool = False
+    carried_allocation_phase: bool = True
 
     def __post_init__(self) -> None:
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
+        if type(self.carried_allocation_phase) is not bool:
+            raise ValueError("carried_allocation_phase must be boolean")
         if self.spatial_computation_delay and not self.spatial_fields:
             raise ValueError("spatial_computation_delay requires spatial fields")
         for name in ("field_phase_first", "arrival_port_blind"):

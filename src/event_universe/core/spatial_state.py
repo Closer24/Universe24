@@ -178,6 +178,8 @@ class SpatialPlan:
     source_delta: Values
     cost: int
     rule_delta: Values = ()
+    # Per port, per field, eight carried allocation phases; empty under node-owned phases.
+    outgoing_phases: tuple[SpatialBundle, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -187,6 +189,7 @@ class SpatialPacket:
     port: int
     fields: SpatialBundle
     cause_id: int | None = None
+    phases: SpatialBundle = ()
 
 
 def zero_spatial_state(components: int) -> SpatialState:

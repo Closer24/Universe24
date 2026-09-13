@@ -340,7 +340,13 @@ class SpatialEngine:
         arrival = bounded(tick + self.initial.link_ticks - int(self.initial.field_phase_first))
         for port, bundle in enumerate(plan.outgoing):
             if any(any(unpack(payload)) for field in bundle for payload in field):
-                packets[port] = SpatialPacket(arrival, position, port, bundle)
+                packets[port] = SpatialPacket(
+                    arrival,
+                    position,
+                    port,
+                    bundle,
+                    phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
+                )
         # Worker results are immutable proposals. Only this scheduler thread commits them.
         if self.event_space is not None:
             self.event_space.require_room(1 + sum(p is not None for p in packets))
@@ -783,6 +789,8 @@ class SpatialEngine:
                 field = self.initial.fields[definition.field]
                 old = receiving[index]
                 populations = [list(unpack(v)) for v in old.populations]
+                phases = [list(unpack(v)) for v in old.allocation_phases]
+                phase_denominator = sum(definition.axis_weights)
                 directions = [[0] * field.components for _ in range(6)]
                 for packet in surviving:
                     for octant, payload in enumerate(packet.fields[index]):
@@ -794,7 +802,15 @@ class SpatialEngine:
                             directions[packet.port][component] = checked_work(
                                 directions[packet.port][component] + value
                             )
+                    if packet.phases:
+                        # Carried remainders merge by addition modulo the axis cycle.
+                        for octant, payload in enumerate(packet.phases[index]):
+                            for component, value in enumerate(unpack(payload)):
+                                phases[octant][component] = (
+                                    phases[octant][component] + value
+                                ) % phase_denominator
                 packed = tuple(pack(tuple(v)) for v in populations)
+                merged_phases = tuple(pack(tuple(v)) for v in phases)
                 delivered = tuple(
                     pack(add_components(tuple(v), unpack(old.delivered[port])))
                     if node.pending
@@ -808,7 +824,7 @@ class SpatialEngine:
                     for component, value in enumerate(population_values):
                         local[component] = checked_work(local[component] + value)
                 field.validate(pack(tuple(local)))
-                states.append(SpatialState(packed, old.allocation_phases, delivered))
+                states.append(SpatialState(packed, merged_phases, delivered))
                 arrival_readings.append(tuple(tuple(v) for v in directions))
             received_count = bounded(
                 checked_work(

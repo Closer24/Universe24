@@ -1097,6 +1097,7 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_computation_delay",
             "field_phase_first",
             "arrival_port_blind",
+            "carried_allocation_phase",
         },
         required,
     )
@@ -1152,6 +1153,9 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         field_phase_first=_boolean(obj.get("field_phase_first", False), "field_phase_first"),
         arrival_port_blind=_boolean(obj.get("arrival_port_blind", False), "arrival_port_blind"),
+        carried_allocation_phase=_boolean(
+            obj.get("carried_allocation_phase", True), "carried_allocation_phase"
+        ),
     )
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program

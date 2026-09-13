@@ -26,7 +26,14 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules
-from .spatial import add_populations, bounded_emission_amount, emission_amount, emit, split_outward
+from .spatial import (
+    add_populations,
+    bounded_emission_amount,
+    emission_amount,
+    emit,
+    split_outward,
+    split_outward_carried,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -36,6 +43,7 @@ class SpatialLaw:
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
+    carried_phase: bool = True
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -153,19 +161,25 @@ class SpatialLaw:
             )
             working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
+        outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
             field = self.fields[definition.field]
             channels: SpatialOutgoing
+            blank = pack((0,) * field.components)
+            channel_phases: SpatialOutgoing = ((blank,) * 8,) * 6
             if definition.transport == "local":
-                blank = pack((0,) * field.components)
                 channels = tuple(
                     (channel[definition.field],) + (blank,) * 7 for channel in local_outgoing
                 )
                 state = working[index]
                 meter.charge("route")
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
+            elif self.carried_phase:
+                channels, state, channel_phases = split_outward_carried(
+                    working[index], definition, field, meter
+                )
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
             if has_local:
@@ -173,6 +187,7 @@ class SpatialLaw:
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)
+                outgoing_phases[port].append(channel_phases[port])
             for component in range(field.components):
                 before = source[definition.field][component]
                 for payload in states[index].populations:
@@ -204,4 +219,5 @@ class SpatialLaw:
             tuple(tuple(v) for v in source),
             meter.total,
             tuple(tuple(v) for v in rule_delta) if has_local else (),
+            tuple(tuple(fields) for fields in outgoing_phases) if self.carried_phase else (),
         )

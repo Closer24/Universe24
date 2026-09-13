@@ -49,6 +49,7 @@ class Simulation(DisturbanceEngine):
                 initial.emissions,
                 initial.operation_costs,
                 initial.field_rules,
+                initial.carried_allocation_phase,
             ),
             (
                 JointSpatialCouplingLaw(

@@ -253,6 +253,13 @@ def _execute_run(
             spatial_sampling="entry-port-blind-on-arrival",
             self_field_filter="arrival-port-blind-v1",
         )
+    if initial.spatial_fields:
+        metadata.update(
+            carried_allocation_phase=initial.carried_allocation_phase,
+            spatial_allocation=(
+                "carried-phase-v1" if initial.carried_allocation_phase else "node-phase-legacy"
+            ),
+        )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     observation = None if probe is None else probe.recording()
     if observation is not None:

@@ -120,6 +120,31 @@ delivered populations as specified below. For vector fields each entry is an int
 Spatial fields must be extensive. Unsupported laws, wrong shapes, nonintegral
 values, duplicate seeds and unknown keys are rejected.
 
+## Carried allocation phases
+
+`split_outward` partitions each octant population over the three allowed
+cardinal directions by walking a cycle of axis weights from an allocation
+phase. Highlights 3.3.1 requires the remainder of that integer division to be
+carried into later updates. By default (`"carried_allocation_phase": true`)
+every nonzero portion therefore leaves with its own phase: the slot after the
+last slot allocated to it, so a portion that ended a partial cycle continues
+that cycle and a portion whose axis was fully passed starts at the next axis.
+The sending node keeps no phase. On arrival, portions of the same octant merge
+by adding their phases modulo the axis weight total, which keeps the combined
+remainder exact. An indivisible unit consequently visits the axes in turn
+along its octant instead of taking every fresh node's first axis.
+
+The transported quantity is unchanged by this choice: every portion is still
+allocated exactly and every component is conserved. Only the destination of
+indivisible units differs. With node-owned phases a decay-free 216-unit pulse
+froze into 178 far-field cells whose units all travelled along the first axis
+weight; with carried phases the unit-weighted mean distances along x, y and z
+agree within a few percent. `"carried_allocation_phase": false` retains the
+legacy node-owned phase for identified old configurations. Reaction packets
+committed from carrier responses keep the node-owned phase in both modes.
+Run metadata records `spatial_allocation` as `carried-phase-v1` or
+`node-phase-legacy`.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with
