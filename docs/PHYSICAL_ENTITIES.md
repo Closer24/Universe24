@@ -44,6 +44,11 @@ contains a configured elastic formula. It remains a reference benchmark, not
 evidence that the new elementary rules derived that formula. The new examples
 below do not use it to generate their updates.
 
+The [coupled unit-excitation experiment](COUPLED_EXCITATIONS.md) adds an explicit
+local capture/exchange/release probe using these existing elementary operations.
+It separates a held internal state from a traveling field. Its finite occupation
+and recoil accounting do not supply the electron/photon dynamics listed below.
+
 ## What can currently be represented
 
 | Physical entity | Discrete representation available | Dynamics still required |

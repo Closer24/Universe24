@@ -14,6 +14,7 @@ result are different claims. Revision-specific results are not a live status fee
 | --- | --- |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
+| [Shared model definitions](MODEL_DEFINITIONS.md) | One named field/type/rule owner reused by explicitly supplied, validated experiment files |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
@@ -22,6 +23,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Entity catalog](ENTITY_CATALOG.md) | Sourced physical properties and interactions, plus explicitly selected experiment profiles |
 | [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
 | [Rational particle candidates](RATIONAL_PARTICLES.md) | Opt-in bounded ratios, balanced routes, fractional credit and local checks |
+| [Coupled excitation probe](COUPLED_EXCITATIONS.md) | Unit-state exchange between a held internal excitation and a traveling field, with local capture and release |
 | [Directional-wave candidate](DIRECTIONAL_WAVE.md) | Six transverse modes and configured conservative polarization encounters |
 | [Physical entities](PHYSICAL_ENTITIES.md) | Inventory, representation coverage and unestablished physical behavior |
 

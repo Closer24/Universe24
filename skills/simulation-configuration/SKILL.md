@@ -35,6 +35,11 @@ the example family in the guide for fields, catalog entities or native events.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.
+   For repeated experiments, use [shared model definitions](../../docs/MODEL_DEFINITIONS.md):
+   add/remove named fields and types only in the model file, and keep world
+   placements in experiment files. Validate the entire model and the resolved
+   experiment after edits; never silently delete dependent rules or infer an
+   active spatial coupling merely from a type's owned-field list.
 5. Choose carried-record or spatial-field ownership for each amount. Add explicit
    source, response or encounter rules only as needed. Count resident and actual
    in-flight stock once; received projections and display vectors are not new stock.

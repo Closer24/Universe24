@@ -14,6 +14,7 @@ that completes, and a physically accepted hypothesis are three separate results.
 | JSON decoding | `json_documents.parse_json_document` | Reject duplicate keys at every depth, malformed JSON, nonfinite constants and exponent overflow; preserve ordinary integers and finite metadata floats |
 | Dispatch and composition | `configuration_validation` | Select an explicit format, require supplied dependencies, coordinate initialization/observer exclusivity, return a report |
 | Initialization | `initialization.parse_initial_state` | Schema versions 1/2, fields, bounded values, references, placements and supported mechanism composition |
+| Shared definitions and experiments | `model_definitions` | Keep named definitions in one model, reject experiment overrides and delegate complete model/world validation to initialization |
 | Native program | `integration.event_program.parse_event_program` | Native program dimensions, operations, clocks and configured event bounds |
 | Physical reference | `entity_catalog.validate_catalog` | Version 2 metadata, measurements, reciprocal identities and possible interaction references; reject executable catalog content |
 | Representation profiles | `entities.validate_profiles` | Version 1 bindings against an explicit version 2 catalog; compile every present classical/quantum representation independently through existing owners |
@@ -42,9 +43,11 @@ policies. The runner preserves the exact initialization bytes it actually reads.
 | `initialization` | `schema_version` | None |
 | `catalog` | `catalog_version` | None; only the physical reference version 2 is supported by this facade |
 | `profiles` | `profile_version` | `--catalog` or `catalog_source` |
+| `definitions` | `definitions_version` | None; validate every field, disturbance and rule in the complete bounded model |
+| `experiment` | `experiment_version` | `--definitions` or `definitions_source` |
 | `observer` | Never inferred | Explicit kind and `--initialization` or `initialization_source` |
 
-Auto mode requires exactly one of the three discriminator keys. It does not infer
+Auto mode requires exactly one of the five discriminator keys. It does not infer
 semantics from a filename, `model_id`, or merely valid JSON. Explicit kinds still
 run their owner's complete schema checks. Unused dependency arguments fail rather
 than silently ignoring a mistaken command. Dependencies are supplied explicitly;
@@ -76,10 +79,13 @@ python -m event_universe.configuration_validation examples/basic.json examples/f
 python -m event_universe.configuration_validation examples/known-entities/catalog.json
 python -m event_universe.configuration_validation examples/known-entities/representation-probes.json --catalog examples/known-entities/catalog.json
 python -m event_universe.configuration_validation observer.json --kind observer --initialization examples/basic.json
+python -m event_universe.configuration_validation examples/named-definitions/definitions.json
+python -m event_universe.configuration_validation examples/named-definitions/near.json --definitions examples/named-definitions/definitions.json
 ```
 
 `validate_configuration(source, *, kind="auto", catalog_source=None,
-initialization_source=None)` accepts text or bytes and returns `ValidationReport`.
+initialization_source=None, definitions_source=None)` accepts text or bytes and
+returns `ValidationReport`.
 It performs no filesystem access. `valid`, resolved `kind`, success `summary` and
 `issues` are available as attributes; `to_dict()` produces serializable data.
 
@@ -87,7 +93,7 @@ The CLI reports every requested path and exits 0 if all are valid, 1 on invalid 
 unreadable input, and 2 for invalid command syntax. With `--json`, stdout contains
 one object with `report_version: 1`, overall `valid`, and `results`. Each result
 contains `path`, `kind`, `valid`, `summary`, and `issues`. Each issue has `code`,
-`document` (`input`, `catalog`, or `initialization`), `message`, and nullable
+`document` (`input`, `catalog`, `initialization`, or `definitions`), `message`, and nullable
 `line`/`column`. JSON syntax errors carry locations when the decoder supplies
 them; semantic errors do not invent JSON pointers. Codes distinguish `syntax`,
 `unsupported_kind`, `missing_dependency`, `unexpected_dependency`, `validation`
@@ -98,6 +104,14 @@ A failure before kind detection retains
 `auto` or the requested kind.
 
 ## Guarantees and remaining runtime checks
+
+[Shared model definitions](MODEL_DEFINITIONS.md) have one named field collection
+and one named disturbance collection. Every type must reference at least one
+existing field, while actual couplings remain explicit local rules. Whole-model
+validation checks unplaced types and rejects dangling references after deletion.
+Experiment validation first verifies its explicit definitions dependency, then
+checks the resolved world. No inherited rule or field can be overridden in the
+experiment file, and no simulation runs during either check.
 
 For native programs, initial event capacity must cover one causal source per
 distinct classical seed cell plus one event per quantum register, including

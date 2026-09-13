@@ -1,5 +1,25 @@
 # Highlights implementation coverage
 
+## Shared named definitions reconciliation - 2026-09-13
+
+[Shared model definitions](MODEL_DEFINITIONS.md) implement Highlights sections
+3.3, 4.3, 4.5 and 10.2: one explicit named field/type/rule source, reusable world
+inputs and canonical validation. Each disturbance names one or more owned fields;
+active carrier/field responses remain explicit local rules. Removing a referenced
+definition fails rather than silently removing its consumers. All model entries
+are checked, including types not placed in the selected experiment.
+
+The live document was read again on 2026-09-13 at 05:48 UTC, at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Source bases: `73c68e87dc97f9421df0f98ac117d7af7b6a8520` and current main
+`ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. This host authoring change does not
+modify the live document, engine laws or the descriptive particle catalog.
+The existing self-contained initialization remains the executed, saved snapshot;
+it is data preparation, without per-configuration simulator compilation.
+Two placement experiments share one definition file and retain equivalent inline
+state/event/cost traces. The finite exchange example verifies its configured
+mechanism only; full physical particle/field emergence remains unverified.
+
 ## Shared Focus and quantum contract - 2026-09-13
 
 The live Highlights document now connects sections 1.2 and 4.7 through the shared
@@ -35,6 +55,21 @@ The [shared Skill workflow](../skills/workflow.md#live-system-specification) now
 requires a current Highlights read and source/evidence reconciliation for every
 Skill, including standalone tasks. AGENTS, Boss and architecture review link to
 that single procedure. A dated coverage map does not replace the live read.
+
+## Coupled excitation candidate reconciliation - 2026-09-13
+
+The [unit-excitation probe](COUPLED_EXCITATIONS.md) applies Highlights sections
+3.2, 3.3, 3.5 and 4.3: independently owned field/internal states exchange through
+local generic operations and a coordinated commit. A local capture gate retains
+the input while a carrier computation is pending. This is a configured mechanism
+under the unverified emergence hypothesis in sections 1.1.3 and 1.3.3, not a new
+claim that electron/photon dynamics or quantum occupation have emerged.
+
+The live document was read on 2026-09-13 at revision
+`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`.
+Source base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. The finite unit-state,
+single-packet and held-receiver restrictions belong to this experiment. No core
+law, catalog measurement or live Highlights text changes in this work.
 
 ## Configuration validation reconciliation - 2026-09-13
 

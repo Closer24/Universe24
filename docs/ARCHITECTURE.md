@@ -19,6 +19,13 @@ and delayed engine commit; its ownership restrictions are in
 
 ## Configuration validation ownership
 
+[Shared named definitions](MODEL_DEFINITIONS.md) use `model_definitions.py` only
+for host authoring and document composition. Fields, types and rules have one
+model owner; world inputs reference those names. The adapter delegates semantics
+to initialization, validates before copying the resolved snapshot and keeps no
+persistent registry. Runtime cells, packets and field state gain no new storage
+or file dependency. Saved fully resolved inputs remain reproducible snapshots.
+
 The [configuration preflight contract](CONFIGURATION_VALIDATION.md) defines the
 shared JSON decoder, supported format dispatch and explicit context dependencies.
 `configuration_validation.py` coordinates existing format owners and returns

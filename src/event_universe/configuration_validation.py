@@ -12,13 +12,16 @@ from event_universe.entities import validate_profiles
 from event_universe.entity_catalog import validate_catalog
 from event_universe.initialization import parse_initial_state
 from event_universe.json_documents import parse_json_document
+from event_universe.model_definitions import prepare_experiment, validate_model_definitions
 from event_universe.observer_configuration import ObserverDefinition
 
-KINDS = ("initialization", "catalog", "profiles", "observer")
+KINDS = ("initialization", "catalog", "profiles", "observer", "definitions", "experiment")
 _DISCRIMINATORS = {
     "schema_version": "initialization",
     "catalog_version": "catalog",
     "profile_version": "profiles",
+    "definitions_version": "definitions",
+    "experiment_version": "experiment",
 }
 _UNSET = object()
 
@@ -114,7 +117,8 @@ def _kind(document: object, requested: str) -> str:
             "unsupported_kind",
             "input",
             "unsupported or ambiguous configuration: expected exactly one of "
-            "schema_version, catalog_version or profile_version; "
+            "schema_version, catalog_version, profile_version, definitions_version "
+            "or experiment_version; "
             "observer files require --kind observer",
         )
     return matches[0]
@@ -138,6 +142,7 @@ def validate_configuration(
     kind: str = "auto",
     catalog_source: str | bytes | None = None,
     initialization_source: str | bytes | None = None,
+    definitions_source: str | bytes | None = None,
 ) -> ValidationReport:
     """Validate supplied content only: no implicit files, simulation or artifacts.
 
@@ -157,8 +162,26 @@ def validate_configuration(
                 "initialization",
                 "initialization context is only used for observer files",
             )
+        if definitions_source is not None and resolved != "experiment":
+            _reject("unexpected_dependency", "definitions", "definitions are only used for experiments")
         if resolved == "initialization":
             summary = _initial_summary(prepare_initialization(document))
+        elif resolved == "definitions":
+            model = validate_model_definitions(document)
+            summary = {
+                "model": model.model_id,
+                "fields": len(model.fields),
+                "types": len(model.disturbances),
+            }
+        elif resolved == "experiment":
+            if definitions_source is None:
+                _reject("missing_dependency", "definitions", "experiment requires explicit definitions")
+            definitions = _decode(definitions_source, "definitions")
+            context = "definitions"
+            validate_model_definitions(definitions)
+            context = "input"
+            _, initial = prepare_experiment(definitions, document)
+            summary = _initial_summary(PreparedInitialization(initial, None))
         elif resolved == "catalog":
             validate_catalog(document)
             catalog = cast(dict[str, Sized], document)
@@ -223,11 +246,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--kind", choices=("auto", *KINDS), default="auto")
     parser.add_argument("--catalog", type=Path, help="catalog context for profile files")
     parser.add_argument("--initialization", type=Path, help="world context for observer files")
+    parser.add_argument("--definitions", type=Path, help="shared model definitions for experiments")
     parser.add_argument("--json", action="store_true", dest="as_json")
     args = parser.parse_args(argv)
     dependencies: dict[str, bytes] = {}
     dependency_issue: ValidationIssue | None = None
-    for label in ("catalog", "initialization"):
+    for label in ("catalog", "initialization", "definitions"):
         path = getattr(args, label)
         if path is not None:
             try:

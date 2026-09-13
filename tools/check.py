@@ -11,7 +11,20 @@ ROOT = Path(__file__).resolve().parents[1]
 MANDATORY_REVIEW_TESTS = ("tests/test_architecture.py", "tests/test_memory_contracts.py")
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/named-definitions/definitions.json": (
+        "tests/test_model_definitions.py",
+        "tests/test_definition_preflight.py",
+    ),
+    "examples/named-definitions/near.json": (
+        "tests/test_model_definitions.py",
+        "tests/test_definition_preflight.py",
+    ),
+    "examples/named-definitions/shifted.json": ("tests/test_model_definitions.py",),
     "examples/particle-contracts/electron-proton.json": ("tests/test_parallel_runner.py",),
+    "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
+    "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),
+    "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
+    "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),

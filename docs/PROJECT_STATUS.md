@@ -1,5 +1,10 @@
 # Project status and restart guide
 
+[Shared model definitions](MODEL_DEFINITIONS.md) provide one named field/type/rule
+source for multiple experiment files. Both the complete definition and resolved
+experiment use canonical preflight. The host adapter assembles ordinary run JSON
+without rebuilding the simulator or adding runtime definition lookup.
+
 The [memory contract](MEMORY.md) now requires system/memory architecture checks
 for every change. Generic defaults share immutable storage; proposal/batch queues
 and disk-backed histories bound avoidable RAM retention. Visited physical
@@ -11,6 +16,13 @@ processes. Physical commits retain their existing owner/order; spatial and
 native-event phases retain documented serial fallback. Check `run.json.execution`
 for actual dispatched work. GPU whole-world execution and partition ownership
 remain open. Verify the current PR head before reusing measured validation.
+
+The optional [coupled unit-excitation probe](COUPLED_EXCITATIONS.md) uses existing
+configuration operations for a held internal state and one traveling field mode.
+A local gate retains the input during an atomic exchange and releases it afterward.
+Its finite occupation and recoil inventory are declared assumptions; massive
+motion, photon quantization and QED are not established. The catalog profiles
+and simulator code are unchanged.
 
 [Configuration preflight](CONFIGURATION_VALIDATION.md) checks initialization,
 physical reference catalogs, all supplied representation profiles and observer

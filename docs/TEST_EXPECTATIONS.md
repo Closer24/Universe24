@@ -1,5 +1,18 @@
 # Test inputs and expected results
 
+## Shared named model definitions
+
+`tests/test_model_definitions.py` and `tests/test_definition_preflight.py` check
+the [single model owner](MODEL_DEFINITIONS.md), one/multiple named field references,
+duplicate or deleted definitions, unplaced invalid types, experiment overrides,
+detached snapshots, strict JSON and explicit dependency errors. Composition must
+match equivalent inline initialization and preserve caller data and rule order.
+The two supplied placements reuse one definition: first-step carrier inventories
+become 7 and 17/25, with equal opposite spatial changes and unchanged declared
+totals. These finite integer exchanges exercise configured mechanisms, not a
+claim about electron or electromagnetic dynamics. Preflight constructs no world
+and writes no files; explicit composition refuses to overwrite an existing output.
+
 ## Permanent system and memory architecture checks
 
 Every changed submission selects `test_architecture.py` and
@@ -54,6 +67,19 @@ traces and detection of changed frozen proposals. Timings exclude trace hashing;
 audited timings retain all ordinary runner checks and event writes. Performance
 reports use identical inputs and source fingerprints; CI has no wall-time
 threshold. See [performance](PERFORMANCE.md) for measured scope and limitations.
+
+## Coupled unit excitations
+
+`tests/test_coupled_excitations.py` owns the independent expectations for the
+[local coupling candidate](COUPLED_EXCITATIONS.md). Positive absorption of Y into
+an empty receiver gives internal Y and recoil +X; negative coupling gives -Y
+with the same recoil. Zero coupling forwards unchanged. Positive emission of
+internal Y gives spatial -Y and recoil -X; occupied Y/Z exchange gives internal Z
+and spatial -Y without recoil. All admissible cases retain the declared U/P at
+every tick, counting actual in-flight owners once. Delays preserve original state
+until atomic commit; send/arrival and release follow causal event order. Invalid
+state and a deliberately out-of-envelope concurrent arrival test rejection,
+without claiming energy conservation through an invalid same-mode merge.
 
 ## Configuration preflight
 

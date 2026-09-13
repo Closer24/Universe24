@@ -1,0 +1,52 @@
+{
+  "definitions_version": 1,
+  "model": {
+    "schema_version": 1,
+    "model_id": "named-local-exchange-example-v1",
+    "fields": [
+      {"name": "amber inventory", "components": 1, "units": "unit", "signed": true, "conserved": true},
+      {"name": "blue inventory", "components": 1, "units": "unit", "signed": true, "conserved": true}
+    ],
+    "disturbance_types": [
+      {
+        "name": "single channel",
+        "fields": ["amber inventory"],
+        "defaults": {"amber inventory": 10},
+        "transport": {"mode": "hold"}
+      },
+      {
+        "name": "dual channel",
+        "fields": ["amber inventory", "blue inventory"],
+        "defaults": {"amber inventory": 20, "blue inventory": 30},
+        "transport": {"mode": "hold"}
+      }
+    ],
+    "spatial_fields": [
+      {"field": "amber inventory", "baseline": 3, "transport": "outward"},
+      {"field": "blue inventory", "baseline": 5, "transport": "outward"}
+    ],
+    "spatial_couplings": [
+      {
+        "name": "single amber response",
+        "type": "single channel",
+        "field": "amber inventory",
+        "mode": "exchange",
+        "amount": {"field": "amber inventory", "side": "right"}
+      },
+      {
+        "name": "dual amber response",
+        "type": "dual channel",
+        "field": "amber inventory",
+        "mode": "exchange",
+        "amount": {"field": "amber inventory", "side": "right"}
+      },
+      {
+        "name": "dual blue response",
+        "type": "dual channel",
+        "field": "blue inventory",
+        "mode": "exchange",
+        "amount": {"field": "blue inventory", "side": "right"}
+      }
+    ]
+  }
+}

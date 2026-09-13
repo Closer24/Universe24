@@ -1,5 +1,54 @@
 # Validation evidence
 
+## Shared named model definitions - 2026-09-13
+
+Bases: `73c68e87dc97f9421df0f98ac117d7af7b6a8520` plus main
+`ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The validated runtime source fingerprint
+is `7a6feb547ea26e508cfd02959db462504800985004977f1944900ec7bd48e617`.
+Only the host composer and configuration facade change under `src/`; physical
+engine arithmetic, payload ownership, scheduling and runtime limits are unchanged.
+
+The [shared definitions](MODEL_DEFINITIONS.md) and both experiment files pass
+canonical preflight. Forty composer tests and ten facade tests cover names,
+whole-model validation, active local exchanges, valid/invalid removal, explicit
+dependencies, strict JSON, detached snapshots and exclusive output. Independent
+inline/composed comparisons retain complete states, ordered events, modeled
+costs and declared totals for both two-tick placements. First-step carrier
+inventories are 7 and 17/25; dynamic spatial inventory gains 6 and 5. Complete
+totals remain 1059 and 1745, including baselines once per physical cell.
+
+Both saved examples were separately assembled and run through the ordinary CLI.
+Each completed two ticks headlessly with balanced accounting and conserved
+declared totals at every completed tick. Saved initialization bytes exactly match
+the resolved inputs. The runs and allocation probe use the source identity above;
+no renderer or GIF was requested.
+
+Independent system/memory review found no persistent registry, runtime file
+lookup, copied definitions in cells or retained composed worlds. After warmup,
+100 preparation calls with released outputs reached 17,968 bytes peak traced
+Python allocation for the supplied example and 45,040 bytes for a 16-field,
+16-type control. Direct calls retained less than 1 KiB, including bounded probe
+bookkeeping. A seventeenth field and an invalid unplaced type reject explicitly.
+Small residual facade allocations also occur with the existing JSON decoder;
+a 2,000-call control attributes them to CPython scanner construction, with no
+retained adapter results found. These are scoped Python allocation observations,
+not RSS, an infinite-lifetime bound or a before/after optimization claim.
+
+The affected gate is `python tools/check.py --base
+73c68e87dc97f9421df0f98ac117d7af7b6a8520`. It includes the integrated example's
+consumers, new authoring/facade tests, existing runner/UI consumers and mandatory
+architecture/memory checks. The submitted PR records the final selected count,
+optional skips and exact-head CI. Independent configuration, architecture and
+memory reviews passed. The configuration Skill now routes repeated experiments
+through one definition owner; Boss and the other shared Skills needed no new
+duplicated rules. The live Highlights reconciliation is in the coverage map.
+
+The local affected gate passed 891 tests with five explicitly opt-in visual
+skips, Ruff/format on eight Python files and strict mypy on ten affected source
+files. All 14 MPI tests ran locally. Only evidence prose changed afterward;
+the final documentation, system-architecture and memory checks were repeated
+without rerunning unrelated physical suites.
+
 ## Highlights and Skill reconciliation - 2026-09-13
 
 The live document's Focus and quantum sections now share one proposed interface;
@@ -109,6 +158,48 @@ locally against Intel MPI. Package changes already in PR #60 selected package-wi
 consumers; the scope was not expanded just for reassurance. The PR records CI for
 the submitted head. Ordinary verification is headless and no GIF or visual
 simulation was requested.
+
+## Coupled unit-excitation candidate - 2026-09-13
+
+Base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`.
+The [candidate contract](COUPLED_EXCITATIONS.md) uses saved initialization rules,
+with no changes under `src/` or to the physical reference catalog. Independent
+physics review checked local ownership, elementary state generation, fixed
+bounds, live delayed-commit guards and the explicit single-packet envelope.
+The review found and closed an emission/input-overlap hole in the authoring check.
+
+Four ordinary headless CLI runs completed: `incoming_positive`, `incoming_zero`
+and `emission` for 8 ticks each; `delayed` for 30 ticks. Each ran canonical
+configuration preflight first. Saved input bytes matched the prepared cases,
+and every run recorded source SHA-256
+`7dac1815abbdcbbd78f1ab175901bc04d9280d76a570eb2d9458032417ed1378`.
+Final internal/recoil values were Y/+X for both absorption runs, zero/zero for
+zero coupling, and zero/-X with spatial -Y for emission. Ordinary spatial
+accounting was balanced. The independent tests additionally check the candidate's
+nonlinear U/P at each tick; the ordinary runner's empty conserved-field totals
+are not evidence of those nonlinear balances.
+
+The incoming packet reached the receiver at audit tick 2. Immediate absorption
+committed at that same audit tick, after receipt; its changed state is visible
+in the post-step snapshot labeled tick 3. Delayed absorption committed at tick 7.
+Emission committed at audit tick 0, sent at tick 1 and arrived at tick 2. These are
+world/event audit times, distinct from local observer counters and playback.
+Generated outputs use the existing 24-hour retention contract; the saved law,
+cases, tests and commands reproduce the evidence after output expiry.
+
+All 38 focused candidate cases passed, including CLI preparation and overwrite
+protection. The affected gate uses the recorded base plus the existing local-field
+and spatial transaction suites for regression:
+
+```sh
+python tools/check.py --base 6a2816526083c23069bf3b0f3fcb6a9dc5b17944 --tests tests/test_local_field_rules.py tests/test_spatial_interactions.py
+```
+ The PR records the exact final count,
+head/tree and CI result. Tools: Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and
+mypy 2.3.1. No full-suite or visual audit is claimed. Boss, configuration, runner,
+field-development, architecture, physics, test, regression and merge Skills were
+reviewed: their existing scope, hypothesis and event-time rules remain sufficient;
+new technical knowledge is linked through this candidate's contract and maps.
 
 ## Read-only configuration preflight - 2026-09-13
 
