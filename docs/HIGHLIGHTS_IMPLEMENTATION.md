@@ -226,6 +226,67 @@ treating its omissions as current gaps.
 - Preserve source, specifications, skills and original configurations in Git.
   Generated results expire under the 24-hour policy; idle cleanup needs a scheduler.
 
+## Proposed amendments of 2026-09-13
+
+Status: proposed from repository evidence; not yet applied to the live Google
+document. Section 10 above is unchanged so that it remains the recorded
+snapshot. Each bullet below is written in the document's style and names the
+heading it belongs under. Evidence: `examples/collisions`, `examples/charged-pair`,
+`tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
+`tests/test_rotation_self_interaction.py`.
+
+Under 3.3.1 Discrete directional-flux conservation:
+
+- An indivisible unit must carry its own allocation phase; a node-owned phase
+  decides its direction by lattice axis order.
+- Observed: without decay, every far-field unit follows the first axis weight,
+  so the far field is rays, not a shell. Status: open defect, not a law.
+
+Under 3.5.2 Local collisions:
+
+- Status: the configured elastic, inelastic, three-body and rotated-axis
+  examples pass the momentum, mass and energy checks; a nonintegral outcome
+  faults instead of rounding. This verifies the supplied law, not emergence.
+
+Under 4.2 Update cycle:
+
+- The order of the field phase relative to the carrier sample within one
+  interval is a declared model choice; see 10.3.
+
+Under 5.2 Fixed link travel:
+
+- Matter and field share the link time; whether the field phase precedes the
+  carrier sample inside an interval is declared, not implied by c.
+
+Under 7.2 Attraction between masses:
+
+- Verified for charge, not mass: a configured charge-times-flux exchange gives
+  attraction of unlike and repulsion of like charges for held and free pairs.
+  The sign is supplied in initialization, so this tests the mechanism, not
+  emergence.
+
+Under 10.3 Spatial fields and finite propagation, replacing the self-field
+bullet:
+
+- Self-field attribution is not implemented as a source-identity filter.
+- Under one shared clock a source and its departure-interval emission cross
+  one link together; a value-driven response therefore reads its own field
+  after every hop and an isolated charge accelerates itself.
+- Two declared policies remove this without identity: field-phase-first
+  delivery keeps own field one link ahead on every free-space path;
+  arrival-port-blind sampling keeps the default clock and ignores the entry
+  travel port for the arrival interval, so straight paths are self-blind
+  while maximum-speed turns still coarrive.
+- The flux-driven rotation law is self-blind on straight paths by geometry and
+  turns at maximum-speed corners.
+- Periodic return remains outside every guarantee. None of these is a derived
+  self-force law.
+
+Under 10.5 Couplings, interactions and rotation:
+
+- The generic value exchange was observed to accelerate an isolated straight
+  emitter by its own coarriving packet; that baseline is retained as a test.
+
 ## Coverage map
 
 ### Local observer reconciliation
