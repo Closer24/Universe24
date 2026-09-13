@@ -1,5 +1,77 @@
 # Highlights implementation coverage
 
+## Latest synchronized snapshot - 2026-09-13
+
+This is the repository implementation map for
+[Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit),
+not a second specification or an automatic live mirror. Both this map and the
+Google Doc were reconciled against main
+`cc042ce6c51a34775c292371538c5cd6acd4e423`, including merged
+[PR #89](https://github.com/Closer24/Universe24/pull/89),
+[PR #90](https://github.com/Closer24/Universe24/pull/90) and
+[PR #92](https://github.com/Closer24/Universe24/pull/92).
+The older entries below retain their historical source and validation scope;
+their statements that the live document was not edited refer to those earlier tasks.
+
+### Current implementation coverage
+
+| Highlights sections | Implemented contract and limits | Repository owner |
+| --- | --- | --- |
+| 2.2.1-2.2.2 | Bounded integer physical inputs and intermediates; shared SI unit/constant registry prepares Scalar/Vector values outside physical stepping. Explicit conversion errors are separate from measurement uncertainty. Model time h is not Planck action. | [Reference units](REFERENCE_UNITS.md), [architecture](ARCHITECTURE.md) |
+| 3.3.4, 3.5.5, 4.3.1 | Declared aggregation, indexed local participants, joint carrier/field proposals and complete-owner conserved readouts. Nonlinear balances use actual before/after state; labels do not supply physical laws. | [Node processor](NODE_VECTOR_PROCESSOR.md) |
+| 4.4.1-4.4.2 | Explicit k*h Node execution and optional shared field/carrier cost-budget timing remain separate, incompatible modes. Waiting input has bounded destination ownership. | [Node processor](NODE_VECTOR_PROCESSOR.md), [shared clock](SPATIAL_COMPUTATION_DELAY.md) |
+| 4.4.3 | Emission can read the Node's last committed work. Configured received-Port response exchanges momentum with a local field register; this is not derived gravity or physical energy. | [Computational response](COMPUTATIONAL_RESPONSE.md) |
+| 6.5-6.7, 10.10 | Node-owned commits, immutable worker planning, deterministic barriers and bounded physical-owner memory have scoped tests. Total host memory and full-world work are separate costs. | [Architecture](ARCHITECTURE.md), [validation](VALIDATION.md) |
+| 10.3.1 | Schema 2 localizes attenuation residue by default. Explicit dissipate retains the earlier loss policy. Stationary deposits remain owned inventory and are not sampled by local rules. | [Spatial fields](SPATIAL_FIELDS.md) |
+| 10.3.2 | Scalar straight-ray transport retains heading and integer routing phase; ray_slots bounds resident capacity. Unsupported vector, octant-seed, field-rule, joint-interaction and alternative-clock combinations are rejected. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1), [ray tests](../tests/test_ray_field.py) |
+| 10.9, 10.11 | Sourced particle reference data, explicit representation profiles, preflight, finite quantum events and read-only observers remain distinct from verified species dynamics. | [Entity catalog](ENTITY_CATALOG.md), [project status](PROJECT_STATUS.md) |
+
+### Merged field changes and evidence
+
+PR #90 adds `residue: localize`, selected when a schema 2 decay definition omits
+the key. At completed interior arrival, the removed fraction becomes bounded
+stationary stock at the receiving Node. It is included in inventory, not
+dissipation; moving flux still diminishes. Explicit `residue: dissipate` selects
+the earlier loss law. Open exit, signed components, source allowances and in-flight
+ownership retain their separate accounting. The 40-tick finite-source run
+accounted for 720 emitted units as deposits, with zero dissipation. Tests include
+signed vectors, mixed residue policies and overflow rejection without partial
+receipt. Neither a component ledger nor a stationary deposit establishes physical
+field energy or a gravitational law.
+
+PR #92 adds `transport: ray` under `isotropic-ray-field-v1`. A source sweeps
+configured integer headings using its emission cursor. Each ray retains its
+heading index, three integer routing accumulators and amount while moving over
+adjacent Links. Matching heading and phase may merge; capacity exhaustion fails.
+Ray fields currently reject vector payloads, octant seeds/weights, field rules,
+spatial interactions, `node_execution` and `spatial_computation_delay`.
+
+The published [inverse-square probe](../examples/inverse-square/README.md) reports
+a 41-cubed open world with 4,096 headings, 64 rays per tick and a 64-tick measurement
+sweep. Finite fitted slopes are -2.25, -2.05 and -1.92 on the axis, face diagonal
+and body diagonal. Angular-patch coefficients of variation are 6-8 percent over
+72 patches at tested radii. This statistic is not a maximum error bound or exact
+isotropy; individual nodes show greater variation. These are reported world/event
+audit measurements of stock, not operational observer records or an independent
+rerun in this documentation task. Scalar shell stock is not oriented surface
+flux, and finite fits do not establish asymptotic scaling, mass coupling,
+attraction, Newton's law or physical energy conservation.
+
+### Unmerged amendments remain separate
+
+The live document's section 11 contains branch-reported self-field policies,
+carried allocation phase, scattering and collision results. Its cited
+[PR #93](https://github.com/Closer24/Universe24/pull/93), head
+`7149ec961df330b460dd3dc7262c4a98c5c17221`, was open and unmerged when checked
+against the main commit above. The live section now states that scope explicitly.
+Its findings are retained without being promoted to merged-main capabilities or
+independently revalidated physical results. This sync does not merge PR #93.
+
+The Google Doc update adds sections 6.7 and 10.3.1-10.3.2, reconciles the prior
+decay accounting bullets, and labels section 11's branch scope. Existing Node,
+unit, quantum and pending-hypothesis content is retained. Documentation-only
+validation applies here; no simulator behavior or experiment input changes.
+
 ## Joint local reaction contract - 2026-09-13
 
 The live source was reread at revision
