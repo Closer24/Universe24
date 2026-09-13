@@ -349,8 +349,9 @@ The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
 A successful query returns fixed-size integer records with model_cost=1 and
 world_ticks=0, regardless of host evaluation work. It never calls Engine.step
 or writes physical state. Host counters and budgets remain distinct from cost.
-No automatic per-node polling is added; any future scheduler must bound calls
-per node update, with one call per tick as the intended policy.
+This original sidecar adds no automatic polling. The later Q-ORIGINS-3 extension
+bounds origin-status inspection to six entries per participating Node per native
+tick; its explicit encounter instruments remain distinct from pure queries.
 
 The optional sidecar has a single owner for its bounded deferred graph, cache,
 query accounting and terminal state. Node records have ten integers and at most
@@ -673,7 +674,7 @@ one `EventNetworkConfig` before creating legacy scalar nodes. The two state
 representations cannot be mixed in one owner. Existing terminal/Focus consumers
 retain their old API and behavior unless the new representation is selected.
 
-The event backend owns immutable local matrices, per-node head IDs, joint source
+The event backend owns immutable local matrices, current register head IDs, joint source
 or checkpoint amplitudes, earlier outcome constraints and bounded decision records.
 Ordinary nodes do not acquire this growing host state. Coherent steps append only
 disjoint one-node or nearest-neighbor operations. Queries return fixed-size local
@@ -704,10 +705,11 @@ unresolved phases and the immutable audit ledger. This is not bounded total
 memory for an unlimited simulated lifetime.
 
 The controller may condition on its known records. Such conditional probabilities
-are not a remotely readable physical register, a classical communication channel,
-or an implemented generic Engine commit interface. There is no automatic native
-per-node polling, quantum-field feedback, universal measurement trigger, physical
-free-momentum law or derived classical limit in this change. The 3:4 matrix is a
+are not a remotely readable physical register or a classical communication channel.
+The later native contracts define their limited Engine interface and origin
+polling. Quantum-field feedback, a universal measurement trigger, a physical
+free-momentum law and a derived classical limit remain outside this backend.
+The 3:4 matrix is a
 test fixture and explicit demonstration parameter, never a hidden default law.
 ## Executable entity profiles and bounded conversion
 
@@ -747,3 +749,83 @@ still incur native cycle cost; zero oracle ticks do not imply zero host work.
 The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
+
+## Localized contact quantum/classical transfer - Q-CONTACT-1
+
+`localized-contact-quantum-v1` composes the ordinary runner, fixed spatial clock
+and finite deferred quantum owner under the
+[localized contact contract](docs/LOCALIZED_QUANTUM_CONTACT.md). An actual local
+unknown-momentum contact creates its origin at commit; absorption returns one
+held localized record. Conserved template quantities have exactly one ordinary
+or coherent owner. Delayed alternatives preserve local field reactions and every
+coupled resident. Classical emission occurs only while the source is localized;
+its previously emitted packets keep their causal evolution.
+
+The profile validates finite emission budgets, number-preserving local gates,
+complete absorption instruments and domain identity in the semantic owner as
+well as JSON. It does not support the shared field-delay clock, Node execution,
+the passive classical-only conservation audit, automatic exterior quantum modes
+or reciprocal classical-field action on delocalized matter. Read-only playback
+separates possible origin support from particles, field inventory and probability.
+
+## Causal ordinary sources from quantum contacts - Q-CAUSAL-SOURCE-1
+
+`causal-contact-fields-v1` selects the
+[causal source contract](docs/CAUSAL_QUANTUM_SOURCES.md), retaining Q-CONTACT-1's
+local preparation, absorption and single inventory ownership. Each participating
+Node additionally owns one bounded complex source envelope and finite emission
+allowances. Its source is full configured emission times local squared magnitude.
+Rational complex evolution preserves phase using number-preserving matrices and
+their nonzero vacuum coefficient; no remote normalization is performed.
+
+Amplitude and terminal packets cross actual Links and commit after tariff-derived
+Node delays. Localized capture creates one full-strength ordinary source, ends
+the colocated envelope and initiates causal termination. A local null zeros only
+the local envelope. Quantum origin status and conditional oracle results never
+select remote ordinary source values, timing or cancellation. Pending outputs
+retain bounded data and local invalidation guards; no formulas enter NodeState.
+
+After measurement the envelopes are a retarded, potentially unnormalized source
+approximation. Their sum is not conserved charge. Existing emitted field stock
+continues under its configured laws and separate injection accounting. The linked
+contract defines the finite domain, clock, transport and conservation limitations;
+the older localized-only profile is unchanged.
+
+## Quantum origin cells in event spacetime - Q-ORIGINS-3
+
+The explicit native v3 candidate is specified in
+[WAVE_ORIGINS.md](docs/WAVE_ORIGINS.md). Every participating physical Node owns
+at most six integer origin references. Origins propagate only through configured
+local quantum operations, subject to native Link timing and capacity checks.
+The references describe possible causal support; exact amplitudes and correlations
+remain in the existing finite quantum owner. Up to thirty configured virtual
+registers and their current heads are a separate representation limit.
+
+All past events stay in the shared immutable event spacetime. No separate local
+predecessor list or linked-history traversal is maintained. A source-associated
+resolution slot is written once by a successful configured terminal outcome,
+under the same transaction as conditional probability preparation and record
+commit. Relevance is checked before another contender samples. Each Node prunes
+its own resolved origins on its next native tick, without an eager global sweep.
+Every v3 operation names its participating origins; unarrived support cannot
+execute it. A retired gate is suppressed without a quantum operation payload or
+register-time change only after certifying invariance of the full retained joint
+density. A retired instrument also requires exactly one possible outcome equal
+to its explicit `null_outcome`, with unchanged full density. An unsafe cancellation
+fails explicitly. Native null certificates are checked again after the target
+head changes, even without a fresh arrival. Untagged gates and legacy carrier bindings are
+rejected in this profile. Origin IDs also remain explicit ledger provenance,
+separate from the quantum recipe dependencies.
+
+Nonterminal outcomes preserve conditional continuation, including unresolved
+momentum after a position record. Only explicit instruments sample. Coherent
+interactions and a lack of classical knowledge do not supply a universal collapse
+law. Checkpoints retain complete correlated state, origin identity, immutable
+past records and each register's Link readiness. Direct status checks use bounded
+local work; tensor evaluation, serialization and total event storage remain host
+costs under Q-ORACLE-1. Cancellation certification is additional bounded quantum
+evaluation, not an O(1) status lookup. Its audit checks cost one model operation
+each and are included once in the ledger total, separate from the carrier subtotal;
+they do not create a physical observer or delay channel. Interaction lists name
+one to six origins, and one origin may represent several disturbances. No new
+conservation law or infinite-memory claim follows.

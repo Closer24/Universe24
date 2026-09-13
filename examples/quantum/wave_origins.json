@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-wave-origin-contact-v1",
+  "shape": [3, 1, 1],
+  "boundary": "open",
+  "slots_per_node": 1,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 5,
+  "operation_costs": {
+    "receive": 1, "read": 1, "evaluate": 1, "update": 1, "couple": 1,
+    "route": 1, "split": 1, "send": 1, "commit": 1
+  },
+  "fields": [
+    {"name": "inventory", "components": 1, "units": "configured unit", "signed": false, "conserved": true}
+  ],
+  "disturbance_types": [
+    {"name": "marker", "fields": ["inventory"], "defaults": {"inventory": 0}, "transport": {"mode": "hold"}}
+  ],
+  "seeds": [],
+  "event_program": {
+    "model": "local-quantum-events-v3",
+    "capacity": 100,
+    "addresses": [[0, 0, 0], [1, 0, 0], [2, 0, 0]],
+    "occupied": [0],
+    "waves": [
+      {"name": "signal", "register_index": 0},
+      {"name": "probe", "register_index": 2}
+    ],
+    "layers": [
+      {"tick": 1, "operations": [
+        {"register_indices": [0, 1], "origins": ["signal"], "matrix": [[[1, 1], 0, 0, 0], [0, 1, 1, 0], [0, 1, -1, 0], [0, 0, 0, [1, 1]]]}
+      ]},
+      {"tick": 2, "operations": [
+        {"register_indices": [1, 2], "origins": ["signal", "probe"], "matrix": [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]}
+      ]},
+      {"tick": 4, "operations": [
+        {"register_indices": [1, 2], "origins": ["signal"], "matrix": [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]}
+      ]}
+    ],
+    "wave_interactions": [
+      {
+        "address": [2, 0, 0], "register_index": 2,
+        "origins": ["signal", "probe"],
+        "instrument": [[[1, 0], [0, 0]], [[0, 1], [0, 0]]],
+        "null_outcome": 0,
+        "terminal_origins": ["signal"], "terminal_outcomes": [1]
+      }
+    ],
+    "tickets": [1]
+  }
+}

@@ -136,6 +136,8 @@ def validate_local_plan(
         raise ValueError("node I/O interaction duration must be nonnegative")
     if plan.cause_id is not None and bounded(plan.cause_id) < 0:
         raise ValueError("node I/O cause must be nonnegative")
+    if plan.resolution_token is not None and bounded(plan.resolution_token) < 0:
+        raise ValueError("node I/O resolution token must be nonnegative")
     _tuple(plan.spatial_guards, capacity * len(initial.spatial_interactions))
     for guard in plan.spatial_guards:
         if type(guard) is not FieldInteractionGuard:

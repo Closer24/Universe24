@@ -15,7 +15,7 @@ from .disturbance_state import (
     pack,
     unpack,
 )
-from .event_resolution import LocalContext
+from .event_resolution import CommitResolver, LocalContext
 from .integer import checked_work
 from .node_boundary import validate_local_plan, validate_record, validate_records
 from .node_conservation import LocalInventory
@@ -483,6 +483,34 @@ class DisturbanceNode(DisturbanceNodeState):
         for slot, record in pending.plan.replacements:
             records[slot] = self._current_emission_state(record, source_records[slot])
         records = [self._staying(record) for record in records]
+        alternatives: list[tuple[DisturbanceRecord | None, ...]] = []
+        resolver = services.resolver
+        context = LocalContext(
+            tick, self.position, tuple(records), self.coupling_remainders, 0, pending.cause_id
+        )
+        if pending.plan.resolution_token is not None:
+            if not isinstance(resolver, CommitResolver):
+                raise ValueError("pending resolution requires a commit resolver")
+            if pending.plan.departures:
+                raise ValueError("deferred alternatives require a local replacement-only cycle")
+            options = resolver.alternatives(context, pending.plan.resolution_token)
+            if not 1 <= len(options) <= 6:
+                raise ValueError("one to six local commit alternatives required")
+            reserved = {slot for slot, _ in pending.plan.replacements}
+            for option in options:
+                if {slot for slot, _ in option} != reserved:
+                    raise ValueError("commit alternatives must use exactly the reserved local slots")
+                validate_local_plan(
+                    services.initial,
+                    replace(pending.plan, replacements=option),
+                    len(self.coupling_remainders),
+                    tuple(source_records),
+                )
+                proposed = list(source_records)
+                for slot, record in option:
+                    proposed[slot] = self._current_emission_state(record, source_records[slot])
+                validate_records(services.initial, tuple(proposed), len(self.records))
+                alternatives.append(tuple(self._staying(record) for record in proposed))
         departure_tick = bounded(tick + services.initial.link_ticks)
         links: list[Packet | None] = [None] * len(old_links)
         for index, departure in enumerate(pending.plan.departures):
@@ -543,6 +571,15 @@ class DisturbanceNode(DisturbanceNodeState):
                 ),
                 "carrier interaction commit",
             )
+        resolution_cause: tuple[int, ...] = ()
+        if alternatives:
+            assert isinstance(resolver, CommitResolver)
+            assert pending.plan.resolution_token is not None
+            choice, event_id = resolver.commit_choice(
+                context, pending.plan.resolution_token, 1 + int(bool(pending.plan.spatial_reaction))
+            )
+            records = list(alternatives[choice])
+            resolution_cause = (event_id,)
         # All proposal validation has succeeded; commit coupled records together.
         self.records = tuple(records)
         self.committed_cost = pending.plan.cost
@@ -571,7 +608,9 @@ class DisturbanceNode(DisturbanceNodeState):
             "cycle_committed",
             tick,
             services,
-            causes=(() if pending.cause_id is None else (pending.cause_id,)) + field_causes,
+            causes=(() if pending.cause_id is None else (pending.cause_id,))
+            + field_causes
+            + resolution_cause,
             notifications=notifications,
             cost=pending.plan.cost,
             transfers=len(pending.plan.departures),

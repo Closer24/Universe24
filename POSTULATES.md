@@ -364,9 +364,10 @@ absorbing output using a supplied uniform integer ticket; repeated readout retur
 the same shared record. This does not implement general measurement or establish
 no-signalling. The test controller's record is not an Engine-native event.
 
-Only the main engine may eventually commit physical events through an explicit
-interface. That interface, automatic node polling and quantum-field feedback are
-not implemented by this addition. Exact contracts and ownership are specified in
+Only the main engine may commit physical events through an explicit interface.
+The later native extensions in sections 16 and 18 define their limited interface
+and origin polling; quantum-field feedback is not supplied by this original
+terminal-trial addition. Exact contracts and ownership are specified in
 `SIMULATOR_DEFINITIONS.md` and `docs/ARCHITECTURE.md`.
 
 ## 15. Supplied mass and local elastic collisions
@@ -427,3 +428,67 @@ component. Local supports, integer bounds, classical cycle charges and zero
 direct oracle ticks remain unchanged. This is a representation/channel extension,
 not a new collapse law or a derived physical species Hamiltonian. See
 [QUANTUM_ENTITIES.md](docs/QUANTUM_ENTITIES.md).
+
+## 18. Event-spacetime origin cells - Q-ORIGINS-3
+
+The user-selected origin-cell candidate keeps history solely in immutable event
+spacetime, with no separate linked list per Node or wave. A participating Node
+holds at most six origin IDs. Configured local operations propagate possible
+causal support; they do not sample a hidden particle path. Current virtual
+register heads and exact joint quantum state retain their existing owners.
+
+At an explicit local wave interaction, the owner calculates every instrument
+outcome from the current conditional state. A configured terminal outcome marks
+its selected origins resolved once, atomically with the result. Other Nodes
+check their local references each native tick and discard resolved origins;
+commit never sweeps all wave fragments. A later gate executes only if every
+declared participating origin remains active and has arrived at a local endpoint.
+Suppressing a retired-origin gate requires unchanged complete correlated density.
+Suppressing a retired instrument additionally requires its sole possible outcome
+to be the declared no-event result with unchanged density. Otherwise reject the
+cancellation; a remote flag cannot remove observable dynamics arbitrarily.
+These certificates are separately priced quantum-owner work, not O(1) status
+lookups or physical observer signals. One origin may encode several disturbances;
+the interaction definition names one to six origins without inferring particle
+count. A continuing outcome
+preserves the conditional state. A position record does not assign sharp momentum,
+and a coherent interaction need not sample at all.
+
+Resolution status is quantum-owner bookkeeping associated with the source event,
+not a mutation of its historical physical data or an ordinary remote field read.
+The finite candidate, initialization requirements, cost distinctions and open
+physical questions are defined in [WAVE_ORIGINS.md](docs/WAVE_ORIGINS.md).
+Bounded local lookup does not make total host evaluation or memory constant.
+
+## 19. Localized quantum contact candidate
+
+The explicitly selected [localized contact hybrid](docs/LOCALIZED_QUANTUM_CONTACT.md)
+transfers one configured ordinary inventory into a finite coherent domain only
+when an actual local contact commits. Undefined momentum is explicit information
+state, not a zero vector or a derivation of propagation amplitudes. A complete
+local absorption instrument restores one localized record and leaves quantum
+vacuum. Number-preserving propagation and origin retirement keep one inventory.
+
+Ordinary fields are emitted only by localized records under their finite configured
+allowances. Existing field stock continues causally. Neither conditioned
+probabilities nor shared origin flags drive a remote ordinary field update.
+This is the user-selected approximation, not a derivation of quantum fields,
+physical momentum or the general classical limit. Its clock and representation
+limits are explicit and do not silently extend the older native profiles.
+
+## 20. Causal local quantum source candidate
+
+The explicit [causal source extension](docs/CAUSAL_QUANTUM_SOURCES.md) permits
+ordinary emission weighted by a bounded complex envelope retained at the same
+Node. Phase evolution uses frozen local and causally received neighbor inputs.
+Only an actual local contact can prepare or localize the configured inventory.
+A successful capture creates one full-strength localized source and sends
+termination through Links with local delay. Shared quantum origin retirement
+never controls remote ordinary fields or their clocks.
+
+After measurement these are retarded, potentially unnormalized source weights;
+the candidate does not silently substitute global conditional probabilities.
+Previously emitted fields remain causal, finite source allowances do not refill,
+and charge inventory is counted separately from field-source weights. This
+extends section 19 only for `causal-contact-fields-v1`, preserving its older
+localized-only selection and making no new quantum-field or energy-closure claim.

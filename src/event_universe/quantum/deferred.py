@@ -182,8 +182,9 @@ class DeferredQuantum:
     def resolve(self, root: int, *, node_budget: int | None = None) -> tuple[Amplitude, int]:
         """Evaluate reachable ancestors only; return amplitude and evaluated-node count.
 
-        The discovered-node guard bounds backward expansion *before* reaching a
+        The discovered-node guard bounds dependency discovery *before* reaching a
         leaf. It is not enough to count only completed nodes of a deep history.
+        Stored dependencies evaluate in causal order; physical time is not reversed.
         This low-level diagnostic method is not itself a modeled node query.
         """
         self._require_node(root)

@@ -385,3 +385,15 @@ The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
 configured N-to-M node reactions, bounded rational vector arithmetic and exact
 conservation tests. It is an independent experiment, not the active simulator.
 Run `python -m tools.generic_vector_lab.run_demo` from this repository.
+
+## License and citation
+
+Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
+Version 0.2.0 is archived on Zenodo under DOI
+[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746).
+Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
+citation entry on the repository page. Reference form:
+
+> Gonen, A. (2026). Universe24: a discrete simulator of local physical laws
+> (Version 0.2.0) [Computer software]. Zenodo.
+> https://doi.org/10.5281/zenodo.22738746

@@ -31,7 +31,7 @@
 <p>This is a member fragment, not a complete configuration. Keep one <code>event_program</code> key, then press <strong>Check configuration</strong>.</p>
 <p><strong>Turn off:</strong> remove the entire <code>event_program</code> member. There is no <code>enabled: false</code> switch. Removing a quantum program also removes its quantum behavior.</p>
 <p><strong>Capacity:</strong> maximum retained causal records for the whole run. It is not the number of ticks; exceeding the limit fails the run.</p>
-<p><strong>Compatibility:</strong> <code>causal-events-v1</code> supports spatial fields and their local interactions without quantum rules. Quantum event programs still cannot be combined with <code>spatial_fields</code>.</p>
+<p><strong>Quantum contacts and fields:</strong> import <code>examples/quantum/localized_charge.json</code> to select <code>localized-contact-quantum-v1</code>. A configured local contact creates a wave, and capture restores one localized disturbance. Classical fields are emitted only by localized sources. Wave references appear separately in recorded playback. The older <code>local-quantum-events-v1/v2/v3</code> profiles still reject spatial fields. <code>causal-events-v1</code> only records causal events.</p>
 <p><strong>Results:</strong> the runner saves <code>causal-events.jsonl</code> when enabled. The ordinary <code>events.jsonl</code> log is also written when the graph is off. The movie does not automatically draw the causal graph.</p>
 </details>
 <div class="configuration-footer"><button id="export" class="button secondary" type="button">↓ Export JSON</button><button id="validate" class="button secondary" type="button">Check configuration</button></div></details>

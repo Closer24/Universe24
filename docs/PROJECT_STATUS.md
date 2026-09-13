@@ -1,5 +1,39 @@
 # Project status and restart guide
 
+The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
+the contact path with bounded source envelopes attached to participating Nodes.
+Local squared weights scale finite ordinary emission; amplitude updates and
+termination traverse real Links and tariff-derived local delays. Capture creates
+one full-strength localized output, while previously emitted fields continue.
+After measurement the envelopes are a retarded, potentially unnormalized source
+approximation, separate from conserved carrier inventory and exact conditional
+quantum state. The existing localized-only profile remains available. Consult
+[validation evidence](VALIDATION.md) for the tested source and completed checks.
+
+The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) now connects
+actual committed ordinary contacts, deferred origin creation, coherent propagation
+and local capture through the primary runner. Classical fields are emitted only
+at localized sources and continue causally after conversion. Finite templates,
+number-preserving matrices and separate source accounting define this explicit
+hybrid; it is not full quantum electromagnetism. Its configuration, supported
+clocks and acceptance evidence are linked from the contract.
+
+The native [quantum origin cells](WAVE_ORIGINS.md) use the shared immutable event
+spacetime as their history. Each participating physical Node holds up to six
+origin IDs and checks their resolution on every native tick. A terminal configured
+outcome closes its selected origins atomically; other Nodes discard those IDs
+on their next tick, without an eager sweep at commit. Later gates requiring
+resolved origins may be suppressed only when a full-density check proves them
+inert; retired instruments additionally require a certain explicit null outcome.
+Unsafe cancellation fails. One origin can describe several disturbances, and
+continuing outcomes keep the conditional joint state. Separate linked histories
+have been removed.
+Current register heads and individual Link readiness still survive checkpoints.
+Reproduce coherent paths with `examples/quantum/event_paths.json`; native v3 adds
+explicit origin and interaction definitions. This remains the finite configured
+register candidate, with supplied propagation and instrument matrices. Exact
+source, passing checks and remaining blockers require current validation evidence.
+
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
 of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
 uses existing received-port interactions and paired momentum updates. The impulse
@@ -216,7 +250,11 @@ identifies invalid behavior; it does not repair the underlying candidate law.
 [Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
 method. Querying computes branch weights; an explicit instrument and ticket select
 a recorded outcome without advancing the physical clock. Host dependency evaluation
-is counted separately from Q-ORACLE-1. [Focus](QUANTUM_FOCUS.md) remains a separate
+is counted separately from Q-ORACLE-1. Required stored dependencies are collected
+and evaluated forward; neither physical time nor earlier outcomes are reversed.
+The [origin lookup clarification](QUANTUM_EVENTS.md#time-direction-and-origin-lookup)
+separates that evaluation from direct origin status access in unmerged PR #91.
+[Focus](QUANTUM_FOCUS.md) remains a separate
 opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
 now composes the optional quantum owner through the ordinary `Simulation` and
 runner, with shared causal identities, repeated local encounters and explicit

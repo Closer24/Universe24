@@ -6,6 +6,9 @@ same owner. The binary pure-state contract below describes the original v1 subse
 its old limitation on indistinguishable Kraus terms is removed only by that
 explicit extension. The shared [native runtime](NATIVE_QUANTUM_EVENTS.md) supplies
 classical feedback; the standalone backend does not own a physical engine.
+The explicit [origin-cell extension](WAVE_ORIGINS.md) adds up to six local wave
+references and terminal or continuing interactions. It uses the same event
+spacetime and joint-state owner, without a separate linked history per Node.
 
 ## Status and scope
 
@@ -29,10 +32,10 @@ document owns the finite quantum state and instrument semantics.
 | --- | --- |
 | Physical input | Immutable unwrapped 3D node addresses and a layer of disjoint one-node or cardinal nearest-neighbor operations |
 | Initial state | Binary occupation per configured node; source amplitudes define the joint state, not hidden classical paths |
-| Wave storage | Joint source/checkpoint state plus local matrix operations and per-node predecessor links |
+| Wave storage | Joint source/checkpoint state and immutable operations in the shared event dependency DAG |
 | Coherent law | Explicit 2x2 or 4x4 Gaussian-integer matrix satisfying `U* U = scale I`, with positive common scale |
 | Instrument | Explicit one-node family of one to four matrices satisfying `sum(K* K) = scale I`; one Kraus matrix per distinguished outcome |
-| Query | Conservative backward dependency closure, including relevant earlier recorded constraints, then forward amplitude evaluation |
+| Query | Bounded collection of required stored dependencies and relevant recorded constraints, then forward amplitude evaluation |
 | Result | Local Born weights; no RNG, historical path selection, or physical-clock advance |
 | Decision | First compute every branch weight, then supply one uniform integer ticket; update only the selected conditional state |
 | State owner | The existing quantum owner composes one backend; no growing history is stored in ordinary physical nodes |
@@ -53,9 +56,44 @@ prototype is not copied as an exception to the register contract.
 
 ## Algorithm
 
+### Event spacetime and current references
+
+History is the immutable shared event spacetime. Its event IDs directly identify
+source states, configured operations, channels, records and checkpoints. `parents`
+record computational dependencies; `physical_parents` additionally enforce the
+locality and travel-time contract. There are no per-stream predecessor records,
+per-Node history lists or `history(register)` traversal API.
+
+Each configured virtual register retains one `EventCursor` containing its stream
+identity, current event ID and last modeled operation tick. Colocated registers
+have distinct handles. The native Node shares these current-state handles with
+the quantum owner; no second head dictionary exists. They are fixed at assembly,
+with at most thirty configured registers globally. They are distinct from the
+[six local origin references](WAVE_ORIGINS.md), which identify unresolved wave
+continuations. Neither kind of handle stores amplitudes or an expandable history.
+
+Appending an event validates owner, address, time, capacity, handles and parents
+before publishing it and advancing current heads. Earlier event data never
+changes. Public cursor properties and `NodeView.event_heads` snapshots expose
+read-only IDs. A source's later resolution is a separate write-once status in
+the event space; it does not modify the source event's physical data or time.
+
+Queries traverse the dependency DAG and necessary recorded constraints inside
+the quantum owner. Looking up an origin status directly does not traverse it.
+Chronology alone cannot authorize a remote physical read. These ownership APIs
+are not a sandbox against arbitrary Python reflection.
+
+Missing knowledge does not automatically create a wave or select an outcome.
+Explicit preparation and local operations define the quantum state. Distinct
+registers start in a tensor-product state; a configured joint operation may
+correlate them. Interference combines coherent amplitudes within that joint
+state, not independent probability values stored on local origin references.
+
+### Deferred evaluation
+
 1. `step` validates a whole disjoint local layer before appending its recipes.
    It advances the physical tick once. No amplitudes or random tickets are needed.
-2. `query` follows the target head backwards. It includes previously committed
+2. `query` collects the stored dependencies required by the target head. It includes previously committed
    constraints that overlap the dependency component, repeating to closure.
    Disconnected product histories and irrelevant unitaries may remain unevaluated.
 3. The quantum owner evaluates the selected recipes forward from source or
@@ -68,9 +106,32 @@ prototype is not copied as an exception to the register contract.
 6. A later operation uses the conditional joint state. It does not acquire sharp
    values for all unmeasured quantities, and it does not resample the past.
 
-The links are not the wave by themselves: states and operation laws are essential.
+Event references are not the wave by themselves: states and operation laws are essential.
 The traversal is conservative, not an optimal tensor-network contraction solver.
 No query of an uncomputed coherent branch chooses which historical route occurred.
+
+### Time direction and origin lookup
+
+There is no reverse physical-time computation: the evaluator applies recorded
+recipes in causal order from source or checkpoint states. Collecting their
+dependencies is host bookkeeping, not evolving a node into its past or rewriting
+an earlier outcome. A read-only query adds zero world ticks; its host work and
+memory are still bounded and charged separately.
+
+The historical `Quantom -> Classic` review snapshot examined
+[PR #91](https://github.com/Closer24/Universe24/pull/91), head
+`49bcbc74c69a47814945efce8600edbc824ee04f`, open and unmerged at that review.
+Later contact integration is described in the
+[localized contact contract](LOCALIZED_QUANTUM_CONTACT.md), with exact source
+and test evidence in [validation](VALIDATION.md).
+Its `local-quantum-events-v3` origin relevance check reads an event ID's status
+directly. It removes separate chronological predecessor lists and the
+`history(register)` traversal API. It retains immutable events, exact quantum
+dependencies, current register heads and checkpoint timing. Resolving a source
+records a later write-once status; it does not change the source event's original
+address, time or parents. Only the direct origin status lookup is O(1); preparing
+quantum weights or certifying cancellation may still evaluate a bounded retained
+joint state. These candidate changes are not claims about merged-main APIs.
 
 A decision is tied to its owner, record identity, node, instrument and graph
 revision. A graph change makes an uncommitted decision stale; use a fresh identity.
@@ -106,6 +167,15 @@ joint replacement state. Only then can old recipes be removed. The host operatio
 creates no measurement, advances no world tick and preserves remaining phases.
 A local marginal is not a sufficient checkpoint for a correlated component.
 A branch omitted by one query may become necessary at a future recombination.
+
+The replacement is marked `checkpoint` in the shared audit. Its dependency
+parents are empty because its complete state replaces that computation. Earlier
+events remain directly addressable in the immutable spacetime; no new chronology
+list is retained. All participating heads redirect together, preserving their
+handle identities, wave-origin identities and each register's own
+last modeled operation tick. A checkpoint must neither restart a Link's wait nor
+make an otherwise premature Link operation admissible. Old quantum payloads may
+be reclaimed; the bounded append-only causal audit is not reclaimed by this call.
 
 Checkpoints summarize computation, whereas records fix a result. Neither proves
 that all future possibilities close, that total memory is bounded for infinite
@@ -161,6 +231,7 @@ A complete small controller is available as:
 
 ```shell
 python -m event_universe.integration.quantum_event_trial --ticket 24
+python -m event_universe --init examples/quantum/event_paths.json --output artifacts/event-paths
 python tools/check.py --base origin/main
 ```
 
@@ -168,3 +239,13 @@ The first command prints headless JSON; its ticket is deliberately supplied,
 not claimed to come from a real quantum device. The integration PR records the
 actual interpreter, source tree, executed checks and limitations. Required finite
 expectations are listed in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
+
+`event_paths.json` is ordinary initialization for a four-Node, four-tick
+one-excitation interferometer. Its configured mixer splits A/B on tick 1,
+configured swaps move those modes to C/D on tick 2, tick 3 is idle, and a mixer
+recombines at C/D on tick 4. The final occupation probabilities are C=0, D=1;
+inserting a phase reversal at C on tick 3 gives C=1, D=0. A position record at C
+on tick 2 gives C=D=1/2 at the output for either recorded outcome. The tests
+repeat every case with and without a correlated checkpoint. Matrices are
+explicit example laws; this is not spontaneous propagation into unconfigured
+Nodes or a derivation of particle dynamics.

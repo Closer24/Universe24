@@ -1,5 +1,54 @@
 # Test inputs and expected results
 
+## Causal quantum sources
+
+The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing
+and inverse interference, signed full emission `-25` producing requests `-9`
+and `-16`, rational complex vacuum normalization, changing-denominator residue,
+finite allowance exhaustion and explicit overflow rejection. These arithmetic
+cases belong to `test_source_envelope.py`.
+
+`test_causal_contact_fields.py` owns integration acceptance: frozen neighbor
+inputs, tariff-derived local delays, every periodic direction, one committed
+localized output, a local null
+without remote renormalization, and terminal packets that end remote emission
+only after causal arrival and local delay. Compare ordinary source, field and
+cost prefixes with and without a distant detector. Include a coupled third
+resident, pending emissions at capture, charged duplicate notices, termination
+before amplitude arrival, no resurrection, finite per-mode allowances and
+formula-free transitive NodeState. Preserve the older contact profile's tests.
+These expectations distinguish conserved carrier inventory from retarded source
+weights and field injection; they are not a claim of full field/matter energy
+conservation. Completed results belong in [validation evidence](VALIDATION.md).
+
+`test_causal_source_commit.py` checks that generation, identity, arrival-time
+and accounting failures occur before sampling or publishing a quantum result.
+Source observers must see both deposited stock and the consumed finite allowance.
+A null during an already started gate retains both frozen operands: mixing
+`(3/5, 4/5)` yields `(-7/25, 24/25)`, and the inverse restores the original pair.
+Changing only one frozen operand is forbidden because it can increase the norm.
+
+## Localized quantum contacts
+
+`test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
+target separation and its fixed-seed one-shot result: three A captures at event
+tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,
+finite dissipative field accounting and unchanged headless output. The actual
+200-trial evidence belongs to the
+[experiment report](../examples/quantum/many_contacts.md).
+
+`test_localized_quantum_contact.py` owns the
+[contact hybrid expectations](LOCALIZED_QUANTUM_CONTACT.md#numerical-acceptance):
+actual source birth, delayed single ownership, finite classical emission and Link
+fronts, 9/25 versus 16/25 mixing and inverse interference, exhaustive capture
+tickets, unchanged unconditional receiver statistics, constant detector cost,
+six periodic directions, positive transit times and unused local capacity.
+It also reproduces a third-resident field-reaction conservation defect, checks
+rejection before sampling, semantic-owner guards, concurrent snapshot publication,
+active generic renaming and headless primary-runner output. The scope is finite
+configured absorption and component accounting, not complete electromagnetic
+energy/momentum conservation or quantum emergence.
+
 ## Computational response
 
 `test_node_work_emission.py` checks committed local work, zero startup, pending
@@ -727,6 +776,47 @@ cases; the check selector maps every lab source/configuration change to it.
 
 ## Selected deferred quantum event network
 
+`test_event_links.py` checks immutable event spacetime through a split/join,
+direct event lookup without separate predecessor lists, current-head updates,
+foreign and forged handle rejection, failed-append atomicity and fixed capacity.
+`test_quantum_node_events.py` runs the native four-Node initialization: final
+C/D weights are 0/1, reversed by a phase, and 1/2 each after either intermediate
+position outcome. Exact correlated checkpoints preserve those cases, audit
+records, handle identity and individual modeled times. A two-tick link must
+remain admissible after compaction, while a prematurely reused register remains
+inadmissible. Colocated registers retain disjoint dependency components until
+their configured joint operation. A 2,000-event DAG leaves cursor storage fixed
+and stores its past solely in immutable spacetime events. Empty quantum
+Nodes introduce no carrier source, cycle, inventory, transport or model cost;
+public head snapshots stay immutable and queries never change physical state.
+
+The [origin-cell contract](WAVE_ORIGINS.md) additionally requires a six-origin
+local capacity, causal support propagation without multi-Link same-tick relay,
+one terminal commit under competing requests, conditional retry after no-click,
+and local invalidation at the next tick without a commit-time bank sweep. A
+continuing outcome must preserve conditional state and remaining coherence; a
+position result must not fabricate a sharp momentum, and this extension does not
+claim a physical momentum observable. A seventh origin fails before
+partial publication. Origins and immutable source events survive checkpoints.
+Unarrived support cannot execute a gate. Retired gates may be skipped only when
+the complete retained correlated density is invariant; otherwise reject before
+layer publication. A certified skip adds no operation payload, phase change or
+physical-ready-time write. A retired instrument requires one possible outcome,
+equal to its declared `null_outcome`, and unchanged complete density. An arbitrary
+remote X, deterministic click or state-changing null must fail cancellation.
+Recheck native null certificates when the target head changes even without a
+fresh arrival marker. One-origin joint states are valid interaction definitions;
+origin count never supplies evidence of a two-disturbance collision.
+Untagged v3 gates, instrument requests without participant IDs and origin-unaware carrier
+bindings are rejected. Active tagged continuations preserve the configured
+interference. Event provenance names origins without treating them as extra
+quantum amplitude sources. Cancellation guards and their one-unit audit events
+must be included once in total model cost and reported in `host_cancellation_checks`.
+The carrier subtotal remains separate. Direct status checks are bounded local
+work; certification, tensor evaluation, locking and total audit size have separate
+host costs. Finite passing cases do not prove
+universal physical locality, conservation or a classical limit.
+
 The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
 definitions, and the existing Q-ORACLE-1 exception. This table defines required
 expectations; a passing source identity and command belong in the integration PR.
@@ -855,3 +945,17 @@ mass-dependent dynamics. `tests/test_entity_catalog.py` pins PDG 2026 masses and
 widths, CODATA 2022 electron magnetic moment, signed antiparticle references and
 the distinction between omitted and inapplicable lifetimes. See
 [reference units](REFERENCE_UNITS.md) for calibration and evidence boundaries.
+
+## Catalog contact bindings
+
+`tests/test_catalog_contact.py` exercises all 34 established particle/multiplet
+bindings through the existing causal contact rule for 16 ticks each. Charge and
+encoded mass inventory keep one owner through preparation and capture; spatial
+source/loss/escape accounting remains balanced. The default three-domain world
+retains charge -2 in charge-thirds and mass reference inventory 7371 keV/c2.
+Positive, negative and neutral source signs, antiparticle references, duplicate
+placements, metadata preservation and the ten-domain schema bound are checked.
+Unassigned flavor-neutrino mass is distinguished from theoretical zero mass.
+This is configuration integration, not QCD, spin dynamics, physical total mass
+or field/matter energy closure. The [example guide](../examples/catalog-contact/README.md)
+owns the setup and limitations.

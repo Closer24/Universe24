@@ -8,6 +8,14 @@ python -m pip install -e '.[render,dev]'
 
 ## Primary initialization-based API
 
+The quantum event storage migration removes the separate local predecessor list
+and `history(register)` traversal. Events remain directly addressable in the
+immutable spacetime DAG; fixed cursors retain current register heads and modeled
+times. The native v3 [origin-cell contract](WAVE_ORIGINS.md) adds six local wave
+references, separate from virtual register heads. The coherent path example is
+now `examples/quantum/event_paths.json`; its regression suite is
+`tests/test_quantum_node_events.py`.
+
 `Simulation` now requires a validated `InitialState`; it no longer accepts an
 implicit scalar Config or built-in particle semantics. Initialize the active
 model with a strict JSON file:
