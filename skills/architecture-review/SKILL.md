@@ -37,6 +37,11 @@ Check that a fresh checkout can find the active model, required commands and liv
 work through the root entry point. Keep path maps and rules in their single owners.
 Do not split packages or processes merely to satisfy a directory convention.
 
+For configuration tasks, keep diagnosis and implementation within the shared
+[task scope](../workflow.md#configuration-tasks-and-implementation-scope).
+An unsupported composition or suspected defect is a review finding; implement
+changes only within an authorized implementation scope.
+
 For configuration changes, apply the
 [validation boundary](../../docs/CONFIGURATION_VALIDATION.md): one strict JSON
 decoder, one semantic owner per format, and a thin dispatcher with explicit context.

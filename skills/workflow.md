@@ -25,6 +25,39 @@ in Issues/PRs. For permitted publishing, persist the handoff there rather than o
 in chat. If publishing is unavailable or unauthorized, report the unsaved handoff.
 Do not claim personal Skills were installed merely because repository files exist.
 
+## Configuration tasks and implementation scope
+
+Checking a configuration uses the existing simulator and validator. It does not
+require changing simulator source, validation code, schemas or test expectations.
+Keep the requested operation explicit:
+
+| Request | Work and result |
+| --- | --- |
+| Check an existing configuration | Read the supplied files and explicit dependencies, use the existing preflight, and report validity or concrete errors; preserve inputs and code, and do not run a world |
+| Create or correct a configuration | Edit the requested configuration data using supported definitions and existing authoring adapters, preserve the intended experiment, then validate the resulting input |
+| Run an experiment | Validate the explicit input first, use the existing runner for the requested run, and inspect its results against the stated acceptance target |
+| Implement or fix simulator software | Treat this as implementation work only when the user's scope includes it; follow the responsible code owner's development and regression workflow |
+
+A data error belongs to configuration authoring. A check-only request returns the
+error and a proposed correction without applying it. An invalid result can complete
+a check-only task: success is an accurate report, not making every input pass.
+Correct data when authoring
+or correction is requested; reuse catalog entities and explicit experiment
+profiles where appropriate. Unsupported format or composition means a capability
+gap. A suspected validator/engine defect needs a minimal reproduction, expected
+versus actual behavior and an identified owner. Report these findings separately;
+a failed check or unexpected physical result does not open an implementation task.
+
+Do not make an input pass by weakening a schema, capacity, assertion or physical
+acceptance condition, adding a hidden law, or switching to a historical model.
+Do not silently alter the experiment to fit the implementation. A passing preflight
+permits the requested run; it does not prove the proposed physical behavior.
+Use existing implementation authorization only when it still covers the current
+task; later restrictions take precedence. When implementation is within scope,
+continue without asking for the same permission again. Otherwise, return the
+finding for a separate implementation request rather than modifying code during
+configuration work.
+
 ## Inputs and handoff
 
 Give each owner a bounded task with the repository, base commit, candidate/model,
