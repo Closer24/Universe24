@@ -768,6 +768,29 @@ the passive classical-only conservation audit, automatic exterior quantum modes
 or reciprocal classical-field action on delocalized matter. Read-only playback
 separates possible origin support from particles, field inventory and probability.
 
+## Causal ordinary sources from quantum contacts - Q-CAUSAL-SOURCE-1
+
+`causal-contact-fields-v1` selects the
+[causal source contract](docs/CAUSAL_QUANTUM_SOURCES.md), retaining Q-CONTACT-1's
+local preparation, absorption and single inventory ownership. Each participating
+Node additionally owns one bounded complex source envelope and finite emission
+allowances. Its source is full configured emission times local squared magnitude.
+Rational complex evolution preserves phase using number-preserving matrices and
+their nonzero vacuum coefficient; no remote normalization is performed.
+
+Amplitude and terminal packets cross actual Links and commit after tariff-derived
+Node delays. Localized capture creates one full-strength ordinary source, ends
+the colocated envelope and initiates causal termination. A local null zeros only
+the local envelope. Quantum origin status and conditional oracle results never
+select remote ordinary source values, timing or cancellation. Pending outputs
+retain bounded data and local invalidation guards; no formulas enter NodeState.
+
+After measurement the envelopes are a retarded, potentially unnormalized source
+approximation. Their sum is not conserved charge. Existing emitted field stock
+continues under its configured laws and separate injection accounting. The linked
+contract defines the finite domain, clock, transport and conservation limitations;
+the older localized-only profile is unchanged.
+
 ## Quantum origin cells in event spacetime - Q-ORIGINS-3
 
 The explicit native v3 candidate is specified in

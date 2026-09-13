@@ -1,10 +1,13 @@
 """Local extension protocol; the scheduler does not interpret domain payloads."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
 from .disturbance_state import Address3, DisturbanceRecord, LocalPlan, Values
+from .source_emission import SourceDeposit
+from .source_emission_node import EmittingEnvelopeNode
+from .spatial_state import SpatialState
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 
@@ -48,3 +51,18 @@ class CommitResolver(Protocol):
     def begin_tick(self, tick: int) -> None: ...
 
     def inventory(self) -> Values: ...
+
+
+@runtime_checkable
+class CausalSourceResolver(Protocol):
+    """A local source owner, separate from quantum status and ordinary inventory."""
+
+    def source_nodes(self) -> Mapping[Address3, EmittingEnvelopeNode]: ...
+
+    def start_sources(self, tick: int) -> None: ...
+
+    def prepare_source(
+        self, address: Address3, tick: int, states: tuple[SpatialState, ...], node_cost: int
+    ) -> SourceDeposit | None: ...
+
+    def commit_source(self, address: Address3, tick: int) -> None: ...

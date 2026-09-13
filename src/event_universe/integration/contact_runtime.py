@@ -13,6 +13,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.event_resolution import LocalContext, Planner
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.integer import checked_work
+from event_universe.quantum import LocalUnitary
 
 from .contact_program import ContactDomain
 from .event_program import Program
@@ -234,6 +235,11 @@ class ContactEventResolver(NativeEventResolver):
             del self._pending[token]
             return outcome, event_id
 
+    def propagation_phase(
+        self, tick: int, domain: ContactDomain
+    ) -> tuple[tuple[LocalUnitary, tuple[int, ...]], ...]:
+        return domain.phases[(tick - 1) % len(domain.phases)]
+
     def begin_tick(self, tick: int) -> None:
         if tick != self.space.tick + 1:
             raise ValueError("contact clock must advance once per simulation tick")
@@ -246,7 +252,7 @@ class ContactEventResolver(NativeEventResolver):
             origin = waves.names.get(domain.name)
             if origin is None:
                 continue
-            for rule, registers in domain.phases[(tick - 1) % len(domain.phases)]:
+            for rule, registers in self.propagation_phase(tick, domain):
                 if len(registers) == 2 and any(
                     tick - self.space.physical_ticks[q] < self.initial.link_ticks for q in registers
                 ):

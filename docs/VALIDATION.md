@@ -1,5 +1,78 @@
 # Validation evidence
 
+## Causal quantum source envelopes - 2026-09-13
+
+Recorded change base: `d8261d4d239e524d18011166f6372ec2949cbe42`; integrated
+main remains `523b39804e8be78ec2069b7af8b6498ccb19810a` after a fresh fetch.
+Final active source SHA-256:
+`1ac603cc9fb6bc34967dcd1b9c4dc6c6e08680229e6e6ed7527f8d4dbf432aaa`.
+The affected gate passed **2,273 tests with five opt-in visual skips** in
+154.64 seconds. Ruff and formatting on 24 changed Python files and strict mypy
+on 69 affected production modules passed. Shared NodeState and resolver interfaces
+select the carrier, field, quantum, locality, boundaries, headless-output and
+retention consumers. No full-suite flag or package build was used.
+
+```sh
+python tools/check.py --base d8261d4d239e524d18011166f6372ec2949cbe42
+python -m event_universe --init examples/quantum/causal_charge.json --output artifacts/causal-charge-final-verified
+python -m event_universe --init examples/quantum/localized_charge.json --output artifacts/causal-localized-final-verified
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/causal-origins-final-verified
+```
+
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used. Windows'
+existing default pytest temporary root denied directory enumeration; the successful
+gate sets `PYTEST_ADDOPTS` to a fresh explicit workspace `--basetemp`.
+Two initial type annotation failures were corrected before the successful gate.
+
+The new arithmetic, integration and atomic-publication modules contribute 59
+focused cases, all included above. A 3:4 split emits -9 and -16 from configured
+full strength -25; inverse propagation recombines the complex amplitudes. Tests
+cover finite fractional allowances, low-budget source deposits, every periodic
+seam and both Port choices on length-two axes, immutable frozen gate inputs,
+local null versus capture, delayed terminal handling, generic label substitution,
+formula-free NodeState and rejection before sampling or changing inventory.
+Observers see the deposited field stock and consumed emission allowance together.
+Two terminal regressions added after that gate passed separately: duplicate
+notices charge receive/read work without restarting termination, and a terminal
+commit before a later valid amplitude prevents reactivation. Thus all 61 new
+focused cases have passing evidence; these last two are not included in 2,273.
+
+Independent physics review passed those 59 cases and confirmed the final source
+after preserving the two existing engine files' line endings. Its separate
+five-Link comparison captured remotely at tick 9: the distant ordinary envelope
+remained 3/5, with the same finite allowance as the detector-free control, through
+tick 13. The terminal notice retired it at tick 14. A null outcome did not
+renormalize that distant source. The ordinary source never queried quantum
+probabilities or used shared origin retirement to change its remote state.
+
+The checked-in causal example completed **10/10 ticks in 0.0884438 seconds**,
+with `display=none`, one random draw and total reported model cost 1,555.
+Source preparation commits at tick 0 and successful absorption at tick 3.
+All three local envelopes retire by tick 5. Charge -1 and mass 1 retain one
+owner at every completed tick. Cumulative ordinary field injection is
+`[-25, -50, -75, -100, -134, -159, -159, -159, -159, -159]`.
+Its configured localization residue retains the final -159 field quantity;
+there is no global erasure of previously emitted stock. Source, residue,
+dissipation and escape accounting balances at every tick.
+
+On the same source, the unchanged localized-only example completed **8/8 ticks
+in 0.0267102 seconds**, retaining field injection -18 and model cost 268.
+The existing origin example completed **5/5 ticks in 0.0078832 seconds**, retaining
+one random draw and model cost 17. All three actual runner outputs are headless,
+excluded from Git and enrolled in 24-hour retention.
+
+The [causal source contract](CAUSAL_QUANTUM_SOURCES.md), postulates, definitions,
+architecture, Highlights coverage, examples, test expectations and physics-review
+Skill are updated together. The example now has an explicit affected-test mapping.
+Existing Boss and test-runner instructions already cover the required coordination
+and validation; no extra scheduled task was added. Live Highlights was reconciled
+read-only. After measurement, the ordinary envelope is an explicitly retarded,
+potentially unnormalized approximation, not a globally conditioned Born query.
+Already started gates retain both frozen operands across null results and can
+subsequently repopulate a local source. This candidate does not establish QED,
+field/matter energy closure, shared aggregate CPU contention or a universal
+classical limit.
+
 ## Localized contact, quantum propagation and classical fields - 2026-09-13
 
 Integrated base: `523b39804e8be78ec2069b7af8b6498ccb19810a`. Implementation

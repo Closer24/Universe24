@@ -8,6 +8,7 @@ from .event_links import EventCursor, EventReferences
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
     from .node_conservation import NodeConservationDefinition
+    from .source_emission_node import EmittingEnvelopeNode
     from .spatial_state import (
         EmissionDefinition,
         FieldGroupDefinition,
@@ -310,6 +311,7 @@ class DisturbanceNodeState:
     cause_id: int | None = None
     event_cursors: tuple[EventCursor, ...] = ()
     event_references: EventReferences | None = None
+    source_envelope: EmittingEnvelopeNode | None = None
 
 
 @dataclass(frozen=True, slots=True)

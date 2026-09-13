@@ -99,7 +99,10 @@ def parse_event_program(initial: InitialState) -> Program:
     if initial.conservation is not None:
         raise ValueError("conservation audit does not support native event programs")
     raw_program = json.loads(initial.event_program)
-    if isinstance(raw_program, dict) and raw_program.get("model") == "localized-contact-quantum-v1":
+    if isinstance(raw_program, dict) and raw_program.get("model") in {
+        "localized-contact-quantum-v1",
+        "causal-contact-fields-v1",
+    }:
         from .contact_program import parse_contact_program
 
         return parse_contact_program(initial, raw_program)

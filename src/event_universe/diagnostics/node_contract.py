@@ -15,6 +15,16 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.event_links import EventCursor, EventReferences
 from event_universe.core.node_ports import PortBank
+from event_universe.core.source_emission import EnvelopeEmissionState, PendingEnvelopeEmission
+from event_universe.core.source_emission_node import EmittingEnvelopeNode
+from event_universe.core.source_envelope_node import (
+    EnvelopeGate,
+    EnvelopePacket,
+    PendingEnvelopeGate,
+    PendingEnvelopeStop,
+    SourceEnvelopeNode,
+)
+from event_universe.core.source_envelope_state import EnvelopeAmplitude, EnvelopeRemainder
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
@@ -46,6 +56,16 @@ STATE_RECORDS = (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    EnvelopeAmplitude,
+    EnvelopeRemainder,
+    EnvelopeGate,
+    EnvelopePacket,
+    PendingEnvelopeGate,
+    PendingEnvelopeStop,
+    SourceEnvelopeNode,
+    EnvelopeEmissionState,
+    PendingEnvelopeEmission,
+    EmittingEnvelopeNode,
 )
 
 

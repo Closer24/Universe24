@@ -468,3 +468,20 @@ probabilities nor shared origin flags drive a remote ordinary field update.
 This is the user-selected approximation, not a derivation of quantum fields,
 physical momentum or the general classical limit. Its clock and representation
 limits are explicit and do not silently extend the older native profiles.
+
+## 20. Causal local quantum source candidate
+
+The explicit [causal source extension](docs/CAUSAL_QUANTUM_SOURCES.md) permits
+ordinary emission weighted by a bounded complex envelope retained at the same
+Node. Phase evolution uses frozen local and causally received neighbor inputs.
+Only an actual local contact can prepare or localize the configured inventory.
+A successful capture creates one full-strength localized source and sends
+termination through Links with local delay. Shared quantum origin retirement
+never controls remote ordinary fields or their clocks.
+
+After measurement these are retarded, potentially unnormalized source weights;
+the candidate does not silently substitute global conditional probabilities.
+Previously emitted fields remain causal, finite source allowances do not refill,
+and charge inventory is counted separately from field-source weights. This
+extends section 19 only for `causal-contact-fields-v1`, preserving its older
+localized-only selection and making no new quantum-field or energy-closure claim.

@@ -1,5 +1,15 @@
 # Project status and restart guide
 
+The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
+the contact path with bounded source envelopes attached to participating Nodes.
+Local squared weights scale finite ordinary emission; amplitude updates and
+termination traverse real Links and tariff-derived local delays. Capture creates
+one full-strength localized output, while previously emitted fields continue.
+After measurement the envelopes are a retarded, potentially unnormalized source
+approximation, separate from conserved carrier inventory and exact conditional
+quantum state. The existing localized-only profile remains available. Consult
+[validation evidence](VALIDATION.md) for the tested source and completed checks.
+
 The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) now connects
 actual committed ordinary contacts, deferred origin creation, coherent propagation
 and local capture through the primary runner. Classical fields are emitted only

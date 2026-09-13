@@ -558,6 +558,24 @@ owner enforces them even for typed callers. Ordinary core and fields do not impo
 quantum laws. Inventory sector totals and possible-origin display are diagnostic
 reads, not physical inputs. Contact model limits are owned by its linked contract.
 
+The opt-in [causal source extension](CAUSAL_QUANTUM_SOURCES.md) adds a bounded
+source-envelope component attached to the same ordinary Node. The `core/source_*`
+modules own formula-free amplitudes, finite source state, pending proposals,
+twelve Port slots and local transitions. No component holds a world reference,
+quantum query, executable matrix or expression tree in its physical state.
+`fields/source_envelope.py` owns the shared rational complex and weighted-source
+arithmetic; `fields/source_emission.py` composes generic spatial primitives.
+Immutable matrix/emission definitions and initialization routing remain outside
+NodeState in `integration/causal_contact_runtime.py`.
+
+Only actual Link packets supply neighbor inputs. The controller transports frozen
+messages and advances local owners; it does not reconstruct sources from the
+quantum state or shared origin flags. Local source commits use write-only
+`NodeEvents` provenance and the existing ordinary spatial accounting. A local
+capture atomically ends its source and installs its ordinary output; remote
+termination requires a received notice and local delay. The candidate contract
+owns its retarded approximation, numerical bounds and clock restrictions.
+
 ## Opt-in quantum ownership — Q-ORACLE-1
 
 The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its

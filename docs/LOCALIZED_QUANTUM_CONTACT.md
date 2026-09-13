@@ -5,6 +5,11 @@ fields are sourced only by localized disturbances. A delocalized excitation
 does not source a probability-weighted classical field. Existing field packets
 continue under their configured local laws. This is not quantum electromagnetism.
 
+The separately selected [causal source extension](CAUSAL_QUANTUM_SOURCES.md),
+`causal-contact-fields-v1`, adds locally evolved weighted field sources and
+Link-delivered cancellation. The localized-only contract on this page remains
+the behavior of `localized-contact-quantum-v1`.
+
 | Part | Contract |
 | --- | --- |
 | Law | A local contact with an explicit unknown-momentum marker transfers one configured disturbance into a vacuum quantum domain. Configured number-preserving neighbor gates propagate it. A complete local absorption instrument transfers it back into one localized disturbance. |

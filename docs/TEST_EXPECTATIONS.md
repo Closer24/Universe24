@@ -1,5 +1,33 @@
 # Test inputs and expected results
 
+## Causal quantum sources
+
+The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing
+and inverse interference, signed full emission `-25` producing requests `-9`
+and `-16`, rational complex vacuum normalization, changing-denominator residue,
+finite allowance exhaustion and explicit overflow rejection. These arithmetic
+cases belong to `test_source_envelope.py`.
+
+`test_causal_contact_fields.py` owns integration acceptance: frozen neighbor
+inputs, tariff-derived local delays, every periodic direction, one committed
+localized output, a local null
+without remote renormalization, and terminal packets that end remote emission
+only after causal arrival and local delay. Compare ordinary source, field and
+cost prefixes with and without a distant detector. Include a coupled third
+resident, pending emissions at capture, charged duplicate notices, termination
+before amplitude arrival, no resurrection, finite per-mode allowances and
+formula-free transitive NodeState. Preserve the older contact profile's tests.
+These expectations distinguish conserved carrier inventory from retarded source
+weights and field injection; they are not a claim of full field/matter energy
+conservation. Completed results belong in [validation evidence](VALIDATION.md).
+
+`test_causal_source_commit.py` checks that generation, identity, arrival-time
+and accounting failures occur before sampling or publishing a quantum result.
+Source observers must see both deposited stock and the consumed finite allowance.
+A null during an already started gate retains both frozen operands: mixing
+`(3/5, 4/5)` yields `(-7/25, 24/25)`, and the inverse restores the original pair.
+Changing only one frozen operand is forbidden because it can increase the norm.
+
 ## Localized quantum contacts
 
 `test_localized_quantum_contact.py` owns the

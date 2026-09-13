@@ -1,5 +1,33 @@
 # Highlights implementation coverage
 
+## Causal quantum source envelopes - 2026-09-13
+
+The user's latest selection extends the preceding localized-source choice:
+each wave mode may source an ordinary field with its local squared weight, and
+weight changes or cancellation must travel through Nodes and Links with delay.
+This maps Highlights sections 1.2.7, 4.7.1-4.7.7 and 10.3/10.6 to the explicit
+[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains
+read-only; this reconciliation reuses the same-hour read at revision
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
+modified `2026-09-13T18:53:30.879Z`.
+
+`causal-contact-fields-v1` retains a bounded complex source envelope at each
+participating ordinary Node, immutable definitions outside NodeState, finite
+allowances and fixed packet/proposal slots. Actual contact creates the source;
+successful local absorption creates one full-strength ordinary output and sends
+terminal notices over physical Links. Existing field stock continues. Shared
+origin status remains quantum bookkeeping and never controls remote ordinary
+emission, response or delay. The older localized-only profile is unchanged.
+
+After measurement the local source weights are retarded and may be unnormalized;
+their sum is not conserved charge or proof of field/matter energy closure. The
+candidate preserves one inventory owner and specifies separate source accounting,
+phase-sensitive propagation, causal termination and unsupported combinations.
+Its implementation owners and numerical acceptance expectations are linked from
+the contract. Exact source, completed runs and review outcomes belong in
+[validation evidence](VALIDATION.md); no pending test is represented here as a
+passed result. This extension does not complete the broader unified-dynamics goal.
+
 ## Localized quantum contacts - 2026-09-13
 
 Live Highlights was reconciled read-only at revision

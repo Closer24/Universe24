@@ -51,6 +51,20 @@ semantic-owner occupation guard in addition to JSON preflight. Test finite
 localized emission, causal field fronts and equal vacuum/click controller cost.
 Keep possible origin references distinct from probability or copied inventory.
 
+For [causal weighted sources](../../docs/CAUSAL_QUANTUM_SOURCES.md), trace every
+ordinary source weight to retained local amplitudes and actual frozen Link
+packets. Quantum conditional queries, global normalization and shared retirement
+flags must not control ordinary field values or clocks. Check phase-sensitive
+split/recombination, rational complex vacuum normalization, receipt and evaluation
+tariffs, and every intermediate Link/control delay. Compare remote ordinary
+source, field and cost prefixes before a terminal notice can arrive. Exercise
+null results without remote renormalization, capture during pending emission,
+charged duplicate notices and stale packets after local termination. Inspect
+transitive NodeState for bounded values, indices and fixed proposal/Port banks,
+with immutable laws outside it. Keep retarded source weights, single conserved
+carrier inventory and finite field injection as separate quantities; do not
+report a source-weight sum as charge conservation or physical energy closure.
+
 Use the [local conservation contract](../../docs/LOCAL_CONSERVATION.md) when a
 model claims joint energy and momentum balance. Identify all actual owners and
 fluxes, and inspect the complete update chain, including arrival merging and

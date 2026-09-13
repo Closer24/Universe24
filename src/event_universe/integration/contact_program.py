@@ -37,6 +37,7 @@ class ContactDomain:
 @dataclass(frozen=True, slots=True)
 class ContactConfiguration:
     domains: tuple[ContactDomain, ...]
+    causal_sources: bool = False
 
 
 def parse_contact_program(initial: InitialState, raw: object) -> Program:
@@ -50,6 +51,11 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         {"model", "capacity", "addresses", "domains", "bounds", "seed", "tickets"},
         {"model", "capacity", "addresses", "domains"},
     )
+    causal_sources = obj["model"] == "causal-contact-fields-v1"
+    if causal_sources and (not initial.spatial_fields or not initial.emissions):
+        raise ValueError("causal contact fields require configured spatial sources")
+    if causal_sources and any(definition.rays for definition in initial.spatial_fields):
+        raise ValueError("causal contact fields currently require octant transport")
     addresses = tuple(
         _address(a, "contact address", 0) for a in _array(obj["addresses"], "contact addresses", 30, 1)
     )
@@ -191,6 +197,25 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         )
     if used != set(range(len(addresses))):
         raise ValueError("every quantum mode must belong to one contact domain")
+    if causal_sources:
+        for domain in domains:
+            remaining = set(domain.registers)
+            reached = {remaining.pop()}
+            while remaining:
+                adjacent = {
+                    q
+                    for q in remaining
+                    if any(
+                        neighbor_address(addresses[p], port, initial.shape, initial.boundary)
+                        == addresses[q]
+                        for p in reached
+                        for port in range(6)
+                    )
+                }
+                if not adjacent:
+                    raise ValueError("causal source domains must be connected through physical Links")
+                reached.update(adjacent)
+                remaining.difference_update(adjacent)
     localized_types = {kind for d in domains for kind in (d.source_type, d.output.type_index)}
     if any(
         emission.budget is None and localized_types.intersection(selected_types(emission))
@@ -227,5 +252,5 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         (),
         _integer(obj.get("seed", 0), "seed", 0),
         tickets,
-        contacts=ContactConfiguration(tuple(domains)),
+        contacts=ContactConfiguration(tuple(domains), causal_sources),
     )
