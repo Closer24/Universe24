@@ -99,6 +99,34 @@ at one hop per tick, the triple-mass core at one third, momentum sums to zero
 and mass to 4 until both leave the open boundary. This is a declared output
 law with exact invariants, not a decay rate or a nuclear model.
 
+### Radiation pressure: a funded lamp and an absorbing sail, four links apart
+
+Lamp of mass 4096 with a stock of 200,000 quanta, firing 252 mirrored headings
+every tick at 8 quanta per ray; sail of mass 64 at rest at x = +4, absorbing;
+the conservation audit checks every event. Runtime source `f668e71273fd...`,
+280 s of host time for 12 ticks.
+
+| Tick | Sail offset, momentum | Lamp momentum | Audit |
+| --- | --- | --- | --- |
+| 1 to 4 | 4, (0, 0, 0) | (0, 0, 0) | closed, rays in flight |
+| 5 | 4, (128, 0, 16) | (0, 0, 0) | closed |
+| 6 | 4, (256, 0, 32) | (0, 0, 0) | closed |
+| 7 | 4, (384, 0, 48) | (0, 0, 0) | closed |
+| 8 | 5, (512, 0, 64) | (0, 0, 0) | closed |
+| 10 | 6, (512, 0, 64) | (0, 0, 0) | closed |
+| 12 | 7, (512, 0, 64) | (0, 0, 0) | closed: world 199,976 + escaped 24 = 200,000 quanta; world momentum (128, 0, 16) + escaped (-128, 0, -16) = 0 |
+
+The audit checked 11,249,738 Node events and every residual was zero. One
+heading of the set, (16, 0, 2), passes through the sail's Node; it delivers 8
+quanta and (128, 0, 16) of momentum per tick from tick 5, and the sail starts
+to move at half a hop per tick once its momentum passes its mass times the
+speed scale. That heading's integer path leaves the x axis after four steps, so
+from x = +5 on no ray of this set crosses the sail and its momentum stays at
+(512, 0, 64): 32 absorbed quanta. The lamp's momentum is zero at every tick
+because the mirrored set sums to zero exactly; the momentum that pushes the
+sail is carried by the rays still in flight on the opposite side of the sweep,
+and leaves through the open boundary with them.
+
 ## Conclusion
 
 Signed straight-ray fields plus an exchange coupling give the charge-sign
