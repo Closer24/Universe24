@@ -1,5 +1,38 @@
 # Validation evidence
 
+## Local node I/O protection - 2026-09-13
+
+Base: `876cbedf6f88dcbf4db01a63933f46e8f9582f57` (pending node-contract PR).
+Production source SHA-256:
+`d58afcdf39483e52e03086ef87114386265abe4379827ed9c5261d2443f00055`.
+The 50 boundary tests and five node-memory tests pass. The negative replacement
+slot regression fails against the original engine because no exception is raised.
+Independent physics/architecture source review passes this scoped boundary.
+The final affected gate passed: 1,298 tests, five opt-in visual skips, Ruff and
+strict mypy on 13 affected source files. The production fingerprint above was
+unchanged during these checks.
+
+Headless comparisons use the existing `examples/node-clock/three_nodes.json`
+for nine ticks and `tests.test_node_memory.maximum_width_world()` (26 ports,
+32 scalar records) for ten ticks. Each timing is the median of five batches of
+30 fresh runs, measured sequentially on the same host with Python 3.14.7.
+Snapshot hashes, model costs and cycle counts match the original in both cases.
+The relay retains inventory 7 at node (3,0,0), cost 14 and three begun cycles.
+The wide node retains cost 840 and ten begun cycles.
+
+| Workload | Original / protected time per 30 runs | Retained Python bytes, both | Peak bytes, original / protected |
+| --- | --- | --- | --- |
+| Relay | 13.06 / 17.72 ms | 2,480 | 8,460 / 8,564 |
+| Wide node | 609.78 / 706.66 ms | 57,056 | 107,272 / 107,272 |
+
+Tracemalloc starts before fresh construction, includes the indicated ticks and
+collects garbage before reading retained bytes. These are small host benchmarks,
+not a throughput guarantee or process-RSS measurement. Validation adds host work
+(about 36% and 16% here); it does not add retained state, model operations or
+world ticks. Ordinary immutable records are reused without a persistent cache.
+The existing architecture/test Skills already require this ownership review;
+their procedures need no further expansion for this boundary.
+
 ## Node ports, clocks and memory - 2026-09-13
 
 Base: `503d1ba11de1ee07eb12d49d35f44e73296f20e0`, integrating configured topology

@@ -300,7 +300,7 @@ oracles. Their values must not feed a production trajectory, force or field, and
 their success does not establish a compliant cure. Read-only diagnostics may
 scan the world and reject a run; they must never repair its physical state.
 
-Q-ORACLE-1 is the sole explicit model-computation exception and is confined to
+Past is Present Calc (Q-ORACLE-1) is the sole explicit model-computation exception and is confined to
 the opt-in quantum owner. It does not relax ordinary field, self-field, movement,
 force or geometry locality. The current bridge does not write physical state.
 
@@ -334,7 +334,7 @@ and external; JSONL recording streams it to disk.
 - Dedicated lattice, movement, source/activity-policy and diagnostic-projection
   tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS.md`.
 
-## Opt-in quantum contracts — Q-ORACLE-1
+## Opt-in quantum contracts — Past is Present Calc (Q-ORACLE-1)
 
 The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
 A successful query returns fixed-size integer records with model_cost=1 and
@@ -688,7 +688,7 @@ term and decision budgets are explicit. Exhaustion/overflow rejects an operation
 without inventing a physical result. Removing an exact common integer factor
 is representation reduction, not a floating-point normalization or rounding.
 
-Query evaluation and record commit add zero world ticks under Q-ORACLE-1. Host
+Query evaluation and record commit add zero world ticks under Past is Present Calc (Q-ORACLE-1). Host
 node evaluations are counted separately; state size, condition scans, checkpoint
 work and bit/storage limits remain host costs. A checkpoint replaces the full
 live correlated component, never merely a target marginal. It preserves all

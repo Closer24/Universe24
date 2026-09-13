@@ -7,6 +7,14 @@ from typing import Protocol
 from .coupling_selectors import matches_type, selected_type_set
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
 from .integer import add_components, checked_work
+from .node_boundary import (
+    validate_decay,
+    validate_reaction_state,
+    validate_samples,
+    validate_spatial_bundle,
+    validate_spatial_outgoing,
+    validate_spatial_plan,
+)
 from .node_state import SpatialNodeView
 from .spatial_state import (
     FieldInteractionGuard,
@@ -182,14 +190,20 @@ class SpatialEngine:
             if any(packet is not None for packet in self.links.get(position, ())):
                 raise ValueError("outgoing spatial links are occupied")
             records = residents.get(position, ())
+            sample_values, sample_fluxes, sample_ports = (
+                node.sample_values,
+                node.sample_fluxes,
+                node.sample_ports,
+            )
             if self.coupler is not None and any(
                 record is not None and record.type_index in coupled_types for record in records
             ):
                 # Freeze only locally delivered input, before fresh source injection.
-                node.sample_values = self.coupler.sample(node.states)
-                node.sample_fluxes = self.coupler.sample_fluxes(node.states)
+                sample_values = self.coupler.sample(node.states)
+                sample_fluxes = self.coupler.sample_fluxes(node.states)
                 if self.initial.spatial_interactions:
-                    node.sample_ports = self.coupler.sample_ports(node.states)
+                    sample_ports = self.coupler.sample_ports(node.states)
+                validate_samples(self.initial, sample_values, sample_fluxes, sample_ports)
             # Samples describe only the preceding delivery interval, never a permanent trail.
             states = (
                 node.states
@@ -217,12 +231,16 @@ class SpatialEngine:
                     for state in states
                 )
                 node.last_cost = 0
+                node.sample_values, node.sample_fluxes, node.sample_ports = (
+                    sample_values,
+                    sample_fluxes,
+                    sample_ports,
+                )
                 node.last_begin_tick = tick
                 self._active.discard(position)
                 continue
             plan = self.planner(states, records, node.received_count)
-            if len(plan.outgoing) != self.port_count:
-                raise ValueError("spatial proposal has incorrect port count")
+            validate_spatial_plan(self.initial, plan, len(records), records)
             cost = bounded(checked_work(plan.cost + node.received_decay_cost))
             packets: list[SpatialPacket | None] = [None] * self.port_count
             for port, bundle in enumerate(plan.outgoing):
@@ -232,6 +250,11 @@ class SpatialEngine:
                     )
             # All physical calculations and validation precede the local commit.
             commit_records(position, plan.emission_records)
+            node.sample_values, node.sample_fluxes, node.sample_ports = (
+                sample_values,
+                sample_fluxes,
+                sample_ports,
+            )
             node.states = plan.states
             node.last_cost = cost
             node.received_count = 0
@@ -302,6 +325,7 @@ class SpatialEngine:
         node = self._at(position)
         if node.last_begin_tick != tick:
             states, phases = self.coupler.deposit(node.states, node.reaction_phases, reaction)
+            validate_reaction_state(self.initial, states, phases)
             return ReactionCommit(states, phases, None)
         # Only this instant's departure buffers are still locally appendable.
         # Packets from an earlier departure are immutable while in transit.
@@ -312,6 +336,8 @@ class SpatialEngine:
         states, phases, outgoing = self.coupler.forward_reaction(
             node.states, node.reaction_phases, reaction
         )
+        validate_reaction_state(self.initial, states, phases)
+        validate_spatial_outgoing(self.initial, outgoing)
         links: list[SpatialPacket | None] = []
         for port, (old, bundle) in enumerate(zip(old_links, outgoing, strict=True)):
             merged = []
@@ -385,9 +411,12 @@ class SpatialEngine:
 
     def deliver(self, tick: int) -> None:
         ready: dict[Address3, list[SpatialPacket]] = {}
-        for packets in self.links.values():
-            for packet in packets:
+        for origin, packets in self.links.items():
+            for port, packet in enumerate(packets):
                 if packet is not None and packet.arrival_tick == tick:
+                    if packet.origin != origin or packet.port != port:
+                        raise ValueError("spatial packet provenance differs from its link owner")
+                    validate_spatial_bundle(self.initial, packet.fields)
                     target = self._neighbor(packet.origin, packet.port)
                     if target is None:
                         self._escape(packet, tick)
@@ -404,6 +433,7 @@ class SpatialEngine:
                     surviving.append(packet)
                     continue
                 bundle, dissipated, cost = self.decayer(packet.fields)
+                validate_decay(self.initial, bundle, dissipated, cost)
                 surviving.append(replace(packet, fields=bundle))
                 decay_cost = bounded(checked_work(decay_cost + cost))
                 arrival_cost = bounded(checked_work(arrival_cost + cost))

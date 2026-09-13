@@ -322,7 +322,11 @@ faster than c to repair an average is forbidden.
 Tests verify stationary-source symmetry, neighbor-only influence and fixed local
 storage capacity. They do not establish gravity or geodesics.
 
-## 14. Shared quantum query postulate — Q-ORACLE-1
+## 14. Shared quantum query postulate — Past is Present Calc (Q-ORACLE-1)
+
+Past is Present Calc is the mechanism name. `Q-ORACLE-1` and
+`deferred-unit-cost-oracle-v1` remain stable contract and model identifiers
+for compatibility. The name does not permit rewriting past events.
 
 The user explicitly authorized `deferred-unit-cost-oracle-v1`: one successful
 query to the shared quantum space counts as one elementary model operation and

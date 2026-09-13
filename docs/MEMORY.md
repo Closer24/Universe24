@@ -49,6 +49,13 @@ fixed. No constant whole-run byte bound follows from the local schema.
 
 ## Passive point views
 
+The [local I/O boundary](NODE_TESTING.md#local-input-and-output-protection)
+validates bounded records and proposals without retaining another owner. Its
+temporary replacement-slot set is limited to K. It shares already validated
+immutable resident records by identity and retains no validation history or
+global cache. Bounds depend on configured slots, fields, rules and ports, not
+world size. Validation consumes host time without changing model costs.
+
 `world.node_view(position)` validates an address and performs point lookups in
 the carrier/spatial node and outgoing-link dictionaries. It constructs small
 immutable view wrappers and shares immutable records, pending plans, field

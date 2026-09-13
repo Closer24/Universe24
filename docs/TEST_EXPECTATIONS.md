@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Local provider protection
+
+`tests/test_node_boundary.py` tests the actual engine boundary with faulty local
+providers. Negative, boolean, duplicate and out-of-range slots or ports, mutable
+payloads, foreign objects, malformed field/phase shapes and negative costs must
+fail before becoming pending work or committed output. A receive policy cannot
+change a pending slot. Carrier origins and spatial origin/port pairs must match
+the link owner before delivery. Mutable sampling, reaction and decay outputs
+are rejected. Ordinary inputs expose no world/graph access, and the architecture
+gate rejects known private world reads and model imports of graph/world owners.
+Changing a remote seed cannot alter an isolated local update before delivery.
+The real three-node relay preserves inventory 7 and arrival at node 3 on tick 9.
+These checks do not certify arbitrary Python callbacks as a security sandbox.
+
 ## Node input/output and clock boundaries
 
 The [node contract](NODE_TESTING.md) is exercised through the real Simulation.
@@ -500,7 +514,7 @@ Bad tickets, early or late first-readout timestamps, overflowing amplitudes or
 weights, a zero total weight and exhausted combined work budgets must fail
 without creating a terminal record. Pure queries never sample; repeated queries
 preserve history and report cache hits. Different query depths retain model cost
-1 and world time cost 0 while reporting distinct host work under Q-ORACLE-1.
+1 and world time cost 0 while reporting distinct host work under Past is Present Calc (Q-ORACLE-1).
 
 Quantum boundary tests reuse the project's import resolver. Relative Engine
 imports, importing engine from core and importing quantum from diagnostics must
@@ -700,7 +714,7 @@ cases; the check selector maps every lab source/configuration change to it.
 ## Selected deferred quantum event network
 
 The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
-definitions, and the existing Q-ORACLE-1 exception. This table defines required
+definitions, and the existing Past is Present Calc (Q-ORACLE-1) exception. This table defines required
 expectations; a passing source identity and command belong in the integration PR.
 
 | Suite | Independent expectations |

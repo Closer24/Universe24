@@ -94,7 +94,7 @@ responsibilities. Keep renames, consumers, migration notes and the
   including self-field estimation and subtraction. Audit the origin of every
   input end-to-end: a local subtraction cannot legalize a global estimator.
   Require fixed local work and storage for fixed K; report total host costs
-  separately. Q-ORACLE-1 is confined to the explicit quantum owner and cannot
+  separately. Past is Present Calc (Q-ORACLE-1) is confined to the explicit quantum owner and cannot
   supply an exception for ordinary fields, forces, movement or geometry.
 - Physical calculations use bounded integers and fixed local state. Neighbor ports
   follow the [configured topology contract](docs/CONFIGURED_TOPOLOGY.md), with six

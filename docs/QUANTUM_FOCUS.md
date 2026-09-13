@@ -1,6 +1,6 @@
 # Hierarchical quantum spatial focus experiment
 
-This document defines an opt-in computational experiment built on Q-ORACLE-1.
+This document defines an opt-in computational experiment built on Past is Present Calc (Q-ORACLE-1).
 It is not a claim that physical space is an octree or that nature performs this
 algorithm.
 
@@ -25,7 +25,7 @@ order and granularity of evaluation, not the probability law.
 
 ## Model and host cost
 
-One successful `focus_event` call has Q-ORACLE-1 model cost 1 and consumes zero
+One successful `focus_event` call has Past is Present Calc (Q-ORACLE-1) model cost 1 and consumes zero
 simulated-world ticks. Recursive spatial refinement and deferred-history
 resolution are host computation and are reported separately. No claim is made
 that host runtime is O(1).

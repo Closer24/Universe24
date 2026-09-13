@@ -1,5 +1,12 @@
 # Architecture and change boundaries
 
+The [local I/O boundary](NODE_TESTING.md#local-input-and-output-protection)
+checks provider proposals before retention and commit. Local calculation
+interfaces expose immutable local inputs, while the scheduler owns neighbor
+routing. The quantum resolver remains an explicitly scoped separate owner;
+ordinary laws do not receive its graph. These checks prevent common provider
+mistakes without creating per-node processes or claiming a Python sandbox.
+
 The active spatial unit is a **node**. Its carrier and spatial lanes have separate
 state owners and retain the existing phase order. The
 [node contract](NODE_TESTING.md) defines immutable point views and real-engine
@@ -130,7 +137,7 @@ models retain their explicit contracts and must not be copied into the active
 generic engine. External floating-point or globally coupled reference prototypes
 are not compliant active-engine implementations, even if their GIFs look useful.
 
-Q-ORACLE-1 is an existing explicitly scoped opt-in quantum exception, documented
+Past is Present Calc (Q-ORACLE-1) is an existing explicitly scoped opt-in quantum exception, documented
 below. It is not a local-law implementation and cannot justify nonlocal inputs
 to ordinary physical rules. This instruction contract neither removes that
 separate research backend nor certifies it as local. Report such scope limits
@@ -523,7 +530,7 @@ equivalence. Reclaiming them is a separate scheduler change requiring physical
 contract checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
 
-## Opt-in quantum ownership — Q-ORACLE-1
+## Opt-in quantum ownership — Past is Present Calc (Q-ORACLE-1)
 
 The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its
 numeric, timing and resource contracts in SIMULATOR_DEFINITIONS.md. The feature
@@ -757,7 +764,7 @@ is an opt-in mechanism experiment with its own explicit JSON laws. It does not
 import, replace or extend the active engine or its schema. The lab runtime owns
 its local transactions; its separate movie tool reads saved states. Generated
 outputs go under artifacts and remain outside source commits. Its local quantum
-coupling is a toy experiment, not an implementation of the active Q-ORACLE-1
+coupling is a toy experiment, not an implementation of the active Past is Present Calc (Q-ORACLE-1)
 bridge contract. The active source-of-truth boundaries above remain unchanged.
 
 ## Shared native event extension

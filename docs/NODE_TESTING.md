@@ -1,5 +1,42 @@
 # Node inputs, outputs and clocks
 
+## Local input and output protection
+
+`core/node_boundary.py` validates local provider results before the scheduler
+retains proposals or commits payloads. Laws receive immutable local records,
+residuals and received samples, not a world mapping or an event graph. Departures
+select a local port; the scheduler computes its neighbor. No per-node process,
+world copy, persistent validation cache or new physical law is introduced.
+
+The runtime rejects mutable containers, foreign objects, invalid field shapes,
+invalid or repeated replacement slots, invalid departure ports and malformed
+spatial proposals. Receipt checks packet origin against the actual link owner;
+spatial receipt also checks its port. A record policy cannot overwrite a slot
+locked by a pending proposal. Sampling, decay and reaction providers use the same
+immutable shape checks. Sample changes are retained only after successful local
+planning. Invalid local output does not become a pending result or transmission.
+
+An exact immutable resident record already validated by the engine may be reused
+by identity. New records still receive full validation. This avoids repeated
+scanning without retaining a cache. Physical checks and declared conservation
+laws remain with their existing owners; validation adds no model operations or
+world ticks, but consumes host time.
+
+`tests/test_node_boundary.py` exercises faulty providers and foreign provenance,
+input mutation attempts, hidden world/graph access, pending-slot protection and
+unchanged local results when remote state differs. Existing port and relay tests
+retain the actual link-delay and configured-degree contracts.
+
+This protects ordinary provider mistakes, not hostile Python with closures,
+reflection or deliberate writes to private engine attributes. The static gate
+rejects known world/graph accesses and imports in calculation layers; it is not
+a proof for arbitrary dynamic code. The explicitly configured quantum resolver
+still owns Past is Present Calc and receives a local request context, while
+ordinary laws receive no graph reference. Completed independent events need not
+roll back when a later event fails; implicit empty-node allocation is host state.
+
+## Observing actual transitions
+
 `NodeProbe` observes selected nodes while advancing the ordinary `Simulation`.
 It does not contain another simulator, inject fabricated arrivals, or change
 configured physical laws. Seed real neighboring nodes in initialization and

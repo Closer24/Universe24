@@ -39,7 +39,7 @@ experiment, not a general dispatcher for arbitrary cells or repeated encounters.
 Names are labels; the ordinary engine has no quantum or particle-name branch.
 
 The classical local planner receives exactly two local slots. Its quantum call
-belongs to the explicitly selected integration controller under Q-ORACLE-1,
+belongs to the explicitly selected integration controller under Past is Present Calc (Q-ORACLE-1),
 not an exception allowing ordinary forces to read distant physical state.
 All candidate mechanical plans validate before the quantum record commits.
 One extra modeled operation is counted; the fixed normal budget makes the local

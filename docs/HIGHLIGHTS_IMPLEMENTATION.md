@@ -1,5 +1,21 @@
 # Highlights implementation coverage
 
+## Node I/O boundary reconciliation - 2026-09-13
+
+Live Highlights was fetched on 2026-09-13; the provider reports modification
+time `2026-09-13T05:10:29.655Z`. Sections 1.2.3, 1.2.7, 3.1, 3.3.1 and 10.1
+require local state, received inputs and bounded link ownership. The
+[local I/O boundary](NODE_TESTING.md#local-input-and-output-protection) enforces
+immutable result shapes, local output addresses through ports, and packet
+provenance without exposing the graph to ordinary laws. It preserves the
+explicit quantum owner and model cost distinction. This is a repository-only
+reconciliation; the live document was not edited.
+
+This work is stacked on node-contract branch head
+`876cbedf6f88dcbf4db01a63933f46e8f9582f57`. Main was observed at
+`1784acdd140f260c0fb5e568b2e28241df573fa2`; its newer spatial event provenance
+changes are not integrated here. Validation applies to the stated branch.
+
 ## Node and clock reconciliation - 2026-09-13
 
 Live Highlights was read at 06:12:43 UTC, revision

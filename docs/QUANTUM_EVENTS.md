@@ -10,7 +10,7 @@ classical feedback; the standalone backend does not own a physical engine.
 ## Status and scope
 
 `deferred-event-network-v1` is the selected finite quantum-state implementation
-under Q-ORACLE-1. It extends the existing `DeferredQuantum` owner. It is not a
+under Past is Present Calc (Q-ORACLE-1). It extends the existing `DeferredQuantum` owner. It is not a
 second physical simulator, an electron/photon field law, or a universal collapse
 criterion. The scalar-amplitude, Focus and terminal-trial APIs retain their old
 contracts for owners that do not select this backend.

@@ -23,6 +23,7 @@ from .disturbance_state import (
 from .event_resolution import EventResolver, LocalContext
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
+from .node_boundary import validate_local_plan, validate_record, validate_records
 from .node_state import NodeSnapshot
 from .record_policy import RecordPolicy
 from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
@@ -100,6 +101,7 @@ class DisturbanceEngine:
             else SpatialEngine(initial, spatial_planner, observer, spatial_coupler, spatial_decayer)
         )
         for seed in initial.seeds:
+            validate_record(initial, seed.record)
             node = self._at(seed.position)
             records = list(node.records)
             try:
@@ -282,6 +284,8 @@ class DisturbanceEngine:
             and any(r is not None and r.type_index in self._coupled_types for r in node.records)
             else None
         )
+        if coupled is not None:
+            validate_records(self.initial, coupled.records, len(node.records), node.records)
         if self.event_space is not None:
             self.event_space.require_room(1)
         context = LocalContext(
@@ -309,11 +313,7 @@ class DisturbanceEngine:
                 plan, cost=bounded(checked_work(plan.cost + self._spatial.cost(position, self.tick)))
             )
             plan = self._record_policy.report_cost(plan)
-        if len(plan.departures) > self.initial.slots_per_node * self.initial.topology.degree:
-            raise ValueError("local rule exceeds fixed outgoing capacity")
-        for departure in plan.departures:
-            if not 0 <= bounded(departure.port) < self.initial.topology.degree:
-                raise ValueError("departure port exceeds configured topology")
+        validate_local_plan(self.initial, plan, len(node.coupling_remainders), node.records)
         extra, duration = cycle_timing(plan.cost, self.initial.normal_budget, self.initial.link_ticks)
         work = checked_work(self._model_work + plan.cost)
         cycles = checked_work(self._local_cycles + 1)
@@ -477,6 +477,9 @@ class DisturbanceEngine:
         for origin, packets in self._links.items():
             for slot, packet in enumerate(packets):
                 if packet is not None and packet.arrival_tick == self.tick:
+                    if packet.origin != origin:
+                        raise ValueError("carrier packet origin differs from its link owner")
+                    validate_record(self.initial, packet.record)
                     target = self.neighbor(origin, packet.port)
                     if target is None:
                         self._escape(origin, slot, packet)
@@ -496,6 +499,9 @@ class DisturbanceEngine:
             )
             if len(records) != len(node.records):
                 raise ValueError("record policy cannot change local capacity")
+            validate_records(self.initial, records, len(node.records), node.records)
+            if any(records[slot] != node.records[slot] for slot in locked):
+                raise ValueError("record policy cannot change a pending local slot")
             received = bounded(node.received_count + len(deliveries))
             # Validate the whole local arrival event before clearing any packet.
             node.records = records

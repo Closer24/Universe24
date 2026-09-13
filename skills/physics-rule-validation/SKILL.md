@@ -74,7 +74,7 @@ For each changed rule, verify:
 - isolation, external-source response and relevant boundary cases have independent
   expectations, with no global repair or failure-hiding special case.
 
-Q-ORACLE-1 applies only to the explicit quantum owner and its reported host work;
+Past is Present Calc (Q-ORACLE-1) applies only to the explicit quantum owner and its reported host work;
 it does not exempt ordinary field, force, movement or geometry inputs. Diagnostics
 may inspect global state and reject a run but must not supply physical repairs.
 

@@ -66,6 +66,17 @@ def violations(source, module):
         forbidden_world_members = {
             "cells",
             "nodes",
+            "_nodes",
+            "_cells",
+            "_links",
+            "event_space",
+            "_event_space",
+            "event_network",
+            "_event_network",
+            "graph",
+            "_graph",
+            "_resolver",
+            "snapshot",
             "node_view",
             "inventory_view",
             "particles",
@@ -114,6 +125,10 @@ def violations(source, module):
                 or dependency.startswith("core.linked_engine.")
                 or dependency == "core.disturbance_engine"
                 or dependency.startswith("core.disturbance_engine.")
+                or dependency == "core.spatial_engine"
+                or dependency.startswith("core.spatial_engine.")
+                or dependency == "core.event_space"
+                or dependency.startswith("core.event_space.")
             ):
                 found.append((line, "model imports world or application code"))
         elif layer in GENERIC_LAYERS | {"models"} and target.split(".")[0] in {

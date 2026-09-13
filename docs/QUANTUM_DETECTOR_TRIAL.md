@@ -17,7 +17,7 @@ Merge requires successful CI and explicit approval.
 | Evolving state | One DeferredQuantum owner holds the bounded graph, query cache, counters and one optional terminal record; no new physical-cell state |
 | Parameters | Immutable QuantumConfig bounds max_nodes, max_eval_nodes and max_cached_results; positive bounded integers |
 | Derived values | Weight is real squared plus imaginary squared; output choice is derived from two weights and the ticket |
-| Outputs | Fixed-size immutable query or terminal reply; a successful call has model cost 1 and world time cost 0 under Q-ORACLE-1 |
+| Outputs | Fixed-size immutable query or terminal reply; a successful call has model cost 1 and world time cost 0 under Past is Present Calc (Q-ORACLE-1) |
 | Consistency | Parent edges are same-cell or six-neighbor causal hops in an unwrapped chart; failed readout cannot commit; repeated readout reuses one record |
 | Tests | Four phases yield weights (4,0), (2,2), (0,4), (2,2); enumerate all tickets, test invalid inputs, bounds, repeated calls and independent engine baseline |
 
