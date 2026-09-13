@@ -33,7 +33,7 @@ if TYPE_CHECKING:
     from .disturbance_node import DisturbanceNode
 
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
+    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int, int], SpatialPlan
 ]
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 SpatialFieldGuard = Callable[[tuple[SpatialState, ...], SpatialPlan], None]
@@ -277,7 +277,10 @@ class SpatialNode(SpatialNodeState):
             self.last_begin_tick = tick
             services.activity.mark(self.position, False)
             return
-        plan = services.planner(states, records, self.received_count)
+        # This is the previous completed colocated carrier cycle, never pending
+        # work or a register carried here from another Node.
+        node_cost = 0 if carrier is None else carrier.committed_cost
+        plan = services.planner(states, records, self.received_count, node_cost)
         validate_spatial_plan(services.initial, plan, len(records), records)
         services.validate_field_guards(self.states, plan)
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))

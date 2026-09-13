@@ -121,12 +121,17 @@ def evaluate_ratio(
     outgoing: tuple[Values, ...] = (),
     participants: tuple[Values, ...] = (),
     received_masks: tuple[int, ...] = (),
+    node_cost: int | None = None,
 ) -> tuple[Ratio, ...]:
     # Fixed worst-case arithmetic tariff, independent of numerator magnitude.
     meter.charge("evaluate", 65536)
     op = expression.op
     if op == "literal":
         return tuple(Ratio(v) for v in expression.literal)
+    if op == "node_cost":
+        if node_cost is None or bounded(node_cost) < 0:
+            raise ValueError("node cost requires an explicitly supplied committed local value")
+        return (Ratio(node_cost),)
     if op == "field":
         owners = participants or (left, right)
         if not 0 <= expression.side < len(owners):
@@ -159,6 +164,7 @@ def evaluate_ratio(
             outgoing=outgoing,
             participants=participants,
             received_masks=received_masks,
+            node_cost=node_cost,
         )
         for a in expression.arguments
     )

@@ -1,5 +1,11 @@
 # Project status and restart guide
 
+[Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
+of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
+uses existing received-port interactions and paired momentum updates. The impulse
+law is explicitly configured; gravitational attraction and physical energy are
+not established by this mechanism.
+
 The [integer Node profile](NODE_VECTOR_PROCESSOR.md) adds bounded indexed rules,
 explicit k*h local duration, declared aggregation and complete-owner pre-commit
 readouts. Indexed spatial rules now read several carriers and fields from one

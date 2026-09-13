@@ -77,6 +77,9 @@ def physical(frames):
     for frame in frames:
         for node in frame["nodes"]:
             node.pop("cost")
+            # This fixture has no work-driven emissions. Both cost snapshots
+            # are control overhead, while payload, timing and paths still match.
+            node.pop("committed_cost")
             for record in node["disturbances"]:
                 record["values"].pop("decision", None)
         for packet in frame["transfers"]:

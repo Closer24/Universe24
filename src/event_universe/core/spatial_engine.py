@@ -28,7 +28,7 @@ from .spatial_state import (
 from .topology import neighbor_address
 
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
+    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int, int], SpatialPlan
 ]
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 EventSink = Callable[[dict[str, object]], None]

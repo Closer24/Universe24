@@ -154,6 +154,7 @@ class DisturbanceEngine:
                     node.last_cost,
                     node.arrival_mask,
                     node.delay_counts,
+                    node.committed_cost,
                 )
                 for position, node in self._nodes.items()
             }
@@ -480,6 +481,7 @@ class DisturbanceEngine:
                 {
                     "position": position,
                     "cost": node.last_cost,
+                    "committed_cost": node.committed_cost,
                     "arrival_mask": node.arrival_mask,
                     "delay_counts": node.delay_counts,
                     "available_tick": node.available_tick,

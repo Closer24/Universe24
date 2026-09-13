@@ -17,6 +17,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
+| [Computational response](COMPUTATIONAL_RESPONSE.md) | Node-owned committed work readout and an explicit directional-response candidate |
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
 | [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
 | [Property couplings](PROPERTY_COUPLINGS.md) | Property eligibility, shared entity profiles and legacy selectors |
