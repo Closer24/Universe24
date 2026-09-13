@@ -16,6 +16,8 @@ result are different claims. Revision-specific results are not a live status fee
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Local field impulse](LOCAL_LORENTZ_FIELD.md) | Configured one-shot E/B pulse and read-only formula-free-state guard |
 | [Local field rules](LOCAL_FIELD_RULES.md) | Six-port read views and joint field/carrier proposals |
+| [Property couplings](PROPERTY_COUPLINGS.md) | Property eligibility, shared entity profiles and legacy selectors |
+| [Local conservation](LOCAL_CONSERVATION.md) | Passive energy/momentum measurement across node events and link flux |
 | [Entity catalog](ENTITY_CATALOG.md) | Sourced physical properties and interactions, plus explicitly selected experiment profiles |
 | [Local conversions](LOCAL_CONVERSIONS.md) | Atomic two-record replacement and declared balances |
 | [Rational particle candidates](RATIONAL_PARTICLES.md) | Opt-in bounded ratios, balanced routes, fractional credit and local checks |

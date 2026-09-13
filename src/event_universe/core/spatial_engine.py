@@ -4,6 +4,7 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass, replace
 from typing import Protocol
 
+from .coupling_selectors import matches_type, selected_type_set
 from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, bounded, pack, unpack
 from .integer import add_components, checked_work
 from .spatial_state import (
@@ -130,10 +131,10 @@ class SpatialEngine:
         if tick % self.initial.link_ticks:
             return
         self._field_tick = tick
-        emitter_types = {rule.type_index for rule in self.initial.emissions}
-        coupled_types = {rule.type_index for rule in self.initial.spatial_couplings} | {
-            rule.type_index for rule in self.initial.spatial_interactions
-        }
+        emitter_types = selected_type_set(self.initial.emissions)
+        coupled_types = selected_type_set(
+            self.initial.spatial_couplings, self.initial.spatial_interactions
+        )
         positions = set(self._active)
         for position, records in residents.items():
             if any(
@@ -165,7 +166,7 @@ class SpatialEngine:
             )
             active_source = any(
                 record is not None
-                and record.type_index == rule.type_index
+                and matches_type(rule, record.type_index)
                 and (
                     rule.budget is None
                     or not record.emission_remaining

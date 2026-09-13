@@ -1,5 +1,9 @@
 # Physical entity catalog and explicit representation probes
 
+Optional [property coupling profiles](PROPERTY_COUPLINGS.md) add one explicit
+`shared_classical` law and local energy/momentum measurements to compatible
+carrier representations. Physical reference metadata remains formula-free.
+
 [catalog.json](../examples/known-entities/catalog.json) is a version 2 physical
 reference. It contains identities, sourced properties and possible interaction
 families, with no executable profiles, update formulas, rates or Hamiltonians.

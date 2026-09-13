@@ -4,6 +4,8 @@ from collections.abc import Callable, Mapping
 from dataclasses import replace
 from types import MappingProxyType
 
+from .conservation_state import InventoryNode, InventoryPacket, InventoryView
+from .coupling_selectors import selected_type_set
 from .disturbance_state import (
     Address3,
     CellView,
@@ -72,9 +74,7 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = {rule.type_index for rule in initial.spatial_couplings} | {
-            rule.type_index for rule in initial.spatial_interactions
-        }
+        self._coupled_types = selected_type_set(initial.spatial_couplings, initial.spatial_interactions)
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
         if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
@@ -115,6 +115,40 @@ class DisturbanceEngine:
                 for position, cell in self._cells.items()
             }
         )
+
+    def inventory_view(self) -> InventoryView:
+        """Expose immutable actual owners for host audits, excluding proposal views."""
+        spatial = self._spatial
+        positions = self._cells.keys() | ({} if spatial is None else spatial.cells).keys()
+        blank = () if spatial is None else spatial._blank_states()
+        nodes = tuple(
+            InventoryNode(
+                position,
+                () if position not in self._cells else self._cells[position].records,
+                blank
+                if spatial is None or position not in spatial.cells
+                else spatial.cells[position].states,
+            )
+            for position in sorted(positions)
+        )
+        packets = [
+            InventoryPacket(
+                "carrier", origin, slot, packet.port, packet.arrival_tick, record=packet.record
+            )
+            for origin, links in self._links.items()
+            for slot, packet in enumerate(links)
+            if packet is not None
+        ]
+        if spatial is not None:
+            packets.extend(
+                InventoryPacket(
+                    "spatial", origin, slot, packet.port, packet.arrival_tick, spatial=packet.fields
+                )
+                for origin, links in spatial.links.items()
+                for slot, packet in enumerate(links)
+                if packet is not None
+            )
+        return InventoryView(nodes, tuple(packets))
 
     @property
     def links(self) -> Mapping[Address3, tuple[Packet | None, ...]]:

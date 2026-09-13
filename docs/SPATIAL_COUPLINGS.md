@@ -117,9 +117,11 @@ carrier norm exactly. Schema 1 rejects `budget` and retains unlimited response.
 ## Timing, prices and atomicity
 
 The spatial response precedes ordinary local updates, paired exchange and
-movement planning. All of them use one frozen carrier proposal and contribute
-to its computation cost. The existing normal-budget rule determines the local
-wait; this extension does not add a fixed movement pause.
+movement planning. Their physical state-generating work uses one frozen carrier
+proposal and contributes to its computation cost. The existing normal-budget
+rule determines the local wait; this extension does not add a fixed movement
+pause. Bounded acceptance checks are passive validation, so their expressions
+and replay do not add model cost or waiting time.
 
 During a wait, the original carrier still owns its old values and continues
 emitting according to its source rule. Spatial fields keep propagating. The
@@ -137,8 +139,10 @@ In both cases a newly available reaction can arrive one `link_ticks` later.
 Separate ordinary-field and reaction splits are the declared local event order;
 integer rounding need not equal a hypothetical single merged split.
 
-Sample reads, expression evaluation, fractional updates, rotations, reaction
-allocation and six-buffer preparation have explicit operation prices. Reaction
+Physical sample reads, activation and assignment evaluation, fractional updates,
+rotations, reaction allocation and six-buffer preparation have explicit operation
+prices. Invariants and conservation comparisons remain checked without model
+charges; they do not replace any part of the physical transfer. Reaction
 preparation reserves its six possible buffers in the frozen carrier cost. For
 each nonzero target reaction with `C` components, the fixed preparation tariff is
 121 reads, `9*C` splits, `56*C` updates, eight route operations and six send-buffer

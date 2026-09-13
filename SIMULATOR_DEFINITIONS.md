@@ -89,6 +89,27 @@ laws below remain requirements of explicitly named research APIs. They do not
 define the active generic schema. Shared locality, integer bounds, read-only
 diagnostics and honest failure reporting still apply across applicable models.
 
+## Local energy and momentum audit
+
+The optional initialization `conservation` member defines scalar energy and
+three-component momentum measurements for property-selected carrier records and
+joint spatial values. The [local conservation contract](docs/LOCAL_CONSERVATION.md)
+owns its schema, additive-owner interpretation and restrictions. The first
+contract permits zero-baseline closed systems and measured open-boundary escape;
+it rejects external sources, decay and native-event composition.
+
+Read-only inventory snapshots bracket committed field phases, arrivals, complete
+carrier cycles and escapes. Local residuals compare node changes with measured
+actual link flux, including nonlinear packet merging and later carrier updates.
+This host audit does not repair a transition, supply physical inputs or charge
+model computation. Detection after an event does not roll back its committed
+owners. Per-rule precommit guards remain a separate mechanism.
+
+Passing the audit establishes the configured balance on the inspected transitions.
+The law still needs independent admitted-domain and physical-interpretation
+evidence. Additive component conservation, local coupling and labels such as
+energy, spin or gravity do not provide that evidence by themselves.
+
 ## Opt-in causal outward streams
 
 `CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar

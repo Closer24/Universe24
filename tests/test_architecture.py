@@ -74,6 +74,8 @@ def test_architecture_gate_rejects_real_import_and_formula_leaks(module, source)
         ("fields.policies", "from ..core.state import checked"),
         ("fields.disturbances", "from ..core.disturbance_state import DisturbanceRecord"),
         ("fields.disturbances", "from ..core.integer import checked_work"),
+        ("fields.disturbances", "from ..core.coupling_selectors import matches_pair"),
+        ("fields.disturbances", "from ..core.validation import ValidationMeter"),
         ("dynamics.turning", "import event_universe.core.state as state"),
         ("models.scalar_field", "from ..fields.scalar import ScalarField"),
         ("particle_api", "def build(value: int | None = None) -> int | None:\n    return value"),

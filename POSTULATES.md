@@ -89,6 +89,17 @@ laws of every configured disturbance. Sections 13 and 15 likewise belong to
 named historical candidates. Section 14 defines the optional quantum assumption. Section 16 explicitly
 selects its native local-cycle integration without changing unselected worlds.
 
+For a configured law claiming energy and momentum conservation, account for the
+fields and disturbances together at every local event. The combined node change
+must match actual incoming and outgoing flux. An internal exchange must balance the
+participants' energy changes and all three momentum changes at that node;
+external sources and losses must be distinguished from closed transfers.
+The [local conservation contract](docs/LOCAL_CONSERVATION.md) defines the optional
+read-only audit and its supported ownership boundaries. It measures declared
+quantities without repairing state, choosing laws or adding model-time cost.
+Locality, a passing component ledger and catalog properties alone do not establish
+physical energy, momentum or an emergent field law.
+
 ## 1. The world consists of locations and events
 
 Space is divided into three-dimensional cells with six directional connections:
