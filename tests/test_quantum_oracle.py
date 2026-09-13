@@ -220,7 +220,7 @@ def test_invalid_bridge_prepare_does_not_leave_an_orphan_source():
     assert q.node_count == 0
 
 
-def test_resolve_work_budget_limits_backward_expansion_before_deep_leaf():
+def test_resolve_work_budget_limits_dependency_discovery_before_deep_leaf():
     q = DeferredQuantum(QuantumConfig(max_nodes=100, max_eval_nodes=3))
     root = q.source((0, 0, 0), 0, 1)
     for tick in range(1, 50):

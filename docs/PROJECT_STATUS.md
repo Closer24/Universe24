@@ -224,7 +224,11 @@ identifies invalid behavior; it does not repair the underlying candidate law.
 [Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
 method. Querying computes branch weights; an explicit instrument and ticket select
 a recorded outcome without advancing the physical clock. Host dependency evaluation
-is counted separately from Q-ORACLE-1. [Focus](QUANTUM_FOCUS.md) remains a separate
+is counted separately from Q-ORACLE-1. Required stored dependencies are collected
+and evaluated forward; neither physical time nor earlier outcomes are reversed.
+The [origin lookup clarification](QUANTUM_EVENTS.md#time-direction-and-origin-lookup)
+separates that evaluation from direct origin status access in unmerged PR #91.
+[Focus](QUANTUM_FOCUS.md) remains a separate
 opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
 now composes the optional quantum owner through the ordinary `Simulation` and
 runner, with shared causal identities, repeated local encounters and explicit
