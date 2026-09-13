@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "model_id": "charged-pair-opposite-v1",
+  "boundary": "open",
+  "shape": [
+    21,
+    7,
+    7
+  ],
+  "slots_per_cell": 4,
+  "link_ticks": 1,
+  "normal_budget": 1000000,
+  "ticks": 120,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "mass unit",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "charge unit",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "mass unit times c / 120",
+      "signed": true,
+      "conserved": true,
+      "extensive": true,
+      "scale": 120
+    },
+    {
+      "name": "potential",
+      "components": 1,
+      "units": "emitted charge-field unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "charged body",
+      "fields": [
+        "mass",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "charge": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": {
+          "op": "min",
+          "args": [
+            120,
+            {
+              "op": "exact_div",
+              "args": [
+                {
+                  "op": "sum",
+                  "args": [
+                    {
+                      "op": "abs",
+                      "args": [
+                        {
+                          "field": "momentum"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "field": "mass"
+                }
+              ]
+            }
+          ]
+        },
+        "rate_denominator": 120
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "potential",
+      "baseline": 0,
+      "transport": "outward"
+    },
+    {
+      "field": "momentum",
+      "baseline": [
+        0,
+        0,
+        0
+      ],
+      "transport": "outward"
+    }
+  ],
+  "emissions": [
+    {
+      "type": "charged body",
+      "field": "potential",
+      "amount": {
+        "op": "mul",
+        "args": [
+          {
+            "field": "charge"
+          },
+          540
+        ]
+      },
+      "denominator": 1,
+      "source": true
+    }
+  ],
+  "spatial_couplings": [
+    {
+      "name": "charge_times_delivered_flux",
+      "type": "charged body",
+      "field": "momentum",
+      "mode": "exchange",
+      "amount": {
+        "op": "neg",
+        "args": [
+          {
+            "op": "mul",
+            "args": [
+              {
+                "field": "charge"
+              },
+              {
+                "flux": "potential"
+              }
+            ]
+          }
+        ]
+      },
+      "denominator": 10
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        9,
+        3,
+        3
+      ],
+      "type": "charged body",
+      "values": {
+        "charge": 1
+      }
+    },
+    {
+      "position": [
+        12,
+        3,
+        3
+      ],
+      "type": "charged body",
+      "values": {
+        "charge": -1
+      }
+    }
+  ]
+}
