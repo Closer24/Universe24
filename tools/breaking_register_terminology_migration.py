@@ -30,6 +30,15 @@ IDENTIFIER_REPLACEMENTS = (
     ("self._site(", "self._validate_register_index("),
 )
 
+# These strings belong to external standards, not Universe24's physical vocabulary.
+# Restore them after generic prose replacement so tests continue to exercise the
+# real browser contract rather than a renamed imitation of it.
+EXTERNAL_RESTORES = (
+    ("Sec-Fetch-Node", "Sec-Fetch-Site"),
+    ("cross-Node", "cross-site"),
+    ("same-Node", "same-site"),
+)
+
 
 def tracked_files() -> list[str]:
     return subprocess.check_output(["git", "ls-files"], cwd=ROOT, text=True).splitlines()
@@ -59,6 +68,12 @@ def replace_words(text: str, plural: str, singular: str) -> str:
     return text
 
 
+def restore_external_names(text: str) -> str:
+    for migrated, external in EXTERNAL_RESTORES:
+        text = text.replace(migrated, external)
+    return text
+
+
 def migrate(path: str, text: str) -> str:
     for old, new in IDENTIFIER_REPLACEMENTS:
         text = text.replace(old, new)
@@ -66,12 +81,15 @@ def migrate(path: str, text: str) -> str:
     suffix = Path(path).suffix.lower()
     if quantum_register_context(path):
         if suffix in {".py", ".json"}:
-            return replace_words(text, "register_indices", "register_index")
-        # Documentation uses readable nouns but keeps schema/API spellings in code spans.
-        text = text.replace('"sites"', '"register_indices"').replace('"site"', '"register_index"')
-        text = text.replace("`sites`", "`register_indices`").replace("`site`", "`register_index`")
-        return replace_words(text, "registers", "register")
-    return replace_words(text, "Nodes", "Node")
+            result = replace_words(text, "register_indices", "register_index")
+        else:
+            # Documentation uses readable nouns but keeps schema/API spellings in code spans.
+            text = text.replace('"sites"', '"register_indices"').replace('"site"', '"register_index"')
+            text = text.replace("`sites`", "`register_indices`").replace("`site`", "`register_index`")
+            result = replace_words(text, "registers", "register")
+    else:
+        result = replace_words(text, "Nodes", "Node")
+    return restore_external_names(result)
 
 
 def main() -> None:
