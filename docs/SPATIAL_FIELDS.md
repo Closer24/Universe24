@@ -150,7 +150,9 @@ phase register and advances it by `rays_per_tick` each tick, so a long sequence
 spread evenly over the observer's sphere is swept over time. Rays with the same
 heading and phase merge exactly at a Node because they share one line. Delivered
 samples and the `flux` leaf see ray arrivals per port, resident ray stock is the
-local `value`, and node values report `ray_count`. Schema 2 decay attenuates each
+local `value`, and node values report `ray_count`. A coupling reaction that
+amends a departing packet leaves the rays on that port untouched, so rays pass
+through Nodes whose carriers respond to them. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
@@ -159,7 +161,10 @@ the shared field clock. Host work per Node is bounded by `ray_slots`.
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
 with an evenly spread heading sequence the time-averaged flux per node follows the
-solid angle the node subtends from the source, in every direction.
+solid angle the node subtends from the source, in every direction. The
+[gravity probe](../examples/gravity-probe/README.md) then couples held and moving
+bodies to that flux with `mass x flux / D` and reports attraction, an inverse
+square in every direction, and mass-independent acceleration.
 
 ## Finite completed-link decay
 

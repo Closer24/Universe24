@@ -1231,3 +1231,25 @@ world/event audit at host Euclidean distance, not as an operational observer.
 The result is geometric dilution of straight rays, not a gravitational law: no
 constant, mass coupling or attraction is claimed, and node-level graininess at
 large radius is finite direction sampling.
+
+## Gravity probe on the straight-ray field — 2026-09-13
+
+Base: `cc042ce` (main after PR #92). Configuration only, plus one engine fix:
+a coupling reaction that amends a departing packet now keeps the rays on that
+port, so rays pass through Nodes whose carriers respond to them (previously they
+were dropped there). The [probe](../examples/gravity-probe/README.md) couples
+held and moving bodies to the ray flux with `mass x flux / D`, `D = 16`, and
+reads the result as a read-only world/event audit at host Euclidean distance.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| New tests | `tests/test_gravity_probe.py`: momentum toward the source proportional to mass within the integer remainder, combined momentum conserved, a body that falls through the source and oscillates; `tests/test_ray_field.py`: rays pass a reacting receiver unchanged |
+| Held bodies | 41-cubed open world, 4,096 headings, 64 rays per tick, one 64-tick sweep measured: mass-1 acceleration slopes -2.03 (axis), -1.94 (face diagonal), -1.92 (body diagonal) against host `r`; `a x r^2 x D / emission` between 0.06 and 0.11 in every direction; identical acceleration for masses 1, 2 and 4 at every Node; combined momentum exactly zero |
+| Visualization | Not requested or generated |
+
+The coupling constant is the configured `1 / D`; the emission per tick plays
+the role of the source mass. The reaction stays in the local momentum field at
+the body's Node and never reaches the source, so this is attraction toward a
+fixed source, not a two-body law. No physical constant is identified.
+

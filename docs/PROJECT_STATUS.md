@@ -84,7 +84,12 @@ one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
 values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
 straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
 anisotropy: rays carry their heading and phase, and the time-averaged flux per
-node follows solid angle. Mass coupling and attraction remain unaddressed.
+node follows solid angle. The [gravity probe](../examples/gravity-probe/README.md)
+composes existing rules only: an `exchange` coupling with amount `mass x flux / D`
+gives held bodies momentum toward the ray source in proportion to mass, and a
+moving body falls inward. The reaction stays in the local momentum field at the
+body's Node; no reaction reaches the source, and no gravitational constant is
+identified beyond the configured `1 / D`.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

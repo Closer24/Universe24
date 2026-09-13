@@ -24,6 +24,7 @@ RESOURCE_CONSUMERS = {
     "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
     "examples/inverse-square/run_experiments.py": ("tests/test_inverse_square_experiments.py",),
+    "examples/gravity-probe/run_experiments.py": ("tests/test_gravity_probe.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),

@@ -456,7 +456,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 spatial_services.coupler.validate_guards(
                     guarded, pending.plan.spatial_reaction, pending.plan.spatial_guards
                 )
-            field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services)
+            field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services, field_plan.rays)
         if services.events.enabled:
             services.events.require_room(
                 1
