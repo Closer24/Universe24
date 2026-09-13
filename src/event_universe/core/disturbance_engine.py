@@ -21,7 +21,7 @@ from .disturbance_state import (
     decode,
     unpack,
 )
-from .event_resolution import EventResolver, LocalContext
+from .event_resolution import EventResolver, LocalContext, Planner
 from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
 from .node_execution import DisturbancePlanningInput, NodeExecution, SpatialPlanningInput
@@ -30,7 +30,6 @@ from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, Spati
 from .spatial_state import SpatialCouplingResult, SpatialPacket, SpatialPlan, SpatialState
 from .topology import neighbor_address
 
-Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
 
 
@@ -290,6 +289,7 @@ class DisturbanceEngine:
                 prepared.context.records,
                 prepared.context.residuals,
                 prepared.context.received,
+                port_loads=prepared.context.port_loads,
             )
             if self._resolver is None
             else self._resolver.resolve(prepared.context, self._planner)
@@ -325,6 +325,9 @@ class DisturbanceEngine:
             and any(r is not None and r.type_index in self._coupled_types for r in node.records)
             else None
         )
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
+        if self.initial.least_delay_routing and self._spatial is not None:
+            port_loads = tuple(self._spatial.directional_load(position, port) for port in range(6))
         context = LocalContext(
             self.tick,
             position,
@@ -332,6 +335,7 @@ class DisturbanceEngine:
             node.coupling_remainders,
             node.received_count,
             node.cause_id,
+            port_loads,
         )
         spatial_cost = 0 if self._spatial is None else self._spatial.cost(position, self.tick)
         return _PreparedCycle(context, coupled, spatial_cost)
@@ -954,6 +958,7 @@ class DisturbanceEngine:
                             cycle.context.records,
                             cycle.context.residuals,
                             cycle.context.received,
+                            cycle.context.port_loads,
                         )
                         for _, cycle in prepared_cycles
                     )

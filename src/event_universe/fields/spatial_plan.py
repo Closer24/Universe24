@@ -44,6 +44,10 @@ class SpatialLaw:
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     carried_phase: bool = True
+    computation_field: int | None = None
+    # When set, indivisible portions prefer the axis whose port carries the least
+    # computation load travelling along ("along") or against it ("against").
+    least_delay_direction: str | None = None
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -91,6 +95,16 @@ class SpatialLaw:
         elif record.emission_remaining:
             raise ValueError("unlimited emission cannot carry a finite allowance")
         return record
+
+    def _port_loads(self, states: tuple[SpatialState, ...]) -> tuple[int, ...] | None:
+        """Computation load pricing a departure through each port, read from local channels only."""
+        if self.least_delay_direction is None or self.computation_field is None:
+            return None
+        index = next(i for i, d in enumerate(self.definitions) if d.field == self.computation_field)
+        delivered = tuple(unpack(payload)[0] for payload in states[index].delivered)
+        if self.least_delay_direction == "along":
+            return delivered
+        return tuple(delivered[port ^ 1] for port in range(6))
 
     def __call__(
         self,
@@ -178,7 +192,7 @@ class SpatialLaw:
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
             elif self.carried_phase:
                 channels, state, channel_phases = split_outward_carried(
-                    working[index], definition, field, meter
+                    working[index], definition, field, meter, self._port_loads(states)
                 )
             else:
                 channels, state = split_outward(working[index], definition, field, meter)

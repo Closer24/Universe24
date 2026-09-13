@@ -244,6 +244,7 @@ def split_outward_carried(
     definition: SpatialFieldDefinition,
     field: FieldDefinition,
     meter: CostMeter,
+    port_loads: tuple[int, ...] | None = None,
 ) -> tuple[SpatialOutgoing, SpatialState, SpatialOutgoing]:
     """Split like split_outward, but every portion carries its own allocation phase.
 
@@ -260,17 +261,24 @@ def split_outward_carried(
     for octant, payload in enumerate(state.populations):
         meter.charge("read")
         meter.charge("route")
+        ports = tuple(2 * axis + (0 if OCTANT_SIGNS[octant][axis] > 0 else 1) for axis in range(3))
+        # With loads, walk the weight cycle cheapest axis first; every axis still
+        # receives exactly its weight per full cycle, so the ratios are unchanged.
+        order: tuple[int, ...] = (0, 1, 2)
+        if port_loads is not None:
+            order = tuple(sorted(range(3), key=lambda axis: (port_loads[ports[axis]], axis)))
+        weights = tuple(definition.axis_weights[axis] for axis in order)
         for component, (value, phase) in enumerate(
             zip(unpack(payload), unpack(state.allocation_phases[octant]), strict=True)
         ):
             meter.charge("split")
-            portions, _ = split_weighted(value, definition.axis_weights, phase)
-            onward = carried_phases(abs(value), definition.axis_weights, phase)
-            for axis, portion in enumerate(portions):
-                port = 2 * axis + (0 if OCTANT_SIGNS[octant][axis] > 0 else 1)
-                buckets[port][octant][component] = portion
+            portions, _ = split_weighted(value, weights, phase)
+            onward = carried_phases(abs(value), weights, phase)
+            for slot, axis in enumerate(order):
+                portion = portions[slot]
+                buckets[ports[axis]][octant][component] = portion
                 if portion:
-                    phases[port][octant][component] = onward[axis]
+                    phases[ports[axis]][octant][component] = onward[slot]
     outgoing = tuple(tuple(pack(tuple(payload)) for payload in port) for port in buckets)
     outgoing_phases = tuple(tuple(pack(tuple(payload)) for payload in port) for port in phases)
     for port_values in buckets:

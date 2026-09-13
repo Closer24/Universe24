@@ -1100,6 +1100,7 @@ def parse_initial_state(document: object) -> InitialState:
             "carried_allocation_phase",
             "computation_field",
             "delay_direction",
+            "least_delay_routing",
         },
         required,
     )
@@ -1166,6 +1167,7 @@ def parse_initial_state(document: object) -> InitialState:
         delay_direction=(
             None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
         ),
+        least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
     )
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program

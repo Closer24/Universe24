@@ -1,12 +1,21 @@
 """Local extension protocol; the scheduler does not interpret domain payloads."""
 
-from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Protocol
 
 from .disturbance_state import Address3, DisturbanceRecord, LocalPlan
 
-Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
+
+class Planner(Protocol):
+    def __call__(
+        self,
+        records: tuple[DisturbanceRecord | None, ...],
+        coupling_remainders: tuple[int, ...],
+        received_count: int,
+        /,
+        *,
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0),
+    ) -> LocalPlan: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -17,6 +26,8 @@ class LocalContext:
     residuals: tuple[int, ...]
     received: int
     cause: int | None
+    # Computation load pricing a departure through each of the six ports.
+    port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
 
 
 class EventResolver(Protocol):

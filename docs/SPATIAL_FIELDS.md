@@ -194,6 +194,26 @@ and stalled the outward probe for seven ticks, and `against` did the reverse.
 A resting body is never moved. Both are configured hypotheses; neither is a
 derived force, and the option requires the default clock.
 
+### Least-delay routing
+
+Directional delay alone changes when a hop happens, not where: the balanced
+router picks lanes by their counters and the carried split walks its axis
+cycle in a fixed order. `"least_delay_routing": true` closes the loop. A
+carrier's balanced router and an outward field's carried split both read the
+load pricing each port (the same `along` or `against` channel as the delay)
+and take the cheapest eligible option first. Every lane still receives
+exactly its reduced weight per cycle, so directional ratios remain exact
+(Highlights 3.3.1) and only the order inside a cycle changes. Everything
+therefore flows first towards the neighbor where computation is free.
+
+That exactness also bounds the effect: a mover with one lane, such as
+momentum `(0, 60, 0)`, has nothing to choose and is never turned, and a 1:1
+diagonal can be reordered by at most one hop per two. Bending a straight
+trajectory requires changing the momentum itself, which is a coupling, not a
+routing choice. Light and other outward fields, whose octants always own
+three lanes, are the natural users of this option. It requires
+`delay_direction` and is recorded in run metadata as `least_delay_routing`.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

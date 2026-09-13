@@ -232,8 +232,13 @@ class InitialState:
     carried_allocation_phase: bool = True
     computation_field: int | None = None
     delay_direction: str | None = None
+    least_delay_routing: bool = False
 
     def __post_init__(self) -> None:
+        if type(self.least_delay_routing) is not bool:
+            raise ValueError("least_delay_routing must be boolean")
+        if self.least_delay_routing and self.delay_direction is None:
+            raise ValueError("least_delay_routing requires delay_direction")
         if self.delay_direction is not None:
             if self.delay_direction not in ("along", "against"):
                 raise ValueError("delay_direction must be along or against")

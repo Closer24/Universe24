@@ -261,6 +261,7 @@ def _execute_run(
                 if initial.delay_direction is None
                 else f"directional-departure-delay-{initial.delay_direction}-v1"
             ),
+            least_delay_routing=initial.least_delay_routing,
         )
     if initial.spatial_fields:
         metadata.update(

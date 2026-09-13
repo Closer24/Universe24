@@ -6,9 +6,9 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
+from .event_resolution import Planner as DisturbancePlanner
 from .spatial_state import SpatialPlan, SpatialState
 
-DisturbancePlanner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 SpatialPlanner = Callable[
     [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
 ]
@@ -22,6 +22,7 @@ class DisturbancePlanningInput:
     records: tuple[DisturbanceRecord | None, ...]
     residuals: tuple[int, ...]
     received: int
+    port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -34,7 +35,10 @@ class SpatialPlanningInput:
 def _plan_disturbance_batch(
     planner: DisturbancePlanner, items: tuple[DisturbancePlanningInput, ...]
 ) -> tuple[LocalPlan, ...]:
-    return tuple(planner(item.records, item.residuals, item.received) for item in items)
+    return tuple(
+        planner(item.records, item.residuals, item.received, port_loads=item.port_loads)
+        for item in items
+    )
 
 
 def _plan_spatial_batch(
