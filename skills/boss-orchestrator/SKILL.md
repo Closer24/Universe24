@@ -53,6 +53,31 @@ Then apply source ownership, documentation, physics review, affected tests, simu
 
 Promotion is evidence-driven: exploration does not automatically become a candidate, and a candidate does not automatically become integration. When uncertain, start with exploration.
 
+## GitHub task persistence
+
+Use GitHub as a durable coordination surface only when the work has become a real objective. Do not create an Issue for every idea or intermediate thought.
+
+Use this mapping:
+
+```text
+Issue   = objective
+Comment = refinement, new requirement, finding or blocker on that objective
+PR      = implementation proposed to satisfy the objective
+```
+
+Rules:
+
+- A small exploration or one-off question normally stays out of Issues.
+- Open an Issue when there is a durable objective that Boss should track, decompose or hand to specialists.
+- Keep one objective in one Issue. Add later requirements, constraints, experimental findings and blockers as comments on that Issue when they belong to the same objective.
+- Do not open a second Issue merely because the same objective gained another detail.
+- Open a separate Issue only when the new work has an independently completable objective, owner or lifecycle.
+- A PR is not a task substitute. Link the implementation PR to its Issue and keep the Issue open until the objective, not merely the code submission, is complete.
+- Close an Issue only when its acceptance target is satisfied, or explicitly close it as not planned/invalid with the reason recorded.
+- Temporary branch state, run IDs and debugging notes belong in Issue/PR comments when they matter to handoff, not in Skills.
+
+This policy applies to Boss coordination and specialist handoffs. Specialists should return findings to the owning Issue rather than creating parallel Issues unless Boss assigned them an independent objective.
+
 ## Routing
 
 | Need | Skill |
