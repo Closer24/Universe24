@@ -51,6 +51,7 @@ Node is the only active physical-location noun. `Site` is not a synonym for Node
 
 - Active code, documentation, tests and diagnostics use `Node` or `NodeState` for a simulation location or its local state.
 - `Site` may appear only when it is part of an external standard name or when it denotes a distinct non-physical mathematical/register concept. In quantum code, prefer `register` or `register_index` when that is the actual meaning.
+- External protocol, package and API identifiers are preserved verbatim when renaming them would change their defined identity.
 - Retired pre-migration location identifiers are not retained as active API aliases.
 - Historical evidence may preserve old literal names when changing them would falsify the recorded source; such evidence does not define the active vocabulary.
 
