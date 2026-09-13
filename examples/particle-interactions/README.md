@@ -32,7 +32,11 @@ its own `quanta` stock and recoils by `amount x heading`; a sail absorbs the
 quanta that reach it, banking each amount and taking its momentum; the
 [conservation audit](../../docs/LOCAL_CONSERVATION.md) measures rays as quanta
 and checks every event. Absorption pushes the sail away from the lamp: this is
-radiation pressure, not attraction.
+radiation pressure, not attraction. The lamp fires 252 headings every tick, 126
+golden-spiral headings paired with their exact negatives, so the integer
+heading set sums to zero and the recoil of one full sweep cancels exactly. The
+audit re-measures every active Node and packet on every event, so this probe
+stays at 12 ticks; the 512-heading, 40-tick version did not finish in hours.
 
 The third probe uses no field. Two held records, a bound proton and a residual
 core, share a Node; a local update counts ticks on the proton, and a

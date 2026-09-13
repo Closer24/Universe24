@@ -55,6 +55,16 @@ def golden_headings(count: int, scale: int) -> list[list[int]]:
     return result
 
 
+def mirrored_headings(count: int, scale: int) -> list[list[int]]:
+    """Golden-spiral headings paired with their negatives: the set sums to zero exactly."""
+    result: list[list[int]] = []
+    for heading in golden_headings(count // 2, scale):
+        mirror = [-c for c in heading]
+        if heading not in result and mirror not in result:
+            result.extend([heading, mirror])
+    return result
+
+
 def charged_transport() -> dict:
     """Move along the momentum at min(1, |p| / (SPEED_SCALE * mass)) hops per tick."""
     return {
@@ -605,7 +615,7 @@ def radiation_pressure_document(ticks: int, headings: list[list[int]], rays_per_
             {
                 "type": "lamp",
                 "field": "quanta",
-                "amount": 2048,
+                "amount": 8 * rays_per_tick,
                 "denominator": 1,
                 "source": False,
                 "recoil_field": "momentum",
@@ -648,7 +658,9 @@ PRESSURE_TICKS = 12
 
 
 def radiation_pressure(ticks: int = PRESSURE_TICKS, headings: int = PRESSURE_HEADINGS) -> dict:
-    raw = radiation_pressure_document(ticks, golden_headings(headings, HEADING_SCALE), headings)
+    """Mirrored headings make the lamp's recoil over one full sweep exactly zero."""
+    directions = mirrored_headings(headings, HEADING_SCALE)
+    raw = radiation_pressure_document(ticks, directions, len(directions))
     world, history = track(raw)
 
     def path(name):
