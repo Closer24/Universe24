@@ -50,7 +50,9 @@ total mass exact.
 21-cubed open world, one shared signed field with `self_exclusion`, runtime
 source SHA-256 `2ab09f723c8a...` (full value in `summary.json`), Python 3.14,
 headless. A control run with one field per body and no exclusion (source
-`53710d462fd4...`) gave the same head-on and emission tables. `tests/test_particle_interactions.py`
+`53710d462fd4...`) gave the same head-on and emission tables, and the run at
+source `f668e71273fd...` that added funded emission, absorption and the ray
+audit repeated all three tables below unchanged. `tests/test_particle_interactions.py`
 checks the same statements with six axis rays per body on a 15-cubed world.
 
 ### Head-on encounter of two equal bodies, mass 16, momentum +-128, from x = -+7

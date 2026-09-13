@@ -1291,3 +1291,27 @@ left through from the flux and value it samples. Work is bounded by
 Self-field returning from any distance other than one link is not excluded; a
 general self-field law remains the open hypothesis in `POSTULATES.md`.
 
+
+## Funded emission, absorption and rays in the audit — 2026-09-13
+
+Base: `09190d0` on this branch. The conservation audit measures a ray as a
+quantum: its amount joins the declared spatial energy expression and
+`amount x heading` is intrinsic momentum. An emission with `source: false`
+pays each quantum from the record field of the same name, clipped to stock, and
+`recoil_field` takes `-(amount x heading)`. A coupling in `absorb` mode banks
+every ray that arrives at the record's Node into the same-named field and adds
+`amount x heading` to `momentum_field`, from arrivals only, so an emitter never
+absorbs its own fresh emission.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 58 files, 2,041 tests with five visualization skips |
+| New tests | `tests/test_energy_audit.py`: funded emission debits and recoils with the audit closed; a stock of 5 emits 2, 2, 1, 0; escaped quanta are measured escape; an absorber banks five quanta with momentum (5, 0, 0); a moving absorber-emitter never eats its own wake; absorb validation |
+| Radiation pressure | 21-cubed open world, lamp of 200,000 quanta firing 252 mirrored headings at 8 quanta per ray, sail of mass 64 four links away: 11,249,738 Node events checked with zero residual; at tick 12 the world holds 199,976 quanta and 24 escaped; the sail carries (512, 0, 64) from 32 absorbed quanta and the lamp's momentum is zero at every tick |
+| Earlier probes | Head-on, light-beside-heavy and proton emission tables repeated unchanged at the new source |
+| Audit cost | Every checked event re-measures every active Node and packet: 4 ticks of the probe take 1 s, 8 ticks 51 s, and the 512-heading, 40-tick version did not finish in hours, so the probe runs 12 ticks |
+| Visualization | Not requested or generated |
+
+Only the repulsive push closes this way. An attraction that pays for the
+kinetic energy it creates has no local rule yet, and the charge probes still
+carry no energy.
