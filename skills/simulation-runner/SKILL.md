@@ -27,6 +27,11 @@ disturbance, transport, coupling and cost definitions; see
 historical scalar universe. Historical scenarios belong to the separate
 `event_universe.legacy_runner` entry point.
 
+Follow the shared
+[configuration task scope](../workflow.md#configuration-tasks-and-implementation-scope)
+when a preflight or run fails. Return the diagnostic to the appropriate owner;
+running an experiment does not authorize a simulator fix.
+
 For configuration-only checks, use the read-only
 [preflight API/CLI](../../docs/CONFIGURATION_VALIDATION.md) and return its report;
 do not launch a simulation. The active runner shares its initialization/observer

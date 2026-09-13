@@ -10,6 +10,19 @@ Read [the shared workflow](../workflow.md) and the current
 contract and dependent changes; output is a scoped compatibility verdict with
 file references and required fixes.
 
+Reconcile the affected system capabilities using the shared
+[live specification procedure](../workflow.md#live-system-specification). For
+Focus and quantum work, distinguish the spatial hierarchy used to locate or
+refine a request from the causal dependency graph used to resolve quantum history.
+Review their common event identity/request/result boundaries through the
+[native event contract](../../docs/NATIVE_QUANTUM_EVENTS.md) and the
+[Focus experiment contract](../../docs/QUANTUM_FOCUS.md). Reading or traversing a
+hierarchy is not itself a measurement; an explicit instrument owns outcome
+selection. Shared event metadata does not make quantum state and an event the
+same object. Full Focus/quantum/spatial-field composition remains a hypothesis
+until the actual contracts, implementation and acceptance evidence support it;
+do not infer that capability from a unified explanation in Highlights.
+
 For the active API, read [DISTURBANCES.md](../../docs/DISTURBANCES.md).
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
 to the complete physical dependency path. Report unsupported tensor shapes and
@@ -36,6 +49,11 @@ For repository changes, use [monorepo ownership](../../docs/ARCHITECTURE.md#mono
 Check that a fresh checkout can find the active model, required commands and live
 work through the root entry point. Keep path maps and rules in their single owners.
 Do not split packages or processes merely to satisfy a directory convention.
+
+For configuration tasks, keep diagnosis and implementation within the shared
+[task scope](../workflow.md#configuration-tasks-and-implementation-scope).
+An unsupported composition or suspected defect is a review finding; implement
+changes only within an authorized implementation scope.
 
 For configuration changes, apply the
 [validation boundary](../../docs/CONFIGURATION_VALIDATION.md): one strict JSON

@@ -5,7 +5,9 @@ checkout; do not rely on a previous conversation.
 
 ## Start a task
 
-1. Read [project status](docs/PROJECT_STATUS.md), then verify the actual checkout,
+1. Refresh the live system specification using the shared workflow's
+   [Highlights reconciliation](skills/workflow.md#live-system-specification).
+   Read [project status](docs/PROJECT_STATUS.md), then verify the actual checkout,
    current main and relevant open PRs. A status snapshot is not live evidence.
 2. Follow [CONTRIBUTING.md](CONTRIBUTING.md) for every edit, validation and Git
    operation. Record the base commit and preserve unrelated local work.
@@ -28,6 +30,7 @@ One repository does not require one runtime process or a new package hierarchy.
 
 | Scope | Authoritative source |
 | --- | --- |
+| System purpose, capabilities and current design intent | [Live specification and implementation reconciliation](skills/workflow.md#live-system-specification) |
 | Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
 | Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |

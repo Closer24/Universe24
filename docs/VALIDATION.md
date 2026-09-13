@@ -1,5 +1,33 @@
 # Validation evidence
 
+## Highlights and Skill reconciliation - 2026-09-13
+
+The live document's Focus and quantum sections now share one proposed interface;
+the [coverage map](HIGHLIGHTS_IMPLEMENTATION.md#shared-focus-and-quantum-contract---2026-09-13)
+records its verified revision and implementation boundaries. Native readback
+confirmed all 13 requested paragraph replacements and the 17-paragraph section.
+All other nonempty paragraph text was preserved; the new heading, ordinary
+introduction and 15 native list items use the surrounding document structure.
+Independent architecture review retained explicit measurement, causal locality,
+conditional continuation, capacity limits and unverified composition status.
+
+Repository changes are confined to documentation and Skills, integrating main
+`6a2816526083c23069bf3b0f3fcb6a9dc5b17944` with memory head
+`9e42f045bc1d52360ca9d156e6a43ba44ada18f0`. The source fingerprint remains
+`21280e4ecd621dee242cc92f0ca60f3605292c4772398f6a541778af93f4ddcf`.
+The review checked single ownership of causal metadata and quantum payloads,
+bounded request interfaces and retained history, plus the unchanged memory
+contracts. Previous runtime and allocation evidence retains its original scope;
+no new runtime behavior, physical result or memory improvement is claimed.
+
+Boss, architecture review, AGENTS and the shared workflow now require live
+Highlights reconciliation. Existing main guidance for configuration scope and
+causal time is preserved. Specialist Skills inherit the common procedure instead
+of duplicating it. The affected gate is `python tools/check.py --base
+9e42f045bc1d52360ca9d156e6a43ba44ada18f0`, including repository navigation, hygiene,
+language, system architecture and memory contracts. Submitted-head results belong
+in the PR; this prose-only update does not require new physical tests or a GIF.
+
 ## Memory integration with configuration preflight — 2026-09-13
 
 Main advanced to `b0988512fa7f42a057c08dee7d6baa83cbf3eef7` while memory head

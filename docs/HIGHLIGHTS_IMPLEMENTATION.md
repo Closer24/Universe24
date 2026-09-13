@@ -1,5 +1,41 @@
 # Highlights implementation coverage
 
+## Shared Focus and quantum contract - 2026-09-13
+
+The live Highlights document now connects sections 1.2 and 4.7 through the shared
+event interface in section 1.2.7. Related hypotheses and capability statements
+refer to that contract. It separates spatial refinement, causal dependencies and
+quantum state ownership; only an explicit instrument records a quantum outcome.
+Ordinary local laws receive configured local results, not remote classical state.
+The live edit was read back on 2026-09-13 at 02:56 UTC, at revision
+`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`.
+
+This reconciliation uses source head
+`9e42f045bc1d52360ca9d156e6a43ba44ada18f0` and the documentation-only main update
+`6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. No runtime implementation changes in
+this update. Capability status is deliberately narrower than the proposed design:
+
+| Capability | Status and evidence |
+| --- | --- |
+| Shared causal event identities and separate quantum payload ownership | Implemented in [event space](../src/event_universe/core/event_space.py), [native resolver](../src/event_universe/integration/event_runtime.py) and [quantum network](../src/event_universe/quantum/event_network.py); covered by [native runtime tests](../tests/test_native_event_runtime.py) |
+| Deferred finite quantum evaluation, conditional continuation and exact checkpoints | Implemented under the [event contract](QUANTUM_EVENTS.md); [network tests](../tests/test_quantum_event_network.py) cover correlated records, phase retention, eager-reference agreement and capacity failures |
+| Hierarchical selection of a finite spatial candidate | Implemented as the separate [Focus experiment](QUANTUM_FOCUS.md); [Focus tests](../tests/test_quantum_focus.py) cover exact ticket weights, bounded requests and unchanged world state |
+| Full hierarchical Focus composed with native quantum events and general spatial fields | Planned interface in Highlights 1.2.7; implementation and physical acceptance remain unverified. The current Focus reply is not committed to the native world/event log |
+
+The proposed composition requires comparison with full-resolution, immediate
+evaluation using identical initialization, rules and sampling tickets. Compare
+recorded outcomes, coherent continuation, declared balances and modeled timing;
+measure host work and memory separately. Shared event metadata must not duplicate
+waves in cells or substitute a spatial summary for a correlated-state checkpoint.
+The existing [native contract](NATIVE_QUANTUM_EVENTS.md), [Focus contract](QUANTUM_FOCUS.md)
+and [memory contract](MEMORY.md) retain their exact implementation boundaries.
+Existing software tests do not establish a complete physical theory.
+
+The [shared Skill workflow](../skills/workflow.md#live-system-specification) now
+requires a current Highlights read and source/evidence reconciliation for every
+Skill, including standalone tasks. AGENTS, Boss and architecture review link to
+that single procedure. A dated coverage map does not replace the live read.
+
 ## Configuration validation reconciliation - 2026-09-13
 
 The [read-only preflight](CONFIGURATION_VALIDATION.md) implements explicit input
