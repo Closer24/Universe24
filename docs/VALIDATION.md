@@ -2,6 +2,23 @@
 
 ## Quantum origin cells and certified cancellation - 2026-09-13
 
+The final submission integrates main `cc042ce6c51a34775c292371538c5cd6acd4e423`
+(straight-ray fields). Final active source SHA-256:
+`9d561027fce33c2c63a73cd003c84f3cd4bc988933177755f8e1598869c400e8`.
+The resulting affected gate passed **2,141 tests with five opt-in visual skips**
+in 158.74 seconds; Ruff/format and strict mypy on 60 affected source modules
+passed. This includes the native cancellation tests and new ray-field consumers.
+The ordinary runner again completed 5/5 ticks, in 0.0123118 seconds, with the
+same one draw, 23 events and model cost 17. Its output is
+`artifacts/wave-origins-integrated`, with headless display and 24-hour retention.
+
+Independent integration review confirmed that the quantum/origin/event/runtime
+files are unchanged, the Node audit supports both origin references and rays,
+and native v3 still rejects independent spatial fields. No unsupported quantum
+and ray-field composition was introduced by the merge.
+
+### Initial implementation checks
+
 Base: `2c20d00094639263fbe387c0a62420dcef108285`. Validated active source SHA-256:
 `25be12915099c34f027563bb6844bf0dcf99299787fad1ba1b7e5dd9460b4ed2`.
 The affected gate passed **2,114 tests with five opt-in visual skips** in
