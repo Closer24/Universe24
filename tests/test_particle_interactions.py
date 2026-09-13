@@ -12,9 +12,9 @@ SPEC.loader.exec_module(PROBE)
 AXES = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 
 
-def axis_document(bodies, ticks):
+def axis_document(bodies, ticks, shared_field=True):
     PROBE.SIZE, PROBE.CENTER = 15, 7
-    raw = PROBE.charged_document(bodies, ticks)
+    raw = PROBE.charged_document(bodies, ticks, shared_field=shared_field)
     for definition in raw["spatial_fields"]:
         if definition["transport"] == "ray":
             definition["headings"] = AXES
@@ -59,14 +59,19 @@ def test_opposite_charges_attract_and_neutral_bodies_pass_through():
     assert left[-1][2] == 64 and right[-1][2] == -64 and left[-1][1] > right[-1][1]
 
 
-def test_light_body_recoils_more_than_the_heavy_one_but_momentum_kicks_match():
+def test_light_body_recoils_more_than_the_heavy_one_with_equal_kicks_per_hit():
     bodies = [
         {"name": "heavy", "mass": 64, "charge": 3, "momentum": [0, 0, 0], "position": [0, 0, 0]},
         {"name": "light", "mass": 1, "charge": 3, "momentum": [0, 0, 0], "position": [3, 0, 0]},
     ]
     _, history = PROBE.track(axis_document(bodies, 7))
     heavy, light = positions(history, "heavy"), positions(history, "light")
-    assert light[-1][2] == -heavy[-1][2] > 0
+    kick = 3 * (3 * PROBE.EMISSION_PER_CHARGE // 6)  # charge x one axis ray of the other body
+    assert light[-1][2] > 0 > heavy[-1][2]
+    assert light[-1][2] % kick == 0 and heavy[-1][2] % kick == 0
+    # The light body rides along its outgoing ray front and is kicked every tick; the
+    # heavy body waits for rays from ever farther away, so its kicks lag (retardation).
+    assert abs(heavy[-1][2]) <= light[-1][2]
     assert light[-1][1] - 3 > 0 >= heavy[-1][1]
 
 
@@ -85,3 +90,31 @@ def test_bound_pair_emits_a_proton_after_its_timer_with_conserved_momentum_and_m
     # The light proton leaves at one hop per tick; the heavier core recoils at a third.
     assert proton[-1]["offset"][0] >= 3 * abs(core[-1]["offset"][0]) - 1
     assert world.totals()["mass"] == (4,) and world.totals()["momentum"] == (0, 0, 0)
+
+
+def test_self_exclusion_removes_the_push_from_a_moving_body_s_own_rays():
+    body = [{"name": "mover", "mass": 4, "charge": 3, "momentum": [16, 0, 0], "position": [-5, 0, 0]}]
+    _, excluded = PROBE.track(axis_document(body, 8))
+    raw = axis_document(body, 8)
+    raw["spatial_fields"][1]["self_exclusion"] = False
+    _, pushed = PROBE.track(raw)
+    kept = positions(excluded, "mover")
+    self_pushed = positions(pushed, "mover")
+    # With exclusion the lone body keeps its momentum while moving; without it,
+    # every move lands it among the rays it emitted one tick earlier.
+    assert all(m == 16 for _, _, m in kept)
+    assert self_pushed[-1][2] > 16
+    assert kept[-1][1] > -5
+
+
+def test_like_charges_repel_through_one_shared_field_with_self_exclusion():
+    bodies = [
+        {"name": "left", "mass": 4, "charge": 3, "momentum": [16, 0, 0], "position": [-4, 0, 0]},
+        {"name": "right", "mass": 4, "charge": 3, "momentum": [-16, 0, 0], "position": [4, 0, 0]},
+    ]
+    raw = axis_document(bodies, 16)
+    assert [f["field"] for f in raw["spatial_fields"]] == ["momentum", "charge_field"]
+    _, history = PROBE.track(raw)
+    left, right = positions(history, "left"), positions(history, "right")
+    assert min(r[1] - l_[1] for l_, r in zip(left, right, strict=True)) > 0
+    assert left[-1][2] < 0 < right[-1][2] and left[-1][2] + right[-1][2] == 0

@@ -18,11 +18,14 @@ amount is `-(charge x flux)`. The delivered flux points away from the emitter,
 so like charges push apart and unlike charges pull together. A body moves along
 its momentum at `min(1, |p| / (16 x mass))` hops per tick.
 
-Self-field exclusion is configured, not derived: a moving body reaches the next
-Node together with the rays it emitted one tick earlier, and with a single shared
-field it pushed itself forward regardless of the other body's sign. Separate
-fields per body remove that; a general rule for excluding one's own field is
-still the open hypothesis named in `POSTULATES.md`.
+A moving body reaches the next Node together with the rays it emitted one tick
+earlier, and without any exclusion it pushed itself forward regardless of the
+other body's sign. The field is shared by all charges and uses the local
+[`self_exclusion`](../../docs/SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1)
+rule: a departing emitter subtracts the rays of its own departure cycle from
+the flux it samples on arrival, from its own registers only, in work bounded by
+`rays_per_tick`. Self-field returning from any other distance is not excluded;
+a general self-field law is still the open hypothesis named in `POSTULATES.md`.
 
 The third probe uses no field. Two held records, a bound proton and a residual
 core, share a Node; a local update counts ticks on the proton, and a

@@ -58,7 +58,8 @@ class Simulation(DisturbanceEngine):
                     initial.spatial_couplings,
                     initial.operation_costs,
                     initial.spatial_fields,
-                    initial.spatial_interactions,
+                    emissions=initial.emissions,
+                    interactions=initial.spatial_interactions,
                 )
                 if initial.spatial_interactions
                 or (
@@ -70,6 +71,7 @@ class Simulation(DisturbanceEngine):
                     initial.spatial_couplings,
                     initial.operation_costs,
                     initial.spatial_fields,
+                    emissions=initial.emissions,
                 )
                 if initial.spatial_couplings
                 else None

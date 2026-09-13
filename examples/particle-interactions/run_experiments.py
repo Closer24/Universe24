@@ -72,12 +72,13 @@ def charged_transport() -> dict:
     }
 
 
-def charged_document(bodies: list[dict], ticks: int) -> dict:
+def charged_document(bodies: list[dict], ticks: int, shared_field: bool = True) -> dict:
     """Bodies: {"name", "mass", "charge", "momentum", "position"}; each is one type.
 
-    Each charged body emits into its own signed ray field and responds only to the
-    other bodies' fields. A moving body would otherwise meet its own rays at the
-    next Node and push itself; self-field exclusion is configured here, not derived.
+    With ``shared_field`` every charged body emits into one signed ray field with
+    ``self_exclusion``: a departing record subtracts its own one-link-old rays from
+    the flux it samples at the next Node, using only its own bookkeeping. Without
+    it each body gets a field of its own and reads only the others' fields.
     """
     raw = {
         "schema_version": 1,
@@ -124,10 +125,11 @@ def charged_document(bodies: list[dict], ticks: int) -> dict:
         "seeds": [],
     }
     charged = [body for body in bodies if body["charge"]]
-    for body in charged:
+
+    def ray_field(name: str, exclude: bool) -> None:
         raw["fields"].append(
             {
-                "name": f"field_of_{body['name']}",
+                "name": name,
                 "components": 1,
                 "units": "signed ray unit",
                 "signed": True,
@@ -137,14 +139,21 @@ def charged_document(bodies: list[dict], ticks: int) -> dict:
         )
         raw["spatial_fields"].append(
             {
-                "field": f"field_of_{body['name']}",
+                "field": name,
                 "baseline": 0,
                 "transport": "ray",
                 "headings": golden_headings(HEADINGS, HEADING_SCALE),
                 "rays_per_tick": RAYS_PER_TICK,
                 "ray_slots": 2048,
+                "self_exclusion": exclude,
             }
         )
+
+    if shared_field and charged:
+        ray_field("charge_field", True)
+    elif not shared_field:
+        for body in charged:
+            ray_field(f"field_of_{body['name']}", False)
     for body in bodies:
         raw["disturbance_types"].append(
             {
@@ -159,33 +168,32 @@ def charged_document(bodies: list[dict], ticks: int) -> dict:
             }
         )
         if body["charge"]:
+            own = "charge_field" if shared_field else f"field_of_{body['name']}"
             raw["emissions"].append(
                 {
                     "type": body["name"],
-                    "field": f"field_of_{body['name']}",
+                    "field": own,
                     "amount": {"op": "mul", "args": [{"field": "charge"}, EMISSION_PER_CHARGE]},
                     "denominator": 1,
                     "source": True,
                 }
             )
-            for other in charged:
-                if other["name"] == body["name"]:
-                    continue
+            read = (
+                ["charge_field"]
+                if shared_field
+                else [f"field_of_{other['name']}" for other in charged if other["name"] != body["name"]]
+            )
+            for field_name in read:
                 # Momentum change is +charge x flux: like charges push apart, unlike attract.
                 raw["spatial_couplings"].append(
                     {
-                        "name": f"{body['name']}_in_field_of_{other['name']}",
+                        "name": f"{body['name']}_in_{field_name}",
                         "type": body["name"],
                         "field": "momentum",
                         "mode": "exchange",
                         "amount": {
                             "op": "neg",
-                            "args": [
-                                {
-                                    "op": "mul",
-                                    "args": [{"field": "charge"}, {"flux": f"field_of_{other['name']}"}],
-                                }
-                            ],
+                            "args": [{"op": "mul", "args": [{"field": "charge"}, {"flux": field_name}]}],
                         },
                         "denominator": 1,
                     }

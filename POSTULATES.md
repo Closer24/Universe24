@@ -68,7 +68,10 @@ and response allowances bound dynamic input, and declared integer attenuation
 removes magnitude at interior arrivals while exempting immutable background.
 The explicit dissipate option tracks signed loss; neither option establishes physical
 momentum through decay. Self-field exclusion by arrival order remains an unverified
-hypothesis and is not enabled by this extension.
+hypothesis and is not enabled by this extension. For straight-ray fields an
+optional local one-link exclusion exists: a departing emitter subtracts the rays
+of its own departure cycle from the flux it samples on arrival, using only its
+own registers; returning self-field at any other distance is not excluded.
 
 The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
 the same budget delay to all local fields and carriers. It freezes updates and

@@ -67,6 +67,8 @@ def validate_record(initial: InitialState, record: DisturbanceRecord) -> None:
         record.spatial_remainders,
         record.emission_remaining,
         record.spatial_remaining,
+        record.emission_last,
+        record.emission_departed,
     ):
         _tuple(rows, max(len(initial.fields), MAX_RULES))
         for row in rows:

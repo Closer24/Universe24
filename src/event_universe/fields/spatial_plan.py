@@ -57,6 +57,8 @@ class SpatialLaw:
             for rule, blank in zip(self.emissions, zero, strict=True)
         )
         finite = any(rule.budget is not None for rule in self.emissions)
+        excluding = any(self.definitions[rule.spatial_field].self_exclusion for rule in self.emissions)
+        blank_last = tuple(pack((0, 0)) for _ in self.emissions)
         if not remainders and not phases:
             if record.emission_remaining:
                 raise ValueError("partial carried emission metadata cannot reset an allowance")
@@ -65,6 +67,8 @@ class SpatialLaw:
                 emission_remainders=zero,
                 emission_phases=zero,
                 emission_remaining=budgets if finite else (),
+                emission_last=blank_last if excluding else (),
+                emission_departed=blank_last if excluding else (),
             )
         if len(remainders) != len(zero) or len(phases) != len(zero):
             raise ValueError("carried emission state must match the fixed emission rules")
@@ -91,6 +95,16 @@ class SpatialLaw:
                     raise ValueError("carried emission allowance exceeds its initial budget")
         elif record.emission_remaining:
             raise ValueError("unlimited emission cannot carry a finite allowance")
+        if excluding:
+            for rows in (record.emission_last, record.emission_departed):
+                if len(rows) != len(blank_last):
+                    raise ValueError("carried self-exclusion state must match the fixed emission rules")
+                for row in rows:
+                    if len(row) != 2:
+                        raise ValueError("carried self-exclusion rows hold an amount and a cursor")
+                    unpack(row)
+        elif record.emission_last or record.emission_departed:
+            raise ValueError("self-exclusion state requires a self-excluding ray field")
         return record
 
     def __call__(
@@ -135,6 +149,7 @@ class SpatialLaw:
                 )
                 residuals, allocation = list(record.emission_remainders), list(record.emission_phases)
                 remaining = list(record.emission_remaining)
+                last = list(record.emission_last)
                 if rule.budget is None:
                     amount, residuals[index] = emission_amount(
                         proposed, residuals[index], rule.denominator, field, meter
@@ -147,10 +162,11 @@ class SpatialLaw:
                     # Straight rays: the amount is shared over the next headings of the
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
-                    new_rays, cursor = emit_rays(
-                        unpack(amount)[0], unpack(allocation[index])[0], definition, meter
-                    )
+                    cursor_before = unpack(allocation[index])[0]
+                    new_rays, cursor = emit_rays(unpack(amount)[0], cursor_before, definition, meter)
                     allocation[index] = pack((cursor,))
+                    if last and definition.self_exclusion:
+                        last[index] = pack((unpack(amount)[0], cursor_before))
                     resident_rays[rule.spatial_field].extend(new_rays)
                 else:
                     populations, allocation[index] = emit(
@@ -167,6 +183,7 @@ class SpatialLaw:
                     emission_remainders=tuple(residuals),
                     emission_phases=tuple(allocation),
                     emission_remaining=tuple(remaining),
+                    emission_last=tuple(last),
                 )
                 for component, value in enumerate(unpack(amount)):
                     source[definition.field][component] = checked_work(

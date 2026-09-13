@@ -12,6 +12,7 @@ from .disturbance_state import (
     Packet,
     PendingCycle,
     bounded,
+    pack,
     unpack,
 )
 from .event_resolution import LocalContext
@@ -476,6 +477,7 @@ class DisturbanceNode(DisturbanceNodeState):
         records = list(source_records)
         for slot, record in pending.plan.replacements:
             records[slot] = self._current_emission_state(record, source_records[slot])
+        records = [self._staying(record) for record in records]
         departure_tick = bounded(tick + services.initial.link_ticks)
         links: list[Packet | None] = [None] * len(old_links)
         for index, departure in enumerate(pending.plan.departures):
@@ -487,7 +489,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
-            links[index] = Packet(departure_tick, self.position, departure.port, record)
+            links[index] = Packet(departure_tick, self.position, departure.port, self._departing(record))
         if spatial is not None and spatial_services is not None and field_plan is None:
             spatial.validate_guards(
                 spatial_services, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -671,7 +673,23 @@ class DisturbanceNode(DisturbanceNodeState):
             emission_remainders=current.emission_remainders,
             emission_phases=current.emission_phases,
             emission_remaining=current.emission_remaining,
+            emission_last=current.emission_last,
+            emission_departed=current.emission_departed,
         )
+
+    @staticmethod
+    def _staying(record: DisturbanceRecord | None) -> DisturbanceRecord | None:
+        """A record that stays meets none of its own rays on the next cycle."""
+        if record is None or not record.emission_last:
+            return record
+        return replace(record, emission_departed=tuple(pack((0, 0)) for _ in record.emission_last))
+
+    @staticmethod
+    def _departing(record: DisturbanceRecord) -> DisturbanceRecord:
+        """A departing record carries this cycle's emission to subtract on arrival."""
+        if not record.emission_last:
+            return record
+        return replace(record, emission_departed=record.emission_last)
 
     def accept_emission(
         self,

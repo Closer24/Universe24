@@ -84,6 +84,9 @@ class SpatialFieldDefinition:
     headings: tuple[Heading, ...] = ()
     rays_per_tick: int = 0
     ray_slots: int = 0
+    # Ray transport only: an emitting record that departs subtracts its own rays
+    # from the flux it samples at the next Node, using only its own bookkeeping.
+    self_exclusion: bool = False
 
     @property
     def rays(self) -> bool:

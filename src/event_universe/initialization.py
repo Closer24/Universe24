@@ -890,7 +890,7 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
-            | {"headings", "rays_per_tick", "ray_slots"}
+            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion"}
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -908,7 +908,9 @@ def _spatial_fields(
         if transport == "local" and schema_version != 1:
             raise ValueError("local spatial transport requires schema_version 1")
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
+        self_exclusion = False
         if transport == "ray":
+            self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -929,8 +931,10 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif ray_keys & obj.keys():
-            raise ValueError("headings, rays_per_tick and ray_slots require ray transport")
+        elif (ray_keys | {"self_exclusion"}) & obj.keys():
+            raise ValueError(
+                "headings, rays_per_tick, ray_slots and self_exclusion require ray transport"
+            )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
         axis = tuple(
@@ -957,6 +961,7 @@ def _spatial_fields(
                 headings,
                 rays_per_tick,
                 ray_slots,
+                self_exclusion,
             )
         )
     return tuple(result)

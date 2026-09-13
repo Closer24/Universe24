@@ -91,8 +91,8 @@ moving body falls inward. The reaction stays in the local momentum field at the
 body's Node; no reaction reaches the source, and no gravitational constant is
 identified beyond the configured `1 / D`. The
 [particle interaction probes](../examples/particle-interactions/README.md) give
-each charged body its own signed ray field (self-field exclusion is configured,
-not derived): like charges repel head-on, opposite charges attract, neutral bodies
+all charged bodies one signed ray field with the local one-link `self_exclusion`
+rule: like charges repel head-on, opposite charges attract, neutral bodies
 cross, and a timed two-record conversion emits a proton with a recoiling core.
 Energy has no representation in these rules, so kicks near a source are unbounded.
 
