@@ -4,6 +4,7 @@ import json
 import subprocess
 import sys
 from copy import deepcopy
+from decimal import Decimal
 from pathlib import Path
 
 import pytest
@@ -506,6 +507,80 @@ def test_generic_signed_measurements_remain_possible(catalog):
     validate_catalog(catalog)
 
 
+def test_magnetic_conjugates_resolve_with_sign_and_reference_provenance(shipped):
+    from event_universe.entity_catalog import resolve_property
+
+    for particle, antiparticle, value in (
+        ("electron", "positron", "-1.00115965218046"),
+        ("proton", "antiproton", "2.7928473446"),
+        ("neutron", "antineutron", "-1.9130428"),
+    ):
+        matter = resolve_property(shipped, particle, "magnetic_moment")
+        anti = resolve_property(shipped, antiparticle, "magnetic_moment")
+        assert matter["value_decimal"] == value
+        assert Decimal(anti["value_decimal"]) == -Decimal(value)
+        assert anti["status"] == "reference"
+        assert anti["resolved_status"] == "measured"
+        assert anti["resolved_from"] == particle
+        assert anti["reference_chain"][0]["source_entity_id"] == antiparticle
+        assert "not an independent measurement" in anti["reference_chain"][0]["context"]
+
+
+@pytest.mark.parametrize("sign", [True, 0, 2, -2, "-1"])
+def test_reference_sign_is_a_strict_integer_sign(shipped, sign):
+    anti = next(row for row in shipped["particle_entities"] if row["id"] == "positron")
+    anti["physical_properties"]["magnetic_moment"]["reference_sign"] = sign
+    with pytest.raises(ValueError, match="reference_sign"):
+        validate_catalog(shipped)
+
+
+def test_mass_alias_cannot_turn_antimatter_mass_negative(shipped):
+    anti = next(row for row in shipped["particle_entities"] if row["id"] == "positron")
+    anti["physical_properties"]["mass"]["reference_sign"] = -1
+    with pytest.raises(ValueError, match="nonnegative"):
+        validate_catalog(shipped)
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"uncertainty_plus_decimal": "0.1"},
+        {"uncertainty_plus_decimal": "0.1", "uncertainty_minus_decimal": "-0.2"},
+        {
+            "uncertainty_plus_decimal": "0.1",
+            "uncertainty_minus_decimal": "0.2",
+            "uncertainty_decimal": "0.3",
+        },
+    ],
+)
+def test_asymmetric_uncertainties_require_complete_unambiguous_nonnegative_sides(catalog, changes):
+    prop = _property(
+        value_decimal="1",
+        unit="reference unit",
+        context="Test measurement.",
+        uncertainty_kind="asymmetric",
+    )
+    prop.update(changes)
+    catalog["particle_entities"][0]["physical_properties"]["signed_measurement"] = prop
+    with pytest.raises(ValueError, match="asymmetric"):
+        validate_catalog(catalog)
+
+
+def test_width_based_lifetime_is_omitted_not_physically_inapplicable(shipped):
+    rows = {row["id"]: row for row in shipped["particle_entities"]}
+    for identity in ("top_quark", "w_plus", "z_boson", "higgs_boson"):
+        props = rows[identity]["physical_properties"]
+        assert props["lifetime"]["status"] == "not_supplied"
+        assert "value_decimal" not in props["lifetime"]
+        assert props["decay_width"]["status"] == "measured"
+    higgs = rows["higgs_boson"]["physical_properties"]["decay_width"]
+    assert (
+        higgs["value_decimal"],
+        higgs["uncertainty_plus_decimal"],
+        higgs["uncertainty_minus_decimal"],
+    ) == ("3.0", "1.5", "0.7")
+
+
 @pytest.mark.parametrize("bound", ["lower_bound_decimal", "upper_bound_decimal"])
 def test_mass_bounds_cannot_be_negative(catalog, bound):
     catalog["particle_entities"][0]["physical_properties"]["mass"] = _property(
@@ -521,30 +596,30 @@ def test_mass_bounds_cannot_be_negative(catalog, bound):
 @pytest.mark.parametrize(
     ("identity", "value", "uncertainty", "unit"),
     [
-        ("electron", "0.51099895000", "0.00000000015", "MeV/c^2"),
+        ("electron", "0.51099895069", "0.00000000016", "MeV/c^2"),
         ("muon", "105.6583755", "0.0000023", "MeV/c^2"),
         ("tau", "1776.93", "0.09", "MeV/c^2"),
         ("up_quark", "2.16", "0.07", "MeV/c^2"),
         ("down_quark", "4.70", "0.07", "MeV/c^2"),
-        ("strange_quark", "93.5", "0.8", "MeV/c^2"),
-        ("charm_quark", "1.2730", "0.0046", "GeV/c^2"),
-        ("bottom_quark", "4.183", "0.007", "GeV/c^2"),
-        ("top_quark", "172.56", "0.31", "GeV/c^2"),
-        ("w_plus", "80.3692", "0.0133", "GeV/c^2"),
-        ("z_boson", "91.1880", "0.0020", "GeV/c^2"),
-        ("higgs_boson", "125.20", "0.11", "GeV/c^2"),
-        ("proton", "938.27208816", "0.00000029", "MeV/c^2"),
-        ("neutron", "939.5654205", "0.0000005", "MeV/c^2"),
+        ("strange_quark", "92.9", "0.7", "MeV/c^2"),
+        ("charm_quark", "1.2729", "0.0045", "GeV/c^2"),
+        ("bottom_quark", "4.186", "0.006", "GeV/c^2"),
+        ("top_quark", "172.60", "0.27", "GeV/c^2"),
+        ("w_plus", "80.3625", "0.0077", "GeV/c^2"),
+        ("z_boson", "91.1879", "0.0020", "GeV/c^2"),
+        ("higgs_boson", "125.13", "0.11", "GeV/c^2"),
+        ("proton", "938.27208943", "0.00000029", "MeV/c^2"),
+        ("neutron", "939.5654219", "0.0000005", "MeV/c^2"),
     ],
 )
-def test_pdg_2025_mass_snapshot_matches_independently_reviewed_tables(
+def test_pdg_2026_mass_snapshot_matches_independently_reviewed_tables(
     shipped,
     identity,
     value,
     uncertainty,
     unit,
 ):
-    # PDG 2025 summary tables: leptons pp. 1-2, quarks p. 1,
+    # PDG 2026 summary tables: leptons pp. 1-2, quarks p. 1,
     # gauge/Higgs bosons pp. 1-4 and baryons pp. 1 and 4.
     particles = {row["id"]: row for row in shipped["particle_entities"]}
     mass = particles[identity]["physical_properties"]["mass"]
@@ -552,7 +627,7 @@ def test_pdg_2025_mass_snapshot_matches_independently_reviewed_tables(
     assert mass["uncertainty_decimal"] == uncertainty
     assert mass["unit"].replace("^", "") == unit.replace("^", "")
     assert mass["status"] == "measured"
-    assert any("pdg.lbl.gov/2025/" in shipped["sources"][source]["url"] for source in mass["sources"])
+    assert any("pdg.lbl.gov/2026/" in shipped["sources"][source]["url"] for source in mass["sources"])
 
 
 @pytest.mark.parametrize(
@@ -560,7 +635,7 @@ def test_pdg_2025_mass_snapshot_matches_independently_reviewed_tables(
     [
         ("muon", "0.0000021969811", "0.0000000000022"),
         ("tau", "0.0000000000002903", "0.0000000000000005"),
-        ("neutron", "878.4", "0.5"),
+        ("neutron", "878.3", "0.4"),
     ],
 )
 def test_free_particle_lifetimes_match_pdg_mean_life_units(shipped, identity, value, uncertainty):

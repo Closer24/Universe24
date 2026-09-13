@@ -39,6 +39,10 @@ the example family in the guide for fields, catalog entities or native events.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.
+   For known physical numbers, use the shared [reference units](../../docs/REFERENCE_UNITS.md)
+   registry and explicit Scalar/Vector encoder. Preserve reported rounding error,
+   distinguish model timing from Planck h, and do not repeat defining constants
+   in per-entity profiles or treat unit conversion as a new interaction law.
 5. Choose carried-record or spatial-field ownership for each amount. Add explicit
    source, response or encounter rules only as needed. Count resident and actual
    in-flight stock once; received projections and display vectors are not new stock.

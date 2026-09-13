@@ -45,6 +45,12 @@ catalogs, compiles them into ordinary initialization, and delegates runtime sche
 validation to `initialization.py`. Reference properties and interaction lists do
 not enter runtime laws or select species-specific behavior. See
 [entity catalog](ENTITY_CATALOG.md).
+The [reference units](REFERENCE_UNITS.md) authoring tool owns the shared external
+constant/unit registry and one-time exact rational conversion into bounded
+Scalar/Vector initialization components. Rational calibration and error reports
+remain host metadata; they are never a physical arithmetic fallback or a runtime
+unit conversion. Integer scales and future physical intermediates still obey
+the ordinary bounds. Unit names do not select interactions or propagation laws.
 Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).

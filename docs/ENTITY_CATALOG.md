@@ -21,6 +21,12 @@ See [physical support and limitations](PHYSICAL_ENTITIES.md).
 
 ## Reference data contract
 
+The numerical snapshot uses PDG 2026 summary tables. Individually cited reviews
+retain their own edition; electron magnetic moment uses CODATA 2022 explicitly.
+Shared constants and units are owned by [reference units](REFERENCE_UNITS.md),
+including bounded Scalar/Vector authoring and the distinction between model
+timing h and Planck's constant of action.
+
 Every entity declares sourced `physical_properties` and `interaction_ids`.
 Fields link to `excitation_ids`; elementary particles link back with `field_ids`.
 Bound states describe their constituents separately. Particle/antiparticle
@@ -39,6 +45,15 @@ Intrinsic charge and doubled spin use `metadata_key` to reference their one
 canonical integer value. A property with `status: reference` and `entity_id`
 refers to the same property on another entity, such as an antiparticle's mass.
 Reference cycles and unresolved identities are rejected.
+
+Signed references may add `reference_sign: -1`, for example conjugate magnetic
+moments using the same spin-axis convention. Mass/lifetime/width cannot acquire
+a negative sign. `resolve_property` returns the resolved value with an explicit
+reference chain and original target status; an antiparticle inference is not
+reclassified as an independent measurement. Its resolved report is not itself a
+catalog property descriptor. Asymmetric uncertainties require both
+`uncertainty_plus_decimal` and `uncertainty_minus_decimal`. Width-based entries
+use lifetime `not_supplied`, rather than claiming lifetime is inapplicable.
 
 The 17 `interaction_families` specify participants, mediators, conditions and
 evidence status. The 33 `representative_channels` list incoming and outgoing

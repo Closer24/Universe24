@@ -22,6 +22,7 @@ PROPERTY_STATUSES = {
     "reference",
     "unknown",
     "not_applicable",
+    "not_supplied",
     "context_dependent",
     "hypothetical",
     "observationally_inferred",
@@ -38,10 +39,13 @@ PROPERTY_KEYS = {
     "description",
     "precision",
     "uncertainty_decimal",
+    "uncertainty_plus_decimal",
+    "uncertainty_minus_decimal",
     "uncertainty_kind",
     "lower_bound_decimal",
     "upper_bound_decimal",
     "entity_id",
+    "reference_sign",
     "metadata_key",
     "constituent_ids",
     "reference",
@@ -191,13 +195,25 @@ def _properties(entities: dict[str, JsonObject], sources: JsonObject) -> None:
                     value < 0 for value in numeric.values()
                 ):
                     raise ValueError(f"{name} measurements and bounds must be nonnegative")
-                if prop["status"] in {"unknown", "not_applicable", "reference"}:
+                if prop["status"] in {"unknown", "not_applicable", "not_supplied", "reference"}:
                     raise ValueError("unknown or referenced properties cannot invent numerical values")
                 if "uncertainty_decimal" in numeric and (
                     numeric["uncertainty_decimal"] < 0 or "value_decimal" not in numeric
                 ):
                     raise ValueError("measurement uncertainty needs a value and must be nonnegative")
                 if "uncertainty_decimal" in numeric:
+                    _text(prop.get("uncertainty_kind"), "measurement uncertainty_kind")
+                asymmetric = {"uncertainty_plus_decimal", "uncertainty_minus_decimal"}
+                if asymmetric.intersection(numeric):
+                    if (
+                        not asymmetric <= numeric.keys()
+                        or "uncertainty_decimal" in numeric
+                        or "value_decimal" not in numeric
+                        or any(numeric[key] < 0 for key in asymmetric)
+                    ):
+                        raise ValueError(
+                            "asymmetric uncertainty needs two nonnegative sides and a value"
+                        )
                     _text(prop.get("uncertainty_kind"), "measurement uncertainty_kind")
                 if (
                     "lower_bound_decimal" in numeric
@@ -224,6 +240,12 @@ def _properties(entities: dict[str, JsonObject], sources: JsonObject) -> None:
                     raise ValueError("referenced intrinsic attributes must have one canonical value")
             if "constituent_ids" in prop:
                 _references(prop["constituent_ids"], entities, "constituents", unique=False)
+            if "reference_sign" in prop:
+                sign = prop["reference_sign"]
+                if prop["status"] != "reference" or type(sign) is not int or sign not in (-1, 1):
+                    raise ValueError("reference_sign requires a reference and an integer sign")
+                if sign < 0 and name in {"mass", "mass_upper_limit", "lifetime", "width", "decay_width"}:
+                    raise ValueError("nonnegative physical properties cannot use a negative reference")
             if prop["status"] == "reference":
                 target = _text(prop.get("entity_id"), "property reference entity_id")
                 if target not in entities or name not in _object(
@@ -238,11 +260,57 @@ def _properties(entities: dict[str, JsonObject], sources: JsonObject) -> None:
     for start in aliases:
         seen = set()
         cursor = start
+        sign = 1
         while cursor in aliases:
             if cursor in seen:
                 raise ValueError("cyclic physical property reference")
             seen.add(cursor)
+            sign *= entities[cursor[0]]["physical_properties"][cursor[1]].get("reference_sign", 1)
             cursor = aliases[cursor]
+        if sign < 0 and "value_decimal" not in entities[cursor[0]]["physical_properties"][cursor[1]]:
+            raise ValueError("signed reference must resolve to a numerical value")
+
+
+def resolve_property(catalog: object, identity: str, name: str) -> JsonObject:
+    """Resolve one reference, including conjugate signs, without changing input data."""
+    validate_catalog(catalog)
+    data = _object(catalog, "catalog")
+    entities = {row["id"]: row for key in ENTITY_SECTIONS for row in data[key]}
+    sign = 1
+    chain = []
+    while True:
+        if identity not in entities or name not in entities[identity]["physical_properties"]:
+            raise ValueError("unknown entity property")
+        prop = entities[identity]["physical_properties"][name]
+        if prop["status"] != "reference":
+            break
+        chain.append({"source_entity_id": identity, **prop})
+        sign *= prop.get("reference_sign", 1)
+        identity = prop["entity_id"]
+    result = dict(prop)
+    if "metadata_key" in result:
+        result["value_decimal"] = str(entities[identity][result["metadata_key"]])
+    if chain:
+        result["resolved_status"] = result["status"]
+        result["status"] = "reference"
+        result["reference_chain"] = chain
+        result["resolved_from"] = identity
+    if sign < 0:
+        if "value_decimal" not in result:
+            raise ValueError("signed reference must resolve to a numerical value")
+        result["value_decimal"] = str(_decimal(result["value_decimal"], name).copy_negate())
+        for low, high in (
+            ("lower_bound_decimal", "upper_bound_decimal"),
+            ("uncertainty_minus_decimal", "uncertainty_plus_decimal"),
+        ):
+            before = {key: result.pop(key) for key in (low, high) if key in result}
+            for original, target in ((low, high), (high, low)):
+                if original in before:
+                    value = before[original]
+                    result[target] = (
+                        str(_decimal(value, name).copy_negate()) if "bound" in low else value
+                    )
+    return result
 
 
 def validate_catalog(catalog: object) -> None:
