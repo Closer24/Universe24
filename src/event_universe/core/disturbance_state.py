@@ -230,12 +230,23 @@ class InitialState:
     field_phase_first: bool = False
     arrival_port_blind: bool = False
     carried_allocation_phase: bool = True
+    computation_field: int | None = None
 
     def __post_init__(self) -> None:
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
         if type(self.carried_allocation_phase) is not bool:
             raise ValueError("carried_allocation_phase must be boolean")
+        if self.computation_field is not None:
+            index = self.computation_field
+            if type(index) is not int or not 0 <= index < len(self.fields):
+                raise ValueError("computation_field must name a configured field")
+            field = self.fields[index]
+            definition = next((d for d in self.spatial_fields if d.field == index), None)
+            if definition is None or definition.transport != "outward":
+                raise ValueError("computation_field must be an outward spatial field")
+            if field.components != 1 or field.signed or not field.conserved:
+                raise ValueError("computation_field must be an unsigned conserved scalar field")
         if self.spatial_computation_delay and not self.spatial_fields:
             raise ValueError("spatial_computation_delay requires spatial fields")
         for name in ("field_phase_first", "arrival_port_blind"):

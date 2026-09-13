@@ -253,6 +253,11 @@ def _execute_run(
             spatial_sampling="entry-port-blind-on-arrival",
             self_field_filter="arrival-port-blind-v1",
         )
+    if initial.computation_field is not None:
+        metadata.update(
+            computation_field=initial.fields[initial.computation_field].name,
+            local_delay="computation-field-load-v1",
+        )
     if initial.spatial_fields:
         metadata.update(
             carried_allocation_phase=initial.carried_allocation_phase,

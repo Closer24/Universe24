@@ -1098,6 +1098,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_phase_first",
             "arrival_port_blind",
             "carried_allocation_phase",
+            "computation_field",
         },
         required,
     )
@@ -1155,6 +1156,11 @@ def parse_initial_state(document: object) -> InitialState:
         arrival_port_blind=_boolean(obj.get("arrival_port_blind", False), "arrival_port_blind"),
         carried_allocation_phase=_boolean(
             obj.get("carried_allocation_phase", True), "carried_allocation_phase"
+        ),
+        computation_field=(
+            None
+            if "computation_field" not in obj
+            else _index(obj["computation_field"], _names(fields), "computation_field")
         ),
     )
     if initial.event_program is not None:

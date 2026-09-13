@@ -145,6 +145,27 @@ committed from carrier responses keep the node-owned phase in both modes.
 Run metadata records `spatial_allocation` as `carried-phase-v1` or
 `node-phase-legacy`.
 
+## Computation field and local delay
+
+Highlights 4.4 defines the computational field as a configured field whose
+local scalar describes the cycle's modeled work and couples to delay through
+`k = max(1, ceil(C / B))`. The top-level member `"computation_field"` names an
+unsigned conserved scalar outward field for that role. Its local value at a
+node, the immutable baseline plus the stock present before that interval's
+forwarding, is added to the cost `C` of every carrier cycle at the node, in
+addition to the priced field operations already contributed. Nothing else
+changes: the field is emitted, transported, diluted and accounted like any
+other conserved outward field, and no mass, distance or force enters the law.
+
+Because the field is conserved, its total stays constant while it dilutes
+with distance, so the extra cost decays with the field itself. With a mass
+emitting 24000 units per interval and `normal_budget` 100, held clocks at
+distances 1, 2, 3, 4 and 8 completed 2, 6, 12, 23 and 40 of 40 cycles; a large
+budget restores 40 everywhere without changing the field. A moving carrier
+crossing such a region is delayed the same way. This is the local delay law
+applied to a configured field, not a derived gravitational potential; whether
+the resulting profile matches any physical law is a separate measurement.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

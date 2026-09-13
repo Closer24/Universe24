@@ -159,6 +159,8 @@ class SpatialNodeState:
     sample_ports: tuple[Values, ...] = ()
     # Frozen six delivered channels per spatial field, for arrival-port-blind samples.
     sample_delivered: tuple[tuple[Payload, ...], ...] = ()
+    # Computation-field stock present at this node before its last forwarding.
+    load: int = 0
     # Fixed host provenance references; never inputs to a physical field law.
     cause_id: int | None = None
     sample_cause_id: int | None = None

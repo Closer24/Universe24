@@ -257,6 +257,14 @@ class SpatialEngine:
         if any(packet is not None for packet in self.links.get(position, ())):
             raise ValueError("outgoing spatial links are occupied")
         records = residents.get(position, ())
+        if self.initial.computation_field is not None:
+            # Stock present before forwarding is this interval's local computation load.
+            spatial = next(
+                i
+                for i, d in enumerate(self.initial.spatial_fields)
+                if d.field == self.initial.computation_field
+            )
+            node.load = sum(unpack(payload)[0] for payload in node.states[spatial].populations)
         sample_values, sample_fluxes, sample_ports = (
             node.sample_values,
             node.sample_fluxes,
@@ -894,7 +902,19 @@ class SpatialEngine:
 
     def cost(self, position: Address3, tick: int) -> int:
         node = self.nodes.get(position)
-        return 0 if node is None or tick % self.initial.link_ticks else node.last_cost
+        if node is None or tick % self.initial.link_ticks:
+            return self.load(position)
+        return bounded(checked_work(node.last_cost + self.load(position)))
+
+    def load(self, position: Address3) -> int:
+        """Local value of the configured computation field: baseline plus stock present this interval."""
+        index = self.initial.computation_field
+        if index is None:
+            return 0
+        spatial = next(i for i, d in enumerate(self.initial.spatial_fields) if d.field == index)
+        baseline = unpack(self.initial.spatial_fields[spatial].baseline)[0]
+        node = self.nodes.get(position)
+        return bounded(checked_work(baseline + (0 if node is None else node.load)))
 
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]
