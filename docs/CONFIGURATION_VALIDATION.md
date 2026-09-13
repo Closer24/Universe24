@@ -14,7 +14,7 @@ that completes, and a physically accepted hypothesis are three separate results.
 | JSON decoding | `json_documents.parse_json_document` | Reject duplicate keys at every depth, malformed JSON, nonfinite constants and exponent overflow; preserve ordinary integers and finite metadata floats |
 | Dispatch and composition | `configuration_validation` | Select an explicit format, require supplied dependencies, coordinate initialization/observer exclusivity, return a report |
 | Initialization | `initialization.parse_initial_state` | Schema versions 1/2, fields, bounded values, references, placements and supported mechanism composition |
-| Shared definitions and experiments | `model_definitions` | Keep named definitions in one model, reject experiment overrides and delegate complete model/world validation to initialization |
+| Shared definitions and experiments | `model_definitions` | Keep named definitions in one model, require a spatial-field source or response for every type, reject experiment overrides and delegate model/world schema validation to initialization |
 | Native program | `integration.event_program.parse_event_program` | Native program dimensions, operations, clocks and configured event bounds |
 | Physical reference | `entity_catalog.validate_catalog` | Version 2 metadata, measurements, reciprocal identities and possible interaction references; reject executable catalog content |
 | Representation profiles | `entities.validate_profiles` | Version 1 bindings against an explicit version 2 catalog; compile every present classical/quantum representation independently through existing owners |

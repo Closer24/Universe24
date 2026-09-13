@@ -25,8 +25,14 @@ A carried field is owned state, not an automatically activated interaction.
 `couplings` exchanges between carriers; `emissions`, `spatial_couplings` and
 `spatial_interactions` define explicit carrier/field behavior under their existing
 contracts. A disturbance may respond to one or several fields. The example has
-one type with one response and another with two responses. An uncoupled type
-remains legal; adding a name never invents a force or an emission law.
+one type with one response and another with two responses. Every declared type,
+including an unplaced type, must have an explicit spatial source or response:
+an emission, spatial coupling, or spatial interaction that reads or writes a
+spatial field. Owned fields, carrier-only exchanges and invariant checks alone
+do not satisfy this requirement. Removing a type's last such rule fails
+validation; adding a name never invents a force or an emission law. Conditional
+or zero-valued rules remain valid declarations, without a promise of nonzero
+response in every experiment.
 
 Rename all references as part of the same edit, then validate. Deleting a field
 or type while another definition, rule or placement still refers to it fails.
@@ -48,8 +54,10 @@ An experiment has exactly `experiment_version: 1` and `world`. World keys are
 `operation_costs`, `seeds`, `spatial_seeds`, `observer` and `event_program`.
 Required values and optional defaults follow ordinary initialization. Native
 programs, including their operations and instruments, remain a separate
-world-bound behavior input with their existing restrictions; this format
-does not enable a previously unsupported mechanism composition.
+world-bound behavior input with their existing restrictions. Native programs
+currently cannot compose with spatial fields, so they cannot satisfy this
+format's required spatial-coupling contract. Use their existing initialization
+format; this adapter does not enable that unsupported mechanism composition.
 
 Experiments cannot replace model-owned definitions. Definitions cannot contain
 world-owned settings. Supply the definition dependency explicitly; file names,
@@ -70,6 +78,9 @@ source edits cannot change that saved input or an already initialized world.
 The host adapter `model_definitions.py` owns document separation and composition.
 `initialization.parse_initial_state` remains the single semantic validator for
 names, field references, payloads, local expressions and compatible mechanisms.
+After parsing, the adapter checks this format's additional requirement that
+every type declares a spatial-field source or response. Legacy initialization
+continues to support uncoupled types.
 Independent definition validation supplies a small empty context to that parser;
 it neither creates a `Simulation` nor claims to be an authored experiment.
 Combined validation checks the actual world, placements, observer and event

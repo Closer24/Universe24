@@ -4,14 +4,17 @@
 
 Bases: `73c68e87dc97f9421df0f98ac117d7af7b6a8520` plus main
 `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The validated runtime source fingerprint
-is `7a6feb547ea26e508cfd02959db462504800985004977f1944900ec7bd48e617`.
+is `dcda2a8b30e7e1c78b07576324550c41c1f507663eb223b6f0e36c8efd9e1fe0`.
 Only the host composer and configuration facade change under `src/`; physical
 engine arithmetic, payload ownership, scheduling and runtime limits are unchanged.
 
 The [shared definitions](MODEL_DEFINITIONS.md) and both experiment files pass
-canonical preflight. Forty composer tests and ten facade tests cover names,
+canonical preflight. Fifty-two composer tests and twelve facade tests cover names,
 whole-model validation, active local exchanges, valid/invalid removal, explicit
-dependencies, strict JSON, detached snapshots and exclusive output. Independent
+dependencies, strict JSON, detached snapshots and exclusive output. Every type
+must declare an explicit spatial-field source or response; tests reject unplaced
+uncoupled types, carrier-only exchanges, invariant-only references and removal
+of the final coupling before creating output. Independent
 inline/composed comparisons retain complete states, ordered events, modeled
 costs and declared totals for both two-tick placements. First-step carrier
 inventories are 7 and 17/25; dynamic spatial inventory gains 6 and 5. Complete
@@ -26,13 +29,17 @@ no renderer or GIF was requested.
 Independent system/memory review found no persistent registry, runtime file
 lookup, copied definitions in cells or retained composed worlds. After warmup,
 100 preparation calls with released outputs reached 17,968 bytes peak traced
-Python allocation for the supplied example and 45,040 bytes for a 16-field,
-16-type control. Direct calls retained less than 1 KiB, including bounded probe
-bookkeeping. A seventeenth field and an invalid unplaced type reject explicitly.
+Python allocation for the supplied example and 62,520 bytes for a 16-field,
+16-type control with a coupling for every type. Direct calls retained less than
+1 KiB, including bounded probe bookkeeping. A seventeenth field, an invalid
+unplaced type and a 65-node expression reject explicitly; a 64-node spatial read
+passes. The coverage check walks validated expressions under the existing
+64-node/depth-16 parser limits, with no extra runtime storage.
 Small residual facade allocations also occur with the existing JSON decoder;
 a 2,000-call control attributes them to CPython scanner construction, with no
 retained adapter results found. These are scoped Python allocation observations,
-not RSS, an infinite-lifetime bound or a before/after optimization claim.
+not RSS, an infinite-lifetime bound or a before/after optimization claim. Fixture
+creation and native memory are outside the traced allocation scope.
 
 The affected gate is `python tools/check.py --base
 73c68e87dc97f9421df0f98ac117d7af7b6a8520`. It includes the integrated example's
@@ -43,7 +50,7 @@ memory reviews passed. The configuration Skill now routes repeated experiments
 through one definition owner; Boss and the other shared Skills needed no new
 duplicated rules. The live Highlights reconciliation is in the coverage map.
 
-The local affected gate passed 891 tests with five explicitly opt-in visual
+The local affected gate passed 905 tests with five explicitly opt-in visual
 skips, Ruff/format on eight Python files and strict mypy on ten affected source
 files. All 14 MPI tests ran locally. Only evidence prose changed afterward;
 the final documentation, system-architecture and memory checks were repeated

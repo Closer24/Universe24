@@ -1,7 +1,7 @@
 """Compose reusable model definitions with explicit world inputs before a run.
 
-This authoring boundary owns document composition only. Initialization remains
-the semantic owner of named fields, disturbance types and every physical rule.
+This authoring boundary owns document composition and field-coupling coverage.
+Initialization remains the semantic owner of names, values and physical rules.
 """
 
 import argparse
@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import cast
 
-from event_universe.core.disturbance_state import OPERATIONS, InitialState
+from event_universe.core.disturbance_state import OPERATIONS, Expression, InitialState
 from event_universe.initialization import parse_initial_state
 from event_universe.json_documents import parse_json_document
 
@@ -54,6 +54,42 @@ def _model(document: object) -> dict[str, object]:
     return model
 
 
+def _reads_spatial(expression: Expression | None) -> bool:
+    if expression is None:
+        return False
+    return (
+        expression.op == "received"
+        or (expression.op == "field" and expression.side == 1)
+        or any(_reads_spatial(argument) for argument in expression.arguments)
+    )
+
+
+def _require_field_couplings(initial: InitialState) -> InitialState:
+    """Require a declared field source/response, without inferring its effect.
+
+    This authoring policy inspects already validated bounded rules. A joint
+    interaction must write spatial state or read it in an assignment/condition;
+    mentioning a spatial field only in an invariant is not a coupling.
+    """
+    coupled = {rule.type_index for rule in initial.emissions}
+    coupled.update(rule.type_index for rule in initial.spatial_couplings)
+    coupled.update(
+        rule.type_index
+        for rule in initial.spatial_interactions
+        if _reads_spatial(rule.when)
+        or any(
+            assignment.side == 1 or _reads_spatial(assignment.expression)
+            for assignment in rule.assignments
+        )
+    )
+    missing = [kind.name for index, kind in enumerate(initial.disturbances) if index not in coupled]
+    if missing:
+        raise ValueError(
+            "each disturbance requires an explicit field coupling; missing for: " + ", ".join(missing)
+        )
+    return initial
+
+
 def validate_model_definitions(document: object) -> InitialState:
     """Validate the complete bounded model using an empty neutral world.
 
@@ -71,7 +107,7 @@ def validate_model_definitions(document: object) -> InitialState:
         "operation_costs": dict.fromkeys(OPERATIONS, 1),
         "seeds": [],
     }
-    return parse_initial_state({**model, **neutral})
+    return _require_field_couplings(parse_initial_state({**model, **neutral}))
 
 
 def prepare_experiment(
@@ -89,7 +125,7 @@ def prepare_experiment(
     if unknown:
         raise ValueError(f"experiment world has unsupported keys: {', '.join(sorted(unknown))}")
     composed = {**model, **world}
-    initial = parse_initial_state(composed)
+    initial = _require_field_couplings(parse_initial_state(composed))
     return copy.deepcopy(composed), initial
 
 

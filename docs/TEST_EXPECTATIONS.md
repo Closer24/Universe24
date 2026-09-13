@@ -4,7 +4,8 @@
 
 `tests/test_model_definitions.py` and `tests/test_definition_preflight.py` check
 the [single model owner](MODEL_DEFINITIONS.md), one/multiple named field references,
-duplicate or deleted definitions, unplaced invalid types, experiment overrides,
+duplicate or deleted definitions, unplaced invalid types, missing spatial
+couplings and deletion of a type's last coupling, experiment overrides,
 detached snapshots, strict JSON and explicit dependency errors. Composition must
 match equivalent inline initialization and preserve caller data and rule order.
 The two supplied placements reuse one definition: first-step carrier inventories

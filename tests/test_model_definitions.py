@@ -194,14 +194,140 @@ def test_removing_a_referenced_definition_fails_without_deleting_its_rules(secti
     assert definitions["model"]["spatial_couplings"] == original_rules
 
 
-def test_an_unplaced_unreferenced_disturbance_can_be_added_and_removed():
+def test_an_unplaced_disturbance_and_its_coupling_can_be_added_and_removed():
     definitions, experiment = _documents()
     original = compose_initialization(definitions, experiment)
     definitions["model"]["disturbance_types"].append(_unplaced_type())
+    coupling = deepcopy(definitions["model"]["spatial_couplings"][0])
+    coupling.update(name="unplaced response", type="unplaced type")
+    definitions["model"]["spatial_couplings"].append(coupling)
     assert len(validate_model_definitions(definitions).disturbances) == 3
     assert len(parse_initial_state(compose_initialization(definitions, experiment)).seeds) == 2
     definitions["model"]["disturbance_types"].pop()
+    definitions["model"]["spatial_couplings"].pop()
     assert compose_initialization(definitions, experiment) == original
+
+
+@pytest.mark.parametrize("unplaced", [False, True])
+def test_owned_fields_do_not_replace_an_explicit_field_coupling(unplaced):
+    definitions, experiment = _documents()
+    if unplaced:
+        definitions["model"]["disturbance_types"].append(_unplaced_type())
+    else:
+        definitions["model"]["spatial_couplings"].pop(0)
+    # Ordinary initialization remains permissive; only this authoring format
+    # requires every declared disturbance to have a field source or response.
+    parse_initial_state({**definitions["model"], **experiment["world"]})
+    with pytest.raises(ValueError, match="explicit field coupling"):
+        validate_model_definitions(definitions)
+    with pytest.raises(ValueError, match="explicit field coupling"):
+        compose_initialization(definitions, experiment)
+
+
+def test_carrier_exchange_alone_does_not_satisfy_spatial_field_coupling():
+    definitions, experiment = _documents()
+    definitions["model"]["spatial_couplings"] = []
+    definitions["model"]["couplings"] = [
+        {
+            "name": "carrier exchange",
+            "left_type": "single channel",
+            "right_type": "dual channel",
+            "field": "amber inventory",
+            "amount": 1,
+        }
+    ]
+    with pytest.raises(ValueError, match="explicit field coupling"):
+        compose_initialization(definitions, experiment)
+
+
+def _joint_rule(kind):
+    return {
+        "name": kind + " joint response",
+        "type": kind,
+        "assignments": [
+            {"side": "left", "field": "amber inventory", "expression": {"field": "amber inventory"}}
+        ],
+        "invariants": [
+            {
+                "name": "amber balance",
+                "expression": {
+                    "op": "add",
+                    "args": [
+                        {"field": "amber inventory"},
+                        {"field": "amber inventory", "side": "right"},
+                    ],
+                },
+            }
+        ],
+    }
+
+
+@pytest.mark.parametrize("mechanism", ["emission", "spatial exchange", "joint interaction"])
+def test_each_supported_explicit_field_mechanism_satisfies_the_requirement(mechanism):
+    definitions, experiment = _documents()
+    model = definitions["model"]
+    if mechanism == "emission":
+        model["spatial_couplings"] = []
+        model["emissions"] = [
+            {"type": kind["name"], "field": "amber inventory", "amount": 0, "source": True}
+            for kind in model["disturbance_types"]
+        ]
+    elif mechanism == "joint interaction":
+        model["spatial_couplings"] = []
+        model["spatial_interactions"] = []
+        for field in model["spatial_fields"]:
+            field["transport"] = "local"
+        for kind in model["disturbance_types"]:
+            rule = _joint_rule(kind["name"])
+            rule["assignments"].append(
+                {"side": "right", "field": "amber inventory", "expression": {"field": "amber inventory"}}
+            )
+            rule["assignments"][0]["expression"] = {"field": "amber inventory", "side": "right"}
+            model["spatial_interactions"].append(rule)
+    validate_model_definitions(definitions)
+    compose_initialization(definitions, experiment)
+
+
+@pytest.mark.parametrize("reference", ["write", "read", "received", "condition", "invariant only"])
+def test_joint_interaction_needs_spatial_read_write_or_condition(reference):
+    definitions, experiment = _documents()
+    model = definitions["model"]
+    model["spatial_couplings"].pop(0)
+    for field in model["spatial_fields"]:
+        field["transport"] = "local"
+    rule = _joint_rule("single channel")
+    if reference == "write":
+        rule["assignments"][0]["side"] = "right"
+    elif reference == "read":
+        rule["assignments"][0]["expression"] = {
+            "op": "add",
+            "args": [0, {"field": "amber inventory", "side": "right"}],
+        }
+    elif reference == "received":
+        rule["assignments"][0]["expression"] = {"received": "amber inventory", "port": 0}
+    elif reference == "condition":
+        rule["when"] = {"field": "amber inventory", "side": "right"}
+    model["spatial_interactions"] = [rule]
+    if reference == "invariant only":
+        with pytest.raises(ValueError, match="explicit field coupling"):
+            validate_model_definitions(definitions)
+        with pytest.raises(ValueError, match="explicit field coupling"):
+            compose_initialization(definitions, experiment)
+    else:
+        validate_model_definitions(definitions)
+        compose_initialization(definitions, experiment)
+
+
+def test_cli_rejects_removing_the_last_coupling_before_output_creation(tmp_path):
+    definitions, _ = _documents()
+    definitions["model"]["spatial_couplings"].pop(0)
+    source = tmp_path / "uncoupled.json"
+    source.write_text(json.dumps(definitions), encoding="utf-8")
+    output = tmp_path / "output" / "resolved.json"
+    completed = _cli(source, EXAMPLE / "near.json", output)
+    assert completed.returncode != 0
+    assert "explicit field coupling" in completed.stderr
+    assert not output.parent.exists()
 
 
 def test_an_unused_named_field_can_be_added_and_removed():

@@ -2,7 +2,8 @@
 
 [Shared model definitions](MODEL_DEFINITIONS.md) provide one named field/type/rule
 source for multiple experiment files. Both the complete definition and resolved
-experiment use canonical preflight. The host adapter assembles ordinary run JSON
+experiment use canonical preflight; every type must declare a spatial-field
+source or response. The host adapter assembles ordinary run JSON
 without rebuilding the simulator or adding runtime definition lookup.
 
 The [memory contract](MEMORY.md) now requires system/memory architecture checks

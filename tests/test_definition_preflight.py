@@ -66,6 +66,26 @@ def test_deleting_used_definition_fails_even_when_type_is_not_placed():
     assert report.issues[0].document == "definitions"
 
 
+@pytest.mark.parametrize("unplaced", [False, True])
+def test_every_declared_disturbance_needs_an_explicit_field_coupling(unplaced):
+    definitions, experiment = sources()
+    library = json.loads(definitions)
+    if unplaced:
+        library["model"]["disturbance_types"].append(
+            {"name": "unplaced", "fields": ["amber inventory"], "transport": {"mode": "hold"}}
+        )
+    else:
+        library["model"]["spatial_couplings"].pop(0)
+    source = json.dumps(library)
+    standalone = validate_configuration(source)
+    composed = validate_configuration(experiment, definitions_source=source)
+    assert not standalone.valid and not composed.valid
+    assert standalone.issues[0].document == "input"
+    assert composed.issues[0].document == "definitions"
+    assert "explicit field coupling" in standalone.issues[0].message
+    assert "explicit field coupling" in composed.issues[0].message
+
+
 def test_valid_model_does_not_hide_bad_experiment_or_allow_definition_override():
     definitions, experiment = sources()
     world = json.loads(experiment)

@@ -5,7 +5,8 @@
 [Shared model definitions](MODEL_DEFINITIONS.md) implement Highlights sections
 3.3, 4.3, 4.5 and 10.2: one explicit named field/type/rule source, reusable world
 inputs and canonical validation. Each disturbance names one or more owned fields;
-active carrier/field responses remain explicit local rules. Removing a referenced
+and must declare an explicit spatial-field source or response. Removing the last
+such rule rejects even an unplaced type. Removing a referenced
 definition fails rather than silently removing its consumers. All model entries
 are checked, including types not placed in the selected experiment.
 
