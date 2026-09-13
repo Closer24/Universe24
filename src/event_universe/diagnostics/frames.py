@@ -58,12 +58,12 @@ def _field_snapshot(world: ScalarEngine) -> tuple[dict[tuple[int, int, int], int
         return (
             {
                 position: magnitude
-                for position, cell in world.streams.cells.items()
-                if (magnitude := sum(cell.populations)) != 0
+                for position, node in world.streams.nodes.items()
+                if (magnitude := sum(node.populations)) != 0
             },
             "stream-magnitude",
         )
-    return {position: cell.phi for position, cell in world.cells.items() if cell.phi != 0}, "scalar"
+    return {position: node.phi for position, node in world.nodes.items() if node.phi != 0}, "scalar"
 
 
 def capture_volume(world: ScalarEngine, *, momentum: ExactVector | None = None) -> VolumeFrame:

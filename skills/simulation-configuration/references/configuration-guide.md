@@ -59,7 +59,7 @@ The authoritative top-level table is in
 | `model_id` | A descriptive identity for the selected rules; use a new identity for a new hypothesis |
 | `shape` | Three integer node counts, such as `[9,9,9]` or `[64,64,64]`; the latter is 64 cubed, not a 2D plane |
 | `boundary` | `periodic` connects opposite faces; `open` records escaping stock |
-| `slots_per_cell` | Maximum co-resident carried records, 1 through 32; this is not the number of spatial modes |
+| `slots_per_node` | Maximum co-resident carried records, 1 through 32; this is not the number of spatial modes |
 | `link_ticks` | Positive travel time for each nearest-neighbor link |
 | `normal_budget` | Positive local computation budget; lowering it can delay carrier commits |
 | `operation_costs` | Explicit positive prices for all nine operations, as in the template |

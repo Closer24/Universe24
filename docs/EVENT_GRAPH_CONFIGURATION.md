@@ -63,7 +63,7 @@ edited document again. Removing a quantum program changes the chosen experiment.
 
 `capacity` is the positive integer limit on retained causal event records for the
 whole run. It is not a tick count, particle count, frame stride or physical memory
-per cell. One tick can create several records. Preflight checks deterministic
+per node. One tick can create several records. Preflight checks deterministic
 startup needs; a run can still exhaust capacity later. Exhaustion reports an
 error rather than silently dropping history. The value above is an example, not
 a guarantee for every world or duration.
@@ -105,12 +105,12 @@ automatically available to a local observer.
 
 | Record | Causal inputs |
 | --- | --- |
-| `spatial_source` | One root per spatially seeded cell, independently of colocated carrier roots |
+| `spatial_source` | One root per spatially seeded node, independently of colocated carrier roots |
 | `spatial_cycle` | Previous local field state and the local carrier owner supplied to emission processing; source and rule deltas remain in the action trace |
 | `spatial_sent` | The field cycle that prepared this port's actual packet; sibling sends are independent |
 | `spatial_received` | Every actual arriving packet and existing local stock, even when signed amounts cancel |
 | `spatial_decayed` | The corresponding reception; these two records describe one atomic arrival/attenuation transaction, with no extra clock advance |
-| `spatial_escaped` | The terminal packet after its full link time; no exterior cell is created |
+| `spatial_escaped` | The terminal packet after its full link time; no exterior node is created |
 | `cycle_started` | The frozen pre-emission field sample when a response reads it, and the field-work event used in the carrier's cost |
 | `spatial_coupled` | Through the joint commit: its frozen carrier proposal, current field state and any departure packets it amends |
 
@@ -122,15 +122,15 @@ the `spatial_coupled` event. Its `spatial_departures` action-log member, when
 present, replaces the complete same-tick departure list; an empty list means
 all those field departures were cancelled. Later receipts use the final owner.
 
-Each field cell adds three optional integer references: current state, frozen
-sample and field-work event. Each spatial packet adds one. No cell or packet
+Each field node adds three optional integer references: current state, frozen
+sample and field-work event. Each spatial packet adds one. No node or packet
 holds source lists, recursive ancestry or copied event payloads. Appending checks
 only bounded direct parents. History traversal is an explicit read-only analysis
 operation; normal stepping never traverses ancestors or queries quantum state.
 Implicit baselines create no volume-sized collection of root events. Idle field
-cells do not create an event on every tick.
+nodes do not create an event on every tick.
 
-Startup capacity counts carrier-seeded cells plus spatially seeded cells.
+Startup capacity counts carrier-seeded nodes plus spatially seeded nodes.
 Before a local field departure, reception or joint commit changes ownership, the
 engine checks space for its entire event batch. Exact capacity is allowed; a
 batch that cannot fit faults the run before that local transaction changes stock

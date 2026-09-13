@@ -41,7 +41,7 @@ def document(kinds, seeds, *, fields=None, couplings=None, budget=10000, travel=
         "schema_version": 1,
         "model_id": "generic-contract-fixture-v1",
         "shape": [41, 41, 41],
-        "slots_per_cell": capacity,
+        "slots_per_node": capacity,
         "link_ticks": travel,
         "normal_budget": budget,
         "ticks": 0,
@@ -54,9 +54,9 @@ def document(kinds, seeds, *, fields=None, couplings=None, budget=10000, travel=
 
 
 def resident_values(world, position):
-    if position not in world.cells:
+    if position not in world.nodes:
         return []
-    return [world.record_values(r) for r in world.cells[position].records if r is not None]
+    return [world.record_values(r) for r in world.nodes[position].records if r is not None]
 
 
 def exchange_document(amount, denominator=1):
@@ -185,10 +185,10 @@ def test_departed_pair_remainder_is_not_inherited_by_the_next_slot_occupant():
     raw["seeds"].append({"position": [1, 2, 2], "type": "right"})
     world = Simulation(parse_initial_state(raw))
     world.step()
-    assert sum(decode(code) for code in world.cells[(2, 2, 2)].coupling_remainders) == 1
+    assert sum(decode(code) for code in world.nodes[(2, 2, 2)].coupling_remainders) == 1
     world.step()
     # The old right participant leaves; a distinct one enters the vacated slot.
-    assert all(code == 1 for code in world.cells[(2, 2, 2)].coupling_remainders)
+    assert all(code == 1 for code in world.nodes[(2, 2, 2)].coupling_remainders)
     world.step()
     assert resident_values(world, (2, 2, 2)) == [{"inventory": (10,)}, {"inventory": (1,)}]
     assert world.totals() == {"inventory": (12,)}
@@ -276,7 +276,7 @@ def test_opposite_stream_channels_remain_distinct_at_a_shared_neighbor():
     raw["shape"] = [2, 1, 1]
     world = Simulation(parse_initial_state(raw))
     world.step()
-    records = [r for r in world.cells[(1, 0, 0)].records if r is not None]
+    records = [r for r in world.nodes[(1, 0, 0)].records if r is not None]
     assert len(records) == 2
     assert {r.channel_code for r in records} == {2, 3}
     assert [world.record_values(r) for r in records] == [{"inventory": (1,)}, {"inventory": (1,)}]
@@ -307,7 +307,7 @@ def test_signed_scalar_and_vector_inventory_survive_waits_splits_and_transit():
         world.step()
         assert world.totals() == {"inventory": (-5,), "components": (3, -2, 1)}
         assert world.source_totals() == {"inventory": (0,), "components": (0, 0, 0)}
-        waiting_seen |= any(cell.pending is not None for cell in world.cells.values())
+        waiting_seen |= any(node.pending is not None for node in world.nodes.values())
         transit_seen |= any(p is not None for packets in world.links.values() for p in packets)
     assert waiting_seen and transit_seen
 
@@ -373,7 +373,7 @@ def test_incoming_records_wait_without_rewriting_a_frozen_local_proposal():
     )
     world.step()
     assert resident_values(world, (2, 2, 2)) == [{"inventory": (10,)}, {"inventory": (5,)}]
-    assert world.cells[(2, 2, 2)].pending.ready_tick == 2
+    assert world.nodes[(2, 2, 2)].pending.ready_tick == 2
     assert world.totals() == {"inventory": (15,)}
     world.step()
     assert resident_values(world, (2, 2, 2)) == [{"inventory": (11,)}, {"inventory": (5,)}]
@@ -407,28 +407,28 @@ def test_observer_failure_cannot_split_one_local_arrival_ownership_commit():
     assert all(p is None for packets in world.links.values() for p in packets)
 
 
-def test_public_cells_and_nested_records_cannot_mutate_physical_state():
+def test_public_nodes_and_nested_records_cannot_mutate_physical_state():
     world = Simulation(parse_initial_state(exchange_document(1)))
-    cells = world.cells
-    cell = cells[(2, 2, 2)]
+    nodes = world.nodes
+    node = nodes[(2, 2, 2)]
     with pytest.raises(TypeError):
-        cells[(2, 2, 2)] = cell
+        nodes[(2, 2, 2)] = node
     with pytest.raises((FrozenInstanceError, AttributeError)):
-        cell.available_tick = 100
+        node.available_tick = 100
     with pytest.raises((FrozenInstanceError, AttributeError)):
-        cell.records = (None,) * len(cell.records)
+        node.records = (None,) * len(node.records)
     with pytest.raises((FrozenInstanceError, AttributeError)):
-        cell.records[0].values = ()
+        node.records[0].values = ()
     world.step()
-    assert unpack(cell.records[0].values[0]) == (0,)
+    assert unpack(node.records[0].values[0]) == (0,)
     assert resident_values(world, (2, 2, 2))[0] == {"inventory": (-1,)}
 
 
 def test_diagnostic_snapshot_is_detached_from_engine_state():
     world = Simulation(parse_initial_state(exchange_document(1)))
     snapshot = world.snapshot()
-    snapshot["cells"][0]["disturbances"][0]["values"]["inventory"] = (123,)
-    snapshot["cells"].clear()
+    snapshot["nodes"][0]["disturbances"][0]["values"]["inventory"] = (123,)
+    snapshot["nodes"].clear()
     assert resident_values(world, (2, 2, 2)) == [{"inventory": (0,)}, {"inventory": (0,)}]
     world.step()
     assert world.totals() == {"inventory": (0,)}

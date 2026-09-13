@@ -34,7 +34,7 @@ def run():
                     "type": record.kind,
                     "p": encode(engine.context(record)["p"]),
                 }
-                for identifier, record in engine.cells[0]
+                for identifier, record in engine.nodes[0]
             ],
         }
 

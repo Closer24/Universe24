@@ -28,7 +28,7 @@ running it overwrites the example JSON, so do not run it after editing that JSON
   scalar multiplication/division, dot product, cross product, dimensional checks
   and a bounded expression interpreter. No Python `eval` or callbacks.
 * `runtime.py`: typed immutable records; generic atomic N-to-M transactions;
-  configured balance checks; adjacent-cell transport with ownership in links;
+  configured balance checks; adjacent-node transport with ownership in links;
   reproducible weighted event scheduling; local complex amplitudes, unitary
   evolution and measurement coupled to physical transactions.
 * `definitions.json`: external entity fields, derived quantities, mass-shell
@@ -46,7 +46,7 @@ labels and add a new conservation rule without changing runtime code.
 
 ## Node participation and compatibility configuration
 
-The `limits` object in `definitions.json` specifies `cell_capacity`,
+The `limits` object in `definitions.json` specifies `node_capacity`,
 `max_participants`, `max_products`, `link_capacity` and `match_attempts`.
 There is no hard-coded 16-participant limit. The current demo chooses six;
 a separate test changes only configuration and executes a 17-input transaction.
@@ -119,7 +119,7 @@ does not imply negative mass. Reactions must explicitly authorize input types.
 | Quantum coupling | Complex phases, interference, 9/25 and 16/25 Born weights, collapse plus physical decay | At most four local basis states; no nonlocal entanglement or QFT |
 | Bound/internal states | Capture, breakup, absorption and emission with recoil | Configured levels; no spectrum solver |
 | Vector diagnostics | Dot/cross identities, angular momentum, q(E+v cross B) expression | Algebra checks only; no integrated EM evolution |
-| Local transport | One-hop handoff, blocked destination, conserved ownership | Abstract 1-D cell graph; no world geometry renderer |
+| Local transport | One-hop handoff, blocked destination, conserved ownership | Abstract 1-D node graph; no world geometry renderer |
 
 For the equal-mass oblique contact with p1=(1,0,0), p2=(0,0,0), normal=(1,1,1),
 the tested outputs are p1=(2/3,-1/3,-1/3) and p2=(1/3,1/3,1/3).
@@ -136,9 +136,9 @@ outcomes, denominator growth or overflow require another numeric representation
 or an explicitly designed approximation policy; this prototype rejects them.
 Python storage itself is not a hardware proof of fixed-size memory.
 
-Cell and link capacities and participant/product limits come from configuration. Expressions are
+Node and link capacities and participant/product limits come from configuration. Expressions are
 bounded to 128 nodes and depth 16. Local quantum dimension is at most 4. The host
-owns the number of cells and invokes ticks; this is not a benchmark of Universe24.
+owns the number of nodes and invokes ticks; this is not a benchmark of Universe24.
 The RNG is xorshift32, for reproducibility rather than cryptographic use. One
 bounded rejection attempt avoids modulo bias; rejected tickets defer the event.
 A failed reaction returns no advanced stream and changes no physical state.

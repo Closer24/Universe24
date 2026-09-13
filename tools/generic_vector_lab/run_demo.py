@@ -86,7 +86,7 @@ def main():
                         "type": record.kind,
                         "quantities": {key: encode(q) for key, q in lab.context(record).items()},
                     }
-                    for _, record in lab.cells[0]
+                    for _, record in lab.nodes[0]
                 ],
             }
         )

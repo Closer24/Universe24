@@ -14,12 +14,12 @@ ZERO_OCTANTS: Octants = (0, 0, 0, 0, 0, 0, 0, 0)
 ZERO_FLUX: Neighbors = (0, 0, 0, 0, 0, 0)
 
 
-class StreamCell(NamedTuple):
+class StreamNodeState(NamedTuple):
     populations: Octants = ZERO_OCTANTS
     flux: Neighbors = ZERO_FLUX
 
 
-STREAM_CELL_REGISTERS = 14
+STREAM_NODE_REGISTERS = 14
 
 
 class StreamTransport:
@@ -32,23 +32,23 @@ class StreamTransport:
         self._lattice = lattice
         self._rule = rule
         self._source_per_octant = source_per_octant
-        self._cells: dict[Address, StreamCell] = {}
+        self._nodes: dict[Address, StreamNodeState] = {}
 
     @property
-    def cells(self) -> Mapping[Address, StreamCell]:
-        return MappingProxyType(self._cells)
+    def nodes(self) -> Mapping[Address, StreamNodeState]:
+        return MappingProxyType(self._nodes)
 
-    def at(self, position: Address) -> StreamCell:
-        return self._cells.get(position, StreamCell())
+    def at(self, position: Address) -> StreamNodeState:
+        return self._nodes.get(position, StreamNodeState())
 
     def validate(self) -> None:
         """Read-only host audit of all fixed stream records."""
-        for position, cell in self._cells.items():
+        for position, node in self._nodes.items():
             if self._lattice.wrap(position) != position:
                 raise ValueError("non-canonical stream address")
-            if len(cell.populations) != 8 or len(cell.flux) != 6:
-                raise ValueError("stream cells require fourteen fixed registers")
-            for value in (*cell.populations, *cell.flux):
+            if len(node.populations) != 8 or len(node.flux) != 6:
+                raise ValueError("stream nodes require fourteen fixed registers")
+            for value in (*node.populations, *node.flux):
                 checked(value)
                 if value < 0:
                     raise ValueError("stream registers must be non-negative")
@@ -57,7 +57,7 @@ class StreamTransport:
         checked(phase)
         if phase < 0:
             raise ValueError("non-negative stream phase required")
-        work = set(self._cells) | set(sources)
+        work = set(self._nodes) | set(sources)
         next_populations: dict[Address, list[int]] = {}
         next_flux: dict[Address, list[int]] = {}
         for origin in work:
@@ -82,10 +82,10 @@ class StreamTransport:
                     amount = checked(checked_work(amount + value))
                 flux = next_flux.setdefault(target, [0] * 6)
                 flux[direction] = checked(checked_work(flux[direction] + amount))
-        cells: dict[Address, StreamCell] = {}
+        nodes: dict[Address, StreamNodeState] = {}
         for position in set(next_populations) | set(next_flux):
             final_populations = cast(Octants, tuple(next_populations.get(position, [0] * 8)))
             final_flux = cast(Neighbors, tuple(next_flux.get(position, [0] * 6)))
             if any(final_populations) or any(final_flux):
-                cells[position] = StreamCell(final_populations, final_flux)
-        self._cells = cells
+                nodes[position] = StreamNodeState(final_populations, final_flux)
+        self._nodes = nodes

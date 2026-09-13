@@ -1,49 +1,42 @@
-"""Read-only audit of formula-free evolving cells, records and transit state."""
+"""Read-only audit of formula-free evolving NodeState, records and transit state."""
 
 from dataclasses import fields, is_dataclass
 from typing import cast
 
 from event_universe.core.disturbance_state import (
-    CellView,
     Departure,
-    DisturbanceCell,
+    DisturbanceNodeState,
     DisturbanceRecord,
     LocalPlan,
+    NodeView,
     Packet,
     PendingCycle,
 )
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
-    SpatialCell,
+    SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
 )
 
-# Shared immutable initialization definitions intentionally do not belong here.
 STATE_RECORDS = (
-    CellView,
-    DisturbanceCell,
+    NodeView,
+    DisturbanceNodeState,
     DisturbanceRecord,
     LocalPlan,
     Packet,
     PendingCycle,
     FieldInteractionGuard,
-    SpatialCell,
+    SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
 )
 
 
-def cell_state_violations(value: object) -> tuple[str, ...]:
-    """Inspect the complete reachable value graph without evaluating any law.
-
-    Only exact numeric state, tuples, and registered state records are allowed.
-    Expression trees, definition objects, strings, mappings and callbacks are
-    forbidden even when nested inside a pending proposal or a packet payload.
-    This is a structural guard, not a proof of locality or of physical accuracy.
-    """
+def node_state_violations(value: object) -> tuple[str, ...]:
+    """Inspect the complete reachable NodeState graph without evaluating any law."""
     errors: list[str] = []
     active: set[int] = set()
 
@@ -62,7 +55,7 @@ def cell_state_violations(value: object) -> tuple[str, ...]:
                 for index, child in enumerate(cast(tuple[object, ...], item)):
                     visit(child, f"{path}[{index}]")
             else:
-                errors.append(f"{path}: forbidden cell-state object {type(item).__name__}")
+                errors.append(f"{path}: forbidden NodeState object {type(item).__name__}")
         finally:
             active.remove(id(item))
 

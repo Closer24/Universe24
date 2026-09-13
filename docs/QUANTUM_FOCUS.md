@@ -17,7 +17,7 @@ A physical-side request contains only four bounded integers: request ID, focus-s
 ID, world tick and one ticket. The ticket chooses between no-event and the total
 event weight. If an event is selected, the same ticket is narrowed through the
 region hierarchy. It is never redrawn at a finer level. The search ends at one
-canonical cell and then one distinguishable outcome in that cell is selected.
+canonical node and then one distinguishable outcome in that node is selected.
 
 This preserves the same categorical weights as a flat selection while revealing
 only the spatial path needed for the chosen event. The hierarchy changes the
@@ -30,20 +30,20 @@ simulated-world ticks. Recursive spatial refinement and deferred-history
 resolution are host computation and are reported separately. No claim is made
 that host runtime is O(1).
 
-The focus tree is not stored in physical cells. Candidate sets are quantum-owned
+The focus tree is not stored in physical nodes. Candidate sets are quantum-owned
 configuration with explicit `max_focus_sets` and `max_focus_candidates` budgets.
 The refinement path is retained only as the last host diagnostic trace; it is not
-part of the physical-side oracle reply. Physical cells retain their existing
+part of the physical-side oracle reply. Physical nodes retain their existing
 fixed state and six-neighbor update rule. The reply is fixed-size, and its event
 is a fixed-size immutable candidate record. It is not yet committed to Engine
 state or the native event log.
 
 ## Inputs and limits
 
-Binding a focus set is a quantum-side configuration operation, not a per-cell
+Binding a focus set is a quantum-side configuration operation, not a per-node
 physical query. Each candidate contains a quantum root, canonical 3D address and
 outcome ID. The candidate root must be at the same address. Duplicate outcomes at
-one cell are rejected; histories that should interfere must first be combined
+one node are rejected; histories that should interfere must first be combined
 into one quantum root.
 
 A focus request cannot read a candidate root from the future. One request ID
@@ -59,9 +59,9 @@ zero total weight raises an error; none is interpreted as no-event.
 ## Required tests
 
 - An 8×8×8 cube splits into eight equal 4×4×4 children.
-- A 5×7×3 region recursively covers all 105 cells exactly once.
+- A 5×7×3 region recursively covers all 105 nodes exactly once.
 - Degenerate non-unit shapes split only their non-unit axes.
-- A 1024×1024×1024 cube reaches one cell in ten focus levels.
+- A 1024×1024×1024 cube reaches one node in ten focus levels.
 - Exhaustive integer tickets reproduce exact flat event and no-event weights.
 - Candidate binding order does not change the selected spatial event.
 - One request ID cannot resample or be rewritten.

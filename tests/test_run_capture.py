@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 import event_universe.diagnostics.frames as frame_capture
-from event_universe import CellState, Config, ParticleState
+from event_universe import Config, NodeState, ParticleState
 from event_universe import legacy_runner as runner
 from event_universe.core.contracts import MoveRecord
 from event_universe.diagnostics.frames import Slice
@@ -92,12 +92,12 @@ def test_failed_step_captures_new_state_and_momentum_without_a_tick_increment(
         config=scenario(1).config,
         tick=0,
         faulted=False,
-        cells={(2, 3, 4): CellState(phi=7)},
+        nodes={(2, 3, 4): NodeState(phi=7)},
         particles={0: ParticleState(2, 3, 4, 2, 0, 0, momentum_den=3)},
     )
 
     def fail_after_commit():
-        world.cells[(2, 3, 4)] = CellState(phi=11, px=5)
+        world.nodes[(2, 3, 4)] = NodeState(phi=11, px=5)
         world.particles[0] = world.particles[0]._replace(px=1)
         world.faulted = True
         raise RuntimeError("injected failure after a local commit")

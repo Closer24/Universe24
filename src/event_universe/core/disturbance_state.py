@@ -203,7 +203,7 @@ class Seed:
 class InitialState:
     model_id: str
     shape: Address3
-    slots_per_cell: int
+    slots_per_node: int
     link_ticks: int
     normal_budget: int
     ticks: int
@@ -262,7 +262,9 @@ class Packet:
 
 
 @dataclass(slots=True)
-class DisturbanceCell:
+class DisturbanceNodeState:
+    """Mutable disturbance-owned state at one Node."""
+
     records: tuple[DisturbanceRecord | None, ...]
     coupling_remainders: tuple[int, ...]
     pending: PendingCycle | None = None
@@ -273,7 +275,9 @@ class DisturbanceCell:
 
 
 @dataclass(frozen=True, slots=True)
-class CellView:
+class NodeView:
+    """Immutable public view of one Node's disturbance-owned state."""
+
     records: tuple[DisturbanceRecord | None, ...]
     coupling_remainders: tuple[int, ...]
     pending: PendingCycle | None

@@ -8,7 +8,7 @@ import pytest
 from event_universe import Config, LinkedSimulation
 from event_universe import ScalarSimulation as Simulation
 from event_universe.core.links import LinkConfig
-from event_universe.core.state import MAX_CORE_INT, CellState, ParticleState, validate_particle
+from event_universe.core.state import MAX_CORE_INT, NodeState, ParticleState, validate_particle
 from event_universe.diagnostics.frames import capture_volume
 from event_universe.diagnostics.measurements import audit, total_momentum
 from event_universe.diagnostics.recorder import TraceRecorder
@@ -88,15 +88,15 @@ def test_fractional_mass_speed_keeps_credit_instead_of_rounding_to_rest():
 def test_fractional_particle_field_impulse_changes_physical_momentum_by_one():
     p = ParticleState(1, 1, 1, px=1, momentum_den=3, mass=2)
     result = update_particle(
-        p, CellState(), (0, 0, 1, 0, 0, 0), Config(force_den=1, source_strength=0), 0
+        p, NodeState(), (0, 0, 1, 0, 0, 0), Config(force_den=1, source_strength=0), 0
     )
     assert result.particle.momentum == (1, 3, 0)
     assert result.particle.momentum_den == 3
-    assert result.cell.py == -1
+    assert result.node.py == -1
     assert result.particle.mass == 2
 
 
-def test_same_cell_reflects_once_and_separates_without_extra_hop():
+def test_same_node_reflects_once_and_separates_without_extra_hop():
     trace = TraceRecorder()
     world = Simulation(
         Config(nx=20, ny=8, nz=8, c_units=12, source_strength=0), observer=trace, collisions=True
@@ -186,7 +186,7 @@ def test_periodic_colocation_and_new_encounter_after_separation():
     assert trace.collision_records[1].after_first.position == (2, 2, 2)
 
 
-def test_different_cells_and_different_arrival_times_are_not_contacts():
+def test_different_nodes_and_different_arrival_times_are_not_contacts():
     trace = TraceRecorder()
     world = Simulation(
         Config(nx=20, ny=8, nz=8, c_units=12, source_strength=0), observer=trace, collisions=True

@@ -16,10 +16,10 @@ law, default Simulation or existing read-only QuantumBridge is modified.
 Two unit-mass bodies start at (2,2,1) and (10,2,1), with momenta (+1,0,0)
 and (-1,0,0). One neighbor transit takes one tick. At tick 4 both reach (6,2,1).
 Only their local co-residence invokes the explicit position instrument on a
-three-site quantum sidecar. No distant particle search triggers the decision.
+three-register quantum sidecar. No distant particle search triggers the decision.
 
-The source begins at quantum site 0. An explicitly supplied 3:4 local mixing
-matrix at tick 1 gives weights 16 for empty and 9 for occupied at site 0.
+The source begins at quantum register 0. An explicitly supplied 3:4 local mixing
+matrix at tick 1 gives weights 16 for empty and 9 for occupied at register 0.
 One supplied ticket in [0,25) selects transmission (0..15) or momentum exchange
 (16..24). Tickets are reproducible test inputs, not a verified random source.
 Enumeration of all tickets tests this exact distribution without RNG claims.
@@ -35,7 +35,7 @@ pair and routes the actual outgoing packets. Thus the outcome changes native
 The fixture binder restricts shape, occupancy, initial records, link time and
 run length. Its positional roles are field 0 mass, field 1 momentum, field 2
 outcome code, and types 0/1 the two bodies. This is an eight-tick, one-contact
-experiment, not a general dispatcher for arbitrary cells or repeated encounters.
+experiment, not a general dispatcher for arbitrary nodes or repeated encounters.
 Names are labels; the ordinary engine has no quantum or particle-name branch.
 
 The classical local planner receives exactly two local slots. Its quantum call
@@ -60,7 +60,7 @@ quantum continuation. No second measurement or rerandomization is introduced.
 
 ## Checks and interpretation
 
-The read-only balance check counts cell-owned and in-flight bodies exactly once:
+The read-only balance check counts node-owned and in-flight bodies exactly once:
 mass 2, total momentum (0,0,0), and twice unit-mass classical kinetic energy 2.
 Failure rejects the run without repairing any state. These balances concern the
 two classical bodies; quantum/environment energy and recoil are not modeled.

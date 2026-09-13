@@ -1,4 +1,4 @@
-"""Generic departure and integer transit duration; no access to cells or the world."""
+"""Generic departure and integer transit duration; no access to nodes or the world."""
 
 from event_universe.core.integer import ceil_div
 from event_universe.core.state import Vector, checked, checked_work

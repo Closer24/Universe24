@@ -21,9 +21,9 @@ def read(path):
 def bodies(world):
     snapshot = world.snapshot()
     return {
-        record["type"]: (cell["position"], record["values"])
-        for cell in snapshot["cells"]
-        for record in cell["disturbances"]
+        record["type"]: (node["position"], record["values"])
+        for node in snapshot["nodes"]
+        for record in node["disturbances"]
     }
 
 

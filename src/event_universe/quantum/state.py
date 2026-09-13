@@ -2,7 +2,7 @@
 
 This module deliberately does not import the simulator world, fields, dynamics,
 models, diagnostics, or integration layer. Quantum history is global sidecar
-state, never per-cell physical state.
+state, never per-node physical state.
 """
 
 from dataclasses import dataclass

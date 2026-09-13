@@ -22,7 +22,7 @@ class CausalStreamConfig:
     source_per_octant: int = 64
     force_num: int = 1
     force_den: int = 64
-    max_particles_per_cell: int = 4
+    max_particles_per_node: int = 4
 
     def engine_config(self) -> Config:
         return Config(
@@ -34,7 +34,7 @@ class CausalStreamConfig:
             field_den=1,
             force_num=self.force_num,
             force_den=self.force_den,
-            max_particles_per_cell=self.max_particles_per_cell,
+            max_particles_per_node=self.max_particles_per_node,
         )
 
 

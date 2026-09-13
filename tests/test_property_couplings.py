@@ -17,7 +17,7 @@ from .test_spatial_interactions import exchange
 
 def record_values(world, position=ORIGIN):
     return [
-        world.record_values(record) for record in world.cells[position].records if record is not None
+        world.record_values(record) for record in world.nodes[position].records if record is not None
     ]
 
 
@@ -213,7 +213,7 @@ def test_compiled_property_emission_and_finite_spatial_budgets_include_second_la
     world = Simulation(initial)
     world.step()
     records = [packet.record for group in world.links.values() for packet in group if packet is not None]
-    records += [record for cell in world.cells.values() for record in cell.records if record is not None]
+    records += [record for node in world.nodes.values() for record in node.records if record is not None]
     assert len(records) == 1
     assert unpack(records[0].values[0]) == (0, 5, 0)
     assert unpack(records[0].spatial_remaining[0]) == (0, 0, 0)
@@ -234,11 +234,11 @@ def test_property_emission_fraction_is_owned_by_each_matching_carrier():
     raw["emissions"][0].update(requires=["strength"], denominator=2)
     world = Simulation(parse_initial_state(raw))
     world.step()
-    record = next(record for record in world.cells[SOURCE].records if record is not None)
+    record = next(record for record in world.nodes[SOURCE].records if record is not None)
     assert unpack(record.emission_remainders[0]) == (1,)
     assert world.source_totals()["radiation"] == (0,)
     world.step()
-    record = next(record for record in world.cells[SOURCE].records if record is not None)
+    record = next(record for record in world.nodes[SOURCE].records if record is not None)
     assert unpack(record.emission_remainders[0]) == (0,)
     assert world.source_totals()["radiation"] == (1,)
 
@@ -302,8 +302,8 @@ def test_equivalent_validation_complexity_cannot_change_physical_cost_or_commit_
     worlds = [Simulation(parse_initial_state(value)) for value in (raw, changed)]
     for world in worlds:
         world.step()
-        assert world.cells[ORIGIN].pending is not None
-    pending = [world.cells[ORIGIN].pending for world in worlds]
+        assert world.nodes[ORIGIN].pending is not None
+    pending = [world.nodes[ORIGIN].pending for world in worlds]
     assert pending[0].plan.cost == pending[1].plan.cost
     assert pending[0].ready_tick == pending[1].ready_tick
     ready = pending[0].ready_tick

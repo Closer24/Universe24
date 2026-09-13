@@ -189,7 +189,7 @@ def _slice_scene(
 
 
 def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
-    """Render all nonzero field cells, particle trails and momenta in a rotating XYZ view."""
+    """Render all nonzero field nodes, particle trails and momenta in a rotating XYZ view."""
     if not frames:
         raise ValueError("at least one diagnostic frame is required")
     if any(frame.field_kind != frames[0].field_kind for frame in frames):
@@ -254,7 +254,7 @@ def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
     )
     fig.text(0.28, 0.055, "Arrow length: speed / c", color="#c2d5ed", fontsize=10)
     fig.text(0.28, 0.025, "↻ Periodic boundary", color="#65e8ff", fontsize=10)
-    fig.text(0.60, 0.025, "X Jump of 2+ cells", color="#ff5252", fontsize=10)
+    fig.text(0.60, 0.025, "X Jump of 2+ nodes", color="#ff5252", fontsize=10)
     fig.text(0.12, 0.18, "AXIS DIRECTIONS", color="#c2d5ed", ha="center", fontsize=8)
     # Overlay particle identity and velocity above the translucent field.
     ax.computed_zorder = False
@@ -275,7 +275,7 @@ def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
         axis.set_label_text(label, color=color, fontsize=17, weight="bold")
         axis.labelpad = 12
         axis.set_tick_params(colors=color, labelsize=11, pad=3)
-    # Static geometry is shared by every camera angle; physical cells are unchanged.
+    # Static geometry is shared by every camera angle; physical nodes are unchanged.
     grid_ticks = []
     for ticks, (lo, hi) in zip((ax.get_xticks(), ax.get_yticks(), ax.get_zticks()), bounds, strict=True):
         dense_ticks = sorted([*ticks, *((a + b) / 2 for a, b in pairwise(ticks))])
@@ -328,7 +328,7 @@ def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
         if frame.field:
             xs, ys, zs = zip(*frame.field, strict=True)
             values = list(frame.field.values())
-            # Display-only gamma lift keeps weak field cells visible on the dark background.
+            # Display-only gamma lift keeps weak field nodes visible on the dark background.
             strengths = [(value / vmax) ** 0.5 for value in values]
             # One shared scalar field: do not invent a per-particle source attribution.
             for spread, base_alpha, gain in (
@@ -454,16 +454,16 @@ def _volume_scene(frames: Sequence[VolumeFrame]) -> _RenderScene:
         + "brighter color and greater opacity, using one fixed scale throughout the animation. "
         "Broad soft halos enlarge field markers for visibility, not the physical field range. "
         "A square-root display transfer lifts weak values; colors are not a linear field scale. "
-        "The display grid has twice as many subdivisions per axis; physical cells are unchanged. "
+        "The display grid has twice as many subdivisions per axis; physical nodes are unchanged. "
         "Particle markers and glow are display symbols, not physical particle sizes. "
         "Lines show sampled paths. X is coral, Y is green and Z is blue. "
         "The corner arrows show positive axis directions, not a position or distance scale. "
         "System momentum is the combined momentum of particles and field. "
-        "Arrow length is proportional to the capped movement-budget speed: c = 10.8 display cells. "
+        "Arrow length is proportional to the capped movement-budget speed: c = 10.8 display nodes. "
         "Frames without a recorded speed scale omit velocity arrows. "
         "A cyan ↻ marks a periodic boundary crossing (the shorter displacement uses the boundary). "
         "A red X marks a shortest displacement of at least two cardinal grid steps, "
-        "including multi-cell jumps across a periodic boundary. Both markers may appear. "
+        "including multi-node jumps across a periodic boundary. Both markers may appear. "
         "Trails break at both markers. Use consecutive ticks to avoid sampled-frame ambiguity; "
         "a marker alone does not indicate motion faster than c. "
         "The camera rotates; coordinates and physics do not.",

@@ -121,7 +121,7 @@ def failure_world(error):
         config=scenario().config,
         tick=0,
         faulted=False,
-        cells={},
+        nodes={},
         particles={0: ParticleState(2, 3, 4, 6, 0, 0), 1: ParticleState(6, 5, 2)},
     )
 

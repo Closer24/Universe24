@@ -76,7 +76,7 @@ def test_sidecar_query_cannot_change_simulator_state():
     assert result.weight == 0
 
     assert integrated.tick == baseline.tick
-    assert dict(integrated.cells) == dict(baseline.cells)
+    assert dict(integrated.nodes) == dict(baseline.nodes)
     assert dict(integrated.particles) == dict(baseline.particles)
     assert dict(integrated.occupancy) == dict(baseline.occupancy)
     assert integrated.active == baseline.active

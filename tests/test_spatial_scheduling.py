@@ -10,7 +10,7 @@ from tests.test_spatial_engine import ORIGIN
 
 
 @pytest.mark.parametrize("boundary,travel,budget", [("periodic", 1, 100000), ("open", 2, 8)])
-def test_active_scheduling_matches_a_full_cell_sweep(boundary, travel, budget):
+def test_active_scheduling_matches_a_full_node_sweep(boundary, travel, budget):
     raw = finite_document(moving=True, source=True, travel=travel, budget=budget)
     raw["boundary"] = boundary
     raw["shape"] = [3, 4, 5]
@@ -22,7 +22,7 @@ def test_active_scheduling_matches_a_full_cell_sweep(boundary, travel, budget):
     world = Simulation(initial, observer=events.append)
     reference = Simulation(initial, observer=reference_events.append)
     for _ in range(40):
-        reference._spatial._active.update(reference._spatial.cells)
+        reference._spatial._active.update(reference._spatial.nodes)
         reference.step()
         world.step()
         assert world.snapshot() == reference.snapshot()
@@ -51,14 +51,14 @@ def test_empty_history_is_not_scanned_by_steps_or_inventory_checks():
         def items(self):
             pytest.fail("idle spatial history items were enumerated")
 
-    world._spatial.cells = NoHistoryScan(world._spatial.cells)
+    world._spatial.nodes = NoHistoryScan(world._spatial.nodes)
     for _ in range(3):
         world.step()
         assert world.totals()["radiation"] == (0,)
         assert world.spatial_accounting()["radiation"]["balanced"]
 
 
-def test_reaction_wakes_a_known_idle_cell_without_missing_its_completed_phase():
+def test_reaction_wakes_a_known_idle_node_without_missing_its_completed_phase():
     raw = coupling_document()
     raw["seeds"] = []
     world = Simulation(parse_initial_state(raw))
@@ -78,7 +78,7 @@ def test_reaction_wakes_a_known_idle_cell_without_missing_its_completed_phase():
     assert engine.accounting()["inventory"]["balanced"]
 
 
-def test_a_new_cell_is_not_backdated_to_an_earlier_empty_phase():
+def test_a_new_node_is_not_backdated_to_an_earlier_empty_phase():
     raw = coupling_document()
     raw["seeds"] = []
     world = Simulation(parse_initial_state(raw))

@@ -17,7 +17,7 @@ def document():
 
 
 def record(world, position):
-    return next(world.record_values(r) for r in world.cells[position].records if r is not None)
+    return next(world.record_values(r) for r in world.nodes[position].records if r is not None)
 
 
 def test_local_pulse_applies_opposite_charge_impulses_after_four_links():

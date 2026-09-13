@@ -16,7 +16,7 @@ from event_universe.runner import run_initialization, source_fingerprint
 
 
 def records(frame):
-    owned = [(cell["position"], row) for cell in frame["cells"] for row in cell["disturbances"]]
+    owned = [(node["position"], row) for node in frame["nodes"] for row in node["disturbances"]]
     owned += [(row["origin"], row) for row in frame["transfers"]]
     return sorted(
         (
@@ -39,7 +39,7 @@ def field_norms(frame):
 
 
 def physical_frame(frame, size):
-    """Read-only comparison after translating the origin; ignore dormant host cells."""
+    """Read-only comparison after translating the origin; ignore dormant host nodes."""
     center = size // 2
 
     def point(position):

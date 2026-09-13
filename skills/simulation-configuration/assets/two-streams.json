@@ -3,7 +3,7 @@
   "model_id": "configured-two-stream-periodic-motion-v1",
   "shape": [9, 9, 9],
   "boundary": "periodic",
-  "slots_per_cell": 4,
+  "slots_per_node": 4,
   "link_ticks": 1,
   "normal_budget": 10000,
   "ticks": 18,

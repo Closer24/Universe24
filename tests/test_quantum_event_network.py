@@ -43,8 +43,8 @@ def probability(reply, outcome=1):
     return Fraction(reply.weights[outcome], sum(reply.weights))
 
 
-def choose(g, record, site, instrument, outcome):
-    decision = g.prepare(record, site, instrument)
+def choose(g, record, register_index, instrument, outcome):
+    decision = g.prepare(record, register_index, instrument)
     assert decision.weights[outcome] > 0
     ticket = sum(decision.weights[:outcome])
     return g.commit(decision, ticket)
@@ -337,22 +337,24 @@ def test_one_event_fourier_uncertainty_and_partial_position_information():
 ACTIVE = (0, 1, 4, 5)
 
 
-def eager_apply(vector, local_matrix, sites):
-    local_sites = tuple(ACTIVE.index(site) for site in sites)
+def eager_apply(vector, local_matrix, register_indices):
+    local_register_indices = tuple(ACTIVE.index(register_index) for register_index in register_indices)
     full = [[0] * 16 for _ in range(16)]
     for out in range(16):
         for inp in range(16):
-            if any(((out >> q) & 1) != ((inp >> q) & 1) for q in range(4) if q not in local_sites):
+            if any(
+                ((out >> q) & 1) != ((inp >> q) & 1) for q in range(4) if q not in local_register_indices
+            ):
                 continue
-            r = sum(((out >> q) & 1) << j for j, q in enumerate(local_sites))
-            c = sum(((inp >> q) & 1) << j for j, q in enumerate(local_sites))
+            r = sum(((out >> q) & 1) << j for j, q in enumerate(local_register_indices))
+            c = sum(((inp >> q) & 1) << j for j, q in enumerate(local_register_indices))
             assert local_matrix[r][c].imag == 0
             full[out][inp] = local_matrix[r][c].real
     return [sum(coef * value for coef, value in zip(row, vector, strict=True)) for row in full]
 
 
-def eager_probability(vector, site):
-    q = ACTIVE.index(site)
+def eager_probability(vector, register_index):
+    q = ACTIVE.index(register_index)
     total = sum(value * value for value in vector)
     one = sum(value * value for i, value in enumerate(vector) if (i >> q) & 1)
     return Fraction(one, total)
@@ -364,20 +366,20 @@ def test_random_layers_and_instruments_match_independent_eager_reference(seed):
     g = network()
     vector = [1] + [0] * 15
     for layer in range(12):
-        site = rng.choice(ACTIVE)
+        register_index = rng.choice(ACTIVE)
         if layer % 3 == 0:
             a, b = rng.choice(((0, 1), (4, 5), (0, 4), (1, 5)))
-            rule, sites = rng.choice((CX, CZ)), (a, b)
+            rule, register_indices = rng.choice((CX, CZ)), (a, b)
         else:
-            rule, sites = rng.choice((H, Z)), (site,)
-        g.step(((rule, sites),))
-        vector = eager_apply(vector, rule.matrix, sites)
+            rule, register_indices = rng.choice((H, Z)), (register_index,)
+        g.step(((rule, register_indices),))
+        vector = eager_apply(vector, rule.matrix, register_indices)
         for target in ACTIVE:
             assert probability(g.query(target)) == eager_probability(vector, target)
         if layer in (4, 9):
             instrument = rng.choice((POSITION, DAMPING))
-            decision = g.prepare(layer, site, instrument)
-            branches = [eager_apply(vector, m, (site,)) for m in instrument.branches]
+            decision = g.prepare(layer, register_index, instrument)
+            branches = [eager_apply(vector, m, (register_index,)) for m in instrument.branches]
             raw = [sum(value * value for value in branch) for branch in branches]
             assert [Fraction(w, sum(decision.weights)) for w in decision.weights] == [
                 Fraction(w, sum(raw)) for w in raw
@@ -429,7 +431,7 @@ def test_unread_remote_instrument_preserves_local_marginal():
     assert combined == prior == Fraction(1, 2)
 
 
-def test_negative_position_record_does_not_choose_another_site():
+def test_negative_position_record_does_not_choose_another_register():
     g = network((0,))
     g.step(((R, (0, 1)),))
     g.step(((R, (1, 2)),))

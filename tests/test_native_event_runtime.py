@@ -30,7 +30,7 @@ def configuration(r=3, t=4, n=5):
                 "tick": 1,
                 "operations": [
                     {
-                        "sites": [0, 1],
+                        "register_indices": [0, 1],
                         "matrix": [
                             [n, 0, 0, 0],
                             [0, r, -t, 0],
@@ -64,7 +64,7 @@ def run(data, names=("mass", "momentum")):
         assert world.totals()[names[0]] == (2,)
         assert world.totals()[names[1]] == (0, 0, 0)
         state = world.snapshot()
-        values = [r["values"] for c in state["cells"] for r in c["disturbances"]]
+        values = [r["values"] for c in state["nodes"] for r in c["disturbances"]]
         values += [r["values"] for r in state["transfers"]]
         assert sum(sum(p * p for p in v[names[1]]) for v in values) == 2
         frames.append(world.snapshot())
@@ -75,9 +75,9 @@ def physical(frames):
     """Compare physical payload, place and transit, not diagnostic control codes."""
     frames = copy.deepcopy(frames)
     for frame in frames:
-        for cell in frame["cells"]:
-            cell.pop("cost")
-            for record in cell["disturbances"]:
+        for node in frame["nodes"]:
+            node.pop("cost")
+            for record in node["disturbances"]:
                 record["values"].pop("decision", None)
         for packet in frame["transfers"]:
             packet["values"].pop("decision", None)

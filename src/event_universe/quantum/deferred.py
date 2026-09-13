@@ -184,7 +184,7 @@ class DeferredQuantum:
 
         The discovered-node guard bounds backward expansion *before* reaching a
         leaf. It is not enough to count only completed nodes of a deep history.
-        This low-level diagnostic method is not itself a modeled cell query.
+        This low-level diagnostic method is not itself a modeled node query.
         """
         self._require_node(root)
         budget = self._config.max_eval_nodes
@@ -271,7 +271,7 @@ class DeferredQuantum:
         return reply
 
     def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
-        """Store bounded candidate configuration inside the quantum owner, not a cell."""
+        """Store bounded candidate configuration inside the quantum owner, not a node."""
         checked(focus_set_id)
         if focus_set_id < 0:
             raise ValueError("focus set id must be non-negative")

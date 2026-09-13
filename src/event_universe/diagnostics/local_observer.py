@@ -44,7 +44,7 @@ class LocalObserver:
 
     Clock counts completed whole-node carrier cycles, not ticks or proper time.
     Receipt sequence is archive order, not a measured time interval. Histories
-    belong to the host and never become cell state or a planner input.
+    belong to the host and never become node state or a planner input.
     """
 
     def __init__(self, definition: ObserverDefinition) -> None:

@@ -23,7 +23,7 @@ def initialization(amount=1, *, owner="left", components=1, signed=True):
         "schema_version": 1,
         "model_id": "carried-exchange-residual-v1",
         "shape": [23, 7, 7],
-        "slots_per_cell": 5,
+        "slots_per_node": 5,
         "link_ticks": 1,
         "normal_budget": 10000,
         "ticks": 8,
@@ -61,7 +61,7 @@ def initialization(amount=1, *, owner="left", components=1, signed=True):
 def mover(world, x):
     return next(
         record
-        for record in world.cells[(x, 3, 3)].records
+        for record in world.nodes[(x, 3, 3)].records
         if record is not None and record.type_index == 0
     )
 
@@ -69,7 +69,7 @@ def mover(world, x):
 def receiver(world, x):
     return next(
         record
-        for record in world.cells[(x, 3, 3)].records
+        for record in world.nodes[(x, 3, 3)].records
         if record is not None and record.type_index == 1
     )
 
@@ -126,7 +126,7 @@ def test_multiple_right_participants_consume_one_left_remainder_in_slot_order():
     world.step()
     values = [
         world.record_values(record)["inventory"]
-        for record in world.cells[(3, 3, 3)].records
+        for record in world.nodes[(3, 3, 3)].records
         if record is not None
     ]
     assert values == [(-1,), (0,), (0,), (1,)]
@@ -148,7 +148,7 @@ def test_signed_vector_exchange_with_two_receivers_matches_independent_three_cyc
     ]
     for values, residue in expected:
         world.step()
-        records = [record for record in world.cells[(3, 3, 3)].records if record is not None]
+        records = [record for record in world.nodes[(3, 3, 3)].records if record is not None]
         assert [world.record_values(record)["inventory"] for record in records] == values
         assert unpack(records[0].exchange_remainders[0]) == residue
         assert world.totals() == {"inventory": (10, -10, 5)}
@@ -190,11 +190,11 @@ def test_invalid_exchange_preserves_both_current_records_and_the_carried_fractio
     world = Simulation(parse_initial_state(initialization(-1, signed=False)))
     world.step()
     world.step()
-    before = world.cells[(5, 3, 3)].records
+    before = world.nodes[(5, 3, 3)].records
     assert unpack(mover(world, 5).exchange_remainders[0]) == (-2,)
     with pytest.raises(ValueError, match="negative"):
         world.step()
-    assert world.cells[(5, 3, 3)].records == before
+    assert world.nodes[(5, 3, 3)].records == before
     assert world.totals() == {"inventory": (0,)}
 
 
@@ -210,7 +210,7 @@ def test_delayed_emitter_refresh_keeps_the_proposed_exchange_remainder():
     ]
     world = Simulation(parse_initial_state(raw))
     world.step()
-    pending = world.cells[(3, 3, 3)].pending
+    pending = world.nodes[(3, 3, 3)].pending
     assert pending is not None and 2 <= pending.ready_tick < 101
     while world.tick < pending.ready_tick:
         assert mover(world, 3).exchange_remainders == ()

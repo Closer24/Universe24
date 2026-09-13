@@ -6,7 +6,7 @@ import pytest
 
 from event_universe import Config
 from event_universe.core.streaming_engine import StreamingEngine
-from event_universe.core.streams import ZERO_OCTANTS, StreamCell
+from event_universe.core.streams import ZERO_OCTANTS, StreamNodeState
 from event_universe.diagnostics.frames import Slice, capture_frame, capture_volume
 from event_universe.models.scalar_field import update_particle
 
@@ -21,18 +21,18 @@ def stream_world():
         lambda values: values,
     )
     # Fixed diagnostic fixture, with nonzero flux deliberately distinct from intensity.
-    world.streams._cells.update(
+    world.streams._nodes.update(
         {
-            (2, 3, 4): StreamCell((1, 2, 3, 4, 5, 6, 7, 8), (99, 0, 0, 0, 0, 0)),
-            (6, 7, 5): StreamCell((0, 0, 0, 0, 0, 0, 0, 9)),
-            (1, 1, 4): StreamCell(),
+            (2, 3, 4): StreamNodeState((1, 2, 3, 4, 5, 6, 7, 8), (99, 0, 0, 0, 0, 0)),
+            (6, 7, 5): StreamNodeState((0, 0, 0, 0, 0, 0, 0, 9)),
+            (1, 1, 4): StreamNodeState(),
         }
     )
     return world
 
 
-def test_stream_projection_copies_population_sums_and_never_materializes_cells(stream_world):
-    before = dict(stream_world.streams.cells)
+def test_stream_projection_copies_population_sums_and_never_materializes_nodes(stream_world):
+    before = dict(stream_world.streams.nodes)
     volume = capture_volume(stream_world)
     plane = capture_frame(stream_world, Slice("XY", 4))
     assert volume.field == {(2, 3, 4): 36, (6, 7, 5): 9}
@@ -40,8 +40,8 @@ def test_stream_projection_copies_population_sums_and_never_materializes_cells(s
     assert volume.field_kind == plane.field_kind == "stream-magnitude"
     volume.field[(2, 3, 4)] = 1000
     plane.field.clear()
-    assert dict(stream_world.streams.cells) == before
-    assert dict(stream_world.cells) == {}
+    assert dict(stream_world.streams.nodes) == before
+    assert dict(stream_world.nodes) == {}
 
 
 @pytest.mark.visualization

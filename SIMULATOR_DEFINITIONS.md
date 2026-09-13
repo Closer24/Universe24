@@ -84,7 +84,7 @@ division cannot round away a failed invariant. The configured unequal-mass
 elastic example and its limits are specified in the disturbance contract; they
 do not change the historical collision laws below or introduce a built-in force.
 
-The source/self-force, scalar cell, particle, turning, variable-link and collision
+The source/self-force, scalar node, particle, turning, variable-link and collision
 laws below remain requirements of explicitly named research APIs. They do not
 define the active generic schema. Shared locality, integer bounds, read-only
 diagnostics and honest failure reporting still apply across applicable models.
@@ -113,8 +113,8 @@ energy, spin or gravity do not provide that evidence by themselves.
 ## Opt-in causal outward streams
 
 `CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar
-transport with exactly fourteen nonnegative bounded integers per stream cell:
-eight octant populations and six delivered directional amounts. Ordinary cell
+transport with exactly fourteen nonnegative bounded integers per stream node:
+eight octant populations and six delivered directional amounts. Ordinary node
 momentum registers remain the local exchange ledger. Stream records contain no
 source identities or histories. Each update reads one old population record and
 at most K local resident slots, produces six fixed eight-integer packets, and
@@ -168,7 +168,7 @@ contract extension, not unbounded host arithmetic or a relaxation of locality.
 
 The numbered record/source/response constraints here describe the historical
 scalar models selected through ScalarSimulation and related named APIs. Their
-five-register cell and sixteen-register particle schema is not universal. The
+five-register node and sixteen-register particle schema is not universal. The
 active generic state and its smaller payload bound are defined in
 [the disturbance contract](docs/DISTURBANCES.md).
 
@@ -181,7 +181,7 @@ active generic state and its smaller payload bound are defined in
    Exceeding a bound raises `OverflowError`; neither wraparound nor saturation is
    used. Python is the host representation, with explicit bounds at the model
    and commit boundaries; arbitrary precision is not an escape for physical state.
-3. A cell contains exactly five integer fields:
+3. A node contains exactly five integer fields:
    `phi, px, py, pz, remainder`.
 4. A particle contains exactly sixteen integer fields:
    `x, y, z, px, py, pz, move_budget, axis_phase, force_rx, force_ry, force_rz,
@@ -189,9 +189,9 @@ active generic state and its smaller payload bound are defined in
    The v13 section below defines the four appended registers and their defaults.
 5. The physical neighborhood is exactly `+x, -x, +y, -y, +z, -z`.
    Each local rule receives only fixed records and six neighbor values.
-6. Every occupied cell has exactly `K = max_particles_per_cell` slots, with
+6. Every occupied node has exactly `K = max_particles_per_node` slots, with
    `-1` denoting an empty slot. K is fixed for a world. No source maps, growing
-   histories or dynamically expanding particle lists are stored per cell.
+   histories or dynamically expanding particle lists are stored per node.
 7. A source persists by occupancy. The model never repeatedly adds its own
    emission to an accumulated source history.
 8. A scalar-field change traverses at most one neighbor edge per synchronous
@@ -220,18 +220,18 @@ arithmetic, alongside absolute and relative import boundaries.
 
 The field and turning components can be supplied independently to `ScalarSimulation`.
 Their denominators come from the same `Config` used by state audits. A scalar
-replacement must fit the existing fixed cell schema; vector or multiple-field
+replacement must fit the existing fixed node schema; vector or multiple-field
 state needs a separate explicit contract. Custom implementations must be local,
 deterministic, bounded and without evolving private state. Measurement code
 reads output and records evidence. No local law receives a world object or
-knows source identities at remote cells.
+knows source identities at remote nodes.
 
 The engine receives field activity as a predicate instead of interpreting the
 candidate law's changes itself. The historical scalar model explicitly retains its legacy
 value-based predicate. An injected scalar law tracks changes to both value and
 remainder unless `field_activity=` is supplied. A law must preserve the all-zero
 sample when neighbors and source are zero, as required by sparse scheduling.
-With no predicate, direct `ScalarEngine` callers retain all visited cells.
+With no predicate, direct `ScalarEngine` callers retain all visited nodes.
 
 No gravitational attraction law, Newton/Einstein equation, future path search or
 unproven physical identification is added as part of architecture maintenance.
@@ -297,8 +297,8 @@ The physical rule and fixed-slot local work have constant bounds for fixed K
 and fixed-width numbers. Sparse dictionaries, sets, global sweeps and
 measurements do not have strict constant total runtime. The Python storage
 adapter does not provide worst-case constant-time hash lookups. Empty historical
-occupancy keys and materialized cells are retained to preserve legacy scheduling;
-world memory can grow as new cells are visited. History collection is optional
+occupancy keys and materialized nodes are retained to preserve legacy scheduling;
+world memory can grow as new nodes are visited. History collection is optional
 and external; JSONL recording streams it to disk.
 
 ## Required regression gates
@@ -324,8 +324,8 @@ The model assumption `deferred-unit-cost-oracle-v1` is defined in POSTULATES.md.
 A successful query returns fixed-size integer records with model_cost=1 and
 world_ticks=0, regardless of host evaluation work. It never calls Engine.step
 or writes physical state. Host counters and budgets remain distinct from cost.
-No automatic per-cell polling is added; any future scheduler must bound calls
-per cell update, with one call per tick as the intended policy.
+No automatic per-node polling is added; any future scheduler must bound calls
+per node update, with one call per tick as the intended policy.
 
 The optional sidecar has a single owner for its bounded deferred graph, cache,
 query accounting and terminal state. Node records have ten integers and at most
@@ -333,9 +333,9 @@ two parents. Amplitudes have two integers; weight is their squared norm. Public
 registers and intermediate work obey the same 32-bit and 64-bit bounds above.
 max_nodes, max_eval_nodes and max_cached_results are explicit positive budgets.
 Failure raises an exception without manufacturing an outcome. Python allocation
-and graph traversal are host work, not strict constant-time cell calculations.
+and graph traversal are host work, not strict constant-time node calculations.
 
-Recorded physical graph edges use an unwrapped 3D chart: same-cell or one cardinal
+Recorded physical graph edges use an unwrapped 3D chart: same-node or one cardinal
 neighbor with a sufficient tick difference. Periodic seam mapping and variable-
 length physical links are not inferred by the sidecar. Pure queries must match
 their root address and cannot read a future root. They do not measure or resample.
@@ -442,7 +442,7 @@ this is the departure budget rate, not a measurement of displacement per tick.
 
 A cyan ↻ marks a shorter displacement through the periodic boundary, using the
 captured world dimensions. A red X marks a shortest displacement of at least
-two cardinal grid steps between displayed frames. A multi-cell jump across a
+two cardinal grid steps between displayed frames. A multi-node jump across a
 boundary shows both markers; a periodic symbol must not hide that jump.
 Trails break at coordinate discontinuities. Sparse sampling is ambiguous, so
 a marker alone is not proof of faster-than-c motion; inspect consecutive ticks.
@@ -466,17 +466,17 @@ The user-authorized link extension is `scalar-field-v11-local-links`, selected
 by `LinkedSimulation` or the historical CLI's `--scenario links`. Baseline v10 remains available for
 comparison. The five/sixteen-register schemas above describe historical scalar field and
 particle records; the frozen v10 reference retains twelve particle registers.
-The v11 candidate additionally has fixed `LinkCell` and `Transit` records:
+The v11 candidate additionally has fixed `LinkNodeState` and `Transit` records:
 
 - Six received scalar integers; six active length integers; six packets of
-  `(value, proposed_length, remaining)` = 30 link integers per materialized cell.
+  `(value, proposed_length, remaining)` = 30 link integers per materialized node.
 - `(direction, departure, length, due)` = four integers per in-flight particle.
   The particle remains in its origin's fixed occupancy slot throughout transit.
 - Three canonical owned edges: +x,+y,+z. Negative edges are local copies. Both
   endpoints may propose changes; ownership must not bias the law by direction.
 - Length proposal: `base + (stretch_num*(local_phi+received_phi))//(2*stretch_den)`.
   Defaults: base=100, stretch_num=1, stretch_den=1. A pair of field values 10,10
-  gives length 110, representing 1.10 original cell spacings. The base is a
+  gives length 110, representing 1.10 original node spacings. The base is a
   scale separating address spacing from the minimum represented length.
 - A proposal travels for the OLD active length, then both endpoints activate
   it. Same-tick opposing proposals use the larger value (explicit candidate
@@ -492,7 +492,7 @@ The v11 candidate additionally has fixed `LinkCell` and `Transit` records:
   departure; evolving geometry affects subsequent transits. This is a model
   approximation. The turning response still uses the scalar gradient; it has
   not been derived from link lengths as an Einstein geodesic.
-- A full target blocks arrival; it neither deletes a particle nor grows cell
+- A full target blocks arrival; it neither deletes a particle nor grows node
   capacity. Any retry uses a newly scheduled full transit, with no banked credit.
 - Initial field seeds are published before the first local scalar replacement.
   No dynamic field rewrite API was added.
@@ -543,7 +543,7 @@ coupling are unchanged. Collision-free mass-1 v10/v11 behavior remains available
 | --- | --- |
 | Law | Classical elastic backscattering: reverse relative velocity in the pair center-of-mass frame |
 | Inputs | The two co-resident particles' three momentum numerators, denominator and positive mass; no remote particles or field solve |
-| Evolving state | Four added particle integers: mass, momentum_den, move_budget_den, last_collision_tick; fixed K-by-K contact flags owned by each contacted cell |
+| Evolving state | Four added particle integers: mass, momentum_den, move_budget_den, last_collision_tick; fixed K-by-K contact flags owned by each contacted node |
 | Parameters | Mass is constant per particle; c_units, K and field parameters retain their existing roles |
 | Derived values | Physical momentum is (px,py,pz)/momentum_den; movement-budget rate is min(L1(p)/mass,c_units), never an independent velocity parameter |
 | Output | Two validated particle records committed together; immutable collision event with before/after state |
@@ -568,7 +568,7 @@ per vector. Movement credit also has a positive denominator and is retained
 exactly across a collision. Direction phase restarts at zero for a newly scattered
 trajectory; carried field-force remainders remain attached to their particles.
 Field impulses remain integer physical impulses: a numerator changes by impulse
-multiplied by momentum_den, and the cell receives the opposite physical impulse.
+multiplied by momentum_den, and the node receives the opposite physical impulse.
 Linked transit time is ceil(length*c_units*mass*momentum_den/L1(numerators)),
 with the existing speed cap and no cross-edge credit. The same rule applies at
 all speeds. Bounded Euclid uses at most 128 divisions for 63-bit inputs. Vector
@@ -584,7 +584,7 @@ arrivals. Intermediate occupancy during sequential movement is not simultaneous
 co-residence. In-flight link residents are excluded until arrival. No collision
 adds a hop, rewrites a past event or changes locked in-flight travel.
 
-Each cell inspects only its K resident slots, at most K(K-1)/2 pairs. A pair's
+Each node inspects only its K resident slots, at most K(K-1)/2 pairs. A pair's
 contact flag prevents repeated bouncing while it remains together. An actual
 move clears flags incident on the departing and arriving slots. Each particle
 scatters at most once in a tick. More than two co-residents are resolved in slot
@@ -593,7 +593,7 @@ ticks. This is a deterministic local multiparticle policy, not a unique
 simultaneous many-body solution or a permutation-invariance claim. Capacity
 blocking remains distinct; K=1 cannot host a two-particle contact.
 
-The contact flags are K*K integer registers per contacted cell, independent of
+The contact flags are K*K integer registers per contacted node, independent of
 world size and elapsed time. Global address sweeps and Python dictionaries remain
 host costs. There are no per-source maps, growing local histories, external
 queries or quantum exceptions in this law.
@@ -633,7 +633,7 @@ and current positions. It retains field momentum. Every proposal validates befor
 commit; baseline v10 is unchanged.
 
 The scheduler may visit at most twelve targets per particle and coalesces overlaps.
-The local rule receives one fixed cell record. It adds no physical registers,
+The local rule receives one fixed node record. It adds no physical registers,
 source map or history and satisfies LOCALITY-1 for fixed K. The candidate must keep
 isolated particle momentum exactly at all tested ticks and retain nonzero external
 response. Exact inputs, results and limitations are in
@@ -648,15 +648,15 @@ one `EventNetworkConfig` before creating legacy scalar nodes. The two state
 representations cannot be mixed in one owner. Existing terminal/Focus consumers
 retain their old API and behavior unless the new representation is selected.
 
-The event backend owns immutable local matrices, per-cell head IDs, joint source
+The event backend owns immutable local matrices, per-node head IDs, joint source
 or checkpoint amplitudes, earlier outcome constraints and bounded decision records.
-Ordinary cells do not acquire this growing host state. Coherent steps append only
-disjoint one-cell or nearest-neighbor operations. Queries return fixed-size local
+Ordinary nodes do not acquire this growing host state. Coherent steps append only
+disjoint one-node or nearest-neighbor operations. Queries return fixed-size local
 weights at the current tick; full-state inspection is host-only diagnostic work.
 Prior correlated records are included in a conservative dependency closure.
 This is sufficient pruning, not a proof of the smallest possible contraction.
 
-An explicit one-cell instrument supplies one to four outcome matrices whose
+An explicit one-node instrument supplies one to four outcome matrices whose
 completeness relation has a positive common integer scale. `prepare` computes
 all branch weights without sampling. `commit` accepts a uniform integer ticket
 when multiple outcomes have positive weight, or no ticket for a certain result.
@@ -681,7 +681,7 @@ memory for an unlimited simulated lifetime.
 The controller may condition on its known records. Such conditional probabilities
 are not a remotely readable physical register, a classical communication channel,
 or an implemented generic Engine commit interface. There is no automatic native
-per-cell polling, quantum-field feedback, universal measurement trigger, physical
+per-node polling, quantum-field feedback, universal measurement trigger, physical
 free-momentum law or derived classical limit in this change. The 3:4 matrix is a
 test fixture and explicit demonstration parameter, never a hidden default law.
 ## Executable entity profiles and bounded conversion
@@ -702,7 +702,7 @@ restrictions. Invalid proposals cannot install partial converted records.
 The optional [native program](docs/NATIVE_QUANTUM_EVENTS.md) binds the selected
 Q-EVENTS-1 owner into the primary Simulation through a generic local protocol.
 Physical causes and computational dependencies retain distinct permissions in
-one bounded immutable identity store. Local cells and packets keep fixed-size
+one bounded immutable identity store. Local nodes and packets keep fixed-size
 references only. Path cost includes the selected mechanical law, a local trigger
 inspection and code writes, and one model unit per successful oracle request.
 The existing budget delay applies once to the entire local cycle; neither

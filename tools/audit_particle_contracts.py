@@ -25,7 +25,7 @@ def load(name):
 
 def inventory(world, raw):
     snapshot = world.snapshot()
-    records = [r["values"] for c in snapshot["cells"] for r in c["disturbances"]]
+    records = [r["values"] for c in snapshot["nodes"] for r in c["disturbances"]]
     records.extend(r["values"] for r in snapshot["transfers"])
     momentum = [Fraction(0)] * 3
     energy = Fraction(0)

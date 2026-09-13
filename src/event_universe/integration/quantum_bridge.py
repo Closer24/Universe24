@@ -73,8 +73,8 @@ class QuantumBridge:
     def interfere(self, left: int, right: int, address: Address, tick: int) -> int:
         return self._quantum.sum2(left, right, address, tick)
 
-    def query_cell(self, root: int, address: Address, tick: int) -> QuantumReply:
-        """Explicit fixed-size call; does not turn every cell into a detector.
+    def query_node(self, root: int, address: Address, tick: int) -> QuantumReply:
+        """Explicit fixed-size call; does not turn every node into a detector.
 
         One invocation is one model unit. Repeated host probes are allowed and
         remain read-only; the physical scheduler, if added later, must bound its
@@ -83,7 +83,7 @@ class QuantumBridge:
         return self._quantum.query(QuantumQuery(root, address, tick))
 
     def bind_focus_set(self, focus_set_id: int, focus_set: FocusSet) -> None:
-        """Configure a bounded candidate set in the quantum owner, not in a cell."""
+        """Configure a bounded candidate set in the quantum owner, not in a node."""
         self._quantum.bind_focus_set(focus_set_id, focus_set)
 
     def focus_event(self, request: FocusRequest) -> FocusReply:
@@ -94,13 +94,13 @@ class QuantumBridge:
         """Compatibility adapter through the same oracle; no second evaluator.
 
         With no world timestamp argument, this historical API queries at the
-        root's recorded time. Use query_cell for an explicitly stamped cell call.
+        root's recorded time. Use query_node for an explicitly stamped node call.
         """
         checked(event_id)
         if event_id < 0:
             raise ValueError("event id must be non-negative")
         node = self._quantum.node(root)
-        reply = self.query_cell(root, (node.x, node.y, node.z), node.tick)
+        reply = self.query_node(root, (node.x, node.y, node.z), node.tick)
         return QuantumMeasurement(event_id, reply.amplitude, reply.weight, reply.evaluation_nodes)
 
     def bind_terminal_trial(self, setup: TerminalSetup) -> None:

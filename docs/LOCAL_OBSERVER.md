@@ -81,7 +81,7 @@ returned signal measured with a defined clock; it is not inferred from addresses
 
 Physical updates keep their integer operations, costs, ownership and link times.
 The archive never feeds a planner or repairs conservation. Its host memory grows
-with local receptions and samples; it is not physical cell memory or an O(1)
+with local receptions and samples; it is not physical node memory or an O(1)
 physical algorithm. `max_receipts` bounds the receipt archive. Exhaustion reports
 a failed run with retained partial evidence, not silent loss. Completed physical
 commits stay committed if diagnostic output later fails.

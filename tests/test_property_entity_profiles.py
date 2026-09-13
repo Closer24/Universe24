@@ -34,16 +34,16 @@ def compiled(entities=ENTITIES, *, profiles=None):
 def records(world):
     return {
         record["values"]["coupling"][0]: record["values"]
-        for cell in world.snapshot()["cells"]
-        for record in cell["disturbances"]
+        for node in world.snapshot()["nodes"]
+        for record in node["disturbances"]
     }
 
 
 def inventories(snapshot):
     energy = 0
     momentum = [0, 0, 0]
-    for cell in snapshot["cells"]:
-        for record in cell["disturbances"]:
+    for node in snapshot["nodes"]:
+        for record in node["disturbances"]:
             values = record["values"]
             energy += values["energy"][0]
             for axis, value in enumerate(values["momentum"]):
@@ -108,7 +108,7 @@ def test_different_catalog_identities_with_equal_properties_receive_equal_transf
     raw = compiled(ENTITIES[:2], profiles=profiles)
     world = Simulation(parse_initial_state(raw))
     world.step()
-    values = [record["values"] for cell in world.snapshot()["cells"] for record in cell["disturbances"]]
+    values = [record["values"] for node in world.snapshot()["nodes"] for record in node["disturbances"]]
     assert len(values) == 2 and values[0] == values[1]
     assert values[0]["energy"] == (4,)
     assert values[0]["momentum"] == (2, 0, 0)

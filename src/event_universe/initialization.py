@@ -672,7 +672,7 @@ def _seeds(
             raise ValueError("seed.position must be within shape")
         occupied[position] = occupied.get(position, 0) + 1
         if occupied[position] > capacity:
-            raise ValueError("initial seeds exceed slots_per_cell")
+            raise ValueError("initial seeds exceed slots_per_node")
         type_index = _index(obj["type"], names, "seed.type")
         definition = disturbances[type_index]
         values = _values(obj.get("values", {}), fields, definition.fields, definition.defaults)
@@ -823,7 +823,7 @@ def _spatial_seeds(
             raise ValueError("spatial seed position must be within shape")
         index = _index(obj["field"], names, "spatial seed field")
         if (position, index) in occupied:
-            raise ValueError("duplicate spatial seed at the same cell and field")
+            raise ValueError("duplicate spatial seed at the same node and field")
         occupied.add((position, index))
         payloads = tuple(
             _payload(v, fields[spatial[index].field])
@@ -1067,7 +1067,7 @@ def parse_initial_state(document: object) -> InitialState:
         "schema_version",
         "model_id",
         "shape",
-        "slots_per_cell",
+        "slots_per_node",
         "link_ticks",
         "normal_budget",
         "ticks",
@@ -1108,9 +1108,9 @@ def parse_initial_state(document: object) -> InitialState:
     shape = _address(obj["shape"], "shape", 1)
     if "observer" in obj:
         ObserverDefinition.parse(obj["observer"], shape)
-    capacity = _integer(obj["slots_per_cell"], "slots_per_cell", 1)
+    capacity = _integer(obj["slots_per_node"], "slots_per_node", 1)
     if capacity > MAX_SLOTS:
-        raise ValueError(f"slots_per_cell exceeds {MAX_SLOTS}")
+        raise ValueError(f"slots_per_node exceeds {MAX_SLOTS}")
     costs = _object(obj["operation_costs"], "operation_costs", set(OPERATIONS), set(OPERATIONS))
     fields = _fields(obj["fields"])
     disturbances = _disturbances(obj["disturbance_types"], fields)
@@ -1118,7 +1118,7 @@ def parse_initial_state(document: object) -> InitialState:
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
         shape=shape,
-        slots_per_cell=capacity,
+        slots_per_node=capacity,
         link_ticks=_integer(obj["link_ticks"], "link_ticks", 1),
         normal_budget=_integer(obj["normal_budget"], "normal_budget", 1),
         ticks=_integer(obj["ticks"], "ticks", 0),

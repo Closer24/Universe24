@@ -8,7 +8,7 @@ from .disturbance_state import DisturbanceRecord, LocalPlan
 class RecordPolicy(Protocol):
     """Pure proposals over fixed local slots and already-delivered records.
 
-    Shared immutable definitions live in the implementation, outside cell state.
+    Shared immutable definitions live in the implementation, outside node state.
     Implementations preserve slot count and pending locks, validate integer
     results, and must not retain mutable state or read a world or a clock.
     """

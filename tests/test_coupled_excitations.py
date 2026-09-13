@@ -29,9 +29,9 @@ def configuration(case="incoming_positive"):
 def carrier(world, names=None):
     names = names or {}
     records = [
-        (tuple(cell["position"]), record["values"])
-        for cell in world.snapshot()["cells"]
-        for record in cell["disturbances"]
+        (tuple(node["position"]), record["values"])
+        for node in world.snapshot()["nodes"]
+        for record in node["disturbances"]
     ]
     assert len(records) == 1
     position, values = records[0]
@@ -64,8 +64,8 @@ def ledger(world, names=None):
     )
     internal_energy = 0
     momentum = [field_energy, 0, 0]
-    for cell in world.snapshot()["cells"]:
-        for record in cell["disturbances"]:
+    for node in world.snapshot()["nodes"]:
+        for record in node["disturbances"]:
             values = record["values"]
             internal_energy += sum(value * value for value in values[names.get("internal", "internal")])
             for axis, value in enumerate(values[names.get("recoil", "recoil")]):
@@ -194,8 +194,8 @@ def test_field_can_travel_independently_and_an_absent_receiver_does_not_release_
     held = Simulation(parse_initial_state(configuration("absent_carrier")))
     checked_steps(free, 5, (1, X))
     checked_steps(held, 5, (1, X))
-    assert all(not node["disturbances"] for node in free.snapshot()["cells"])
-    assert all(not node["disturbances"] for node in held.snapshot()["cells"])
+    assert all(not node["disturbances"] for node in free.snapshot()["nodes"])
+    assert all(not node["disturbances"] for node in held.snapshot()["nodes"])
     assert owned_amplitudes(free) != owned_amplitudes(held)
     assert owned_amplitudes(held) == [("node", (4, 2, 2), Y)]
     assert gate(held, (4, 2, 2)) == (1,)
@@ -207,7 +207,7 @@ def test_low_budget_preserves_owned_state_until_the_frozen_exchange_commits():
     position, before = carrier(world)
     # By tick four the two-link pulse has arrived and the exchange has been planned.
     checked_steps(world, 4, (1, X))
-    pending = world.cells[position].pending
+    pending = world.nodes[position].pending
     assert pending is not None and pending.ready_tick > world.tick
     assert pending.plan.spatial_guards
     ready = pending.ready_tick
@@ -238,7 +238,7 @@ def test_arrival_during_pending_exchange_rejects_stale_commit_without_releasing_
     world = Simulation(parse_initial_state(raw))
     before = carrier(world)[1]
     world.step()
-    pending = world.cells[position].pending
+    pending = world.nodes[position].pending
     assert pending is not None and pending.plan.spatial_guards
     ready = pending.ready_tick
     assert ready > world.tick
@@ -482,7 +482,7 @@ def test_delayed_emission_commits_before_send_and_obeys_the_configured_link_dela
     world = Simulation(parse_initial_state(raw), observer=events.append)
     position, before = carrier(world)
     checked_steps(world, 1, (1, ZERO))
-    pending = world.cells[position].pending
+    pending = world.nodes[position].pending
     assert pending is not None and pending.ready_tick > world.tick
     ready = pending.ready_tick
     while world.tick < ready:

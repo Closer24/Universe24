@@ -124,7 +124,7 @@ def _run_scenario(
         # Field-bearing initial states are not evidence of isolation.
         isolated = (
             next(iter(world.particles.items()))
-            if len(world.particles) == 1 and not any(any(cell) for cell in world.cells.values())
+            if len(world.particles) == 1 and not any(any(node) for node in world.nodes.values())
             else None
         )
         isolated_status = "not_applicable" if isolated is None else "passed"

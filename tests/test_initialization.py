@@ -87,7 +87,7 @@ def test_coupling_references_are_resolved_to_owned_fields() -> None:
         (("ticks",), True, "must be an integer"),
         (("normal_budget",), 0, "must be an integer"),
         (("shape",), [7, 0, 7], "must be an integer"),
-        (("slots_per_cell",), 33, "slots_per_cell"),
+        (("slots_per_node",), 33, "slots_per_node"),
         (("operation_costs", "read"), 0, "cost of read"),
         (("operation_costs", "typo"), 2, "unknown keys"),
         (("fields", 0, "signed"), 1, "must be a boolean"),
@@ -131,10 +131,10 @@ def test_split_cannot_divide_an_intensive_attribute() -> None:
 
 def test_initial_capacity_and_required_operation_prices() -> None:
     document = _document()
-    document["slots_per_cell"] = 2
-    with pytest.raises(ValueError, match="exceed slots_per_cell"):
+    document["slots_per_node"] = 2
+    with pytest.raises(ValueError, match="exceed slots_per_node"):
         parse_initial_state(document)
-    document["slots_per_cell"] = 3
+    document["slots_per_node"] = 3
     assert len(parse_initial_state(document).seeds) == 3
     del document["operation_costs"]["commit"]
     with pytest.raises(ValueError, match="missing keys: commit"):

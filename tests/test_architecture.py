@@ -3,9 +3,9 @@ from pathlib import Path
 import pytest
 
 import event_universe
-from event_universe import CellState, ParticleState
+from event_universe import NodeState, ParticleState
 from event_universe.core.scalar_engine import ScalarEngine
-from event_universe.core.state import CELL_REGISTERS, PARTICLE_REGISTERS
+from event_universe.core.state import NODE_REGISTERS, PARTICLE_REGISTERS
 from event_universe.diagnostics.numeric_audit import audit_physical_modules, static_integer_audit
 
 from .architecture_rules import violations
@@ -91,9 +91,9 @@ def test_architecture_gate_allows_legal_dependencies_and_type_annotations(module
 
 
 def test_physical_records_have_fixed_integer_fields_and_no_history():
-    assert CELL_REGISTERS == 5 and PARTICLE_REGISTERS == 16
-    assert len(CellState()) == 5 and len(ParticleState(0, 0, 0)) == 16
-    assert not hasattr(CellState(), "__dict__")
+    assert NODE_REGISTERS == 5 and PARTICLE_REGISTERS == 16
+    assert len(NodeState()) == 5 and len(ParticleState(0, 0, 0)) == 16
+    assert not hasattr(NodeState(), "__dict__")
     assert not hasattr(ParticleState(0, 0, 0), "__dict__")
     engine_source = Path(__import__(ScalarEngine.__module__, fromlist=["__file__"]).__file__).read_text()
     assert "self.paths" not in engine_source and "self.force_records" not in engine_source

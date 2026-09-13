@@ -100,7 +100,7 @@ A failure before kind detection retains
 ## Guarantees and remaining runtime checks
 
 For native programs, initial event capacity must cover one causal source per
-distinct classical seed cell plus one event per quantum register, including
+distinct classical seed node plus one event per quantum register, including
 colocated registers. The native parser owns this deterministic check; it does not
 reserve capacity or replace the runtime ledger's future-event bound checks.
 

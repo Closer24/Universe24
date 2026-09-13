@@ -7,7 +7,7 @@
     5
   ],
   "boundary": "periodic",
-  "slots_per_cell": 1,
+  "slots_per_node": 1,
   "link_ticks": 1,
   "normal_budget": 1000000,
   "ticks": 8,

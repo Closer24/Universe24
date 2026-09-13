@@ -8,7 +8,6 @@ by default. Use --visualize only when a recorded HTML display is requested.
 from event_universe.compat import IntegerO1Field, IntegerO1Field3D
 from event_universe.core.state import (
     AXIS_PHASE,
-    CELL_REGISTERS,
     DIRECTIONS,
     FIELD_PX,
     FIELD_PY,
@@ -23,6 +22,7 @@ from event_universe.core.state import (
     MINUS_Y,
     MINUS_Z,
     MOVE_BUDGET,
+    NODE_REGISTERS,
     PARTICLE_REGISTERS,
     PHI,
     PLUS_X,
@@ -42,7 +42,7 @@ from event_universe.diagnostics.numeric_audit import static_integer_audit
 
 __all__ = [
     "AXIS_PHASE",
-    "CELL_REGISTERS",
+    "NODE_REGISTERS",
     "Config",
     "DIRECTIONS",
     "FIELD_PX",

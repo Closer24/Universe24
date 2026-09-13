@@ -16,7 +16,7 @@ SPEC.loader.exec_module(EXPERIMENTS)
 
 def owned(world):
     frame = world.snapshot()
-    return [row["values"] for cell in frame["cells"] for row in cell["disturbances"]] + [
+    return [row["values"] for node in frame["nodes"] for row in node["disturbances"]] + [
         row["values"] for row in frame["transfers"]
     ]
 
@@ -32,10 +32,10 @@ def test_zero_total_unequal_mass_candidate_reflects_and_declines_nonzero_total()
         if tick == 4:
             # Independent classical unit check from measured displacement.
             initial_x = {1: 2, 2: 5}
-            for cell in world.snapshot()["cells"]:
-                for record in cell["disturbances"]:
+            for node in world.snapshot()["nodes"]:
+                for record in node["disturbances"]:
                     mass = record["values"]["mass"][0]
-                    displacement = cell["position"][0] - initial_x[mass]
+                    displacement = node["position"][0] - initial_x[mass]
                     assert (
                         displacement * mass * raw["fields"][2]["scale"]
                         == record["values"]["momentum"][0] * tick
