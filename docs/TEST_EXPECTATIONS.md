@@ -830,3 +830,15 @@ Parallel integration also compares indexed field-only and joint Node profiles,
 and work-driven emissions, against serial snapshots, committed-cost readouts,
 modeled work and complete event order. Worker planning keeps the same local
 proposal validation and field/carrier commit boundaries.
+
+## Reference unit authoring
+
+`tests/test_reference_units.py` independently checks SI dimensions and exact defining
+constants, Scalar/Vector shape and sign, known catalog mass/charge/magnetic inputs,
+explicit rounding budgets, runtime payload bounds and malformed dependency graphs.
+Its periodic 40-tick probe preserves encoded reference mass inventory and all three
+momentum registers under unchanged two-tick Link transport. It is not a proof of
+mass-dependent dynamics. `tests/test_entity_catalog.py` pins PDG 2026 masses and
+widths, CODATA 2022 electron magnetic moment, signed antiparticle references and
+the distinction between omitted and inapplicable lifetimes. See
+[reference units](REFERENCE_UNITS.md) for calibration and evidence boundaries.

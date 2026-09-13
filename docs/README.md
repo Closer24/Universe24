@@ -10,6 +10,7 @@ result are different claims. Revision-specific results are not a live status fee
 | Document | Responsibility |
 | --- | --- |
 | [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Scalar, Vector, Port, Link, Event and LocalRule vocabulary |
+| [Physical reference units](REFERENCE_UNITS.md) | Shared constants, SI dimensions and bounded Scalar/Vector authoring with explicit encoding error |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
 | [Integer Node processor](NODE_VECTOR_PROCESSOR.md) | Opt-in rule durations, indexed interactions, aggregation and pre-commit readout guards |
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |

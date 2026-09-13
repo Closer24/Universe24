@@ -2,8 +2,8 @@
   "catalog_version": 2,
   "purpose": "physical_reference",
   "scope": {
-    "snapshot_date": "2026-09-12",
-    "reference_release": "PDG 2025 update tables and individually cited reviews, accessed on the snapshot date.",
+    "snapshot_date": "2026-09-13",
+    "reference_release": "PDG 2026 summary tables; individually dated reviews and CODATA 2022 magnetic references.",
     "elementary_coverage": "Six quark flavors and antiparticles; three charged leptons and antiparticles; three active neutrino flavor sectors and antineutrino labels; photon; one gluon octet; W plus, W minus, Z and Higgs bosons.",
     "field_coverage": "Standard Model field families and classical geometry; inferred dark-sector categories and project hypotheses are distinguished.",
     "selected_composites": "Proton, neutron and their antiparticles have individual entries.",
@@ -27,7 +27,8 @@
     "Evidence statuses separate measurements, theoretical classifications, unknown identity and hypotheses.",
     "Executable representation profiles may explicitly select couplings by shared carried properties; entity names and catalog metadata never dispatch a simulation law.",
     "An energy and momentum conservation claim must jointly account for fields, disturbances and actual in-flight owners, with node changes balanced by causal boundary flux.",
-    "Conservation diagnostics measure declared quantities and report violations; they do not repair physical state. Candidate definitions remain in explicit representation profiles."
+    "Conservation diagnostics measure declared quantities and report violations; they do not repair physical state. Candidate definitions remain in explicit representation profiles.",
+    "Reference units and named constants are defined in physical-units.json. Explicit host authoring maps selected values into bounded Scalar/Vector components; catalog identity never selects a physical law."
   ],
   "sources": {
     "pdg_higgs": {
@@ -39,8 +40,8 @@
       "url": "https://home.cern/science/physics/standard-model/"
     },
     "pdg_particles": {
-      "title": "PDG 2025: Particle summary tables",
-      "url": "https://pdg.lbl.gov/2025/tables/contents_tables.html"
+      "title": "PDG 2026: Particle summary tables",
+      "url": "https://pdg.lbl.gov/2026/tables/contents_tables.html"
     },
     "cern_antimatter": {
       "title": "CERN: Antimatter",
@@ -71,24 +72,24 @@
       "url": "https://github.com/Closer24/Universe24/blob/main/POSTULATES.md"
     },
     "pdg_boson_table": {
-      "title": "PDG 2025: Gauge and Higgs boson table",
-      "url": "https://pdg.lbl.gov/2025/tables/rpp2025-sum-gauge-higgs-bosons.pdf"
+      "title": "PDG 2026: Gauge and Higgs boson table",
+      "url": "https://pdg.lbl.gov/2026/tables/rpp2026-sum-gauge-higgs-bosons.pdf"
     },
     "pdg_lepton_table": {
-      "title": "PDG 2025: Lepton table",
-      "url": "https://pdg.lbl.gov/2025/tables/rpp2025-sum-leptons.pdf"
+      "title": "PDG 2026: Lepton table",
+      "url": "https://pdg.lbl.gov/2026/tables/rpp2026-sum-leptons.pdf"
     },
     "pdg_quark_table": {
-      "title": "PDG 2025: Quark table",
-      "url": "https://pdg.lbl.gov/2025/tables/rpp2025-sum-quarks.pdf"
+      "title": "PDG 2026: Quark table",
+      "url": "https://pdg.lbl.gov/2026/tables/rpp2026-sum-quarks.pdf"
     },
     "pdg_baryon_table": {
-      "title": "PDG 2025: Baryon table",
-      "url": "https://pdg.lbl.gov/2025/tables/rpp2025-sum-baryons.pdf"
+      "title": "PDG 2026: Baryon table",
+      "url": "https://pdg.lbl.gov/2026/tables/rpp2026-sum-baryons.pdf"
     },
     "pdg_meson_table": {
-      "title": "PDG 2025: Meson table",
-      "url": "https://pdg.lbl.gov/2025/tables/rpp2025-sum-mesons.pdf"
+      "title": "PDG 2026: Meson table",
+      "url": "https://pdg.lbl.gov/2026/tables/rpp2026-sum-mesons.pdf"
     },
     "pdg_qcd": {
       "title": "PDG 2025: Quantum chromodynamics",
@@ -133,6 +134,10 @@
     "tong_solid_state": {
       "title": "David Tong: Solid state physics",
       "url": "https://davidtong.org/teaching/solid-state-physics/"
+    },
+    "nist_codata_2022": {
+      "title": "NIST CODATA 2022 recommended constants",
+      "url": "https://physics.nist.gov/cuu/Constants/Table/allascii.txt"
     }
   },
   "field_entities": [
@@ -882,7 +887,8 @@
           "context": "Running mass in the modified minimal subtraction scheme at 2 GeV; 90 percent confidence interval.",
           "precision": "Published precision; no simulator conversion.",
           "uncertainty_decimal": "0.07",
-          "uncertainty_kind": "symmetric reported uncertainty"
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "confidence_level_percent": 90
         },
         "lifetime": {
           "status": "not_applicable",
@@ -1139,7 +1145,8 @@
           "context": "Running mass in the modified minimal subtraction scheme at 2 GeV; 90 percent confidence interval.",
           "precision": "Published precision; no simulator conversion.",
           "uncertainty_decimal": "0.07",
-          "uncertainty_kind": "symmetric reported uncertainty"
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "confidence_level_percent": 90
         },
         "lifetime": {
           "status": "not_applicable",
@@ -1391,12 +1398,13 @@
           "sources": [
             "pdg_quark_table"
           ],
-          "value_decimal": "1.2730",
+          "value_decimal": "1.2729",
           "unit": "GeV/c2",
           "context": "Running mass in the modified minimal subtraction scheme at its own running-mass scale; 90 percent confidence interval.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.0046",
-          "uncertainty_kind": "symmetric reported uncertainty"
+          "uncertainty_decimal": "0.0045",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "confidence_level_percent": 90
         },
         "lifetime": {
           "status": "not_applicable",
@@ -1648,12 +1656,13 @@
           "sources": [
             "pdg_quark_table"
           ],
-          "value_decimal": "93.5",
+          "value_decimal": "92.9",
           "unit": "MeV/c2",
           "context": "Running mass in the modified minimal subtraction scheme at 2 GeV; 90 percent confidence interval.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.8",
-          "uncertainty_kind": "symmetric reported uncertainty"
+          "uncertainty_decimal": "0.7",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "confidence_level_percent": 90
         },
         "lifetime": {
           "status": "not_applicable",
@@ -1905,15 +1914,15 @@
           "sources": [
             "pdg_quark_table"
           ],
-          "value_decimal": "172.56",
+          "value_decimal": "172.60",
           "unit": "GeV/c2",
-          "context": "Direct event-kinematics mass, distinct from running or pole-mass determinations; PDG scale factor 1.6.",
+          "context": "Direct event-kinematics mass, distinct from running or pole-mass determinations; PDG scale factor 1.5.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.31",
+          "uncertainty_decimal": "0.27",
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "lifetime": {
-          "status": "not_applicable",
+          "status": "not_supplied",
           "sources": [
             "pdg_quark_table"
           ],
@@ -1965,8 +1974,11 @@
           ],
           "value_decimal": "1.42",
           "unit": "GeV",
-          "context": "Total top width.",
-          "precision": "Uncertainty plus 0.19 and minus 0.15 GeV; PDG scale factor 1.4."
+          "context": "Total top width; PDG scale factor 1.4.",
+          "precision": "Published asymmetric uncertainty; no simulator conversion.",
+          "uncertainty_plus_decimal": "0.19",
+          "uncertainty_minus_decimal": "0.15",
+          "uncertainty_kind": "asymmetric reported uncertainty"
         }
       }
     },
@@ -2179,12 +2191,13 @@
           "sources": [
             "pdg_quark_table"
           ],
-          "value_decimal": "4.183",
+          "value_decimal": "4.186",
           "unit": "GeV/c2",
           "context": "Running mass in the modified minimal subtraction scheme at its own running-mass scale; 90 percent confidence interval.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.007",
-          "uncertainty_kind": "symmetric reported uncertainty"
+          "uncertainty_decimal": "0.006",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "confidence_level_percent": 90
         },
         "lifetime": {
           "status": "not_applicable",
@@ -2437,11 +2450,11 @@
           "sources": [
             "pdg_lepton_table"
           ],
-          "value_decimal": "0.51099895000",
+          "value_decimal": "0.51099895069",
           "unit": "MeV/c2",
           "context": "Rest mass in selected PDG table.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.00000000015",
+          "uncertainty_decimal": "0.00000000016",
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "lifetime": {
@@ -2474,6 +2487,17 @@
           ],
           "value": "lepton interaction sector",
           "context": "Ordinary classification without universal conservation enforcement."
+        },
+        "magnetic_moment": {
+          "status": "measured",
+          "sources": [
+            "nist_codata_2022"
+          ],
+          "value_decimal": "-1.00115965218046",
+          "uncertainty_decimal": "0.00000000000018",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "unit": "bohr_magneton",
+          "context": "Signed magnetic moment for maximal spin projection along the quantization axis. An axial-vector state additionally requires explicit preparation; this scalar reference does not assign an orientation."
         }
       }
     },
@@ -2585,6 +2609,16 @@
           ],
           "value": "antilepton interaction sector",
           "context": "Ordinary classification without universal conservation enforcement."
+        },
+        "magnetic_moment": {
+          "status": "reference",
+          "sources": [
+            "nist_codata_2022",
+            "cern_antimatter"
+          ],
+          "entity_id": "electron",
+          "reference_sign": -1,
+          "context": "Opposite signed magnetic moment for the same spin-axis convention under particle-antiparticle symmetry, not an independent measurement."
         }
       }
     },
@@ -3971,15 +4005,15 @@
           "sources": [
             "pdg_boson_table"
           ],
-          "value_decimal": "80.3692",
+          "value_decimal": "80.3625",
           "unit": "GeV/c2",
           "context": "Shared W reference, not a separate charge-specific mass measurement.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.0133",
+          "uncertainty_decimal": "0.0077",
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "lifetime": {
-          "status": "not_applicable",
+          "status": "not_supplied",
           "sources": [
             "pdg_boson_table"
           ],
@@ -4182,7 +4216,7 @@
           "sources": [
             "pdg_boson_table"
           ],
-          "value_decimal": "91.1880",
+          "value_decimal": "91.1879",
           "unit": "GeV/c2",
           "context": "Resonance mass in the selected PDG convention.",
           "precision": "Published precision; no simulator conversion.",
@@ -4190,7 +4224,7 @@
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "lifetime": {
-          "status": "not_applicable",
+          "status": "not_supplied",
           "sources": [
             "pdg_boson_table"
           ],
@@ -4287,15 +4321,15 @@
           "sources": [
             "pdg_boson_table"
           ],
-          "value_decimal": "125.20",
+          "value_decimal": "125.13",
           "unit": "GeV/c2",
-          "context": "Selected Higgs mass; PDG scale factor 1.4.",
+          "context": "Selected Higgs mass; PDG scale factor 1.5.",
           "precision": "Published precision; no simulator conversion.",
           "uncertainty_decimal": "0.11",
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "lifetime": {
-          "status": "not_applicable",
+          "status": "not_supplied",
           "sources": [
             "pdg_boson_table"
           ],
@@ -4313,10 +4347,13 @@
           "sources": [
             "pdg_boson_table"
           ],
-          "value_decimal": "3.7",
+          "value_decimal": "3.0",
           "unit": "MeV",
           "context": "Conditional extraction assumes equal on-shell and off-shell effective couplings.",
-          "precision": "Uncertainty plus 1.9 and minus 1.4 MeV."
+          "precision": "Published asymmetric uncertainty; no simulator conversion.",
+          "uncertainty_plus_decimal": "1.5",
+          "uncertainty_minus_decimal": "0.7",
+          "uncertainty_kind": "asymmetric reported uncertainty"
         }
       }
     },
@@ -4391,7 +4428,7 @@
           "sources": [
             "pdg_baryon_table"
           ],
-          "value_decimal": "938.27208816",
+          "value_decimal": "938.27208943",
           "unit": "MeV/c2",
           "context": "Composite rest mass, not the sum of valence-quark reference masses.",
           "precision": "Published precision; no simulator conversion.",
@@ -4427,6 +4464,17 @@
           "value": 1,
           "unit": "baryon number",
           "context": "Ordinary classification; no unobserved violation asserted."
+        },
+        "magnetic_moment": {
+          "status": "measured",
+          "sources": [
+            "pdg_baryon_table"
+          ],
+          "value_decimal": "2.7928473446",
+          "uncertainty_decimal": "0.0000000008",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "unit": "nuclear_magneton",
+          "context": "Signed magnetic moment for maximal spin projection along the quantization axis. An axial-vector state additionally requires explicit preparation; this scalar reference does not assign an orientation."
         }
       }
     },
@@ -4535,6 +4583,16 @@
           "value": -1,
           "unit": "baryon number",
           "context": "Ordinary classification; no unobserved violation asserted."
+        },
+        "magnetic_moment": {
+          "status": "reference",
+          "sources": [
+            "pdg_baryon_table",
+            "cern_antimatter"
+          ],
+          "entity_id": "proton",
+          "reference_sign": -1,
+          "context": "Opposite signed magnetic moment for the same spin-axis convention under particle-antiparticle symmetry, not an independent measurement."
         }
       }
     },
@@ -4609,7 +4667,7 @@
           "sources": [
             "pdg_baryon_table"
           ],
-          "value_decimal": "939.5654205",
+          "value_decimal": "939.5654219",
           "unit": "MeV/c2",
           "context": "Composite rest mass, not the sum of valence-quark reference masses.",
           "precision": "Published precision; no simulator conversion.",
@@ -4621,11 +4679,11 @@
           "sources": [
             "pdg_baryon_table"
           ],
-          "value_decimal": "878.4",
+          "value_decimal": "878.3",
           "unit": "s",
           "context": "Free-neutron mean lifetime; bound stability depends on nuclear state. PDG scale factor 1.8.",
           "precision": "Published precision; no simulator conversion.",
-          "uncertainty_decimal": "0.5",
+          "uncertainty_decimal": "0.4",
           "uncertainty_kind": "symmetric reported uncertainty"
         },
         "composition": {
@@ -4649,6 +4707,17 @@
           "value": 1,
           "unit": "baryon number",
           "context": "Ordinary classification; no unobserved violation asserted."
+        },
+        "magnetic_moment": {
+          "status": "measured",
+          "sources": [
+            "pdg_baryon_table"
+          ],
+          "value_decimal": "-1.9130428",
+          "uncertainty_decimal": "0.0000005",
+          "uncertainty_kind": "symmetric reported uncertainty",
+          "unit": "nuclear_magneton",
+          "context": "Signed magnetic moment for maximal spin projection along the quantization axis. An axial-vector state additionally requires explicit preparation; this scalar reference does not assign an orientation."
         }
       }
     },
@@ -4757,6 +4826,16 @@
           "value": -1,
           "unit": "baryon number",
           "context": "Ordinary classification; no unobserved violation asserted."
+        },
+        "magnetic_moment": {
+          "status": "reference",
+          "sources": [
+            "pdg_baryon_table",
+            "cern_antimatter"
+          ],
+          "entity_id": "neutron",
+          "reference_sign": -1,
+          "context": "Opposite signed magnetic moment for the same spin-axis convention under particle-antiparticle symmetry, not an independent measurement."
         }
       }
     },
