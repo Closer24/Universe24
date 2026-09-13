@@ -55,7 +55,14 @@ and response allowances bound dynamic input, and declared integer attenuation
 removes magnitude at interior arrivals while exempting immutable background.
 This candidate tracks signed dissipation rather than promising conserved physical
 momentum through decay. Self-field exclusion by arrival order remains an unverified
-hypothesis and is not enabled by this extension.
+hypothesis and is not enabled by this extension. Two explicit opt-in policies now
+exist for the generic engine, described in [spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering):
+`field_phase_first` completes every field link before carriers sample, so an
+emitter's own field is one link ahead on every free-space path; `arrival_port_blind`
+keeps the default clock and lets an arriving carrier ignore, for that one sample,
+the travel port it came in on, so straight paths are self-blind while maximum-speed
+corners still coarrive. Both pass isolated-source and external-source controls;
+neither uses source identity, and neither is a derived physical law.
 
 The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
 the same budget delay to all local fields and carriers. It freezes updates and
@@ -212,6 +219,14 @@ solely because of its own symmetric field.
 For an accepted free-motion candidate, this requirement also applies to moving
 isolated particles: their momentum and impulse remainders must not change due
 to their own field. Baseline failures remain evidence, not approved corrections.
+The generic engine's default clock fails this requirement for a value-driven
+exchange response: a carrier and the field it emits in its departure interval
+cross one link together, and `tests/test_field_phase_first.py` records that
+baseline. The opt-in `field_phase_first` and `arrival_port_blind` policies in
+[spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering) satisfy
+it for straight motion by ordering alone; the flux-driven rotation law satisfies
+it under the default clock by geometry, as `tests/test_rotation_self_interaction.py`
+shows. None of these selects a self-force law under acceleration.
 The opt-in `causal-octant-stream-v1` candidate tests this through outward one-link
 transport before the particle response, with no source identity or subtraction.
 Its free-space guarantee ends at periodic return, which is a boundary effect

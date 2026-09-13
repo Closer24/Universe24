@@ -1,5 +1,6 @@
 """Generic field/carrier transactions with rebased delayed-commit guards."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass, replace
 
 from event_universe.core.coupling_selectors import matches_type
@@ -114,7 +115,12 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         sample: Values,
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
+        *,
+        slot_samples: Mapping[int, Values] | None = None,
+        slot_fluxes: Mapping[int, Values] | None = None,
     ) -> SpatialCouplingResult:
+        if slot_samples or slot_fluxes:
+            raise ValueError("joint spatial interactions do not support per-slot samples")
         legacy = SpatialCouplingLaw.__call__(self, records, sample, fluxes)
         meter = CostMeter(self.costs)
         meter.total = legacy.cost

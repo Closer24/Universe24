@@ -1,5 +1,6 @@
 """Bounded local field exchange and exact lattice rotations with opposite reaction."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass, replace
 
 from event_universe.core.coupling_selectors import matches_type
@@ -336,6 +337,9 @@ class SpatialCouplingLaw:
         sample: Values,
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
+        *,
+        slot_samples: Mapping[int, Values] | None = None,
+        slot_fluxes: Mapping[int, Values] | None = None,
     ) -> SpatialCouplingResult:
         if len(records) > MAX_SLOTS or len(self.definitions) > MAX_RULES:
             raise ValueError("spatial coupling exceeds the fixed local capacity")
@@ -386,7 +390,11 @@ class SpatialCouplingLaw:
                     meter.charge("read", field.components)
                     if not any(unpack(remaining[index])):
                         continue
-                request = evaluate(definition.expression, record.values, sample, meter, fluxes)
+                local_sample = sample if not slot_samples else slot_samples.get(slot, sample)
+                local_fluxes = fluxes if not slot_fluxes else slot_fluxes.get(slot, fluxes)
+                request = evaluate(
+                    definition.expression, record.values, local_sample, meter, local_fluxes
+                )
                 before = unpack(record.values[definition.field])
                 if definition.mode == "rotation":
                     after, residuals[index] = _rotate(

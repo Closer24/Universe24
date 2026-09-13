@@ -238,7 +238,11 @@ own field. Both can traverse the same link together. A turn can collect earlier
 contributions along multiple paths; a periodic boundary can return old field.
 Merged integer allocation is not generally source-linear. Automatic self
 subtraction is not enabled by this extension. Unknown self-filter settings fail
-instead of being silently ignored. Optional [spatial couplings](SPATIAL_COUPLINGS.md)
+instead of being silently ignored. Two explicit opt-in policies change when a
+carrier samples relative to its own emission without identifying sources:
+[`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
+[`arrival_port_blind`](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling).
+Optional [spatial couplings](SPATIAL_COUPLINGS.md)
 now provide generic exchange and exact discrete rotation with a local opposite
 field reaction. Their straight-line flux response has a restricted geometric
 self-interaction guarantee; it does not claim general source attribution.

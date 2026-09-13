@@ -115,6 +115,7 @@ separate carriers and their different directions.
 | `normal_budget` | Positive ordinary local computation cost `B` |
 | `spatial_computation_delay` | Optional strict boolean, default false; apply one [shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) to fields and carriers; true requires spatial fields |
 | `field_phase_first` | Optional strict boolean, default false; complete every field link before carriers sample it ([field phase first](SPATIAL_COUPLINGS.md#field-phase-first-ordering)); requires outward spatial fields, `link_ticks` 1, the default clock and no field rules or spatial interactions |
+| `arrival_port_blind` | Optional strict boolean, default false; a carrier's arrival-interval sample excludes the travel port it came in on ([arrival-port-blind sampling](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling)); requires outward spatial fields and the default clock, excludes field rules, spatial interactions and `field_phase_first` |
 | `ticks` | Nonnegative requested simulation duration |
 | `operation_costs` | All nine primitive prices, each a positive integer |
 | `fields` | Between 1 and 16 unique field definitions |

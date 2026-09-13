@@ -16,7 +16,7 @@ from .disturbance_state import (
     unpack,
 )
 from .event_space import CausalEventSpace
-from .integer import add_components, checked_work
+from .integer import add_components, checked_work, subtract_components
 from .node_execution import NodeExecution, SpatialPlanningInput
 from .spatial_state import (
     FieldInteractionGuard,
@@ -52,6 +52,9 @@ class SpatialCoupler(Protocol):
         sample: Values,
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
+        *,
+        slot_samples: Mapping[int, Values] | None = None,
+        slot_fluxes: Mapping[int, Values] | None = None,
     ) -> SpatialCouplingResult: ...
 
     def validate_guards(
@@ -269,6 +272,8 @@ class SpatialEngine:
             sample_values = self.coupler.sample(node.states)
             sample_fluxes = self.coupler.sample_fluxes(node.states)
             sample_cause = node.cause_id
+            if self.initial.arrival_port_blind:
+                node.sample_delivered = tuple(state.delivered for state in node.states)
             if self.initial.spatial_interactions:
                 sample_ports = self.coupler.sample_ports(node.states)
         # Samples describe only the preceding delivery interval, never a permanent trail.
@@ -454,12 +459,45 @@ class SpatialEngine:
             node.sample_cause_id = node.cause_id
 
     def couple(
-        self, position: Address3, records: tuple[DisturbanceRecord | None, ...]
+        self,
+        position: Address3,
+        records: tuple[DisturbanceRecord | None, ...],
+        blind_ports: Mapping[int, int] | None = None,
     ) -> SpatialCouplingResult:
         if self.coupler is None:
             raise ValueError("spatial coupling requires an explicitly composed law")
         node = self._at(position)
-        return self.coupler(records, node.sample_values, node.sample_fluxes, node.sample_ports)
+        slot_samples: dict[int, Values] = {}
+        slot_fluxes: dict[int, Values] = {}
+        for slot, port in (blind_ports or {}).items():
+            if slot >= len(records) or records[slot] is None or not node.sample_delivered:
+                continue
+            values, fluxes = list(node.sample_values), list(node.sample_fluxes)
+            for definition, delivered in zip(
+                self.initial.spatial_fields, node.sample_delivered, strict=True
+            ):
+                through = unpack(delivered[port])
+                if not any(through):
+                    continue
+                index = definition.field
+                values[index] = pack(subtract_components(unpack(values[index]), through))
+                if len(through) == 1:
+                    flux = list(unpack(fluxes[index]))
+                    axis, opposite = divmod(port, 2)
+                    flux[axis] = checked_work(
+                        flux[axis] + through[0] if opposite else flux[axis] - through[0]
+                    )
+                    fluxes[index] = pack(tuple(flux))
+            slot_samples[slot] = tuple(values)
+            slot_fluxes[slot] = tuple(fluxes)
+        return self.coupler(
+            records,
+            node.sample_values,
+            node.sample_fluxes,
+            node.sample_ports,
+            slot_samples=slot_samples,
+            slot_fluxes=slot_fluxes,
+        )
 
     def node_plan(
         self, position: Address3, records: tuple[DisturbanceRecord | None, ...]

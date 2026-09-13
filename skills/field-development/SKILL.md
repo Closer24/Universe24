@@ -27,6 +27,10 @@ For self-field work, inspect every upstream dependency. A local subtraction is
 not local physics if its estimator uses a shadow world, source history or global
 knowledge. Keep persistent source behavior, causal delivery and equal/opposite
 momentum exchange explicit; disabling response is not a self-force solution.
+The two existing ordering policies, `field_phase_first` and `arrival_port_blind`
+in [spatial couplings](../../docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering),
+show the required test shape: an isolated straight emitter, a maximum-speed
+turn, a held external-source control and rejected combinations.
 
 Check a minimal failing input first, then an external-source control so a cure
 does not erase all interaction. Keep periodic return distinct from free-space

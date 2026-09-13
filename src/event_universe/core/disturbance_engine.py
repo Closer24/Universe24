@@ -314,7 +314,13 @@ class DisturbanceEngine:
         ):
             return None
         coupled = (
-            self._spatial.couple(position, node.records)
+            self._spatial.couple(
+                position,
+                node.records,
+                {slot: code - 1 for slot, code in enumerate(node.arrival_port_codes) if code}
+                if self.initial.arrival_port_blind
+                else None,
+            )
             if self._spatial is not None
             and any(r is not None and r.type_index in self._coupled_types for r in node.records)
             else None
@@ -793,6 +799,13 @@ class DisturbanceEngine:
             # Validate the whole local arrival event before clearing any packet.
             node.records = records
             node.received_count = received
+            if self.initial.arrival_port_blind:
+                codes = list(node.arrival_port_codes) or [0] * len(records)
+                for _, _, packet in deliveries:
+                    for slot, record in enumerate(records):
+                        if record is packet.record:
+                            codes[slot] = packet.port + 1
+                node.arrival_port_codes = tuple(codes)
             for origin, slot, _packet in deliveries:
                 links = list(self._links[origin])
                 links[slot] = None
@@ -922,6 +935,10 @@ class DisturbanceEngine:
                 else:
                     self._begin(position, node)
                 self._commit(position, node)
+            if self.initial.arrival_port_blind:
+                # The entry-port exclusion applies only to the arrival interval's sample.
+                for node in self._nodes.values():
+                    node.arrival_port_codes = ()
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
                 # Under field_phase_first only carrier reactions still arrive here.

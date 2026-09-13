@@ -228,27 +228,32 @@ class InitialState:
     conservation: ConservationDefinition | None = None
     spatial_computation_delay: bool = False
     field_phase_first: bool = False
+    arrival_port_blind: bool = False
 
     def __post_init__(self) -> None:
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
         if self.spatial_computation_delay and not self.spatial_fields:
             raise ValueError("spatial_computation_delay requires spatial fields")
-        if type(self.field_phase_first) is not bool:
-            raise ValueError("field_phase_first must be boolean")
-        if self.field_phase_first:
+        for name in ("field_phase_first", "arrival_port_blind"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} must be boolean")
+            if not getattr(self, name):
+                continue
             if not self.spatial_fields:
-                raise ValueError("field_phase_first requires spatial fields")
+                raise ValueError(f"{name} requires spatial fields")
             if any(field.transport != "outward" for field in self.spatial_fields):
-                raise ValueError("field_phase_first requires outward spatial fields only")
-            if self.link_ticks != 1:
-                raise ValueError("field_phase_first requires link_ticks 1")
+                raise ValueError(f"{name} requires outward spatial fields only")
             if self.spatial_computation_delay:
-                raise ValueError("field_phase_first cannot combine with spatial_computation_delay")
+                raise ValueError(f"{name} cannot combine with spatial_computation_delay")
             if self.field_rules or self.spatial_interactions:
-                raise ValueError(
-                    "field_phase_first cannot combine with field rules or spatial interactions"
-                )
+                raise ValueError(f"{name} cannot combine with field rules or spatial interactions")
+        if self.field_phase_first and self.link_ticks != 1:
+            raise ValueError("field_phase_first requires link_ticks 1")
+        if self.field_phase_first and self.arrival_port_blind:
+            raise ValueError(
+                "field_phase_first and arrival_port_blind are alternative self-field policies"
+            )
 
 
 class Departure(NamedTuple):
@@ -300,6 +305,8 @@ class DisturbanceNodeState:
     received_count: int = 0
     last_cost: int = 0
     cause_id: int | None = None
+    # Per slot: 0, or travel port + 1 of a record that arrived in the current interval.
+    arrival_port_codes: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

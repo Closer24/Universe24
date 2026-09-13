@@ -168,8 +168,13 @@ candidate-specific behavior. Schema 2 (`finite-dissipative-v1`) records complete
 loss and finite source/response allowances; accounting for decay is not physical
 energy or momentum conservation through decay. Periodic and open boundaries have
 separate explicit contracts. General automatic self-field attribution after turns
-or periodic return remains unsupported. A passing isolated-motion rejection test
-identifies invalid behavior; it does not repair the underlying candidate law.
+or periodic return remains unsupported. Two opt-in ordering policies,
+[`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
+[`arrival_port_blind`](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling), keep an
+isolated straight emitter's momentum unchanged without source identity; the default
+clock is unchanged and still shows the coarrival self push for value-driven exchange.
+A passing isolated-motion rejection test identifies invalid behavior; it does not
+repair the underlying candidate law.
 
 [Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
 method. Querying computes branch weights; an explicit instrument and ticket select

@@ -273,6 +273,28 @@ The experiment does not promote full electromagnetic emergence to a verified
 result. This entry records repository coverage; it does not claim a live
 Highlights edit or replace the earlier revision record above.
 
+### Self-field ordering reconciliation
+
+Highlights was read again on 2026-09-13 through the Drive connector for
+sections 1.1.1, 3.3.1, 3.5.2, 3.5.4, 4.2, 5.2, 10.3 and 10.5. Section 10.3
+states that self-field attribution is not implemented as a general
+source-identity filter; that remains true. The generic engine's default clock
+delivers a carrier and its departure-interval emission through the same link
+together, so a value-driven exchange read one own packet after every hop and
+an isolated moving charge violated POSTULATES section 7. Two opt-in policies
+now exist without source identity: `field_phase_first` orders the field phase
+before carrier sampling, matching the causal stream candidate, so own field is
+at least one link ahead on every free-space path; `arrival_port_blind` keeps
+the default clock and excludes the arrival travel port from an arriving
+carrier's single sample, so straight paths are self-blind while maximum-speed
+corners still coarrive. Both pass isolated-source and external-source controls
+in `tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
+`tests/test_rotation_self_interaction.py`. The same probes recorded that a
+decay-free schema 1 pulse keeps every unit on the Manhattan shell but that
+indivisible far-field units all follow the first axis weight, which is a
+separate open finding. This reconciliation edits repository contracts only;
+the live Google document was not edited.
+
 ### Source contracts and evidence
 
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
