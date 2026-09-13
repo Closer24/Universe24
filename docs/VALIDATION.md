@@ -1272,3 +1272,22 @@ existing two-record conversion. Read as a read-only world/event audit.
 No energy is represented, so encounters within one link produce unbounded
 kicks; no species, constant or unit is identified.
 
+## Local self-exclusion for ray emitters — 2026-09-13
+
+Base: `1d28d5f` on this branch. A ray field may set `self_exclusion`: a
+departing emitter carries the `(amount, cursor)` of its departure cycle and, on
+arrival, subtracts the rays of that cycle whose first DDA step took the port it
+left through from the flux and value it samples. Work is bounded by
+`rays_per_tick`; only the record's own registers are read.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 2,035 tests with five visualization skips |
+| Lone mover | Six axis rays, momentum 16, speed one quarter hop per tick: momentum stays 16 through every move with exclusion; without it the body reaches 7,696 in eight ticks from its own wake |
+| Shared field | Like charges repel through one field (closest approach 2 at tick 13, both reverse); opposite charges meet at tick 14; neutral bodies cross; light body pulled in or pushed out by the charge product; emission unchanged |
+| Positional laws | `emissions` is a keyword-only field on the coupling laws, so existing positional joint-law construction is unchanged |
+| Visualization | Not requested or generated |
+
+Self-field returning from any distance other than one link is not excluded; a
+general self-field law remains the open hypothesis in `POSTULATES.md`.
+

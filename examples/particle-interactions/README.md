@@ -36,8 +36,10 @@ total mass exact.
 
 ## Observed outcomes on 2026-09-13
 
-21-cubed open world, runtime source SHA-256 `53710d462fd4...` (full value in
-`summary.json`), Python 3.14, headless. `tests/test_particle_interactions.py`
+21-cubed open world, one shared signed field with `self_exclusion`, runtime
+source SHA-256 `2ab09f723c8a...` (full value in `summary.json`), Python 3.14,
+headless. A control run with one field per body and no exclusion (source
+`53710d462fd4...`) gave the same head-on and emission tables. `tests/test_particle_interactions.py`
 checks the same statements with six axis rays per body on a 15-cubed world.
 
 ### Head-on encounter of two equal bodies, mass 16, momentum +-128, from x = -+7
@@ -58,13 +60,16 @@ carries no energy.
 
 | Light charge | Light body | Heavy body |
 | --- | --- | --- |
-| -3 | pulled in from tick 7, momentum -180 at tick 10, passes the heavy body and leaves at -999 | pulled after it with +1143 |
-| +3 | pushed out from tick 7, leaves with +45 | recoils to -162 |
+| -3 | pulled in from tick 7, momentum -477 at tick 10, passes the heavy body and leaves at -1836 | pulled after it to +324, settling at +243 as the light body recedes |
+| +3 | pushed out from tick 7, leaves with +297 | recoils to -162 |
 
 The signs follow the charge product. Near the heavy body the flux through one
 Node is a large fraction of the whole emission, so the attractive case ends with
-both bodies flying apart at the speed cap with momenta far beyond their initial
-state: no energy is represented, and nothing bounds a kick at one link. The
+the light body flying through and away at the speed cap with momentum far
+beyond its initial state: no energy is represented, and nothing bounds a kick at
+one link. The control run without self exclusion but with separate fields gave
+the heavy body a larger drag (+1143); with one shared field its residual
+self-field, rays returning from farther than one link, is not excluded. The
 momentum kicks are exchanged with each body's local momentum field, not between
 the bodies, so equal and opposite recoil holds only while both bodies stay in
 each other's field.
