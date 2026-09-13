@@ -1,5 +1,99 @@
 # Validation evidence
 
+## Guarded integer Node execution - 2026-09-13
+
+Base: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Tested active source SHA-256:
+`68cec05fc6463e4ef2ced0f1d0d2ff1b63de4d1cb30b6b011424e26245bebf9f`.
+The [Node contract](NODE_VECTOR_PROCESSOR.md) defines the supported scope and
+separates imposed constraints from unestablished physical emergence.
+
+The dependency-selected gate completed with **1,814 passed and five visual-only
+skips**. Ruff, formatting and strict mypy passed. The default package import
+regression initially caught an eagerly loaded diagnostic module; the report now
+loads it only when requested, and the final gate passes that original assertion.
+
+```sh
+python tools/check.py --base bb177121ec2efdc6c998a8290b9e7b09c7706c62
+```
+
+Python was 3.14.7. Coverage includes existing carrier/spatial/causal/quantum
+regressions, locality and formula-free state, bounded indexed rules, generic
+renaming, k timing, zero/canceling arrivals, pending field deltas and paired
+reactions. The new pre-commit guard tests reject nonlinear merging and changes
+to momentum or charge without changing actual owners or accounting. Constructor
+and direct-service tests prevent silently omitting the mandatory guard.
+Known initial readout overflow is rejected in preflight without constructing a
+world or creating output. Failed diagnostic projection reports an explicit error
+and no partial values. Named host totals include actual owners once and do not
+apply the local capacity limit to an entire multi-Node world.
+
+Two ordinary headless CLI runs each completed eight requested ticks on that
+source. `six-records.json` (input SHA-256
+`12d3464890ff80df034aa5ea4bcead6fbef31a2ff916c06789b5f18fedc9ae2e`)
+committed at ticks 3 and 7 and retained declared E=21, P=(3,0,0), Q=0,
+J=(0,15,0). `two-fields.json` (input SHA-256
+`faf174035d96cc66d2382dc600cc2c06131087cb50dfddad9d4d42d8e6b38605`)
+performed the paired exchange at tick 2 and retained E=7 and zero P/Q/J.
+Run metadata and event logs were inspected; display was `none`.
+These are externally defined register readouts and permutation/exchange laws,
+not derived electromagnetic or quantum dynamics.
+
+### Memory and architecture
+
+The reproducible host probe is [profile_node_vectors.py](../tools/profile_node_vectors.py):
+
+```sh
+python tools/profile_node_vectors.py . artifacts/node-vector-memory/report.json
+```
+
+Use `PYTHONPATH=src` and a new output file. It records source/configuration identity,
+plain stepping time, traced peaks and unique reachable owner allocations for
+nine fixed-degree cases through 256 ticks. On the tested source, carrier owner
+graphs at equivalent cycle checkpoints remained unchanged from tick 16 to 256:
+
+| Nodes | Components | Slots per Node | Retained owner bytes |
+| ---: | ---: | ---: | ---: |
+| 1 | 8 | 8 | 3,680 |
+| 8 | 8 | 8 | 24,008 |
+| 27 | 8 | 8 | 79,184 |
+| 8 | 16 | 8 | 27,144 |
+| 8 | 32 | 8 | 33,416 |
+| 8 | 8 | 16 | 27,592 |
+| 8 | 8 | 32 | 34,760 |
+
+Eight colocated carrier/field Nodes retained 48,444 bytes at tick 256. Their
+196-byte rise from tick 128 reflects seven additional 28-byte Python integer
+objects after clock values leave the shared small-integer cache. A separate
+1,024-tick follow-up on source `785c9ec2b01b7caf8756906eb24075f067fa73f2f88e9b6f248b9150a4c9081e`
+held exactly 48,444 bytes at ticks 256, 512 and 1,024; that earlier source precedes
+the final initial-readout and receipt-bound checks and is identified separately.
+
+The largest final-source measured interval peak was 363,444 traced bytes.
+Measurements exclude native allocator/RSS, configuration allocation before tracing,
+observers and recorded history. Shared Python objects are counted once; these
+numbers are not physical register counts. Timing is a single host sample and
+tracing adds substantial overhead; no simulation speedup is claimed.
+
+State and output capacity are fixed per Node, and shared definitions/services are
+outside evolving Node payloads. However, the host retains maps and port banks for
+all visited positions. Whole-host memory therefore scales with visited Nodes,
+not just currently active Nodes. Repeated sorting and immutable temporary tuples
+also remain runtime costs. The fixed-Node probes do not establish bounded memory
+for unbounded exploration or generic graph/coarse-graining support.
+
+### Review and workflow
+
+Independent reviews checked schema/aggregation, local clock/field ownership,
+nonlinear balances, API bypasses, and current-value reporting. Review findings
+were fixed with retained regressions: nonadditive spatial ownership rejection,
+unrelated-field merge eligibility, received-mask consumption, missing guards and
+initial-readout overflow. The regression Skill now links the Node contract and
+the focused checks; its frontmatter validator passed using existing local
+validation dependencies. Other reviewed Skills already express the needed
+architecture and physical-evidence boundaries. No schedule or live Highlights
+document was changed. The [Highlights map](HIGHLIGHTS_IMPLEMENTATION.md) records
+the explicit user clarification of h and k.
+
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The

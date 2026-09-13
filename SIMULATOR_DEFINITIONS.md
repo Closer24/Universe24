@@ -2,6 +2,12 @@
 
 ## Active generic disturbance model
 
+The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
+active engine with indexed bounded interactions, 1..32-component properties,
+explicit aggregation and pre-commit conserved readouts. In this profile one hop
+takes one h and local rules take their declared k*h before dispatch. Existing
+cost-budget timing below applies to configurations without that opt-in.
+
 The primary API is `Simulation(initial: InitialState)`. An initialization JSON
 file supplies every field/type name, seed, allowed local expression, coupling,
 transport rule and cost setting. The engine has no hardcoded interpretation of

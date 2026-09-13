@@ -98,6 +98,8 @@ def violations(source, module):
                     or dependency.startswith("core.validation.")
                     or dependency == "core.integer"
                     or dependency.startswith("core.integer.")
+                    or dependency == "core.node_conservation"
+                    or dependency.startswith("core.node_conservation.")
                     or target_layer == layer
                 ):
                     found.append((line, "generic calculation imports another layer"))

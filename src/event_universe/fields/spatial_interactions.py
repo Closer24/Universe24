@@ -22,7 +22,7 @@ from event_universe.core.spatial_state import (
 from event_universe.core.validation import ValidationMeter
 
 from .disturbances import evaluate
-from .local_field_rules import received_values
+from .local_field_rules import received_masks, received_values
 from .spatial_coupling import SpatialCouplingLaw, sample_values
 
 
@@ -58,6 +58,9 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
 
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
         return received_values(self.fields, self.spatial_definitions, states)
+
+    def sample_received_masks(self, states: tuple[SpatialState, ...]) -> tuple[int, ...]:
+        return received_masks(self.fields, self.spatial_definitions, states)
 
     def _reserve_sample(self, meter: CostMeter) -> None:
         for definition in self.spatial_definitions:
@@ -114,10 +117,12 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         sample: Values,
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
+        received_masks: tuple[int, ...] = (),
     ) -> SpatialCouplingResult:
         legacy = SpatialCouplingLaw.__call__(self, records, sample, fluxes)
         meter = CostMeter(self.costs)
         meter.total = legacy.cost
+        meter.interaction_ticks = legacy.interaction_ticks
         if not self.interactions:
             self._reserve_local_deposit(meter, legacy.reaction)
             return replace(legacy, cost=meter.total)
@@ -139,15 +144,30 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                     continue
                 if (
                     rule.when is not None
-                    and evaluate(rule.when, record.values, field_values, meter, fluxes, ports=ports)[0]
+                    and evaluate(
+                        rule.when,
+                        record.values,
+                        field_values,
+                        meter,
+                        fluxes,
+                        ports=ports,
+                        received_masks=received_masks,
+                    )[0]
                     <= 0
                 ):
                     continue
+                meter.advance(rule.k)
                 meter.charge("couple")
                 candidate = [list(record.values), list(field_values)]
                 for assignment in rule.assignments:
                     value = evaluate(
-                        assignment.expression, record.values, field_values, meter, fluxes, ports=ports
+                        assignment.expression,
+                        record.values,
+                        field_values,
+                        meter,
+                        fluxes,
+                        ports=ports,
+                        received_masks=received_masks,
                     )
                     payload = pack(value)
                     self.fields[assignment.field].validate(payload)
@@ -167,7 +187,11 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                 field_values = field_after
         self._reserve_local_deposit(meter, tuple(tuple(value) for value in reaction))
         return SpatialCouplingResult(
-            tuple(working), tuple(tuple(value) for value in reaction), meter.total, tuple(guards)
+            tuple(working),
+            tuple(tuple(value) for value in reaction),
+            meter.total,
+            tuple(guards),
+            meter.interaction_ticks,
         )
 
     def validate_guards(

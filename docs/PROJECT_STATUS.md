@@ -1,5 +1,12 @@
 # Project status and restart guide
 
+The [integer Node profile](NODE_VECTOR_PROCESSOR.md) adds bounded indexed rules,
+explicit k*h local duration, declared aggregation and complete-owner pre-commit
+readouts. Nodes own their physical transitions and fixed output banks. Example
+configurations demonstrate register permutations and local field exchange;
+they do not establish physical species laws or quantum emergence. General graph
+topology and interacting coarse-graining remain outside this profile.
+
 The [property coupling extension](PROPERTY_COUPLINGS.md) selects compatible
 disturbances by owned properties, retaining explicit types for existing inputs.
 Entity probes share two local energy/momentum reservoirs. The optional

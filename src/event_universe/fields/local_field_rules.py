@@ -28,6 +28,19 @@ def received_values(
     return tuple(tuple(channel) for channel in channels)
 
 
+def received_masks(
+    fields: tuple[FieldDefinition, ...],
+    definitions: tuple[SpatialFieldDefinition, ...],
+    states: tuple[SpatialState, ...],
+) -> tuple[int, ...]:
+    """Project per-field port presence, including delivered zero-valued packets."""
+    result = [0] * len(fields)
+    for definition, state in zip(definitions, states, strict=True):
+        state.validate(fields[definition.field].components)
+        result[definition.field] = state.received_mask
+    return tuple(result)
+
+
 def _stock(
     fields: tuple[FieldDefinition, ...],
     definitions: tuple[SpatialFieldDefinition, ...],
@@ -99,9 +112,12 @@ def apply_field_rules(
     outgoing: tuple[Values, ...] = (zero,) * 6
     stock = _stock(fields, definitions, states, meter)
     ports = received_values(fields, definitions, states)
+    masks = received_masks(fields, definitions, states)
     local_fields = tuple(d.field for d in definitions if d.transport == "local")
-    active = any(any(stock[index]) for index in local_fields) or any(
-        any(unpack(payload)) for channel in ports for payload in channel
+    active = (
+        any(masks)
+        or any(any(stock[index]) for index in local_fields)
+        or any(any(unpack(payload)) for channel in ports for payload in channel)
     )
     # Baseline alone does not activate empty space or create undeclared sources.
     if active:
@@ -110,9 +126,13 @@ def apply_field_rules(
             meter.charge("read", 6 * len(definitions))
             if (
                 rule.when is not None
-                and evaluate(rule.when, zero, right, meter, ports=ports, outgoing=outgoing)[0] <= 0
+                and evaluate(
+                    rule.when, zero, right, meter, ports=ports, outgoing=outgoing, received_masks=masks
+                )[0]
+                <= 0
             ):
                 continue
+            meter.advance(rule.k)
             before = tuple(
                 evaluate(invariant.expression, zero, right, checks, ports=ports, outgoing=outgoing)
                 for invariant in rule.invariants
@@ -125,7 +145,15 @@ def apply_field_rules(
                         "field rules can write only local stock or its six outgoing buffers"
                     )
                 value = pack(
-                    evaluate(assignment.expression, zero, right, meter, ports=ports, outgoing=outgoing)
+                    evaluate(
+                        assignment.expression,
+                        zero,
+                        right,
+                        meter,
+                        ports=ports,
+                        outgoing=outgoing,
+                        received_masks=masks,
+                    )
                 )
                 fields[assignment.field].validate(value)
                 meter.charge("update", fields[assignment.field].components)

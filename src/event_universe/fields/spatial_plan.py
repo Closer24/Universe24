@@ -169,7 +169,7 @@ class SpatialLaw:
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
             if has_local:
-                state = replace(state, delivered=(pack((0,) * field.components),) * 6)
+                state = replace(state, delivered=(pack((0,) * field.components),) * 6, received_mask=0)
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)
@@ -204,4 +204,5 @@ class SpatialLaw:
             tuple(tuple(v) for v in source),
             meter.total,
             tuple(tuple(v) for v in rule_delta) if has_local else (),
+            meter.interaction_ticks,
         )

@@ -1,5 +1,19 @@
 # Highlights implementation coverage
 
+## Integer Node timing reconciliation - 2026-09-13
+
+The live Highlights source was read again with modification timestamp
+`2026-09-13T05:10:29.655Z`; integration started from main
+`bb177121ec2efdc6c998a8290b9e7b09c7706c62`.
+Sections 3.2, 3.3 and 4.3 motivate bounded generic local properties and rules.
+The user's subsequent explicit h/k clarification selects the new
+[Node profile](NODE_VECTOR_PROCESSOR.md): h is one hop; k is configured per
+interaction, independently of operation cost. This supersedes the cost-derived
+k description in section 10.6 for the opt-in profile only. Node vector width is
+also explicitly generalized while world topology remains the current six-port
+lattice. Section 1.3's distinction between assumptions, tested consequences and
+emergence claims remains binding. The live document was not edited.
+
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
 The live Highlights document was read at revision

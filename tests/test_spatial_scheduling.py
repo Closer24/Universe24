@@ -64,14 +64,15 @@ def test_reaction_wakes_a_known_idle_node_without_missing_its_completed_phase():
     world = Simulation(parse_initial_state(raw))
     engine = world._spatial
     engine._at(ORIGIN)
-    engine.begin(0, {}, lambda _position, _records: None)
+    engine.begin(0, {})
     assert ORIGIN not in engine._active
-    engine.begin(1, {}, lambda _position, _records: None)
+    engine.begin(1, {})
     reaction = ((8, -8, 0), (0, 0, 0), (0,))
-    proposal = engine.prepare_reaction(ORIGIN, 1, reaction)
+    node = engine._at(ORIGIN)
+    proposal = node.prepare_reaction(1, reaction, engine._services)
     assert proposal.links is not None
     assert all(packet is None or packet.arrival_tick == 2 for packet in proposal.links)
-    engine.commit_reaction(ORIGIN, proposal, reaction)
+    node.commit_reaction(proposal, reaction, engine._services)
     assert ORIGIN in engine._active
     engine.deliver(2)
     assert engine.accounting()["inventory"]["current"] == (8, -8, 0)
@@ -83,10 +84,11 @@ def test_a_new_node_is_not_backdated_to_an_earlier_empty_phase():
     raw["seeds"] = []
     world = Simulation(parse_initial_state(raw))
     engine = world._spatial
-    engine.begin(1, {}, lambda _position, _records: None)
+    engine.begin(1, {})
     reaction = ((8, -8, 0), (0, 0, 0), (0,))
-    proposal = engine.prepare_reaction(ORIGIN, 1, reaction)
+    node = engine._at(ORIGIN)
+    proposal = node.prepare_reaction(1, reaction, engine._services)
     assert proposal.links is None
-    engine.commit_reaction(ORIGIN, proposal, reaction)
+    node.commit_reaction(proposal, reaction, engine._services)
     assert engine.accounting()["inventory"]["current"] == (8, -8, 0)
     assert ORIGIN in engine._active

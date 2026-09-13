@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, NamedTuple
 
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
+    from .node_conservation import NodeConservationDefinition
     from .spatial_state import (
         EmissionDefinition,
         FieldGroupDefinition,
@@ -24,6 +25,10 @@ MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
 MAX_EXPRESSION_NODES = 64
+MAX_COMPONENTS = 32
+AGGREGATIONS = frozenset(
+    {"sum", "vector_sum", "keep_equal", "phase_bins", "interaction_state", "nonmergeable"}
+)
 OPERATIONS = ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
 Payload = tuple[int, ...]
 Values = tuple[Payload, ...]
@@ -65,6 +70,7 @@ class FieldDefinition:
     conserved: bool
     scale: int = 1
     extensive: bool = True
+    aggregation: str | None = None
 
     def validate(self, values: Payload) -> None:
         if len(values) != self.components:
@@ -153,6 +159,8 @@ class InteractionDefinition:
     output_types: tuple[int, int] | None = None
     left_types: tuple[int, ...] = ()
     right_types: tuple[int, ...] = ()
+    k: int = 0
+    participants: tuple[tuple[int, ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -169,9 +177,16 @@ class CostMeter:
     def __init__(self, definitions: OperationCosts) -> None:
         self.definitions = definitions
         self.total = 0
+        self.interaction_ticks = 0
 
     def charge(self, operation: str, count: int = 1) -> None:
         self.total = bounded(checked_work(self.total + self.definitions.price(operation) * count))
+
+    def advance(self, ticks: int) -> None:
+        """Reserve configured sequential rule duration independently of tariffs."""
+        if bounded(ticks) < 0:
+            raise ValueError("interaction duration must be nonnegative")
+        self.interaction_ticks = bounded(checked_work(self.interaction_ticks + ticks))
 
 
 @dataclass(frozen=True, slots=True)
@@ -224,6 +239,8 @@ class InitialState:
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     event_program: str | None = None
     conservation: ConservationDefinition | None = None
+    node_execution: bool = False
+    conservation_contract: NodeConservationDefinition | None = None
 
 
 class Departure(NamedTuple):
@@ -242,6 +259,7 @@ class LocalPlan:
     spatial_reaction: Values = ()
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
     cause_id: int | None = None
+    interaction_ticks: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -284,3 +302,5 @@ class NodeView:
     available_tick: int
     received_count: int
     last_cost: int
+    arrival_mask: tuple[int, ...] = ()
+    delay_counts: tuple[int, ...] = ()

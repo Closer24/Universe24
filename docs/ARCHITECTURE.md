@@ -1,5 +1,15 @@
 # Architecture and change boundaries
 
+[Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
+pending completion and publication in `core/disturbance_node.py` and
+`core/spatial_node.py`. Shared services contain seed-free immutable definitions,
+local law providers and write-side accounting; Nodes receive no world lookup.
+Transport indexes local fixed output banks and validates adjacent delivery.
+`core/node_conservation.py` is a DTO/protocol boundary; generic readout arithmetic
+lives in `fields/node_conservation.py`, and its parser reuses initialization's
+expression grammar. A configured exact balance check precedes physical mutation.
+The profile's declared k and counted operation cost are separate quantities.
+
 [Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
 sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
 `core/validation.py` retains bounded checks without charging the physical clock.

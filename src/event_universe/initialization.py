@@ -13,6 +13,8 @@ from .core.coupling_selectors import (
     selected_types,
 )
 from .core.disturbance_state import (
+    AGGREGATIONS,
+    MAX_COMPONENTS,
     MAX_EXPRESSION_NODES,
     MAX_FIELDS,
     MAX_RULES,
@@ -109,14 +111,25 @@ def _names(values: tuple[FieldDefinition | DisturbanceDefinition, ...]) -> dict[
     return result
 
 
-def _fields(value: object) -> tuple[FieldDefinition, ...]:
+def _fields(value: object, *, node_execution: bool = False) -> tuple[FieldDefinition, ...]:
     result: list[FieldDefinition] = []
     required = {"name", "components", "units", "signed", "conserved"}
     for raw in _array(value, "fields", MAX_FIELDS, 1):
-        obj = _object(raw, "field", required | {"scale", "extensive"}, required)
+        obj = _object(raw, "field", required | {"scale", "extensive", "aggregation"}, required)
         components = _integer(obj["components"], "field.components", 1)
-        if components not in (1, 3):
+        if node_execution and components > MAX_COMPONENTS:
+            raise ValueError(f"field.components exceeds {MAX_COMPONENTS}")
+        if not node_execution and components not in (1, 3):
             raise ValueError("field.components must be 1 or 3")
+        aggregation = _text(obj["aggregation"], "field.aggregation") if "aggregation" in obj else None
+        if node_execution and aggregation is None:
+            raise ValueError("node_execution requires an explicit aggregation for every field")
+        if aggregation is not None and aggregation not in AGGREGATIONS:
+            raise ValueError("unsupported field aggregation")
+        if aggregation in ("sum", "phase_bins") and components != 1:
+            raise ValueError("sum and phase_bins require scalar fields")
+        if aggregation == "vector_sum" and components == 1:
+            raise ValueError("vector_sum requires a vector field")
         conserved = _boolean(obj["conserved"], "field.conserved")
         extensive = _boolean(obj.get("extensive", True), "field.extensive")
         if conserved and not extensive:
@@ -130,6 +143,7 @@ def _fields(value: object) -> tuple[FieldDefinition, ...]:
                 conserved=conserved,
                 scale=_integer(obj.get("scale", 1), "field.scale", 1),
                 extensive=extensive,
+                aggregation=aggregation,
             )
         )
     fields = tuple(result)
@@ -142,7 +156,7 @@ def _payload(value: object, field: FieldDefinition) -> Payload:
     if field.components == 1:
         components = (_integer(value, f"value for {field.name}"),)
     else:
-        items = _array(value, f"value for {field.name}", 3, 3)
+        items = _array(value, f"value for {field.name}", field.components, field.components)
         components = tuple(_integer(item, f"component of {field.name}") for item in items)
     result = pack(components)
     field.validate(result)
@@ -175,6 +189,7 @@ class _Expressions:
         flux_fields: tuple[int, ...] = (),
         received_fields: tuple[int, ...] = (),
         outgoing_fields: tuple[int, ...] = (),
+        participants: tuple[tuple[int, ...], ...] = (),
     ) -> None:
         self.fields = fields
         self.names = _names(fields)
@@ -183,6 +198,8 @@ class _Expressions:
         self.flux_fields = flux_fields
         self.received_fields = received_fields
         self.outgoing_fields = outgoing_fields
+        self.participants = participants
+        self.max_components = max(field.components for field in fields)
 
     def parse(
         self, value: object, expected: int | None = None, *, invariant: bool = False
@@ -201,27 +218,52 @@ class _Expressions:
         if type(value) is int:
             return Expression("literal", literal=(_integer(value, "expression literal"),)), 1
         if isinstance(value, list):
-            items = _array(value, "expression literal", 3, 1)
-            if len(items) not in (1, 3):
-                raise ValueError("expression literal must contain 1 or 3 components")
+            items = _array(value, "expression literal", max(3, self.max_components), 1)
+            if len(items) not in {1, 3, *(field.components for field in self.fields)}:
+                raise ValueError("expression literal has an unsupported vector shape")
             literal = tuple(_integer(item, "expression literal component") for item in items)
             return Expression("literal", literal=literal), len(literal)
         obj = _object(
             value,
             "expression",
-            {"field", "side", "op", "args", "index", "flux", "matrix", "received", "outgoing", "port"},
+            {
+                "field",
+                "side",
+                "participant",
+                "op",
+                "args",
+                "index",
+                "flux",
+                "matrix",
+                "received",
+                "outgoing",
+                "received_present",
+                "port",
+            },
             set(),
         )
-        if "received" in obj or "outgoing" in obj:
-            operation = "received" if "received" in obj else "outgoing"
+        if {"received", "outgoing", "received_present"}.intersection(obj):
+            operation = (
+                "received_present"
+                if "received_present" in obj
+                else "received"
+                if "received" in obj
+                else "outgoing"
+            )
             obj = _object(obj, "directional expression", {operation, "port"}, {operation, "port"})
-            owned = self.received_fields if operation == "received" else self.outgoing_fields
+            owned = (
+                self.received_fields
+                if operation in ("received", "received_present")
+                else self.outgoing_fields
+            )
             names = {self.fields[index].name: index for index in owned}
             index = _index(obj[operation], names, f"{operation} spatial field")
             port = _integer(obj["port"], "expression.port", 0)
             if port >= 6:
                 raise ValueError("expression.port must be from 0 through 5")
-            return Expression(operation, field=index, port=port), self.fields[index].components
+            return Expression(
+                operation, field=index, port=port
+            ), 1 if operation == "received_present" else self.fields[index].components
         if "flux" in obj:
             obj = _object(obj, "flux expression", {"flux"}, {"flux"})
             names = {self.fields[index].name: index for index in self.flux_fields}
@@ -284,8 +326,13 @@ class _Expressions:
                 for row in _array(obj["matrix"], "matrix", 3, 3)
             )
             return Expression(operation, tuple(item[0] for item in arguments), matrix=matrix), 3
-        if operation in ("dot", "cross") and sizes != (3, 3):
-            raise ValueError(f"{operation} requires two vectors")
+        if operation == "cross" and sizes != (3, 3):
+            raise ValueError("cross requires two three-component vectors")
+        if operation == "dot" and (sizes[0] < 2 or sizes[0] != sizes[1]):
+            raise ValueError("dot requires two vectors of equal size")
+        if len(sizes) == 2 and operation not in ("dot", "cross"):
+            if min(sizes) != 1 and sizes[0] != sizes[1]:
+                raise ValueError("incompatible expression component counts")
         if operation == "vector" and sizes != (1, 1, 1):
             raise ValueError("vector requires three scalars")
         if operation in ("gt", "eq") and sizes != (1, 1):
@@ -311,7 +358,19 @@ class _Expressions:
         return Expression(operation, tuple(item[0] for item in arguments), component=component), size
 
     def _reference(self, obj: dict[str, object]) -> tuple[Expression, int]:
-        obj = _object(obj, "field expression", {"field", "side"}, {"field"})
+        obj = _object(obj, "field expression", {"field", "side", "participant"}, {"field"})
+        if "participant" in obj:
+            if "side" in obj or not self.participants:
+                raise ValueError("participant references require an indexed interaction context")
+            side = _integer(obj["participant"], "expression.participant", 0)
+            if side >= len(self.participants):
+                raise ValueError("expression participant exceeds the declared roles")
+            index = _index(obj["field"], self.names, "expression.field")
+            if index not in self.participants[side]:
+                raise ValueError("expression references a field not owned by its participant")
+            return Expression("field", field=index, side=side), self.fields[index].components
+        if self.participants:
+            raise ValueError("indexed interactions require an explicit participant reference")
         side_name = obj.get("side", "left")
         if side_name not in ("left", "right"):
             raise ValueError("expression.side must be left or right")
@@ -380,6 +439,10 @@ def _transport(
             raise ValueError("direction_field must be a vector owned by the disturbance")
     if mode == "split" and any(not fields[index].extensive for index in owned):
         raise ValueError("split transport accepts only extensive fields")
+    if mode == "split" and any(
+        fields[index].aggregation not in (None, "sum", "vector_sum") for index in owned
+    ):
+        raise ValueError("split transport requires additive aggregation for every carried field")
     rate = _Expressions(fields, owned).parse(obj["rate"], 1) if "rate" in obj else None
     denominator = _integer(obj.get("rate_denominator", 1), "transport.rate_denominator", 1)
     divisor = (
@@ -555,16 +618,31 @@ def _interactions(
     value: object,
     fields: tuple[FieldDefinition, ...],
     disturbances: tuple[DisturbanceDefinition, ...],
+    *,
+    node_execution: bool = False,
 ) -> tuple[InteractionDefinition, ...]:
     result: list[InteractionDefinition] = []
     type_names, field_names = _names(disturbances), _names(fields)
     required = {"name", "assignments", "invariants"}
     selectors = {"left_type", "right_type", "left_requires", "right_requires"}
     for raw in _array(value, "interactions", MAX_RULES):
-        obj = _object(raw, "interaction", required | selectors | {"when", "output_types"}, required)
+        obj = _object(
+            raw,
+            "interaction",
+            required | selectors | {"when", "output_types", "k", "participants"},
+            required,
+        )
         name = _text(obj["name"], "interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate interaction name")
+        k = _rule_ticks(obj, node_execution)
+        if "participants" in obj:
+            if not node_execution:
+                raise ValueError("indexed interactions require node_execution")
+            if selectors.intersection(obj) or "output_types" in obj:
+                raise ValueError("indexed interactions cannot combine pair selectors or conversions")
+            result.append(_indexed_interaction(obj, fields, disturbances, k))
+            continue
         left, left_fields = _selection(
             obj, fields, disturbances, "left_type", "left_requires", "interaction"
         )
@@ -647,9 +725,76 @@ def _interactions(
                 output_types,
                 left if "left_requires" in obj else (),
                 right if "right_requires" in obj else (),
+                k,
             )
         )
     return tuple(result)
+
+
+def _rule_ticks(obj: dict[str, object], required: bool) -> int:
+    if "k" not in obj:
+        if required:
+            raise ValueError("node_execution requires explicit positive k for every local rule")
+        return 0
+    return _integer(obj["k"], "rule.k", 1)
+
+
+def _indexed_interaction(
+    obj: dict[str, object],
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+    k: int,
+) -> InteractionDefinition:
+    """Compile fixed participant roles, preserving their declared selection order."""
+    selections, owned = [], []
+    for raw in _array(obj["participants"], "interaction.participants", MAX_SLOTS, 2):
+        role = _object(raw, "participant", {"type", "requires"}, set())
+        kinds, properties = _selection(role, fields, disturbances, "type", "requires", "participant")
+        selections.append(kinds)
+        owned.append(properties)
+    layouts = tuple(owned)
+
+    def expression(value: object, size: int | None = None, *, invariant: bool = False) -> Expression:
+        return _Expressions(fields, (), participants=layouts).parse(value, size, invariant=invariant)
+
+    assignments: list[Assignment] = []
+    for raw in _array(obj["assignments"], "assignments", MAX_FIELDS * MAX_SLOTS, 1):
+        item = _object(
+            raw,
+            "assignment",
+            {"participant", "field", "expression"},
+            {"participant", "field", "expression"},
+        )
+        participant = _integer(item["participant"], "assignment.participant", 0)
+        if participant >= len(layouts):
+            raise ValueError("assignment participant exceeds the declared roles")
+        field = _index(item["field"], _names(fields), "assignment.field")
+        if field not in layouts[participant] or any(
+            disturbances[index].cost_field == field for index in selections[participant]
+        ):
+            raise ValueError("assignment requires an owned field other than cost_field")
+        if any(a.side == participant and a.field == field for a in assignments):
+            raise ValueError("duplicate assignment target")
+        assignments.append(
+            Assignment(participant, field, expression(item["expression"], fields[field].components))
+        )
+    invariants: list[Invariant] = []
+    for raw in _array(obj["invariants"], "invariants", MAX_FIELDS, 1):
+        item = _object(raw, "invariant", {"name", "expression"}, {"name", "expression"})
+        name = _text(item["name"], "invariant.name")
+        if any(invariant.name == name for invariant in invariants):
+            raise ValueError("duplicate invariant name")
+        invariants.append(Invariant(name, expression(item["expression"], invariant=True)))
+    return InteractionDefinition(
+        name=_text(obj["name"], "interaction.name"),
+        left_type=selections[0][0],
+        right_type=selections[1][0],
+        assignments=tuple(assignments),
+        invariants=tuple(invariants),
+        when=expression(obj["when"], 1) if "when" in obj else None,
+        k=k,
+        participants=tuple(selections),
+    )
 
 
 def _seeds(
@@ -723,6 +868,8 @@ def _spatial_fields(
         field = fields[index]
         if not field.extensive:
             raise ValueError("spatial transport requires extensive field components")
+        if field.aggregation not in (None, "sum", "vector_sum"):
+            raise ValueError("spatial ownership requires additive field aggregation")
         transport = _text(obj["transport"], "spatial transport")
         if transport not in ("outward", "local"):
             raise ValueError("spatial transport must be outward or local")
@@ -935,6 +1082,8 @@ def _field_rules(
     value: object,
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
+    *,
+    node_execution: bool = False,
 ) -> tuple[NodeFieldRuleDefinition, ...]:
     result: list[NodeFieldRuleDefinition] = []
     spatial_fields = tuple(definition.field for definition in spatial)
@@ -948,7 +1097,7 @@ def _field_rules(
 
     required = {"name", "assignments", "invariants"}
     for raw in _array(value, "field_rules", MAX_RULES):
-        obj = _object(raw, "field rule", required | {"when"}, required)
+        obj = _object(raw, "field rule", required | {"when", "k"}, required)
         name = _text(obj["name"], "field rule.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate field rule name")
@@ -980,7 +1129,11 @@ def _field_rules(
             ).parse(item["expression"], invariant=True)
             invariants.append(Invariant(invariant_name, invariant_expression))
         when = expression(obj["when"], 1) if "when" in obj else None
-        result.append(NodeFieldRuleDefinition(name, tuple(assignments), tuple(invariants), when))
+        result.append(
+            NodeFieldRuleDefinition(
+                name, tuple(assignments), tuple(invariants), when, _rule_ticks(obj, node_execution)
+            )
+        )
     return tuple(result)
 
 
@@ -989,6 +1142,8 @@ def _spatial_interactions(
     fields: tuple[FieldDefinition, ...],
     disturbances: tuple[DisturbanceDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
+    *,
+    node_execution: bool = False,
 ) -> tuple[SpatialInteractionDefinition, ...]:
     result: list[SpatialInteractionDefinition] = []
     field_names = _names(fields)
@@ -998,7 +1153,7 @@ def _spatial_interactions(
     for raw in _array(value, "spatial_interactions", MAX_RULES):
         if not spatial:
             raise ValueError("spatial interactions require at least one spatial field")
-        obj = _object(raw, "spatial interaction", required | {"type", "requires", "when"}, required)
+        obj = _object(raw, "spatial interaction", required | {"type", "requires", "when", "k"}, required)
         name = _text(obj["name"], "spatial interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate spatial interaction name")
@@ -1056,6 +1211,7 @@ def _spatial_interactions(
                 tuple(invariants),
                 when,
                 kinds if "requires" in obj else (),
+                _rule_ticks(obj, node_execution),
             )
         )
     return tuple(result)
@@ -1094,6 +1250,8 @@ def parse_initial_state(document: object) -> InitialState:
             "event_program",
             "observer",
             "conservation",
+            "node_execution",
+            "conservation_contract",
         },
         required,
     )
@@ -1112,7 +1270,8 @@ def parse_initial_state(document: object) -> InitialState:
     if capacity > MAX_SLOTS:
         raise ValueError(f"slots_per_node exceeds {MAX_SLOTS}")
     costs = _object(obj["operation_costs"], "operation_costs", set(OPERATIONS), set(OPERATIONS))
-    fields = _fields(obj["fields"])
+    node_execution = _boolean(obj.get("node_execution", False), "node_execution")
+    fields = _fields(obj["fields"], node_execution=node_execution)
     disturbances = _disturbances(obj["disturbance_types"], fields)
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
     initial = InitialState(
@@ -1137,14 +1296,39 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         schema_version=schema_version,
         boundary=boundary,
-        interactions=_interactions(obj.get("interactions", []), fields, disturbances),
+        interactions=_interactions(
+            obj.get("interactions", []), fields, disturbances, node_execution=node_execution
+        ),
         field_groups=_field_groups(obj.get("field_groups", []), fields),
-        field_rules=_field_rules(obj.get("field_rules", []), fields, spatial),
+        field_rules=_field_rules(
+            obj.get("field_rules", []), fields, spatial, node_execution=node_execution
+        ),
         spatial_interactions=_spatial_interactions(
-            obj.get("spatial_interactions", []), fields, disturbances, spatial
+            obj.get("spatial_interactions", []),
+            fields,
+            disturbances,
+            spatial,
+            node_execution=node_execution,
         ),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
+        node_execution=node_execution,
     )
+    if node_execution:
+        if "conservation_contract" not in obj:
+            raise ValueError("node_execution requires an explicit conservation_contract")
+        if initial.schema_version != 1 or initial.link_ticks != 1:
+            raise ValueError("node_execution requires schema_version 1 and link_ticks 1")
+        if (
+            initial.couplings
+            or initial.emissions
+            or initial.spatial_couplings
+            or any(kind.updates for kind in initial.disturbances)
+        ):
+            raise ValueError("node_execution requires explicit k rules instead of unpriced legacy rules")
+        if initial.event_program is not None:
+            raise ValueError("node_execution does not support native event programs")
+        if any(len(rule.participants) > capacity for rule in initial.interactions):
+            raise ValueError("interaction participant count exceeds slots_per_node")
     if initial.event_program is not None:
         from .integration.event_program import parse_event_program
 
@@ -1155,6 +1339,12 @@ def parse_initial_state(document: object) -> InitialState:
         from .diagnostics.local_conservation import validate_empty_measurement
 
         validate_empty_measurement(initial)
+    if "conservation_contract" in obj:
+        from .node_conservation_configuration import parse_node_conservation
+
+        initial = replace(
+            initial, conservation_contract=parse_node_conservation(obj["conservation_contract"], initial)
+        )
     return initial
 
 

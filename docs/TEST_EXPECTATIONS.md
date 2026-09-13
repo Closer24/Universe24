@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Integer Node execution
+
+`test_node_rule_contract.py` checks six-record frozen permutations, generic vector
+widths, explicit fired-rule duration, nonadditive policy rejection and independent
+arrival presence. `test_node_conservation.py` checks complete-owner readouts and
+rejects nonlinear merge drift (13 becomes 25), unequal momentum, overflow and
+capacity errors without modifying inputs. `test_node_conservation_configuration.py`
+checks exact layout coverage and rejection through the read-only preflight.
+`test_node_runtime.py` checks isolated Node boundaries; `test_node_vector_integration.py`
+checks public execution, timing and failed-transition atomicity.
+`test_node_vector_examples.py` owns the two example configurations and their
+independently known declared readouts. These are correctness contracts for the
+[selected model](NODE_VECTOR_PROCESSOR.md), not proofs of quantum dynamics.
+
 ## Property coupling and passive local conservation
 
 `test_property_couplings.py` requires property compatibility across differently

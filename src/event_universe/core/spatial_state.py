@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from .disturbance_state import (
+    MAX_COMPONENTS,
     Address3,
     Assignment,
     DisturbanceRecord,
@@ -55,6 +56,7 @@ class NodeFieldRuleDefinition:
     assignments: tuple[FieldAssignment, ...]
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
+    k: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,6 +67,7 @@ class SpatialInteractionDefinition:
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
     types: tuple[int, ...] = ()
+    k: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,6 +108,7 @@ class SpatialCouplingResult:
     reaction: Values
     cost: int
     guards: tuple[FieldInteractionGuard, ...] = ()
+    interaction_ticks: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -125,10 +129,13 @@ class SpatialState:
     populations: SpatialPopulations
     allocation_phases: SpatialPopulations
     delivered: tuple[Payload, ...]
+    received_mask: int = 0
 
     def validate(self, components: int) -> None:
-        if components not in (1, 3):
-            raise ValueError("spatial fields require one or three components")
+        if type(components) is not int or not 1 <= components <= MAX_COMPONENTS:
+            raise ValueError("spatial fields require one to thirty-two components")
+        if type(self.received_mask) is not int or not 0 <= self.received_mask < 64:
+            raise ValueError("received mask requires six bounded port bits")
         for values, size in (
             (self.populations, 8),
             (self.allocation_phases, 8),
@@ -157,6 +164,7 @@ class SpatialNodeState:
     last_begin_tick: int = -1
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
+    sample_received_masks: tuple[int, ...] = ()
     # Fixed host provenance references; never inputs to a physical field law.
     cause_id: int | None = None
     sample_cause_id: int | None = None
@@ -171,6 +179,7 @@ class SpatialPlan:
     source_delta: Values
     cost: int
     rule_delta: Values = ()
+    interaction_ticks: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -184,7 +193,7 @@ class SpatialPacket:
 
 def zero_spatial_state(components: int) -> SpatialState:
     bounded(components)
-    if components not in (1, 3):
-        raise ValueError("spatial fields require one or three components")
+    if not 1 <= components <= MAX_COMPONENTS:
+        raise ValueError("spatial fields require one to thirty-two components")
     zero = pack((0,) * components)
     return SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6)

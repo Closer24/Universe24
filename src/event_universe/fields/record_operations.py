@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, replace
 
-from event_universe.core.coupling_selectors import matches_pair
+from event_universe.core.coupling_selectors import matches_pair, participant_groups
 from event_universe.core.disturbance_state import (
     CouplingDefinition,
     DisturbanceDefinition,
@@ -40,6 +40,10 @@ class RecordOperations:
             *self.interactions,
         )
         for coupling in rules:
+            if isinstance(coupling, InteractionDefinition) and coupling.participants:
+                if participant_groups(coupling, records):
+                    return True
+                continue
             if any(
                 matches_pair(coupling, left, right)
                 for i, left in enumerate(present)
@@ -92,6 +96,7 @@ class RecordOperations:
                         and old is not None
                         and old.type_index == incoming.type_index
                         and old.channel_code == incoming.channel_code
+                        and self._compatible(old, incoming)
                     ),
                     None,
                 )
@@ -100,7 +105,12 @@ class RecordOperations:
                 assert old is not None
                 combined: list[tuple[int, ...]] = []
                 for index, (a, b) in enumerate(zip(old.values, incoming.values, strict=True)):
-                    value = pack(add_components(unpack(a), unpack(b)))
+                    aggregation = self.fields[index].aggregation
+                    value = (
+                        pack(add_components(unpack(a), unpack(b)))
+                        if aggregation in (None, "sum", "vector_sum")
+                        else a
+                    )
                     self.fields[index].validate(value)
                     combined.append(value)
                 records[match] = replace(old, values=tuple(combined))
@@ -113,3 +123,17 @@ class RecordOperations:
                     ) from error
                 records[slot] = incoming
         return tuple(records)
+
+    def _compatible(self, left: DisturbanceRecord, right: DisturbanceRecord) -> bool:
+        """Declared retention policies and carried bookkeeping partition arrivals."""
+        if not any(field.aggregation is not None for field in self.fields):
+            return True
+        if replace(left, values=()) != replace(right, values=()):
+            return False
+        for index in self.disturbances[left.type_index].fields:
+            field, first, second = self.fields[index], left.values[index], right.values[index]
+            if field.aggregation == "nonmergeable":
+                return False
+            if field.aggregation not in (None, "sum", "vector_sum") and first != second:
+                return False
+        return True

@@ -15,6 +15,12 @@ formulas, expression trees, definitions or executable laws. Shared immutable
 initialization definitions and generic evaluators remain permitted outside nodes.
 Check local causal field response and paired field reaction; a keyword scan or
 global source reconstruction behind a local accessor does not satisfy this rule.
+For the opt-in [integer Node profile](../../docs/NODE_VECTOR_PROCESSOR.md), include
+`tests/test_node_runtime.py`, `tests/test_node_guard_boundaries.py` and
+`tests/test_node_vector_integration.py`. Keep explicit k timing separate from
+operation cost, and check actual pending/packet owners before accepting a balance.
+Aggregation metadata must match each carrier and spatial receipt implementation;
+a supported metadata name alone does not establish a supported merge policy.
 Report missing checks in the audited revision as incomplete coverage. Preserve
 the existing schedule, retention and no-publication rules; do not create a second
 daily automation or change physical laws as part of an audit.

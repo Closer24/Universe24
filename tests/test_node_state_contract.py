@@ -5,13 +5,14 @@ from annotationlib import Format
 from dataclasses import replace
 from pathlib import Path
 from types import UnionType
-from typing import Union, get_args, get_origin, get_type_hints
+from typing import TypeVar, Union, get_args, get_origin, get_type_hints
 
 import pytest
 
 from event_universe import Simulation
 from event_universe.core import disturbance_state, spatial_state
 from event_universe.core.disturbance_state import Expression
+from event_universe.core.node_ports import PortBank
 from event_universe.diagnostics.node_contract import STATE_RECORDS, node_state_violations
 from event_universe.initialization import parse_initial_state
 
@@ -64,7 +65,10 @@ def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
     def inspect(annotation):
         if annotation in (int, type(None), Ellipsis) or annotation in allowed:
             return
-        assert get_origin(annotation) in (tuple, UnionType, Union), annotation
+        if isinstance(annotation, TypeVar):
+            inspect(annotation.__bound__)
+            return
+        assert get_origin(annotation) in (tuple, UnionType, Union, PortBank), annotation
         for argument in get_args(annotation):
             inspect(argument)
 

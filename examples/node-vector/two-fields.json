@@ -1,0 +1,643 @@
+{
+  "schema_version": 1,
+  "model_id": "generic-node-two-field-exchange-v1",
+  "node_execution": true,
+  "shape": [
+    5,
+    5,
+    5
+  ],
+  "boundary": "periodic",
+  "slots_per_node": 8,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "first",
+      "components": 8,
+      "units": "configured integer registers",
+      "signed": true,
+      "conserved": false,
+      "aggregation": "vector_sum"
+    },
+    {
+      "name": "second",
+      "components": 8,
+      "units": "configured integer registers",
+      "signed": true,
+      "conserved": false,
+      "aggregation": "vector_sum"
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "parcel",
+      "fields": [
+        "first",
+        "second"
+      ],
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "first": [
+          5,
+          2,
+          -1,
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        "second": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "spatial_fields": [
+    {
+      "field": "first",
+      "baseline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    },
+    {
+      "field": "second",
+      "baseline": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "transport": "local"
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "field": "second",
+      "populations": [
+        [
+          2,
+          -2,
+          1,
+          0,
+          -1,
+          0,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    }
+  ],
+  "spatial_interactions": [
+    {
+      "name": "exchange_with_second_field",
+      "type": "parcel",
+      "k": 2,
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "component",
+            "args": [
+              {
+                "field": "first",
+                "side": "left"
+              }
+            ],
+            "index": 0
+          },
+          {
+            "op": "component",
+            "args": [
+              {
+                "field": "second",
+                "side": "right"
+              }
+            ],
+            "index": 0
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "first",
+          "expression": {
+            "field": "second",
+            "side": "right"
+          }
+        },
+        {
+          "side": "right",
+          "field": "second",
+          "expression": {
+            "field": "first",
+            "side": "left"
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "joint_registers",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "first",
+                "side": "left"
+              },
+              {
+                "field": "second",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "conservation_contract": {
+    "name": "explicit register projections",
+    "quantities": [
+      {
+        "name": "declared_energy",
+        "components": 1,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "first",
+              "second"
+            ],
+            "value": {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first"
+                    },
+                    {
+                      "field": "second"
+                    }
+                  ]
+                }
+              ],
+              "index": 0
+            }
+          }
+        ],
+        "spatial": {
+          "op": "component",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "field": "first",
+                  "side": "right"
+                },
+                {
+                  "field": "second",
+                  "side": "right"
+                }
+              ]
+            }
+          ],
+          "index": 0
+        }
+      },
+      {
+        "name": "declared_momentum",
+        "components": 3,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "first",
+              "second"
+            ],
+            "value": {
+              "op": "vector",
+              "args": [
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 1
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 2
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 3
+                }
+              ]
+            }
+          }
+        ],
+        "spatial": {
+          "op": "vector",
+          "args": [
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 1
+            },
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 2
+            },
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 3
+            }
+          ]
+        }
+      },
+      {
+        "name": "declared_charge",
+        "components": 1,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "first",
+              "second"
+            ],
+            "value": {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first"
+                    },
+                    {
+                      "field": "second"
+                    }
+                  ]
+                }
+              ],
+              "index": 4
+            }
+          }
+        ],
+        "spatial": {
+          "op": "component",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "field": "first",
+                  "side": "right"
+                },
+                {
+                  "field": "second",
+                  "side": "right"
+                }
+              ]
+            }
+          ],
+          "index": 4
+        }
+      },
+      {
+        "name": "declared_angular_momentum",
+        "components": 3,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "first",
+              "second"
+            ],
+            "value": {
+              "op": "vector",
+              "args": [
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 5
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 6
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "op": "add",
+                      "args": [
+                        {
+                          "field": "first"
+                        },
+                        {
+                          "field": "second"
+                        }
+                      ]
+                    }
+                  ],
+                  "index": 7
+                }
+              ]
+            }
+          }
+        ],
+        "spatial": {
+          "op": "vector",
+          "args": [
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 5
+            },
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 6
+            },
+            {
+              "op": "component",
+              "args": [
+                {
+                  "op": "add",
+                  "args": [
+                    {
+                      "field": "first",
+                      "side": "right"
+                    },
+                    {
+                      "field": "second",
+                      "side": "right"
+                    }
+                  ]
+                }
+              ],
+              "index": 7
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
