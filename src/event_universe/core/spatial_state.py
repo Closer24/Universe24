@@ -21,10 +21,29 @@ SpatialOutgoing = tuple[SpatialPopulations, ...]
 SpatialBundle = tuple[SpatialPopulations, ...]
 
 
+DECAY_RESIDUES = ("localize", "dissipate")
+
+
 @dataclass(frozen=True, slots=True)
 class DecayDefinition:
+    """Completed-link attenuation ratio and the fate of the removed fraction.
+
+    ``localize`` (default) keeps the removed quantity as stationary stock owned
+    by the receiving Node, so total signed inventory is preserved. ``dissipate`` is the
+    explicit historical option that records it as loss instead.
+    """
+
     retain_numerator: int
     retain_denominator: int
+    residue: str = "localize"
+
+    def __post_init__(self) -> None:
+        if self.residue not in DECAY_RESIDUES:
+            raise ValueError("decay residue must be dissipate or localize")
+
+    @property
+    def localizes(self) -> bool:
+        return self.residue == "localize"
 
 
 @dataclass(frozen=True, slots=True)
@@ -184,6 +203,9 @@ class SpatialNodeState:
     cost_cause_id: int | None = None
     # Later arrivals have destination ownership but cannot enter a frozen cycle.
     shared_pending: int = 0
+    # Stationary stock per spatial field, deposited by localizing decay. It is
+    # owned inventory at a known Node: never transported, decayed or sampled.
+    localized: tuple[Payload, ...] = ()
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0

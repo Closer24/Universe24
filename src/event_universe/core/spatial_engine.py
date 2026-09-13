@@ -8,7 +8,16 @@ if TYPE_CHECKING:
     from .disturbance_node import DisturbanceNode
 
 from .coupling_selectors import selected_type_set
-from .disturbance_state import Address3, CostMeter, DisturbanceRecord, InitialState, Values, pack, unpack
+from .disturbance_state import (
+    Address3,
+    CostMeter,
+    DisturbanceRecord,
+    InitialState,
+    Payload,
+    Values,
+    pack,
+    unpack,
+)
 from .event_space import CausalEventSpace
 from .integer import checked_work
 from .node_boundary import validate_spatial_bundle
@@ -78,6 +87,7 @@ class SpatialEngine:
         self.links: PortTable[SpatialPacket] = PortTable((None,) * 6)
         self.sources = [[0] * field.components for field in initial.fields]
         self.dissipation = [[0] * field.components for field in initial.fields]
+        self.localized = [[0] * field.components for field in initial.fields]
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
@@ -94,7 +104,9 @@ class SpatialEngine:
             coupler,
             decayer,
             NodeActivity(self._active),
-            SpatialAccounting(self.sources, self.dissipation, self.reactions, self.transformations),
+            SpatialAccounting(
+                self.sources, self.dissipation, self.reactions, self.transformations, self.localized
+            ),
             balance_guard,
             field_guard,
             meter.total,
@@ -120,6 +132,12 @@ class SpatialEngine:
             result.append(SpatialState((zero,) * 8, (zero,) * 8, (zero,) * 6))
         return tuple(result)
 
+    def _blank_localized(self) -> tuple[Payload, ...]:
+        return tuple(
+            pack((0,) * self.initial.fields[definition.field].components)
+            for definition in self.initial.spatial_fields
+        )
+
     def _at(self, position: Address3) -> SpatialNode:
         if position not in self.nodes:
             self.nodes[position] = SpatialNode(
@@ -128,6 +146,7 @@ class SpatialEngine:
                 output=self.links.bank(position),
                 arrival_mask=(0,) * 6,
                 delay_counts=(0,) * 6,
+                localized=self._blank_localized(),
             )
             self._active.add(position)
         elif position not in self._active:
@@ -294,12 +313,18 @@ class SpatialEngine:
                 for payload in populations:
                     for component, value in enumerate(unpack(payload)):
                         result[definition.field][component] += value
+            # Deposits are owned stock at idle or active Nodes; the ledger sums them
+            # without enumerating idle history.
+            for component, value in enumerate(self.localized[definition.field]):
+                result[definition.field][component] += value
         return result
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
         states = self.nodes[position].states if position in self.nodes else self._blank_states()
         result: dict[str, dict[str, object]] = {}
-        for definition, state in zip(self.initial.spatial_fields, states, strict=True):
+        for index, (definition, state) in enumerate(
+            zip(self.initial.spatial_fields, states, strict=True)
+        ):
             field = self.initial.fields[definition.field]
             local = list(unpack(definition.baseline))
             for payload in state.populations:
@@ -312,6 +337,11 @@ class SpatialEngine:
                 "directions": tuple(unpack(v) for v in state.delivered),
                 "populations": tuple(unpack(v) for v in state.populations),
             }
+            if definition.decay is not None and definition.decay.localizes:
+                localized = (
+                    self.nodes[position].localized if position in self.nodes else self._blank_localized()
+                )
+                result[field.name]["localized"] = unpack(localized[index])
         return result
 
     def accounting(self) -> dict[str, dict[str, object]]:
@@ -338,6 +368,7 @@ class SpatialEngine:
                 "sources": tuple(self.sources[index]),
                 "reactions": tuple(self.reactions[index]),
                 "dissipated": tuple(self.dissipation[index]),
+                "localized": tuple(self.localized[index]),
                 "escaped": tuple(self.escaped[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(

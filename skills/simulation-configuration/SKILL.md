@@ -28,8 +28,8 @@ the example family in the guide for fields, catalog entities or native events.
    meet, where, duration, quantities to measure and whether visual output is wanted.
    Reuse explicit user choices. Resolve routine defaults from an existing example.
 2. Choose the supported schema and mechanism before assigning physical labels.
-   Use schema 1 for local field rules, schema 2 for finite dissipative outward
-   fields. The classical causal graph supports both; native quantum programs
+   Use schema 1 for local field rules, schema 2 for finite attenuating outward
+   fields that keep total flux as deposits at known nodes. The classical causal graph supports both; native quantum programs
    still reject spatial fields. Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
    for provenance granularity, capacity and failure behavior.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed

@@ -66,7 +66,7 @@ def document():
                 "field": "load",
                 "transport": "outward",
                 "baseline": [0, 0, 0],
-                "decay": {"retain_numerator": 1, "retain_denominator": 2},
+                "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
             }
         ],
         "emissions": [

@@ -119,8 +119,9 @@ expose individual nodes at larger scales. A dense view asks for zoom instead of
 substituting a schematic grid. The approaching preset takes two ticks per link.
 
 Result tables distinguish current quantities, committed sources, signed
-dissipation and escaped quantities. A balanced dissipative or open run can change
-its physical totals without failing its accounting checks.
+dissipation, localized deposits and escaped quantities. A balanced explicitly
+dissipative or open run can change its physical totals without failing its
+accounting checks; under the default localizing residue a closed run keeps them.
 
 ## Phone layout
 

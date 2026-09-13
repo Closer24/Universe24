@@ -4,9 +4,13 @@ These optional candidates separate a carried disturbance from the spatial fields
 it emits. Select fields through `spatial_fields` in initialization. Schema version
 1 selects `conservative-outward-v1`, with conservative transport and unlimited
 declared emission; its example is
-[moving_source.json](../examples/moving_source.json). Schema version 2 selects
-`finite-dissipative-v1`, requiring finite decay and source allowances; its example
-is [finite_fields.json](../examples/finite_fields.json). Names such as `radiation`,
+[moving_source.json](../examples/moving_source.json). Schema version 2 requires
+finite decay and source allowances and selects `finite-localizing-v1` by default:
+attenuated fractions become stationary stock at the receiving Node, so total
+signed inventory is preserved. Its example is
+[finite_fields.json](../examples/finite_fields.json). The explicit
+`"residue": "dissipate"` option selects the historical `finite-dissipative-v1`
+loss law instead. Names such as `radiation`,
 `strength` and `heading` remain configuration data. The runner derives the policy
 from `schema_version`, never from words in the user's `model_id`.
 
@@ -80,7 +84,8 @@ source strength: required `source: true` declares external injection. A
 reservoir-funded source needs a separately defined atomic debit law.
 
 For schema version 2, every spatial-field entry additionally requires
-`"decay": {"retain_numerator": 2, "retain_denominator": 3}` and every emission
+`"decay": {"retain_numerator": 2, "retain_denominator": 3}`, optionally with
+`"residue": "dissipate"` for the historical loss law, and every emission
 requires `"budget": 216`, or a three-element array for a vector target. Budgets
 are nonnegative component amounts in the target field's configured units,
 bounded by `1_073_741_823`. A zero component budget is valid. Schema 1 rejects
@@ -128,8 +133,13 @@ interior receiving node, each original packet's octant component `v` becomes:
 
 ```text
 retained = sign(v) * floor(abs(v) * p / q)
-dissipated = v - retained
+removed = v - retained
 ```
+
+The optional `residue` key decides the fate of `removed`. The default
+`"localize"` deposits it as stationary stock at the receiving Node (see
+[Localizing residue](#localizing-residue) below). The explicit `"dissipate"`
+option records it as loss, as the rest of this section describes.
 
 This operates before packets are merged at the destination. For example, two
 separate incoming components of 1 with `p/q = 1/2` both disappear; merging them
@@ -138,22 +148,54 @@ are built from the attenuated arrivals. Resident seeds and newly committed
 reactions first traverse a full link before this loss is applied. There is no
 loss merely because a carrier waits or a diagnostic reads a node.
 
-No decay remainder is retained. This is an explicit dissipative integer law,
-not conservation-preserving division. The immutable baseline is exempt and
+Under `"residue": "dissipate"` no decay remainder is retained. That is an explicit
+dissipative integer law, not conservation-preserving division. The immutable baseline is exempt and
 persists even after all dynamic populations vanish. Each component retains its
 own sign until it becomes zero, but component-wise rounding can change a vector's
 direction and norm. It does not conserve physical momentum or energy. Exact
 opposite reactions at coupling commit remain a separate local property.
 
-Every nonzero integer component loses magnitude on each completed interior link
-or leaves the domain through an open boundary. For a
+Every nonzero integer component loses moving magnitude on each completed interior
+link or leaves the domain through an open boundary. For a
 fixed finite set of initial records, initial populations and finite source and
 coupling budgets, total absolute dynamic injection is bounded. Once the last
-nonzero input has occurred, all dynamic spatial populations therefore disappear
-after finitely many links, including on the periodic lattice. This does not
+nonzero input has occurred, all moving spatial populations therefore come to
+rest after finitely many links, including on the periodic lattice: as deposits
+under the default residue, or as recorded loss under `"dissipate"`. This does not
 promise that carriers stop moving or that unused allowances reach zero, nor a
 universal extinction tick independent of the source schedule. Allocation phases
 may remain in sparse nodes after their physical stock vanishes.
+
+### Localizing residue
+
+The default residue, `"localize"`, preserves signed component inventory:
+it keeps the same retained quantity moving, but the removed fraction
+`v - retained` is deposited as stationary stock owned by the receiving Node
+instead of being recorded as loss. Omitting `residue` selects it; the historical
+loss law needs the explicit key:
+
+```json
+"decay": {"retain_numerator": 1, "retain_denominator": 2}
+"decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"}
+```
+
+The deposit is computed per original packet/octant/component before merging,
+exactly like dissipation, so two separate arrivals of 1 with `p/q = 1/2` deposit
+two stationary units at that Node. A deposit stays at its Node: it is never
+transported, split, decayed, sampled into the six delivered readings or read by
+field rules and couplings, and it does not enter `value`. Localizing fields
+report it separately as `localized` in node values, snapshots and accounting.
+Under this residue the dissipation ledger stays zero and total field inventory,
+moving stock plus deposits, is preserved: a wave that thins below one unit ends
+as whole units at known Nodes rather than as recorded loss. Idle Nodes keep their
+deposits; a committed-deposit ledger totals them without scanning idle history. The runner
+records `finite-localizing-v1` when every spatial field localizes, otherwise
+`finite-dissipative-v1`, and lists each field's residue in `spatial_decay_residue`.
+The schema 1 conservation audits do not cover schema 2; the engine accounting
+`balanced` flag and the runner's conservation flag check the preserved total.
+This is a configured integer law, not a derived particle or absorption model.
+In [finite_fields.json](../examples/finite_fields.json) every emitted unit ends
+at rest at a known Node with zero dissipation.
 
 ## Event order and cost
 

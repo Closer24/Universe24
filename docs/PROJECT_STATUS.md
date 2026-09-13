@@ -78,6 +78,11 @@ selected mechanisms pass; field/particle physical laws remain incomplete.
 Finite owned-reservoir transfer, a ray-speed parameter and a restricted
 zero-total-momentum unequal-mass candidate are explicit configuration solutions,
 not replacements for the default entity profiles or derived universal laws.
+The [inverse-square probe](../examples/inverse-square/README.md) measures the
+outward field from outside the event space: every Manhattan shell carries exactly
+one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
+values are anisotropic (geometric on axes, about `1/r` on body diagonals). Newton's
+pointwise law would need an isotropic transport candidate that does not exist yet.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
@@ -180,9 +185,12 @@ local configuration is distinct from total host scheduling and history costs.
 Capacity exhaustion rejects a run rather than silently losing state.
 
 [Spatial fields](SPATIAL_FIELDS.md) and [couplings](SPATIAL_COUPLINGS.md) retain
-candidate-specific behavior. Schema 2 (`finite-dissipative-v1`) records completed-link
-loss and finite source/response allowances; accounting for decay is not physical
-energy or momentum conservation through decay. Periodic and open boundaries have
+candidate-specific behavior. Schema 2 (`finite-localizing-v1` by default) attenuates
+moving stock on each completed link and deposits the removed fraction as stationary
+stock at the receiving Node, so total inventory is preserved; the explicit
+`"residue": "dissipate"` option (`finite-dissipative-v1`) records completed-link
+loss instead. Finite source/response allowances apply to both. Accounting through
+attenuation is not physical energy or momentum conservation. Periodic and open boundaries have
 separate explicit contracts. General automatic self-field attribution after turns
 or periodic return remains unsupported. A passing isolated-motion rejection test
 identifies invalid behavior; it does not repair the underlying candidate law.

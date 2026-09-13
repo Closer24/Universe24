@@ -63,22 +63,26 @@ conversions as transformations rather than external sources. It supplies no
 Maxwell, Lorentz or quantum law, and does not alter schema 2 finite decay.
 
 Schema version 1 retains those conservative spatial laws. Schema version 2
-selects the explicit `finite-dissipative-v1` policy, derived from the schema
-version independently of user-defined names. Every spatial field requires a
-bounded integer ratio `0 <= p < q`; each original packet/octant/component is
-attenuated to `sign(v) * floor(abs(v) * p / q)` on completing an interior link,
-before arrival packets merge. Removed fractions are intentionally not retained.
-Immutable baselines are exempt. Per-record finite allowances bound absolute
+selects finite attenuation, derived from the schema version independently of
+user-defined names. Every spatial field requires a bounded integer ratio
+`0 <= p < q`; each original packet/octant/component is attenuated to
+`sign(v) * floor(abs(v) * p / q)` on completing an interior link, before arrival
+packets merge. By default (`finite-localizing-v1`) each removed fraction is
+deposited as stationary stock at the receiving Node, preserving signed inventory:
+it comes to rest as whole units at known Nodes. The explicit
+`"residue": "dissipate"` option (`finite-dissipative-v1`) records removed
+fractions as loss instead. Immutable baselines are exempt. Per-record finite allowances bound absolute
 emission and opposite coupling reactions; they are not physical reservoirs.
 The complete laws belong to [spatial fields](docs/SPATIAL_FIELDS.md) and
 [spatial response](docs/SPATIAL_COUPLINGS.md).
 
 The version 2 combined balance is initial inventory plus committed sources minus
-committed signed dissipation and escaped quantity. Integer attenuation can change vector direction and does not
-preserve momentum or energy. Coupling remains equal-and-opposite at its atomic
-commit, before subsequent propagation loss. Fixed finite initial records and
-allowances bound dynamic input; after the last nonzero input, dynamic spatial
-stock vanishes after finitely many links. This does not require carriers to stop
+committed signed dissipation and escaped quantity, where deposits count as
+inventory and dissipation is zero under the default residue. Integer attenuation
+can change vector direction and does not preserve momentum or energy. Coupling
+remains equal-and-opposite at its atomic commit, before subsequent attenuation.
+Fixed finite initial records and allowances bound dynamic input; after the last
+nonzero input, moving spatial stock comes to rest after finitely many links. This does not require carriers to stop
 or immutable backgrounds to disappear. Schema 1 rejects the new decay and budget
 keys, and named historical research models retain their own integer rules.
 
@@ -157,7 +161,8 @@ The canonical implementation is the `event_universe` Python package under `src/`
 `persistent_source_field.py` is a compatibility facade, with no copied physical law.
 The historical scalar model identifier is `scalar-field-v10-contact`.
 The active generic user identity is supplied by initialization; its schema version
-separately identifies conservative or finite dissipative spatial policy.
+separately identifies conservative or finite attenuating spatial policy, and the
+decay residue distinguishes localizing from dissipative attenuation.
 The plain-language conceptual source is `POSTULATES.md`. If its wording is
 ambiguous, this file defines the executable technical requirement. A deliberate
 change to a postulate must update both files and the relevant regression tests.
