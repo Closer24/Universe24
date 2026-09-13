@@ -318,5 +318,11 @@ def build_event_runtime(initial: InitialState) -> tuple[CausalEventSpace | None,
     events = CausalEventSpace(
         program.capacity, shape=initial.shape, boundary=initial.boundary, link_ticks=initial.link_ticks
     )
-    resolver = None if program.network is None else NativeEventResolver(initial, program, events)
+    resolver: EventResolver | None
+    if program.contacts is not None:
+        from .contact_runtime import ContactEventResolver
+
+        resolver = ContactEventResolver(initial, program, events)
+    else:
+        resolver = None if program.network is None else NativeEventResolver(initial, program, events)
     return events, resolver

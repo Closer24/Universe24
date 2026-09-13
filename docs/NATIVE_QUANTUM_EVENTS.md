@@ -1,5 +1,9 @@
 # Native event programs and charged classical paths
 
+The separate [localized contact profile](LOCALIZED_QUANTUM_CONTACT.md) adds actual
+commit-time ordinary/quantum conversion and localized classical field emission.
+Its explicit model selection does not relax the v1/v2/v3 restrictions below.
+
 ## Contract and ownership
 
 The primary `Simulation(initial)` and the ordinary `event-universe --init ...`

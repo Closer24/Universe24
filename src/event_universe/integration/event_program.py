@@ -6,6 +6,7 @@ callbacks. This owner validates payloads; the physical scheduler stays neutral.
 
 import json
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from event_universe.core.disturbance_state import Address3, InitialState
 from event_universe.initialization import _address, _array, _index, _integer, _object, _text
@@ -13,6 +14,9 @@ from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrumen
 from event_universe.quantum.event_network import Instrument, LocalOperation
 from event_universe.quantum.event_rules import GroupedInstrument, LocalChannel, Matrix, outcome_groups
 from event_universe.quantum.wave_origins import WaveDefinition
+
+if TYPE_CHECKING:
+    from .contact_program import ContactConfiguration
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,6 +50,7 @@ class Program:
     tickets: tuple[int, ...] | None
     wave_interactions: tuple[WaveBinding, ...] = ()
     layer_origins: tuple[tuple[int, tuple[tuple[str, ...], ...]], ...] = ()
+    contacts: ContactConfiguration | None = None
 
 
 def _matrix(value: object) -> Matrix:
@@ -93,8 +98,13 @@ def parse_event_program(initial: InitialState) -> Program:
         raise ValueError("bounded event program required")
     if initial.conservation is not None:
         raise ValueError("conservation audit does not support native event programs")
+    raw_program = json.loads(initial.event_program)
+    if isinstance(raw_program, dict) and raw_program.get("model") == "localized-contact-quantum-v1":
+        from .contact_program import parse_contact_program
+
+        return parse_contact_program(initial, raw_program)
     obj = _object(
-        json.loads(initial.event_program),
+        raw_program,
         "event program",
         {
             "model",

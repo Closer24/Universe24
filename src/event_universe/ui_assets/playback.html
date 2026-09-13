@@ -54,6 +54,7 @@ $('#previous').textContent=observerMode?'← Sample':'← Tick';$('#next').textC
 function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
 function visibleRecords(f){const records=f.nodes.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Node':'Waiting node'})));
 for(const t of f.transfers)records.push(transferView(t,f));return records;}
+function visibleEventSupport(f){return f.event_support||[];}
 function transferView(t,f){
 const boundary=f.boundary||metadata.boundary||'periodic';
 const p=[...t.origin],axis=Math.floor(t.port/2),sign=t.port%2===0?1:-1;const fraction=Math.max(0,Math.min(1,1-(t.arrival_tick-f.tick)/(metadata.link_ticks||1)));const coordinate=p[axis]+sign*fraction;p[axis]=boundary==='open'?coordinate:(coordinate+shape[axis])%shape[axis];
@@ -118,6 +119,13 @@ function draw(){
   $('#previous').disabled=index===0;$('#next').disabled=index===frames.length-1;
   $('#grid-info').textContent=(dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).')+' Projection includes every '+'XYZ'[[0,1,2].find(axis=>!axes.includes(axis))]+' layer.';
   const body=$('#records');body.replaceChildren();
+  for(const support of visibleEventSupport(f)){
+    const [x,y]=project(support.position),size=Math.max(5,Math.min(10,unit*.35));
+    ctx.save();ctx.strokeStyle='#b6a0ff';ctx.lineWidth=1.5;ctx.setLineDash([2,3]);
+    ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);ctx.stroke();ctx.restore();
+    const row=document.createElement('tr');
+    for(const value of ['Wave references',support.position.join(', '),'Origins: '+support.origins.join(', '),'Possible support; not a localized charge or probability']){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}body.append(row);
+  }
   const fieldSelection=$('#field').value,spatial=visibleSpatialFields(f).filter(r=>!fieldSelection||r.name===fieldSelection);
   $('#field-info').textContent='Uniform baselines across the domain: '+JSON.stringify(f.spatial_baselines||{})+'. Node values already include these baselines; received samples are not additional inventory.';
   for(const r of spatial){

@@ -750,6 +750,24 @@ The entity compiler's explicit quantum selection adds no species-name dispatch.
 Independent spatial-field clocks and general field/particle dynamics remain
 outside this candidate. Legacy binary inputs retain their original behavior.
 
+## Localized contact quantum/classical transfer - Q-CONTACT-1
+
+`localized-contact-quantum-v1` composes the ordinary runner, fixed spatial clock
+and finite deferred quantum owner under the
+[localized contact contract](docs/LOCALIZED_QUANTUM_CONTACT.md). An actual local
+unknown-momentum contact creates its origin at commit; absorption returns one
+held localized record. Conserved template quantities have exactly one ordinary
+or coherent owner. Delayed alternatives preserve local field reactions and every
+coupled resident. Classical emission occurs only while the source is localized;
+its previously emitted packets keep their causal evolution.
+
+The profile validates finite emission budgets, number-preserving local gates,
+complete absorption instruments and domain identity in the semantic owner as
+well as JSON. It does not support the shared field-delay clock, Node execution,
+the passive classical-only conservation audit, automatic exterior quantum modes
+or reciprocal classical-field action on delocalized matter. Read-only playback
+separates possible origin support from particles, field inventory and probability.
+
 ## Quantum origin cells in event spacetime - Q-ORIGINS-3
 
 The explicit native v3 candidate is specified in

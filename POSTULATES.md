@@ -452,3 +452,19 @@ not a mutation of its historical physical data or an ordinary remote field read.
 The finite candidate, initialization requirements, cost distinctions and open
 physical questions are defined in [WAVE_ORIGINS.md](docs/WAVE_ORIGINS.md).
 Bounded local lookup does not make total host evaluation or memory constant.
+
+## 19. Localized quantum contact candidate
+
+The explicitly selected [localized contact hybrid](docs/LOCALIZED_QUANTUM_CONTACT.md)
+transfers one configured ordinary inventory into a finite coherent domain only
+when an actual local contact commits. Undefined momentum is explicit information
+state, not a zero vector or a derivation of propagation amplitudes. A complete
+local absorption instrument restores one localized record and leaves quantum
+vacuum. Number-preserving propagation and origin retirement keep one inventory.
+
+Ordinary fields are emitted only by localized records under their finite configured
+allowances. Existing field stock continues causally. Neither conditioned
+probabilities nor shared origin flags drive a remote ordinary field update.
+This is the user-selected approximation, not a derivation of quantum fields,
+physical momentum or the general classical limit. Its clock and representation
+limits are explicit and do not silently extend the older native profiles.

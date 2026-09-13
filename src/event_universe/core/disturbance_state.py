@@ -274,6 +274,7 @@ class LocalPlan:
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
     cause_id: int | None = None
     interaction_ticks: int = 0
+    resolution_token: int | None = None
 
 
 @dataclass(frozen=True, slots=True)

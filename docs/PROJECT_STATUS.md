@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) now connects
+actual committed ordinary contacts, deferred origin creation, coherent propagation
+and local capture through the primary runner. Classical fields are emitted only
+at localized sources and continue causally after conversion. Finite templates,
+number-preserving matrices and separate source accounting define this explicit
+hybrid; it is not full quantum electromagnetism. Its configuration, supported
+clocks and acceptance evidence are linked from the contract.
+
 The native [quantum origin cells](WAVE_ORIGINS.md) use the shared immutable event
 spacetime as their history. Each participating physical Node holds up to six
 origin IDs and checks their resolution on every native tick. A terminal configured

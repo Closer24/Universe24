@@ -16,12 +16,15 @@ from event_universe.core.event_space import CausalEventSpace
 class WaveDefinition:
     name: str
     register_index: int
+    deferred: bool = False
 
     def __post_init__(self) -> None:
         if type(self.name) is not str or not self.name or len(self.name) > 128:
             raise ValueError("bounded nonempty wave name required")
         if bounded(self.register_index) < 0:
             raise ValueError("nonnegative wave source register required")
+        if type(self.deferred) is not bool:
+            raise ValueError("deferred wave selection must be boolean")
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,8 +57,11 @@ class WaveOrigins:
         unique = tuple(dict.fromkeys(addresses))
         banks = events.bind_references(unique)
         self.banks = dict(zip(unique, banks, strict=True))
+        self.definitions = {definition.name: definition for definition in definitions}
         self.names: dict[str, int] = {}
         for definition in definitions:
+            if definition.deferred:
+                continue
             address = addresses[definition.register_index]
             origin = events.append(
                 tick=0,
@@ -68,6 +74,28 @@ class WaveOrigins:
             bank = self.banks[address]
             bank.replace((*bank.origins, origin.id), origin.id)
         self._origin_ids = frozenset(self.names.values())
+
+    def check_activation(self, name: str) -> WaveDefinition:
+        definition = self.definitions.get(name)
+        if definition is None or not definition.deferred or name in self.names:
+            raise ValueError("wave activation requires an unused deferred origin")
+        bank = self.banks[self.addresses[definition.register_index]]
+        if sum(self.relevant(origin) for origin in bank.origins) >= 6:
+            raise OverflowError("local quantum wave capacity exceeds six")
+        return definition
+
+    def activate(self, name: str, tick: int, parent: int) -> int:
+        definition = self.check_activation(name)
+        address = self.addresses[definition.register_index]
+        origin = self.events.append(
+            tick=tick, addresses=(address,), owner="quantum", kind="wave-origin", parents=(parent,)
+        )
+        self.names[name] = origin.id
+        self._origin_ids = self._origin_ids | {origin.id}
+        bank = self.banks[address]
+        retained = tuple(i for i in bank.origins if self.relevant(i))
+        bank.replace((*retained, origin.id), origin.id)
+        return origin.id
 
     @property
     def states(self) -> tuple[WaveStatus, ...]:

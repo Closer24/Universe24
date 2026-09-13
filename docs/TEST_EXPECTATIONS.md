@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Localized quantum contacts
+
+`test_localized_quantum_contact.py` owns the
+[contact hybrid expectations](LOCALIZED_QUANTUM_CONTACT.md#numerical-acceptance):
+actual source birth, delayed single ownership, finite classical emission and Link
+fronts, 9/25 versus 16/25 mixing and inverse interference, exhaustive capture
+tickets, unchanged unconditional receiver statistics, constant detector cost,
+six periodic directions, positive transit times and unused local capacity.
+It also reproduces a third-resident field-reaction conservation defect, checks
+rejection before sampling, semantic-owner guards, concurrent snapshot publication,
+active generic renaming and headless primary-runner output. The scope is finite
+configured absorption and component accounting, not complete electromagnetic
+energy/momentum conservation or quantum emergence.
+
 ## Computational response
 
 `test_node_work_emission.py` checks committed local work, zero startup, pending

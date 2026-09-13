@@ -1,5 +1,39 @@
 # Highlights implementation coverage
 
+## Localized quantum contacts - 2026-09-13
+
+Live Highlights was reconciled read-only at revision
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
+modified `2026-09-13T18:53:30.879Z`. Its sections 1.2.7, 4.7.1-4.7.7 and
+10.3/10.6 map to the [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md).
+The later user selection explicitly chooses ordinary fields only at localized
+events. This finite hybrid is an additional configured candidate, not a claim
+that the project's separate goal of emergent unified dynamics is complete.
+
+Actual local source contact creates an origin only at committed event time.
+Finite coherent domains retain one configured inventory through number-preserving
+operations; a complete local absorption instrument transfers it into one ordinary
+record. Existing classical fields evolve causally. Quantum probabilities never
+reconstruct or erase remote ordinary field stock. Definitions, implementation
+owners, tests and configuration are linked in the candidate contract.
+
+The separate predecessor list remains absent. Node state adds only a bounded
+reservation token; six-entry origin banks and immutable event history retain their
+owners. Common local field reactions preserve every coupled resident, including
+third participants, and all alternatives validate before sampling. Unknown
+momentum is explicit; no sharp momentum or physical energy is inferred from a
+position record. Public snapshots serialize with event-backed commits and expose
+possible support separately from localized charge.
+
+The focused acceptance suite covers fifty-one numerical and failure cases, including
+3:4 interference, exhaustive Born tickets, delayed ownership, external-field
+exchange, finite emission, six periodic directions and unchanged unconditional
+receiver statistics. The authoritative run/gate evidence belongs in
+[validation](VALIDATION.md). Full quantum fields, unrestricted no-signalling,
+exterior quantum escape and shared Node clock composition remain outside scope.
+The live Google Doc was not changed. Its section 11 reports other unmerged
+branch candidates; those results are not imported or claimed by this change.
+
 ## Quantum origin cells and event spacetime - 2026-09-13
 
 Live Highlights revision

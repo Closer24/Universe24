@@ -540,6 +540,24 @@ equivalence. Reclaiming them is a separate scheduler change requiring physical
 contract checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
 
+## Commit-time local quantum transfer
+
+The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) uses a generic
+`CommitResolver` protocol. Pending Node state carries one bounded integer token;
+immutable definitions and bounded reservations stay with the resolver. The Node
+validates all reserved replacement alternatives and the common field reaction
+before requesting a choice. Routing, sources and cycle cost cannot vary between
+those alternatives. Spare unreserved slots remain available during a wait.
+The event-backed tick and snapshot use the same transaction lock, making quantum
+transfer and ordinary installation one observable publication.
+
+`integration/contact_program.py` validates configuration and
+`integration/contact_runtime.py` composes existing owners. Occupation/capture
+arithmetic constraints belong to `quantum/contact_rules.py`; the quantum semantic
+owner enforces them even for typed callers. Ordinary core and fields do not import
+quantum laws. Inventory sector totals and possible-origin display are diagnostic
+reads, not physical inputs. Contact model limits are owned by its linked contract.
+
 ## Opt-in quantum ownership — Q-ORACLE-1
 
 The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its

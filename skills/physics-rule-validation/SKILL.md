@@ -43,6 +43,14 @@ model contracts and does not add a new physical law.
 
 ## Review energy and momentum claims
 
+For [ordinary/quantum contact conversion](../../docs/LOCALIZED_QUANTUM_CONTACT.md),
+check ownership at the actual delayed commit, not merely at branch planning.
+Exercise a coupled third resident and arrivals into spare slots. Validate all
+local outcomes before sampling, including common field reactions; require a
+semantic-owner occupation guard in addition to JSON preflight. Test finite
+localized emission, causal field fronts and equal vacuum/click controller cost.
+Keep possible origin references distinct from probability or copied inventory.
+
 Use the [local conservation contract](../../docs/LOCAL_CONSERVATION.md) when a
 model claims joint energy and momentum balance. Identify all actual owners and
 fluxes, and inspect the complete update chain, including arrival merging and

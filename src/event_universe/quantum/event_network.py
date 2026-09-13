@@ -13,6 +13,7 @@ from typing import Concatenate
 
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.state import Address, checked, checked_work
+from event_universe.core.topology import neighbor_address
 
 from .event_rules import (
     BasisLayout,
@@ -71,8 +72,35 @@ class EventNetworkConfig:
     initial_levels: tuple[int, ...] = ()
     register_names: tuple[str, ...] = ()
     waves: tuple[WaveDefinition, ...] = ()
+    local_contacts: bool = False
+    occupation_domains: tuple[tuple[int, ...], ...] = ()
 
     def __post_init__(self) -> None:
+        if type(self.local_contacts) is not bool:
+            raise ValueError("local contact selection must be boolean")
+        if self.local_contacts and (
+            not self.waves
+            or any(not w.deferred for w in self.waves)
+            or any(self.levels)
+            or any(d != 2 for d in self.local_dimensions)
+        ):
+            raise ValueError("local contacts require deferred binary vacuum domains")
+        if self.local_contacts:
+            covered = tuple(q for domain in self.occupation_domains for q in domain)
+            if (
+                type(self.occupation_domains) is not tuple
+                or len(self.occupation_domains) != len(self.waves)
+                or any(type(d) is not tuple or not d for d in self.occupation_domains)
+                or len(covered) != len(set(covered))
+                or set(covered) != set(range(len(self.addresses)))
+                or any(
+                    w.register_index not in d
+                    for w, d in zip(self.waves, self.occupation_domains, strict=True)
+                )
+            ):
+                raise ValueError("contact occupation domains must partition the configured modes")
+        elif self.occupation_domains:
+            raise ValueError("occupation domains require the contact profile")
         if type(self.addresses) is not tuple or not 1 <= len(self.addresses) <= 30:
             raise ValueError("one to thirty immutable addresses are supported")
         for address in self.addresses:
@@ -218,7 +246,9 @@ class EventNetwork:
         self._tick = 0
         self._revision = 0
         self.event_space = event_space if event_space is not None else CausalEventSpace()
-        self.event_space.require_room(len(config.addresses) + len(config.waves))
+        self.event_space.require_room(
+            len(config.addresses) + sum(not wave.deferred for wave in config.waves)
+        )
         self._payloads: dict[int, QuantumPayload] = {}
         self._cursors = self.event_space.bind_streams("quantum", config.addresses)
         layout = BasisLayout(config.local_dimensions)
@@ -426,6 +456,16 @@ class EventNetwork:
         node_origins: list[tuple[int, ...]] = []
         cancellations: list[tuple[tuple[int, ...], tuple[int, ...]]] = []
         for index, (rule, register_indices) in enumerate(operations):
+            if self.config.local_contacts:
+                from .contact_rules import preserves_occupation
+
+                if not isinstance(rule, LocalUnitary):
+                    raise ValueError("contact propagation requires an occupation-preserving unitary")
+                preserves_occupation(rule)
+                if not any(
+                    set(register_indices) <= set(domain) for domain in self.config.occupation_domains
+                ):
+                    raise ValueError("contact propagation cannot exchange separate domain inventories")
             if type(rule) not in (LocalUnitary, LocalChannel) or type(register_indices) is not tuple:
                 raise TypeError("local coherent rule and immutable register_indices required")
             if len(register_indices) not in (1, 2):
@@ -447,9 +487,19 @@ class EventNetwork:
             if len(register_indices) == 2:
                 a, b = (self.config.addresses[q] for q in register_indices)
                 distance = sum(abs(checked_work(x - y)) for x, y in zip(a, b, strict=True))
-                if distance not in (0, 1):
+                periodic_neighbor = (
+                    self.config.local_contacts
+                    and self.event_space.shape is not None
+                    and any(
+                        neighbor_address(a, port, self.event_space.shape, self.event_space.boundary) == b
+                        for port in range(6)
+                    )
+                )
+                if distance not in (0, 1) and not periodic_neighbor:
                     raise ValueError("only cardinal nearest-neighbor operations are allowed")
             origins = () if origin_groups is None else origin_groups[index]
+            if self.config.local_contacts:
+                self._contact_origins(register_indices[0], origins, required=True)
             if self.waves is not None:
                 self._wave_request(origins, (), (), 0)
                 if not self.waves.operation_live(origins, register_indices):
@@ -602,7 +652,7 @@ class EventNetwork:
         terminal_outcomes: tuple[int, ...],
         outcome_count: int,
     ) -> None:
-        if self.waves is not None and not origins:
+        if self.waves is not None and not origins and not self.config.local_contacts:
             raise ValueError("wave interactions require explicit origins")
         for values in (origins, terminal_origins, terminal_outcomes):
             if type(values) is not tuple or len(values) > 6 or any(type(v) is not int for v in values):
@@ -620,12 +670,55 @@ class EventNetwork:
                 raise ValueError("wave origins were not configured")
             self.waves.status(origin)
 
+    def _contact_origins(self, register: int, origins: tuple[int, ...], *, required: bool) -> None:
+        if not origins and not required:
+            return
+        assert self.waves is not None
+        domain = next(i for i, qs in enumerate(self.config.occupation_domains) if register in qs)
+        expected = self.waves.names.get(self.config.waves[domain].name)
+        if expected is None or origins != (expected,):
+            raise ValueError("contact operation must select its own occupation domain origin")
+
     @_serialized
     def wave_relevant(self, origin: int) -> bool:
         """One origin status read, with no history or state evaluation."""
         if self.waves is None:
             raise ValueError("wave origins were not configured")
         return self.waves.relevant(origin)
+
+    @_serialized
+    def activate_contact(self, name: str, preparation: LocalUnitary, cause: int) -> int:
+        """Prepare one local vacuum mode at the actual committed contact time."""
+        from .contact_rules import validates_preparation
+
+        if not self.config.local_contacts or self.waves is None:
+            raise ValueError("contact activation requires its explicit network profile")
+        validates_preparation(preparation)
+        definition = self.waves.check_activation(name)
+        register = definition.register_index
+        causal = self.event_space.event(cause)
+        if causal.tick != self.tick or self.config.addresses[register] not in causal.addresses:
+            raise ValueError("contact activation requires a current local cause")
+        self._room(1)
+        self.event_space.require_room(2)
+        ids, _ = self._plan((register,))
+        state, _ = self._evaluate(ids)
+        weights = marginal(state, register, self.config.local_dimensions)
+        if weights[1] != 0:
+            raise ValueError("contact activation requires local vacuum")
+        revision = checked(self._revision + 1)
+        self._count_query(len(ids))
+        node = NetworkEvent(
+            self.event_space.next_id,
+            self.tick,
+            (register,),
+            (self._head(register),),
+            matrix=preparation.matrix,
+        )
+        self._store(node, cause)
+        origin = self.waves.activate(name, self.tick, node.id)
+        self._revision = revision
+        return origin
 
     @_serialized
     def prepare(
@@ -648,6 +741,12 @@ class EventNetwork:
         """
         if checked(record_id) < 0 or type(instrument) not in (LocalInstrument, GroupedInstrument):
             raise ValueError("non-negative record id and local instrument required")
+        if self.config.local_contacts:
+            from .contact_rules import validates_capture
+
+            if not isinstance(instrument, LocalInstrument):
+                raise ValueError("local contacts require a complete absorption instrument")
+            validates_capture(instrument)
         self._validate_register_index(register_index)
         groups = outcome_groups(instrument)
         if null_outcome is not None and (
@@ -655,6 +754,8 @@ class EventNetwork:
         ):
             raise ValueError("null outcome outside instrument")
         self._wave_request(origins, terminal_origins, terminal_outcomes, len(groups))
+        if self.config.local_contacts:
+            self._contact_origins(register_index, origins, required=False)
         if len(groups[0][0]) != self.config.local_dimensions[register_index]:
             raise ValueError("instrument dimension and register disagree")
         if cause is not None:
@@ -693,6 +794,16 @@ class EventNetwork:
             )
             for group in groups
         )
+        if (
+            self.config.local_contacts
+            and weights[1]
+            and (len(origins) != 1 or terminal_origins != origins or terminal_outcomes != (1,))
+        ):
+            raise ValueError("occupied contact capture must retire its delivered origin")
+        if self.config.local_contacts:
+            ancestors, _ = self._ancestors((self._head(register_index),))
+            if len(ancestors) + 1 > self.config.max_eval_nodes:
+                raise OverflowError("record dependency budget exceeded")
         decision = EventDecision(
             record_id,
             self.tick,

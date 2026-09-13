@@ -39,6 +39,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Quantum entities](QUANTUM_ENTITIES.md) | Quantum entity definitions and native integration ownership |
 | [Quantum events](QUANTUM_EVENTS.md) | Selected deferred joint-state event backend and decision semantics |
 | [Quantum origin cells](WAVE_ORIGINS.md) | Six local origin references, atomic terminal decisions and next-tick local invalidation in event spacetime |
+| [Localized quantum contacts](LOCALIZED_QUANTUM_CONTACT.md) | Commit-time inventory transfer, finite localized field sources and repeating coherent propagation |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
 | [Quantum detector trial](QUANTUM_DETECTOR_TRIAL.md) | Historical opt-in detector/controller experiment |
