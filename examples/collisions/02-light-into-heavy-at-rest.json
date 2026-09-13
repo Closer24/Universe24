@@ -6,7 +6,7 @@
     7,
     7
   ],
-  "slots_per_cell": 4,
+  "slots_per_node": 4,
   "link_ticks": 1,
   "normal_budget": 10000,
   "ticks": 240,

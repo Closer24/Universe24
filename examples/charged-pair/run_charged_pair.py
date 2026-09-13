@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -75,7 +76,7 @@ def configuration(model_id: str, left_charge: int, right_charge: int, ticks: int
         "model_id": model_id,
         "boundary": "open",
         "shape": SHAPE,
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 1_000_000,
         "ticks": ticks,
@@ -129,6 +130,7 @@ EXPERIMENTS = {
 
 
 def run(name: str, output: Path) -> tuple[int, str]:
+    shutil.rmtree(output, ignore_errors=True)
     completed = subprocess.run(
         [sys.executable, "-m", "event_universe", "--init", str(HERE / f"{name}.json"), "--output", str(output)],
         cwd=ROOT,
@@ -190,10 +192,10 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
         print(f"  {tick:>4}  {xl:>3}  {xr:>3}  {abs(xr - xl):>5}     {str(pl):<12} {str(pr)}")
 
     state = json.loads((output / "state.json").read_text(encoding="utf-8"))
-    for cell in state["cells"]:
-        for record in cell["disturbances"]:
+    for node in state["nodes"]:
+        for record in node["disturbances"]:
             v = record["values"]
-            print(f"  final: charge {v['charge'][0]:+d} at {cell['position']} momentum {v['momentum']}")
+            print(f"  final: charge {v['charge'][0]:+d} at {node['position']} momentum {v['momentum']}")
     if coupled_samples:
         print(f"  first spatial_coupled event: {json.dumps(coupled_samples[0])[:300]}")
 

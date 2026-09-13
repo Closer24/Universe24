@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -212,7 +213,7 @@ def configuration(model_id: str, ticks: int, fields: list, types: list, rules: l
         "schema_version": 1,
         "model_id": model_id,
         "shape": SHAPE,
-        "slots_per_cell": 4,
+        "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 10000,
         "ticks": ticks,
@@ -345,6 +346,7 @@ def write_inputs() -> None:
 
 
 def run(name: str, output: Path) -> tuple[int, str]:
+    shutil.rmtree(output, ignore_errors=True)
     completed = subprocess.run(
         [sys.executable, "-m", "event_universe", "--init", str(HERE / f"{name}.json"), "--output", str(output)],
         cwd=ROOT,
@@ -409,12 +411,12 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
     state_path = output / "state.json"
     if state_path.exists():
         state = json.loads(state_path.read_text(encoding="utf-8"))
-        for cell in state["cells"]:
-            for record in cell["disturbances"]:
+        for node in state["nodes"]:
+            for record in node["disturbances"]:
                 values = record["values"]
                 extra = f"  heat {values['heat'][0]}" if "heat" in values else ""
                 print(
-                    f"  final: {record['type']:<14} at {pos(cell['position']):<10} "
+                    f"  final: {record['type']:<14} at {pos(node['position']):<10} "
                     f"mass {values['mass'][0]} momentum {vec(values)}{extra}"
                 )
 
