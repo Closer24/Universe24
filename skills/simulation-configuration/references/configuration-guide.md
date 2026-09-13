@@ -19,6 +19,12 @@ by a supported adapter. Do not put Python expressions or callbacks into JSON.
 
 ## 1. Start with a complete working configuration
 
+For catalog particles using the existing causal quantum contact/source rule, use
+[catalog-contact](../../../examples/catalog-contact/README.md). Select entity IDs
+in its authoring JSON or CLI; its adapter reuses the original interaction template
+and shared unit encoder. Retain the binding report and unassigned-mass marker.
+Selecting a catalog identity does not activate its descriptive QCD/weak channels.
+
 For fields that count as local computation, use
 [`spatial_computation_delay`](../../../docs/SPATIAL_COMPUTATION_DELAY.md).
 It selects the shared node cycle; `link_ticks: 1` gives one-tick neighbor transit.
