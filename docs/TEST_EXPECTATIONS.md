@@ -723,6 +723,19 @@ cases; the check selector maps every lab source/configuration change to it.
 
 ## Selected deferred quantum event network
 
+`test_event_links.py` checks distinct local chains through a split/join, immutable
+predecessors, host checkpoint chronology without added causal parents, foreign
+and forged handle rejection, failed-append atomicity and fixed stream capacity.
+`test_quantum_linked_nodes.py` runs the native four-Node initialization: final
+C/D weights are 0/1, reversed by a phase, and 1/2 each after either intermediate
+position outcome. Exact correlated checkpoints preserve those cases, audit
+records, handle identity and individual modeled times. A two-tick link must
+remain admissible after compaction, while a prematurely reused register remains
+inadmissible. Colocated registers retain separate histories until their configured
+joint operation. A 2,000-event chain leaves cursor storage fixed. Empty quantum
+Nodes introduce no carrier source, cycle, inventory, transport or model cost;
+public head snapshots stay immutable and queries never change physical state.
+
 The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
 definitions, and the existing Q-ORACLE-1 exception. This table defines required
 expectations; a passing source identity and command belong in the integration PR.

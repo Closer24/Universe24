@@ -119,8 +119,7 @@ class NativeEventResolver:
                 != self.space.config.addresses[register_indices[1]]
             ):
                 for q in register_indices:
-                    previous = self.events.event(self.space.heads[q])
-                    if tick - previous.tick < self.initial.link_ticks:
+                    if tick - self.space.physical_ticks[q] < self.initial.link_ticks:
                         raise ValueError("coherent neighbor operation precedes physical link time")
         self.space.step(layer)
 
@@ -131,6 +130,20 @@ class NativeEventResolver:
             else "local-quantum-events-v1",
             "register_dimensions": self.space.config.local_dimensions,
             "register_names": self.space.config.register_names,
+            "node_event_heads": [
+                {
+                    "address": address,
+                    "streams": [
+                        {
+                            "stream_id": cursor.stream_id,
+                            "event_id": cursor.head,
+                            "physical_tick": cursor.physical_tick,
+                        }
+                        for cursor in self.events.cursors_at(address)
+                    ],
+                }
+                for address in self.events.stream_addresses
+            ],
             "tick": self.space.tick,
             "oracle_calls": self.owner.query_stats.successful_queries,
             "oracle_direct_world_ticks": 0,

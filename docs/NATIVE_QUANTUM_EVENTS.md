@@ -18,9 +18,11 @@ There are not two competing authoritative copies of that metadata.
 The core `EventResolver` protocol receives only a local immutable context and
 the existing local planner. `integration/event_runtime.py` composes the selected
 quantum owner with that protocol. Generic core and field modules do not import
-quantum. Initialization resolves arbitrary type/field labels to indices. Carrier
-nodes, packets and pending cycles acquire only one optional event ID each; they never
-hold a growing history or a wave vector. Global counters and the bounded ledger
+quantum. Initialization resolves arbitrary type/field labels to indices. Packets
+and pending cycles acquire one optional event ID. Each configured quantum Node
+also retains a fixed tuple of shared local stream handles as defined in
+[local linked histories](QUANTUM_EVENTS.md#local-linked-histories); it never holds
+a growing history or a wave vector. Global counters and the bounded ledger
 are host bookkeeping, not a nonlocal input to local physics.
 
 Dependencies must refer to existing, nonfuture event IDs. Physical parent edges
@@ -28,7 +30,16 @@ additionally require the same node or a completed nearest-neighbor link, includi
 configured periodic seams. Dependency-only edges confer no physical read access.
 Global numbering is bookkeeping, not a preferred physical signal. Coherent quantum
 operations preserve the existing disjoint local-layer contract; the native binder
-also checks actual parent times against the world's fixed link transit.
+also checks each register's last modeled operation time against fixed link
+transit. Host checkpoints preserve those times even when head IDs change.
+
+Quantum-only addresses use the same `DisturbanceNode` owner with empty carrier
+slots. Their construction emits no carrier source event, starts no carrier cycle
+and adds no ordinary model cost. `Simulation.nodes[address].event_heads` returns
+immutable `(stream_id, event_id)` pairs, including Nodes with no carriers. The
+resolver's `node_event_heads` report also records the last modeled tick. Ordinary
+carrier snapshots omit these empty, never-activated owners; once they receive
+carriers they enter the existing carrier snapshot path. No rendering is required.
 
 ## Finite quantum-register extension
 

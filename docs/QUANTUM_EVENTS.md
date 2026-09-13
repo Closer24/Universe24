@@ -53,6 +53,42 @@ prototype is not copied as an exception to the register contract.
 
 ## Algorithm
 
+### Local linked histories
+
+Each configured register has one `EventCursor` in `core/event_links.py`. The
+shared event space owns its stream identity, latest event ID and last modeled
+operation tick. The native physical Node holds that same handle in a fixed
+local tuple; the quantum backend does not maintain a second head dictionary.
+Colocated registers have distinct handles. A stream bank is sealed when the
+physical engine is assembled, and contains at most thirty handles per Node.
+Each handle contains three integers, independent of history length.
+
+Every appended event stores immutable `predecessors`, one previous ID per
+participating stream. A local chain can branch into separate later operations
+and meet another chain in a shared event. The overall structure is a DAG, not
+an independent tree per Node. The shared event store retains the old records;
+changing a current head never changes a past event's data or links.
+
+Predecessors describe local history. `parents` describe dependencies required
+for evaluation, while `physical_parents` additionally require physical locality.
+These are different contracts: chronological adjacency cannot authorize a
+remote read or introduce an extra quantum dependency. `history(register)` walks
+the local chain newest first; queries walk dependency parents and the required
+record constraints. Both traversals are host work, outside ordinary local rules.
+
+Append validates participating handles, owners, addresses, time, capacities and
+parent references before publishing any event or head. Read-only public cursor
+properties and immutable `NodeView.event_heads` snapshots expose IDs only. This
+is an internal ownership boundary, not a sandbox against hostile Python code.
+
+Configured sources, coherent local operations, channels and explicit result
+records all use these links. Missing knowledge does not automatically create a
+wave or select an outcome. Distinct registers start in a tensor-product state;
+a joint operation can correlate them. Interference combines amplitudes of
+coherent alternatives, never probabilities from unrelated particles.
+
+### Deferred evaluation
+
 1. `step` validates a whole disjoint local layer before appending its recipes.
    It advances the physical tick once. No amplitudes or random tickets are needed.
 2. `query` follows the target head backwards. It includes previously committed
@@ -106,6 +142,14 @@ joint replacement state. Only then can old recipes be removed. The host operatio
 creates no measurement, advances no world tick and preserves remaining phases.
 A local marginal is not a sufficient checkpoint for a correlated component.
 A branch omitted by one query may become necessary at a future recombination.
+
+The replacement is marked `checkpoint` in the shared audit. Its dependency
+parents are empty because its complete state replaces that computation; its
+per-stream predecessor links retain the audit history. All participating heads
+redirect together, preserving their handle identities and each register's own
+last modeled operation tick. A checkpoint must neither restart a Link's wait nor
+make an otherwise premature Link operation admissible. Old quantum payloads may
+be reclaimed; the bounded append-only causal audit is not reclaimed by this call.
 
 Checkpoints summarize computation, whereas records fix a result. Neither proves
 that all future possibilities close, that total memory is bounded for infinite
@@ -161,6 +205,7 @@ A complete small controller is available as:
 
 ```shell
 python -m event_universe.integration.quantum_event_trial --ticket 24
+python -m event_universe --init examples/quantum/linked_paths.json --output artifacts/linked-paths
 python tools/check.py --base origin/main
 ```
 
@@ -168,3 +213,13 @@ The first command prints headless JSON; its ticket is deliberately supplied,
 not claimed to come from a real quantum device. The integration PR records the
 actual interpreter, source tree, executed checks and limitations. Required finite
 expectations are listed in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md).
+
+`linked_paths.json` is ordinary initialization for a four-Node, four-tick
+one-excitation interferometer. Its configured mixer splits A/B on tick 1,
+configured swaps move those modes to C/D on tick 2, tick 3 is idle, and a mixer
+recombines at C/D on tick 4. The final occupation probabilities are C=0, D=1;
+inserting a phase reversal at C on tick 3 gives C=1, D=0. A position record at C
+on tick 2 gives C=D=1/2 at the output for either recorded outcome. The tests
+repeat every case with and without a correlated checkpoint. Matrices are
+explicit example laws; this is not spontaneous propagation into unconfigured
+Nodes or a derivation of particle dynamics.

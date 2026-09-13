@@ -85,6 +85,12 @@ Q-ORACLE-1 applies only to the explicit quantum owner and its reported host work
 it does not exempt ordinary field, force, movement or geometry inputs. Diagnostics
 may inspect global state and reject a run but must not supply physical repairs.
 
+For deferred-history changes, follow the
+[local linked history and checkpoint contract](../../docs/QUANTUM_EVENTS.md#local-linked-histories).
+Check future physical admissibility as well as equal amplitudes: exact host
+compaction must preserve each local register's Link readiness, and chronological
+predecessors must not become new physical dependencies.
+
 Do not infer a universal causal proof from a one-hop test or fixed callback size.
 Separate tested finite cases, analytic arguments and unestablished physics. A
 passing candidate does not resolve a failing baseline. For a blocker, preserve

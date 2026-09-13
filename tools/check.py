@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/quantum/linked_paths.json": ("tests/test_quantum_linked_nodes.py",),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",
         "tests/test_node_vector_integration.py",

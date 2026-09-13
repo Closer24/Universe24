@@ -185,7 +185,7 @@ class EventNetwork:
         self.event_space = event_space if event_space is not None else CausalEventSpace()
         self.event_space.require_room(len(config.addresses))
         self._payloads: dict[int, QuantumPayload] = {}
-        self._heads: dict[int, int] = {}
+        self._cursors = self.event_space.bind_streams("quantum", config.addresses)
         layout = BasisLayout(config.local_dimensions)
         for q in range(len(config.addresses)):
             node = NetworkEvent(
@@ -195,20 +195,21 @@ class EventNetwork:
                 state=((layout.stride(q) * config.levels[q], Amplitude(1, 0)),),
             )
             self._store(node)
-            self._heads[q] = node.id
         self._constraints: dict[int, tuple[frozenset[int], frozenset[int]]] = {}
         self._prepared: dict[int, EventDecision] = {}
         self._records: dict[int, NetworkRecord] = {}
         self._queries = 0
         self._evaluated = 0
 
-    def _store(self, node: NetworkEvent, cause: int | None = None) -> None:
+    def _store(self, node: NetworkEvent, cause: int | None = None, *, checkpoint: bool = False) -> None:
         parents = node.parents if cause is None else (*node.parents, cause)
         event = self.event_space.append(
             tick=node.tick,
             addresses=tuple(self.config.addresses[q] for q in node.register_indices),
             owner="quantum",
-            kind="record"
+            kind="checkpoint"
+            if checkpoint
+            else "record"
             if node.outcome >= 0
             else "state"
             if node.state is not None
@@ -217,6 +218,8 @@ class EventNetwork:
             else "operation",
             parents=parents,
             payload_ref=node.id,
+            cursors=tuple(self._cursors[q] for q in node.register_indices),
+            advance_stream_time=not checkpoint,
         )
         if event.id != node.id:
             raise ValueError("event identity changed during insertion")
@@ -252,7 +255,23 @@ class EventNetwork:
 
     @property
     def heads(self) -> tuple[int, ...]:
-        return tuple(self._heads[q] for q in range(len(self.config.addresses)))
+        return tuple(self._head(q) for q in range(len(self._cursors)))
+
+    def _head(self, register_index: int) -> int:
+        head = self._cursors[register_index].head
+        if head is None:
+            raise RuntimeError("quantum stream lacks its initial state")
+        return head
+
+    @property
+    def physical_ticks(self) -> tuple[int, ...]:
+        """Last modeled change per register, unaffected by host checkpoints."""
+        return tuple(cursor.physical_tick for cursor in self._cursors)
+
+    def history(self, register_index: int) -> tuple[int, ...]:
+        """Read the local linked audit sequence, including compacted records."""
+        self._validate_register_index(register_index)
+        return self.event_space.history(self._cursors[register_index])
 
     @property
     def events(self) -> tuple[NetworkEvent, ...]:
@@ -314,7 +333,7 @@ class EventNetwork:
                 distance = sum(abs(checked_work(x - y)) for x, y in zip(a, b, strict=True))
                 if distance not in (0, 1):
                     raise ValueError("only cardinal nearest-neighbor operations are allowed")
-            parents = tuple(dict.fromkeys(self._heads[q] for q in register_indices))
+            parents = tuple(dict.fromkeys(self._head(q) for q in register_indices))
             nodes.append(
                 NetworkEvent(
                     self.event_space.next_id + len(nodes),
@@ -327,8 +346,6 @@ class EventNetwork:
             )
         for node in nodes:
             self._store(node)
-            for register_index in node.register_indices:
-                self._heads[register_index] = node.id
         self._tick, self._revision = tick, revision
 
     def _ancestors(self, roots: tuple[int, ...]) -> tuple[set[int], set[int]]:
@@ -350,7 +367,7 @@ class EventNetwork:
     def _plan(self, targets: tuple[int, ...]) -> tuple[tuple[int, ...], tuple[int, ...]]:
         for register_index in targets:
             self._validate_register_index(register_index)
-        ids, register_indices = self._ancestors(tuple(self._heads[q] for q in targets))
+        ids, register_indices = self._ancestors(tuple(self._head(q) for q in targets))
         while True:
             grew = False
             for i, (record_ids, record_register_indices) in self._constraints.items():
@@ -514,7 +531,7 @@ class EventNetwork:
                     break
         self._room(1)
         revision = checked(self._revision + 1)
-        parents = (self._heads[decision.register_index],)
+        parents = (self._head(decision.register_index),)
         ids, register_indices = self._ancestors(parents)
         if len(ids) + 1 > self.config.max_eval_nodes:
             raise OverflowError("record dependency budget exceeded")
@@ -531,7 +548,6 @@ class EventNetwork:
         )
         record = NetworkRecord(decision, outcome, i)
         self._store(node, decision.cause)
-        self._heads[decision.register_index] = i
         self._constraints[i] = (frozenset(ids | {i}), frozenset(register_indices))
         self._records[decision.record_id] = record
         self._revision = revision
@@ -556,10 +572,10 @@ class EventNetwork:
         self.event_space.require_room(1)
         new = NetworkEvent(self.event_space.next_id, self.tick, register_indices, state=state)
         events = {**{i: self._event(i) for i in self._payloads}, new.id: new}
-        heads = {**self._heads, **dict.fromkeys(register_indices, new.id)}
+        heads = tuple(new.id if q in register_indices else head for q, head in enumerate(self.heads))
         constraints = {i: cone for i, cone in self._constraints.items() if i not in ids}
         live: set[int] = set()
-        stack = list(heads.values()) + list(constraints)
+        stack = list(heads) + list(constraints)
         while stack:
             i = stack.pop()
             if i in live:
@@ -570,8 +586,8 @@ class EventNetwork:
             stack.extend(events[i].parents)
         if len(live) > self.config.max_nodes:
             raise OverflowError("checkpoint node budget exceeded")
-        self._store(new)
+        self._store(new, checkpoint=True)
         self._payloads = {i: payload for i, payload in self._payloads.items() if i in live}
-        self._heads, self._constraints = heads, constraints
+        self._constraints = constraints
         self._revision = revision
         return new.id

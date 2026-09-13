@@ -1,5 +1,57 @@
 # Validation evidence
 
+## Linked quantum histories on native Nodes - 2026-09-13
+
+Base: `5a2e21d892eba82c5aaff0582152e79f94c0fdc5`. Active source SHA-256:
+`4eff11aa7181a6c0105ded591467d9205f92a797cc8346d1ce76c2c92fbbdeb9`.
+The affected gate passed **2,019 tests with five explicitly visual skips** in
+138 seconds, with Ruff and strict mypy on 58 affected production modules.
+The selection includes ordinary carrier/field, native quantum, NodeState,
+locality, genericity, boundary, retention and interface consumers; no full-suite
+flag, package build or rendering was used.
+
+```sh
+python tools/check.py --base origin/main --tests tests/test_quantum_linked_nodes.py tests/test_native_event_runtime.py tests/test_native_quantum_channels.py
+python -m event_universe --init examples/quantum/linked_paths.json --output artifacts/linked-paths-verified
+```
+
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used. On Windows,
+the gate used a short external temporary path with forward slashes in
+`PYTEST_ADDOPTS`. An earlier backslash-only value was parsed as a relative path,
+putting generated fixtures inside the repository and exceeding Windows path
+limits. That run had 14 environment/hygiene failures; moving those fixtures out
+and correcting the invocation produced the complete pass without a source fix.
+The existing tracked CRLF in `disturbance_engine.py` is preserved; Git whitespace
+validation uses `core.whitespace=cr-at-eol` rather than rewriting the whole file.
+
+The new 28 focused cases cover local predecessor histories, immutable snapshots,
+split/join interference, both recorded outcomes, complex phases, exact correlated
+checkpoints, distinct colocated registers, fixed cursor size and atomic failures.
+An independent reviewer passed 110 relevant tests, then confirmed that the only
+later source adjustment was a local type annotation and formatting. The reviewed
+contract and final fingerprint are unchanged in behavior. The original timing
+defect was independently reproduced: a tick-1 checkpoint incorrectly rejected
+a valid tick-2 operation across a two-tick Link. The corrected cursor keeps its
+last modeled time, including distinct times within one checkpointed component.
+
+The ordinary headless run completed 4/4 ticks in 0.005711 seconds on the exact
+source above. Saved initialization equals the checked-in JSON byte for byte;
+display is `none`. Its eight causal records finish with heads `(5, 6, 7, 7)`.
+The output retains each stream's predecessor separately. No carrier sources,
+ordinary cycles or model costs are invented for empty quantum-only Nodes.
+Independent test readouts give final C/D probabilities 0/1, 1/0 after a phase
+reversal, and 1/2 each after either intermediate position outcome. Every case
+is repeated with and without compaction. These are configured finite-register
+laws, not a derivation of quantum field dynamics or the classical limit.
+
+The physics-review Skill now links to the checkpoint/readiness contract;
+`quick_validate.py` passed using the existing isolated PyYAML 6.0.3 dependency.
+Boss, architecture and test-runner instructions already cover ownership,
+independent expectations and proportional checks; no extra role or Skill is
+needed. Live Highlights reconciliation is recorded in
+[the coverage map](HIGHLIGHTS_IMPLEMENTATION.md#local-quantum-event-lists---2026-09-13).
+Generated artifacts stay outside source commits and retain their 24-hour leases.
+
 ## Joint reactions and delayed rule validity - 2026-09-13
 
 Incremental base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`, continuing PR 86
