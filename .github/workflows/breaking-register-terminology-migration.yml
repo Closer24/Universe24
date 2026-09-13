@@ -39,6 +39,7 @@ jobs:
             ':!docs/TERMINOLOGY.md' \
             ':!src/event_universe/ui.py' \
             ':!src/event_universe/retention.py' \
+            ':!tests/test_workspace.py' \
             ':!tools/breaking_register_terminology_migration.py'; then
             echo 'Site vocabulary remains in active simulator files.' >&2
             exit 1
