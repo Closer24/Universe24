@@ -260,8 +260,10 @@ class SpatialEngine:
             node.sample_ports,
         )
         sample_cause = node.sample_cause_id
-        if self.coupler is not None and any(
-            record is not None and record.type_index in coupled_types for record in records
+        if (
+            self.coupler is not None
+            and not self.initial.field_phase_first
+            and any(record is not None and record.type_index in coupled_types for record in records)
         ):
             # Freeze only locally delivered input, before fresh source injection.
             sample_values = self.coupler.sample(node.states)
@@ -329,11 +331,11 @@ class SpatialEngine:
         position, node = cycle.position, cycle.node
         cost = bounded(checked_work(plan.cost + node.received_decay_cost))
         packets: list[SpatialPacket | None] = [None] * 6
+        # Field-phase-first packets complete their link inside the departure interval.
+        arrival = bounded(tick + self.initial.link_ticks - int(self.initial.field_phase_first))
         for port, bundle in enumerate(plan.outgoing):
             if any(any(unpack(payload)) for field in bundle for payload in field):
-                packets[port] = SpatialPacket(
-                    bounded(tick + self.initial.link_ticks), position, port, bundle
-                )
+                packets[port] = SpatialPacket(arrival, position, port, bundle)
         # Worker results are immutable proposals. Only this scheduler thread commits them.
         if self.event_space is not None:
             self.event_space.require_room(1 + sum(p is not None for p in packets))
@@ -433,6 +435,23 @@ class SpatialEngine:
             self.links[position] = tuple(
                 None if p is None else replace(p, cause_id=cause) for p in proposal.links
             )
+
+    def freeze_samples(self, residents: Mapping[Address3, tuple[DisturbanceRecord | None, ...]]) -> None:
+        """Freeze coupled samples after this interval's field phase has delivered."""
+        if self.coupler is None:
+            return
+        coupled_types = selected_type_set(
+            self.initial.spatial_couplings, self.initial.spatial_interactions
+        )
+        for position, records in residents.items():
+            if not any(record is not None and record.type_index in coupled_types for record in records):
+                continue
+            node = self._at(position)
+            node.sample_values = self.coupler.sample(node.states)
+            node.sample_fluxes = self.coupler.sample_fluxes(node.states)
+            if self.initial.spatial_interactions:
+                node.sample_ports = self.coupler.sample_ports(node.states)
+            node.sample_cause_id = node.cause_id
 
     def couple(
         self, position: Address3, records: tuple[DisturbanceRecord | None, ...]

@@ -114,6 +114,7 @@ separate carriers and their different directions.
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
 | `normal_budget` | Positive ordinary local computation cost `B` |
 | `spatial_computation_delay` | Optional strict boolean, default false; apply one [shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) to fields and carriers; true requires spatial fields |
+| `field_phase_first` | Optional strict boolean, default false; complete every field link before carriers sample it ([field phase first](SPATIAL_COUPLINGS.md#field-phase-first-ordering)); requires outward spatial fields, `link_ticks` 1, the default clock and no field rules or spatial interactions |
 | `ticks` | Nonnegative requested simulation duration |
 | `operation_costs` | All nine primitive prices, each a positive integer |
 | `fields` | Between 1 and 16 unique field definitions |

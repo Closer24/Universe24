@@ -227,12 +227,28 @@ class InitialState:
     event_program: str | None = None
     conservation: ConservationDefinition | None = None
     spatial_computation_delay: bool = False
+    field_phase_first: bool = False
 
     def __post_init__(self) -> None:
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
         if self.spatial_computation_delay and not self.spatial_fields:
             raise ValueError("spatial_computation_delay requires spatial fields")
+        if type(self.field_phase_first) is not bool:
+            raise ValueError("field_phase_first must be boolean")
+        if self.field_phase_first:
+            if not self.spatial_fields:
+                raise ValueError("field_phase_first requires spatial fields")
+            if any(field.transport != "outward" for field in self.spatial_fields):
+                raise ValueError("field_phase_first requires outward spatial fields only")
+            if self.link_ticks != 1:
+                raise ValueError("field_phase_first requires link_ticks 1")
+            if self.spatial_computation_delay:
+                raise ValueError("field_phase_first cannot combine with spatial_computation_delay")
+            if self.field_rules or self.spatial_interactions:
+                raise ValueError(
+                    "field_phase_first cannot combine with field rules or spatial interactions"
+                )
 
 
 class Departure(NamedTuple):

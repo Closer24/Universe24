@@ -177,3 +177,25 @@ source attribution remains a separate feature: a carried own-front register coul
 support unsigned straight paths with a defined partition order, but is not
 implemented by this response extension. Current rules always operate on the
 declared local samples and do not claim to identify their sources.
+
+## Field phase first ordering
+
+Under the default clock a carrier and the field it emits in its departure
+interval cross the same link together and are sampled together at the
+destination. A value-driven `exchange` therefore reads one packet of its own
+field after every hop: a coarrival self push proportional to the emitted share
+on the travel port. The top-level boolean `"field_phase_first": true` selects
+the `causal-front-first-v1` ordering already used by
+[the causal stream candidate](CAUSAL_STREAM_FIELD.md): every field packet
+completes its link inside the interval in which it departs, delivery happens
+before any carrier sample is frozen, and carriers still cross one link per
+interval. A straight-moving emitter's own field is then at least one link ahead
+at every read, by Manhattan distance alone; no source identity, history or
+subtraction is used.
+
+Adjacent receivers consequently read a source one interval earlier than under
+the default clock. Turns with alternate shortest paths and periodic return
+remain outside the guarantee, exactly as above. The option requires outward
+spatial fields, `link_ticks` 1 and the default clock, and cannot combine with
+local field rules or joint spatial interactions. Run metadata records
+`field_phase_first` and `spatial_sampling: after-field-phase-delivery`.

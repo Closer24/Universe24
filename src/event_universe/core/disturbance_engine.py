@@ -865,14 +865,19 @@ class DisturbanceEngine:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
             if self._spatial is not None and not self.initial.spatial_computation_delay:
+                residents = {p: node.records for p, node in self._nodes.items()}
                 self._spatial.begin(
                     self.tick,
-                    {p: node.records for p, node in self._nodes.items()},
+                    residents,
                     self._commit_emission_records,
                     record_cause=self._record_cause if self.event_space is not None else None,
                     commit_cause=self._commit_emission_cause if self.event_space is not None else None,
                     execution=self._execution,
                 )
+                if self.initial.field_phase_first:
+                    # The field phase completes its links before any carrier samples them.
+                    self._spatial.deliver(self.tick)
+                    self._spatial.freeze_samples(residents)
             positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
@@ -919,6 +924,7 @@ class DisturbanceEngine:
                 self._commit(position, node)
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
+                # Under field_phase_first only carrier reactions still arrive here.
                 self._spatial.deliver(self.tick)
             self._deliver()
             for position in sorted(self._nodes):

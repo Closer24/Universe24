@@ -240,6 +240,12 @@ def _execute_run(
             spatial_response="local-exchange-or-quarter-turn",
             spatial_sampling="resident-before-emission",
         )
+    if initial.field_phase_first:
+        metadata.update(
+            field_phase_first=True,
+            spatial_sampling="after-field-phase-delivery",
+            field_order="causal-front-first-v1",
+        )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     observation = None if probe is None else probe.recording()
     if observation is not None:

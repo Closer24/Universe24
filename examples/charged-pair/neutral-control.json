@@ -2,6 +2,7 @@
   "schema_version": 1,
   "model_id": "charged-pair-neutral-control-v1",
   "boundary": "open",
+  "field_phase_first": true,
   "shape": [
     21,
     7,

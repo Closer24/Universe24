@@ -29,6 +29,9 @@ CENTER = 3
 LEFT_X, RIGHT_X = 9, 12
 EMISSION_PER_CHARGE = 540
 RESPONSE_DENOMINATOR = 10
+# Field links complete before carriers sample, so a straight-moving body never
+# reads the packet it emitted in its departure interval (docs/SPATIAL_COUPLINGS.md).
+FIELD_PHASE_FIRST = True
 
 
 def op(name: str, *args: object) -> dict:
@@ -75,6 +78,7 @@ def configuration(model_id: str, left_charge: int, right_charge: int, ticks: int
         "schema_version": 1,
         "model_id": model_id,
         "boundary": "open",
+        "field_phase_first": FIELD_PHASE_FIRST,
         "shape": SHAPE,
         "slots_per_node": 4,
         "link_ticks": 1,
@@ -159,6 +163,7 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
     # Track each body by its seed x order: "L" started at LEFT_X, "R" at RIGHT_X.
     position = {"L": [LEFT_X, CENTER, CENTER], "R": [RIGHT_X, CENTER, CENTER]}
     momentum = {"L": [0, 0, 0], "R": [0, 0, 0]}
+    charges = {"L": config["seeds"][0]["values"]["charge"], "R": config["seeds"][1]["values"]["charge"]}
     history: list[tuple[int, int, int, list[int], list[int]]] = [(0, LEFT_X, RIGHT_X, [0, 0, 0], [0, 0, 0])]
     coupled_samples: list[dict] = []
     for line in (output / "events.jsonl").read_text(encoding="utf-8").splitlines():
@@ -168,15 +173,19 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
             coupled_samples.append(event)
         if kind not in {"sent", "received"}:
             continue
-        # Identify which body: the one whose last known position matches the event cell.
-        who = next((k for k, p in position.items() if p == event["position"]), None)
+        # Identify the body by charge when the two charges differ, else by position.
+        charge = event["values"]["charge"][0]
+        by_charge = [k for k, c in charges.items() if c == charge] if len(set(charges.values())) == 2 else []
         if kind == "sent":
+            candidates = by_charge or [k for k, p in position.items() if p == event["position"]]
+            who = next((k for k in candidates if position[k] == event["position"]), None)
             if who is None:
                 continue
             momentum[who] = event["values"]["momentum"]
             position[who] = None  # in transit
         else:
-            who = next((k for k, p in position.items() if p is None), None)
+            candidates = by_charge or list(position)
+            who = next((k for k in candidates if position[k] is None), None)
             if who is None:
                 continue
             position[who] = event["position"]
