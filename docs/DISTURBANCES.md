@@ -108,6 +108,7 @@ separate carriers and their different directions.
 | `slots_per_node` | Fixed positive resident capacity, at most 32 |
 | `link_ticks` | Fixed positive transit time shared by all neighbor links |
 | `normal_budget` | Positive ordinary local computation cost `B` |
+| `spatial_computation_delay` | Optional strict boolean, default false; apply one [shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) to fields and carriers; true requires spatial fields |
 | `ticks` | Nonnegative requested simulation duration |
 | `operation_costs` | All nine primitive prices, each a positive integer |
 | `fields` | Between 1 and 16 unique field definitions |

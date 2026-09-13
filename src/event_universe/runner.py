@@ -216,6 +216,13 @@ def _execute_run(
             spatial_accounting=world.spatial_accounting(),
             spatial_background="immutable; excluded from decay",
         )
+        if initial.spatial_computation_delay:
+            metadata.update(
+                spatial_computation_delay=True,
+                local_clock="shared-field-carrier-cycle-v1",
+                emission_interval_ticks=None,
+                emission_schedule="once per completed local computation cycle",
+            )
     if initial.spatial_couplings:
         metadata.update(
             spatial_couplings=[rule.name for rule in initial.spatial_couplings],

@@ -1,6 +1,8 @@
 """Completed local work can drive emission without traveling inside a carrier."""
 
+import json
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
@@ -182,3 +184,24 @@ def test_rational_projection_receives_the_same_explicit_local_readout():
     assert evaluate(
         initial.emissions[0].amount, (), (), CostMeter(initial.operation_costs), node_cost=7
     ) == (3, 3, 3)
+
+
+@pytest.mark.parametrize("shared", [False, True])
+def test_committed_work_readout_keeps_node_ownership_under_both_clocks(shared):
+    raw = document()
+    raw["spatial_computation_delay"] = shared
+    world = Simulation(parse_initial_state(raw))
+    world.step()
+    committed = world.nodes[(3, 3, 3)].committed_cost
+    assert committed > 0 and world.source_totals()["load"] == (0, 0, 0)
+    world.step()
+    assert world.source_totals()["load"] == (committed,) * 3
+    assert world.nodes[(4, 3, 3)].committed_cost == 0
+    assert all(row["balanced"] for row in world.spatial_accounting().values())
+
+
+def test_conflicting_clock_selections_are_rejected_before_running():
+    raw = json.loads((Path(__file__).parents[1] / "examples/node-vector/two-fields.json").read_text())
+    raw["spatial_computation_delay"] = True
+    with pytest.raises(ValueError, match="different clocks"):
+        parse_initial_state(raw)

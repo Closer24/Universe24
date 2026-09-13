@@ -80,3 +80,8 @@ python -m event_universe --init examples/computational-response/moving-pair.json
 
 Use a new output directory for every run. Initialization is runtime JSON; it does
 not require a simulator rebuild. Rendering remains separately opt-in.
+
+With `spatial_computation_delay`, emission reads the previous completed shared
+cycle cost. Its source debit commits with the frozen field/carrier proposal.
+The Node register updates only after that commit; moving carriers cannot carry
+it to the next Node. The indexed `node_execution` clock remains a separate mode.

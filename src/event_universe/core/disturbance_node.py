@@ -8,6 +8,7 @@ from .disturbance_state import (
     DisturbanceNodeState,
     DisturbanceRecord,
     InitialState,
+    LocalPlan,
     Packet,
     PendingCycle,
     bounded,
@@ -19,6 +20,7 @@ from .node_boundary import validate_local_plan, validate_record, validate_record
 from .node_conservation import LocalInventory
 from .node_ports import PortBank
 from .node_services import NodeServices, cycle_timing, port_count
+from .spatial_state import SpatialPacket, SpatialState, zero_spatial_state
 from .topology import neighbor_address
 
 if TYPE_CHECKING:
@@ -125,6 +127,12 @@ class DisturbanceNode(DisturbanceNodeState):
             if self.pending is None
             else frozenset(slot for slot, _ in self.pending.plan.replacements)
         )
+        if self.pending is not None and self.pending.spatial_plan is not None:
+            locked |= frozenset(
+                slot
+                for slot, record in enumerate(self.pending.spatial_plan.emission_records)
+                if record is not None
+            )
         records = services.record_policy.receive(
             self.records, tuple(packet.record for packet in packets), locked
         )
@@ -169,6 +177,10 @@ class DisturbanceNode(DisturbanceNodeState):
         spatial_services: SpatialServices | None,
     ) -> None:
         if self.pending is not None or self.available_tick > tick:
+            return
+        if services.initial.spatial_computation_delay:
+            assert spatial is not None and spatial_services is not None
+            self._begin_shared(tick, services, spatial, spatial_services)
             return
         if services.initial.node_execution and spatial is not None and spatial.pending is not None:
             return
@@ -261,6 +273,105 @@ class DisturbanceNode(DisturbanceNodeState):
         )
         self.pending = replace(pending, cause_id=cause)
 
+    def _begin_shared(
+        self, tick: int, services: NodeServices, spatial: SpatialNode, spatial_services: SpatialServices
+    ) -> None:
+        """Freeze one field/carrier transaction and charge its combined work once."""
+        field_plan = spatial.node_plan(self.records, spatial_services, self.committed_cost)
+        has_carriers = services.record_policy.has_work(self.records)
+        if not has_carriers and field_plan.cost == 0:
+            spatial.last_cost = 0
+            spatial.cost_cause_id = None
+            spatial_services.activity.mark(self.position, False)
+            return
+        field_plan = replace(
+            field_plan, cost=bounded(checked_work(field_plan.cost + spatial_services.node_merge_cost))
+        )
+        self._validate_emission_records(self.records, field_plan.emission_records)
+        records = field_plan.emission_records
+        coupled = (
+            spatial.node_coupling(records, spatial_services)
+            if any(
+                record is not None and record.type_index in services.coupled_types for record in records
+            )
+            else None
+        )
+        zero = tuple((0,) * field.components for field in services.initial.fields)
+        plan = (
+            services.planner(
+                records if coupled is None else coupled.records,
+                self.coupling_remainders,
+                self.received_count,
+            )
+            if has_carriers
+            else LocalPlan((), (), self.coupling_remainders, zero, 0)
+        )
+        if coupled is not None:
+            plan = replace(
+                plan,
+                spatial_reaction=coupled.reaction,
+                spatial_guards=coupled.guards,
+                cost=bounded(checked_work(plan.cost + coupled.cost)),
+            )
+        plan = services.record_policy.report_cost(
+            replace(plan, cost=bounded(checked_work(plan.cost + field_plan.cost)))
+        )
+        validate_local_plan(services.initial, plan, len(self.coupling_remainders), self.records)
+        if plan.spatial_guards:
+            assert spatial_services.coupler is not None
+            spatial_services.coupler.validate_guards(
+                field_plan.states, plan.spatial_reaction, plan.spatial_guards
+            )
+        guard_states = field_plan.states if plan.spatial_guards else ()
+        reaction = spatial.prepare_reaction(
+            tick, plan.spatial_reaction, spatial_services, plan=field_plan
+        )
+        phases = spatial.reaction_phases
+        if reaction is not None:
+            assert reaction.links is not None
+            blank = tuple(
+                zero_spatial_state(services.initial.fields[d.field].components).populations
+                for d in services.initial.spatial_fields
+            )
+            field_plan = replace(
+                field_plan,
+                states=reaction.states,
+                outgoing=tuple(blank if p is None else p.fields for p in reaction.links),
+            )
+            phases = reaction.phases
+        extra, duration = cycle_timing(
+            plan.cost, services.initial.normal_budget, services.initial.link_ticks
+        )
+        pending = PendingCycle(
+            bounded(tick + extra),
+            bounded(tick + duration),
+            plan,
+            spatial_plan=field_plan,
+            spatial_phases=phases,
+            spatial_guard_states=guard_states,
+        )
+        if services.events.enabled:
+            services.events.require_room(1)
+        field_cause = spatial.cause_id
+        services.accounting.charge_cycle(plan.cost)
+        self.pending, self.received_count, self.last_cost = pending, 0, plan.cost
+        spatial.shared_pending = 1
+        spatial.last_cost = field_plan.cost
+        self.arrival_mask = (0,) * port_count(services.initial)
+        self.delay_counts = (extra // services.initial.link_ticks,) * port_count(services.initial)
+        cause = self.notify(
+            "cycle_started",
+            tick,
+            services,
+            causes=() if field_cause is None else (field_cause,),
+            event_cost=plan.cost,
+            cost=plan.cost,
+            ready_tick=pending.ready_tick,
+            next_tick=pending.next_tick,
+            spatial_cost=field_plan.cost,
+        )
+        self.pending = replace(pending, cause_id=cause)
+
     def _commit(
         self,
         tick: int,
@@ -271,16 +382,42 @@ class DisturbanceNode(DisturbanceNodeState):
         pending = self.pending
         if pending is None or pending.ready_tick > tick:
             return
+        field_plan = pending.spatial_plan
+        field_states: tuple[SpatialState, ...] = ()
+        field_packets: tuple[SpatialPacket | None, ...] = ()
+        if field_plan is not None:
+            assert spatial is not None and spatial_services is not None
+            if any(packet is not None for packet in spatial.output.packets):
+                raise ValueError("outgoing spatial links are occupied")
+            field_states = spatial.node_states(field_plan, spatial_services)
+            if pending.spatial_guard_states and spatial.incoming:
+                assert spatial_services.coupler is not None
+                guarded = spatial.node_states(
+                    replace(field_plan, states=pending.spatial_guard_states), spatial_services
+                )
+                spatial_services.coupler.validate_guards(
+                    guarded, pending.plan.spatial_reaction, pending.plan.spatial_guards
+                )
+            field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services)
         if services.events.enabled:
             services.events.require_room(
-                1 + int(bool(pending.plan.spatial_reaction)) + len(pending.plan.departures)
+                1
+                + int(bool(pending.plan.spatial_reaction))
+                + len(pending.plan.departures)
+                + int(field_plan is not None)
+                + sum(p is not None for p in field_packets)
             )
         old_links = self.output.packets
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
-        records = list(self.records)
+        source_records = list(self.records)
+        if field_plan is not None:
+            for slot, emitted in enumerate(field_plan.emission_records):
+                if emitted is not None:
+                    source_records[slot] = self._current_emission_state(source_records[slot], emitted)
+        records = list(source_records)
         for slot, record in pending.plan.replacements:
-            records[slot] = self._current_emission_state(record, self.records[slot])
+            records[slot] = self._current_emission_state(record, source_records[slot])
         departure_tick = bounded(tick + services.initial.link_ticks)
         links: list[Packet | None] = [None] * len(old_links)
         for index, departure in enumerate(pending.plan.departures):
@@ -288,18 +425,18 @@ class DisturbanceNode(DisturbanceNodeState):
             if departure.origin_slot != -1:
                 if not 0 <= departure.origin_slot < len(self.records):
                     raise ValueError("departure origin slot exceeds local capacity")
-                current = self.records[departure.origin_slot]
+                current = source_records[departure.origin_slot]
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
             links[index] = Packet(departure_tick, self.position, departure.port, record)
-        if spatial is not None and spatial_services is not None:
+        if spatial is not None and spatial_services is not None and field_plan is None:
             spatial.validate_guards(
                 spatial_services, pending.plan.spatial_reaction, pending.plan.spatial_guards
             )
         reaction = (
             None
-            if spatial is None or spatial_services is None
+            if spatial is None or spatial_services is None or field_plan is not None
             else spatial.prepare_reaction(tick, pending.plan.spatial_reaction, spatial_services)
         )
         field_causes = (
@@ -307,7 +444,7 @@ class DisturbanceNode(DisturbanceNodeState):
             if services.events.enabled
             and spatial is not None
             and spatial_services is not None
-            and (pending.plan.spatial_reaction or pending.plan.spatial_guards)
+            and (field_plan is not None or pending.plan.spatial_reaction or pending.plan.spatial_guards)
             else ()
         )
         if services.balance_guard is not None:
@@ -350,11 +487,22 @@ class DisturbanceNode(DisturbanceNodeState):
         if services.initial.node_execution:
             self.delay_counts = services.zero_delays
         self.output.publish(tuple(links))
-        if spatial is not None and spatial_services is not None:
+        if field_plan is not None:
+            assert spatial is not None and spatial_services is not None
+            spatial.commit_node(
+                tick,
+                field_plan,
+                field_states,
+                pending.spatial_phases,
+                field_packets,
+                pending.plan.spatial_reaction,
+                spatial_services,
+            )
+        elif spatial is not None and spatial_services is not None:
             spatial.commit_reaction(reaction, pending.plan.spatial_reaction, spatial_services)
         services.accounting.record_sources(pending.plan.source_delta)
         notifications: list[dict[str, object]] = []
-        self.notify(
+        committed = self.notify(
             "cycle_committed",
             tick,
             services,
@@ -363,6 +511,27 @@ class DisturbanceNode(DisturbanceNodeState):
             cost=pending.plan.cost,
             transfers=len(pending.plan.departures),
         )
+        if field_plan is not None:
+            assert spatial is not None and spatial_services is not None
+            cause = spatial._event(
+                "spatial_cycle",
+                tick,
+                spatial_services,
+                causes=(committed,),
+                notifications=notifications,
+                cost=field_plan.cost,
+                source_delta={
+                    f.name: field_plan.source_delta[i]
+                    for i, f in enumerate(services.initial.fields)
+                    if any(field_plan.source_delta[i])
+                },
+                rule_delta={
+                    f.name: field_plan.rule_delta[i]
+                    for i, f in enumerate(services.initial.fields)
+                    if field_plan.rule_delta and any(field_plan.rule_delta[i])
+                },
+            )
+            spatial.cause_id = spatial.cost_cause_id = cause
         if pending.plan.spatial_reaction:
             cause = self.notify(
                 "spatial_coupled",
@@ -391,7 +560,26 @@ class DisturbanceNode(DisturbanceNodeState):
                 ),
             )
             if cause is not None and spatial is not None and spatial_services is not None:
-                spatial.link_reaction(reaction, cause)
+                if field_plan is not None:
+                    spatial.cause_id = cause
+                else:
+                    spatial.link_reaction(reaction, cause)
+        if field_plan is not None:
+            assert spatial is not None and spatial_services is not None
+            linked_fields = list(spatial.output.packets)
+            for index, field_packet in enumerate(linked_fields):
+                if field_packet is not None:
+                    cause = spatial._event(
+                        "spatial_sent",
+                        tick,
+                        spatial_services,
+                        causes=(spatial.cause_id,),
+                        notifications=notifications,
+                        port=field_packet.port,
+                        arrival_tick=field_packet.arrival_tick,
+                    )
+                    linked_fields[index] = replace(field_packet, cause_id=cause)
+            spatial.output.publish(tuple(linked_fields))
         for index, departure in enumerate(pending.plan.departures):
             cause = self.notify(
                 "sent",
@@ -431,12 +619,18 @@ class DisturbanceNode(DisturbanceNodeState):
         self,
         records: tuple[DisturbanceRecord | None, ...],
     ) -> None:
-        if len(records) != len(self.records):
+        self._validate_emission_records(self.records, records)
+        self.records = records
+
+    @staticmethod
+    def _validate_emission_records(
+        originals: tuple[DisturbanceRecord | None, ...], records: tuple[DisturbanceRecord | None, ...]
+    ) -> None:
+        if len(records) != len(originals):
             raise ValueError("spatial emission cannot change disturbance capacity")
-        for before, after in zip(self.records, records, strict=True):
+        for before, after in zip(originals, records, strict=True):
             if before is None or after is None:
                 if before is not after:
                     raise ValueError("spatial emission cannot change disturbance occupancy")
-            elif self._current_emission_state(before, after) != after:
+            elif DisturbanceNode._current_emission_state(before, after) != after:
                 raise ValueError("spatial emission cannot change a disturbance's physical values")
-        self.records = records

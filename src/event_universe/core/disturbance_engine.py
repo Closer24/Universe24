@@ -172,6 +172,9 @@ class DisturbanceEngine:
                 blank
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].states,
+                ()
+                if spatial is None or position not in spatial.nodes
+                else spatial.nodes[position].incoming,
             )
             for position in sorted(positions)
         )
@@ -272,9 +275,12 @@ class DisturbanceEngine:
         if (
             self._spatial is not None
             and spatial is None
-            and any(
-                record is not None and record.type_index in self._coupled_types
-                for record in node.records
+            and (
+                self.initial.spatial_computation_delay
+                or any(
+                    record is not None and record.type_index in self._coupled_types
+                    for record in node.records
+                )
             )
         ):
             spatial = self._spatial._at(position)
@@ -357,13 +363,16 @@ class DisturbanceEngine:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
-            if self._spatial is not None:
+            if self._spatial is not None and not self.initial.spatial_computation_delay:
                 self._spatial.begin(
                     self.tick,
                     self._nodes,
                 )
-            for position in sorted(self._nodes):
-                node = self._nodes[position]
+            positions = set(self._nodes)
+            if self._spatial is not None and self.initial.spatial_computation_delay:
+                positions.update(self._spatial._active)
+            for position in sorted(positions):
+                node = self._at(position)
                 self._begin(position, node)
                 self._commit(position, node)
             self.tick = bounded(self.tick + 1)

@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from .disturbance_node import DisturbanceNode
 
 from .coupling_selectors import selected_type_set
-from .disturbance_state import Address3, DisturbanceRecord, InitialState, Values, pack, unpack
+from .disturbance_state import Address3, CostMeter, DisturbanceRecord, InitialState, Values, pack, unpack
 from .event_space import CausalEventSpace
 from .integer import checked_work
 from .node_boundary import validate_spatial_bundle
@@ -80,6 +80,12 @@ class SpatialEngine:
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
+        meter = CostMeter(initial.operation_costs)
+        if initial.spatial_computation_delay:
+            components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
+            meter.charge("read", 2 * components)
+            meter.charge("evaluate", components)
+            meter.charge("update", components)
         self._services = SpatialServices(
             replace(initial, seeds=(), spatial_seeds=()),
             planner,
@@ -90,6 +96,7 @@ class SpatialEngine:
             SpatialAccounting(self.sources, self.dissipation, self.reactions, self.transformations),
             balance_guard,
             field_guard,
+            meter.total,
         )
         for seed in initial.spatial_seeds:
             node = self._at(seed.position)
@@ -261,6 +268,11 @@ class SpatialEngine:
             for component, value in enumerate(unpack(definition.baseline)):
                 result[definition.field][component] += volume * value
             inventories = [self.nodes[position].states[index].populations for position in self._active]
+            inventories.extend(
+                self.nodes[position].incoming[index].populations
+                for position in self._active
+                if self.nodes[position].incoming
+            )
             inventories.extend(
                 packet.fields[index]
                 for packets in self.links.values()

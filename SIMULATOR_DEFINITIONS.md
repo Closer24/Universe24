@@ -35,7 +35,10 @@ transport, atomic local exchange, explicit sources, fixed link transit, local
 computation delay without debt, capacity failures and headless output.
 
 Optional [spatial fields](docs/SPATIAL_FIELDS.md) add initialization-defined
-baselines, continuous external emission and fixed-clock outward octant transport.
+baselines, continuous external emission and fixed-clock outward octant transport
+by default. The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md)
+freezes field and carrier updates under one combined budget, retaining later
+input separately until commit; all waits and transits are integer tick counts.
 Their six delivered channels preserve travel direction; eight internal sign
 classes prevent reversal of an emitted branch. The document specifies source
 cadence, bounded residual ownership, cost coupling and periodic/self-field limits.

@@ -14,7 +14,9 @@ if TYPE_CHECKING:
         SpatialCouplingDefinition,
         SpatialFieldDefinition,
         SpatialInteractionDefinition,
+        SpatialPlan,
         SpatialSeed,
+        SpatialState,
     )
 
 from .integer import checked_work
@@ -242,6 +244,16 @@ class InitialState:
     node_execution: bool = False
     conservation_contract: NodeConservationDefinition | None = None
 
+    spatial_computation_delay: bool = False
+
+    def __post_init__(self) -> None:
+        if self.node_execution and self.spatial_computation_delay:
+            raise ValueError("node_execution and spatial_computation_delay select different clocks")
+        if type(self.spatial_computation_delay) is not bool:
+            raise ValueError("spatial_computation_delay must be boolean")
+        if self.spatial_computation_delay and not self.spatial_fields:
+            raise ValueError("spatial_computation_delay requires spatial fields")
+
 
 class Departure(NamedTuple):
     port: int
@@ -268,6 +280,9 @@ class PendingCycle:
     next_tick: int
     plan: LocalPlan
     cause_id: int | None = None
+    spatial_plan: SpatialPlan | None = None
+    spatial_phases: Values = ()
+    spatial_guard_states: tuple[SpatialState, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

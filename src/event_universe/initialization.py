@@ -1322,6 +1322,7 @@ def parse_initial_state(document: object) -> InitialState:
             "conservation",
             "node_execution",
             "conservation_contract",
+            "spatial_computation_delay",
         },
         required,
     )
@@ -1382,6 +1383,9 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
         node_execution=node_execution,
+        spatial_computation_delay=_boolean(
+            obj.get("spatial_computation_delay", False), "spatial_computation_delay"
+        ),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
