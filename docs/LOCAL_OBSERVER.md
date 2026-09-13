@@ -48,6 +48,10 @@ the global recording for comparison; that view is not local probe knowledge.
   counter. This is not a count of host seconds, scheduler ticks, individual
   operations or particles. A configured held record supplies a repeated process;
   absent local cycles, the counter stays zero. Field forwarding is not a clock.
+  With [shared field computation delay](SPATIAL_COMPUTATION_DELAY.md) enabled,
+  a coordinated field/carrier cycle also completes at a field-only node.
+  That completion increments the same counter once. Empty port inputs alone
+  do not create a cycle or increment it.
 - The ideal probe records delivery even while the carrier cycle waits. This
   does not mean a material detector or human has processed the input. Such a
   detector needs an explicitly priced local response law.
