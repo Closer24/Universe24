@@ -88,6 +88,12 @@ fields: their independent clocks have not been composed. The separate
 directional-wait candidate in PR65 still requires its own integration; this
 extension does not activate that candidate or a checkpoint format.
 
+The separate `conservation` local energy/momentum audit currently rejects every
+native event program, including `causal-events-v1`. This boundary applies both
+to JSON and typed `InitialState` input, before allocating event runtime state.
+Existing component accounting and local transaction guards remain available
+with the graph; they are distinct from this optional audit.
+
 ## Spatial provenance and resource bounds
 
 Spatial events use the same ID namespace as carrier events. The graph records

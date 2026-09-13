@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, replace
 
+from event_universe.core.coupling_selectors import matches_type, selected_types
 from event_universe.core.disturbance_state import (
     CostMeter,
     DisturbanceRecord,
@@ -44,7 +45,7 @@ class SpatialLaw:
         )
         remainders, phases = record.emission_remainders, record.emission_phases
         budgets = tuple(
-            rule.budget if rule.budget is not None and rule.type_index == record.type_index else blank
+            rule.budget if rule.budget is not None and matches_type(rule, record.type_index) else blank
             for rule, blank in zip(self.emissions, zero, strict=True)
         )
         finite = any(rule.budget is not None for rule in self.emissions)
@@ -68,7 +69,7 @@ class SpatialLaw:
             denominator = sum(self.definitions[rule.spatial_field].octant_weights)
             if any(not 0 <= value < denominator for value in allocation):
                 raise ValueError("carried emission phase must be below the octant weight total")
-            if rule.type_index != record.type_index and (any(residues) or any(allocation)):
+            if not matches_type(rule, record.type_index) and (any(residues) or any(allocation)):
                 raise ValueError("an emitter cannot own another disturbance type's source residue")
         if finite:
             if len(record.emission_remaining) != len(budgets):
@@ -98,7 +99,7 @@ class SpatialLaw:
         # Each delivered component updates its population and directional sample.
         meter.charge("update", received_count * 16 * received_components)
         working = list(states)
-        emitters = tuple(rule.type_index for rule in self.emissions)
+        emitters = {kind for rule in self.emissions for kind in selected_types(rule)}
         updated_records = [
             self._emitter(record) if record is not None and record.type_index in emitters else record
             for record in records
@@ -108,7 +109,7 @@ class SpatialLaw:
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
             for slot, record in enumerate(updated_records):
-                if record is None or record.type_index != rule.type_index:
+                if record is None or not matches_type(rule, record.type_index):
                     continue
                 meter.charge("read")
                 if rule.budget is not None and not any(unpack(record.emission_remaining[index])):

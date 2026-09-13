@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, replace
 
+from event_universe.core.coupling_selectors import matches_pair
 from event_universe.core.disturbance_state import (
     CouplingDefinition,
     DisturbanceDefinition,
@@ -39,9 +40,13 @@ class RecordOperations:
             *self.interactions,
         )
         for coupling in rules:
-            if coupling.left_type in present and coupling.right_type in present:
-                if coupling.left_type != coupling.right_type or present.count(coupling.left_type) > 1:
-                    return True
+            if any(
+                matches_pair(coupling, left, right)
+                for i, left in enumerate(present)
+                for j, right in enumerate(present)
+                if i != j
+            ):
+                return True
         for record in records:
             if record is not None:
                 definition = self.disturbances[record.type_index]

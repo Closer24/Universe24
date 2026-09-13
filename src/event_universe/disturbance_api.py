@@ -1,5 +1,8 @@
 """Public assembly of the generic disturbance simulator."""
 
+from typing import TYPE_CHECKING
+
+from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
 from event_universe.fields.disturbances import DisturbanceLaw
@@ -8,6 +11,9 @@ from event_universe.fields.spatial_coupling import SpatialCouplingLaw
 from event_universe.fields.spatial_decay import SpatialDecayLaw
 from event_universe.fields.spatial_interactions import JointSpatialCouplingLaw
 from event_universe.fields.spatial_plan import SpatialLaw
+
+if TYPE_CHECKING:
+    from event_universe.diagnostics.local_conservation import LocalConservationAudit
 
 
 class Simulation(DisturbanceEngine):
@@ -68,13 +74,30 @@ class Simulation(DisturbanceEngine):
                 initial.disturbances,
                 initial.couplings,
                 initial.interactions,
-                frozenset(
-                    (
-                        *(rule.type_index for rule in initial.spatial_couplings),
-                        *(rule.type_index for rule in initial.spatial_interactions),
-                    )
-                ),
+                selected_type_set(initial.spatial_couplings, initial.spatial_interactions),
             ),
             event_space=event_space,
             resolver=resolver,
         )
+        self._audit: LocalConservationAudit | None = None
+        if initial.conservation is not None:
+            from event_universe.diagnostics.local_conservation import LocalConservationAudit
+
+            self._audit = LocalConservationAudit(initial, self.inventory_view)
+        self._external_observer = observer
+        if self._audit is not None:
+            self._observer = self._observe_conservation
+            if self._spatial is not None:
+                self._spatial.observer = self._observe_conservation
+
+    def _observe_conservation(self, event: dict[str, object]) -> None:
+        assert self._audit is not None
+        try:
+            self._audit.observe(event)
+        finally:
+            if self._external_observer is not None:
+                self._external_observer(event)
+
+    def conservation_report(self) -> dict[str, object]:
+        """Read the optional candidate energy/momentum audit without advancing time."""
+        return {"status": "not_configured"} if self._audit is None else self._audit.report()

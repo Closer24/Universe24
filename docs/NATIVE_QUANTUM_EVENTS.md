@@ -97,7 +97,9 @@ routing, sends, updates, interactions and its configured receive costs. The new
 resolver charges one `read` price for inspecting a bound cycle; a triggered
 instrument additionally costs **one oracle model operation** and one `update`
 price per locally written outcome code. The chosen mechanical branch pays its
-own law's cost. There is no `quantum_off` path that silently bypasses this work.
+own law's physical update cost. Named invariant checks and automatic conservation
+checks remain mandatory passive validation and do not change the cycle cost.
+There is no `quantum_off` path that silently bypasses this work.
 
 The same existing timing rule applies to the complete cost C: for budget B and
 fixed link transit tau, local waiting is `(ceil(C/B)-1)*tau` when C exceeds B.
@@ -146,7 +148,11 @@ classical physical state and link timing; shared cross-owner ancestry; repeated
 periodic encounters; preserved quantum reversal/checkpoint semantics; tight cost
 budgets; unchanged default execution; and the canonical headless runner outputs.
 For the unit-price eight-tick examples the model costs are 116 for transmission
-and 135 for reflection. The budget-2 example meets at tick 15, has local contact
+and 121 for reflection. Reflection adds one coupling operation and two assignments,
+each priced as one update and one field-expression evaluation: five units. The
+seven-node conservation invariant is still evaluated before and after the proposal;
+its 14 validation evaluations no longer contribute to the physical clock.
+The budget-2 example meets at tick 15, has local contact
 cost 20, commits at tick 24 and sends packets that arrive at tick 25. These are
 finite expectations of the declared candidate, not a Newtonian emergence proof.
 

@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, replace
 
+from event_universe.core.coupling_selectors import matches_type
 from event_universe.core.disturbance_state import (
     CostMeter,
     DisturbanceRecord,
@@ -18,6 +19,7 @@ from event_universe.core.spatial_state import (
     SpatialState,
     zero_spatial_state,
 )
+from event_universe.core.validation import ValidationMeter
 
 from .disturbances import evaluate
 from .local_field_rules import received_values
@@ -81,6 +83,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         field_after: Values,
         meter: CostMeter,
     ) -> None:
+        meter = ValidationMeter(self.costs)
         for index, field in enumerate(self.fields):
             for payloads in (before, after, field_before, field_after):
                 field.validate(payloads[index])
@@ -132,7 +135,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         guards = []
         for index, rule in enumerate(self.interactions):
             for slot, record in enumerate(working):
-                if record is None or record.type_index != rule.type_index:
+                if record is None or not matches_type(rule, record.type_index):
                     continue
                 if (
                     rule.when is not None
@@ -151,10 +154,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                     candidate[assignment.side][assignment.field] = payload
                     meter.charge("update")
                 after, field_after = tuple(candidate[0]), tuple(candidate[1])
-                start = meter.total
                 self._check(rule, record.values, after, field_values, field_after, meter)
-                # Reserve the same bounded validation work for the actual delayed commit.
-                meter.total = bounded(checked_work(meter.total + meter.total - start))
                 delta = _difference(field_after, field_values, meter)
                 _delta_cost(meter, delta)
                 for field_index, change in enumerate(delta):
@@ -165,11 +165,6 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                 guards.append(FieldInteractionGuard(index, slot, record.values, after, delta))
                 working[slot] = replace(record, values=after)
                 field_values = field_after
-        if guards:
-            # Commit resamples, subtracts every delta, adds the legacy remainder,
-            # then replays each guard, even when the final reaction is zero.
-            self._reserve_sample(meter)
-            _delta_cost(meter, sample, 2 * len(guards) + 1)
         self._reserve_local_deposit(meter, tuple(tuple(value) for value in reaction))
         return SpatialCouplingResult(
             tuple(working), tuple(tuple(value) for value in reaction), meter.total, tuple(guards)
@@ -184,7 +179,7 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         """Check each frozen transaction against currently owned field values."""
         if not guards:
             return
-        meter = CostMeter(self.costs)
+        meter = ValidationMeter(self.costs)
         remaining = [list(value) for value in reaction]
         for guard in guards:
             _delta_cost(meter, guard.delta)

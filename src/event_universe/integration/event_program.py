@@ -64,6 +64,8 @@ def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sour
 def parse_event_program(initial: InitialState) -> Program:
     if initial.event_program is None or len(initial.event_program) > 1_000_000:
         raise ValueError("bounded event program required")
+    if initial.conservation is not None:
+        raise ValueError("conservation audit does not support native event programs")
     obj = _object(
         json.loads(initial.event_program),
         "event program",

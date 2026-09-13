@@ -1,0 +1,684 @@
+{
+  "profile_version": 1,
+  "purpose": "Explicit finite property-selected energy and impulse inventory transfers. Physical catalog metadata never selects the law.",
+  "profiles": [
+    {
+      "entity_id": "electron",
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "This held record carries configured energy and impulse inventories without a trajectory or dispersion relation.",
+          "The signed selector is supplied experiment data; catalog identity, measured charge and mass do not configure the response.",
+          "This is a finite transfer demonstration, not electron, positron or neutrino dynamics."
+        ],
+        "fields": [
+          {
+            "name": "energy",
+            "components": 1,
+            "units": "configured energy unit",
+            "signed": false,
+            "conserved": false
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "configured impulse unit",
+            "signed": true,
+            "conserved": false
+          },
+          {
+            "name": "coupling",
+            "components": 1,
+            "units": "dimensionless selector",
+            "signed": true,
+            "conserved": false,
+            "extensive": false
+          }
+        ],
+        "seed_values": {
+          "energy": 2,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "coupling": -1
+        },
+        "disturbance": {
+          "name": "electron_probe",
+          "fields": [
+            "energy",
+            "momentum",
+            "coupling"
+          ],
+          "transport": {
+            "mode": "hold"
+          },
+          "checks": [
+            {
+              "name": "signed_unit_selector",
+              "expression": {
+                "op": "gt",
+                "args": [
+                  2,
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "coupling",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity_id": "positron",
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "This held record carries configured energy and impulse inventories without a trajectory or dispersion relation.",
+          "The signed selector is supplied experiment data; catalog identity, measured charge and mass do not configure the response.",
+          "This is a finite transfer demonstration, not electron, positron or neutrino dynamics."
+        ],
+        "fields": [
+          {
+            "name": "energy",
+            "components": 1,
+            "units": "configured energy unit",
+            "signed": false,
+            "conserved": false
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "configured impulse unit",
+            "signed": true,
+            "conserved": false
+          },
+          {
+            "name": "coupling",
+            "components": 1,
+            "units": "dimensionless selector",
+            "signed": true,
+            "conserved": false,
+            "extensive": false
+          }
+        ],
+        "seed_values": {
+          "energy": 2,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 1
+        },
+        "disturbance": {
+          "name": "positron_probe",
+          "fields": [
+            "energy",
+            "momentum",
+            "coupling"
+          ],
+          "transport": {
+            "mode": "hold"
+          },
+          "checks": [
+            {
+              "name": "signed_unit_selector",
+              "expression": {
+                "op": "gt",
+                "args": [
+                  2,
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "coupling",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "entity_id": "electron_neutrino",
+      "executable_profile": {
+        "kind": "carrier",
+        "claim_level": "representation_probe",
+        "assumptions": [
+          "This held record carries configured energy and impulse inventories without a trajectory or dispersion relation.",
+          "The signed selector is supplied experiment data; catalog identity, measured charge and mass do not configure the response.",
+          "This is a finite transfer demonstration, not electron, positron or neutrino dynamics."
+        ],
+        "fields": [
+          {
+            "name": "energy",
+            "components": 1,
+            "units": "configured energy unit",
+            "signed": false,
+            "conserved": false
+          },
+          {
+            "name": "momentum",
+            "components": 3,
+            "units": "configured impulse unit",
+            "signed": true,
+            "conserved": false
+          },
+          {
+            "name": "coupling",
+            "components": 1,
+            "units": "dimensionless selector",
+            "signed": true,
+            "conserved": false,
+            "extensive": false
+          }
+        ],
+        "seed_values": {
+          "energy": 2,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "coupling": 0
+        },
+        "disturbance": {
+          "name": "neutral_probe",
+          "fields": [
+            "energy",
+            "momentum",
+            "coupling"
+          ],
+          "transport": {
+            "mode": "hold"
+          },
+          "checks": [
+            {
+              "name": "signed_unit_selector",
+              "expression": {
+                "op": "gt",
+                "args": [
+                  2,
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "coupling",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "shared_classical": {
+    "model_id": "catalog-property-reservoir-transfer-v1",
+    "claim_level": "representation_probe",
+    "boundary": "periodic",
+    "assumptions": [
+      "Two independent local reservoirs transfer configured energy and impulse inventories using the same carried properties.",
+      "Each nonzero signed selector receives one energy unit and one signed +X impulse unit per available reservoir per local cycle; every reservoir changes by the exact opposite amount.",
+      "Unsigned finite energy prevents overdrawing either reservoir. The neutral selector retains its initial inventories.",
+      "The energy and impulse definitions are supplied normalized inventories, not measured physical energy, a dispersion relation, Maxwell dynamics or QED.",
+      "Conservation diagnostics observe all owners and causal boundary transfers; failure stops the run and never repairs state."
+    ],
+    "fields": [
+      {
+        "name": "reservoir_r_energy",
+        "components": 1,
+        "units": "configured energy unit",
+        "signed": false,
+        "conserved": false
+      },
+      {
+        "name": "reservoir_r_momentum",
+        "components": 3,
+        "units": "configured impulse unit",
+        "signed": true,
+        "conserved": false
+      },
+      {
+        "name": "reservoir_s_energy",
+        "components": 1,
+        "units": "configured energy unit",
+        "signed": false,
+        "conserved": false
+      },
+      {
+        "name": "reservoir_s_momentum",
+        "components": 3,
+        "units": "configured impulse unit",
+        "signed": true,
+        "conserved": false
+      }
+    ],
+    "spatial_fields": [
+      {
+        "field": "reservoir_r_energy",
+        "baseline": 0,
+        "transport": "local"
+      },
+      {
+        "field": "reservoir_r_momentum",
+        "baseline": [
+          0,
+          0,
+          0
+        ],
+        "transport": "local"
+      },
+      {
+        "field": "reservoir_s_energy",
+        "baseline": 0,
+        "transport": "local"
+      },
+      {
+        "field": "reservoir_s_momentum",
+        "baseline": [
+          0,
+          0,
+          0
+        ],
+        "transport": "local"
+      }
+    ],
+    "spatial_seed_values": {
+      "reservoir_r_energy": 4,
+      "reservoir_r_momentum": [
+        0,
+        0,
+        0
+      ],
+      "reservoir_s_energy": 4,
+      "reservoir_s_momentum": [
+        0,
+        0,
+        0
+      ]
+    },
+    "spatial_interactions": [
+      {
+        "name": "transfer_from_r",
+        "requires": [
+          "energy",
+          "momentum",
+          "coupling"
+        ],
+        "when": {
+          "op": "mul",
+          "args": [
+            {
+              "op": "gt",
+              "args": [
+                {
+                  "op": "abs",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    }
+                  ]
+                },
+                0
+              ]
+            },
+            {
+              "op": "gt",
+              "args": [
+                {
+                  "field": "reservoir_r_energy",
+                  "side": "right"
+                },
+                0
+              ]
+            }
+          ]
+        },
+        "assignments": [
+          {
+            "side": "left",
+            "field": "energy",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "energy",
+                  "side": "left"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "side": "left",
+            "field": "momentum",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "momentum",
+                  "side": "left"
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    },
+                    [
+                      1,
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "side": "right",
+            "field": "reservoir_r_energy",
+            "expression": {
+              "op": "sub",
+              "args": [
+                {
+                  "field": "reservoir_r_energy",
+                  "side": "right"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "side": "right",
+            "field": "reservoir_r_momentum",
+            "expression": {
+              "op": "sub",
+              "args": [
+                {
+                  "field": "reservoir_r_momentum",
+                  "side": "right"
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    },
+                    [
+                      1,
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "invariants": [
+          {
+            "name": "joint_energy",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "energy",
+                  "side": "left"
+                },
+                {
+                  "field": "reservoir_r_energy",
+                  "side": "right"
+                }
+              ]
+            }
+          },
+          {
+            "name": "joint_momentum",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "momentum",
+                  "side": "left"
+                },
+                {
+                  "field": "reservoir_r_momentum",
+                  "side": "right"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "transfer_from_s",
+        "requires": [
+          "energy",
+          "momentum",
+          "coupling"
+        ],
+        "when": {
+          "op": "mul",
+          "args": [
+            {
+              "op": "gt",
+              "args": [
+                {
+                  "op": "abs",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    }
+                  ]
+                },
+                0
+              ]
+            },
+            {
+              "op": "gt",
+              "args": [
+                {
+                  "field": "reservoir_s_energy",
+                  "side": "right"
+                },
+                0
+              ]
+            }
+          ]
+        },
+        "assignments": [
+          {
+            "side": "left",
+            "field": "energy",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "energy",
+                  "side": "left"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "side": "left",
+            "field": "momentum",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "momentum",
+                  "side": "left"
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    },
+                    [
+                      1,
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "side": "right",
+            "field": "reservoir_s_energy",
+            "expression": {
+              "op": "sub",
+              "args": [
+                {
+                  "field": "reservoir_s_energy",
+                  "side": "right"
+                },
+                1
+              ]
+            }
+          },
+          {
+            "side": "right",
+            "field": "reservoir_s_momentum",
+            "expression": {
+              "op": "sub",
+              "args": [
+                {
+                  "field": "reservoir_s_momentum",
+                  "side": "right"
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {
+                      "field": "coupling",
+                      "side": "left"
+                    },
+                    [
+                      1,
+                      0,
+                      0
+                    ]
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "invariants": [
+          {
+            "name": "joint_energy",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "energy",
+                  "side": "left"
+                },
+                {
+                  "field": "reservoir_s_energy",
+                  "side": "right"
+                }
+              ]
+            }
+          },
+          {
+            "name": "joint_momentum",
+            "expression": {
+              "op": "add",
+              "args": [
+                {
+                  "field": "momentum",
+                  "side": "left"
+                },
+                {
+                  "field": "reservoir_s_momentum",
+                  "side": "right"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "conservation": {
+      "name": "configured_energy_and_impulse_inventory",
+      "energy_units": "configured energy unit",
+      "momentum_units": "configured impulse unit",
+      "carriers": [
+        {
+          "requires": [
+            "energy",
+            "momentum",
+            "coupling"
+          ],
+          "energy": {
+            "field": "energy",
+            "side": "left"
+          },
+          "momentum": {
+            "field": "momentum",
+            "side": "left"
+          }
+        }
+      ],
+      "spatial": {
+        "energy": {
+          "op": "add",
+          "args": [
+            {
+              "field": "reservoir_r_energy",
+              "side": "right"
+            },
+            {
+              "field": "reservoir_s_energy",
+              "side": "right"
+            }
+          ]
+        },
+        "momentum": {
+          "op": "add",
+          "args": [
+            {
+              "field": "reservoir_r_momentum",
+              "side": "right"
+            },
+            {
+              "field": "reservoir_s_momentum",
+              "side": "right"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

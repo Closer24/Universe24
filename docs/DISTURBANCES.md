@@ -360,9 +360,10 @@ those earlier proposed responses; they preserve its conserved sum while retainin
 the spatial response's prepared opposite reaction.
 Interactions use declared rule order, then fixed slot order, with each unordered
 pair once for equal types and ordered matching pairs for distinct types. Each
-assignment charges `update`, each accepted activation charges `couple`, and AST
-evaluation (including activation and invariants) charges `evaluate`. Every AST
-retains the 64-node/depth-16 bound. State and work remain bounded for fixed schema
+assignment charges `update`, each accepted activation charges `couple`, and
+activation/assignment AST evaluation charges `evaluate`. Invariant evaluation is
+passive validation and contributes no model cost. Every AST retains the
+64-node/depth-16 bound. State and work remain bounded for fixed schema
 and slot capacity. All proposals obey the existing frozen computation wait and
 simultaneous local commit contract. An invalid interaction faults the run before
 committing its carrier proposal or installing its pending plan. Previously
@@ -406,13 +407,22 @@ Every modeled local cycle meters these primitives using `operation_costs`:
 | --- | --- |
 | `receive` | Packets received since the previous local plan |
 | `read` | Fields owned by each processed resident record |
-| `evaluate` | Each visited expression-tree node |
+| `evaluate` | Each expression-tree node visited for physical activation or state generation |
 | `update` | Each update assignment, including a configured cost-field write |
 | `couple` | Each applicable record-pair exchange |
 | `route` | Each processed record's transport decision |
 | `split` | Each component partition in the fixed payload schema |
 | `send` | Each outgoing record |
 | `commit` | The local cycle commit |
+
+Carrier local checks, invariant expressions, automatic conservation comparisons
+and replay used only for validation do not contribute to these model prices.
+They still use bounded arithmetic and reject failures. Physical `when` predicates,
+assignments, coupling reads, reaction deltas and actual deposit preparation remain
+priced: they choose or generate the transition. Adding a passive acceptance check
+does not itself delay a valid physical cycle. Host validation work can still grow.
+The separate [local energy/momentum audit](LOCAL_CONSERVATION.md) measures complete
+committed transitions and has no model-time or operation-cost contribution.
 
 These are model operations. Python instruction count, diagnostics, rendering,
 global scheduler scans and metering its own bookkeeping are separate host work.

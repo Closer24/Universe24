@@ -178,6 +178,7 @@ def _execute_run(
         "display": "disturbances" if visualize else "none",
         "initial_totals": initial_totals,
         "final_totals": world.totals(),
+        "local_conservation": world.conservation_report(),
         "source_totals": world.source_totals(),
         "conserved_at_every_completed_tick": conservation,
         "dissipation_totals": world.dissipation_totals(),

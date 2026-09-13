@@ -1,5 +1,13 @@
 # Architecture and change boundaries
 
+[Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
+sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
+`core/validation.py` retains bounded checks without charging the physical clock.
+The optional [local conservation audit](LOCAL_CONSERVATION.md) lives in
+`diagnostics/local_conservation.py`; public assembly attaches it to committed
+events and exposes immutable `core/conservation_state.py` inventory views.
+Its host work is separate from model operation costs; it never provides an update or repair.
+
 The [quantum-register extension](QUANTUM_ENTITIES.md) keeps density arithmetic in
 `quantum/mixed.py`, reusable matrix builders in `quantum/operations.py`, and the
 finite entity-profile compiler in `integration/quantum_entities.py`. The generic

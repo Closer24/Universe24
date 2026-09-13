@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, replace
 
+from event_universe.core.coupling_selectors import matches_type
 from event_universe.core.disturbance_state import (
     MAX_RULES,
     MAX_SLOTS,
@@ -299,7 +300,7 @@ class SpatialCouplingLaw:
             residuals = unpack(payload)
             if any(abs(value) >= definition.denominator for value in residuals):
                 raise ValueError("spatial coupling residual must be below its denominator")
-            if definition.type_index != record.type_index and any(residuals):
+            if not matches_type(definition, record.type_index) and any(residuals):
                 raise ValueError("record does not own another type's spatial coupling remainder")
         return record.spatial_remainders
 
@@ -312,7 +313,7 @@ class SpatialCouplingLaw:
                 field.validate(definition.budget)
                 if any(value < 0 for value in unpack(definition.budget)):
                     raise ValueError("spatial coupling budget must be nonnegative")
-                if definition.type_index == record.type_index:
+                if matches_type(definition, record.type_index):
                     limit = definition.budget
             limits.append(limit)
         if not record.spatial_remaining:
@@ -367,7 +368,7 @@ class SpatialCouplingLaw:
             if definition.mode == "rotation" and field.components != 3:
                 raise ValueError("spatial rotation requires a three-component target")
             for slot, record in enumerate(updated):
-                if record is None or record.type_index != definition.type_index:
+                if record is None or not matches_type(definition, record.type_index):
                     continue
                 if len(record.values) != len(self.fields):
                     raise ValueError("record field count differs from spatial coupling schema")

@@ -1,5 +1,32 @@
 # Test inputs and expected results
 
+## Property coupling and passive local conservation
+
+`test_property_couplings.py` requires property compatibility across differently
+named layouts, all supported selector families, missing-property rejection,
+fraction/budget ownership and identical timing for equivalent check expressions.
+`test_property_entity_profiles.py` validates the shared catalog profiles and
+two independent reservoirs: total energy 14 and momentum zero persist through
+four ticks while the neutral control stays unchanged. Late energy or momentum
+corruption must fault without correction.
+`test_local_conservation.py` covers local changes and actual packet flux,
+pending originals, periodic/open transit, all momentum components, nonlinear
+arrival cancellation, passive observation and saved failure reports. These
+measurements use explicit candidate quantities, not inferred physical energies.
+
+## Coupled unit excitations
+
+`tests/test_coupled_excitations.py` owns the independent expectations for the
+[local coupling candidate](COUPLED_EXCITATIONS.md). Positive absorption of Y into
+an empty receiver gives internal Y and recoil +X; negative coupling gives -Y
+with the same recoil. Zero coupling forwards unchanged. Positive emission of
+internal Y gives spatial -Y and recoil -X; occupied Y/Z exchange gives internal Z
+and spatial -Y without recoil. All admissible cases retain the declared U/P at
+every tick, counting actual in-flight owners once. Delays preserve original state
+until atomic commit; send/arrival and release follow causal event order. Invalid
+state and a deliberately out-of-envelope concurrent arrival test rejection,
+without claiming energy conservation through an invalid same-mode merge.
+
 ## Configuration preflight
 
 The [validation contract](CONFIGURATION_VALIDATION.md) is covered by
@@ -24,6 +51,9 @@ equality of physical state, bookkeeping, costs and timing. The shipped signed
 encounter reaches zero at tick 6 while retaining both histories and 20 events.
 Stepping must not traverse ancestry or instantiate a quantum resolver. Existing
 native quantum/runtime tests retain their own inverse, checkpoint and cost checks.
+Typed initialization with the separate conservation audit and a native event
+program must fail before event-space or resolver allocation, through parsing,
+runtime construction and the public simulation entry point.
 
 
 ## Local observer

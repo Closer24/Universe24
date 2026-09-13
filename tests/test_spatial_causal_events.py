@@ -24,6 +24,29 @@ def traced(raw, capacity=100_000):
     return raw
 
 
+@pytest.mark.parametrize("entry", ["parse", "runtime", "simulation"])
+def test_typed_conservation_composition_is_rejected_before_runtime_allocation(entry, monkeypatch):
+    from event_universe.core.event_space import CausalEventSpace
+    from event_universe.integration.event_program import parse_event_program
+    from event_universe.integration.event_runtime import NativeEventResolver, build_event_runtime
+
+    from .test_local_conservation import converging_packets
+
+    initial = replace(
+        parse_initial_state(converging_packets()),
+        event_program=json.dumps({"model": "causal-events-v1", "capacity": 10000}),
+    )
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Unsupported composition must fail before runtime allocation")
+
+    monkeypatch.setattr(CausalEventSpace, "__init__", forbidden)
+    monkeypatch.setattr(NativeEventResolver, "__init__", forbidden)
+    start = {"parse": parse_event_program, "runtime": build_event_runtime, "simulation": Simulation}
+    with pytest.raises(ValueError, match="conservation audit does not support native event programs"):
+        start[entry](initial)
+
+
 def pulse(*, travel=2):
     raw = document(travel=travel)
     raw["spatial_seeds"] = [{"position": list(ORIGIN), "field": "radiation", "populations": [27] * 8}]

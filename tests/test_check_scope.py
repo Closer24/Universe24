@@ -236,3 +236,16 @@ def test_profile_validation_retains_explicit_data_dependencies(name):
     tests, _ = CHECK.select(["examples/known-entities/" + name], {})
     assert "tests/test_profile_validation.py" in tests
     assert "tests/test_configuration_validation.py" in tests
+
+
+@pytest.mark.parametrize("filename", ["law.json", "definition.json", "experiments.json", "prepare.py"])
+def test_coupled_excitation_resources_select_their_behavioral_consumer(filename):
+    tests, _ = CHECK.select([f"examples/coupled-excitations/{filename}"], {})
+    assert "tests/test_coupled_excitations.py" in tests
+    assert "tests/test_directional_wave.py" not in tests
+
+
+@pytest.mark.parametrize("name", ["catalog.json", "property-coupling-probes.json"])
+def test_property_coupling_profiles_select_their_behavioral_consumer(name):
+    tests, _ = CHECK.select([f"examples/known-entities/{name}"], {})
+    assert "tests/test_property_entity_profiles.py" in tests

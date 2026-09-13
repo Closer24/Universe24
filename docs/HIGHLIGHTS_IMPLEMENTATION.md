@@ -1,5 +1,34 @@
 # Highlights implementation coverage
 
+## Property coupling and local conservation reconciliation - 2026-09-13
+
+The live Highlights document was read at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Source base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. Sections 10.2, 10.5,
+10.6 and 10.7 map to [property selection](PROPERTY_COUPLINGS.md), shared explicit
+entity profiles and [passive local conservation](LOCAL_CONSERVATION.md).
+The clarified user rule requires joint energy/momentum and actual boundary flux;
+internal transfer is not an external source and checking cannot repair a law.
+The audit detects violations after committed owner changes. Per-rule validation
+no longer sets computation delay. Catalog metadata remains formula-free;
+experiment profiles define their own quantities and elementary assignments.
+No physical species law or universal proof follows. The live document was not edited.
+
+## Coupled excitation candidate reconciliation - 2026-09-13
+
+The [unit-excitation probe](COUPLED_EXCITATIONS.md) applies Highlights sections
+3.2, 3.3, 3.5 and 4.3: independently owned field/internal states exchange through
+local generic operations and a coordinated commit. A local capture gate retains
+the input while a carrier computation is pending. This is a configured mechanism
+under the unverified emergence hypothesis in sections 1.1.3 and 1.3.3, not a new
+claim that electron/photon dynamics or quantum occupation have emerged.
+
+The live document was read on 2026-09-13 at revision
+`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`.
+Source base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. The finite unit-state,
+single-packet and held-receiver restrictions belong to this experiment. No core
+law, catalog measurement or live Highlights text changes in this work.
+
 ## Configuration validation reconciliation - 2026-09-13
 
 The [read-only preflight](CONFIGURATION_VALIDATION.md) implements explicit input

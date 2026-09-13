@@ -1,5 +1,20 @@
 # Project status and restart guide
 
+The [property coupling extension](PROPERTY_COUPLINGS.md) selects compatible
+disturbances by owned properties, retaining explicit types for existing inputs.
+Entity probes share two local energy/momentum reservoirs. The optional
+[local conservation audit](LOCAL_CONSERVATION.md) measures node changes and
+actual link transfers after commits, including merging and later updates.
+Checks do not repair state or contribute modeled delay. Quantity definitions
+and discrete laws still require independent physical proof.
+
+The optional [coupled unit-excitation probe](COUPLED_EXCITATIONS.md) uses existing
+configuration operations for a held internal state and one traveling field mode.
+A local gate retains the input during an atomic exchange and releases it afterward.
+Its finite occupation and recoil inventory are declared assumptions; massive
+motion, photon quantization and QED are not established. The catalog profiles
+and simulator code are unchanged.
+
 [Configuration preflight](CONFIGURATION_VALIDATION.md) checks initialization,
 physical reference catalogs, all supplied representation profiles and observer
 sidecars without running a world. It shares parsing and preparation with runtime

@@ -45,7 +45,8 @@ def _profile_index(
     document = _object(profiles, "profiles document")
     if type(document.get("profile_version")) is not int or document["profile_version"] != 1:
         raise ValueError("unsupported profile_version")
-    if set(document) != {"profile_version", "purpose", "profiles"}:
+    required = {"profile_version", "purpose", "profiles"}
+    if not required <= set(document) or set(document) - required - {"shared_classical"}:
         raise ValueError("unsupported or incomplete profiles document")
     purpose = document["purpose"]
     if not isinstance(purpose, str) or not purpose.strip():
@@ -68,6 +69,75 @@ def _profile_index(
     return result
 
 
+def _profile_fields(fields: dict[str, JsonObject], definitions: object) -> dict[str, JsonObject]:
+    """Merge matching register definitions without interpreting their names."""
+    local: dict[str, JsonObject] = {}
+    for field in _rows(definitions, "profile fields"):
+        name = field.get("name")
+        if not isinstance(name, str) or not name or name in local:
+            raise ValueError("profile field names must be unique nonempty strings")
+        if name in fields and fields[name] != field:
+            raise ValueError(f"incompatible shared field: {name}")
+        local[name] = field
+        fields[name] = field
+    return local
+
+
+def _spatial_profile(
+    result: JsonObject,
+    definitions: dict[str, JsonObject],
+    spatial_rows: object,
+    seed_values: object,
+    position: list[int],
+    spatial_names: set[str],
+) -> None:
+    """Place each explicitly supplied spatial inventory once."""
+    spatial = _rows(spatial_rows, "spatial_fields")
+    if [item.get("field") for item in spatial] != list(definitions):
+        raise ValueError("spatial_fields must declare each component in order")
+    values = _object(seed_values, "spatial_seed_values")
+    if set(values) != set(definitions):
+        raise ValueError("spatial_seed_values must specify every spatial field exactly once")
+    for name, field in definitions.items():
+        if name in spatial_names:
+            raise ValueError("selected spatial fields must have distinct ownership")
+        spatial_names.add(name)
+        zero: int | list[int] = 0 if field.get("components") == 1 else [0, 0, 0]
+        result["spatial_seeds"].append(
+            {"position": position.copy(), "field": name, "populations": [values[name]] + [zero] * 7}
+        )
+    result["spatial_fields"].extend(spatial)
+
+
+def _shared_classical(profiles: object, representation: str) -> JsonObject | None:
+    if not isinstance(profiles, dict) or "shared_classical" not in profiles:
+        return None
+    if representation != "classical":
+        raise ValueError("shared_classical cannot be used with a quantum representation")
+    shared = copy.deepcopy(_object(profiles["shared_classical"], "shared_classical"))
+    required = {
+        "model_id",
+        "claim_level",
+        "assumptions",
+        "boundary",
+        "fields",
+        "spatial_fields",
+        "spatial_seed_values",
+        "spatial_interactions",
+        "conservation",
+    }
+    if set(shared) != required or shared.get("claim_level") != "representation_probe":
+        raise ValueError("unsupported or incomplete shared_classical representation probe")
+    assumptions = shared["assumptions"]
+    if (
+        not isinstance(assumptions, list)
+        or not assumptions
+        or any(not isinstance(item, str) or not item.strip() for item in assumptions)
+    ):
+        raise ValueError("shared_classical assumptions must be explicit")
+    return shared
+
+
 def compile_entities(
     catalog: object,
     entity_ids: Sequence[str],
@@ -84,6 +154,8 @@ def compile_entities(
     Legacy v1 authoring documents may still contain their explicit profiles.
 
     Carrier definitions and local-field operations are copied from profiles.
+    An explicit shared_classical section composes local reservoirs, property
+    transactions and conservation measurements once for the selected carriers.
     The supplied field probes preserve retained-plus-outgoing component balances.
     Extending the domain is not a continuum-limit or physical-law claim.
     """
@@ -113,6 +185,7 @@ def compile_entities(
         raise ValueError("representation probes require three integer dimensions of at least five")
     if representation not in ("classical", "quantum"):
         raise ValueError("representation must be classical or quantum")
+    shared = _shared_classical(profiles, representation)
     profile_key = "executable_profile" if representation == "classical" else "quantum_profile"
     for identity in entity_ids:
         if identity not in indexed:
@@ -162,16 +235,7 @@ def compile_entities(
             or any(not isinstance(item, str) or not item.strip() for item in profile["assumptions"])
         ):
             raise ValueError("profile assumptions must be explicit")
-        definitions = _rows(profile["fields"], "profile fields")
-        local: dict[str, JsonObject] = {}
-        for field in definitions:
-            name = field.get("name")
-            if not isinstance(name, str) or not name or name in local:
-                raise ValueError("profile field names must be unique nonempty strings")
-            if name in fields and fields[name] != field:
-                raise ValueError(f"incompatible shared field: {name}")
-            local[name] = field
-            fields[name] = field
+        local = _profile_fields(fields, profile["fields"])
         values = _object(profile["seed_values"], "seed_values")
         if set(values) != set(local):
             raise ValueError("seed_values must specify every profile field exactly once")
@@ -195,23 +259,22 @@ def compile_entities(
             if not isinstance(components, list) or components != list(local):
                 raise ValueError("components must list the profile fields in declaration order")
             result["field_groups"].append({"name": identity, "fields": components})
-            spatial = _rows(profile["spatial_fields"], "spatial_fields")
-            if [item.get("field") for item in spatial] != components:
-                raise ValueError("spatial_fields must declare each component in order")
-            result["spatial_fields"].extend(spatial)
+            _spatial_profile(result, local, profile["spatial_fields"], values, position, spatial_names)
             result["field_rules"].extend(_rows(profile["field_rules"], "field_rules"))
-            for name, field in local.items():
-                if name in spatial_names:
-                    raise ValueError("selected spatial fields must have distinct ownership")
-                spatial_names.add(name)
-                zero: int | list[int] = 0 if field.get("components") == 1 else [0, 0, 0]
-                result["spatial_seeds"].append(
-                    {
-                        "position": position.copy(),
-                        "field": name,
-                        "populations": [values[name]] + [zero] * 7,
-                    }
-                )
+    if shared is not None:
+        local = _profile_fields(fields, shared["fields"])
+        _spatial_profile(
+            result,
+            local,
+            shared["spatial_fields"],
+            shared["spatial_seed_values"],
+            position,
+            spatial_names,
+        )
+        result["model_id"] = shared["model_id"]
+        result["boundary"] = shared["boundary"]
+        result["spatial_interactions"] = _rows(shared["spatial_interactions"], "spatial_interactions")
+        result["conservation"] = _object(shared["conservation"], "conservation")
     if not types:
         # Initialization requires a type even for an unoccupied spatial world.
         types["unused carrier"] = {
@@ -238,6 +301,9 @@ def validate_profiles(catalog: object, profiles: object) -> dict[str, int]:
         entry["id"]: entry for section in ENTITY_SECTIONS for entry in _rows(source[section], section)
     }
     experiments = _profile_index(indexed, profiles, 2)
+    shared = _shared_classical(profiles, "classical")
+    if shared is not None and not any("executable_profile" in row for row in experiments.values()):
+        raise ValueError("shared_classical requires at least one classical profile")
     summary = {"profiles": len(experiments), "classical": 0, "quantum": 0}
     for identity, experiment in experiments.items():
         for representation, key in (

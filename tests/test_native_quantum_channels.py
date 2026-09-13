@@ -67,7 +67,7 @@ def test_native_interference_counts_and_priced_paths(middle, weights):
         counts[rec["outcome"]] += 1
         assert q["random_draws"] == int(all(weights))
         assert q["oracle_calls"] == 1 and q["oracle_direct_world_ticks"] == 0
-        assert r["model_operations_cost"] == r["event_ledger_cost"] == (135 if rec["outcome"] else 116)
+        assert r["model_operations_cost"] == r["event_ledger_cost"] == (121 if rec["outcome"] else 116)
         sends = [e for e in trace if e["event"] == "sent" and e["tick"] == 4]
         assert len(sends) == 2
         assert {e["disturbance"]: e["port"] for e in sends} == (

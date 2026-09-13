@@ -64,6 +64,7 @@ class SpatialInteractionDefinition:
     assignments: tuple[Assignment, ...]
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
+    types: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -82,6 +83,7 @@ class EmissionDefinition:
     amount: Expression
     denominator: int = 1
     budget: Payload | None = None
+    types: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -94,6 +96,7 @@ class SpatialCouplingDefinition:
     denominator: int = 1
     axis_order: tuple[int, int, int] = (0, 1, 2)
     budget: Payload | None = None
+    types: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
