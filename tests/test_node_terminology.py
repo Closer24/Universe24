@@ -21,8 +21,8 @@ def test_canonical_state_types_use_node_names_after_breaking_migration():
 
 def test_public_simulation_exposes_nodes_as_the_canonical_state_map():
     world = Simulation(load_initial_state(ROOT / "examples/basic.json"))
-    assert world.nodes == world.nodes
-    assert tuple(world.nodes) == tuple(world.nodes)
+    assert world.nodes
+    assert all(hasattr(node, "records") for node in world.nodes.values())
 
 
 def test_terminology_contract_defines_inputs_outputs_as_roles_not_types():
@@ -30,4 +30,5 @@ def test_terminology_contract_defines_inputs_outputs_as_roles_not_types():
     for term in ("Node", "NodeState", "Scalar", "Vector", "Port", "Link", "Event", "LocalRule"):
         assert f"**{term}**" in text
     assert "Input and output are roles, not value types" in text
-    assert "`Node` and `Site` are not separate physical entities" in text
+    assert "Node is the only active physical-location noun" in text
+    assert "Retired pre-migration location identifiers are not retained as active API aliases" in text
