@@ -1191,3 +1191,21 @@ records above were produced under that law and now name it explicitly.
 Deposits are never transported, decayed, sampled or read by rules, and the
 schema 1 conservation audits still do not cover schema 2. This is a configured
 integer law, not a derived particle, absorption or energy model.
+
+Integration review of the Claude candidate added signed-vector, mixed-residue
+and deposit-overflow atomicity checks: all 23 finite spatial-engine tests passed
+on Python 3.14.7. The independent local-law review found no implementation
+blocker and required distinguishing conserved signed inventory from moving flux.
+The 40-tick headless `finite_fields.json` run at runtime source SHA-256
+`061b1fcc2d6b210b6450b11ecb33ee8e1b8c479c33e222d21451c2927803d3a7`
+completed with source 720, localized inventory 720 and zero dissipation.
+At ticks 40, 80 and 120 the same probe retained 155 spatial Nodes and a
+140-byte deposit tuple/payload allocation per Node. This is a Python-owned
+deposit-storage measurement, not total process RSS or universal memory proof.
+The existing merge and physics review Skills already require these boundaries;
+no additional Skill rule was needed.
+The integration affected check passed Ruff, formatting and strict mypy, with
+2000 pytest passes and 5 visualization skips. One retention test encountered a
+Windows file-replacement permission error; rerunning its entire 17-test module
+in a fresh temporary directory passed. All 28 repository language, navigation
+and hygiene checks also passed. Required CI is checked on the published head.

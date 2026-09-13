@@ -224,7 +224,7 @@ def localized(world, position):
 
 
 @pytest.mark.parametrize(("travel", "shared_clock"), [(1, False), (2, False), (1, True)])
-def test_localizing_decay_preserves_total_flux_and_deposits_stationary_stock(travel, shared_clock):
+def test_localizing_decay_preserves_total_inventory_and_deposits_stationary_stock(travel, shared_clock):
     raw = localizing_document(travel=travel)
     raw["spatial_computation_delay"] = shared_clock
     raw["fields"][-1]["signed"] = False
@@ -238,7 +238,7 @@ def test_localizing_decay_preserves_total_flux_and_deposits_stationary_stock(tra
     for tick in range(1, 8 * travel + 1):
         world.step()
         links = min(tick // travel, 5)
-        # Total flux never changes: moving stock plus stationary deposits is 20.
+        # Total signed inventory never changes: moving stock plus stationary deposits is 20.
         assert world.totals()["radiation"] == (20,)
         assert world.dissipation_totals()["radiation"] == (0,)
         assert world.localized_totals()["radiation"] == (sum(deposits[: links + 1]),)
@@ -332,3 +332,63 @@ def test_decay_residue_is_validated_and_recorded(tmp_path):
     assert metadata["localized_totals"]["radiation"] == [5]
     assert metadata["final_totals"]["radiation"] == [5]
     assert metadata["accounting_balanced_at_every_completed_tick"]
+
+
+@pytest.mark.parametrize("shared_clock", [False, True])
+def test_localizing_signed_vector_preserves_each_component(shared_clock):
+    raw = localizing_document(components=3, baseline=[0, 0, 0])
+    raw["spatial_computation_delay"] = shared_clock
+    raw["spatial_seeds"] = [
+        {"position": list(ORIGIN), "field": "radiation", "populations": [[5, -3, 0]] + [[0, 0, 0]] * 7}
+    ]
+    world = Simulation(parse_initial_state(raw))
+    world.step()
+    assert localized(world, offset(ORIGIN, (1, 0, 0))) == (3, -2, 0)
+    assert world.totals()["radiation"] == (5, -3, 0)
+    for _ in range(5):
+        world.step()
+    assert world.localized_totals()["radiation"] == (5, -3, 0)
+    assert world.dissipation_totals()["radiation"] == (0, 0, 0)
+
+
+def test_localizing_overflow_keeps_packet_and_all_local_owners():
+    raw = localizing_document()
+    world = Simulation(parse_initial_state(raw))
+    engine = world._spatial
+    node = engine._at(ORIGIN)
+    node.localized = (pack((MAX_VALUE,)),)
+    engine.localized[-1][0] = MAX_VALUE
+    source = offset(ORIGIN, (-1, 0, 0))
+    population = (pack((2,)),) + (pack((0,)),) * 7
+    packet = SpatialPacket(1, source, 0, (population,))
+    engine.links[source] = (packet,) + (None,) * 5
+    before = (node.states, node.localized, node.arrival_mask, node.received_decay_cost)
+    with pytest.raises(ValueError, match="bound"):
+        engine.deliver(1)
+    assert (node.states, node.localized, node.arrival_mask, node.received_decay_cost) == before
+    assert engine.links[source][0] == packet
+    assert world.localized_totals()["radiation"] == (MAX_VALUE,)
+    assert world.dissipation_totals()["radiation"] == (0,)
+
+
+def test_mixed_residues_keep_independent_field_accounting():
+    raw = localizing_document()
+    raw["fields"].append({**raw["fields"][-1], "name": "lossy"})
+    raw["spatial_fields"].append(
+        {
+            **raw["spatial_fields"][0],
+            "field": "lossy",
+            "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
+        }
+    )
+    raw["spatial_seeds"] = [
+        {"position": list(ORIGIN), "field": name, "populations": [5, 0, 0, 0, 0, 0, 0, 0]}
+        for name in ("radiation", "lossy")
+    ]
+    world = Simulation(parse_initial_state(raw))
+    world.step()
+    assert world.totals()["radiation"] == (5,)
+    assert world.totals()["lossy"] == (2,)
+    assert world.localized_totals() == {"strength": (0,), "radiation": (3,), "lossy": (0,)}
+    assert world.dissipation_totals() == {"strength": (0,), "radiation": (0,), "lossy": (3,)}
+    assert all(item["balanced"] for item in world.spatial_accounting().values())

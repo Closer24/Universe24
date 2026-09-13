@@ -7,7 +7,7 @@ declared emission; its example is
 [moving_source.json](../examples/moving_source.json). Schema version 2 requires
 finite decay and source allowances and selects `finite-localizing-v1` by default:
 attenuated fractions become stationary stock at the receiving Node, so total
-flux is preserved. Its example is
+signed inventory is preserved. Its example is
 [finite_fields.json](../examples/finite_fields.json). The explicit
 `"residue": "dissipate"` option selects the historical `finite-dissipative-v1`
 loss law instead. Names such as `radiation`,
@@ -168,8 +168,8 @@ may remain in sparse nodes after their physical stock vanishes.
 
 ### Localizing residue
 
-The default residue, `"localize"`, follows the principle that a wave never loses
-flux: it keeps the same retained quantity moving, but the removed fraction
+The default residue, `"localize"`, preserves signed component inventory:
+it keeps the same retained quantity moving, but the removed fraction
 `v - retained` is deposited as stationary stock owned by the receiving Node
 instead of being recorded as loss. Omitting `residue` selects it; the historical
 loss law needs the explicit key:

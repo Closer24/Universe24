@@ -66,7 +66,7 @@ forwarding continues at causal link speed. Schema 1 preserves conservative
 transport. Schema 2 explicitly selects finite attenuation, `finite-localizing-v1` by default: finite source
 and response allowances bound dynamic input, and declared integer attenuation
 removes magnitude at interior arrivals while exempting immutable background.
-This candidate tracks signed dissipation rather than promising conserved physical
+The explicit dissipate option tracks signed loss; neither option establishes physical
 momentum through decay. Self-field exclusion by arrival order remains an unverified
 hypothesis and is not enabled by this extension.
 
@@ -191,7 +191,7 @@ an integer remainder carried into the next calculation.
 
 Schema 2 finite attenuation changes each packet/octant/component reaching an
 interior receiver from `v` to `sign(v) * floor(abs(v) * p / q)`, with integer
-`0 <= p < q`. A wave never loses flux: by default the removed signed quantity is
+`0 <= p < q`. Signed inventory is preserved: by default the removed signed quantity is
 deposited as stationary stock at the receiving node, so total inventory is
 preserved and a thinning wave ends as whole units at known nodes rather than
 fading to nothing. The explicitly selected `"residue": "dissipate"` candidate is

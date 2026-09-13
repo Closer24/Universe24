@@ -68,7 +68,7 @@ user-defined names. Every spatial field requires a bounded integer ratio
 `0 <= p < q`; each original packet/octant/component is attenuated to
 `sign(v) * floor(abs(v) * p / q)` on completing an interior link, before arrival
 packets merge. By default (`finite-localizing-v1`) each removed fraction is
-deposited as stationary stock at the receiving Node, so a wave never loses flux:
+deposited as stationary stock at the receiving Node, preserving signed inventory:
 it comes to rest as whole units at known Nodes. The explicit
 `"residue": "dissipate"` option (`finite-dissipative-v1`) records removed
 fractions as loss instead. Immutable baselines are exempt. Per-record finite allowances bound absolute
