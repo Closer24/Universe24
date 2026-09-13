@@ -1,5 +1,32 @@
 # Highlights implementation coverage
 
+## Quantum time-direction clarification - 2026-09-13
+
+Highlights sections 1.2.7 and 4.7 distinguish direct origin relevance lookup
+from deferred quantum evaluation. Neither is reverse physical-time computation.
+Required stored dependencies and recorded constraints are collected as bounded
+host work; their recipes evaluate forward from sources or exact checkpoints.
+Earlier events and outcomes are not rewritten or resampled.
+
+This terminology review uses merged main
+`63983788140bc06d5e8f581e3609c0520c00f43b` and the latest reported
+`Quantom -> Classic` run in [PR #91](https://github.com/Closer24/Universe24/pull/91),
+head `49bcbc74c69a47814945efce8600edbc824ee04f`. PR #91 was open and unmerged
+at review. Its `local-quantum-events-v3` candidate removes separate chronological
+predecessor lists and `history(register)` traversal, while retaining immutable
+events and quantum dependencies. Direct event-ID/status lookup is O(1); full
+retained-state evaluation and cancellation certification are separate host work.
+Source resolution adds a later write-once status without rewriting the source.
+
+The PR reports `wave_origins.json` completing 5/5 ticks in 0.0123118 seconds:
+one outcome draw, origin 3 resolved at tick 2 to record 13, peer references retired
+at tick 3, and origin 4 still active. Three oracle calls include two cancellation
+certifications. These are branch-reported results, not a new experiment in this
+documentation task or proof of a universal quantum-to-classical limit.
+See [the quantum contract](QUANTUM_EVENTS.md#time-direction-and-origin-lookup).
+The Google Doc receives the same clarification in sections 1.2.7, 4.7.2 and 4.7.7.
+No reaction law or evaluation algorithm changes in this correction.
+
 ## Latest synchronized snapshot - 2026-09-13
 
 This is the repository implementation map for

@@ -1,7 +1,8 @@
 """Demand-driven joint-state backend owned by DeferredQuantum.
 
 Acyclic per-node heads describe the wave; read-only queries never select old paths.
-Recorded constraints close the conservative backward cone. Only an explicitly
+Recorded constraints complete the required dependency set; recipes evaluate
+forward from stored states, without reversing physical time. Only an explicitly
 supplied local instrument can commit an outcome. This is an opt-in finite
 quantum candidate, not a derived field law; native integration shares the causal metadata owner.
 """
@@ -340,7 +341,7 @@ class EventNetwork:
             if i in found:
                 continue
             if len(found) >= self.config.max_eval_nodes:
-                raise OverflowError("backward dependency budget exceeded")
+                raise OverflowError("quantum dependency budget exceeded")
             node = self._event(i)
             found.add(i)
             register_indices.update(node.register_indices)
