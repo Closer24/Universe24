@@ -63,7 +63,13 @@ def wave_momentum_expression() -> dict:
     return op("add", total, op("mul", right("held_px"), [1, 0, 0]))
 
 
-def configuration(charge: int, *, ticks: int = 14, quanta_per_tick: int = 10, pulses: int = 6) -> dict:
+def configuration(
+    charge: int,
+    *,
+    ticks: int = 14,
+    quanta_per_tick: int = 10,
+    pulses: int = 6,
+) -> dict:
     fields = [
         {"name": "mass", "components": 1, "units": "mass unit", "signed": False, "conserved": True},
         {"name": "charge", "components": 1, "units": "charge unit", "signed": True, "conserved": True},
@@ -157,6 +163,17 @@ def configuration(charge: int, *, ticks: int = 14, quanta_per_tick: int = 10, pu
             },
         ],
     }
+    # The marker is emitted in every field interval; a held carrier cycles only when it
+    # has work, so a carrier-phase assignment would mark only every other interval.
+    emissions = [
+        {
+            "type": "scatterer",
+            "field": "presence",
+            "amount": op("mul", {"field": "charge"}, {"field": "charge"}),
+            "denominator": 1,
+            "source": True,
+        }
+    ]
     return {
         "schema_version": 1,
         "model_id": "directional-quanta-charge-scattering-v1",
@@ -193,15 +210,7 @@ def configuration(charge: int, *, ticks: int = 14, quanta_per_tick: int = 10, pu
             {"field": name, "baseline": 0, "transport": "local"}
             for name in ("presence", "held_px", *(f"rad_{d}" for d in DIRECTIONS))
         ],
-        "emissions": [
-            {
-                "type": "scatterer",
-                "field": "presence",
-                "amount": op("mul", {"field": "charge"}, {"field": "charge"}),
-                "denominator": 1,
-                "source": True,
-            }
-        ],
+        "emissions": emissions,
         "spatial_seeds": [
             {
                 "position": [SOURCE_X + i, CENTER, CENTER],

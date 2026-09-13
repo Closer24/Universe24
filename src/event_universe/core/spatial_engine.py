@@ -698,7 +698,8 @@ class SpatialEngine:
                 merged.append(tuple(combined))
             values = tuple(merged)
             links.append(
-                SpatialPacket(arrival, position, port, values)
+                # A reaction appended to a departing packet keeps that packet's carried phases.
+                SpatialPacket(arrival, position, port, values, phases=() if old is None else old.phases)
                 if any(any(unpack(payload)) for field in values for payload in field)
                 else None
             )
