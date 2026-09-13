@@ -1254,3 +1254,21 @@ the role of the source mass. The reaction stays in the local momentum field at
 the body's Node and never reaches the source, so this is attraction toward a
 fixed source, not a two-body law. No physical constant is identified.
 
+## Particle interaction probes — 2026-09-13
+
+Base: `8b9f79f` on this branch. Configuration only. Each charged body emits its
+own signed straight-ray field and responds to the others' with `-(charge x flux)`;
+a bound pair converts into a free proton and a recoiling core through the
+existing two-record conversion. Read as a read-only world/event audit.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| New tests | `tests/test_particle_interactions.py`: head-on repulsion without sharing a Node with reversed equal-and-opposite momenta, attraction at rest, neutral crossing, matched kicks with unequal recoil, timed emission with mass 4 and zero momentum conserved |
+| Dense field | 21-cubed open world, 512 headings all firing every tick: like charges turn at distance 2 (tick 13) and reverse; opposite charges meet at tick 14 and pass through; neutral bodies cross at tick 14 unchanged; a light body is pulled in or pushed out by the sign of the charge product; emission at tick 10 with the proton at one hop per tick and the core at one third |
+| Self-field | With one shared field a moving body met its own rays at the next Node and pushed itself regardless of the other charge; separate fields per body remove this in configuration |
+| Visualization | Not requested or generated |
+
+No energy is represented, so encounters within one link produce unbounded
+kicks; no species, constant or unit is identified.
+
