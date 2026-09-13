@@ -11,6 +11,11 @@ their durations; link transit follows local completion. Operation cost is measur
 separately. The earlier cost-budget delay contract below still describes profiles
 without `node_execution: true`. Conserved readouts remain selected assumptions
 until independently derived physical behavior is demonstrated.
+Its generic reaction contract admits several local disturbances and fields in
+one frozen proposal. Declared invariants and persistent validity conditions must
+hold at actual commit, including after a local arrival during the wait. A consumed
+start trigger is not a persistent condition. Every affected owner commits together
+or remains unchanged; a failed check reports an error without repairing the law.
 
 Distinguish three categories:
 

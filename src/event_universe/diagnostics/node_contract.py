@@ -17,6 +17,7 @@ from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
     FieldInteractionGuard,
+    FieldRuleGuard,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,
@@ -35,6 +36,7 @@ STATE_RECORDS = (
     Packet,
     PendingCycle,
     FieldInteractionGuard,
+    FieldRuleGuard,
     SpatialNodeState,
     SpatialPacket,
     SpatialPlan,

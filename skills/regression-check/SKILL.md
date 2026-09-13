@@ -19,6 +19,10 @@ For the opt-in [integer Node profile](../../docs/NODE_VECTOR_PROCESSOR.md), incl
 `tests/test_node_runtime.py`, `tests/test_node_guard_boundaries.py` and
 `tests/test_node_vector_integration.py`. Keep explicit k timing separate from
 operation cost, and check actual pending/packet owners before accepting a balance.
+When that revision supports joint indexed reactions or persistent conditions,
+include `tests/test_joint_node_reactions.py`, `tests/test_joint_reaction_configuration.py`
+and `tests/test_field_commit_guards.py`; follow the delayed-rule review in
+[physics validation](../physics-rule-validation/SKILL.md#review-the-declared-rules).
 Aggregation metadata must match each carrier and spatial receipt implementation;
 a supported metadata name alone does not establish a supported merge policy.
 Report missing checks in the audited revision as incomplete coverage. Preserve

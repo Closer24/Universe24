@@ -58,6 +58,14 @@ def test_unknown_state_owners_require_explicit_review():
     assert node_state_violations(object())
 
 
+def test_field_rule_guard_is_recursively_audited_instead_of_hiding_nested_laws():
+    guard = spatial_state.FieldRuleGuard(0, ((1,),), (((1,),),) * 6)
+    assert not node_state_violations(guard)
+    corrupt = replace(guard, outgoing=((Expression("literal", literal=(1,)),),))
+    errors = node_state_violations(corrupt)
+    assert errors and "state.outgoing[0][0]" in errors[0]
+
+
 def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
     namespace = vars(disturbance_state) | vars(spatial_state)
     allowed = (*STATE_RECORDS, disturbance_state.Departure)

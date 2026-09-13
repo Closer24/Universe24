@@ -26,6 +26,13 @@ class Simulation(DisturbanceEngine):
             from event_universe.integration.event_runtime import build_event_runtime
 
             event_space, resolver = build_event_runtime(initial)
+        spatial_law = SpatialLaw(
+            initial.fields,
+            initial.spatial_fields,
+            initial.emissions,
+            initial.operation_costs,
+            initial.field_rules,
+        )
         super().__init__(
             initial,
             DisturbanceLaw(
@@ -36,13 +43,7 @@ class Simulation(DisturbanceEngine):
                 initial.interactions,
             ),
             observer,
-            SpatialLaw(
-                initial.fields,
-                initial.spatial_fields,
-                initial.emissions,
-                initial.operation_costs,
-                initial.field_rules,
-            ),
+            spatial_law,
             (
                 JointSpatialCouplingLaw(
                     initial.fields,
@@ -79,6 +80,7 @@ class Simulation(DisturbanceEngine):
             ),
             event_space=event_space,
             resolver=resolver,
+            field_guard=spatial_law.validate_guards,
             balance_guard=(
                 LocalBalanceGuard(
                     initial.fields,

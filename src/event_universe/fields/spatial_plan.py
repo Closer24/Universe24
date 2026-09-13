@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     EmissionDefinition,
+    FieldRuleGuard,
     NodeFieldRuleDefinition,
     SpatialFieldDefinition,
     SpatialOutgoing,
@@ -25,7 +26,7 @@ from event_universe.core.spatial_state import (
 )
 
 from .disturbances import evaluate
-from .local_field_rules import apply_field_rules
+from .local_field_rules import apply_field_rules, validate_field_guards
 from .spatial import add_populations, bounded_emission_amount, emission_amount, emit, split_outward
 
 
@@ -36,6 +37,9 @@ class SpatialLaw:
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
+
+    def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
+        validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -147,9 +151,10 @@ class SpatialLaw:
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
+        guards: list[FieldRuleGuard] = []
         if has_local:
             ruled_states, local_outgoing = apply_field_rules(
-                self.fields, self.definitions, self.field_rules, tuple(working), meter
+                self.fields, self.definitions, self.field_rules, tuple(working), meter, guards=guards
             )
             working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
@@ -205,4 +210,5 @@ class SpatialLaw:
             meter.total,
             tuple(tuple(v) for v in rule_delta) if has_local else (),
             meter.interaction_ticks,
+            tuple(guards),
         )

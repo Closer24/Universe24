@@ -57,6 +57,14 @@ class NodeFieldRuleDefinition:
     invariants: tuple[Invariant, ...]
     when: Expression | None = None
     k: int = 0
+    commit_when: Expression | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class FieldRuleGuard:
+    rule_index: int
+    delta: Values
+    outgoing: tuple[Values, ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -68,6 +76,8 @@ class SpatialInteractionDefinition:
     when: Expression | None = None
     types: tuple[int, ...] = ()
     k: int = 0
+    participants: tuple[tuple[int, ...], ...] = ()
+    commit_when: Expression | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,6 +87,9 @@ class FieldInteractionGuard:
     before: Values
     after: Values
     delta: Values
+    slots: tuple[int, ...] = ()
+    participant_before: tuple[Values, ...] = ()
+    participant_after: tuple[Values, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -180,6 +193,7 @@ class SpatialPlan:
     cost: int
     rule_delta: Values = ()
     interaction_ticks: int = 0
+    field_guards: tuple[FieldRuleGuard, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

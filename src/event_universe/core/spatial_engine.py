@@ -18,6 +18,7 @@ from .node_services import NodeEvents
 from .spatial_node import NodeActivity, SpatialAccounting, SpatialNode, SpatialServices
 from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
+from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
     SpatialBundle,
     SpatialPacket,
@@ -57,9 +58,12 @@ class SpatialEngine:
         *,
         event_space: CausalEventSpace | None = None,
         balance_guard: NodeConservationGuard | None = None,
+        field_guard: SpatialFieldGuard | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
+        if initial.node_execution and initial.field_rules and field_guard is None:
+            raise ValueError("node_execution field rules require a field commit guard")
         self.initial = initial
         self.planner = planner
         self.observer = observer
@@ -85,6 +89,7 @@ class SpatialEngine:
             NodeActivity(self._active),
             SpatialAccounting(self.sources, self.dissipation, self.reactions, self.transformations),
             balance_guard,
+            field_guard,
         )
         for seed in initial.spatial_seeds:
             node = self._at(seed.position)

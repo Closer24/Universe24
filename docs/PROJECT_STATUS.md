@@ -2,7 +2,10 @@
 
 The [integer Node profile](NODE_VECTOR_PROCESSOR.md) adds bounded indexed rules,
 explicit k*h local duration, declared aggregation and complete-owner pre-commit
-readouts. Nodes own their physical transitions and fixed output banks. Example
+readouts. Indexed spatial rules now read several carriers and fields from one
+snapshot. Delayed field phases recheck each rule's invariants, and optional
+`commit_when` is separate from the consumed `when` trigger. Nodes own their
+physical transitions and fixed output banks. Example
 configurations demonstrate register permutations and local field exchange;
 they do not establish physical species laws or quantum emergence. General graph
 topology and interacting coarse-graining remain outside this profile.

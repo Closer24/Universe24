@@ -2,8 +2,10 @@
 
 from dataclasses import dataclass, replace
 
-from event_universe.core.coupling_selectors import matches_type
+from event_universe.core.coupling_selectors import matches_type, participant_groups
 from event_universe.core.disturbance_state import (
+    MAX_RULES,
+    MAX_SLOTS,
     CostMeter,
     DisturbanceRecord,
     Values,
@@ -80,36 +82,88 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
     def _check(
         self,
         rule: SpatialInteractionDefinition,
-        before: Values,
-        after: Values,
+        before: tuple[Values, ...],
+        after: tuple[Values, ...],
         field_before: Values,
         field_after: Values,
         meter: CostMeter,
     ) -> None:
         meter = ValidationMeter(self.costs)
+        original, candidate = (*before, field_before), (*after, field_after)
         for index, field in enumerate(self.fields):
-            for payloads in (before, after, field_before, field_after):
+            for payloads in (*original, *candidate):
                 field.validate(payloads[index])
-            meter.charge("read", 4)
+            meter.charge("read", len(original) + len(candidate))
             if field.conserved:
-                old = tuple(
-                    checked_work(a + b)
-                    for a, b in zip(unpack(before[index]), unpack(field_before[index]), strict=True)
-                )
-                new = tuple(
-                    checked_work(a + b)
-                    for a, b in zip(unpack(after[index]), unpack(field_after[index]), strict=True)
-                )
+                totals = []
+                for owners in (original, candidate):
+                    total = (0,) * field.components
+                    for owner in owners:
+                        total = add_components(total, unpack(owner[index]))
+                    totals.append(total)
                 meter.charge("update", 2 * field.components)
-                if old != new:
+                if totals[0] != totals[1]:
                     raise ValueError(
                         f"spatial interaction {rule.name} violates conservation of {field.name}"
                     )
         for invariant in rule.invariants:
-            old = evaluate(invariant.expression, before, field_before, meter)
-            new = evaluate(invariant.expression, after, field_after, meter)
+            old = evaluate(invariant.expression, before[0], field_before, meter, participants=original)
+            new = evaluate(invariant.expression, after[0], field_after, meter, participants=candidate)
             if old != new:
                 raise ValueError(f"spatial interaction {rule.name} violates invariant {invariant.name}")
+
+    def _proposal(
+        self,
+        rule: SpatialInteractionDefinition,
+        before: tuple[Values, ...],
+        field_values: Values,
+        meter: CostMeter,
+        fluxes: Values,
+        ports: tuple[Values, ...],
+        received_masks: tuple[int, ...],
+    ) -> tuple[tuple[Values, ...], Values] | None:
+        owners = (*before, field_values)
+        for condition, condition_meter in (
+            (rule.when, meter),
+            (rule.commit_when, ValidationMeter(self.costs)),
+        ):
+            if (
+                condition is not None
+                and evaluate(
+                    condition,
+                    before[0],
+                    field_values,
+                    condition_meter,
+                    fluxes,
+                    ports=ports,
+                    participants=owners,
+                    received_masks=received_masks,
+                )[0]
+                <= 0
+            ):
+                return None
+        meter.advance(rule.k)
+        meter.charge("couple")
+        candidate = [list(owner) for owner in owners]
+        for assignment in rule.assignments:
+            value = evaluate(
+                assignment.expression,
+                before[0],
+                field_values,
+                meter,
+                fluxes,
+                ports=ports,
+                participants=owners,
+                received_masks=received_masks,
+            )
+            payload = pack(value)
+            self.fields[assignment.field].validate(payload)
+            candidate[assignment.side][assignment.field] = payload
+            meter.charge("update")
+        after = tuple(tuple(owner) for owner in candidate[:-1])
+        field_after = tuple(candidate[-1])
+        self._check(rule, before, after, field_values, field_after, meter)
+        return after, field_after
 
     def __call__(
         self,
@@ -119,6 +173,8 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         ports: tuple[Values, ...] = (),
         received_masks: tuple[int, ...] = (),
     ) -> SpatialCouplingResult:
+        if len(records) > MAX_SLOTS or len(self.interactions) > MAX_RULES:
+            raise ValueError("spatial interactions exceed fixed local capacity")
         legacy = SpatialCouplingLaw.__call__(self, records, sample, fluxes)
         meter = CostMeter(self.costs)
         meter.total = legacy.cost
@@ -139,42 +195,26 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         reaction = [list(values) for values in legacy.reaction]
         guards = []
         for index, rule in enumerate(self.interactions):
-            for slot, record in enumerate(working):
-                if record is None or not matches_type(rule, record.type_index):
+            groups = (
+                participant_groups(rule, tuple(working))
+                if rule.participants
+                else tuple(
+                    (slot,)
+                    for slot, record in enumerate(working)
+                    if record is not None and matches_type(rule, record.type_index)
+                )
+            )
+            for slots in groups:
+                selected = tuple(working[slot] for slot in slots)
+                assert all(record is not None for record in selected)
+                originals = tuple(record for record in selected if record is not None)
+                before = tuple(record.values for record in originals)
+                proposal = self._proposal(
+                    rule, before, field_values, meter, fluxes, ports, received_masks
+                )
+                if proposal is None:
                     continue
-                if (
-                    rule.when is not None
-                    and evaluate(
-                        rule.when,
-                        record.values,
-                        field_values,
-                        meter,
-                        fluxes,
-                        ports=ports,
-                        received_masks=received_masks,
-                    )[0]
-                    <= 0
-                ):
-                    continue
-                meter.advance(rule.k)
-                meter.charge("couple")
-                candidate = [list(record.values), list(field_values)]
-                for assignment in rule.assignments:
-                    value = evaluate(
-                        assignment.expression,
-                        record.values,
-                        field_values,
-                        meter,
-                        fluxes,
-                        ports=ports,
-                        received_masks=received_masks,
-                    )
-                    payload = pack(value)
-                    self.fields[assignment.field].validate(payload)
-                    candidate[assignment.side][assignment.field] = payload
-                    meter.charge("update")
-                after, field_after = tuple(candidate[0]), tuple(candidate[1])
-                self._check(rule, record.values, after, field_values, field_after, meter)
+                after, field_after = proposal
                 delta = _difference(field_after, field_values, meter)
                 _delta_cost(meter, delta)
                 for field_index, change in enumerate(delta):
@@ -182,8 +222,20 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
                         reaction[field_index][component] = bounded(
                             checked_work(reaction[field_index][component] + amount)
                         )
-                guards.append(FieldInteractionGuard(index, slot, record.values, after, delta))
-                working[slot] = replace(record, values=after)
+                guards.append(
+                    FieldInteractionGuard(
+                        index,
+                        slots[0],
+                        before[0],
+                        after[0],
+                        delta,
+                        slots if rule.participants else (),
+                        before if rule.participants else (),
+                        after if rule.participants else (),
+                    )
+                )
+                for slot, record, values in zip(slots, originals, after, strict=True):
+                    working[slot] = replace(record, values=values)
                 field_values = field_after
         self._reserve_local_deposit(meter, tuple(tuple(value) for value in reaction))
         return SpatialCouplingResult(
@@ -201,11 +253,29 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         guards: tuple[FieldInteractionGuard, ...],
     ) -> None:
         """Check each frozen transaction against currently owned field values."""
+        if type(guards) is not tuple or len(guards) > MAX_RULES * MAX_SLOTS:
+            raise ValueError("pending spatial interaction guards exceed fixed local capacity")
         if not guards:
             return
         meter = ValidationMeter(self.costs)
         remaining = [list(value) for value in reaction]
         for guard in guards:
+            if type(guard) is not FieldInteractionGuard or type(guard.rule_index) is not int:
+                raise ValueError("pending spatial interaction requires an immutable indexed guard")
+            if not 0 <= guard.rule_index < len(self.interactions):
+                raise ValueError("unknown pending spatial interaction guard")
+            count = len(self.interactions[guard.rule_index].participants)
+            if (
+                type(guard.slots) is not tuple
+                or len(guard.slots) != count
+                or len(set(guard.slots)) != count
+                or any(type(slot) is not int or not 0 <= slot < MAX_SLOTS for slot in guard.slots)
+                or type(guard.participant_before) is not tuple
+                or type(guard.participant_after) is not tuple
+                or len(guard.participant_before) != count
+                or len(guard.participant_after) != count
+            ):
+                raise ValueError("pending spatial interaction participant snapshots are invalid")
             _delta_cost(meter, guard.delta)
             for index, change in enumerate(guard.delta):
                 for component, value in enumerate(change):
@@ -216,9 +286,22 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
             if not 0 <= guard.rule_index < len(self.interactions):
                 raise ValueError("unknown pending spatial interaction guard")
             after = _add_delta(current, guard.delta, meter)
-            self._check(
-                self.interactions[guard.rule_index], guard.before, guard.after, current, after, meter
-            )
+            rule = self.interactions[guard.rule_index]
+            before_owners = guard.participant_before or (guard.before,)
+            after_owners = guard.participant_after or (guard.after,)
+            if (
+                rule.commit_when is not None
+                and evaluate(
+                    rule.commit_when,
+                    before_owners[0],
+                    current,
+                    meter,
+                    participants=(*before_owners, current),
+                )[0]
+                <= 0
+            ):
+                raise ValueError(f"spatial interaction {rule.name} commit_when is no longer satisfied")
+            self._check(rule, before_owners, after_owners, current, after, meter)
             current = after
 
     def _partition_reaction(self, reaction: Values) -> tuple[Values, Values]:

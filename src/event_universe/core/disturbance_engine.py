@@ -26,7 +26,13 @@ from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
 from .record_policy import RecordPolicy
-from .spatial_engine import SpatialCoupler, SpatialDecayer, SpatialEngine, SpatialPlanner
+from .spatial_engine import (
+    SpatialCoupler,
+    SpatialDecayer,
+    SpatialEngine,
+    SpatialFieldGuard,
+    SpatialPlanner,
+)
 from .topology import neighbor_address
 
 Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
@@ -54,6 +60,7 @@ class DisturbanceEngine:
         event_space: CausalEventSpace | None = None,
         resolver: EventResolver | None = None,
         balance_guard: NodeConservationGuard | None = None,
+        field_guard: SpatialFieldGuard | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
@@ -95,6 +102,7 @@ class DisturbanceEngine:
                 spatial_decayer,
                 event_space=event_space,
                 balance_guard=balance_guard,
+                field_guard=field_guard,
             )
         )
         self._services = NodeServices(

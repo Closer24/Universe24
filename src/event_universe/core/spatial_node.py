@@ -36,6 +36,7 @@ SpatialPlanner = Callable[
     [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
 ]
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
+SpatialFieldGuard = Callable[[tuple[SpatialState, ...], SpatialPlan], None]
 
 
 class SpatialCoupler(Protocol):
@@ -113,12 +114,24 @@ class SpatialServices:
     activity: NodeActivity
     accounting: SpatialAccounting
     balance_guard: NodeConservationGuard | None = None
+    field_guard: SpatialFieldGuard | None = None
 
     def __post_init__(self) -> None:
         if self.initial.node_execution and (
             self.initial.conservation_contract is None or self.balance_guard is None
         ):
             raise ValueError("node_execution requires a conservation contract and balance guard")
+        if self.initial.node_execution and self.initial.field_rules and self.field_guard is None:
+            raise ValueError("node_execution field rules require a field commit guard")
+
+    def validate_field_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
+        if not self.initial.node_execution:
+            return
+        if self.field_guard is None:
+            if plan.field_guards:
+                raise ValueError("field rule metadata requires a field commit guard")
+            return
+        self.field_guard(states, plan)
 
 
 class SpatialAccounting:
@@ -266,6 +279,7 @@ class SpatialNode(SpatialNodeState):
             return
         plan = services.planner(states, records, self.received_count)
         validate_spatial_plan(services.initial, plan, len(records), records)
+        services.validate_field_guards(self.states, plan)
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))
         if services.initial.node_execution and plan.interaction_ticks:
             ready_tick = bounded(tick + plan.interaction_ticks)
@@ -339,6 +353,7 @@ class SpatialNode(SpatialNodeState):
         records = () if carrier is None else carrier.records
         plan = replace(pending.plan, states=tuple(states), emission_records=records)
         validate_spatial_plan(services.initial, plan, len(records), records)
+        services.validate_field_guards(self.states, plan)
         self._commit_plan(tick, carrier, services, plan, pending.cost, pending_cause=pending.cause_id)
 
     def _commit_plan(

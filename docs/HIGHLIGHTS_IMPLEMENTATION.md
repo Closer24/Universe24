@@ -1,5 +1,19 @@
 # Highlights implementation coverage
 
+## Joint local reaction contract - 2026-09-13
+
+The live source was reread at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Implementation base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`.
+Sections 3.1, 3.3 and 4.3 motivate the bounded property-selected
+[joint Node reaction](NODE_VECTOR_PROCESSOR.md#local-rules). The user's explicit
+reaction contract refines delayed execution: one group reads several carriers
+and fields from one snapshot, and each frozen substep must still pass its
+declared invariants and optional persistent condition before atomic commit.
+Start triggers remain separate. The supplied register-rotation example checks
+externally defined readouts; it does not derive physical species, energy laws or
+quantum behavior. No live Highlights text was edited.
+
 ## Integer Node timing reconciliation - 2026-09-13
 
 The live Highlights source was read again with modification timestamp

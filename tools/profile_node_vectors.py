@@ -20,6 +20,9 @@ from event_universe.runner import source_fingerprint
 ROOT = Path(sys.argv[1]).resolve()
 OUTPUT = Path(sys.argv[2]).resolve()
 POINTS = (0, 1, 2, 3, 16, 32, 64, 128, 256)
+SCOPE = sys.argv[3] if len(sys.argv) > 3 else "all"
+if SCOPE not in ("all", "reactions"):
+    raise ValueError("memory scope must be all or reactions")
 
 
 def sha_json(value):
@@ -48,7 +51,13 @@ def deep_size(value):
 
 def configuration(kind, count, width, slots):
     source = (
-        ROOT / "examples/node-vector" / ("six-records.json" if kind == "records" else "two-fields.json")
+        ROOT
+        / "examples/node-vector"
+        / {
+            "records": "six-records.json",
+            "fields": "two-fields.json",
+            "joint": "joint-reaction.json",
+        }[kind]
     )
     raw = json.loads(source.read_text(encoding="utf-8"))
     template_sha = sha_json(raw)
@@ -214,6 +223,7 @@ def measure_all():
         "checkout": str(ROOT),
         "script": str(Path(__file__).resolve()),
         "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "scope": SCOPE,
         "source_sha256_before": source_fingerprint(),
         "method": "No observer, event graph, frame capture, renderer or saved history. Fixed six ports. GC before sampled host bytes. One plain pass and one tracemalloc pass per case; this is an instrumentation comparison, not a speedup claim.",
         "limits": "tracemalloc excludes native allocator/RSS and begins after parsed configuration allocation. Reachable graph totals use Python object identity and include shared payload reuse; not physical register counts or a complete process memory figure. Tiny retained measurement-list growth and interpreter caches contribute to traced current bytes. Samples at 16/32/64/128/256 compare the same repeated cycle phase.",
@@ -223,6 +233,9 @@ def measure_all():
     cases += [("records", 8, width, 8) for width in (16, 32)]
     cases += [("records", 8, 8, slots) for slots in (16, 32)]
     cases += [("fields", 1, 8, 8), ("fields", 8, 8, 8)]
+    cases += [("joint", n, 3, 2) for n in (1, 8, 27)]
+    if SCOPE == "reactions":
+        cases = [case for case in cases if case[0] in ("fields", "joint")]
     for case in cases:
         report["cases"].append(measure(*case))
         OUTPUT.write_text(json.dumps(report, indent=2), encoding="utf-8")

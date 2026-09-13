@@ -1,4 +1,4 @@
-"""Independent register-projection checks for the two generic Node examples."""
+"""Independent register-projection checks for generic Node examples."""
 
 import json
 from dataclasses import replace
@@ -57,7 +57,7 @@ def proposed(raw):
     return initial, before, after, result, guard.measure(before), guard.measure(after)
 
 
-@pytest.mark.parametrize("name", ["six-records.json", "two-fields.json"])
+@pytest.mark.parametrize("name", ["six-records.json", "two-fields.json", "joint-reaction.json"])
 def test_node_examples_pass_public_preflight(name):
     report = validate_configuration((EXAMPLES / name).read_bytes(), kind="initialization")
     assert report.valid, report.to_dict()
@@ -84,6 +84,18 @@ def test_two_field_exchange_preserves_joint_projections_and_costs_two_ticks():
     assert after.records != before.records and after.spatial != before.spatial
 
 
+def test_two_carriers_and_two_fields_share_one_snapshot_and_derived_readouts():
+    _, before, after, result, original, final = proposed(load("joint-reaction.json"))
+    assert original == final == ((34,), (4, 6, 2))
+    assert result.interaction_ticks == 3
+    assert len(result.guards) == 1
+    assert result.guards[0].slots == (0, 1)
+    assert after.records[0].values[0] == before.spatial[0][0]
+    assert after.records[1].values[0] == before.records[0].values[0]
+    assert after.spatial[0][0] == before.spatial[1][0]
+    assert after.spatial[1][0] == before.records[1].values[0]
+
+
 def rename(value, labels):
     """Rename known declared labels without rewriting schema or operation names."""
     if isinstance(value, str):
@@ -100,6 +112,10 @@ def rename(value, labels):
     [
         ("six-records.json", {"registers": "__proto__", "parcel": "constructor"}),
         ("two-fields.json", {"first": "field", "second": "participants", "parcel": "__proto__"}),
+        (
+            "joint-reaction.json",
+            {"state": "__proto__", "first": "participants", "second": "constructor", "parcel": "side"},
+        ),
     ],
 )
 def test_active_proposals_do_not_depend_on_physical_or_schema_like_labels(name, labels):

@@ -370,7 +370,14 @@ class _Expressions:
                 raise ValueError("expression references a field not owned by its participant")
             return Expression("field", field=index, side=side), self.fields[index].components
         if self.participants:
-            raise ValueError("indexed interactions require an explicit participant reference")
+            if obj.get("side") != "right" or self.owned[1] is None:
+                raise ValueError("indexed interactions require an explicit participant reference")
+            index = _index(obj["field"], self.names, "expression.field")
+            if index not in self.owned[1]:
+                raise ValueError("expression references a field not owned by the local spatial state")
+            return Expression("field", field=index, side=len(self.participants)), self.fields[
+                index
+            ].components
         side_name = obj.get("side", "left")
         if side_name not in ("left", "right"):
             raise ValueError("expression.side must be left or right")
@@ -739,6 +746,21 @@ def _rule_ticks(obj: dict[str, object], required: bool) -> int:
     return _integer(obj["k"], "rule.k", 1)
 
 
+def _participant_selections(
+    obj: dict[str, object],
+    fields: tuple[FieldDefinition, ...],
+    disturbances: tuple[DisturbanceDefinition, ...],
+) -> tuple[tuple[tuple[int, ...], ...], tuple[tuple[int, ...], ...]]:
+    """Compile the same bounded role selection for carrier and field transactions."""
+    selections, owned = [], []
+    for raw in _array(obj["participants"], "interaction.participants", MAX_SLOTS, 2):
+        role = _object(raw, "participant", {"type", "requires"}, set())
+        kinds, properties = _selection(role, fields, disturbances, "type", "requires", "participant")
+        selections.append(kinds)
+        owned.append(properties)
+    return tuple(selections), tuple(owned)
+
+
 def _indexed_interaction(
     obj: dict[str, object],
     fields: tuple[FieldDefinition, ...],
@@ -746,13 +768,7 @@ def _indexed_interaction(
     k: int,
 ) -> InteractionDefinition:
     """Compile fixed participant roles, preserving their declared selection order."""
-    selections, owned = [], []
-    for raw in _array(obj["participants"], "interaction.participants", MAX_SLOTS, 2):
-        role = _object(raw, "participant", {"type", "requires"}, set())
-        kinds, properties = _selection(role, fields, disturbances, "type", "requires", "participant")
-        selections.append(kinds)
-        owned.append(properties)
-    layouts = tuple(owned)
+    selections, layouts = _participant_selections(obj, fields, disturbances)
 
     def expression(value: object, size: int | None = None, *, invariant: bool = False) -> Expression:
         return _Expressions(fields, (), participants=layouts).parse(value, size, invariant=invariant)
@@ -1097,7 +1113,7 @@ def _field_rules(
 
     required = {"name", "assignments", "invariants"}
     for raw in _array(value, "field_rules", MAX_RULES):
-        obj = _object(raw, "field rule", required | {"when", "k"}, required)
+        obj = _object(raw, "field rule", required | {"when", "commit_when", "k"}, required)
         name = _text(obj["name"], "field rule.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate field rule name")
@@ -1131,7 +1147,16 @@ def _field_rules(
         when = expression(obj["when"], 1) if "when" in obj else None
         result.append(
             NodeFieldRuleDefinition(
-                name, tuple(assignments), tuple(invariants), when, _rule_ticks(obj, node_execution)
+                name,
+                tuple(assignments),
+                tuple(invariants),
+                when,
+                _rule_ticks(obj, node_execution),
+                commit_when=(
+                    _Expressions(fields, (), spatial_fields).parse(obj["commit_when"], 1)
+                    if "commit_when" in obj
+                    else None
+                ),
             )
         )
     return tuple(result)
@@ -1153,65 +1178,102 @@ def _spatial_interactions(
     for raw in _array(value, "spatial_interactions", MAX_RULES):
         if not spatial:
             raise ValueError("spatial interactions require at least one spatial field")
-        obj = _object(raw, "spatial interaction", required | {"type", "requires", "when", "k"}, required)
+        obj = _object(
+            raw,
+            "spatial interaction",
+            required | {"type", "requires", "participants", "when", "commit_when", "k"},
+            required,
+        )
         name = _text(obj["name"], "spatial interaction.name")
         if any(rule.name == name for rule in result):
             raise ValueError("duplicate spatial interaction name")
-        kinds, carrier_fields = _selection(
-            obj, fields, disturbances, "type", "requires", "spatial interaction"
-        )
-        kind = kinds[0]
-        if any(disturbances[index].transport.mode == "split" for index in kinds):
+        indexed = "participants" in obj
+        if indexed:
+            if {"type", "requires"}.intersection(obj):
+                raise ValueError("spatial interactions cannot mix participants with type or requires")
+            selections, layouts = _participant_selections(obj, fields, disturbances)
+        else:
+            kinds, carrier_fields = _selection(
+                obj, fields, disturbances, "type", "requires", "spatial interaction"
+            )
+            selections, layouts = (kinds,), (carrier_fields,)
+        if any(disturbances[index].transport.mode == "split" for kinds in selections for index in kinds):
             raise ValueError("spatial interaction requires a whole-record hold or move type")
+        spatial_side = len(layouts)
+
+        def expression(
+            value: object,
+            size: int | None = None,
+            *,
+            invariant: bool = False,
+            received: bool = False,
+            owned: tuple[tuple[int, ...], ...] = layouts,
+            indexed_roles: bool = indexed,
+        ) -> Expression:
+            return _Expressions(
+                fields,
+                owned[0],
+                spatial_fields,
+                received_fields=spatial_fields if received else (),
+                participants=owned if indexed_roles else (),
+            ).parse(value, size, invariant=invariant)
+
         assignments: list[Assignment] = []
-        for raw_assignment in _array(obj["assignments"], "spatial assignments", MAX_FIELDS * 2, 1):
+        for raw_assignment in _array(
+            obj["assignments"], "spatial assignments", MAX_FIELDS * (spatial_side + 1), 1
+        ):
             item = _object(
                 raw_assignment,
                 "spatial assignment",
-                {"side", "field", "expression"},
-                {"side", "field", "expression"},
+                {"side", "participant", "field", "expression"},
+                {"field", "expression"},
             )
-            if item["side"] not in ("left", "right"):
-                raise ValueError("assignment.side must be left or right")
-            side = 0 if item["side"] == "left" else 1
+            if indexed and "participant" in item:
+                if "side" in item:
+                    raise ValueError("spatial assignment cannot mix participant and side")
+                side = _integer(item["participant"], "assignment.participant", 0)
+                if side >= spatial_side:
+                    raise ValueError("assignment participant exceeds the declared roles")
+            elif indexed:
+                if item.get("side") != "right":
+                    raise ValueError("indexed assignments require an explicit participant or right side")
+                side = spatial_side
+            else:
+                if "participant" in item or item.get("side") not in ("left", "right"):
+                    raise ValueError("assignment.side must be left or right")
+                side = 0 if item["side"] == "left" else 1
             field = _index(item["field"], field_names, "spatial assignment.field")
-            owned = carrier_fields if side == 0 else local_fields
+            owned = local_fields if side == spatial_side else layouts[side]
             if field not in owned or (
-                side == 0 and any(field == disturbances[index].cost_field for index in kinds)
+                side != spatial_side
+                and any(field == disturbances[index].cost_field for index in selections[side])
             ):
                 raise ValueError("spatial assignment requires an owned non-cost or local spatial field")
             if any(a.side == side and a.field == field for a in assignments):
                 raise ValueError("duplicate spatial assignment target")
-            expression = _Expressions(
-                fields, carrier_fields, spatial_fields, received_fields=spatial_fields
-            ).parse(item["expression"], fields[field].components)
-            assignments.append(Assignment(side, field, expression))
+            assignments.append(
+                Assignment(
+                    side, field, expression(item["expression"], fields[field].components, received=True)
+                )
+            )
         invariants: list[Invariant] = []
         for raw_invariant in _array(obj["invariants"], "spatial invariants", MAX_FIELDS, 1):
             item = _object(raw_invariant, "invariant", {"name", "expression"}, {"name", "expression"})
             invariant_name = _text(item["name"], "invariant.name")
             if any(invariant.name == invariant_name for invariant in invariants):
                 raise ValueError("duplicate invariant name")
-            expression = _Expressions(fields, carrier_fields, spatial_fields).parse(
-                item["expression"], invariant=True
-            )
-            invariants.append(Invariant(invariant_name, expression))
-        when = (
-            _Expressions(fields, carrier_fields, spatial_fields, received_fields=spatial_fields).parse(
-                obj["when"], 1
-            )
-            if "when" in obj
-            else None
-        )
+            invariants.append(Invariant(invariant_name, expression(item["expression"], invariant=True)))
         result.append(
             SpatialInteractionDefinition(
                 name,
-                kind,
+                selections[0][0],
                 tuple(assignments),
                 tuple(invariants),
-                when,
-                kinds if "requires" in obj else (),
+                expression(obj["when"], 1, received=True) if "when" in obj else None,
+                selections[0] if "requires" in obj else (),
                 _rule_ticks(obj, node_execution),
+                participants=selections if indexed else (),
+                commit_when=expression(obj["commit_when"], 1) if "commit_when" in obj else None,
             )
         )
     return tuple(result)
@@ -1313,6 +1375,8 @@ def parse_initial_state(document: object) -> InitialState:
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
         node_execution=node_execution,
     )
+    if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
+        raise ValueError("spatial interaction participant count exceeds slots_per_node")
     if node_execution:
         if "conservation_contract" not in obj:
             raise ValueError("node_execution requires an explicit conservation_contract")

@@ -143,6 +143,25 @@ def validate_local_plan(
         _values(initial, guard.before, encoded=True)
         _values(initial, guard.after, encoded=True)
         _values(initial, guard.delta, encoded=False)
+        rule = initial.spatial_interactions[guard.rule_index]
+        count = len(rule.participants)
+        _tuple(guard.slots, capacity, count)
+        _tuple(guard.participant_before, capacity, count)
+        _tuple(guard.participant_after, capacity, count)
+        slots = guard.slots or (guard.slot,)
+        if len(set(slots)) != len(slots) or not set(slots) <= replaced:
+            raise ValueError("pending spatial interaction must lock every distinct participant")
+        if count:
+            if guard.slot != slots[0]:
+                raise ValueError("pending spatial interaction first slot differs from its group")
+            if guard.before != guard.participant_before[0] or guard.after != guard.participant_after[0]:
+                raise ValueError("pending spatial interaction first snapshot differs from its group")
+            for slot, before, after in zip(
+                slots, guard.participant_before, guard.participant_after, strict=True
+            ):
+                _index(slot, capacity)
+                _values(initial, before, encoded=True)
+                _values(initial, after, encoded=True)
 
 
 def validate_spatial_states(initial: InitialState, states: tuple[SpatialState, ...]) -> None:

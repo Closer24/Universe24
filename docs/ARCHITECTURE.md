@@ -9,6 +9,13 @@ Transport indexes local fixed output banks and validates adjacent delivery.
 lives in `fields/node_conservation.py`, and its parser reuses initialization's
 expression grammar. A configured exact balance check precedes physical mutation.
 The profile's declared k and counted operation cost are separate quantities.
+Indexed spatial rules reuse carrier role selection and the existing expression
+evaluator with an additional local field owner. Pending proposals contain bounded
+slot snapshots and deltas, never executable expressions. Field-only pending
+proposals similarly retain per-rule deltas and outgoing views. Shared immutable
+law services revalidate them before Node-owned commits; they receive local state
+only. The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates consumed
+start triggers from persistent conditions and defines their failure behavior.
 
 [Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
 sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.

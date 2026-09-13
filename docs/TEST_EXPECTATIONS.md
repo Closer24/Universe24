@@ -10,7 +10,14 @@ capacity errors without modifying inputs. `test_node_conservation_configuration.
 checks exact layout coverage and rejection through the read-only preflight.
 `test_node_runtime.py` checks isolated Node boundaries; `test_node_vector_integration.py`
 checks public execution, timing and failed-transition atomicity.
-`test_node_vector_examples.py` owns the two example configurations and their
+`test_joint_reaction_configuration.py` checks role ownership, capacity, ambiguous
+references and rejection of transient commit guards. `test_joint_node_reactions.py`
+checks distinct property layouts, deterministic disjoint selection, all 32 local
+slots, frozen group/field updates, guard invalidation and participant locks.
+`test_field_commit_guards.py` reproduces a delayed norm violation (32 to 34),
+including a zero-net-delta phase, and requires rejection before any owner changes.
+It also covers valid arrivals, ordered guards, consumed triggers and direct
+assembly boundaries. `test_node_vector_examples.py` owns the three example configurations and their
 independently known declared readouts. These are correctness contracts for the
 [selected model](NODE_VECTOR_PROCESSOR.md), not proofs of quantum dynamics.
 

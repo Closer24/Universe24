@@ -63,9 +63,39 @@ cycle reserves the same duration across its port bank. Original cost-budget
 profiles retain their historical duration reporting.
 
 Spatial and carrier rules use the same declared properties. A joint carrier/field
-interaction can reference several locally owned fields. Received-port presence
+interaction can declare the same indexed `participants` and reference several
+locally owned fields. A participant reference or assignment uses `participant: i`;
+`side: "right"` selects the joint local field owner. A default or left-side
+reference is rejected in an indexed rule because it would be ambiguous. All
+assignments in one group read all selected participants and fields from one
+frozen snapshot. Each participating slot stays reserved, including a participant
+whose values the rule only reads. Later groups see preceding proposed changes.
+Received-port presence
 is distinct from its numeric value: a zero packet or canceling contributions can
 still represent an arrival. Copied field samples are inputs, not extra stock.
+
+`field_rules` and `spatial_interactions` accept an optional scalar `commit_when`.
+It must be positive both when selecting a rule and immediately before committing
+its frozen substep. `when` remains a start trigger and is not replayed. Persistent
+conditions read owned carrier/field values only; received samples, arrival-presence
+bits, flux and proposed outgoing leaves are rejected. Validation does not charge
+physical operation cost or change k. An initially false guard skips the rule;
+a guard invalidated during the wait faults before any owner in that proposal
+changes. There is no automatic retry, silent cancellation or new choice of R.
+
+For a delayed field-only phase, each fired rule retains a bounded field delta
+and six-channel outgoing snapshot. At completion, every rule's declared invariants
+and persistent condition are rechecked in order against live stock plus preceding
+frozen deltas. This includes an intermediate change whose net phase delta is zero.
+Intervening arrivals remain owned. Assignment expressions are never rerun to
+manufacture a different delayed result. The same revalidation applies to joint
+carrier/field groups. Rule invariants constrain their own substep; the mandatory
+conservation contract additionally checks the complete final owner transition.
+
+In mathematical notation n is the participant count, while k specifies duration.
+Scalar energy and vector momentum can be declared readouts of the underlying
+registers; they are not mandatory state fields or engine formulas. Nonlinear
+readout changes are evaluated from actual before/after states, including fields.
 
 ## Conserved readouts
 
@@ -120,6 +150,9 @@ retain a spatial index and optional diagnostic history; neither is a physical
 input to local rules. Node isolation is an API and validation boundary, not a
 security sandbox against arbitrary Python reflection. See [architecture](ARCHITECTURE.md)
 and the recorded validation evidence for tested limits and measurements.
+O(1) describes one bounded local event relative to world size, not a whole tick.
+Pending guard storage scales with fired rules, selected slots, field components
+and the fixed outgoing degree; it does not grow with elapsed event history.
 
 ## Reproducible configurations
 
@@ -131,6 +164,11 @@ and the recorded validation evidence for tested limits and measurements.
   energy 7 and zero momentum, charge and angular momentum. The other field remains
   independently addressable. The rule is an explicit register swap, not an
   inferred electromagnetic force.
+- [Joint reaction](../examples/node-vector/joint-reaction.json): two carriers and
+  two local fields rotate four vectors from one snapshot with k=3. Independently
+  defined squared-length and vector-sum readouts remain 34 and (4, 6, 2). The
+  configuration calls these readouts energy and momentum; this tests the generic
+  machinery and does not establish a physical energy law.
 
 Run a configuration with `python -m event_universe --init
 examples/node-vector/six-records.json --output artifacts/node-vector-six` from the

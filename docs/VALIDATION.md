@@ -1,5 +1,69 @@
 # Validation evidence
 
+## Joint reactions and delayed rule validity - 2026-09-13
+
+Incremental base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`, continuing PR 86
+on main `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Final active source SHA-256:
+`1c85d9200fc57378c971fc7409532555713be04916139027eb9c08439cc918c8`.
+The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates indexed
+participant/field proposals, consumed triggers and persistent conditions.
+The final affected gate passed: **1,879 tests passed and five visual-only tests
+were skipped**. Ruff, formatting and strict mypy (55 affected modules) passed.
+The final documentation checks also passed (28 cases).
+
+The focused regressions include 23 parser cases, 16 joint-reaction cases and
+21 field-guard cases. The independent reviewer ran 85 related cases before the
+final read-only audit registration, then all 10 NodeState checks afterward.
+The declaration audit initially rejected the new `FieldRuleGuard` owner. It now
+recursively audits that record; a negative test rejects a hidden expression in
+its outgoing metadata. The check was extended, not bypassed.
+
+```sh
+python tools/check.py --base a7a0000e3005ae41b37639f5dcf76e56532be69f
+python -m event_universe --init examples/node-vector/joint-reaction.json --output artifacts/joint-reaction-final-run
+python tools/profile_node_vectors.py . artifacts/joint-reaction-memory/report.json reactions
+```
+
+Python: 3.14.7. The first gate hit access-denied errors in the existing Windows
+pytest temporary root. The final gate uses a fresh external temporary directory
+and cache through `PYTEST_ADDOPTS`; no test or engine behavior is changed to
+work around filesystem permissions. Both modified Skills passed `quick_validate.py`
+using a separate PyYAML 6.0.3 validation dependency directory.
+
+The final headless run completed 8/8 ticks on the final source, with commits at
+ticks 3 and 7. Saved initialization matches the checked-in configuration. Both
+spatial ledgers balance; externally defined squared-length and vector-sum
+readouts remain 34 and (4, 6, 2). Final carriers are (0, 2, 0) and (1, 0, 0);
+the local fields are (0, 0, 2) and (3, 4, 0). This is a supplied register
+permutation, not a derivation of physical energy or particle interactions.
+
+All five host-memory cases used source
+`44640835b60c5623fdc0104b3a95f927b1a1fd7856e3d52dce0c3af5d7ac2342`.
+The only subsequent production change registers `FieldRuleGuard` with the
+read-only NodeState auditor; reconstructing that file's earlier bytes reproduces
+the measured source hash exactly. No evolving-state or stepping code changed.
+The joint owner graph remains constant at ticks 16/32/64/128/256:
+
+| Nodes | Reachable owner graph bytes |
+| --- | ---: |
+| 1 | 5,908 |
+| 8 | 40,068 |
+| 27 | 132,712 |
+
+The field-rule probes measured 6,892 bytes for one Node and 48,248 to 48,444
+bytes for eight Nodes; the latter change reflects Python integer object sharing
+at later clock values. The largest traced interval peak was 485,116 bytes.
+These are reachable Python allocations and tracemalloc observations, excluding
+native allocator/RSS coverage. Pending rule metadata is bounded by configured
+rules, slots, components and six outputs. Host indexes still scale with visited
+Nodes; no whole-world O(1) or speedup claim follows.
+
+The established joint reaction delta limit is unchanged: an extreme endpoint
+swap can fail if the transfer itself exceeds `MAX_VALUE`, even when each
+endpoint fits. Failure is explicit. Physics-validation and regression Skills
+now cover delayed substep checks; Boss and architecture Skills already route
+this work correctly, so no new Skill or scheduler was introduced.
+
 ## Guarded integer Node execution - 2026-09-13
 
 Base: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Tested active source SHA-256:
