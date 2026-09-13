@@ -1,0 +1,65 @@
+name: Newton output evidence
+on:
+  push:
+    branches: [test/newton-output-validation]
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: python -m pip install -e '.[render,dev]'
+      - name: Capture source and existing reference controls
+        run: |
+          mkdir -p artifacts/newton-output-evidence
+          git rev-parse HEAD > artifacts/newton-output-evidence/commit.txt
+          git archive --format=tar.gz HEAD > artifacts/newton-output-evidence/source.tar.gz
+          python - <<'PY'
+          import copy
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+          from event_universe.runner import source_fingerprint
+          root = Path('artifacts/newton-output-evidence')
+          before = source_fingerprint()
+          source = Path('examples/04-unequal-mass-collision.json')
+          raw = json.loads(source.read_text())
+          cases = {'collision-reference': source}
+          for name in ('free', 'rest', 'slow'):
+              document = copy.deepcopy(raw)
+              document['interactions'] = []
+              document['seeds'] = document['seeds'][:1]
+              document['disturbance_types'] = document['disturbance_types'][:1]
+              document['model_id'] = 'newton-output-' + name + '-control-v1'
+              document['ticks'] = {'free': 240, 'rest': 120, 'slow': 4000}[name]
+              if name == 'rest':
+                  document['disturbance_types'][0]['defaults']['momentum'] = [0, 0, 0]
+              if name == 'slow':
+                  document['fields'][1]['scale'] = 1000
+                  document['fields'][1]['units'] = 'mass unit times c / 1000'
+                  document['disturbance_types'][0]['defaults']['momentum'] = [2, 0, 0]
+                  document['disturbance_types'][0]['transport']['rate_denominator'] = 1000
+              path = root / (name + '.json')
+              path.write_text(json.dumps(document, indent=2) + '\n')
+              cases[name] = path
+          for name, path in cases.items():
+              subprocess.run([sys.executable, '-m', 'event_universe', '--init', str(path), '--output', str(root/name), '--visualize', '--frame-stride', '1'], check=True)
+          if source_fingerprint() != before:
+              raise RuntimeError('Simulator source changed during evidence capture')
+          (root/'provenance.json').write_text(json.dumps({'source_sha256': before, 'runtime_unchanged': True, 'base_commit': 'b0988512fa7f42a057c08dee7d6baa83cbf3eef7', 'scope': 'Existing configured collision reference and force-free controls; not an emergence claim.'}, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: newton-output-evidence
+          path: artifacts/newton-output-evidence/
+          retention-days: 1
+          if-no-files-found: error
