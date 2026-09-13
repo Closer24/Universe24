@@ -67,7 +67,9 @@ CHARGED_BODY = {
     "transport": {
         "mode": "move",
         "direction_field": "momentum",
-        "rate": op("min", 120, op("exact_div", op("sum", op("abs", {"field": "momentum"})), {"field": "mass"})),
+        "rate": op(
+            "min", 120, op("exact_div", op("sum", op("abs", {"field": "momentum"})), {"field": "mass"})
+        ),
         "rate_denominator": 120,
     },
 }
@@ -86,7 +88,17 @@ def configuration(model_id: str, left_charge: int, right_charge: int, ticks: int
         "ticks": ticks,
         "operation_costs": {
             name: 1
-            for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
+            for name in (
+                "receive",
+                "read",
+                "evaluate",
+                "update",
+                "couple",
+                "route",
+                "split",
+                "send",
+                "commit",
+            )
         },
         "fields": FIELDS,
         "disturbance_types": [CHARGED_BODY],
@@ -114,14 +126,25 @@ def configuration(model_id: str, left_charge: int, right_charge: int, ticks: int
             }
         ],
         "seeds": [
-            {"position": [LEFT_X, CENTER, CENTER], "type": "charged body", "values": {"charge": left_charge}},
-            {"position": [RIGHT_X, CENTER, CENTER], "type": "charged body", "values": {"charge": right_charge}},
+            {
+                "position": [LEFT_X, CENTER, CENTER],
+                "type": "charged body",
+                "values": {"charge": left_charge},
+            },
+            {
+                "position": [RIGHT_X, CENTER, CENTER],
+                "type": "charged body",
+                "values": {"charge": right_charge},
+            },
         ],
     }
 
 
 EXPERIMENTS = {
-    "like-charges": ("Charges (+1, +1): expected to move apart.", configuration("charged-pair-like-v1", 1, 1, 120)),
+    "like-charges": (
+        "Charges (+1, +1): expected to move apart.",
+        configuration("charged-pair-like-v1", 1, 1, 120),
+    ),
     "opposite-charges": (
         "Charges (+1, -1): expected to move toward each other.",
         configuration("charged-pair-opposite-v1", 1, -1, 120),
@@ -136,7 +159,15 @@ EXPERIMENTS = {
 def run(name: str, output: Path) -> tuple[int, str]:
     shutil.rmtree(output, ignore_errors=True)
     completed = subprocess.run(
-        [sys.executable, "-m", "event_universe", "--init", str(HERE / f"{name}.json"), "--output", str(output)],
+        [
+            sys.executable,
+            "-m",
+            "event_universe",
+            "--init",
+            str(HERE / f"{name}.json"),
+            "--output",
+            str(output),
+        ],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -156,15 +187,21 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
     print(f"status: {result['status']}  ticks: {result['completed_ticks']}/{result['requested_ticks']}")
     if result["error"]:
         print(f"error: {result['error']}")
-    print(f"momentum totals (carriers + field, all in-transit): initial {result['initial_totals']['momentum']}  final {result['final_totals']['momentum']}")
-    print(f"charge totals: initial {result['initial_totals']['charge']}  final {result['final_totals']['charge']}")
+    print(
+        f"momentum totals (carriers + field, all in-transit): initial {result['initial_totals']['momentum']}  final {result['final_totals']['momentum']}"
+    )
+    print(
+        f"charge totals: initial {result['initial_totals']['charge']}  final {result['final_totals']['charge']}"
+    )
     print(f"accounting balanced every tick: {result['accounting_balanced_at_every_completed_tick']}")
 
     # Track each body by its seed x order: "L" started at LEFT_X, "R" at RIGHT_X.
     position = {"L": [LEFT_X, CENTER, CENTER], "R": [RIGHT_X, CENTER, CENTER]}
     momentum = {"L": [0, 0, 0], "R": [0, 0, 0]}
     charges = {"L": config["seeds"][0]["values"]["charge"], "R": config["seeds"][1]["values"]["charge"]}
-    history: list[tuple[int, int, int, list[int], list[int]]] = [(0, LEFT_X, RIGHT_X, [0, 0, 0], [0, 0, 0])]
+    history: list[tuple[int, int, int, list[int], list[int]]] = [
+        (0, LEFT_X, RIGHT_X, [0, 0, 0], [0, 0, 0])
+    ]
     coupled_samples: list[dict] = []
     for line in (output / "events.jsonl").read_text(encoding="utf-8").splitlines():
         event = json.loads(line)
@@ -175,7 +212,9 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
             continue
         # Identify the body by charge when the two charges differ, else by position.
         charge = event["values"]["charge"][0]
-        by_charge = [k for k, c in charges.items() if c == charge] if len(set(charges.values())) == 2 else []
+        by_charge = (
+            [k for k, c in charges.items() if c == charge] if len(set(charges.values())) == 2 else []
+        )
         if kind == "sent":
             candidates = by_charge or [k for k, p in position.items() if p == event["position"]]
             who = next((k for k in candidates if position[k] == event["position"]), None)
@@ -190,7 +229,15 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
                 continue
             position[who] = event["position"]
             momentum[who] = event["values"]["momentum"]
-        history.append((event["tick"], (position["L"] or [None])[0], (position["R"] or [None])[0], momentum["L"], momentum["R"]))
+        history.append(
+            (
+                event["tick"],
+                (position["L"] or [None])[0],
+                (position["R"] or [None])[0],
+                momentum["L"],
+                momentum["R"],
+            )
+        )
 
     print("  tick   xL   xR  distance   pL           pR")
     shown = set()

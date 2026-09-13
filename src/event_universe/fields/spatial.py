@@ -223,15 +223,24 @@ def split_outward(
     return outgoing, replace(state, populations=cleared.populations, allocation_phases=tuple(updated))
 
 
-def carried_phases(magnitude: int, weights: tuple[int, ...], phase: int) -> tuple[int, ...]:
-    """Phase each nonzero portion carries onward: the slot after its last allocated slot."""
+def carried_phases(
+    magnitude: int, weights: tuple[int, ...], phase: int, straight: bool = False
+) -> tuple[int, ...]:
+    """Phase each nonzero portion carries onward.
+
+    Rotating: the slot after the portion's last allocated slot, so a lone unit
+    visits the axes in turn. Straight: the first slot of the portion's own
+    axis, so a lone unit keeps its axis and only a merged group spreads again.
+    """
     denominator = _weight_sum(weights)
     if magnitude <= 0:
         return (0,) * len(weights)
     last = (phase + magnitude - 1) % denominator
     result, offset = [], 0
     for weight in weights:
-        if offset <= last < offset + weight:
+        if straight:
+            result.append(offset % denominator)
+        elif offset <= last < offset + weight:
             result.append((phase + magnitude) % denominator)
         else:
             result.append((offset + weight) % denominator)
@@ -245,6 +254,7 @@ def split_outward_carried(
     field: FieldDefinition,
     meter: CostMeter,
     port_loads: tuple[int, ...] | None = None,
+    straight: bool = False,
 ) -> tuple[SpatialOutgoing, SpatialState, SpatialOutgoing]:
     """Split like split_outward, but every portion carries its own allocation phase.
 
@@ -273,7 +283,7 @@ def split_outward_carried(
         ):
             meter.charge("split")
             portions, _ = split_weighted(value, weights, phase)
-            onward = carried_phases(abs(value), weights, phase)
+            onward = carried_phases(abs(value), weights, phase, straight)
             for slot, axis in enumerate(order):
                 portion = portions[slot]
                 buckets[ports[axis]][octant][component] = portion

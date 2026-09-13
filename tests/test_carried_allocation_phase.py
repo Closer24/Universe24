@@ -19,6 +19,7 @@ TICKS = 11
 
 
 def document(*, carried=None, components=1, populations=None):
+    """`carried` selects allocation_phase: None keeps the default, else a mode name."""
     doc = {
         "schema_version": 1,
         "model_id": "carried-allocation-phase-contract-v1",
@@ -65,7 +66,7 @@ def document(*, carried=None, components=1, populations=None):
         "seeds": [{"position": [C, C, C], "type": "probe"}],
     }
     if carried is not None:
-        doc["carried_allocation_phase"] = carried
+        doc["allocation_phase"] = carried
     return doc
 
 
@@ -89,23 +90,35 @@ def mean_axis_distances(cells):
     return tuple(sum(abs(p[i] - C) * abs(a[0]) for p, a in cells.items()) / total for i in range(3))
 
 
-def test_default_is_carried_and_boolean_is_enforced():
-    assert parse_initial_state(document()).carried_allocation_phase is True
-    assert parse_initial_state(document(carried=False)).carried_allocation_phase is False
-    with pytest.raises(ValueError, match="boolean"):
-        parse_initial_state(document(carried="yes"))
+def test_default_is_straight_and_the_mode_name_is_enforced():
+    assert parse_initial_state(document()).allocation_phase == "straight"
+    assert parse_initial_state(document(carried="node")).allocation_phase == "node"
+    with pytest.raises(ValueError, match="straight, rotate or node"):
+        parse_initial_state(document(carried="sideways"))
 
 
-def test_carried_phases_keep_the_decay_free_shell_isotropic():
-    world, cells = shell(document())
+@pytest.mark.parametrize("mode", ["straight", "rotate"])
+def test_carried_phases_keep_the_decay_free_shell_isotropic(mode):
+    world, cells = shell(document(carried=mode))
     assert world.totals()["radiation"] == (216,)
     assert all(sum(abs(p[i] - C) for i in range(3)) == TICKS for p in cells)
     dx, dy, dz = mean_axis_distances(cells)
     assert max(dx, dy, dz) < 1.3 * min(dx, dy, dz)
 
 
+def axial(cells):
+    return max((abs(x - C) for (x, y, z) in cells if y == C and z == C), default=0)
+
+
+def test_straight_phases_keep_the_axial_front_at_link_speed():
+    _, straight = shell(document(carried="straight"))
+    _, rotate = shell(document(carried="rotate"))
+    assert axial(straight) == TICKS
+    assert axial(rotate) < TICKS
+
+
 def test_node_owned_phases_document_the_first_axis_bias():
-    world, cells = shell(document(carried=False))
+    world, cells = shell(document(carried="node"))
     assert world.totals()["radiation"] == (216,)
     dx, dy, dz = mean_axis_distances(cells)
     assert dx > 2 * max(dy, dz)
@@ -140,7 +153,7 @@ def test_carried_phase_of_each_portion_is_the_slot_after_its_last_unit(
     assert sum(portions) == magnitude
 
 
-def test_singleton_cycles_through_all_axes_under_carried_phases():
+def test_singleton_cycles_through_all_axes_under_rotating_phases():
     phase, visited = 0, []
     for _ in range(6):
         portions, _ = split_weighted(1, (1, 1, 1), phase)
@@ -149,3 +162,19 @@ def test_singleton_cycles_through_all_axes_under_carried_phases():
         phase = carried_phases(1, (1, 1, 1), phase)[axis]
     assert visited == [0, 1, 2, 0, 1, 2]
     assert pack((phase,)) == pack((0,))
+
+
+@pytest.mark.parametrize("start", [0, 1, 2])
+def test_singleton_keeps_its_axis_under_straight_phases(start):
+    phase, visited = start, []
+    for _ in range(6):
+        portions, _ = split_weighted(1, (1, 1, 1), phase)
+        axis = portions.index(1)
+        visited.append(axis)
+        phase = carried_phases(1, (1, 1, 1), phase, straight=True)[axis]
+    assert visited == [start] * 6
+
+
+def test_straight_phases_spread_a_group_but_pin_each_singleton():
+    assert carried_phases(3, (1, 1, 1), 0, straight=True) == (0, 1, 2)
+    assert carried_phases(5, (2, 1, 0), 1, straight=True) == (0, 2, 0)

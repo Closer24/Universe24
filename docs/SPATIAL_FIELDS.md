@@ -125,25 +125,33 @@ values, duplicate seeds and unknown keys are rejected.
 `split_outward` partitions each octant population over the three allowed
 cardinal directions by walking a cycle of axis weights from an allocation
 phase. Highlights 3.3.1 requires the remainder of that integer division to be
-carried into later updates. By default (`"carried_allocation_phase": true`)
-every nonzero portion therefore leaves with its own phase: the slot after the
-last slot allocated to it, so a portion that ended a partial cycle continues
-that cycle and a portion whose axis was fully passed starts at the next axis.
-The sending node keeps no phase. On arrival, portions of the same octant merge
-by adding their phases modulo the axis weight total, which keeps the combined
-remainder exact. An indivisible unit consequently visits the axes in turn
-along its octant instead of taking every fresh node's first axis.
+carried into later updates. `"allocation_phase"` selects who owns it:
+
+- `"straight"` (default): every nonzero portion leaves with the first slot of
+  its own axis. A lone unit therefore keeps its axis and travels a straight
+  ray at link speed; only when portions of the same octant meet at a node do
+  their phases merge (by addition modulo the axis weight total) and the group
+  spreads again. Directions are decided where the field is still divisible,
+  near its source, and kept afterwards.
+- `"rotate"`: every portion leaves with the slot after its last allocated slot,
+  so a lone unit visits the axes in turn along its octant. The far field is
+  isotropic in the Manhattan sense but no lone unit advances along an axis
+  faster than one third of link speed.
+- `"node"`: the legacy node-owned phase for identified old configurations. A
+  fresh node starts at the first axis weight, so far-field units all follow
+  that axis.
 
 The transported quantity is unchanged by this choice: every portion is still
 allocated exactly and every component is conserved. Only the destination of
 indivisible units differs. With node-owned phases a decay-free 216-unit pulse
 froze into 178 far-field cells whose units all travelled along the first axis
-weight; with carried phases the unit-weighted mean distances along x, y and z
-agree within a few percent. `"carried_allocation_phase": false` retains the
-legacy node-owned phase for identified old configurations. Reaction packets
-committed from carrier responses keep the node-owned phase in both modes.
-Run metadata records `spatial_allocation` as `carried-phase-v1` or
-`node-phase-legacy`.
+weight; with rotating phases the unit-weighted mean distances along x, y and z
+agreed within a few percent but a lamp sixteen links away was never seen on
+its axis within forty ticks; with straight phases the axial front moves at
+link speed again while the axes share the units. Reaction packets committed
+from carrier responses keep the node-owned phase in every mode. Run metadata
+records `spatial_allocation` as `carried-straight-phase-v1`,
+`carried-rotate-phase-v1` or `node-phase-legacy`.
 
 ## Computation field and local delay
 

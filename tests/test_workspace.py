@@ -209,8 +209,8 @@ def test_workspace_runs_open_finite_example_headlessly_with_exact_escape_account
     assert metadata["completed_ticks"] == metadata["tick"] == 12
     assert metadata["initial_totals"] == {"strength": [72], "radiation": [0]}
     assert metadata["source_totals"] == {"strength": [0], "radiation": [72]}
-    assert metadata["escaped_totals"] == {"strength": [72], "radiation": [20]}
-    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [52]}
+    assert metadata["escaped_totals"] == {"strength": [72], "radiation": [16]}
+    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [56]}
     assert metadata["final_totals"] == {"strength": [0], "radiation": [0]}
     assert metadata["accounting_balanced_at_every_completed_tick"]
     assert not metadata["conserved_at_every_completed_tick"]

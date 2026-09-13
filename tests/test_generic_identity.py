@@ -210,7 +210,7 @@ def assert_exercised(case, world, events):
         assert world.dissipation_totals()["radiation"][0] > 0
         assert world.snapshot()["spatial_baselines"]["radiation"] == (3,)
     elif case == "open_world":
-        assert world.escaped_totals() == {"strength": (72,), "radiation": (20,)}
+        assert world.escaped_totals() == {"strength": (72,), "radiation": (16,)}
     elif case == "property_fields":
         report = world.conservation_report()
         assert report["status"] == "passed"

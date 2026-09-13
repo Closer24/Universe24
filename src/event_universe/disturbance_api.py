@@ -50,7 +50,7 @@ class Simulation(DisturbanceEngine):
                 initial.emissions,
                 initial.operation_costs,
                 initial.field_rules,
-                initial.carried_allocation_phase,
+                initial.allocation_phase,
                 initial.computation_field,
                 initial.delay_direction if initial.least_delay_routing else None,
             ),

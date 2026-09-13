@@ -1097,7 +1097,7 @@ def parse_initial_state(document: object) -> InitialState:
             "spatial_computation_delay",
             "field_phase_first",
             "arrival_port_blind",
-            "carried_allocation_phase",
+            "allocation_phase",
             "computation_field",
             "delay_direction",
             "least_delay_routing",
@@ -1156,9 +1156,7 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         field_phase_first=_boolean(obj.get("field_phase_first", False), "field_phase_first"),
         arrival_port_blind=_boolean(obj.get("arrival_port_blind", False), "arrival_port_blind"),
-        carried_allocation_phase=_boolean(
-            obj.get("carried_allocation_phase", True), "carried_allocation_phase"
-        ),
+        allocation_phase=_text(obj.get("allocation_phase", "straight"), "allocation_phase"),
         computation_field=(
             None
             if "computation_field" not in obj

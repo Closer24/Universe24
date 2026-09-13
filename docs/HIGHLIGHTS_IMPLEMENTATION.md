@@ -242,9 +242,11 @@ Under 3.3.1 Discrete directional-flux conservation:
   decides its direction by lattice axis order.
 - Observed: without decay, every far-field unit follows the first axis weight,
   so the far field is rays, not a shell. Status: open defect, not a law.
-- Repository status after the live edit: `carried_allocation_phase` (default
-  true) carries each portion's phase and merges phases on arrival; the shell
-  is isotropic within a few percent and `false` retains the legacy behavior.
+- Repository status after the live edit: `allocation_phase` carries each
+  portion's phase and merges phases on arrival. `"straight"` (default) keeps
+  a lone unit on its axis so rays move at link speed while the axes share
+  the units; `"rotate"` cycles the axes and is Manhattan-isotropic but slows
+  axial propagation to a third; `"node"` retains the legacy behavior.
   See [spatial fields](SPATIAL_FIELDS.md#carried-allocation-phases).
 
 Under 3.5.2 Local collisions:

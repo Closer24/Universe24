@@ -147,7 +147,11 @@ def inelastic_rule(name: str, left: str, right: str) -> dict:
                 "expression": op("exact_div", op("mul", mass("right"), total_momentum()), total_mass()),
             },
             {"side": "left", "field": "heat", "expression": op("add", field("heat", "left"), half_loss)},
-            {"side": "right", "field": "heat", "expression": op("add", field("heat", "right"), half_loss)},
+            {
+                "side": "right",
+                "field": "heat",
+                "expression": op("add", field("heat", "right"), half_loss),
+            },
         ],
         "invariants": [
             {"name": "left_mass", "expression": mass("left")},
@@ -191,9 +195,7 @@ MOVE_BY_MOMENTUM = {
 }
 
 
-def body(
-    name: str, m: int, p: int | list[int], *extra_fields: str, **extra_defaults: object
-) -> dict:
+def body(name: str, m: int, p: int | list[int], *extra_fields: str, **extra_defaults: object) -> dict:
     defaults: dict = {"mass": m, "momentum": [p, 0, 0] if isinstance(p, int) else list(p)}
     defaults.update(extra_defaults)
     return {
@@ -208,7 +210,9 @@ def seed(name: str, x: int, y: int = Y, z: int = Z) -> dict:
     return {"position": [x, y, z], "type": name}
 
 
-def configuration(model_id: str, ticks: int, fields: list, types: list, rules: list, seeds: list) -> dict:
+def configuration(
+    model_id: str, ticks: int, fields: list, types: list, rules: list, seeds: list
+) -> dict:
     return {
         "schema_version": 1,
         "model_id": model_id,
@@ -219,7 +223,17 @@ def configuration(model_id: str, ticks: int, fields: list, types: list, rules: l
         "ticks": ticks,
         "operation_costs": {
             name: 1
-            for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
+            for name in (
+                "receive",
+                "read",
+                "evaluate",
+                "update",
+                "couple",
+                "route",
+                "split",
+                "send",
+                "commit",
+            )
         },
         "fields": fields,
         "disturbance_types": types,
@@ -348,7 +362,15 @@ def write_inputs() -> None:
 def run(name: str, output: Path) -> tuple[int, str]:
     shutil.rmtree(output, ignore_errors=True)
     completed = subprocess.run(
-        [sys.executable, "-m", "event_universe", "--init", str(HERE / f"{name}.json"), "--output", str(output)],
+        [
+            sys.executable,
+            "-m",
+            "event_universe",
+            "--init",
+            str(HERE / f"{name}.json"),
+            "--output",
+            str(output),
+        ],
         cwd=ROOT,
         capture_output=True,
         text=True,
@@ -389,7 +411,9 @@ def summarize(name: str, output: Path, returncode: int, console: str) -> None:
     for entry in config["seeds"]:
         last[entry["type"]] = {"momentum": defaults[entry["type"]]["momentum"]}
         where[entry["type"]] = entry["position"]
-        print(f"  {entry['type']:<14} starts at {pos(entry['position']):<10} momentum {vec(last[entry['type']])}")
+        print(
+            f"  {entry['type']:<14} starts at {pos(entry['position']):<10} momentum {vec(last[entry['type']])}"
+        )
 
     events_path = output / "events.jsonl"
     if events_path.exists():

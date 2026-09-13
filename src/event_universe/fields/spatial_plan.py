@@ -43,7 +43,9 @@ class SpatialLaw:
     emissions: tuple[EmissionDefinition, ...]
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
-    carried_phase: bool = True
+    # "straight": a portion keeps its axis; "rotate": it continues the weight cycle;
+    # "node": legacy node-owned phase.
+    allocation_phase: str = "straight"
     computation_field: int | None = None
     # When set, indivisible portions prefer the axis whose port carries the least
     # computation load travelling along ("along") or against it ("against").
@@ -190,9 +192,14 @@ class SpatialLaw:
                 state = working[index]
                 meter.charge("route")
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
-            elif self.carried_phase:
+            elif self.allocation_phase != "node":
                 channels, state, channel_phases = split_outward_carried(
-                    working[index], definition, field, meter, self._port_loads(states)
+                    working[index],
+                    definition,
+                    field,
+                    meter,
+                    self._port_loads(states),
+                    straight=self.allocation_phase == "straight",
                 )
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
@@ -233,5 +240,7 @@ class SpatialLaw:
             tuple(tuple(v) for v in source),
             meter.total,
             tuple(tuple(v) for v in rule_delta) if has_local else (),
-            tuple(tuple(fields) for fields in outgoing_phases) if self.carried_phase else (),
+            tuple(tuple(fields) for fields in outgoing_phases)
+            if self.allocation_phase != "node"
+            else (),
         )

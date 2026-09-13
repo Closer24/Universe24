@@ -265,9 +265,11 @@ def _execute_run(
         )
     if initial.spatial_fields:
         metadata.update(
-            carried_allocation_phase=initial.carried_allocation_phase,
+            allocation_phase=initial.allocation_phase,
             spatial_allocation=(
-                "carried-phase-v1" if initial.carried_allocation_phase else "node-phase-legacy"
+                "node-phase-legacy"
+                if initial.allocation_phase == "node"
+                else f"carried-{initial.allocation_phase}-phase-v1"
             ),
         )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")

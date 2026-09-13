@@ -229,7 +229,7 @@ class InitialState:
     spatial_computation_delay: bool = False
     field_phase_first: bool = False
     arrival_port_blind: bool = False
-    carried_allocation_phase: bool = True
+    allocation_phase: str = "straight"
     computation_field: int | None = None
     delay_direction: str | None = None
     least_delay_routing: bool = False
@@ -248,8 +248,8 @@ class InitialState:
                 raise ValueError("delay_direction requires the default clock")
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
-        if type(self.carried_allocation_phase) is not bool:
-            raise ValueError("carried_allocation_phase must be boolean")
+        if self.allocation_phase not in ("straight", "rotate", "node"):
+            raise ValueError("allocation_phase must be straight, rotate or node")
         if self.computation_field is not None:
             index = self.computation_field
             if type(index) is not int or not 0 <= index < len(self.fields):
