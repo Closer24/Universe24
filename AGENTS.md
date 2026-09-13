@@ -24,10 +24,28 @@ never edit it to make a test pass.
 Generated artifacts, distributions and backups are outputs or history.
 One repository does not require one runtime process or a new package hierarchy.
 
+## Canonical simulation terminology
+
+Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the active
+simulator, documentation, tests and diagnostics.
+
+The physical location is a **Node**. Its complete local information is its
+**NodeState**. NodeState contains configured Scalars and Vectors plus only the
+minimal ownership, Port and timing metadata required for local transport. Input
+and output are roles of Scalars/Vectors, not additional physical value types.
+Nodes are connected by **Links** through directional **Ports**; local changes are
+**Events** and configured local logic is a **LocalRule**.
+
+Do not introduce `Cell` or `Site` as alternative active physical nouns. They may
+appear only in explicitly historical compatibility identifiers, migration notes,
+or a mathematical topology set where the term has a distinct established meaning.
+New active identifiers use `node`, `nodes` and `NodeState`.
+
 ## Read the contract for the affected scope
 
 | Scope | Authoritative source |
 | --- | --- |
+| Canonical names and state vocabulary | [docs/TERMINOLOGY.md](docs/TERMINOLOGY.md) |
 | Any physical behavior or hypothesis | [POSTULATES.md](POSTULATES.md) and [SIMULATOR_DEFINITIONS.md](SIMULATOR_DEFINITIONS.md) |
 | Generic initialization, disturbance laws or local delay | [docs/DISTURBANCES.md](docs/DISTURBANCES.md) |
 | State, interfaces, dependencies or repository layout | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
@@ -91,8 +109,9 @@ responsibilities. Keep renames, consumers, migration notes and the
   Require fixed local work and storage for fixed K; report total host costs
   separately. Q-ORACLE-1 is confined to the explicit quantum owner and cannot
   supply an exception for ordinary fields, forces, movement or geometry.
-- Physical calculations use bounded integers, fixed local state and six neighbors.
-  Measure host computation and storage separately from the model's local cost.
+- Physical calculations use bounded integers, fixed local NodeState and six
+  neighboring Nodes. Measure host computation and storage separately from the
+  model's local cost.
 - Field, response, movement and transit calculations belong in generic components.
   Models select policies and compose components without copying formulas. The engine
   schedules work and validates contracts.
