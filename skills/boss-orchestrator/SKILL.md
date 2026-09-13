@@ -57,7 +57,7 @@ Before completion, review Boss itself and every participating or affected Skill.
 
 | Need | Skill | Expected handoff |
 | --- | --- | --- |
-| Author space, entities, fields, run or display configuration | [simulation-configuration](../simulation-configuration/SKILL.md) | Validated input, reusable definitions and exact invocation |
+| Check or author space, entities, fields, run or display configuration | [simulation-configuration](../simulation-configuration/SKILL.md) | Validation report for checks; validated input, reusable definitions and exact invocation for authoring |
 | Field law or response implementation | [field-development](../field-development/SKILL.md) | Explicit candidate contract and focused change |
 | State, interfaces or dependency boundaries | [architecture-review](../architecture-review/SKILL.md) | Compatible ownership/schema assessment |
 | Any physical-engine behavior change | [physics-rule-validation](../physics-rule-validation/SKILL.md) | Rule-by-rule acceptance or concrete blockers |
@@ -66,6 +66,12 @@ Before completion, review Boss itself and every participating or affected Skill.
 | Rendering or visual interpretation | [visualization-check](../visualization-check/SKILL.md) | Faithful, inspected output |
 | Unintended change to current physical behavior | [regression-check](../regression-check/SKILL.md) | Contract-focused regression evidence |
 | Review, reconcile, close or merge PRs | [pr-review-and-merge](../pr-review-and-merge/SKILL.md) | Current-head integration decision |
+
+For configuration requests, apply the shared
+[task scope](../workflow.md#configuration-tasks-and-implementation-scope) before
+assigning an implementation owner. Route data corrections, capability gaps and
+suspected code defects separately; a failed validation report alone does not
+request a code-changing subtask.
 
 This routing table is a current default, not a permanent taxonomy. Change it when repeated task evidence shows that a smaller or clearer Skill set works better.
 
@@ -82,7 +88,7 @@ practical. Do not create idle agents merely to match the table.
 4. For physics changes, obtain the rule contract/review and coordinate tests, simulation and regression evidence. Checks may share identical run outputs.
 5. Reconcile completed branches on current main. Route changed interfaces or behavior back to the affected specialist; do not restart unrelated checks.
 6. Run the mandatory persistence and self-improvement review. Review Boss itself, every affected child Skill, and whether the overall Skill set should be merged, split, simplified, replaced, or retired.
-7. Apply all justified Skill and specification updates before completion. Prefer rewriting/removing obsolete guidance over adding layers of exceptions.
+7. Apply all justified and authorized Skill and specification updates before completion. Prefer rewriting/removing obsolete guidance over adding layers of exceptions.
 8. Apply the PR skill using the combined result. Complete a task only when its actual requirements pass, the Skill review is complete, and the authorized result is in the intended branch.
 
 Report completed PRs separately from physical or operational blockers. Do not

@@ -1,12 +1,16 @@
 ---
 name: simulation-configuration
-description: Author and explain Universe24 JSON configurations for space, reusable entities, fields, interactions, run controls and display settings. Use when preparing or modifying an experiment, without adding simulator laws implicitly.
+description: Check, author and explain Universe24 JSON configurations for space, reusable entities, fields, interactions, run controls and display settings. Use when checking, preparing or modifying an experiment, without changing simulator code during configuration work.
 ---
 
 # Configure a simulation
 
-Produce a validated initialization file, the reusable definitions it depends on,
-an exact run command, and display settings when requested. Follow the repository's
+For a check request, return the existing file's validation report. For authoring,
+produce a validated initialization file, its reusable dependencies, an exact run
+command, and display settings when requested. Apply the shared
+[configuration task scope](../workflow.md#configuration-tasks-and-implementation-scope)
+before choosing a workflow; a validation failure does not authorize simulator edits.
+Follow the repository's
 [shared workflow](../workflow.md). This skill owns experiment authoring;
 [simulation-runner](../simulation-runner/SKILL.md) owns execution and evidence.
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
