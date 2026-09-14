@@ -251,6 +251,26 @@ the same delay acts on every part of a signal. This is the model's own
 candidate for a distance-redshift relation; it does not by itself give an
 accelerating relation, and its statistical form is quantized.
 
+### Escape speed against radius: the model's rotation-curve test (`... open rays`)
+
+Flat rotation curves — the dark-matter signature — mean a force falling as 1/r,
+so the escape speed would hardly depend on radius; Newton's 1/r² gives
+v_esc ∝ 1/√R. The same four-body sweep at emission 2400 with the masses
+emitting rays (isotropic far field), at R = 3, 5 and 9:
+
+| R | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c | critical speed |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | expanding | expanding | expanding | expanding, one escaped | escaped | ≈ 0.5-0.75 c |
+| 5 | turned around | expanding | expanding | escaped by 39 | escaped | ≈ 0.375-0.5 c |
+| 9 | turned around | expanding, one escaped | escaped by 25 | escaped | escaped | ≈ 0.25-0.375 c |
+
+Bracket midpoints 0.62, 0.44 and 0.31 c: the ratios 0.71 (R 3→5) and 0.70
+(R 5→9) sit at Newton's √(3/5) = 0.77 and √(5/9) = 0.75 within the sweep's
+resolution, if anything slightly steeper. The curve is Newtonian, not flat.
+The model therefore has no dark-matter substitute of its own: a flat rotation
+curve would need an explicitly extended source, which is dark matter by
+another name, or a force law that no local integer transport here produces.
+
 ### In a closed universe (`... periodic ...`)
 
 Universe24 is closed. With a periodic boundary the field never leaves, so the
@@ -311,9 +331,10 @@ reaches a diffusive steady state whose flux is again 1/r². A self-sourcing
 field (stock creating stock, a "field gravitates" rule) either decays away
 (Yukawa, steeper) or grows without bound; neither is a 1/r force. The
 unlocalized quantum sector is the opposite of dark matter: it neither attracts
-nor falls (probe 3). No probe was run for dark matter because no candidate
-survived this analysis; a flat rotation curve in this model would require an
-explicitly extended source, which is dark matter by another name.
+nor falls (probe 3). The escape-speed-against-radius sweep in probe 4 is the
+model's own rotation-curve test and comes out Newtonian (v_esc ∝ 1/√R within
+resolution, if anything steeper); a flat rotation curve in this model would
+require an explicitly extended source, which is dark matter by another name.
 
 ## What these probes do not show
 
