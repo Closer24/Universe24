@@ -33,7 +33,7 @@ from .node_execution import (
     finish_local_cycle,
 )
 from .node_ports import PortBank
-from .node_services import NodeEvents, add_audit_delta, port_count
+from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
     FieldInteractionGuard,
     Rays,
@@ -361,7 +361,26 @@ class SpatialNode(SpatialNodeState):
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
-        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost, self.rays)
+        resident_rays: tuple[Rays, ...] = self.rays
+        held: tuple[Rays, ...] = ()
+        if services.initial.ray_delay and any(self.rays):
+            # Rays wait the intervals the Node's computation load alone would add to
+            # a cycle; a waiting Kerengonen ray may advance its phase per interval.
+            if self.ray_wait == 0:
+                extra, _ = cycle_timing(
+                    self.load_value(services),
+                    services.initial.normal_budget,
+                    services.initial.link_ticks,
+                )
+                self.ray_wait = extra // services.initial.link_ticks
+                waiting = self.ray_wait > 0
+            else:
+                self.ray_wait -= 1
+                waiting = self.ray_wait > 0
+            if waiting:
+                held = self._waited_rays(services)
+                resident_rays = tuple(() for _ in self.rays)
+        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost, resident_rays)
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
         validate_spatial_plan(services.initial, plan, len(records), records)
@@ -406,6 +425,35 @@ class SpatialNode(SpatialNodeState):
         self.sample_cause_id = sample_cause
         self.sample_received_masks = sample_received_masks
         self._commit_plan(tick, carrier, services, plan, cost)
+        if held:
+            # The waiting rays stay owned here; only fresh emissions left this cycle.
+            self.rays = held
+
+    def _waited_rays(self, services: SpatialServices) -> tuple[Rays, ...]:
+        """Resident rays after one waiting interval: unchanged, or phase-advanced per tick."""
+        if not services.initial.ray_phase_per_tick:
+            return self.rays
+        result = []
+        for definition, rays in zip(services.initial.spatial_fields, self.rays, strict=False):
+            if not definition.phase_steps or not rays:
+                result.append(rays)
+                continue
+            result.append(
+                merge_rays(
+                    tuple(
+                        replace(
+                            ray,
+                            phase=(
+                                ray.phase
+                                + (ray.advance if ray.advance >= 0 else definition.phase_advance)
+                            )
+                            % definition.phase_steps,
+                        )
+                        for ray in rays
+                    )
+                )
+            )
+        return tuple(result)
 
     def commit_ready(
         self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices

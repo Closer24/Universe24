@@ -507,6 +507,48 @@ So the model does have a dark-matter substitute, and it is not extra mass: a
 representation hypothesis about galaxies, not a derivation; the lattice shows
 only that the flat curve follows from the compression alone.
 
+## 8. Gravity in an interferometer (`kerengonen_interferometer.py`)
+
+Does the model's gravity leave a phase? The two-lamp Kerengonen interferometer
+of main's double-slit probe (lamps in phase at y = ±3, a screen of absorbers
+eight links on) with a mass emitting an outward computation field beside lamp
+B's rays to the upper screen. The lower wing is lit by rays that never pass
+the mass and is the control. Four worlds, same lamps and screen; two of them
+use the new opt-in engine rules `ray_delay` (rays wait at a loaded Node the
+intervals its load alone prices) and `ray_phase_per_tick` (a waiting
+Kerengonen ray advances its phase per waiting interval as well as per link):
+
+| screen y | no mass | A fixed clock | B ray_delay | C phase per tick |
+| --- | --- | --- | --- | --- |
+| −12 … 8 | fringe | identical | identical | identical |
+| 9 | 416 | 416 | 506 | 388 |
+| 10 | 552 | 552 | 485 | **211** |
+| 11 | 528 | 528 | 613 | 366 |
+| 12 | 436 | 436 | 556 | 427 |
+| lower wing total | 6176 | 6176 | 6176 | 6176 |
+| upper wing total | 6176 | 6176 | 6404 | 5636 |
+
+- **A, the rules as they stood:** every screen Node identical to the world
+  without the mass. Rays on the fixed field clock ignore computation load
+  entirely; the model's gravity was invisible to interference — the clock
+  composition gap of main's curvature probe, as a fringe.
+- **B, rays delayed, phase per link:** only the rows whose lamp-B rays cross
+  the loaded region change, and they gain quanta (6404 against 6176): a
+  delayed ray arrives when its partner from lamp A has passed, meets no
+  coherent opposition, and is absorbed whole. Delay without phase is
+  decoherence — the fringe is washed out, not moved.
+- **C, phase advancing on waits as well:** the same rows now darken (y = 10
+  from 552 to 211, the wing from 6176 to 5636): the waited intervals carry
+  phase into the recombination and the fringe shifts by the waits, in whole
+  steps. This is the gravitational phase — the COW signature — and it appears
+  only when the wait counts as phase.
+
+The single-ray test (`tests/test_ray_delay.py`) fixes the rule exactly: a
+ray delayed 11 intervals arrives with the undelayed phase under B and with
+phase +11 mod 8 = 3 under C. Both keys are declared timing rules; the probe
+shows which one puts the computation clock and the wave in the same
+measurement.
+
 ## 7. Focus and computing less
 
 The repository's [Focus](../../docs/QUANTUM_FOCUS.md) is an octree over

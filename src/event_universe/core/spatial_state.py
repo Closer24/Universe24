@@ -304,6 +304,8 @@ class SpatialNodeState:
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0
+    # Intervals the resident rays still wait under ray_delay before forwarding.
+    ray_wait: int = 0
 
 
 @dataclass(frozen=True, slots=True)

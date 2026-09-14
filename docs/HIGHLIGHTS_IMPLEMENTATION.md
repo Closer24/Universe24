@@ -622,6 +622,13 @@ charge). Findings, each a branch result and not a law:
   Under `straight` phases the mass's axis ray stalls the train at one column
   and under `rotate` the wrapped Manhattan field piles up at the antipode;
   neither is a uniform load.
+- Under 4.4 and the Kerengonen field: a two-lamp interferometer beside a mass
+  is unchanged at every screen Node under the fixed field clock (gravity
+  invisible to interference); with the opt-in `ray_delay` the delayed rows
+  gain quanta (decoherence, 6176 → 6404); with `ray_phase_per_tick` as well
+  they darken (6176 → 5636, y = 10 from 552 to 211): the waits carry phase and
+  the fringe shifts in whole steps — the gravitational-phase (COW) signature,
+  present only when a waiting interval counts as phase.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the
