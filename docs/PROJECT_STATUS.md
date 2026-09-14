@@ -154,7 +154,10 @@ in Manhattan path difference; the plain ray field is unchanged without the key.
 A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
 two slits gives the fringe, and rays may carry their own advance from the
 emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
-halves the fringe period each time the beam's momentum doubles.
+halves the fringe period each time the beam's momentum doubles, and the
+[matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
+pays its matter out as a wave train and lands it on the screen with the fringe
+of the momentum it flew with.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

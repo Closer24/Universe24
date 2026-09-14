@@ -1761,3 +1761,25 @@ The rule `|p| / D` is configured, not derived; what the measurement shows is
 that the lattice, the Huygens slits and the coherence gate carry it from the
 source to the screen: wavelength inverse to momentum, three doublings in a
 row. The beam is a held source; a record in flight is not yet a matter ray.
+
+## A particle in flight as a matter wave, and the small-stock sweep — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Engine: an emitted amount below
+`rays_per_tick` fills only as many headings as it has quanta and moves the
+cursor on by that many, so a small stock sweeps the whole sequence in turn
+instead of the same few headings every tick. Probes: the de Broglie beam and
+the new matter-wave particle read the advance from a `wavenumber` field set
+from the momentum of the flight, never from the recoiling momentum.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed on the affected scope: Ruff lint and formatting, strict mypy, 1,780 tests with five visualization skips |
+| New tests | `tests/test_ray_field.py`: 2 quanta over a four-heading sweep take headings 0 and 1, then 2 and 3, then 0 and 1, while a covering stock still advances by the count; `tests/test_matter_wave.py`: the particle flies, stops on its tick, pays its matter out and the world closes |
+| Matter wave | One particle of 479,232 quanta, momentum 32 or 64, a sixteen-tick train through Huygens slits at y = +-6: first dark fringe at y = 2 and y = 1, bright Nodes at 0, +-4 and at 0, +-2, +-4, +-6; ratios exactly one where only one slit reaches; the plain field exactly the sum of the single slits; the husk stops with the recoil its rays carried; matter closed in all eight worlds |
+| De Broglie beam | Re-run on the `wavenumber` field: first dark at 4, 2, 1 for momenta 16, 32, 64, unchanged |
+| Earlier versions | A one-tick pulse gave no fringe (the two paths meet only where they are equal); a 7,488-quantum train gave a momentum-independent pattern because the slits' small stock re-emitted over the same few headings, the engine fix above |
+| Visualization | Not requested or generated |
+
+The particle's matter lands spread as its wave, not at one Node; landing whole
+at one place needs a causal retirement of the rest of the wave, which the
+quantum layer has and the ray field does not yet.
