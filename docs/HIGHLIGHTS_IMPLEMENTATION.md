@@ -1,5 +1,35 @@
 # Highlights implementation coverage
 
+## General research scope and effective formulas - 2026-09-14
+
+Reviewed main: `18bc9eef361f1199e198aa13901a5a67f29c5ed8`.
+
+Universe24 is intended as a general-purpose experimental model for investigating
+physical phenomena throughout the universe, from individual disturbances and
+light to matter, fields and large-scale systems. Any physical phenomenon can be
+a research target; each experiment requires an explicit representation, supported
+local rules and independent validation. The aim is broad scientific testing, with
+demonstrated coverage growing as experiments are added. This research scope does
+not imply that every phenomenon is already represented or computationally feasible.
+
+The model may also help discover and derive effective mathematical relations from
+its discrete local rules. Measure patterns and scaling, propose a candidate
+formula, and test it on new configurations and scales. A derivation must explain
+why the relation follows from the rules and identify its domain of validity and
+approximation errors; curve fitting alone is not a derivation. An input formula,
+a fitted observation and a relation derived from local dynamics remain distinct.
+Comparison with independent physical evidence is needed before identifying a
+candidate relation with a law of nature.
+
+This extends the research purpose of live Highlights section **1.2.8** while
+preserving the preceding experiment evidence and its stated limitations.
+Connector readback verified both new paragraphs, inherited typography and the
+unchanged surrounding text and source link at revision
+`ANLCKQmjYawB_yYVKG1SxUrPM1Db4J80QFFRHMgHtFeUKkhQBL2qH9no65jFVVJ3A5H72BkF5xM0moWk87qw3ghhpfuSYLKR2WiWLthjl1o`.
+It adds no simulator capability, physical law or new run result. The existing
+postulates and validation workflow already require the distinction between
+research goals, configured assumptions and demonstrated behavior.
+
 ## Discrete space, classical mechanics and light - 2026-09-14
 
 Reviewed main: `0299cb98bf07f00dc10bad858b674ded449be03e`.
