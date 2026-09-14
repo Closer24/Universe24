@@ -12,7 +12,7 @@ from event_universe.initialization import parse_initial_state
 from event_universe.integration.event_runtime import NativeEventResolver
 from event_universe.quantum import DeferredQuantum, EventNetworkConfig
 
-from .test_quantum_event_network import CX, POSITION, H, Z, probability
+from .support.quantum import CX, POSITION, H, Z, probability
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples/quantum/event_paths.json"
 

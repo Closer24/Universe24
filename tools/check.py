@@ -2,6 +2,7 @@
 
 import argparse
 import ast
+import io
 import json
 import subprocess
 import sys
@@ -108,6 +109,39 @@ RESOURCE_CONSUMERS = {
 
 def git(*args):
     return subprocess.check_output(["git", *args], cwd=ROOT, encoding="utf-8").strip()
+
+
+def previous_sources(base):
+    """Read the prior Python tree in two Git processes, including deleted providers."""
+    listing = subprocess.check_output(
+        ["git", "ls-tree", "-rz", base, "--", "src", "tests", "tools"], cwd=ROOT
+    )
+    entries = []
+    for entry in listing.split(b"\0"):
+        if not entry:
+            continue
+        metadata, name = entry.split(b"\t", 1)
+        path = name.decode("utf-8")
+        if path.endswith(".py") and "reference" not in Path(path).parts:
+            entries.append((metadata.split()[2], path))
+    if not entries:
+        return {}
+    payload = subprocess.check_output(
+        ["git", "cat-file", "--batch"],
+        input=b"".join(identity + b"\n" for identity, _ in entries),
+        cwd=ROOT,
+    )
+    stream = io.BytesIO(payload)
+    sources = {}
+    for identity, path in entries:
+        actual, kind, length = stream.readline().split()
+        if actual != identity or kind != b"blob":
+            raise ValueError("unexpected Git source object")
+        content = stream.read(int(length))
+        if len(content) != int(length) or stream.read(1) != b"\n":
+            raise ValueError("incomplete Git source object")
+        sources[path] = content.decode("utf-8")
+    return sources
 
 
 def module_name(path):
@@ -282,16 +316,13 @@ def main():
         sources = {
             p.relative_to(ROOT).as_posix(): p.read_text(encoding="utf-8")
             for directory in ("src", "tests", "tools")
-            for p in (ROOT / directory).rglob("*.py")
+            for p in ((ROOT / directory).rglob("*.py") if changed else ())
             if "reference" not in p.parts
         }
         # Include removed/old import edges so deletions and redirected imports retain consumers.
-        previous = {}
-        for path in git("ls-tree", "-r", "--name-only", base, "src", "tests", "tools").splitlines():
-            if path.endswith(".py") and "/reference/" not in path:
-                previous[path] = git("show", f"{base}:{path}")
-        tests, typed = select(changed, sources)
-        old_tests, old_typed = select(changed, previous)
+        previous = previous_sources(base) if changed else {}
+        tests, typed = select(changed, sources) if changed else ([], [])
+        old_tests, old_typed = select(changed, previous) if changed else ([], [])
         tests = sorted({*tests, *old_tests, *args.tests})
         tests = [p for p in tests if (ROOT / p.split("::")[0]).exists()]
         typed = sorted(p for p in {*typed, *old_typed} if (ROOT / p).exists())
