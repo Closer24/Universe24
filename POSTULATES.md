@@ -68,7 +68,10 @@ and response allowances bound dynamic input, and declared integer attenuation
 removes magnitude at interior arrivals while exempting immutable background.
 The explicit dissipate option tracks signed loss; neither option establishes physical
 momentum through decay. Self-field exclusion by arrival order remains an unverified
-hypothesis and is not enabled by this extension.
+hypothesis and is not enabled by this extension. For straight-ray fields an
+optional local one-link exclusion exists: a departing emitter subtracts the rays
+of its own departure cycle from the flux it samples on arrival, using only its
+own registers; returning self-field at any other distance is not excluded.
 
 The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
 the same budget delay to all local fields and carriers. It freezes updates and
@@ -284,7 +287,11 @@ The outward octant candidate conserves flux through every closed shell but
 concentrates it near body diagonals. The straight-ray candidate keeps the same
 shell conservation and makes the time-averaged flux follow solid angle in every
 direction, because each ray carries its own heading and phase and never spreads.
-Neither derives a gravitational constant, a mass coupling or attraction.
+Signed quanta are the attraction hypothesis under test: a source emits negative
+quanta paid into its own stock, a body absorbs a share proportional to its mass
+and pays for the momentum it gains toward the source. Energy and momentum stay
+exact at every event; no gravitational constant is derived, and a source's stock
+rises by what it emits.
 
 ## 12. Quantum behavior and entanglement remain open
 

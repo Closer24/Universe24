@@ -84,6 +84,9 @@ class SpatialFieldDefinition:
     headings: tuple[Heading, ...] = ()
     rays_per_tick: int = 0
     ray_slots: int = 0
+    # Ray transport only: an emitting record that departs subtracts its own rays
+    # from the flux it samples at the next Node, using only its own bookkeeping.
+    self_exclusion: bool = False
 
     @property
     def rays(self) -> bool:
@@ -153,6 +156,11 @@ class EmissionDefinition:
     denominator: int = 1
     budget: Payload | None = None
     types: tuple[int, ...] = ()
+    # Ray fields only: pay the emitted amount from the record's own field of the
+    # same name (clipped to its stock) instead of declaring an external source,
+    # and subtract the emitted rays' amount x heading from an owned vector field.
+    funded: bool = False
+    recoil_field: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -166,6 +174,13 @@ class SpatialCouplingDefinition:
     axis_order: tuple[int, int, int] = (0, 1, 2)
     budget: Payload | None = None
     types: tuple[int, ...] = ()
+    # Absorb mode only: the owned vector field that receives amount x heading.
+    momentum_field: int | None = None
+    # Absorb mode only: the share of each arriving ray that is absorbed, as a
+    # nonnegative owned-field expression over fraction_denominator; the rest of
+    # the ray is forwarded. None absorbs whole rays.
+    fraction: Expression | None = None
+    fraction_denominator: int = 1
 
 
 @dataclass(frozen=True, slots=True)

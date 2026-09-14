@@ -37,6 +37,22 @@ by this sampling rule. Each local sample and carried remainder has fixed size;
 no source identifiers, histories, other-world simulations or global measurements
 enter the response.
 
+## Absorb
+
+`"mode": "absorb"` applies to a straight-ray field that the absorbing type also
+carries. It takes no `amount`: of every ray resident at the record's Node on the
+cycle after it arrived, the share `amount x fraction / fraction_denominator`
+(truncated toward zero; the whole ray without a `fraction`) is removed, added to
+the record's field of the same name, and with `"momentum_field"` its
+`share x heading` is added to that owned vector; the rest of the ray is
+forwarded. `fraction` is a nonnegative expression over the record's own fields,
+so a share proportional to `mass` gives every body the same acceleration. A
+negative share is paid from the record's stock and never beyond it: the clipped
+remainder continues as a ray. One ray field is either absorbed or exchanged and
+rotated, never both. Absorb runs inside the spatial plan before forwarding,
+needs no response law, and is described with funded emission in
+[SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#funded-emission-and-absorption).
+
 ## Exchange and rotation
 
 An `exchange` rule evaluates `amount`, divides it by `denominator` with a signed

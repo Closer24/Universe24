@@ -890,7 +890,7 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
-            | {"headings", "rays_per_tick", "ray_slots"}
+            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion"}
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -908,7 +908,9 @@ def _spatial_fields(
         if transport == "local" and schema_version != 1:
             raise ValueError("local spatial transport requires schema_version 1")
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
+        self_exclusion = False
         if transport == "ray":
+            self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -929,8 +931,10 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif ray_keys & obj.keys():
-            raise ValueError("headings, rays_per_tick and ray_slots require ray transport")
+        elif (ray_keys | {"self_exclusion"}) & obj.keys():
+            raise ValueError(
+                "headings, rays_per_tick, ray_slots and self_exclusion require ray transport"
+            )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
         axis = tuple(
@@ -957,6 +961,7 @@ def _spatial_fields(
                 headings,
                 rays_per_tick,
                 ray_slots,
+                self_exclusion,
             )
         )
     return tuple(result)
@@ -975,15 +980,29 @@ def _emissions(
         obj = _object(
             raw,
             "emission",
-            {"type", "requires", "field", "amount", "denominator", "source"}
+            {"type", "requires", "field", "amount", "denominator", "source", "recoil_field"}
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
         )
-        if not _boolean(obj["source"], "emission.source"):
-            raise ValueError("emission requires explicit source: true")
+        source = _boolean(obj["source"], "emission.source")
         kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
         kind = kinds[0]
         index = _index(obj["field"], names, "emission.field")
+        recoil: int | None = None
+        if not source:
+            # Funded emission: the record pays from its own field of the same name.
+            if not spatial[index].rays:
+                raise ValueError("emission with source: false requires a ray field funded by the record")
+            if spatial[index].field not in owned:
+                raise ValueError("funded emission requires the emitting type to own the ray field")
+            if schema_version == 2:
+                raise ValueError("funded emission requires schema_version 1")
+        if "recoil_field" in obj:
+            if source:
+                raise ValueError("recoil_field requires a funded emission (source: false)")
+            recoil = _index(obj["recoil_field"], _names(fields), "emission.recoil_field")
+            if recoil not in owned or fields[recoil].components != 3 or not fields[recoil].signed:
+                raise ValueError("recoil_field must be a signed vector owned by the emitting type")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1003,6 +1022,8 @@ def _emissions(
                 if schema_version == 2
                 else None,
                 kinds if "requires" in obj else (),
+                not source,
+                recoil,
             )
         )
     return tuple(result)
@@ -1064,7 +1085,18 @@ def _spatial_couplings(
         obj = _object(
             raw,
             "spatial coupling",
-            required | {"type", "requires", "amount", "rotation", "denominator", "axis_order"},
+            required
+            | {
+                "type",
+                "requires",
+                "amount",
+                "rotation",
+                "denominator",
+                "axis_order",
+                "momentum_field",
+                "fraction",
+                "fraction_denominator",
+            },
             required,
         )
         name = _text(obj["name"], "spatial coupling.name")
@@ -1074,8 +1106,60 @@ def _spatial_couplings(
         kind = kinds[0]
         target = _index(obj["field"], field_names, "spatial coupling.field")
         mode = _text(obj["mode"], "spatial coupling.mode")
-        if mode not in ("exchange", "rotation"):
-            raise ValueError("spatial coupling.mode must be exchange or rotation")
+        if mode not in ("exchange", "rotation", "absorb"):
+            raise ValueError("spatial coupling.mode must be exchange, rotation or absorb")
+        if mode == "absorb":
+            obj = _object(
+                obj,
+                "spatial coupling",
+                required | {"type", "requires", "momentum_field", "fraction", "fraction_denominator"},
+                required,
+            )
+            definition = next((d for d in spatial if d.field == target), None)
+            if definition is None or not definition.rays or target not in owned:
+                raise ValueError("absorb requires a ray field that the absorbing type also carries")
+            if schema_version != 1:
+                raise ValueError("absorb requires schema_version 1")
+            if any(disturbances[index].transport.mode == "split" for index in kinds):
+                raise ValueError("absorb requires a whole-record hold or move type")
+            momentum: int | None = None
+            if "momentum_field" in obj:
+                momentum = _index(obj["momentum_field"], field_names, "spatial coupling.momentum_field")
+                if (
+                    momentum not in owned
+                    or fields[momentum].components != 3
+                    or not fields[momentum].signed
+                ):
+                    raise ValueError(
+                        "momentum_field must be a signed vector owned by the absorbing type"
+                    )
+            fraction: Expression | None = None
+            fraction_denominator = 1
+            if "fraction" in obj:
+                fraction = _Expressions(fields, owned).parse(obj["fraction"], 1)
+                if "fraction_denominator" in obj:
+                    fraction_denominator = _integer(
+                        obj["fraction_denominator"], "spatial coupling.fraction_denominator", 1
+                    )
+            elif "fraction_denominator" in obj:
+                raise ValueError("fraction_denominator requires an absorb fraction")
+            result.append(
+                SpatialCouplingDefinition(
+                    name,
+                    kind,
+                    target,
+                    mode,
+                    _Expressions(fields, owned).parse(1, 1),
+                    1,
+                    (0, 1, 2),
+                    None,
+                    kinds if "requires" in obj else (),
+                    momentum,
+                    fraction,
+                    fraction_denominator,
+                )
+            )
+            continue
         parameter = "amount" if mode == "exchange" else "rotation"
         allowed = (
             required
@@ -1118,6 +1202,9 @@ def _spatial_couplings(
                 kinds if "requires" in obj else (),
             )
         )
+    absorbed = {rule.field for rule in result if rule.mode == "absorb"}
+    if any(rule.mode != "absorb" and rule.field in absorbed for rule in result):
+        raise ValueError("a ray field cannot be both absorbed and exchanged or rotated")
     return tuple(result)
 
 
@@ -1474,7 +1561,7 @@ def _conservation(value: object, initial: InitialState) -> ConservationDefinitio
     obj = _object(value, "conservation", required | {"spatial"}, required)
     if initial.event_program is not None:
         raise ValueError("conservation audit does not support native event programs")
-    if initial.emissions or any(
+    if any(not rule.funded for rule in initial.emissions) or any(
         update.source for kind in initial.disturbances for update in kind.updates
     ):
         raise ValueError("conservation audit requires closed internal transfers, not explicit sources")

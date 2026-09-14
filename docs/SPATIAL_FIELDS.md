@@ -144,13 +144,29 @@ between arrival and the next cycle; there is no octant stock.
 | `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
 | `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
+| `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
 spread evenly over the observer's sphere is swept over time. Rays with the same
 heading and phase merge exactly at a Node because they share one line. Delivered
 samples and the `flux` leaf see ray arrivals per port, resident ray stock is the
-local `value`, and node values report `ray_count`. Schema 2 decay attenuates each
+local `value`, and node values report `ray_count`. A coupling reaction that
+amends a departing packet leaves the rays on that port untouched, so rays pass
+through Nodes whose carriers respond to them.
+
+A record that emits rays and moves one link meets, at the next Node, exactly the
+rays it emitted on the cycle it departed whose first DDA step took the same
+port. With `"self_exclusion": true` the record carries two rows per emission
+rule, this cycle's `(amount, cursor)` and the pair from its last departure
+(zero while it stays), and every coupling it evaluates after arriving reads the
+sampled flux and value with those rays subtracted. The work is bounded by
+`rays_per_tick`, uses only the record's own registers and the port it left
+through, and reads no ray identity or remote state. Rays of another record
+that merged with them at that Node are subtracted too; that coincidence needs
+the same heading and phase from an adjacent Node. Rays that return later, from
+any distance, are not excluded: this is one-link exclusion of the emitter's own
+wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
@@ -159,7 +175,46 @@ the shared field clock. Host work per Node is bounded by `ray_slots`.
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
 with an evenly spread heading sequence the time-averaged flux per node follows the
-solid angle the node subtends from the source, in every direction.
+solid angle the node subtends from the source, in every direction. The
+[gravity probe](../examples/gravity-probe/README.md) then couples held and moving
+bodies to that flux with `mass x flux / D` and reports attraction, an inverse
+square in every direction, and mass-independent acceleration.
+
+### Funded emission and absorption
+
+A ray field whose emitting type also carries a scalar field of the same name may
+emit with `"source": false`: the emitted amount is paid from the record's own
+stock, clipped to what it holds, and no external source is recorded. An optional
+`"recoil_field"` names an owned signed vector that loses `amount x heading` for
+every emitted ray. The reverse is the `absorb` coupling mode: a record of the
+absorbing type takes a share of every ray resident at its Node on the cycle
+after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
+adds it to its own field of the same name and, with `momentum_field`,
+`share x heading` to that vector; the rest of the ray is forwarded. Absorption
+happens before forwarding and before this cycle's emission joins the residents,
+so a record never swallows its fresh rays; with `self_exclusion` the rays of its
+own last departure are left alone by exact heading and phase. Absorbers act in
+slot order.
+
+Quanta are signed when the field is. A funded emission of a negative amount
+credits the emitter with what it emits, and the ray's momentum `amount x heading`
+points back at the emitter; a record that absorbs a share of such a ray pays it
+from its own stock, never beyond what it holds, and gains momentum toward the
+source. That is attraction with the ledger closed: the pulled body pays for its
+pull, and a body with nothing left is not pulled.
+
+```json
+"emissions": [{"type": "lamp", "field": "quanta", "amount": 2048, "source": false,
+               "recoil_field": "momentum"}],
+"spatial_couplings": [{"name": "sail_absorbs", "type": "sail", "field": "quanta",
+                       "mode": "absorb", "momentum_field": "momentum"}]
+```
+
+Together with the [conservation audit](LOCAL_CONSERVATION.md), which measures
+rays as quanta, this closes the ledger: energy is the amount, momentum is amount
+times heading, and both move only between records and rays. Positive quanta
+give radiation pressure; negative quanta give attraction paid by the absorber.
+Schema 2 attenuation of such fields is not supported.
 
 ## Finite completed-link decay
 
