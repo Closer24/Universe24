@@ -3,7 +3,7 @@
   "model_id": "computational-curvature-probe-v1",
   "shape": [25, 17, 7],
   "boundary": "open",
-  "slots_per_cell": 8,
+  "slots_per_node": 8,
   "link_ticks": 1,
   "normal_budget": 32,
   "ticks": 28,

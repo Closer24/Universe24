@@ -51,7 +51,7 @@ def _variant(mass: int, normal_budget: int) -> dict[str, object]:
 
 
 def _cell(snapshot: dict[str, object], position: tuple[int, int, int]) -> dict[str, object] | None:
-    for item in snapshot["cells"]:
+    for item in snapshot["nodes"]:
         if _position(item["position"]) == position:
             return item
     return None
