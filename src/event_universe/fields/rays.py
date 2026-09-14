@@ -59,7 +59,9 @@ def emit_rays(
         share = base + int(offset < extra)
         if share:
             rays.append(Ray((cursor + offset) % headings, (0, 0, 0), sign * share, phase, advance))
-    return tuple(rays), (cursor + count) % headings
+    # An amount below the sweep count fills only `extra` headings; the cursor then
+    # moves on by those, so a small stock still sweeps the whole sequence in turn.
+    return tuple(rays), (cursor + (count if base else extra)) % headings
 
 
 def forward_rays(rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter) -> tuple[Rays, ...]:

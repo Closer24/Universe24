@@ -170,7 +170,7 @@ wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. Host work per Node is bounded by `ray_slots`.
+the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
 
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and

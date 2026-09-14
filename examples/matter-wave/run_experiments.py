@@ -1,16 +1,18 @@
-"""De Broglie on matter rays: a beam's fringe spacing must shrink as its momentum grows.
+"""A particle in flight dissolves into a matter wave and lands on a screen as a fringe.
 
-A held beam source of momentum p emits rays on a Kerengonen field of 64 phase
-steps whose advance per link is `|p| / 4`, its own de Broglie rule. An
-absorbing wall with two re-emitting slits at y = -6 and y = +6 stands eight
-links downstream, the screen twelve links beyond it. On this lattice the path
-difference between the slits and a screen Node at offset y is `2 y` links for
-`|y| <= 6`, so the phase difference is `2 y x advance` steps and the first
-dark fringe sits at `y = 16 / advance`: 4, 2 and 1 for momenta 16, 32 and 64.
-Each momentum is also run with one slit at a time and on the plain field, so
-the fringe is read as the two-slit profile over the sum of the single slits.
-Every number is a read-only world/event audit at host lattice coordinates; no
-mass, constant or wavelength unit is identified.
+Configuration only, on rules that already exist. A particle record of matter M
+and momentum p moves along its momentum at half a link per tick. A local
+update counts its ticks; from the configured tick it stops and a funded
+emission pays out its matter over sixteen ticks as Kerengonen rays over a
+forward cone, each ray advancing `|p| / 4` phase steps per link, until the
+husk is empty. Sixteen ticks is longer than any path difference to the screen,
+so the two slits' contributions overlap at every screen Node; a one-tick pulse
+would meet itself only where the paths are equal. The
+wave meets an absorbing wall with two Huygens slits and a screen twelve links
+beyond, exactly as in the de Broglie probe. What the screen collects is the
+matter of one particle, spread as its wave; the fringe period must follow the
+momentum the particle had. Every number is a read-only world/event audit at
+host lattice coordinates; no mass, constant or wavelength unit is identified.
 """
 
 from __future__ import annotations
@@ -27,18 +29,24 @@ from event_universe.runner import source_fingerprint
 
 SIZE = 31
 CENTER = SIZE // 2
-SOURCE_X = CENTER - 13
+START_X = CENTER - 15
 WALL_X = CENTER - 4
 SCREEN_X = CENTER + 8
 SLIT_HALF = 6
 SCREEN_HALF = 12
 PHASE_STEPS = 64
 ADVANCE_DENOMINATOR = 4
-MOMENTA = (16, 32, 64)
+MOMENTA = (32, 64)
 HEADINGS = 256
 HEADING_SCALE = 64
-PER_RAY = 64
-TICKS = 64
+PER_RAY = 4096  # a single particle of 479,232 quanta: enough that each slit re-emits over every heading every tick
+DISSOLVE_TICK = 4  # the particle flies two links, stops, and starts to dissolve
+TRAIN_TICKS = (
+    16  # it pays out its matter over sixteen ticks: a wave train longer than any path difference
+)
+SPEED_NUMERATOR = 32  # hops per tick = 32 / 64 while the clock is below the dissolve tick, then 0
+SPEED_DENOMINATOR = 64
+TICKS = 84
 COSTS = {
     name: 1
     for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
@@ -46,7 +54,6 @@ COSTS = {
 
 
 def cone_headings(count: int, scale: int) -> list[list[int]]:
-    """Distinct integer headings within 45 degrees of +x, in the wall plane."""
     result: list[list[int]] = []
     for i in range(count):
         angle = -math.pi / 4 + math.pi / 2 * (i + 0.5) / count
@@ -62,8 +69,10 @@ def document(
     ticks: int = TICKS,
     slits: tuple[int, ...] = (-SLIT_HALF, SLIT_HALF),
     phased: bool = True,
+    dissolve_tick: int = DISSOLVE_TICK,
 ) -> dict:
     count = len(headings)
+    matter = PER_RAY * count
     field: dict = {
         "field": "matter",
         "baseline": 0,
@@ -77,10 +86,18 @@ def document(
     # The de Broglie advance reads the momentum the emitter set out with; the
     # momentum field itself takes the recoil of every emitted ray.
     wavenumber = {"field": "wavenumber"}
-    beam_emission: dict = {
-        "type": "beam",
+    # One sixteenth of the matter per tick once the clock has passed the dissolve
+    # tick, nothing before, and never more than is left: a wave train, not a pulse.
+    dissolve: dict = {
+        "type": "particle",
         "field": "matter",
-        "amount": PER_RAY * count,
+        "amount": {
+            "op": "mul",
+            "args": [
+                {"op": "min", "args": [{"field": "matter"}, matter // TRAIN_TICKS]},
+                {"op": "gt", "args": [{"field": "clock"}, dissolve_tick - 1]},
+            ],
+        },
         "denominator": 1,
         "source": False,
         "recoil_field": "momentum",
@@ -94,16 +111,16 @@ def document(
         "recoil_field": "momentum",
     }
     if phased:
-        beam_emission["kerengonen_advance"] = {"amount": wavenumber, "denominator": ADVANCE_DENOMINATOR}
+        dissolve["kerengonen_advance"] = {"amount": wavenumber, "denominator": ADVANCE_DENOMINATOR}
         slit_emission["kerengonen_phase"] = "carried"
     body = {
-        "fields": ["matter", "momentum"],
-        "defaults": {"matter": 0, "momentum": [0, 0, 0]},
+        "fields": ["matter", "momentum", "clock"],
+        "defaults": {"matter": 0, "momentum": [0, 0, 0], "clock": 0},
         "transport": {"mode": "hold"},
     }
     return {
         "schema_version": 1,
-        "model_id": "de-broglie-matter-ray-probe-v1",
+        "model_id": "matter-wave-particle-in-flight-probe-v1",
         "shape": [SIZE, SIZE, 3],
         "boundary": "open",
         "slots_per_node": 2,
@@ -136,24 +153,47 @@ def document(
                 "conserved": False,
                 "extensive": False,
             },
+            {
+                "name": "clock",
+                "components": 1,
+                "units": "tick",
+                "signed": False,
+                "conserved": False,
+                "extensive": False,
+            },
         ],
         "disturbance_types": [
             {
-                "name": "beam",
-                "fields": ["matter", "momentum", "wavenumber"],
+                "name": "particle",
+                "fields": ["matter", "momentum", "clock", "wavenumber"],
                 "defaults": {
-                    "matter": PER_RAY * count * ticks,
+                    "matter": matter,
                     "momentum": [momentum, 0, 0],
+                    "clock": 0,
                     "wavenumber": momentum,
                 },
-                "transport": {"mode": "hold"},
+                "transport": {
+                    "mode": "move",
+                    "direction_field": "momentum",
+                    "rate": {
+                        "op": "mul",
+                        "args": [
+                            SPEED_NUMERATOR,
+                            {"op": "gt", "args": [dissolve_tick, {"field": "clock"}]},
+                        ],
+                    },
+                    "rate_denominator": SPEED_DENOMINATOR,
+                },
+                "updates": [
+                    {"field": "clock", "expression": {"op": "add", "args": [{"field": "clock"}, 1]}}
+                ],
             },
             {"name": "wall", **body},
             {"name": "slit", **body},
             {"name": "screen", **body},
         ],
         "spatial_fields": [field],
-        "emissions": [beam_emission, slit_emission],
+        "emissions": [dissolve, slit_emission],
         "spatial_couplings": [
             {
                 "name": f"{name}_absorbs",
@@ -164,7 +204,7 @@ def document(
             }
             for name in ("wall", "slit", "screen")
         ],
-        "seeds": [{"position": [SOURCE_X, CENTER, 1], "type": "beam"}]
+        "seeds": [{"position": [START_X, CENTER, 1], "type": "particle"}]
         + [
             {"position": [WALL_X, CENTER + y, 1], "type": "slit" if y in slits else "wall"}
             for y in range(-(SIZE // 2), SIZE // 2 + 1)
@@ -179,10 +219,23 @@ def document(
 def run(raw: dict) -> dict:
     world = Simulation(parse_initial_state(raw))
     initial = world.totals()["matter"][0]
-    for _ in range(raw["ticks"]):
-        world.step()
-    totals, escaped = world.totals(), world.escaped_totals()
     names = [kind["name"] for kind in raw["disturbance_types"]]
+    path = []
+    for tick in range(1, raw["ticks"] + 1):
+        world.step()
+        for position, node in world.nodes.items():
+            for record in node.records:
+                if record is not None and names[record.type_index] == "particle":
+                    values = world.record_values(record)
+                    path.append(
+                        {
+                            "tick": tick,
+                            "x": position[0] - CENTER,
+                            "matter": values["matter"][0],
+                            "momentum": list(values["momentum"]),
+                        }
+                    )
+    totals, escaped = world.totals(), world.escaped_totals()
     profile: dict[int, int] = {}
     for position, node in world.nodes.items():
         for record in node.records:
@@ -191,6 +244,8 @@ def run(raw: dict) -> dict:
     return {
         "profile": dict(sorted(profile.items())),
         "absorbed_total": sum(profile.values()),
+        "particle_path": path[::2],
+        "husk": path[-1] if path else None,
         "matter_closed": totals["matter"][0] + escaped["matter"][0] == initial,
     }
 
@@ -207,7 +262,6 @@ def fringe(momentum: int, headings: list[list[int]]) -> dict:
         rows.append(
             {
                 "y": y,
-                "phase_difference": (2 * min(abs(y), SLIT_HALF) * advance) % PHASE_STEPS,
                 "two_slits": two["profile"].get(y, 0),
                 "sum_of_single_slits": incoherent,
                 "plain": plain["profile"].get(y, 0),
@@ -215,17 +269,16 @@ def fringe(momentum: int, headings: list[list[int]]) -> dict:
             }
         )
     inner = [row for row in rows if 0 < row["y"] <= SLIT_HALF and row["ratio"] is not None]
-    first_dark = min(inner, key=lambda row: row["ratio"])["y"] if inner else None
     return {
         "momentum": momentum,
         "advance": advance,
-        "predicted_first_dark": PHASE_STEPS // 2 // (2 * advance) if advance else None,
-        "measured_first_dark": first_dark,
+        "predicted_first_dark": PHASE_STEPS // 2 // (2 * advance),
+        "measured_first_dark": min(inner, key=lambda row: row["ratio"])["y"] if inner else None,
         "plain_equals_sum": all(row["plain"] == row["sum_of_single_slits"] for row in rows),
-        "closed": two["matter_closed"]
-        and a["matter_closed"]
-        and b["matter_closed"]
-        and plain["matter_closed"],
+        "closed": all(w["matter_closed"] for w in (two, a, b, plain)),
+        "particle_path": two["particle_path"],
+        "husk": two["husk"],
+        "absorbed": {"two_slits": two["absorbed_total"], "plain": plain["absorbed_total"]},
         "rows": rows,
     }
 
@@ -242,9 +295,8 @@ def main() -> None:
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "measurement_scope": "read-only world/event audit",
         "headings": len(headings),
-        "phase_steps": PHASE_STEPS,
-        "advance_denominator": ADVANCE_DENOMINATOR,
-        "ticks": TICKS,
+        "matter": PER_RAY * len(headings),
+        "dissolve_tick": DISSOLVE_TICK,
         "fringes": results,
     }
     (args.output / "summary.json").write_text(json.dumps(report, indent=2) + "\n")
@@ -252,8 +304,6 @@ def main() -> None:
         print(
             "momentum",
             result["momentum"],
-            "advance",
-            result["advance"],
             "first dark predicted",
             result["predicted_first_dark"],
             "measured",
@@ -262,8 +312,11 @@ def main() -> None:
             result["plain_equals_sum"],
             "closed",
             result["closed"],
+            "husk",
+            result["husk"],
         )
-        print("  ratios", [(row["y"], row["ratio"]) for row in result["rows"] if abs(row["y"]) <= 8])
+        print("  path", result["particle_path"][:4])
+        print("  ratios", [(row["y"], row["ratio"]) for row in result["rows"] if abs(row["y"]) <= 6])
     print("Wrote report: " + str(args.output / "summary.json"))
 
 
