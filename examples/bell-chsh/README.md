@@ -71,20 +71,29 @@ the correlation is the triangle wave of the sign model:
 | Plus rates | 0.5156 on both sides |
 | Missing pairs, closure | 0 of 256; every run closed |
 
-With `--capture bond` the two rays share a bond, the plus detectors hold
-their settings, there are no reference lamps, and the
-[bond registry](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
-answers for both ends with the singlet's law: the split of postulate 4, the
-one influence that skips Nodes and carries nothing physical. 16 registry
-seeds per hidden-phase slot, 1,024 pairs per correlation:
+With `--capture bond` the two rays are bonded to their origin: the source
+Node stamps each with the code of its own address and the tick of the
+emission, and each ray carries that code through the lattice at link speed
+until its next interaction. The plus detectors hold their settings, there are
+no reference lamps, and at the interaction the
+[bond registry](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1),
+looked up by the origin the ray brought, answers for both ends with the
+singlet's law: the split of postulate 4, the one influence that skips Nodes
+and carries nothing physical. 16 registry seeds per hidden-phase slot, 1,024
+pairs per correlation:
 
 | Quantity | Bonded value |
 | --- | --- |
-| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.719, 0.707, -0.719, -0.719 (quantum -0.707, 0.707, -0.707, -0.707) |
-| S | 2.863 (quantum 2.828, local bound 2) |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.670, 0.690, -0.670, -0.670 (quantum -0.707, 0.707, -0.707, -0.707) |
+| S | 2.699 (quantum 2.828, local bound 2) |
 | Same setting, E(0, 0) | -1.0 |
-| Plus rates, Alice and Bob | 0.47 to 0.52, whatever the other side's setting |
+| Plus rates, Alice and Bob | 0.50 to 0.52, whatever the other side's setting |
 | Missing pairs, closure | 0 of 4,096; every run closed |
+
+The first bonded measurement, with the pair bonded by a configured label
+instead of its origin, read S = 2.863 on the same seeds; the two are the same
+law drawing different tickets, both around the quantum value and both far
+above the bound.
 
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against

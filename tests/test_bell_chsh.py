@@ -69,12 +69,31 @@ def test_bonded_pairs_break_the_local_bound_with_the_singlet_law():
     assert all(value["missing"] == 0 for value in result["correlations"].values())
     assert [value["E"] for value in result["correlations"].values()] == [
         -0.7188,
-        0.8125,
+        0.7188,
         -0.7188,
         -0.7188,
     ]
-    assert result["S"] == 2.9689 and result["same_setting_E"] == -1.0
+    assert result["S"] == 2.8752 and result["same_setting_E"] == -1.0
     assert result["S"] > result["local_bound"]
+
+
+def test_both_rays_carry_the_code_of_their_birth_node_and_tick():
+    from event_universe import Simulation
+    from event_universe.core.spatial_state import origin_bond
+
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    initial = parse_initial_state(raw)
+    assert initial.emissions[0].bond_origin and initial.emissions[1].bond_origin
+    world = Simulation(initial)
+    world.step()
+    bonds = {
+        ray.bond for node in world.inventory_view().nodes for ray in (node.rays[0] if node.rays else ())
+    }
+    # One pair, one code: the source Node and the tick of the emission.
+    assert bonds == {origin_bond((PROBE.CENTER, 1, 1), (PROBE.WIDTH, 3, 3), 0)}
+    assert origin_bond((0, 0, 0), (13, 3, 3), 0) == 1
+    assert origin_bond((0, 0, 0), (13, 3, 3), 5) == 6
+    assert origin_bond((1, 0, 0), (13, 3, 3), 0) != origin_bond((0, 1, 0), (13, 3, 3), 0)
 
 
 def test_bonds_are_validated():
@@ -95,4 +114,8 @@ def test_bonds_are_validated():
     raw = PROBE.document(0, 0, 0, 1, capture="bond")
     del raw["spatial_fields"][0]["kerengonen"]
     with pytest.raises(ValueError, match="requires a kerengonen"):
+        parse_initial_state(raw)
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    raw["emissions"][0]["bond_field"] = "momentum"
+    with pytest.raises(ValueError, match="scalar owned"):
         parse_initial_state(raw)

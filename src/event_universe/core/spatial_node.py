@@ -35,6 +35,7 @@ from .node_execution import (
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
+    BOND_ORIGIN_MARK,
     Claim,
     Claims,
     FieldInteractionGuard,
@@ -48,6 +49,7 @@ from .spatial_state import (
     attenuate_rays,
     coherent_stock,
     merge_rays,
+    origin_bond,
     ray_stock,
     validate_claims,
     validate_rays,
@@ -454,6 +456,17 @@ class SpatialNode(SpatialNodeState):
                     for port_claims in plan.outgoing_claims
                 ),
             )
+        if plan.rays and any(definition.bonded for definition in services.initial.spatial_fields):
+            # A ray bonded to its origin carries this Node and tick from here on.
+            code = origin_bond(self.position, services.initial.shape, tick)
+            plan = replace(
+                plan,
+                rays=tuple(
+                    tuple(self._origin_bonded(field_rays, code) for field_rays in port_rays)
+                    for port_rays in plan.rays
+                ),
+                kept_rays=tuple(self._origin_bonded(field_rays, code) for field_rays in plan.kept_rays),
+            )
         packets: list[SpatialPacket | None] = [None] * 6
         for port, bundle in enumerate(plan.outgoing):
             port_rays = plan.rays[port] if plan.rays else ()
@@ -565,6 +578,10 @@ class SpatialNode(SpatialNodeState):
         self.output.publish(tuple(packets))
         for message in notifications:
             services.events.publish(message)
+
+    @staticmethod
+    def _origin_bonded(rays: Rays, code: int) -> Rays:
+        return tuple(replace(ray, bond=code) if ray.bond == BOND_ORIGIN_MARK else ray for ray in rays)
 
     def _stamped(self, claims: Claims) -> Claims:
         return tuple(

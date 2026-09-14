@@ -1199,12 +1199,17 @@ def _emissions(
                 raise ValueError("emission.heading must be one of the field's headings")
             fixed_heading = spatial[index].headings.index(fixed)
         bond_field: int | None = None
+        bond_origin = False
         if "bond_field" in obj:
             if not spatial[index].bonded:
                 raise ValueError("bond_field requires a bonded ray field")
-            bond_field = _index(obj["bond_field"], _names(fields), "emission.bond_field")
-            if bond_field not in owned or fields[bond_field].components != 1:
-                raise ValueError("bond_field must be a scalar owned by the emitting type")
+            if obj["bond_field"] == "origin":
+                # The birth Node and tick bond the rays: everything born together is one pair.
+                bond_origin = True
+            else:
+                bond_field = _index(obj["bond_field"], _names(fields), "emission.bond_field")
+                if bond_field not in owned or fields[bond_field].components != 1:
+                    raise ValueError("bond_field must be a scalar owned by the emitting type")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1237,6 +1242,7 @@ def _emissions(
                 train_carried,
                 fixed_heading,
                 bond_field,
+                bond_origin,
             )
         )
     return tuple(result)

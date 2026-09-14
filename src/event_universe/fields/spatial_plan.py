@@ -15,6 +15,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    BOND_ORIGIN_MARK,
     TICKET_MODULUS,
     Claim,
     Claims,
@@ -571,8 +572,14 @@ class SpatialLaw:
                             raise ValueError("a train must not be negative")
                         new_rays = tuple(replace(ray, train=train) for ray in new_rays)
                         meter.charge("update", len(new_rays))
-                    if rule.bond_field is not None and new_rays:
-                        bond = unpack(record_values[rule.bond_field])[0]
+                    if (rule.bond_field is not None or rule.bond_origin) and new_rays:
+                        # Bonded at birth: by the emitter's label, or by the birth Node
+                        # and tick, which the Node stamps when it commits this plan.
+                        bond = (
+                            BOND_ORIGIN_MARK
+                            if rule.bond_origin
+                            else unpack(record_values[rule.bond_field or 0])[0]
+                        )
                         if bond < 0:
                             raise ValueError("a bond must not be negative")
                         new_rays = tuple(replace(ray, bond=bond) for ray in new_rays)

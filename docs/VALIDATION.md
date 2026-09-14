@@ -1957,9 +1957,10 @@ even coin and the second so that the ends agree with probability
 
 | Check | Result |
 | --- | --- |
-| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 70 files, 2,456 tests with five visualization skips |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 70 files, 2,457 tests with five visualization skips |
 | New tests | `tests/test_bonds.py`: 400 first answers split 150 to 250 each way, equal settings always disagree, a half turn always agree, a quarter turn agree 150 to 250 times of 400; seed at the modulus and a bond of zero rejected. `tests/test_bell_chsh.py`: equal settings never agree and a half turn always do for three seeds; one seed per slot gives E = -0.7188, 0.8125, -0.7188, -0.7188, S = 2.9689 and E(0, 0) = -1.0, above 2; bond seed at the modulus, bond_field and bond_setting without a bonded field, and a bond without kerengonen rejected |
-| CHSH, bonded | 16 registry seeds x 64 slots x 4 setting pairs: E = -0.7188, 0.707, -0.7188, -0.7188 against the quantum -0.7071, 0.7071, -0.7071, -0.7071; S = 2.8634 (quantum 2.8284, local bound 2); E(0, 0) = -1.0; plus rates 0.47 to 0.52 on either side whatever the other side's setting; no missing pair of 4,096; every run closed |
+| CHSH, bonded | 16 registry seeds x 64 slots x 4 setting pairs, the pair bonded by a configured label: E = -0.7188, 0.707, -0.7188, -0.7188 against the quantum -0.7071, 0.7071, -0.7071, -0.7071; S = 2.8634 (quantum 2.8284, local bound 2); E(0, 0) = -1.0; plus rates 0.47 to 0.52 on either side whatever the other side's setting; no missing pair of 4,096; every run closed |
+| CHSH, bonded to the origin | The same run with `"bond_field": "origin"`, each ray stamped at birth with its Node and tick and carrying it to the detector: E = -0.6699, 0.6895, -0.6699, -0.6699; S = 2.6992; E(0, 0) = -1.0; plus rates 0.50 to 0.52; no missing pair; every run closed; both rays of a pair verified to carry one origin code |
 | Visualization | Not requested or generated |
 
 The three captures on one probe: lottery 1.48, deterministic hidden

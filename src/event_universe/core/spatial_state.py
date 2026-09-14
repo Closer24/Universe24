@@ -267,8 +267,11 @@ class EmissionDefinition:
     # Ray fields only: emit every ray on this one heading of the sequence instead
     # of sweeping the sequence (a directed emitter). None sweeps.
     heading: int | None = None
-    # Bonded fields only: the owned scalar whose value bonds every emitted ray.
+    # Bonded fields only: the owned scalar whose value bonds every emitted ray,
+    # or, with bond_origin, the birth Node and tick themselves: the origin
+    # travels with the ray until its next interaction.
     bond_field: int | None = None
+    bond_origin: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -702,6 +705,17 @@ def next_ticket(state: int, salt: int) -> int:
     if not 0 <= state < TICKET_MODULUS:
         raise ValueError("absorb ticket state must stay below the ticket modulus")
     return (state * 48271 + salt + 1) % TICKET_MODULUS
+
+
+# A ray bonded to its origin leaves the planner with this mark; the Node that
+# emits it replaces the mark with the code of its own address and the tick.
+BOND_ORIGIN_MARK = TICKET_MODULUS
+
+
+def origin_bond(position: Address3, shape: Address3, tick: int) -> int:
+    """The bond of everything born at one Node on one tick: a positive bounded code."""
+    index = (position[0] * shape[1] + position[1]) * shape[2] + position[2]
+    return checked_work(index * 1048573 + bounded(tick)) % TICKET_MODULUS + 1
 
 
 def ticket_draw(state: int) -> int:

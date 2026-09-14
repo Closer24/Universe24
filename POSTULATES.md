@@ -183,8 +183,9 @@ influence in the simulator. Oracle evaluation is not physical propagation.
 The bound is split in two, as the experiments split it. Energy, momentum,
 matter and every message that a record can control move at most one Node per
 step, without exception. The joint outcome of a bonded pair, two rays emitted
-together, is the one thing that does not: when either end is measured, the
-bond registry answers for both ends at once, at any distance (the
+together, is the one thing that does not: each ray carries the Node and tick
+of its birth through the lattice at link speed, and when either end is
+measured, the bond registry answers for both ends at once, at any distance (the
 [bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
 That answer carries no energy, no momentum and no message, because each end
 alone sees an even coin whatever the other end does; it is the correlation

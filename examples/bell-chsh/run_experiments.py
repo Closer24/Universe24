@@ -57,10 +57,11 @@ def document(
     With capture "threshold" the detectors are deterministic hidden-variable
     devices: a ray is taken when its coherence with the reference reaches one
     half, so the outcome is fixed by lambda and the setting alone. With capture
-    "bond" the two rays share a bond and each plus detector holds its setting:
-    the bond registry, the declared exception to the causal bound, answers for
-    both ends with the singlet's joint law; the seed then seeds the registry
-    and there are no reference lamps.
+    "bond" the two rays are bonded to their origin, the Node and tick of their
+    birth, which each carries until its next interaction; each plus detector
+    holds its setting, and the bond registry, the declared exception to the
+    causal bound, answers for both ends with the singlet's joint law. The seed
+    then seeds the registry and there are no reference lamps.
     """
     body = {
         "fields": ["quanta", "momentum"],
@@ -109,14 +110,6 @@ def document(
                 "extensive": False,
             },
             {
-                "name": "bond",
-                "components": 1,
-                "units": "label",
-                "signed": False,
-                "conserved": False,
-                "extensive": False,
-            },
-            {
                 "name": "setting",
                 "components": 1,
                 "units": "phase step",
@@ -128,14 +121,14 @@ def document(
         "disturbance_types": [
             {
                 "name": "source_alice",
-                "fields": ["quanta", "momentum", "train", "bond"],
-                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 1, "bond": 1},
+                "fields": ["quanta", "momentum", "train"],
+                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 1},
                 "transport": {"mode": "hold"},
             },
             {
                 "name": "source_bob",
-                "fields": ["quanta", "momentum", "train", "bond"],
-                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 2, "bond": 1},
+                "fields": ["quanta", "momentum", "train"],
+                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 2},
                 "transport": {"mode": "hold"},
             },
             {
@@ -192,7 +185,7 @@ def document(
                 "kerengonen_phase": hidden_phase % PHASE_STEPS,
                 "train_field": "train",
                 "heading": [-1, 0, 0],
-                **({"bond_field": "bond"} if bonded else {}),
+                **({"bond_field": "origin"} if bonded else {}),
             },
             {
                 "type": "source_bob",
@@ -204,7 +197,7 @@ def document(
                 "kerengonen_phase": (hidden_phase + HALF_TURN) % PHASE_STEPS,
                 "train_field": "train",
                 "heading": [1, 0, 0],
-                **({"bond_field": "bond"} if bonded else {}),
+                **({"bond_field": "origin"} if bonded else {}),
             },
             {
                 "type": "reference_alice",

@@ -380,9 +380,12 @@ probability of its wave.
 The one declared exception to the causal bound, split off in postulate 4. A
 Kerengonen ray field may add `"bond": {"seed": s}` (identity
 `bonded-ray-field-v1` in the run metadata); an emission with
-`"bond_field": "<owned scalar>"` then bonds every ray it emits with that
-value, so two rays emitted together by two records holding the same value
-are one pair. An absorb rule with `"bond_setting": "<owned scalar>"` is a
+`"bond_field": "origin"` then bonds every ray it emits to its birth: the Node
+that emits it stamps the ray with the code of its own address and the tick,
+and the ray carries that origin, unchanged, until its next interaction, so
+everything born at one Node on one tick is one pair. (`"bond_field":
+"<owned scalar>"` bonds by the emitter's label instead.) An absorb rule with
+`"bond_setting": "<owned scalar>"` is a
 detector whose setting is that field's value in phase steps. When such a
 record meets a bonded ray it does not draw a ticket or read the coherence: it
 asks the bond registry, one object for the whole world seeded by `s`. The
