@@ -46,3 +46,12 @@ def test_capture_salt_is_validated():
     raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": PROBE.PHASE_STEPS, "phase_advance": 0}
     with pytest.raises(ValueError, match="requires the lottery"):
         parse_initial_state(raw)
+
+
+def test_deterministic_hidden_variables_reach_the_bound_and_stop_there():
+    result = PROBE.chsh(seeds=1, capture="threshold")
+    assert result["closed"] and result["capture"] == "threshold"
+    assert [value["E"] for value in result["correlations"].values()] == [-0.5, 0.5, -0.5, -0.5]
+    assert [value["predicted_E"] for value in result["correlations"].values()] == [-0.5, 0.5, -0.5, -0.5]
+    assert result["S"] == 2.0 == result["local_bound"] < result["quantum_S"]
+    assert result["same_setting_E"] == -0.9375

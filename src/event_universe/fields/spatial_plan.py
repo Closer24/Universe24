@@ -268,6 +268,12 @@ class SpatialLaw:
                             share_numerator * TICKET_MODULUS
                         ):
                             share = 0
+                    elif definition.capture == "threshold":
+                        # Whole ray or nothing, decided by the hidden phases alone: taken
+                        # when the coherent share reaches one half, left otherwise.
+                        meter.charge("evaluate")
+                        if checked_work(2 * share_numerator) < share_denominator:
+                            share = 0
                     elif share_numerator < share_denominator:
                         magnitude = checked_work(abs(ray.amount) * share_numerator) // share_denominator
                         share = -magnitude if ray.amount < 0 else magnitude

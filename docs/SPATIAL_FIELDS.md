@@ -259,6 +259,9 @@ record row (`absorb_tickets`), never a global number, and the same seed with
 the same rays repeats the same clicks. An absorb rule may add
 `"capture_salt": k` to start its ticket at the seed plus `k`, so two
 detectors on one field draw their own sequences, two devices with two dice.
+The third choice, `"threshold"`, is the deterministic hidden-variable rule:
+the whole ray is taken when its coherent share reaches one half and left
+otherwise, so the outcome is fixed by the phases alone, with no ticket.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because

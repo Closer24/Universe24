@@ -58,6 +58,19 @@ over every hidden phase, and the salt's validation.
 | Missing pairs | 0 of 4,096 |
 | Quanta closed | every run |
 
+With `--capture threshold` the detectors are deterministic hidden-variable
+devices: a ray is taken when its coherence with the reference reaches one
+half. The outcome is then fixed by the hidden phase and the setting alone, and
+the correlation is the triangle wave of the sign model:
+
+| Quantity | Threshold value |
+| --- | --- |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.5, 0.5, -0.5, -0.5 (predicted the same) |
+| S | 2.0 (predicted 2.0) |
+| Same setting, E(0, 0) | -0.9375 (the half-turn boundary rounds one phase in sixteen) |
+| Plus rates | 0.5156 on both sides |
+| Missing pairs, closure | 0 of 256; every run closed |
+
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against
 `cos^2` 1.0, 0.85, 0.5, 0.15 and 0.0, and Bob's the complement. The first
@@ -68,10 +81,13 @@ state, and the same-setting correlation reads its predicted `-0.5`.
 
 ## Conclusion
 
-The ray gives Bell's test a local model's answer. Each detector obeys Malus's
-law, the two sides are correlated by their shared hidden phase, nothing
-signals, and S lands near `sqrt 2`, well below the local bound 2 and half the
-quantum `2 sqrt 2`. The excess that the quantum singlet shows is exactly what
-no rule on this lattice can produce, whatever the capture, the claim or the
-pace: the ray explains the shared origin and the collapse's timing, not the
-correlation beyond the bound.
+The ray gives Bell's test a local model's answer, twice. With the lottery
+each detector obeys Malus's law and S lands near `sqrt 2`; with deterministic
+hidden variables the equal-setting correlation becomes near perfect and S
+rises to exactly 2, the bound itself, and not a step beyond it. Hidden
+variables instead of dice buy the missing half of the correlation and stop
+at the theorem's line, because the outcome at each side still depends only
+on what is at that side. The excess that the quantum singlet shows, `2 sqrt
+2`, is what no rule on this lattice can produce, whatever the capture, the
+claim or the pace: the ray explains the shared origin and the collapse's
+timing, not the correlation beyond the bound.

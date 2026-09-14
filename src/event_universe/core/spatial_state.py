@@ -666,7 +666,7 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     return (min(max(numerator, 0), denominator), denominator)
 
 
-CAPTURE_MODES = ("share", "lottery")
+CAPTURE_MODES = ("share", "lottery", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
 
 

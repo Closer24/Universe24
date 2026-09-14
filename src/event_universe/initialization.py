@@ -955,11 +955,11 @@ def _spatial_fields(
                 )
                 capture = _text(phased.get("capture", "share"), "kerengonen.capture")
                 if capture not in CAPTURE_MODES:
-                    raise ValueError("kerengonen.capture must be share or lottery")
+                    raise ValueError("kerengonen.capture must be share, lottery or threshold")
                 capture_seed = _integer(phased.get("capture_seed", 0), "kerengonen.capture_seed", 0)
                 if capture_seed >= TICKET_MODULUS:
                     raise ValueError("kerengonen.capture_seed must be below the ticket modulus")
-                if capture == "share" and "capture_seed" in phased:
+                if capture != "lottery" and "capture_seed" in phased:
                     raise ValueError("kerengonen.capture_seed requires the lottery capture")
                 phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
                 if phase_steps > MAX_PHASE_STEPS:

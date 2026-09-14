@@ -1926,3 +1926,20 @@ The claim delivers a train's quanta to its catcher and the momentum of only
 the part the flood can reach; the pull it makes is neither inverse square nor
 flat, and it disappears when the gather is complete. No dark-matter
 appearance from focusing.
+
+## Bell's test with deterministic hidden variables: S = 2 exactly — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A third Kerengonen capture,
+`threshold`: the whole ray is taken when its coherent share reaches one half,
+so a detector's outcome is fixed by the hidden phase and its setting, with no
+ticket. The Bell probe runs it with `--capture threshold`.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,452 tests with five visualization skips |
+| New tests | `tests/test_bell_chsh.py`: the threshold run over the 64 hidden phases gives E = -0.5, 0.5, -0.5, -0.5, S = 2.0 and E(0, 0) = -0.9375, closed, below the quantum 2.828; `tests/test_kerengonen.py`: the capture wording |
+| CHSH, threshold | 64 hidden phases, one run each: E(a, b) = -0.5, E(a, b') = 0.5, E(a', b) = -0.5, E(a', b') = -0.5, exactly the triangle-wave prediction; S = 2.0, the local bound; E(0, 0) = -0.9375; plus rates 0.5156; no missing pair; every run closed |
+| Visualization | Not requested or generated |
+
+Hidden variables instead of dice reach the bound and stop there, as Bell's
+theorem requires of any local model; the quantum excess stays out of reach.

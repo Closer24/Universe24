@@ -44,8 +44,20 @@ COSTS = {
 }
 
 
-def document(hidden_phase: int, alice: int, bob: int, seed: int, ticks: int = TICKS) -> dict:
-    """One pair at hidden phase lambda, detector settings for Alice and Bob, one capture seed."""
+def document(
+    hidden_phase: int,
+    alice: int,
+    bob: int,
+    seed: int,
+    ticks: int = TICKS,
+    capture: str = "lottery",
+) -> dict:
+    """One pair at hidden phase lambda, detector settings for Alice and Bob, one capture seed.
+
+    With capture "threshold" the detectors are deterministic hidden-variable
+    devices: a ray is taken when its coherence with the reference reaches one
+    half, so the outcome is fixed by lambda and the setting alone.
+    """
     body = {
         "fields": ["quanta", "momentum"],
         "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
@@ -129,8 +141,8 @@ def document(hidden_phase: int, alice: int, bob: int, seed: int, ticks: int = TI
                 "kerengonen": {
                     "phase_steps": PHASE_STEPS,
                     "phase_advance": 0,
-                    "capture": "lottery",
-                    "capture_seed": seed,
+                    "capture": capture,
+                    **({"capture_seed": seed} if capture == "lottery" else {}),
                 },
                 "claim": {"ticks": 4 * ticks, "slots": 4},
             }
@@ -187,7 +199,7 @@ def document(hidden_phase: int, alice: int, bob: int, seed: int, ticks: int = TI
                 "momentum_field": "momentum",
                 "claim": True,
                 # Each detector draws its own ticket sequence: two devices, two dice.
-                "capture_salt": salt,
+                **({"capture_salt": salt} if capture == "lottery" else {}),
                 "type": name,
             }
             for name, salt in (
@@ -236,7 +248,7 @@ def outcomes(raw: dict) -> dict:
     }
 
 
-def correlation(alice: int, bob: int, seeds: int = SEEDS) -> dict:
+def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lottery") -> dict:
     """E(a, b) over every hidden phase and the given number of capture seeds."""
     total = count = 0
     plus_alice = plus_bob = 0
@@ -244,7 +256,7 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS) -> dict:
     closed = True
     for hidden in range(PHASE_STEPS):
         for seed in range(1, seeds + 1):
-            result = outcomes(document(hidden, alice, bob, seed))
+            result = outcomes(document(hidden, alice, bob, seed, capture=capture))
             closed = closed and result["closed"]
             if result["alice"] is None or result["bob"] is None:
                 missing += 1
@@ -253,7 +265,14 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS) -> dict:
             count += 1
             plus_alice += result["alice"] > 0
             plus_bob += result["bob"] > 0
-    predicted = -0.5 * math.cos(2 * math.pi * (alice - bob) / PHASE_STEPS)
+    turn = 2 * math.pi * (alice - bob) / PHASE_STEPS
+    if capture == "threshold":
+        # Deterministic detectors: the triangle-wave correlation of the sign model.
+        fraction = (abs(alice - bob) % PHASE_STEPS) / PHASE_STEPS
+        fraction = min(fraction, 1 - fraction)
+        predicted = -(1 - 4 * fraction)
+    else:
+        predicted = -0.5 * math.cos(turn)
     return {
         "alice": alice,
         "bob": bob,
@@ -261,16 +280,17 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS) -> dict:
         "missing": missing,
         "E": round(total / count, 4) if count else None,
         "predicted_E": round(predicted, 4),
-        "quantum_E": round(-math.cos(2 * math.pi * (alice - bob) / PHASE_STEPS), 4),
+        "quantum_E": round(-math.cos(turn), 4),
         "alice_plus_rate": round(plus_alice / count, 4) if count else None,
         "bob_plus_rate": round(plus_bob / count, 4) if count else None,
         "closed": closed,
     }
 
 
-def chsh(seeds: int = SEEDS) -> dict:
+def chsh(seeds: int = SEEDS, capture: str = "lottery") -> dict:
     results = {
-        f"{left},{right}": correlation(SETTINGS[left], SETTINGS[right], seeds) for left, right in PAIRS
+        f"{left},{right}": correlation(SETTINGS[left], SETTINGS[right], seeds, capture)
+        for left, right in PAIRS
     }
     e = {key: value["E"] for key, value in results.items()}
     s = abs(e["a,b"] - e["a,b2"] + e["a2,b"] + e["a2,b2"])
@@ -289,12 +309,13 @@ def chsh(seeds: int = SEEDS) -> dict:
     return {
         "settings": SETTINGS,
         "seeds": seeds,
+        "capture": capture,
         "correlations": results,
         "S": round(s, 4),
         "predicted_S": round(predicted, 4),
         "local_bound": 2,
         "quantum_S": round(quantum, 4),
-        "same_setting_E": correlation(0, 0, seeds)["E"],
+        "same_setting_E": correlation(0, 0, seeds, capture)["E"],
         "closed": all(value["closed"] for value in results.values()),
     }
 
@@ -303,9 +324,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seeds", type=int, default=SEEDS)
+    parser.add_argument("--capture", choices=("lottery", "threshold"), default="lottery")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    result = chsh(args.seeds)
+    result = chsh(args.seeds if args.capture == "lottery" else 1, args.capture)
     report = {
         "source_sha256": source_fingerprint(),
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -313,7 +335,7 @@ def main() -> None:
         "phase_steps": PHASE_STEPS,
         **result,
     }
-    (args.output / "summary.json").write_text(json.dumps(report, indent=2) + "\n")
+    (args.output / f"summary-{args.capture}.json").write_text(json.dumps(report, indent=2) + "\n")
     for key, value in result["correlations"].items():
         print(
             key,
@@ -343,7 +365,7 @@ def main() -> None:
         "same setting E",
         result["same_setting_E"],
     )
-    print("Wrote report: " + str(args.output / "summary.json"))
+    print("Wrote report: " + str(args.output / f"summary-{args.capture}.json"))
 
 
 if __name__ == "__main__":

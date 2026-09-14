@@ -352,8 +352,10 @@ result is what a local model must give: S near the value the two independent
 lotteries predict, below the local bound 2, and far from the quantum 2 sqrt 2.
 The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
-rule on this lattice can. That excess is the open question of this section,
-answered in this repository only by the explicitly nonlocal quantum query.
+rule on this lattice can. Replacing the lottery by deterministic hidden
+variables (the `threshold` capture) raises S to exactly 2 and no further, as
+the theorem says. That excess is the open question of this section, answered
+in this repository only by the explicitly nonlocal quantum query.
 
 The dark-matter question was put to the same rule. Gathering a gravity train
 to whoever catches a ray of it does focus the pull, but into the momentum of

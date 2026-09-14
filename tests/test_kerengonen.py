@@ -372,7 +372,7 @@ def test_lottery_capture_takes_whole_rays_with_the_coherent_probability():
 def test_lottery_capture_is_validated():
     raw = lottery_document(4, 1, 0)
     raw["spatial_fields"][0]["kerengonen"]["capture"] = "dice"
-    with pytest.raises(ValueError, match="share or lottery"):
+    with pytest.raises(ValueError, match="share, lottery or threshold"):
         parse_initial_state(raw)
     raw = lottery_document(4, 1, 0)
     raw["spatial_fields"][0]["kerengonen"]["capture"] = "share"
