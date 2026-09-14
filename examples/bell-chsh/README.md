@@ -110,6 +110,40 @@ measurement, with the lottery drawing its ticket state directly, gave
 reference rays drew numbers a fixed distance apart; the draw now squares the
 state, and the same-setting correlation reads its predicted `-0.5`.
 
+### The door of postulate 22: a number source outside the world
+
+`--source uniform` and `--source biased` hand the registry each pair's number
+from outside the world instead of from its own sequence
+([postulate 22](../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction),
+[the contract](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
+The uniform source is a generator that is not the registry's. The biased source
+keeps every number's upper half below one half, so the end that asks first,
+Alice's detector, always answers +1, and leaves the lower half uniform, so the
+singlet's agreement law is untouched. 16 seeds per slot, 1,024 pairs per
+correlation:
+
+| Quantity | World's sequence | Uniform outside source | Biased outside source |
+| --- | --- | --- | --- |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.709, 0.762, -0.709, -0.709 | -0.697, 0.699, -0.697, -0.697 | -0.703, 0.670, -0.703, -0.703 |
+| S | 2.889 | 2.7911 | 2.7792 |
+| Same setting, E(0, 0) | -1.0 | -1.0 | -1.0 |
+| Alice's plus rate per setting pair | 0.51 | 0.49, 0.49, 0.49, 0.49 | 1.00, 1.00, 1.00, 1.00 |
+| Bob's plus rate per setting pair | 0.48, 0.51, 0.48, 0.48 | 0.51, 0.51, 0.51, 0.51 | 0.15, 0.83, 0.15, 0.15 |
+| Bob's rate shift with Alice's setting | 0.03 | 0.0049 | 0.6866 |
+| Closure | every run | every run | every run |
+
+A uniform source from outside the world is invisible from inside: the Bell
+value, the same-setting correlation and the even rates are those of the
+world's own sequence within the counting spread. A biased source keeps the
+Bell value, because the agreement law lives in the lower half of the number,
+and moves Bob's plus rate with Alice's setting by 0.6866: Bob at
+`b'` reads 0.83 when Alice measures `a` and
+0.15 when she measures `a'`, the
+singlet's `(1 - cos(a - b')) / 2` with Alice's coin fixed. That is a signal
+faster than the causal speed, and it is the only trace an outside source can
+leave: it may choose every single outcome, but not without a bias, and a bias
+is measured at the other end.
+
 ## Conclusion
 
 The ray gives Bell's test a local model's answer, twice. With the lottery
