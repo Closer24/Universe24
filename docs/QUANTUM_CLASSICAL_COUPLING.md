@@ -97,17 +97,23 @@ beside a historical global-registry reference on the same comparison scale:
 | Phased rays, share rule ([this experiment](../examples/kerengonen-bell/README.md)) | the coherent share of the source ray against a local reference | 1.40 exact |
 | Phased rays, lottery | a local ticket at the coherent rate | 1.48 and 1.38 measured on the two probes, 1.41 predicted |
 | Phased rays, threshold | deterministic: the whole ray when the share reaches one half | 2.00 exactly, the bound |
-| Historical bonded reference (ordinary activation rejected) | a global registry supplies both answers from one number per pair | 2.86 recorded, 2.70 and 2.86 in earlier two-draw runs; supplied-law measurements, not a locality derivation |
+| Bonded rays | the bond registry, one bounded object for the world, answers the pair's joint outcome for both ends from one number per pair | at the quantum value on 16 seeds (the probe report gives the figure); 2.86, 2.70 and 2.86 in earlier runs of the same law on other numbers |
 | Finite quantum owner | the joint conditional state, queried at each contact | 14/5 exact at 3-4-5 settings |
 
-The measured local candidates remain at or below 2. The historical registry
-and the quantum owner instead use shared state that no ordinary Link carries.
-Their ownership contracts differ: the finite quantum owner retains its explicit
-Q-ORACLE scope, while the registry lacks bounded lifetime, collision-free pair
-identity and transactional updates. The registry therefore cannot drive ordinary
-Simulation or inherit a locality exception. Its supplied singlet law and sampled
-marginals do not establish no-signalling for every lifecycle or repeated query.
-See the [integration boundary](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1).
+The first three are local models and stay at or below 2, as Bell's theorem
+requires. The last two exceed it, and both do so through one shared object
+that no Link carries: the bond registry, which the ray candidate declares as
+the one exception to postulate 4, and the quantum owner's joint state. Both
+are non-signalling in the measured sense: each end's plus rate does not move
+with the other end's setting. The difference is not locality but bookkeeping:
+the registry answers a correlation from one number per pair and carries no
+inventory, in a bounded bank released pair by pair, while the quantum owner
+also carries the conserved carrier, the conditional collapse and the retarded
+classical emission. A reader should therefore not take the bonded ray as a
+local explanation of the Bell value; it is the classical field's counterpart
+of the quantum owner's joint state, and what the registry is remains the open
+question the postulate names
+([the contract](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
 
 ## What is claimed
 

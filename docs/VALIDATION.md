@@ -14,12 +14,12 @@ observer failure, immutable pace preparation and release of an empty wait.
 on Python 3.14.7. The independent physics review passed the first 49 cases and
 the final empty-wait regression separately. The full affected gate and required
 CI remain the merge requirements; their actual outcome is recorded in the PR.
-The global bond reference is preserved but cannot drive ordinary Simulation.
-The existing quantum owner and Q-ORACLE option are unchanged.
+That integration set the bond registry aside; the bounded registry entry
+below restores it as the declared split of postulate 4. The existing quantum
+owner and Q-ORACLE option are unchanged.
 
 Follow-up integration includes main `a686925`, the single-draw reference branch
-at `df9c350`, and the relativity probe branch at `280a43b`. The single-draw
-change remains isolated from ordinary Simulation. Replay now compares the
+at `df9c350`, and the relativity probe branch at `280a43b`. Replay now compares the
 actual exposed snapshots (hashes are display only), with assertion failures for
 mismatches and a changed-seed control. The eight-tick quantum replay and the
 12-tick equal-mass collision restart passed; this is no claim about inverting
@@ -2524,10 +2524,8 @@ of postulate 4 and nothing else.
 
 ## Postulate 22: one integer per interaction - 2026-09-14
 
-Historical branch evidence only. The single-draw registry is retained as a
-standalone reference, while ordinary activation is rejected. Current postulate
-22 scopes replay separately from physical reversibility and does not assert
-no-signalling for this registry across arbitrary queries or lifecycles.
+The registry below was then made bounded and idempotent (the entry that
+follows); its numbers were re-measured there.
 
 Base: `a686925` on `main` (after PR #116). The bond registry now draws one
 number per bonded pair: the first question draws it and answers by its upper
