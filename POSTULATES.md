@@ -664,3 +664,14 @@ one number answers both ends and `S` reaches the quantum value. The
 implements the pair's single number; the [Bell probe](examples/bell-chsh/README.md)
 measures it. What the sequence is, beyond a configured seed, is the open
 question of postulate 12 in another form.
+
+Three things follow from this postulate without a further assumption. The
+sequence is the only place where information not already in the world's
+state enters the world, because everything else is fixed by the rules and the
+initial state. The model is indifferent to where the sequence comes from: a
+seed, a file or a source outside the world give the same physics as long as
+the numbers are used the same way. And whatever supplies the numbers is bound
+by no-signalling: it may choose any single outcome without leaving a
+statistical trace, but a biased supply moves one end's plus rate with the
+other end's setting, which is a signal faster than the causal speed and is
+measured as such. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
