@@ -51,6 +51,9 @@ def body(name, momentum):
             "direction_field": "momentum",
             "rate": op("min", 120, op("sum", op("abs", {"field": "momentum"}))),
             "rate_denominator": 120,
+            # Balanced routing interleaves lanes by the reduced weight ratio;
+            # the default cyclic walk would spend 120 moves on x first.
+            "routing": "balanced",
         },
     }
 

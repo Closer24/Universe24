@@ -87,6 +87,11 @@ def document(emission):
                     "direction_field": "momentum",
                     "rate": op("min", 120, op("sum", op("abs", {"field": "momentum"}))),
                     "rate_denominator": 120,
+                    # Cyclic routing walks the raw weight cycle (120 moves along x
+                    # before the first along y); balanced routing reduces the
+                    # weights by their gcd and interleaves lanes, so a body with
+                    # momentum (120, 18, 0) actually drifts as 20:3.
+                    "routing": "balanced",
                 },
             },
         ],
