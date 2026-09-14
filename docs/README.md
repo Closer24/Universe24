@@ -47,7 +47,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Quantum and classical coupling](QUANTUM_CLASSICAL_COUPLING.md) | Claims, non-claims, measured evidence and related work for the hybrid model, written for external review |
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
 | [Two-wing Bell test](../examples/quantum/bell_chsh.md) | CHSH 14/5 from two separated lattice wings on the canonical runner, seeded coincidence counts, no-signalling marginals and a dephased control at 6/5 |
-| [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact and catalog electron/positron contact fields, rendered from recorded runs with names, charges and masses |
+| [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact, catalog electron/positron contact fields, and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges and masses |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |

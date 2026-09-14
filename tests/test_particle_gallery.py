@@ -59,6 +59,67 @@ def test_catalog_pair_records_opposite_fields_and_two_captures(tmp_path):
     assert not any((1, True) == s or (3, False) == s for s in signs)
 
 
+def test_reaction_laws_validate_and_conserve_every_declared_inventory():
+    raw = json.loads(GALLERY.REACTIONS_TEMPLATE.read_text(encoding="utf-8"))
+    assert raw["model_id"] == "configured-lepton-reactions-v1"
+    assert [f["name"] for f in raw["fields"] if f["conserved"]] == [
+        "energy",
+        "momentum",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon",
+    ]
+    assert [r["name"] for r in raw["interactions"]] == [
+        "pair_to_muons",
+        "annihilation",
+        "w_minus_decay",
+        "w_plus_decay",
+        "muon_decay_step_1",
+        "antimuon_decay_step_1",
+        "beta_decay_step_1",
+    ]
+    for name in GALLERY.REACTION_SCENARIOS:
+        assert validate_configuration(json.dumps(GALLERY.reaction_configuration(name)).encode()).valid
+
+
+def test_reactions_record_annihilation_muon_chain_and_beta_decay(tmp_path):
+    results = GALLERY.run_reactions(tmp_path / "gallery")
+    annihilation = results["annihilation"]["summary"]
+    assert annihilation["events"] == [{"tick": 5, "position": [7, 7, 1], "rule": "annihilation"}]
+    assert [r[1:3] for r in annihilation["final_records"]] == [["photon", 13], ["photon", 13]]
+    assert annihilation["final_totals"] == annihilation["initial_totals"]
+    muon = results["muon_pair"]["summary"]
+    assert [(e["tick"], e["rule"]) for e in muon["events"]] == [
+        (5, "pair_to_muons"),
+        (8, "antimuon_decay_step_1"),
+        (8, "muon_decay_step_1"),
+        (9, "w_plus_decay"),
+        (9, "w_minus_decay"),
+    ]
+    kinds = sorted(r[1] for r in muon["final_records"])
+    assert kinds == [
+        "electron",
+        "electron_antineutrino",
+        "electron_neutrino",
+        "muon_antineutrino",
+        "muon_neutrino",
+        "positron",
+    ]
+    assert muon["final_totals"]["energy"] == [2200] and muon["final_totals"]["lepton_mu"] == [0]
+    assert muon["final_totals"]["lepton_e"] == [0] and muon["final_totals"]["charge"] == [0]
+    beta = results["beta_decay"]["summary"]
+    assert [(e["tick"], e["rule"]) for e in beta["events"]] == [
+        (4, "beta_decay_step_1"),
+        (5, "w_minus_decay"),
+    ]
+    assert sorted(r[1] for r in beta["final_records"]) == ["electron", "electron_antineutrino", "proton"]
+    assert beta["final_totals"] == beta["initial_totals"]
+    assert beta["final_totals"]["baryon"] == [1] and beta["final_totals"]["charge"] == [0]
+    w_frame = results["beta_decay"]["frames"][5]
+    assert any(d["type"] == "w_minus" for node in w_frame["nodes"] for d in node["disturbances"])
+
+
 @pytest.mark.visualization
 def test_gallery_renders_two_animations_and_two_stills(tmp_path):
     pytest.importorskip("matplotlib")
@@ -77,3 +138,14 @@ def test_gallery_renders_two_animations_and_two_stills(tmp_path):
     ]
     assert all(p.stat().st_size for p in saved)
     assert Image.open(saved[0]).n_frames >= 9 and Image.open(saved[2]).n_frames >= 17
+    reactions = GALLERY.run_reactions(output)
+    rendered = GALLERY.render_reactions(output, reactions)
+    assert [p.name for p in rendered] == [
+        "reaction_annihilation.gif",
+        "reaction_annihilation_event.png",
+        "reaction_muon_pair.gif",
+        "reaction_muon_pair_event.png",
+        "reaction_beta_decay.gif",
+        "reaction_beta_decay_event.png",
+    ]
+    assert all(p.stat().st_size for p in rendered)

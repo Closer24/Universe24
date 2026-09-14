@@ -39,6 +39,62 @@ BACKSCATTER_SEEDS = [
     {"position": [11, 8, 8], "type": "positron"},
 ]
 BACKSCATTER_TICKS = 96
+REACTIONS_TEMPLATE = HERE / "lepton_reactions.json"
+REACTION_SCENARIOS = {
+    "annihilation": {
+        "title": "Electron-positron annihilation into two photons",
+        "ticks": 12,
+        "seeds": [
+            {"position": [2, 7, 1], "type": "electron"},
+            {"position": [12, 7, 1], "type": "positron"},
+        ],
+    },
+    "muon_pair": {
+        "title": "Electron-positron annihilation into a muon pair, then muon decays",
+        "ticks": 12,
+        "seeds": [
+            {
+                "position": [2, 7, 1],
+                "type": "electron",
+                "values": {"energy": 1100, "momentum": [1100, 0, 0]},
+            },
+            {
+                "position": [12, 7, 1],
+                "type": "positron",
+                "values": {"energy": 1100, "momentum": [-1100, 0, 0]},
+            },
+            {"position": [7, 10, 1], "type": "vacuum_slot"},
+            {"position": [7, 10, 1], "type": "vacuum_slot"},
+            {"position": [7, 4, 1], "type": "vacuum_slot"},
+            {"position": [7, 4, 1], "type": "vacuum_slot"},
+        ],
+    },
+    "beta_decay": {
+        "title": "Neutron beta decay through a one-tick W boson",
+        "ticks": 11,
+        "seeds": [
+            {"position": [3, 7, 1], "type": "neutron"},
+            {"position": [7, 7, 1], "type": "vacuum_slot"},
+            {"position": [7, 7, 1], "type": "vacuum_slot"},
+        ],
+    },
+}
+SYMBOLS = {
+    "electron": ("e\u207b", "#5ea8ff"),
+    "positron": ("e\u207a", "#ff6b6b"),
+    "photon": ("\u03b3", "#fff1a8"),
+    "muon": ("\u03bc\u207b", "#b48cff"),
+    "antimuon": ("\u03bc\u207a", "#ff8cf0"),
+    "muon_neutrino": ("\u03bd\u03bc", "#9fe0c8"),
+    "muon_antineutrino": ("\u03bd\u0305\u03bc", "#9fe0c8"),
+    "electron_neutrino": ("\u03bd\u2091", "#9fe0c8"),
+    "electron_antineutrino": ("\u03bd\u0305\u2091", "#9fe0c8"),
+    "w_minus": ("W\u207b", "#ffa64d"),
+    "w_plus": ("W\u207a", "#ffa64d"),
+    "neutron": ("n", "#c9d3ea"),
+    "proton": ("p", "#ff8a65"),
+    "vacuum_slot": ("vacuum slot", "#3a4562"),
+}
 BACKGROUND = "#0b1020"
 INK = "#e8ecf4"
 DIM = "#8a95b3"
@@ -78,6 +134,15 @@ def catalog_configuration() -> dict[str, Any]:
     assert spec.loader is not None
     spec.loader.exec_module(module)
     raw, _provenance = module.prepare(["electron", "positron"])
+    return raw
+
+
+def reaction_configuration(name: str) -> dict[str, Any]:
+    """The checked-in reaction laws with one scenario's seeds and run length."""
+    raw = json.loads(REACTIONS_TEMPLATE.read_text(encoding="utf-8"))
+    scenario = REACTION_SCENARIOS[name]
+    raw["seeds"] = json.loads(json.dumps(scenario["seeds"]))
+    raw["ticks"] = scenario["ticks"]
     return raw
 
 
@@ -175,6 +240,77 @@ def contact_summary(case_dir: Path) -> dict[str, Any]:
         ],
         "final_totals": report["final_totals"],
         "source_totals": report["source_totals"],
+    }
+
+
+def _records_by_node(frame: dict[str, Any]) -> dict[tuple[int, ...], list[dict[str, Any]]]:
+    return {
+        tuple(node["position"]): [d for d in node["disturbances"] if d["type"] != "vacuum_slot"]
+        for node in frame["nodes"]
+        if any(d["type"] != "vacuum_slot" for d in node["disturbances"])
+    }
+
+
+def sent_types(case_dir: Path) -> dict[tuple[int, tuple[int, ...]], list[str]]:
+    """Record types sent from each Node at each tick, from the event trace."""
+    table: dict[tuple[int, tuple[int, ...]], list[str]] = {}
+    for line in (case_dir / "events.jsonl").read_text(encoding="utf-8").splitlines():
+        event = json.loads(line)
+        if event["event"] == "sent":
+            table.setdefault((event["tick"], tuple(event["position"])), []).append(event["disturbance"])
+    return table
+
+
+def reaction_events(
+    frames: list[dict[str, Any]],
+    sent: dict[tuple[int, tuple[int, ...]], list[str]],
+    rules: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """A rule fired at (tick, Node) when its inputs are recorded there and its outputs leave or stay."""
+    events = []
+    for index, frame in enumerate(frames):
+        following = frames[index + 1] if index + 1 < len(frames) else None
+        present = {
+            tuple(node["position"]): [d["type"] for d in node["disturbances"]] for node in frame["nodes"]
+        }
+        held = (
+            {}
+            if following is None
+            else {
+                tuple(node["position"]): [d["type"] for d in node["disturbances"]]
+                for node in following["nodes"]
+            }
+        )
+        for position, kinds in present.items():
+            produced = sent.get((frame["tick"], position), []) + held.get(position, [])
+            for rule in rules:
+                left, right = rule["left_type"], rule["right_type"]
+                if left not in kinds or right not in kinds:
+                    continue
+                outputs = [rule["output_types"]["left"], rule["output_types"]["right"]]
+                remaining = list(produced)
+                if all(o in remaining and (remaining.remove(o) or True) for o in outputs):
+                    events.append(
+                        {"tick": frame["tick"], "position": list(position), "rule": rule["name"]}
+                    )
+    return events
+
+
+def reaction_summary(case_dir: Path, frames: list[dict[str, Any]]) -> dict[str, Any]:
+    initialization = json.loads((case_dir / "initialization.json").read_text(encoding="utf-8"))
+    report = json.loads((case_dir / "run.json").read_text(encoding="utf-8"))
+    final = _records_by_node(frames[-1])
+    return {
+        "events": reaction_events(frames, sent_types(case_dir), initialization["interactions"]),
+        "final_records": sorted(
+            (list(p), d["type"], d["values"]["energy"][0], d["values"]["momentum"])
+            for p, records in final.items()
+            for d in records
+        ),
+        "initial_totals": report["initial_totals"],
+        "final_totals": report["final_totals"],
+        "escaped_totals": report["escaped_totals"],
+        "accounting_balanced": report["accounting_balanced_at_every_completed_tick"],
     }
 
 
@@ -459,6 +595,120 @@ def draw_contact_frame(
     return fig
 
 
+def _reaction_caption(events: list[dict[str, Any]], tick: int, rules: dict[str, dict[str, Any]]) -> str:
+    parts = []
+    for event in events:
+        if event["tick"] != tick:
+            continue
+        rule = rules[event["rule"]]
+        left, right = rule["left_type"], rule["right_type"]
+        inputs = [SYMBOLS[left][0]] + ([] if right == "vacuum_slot" else [SYMBOLS[right][0]])
+        outputs = [SYMBOLS[rule["output_types"][s]][0] for s in ("left", "right")]
+        parts.append(" + ".join(inputs) + "  \u2192  " + " + ".join(outputs) + f"   ({rule['name']})")
+    return "     ".join(parts)
+
+
+def draw_reaction_frame(
+    frame: dict[str, Any],
+    scenario: str,
+    shape: list[int],
+    events: list[dict[str, Any]],
+    rules: dict[str, dict[str, Any]],
+    plt: Any,
+    line: Any,
+) -> Any:
+    fig, ax = _figure(plt)
+    ax.set_box_aspect((shape[0], shape[1], 3), zoom=2.2)
+    ax.set_xlim(-0.5, shape[0] - 0.5)
+    ax.set_ylim(-0.5, shape[1] - 0.5)
+    ax.set_zlim(0, 2)
+    ax.view_init(elev=38, azim=-90)
+    _grid_plane(ax, shape, 1, line)
+    tick = frame["tick"]
+    fired = {tuple(e["position"]) for e in events if e["tick"] == tick}
+    for position in fired:
+        _glow(ax, list(position), FLASH, 320)
+    for node in frame["nodes"]:
+        p = node["position"]
+        stack = 0
+        for record in node["disturbances"]:
+            kind = record["type"]
+            symbol, color = SYMBOLS.get(kind, (kind, INK))
+            if kind == "vacuum_slot":
+                ax.scatter(
+                    [p[0]],
+                    [p[1]],
+                    [p[2]],
+                    s=60,
+                    facecolors="none",
+                    edgecolors=color,
+                    linewidths=0.9,
+                    depthshade=False,
+                )
+                continue
+            values = record["values"]
+            energy, momentum_vector = values["energy"][0], values["momentum"]
+            _glow(ax, p, color, 150 if kind not in ("photon",) else 110)
+            if any(momentum_vector):
+                norm = sum(abs(c) for c in momentum_vector)
+                ax.quiver(
+                    p[0],
+                    p[1],
+                    p[2],
+                    1.3 * momentum_vector[0] / norm,
+                    1.3 * momentum_vector[1] / norm,
+                    0,
+                    color=color,
+                    linewidth=1.8,
+                    arrow_length_ratio=0.35,
+                )
+            label = f"{kind.replace('_', ' ')}  {symbol}"
+            detail = f"E = {energy / 10:g} MeV   p = ({momentum_vector[0] / 10:g}, {momentum_vector[1] / 10:g}, 0)   q = {values['charge'][0]:+d}"
+            dy = 0.9 + 1.15 * stack
+            ax.text(
+                p[0],
+                p[1] + dy,
+                p[2] + 0.4,
+                label,
+                color=color,
+                fontsize=9.5,
+                ha="center",
+                fontweight="bold",
+            )
+            ax.text(p[0], p[1] + dy - 0.38, p[2] + 0.4, detail, color=color, fontsize=7.2, ha="center")
+            stack += 1
+    _unclip(ax)
+    caption = _reaction_caption(events, tick, rules)
+    fig.text(
+        0.03, 0.93, REACTION_SCENARIOS[scenario]["title"], color=INK, fontsize=16, fontweight="bold"
+    )
+    fig.text(
+        0.03,
+        0.88,
+        f"tick {tick:02d}   open 15 x 15 x 3 lattice, plane z = 1   configured two-record conversions; energy, momentum, charge, lepton and baryon numbers are conserved inventories",
+        color=DIM,
+        fontsize=9.5,
+    )
+    fig.text(
+        0.03,
+        0.04,
+        caption
+        if caption
+        else "records move one Node per tick along their unit direction; vacuum slots are the configured decay locations",
+        color=INK if caption else DIM,
+        fontsize=11 if caption else 9.5,
+    )
+    fig.text(
+        0.97,
+        0.005,
+        "energies and momenta in MeV from recorded values (units of 0.1 MeV); rest masses are not enforced on the shell",
+        color=DIM,
+        fontsize=8,
+        ha="right",
+    )
+    return fig
+
+
 def _image(fig: Any, plt: Any) -> Any:
     from PIL import Image
 
@@ -501,6 +751,55 @@ def run_contact_fields(output: Path) -> dict[str, Any]:
     frames = recorded_frames(case_dir)
     summary = contact_summary(case_dir)
     return {"case": case_dir.name, "frames": frames, "summary": summary}
+
+
+def run_reactions(output: Path) -> dict[str, Any]:
+    results = {}
+    for name in REACTION_SCENARIOS:
+        case_dir = _run(reaction_configuration(name), output, "reaction_" + name, visualize=True)
+        frames = recorded_frames(case_dir)
+        summary = reaction_summary(case_dir, frames)
+        assert summary["accounting_balanced"], name
+        results[name] = {"case": case_dir.name, "frames": frames, "summary": summary}
+    return results
+
+
+def render_reactions(output: Path, reactions: dict[str, Any]) -> tuple[Path, ...]:
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d.art3d import Line3DCollection
+
+    saved = []
+    for name in reactions:
+        saved.append(output / f"reaction_{name}.gif")
+        saved.append(output / f"reaction_{name}_event.png")
+    for path in saved:
+        path.touch()
+    with ArtifactLease(output, saved):
+        for index, (name, result) in enumerate(reactions.items()):
+            initialization = json.loads(
+                (output / result["case"] / "initialization.json").read_text(encoding="utf-8")
+            )
+            rules = {r["name"]: r for r in initialization["interactions"]}
+            events = result["summary"]["events"]
+            event_ticks = {e["tick"] for e in events}
+            images, durations = [], []
+            for frame in result["frames"]:
+                image = _image(
+                    draw_reaction_frame(
+                        frame, name, initialization["shape"], events, rules, plt, Line3DCollection
+                    ),
+                    plt,
+                )
+                hold = CONTACT_HOLD if frame["tick"] in event_ticks else 1
+                images.extend([image] * hold)
+                durations.extend([FRAME_MS] * hold)
+                if frame["tick"] == min(event_ticks, default=-1):
+                    image.save(saved[2 * index + 1])
+            _save_gif(images, durations, saved[2 * index])
+    return tuple(saved)
 
 
 def render(output: Path, backscatter: dict[str, Any], contact: dict[str, Any]) -> tuple[Path, ...]:
@@ -576,12 +875,15 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
     backscatter = run_backscatter(out)
     contact = run_contact_fields(out)
+    reactions = run_reactions(out)
     summary = {
         "backscatter": {k: v for k, v in backscatter.items() if k != "timeline"},
         "contact_fields": contact["summary"],
+        "reactions": {name: r["summary"] for name, r in reactions.items()},
     }
     if not args.no_render:
         summary["rendered"] = [str(p) for p in render(out, backscatter, contact)]
+        summary["rendered"] += [str(p) for p in render_reactions(out, reactions)]
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items() if k != "rendered"}, indent=None)[:600])
 
