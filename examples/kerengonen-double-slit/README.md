@@ -89,11 +89,46 @@ for the share rule; every quantum is accounted for in all three worlds. This
 is the fringe as single detections: each quantum lands whole at one Node, and
 the pattern is in how often.
 
+### One lamp, an absorbing wall, two slits that re-emit: the wave passes through
+
+The falsification test. A single lamp twelve links upstream fires a forward
+cone of 117 headings (within 45 degrees of +x, scale 64), 64 quanta per ray,
+for 64 ticks. Eight links downstream stands a wall of absorbers across the
+whole width, with two Nodes at `y = -3` and `y = +3` of a `slit` type: a slit
+absorbs like the wall but re-emits its whole stock every cycle over the same
+cone, at the phase it absorbed plus one advance, as
+[carried](../../docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+emission. The screen is twelve links beyond the wall. Four worlds: both
+slits, each slit alone, and both slits on the plain field.
+
+| Screen y | Path difference | Two slits | Slit A alone | Slit B alone | Sum of the two | Plain, two slits | Two slits over the sum |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0 | 0 | 2430 | 1110 | 1110 | 2220 | 2220 | 1.09 |
+| +-1 | +-2 | 978 | 950, 1080 | 1080, 950 | 2030 | 2030 | 0.48 |
+| +-2 | +-4 | 140 | 1365, 875 | 875, 1365 | 2240 | 2240 | 0.06 |
+| +-3 | +-6 | 1102 | 1000, 1020 | 1020, 1000 | 2020 | 2020 | 0.55 |
+| +-4 | +-6 | 1101 | 1365, 825 | 825, 1365 | 2190 | 2190 | 0.50 |
+| +-8 | +-6 | 875 | 875, 580 | 725, 875 | 1600, 1455 | 1600, 1455 | 0.55, 0.60 |
+| +-10 | +-6 | 987 | 825, 0 | 0, 825 | 825 | 825 | 1.20 |
+| +-12 | +-6 | 465 | 465, 0 | 0, 465 | 465 | 465 | 1.00 |
+
+Without phase, two slits give exactly the sum of the two single slits at every
+Node: amounts add, nothing more. With phase the same two slits give the fringe
+of the two-lamp experiment: the center above the sum, a quarter turn at one
+half, a half turn at six percent, three quarters near one half, and where only
+one slit's rays reach (`|y| >= 11`) exactly the single-slit value, because
+there is nothing to interfere with. No second lamp exists: the two sources
+are the two slits, lit by one wave, and their phases are what the wave carried
+to them, 11 links from the lamp for both. The wall keeps 332,800 quanta in the
+phased and the plain world alike, and every world closes on its initial stock.
+
 ## Conclusion
 
 Rays with a phase interfere where they meet and are absorbed whole where they
 land: the fringe is in the absorption, the amounts are never changed, and the
-ledger closes. Two limits are visible in the numbers. Interference needs rays
+ledger closes. A single lamp behind two re-emitting slits gives the same
+fringe, so the wave's phase survives absorption and re-emission at a Node and
+the double slit needs no second lamp. Two limits are visible in the numbers. Interference needs rays
 of both lamps at one Node on one tick, so ticks on which only one lamp's rays
 are present pass ungated; and the pattern follows Manhattan path difference on
 this lattice, not Euclidean. Quanta that cancel are not redistributed to the

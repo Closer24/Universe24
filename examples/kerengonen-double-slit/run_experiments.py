@@ -38,6 +38,8 @@ SOURCE_X = CENTER - 12  # the single lamp of the wall experiment
 WALL_X = CENTER - 4  # an absorbing wall with two re-emitting slits at y = +-3
 SOURCE_PER_RAY = 64
 SOURCE_TICKS = 64
+WALL_HEADINGS = 256  # a forward cone within 45 degrees of +x at scale 64: 117 distinct
+WALL_HEADING_SCALE = 64
 COSTS = {
     name: 1
     for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
@@ -49,6 +51,17 @@ def planar_headings(count: int, scale: int) -> list[list[int]]:
     result: list[list[int]] = []
     for i in range(count):
         angle = -math.pi / 2 + math.pi * (i + 0.5) / count
+        heading = [round(scale * math.cos(angle)), round(scale * math.sin(angle)), 0]
+        if heading[0] > 0 and heading not in result:
+            result.append(heading)
+    return result
+
+
+def cone_headings(count: int, scale: int) -> list[list[int]]:
+    """Distinct integer headings within 45 degrees of +x: nothing crawls along a wall."""
+    result: list[list[int]] = []
+    for i in range(count):
+        angle = -math.pi / 4 + math.pi / 2 * (i + 0.5) / count
         heading = [round(scale * math.cos(angle)), round(scale * math.sin(angle)), 0]
         if heading[0] > 0 and heading not in result:
             result.append(heading)
@@ -356,10 +369,13 @@ def main() -> None:
     }
     lottery["share_single_quanta"] = run(document(LOTTERY_TICKS, headings, per_ray=1))
     # One source behind a wall: the two slits are Huygens sources of the same wave.
+    # A forward cone of headings keeps re-emitted rays off the wall plane.
+    cone = cone_headings(WALL_HEADINGS, WALL_HEADING_SCALE)
     wall = {
-        "two_slits": run_wall(wall_document(SOURCE_TICKS, headings)),
-        "one_slit": run_wall(wall_document(SOURCE_TICKS, headings, slits=(-SLIT_HALF,))),
-        "two_slits_plain": run_wall(wall_document(SOURCE_TICKS, headings, phase_steps=0)),
+        "two_slits": run_wall(wall_document(SOURCE_TICKS, cone)),
+        "slit_a_only": run_wall(wall_document(SOURCE_TICKS, cone, slits=(-SLIT_HALF,))),
+        "slit_b_only": run_wall(wall_document(SOURCE_TICKS, cone, slits=(SLIT_HALF,))),
+        "two_slits_plain": run_wall(wall_document(SOURCE_TICKS, cone, phase_steps=0)),
     }
     # Eight headings, 24 ticks, a five-Node screen: the (16, +-3) headings of both
     # lamps meet at y = 0 after 19 links each, in phase, under the event audit.
@@ -395,6 +411,7 @@ def main() -> None:
             name: {k: v for k, v in world.items() if k != "profile"} for name, world in wall.items()
         },
         "wall_ticks": SOURCE_TICKS,
+        "wall_headings": len(cone),
         "audited": {k: v for k, v in audited.items() if k != "profile"}
         | {"profile": audited["profile"]},
     }
