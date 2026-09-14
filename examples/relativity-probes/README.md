@@ -214,6 +214,29 @@ links of their turning radius. The universe here is attraction plus initial
 motion, and the initial motion loses. Weaker fields (emission 2400 and 600)
 are recorded below to locate the critical speed.
 
+## 5. Redshift without recession (`redshift_without_expansion.py`)
+
+Twelve light bodies one link apart run at c along a row past a mass whose
+emission of the `computation` field grows by 600 every cycle (a universe still
+filling with field). `delay_direction: "along"`, budget 40, cyclic routing
+(balanced routing would price 512 route operations per cycle and dominate the
+budget). The eye at the end of the row records only arrival ticks.
+
+| | arrival ticks of bodies 1..12 | gaps |
+| --- | --- | --- |
+| growth 0 (control) | 21, 22, …, 32 | all 1 |
+| growth 600 | 35, 36, 39, 51, 52, 52, 53, 56, 56, 59, two not yet arrived by 60 | 1, 3, 12, 1, 0, 1, 3, 0, 3 |
+
+With the field growing, the train arrives late and stretched: ten bodies span
+24 ticks instead of nine, mean spacing 2.7 links per tick, z ≈ 1.7 averaged —
+a redshift produced by delay growth along the path, with no recession and no
+expansion term. The stretch is not smooth: the departure delay is an integer
+number of extra cycles, so bodies bunch (gap 0) and separate (gap 12) as the
+load crosses each budget multiple. Durations stretch with the spacing, since
+the same delay acts on every part of a signal. This is the model's own
+candidate for a distance-redshift relation; it does not by itself give an
+accelerating relation, and its statistical form is quantized.
+
 ## What these probes do not show
 
 They do not derive gravity, the 1/b lensing law, the factor two of general
