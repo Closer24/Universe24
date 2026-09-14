@@ -275,6 +275,19 @@ The model therefore has no dark-matter substitute of its own: a flat rotation
 curve would need an explicitly extended source, which is dark matter by
 another name, or a force law that no local integer transport here produces.
 
+### Closed four-body universe (`cosmic_expansion.py 600 80 5 80 periodic`)
+
+In the 29 × 29 × 3 periodic box every launched body meets the images of the
+others within fourteen links: even the field-free control "turns around" at
+distance 14 (the minimal-image distance peaks at half the box), so the
+open-box labels do not apply. What survives the wrap: v0 = 0 recollapses
+(5 → 3.5), v0 = 0.125 c is still expanding at tick 80 (5 → 10.5, decelerating),
+and every faster launch reaches the half-box and comes back through the
+images. A closed universe this small is bound by construction — its size is
+below the distance a free body covers in the run — which is the general point:
+in a closed Universe24 "escape" does not exist, only the size of the box
+against the launch speed and the accumulating field.
+
 ### In a closed universe (`... periodic ...`)
 
 Universe24 is closed. With a periodic boundary the field never leaves, so the

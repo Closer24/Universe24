@@ -11,7 +11,7 @@ For each v0 the probe reports the mean distance of the bodies from the centre
 over time, whether the bodies turned around (recollapse) or left the slab
 (escape), and the speed at which the two regimes separate.
 
-usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays]
+usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays] [side]
 """
 
 import sys
@@ -28,8 +28,11 @@ TICKS = int(sys.argv[4]) if len(sys.argv) > 4 else 60
 BOUNDARY = sys.argv[5] if len(sys.argv) > 5 else "open"
 # "rays": the masses emit straight rays (isotropic far field) instead of octants.
 RAYS = len(sys.argv) > 6 and sys.argv[6] == "rays"
-SHAPE = [29, 29, 3]
-CENTER = (14, 14, 1)
+# Box side in x and y; a periodic box must be wide enough that no body meets its
+# own image within the run (a body at c covers ticks links).
+SIDE = int(sys.argv[7]) if len(sys.argv) > 7 else 29
+SHAPE = [SIDE, SIDE, 3]
+CENTER = (SIDE // 2, SIDE // 2, 1)
 AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 
@@ -226,7 +229,7 @@ def label(history, escaped):
 if __name__ == "__main__":
     print(
         f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, "
-        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}"
+        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}, side {SIDE}"
     )
     print("control without a field: v0 = 60 ->", label(*run(60, 0)))
     for v0 in (0, 15, 30, 45, 60, 90, 120):
