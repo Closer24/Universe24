@@ -153,7 +153,7 @@ def run(raw: dict) -> dict:
 
 def period(readings: dict[int, int]) -> int | None:
     values = [readings[x] for x in sorted(readings)]
-    for candidate in range(2, len(values) // 2):
+    for candidate in range(2, len(values) // 2 + 2):
         if all(values[i] == values[i + candidate] for i in range(len(values) - candidate)):
             return candidate
     return None
