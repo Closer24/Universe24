@@ -1521,6 +1521,12 @@ def parse_initial_state(document: object) -> InitialState:
             "node_execution",
             "conservation_contract",
             "spatial_computation_delay",
+            "field_phase_first",
+            "arrival_port_blind",
+            "allocation_phase",
+            "computation_field",
+            "delay_direction",
+            "least_delay_routing",
         },
         required,
     )
@@ -1584,6 +1590,18 @@ def parse_initial_state(document: object) -> InitialState:
         spatial_computation_delay=_boolean(
             obj.get("spatial_computation_delay", False), "spatial_computation_delay"
         ),
+        field_phase_first=_boolean(obj.get("field_phase_first", False), "field_phase_first"),
+        arrival_port_blind=_boolean(obj.get("arrival_port_blind", False), "arrival_port_blind"),
+        allocation_phase=_text(obj.get("allocation_phase", "straight"), "allocation_phase"),
+        computation_field=(
+            None
+            if "computation_field" not in obj
+            else _index(obj["computation_field"], _names(fields), "computation_field")
+        ),
+        delay_direction=(
+            None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
+        ),
+        least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")

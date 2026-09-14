@@ -370,6 +370,17 @@ class SpatialEngine:
                 self.links[packet.origin] = tuple(links)
             self._notify(notifications)
 
+    def freeze_samples(self, residents: Mapping[Address3, DisturbanceNode]) -> None:
+        """Freeze coupled samples after this interval's field phase has delivered."""
+        if self.coupler is None:
+            return
+        coupled_types = selected_type_set(
+            self.initial.spatial_couplings, self.initial.spatial_interactions
+        )
+        for position, carrier in residents.items():
+            if any(r is not None and r.type_index in coupled_types for r in carrier.records):
+                self._at(position).freeze_sample(self._services)
+
     def close(self, tick: int, residents: Mapping[Address3, DisturbanceNode]) -> None:
         """Deliver a closing clock notice only to the active local field owners."""
         if self.initial.node_execution:

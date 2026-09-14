@@ -74,7 +74,38 @@ report a committed violation; it neither repairs that event nor proves closure
 of all admitted inputs. Require a separate scope statement for omitted energy
 terms, external reservoirs and unimplemented field or spin dynamics.
 
+For unresolved momentum, distinguish a missing value from a declared zero mean
+with nonzero variance. A local kick cannot recover an unknown incoming momentum.
+If a candidate transfers uncertainty, identify its receiving owner and retained
+state. Conserving means and second moments is expectation-level closure; it does
+not prove conservation in every sampled branch or retention of quantum phase and
+correlations. Check mass assumptions in kinetic-energy readouts, and reject
+missing diagnostic payloads instead of treating them as zero.
+
+For wave-derived moments, distinguish the incident density, selected measurement
+state and any ordinary output re-encoding. Absorption vacuum has no particle
+momentum distribution. A finite derivative observable is not automatically
+canonical momentum; check phase-sensitive states with identical position
+probabilities, mixed states and boundary rows. Keep exact density diagnostics
+outside physical inputs. Separate nonselective operation drift from selected
+conditional changes; neither is a simulated apparatus recoil without an actual
+owner and interaction. Audit propagation against a newly introduced energy
+readout instead of reusing an older fixed inventory as proof of closure.
+
+For configured relative phases, compare equivalent coefficient pairs that differ
+by a common complex factor. Exercise negative exponents and inverse composition
+through interference probabilities, including the ordinary envelope consumer;
+real reference coefficients alone cannot expose a partial-conjugation defect.
+
 ## Review the declared rules
+
+For [recurrent contact outcomes](../../docs/RECURRENT_QUANTUM_CONTACT.md),
+enumerate complete instrument weights and validate every output before drawing.
+Exercise occupied-domain preparation, capacity exhaustion, same-tick replay after
+resolution and several local origins without inventory duplication. Compare
+remote ordinary prefixes across outcomes that change the quantum generation;
+a local vacuum result must not select its ordinary source bank from remote
+quantum progress. Keep finite allowances and stale packets isolated by generation.
 
 For [delayed Node rules](../../docs/NODE_VECTOR_PROCESSOR.md#local-rules),
 distinguish a consumed start trigger from a persistent commit condition. Exercise

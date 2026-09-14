@@ -103,6 +103,38 @@ def test_computation_delay_preserves_source_and_capture_ownership_until_commit()
     assert resolver.report()["contact_transfers"][-1]["tick"] == 11
 
 
+def test_arrival_uses_spare_slot_while_empty_capture_output_is_reserved():
+    raw = configuration(False)
+    raw["normal_budget"] = 1
+    raw["event_program"]["domains"][0]["phases"].extend([[], [], [], []])
+    raw["disturbance_types"].append(
+        {
+            "name": "messenger",
+            "fields": ["mass"],
+            "defaults": {"mass": 0},
+            "transport": {"mode": "move", "weights": [1, 0, 0, 0, 0, 0]},
+        }
+    )
+    raw["seeds"].append({"position": [2, 1, 1], "type": "messenger"})
+    world, resolver = world_for(raw)
+    step(world, 1)
+    pending = world.nodes[(3, 1, 1)].pending
+    assert pending.ready_tick == 5
+    assert {slot for slot, _ in pending.plan.replacements} == {0, 1}
+    before = world.nodes[(3, 1, 1)].records
+    assert before[1:] == (None, None)
+    step(world, 3)
+    arrived = world.nodes[(3, 1, 1)]
+    assert arrived.pending == pending
+    assert arrived.records[:2] == before[:2]
+    assert arrived.records[2].type_index == 3
+    assert all(packet is None for packets in world.links.values() for packet in packets)
+    step(world, 7)
+    assert localized(world) == [((3, 1, 1), 1)]
+    assert world.nodes[(3, 1, 1)].records[2] == arrived.records[2]
+    assert resolver.report()["contact_transfers"][-1]["tick"] == 11
+
+
 def test_split_recombine_retains_phase_without_a_classical_hidden_carrier():
     raw = configuration(False)
     domain = raw["event_program"]["domains"][0]

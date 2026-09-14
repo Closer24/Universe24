@@ -6,9 +6,9 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
+from .event_resolution import Planner as DisturbancePlanner
 from .spatial_state import Rays, SpatialPlan, SpatialState
 
-DisturbancePlanner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 SpatialPlanner = Callable[
     [
         tuple[SpatialState, ...],
@@ -29,6 +29,7 @@ class DisturbancePlanningInput:
     records: tuple[DisturbanceRecord | None, ...]
     residuals: tuple[int, ...]
     received: int
+    port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -58,7 +59,12 @@ def finish_local_cycle(
                 return
             if isinstance(request, DisturbancePlanningInput):
                 assert disturbance is not None
-                result = disturbance(request.records, request.residuals, request.received)
+                result = disturbance(
+                    request.records,
+                    request.residuals,
+                    request.received,
+                    port_loads=request.port_loads,
+                )
             elif isinstance(request, SpatialPlanningInput):
                 assert spatial is not None
                 result = spatial(
@@ -73,7 +79,10 @@ def finish_local_cycle(
 def _plan_disturbance_batch(
     planner: DisturbancePlanner, items: tuple[DisturbancePlanningInput, ...]
 ) -> tuple[LocalPlan, ...]:
-    return tuple(planner(item.records, item.residuals, item.received) for item in items)
+    return tuple(
+        planner(item.records, item.residuals, item.received, port_loads=item.port_loads)
+        for item in items
+    )
 
 
 def _plan_spatial_batch(

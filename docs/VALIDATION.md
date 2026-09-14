@@ -62,6 +62,301 @@ Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
 candidate; it does not establish a classical limit, field back-action or
 energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
 
+## Negative field phase with complex reference - 2026-09-14
+
+Base: integration commit `3a5e7d1`. Independent physics review found that a
+negative field exponent conjugated `unit` alone. With `vacuum = unit = i`,
+the configured relative phase is one but H U(-1) H returned probability zero
+instead of one. Native equivalent coefficient pairs also disagreed: a -400 coil
+gave capture probability `576/3125` for `(5, 3+4i)` and `2304/3125` for
+`(5i, -4+3i)`.
+
+After correcting a test-only query API typo, the new regressions produced
+**12 failures and 5 passes before the runtime fix**. Conjugating both
+coefficients repaired the negative relative phase; all **33 field-phase tests
+passed in 4.96 seconds**, including the headless runner. The native twelve-tick
+controls now agree on capture probability `576/3125`, source envelope weight
+`2549/3125` and balanced ordinary field accounting. Inverse powers in both orders
+and common complex representations are checked using actual interference
+queries, not only matrix entries.
+
+Independent read-only review passed the fix and separately ran 32 tests with
+the artifact-writing headless case deselected. Both quantum and ordinary
+consumers use the same corrected table; local field scheduling, costs, fixed
+NodeState and causal callback inputs are unchanged. The physics Skill records
+the missed complex-reference case. Real-vacuum examples retain their behavior.
+
+Final active-source SHA-256:
+`8fa258a94a71641e0c71b69038ad57b632e344b998b78d728b99af923a738d3f`.
+The earlier full-suite result below predates this focused correction.
+
+On that final source, `python tools/check.py --base 3a5e7d1` passed **2,093
+tests with five opt-in visual skips in 216.85 seconds**. Ruff/format passed on
+both changed Python files and strict mypy passed on 22 affected source files.
+The selection covered causal/recurrent contacts, generic fields and carriers,
+conservation, Node/Link timing, parallelism, boundaries, retention and repository
+contracts. The saved position-output aggregate passed in **12.48 seconds** with
+unchanged native traces and costs when diagnostics were enabled or disabled.
+Its source hash matches the final fingerprint above; joint quantum/apparatus
+energy closure remains explicitly false. No local build or visualization ran.
+
+## Current-main contact integration - 2026-09-14
+
+Integrated main `53e44a51dd238dff34d5e7ced0f337e8f1c7341f` (PR #101) with
+experiment commit `47b7ea01fa7f568dfdd2eca6db99d0da9dca9658`. Retained both
+causal and recurrent definitions, using keyword construction for their options.
+Recurrent generations explicitly reject unimplemented null-notice/field-phase
+combinations. Fixed an automatic-merge error that lost the local field callback
+between `start_sources` and `_start_bank`.
+
+On source fingerprint
+`5f50a477f657361842f6ed45def673bed50bf30262e0d36cde2088dbe9a349ed`, the user's
+requested full gate `python tools/check.py --base 47b7ea0 --full` passed:
+**2,865 tests, 30 opt-in visual skips, 313.81 seconds**. Ruff and formatting
+passed on 390 files; strict mypy passed on 120 source files. All original quantum,
+moment, locality, field, retention, parallelism and new experiments were included.
+Focused phase/null/recurrent integration additionally passed 44 tests.
+
+The new composition regressions subsequently use canonical JSON resources rather
+than importing other test modules. Their eight cases passed after correcting an
+event-label typo; 91 related selector/repository checks passed. Runtime source
+remained identical. The updated selector includes both JSON dependencies.
+The optional rendering tests were skipped deliberately, and no build ran.
+
+## Spatial wave moments and local position output - 2026-09-14
+
+Continuation base: `86eeb9c5b1c0297067a0ce828ba2faa147c3c151` on draft PR #104,
+including open PR #100; fetched main was `d66b43eb193954a9a14a5a33deefd290d61ed547`.
+The [new candidate report](../examples/quantum/position_moment_response.md)
+specifies the finite observable, local re-encoding and unclosed energy terms.
+There are no production changes relative to this base. Production fingerprint
+remains `1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
+
+Initial focused integration: **4 passed in 14.07 seconds**, including the full
+headless aggregate, two deliberately invalid moment proposals and renamed,
+bounded owners. The observable helper separately passed 30 cases before the
+additional entangled-environment regression. Independent physics review passed
+the scoped implementation, 33 focused checks and the explicit measurement
+controls; the entangled case has mean1, second3 and variance2 without records.
+The affected gate `python tools/check.py --base 86eeb9c` passed **151 tests**
+with **two opt-in visualization skips** in **39.59 seconds**. Ruff and format
+passed on eight changed Python files; no production module needed type checking.
+The selected scope includes the new integration/observable tests, resource
+selection, repository gates, workspace and headless movie consumers.
+
+Native middle capture derives variance2 and later transfers it to the reservoir;
+endpoint capture derives1. Actual propagated wave energy readouts change
+10 -> 11 -> 10, or remain11 after middle capture. These are reported as a missing
+joint closure, not repaired. Opposite-phase loop states have means +2/-2 despite
+equal position probabilities. Position re-encoding does not recover that
+incident direction; target mean3 still comes from the configured reservoir.
+
+The physics Skill now requires the distinction between incident state,
+re-encoding, vacuum, ensemble drift and selected change. Boss, configuration,
+runner and PR Skills were reviewed; their existing scope, ownership and evidence
+rules need no further change. Live Highlights was read and reconciled in the
+versioned coverage map; it was not edited. No build or visualization ran.
+
+## Local moment response and reserved receipts - 2026-09-14
+
+Task base: `3a2fdfdc796212961a2f305544f0d98998506864`; current main was
+`1c782390456ea9629eb0f73c030095574d80e454`. This work includes the still-open
+PR #100 dependency and the earlier bounded quantum-to-classical investigation.
+The [local response report](../examples/quantum/local_moment_exchange.md) defines
+the supplied candidate, input authoring, exact outcomes and remaining limits.
+
+The complete headless experiment passed in **10.8934 seconds** on the final
+source. It includes the primary 800-tick native recording, six signed-axis
+audits through escape, no-reservoir control, three-tick Links, computation budget
+20, and independent exact quantum state-exchange controls. The ordinary audits
+preserve mean momentum and expected quadratic kinetic energy, including quantum
+inventory and escaped stock. They do not retain full phase or branch correlations.
+Independent physics review passed this restricted scope, including rejection of
+non-unit masses, false certainty and missing audit fields. Independent ownership
+review also accepted the generic unlocked-spare receipt correction.
+
+Active-source SHA-256, checked before and after the experiment:
+`1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
+This identifies the tested Windows checkout bytes, including its line endings.
+All physical source changes are confined to the reserved-slot receipt fix.
+
+`python tools/check.py --base 3a2fdfd` passed **1,723 tests with five opt-in
+visual skips** in 183.53 seconds. Ruff/format passed for nine changed Python
+files; strict mypy passed for ten affected source files. The selector covered
+native/quantum contacts, field/carrier ownership, local conversions, integer
+arithmetic, Node/Link timing, boundaries, generic names, UI/runner consumers and
+retention. Eight receipt regressions first failed on the original implementation;
+the two focused files then passed 71 tests after repair. No full-suite flag,
+simulator build or visualization was used. Versions: Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1; Windows pytest used a fresh explicit base directory.
+
+Main advanced during publication to `d66b43eb193954a9a14a5a33deefd290d61ed547`
+with PR #102's shared-test builders and active local-contract coverage. Merge
+`2baa7c7` retains both the new upstream expectations and this branch's quantum
+and moment-response cases. Production source is byte-identical to the fingerprint
+above, so the actual experiment remains applicable. The integration gate,
+`python tools/check.py --base 304445d`, passed **646 tests** in 29.57 seconds;
+Ruff/format passed for 27 affected files. The final documentation and prior
+quantum-to-classical experiment regression had also passed 23 tests before this
+test-only integration. No failed check was bypassed, and no upstream production
+law changed.
+
+## Quantum-to-classical claim investigation - 2026-09-14
+
+The [reproducible investigation](../examples/quantum/quantum_classical_check.md)
+ran on `be518fe1089457032b201324372201086e1edbcf` with experiment-only additions;
+production source was unchanged. Its source fingerprint, exact numerical
+results and limitations are recorded in that report. The aggregate completed
+in 3.88 seconds: ten native interference worlds, sixteen coherent-environment
+controls, the existing five-cycle Markov comparison and three 96-tick spatial
+contact controls. Numerical expectations pass; emergence of a Newtonian
+trajectory is **not established**. Independent review checked the saved native
+weights, fixed timing and the distinction between configured hold and emergence.
+
+`python tools/check.py --base be518fe1089457032b201324372201086e1edbcf` passed
+**106 tests with two opt-in visual skips** in 27.72 seconds. Ruff and formatting
+passed for six changed Python files. The affected scope includes the new
+headless CLI experiment, resource-consumer selection and repository language,
+hygiene, navigation, workspace and recorded-output contracts. Production source
+and its prior physics evidence are unchanged; no full-suite run, package build
+or visualization was requested. Python 3.14.7, pytest 9.1.1 and Ruff 0.16.7 were
+used with a fresh explicit Windows pytest base directory.
+
+## Recurrent local contact outcomes - 2026-09-14
+
+Recorded task base: `3e5eaea5ad88688b2509ec34f5d43246dc62d15e`. The branch then
+fast-forwarded to `31915ae805a18a125483fb92ef36ad81062d691f`; that main update only
+changes citation/README text. The tested active source SHA-256 remains
+`cddaff84568049b2c7fdf88355476a9e57657440052bf944b93874a1bb39cd95`.
+
+The mandatory affected gate passed **2,297 tests with five opt-in visual skips**
+in 174.86 seconds. Ruff and formatting passed for 14 changed Python files;
+strict mypy passed for 71 affected source files. Sixteen new recurrent tests are
+included. Shared NodeState and resolver changes select carrier/field/quantum,
+locality, boundaries, headless output and retention consumers. No full-suite flag,
+package build or visualization was used. Interpreter/tool versions remain
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1. Windows tests used a fresh
+explicit `PYTEST_ADDOPTS=--basetemp=...` path because the default temp root has an
+existing enumeration-permission failure.
+
+After the citation-only main update and final documentation edits, all 28
+repository language, hygiene and navigation checks passed. The Windows checkout
+has mixed checkout line endings; Git's source archive differs only by CRLF/LF
+encoding. Every archived source file was compared with the tested source after
+newline normalization. An additional actual run from the exact staged Git source
+archive completed 48 ticks in 0.1714972 seconds, with source SHA-256
+`141d41edc8854adad5f5c1d64ed4db7be6cfd3f11ed99041b84646204b90e5f6`.
+Its event files, state, input, model costs and accounting exactly match the first
+run; only source byte identity and elapsed host time differ. The second run's
+outputs retain the ordinary 24-hour registration. Automatic approval review
+blocked removal of the disposable source snapshot; it remains outside Git at
+`artifacts/recurrent-index-source-0914` and is not enrolled for automatic cleanup
+because the retention guard protects source directories.
+
+Main subsequently advanced to `1c782390456ea9629eb0f73c030095574d80e454` with the
+catalog-contact authoring example. Integration preserves both resource-consumer
+registrations and selector tests; production source fingerprints are unchanged.
+The additional affected gate, `python tools/check.py --base 1c04760194b8dd60c24305620450608dfae30893`,
+passed **382 tests with two opt-in visual skips** in 67.32 seconds, including all
+39 catalog-contact cases. Ruff and formatting on its four affected Python files
+passed. The earlier production/physics evidence remains applicable.
+
+```sh
+python tools/check.py --base 3e5eaea5ad88688b2509ec34f5d43246dc62d15e
+python -m event_universe --init examples/quantum/repeated_contacts.json --output artifacts/repeated-contacts-0914-verified
+```
+
+The actual primary-runner example completed **48/48 ticks in 0.1671985 seconds**
+with `display=none`, eight random draws and reported model cost 7,632. Its input
+SHA-256 is `f73311793174e383d3dcd513e875d10fba40820cf2744706df79f15afa627c3e`.
+The [event sequence](../examples/quantum/repeated_contacts.md) has new-wave results
+at ticks 3, 9 and 21, continuation at 6/12/15/18 and localization at 24. Charge -1
+and mass 1 retain one owner at every tick. Ordinary injection -36 and dissipation
+-36 leave zero final field stock, with every-tick accounting balanced. Saved
+metadata, causal events and final state were inspected; generated files stay
+outside Git under the runner's 24-hour retention registration.
+
+Independent physics review supplied three passing counterexamples: remote
+generation changes cannot choose a local null's ordinary emitter before a causal
+notice arrives; a resolved new-wave result cannot be replayed into another
+origin; source preparation requires complete-domain vacuum, not just local
+vacuum. Exhaustive instruments independently yield source counts 9/16 out of 25
+and capture counts 9/16/144 out of 169. A renamed configuration with an additional
+signed conserved vector and alternate localized output retains the same events,
+inventory and finite emission. Existing one-shot, conditional-state, origin and
+field regressions pass on this source.
+
+The implementation contract, postulates, definitions, architecture, restart guide,
+Highlights map and numerical expectations accompany the code. The physics-review
+Skill gains the demonstrated remote-generation/replay checks; the configuration
+Skill routes complete instruments and finite capacities. Boss, field-development
+and architecture-review were reviewed: their existing ownership and evidence
+rules cover this extension, so no duplicate workflow was added. The scope remains
+finite supplied one-excitation domains and retarded ordinary sources, not a
+derived Hamiltonian, reciprocal field action or physical energy/momentum closure.
+
+## Null notices and field-dependent phase - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of
+the interference harness below. Runtime source fingerprint of the executed
+harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
+Two opt-in extensions of `causal-contact-fields-v1` were added, both inactive
+without their configuration keys: [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
+and the [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase).
+The envelope output bank grew from twelve to eighteen fixed slots; the
+NodeState contract fixture was widened accordingly and no other test changed.
+
+Recorded on the interference harness: after an arm null at tick 1 with notices
+enabled, the source emits 25 of 25 units from tick 2, the next gate emits 9 and
+16, and every scale ends at 625/81; an output null at tick 7 reaches the source
+at tick 9 with scale 625/337. With a field phase on the M arm, coil fields 0,
+200, 400 and 800 select exponents 0, 0, 1 and 2 and record output weights
+`[12745, 2880]` and `[160225, 230400]`, equal to the independent Gaussian-integer
+prediction; a coil beside the far side of the source selects exponent 0.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **2,348 passed and five visual-only skipped**, with
+seven setup errors in `test_maxwell_configuration.py` and `test_run_live.py`
+that came from a missing render extra; after installing `.[render]` those two
+files passed (14 passed, two skipped). Ruff, formatting and strict mypy passed
+with no issues on 118 source files. Python 3.14.0rc2 on Linux. These are
+measured behaviors of configured candidates; no classical limit, energy closure
+or multi-excitation Born consistency is established.
+
+## Two-arm interference and coupling summary - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99). Runtime
+source fingerprint of the executed harness:
+`4916707db38c4f364552a24a727678698912f509a27969c4217ca02005ca6cf6`. No source
+module under `src/` changed; the addition is an experiment harness, its
+acceptance test, a reader-facing coupling summary and index updates.
+
+The [interference harness](../examples/quantum/causal_interference.md) ran
+thirteen headless 14-tick worlds on the unchanged `causal-contact-fields-v1`
+profile. Recorded output decision weights were `[337, 288]`, `[49, 576]` and
+`[337, 288]` for `phi = pi/2, pi, 3pi/2`, with no uncertain decision at
+`phi = 0`; all equal the exact rational prediction computed before the runs.
+Mean source emission after recombination was 25, 13.5, 2 and 13.5 units per
+tick against 25, 13.48, 1.96 and 13.48 predicted. The arm-detector variant gave
+`[9, 16]` at tick 1 for every phase and no uncertain output decision. After an
+arm null the source Node emitted 9 of 25 units per tick: the retarded-source
+rule measured. Every run reported balanced accounting and conserved totals.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **101 passed, two visual-only skipped**, including
+repository navigation, language and hygiene checks. Ruff and formatting passed.
+Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
+candidate; it does not establish a classical limit, field back-action or
+energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
+
 ## Causal quantum source envelopes - 2026-09-13
 
 Recorded change base: `d8261d4d239e524d18011166f6372ec2949cbe42`; integrated

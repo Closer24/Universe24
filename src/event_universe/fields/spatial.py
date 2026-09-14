@@ -221,3 +221,82 @@ def split_outward(
             meter.charge("send")
     cleared = zero_spatial_state(field.components)
     return outgoing, replace(state, populations=cleared.populations, allocation_phases=tuple(updated))
+
+
+def carried_phases(
+    magnitude: int, weights: tuple[int, ...], phase: int, straight: bool = False
+) -> tuple[int, ...]:
+    """Phase each nonzero portion carries onward.
+
+    Rotating: the slot after the portion's last allocated slot, so a lone unit
+    visits the axes in turn. Straight: the first slot of the portion's own
+    axis, so a lone unit keeps its axis and only a merged group spreads again.
+    """
+    denominator = _weight_sum(weights)
+    if magnitude <= 0:
+        return (0,) * len(weights)
+    last = (phase + magnitude - 1) % denominator
+    result, offset = [], 0
+    for weight in weights:
+        if straight:
+            result.append(offset % denominator)
+        elif offset <= last < offset + weight:
+            result.append((phase + magnitude) % denominator)
+        else:
+            result.append((offset + weight) % denominator)
+        offset += weight
+    return tuple(result)
+
+
+def split_outward_carried(
+    state: SpatialState,
+    definition: SpatialFieldDefinition,
+    field: FieldDefinition,
+    meter: CostMeter,
+    port_loads: tuple[int, ...] | None = None,
+    straight: bool = False,
+) -> tuple[SpatialOutgoing, SpatialState, SpatialOutgoing]:
+    """Split like split_outward, but every portion carries its own allocation phase.
+
+    The node keeps no phase: the remainder of each integer division leaves with
+    the portion that owns it, so an indivisible unit continues its own cycle at
+    the next node instead of taking that node's first axis.
+    """
+    _validate_definition(definition, field)
+    state.validate(field.components)
+    for payload in (*state.populations, *state.delivered):
+        field.validate(payload)
+    buckets = [[[0] * field.components for _ in range(8)] for _ in range(6)]
+    phases = [[[0] * field.components for _ in range(8)] for _ in range(6)]
+    for octant, payload in enumerate(state.populations):
+        meter.charge("read")
+        meter.charge("route")
+        ports = tuple(2 * axis + (0 if OCTANT_SIGNS[octant][axis] > 0 else 1) for axis in range(3))
+        # With loads, walk the weight cycle cheapest axis first; every axis still
+        # receives exactly its weight per full cycle, so the ratios are unchanged.
+        order: tuple[int, ...] = (0, 1, 2)
+        if port_loads is not None:
+            order = tuple(sorted(range(3), key=lambda axis: (port_loads[ports[axis]], axis)))
+        weights = tuple(definition.axis_weights[axis] for axis in order)
+        for component, (value, phase) in enumerate(
+            zip(unpack(payload), unpack(state.allocation_phases[octant]), strict=True)
+        ):
+            meter.charge("split")
+            portions, _ = split_weighted(value, weights, phase)
+            onward = carried_phases(abs(value), weights, phase, straight)
+            for slot, axis in enumerate(order):
+                portion = portions[slot]
+                buckets[ports[axis]][octant][component] = portion
+                if portion:
+                    phases[ports[axis]][octant][component] = onward[slot]
+    outgoing = tuple(tuple(pack(tuple(payload)) for payload in port) for port in buckets)
+    outgoing_phases = tuple(tuple(pack(tuple(payload)) for payload in port) for port in phases)
+    for port_values in buckets:
+        if any(any(payload) for payload in port_values):
+            meter.charge("send")
+    cleared = zero_spatial_state(field.components)
+    return (
+        outgoing,
+        replace(state, populations=cleared.populations, allocation_phases=cleared.allocation_phases),
+        outgoing_phases,
+    )

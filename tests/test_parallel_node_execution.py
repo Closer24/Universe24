@@ -84,10 +84,10 @@ def test_only_one_caller_can_advance_a_tick() -> None:
     entered, release = Event(), Event()
     original = world._planner
 
-    def blocking(records, residuals, received):
+    def blocking(records, residuals, received, **options):
         entered.set()
         assert release.wait(timeout=5)
-        return original(records, residuals, received)
+        return original(records, residuals, received, **options)
 
     world._services = replace(world._services, planner=blocking)
     worker = Thread(target=world.step)

@@ -48,6 +48,9 @@ def base_document() -> dict:
         "link_ticks": 1,
         "normal_budget": 100000,
         "ticks": TICKS,
+        # This probe documents the node-owned allocation phase (axis rays fall
+        # geometrically); carried phases are compared in docs/SPATIAL_FIELDS.md.
+        "allocation_phase": "node",
         "operation_costs": {
             "receive": 1,
             "read": 1,

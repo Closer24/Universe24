@@ -42,6 +42,9 @@ class Simulation(DisturbanceEngine):
             initial.operation_costs,
             initial.field_rules,
             absorptions=tuple(rule for rule in initial.spatial_couplings if rule.mode == "absorb"),
+            allocation_phase=initial.allocation_phase,
+            computation_field=initial.computation_field,
+            least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
         )
         super().__init__(
             initial,
@@ -51,6 +54,7 @@ class Simulation(DisturbanceEngine):
                 initial.couplings,
                 initial.operation_costs,
                 initial.interactions,
+                initial.least_delay_routing,
             ),
             observer,
             spatial_law,

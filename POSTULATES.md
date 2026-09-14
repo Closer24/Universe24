@@ -73,6 +73,15 @@ optional local one-link exclusion exists: a departing emitter subtracts the rays
 of its own departure cycle from the flux it samples on arrival, using only its
 own registers; returning self-field at any other distance is not excluded.
 
+hypothesis and is not enabled by this extension. Two explicit opt-in policies now
+exist for the generic engine, described in [spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering):
+`field_phase_first` completes every field link before carriers sample, so an
+emitter's own field is one link ahead on every free-space path; `arrival_port_blind`
+keeps the default clock and lets an arriving carrier ignore, for that one sample,
+the travel port it came in on, so straight paths are self-blind while maximum-speed
+corners still coarrive. Both pass isolated-source and external-source controls;
+neither uses source identity, and neither is a derived physical law.
+
 The opt-in [shared computation cycle](docs/SPATIAL_COMPUTATION_DELAY.md) applies
 the same budget delay to all local fields and carriers. It freezes updates and
 directional departures together; later input belongs to the next cycle.
@@ -231,6 +240,14 @@ solely because of its own symmetric field.
 For an accepted free-motion candidate, this requirement also applies to moving
 isolated particles: their momentum and impulse remainders must not change due
 to their own field. Baseline failures remain evidence, not approved corrections.
+The generic engine's default clock fails this requirement for a value-driven
+exchange response: a carrier and the field it emits in its departure interval
+cross one link together, and `tests/test_field_phase_first.py` records that
+baseline. The opt-in `field_phase_first` and `arrival_port_blind` policies in
+[spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering) satisfy
+it for straight motion by ordering alone; the flux-driven rotation law satisfies
+it under the default clock by geometry, as `tests/test_rotation_self_interaction.py`
+shows. None of these selects a self-force law under acceleration.
 The opt-in `causal-octant-stream-v1` candidate tests this through outward one-link
 transport before the particle response, with no source identity or subtraction.
 Its free-space guarantee ends at periodic return, which is a boundary effect
@@ -514,4 +531,25 @@ lets a configured one-mode gate choose its exact integer phase from the Node's
 own classical field value at the schedule tick. The classical field then acts
 on the wave, locally and causally, as a phase only. Its `unit / vacuum` ratio
 is configured data, not a derived coupling constant, and no field-plus-matter
-conservation follows from it.
+conservation follows from it. Negative field exponents invert that relative
+phase by conjugating both coefficients; a common phase on the coefficient pair
+does not change observable probabilities.
+
+## 21. Configured recurrent contact outcomes
+
+The explicit [recurrent contact candidate](docs/RECURRENT_QUANTUM_CONTACT.md),
+`recurrent-contact-fields-v1`, extends section 20 with complete configured local
+outcome instruments. A source encounter can retain its localized record or
+transfer it into a vacuum domain. A capture can leave vacuum, localize the
+inventory, continue the conditional wave, or resolve its origin and begin a new
+local continuation. Only the instrument and current conditional state determine
+the lottery; a certain result consumes no random ticket.
+
+One inventory owner survives each transfer. New-wave creation and old-origin
+resolution are atomic, with immutable event history and bounded current references.
+At most six explicitly preallocated source generations retain separate causal
+packets and finite allowances. A local vacuum result clears every nonretired
+local envelope; remote quantum generation changes cannot choose an ordinary
+source bank. Existing field stock follows its configured transport and decay.
+This is a finite configured hypothesis, preserving the older profiles and their
+limits; it does not derive the matrices or establish physical energy closure.

@@ -144,6 +144,13 @@ class DisturbanceNode(DisturbanceNodeState):
         validate_records(initial, records, len(self.records), self.records)
         if any(records[slot] != self.records[slot] for slot in locked):
             raise ValueError("record policy cannot change a pending local slot")
+        if initial.arrival_port_blind:
+            codes = list(self.arrival_port_codes) or [0] * len(records)
+            for packet in packets:
+                for slot, record in enumerate(records):
+                    if record is packet.record:
+                        codes[slot] = packet.port + 1
+            self.arrival_port_codes = tuple(codes)
         received = bounded(self.received_count + len(packets))
         if services.balance_guard is not None:
             fields = () if spatial is None else tuple(state.populations for state in spatial.states)
@@ -249,12 +256,22 @@ class DisturbanceNode(DisturbanceNodeState):
         ):
             return
         coupled = (
-            spatial.couple(self.records, spatial_services, tick)
+            spatial.couple(
+                self.records,
+                spatial_services,
+                tick,
+                {slot: code - 1 for slot, code in enumerate(self.arrival_port_codes) if code}
+                if services.initial.arrival_port_blind
+                else None,
+            )
             if spatial is not None
             and spatial_services is not None
             and any(r is not None and r.type_index in services.coupled_types for r in self.records)
             else None
         )
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
+        if services.initial.least_delay_routing and spatial is not None and spatial_services is not None:
+            port_loads = tuple(spatial.directional_load(port, spatial_services) for port in range(6))
         if services.events.enabled:
             services.events.require_room(1)
         context = LocalContext(
@@ -264,9 +281,12 @@ class DisturbanceNode(DisturbanceNodeState):
             self.coupling_remainders,
             self.received_count,
             self.cause_id,
+            port_loads,
         )
         if services.resolver is None:
-            plan = yield DisturbancePlanningInput(context.records, context.residuals, context.received)
+            plan = yield DisturbancePlanningInput(
+                context.records, context.residuals, context.received, port_loads
+            )
             if not isinstance(plan, LocalPlan):
                 raise ValueError("carrier planning requires a LocalPlan")
         else:
@@ -307,8 +327,35 @@ class DisturbanceNode(DisturbanceNodeState):
             raise ValueError(
                 "funded ray emission or absorption does not support a delayed carrier cycle"
             )
+        delays: tuple[int, ...] = ()
+        if (
+            services.initial.delay_direction is not None
+            and spatial is not None
+            and spatial_services is not None
+        ):
+            # Each departure prices the computation load travelling along or against it;
+            # the extra wait beyond the local cycle is spent before its arrival.
+            delays = tuple(
+                max(
+                    0,
+                    cycle_timing(
+                        bounded(
+                            checked_work(
+                                plan.cost + spatial.directional_load(departure.port, spatial_services)
+                            )
+                        ),
+                        services.initial.normal_budget,
+                        services.initial.link_ticks,
+                    )[0]
+                    - extra,
+                )
+                for departure in plan.departures
+            )
+            duration = bounded(checked_work(duration + max(delays, default=0)))
         services.accounting.charge_cycle(plan.cost)
-        pending = PendingCycle(bounded(tick + extra), bounded(tick + duration), plan)
+        pending = PendingCycle(
+            bounded(tick + extra), bounded(tick + duration), plan, departure_delays=delays
+        )
         if services.initial.node_execution and coupled is not None and spatial is not None:
             spatial.consume_sample()
         # Originals remain in their occupied slots throughout the local wait.
@@ -349,8 +396,11 @@ class DisturbanceNode(DisturbanceNodeState):
             spatial.cost_cause_id = None
             spatial_services.activity.mark(self.position, False)
             return
+        # Under the shared clock the computation load delays field forwarding too.
+        load = spatial.refresh_load(spatial_services)
         field_plan = replace(
-            field_plan, cost=bounded(checked_work(field_plan.cost + spatial_services.node_merge_cost))
+            field_plan,
+            cost=bounded(checked_work(field_plan.cost + spatial_services.node_merge_cost + load)),
         )
         self._validate_emission_records(
             self.records,
@@ -534,7 +584,13 @@ class DisturbanceNode(DisturbanceNodeState):
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
-            links[index] = Packet(departure_tick, self.position, departure.port, self._departing(record))
+            delay = pending.departure_delays[index] if pending.departure_delays else 0
+            links[index] = Packet(
+                bounded(checked_work(departure_tick + delay)),
+                self.position,
+                departure.port,
+                self._departing(record),
+            )
         if spatial is not None and spatial_services is not None and field_plan is None:
             spatial.validate_guards(
                 spatial_services, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -705,7 +761,12 @@ class DisturbanceNode(DisturbanceNodeState):
                 port=departure.port,
                 disturbance=services.initial.disturbances[departure.record.type_index].name,
                 values=record_values(services.initial, departure.record),
-                arrival_tick=departure_tick,
+                arrival_tick=bounded(
+                    checked_work(
+                        departure_tick
+                        + (pending.departure_delays[index] if pending.departure_delays else 0)
+                    )
+                ),
             )
             if cause is not None:
                 linked = list(self.output.packets)
