@@ -1,5 +1,35 @@
 # Validation evidence
 
+## Two-arm interference and coupling summary - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99). Runtime
+source fingerprint of the executed harness:
+`4916707db38c4f364552a24a727678698912f509a27969c4217ca02005ca6cf6`. No source
+module under `src/` changed; the addition is an experiment harness, its
+acceptance test, a reader-facing coupling summary and index updates.
+
+The [interference harness](../examples/quantum/causal_interference.md) ran
+thirteen headless 14-tick worlds on the unchanged `causal-contact-fields-v1`
+profile. Recorded output decision weights were `[337, 288]`, `[49, 576]` and
+`[337, 288]` for `phi = pi/2, pi, 3pi/2`, with no uncertain decision at
+`phi = 0`; all equal the exact rational prediction computed before the runs.
+Mean source emission after recombination was 25, 13.5, 2 and 13.5 units per
+tick against 25, 13.48, 1.96 and 13.48 predicted. The arm-detector variant gave
+`[9, 16]` at tick 1 for every phase and no uncertain output decision. After an
+arm null the source Node emitted 9 of 25 units per tick: the retarded-source
+rule measured. Every run reported balanced accounting and conserved totals.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **101 passed, two visual-only skipped**, including
+repository navigation, language and hygiene checks. Ruff and formatting passed.
+Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
+candidate; it does not establish a classical limit, field back-action or
+energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
+
 ## Causal quantum source envelopes - 2026-09-13
 
 Recorded change base: `d8261d4d239e524d18011166f6372ec2949cbe42`; integrated

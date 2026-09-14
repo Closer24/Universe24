@@ -30,6 +30,15 @@ Changing only one frozen operand is forbidden because it can increase the norm.
 
 ## Localized quantum contacts
 
+`test_causal_interference.py` runs the
+[two-arm interference harness](../examples/quantum/causal_interference.md) in
+the fast gate: exact output decision weights `[337, 288]`, `[49, 576]` and
+`[337, 288]` for `phi = pi/2, pi, 3pi/2` and no uncertain decision at `phi = 0`;
+mean source emission after recombination within 1/6 unit of `25 |a_S|^2`;
+one localized capture at D at tick 7 when the ticket selects it; an arm
+detector giving `[9, 16]` for every phase with no later uncertain output
+decision; and a retarded source emission of 9 of 25 after an arm null.
+
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event
 tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,

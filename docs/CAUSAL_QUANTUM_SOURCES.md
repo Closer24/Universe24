@@ -107,6 +107,12 @@ closure, quantum electromagnetism or a universal classical limit.
 
 ## Configuration, implementation and acceptance
 
+The [two-arm interference experiment](../examples/quantum/causal_interference.md)
+measures phase-dependent capture, classical emission after recombination,
+which-path decoherence and the size of the retarded-source approximation.
+The [coupling summary](QUANTUM_CLASSICAL_COUPLING.md) places these results
+against the literature.
+
 Select `event_program.model: "causal-contact-fields-v1"` with the existing contact
 schema. [causal_charge.json](../examples/quantum/causal_charge.json) is the complete
 runner example:

@@ -24,7 +24,9 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
+        "tests/test_causal_interference.py",
     ),
+    "examples/quantum/causal_interference.py": ("tests/test_causal_interference.py",),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",
         "tests/test_node_vector_integration.py",
