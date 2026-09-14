@@ -22,9 +22,13 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/many_contacts_view.py": ("tests/test_many_contacts.py",),
     "examples/quantum/event_paths.json": ("tests/test_quantum_node_events.py",),
     "examples/quantum/wave_origins.json": ("tests/test_native_wave_origins.py",),
+    "examples/quantum/causal_interference.py": ("tests/test_causal_interference.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
+        "tests/test_causal_interference.py",
+        "tests/test_null_notices.py",
+        "tests/test_field_phase.py",
     ),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",
