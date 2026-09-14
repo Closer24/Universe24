@@ -97,6 +97,12 @@ classical carrier runs the same six links on a parallel row.
 | classical runner, 6 links | arrives tick 6 | arrives tick 13 |
 | quantum excitation, 6 links | captured tick 6 | captured tick 6 |
 
+Read by a local observer instead of the host report
+(`quantum_from_the_side.py`: the observer at the detector node knows only when a
+localized charge first sits in its own records and when the runner, launched on
+the same row, is received at its node): click at tick 7 and runner at tick 7
+without the mass; click at tick 6 and runner at tick 20 with it.
+
 The field delays the classical carrier but the quantum gate schedule advances
 one Link per world tick regardless of local load. In this profile the quantum
 domain does not feel the computation field: an equivalence-principle gap that a

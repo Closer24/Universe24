@@ -14,7 +14,11 @@ from pathlib import Path
 from event_universe import Simulation
 from event_universe.initialization import parse_initial_state
 
-BASE = json.loads(Path("examples/quantum/localized_charge.json").read_text(encoding="utf-8"))
+BASE = json.loads(
+    (Path(__file__).resolve().parents[2] / "examples/quantum/localized_charge.json").read_text(
+        encoding="utf-8"
+    )
+)
 LENGTH = 7
 BUDGET = 40
 SWAP = [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]
