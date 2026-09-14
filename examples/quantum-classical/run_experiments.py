@@ -52,7 +52,7 @@ GOLDEN_STRIDE = 2531  # round(4096 / golden ratio), odd: a permutation of the sw
 DETECTOR_RADII = (2, 3, 4, 6, 8)
 WINDOWS = (64, 256, 1024)
 
-CAPTURE_TRIALS = 2000
+CAPTURE_TRIALS = 10000
 CAPTURE_TICKS = 16
 PASS_PERIOD = 4  # the charge meets the detector's mixer every four ticks
 
