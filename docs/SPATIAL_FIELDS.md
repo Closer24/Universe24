@@ -196,6 +196,15 @@ so a record never swallows its fresh rays; with `self_exclusion` the rays of its
 own last departure are left alone by exact heading and phase. Absorbers act in
 slot order.
 
+A funded emission may carry a `"dissolve": {"after_ticks": N, "over_ticks": K}`
+schedule instead of an amount: the record emits nothing for its first `N`
+cycles, then the stock it held when the rule first saw it, divided over `K`
+cycles and never more than is left. The count and the initial stock are a
+record row (`dissolve_clocks`), so the schedule follows the record wherever it
+moves. A particle that pays itself out as rays this way is a matter wave in
+flight; the [matter-wave probe](../examples/matter-wave/README.md) lands one
+on a screen as the fringe of its momentum.
+
 Quanta are signed when the field is. A funded emission of a negative amount
 credits the emitter with what it emits, and the ray's momentum `amount x heading`
 points back at the emitter; a record that absorbs a share of such a ray pays it

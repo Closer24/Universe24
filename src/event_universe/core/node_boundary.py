@@ -71,6 +71,7 @@ def validate_record(initial: InitialState, record: DisturbanceRecord) -> None:
         record.emission_departed,
         record.absorb_tickets,
         record.absorbed_phases,
+        record.dissolve_clocks,
     ):
         _tuple(rows, max(len(initial.fields), MAX_RULES))
         for row in rows:

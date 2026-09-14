@@ -77,6 +77,7 @@ def document(
     audit: bool = False,
     screen_half: int = SCREEN_HALF,
     capture_seed: int | None = None,
+    layers: int = 1,
 ) -> dict:
     count = len(headings)
     stock = per_ray * count * ticks
@@ -173,7 +174,8 @@ def document(
             {"position": [LAMP_X, CENTER + SLIT_HALF, 1], "type": "lamp_b"},
         ]
         + [
-            {"position": [SCREEN_X, CENTER + y, 1], "type": "screen"}
+            {"position": [SCREEN_X + layer, CENTER + y, 1], "type": "screen"}
+            for layer in range(layers)
             for y in range(-screen_half, screen_half + 1)
         ],
     }
@@ -312,13 +314,18 @@ def run_wall(raw: dict) -> dict:
     }
 
 
-def screen_profile(world: Simulation) -> dict[int, int]:
+def screen_profile(world: Simulation, layer: int = 0) -> dict[int, int]:
+    """The absorbed quanta per screen Node of one layer (0 is the first the wave meets)."""
     profile = {}
     for position, node in world.nodes.items():
         for record in node.records:
-            if record is not None and record.type_index == 2:
+            if record is not None and record.type_index == 2 and position[0] == SCREEN_X + layer:
                 profile[position[1] - CENTER] = world.record_values(record)["quanta"][0]
     return dict(sorted(profile.items()))
+
+
+def layer_totals(world: Simulation, layers: int) -> list[int]:
+    return [sum(screen_profile(world, layer).values()) for layer in range(layers)]
 
 
 def run(raw: dict) -> dict:
@@ -328,6 +335,13 @@ def run(raw: dict) -> dict:
         world.step()
     totals, escaped = world.totals(), world.escaped_totals()
     profile = screen_profile(world)
+    layers = len(
+        {
+            p[0]
+            for p, node in world.nodes.items()
+            if any(r is not None and r.type_index == 2 for r in node.records)
+        }
+    )
     lamps = [
         world.record_values(r)
         for node in world.nodes.values()
@@ -336,7 +350,8 @@ def run(raw: dict) -> dict:
     ]
     return {
         "profile": profile,
-        "absorbed_total": sum(profile.values()),
+        "absorbed_total": sum(layer_totals(world, layers)),
+        "layer_totals": layer_totals(world, layers),
         "lamp_stock": [lamp["quanta"][0] for lamp in lamps],
         "lamp_momentum": [list(lamp["momentum"]) for lamp in lamps],
         "quanta_closed": totals["quanta"][0] + escaped["quanta"][0] == initial,
@@ -360,6 +375,15 @@ def main() -> None:
         "kerengonen": run(document(TICKS, headings)),
         "kerengonen_lamp_b_half_turn": run(document(TICKS, headings, phase_b=PHASE_STEPS // 2)),
         "plain": run(document(TICKS, headings, phase_steps=0)),
+    }
+    # A thick screen: the quanta a dark Node lets pass are absorbed in the layers
+    # behind it, where the path difference, and so the phase, is different.
+    thick = {
+        f"layers_{layers}": {
+            "phased": run(document(TICKS, headings, layers=layers)),
+            "plain": run(document(TICKS, headings, phase_steps=0, layers=layers)),
+        }
+        for layers in (1, 2, 4, 8)
     }
     # Single quanta, whole or nothing: the lottery capture builds the fringe click by
     # click. The share rule would truncate a lone quantum's half share to nothing.
@@ -412,6 +436,14 @@ def main() -> None:
         },
         "wall_ticks": SOURCE_TICKS,
         "wall_headings": len(cone),
+        "thick_screen": {
+            name: {
+                kind: {k: v for k, v in world.items() if k != "profile"}
+                | {"first_layer": world["profile"]}
+                for kind, world in pair.items()
+            }
+            for name, pair in thick.items()
+        },
         "audited": {k: v for k, v in audited.items() if k != "profile"}
         | {"profile": audited["profile"]},
     }
@@ -430,6 +462,21 @@ def main() -> None:
             [row[f"wall_{name}"] for name in wall],
         )
     print("lottery", result["lottery"])
+    for name, pair in thick.items():
+        print(
+            name,
+            "phased absorbed",
+            pair["phased"]["absorbed_total"],
+            pair["phased"]["layer_totals"],
+            "plain",
+            pair["plain"]["absorbed_total"],
+            "escaped",
+            pair["phased"]["escaped"],
+            pair["plain"]["escaped"],
+            "first layer center and half turn",
+            pair["phased"]["profile"].get(0),
+            pair["phased"]["profile"].get(2),
+        )
     print("wall", result["wall"])
     print("runs", result["runs"])
     print("audited", result["audited"]["audit"]["status"], result["audited"]["quanta_closed"])

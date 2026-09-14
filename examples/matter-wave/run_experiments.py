@@ -1,13 +1,14 @@
 """A particle in flight dissolves into a matter wave and lands on a screen as a fringe.
 
 Configuration only, on rules that already exist. A particle record of matter M
-and momentum p moves along its momentum at half a link per tick. A local
-update counts its ticks; from the configured tick it stops and a funded
-emission pays out its matter over sixteen ticks as Kerengonen rays over a
-forward cone, each ray advancing `|p| / 4` phase steps per link, until the
-husk is empty. Sixteen ticks is longer than any path difference to the screen,
-so the two slits' contributions overlap at every screen Node; a one-tick pulse
-would meet itself only where the paths are equal. The
+and momentum p moves along its momentum at half a link per tick. Its funded
+emission carries the engine's `dissolve` schedule: nothing for four cycles,
+then its initial matter over sixteen cycles as Kerengonen rays over a forward
+cone, each ray advancing `|p| / 4` phase steps per link. The particle keeps
+flying while it holds matter and stops when it is empty. Sixteen ticks is
+longer than any path difference to the screen, so the two slits' contributions
+overlap at every screen Node; a one-tick pulse would meet itself only where
+the paths are equal. The
 wave meets an absorbing wall with two Huygens slits and a screen twelve links
 beyond, exactly as in the de Broglie probe. What the screen collects is the
 matter of one particle, spread as its wave; the fringe period must follow the
@@ -40,11 +41,11 @@ MOMENTA = (32, 64)
 HEADINGS = 256
 HEADING_SCALE = 64
 PER_RAY = 4096  # a single particle of 479,232 quanta: enough that each slit re-emits over every heading every tick
-DISSOLVE_TICK = 4  # the particle flies two links, stops, and starts to dissolve
+DISSOLVE_TICK = 4  # the particle flies two links before its train starts
 TRAIN_TICKS = (
     16  # it pays out its matter over sixteen ticks: a wave train longer than any path difference
 )
-SPEED_NUMERATOR = 32  # hops per tick = 32 / 64 while the clock is below the dissolve tick, then 0
+SPEED_NUMERATOR = 32  # hops per tick = 32 / 64 while it holds matter, then 0
 SPEED_DENOMINATOR = 64
 TICKS = 84
 COSTS = {
@@ -86,19 +87,12 @@ def document(
     # The de Broglie advance reads the momentum the emitter set out with; the
     # momentum field itself takes the recoil of every emitted ray.
     wavenumber = {"field": "wavenumber"}
-    # One sixteenth of the matter per tick once the clock has passed the dissolve
-    # tick, nothing before, and never more than is left: a wave train, not a pulse.
+    # The engine's dissolution schedule: nothing for dissolve_tick cycles, then the
+    # initial matter over TRAIN_TICKS cycles, never more than is left.
     dissolve: dict = {
         "type": "particle",
         "field": "matter",
-        "amount": {
-            "op": "mul",
-            "args": [
-                {"op": "min", "args": [{"field": "matter"}, matter // TRAIN_TICKS]},
-                {"op": "gt", "args": [{"field": "clock"}, dissolve_tick - 1]},
-            ],
-        },
-        "denominator": 1,
+        "dissolve": {"after_ticks": dissolve_tick, "over_ticks": TRAIN_TICKS},
         "source": False,
         "recoil_field": "momentum",
     }
@@ -114,8 +108,8 @@ def document(
         dissolve["kerengonen_advance"] = {"amount": wavenumber, "denominator": ADVANCE_DENOMINATOR}
         slit_emission["kerengonen_phase"] = "carried"
     body = {
-        "fields": ["matter", "momentum", "clock"],
-        "defaults": {"matter": 0, "momentum": [0, 0, 0], "clock": 0},
+        "fields": ["matter", "momentum"],
+        "defaults": {"matter": 0, "momentum": [0, 0, 0]},
         "transport": {"mode": "hold"},
     }
     return {
@@ -154,10 +148,10 @@ def document(
                 "extensive": False,
             },
             {
-                "name": "clock",
-                "components": 1,
-                "units": "tick",
-                "signed": False,
+                "name": "heading",
+                "components": 3,
+                "units": "direction",
+                "signed": True,
                 "conserved": False,
                 "extensive": False,
             },
@@ -165,28 +159,22 @@ def document(
         "disturbance_types": [
             {
                 "name": "particle",
-                "fields": ["matter", "momentum", "clock", "wavenumber"],
+                "fields": ["matter", "momentum", "heading", "wavenumber"],
                 "defaults": {
                     "matter": matter,
                     "momentum": [momentum, 0, 0],
-                    "clock": 0,
+                    "heading": [1, 0, 0],
                     "wavenumber": momentum,
                 },
                 "transport": {
                     "mode": "move",
-                    "direction_field": "momentum",
+                    "direction_field": "heading",
                     "rate": {
                         "op": "mul",
-                        "args": [
-                            SPEED_NUMERATOR,
-                            {"op": "gt", "args": [dissolve_tick, {"field": "clock"}]},
-                        ],
+                        "args": [SPEED_NUMERATOR, {"op": "gt", "args": [{"field": "matter"}, 0]}],
                     },
                     "rate_denominator": SPEED_DENOMINATOR,
                 },
-                "updates": [
-                    {"field": "clock", "expression": {"op": "add", "args": [{"field": "clock"}, 1]}}
-                ],
             },
             {"name": "wall", **body},
             {"name": "slit", **body},

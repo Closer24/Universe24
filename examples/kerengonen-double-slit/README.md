@@ -122,6 +122,28 @@ are the two slits, lit by one wave, and their phases are what the wave carried
 to them, 11 links from the lamp for both. The wall keeps 332,800 quanta in the
 phased and the plain world alike, and every world closes on its initial stock.
 
+### A thick screen: what a dark Node lets pass is absorbed behind it
+
+The two-lamp world again, 16 quanta per ray, with the screen one, two, four
+and eight Nodes deep. The first layer is the screen above; each layer behind
+it is another line of absorbers one link on, where the path difference, and
+so the phase, is different.
+
+| Layers | Phased, total absorbed | Per layer | Plain, total absorbed | Phased over plain | First layer at y = 0 and y = 2 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 13,280 | 13,280 | 21,408 | 0.62 | 928, 64 |
+| 2 | 17,062 | 13,280, 3,782 | 21,408 | 0.80 | 928, 64 |
+| 4 | 18,752 | 13,280, 3,782, 1,244, 446 | 21,408 | 0.88 | 928, 64 |
+| 8 | 19,682 | 13,280, 3,782, 1,244, 446, 148, 190, 290, 302 | 21,408 | 0.92 | 928, 64 |
+
+The plain field absorbs everything in its first layer, and the layers behind
+it stay empty. With phase, the first layer keeps its fringe unchanged, and the
+quanta it let pass at its dark Nodes are absorbed in the layers behind, where
+they meet a different path difference: eight layers recover 92 percent of the
+plain total, the rest still in flight or escaped, and every world closes on
+its initial stock. The thin-screen deficit is not lost energy but energy that
+lands deeper.
+
 ## Conclusion
 
 Rays with a phase interfere where they meet and are absorbed whole where they
@@ -132,5 +154,6 @@ the double slit needs no second lamp. Two limits are visible in the numbers. Int
 of both lamps at one Node on one tick, so ticks on which only one lamp's rays
 are present pass ungated; and the pattern follows Manhattan path difference on
 this lattice, not Euclidean. Quanta that cancel are not redistributed to the
-bright fringes; they continue and escape, which keeps the rule local and the
-total exact but differs from a wave that carries its energy to where it adds.
+bright fringes; they continue, and a thick screen absorbs them behind the
+first layer, which keeps the rule local and the total exact but differs from
+a wave that carries its energy to where it adds.

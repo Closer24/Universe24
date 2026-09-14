@@ -1801,3 +1801,17 @@ emission must name a recoil field, and the emitter must absorb on the field.
 
 A mirror across a lattice axis only; an oblique or partial mirror needs a
 heading map beyond one sign flip.
+
+## A thick screen behind the double slit — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Configuration only: the two-lamp
+double-slit world with screens one, two, four and eight Nodes deep.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,432 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed |
+| Thick screen | Phased totals 13,280, 17,062, 18,752 and 19,682 for one, two, four and eight layers against a plain 21,408 absorbed entirely in the first layer; the first-layer fringe (928 at the center, 64 at the half turn) unchanged by the layers behind; every world closed |
+| Visualization | Not requested or generated |
+
+The thin-screen deficit is energy that lands deeper, not energy lost.

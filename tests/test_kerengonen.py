@@ -642,3 +642,104 @@ def test_the_mirror_emission_is_validated():
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
     with pytest.raises(ValueError, match="requires an absorb rule"):
         parse_initial_state(raw)
+
+
+def test_a_thick_screen_absorbs_what_a_thin_one_lets_pass():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "double_slit_probe_thick",
+        Path(__file__).resolve().parents[1] / "examples/kerengonen-double-slit/run_experiments.py",
+    )
+    probe = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(probe)
+    headings = probe.planar_headings(32, probe.HEADING_SCALE)
+    thin = probe.run(probe.document(24, headings, screen_half=4))
+    thick = probe.run(probe.document(24, headings, screen_half=4, layers=3))
+    assert thin["quanta_closed"] and thick["quanta_closed"]
+    assert thick["layer_totals"][0] == thin["absorbed_total"]
+    assert thick["absorbed_total"] >= thin["absorbed_total"] and len(thick["layer_totals"]) == 3
+
+
+def dissolving_document(after=3, over=4, stock=10, ticks=12, moving=False):
+    """One particle of `stock` quanta on a one-heading field pays itself out on a schedule."""
+    raw = two_lamps(8, 1, ticks=ticks)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 1
+    raw["disturbance_types"] = [
+        {
+            "name": "particle",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": stock, "momentum": [4, 0, 0]},
+            "transport": {"mode": "hold"}
+            if not moving
+            else {
+                "mode": "move",
+                "direction_field": "momentum",
+                "rate": {"op": "min", "args": [1, {"field": "quanta"}]},
+                "rate_denominator": 1,
+            },
+        }
+    ]
+    raw["emissions"] = [
+        {
+            "type": "particle",
+            "field": "quanta",
+            "source": False,
+            "dissolve": {"after_ticks": after, "over_ticks": over},
+        }
+    ]
+    raw["spatial_couplings"] = []
+    raw["seeds"] = [{"position": [CENTER - 4, CENTER, CENTER], "type": "particle"}]
+    return raw
+
+
+def particle_stock(world):
+    return [
+        world.record_values(r)["quanta"][0]
+        for node in world.nodes.values()
+        for r in node.records
+        if r is not None and r.type_index == 0
+    ]
+
+
+def test_a_dissolving_record_pays_its_initial_stock_out_on_the_schedule():
+    world = Simulation(parse_initial_state(dissolving_document()))
+    stocks = []
+    for _ in range(9):
+        world.step()
+        stocks.append(particle_stock(world)[0])
+    # Nothing for three cycles, then ceil(10 / 4) = 3 per cycle until the last quantum.
+    assert stocks == [10, 10, 10, 7, 4, 1, 0, 0, 0]
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
+    # A moving particle keeps flying while it holds quanta and stops when empty; the
+    # schedule counts its own cycles wherever it is.
+    world = Simulation(parse_initial_state(dissolving_document(moving=True)))
+    positions = []
+    for _ in range(9):
+        world.step()
+        found = [
+            position[0] - CENTER
+            for position, node in world.nodes.items()
+            for r in node.records
+            if r is not None and r.type_index == 0
+        ]
+        positions.append(found[0] if found else None)
+    assert positions[0] == -3 and positions[5] == 2 and positions[6] == positions[8] == 2
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
+
+
+def test_dissolution_is_validated():
+    raw = dissolving_document()
+    raw["emissions"][0]["source"] = True
+    with pytest.raises(ValueError, match="funded emission on a ray field"):
+        parse_initial_state(raw)
+    raw = dissolving_document()
+    del raw["emissions"][0]["dissolve"]
+    with pytest.raises(ValueError, match="requires an amount"):
+        parse_initial_state(raw)
+    raw = dissolving_document()
+    raw["emissions"][0]["dissolve"] = {"after_ticks": 0, "over_ticks": 0}
+    with pytest.raises(ValueError, match="over_ticks"):
+        parse_initial_state(raw)

@@ -328,6 +328,21 @@ class SpatialLaw:
                 proposed = evaluate(
                     rule.amount, record.values, record.values, meter, node_cost=node_cost
                 )
+                clocks = list(record.dissolve_clocks)
+                if rule.dissolve_over:
+                    # A particle paying itself out: count this record's cycles, remember
+                    # the stock it started with, and schedule the train from it.
+                    if len(clocks) != len(self.emissions):
+                        clocks = [pack((0, 0)) for _ in self.emissions]
+                    elapsed, initial = unpack(clocks[index])
+                    stock = unpack(record.values[definition.field])[0]
+                    if initial == 0:
+                        initial = stock
+                    elapsed = checked_work(elapsed + 1)
+                    clocks[index] = pack((min(elapsed, rule.dissolve_after + 1), initial))
+                    share = (initial + rule.dissolve_over - 1) // rule.dissolve_over
+                    proposed = (min(stock, share) if elapsed > rule.dissolve_after else 0,)
+                    meter.charge("update")
                 residuals, allocation = list(record.emission_remainders), list(record.emission_phases)
                 remaining = list(record.emission_remaining)
                 last = list(record.emission_last)
@@ -416,6 +431,7 @@ class SpatialLaw:
                     emission_phases=tuple(allocation),
                     emission_remaining=tuple(remaining),
                     emission_last=tuple(last),
+                    dissolve_clocks=tuple(clocks),
                 )
                 if rule.funded:
                     funded[definition.field] = checked_work(funded[definition.field] + unpack(amount)[0])

@@ -1022,10 +1022,13 @@ def _emissions(
                 "kerengonen_phase",
                 "kerengonen_advance",
                 "kerengonen_mirror",
+                "dissolve",
             }
             | ({"budget"} if schema_version == 2 else set()),
-            {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
+            {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
         )
+        if "amount" not in obj and "dissolve" not in obj:
+            raise ValueError("emission requires an amount unless it dissolves")
         source = _boolean(obj["source"], "emission.source")
         kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
         kind = kinds[0]
@@ -1072,6 +1075,18 @@ def _emissions(
             advance_denominator = _integer(
                 advance_object.get("denominator", 1), "emission.kerengonen_advance.denominator", 1
             )
+        dissolve_after, dissolve_over = 0, 0
+        if "dissolve" in obj:
+            if source or not spatial[index].rays:
+                raise ValueError("dissolve requires a funded emission on a ray field")
+            schedule = _object(
+                obj["dissolve"],
+                "emission.dissolve",
+                {"after_ticks", "over_ticks"},
+                {"after_ticks", "over_ticks"},
+            )
+            dissolve_after = _integer(schedule["after_ticks"], "emission.dissolve.after_ticks", 0)
+            dissolve_over = _integer(schedule["over_ticks"], "emission.dissolve.over_ticks", 1)
         mirror: tuple[int, int, int] | None = None
         if "kerengonen_mirror" in obj:
             if not spatial[index].kerengonen:
@@ -1097,7 +1112,7 @@ def _emissions(
         ):
             raise ValueError("duplicate emission for the same disturbance type and field")
         amount = _Expressions(fields, owned, node_cost=True).parse(
-            obj["amount"], fields[spatial[index].field].components
+            obj.get("amount", 0), fields[spatial[index].field].components
         )
         result.append(
             EmissionDefinition(
@@ -1116,6 +1131,8 @@ def _emissions(
                 advance,
                 advance_denominator,
                 mirror,
+                dissolve_after,
+                dissolve_over,
             )
         )
     return tuple(result)

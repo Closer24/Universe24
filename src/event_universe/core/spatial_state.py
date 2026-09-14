@@ -189,6 +189,11 @@ class EmissionDefinition:
     # Kerengonen fields only: re-emit the whole amount along the mirror image of the
     # heading last absorbed, with these component signs (a mirror across one axis).
     mirror: tuple[int, int, int] | None = None
+    # Dissolution (funded ray fields only): emit nothing for dissolve_after cycles,
+    # then the record's initial stock over dissolve_over cycles, never more than
+    # is left. Zero dissolve_over means no dissolution.
+    dissolve_after: int = 0
+    dissolve_over: int = 0
 
 
 @dataclass(frozen=True, slots=True)

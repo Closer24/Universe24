@@ -27,13 +27,13 @@ def test_the_particle_flies_then_dissolves_and_its_husk_stops():
                 if record is not None and record.type_index == 0:
                     values = world.record_values(record)
                     seen.append((position[0] - PROBE.CENTER, values["matter"][0]))
-    # Half a link per tick until the dissolve tick, then it stands still and pays
-    # its matter out over the train; the husk never moves again.
+    # Half a link per tick while it holds matter, paying its train out from the
+    # dissolve tick as it flies; empty, it stops.
     positions = [x for x, _ in seen]
     assert positions[0] == PROBE.START_X - PROBE.CENTER
     assert max(positions) > positions[0]
     matter = [m for _, m in seen]
-    assert matter[0] == matter[1] and matter[-1] < matter[0]
-    assert len({x for x, m in seen if m < matter[0]}) == 1
+    assert matter[:4] == [matter[0]] * 4 and matter[4] < matter[0]
+    assert positions[-1] == positions[-2] or matter[-1] > 0
     assert world.totals()["matter"][0] + world.escaped_totals()["matter"][0] == initial
     assert parse_initial_state(PROBE.document(64, headings, ticks=4, phased=False))
