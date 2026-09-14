@@ -44,10 +44,12 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
+    CAPTURE_MODES,
     DECAY_RESIDUES,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    TICKET_MODULUS,
     DecayDefinition,
     EmissionDefinition,
     FieldAssignment,
@@ -911,6 +913,7 @@ def _spatial_fields(
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
         self_exclusion = False
         phase_steps, phase_advance = 0, 0
+        capture, capture_seed = "share", 0
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             if "kerengonen" in obj:
@@ -918,9 +921,17 @@ def _spatial_fields(
                 phased = _object(
                     obj["kerengonen"],
                     "kerengonen",
-                    {"phase_steps", "phase_advance"},
+                    {"phase_steps", "phase_advance", "capture", "capture_seed"},
                     {"phase_steps", "phase_advance"},
                 )
+                capture = _text(phased.get("capture", "share"), "kerengonen.capture")
+                if capture not in CAPTURE_MODES:
+                    raise ValueError("kerengonen.capture must be share or lottery")
+                capture_seed = _integer(phased.get("capture_seed", 0), "kerengonen.capture_seed", 0)
+                if capture_seed >= TICKET_MODULUS:
+                    raise ValueError("kerengonen.capture_seed must be below the ticket modulus")
+                if capture == "share" and "capture_seed" in phased:
+                    raise ValueError("kerengonen.capture_seed requires the lottery capture")
                 phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
                 if phase_steps > MAX_PHASE_STEPS:
                     raise ValueError("kerengonen phase_steps must be between 2 and 4096")
@@ -980,6 +991,8 @@ def _spatial_fields(
                 self_exclusion,
                 phase_steps,
                 phase_advance,
+                capture,
+                capture_seed,
             )
         )
     return tuple(result)

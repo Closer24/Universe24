@@ -15,6 +15,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
+    TICKET_MODULUS,
     EmissionDefinition,
     FieldRuleGuard,
     NodeFieldRuleDefinition,
@@ -28,6 +29,8 @@ from event_universe.core.spatial_state import (
     SpatialState,
     advance_ray,
     coherence,
+    next_ticket,
+    ray_salt,
     ray_stock,
 )
 
@@ -92,7 +95,8 @@ class SpatialLaw:
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
         if definition.kerengonen:
             meter.charge("evaluate", len(resident))
-        for rule in self.absorptions:
+        lottery = definition.capture == "lottery"
+        for rule_index, rule in enumerate(self.absorptions):
             if rule.field != definition.field:
                 continue
             for slot, record in enumerate(records):
@@ -101,6 +105,10 @@ class SpatialLaw:
                 own = self._own_departed_keys(record, index, meter)
                 if all((ray.heading, ray.accumulators) in own for ray in resident):
                     continue
+                tickets = list(record.absorb_tickets)
+                if lottery and len(tickets) != len(self.absorptions):
+                    tickets = [pack((definition.capture_seed,)) for _ in self.absorptions]
+                ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -122,14 +130,20 @@ class SpatialLaw:
                     meter.charge("couple")
                     share = ray.amount
                     fractional = numerator is not None and numerator < rule.fraction_denominator
-                    if fractional or coherent_numerator < coherent_denominator:
-                        share_numerator, share_denominator = coherent_numerator, coherent_denominator
-                        if fractional:
-                            assert numerator is not None
-                            share_numerator = checked_work(share_numerator * numerator)
-                            share_denominator = checked_work(
-                                share_denominator * rule.fraction_denominator
-                            )
+                    share_numerator, share_denominator = coherent_numerator, coherent_denominator
+                    if fractional:
+                        assert numerator is not None
+                        share_numerator = checked_work(share_numerator * numerator)
+                        share_denominator = checked_work(share_denominator * rule.fraction_denominator)
+                    if lottery:
+                        # Whole ray or nothing: the local ticket draws against the share.
+                        ticket = next_ticket(ticket, ray_salt(ray))
+                        meter.charge("evaluate")
+                        if checked_work(ticket * share_denominator) >= checked_work(
+                            share_numerator * TICKET_MODULUS
+                        ):
+                            share = 0
+                    elif share_numerator < share_denominator:
                         magnitude = checked_work(abs(ray.amount) * share_numerator) // share_denominator
                         share = -magnitude if ray.amount < 0 else magnitude
                     if share < 0:
@@ -150,7 +164,11 @@ class SpatialLaw:
                     values[rule.momentum_field] = pack(tuple(momentum))
                     self.fields[rule.momentum_field].validate(values[rule.momentum_field])
                 meter.charge("update", 1 + (3 if momentum is not None else 0))
-                records[slot] = replace(record, values=tuple(values))
+                if lottery:
+                    tickets[rule_index] = pack((ticket,))
+                    records[slot] = replace(record, values=tuple(values), absorb_tickets=tuple(tickets))
+                else:
+                    records[slot] = replace(record, values=tuple(values))
         return absorbed_total
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:

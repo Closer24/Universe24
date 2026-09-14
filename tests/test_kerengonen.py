@@ -309,3 +309,75 @@ def test_double_slit_probe_composes_and_closes():
     plain = probe.run(probe.document(8, headings, phase_steps=0, screen_half=2))
     assert phased["quanta_closed"] and plain["quanta_closed"]
     assert parse_initial_state(probe.document(4, headings, phase_b=4, screen_half=1))
+
+
+def lottery_document(steps, advance, absorber, seed=7, phase_b=0):
+    raw = two_lamps(steps, advance, absorber=absorber, phase_b=phase_b, ticks=12)
+    raw["spatial_fields"][0]["kerengonen"].update({"capture": "lottery", "capture_seed": seed})
+    for rule in raw["emissions"]:
+        rule["amount"] = 2  # one quantum per ray, each way
+    return raw
+
+
+def absorber_of(world):
+    return next(
+        world.record_values(r)
+        for node in world.nodes.values()
+        for r in node.records
+        if r is not None and r.type_index == 2
+    )
+
+
+def test_lottery_capture_takes_whole_rays_with_the_coherent_probability():
+    from event_universe.core.spatial_state import TICKET_MODULUS, next_ticket
+
+    assert next_ticket(0, 0) == 1 and next_ticket(1, 5) == 48277
+    with pytest.raises(ValueError, match="ticket state"):
+        next_ticket(TICKET_MODULUS, 0)
+    # In phase (x = 0) every ray is taken: the lottery equals the share rule at
+    # probability one. Opposite (x = 1 with four steps) nothing is taken once both
+    # lamps' rays meet, as before.
+    bright = Simulation(parse_initial_state(lottery_document(4, 1, 0)))
+    dark = Simulation(parse_initial_state(lottery_document(4, 1, 1)))
+    for world in (bright, dark):
+        for _ in range(12):
+            world.step()
+        assert world.conservation_report()["status"] == "passed"
+    assert absorber_of(bright)["quanta"] == (18,)
+    assert absorber_of(dark)["quanta"] == (2,)
+    # A quarter turn (x = 1 with eight steps): each single-quantum ray is taken whole
+    # or left whole with probability one half; the share rule would truncate one
+    # quantum times one half to nothing. Two seeds give two different click sequences
+    # with a plausible count, and every quantum stays accounted for.
+    counts = []
+    for seed in (7, 8):
+        world = Simulation(parse_initial_state(lottery_document(8, 1, 1, seed=seed)))
+        for _ in range(12):
+            world.step()
+        report = world.conservation_report()
+        assert report["status"] == "passed"
+        assert world.totals()["quanta"][0] + report["escaped"]["energy"] == 800
+        taken = absorber_of(world)["quanta"][0]
+        counts.append(taken)
+        assert 2 <= taken <= 16
+    raw = two_lamps(8, 1, absorber=1, ticks=12)
+    for rule in raw["emissions"]:
+        rule["amount"] = 2
+    share = Simulation(parse_initial_state(raw))
+    for _ in range(12):
+        share.step()
+    assert absorber_of(share)["quanta"] == (2,)
+
+
+def test_lottery_capture_is_validated():
+    raw = lottery_document(4, 1, 0)
+    raw["spatial_fields"][0]["kerengonen"]["capture"] = "dice"
+    with pytest.raises(ValueError, match="share or lottery"):
+        parse_initial_state(raw)
+    raw = lottery_document(4, 1, 0)
+    raw["spatial_fields"][0]["kerengonen"]["capture"] = "share"
+    with pytest.raises(ValueError, match="capture_seed requires"):
+        parse_initial_state(raw)
+    raw = lottery_document(4, 1, 0, seed=1073741789)
+    with pytest.raises(ValueError, match="ticket modulus"):
+        parse_initial_state(raw)

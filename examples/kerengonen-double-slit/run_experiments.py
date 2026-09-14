@@ -32,6 +32,8 @@ HEADING_SCALE = 16
 PER_RAY = 16
 PHASE_STEPS = 8
 TICKS = 48
+LOTTERY_TICKS = 96  # single quanta, whole or nothing: twice the ticks for the counts
+LOTTERY_SEEDS = (1, 2)
 COSTS = {
     name: 1
     for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
@@ -57,6 +59,7 @@ def document(
     phase_b: int = 0,
     audit: bool = False,
     screen_half: int = SCREEN_HALF,
+    capture_seed: int | None = None,
 ) -> dict:
     count = len(headings)
     stock = per_ray * count * ticks
@@ -70,6 +73,8 @@ def document(
     }
     if phase_steps:
         field["kerengonen"] = {"phase_steps": phase_steps, "phase_advance": 1}
+        if capture_seed is not None:
+            field["kerengonen"].update({"capture": "lottery", "capture_seed": capture_seed})
     emission_b: dict = {
         "type": "lamp_b",
         "field": "quanta",
@@ -224,6 +229,13 @@ def main() -> None:
         "kerengonen_lamp_b_half_turn": run(document(TICKS, headings, phase_b=PHASE_STEPS // 2)),
         "plain": run(document(TICKS, headings, phase_steps=0)),
     }
+    # Single quanta, whole or nothing: the lottery capture builds the fringe click by
+    # click. The share rule would truncate a lone quantum's half share to nothing.
+    lottery = {
+        f"seed_{seed}": run(document(LOTTERY_TICKS, headings, per_ray=1, capture_seed=seed))
+        for seed in LOTTERY_SEEDS
+    }
+    lottery["share_single_quanta"] = run(document(LOTTERY_TICKS, headings, per_ray=1))
     # Eight headings, 24 ticks, a five-Node screen: the (16, +-3) headings of both
     # lamps meet at y = 0 after 19 links each, in phase, under the event audit.
     audited = run(document(24, planar_headings(8, HEADING_SCALE), audit=True, screen_half=2))
@@ -235,6 +247,7 @@ def main() -> None:
             "kerengonen": runs["kerengonen"]["profile"].get(y, 0),
             "half_turn": runs["kerengonen_lamp_b_half_turn"]["profile"].get(y, 0),
             "plain": runs["plain"]["profile"].get(y, 0),
+            **{name: world["profile"].get(y, 0) for name, world in lottery.items()},
         }
         for y in range(-SCREEN_HALF, SCREEN_HALF + 1)
     ]
@@ -248,12 +261,26 @@ def main() -> None:
         "ticks": TICKS,
         "fringe": fringe,
         "runs": {name: {k: v for k, v in run_.items() if k != "profile"} for name, run_ in runs.items()},
+        "lottery": {
+            name: {k: v for k, v in world.items() if k != "profile"} for name, world in lottery.items()
+        },
+        "lottery_ticks": LOTTERY_TICKS,
         "audited": {k: v for k, v in audited.items() if k != "profile"}
         | {"profile": audited["profile"]},
     }
     (args.output / "summary.json").write_text(json.dumps(result, indent=2) + "\n")
     for row in fringe:
-        print(row["y"], row["path_difference"], row["kerengonen"], row["half_turn"], row["plain"])
+        print(
+            row["y"],
+            row["path_difference"],
+            row["kerengonen"],
+            row["half_turn"],
+            row["plain"],
+            "lottery",
+            [row[f"seed_{seed}"] for seed in LOTTERY_SEEDS],
+            row["share_single_quanta"],
+        )
+    print("lottery", result["lottery"])
     print("runs", result["runs"])
     print("audited", result["audited"]["audit"]["status"], result["audited"]["quanta_closed"])
     print("Wrote report: " + str(args.output / "summary.json"))

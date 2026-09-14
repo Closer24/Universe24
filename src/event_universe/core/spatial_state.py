@@ -93,6 +93,11 @@ class SpatialFieldDefinition:
     # the steps a ray advances on every link. Zero steps is the plain ray field.
     phase_steps: int = 0
     phase_advance: int = 0
+    # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
+    # share of its amount; "lottery" takes the whole ray or nothing, decided by a
+    # local ticket whose probability is that share.
+    capture: str = "share"
+    capture_seed: int = 0
 
     @property
     def rays(self) -> bool:
@@ -471,6 +476,29 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
             )
     denominator = checked_work(checked_work(magnitude * magnitude) * PHASE_COSINE_SCALE)
     return (min(max(numerator, 0), denominator), denominator)
+
+
+CAPTURE_MODES = ("share", "lottery")
+TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
+
+
+def next_ticket(state: int, salt: int) -> int:
+    """Advance a local ticket state: a multiplicative congruence salted by the ray met."""
+    if not 0 <= state < TICKET_MODULUS:
+        raise ValueError("absorb ticket state must stay below the ticket modulus")
+    return (state * 48271 + salt + 1) % TICKET_MODULUS
+
+
+def ray_salt(ray: Ray) -> int:
+    """A bounded integer that differs between rays of different line, phase or amount."""
+    return (
+        ray.heading * 7919
+        + ray.accumulators[0] * 104729
+        + ray.accumulators[1] * 1299709
+        + ray.accumulators[2] * 15485863
+        + ray.phase * 32452843
+        + abs(ray.amount)
+    ) % TICKET_MODULUS
 
 
 def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
