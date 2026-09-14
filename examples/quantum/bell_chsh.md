@@ -52,6 +52,22 @@ directory and a combined `summary.json`. It is headless and records no frames.
 `tests/test_bell_chsh.py` runs the same harness with five trials per setting
 in the fast gate.
 
+## Animation
+
+```sh
+PYTHONPATH=src python examples/quantum/bell_chsh_view.py artifacts/bell-chsh --target artifacts/bell-chsh-view
+```
+
+[bell_chsh_view.py](bell_chsh_view.py) needs the `render` extra. It reads the
+saved runs only: initialization layers, `events.jsonl` receptions, `run.json`
+decision records and the final `state.json`. It writes `bell_chsh.gif`, one
+frame per recorded tick for one run of each setting pair followed by the
+result table, and four stills. The lattice is drawn in three dimensions with
+its Links; the pair members are the registers named by the recorded gates; the
+detectors are at their recorded positions. The dashed arc between the two
+members marks one joint state held by the quantum owner. It is not a Link, a
+field or a signal, and nothing is interpolated between ticks.
+
 ## Observed results, 2026-09-14
 
 Python 3.14.0rc2, runtime source fingerprint

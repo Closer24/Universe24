@@ -25,6 +25,7 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/causal_interference.py": ("tests/test_causal_interference.py",),
     "examples/quantum/bell_chsh.py": ("tests/test_bell_chsh.py",),
     "examples/quantum/bell_chsh.json": ("tests/test_bell_chsh.py",),
+    "examples/quantum/bell_chsh_view.py": ("tests/test_bell_chsh.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
