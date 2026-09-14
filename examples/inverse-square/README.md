@@ -1,5 +1,8 @@
 # Inverse-square probe: what the outward field law does and does not derive
 
+For exact path counting, size/translation controls and an equal-Euclidean-radius
+counterexample, see [the emergence validation](EMERGENCE_VALIDATION.md).
+
 This experiment asks whether Newton's inverse-square dependence follows from
 the existing outward field transport. Every number below is a read-only
 world/event audit of node state after the run, placed at host Euclidean
