@@ -1,7 +1,7 @@
 """A particle in flight dissolves into a matter wave and lands on a screen as a fringe.
 
 Configuration only, on rules that already exist. A particle record of matter M
-and momentum p moves along its momentum at half a link per tick. Its funded
+and momentum p moves along its heading at an eighth of a link per tick. Its funded
 emission carries the engine's `dissolve` schedule: nothing for four cycles,
 then its initial matter over sixteen cycles as Kerengonen rays over a forward
 cone, each ray advancing `|p| / 4` phase steps per link. The particle keeps
@@ -45,7 +45,7 @@ DISSOLVE_TICK = 4  # the particle flies two links before its train starts
 TRAIN_TICKS = (
     16  # it pays out its matter over sixteen ticks: a wave train longer than any path difference
 )
-SPEED_NUMERATOR = 32  # hops per tick = 32 / 64 while it holds matter, then 0
+SPEED_NUMERATOR = 8  # hops per tick = 8 / 64 while it holds matter, then 0: it stays far from the wall
 SPEED_DENOMINATOR = 64
 TICKS = 84
 COSTS = {
