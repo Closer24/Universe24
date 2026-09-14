@@ -566,11 +566,13 @@ everything born at one Node on one tick is one pair. (`"bond_field":
 detector whose setting is that field's value in phase steps. When such a
 record meets a bonded ray it does not draw a ticket or read the coherence: it
 asks the bond registry, one object for the whole world seeded by `s`. The
-first question on a bond is answered by an even coin and remembered with its
-setting; the second, at another setting, is answered so that the two ends
-agree with probability `(1 - cos(difference)) / 2` from the fixed cosine
-table, the singlet's law. An answer of +1 takes the whole ray, -1 leaves it
-to walk on. The registry's second answer knows the first at once, at any
+first question on a bond draws the pair's one number and is answered by its
+upper half, an even coin, remembered with its setting and the number; the
+second, at another setting, draws nothing and is answered by the lower half
+of the same number so that the two ends agree with probability
+`(1 - cos(difference)) / 2` from the fixed cosine table, the singlet's law
+([postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)).
+An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's second answer knows the first at once, at any
 distance; it moves no energy, no momentum and no message, since each end
 alone sees an even coin whatever the other end's setting. Rays merge only
 within one bond. The registry lives in one process: bonded worlds run on a

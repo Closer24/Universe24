@@ -630,3 +630,27 @@ local envelope; remote quantum generation changes cannot choose an ordinary
 source bank. Existing field stock follows its configured transport and decay.
 This is a finite configured hypothesis, preserving the older profiles and their
 limits; it does not derive the matrices or establish physical energy closure.
+
+## 22. The lottery is the reality: one integer per interaction
+
+Every interaction whose outcome is not certain consumes exactly one bounded
+integer from a configured sequence, and nothing else decides it: the record's
+own ticket for a lottery capture on a ray field, the quantum owner's ticket at
+a contact, and the bond registry's number for a bonded pair. The world's
+history is fixed by its rules, its initial state and this sequence of integers,
+one per interaction, and the same sequence replays the same history.
+
+A bonded pair is one interaction and draws one number, whichever end asks
+first, Alice's or Bob's. That number's upper half is the first end's even
+coin; its lower half, read against the difference of the two settings,
+decides whether the second end agrees, with the singlet's probability
+`(1 - cos(difference)) / 2`. Neither end can read the number: each sees an even
+coin whatever the other end's setting, so the number carries no message and
+postulate 4 holds for everything physical. The number is a hidden variable in
+Bell's sense, local for a lottery capture, where it lives in the detector's
+record row and `S` stays at or below 2, and shared for a bonded pair, where
+one number answers both ends and `S` reaches the quantum value. The
+[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
+implements the pair's single number; the [Bell probe](examples/bell-chsh/README.md)
+measures it. What the sequence is, beyond a configured seed, is the open
+question of postulate 12 in another form.
