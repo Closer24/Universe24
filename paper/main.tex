@@ -11,7 +11,7 @@
 exact interference, causal collapse, and a Bell test that separates\\
 local from shared-state candidates on one lattice}
 \author{Alon Gonen\\
-\small Reality Theory (Universe24) \quad \texttt{alon@defounder.ai}}
+\small Independent researcher; Reality Theory (Universe24) \quad \texttt{alon@defounder.ai}}
 \date{September 2026}
 
 \begin{document}
@@ -20,7 +20,8 @@ local from shared-state candidates on one lattice}
 \begin{abstract}
 We report exact, reproducible measurements on Universe24, a simulator in which
 space is a three-dimensional lattice of Nodes joined by six Links, every
-evolving quantity is a bounded integer, and every rule is local. Ordinary
+evolving quantity is a bounded integer, and every rule is local, with one
+declared exception stated below. Ordinary
 matter and fields are configured disturbances; a quantum excitation is a finite
 joint state over at most thirty lattice registers, evolved by number-preserving
 Gaussian-integer unitaries and read by local Kraus instruments. The two are
@@ -35,12 +36,13 @@ Aharonov--Bohm-like phase from an external classical field, an emission-side
 energy closure, and the emission-side classical limit. We then run the CHSH
 form of Bell's test five times on one lattice with the same settings. Three
 candidates whose information travels only on Links give $S = 1.40$ (exact),
-$1.48$, and exactly $2$; two candidates with one shared object that no Link
-carries give $S = 2.89$ (a bounded registry answering a bonded pair from one
-number) and $S = 14/5$ (the finite quantum owner). We state a postulate under
-which every uncertain interaction consumes one bounded integer, derive that
-the integer sequence is the only entry for information outside the world and
-is bound by no-signalling, and measure that bound: a uniform outside source is
+$1.48$ and exactly $2$, and the plain field gives exactly $2$; two candidates
+with one shared object that no Link carries give $S = 2.89$ (a bounded
+registry answering a bonded pair from one number, at settings whose quantum
+value is $2\sqrt2$) and $S = 14/5$ (the finite quantum owner at 3-4-5 settings). We state a postulate under
+which every uncertain interaction consumes one bounded integer, show that
+within the model the integer sequence is the only entry for information
+outside the world and is bound by no-signalling, and measure that bound: a uniform outside source is
 invisible, a biased one is a signal. We list what is not claimed: no derivation
 of the classical limit or of the configured laws, no continuum limit, and no
 prediction yet distinguishable from quantum mechanics with a classical field.
@@ -97,8 +99,8 @@ for phased rays are prepared once in fixed point with a bounded series.
 
 \paragraph{Computation cost and delay.} Every local cycle has a cost in
 configured operation prices, and a cycle whose cost exceeds the normal budget
-$B$ delays its Node by $k = \lceil C/B \rceil$ intervals; Link transit stays
-one tick and no debt accumulates. A configured conserved field may be named the
+$B$ delays its Node by a number of intervals set by $\lceil C/B \rceil$; Link
+transit stays one tick and no debt accumulates. A configured conserved field may be named the
 computation field: its local value adds to the cost of every cycle at the Node,
 so a mass that emits it slows the carriers, and optionally the rays, that pass
 it. With directional delay each departure waits for the load on its own
@@ -222,25 +224,32 @@ continuous law, while the wave's own dynamics stay configured.
 
 \section{Bell's test five times on one lattice}\label{sec:bell}
 
-We run the CHSH form with the same four settings, Alice $Z$ or $X$ and Bob
-$(3Z \pm 4X)/5$, read as phases $0^\circ, 90^\circ, 53^\circ, 307^\circ$ on the
-ray candidates, and the same combination
-$S = E(a_0 b_0) + E(a_0 b_1) + E(a_1 b_0) - E(a_1 b_1)$.
+We run the CHSH form, $S = E(a_0 b_0) + E(a_0 b_1) + E(a_1 b_0) - E(a_1 b_1)$,
+on two probes. The phased-ray probe uses the quantum owner's settings, Alice
+$Z$ or $X$ and Bob $(3Z \pm 4X)/5$, read as phases $0^\circ, 90^\circ,
+53^\circ, 307^\circ$ on a 360-step circle; the quantum value at these
+settings is $14/5$, the closest integer stand-in for the optimal settings. The
+ray Bell probe uses the optimal settings $0^\circ, 90^\circ, 45^\circ,
+135^\circ$ on a 64-step circle, whose quantum value is $2\sqrt2$; two
+independent local lotteries predict $\sqrt2$ there. The reading of a
+measurement setting as a phase on the ray field is a configured
+correspondence. Each row of the table is compared with the quantum value at
+its own settings.
 
 \begin{table}[h]\centering\small
-\resizebox{\linewidth}{!}{\begin{tabular}{lll}
+\resizebox{\linewidth}{!}{\begin{tabular}{llll}
 \toprule
-Candidate & What decides the outcome & $S$\\
+Candidate & What decides the outcome & Settings (quantum value) & $S$\\
 \midrule
-Phased rays, share rule & coherent share against a local reference & $826177/589824 = 1.4007$ exact\\
-Phased rays, lottery & a local ticket at the coherent rate & $1.48$, $1.38$ (two probes; $1.41$ predicted)\\
-Phased rays, threshold & deterministic: whole ray when the share reaches $\tfrac12$ & $2.00$ exactly\\
-Plain rays, no phase & every ray absorbed whole & $2$ exactly\\
-Bonded rays & the bond registry, one number per pair & $2.89$ ($2.83$ quantum)\\
-Finite quantum owner & the joint conditional state at each contact & $14/5$ exact; dephased control $6/5$\\
+Phased rays, share rule & coherent share against a local reference & 3-4-5 ($14/5$) & $826177/589824 = 1.4007$ exact\\
+Phased rays, lottery & a local ticket at the coherent rate & 3-4-5 ($14/5$); $45^\circ$ ($2\sqrt2$) & $1.38$; $1.48$ ($1.41$ predicted)\\
+Phased rays, threshold & deterministic: whole ray when the share reaches $\tfrac12$ & $45^\circ$ ($2\sqrt2$) & $2.00$ exactly\\
+Plain rays, no phase & every ray absorbed whole & 3-4-5 ($14/5$) & $2$ exactly\\
+Bonded rays & the bond registry, one number per pair & $45^\circ$ ($2\sqrt2 = 2.83$) & $2.89$\\
+Finite quantum owner & the joint conditional state at each contact & 3-4-5 ($14/5$) & $14/5$ exact; dephased control $6/5$\\
 \bottomrule
 \end{tabular}}
-\caption{One lattice, one runner, one set of settings. Candidates whose information travels only on Links stay at or below 2; candidates with one shared object exceed it.}
+\caption{One lattice, one runner, each candidate against the quantum value at its own settings. Candidates whose information travels only on Links stay at or below 2; candidates with one shared object exceed it.}
 \end{table}
 
 The share rule equals the local model $E = \tfrac12\cos(a-b)$ exactly, one
@@ -293,6 +302,9 @@ a finite number of ticks.
 \item Not quantum electrodynamics, gravity, spin, statistics or many-body
 dynamics.
 \item The bonded ray is not a local explanation of the Bell value.
+\item A run above the quantum value ($2.89$ against $2.83$) is counting
+spread over 1024 pairs; the registry's law gives $E = -\cos$ exactly in
+expectation.
 \end{itemize}
 
 What would make this a physics result: a local integer rule for several
