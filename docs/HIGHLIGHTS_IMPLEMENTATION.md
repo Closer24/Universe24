@@ -1,5 +1,45 @@
 # Highlights implementation coverage
 
+## The ray: one object for wave and particle - 2026-09-14
+
+This entry maps the straight-ray field and its Kerengonen extension to the
+Highlights sections on fields, quanta and the classical limit (1.2, 4.7, 10.3).
+It reconciles the repository at main `c3c39d0` after
+[PR #98](https://github.com/Closer24/Universe24/pull/98) plus the eight later
+commits on the working branch; the live document was not edited.
+
+A ray is a whole amount of one scalar field with a fixed integer heading and
+three routing accumulators that keep it on one lattice line, one link per tick.
+With the `kerengonen` key it also carries a phase that advances per link, and
+each ray may carry its own advance, stamped at emission from an expression over
+the emitter's fields (`|p| / D` is the de Broglie rule). Rays that meet at a
+Node combine by phase; the coherence of what met, from a fixed-point integer
+cosine table, gates the value a reader samples and the share an absorber
+takes. Amounts are never changed by phase: the audit sums quanta. Absorption
+is a run-time choice, the coherent share or a whole-ray lottery drawn by a
+record-row ticket. A record that absorbs keeps the phase, advance and heading
+of what it took: an emission may carry that phase on (a Huygens slit), send
+the amount back along the mirrored heading (a mirror), or pay a record out on
+a schedule (`dissolve`: a particle becoming its own wave train).
+
+| Highlights sections | Implemented contract and limits | Repository owner |
+| --- | --- | --- |
+| 10.3.2 | Straight rays: isotropic inverse square, shell conservation, a small stock sweeping the heading sequence in turn. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
+| 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
+| 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
+| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [validation](VALIDATION.md) |
+| 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | [Quantum-to-classical probes](../examples/quantum-classical/README.md) |
+
+What the ray is not, recorded rather than claimed: a single particle's matter
+lands spread as its wave, not at one Node, because the ray field has no causal
+retirement of the rest of a wave when one Node captures; a mirror reflects
+across a lattice axis only; fringes follow Manhattan path difference; the
+lottery ticket is a configured local sequence, not physical randomness; the
+event audit re-measures every owner per event, so audited worlds stay small.
+The `|p| / D` rule and every mixer are configured laws, measured to hold, not
+derived. Exact sources and completed checks are in
+[validation evidence](VALIDATION.md).
+
 ## Causal quantum source envelopes - 2026-09-13
 
 The user's latest selection extends the preceding localized-source choice:
@@ -377,6 +417,12 @@ treating its omissions as current gaps.
   remaining physical inventory is conserved indefinitely.
 - Self-field attribution is not implemented as a general source-identity filter.
   Arrival order is not a general proof of ownership after turning or periodic return.
+  A ray field's `self_exclusion` subtracts a departing emitter's own one-link rays
+  on arrival, from its own registers only.
+- A ray is a whole amount on one lattice line; with `kerengonen` it carries a
+  phase and its own advance, combines by phase where rays meet, and is absorbed
+  whole or by its coherent share. Slits, mirrors and dissolving particles are
+  emissions that carry the absorbed phase, heading or schedule on.
 
 ### 10.4 Local field rules and field groups
 
