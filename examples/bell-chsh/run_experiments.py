@@ -23,9 +23,18 @@ import hashlib
 import json
 import math
 import random
+from concurrent.futures import ProcessPoolExecutor
+from fractions import Fraction
 from pathlib import Path
 
 from event_universe import Simulation
+from event_universe.core.spatial_state import (
+    PHASE_COSINE_SCALE,
+    TICKET_MODULUS,
+    origin_bond,
+    phase_cosines,
+)
+from event_universe.fields.bonds import BondRegistry
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import source_fingerprint
 
@@ -299,7 +308,6 @@ def outcomes(raw: dict) -> dict:
     }
 
 
-TICKET_MODULUS = 1073741789
 SOURCES = ("sequence", "uniform", "biased")
 
 
@@ -416,24 +424,306 @@ def chsh(seeds: int = SEEDS, capture: str = "lottery", source: str = "sequence")
     }
 
 
+# --- Statistics of the bonded value and the causal factorization of every candidate ---
+
+EXPECTED_BOND_S = Fraction(
+    abs(
+        sum(
+            sign * -phase_cosines(PHASE_STEPS)[(SETTINGS[left] - SETTINGS[right]) % PHASE_STEPS]
+            for sign, (left, right) in zip((1, -1, 1, 1), PAIRS, strict=True)
+        )
+    ),
+    PHASE_COSINE_SCALE,
+)
+"""The registry's exact expectation of S on the 64-step table: 724/256 = 2.828125.
+
+The second end agrees when the number's lower half, uniform below the modulus,
+falls under (256 - c) / 512, so E(a, b) = -c / 256 in expectation for the table
+cosine c of the settings' difference; the four terms give 4 x 181 / 256.
+"""
+PROBE_BOND = origin_bond((CENTER, 1, 1), (WIDTH, 3, 3), 0)
+LATTICE_LEVELS = (64, 256, 1024, 4096)
+REGISTRY_LEVELS = (1000, 10000, 100000, 1000000)
+REPLICAS = 4
+
+
+def sweep_seed(pairs: int, replica: int, setting: int, index: int) -> int:
+    """A registry seed for one pair: fresh for every level, replica, setting pair and pair."""
+    offset = pairs.bit_length() * 2**26 + (replica * len(PAIRS) + setting) * pairs + index
+    return 1 + offset % (TICKET_MODULUS - 1)
+
+
+def registry_pair(seed: int, alice: int, bob: int) -> tuple[int, int]:
+    """The registry alone, no lattice: Alice asks first at her setting, Bob second at his."""
+    registry = BondRegistry(seed, PHASE_STEPS)
+    return registry.draw(PROBE_BOND, alice, 1), registry.draw(PROBE_BOND, bob, 2)
+
+
+def lattice_pair(job: tuple[int, int, int]) -> tuple[int | None, int | None, bool]:
+    """One bonded pair on the lattice: (Alice's outcome, Bob's outcome, closed)."""
+    seed, alice, bob = job
+    result = outcomes(document(0, alice, bob, seed, capture="bond"))
+    return result["alice"], result["bob"], result["closed"]
+
+
+def standard_error(e: float, count: int) -> float:
+    """The binomial standard error of a correlation of +-1 products over count pairs."""
+    return math.sqrt(max(1 - e * e, 0) / count) if count else 0.0
+
+
+def bonded_statistics(pairs: int, replica: int, lattice: bool, workers: int = 1) -> dict:
+    """E(a, b) over `pairs` fresh bonded pairs per setting pair, with standard errors.
+
+    Every setting pair draws its own pairs, so the four correlations are independent
+    samples and the error of S is the root of the sum of their squared errors. On
+    the lattice every pair is also computed by the registry alone from the same
+    seed, and the two are compared outcome by outcome.
+    """
+    correlations = {}
+    closed = True
+    identical = 0
+    for setting, (left, right) in enumerate(PAIRS):
+        alice, bob = SETTINGS[left], SETTINGS[right]
+        seeds = [sweep_seed(pairs, replica, setting, index) for index in range(pairs)]
+        registry = [registry_pair(seed, alice, bob) for seed in seeds]
+        if lattice:
+            jobs = [(seed, alice, bob) for seed in seeds]
+            if workers > 1:
+                with ProcessPoolExecutor(max_workers=workers) as pool:
+                    landed = list(pool.map(lattice_pair, jobs, chunksize=16))
+            else:
+                landed = [lattice_pair(job) for job in jobs]
+            closed = closed and all(row[2] for row in landed)
+            sample = [(row[0], row[1]) for row in landed]
+            identical += sum(a == b for a, b in zip(sample, registry, strict=True))
+        else:
+            sample = registry
+        total = sum(a * b for a, b in sample if a is not None and b is not None)
+        count = sum(a is not None and b is not None for a, b in sample)
+        e = total / count if count else 0.0
+        correlations[f"{left},{right}"] = {
+            "pairs": count,
+            "missing": pairs - count,
+            "E": round(e, 5),
+            "sigma_E": round(standard_error(e, count), 5),
+            "expected_E": round(
+                -phase_cosines(PHASE_STEPS)[(alice - bob) % PHASE_STEPS] / PHASE_COSINE_SCALE, 5
+            ),
+            "alice_plus_rate": round(sum(a > 0 for a, _ in sample) / count, 4) if count else None,
+            "bob_plus_rate": round(sum(b > 0 for _, b in sample) / count, 4) if count else None,
+        }
+    e = {key: value["E"] for key, value in correlations.items()}
+    s = abs(e["a,b"] - e["a,b2"] + e["a2,b"] + e["a2,b2"])
+    sigma = math.sqrt(sum(value["sigma_E"] ** 2 for value in correlations.values()))
+    return {
+        "pairs_per_correlation": pairs,
+        "replica": replica,
+        "lattice": lattice,
+        "correlations": correlations,
+        "S": round(s, 5),
+        "sigma_S": round(sigma, 5),
+        "expected_S": float(EXPECTED_BOND_S),
+        "quantum_S": round(2 * math.sqrt(2), 5),
+        "z": round((s - float(EXPECTED_BOND_S)) / sigma, 3) if sigma else None,
+        **({"closed": closed, "identical_to_registry": identical} if lattice else {}),
+    }
+
+
+def sweep(
+    lattice_levels: tuple[int, ...] = LATTICE_LEVELS,
+    registry_levels: tuple[int, ...] = REGISTRY_LEVELS,
+    replicas: int = REPLICAS,
+    workers: int = 1,
+) -> dict:
+    """S against the number of pairs: the lattice up to 4096, the registry alone beyond."""
+    levels = []
+    for lattice, level_list in ((True, lattice_levels), (False, registry_levels)):
+        for pairs in level_list:
+            runs = [bonded_statistics(pairs, replica, lattice, workers) for replica in range(replicas)]
+            values = [run["S"] for run in runs]
+            mean = sum(values) / len(values)
+            spread = (
+                math.sqrt(sum((v - mean) ** 2 for v in values) / (len(values) - 1))
+                if len(values) > 1
+                else 0.0
+            )
+            levels.append(
+                {
+                    "pairs_per_correlation": pairs,
+                    "lattice": lattice,
+                    "replicas": replicas,
+                    "S_values": values,
+                    "S_mean": round(mean, 5),
+                    "S_spread": round(spread, 5),
+                    "S_error_of_mean": round(spread / math.sqrt(len(values)), 5),
+                    "sigma_S_predicted": runs[0]["sigma_S"],
+                    "deviation_from_expected": round(mean - float(EXPECTED_BOND_S), 5),
+                    "runs": runs,
+                }
+            )
+    return {
+        "settings": SETTINGS,
+        "expected_S": float(EXPECTED_BOND_S),
+        "expected_S_exact": f"{EXPECTED_BOND_S.numerator}/{EXPECTED_BOND_S.denominator}",
+        "quantum_S": round(2 * math.sqrt(2), 5),
+        "local_bound": 2,
+        "levels": levels,
+    }
+
+
+CANDIDATES = ("lottery", "threshold", "bond")
+
+
+def causal_factors(capture: str, seeds: int = 4, workers: int = 1) -> dict:
+    """Does either end's outcome move with the other end's setting at fixed hidden variable?
+
+    For every hidden variable lambda (hidden phase and seed) the four setting pairs
+    are run and the outcomes tabulated as A(a, b, lambda) and B(a, b, lambda).
+    Parameter independence at Alice means A(a, b) = A(a, b') for every lambda,
+    and at Bob B(a, b) = B(a', b); the rates of violation are counted. Locality in
+    Bell's sense, P(A, B | a, b, lambda) = P(A | a, lambda) P(B | b, lambda),
+    needs both rates to vanish. The hidden variable's distribution is the same
+    for every setting pair by construction: the seed and hidden phase are chosen
+    before the settings and do not read them, which is measurement independence.
+    """
+    jobs = []
+    for hidden in range(PHASE_STEPS):
+        for seed in range(1, seeds + 1):
+            registry_seed = hidden * seeds + seed if capture == "bond" else seed
+            for left, right in PAIRS:
+                jobs.append((hidden, seed, left, right, registry_seed))
+
+    jobs = [(capture,) + job for job in jobs]
+    if workers > 1:
+        with ProcessPoolExecutor(max_workers=workers) as pool:
+            rows = list(pool.map(_causal_job, jobs, chunksize=16))
+    else:
+        rows = [_causal_job(job) for job in jobs]
+    table: dict[tuple[int, int], dict[tuple[str, str], tuple[int | None, int | None]]] = {}
+    closed = True
+    for (hidden, seed, left, right), a, b, ok in rows:
+        table.setdefault((hidden, seed), {})[(left, right)] = (a, b)
+        closed = closed and ok
+    alice_moves = {"a": 0, "a2": 0}
+    bob_moves = {"b": 0, "b2": 0}
+    complete = 0
+    for cells in table.values():
+        if any(None in pair for pair in cells.values()):
+            continue
+        complete += 1
+        for setting in alice_moves:
+            alice_moves[setting] += cells[(setting, "b")][0] != cells[(setting, "b2")][0]
+        for setting in bob_moves:
+            bob_moves[setting] += cells[("a", setting)][1] != cells[("a2", setting)][1]
+    return {
+        "capture": capture,
+        "hidden_variables": complete,
+        "closed": closed,
+        "alice_moves_with_bob_setting": {
+            key: round(value / complete, 4) for key, value in alice_moves.items()
+        },
+        "bob_moves_with_alice_setting": {
+            key: round(value / complete, 4) for key, value in bob_moves.items()
+        },
+        "parameter_independent": all(v == 0 for v in alice_moves.values())
+        and all(v == 0 for v in bob_moves.values()),
+    }
+
+
+def _causal_job(job: tuple) -> tuple:
+    capture, hidden, seed, left, right, registry_seed = job
+    result = outcomes(document(hidden, SETTINGS[left], SETTINGS[right], registry_seed, capture=capture))
+    return (hidden, seed, left, right), result["alice"], result["bob"], result["closed"]
+
+
+def causal_analysis(seeds: int = 4, workers: int = 1) -> dict:
+    """The parameter-independence rates of the three ray candidates."""
+    return {
+        "settings": SETTINGS,
+        "candidates": {capture: causal_factors(capture, seeds, workers) for capture in CANDIDATES},
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seeds", type=int, default=SEEDS)
     parser.add_argument("--capture", choices=("lottery", "threshold", "bond"), default="lottery")
     parser.add_argument("--source", choices=SOURCES, default="sequence")
+    parser.add_argument(
+        "--sweep",
+        action="store_true",
+        help="S against the number of bonded pairs, with standard errors, lattice and registry",
+    )
+    parser.add_argument("--lattice-pairs", type=int, nargs="*", default=list(LATTICE_LEVELS))
+    parser.add_argument("--registry-pairs", type=int, nargs="*", default=list(REGISTRY_LEVELS))
+    parser.add_argument("--replicas", type=int, default=REPLICAS)
+    parser.add_argument(
+        "--causal",
+        action="store_true",
+        help="parameter-independence rates of the lottery, threshold and bonded candidates",
+    )
+    parser.add_argument(
+        "--workers", type=int, default=1, help="processes for the sweep and causal modes"
+    )
     args = parser.parse_args()
     if args.source != "sequence" and args.capture != "bond":
         raise SystemExit("an external number source applies to the bonded capture only")
     args.output.mkdir(parents=True, exist_ok=True)
-    result = chsh(args.seeds if args.capture != "threshold" else 1, args.capture, args.source)
-    report = {
+    stamp = {
         "source_sha256": source_fingerprint(),
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "measurement_scope": "read-only world/event audit",
         "phase_steps": PHASE_STEPS,
-        **result,
     }
+    if args.sweep:
+        result = sweep(
+            tuple(args.lattice_pairs), tuple(args.registry_pairs), args.replicas, args.workers
+        )
+        (args.output / "summary-bond-sweep.json").write_text(
+            json.dumps({**stamp, **result}, indent=2) + "\n"
+        )
+        for level in result["levels"]:
+            print(
+                "lattice" if level["lattice"] else "registry",
+                level["pairs_per_correlation"],
+                "pairs: S",
+                level["S_mean"],
+                "+-",
+                level["S_error_of_mean"],
+                "(spread",
+                level["S_spread"],
+                "predicted sigma",
+                level["sigma_S_predicted"],
+                ") expected",
+                result["expected_S"],
+                *(
+                    ("identical to registry", sum(r["identical_to_registry"] for r in level["runs"]))
+                    if level["lattice"]
+                    else ()
+                ),
+            )
+        print("Wrote report: " + str(args.output / "summary-bond-sweep.json"))
+        return
+    if args.causal:
+        result = causal_analysis(args.seeds if args.seeds != SEEDS else 4, args.workers)
+        (args.output / "summary-causal.json").write_text(
+            json.dumps({**stamp, **result}, indent=2) + "\n"
+        )
+        for name, row in result["candidates"].items():
+            print(
+                name,
+                "Alice moves with Bob's setting",
+                row["alice_moves_with_bob_setting"],
+                "Bob moves with Alice's setting",
+                row["bob_moves_with_alice_setting"],
+                "closed",
+                row["closed"],
+            )
+        print("Wrote report: " + str(args.output / "summary-causal.json"))
+        return
+    result = chsh(args.seeds if args.capture != "threshold" else 1, args.capture, args.source)
+    report = {**stamp, **result}
     name = args.capture if args.source == "sequence" else f"{args.capture}-{args.source}"
     (args.output / f"summary-{name}.json").write_text(json.dumps(report, indent=2) + "\n")
     for key, value in result["correlations"].items():

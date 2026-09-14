@@ -152,3 +152,50 @@ def test_the_bond_stream_is_validated():
     raw["spatial_fields"][0]["bond"]["stream"] = [1] * 4097
     with pytest.raises(ValueError, match="at most 4096"):
         parse_initial_state(raw)
+
+
+def test_the_bonded_value_is_the_registry_law_pair_by_pair_with_its_standard_error():
+    from fractions import Fraction
+
+    # The registry's exact expectation on the 64-step table: 4 x 181 / 256.
+    assert PROBE.EXPECTED_BOND_S == Fraction(181, 64)
+    seeds = {
+        PROBE.sweep_seed(pairs, replica, setting, index)
+        for pairs in (16, 64)
+        for replica in range(2)
+        for setting in range(4)
+        for index in range(pairs)
+    }
+    assert len(seeds) == 2 * 4 * (16 + 64) and all(0 < seed < PROBE.TICKET_MODULUS for seed in seeds)
+    lattice = PROBE.bonded_statistics(16, 0, lattice=True)
+    registry = PROBE.bonded_statistics(16, 0, lattice=False)
+    # Every one of the 64 lattice outcomes is the registry's answer from the same seed.
+    assert lattice["closed"] and lattice["identical_to_registry"] == 64
+    assert lattice["S"] == registry["S"] and lattice["sigma_S"] == registry["sigma_S"]
+    assert all(
+        lattice["correlations"][key]["E"] == registry["correlations"][key]["E"]
+        and lattice["correlations"][key]["missing"] == 0
+        for key in lattice["correlations"]
+    )
+    # A hundred thousand registry pairs per correlation: within three standard errors
+    # of the law's expectation, and the error itself below one part in two hundred.
+    big = PROBE.bonded_statistics(100000, 0, lattice=False)
+    assert big["sigma_S"] < 0.005 and abs(big["S"] - 2.828125) < 3 * big["sigma_S"]
+    assert big["expected_S"] == 2.828125 and big["quantum_S"] == 2.82843
+
+
+def test_only_the_bonded_candidate_moves_an_outcome_with_the_other_ends_setting():
+    # At fixed hidden variable, a local candidate's outcome at one end never moves
+    # with the other end's setting: parameter independence, measured as a rate.
+    lottery = PROBE.causal_factors("lottery", seeds=1)
+    assert lottery["closed"] and lottery["hidden_variables"] == 64
+    assert lottery["parameter_independent"]
+    assert lottery["alice_moves_with_bob_setting"] == {"a": 0.0, "a2": 0.0}
+    assert lottery["bob_moves_with_alice_setting"] == {"b": 0.0, "b2": 0.0}
+    # The registry: Alice's coin never moves with Bob's setting; Bob's answer at b'
+    # moves with Alice's setting for 47 of 64 hidden variables (the law says 362/512).
+    bond = PROBE.causal_factors("bond", seeds=1)
+    assert bond["closed"] and bond["hidden_variables"] == 64
+    assert not bond["parameter_independent"]
+    assert bond["alice_moves_with_bob_setting"] == {"a": 0.0, "a2": 0.0}
+    assert bond["bob_moves_with_alice_setting"] == {"b": 0.0, "b2": 0.7344}

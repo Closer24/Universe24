@@ -3,6 +3,41 @@
 All notable changes to Universe24, the reference implementation of Reality
 Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
+## 0.3.1 - 2026-09-14
+
+A review pass on the paper's Bell narrative. No engine change; the Bell probe
+gains two modes and the framework's claims are narrowed to what is measured.
+
+### Bell's test
+
+- The bonded value carries its statistics: `--sweep` re-measures the bonded
+  CHSH value with fresh pairs for every setting pair, 64 to 4096 pairs per
+  correlation on the lattice with four replicas each and the registry alone
+  to a million pairs, with binomial standard errors; every lattice outcome
+  equals the registry's answer from the same seed, and `S` converges to the
+  table expectation `724/256 = 2.828125`. The first run's 2.889 was sampling
+  spread on correlated samples ([report](examples/bell-chsh/README.md#standard-errors-and-convergence-of-the-bonded-value)).
+- Which assumption of Bell's theorem each candidate breaks is measured at
+  fixed hidden variable by `--causal`: the lottery and the threshold are
+  parameter independent; the bonded pair is deterministic and
+  measurement-independent and breaks parameter independence (Bob's answer
+  moves with Alice's setting for SWEEPCAUSALBOND of the hidden variables at
+  `b'`); the quantum owner breaks outcome independence
+  ([report](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks),
+  [coupling](docs/QUANTUM_CLASSICAL_COUPLING.md)).
+- Postulates 4 and 22 name the broken assumption: the registry is a nonlocal
+  resource in Bell's sense, its unmoved plus rates are no-signalling and not
+  locality, and how a number is read (one end, both ends, or correlated with
+  the settings) decides which assumption is at stake ([POSTULATES](POSTULATES.md)).
+
+### Paper
+
+- The manuscript is reframed as a finite-integer causal-lattice testbed: the
+  configured laws are named as inputs, the Bell section carries errors and the
+  causal analysis, "what is new" and "what is not claimed" are explicit, and
+  the bonded pair is stated not to be a local explanation of the Bell value
+  ([paper](paper/main.tex)).
+
 ## 0.3.0 - 2026-09-14
 
 153 commits since 0.2.0. Zenodo DOI 10.5281/zenodo.22749342. Every number

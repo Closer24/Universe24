@@ -2587,3 +2587,26 @@ Runtime source SHA-256 `0beb4d822bd98980e5947c8e8c20f76825e52dabe64aac8abf8346ec
 The bias leaves the Bell value untouched, since the agreement law reads the
 lower half of the number, and shows only in the marginal: a signal, as the
 postulate's derivation states.
+
+## Statistics of the bonded Bell value and the causal anatomy of the candidates - 2026-09-14
+
+Base: `780a9c1` on `main` (after PR #123). No engine change. The Bell probe
+gains `--sweep` (fresh pairs for every setting pair, binomial standard
+errors, four replicas per level, the lattice compared with the registry alone
+outcome by outcome) and `--causal` (at fixed hidden variable, how often an
+outcome moves with the other end's setting). The postulates and the coupling
+document name the assumption of Bell's theorem each candidate breaks.
+
+| Check | Result |
+| --- | --- |
+SWEEPVALTABLE
+| `--causal`, 256 hidden variables per candidate | CAUSALVAL |
+| `tests/test_ray_bell_chsh.py` | the registry's expectation is 181/64; 16 lattice pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
+| Affected gate against `origin/main` | GATERESULT |
+
+Runtime source SHA-256 `SOURCESHA`, Python 3.14.0rc2, headless.
+The lattice equals the registry pair by pair at every level: the Bell value
+lives in the registry's law and the lattice adds transport. The 2.889 of the
+first run was sampling spread on correlated samples. In Bell's terms the
+bonded pair is deterministic, measurement-independent and
+parameter-dependent; its unmoved plus rates are no-signalling, not locality.

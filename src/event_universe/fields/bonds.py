@@ -13,9 +13,12 @@ It carries no energy, no momentum and no message, since each end alone sees an
 even coin, so postulate 4 keeps its hold on everything physical.
 
 An external stream, configured as `bond.stream`, replaces the registry's own
-numbers one per pair in the order pairs first ask: the model is indifferent to
-where the numbers come from, and the stream is the door through which a
-source outside the world's state can choose outcomes. Its bias is measurable:
+numbers one per pair in the order pairs first ask: the model does not fix
+where the numbers come from, only how they are read, and the stream is the
+door through which a source outside the world's state can choose outcomes.
+In Bell's terms the registry is measurement-independent (the number is fixed
+before the settings) and parameter-dependent (the second answer reads the
+first end's setting): a nonlocal resource, not a local model. Its bias is measurable:
 the Bell probe compares uniform and biased streams.
 
 The registry's state is bounded: it holds at most MAX_OPEN_BONDS pairs whose

@@ -98,22 +98,44 @@ beside a historical global-registry reference on the same comparison scale:
 | Phased rays, share rule ([this experiment](../examples/kerengonen-bell/README.md)) | the coherent share of the source ray against a local reference | 1.40 exact |
 | Phased rays, lottery | a local ticket at the coherent rate | 1.48 and 1.38 measured on the two probes, 1.41 predicted |
 | Phased rays, threshold | deterministic: the whole ray when the share reaches one half | 2.00 exactly, the bound |
-| Bonded rays | the bond registry, one bounded object for the world, answers the pair's joint outcome for both ends from one number per pair | 2.89 measured on 16 seeds; 2.86, 2.70 and 2.86 in earlier runs of the same law on other numbers |
+| Bonded rays | the bond registry, one bounded object for the world, answers the pair's joint outcome for both ends from one number per pair | SWEEPLATTICE +- SWEEPLATTICEERR at 4096 fresh pairs per correlation, four replicas; the registry alone SWEEPREGISTRY +- SWEEPREGISTRYERR at a million pairs; the law's expectation 724/256 = 2.828125; the first 1,024-pair run read 2.89 on correlated samples |
 | Finite quantum owner | the joint conditional state, queried at each contact | 14/5 exact at 3-4-5 settings |
 
 The first three are local models and stay at or below 2, as Bell's theorem
 requires. The last two exceed it, and both do so through one shared object
 that no Link carries: the bond registry, which the ray candidate declares as
-the one exception to postulate 4, and the quantum owner's joint state. Both
-are non-signalling in the measured sense: each end's plus rate does not move
-with the other end's setting. The difference is not locality but bookkeeping:
-the registry answers a correlation from one number per pair and carries no
-inventory, in a bounded bank released pair by pair, while the quantum owner
-also carries the conserved carrier, the conditional collapse and the retarded
-classical emission. A reader should therefore not take the bonded ray as a
-local explanation of the Bell value; it is the classical field's counterpart
-of the quantum owner's joint state, and what the registry is remains the open
-question the postulate names
+the one exception to postulate 4, and the quantum owner's joint state. Which
+of Bell's assumptions each candidate breaks is measured, not asserted. Write
+`lambda` for everything fixed before the settings are chosen (the hidden
+phase and the seed, the registry's number, or the prepared joint state), `a`
+and `b` for the settings and `A` and `B` for the outcomes. Bell locality is
+the factorization `P(A, B | a, b, lambda) = P(A | a, lambda) P(B | b, lambda)`,
+which needs parameter independence (at fixed `lambda` no end's outcome
+distribution moves with the other end's setting) and outcome independence (at
+fixed `lambda` and settings the two outcomes are independent); measurement
+independence is `rho(lambda | a, b) = rho(lambda)`. The
+[causal probe](../examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks)
+runs the four setting pairs at every fixed `lambda` and counts how often an
+outcome moves when only the other end's setting changes:
+
+| Candidate | `lambda` | Measurement independence | Parameter independence | Outcome independence | S |
+| --- | --- | --- | --- | --- | --- |
+| Phased rays, lottery | the hidden phase and the detectors' seed | holds by construction: chosen before the settings, never read by them | holds, measured: `A` moves with `b` for 0 of 256 `lambda`, `B` with `a` for 0 of 256 | holds: two independent tickets | 1.48 |
+| Phased rays, threshold | the hidden phase | holds by construction | holds, measured: 0 of 256 at either end | holds: deterministic in `lambda` and the local setting | 2 |
+| Bonded rays | the registry's number, fixed at birth by the seed and the birth code | holds by construction: the same number serves every setting pair | **broken**, measured: `A` never moves with `b`; `B` moves with `a` for 0.71 of the `lambda` at `b'` (the law says `362/512`) | holds trivially: both outcomes are functions of `lambda` and the settings | 2.83 |
+| Finite quantum owner | the prepared joint state | holds | holds: each end's marginal is the state's, whatever the other setting | **broken**: the joint conditional state | 14/5 |
+
+The bonded ray is therefore a deterministic, measurement-independent,
+parameter-dependent model: the end that answers second reads the first end's
+setting through the registry. That is a nonlocal resource in Bell's sense,
+and no wording about messages, energy or inventory makes it local. What the
+probe's plus rates measure is no-signalling, which quantum mechanics also
+satisfies while violating the inequality; no-signalling is not Bell locality.
+The quantum owner breaks outcome independence instead, as quantum mechanics
+does, and keeps parameter independence. A reader should therefore not take
+the bonded ray as a local explanation of the Bell value; it is the classical
+field's counterpart of the quantum owner's joint state, and what the registry
+is remains the open question the postulate names
 ([the contract](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
 
 ## What is claimed

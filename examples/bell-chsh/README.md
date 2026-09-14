@@ -97,10 +97,15 @@ agreement its lower half. Earlier runs read 2.861 with the number drawn from
 a running registry state, and 2.699 (bonded by origin) and 2.863 (bonded by a
 configured label) with a second draw for the second end; all four are the
 same law on different numbers, around the quantum value within the counting
-spread of about 0.05 and far above the bound. S above 2 sqrt 2 in a run is that spread, not a value beyond the
-quantum one: the registry's law gives E = -cos exactly in expectation. The
-plus rates measure no-signalling for these runs; they are a measurement, not
-a proof for every lifecycle.
+spread of about 0.05 and far above the bound. In these runs the four setting
+pairs shared the same registry numbers, so their correlations were not
+independent samples; the [sweep below](#standard-errors-and-convergence-of-the-bonded-value)
+re-measures with fresh pairs for every setting pair and shows that a run
+above 2 sqrt 2 is sampling spread: the registry's law gives `E = -c / 256`
+exactly in expectation, `c` the table cosine, and `S` converges to
+`724 / 256 = 2.828125`. The plus rates measure no-signalling for these runs;
+they are a measurement of the marginals, not locality
+([below](#which-assumption-of-bells-theorem-each-candidate-breaks)).
 
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against
@@ -144,6 +149,75 @@ faster than the causal speed, and it is the only trace an outside source can
 leave: it may choose every single outcome, but not without a bias, and a bias
 is measured at the other end.
 
+### Standard errors and convergence of the bonded value
+
+```sh
+python examples/bell-chsh/run_experiments.py --output artifacts/bell-chsh --sweep --workers 4
+```
+
+Every setting pair draws its own fresh pairs, with a registry seed that is new
+for every level, replica, setting pair and pair, so the four correlations are
+independent samples; each `E` carries the binomial standard error
+`sqrt((1 - E^2) / N)` and `S` the root of the sum of their squares. Four
+independent replicas are run at every level, and the spread of their `S`
+values is reported beside the predicted error. On the lattice, every pair is
+also answered by the registry alone from the same seed (Alice first at her
+setting, Bob second at his) and the two outcomes are compared one by one.
+The registry alone is run on to a million pairs per correlation.
+
+| Pairs per correlation | Where | S, mean of 4 replicas | Predicted error of the mean | Spread of the replicas | Lattice outcomes identical to the registry's |
+| --- | --- | --- | --- | --- | --- |
+SWEEPTABLE
+
+The expectation of the registry's law on the 64-step table is
+`4 x 181 / 256 = 724 / 256 = 2.828125`, three parts in ten thousand below
+`2 sqrt 2 = 2.828427` because the table holds `cos 45 degrees` as `181 / 256`.
+The lattice equals the registry pair by pair at every level: the Bell value
+lives in the registry's law, and the lattice adds transport and nothing else.
+The first bonded run's 2.889 was sampling spread on correlated samples.
+
+### Which assumption of Bell's theorem each candidate breaks
+
+```sh
+python examples/bell-chsh/run_experiments.py --output artifacts/bell-chsh --causal --seeds 4 --workers 4
+```
+
+Write `lambda` for everything fixed before the settings are chosen, `a` and
+`b` for the settings, `A` and `B` for the outcomes. Bell locality is the
+factorization `P(A, B | a, b, lambda) = P(A | a, lambda) P(B | b, lambda)`,
+which is parameter independence (at fixed `lambda`, no end's outcome
+distribution moves with the other end's setting) together with outcome
+independence (at fixed `lambda` and settings, the two outcomes are
+independent); measurement independence is `rho(lambda | a, b) = rho(lambda)`.
+With all three, `S` is at most 2. Every candidate here is a program, so each
+condition can be measured: the probe fixes `lambda` (the hidden phase and the
+seed; for a bonded pair the registry's number, a function of the seed and the
+birth code), runs the four setting pairs, and counts how often an outcome
+moves when only the other end's setting changes. `lambda` is chosen before
+the settings and no rule reads them when choosing it, so measurement
+independence holds by construction, and the same registry number serves
+every setting pair. Over 256 hidden variables (64 hidden phases, 4 seeds)
+per candidate:
+
+| Candidate | `A` moves with Bob's setting (at `a`, at `a'`) | `B` moves with Alice's setting (at `b`, at `b'`) | Parameter independent | Closed |
+| --- | --- | --- | --- | --- |
+CAUSALTABLE
+
+The lottery and the threshold never move an outcome with the other end's
+setting: they are local in Bell's sense and stay at or below 2. The bonded
+pair never moves Alice's coin with Bob's setting and moves Bob's answer with
+Alice's setting for CAUSALBOND of the hidden variables at `b'` (the law says
+`362 / 512 = 0.707`: the agreement thresholds at `a - b'` and `a' - b'` are
+`437 / 512` and `75 / 512` of the number's lower half, and the answers differ
+between them) and never at `b` (the two thresholds coincide). The bonded pair
+is therefore a deterministic, measurement-independent, parameter-dependent
+model: the second end reads the first end's setting, and that is the nonlocal
+resource. Its unmoved plus rates are no-signalling, which quantum mechanics
+also satisfies while violating the inequality; no-signalling is not locality.
+The quantum owner, on the other probe, keeps parameter independence (each
+end's marginal is the state's) and breaks outcome independence through the
+joint conditional state, as quantum mechanics does.
+
 ## Conclusion
 
 The ray gives Bell's test a local model's answer, twice. With the lottery
@@ -154,5 +228,6 @@ variables instead of dice buy the missing half of the correlation and stop
 at the theorem's line, because the outcome at each side still depends only
 on what is at that side. The bonded run gives a third answer: one number per
 pair, held by a bounded registry that answers both ends, and S at the quantum
-value. That is the split of postulate 4 and not a local derivation; the
-registry is the one object no Link carries, and what it is remains open.
+value with its standard error. That is the split of postulate 4 and not a
+local derivation: the registry breaks parameter independence, the one object
+no Link carries, and what it is remains open.
