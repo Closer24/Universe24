@@ -117,7 +117,10 @@ def envelope_node_with_pending_state():
             4, (2, 1, 1), 1, 7, source_envelope_state.EnvelopeAmplitude(4, 0, 5), 2, 8
         ),
         pending_stop=source_envelope_node.PendingEnvelopeStop(9, 7, 10),
-        output=(outgoing,) + (None,) * 6 + (terminal,) + (None,) * (source_envelope_node.OUTPUT_SLOTS - 8),
+        output=(outgoing,)
+        + (None,) * 6
+        + (terminal,)
+        + (None,) * (source_envelope_node.OUTPUT_SLOTS - 8),
         emission_state=emission,
         pending_emission=source_emission.PendingEnvelopeEmission(
             7, 10, 7, ((pack((3,)),) * 8,), (pack((24,)),), emission, 17, 11
