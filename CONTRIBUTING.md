@@ -86,6 +86,12 @@ base, including `--base HEAD^` when reviewing the latest commit on main.
 `--dry-run` prints the changed files and selected commands without running them.
 The executed selection is saved in `artifacts/check-scope.json`.
 
+A clean selection avoids source-tree scans; explicit `--tests` still run. Changed
+selections batch-read prior Git blobs while retaining both old and current import
+graphs. Shared test builders belong in focused `tests/support/` modules so edits
+to an assertion do not implicitly change the fixtures of unrelated consumers.
+Reuse immutable recorded baselines, never a mutable Simulation across tests.
+
 Only changed Python files receive Ruff checks. Type checking covers affected
 production modules; pytest covers changed tests and transitive consumers in both
 the old and current import graphs. Explicit rules cover examples, UI assets,

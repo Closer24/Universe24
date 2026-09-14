@@ -14,7 +14,7 @@ from event_universe.fields.spatial_interactions import JointSpatialCouplingLaw
 from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import _Expressions, parse_initial_state
 
-from .test_disturbance_engine import document, field, kind
+from .support.disturbances import document, field, kind
 from .test_local_field_rules import document as spatial_document
 from .test_local_field_rules import invariant, local, operation
 from .test_spatial_interactions import exchange

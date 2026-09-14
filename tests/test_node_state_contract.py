@@ -100,12 +100,6 @@ def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
             inspect(annotation)
 
 
-def test_legacy_node_names_are_aliases_not_physical_types():
-    assert disturbance_state.DisturbanceNodeState is disturbance_state.DisturbanceNodeState
-    assert disturbance_state.NodeView is disturbance_state.NodeView
-    assert spatial_state.SpatialNodeState is spatial_state.SpatialNodeState
-
-
 def envelope_node_with_pending_state():
     amplitude = source_envelope_state.EnvelopeAmplitude(3, 0, 5)
     gate = source_envelope_node.EnvelopeGate(4, 0, 0)
@@ -123,7 +117,7 @@ def envelope_node_with_pending_state():
             4, (2, 1, 1), 1, 7, source_envelope_state.EnvelopeAmplitude(4, 0, 5), 2, 8
         ),
         pending_stop=source_envelope_node.PendingEnvelopeStop(9, 7, 10),
-        output=(outgoing,) + (None,) * 6 + (terminal,) + (None,) * 4,
+        output=(outgoing,) + (None,) * 6 + (terminal,) + (None,) * 10,
         emission_state=emission,
         pending_emission=source_emission.PendingEnvelopeEmission(
             7, 10, 7, ((pack((3,)),) * 8,), (pack((24,)),), emission, 17, 11

@@ -4,54 +4,18 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from fractions import Fraction
-from pathlib import Path
 from threading import Event
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.core.disturbance_state import unpack
 from event_universe.diagnostics.node_contract import node_state_violations
 from event_universe.initialization import parse_initial_state
-from event_universe.integration.contact_runtime import ContactEventResolver
 from event_universe.quantum.event_rules import LocalInstrument, LocalUnitary
 from event_universe.runner import run_initialization
 
-from .test_quantum_event_network import matrix, probability
-
-EXAMPLE = Path(__file__).resolve().parents[1] / "examples/quantum/localized_charge.json"
-ROTATION = [[5, 0, 0, 0], [0, 3, -4, 0], [0, 4, 3, 0], [0, 0, 0, 5]]
-INVERSE = [[5, 0, 0, 0], [0, 3, 4, 0], [0, -4, 3, 0], [0, 0, 0, 5]]
-
-
-def configuration(fields=True):
-    raw = json.loads(EXAMPLE.read_text())
-    if not fields:
-        raw.pop("spatial_fields")
-        raw.pop("emissions")
-    return raw
-
-
-def world_for(raw):
-    world = Simulation(parse_initial_state(raw))
-    assert isinstance(world._resolver, ContactEventResolver)
-    return world, world._resolver
-
-
-def step(world, count):
-    for _ in range(count):
-        world.step()
-        assert world.totals()["charge"] == (-1,)
-        assert world.totals()["mass"] == (1,)
-
-
-def localized(world):
-    return [
-        (address, r.type_index)
-        for address, node in world.nodes.items()
-        for r in node.records
-        if r is not None and r.type_index in (0, 1)
-    ]
+from .support.contact import EXAMPLE, INVERSE, ROTATION, configuration, localized, step, world_for
+from .support.quantum import matrix, probability
 
 
 def test_contact_birth_capture_and_finite_local_field_source():

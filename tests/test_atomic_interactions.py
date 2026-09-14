@@ -11,7 +11,7 @@ from event_universe.core.disturbance_state import MAX_VALUE
 from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_state
 
-from .test_disturbance_engine import document, field, kind
+from .support.disturbances import document, field, kind
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples/04-unequal-mass-collision.json"
 

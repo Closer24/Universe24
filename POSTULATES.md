@@ -498,3 +498,20 @@ Previously emitted fields remain causal, finite source allowances do not refill,
 and charge inventory is counted separately from field-source weights. This
 extends section 19 only for `causal-contact-fields-v1`, preserving its older
 localized-only selection and making no new quantum-field or energy-closure claim.
+
+The optional [null notice extension](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
+lets a Node that records a null result send its own renormalization factor
+`1/(1-p)` through Links. Receiving Nodes multiply a local weight scale after
+their control delay and forward the notice. The factor is computed from local
+state only and travels at Link speed; for one excitation it equals the exact
+conditional renormalization once delivered. Between decision and arrival the
+remote weights remain stale. This is a candidate rule that closes a measured
+gap in the single-excitation sector; it is not a general Born-rule mechanism
+for entangled registers and it never reads the shared quantum state.
+
+The optional [field-dependent phase](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+lets a configured one-mode gate choose its exact integer phase from the Node's
+own classical field value at the schedule tick. The classical field then acts
+on the wave, locally and causally, as a phase only. Its `unit / vacuum` ratio
+is configured data, not a derived coupling constant, and no field-plus-matter
+conservation follows from it.

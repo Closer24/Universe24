@@ -451,9 +451,16 @@ class DisturbanceEngine:
         if self.faulted:
             raise RuntimeError("a failed disturbance simulation cannot continue")
         try:
+            readings: dict[Address3, dict[str, dict[str, object]]] | None = None
             if isinstance(self._resolver, CausalSourceResolver):
                 if self._spatial is None:
                     raise ValueError("causal source owner requires spatial fields")
+                # The local field values present at the start of this cycle;
+                # a field-dependent gate scheduled this tick reads only these.
+                readings = {
+                    position: self._spatial.values(position)
+                    for position in self._resolver.source_nodes()
+                }
                 for position in self._resolver.source_nodes():
                     spatial_node = self._spatial._at(position)
                     proposal = self._resolver.prepare_source(
@@ -493,7 +500,9 @@ class DisturbanceEngine:
                     self._begin(position, node)
                     self._commit(position, node)
             if isinstance(self._resolver, CausalSourceResolver):
-                self._resolver.start_sources(self.tick)
+                self._resolver.start_sources(
+                    self.tick, None if readings is None else readings.__getitem__
+                )
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
                 self._spatial.deliver(self.tick, self._nodes)
