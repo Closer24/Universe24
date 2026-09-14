@@ -264,9 +264,10 @@ emitting rays (isotropic far field), at R = 3, 5 and 9:
 | 5 | turned around | expanding | expanding | escaped by 39 | escaped | ≈ 0.375-0.5 c |
 | 9 | turned around | expanding, one escaped | escaped by 25 | escaped | escaped | ≈ 0.25-0.375 c |
 
-The octant-field control at R = 9 gives the same bracket (0.25 c still
-expanding with two escapes, 0.375 c escaped by tick 24): the bodies sit on the
-axes, where the octant field is strongest, so the two transports agree there.
+The octant-field controls give the same brackets (R = 3: 0.5 c still
+expanding, 0.75 c escaped by tick 26; R = 9: 0.25 c still expanding with two
+escapes, 0.375 c escaped by tick 24): the bodies sit on the axes, where the
+octant field is strongest, so the two transports agree there.
 Bracket midpoints 0.62, 0.44 and 0.31 c: the ratios 0.71 (R 3→5) and 0.70
 (R 5→9) sit at Newton's √(3/5) = 0.77 and √(5/9) = 0.75 within the sweep's
 resolution, if anything slightly steeper. The curve is Newtonian, not flat.
