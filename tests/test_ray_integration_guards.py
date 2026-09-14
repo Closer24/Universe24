@@ -181,7 +181,7 @@ def test_carried_phase_uses_the_largest_absorbed_share_advance(advance, next_pha
     # Largest-share inheritance is the configured candidate's policy. Explicit
     # zero must remain zero; only -1 selects the field's one-step advance.
     assert unpack(records[0].absorbed_phases[0])[:2] == (5, advance)
-    assert law._carried_phase(records[0], initial.spatial_fields[0]) == (next_phase, advance)
+    assert law._carried_phase(records[0], initial.spatial_fields[0])[:2] == (next_phase, advance)
 
 
 def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
