@@ -1189,3 +1189,16 @@ Unassigned flavor-neutrino mass is distinguished from theoretical zero mass.
 This is configuration integration, not QCD, spin dynamics, physical total mass
 or field/matter energy closure. The [example guide](../examples/catalog-contact/README.md)
 owns the setup and limitations.
+
+
+### Ray integration and local Focus
+
+`test_ray_merge_contracts.py` independently covers funded inventory during a
+load wait, waiting-time absorption, retained-owner capacity and shape, full claim
+packet validation, expired slot reuse, exact 100005/3 share capture, unfundable
+negative threshold capture, directed self-exclusion and maximum pace inputs.
+`test_local_focus.py` checks per-tick inventory, snapshots, ordered events and
+modeled cost against the unchanged ordinary scheduler, including six-Port
+revisits, pending delays, failure timing, parallel execution and explicit fallback.
+Host visit reduction is distinct from physical O(1) local work. Historical global
+bond output remains reference evidence; ordinary activation must fail explicitly.

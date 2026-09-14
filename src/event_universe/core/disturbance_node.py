@@ -47,6 +47,22 @@ class DisturbanceNode(DisturbanceNodeState):
     delay_counts: tuple[int, ...] = ()
     committed_cost: int = 0
 
+    def can_sleep(self, services: NodeServices) -> bool:
+        """Certify a no-op carrier visit from this Node's own bounded state.
+
+        A resolver or a shared field clock may own autonomous work; those paths
+        retain their ordinary scheduler. Nonempty records and pending cycles
+        stay awake even when their next completion is several ticks away.
+        """
+        return (
+            services.resolver is None
+            and not services.initial.spatial_computation_delay
+            and self.pending is None
+            and all(record is None for record in self.records)
+            and not (services.initial.node_execution and any(self.delay_counts))
+            and not services.record_policy.has_work(self.records)
+        )
+
     def advance(
         self,
         tick: int,

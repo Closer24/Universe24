@@ -1,5 +1,10 @@
 # Bell probe: CHSH on two phased rays from one source
 
+> Integration status: ordinary initialization rejects `--capture bond`. The
+> global-registry results below are historical supplied-law reference results,
+> not evidence of local quantum emergence. Lottery and threshold runs remain
+> supported. See [the owner boundary](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1).
+
 A configuration on the [Kerengonen candidate](../../docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
 with the lottery capture, directed emitters (`heading`), a per-detector
 `capture_salt`, and [claims](../../docs/SPATIAL_FIELDS.md#claim-and-gather-claim-gather-ray-field-v1)

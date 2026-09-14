@@ -16,6 +16,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Canonical terminology](TERMINOLOGY.md) | Node, NodeState, Scalar, Vector, Port, Link, Event and LocalRule vocabulary |
 | [Physical reference units](REFERENCE_UNITS.md) | Shared constants, SI dimensions and bounded Scalar/Vector authoring with explicit encoding error |
 | [Architecture](ARCHITECTURE.md) | Module ownership, state boundaries and dependency direction |
+| [Local Focus](LOCAL_FOCUS.md) | Optional carrier scheduling, exact-equivalence scope, wake conditions and host memory |
 | [Integer Node processor](NODE_VECTOR_PROCESSOR.md) | Opt-in rule durations, indexed interactions, aggregation and pre-commit readout guards |
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Event graph configuration](EVENT_GRAPH_CONFIGURATION.md) | Enable or disable the causal graph, distinguish quantum programs, set capacity and locate saved records |

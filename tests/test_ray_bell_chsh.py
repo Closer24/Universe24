@@ -57,43 +57,21 @@ def test_deterministic_hidden_variables_reach_the_bound_and_stop_there():
     assert result["same_setting_E"] == -0.9375
 
 
-def test_bonded_pairs_break_the_local_bound_with_the_singlet_law():
+def test_nonlocal_bond_candidate_cannot_drive_ordinary_simulation():
+    # The historical global-registry experiment supplied the singlet law.
+    # It is not an exception to ordinary Node locality or a transactional planner.
     for seed in (1, 2, 3):
-        same = PROBE.outcomes(PROBE.document(0, 0, 0, seed, capture="bond"))
-        opposite = PROBE.outcomes(PROBE.document(0, 0, PROBE.HALF_TURN, seed, capture="bond"))
-        # Equal settings never agree, settings a half turn apart always do; both closed.
-        assert same["alice"] == -same["bob"] and same["closed"]
-        assert opposite["alice"] == opposite["bob"] and opposite["closed"]
-    result = PROBE.chsh(seeds=1, capture="bond")
-    assert result["closed"] and result["predicted_S"] == 2.8284
-    assert all(value["missing"] == 0 for value in result["correlations"].values())
-    assert [value["E"] for value in result["correlations"].values()] == [
-        -0.7188,
-        0.7188,
-        -0.7188,
-        -0.7188,
-    ]
-    assert result["S"] == 2.8752 and result["same_setting_E"] == -1.0
-    assert result["S"] > result["local_bound"]
+        with pytest.raises(ValueError, match="nonlocal research candidate"):
+            PROBE.outcomes(PROBE.document(0, 0, 0, seed, capture="bond"))
 
 
-def test_both_rays_carry_the_code_of_their_birth_node_and_tick():
-    from event_universe import Simulation
+def test_historical_birth_codes_are_diagnostic_and_not_unique_forever():
     from event_universe.core.spatial_state import origin_bond
 
-    raw = PROBE.document(0, 0, 0, 1, capture="bond")
-    initial = parse_initial_state(raw)
-    assert initial.emissions[0].bond_origin and initial.emissions[1].bond_origin
-    world = Simulation(initial)
-    world.step()
-    bonds = {
-        ray.bond for node in world.inventory_view().nodes for ray in (node.rays[0] if node.rays else ())
-    }
-    # One pair, one code: the source Node and the tick of the emission.
-    assert bonds == {origin_bond((PROBE.CENTER, 1, 1), (PROBE.WIDTH, 3, 3), 0)}
     assert origin_bond((0, 0, 0), (13, 3, 3), 0) == 1
     assert origin_bond((0, 0, 0), (13, 3, 3), 5) == 6
-    assert origin_bond((1, 0, 0), (13, 3, 3), 0) != origin_bond((0, 1, 0), (13, 3, 3), 0)
+    # Finite hash collisions are one reason this candidate cannot own outcomes.
+    assert origin_bond((0, 0, 1), (3, 3, 3), 0) == origin_bond((0, 0, 0), (3, 3, 3), 1048573)
 
 
 def test_bonds_are_validated():

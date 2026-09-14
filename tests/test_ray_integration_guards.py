@@ -165,7 +165,7 @@ def test_self_exclusion_keeps_the_departed_advance_and_distinguishes_a_foreign_o
     assert taken == 2 and residents == [own]
     assert unpack(records[0].values[0]) == (402,)
     assert unpack(records[0].values[1]) == (9, 0, 0)
-    assert unpack(records[0].absorbed_phases[0]) == (3, 5)
+    assert unpack(records[0].absorbed_phases[0]) == (3, 5, 0)
 
 
 @pytest.mark.parametrize("advance,next_phase", [(-1, 6), (0, 5), (7, 12)])
@@ -180,8 +180,8 @@ def test_carried_phase_uses_the_largest_absorbed_share_advance(advance, next_pha
     assert unpack(records[0].values[1]) == (-2, 0, 0)
     # Largest-share inheritance is the configured candidate's policy. Explicit
     # zero must remain zero; only -1 selects the field's one-step advance.
-    assert unpack(records[0].absorbed_phases[0]) == (5, advance)
-    assert law._carried_phase(records[0], initial.spatial_fields[0]) == (next_phase, advance)
+    assert unpack(records[0].absorbed_phases[0]) == (5, advance, 1)
+    assert law._carried_phase(records[0], initial.spatial_fields[0]) == (next_phase, advance, 1)
 
 
 def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():

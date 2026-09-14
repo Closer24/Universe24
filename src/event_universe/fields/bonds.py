@@ -1,15 +1,11 @@
-"""Bonded pairs: the declared exception to the causal bound.
+"""Standalone nonlocal singlet reference, unavailable to ordinary Simulation.
 
-Two rays emitted together may share a bond. When a detector takes a bonded ray
-it does not draw a local ticket: it asks the bond registry, which holds the
-pair's joint outcome. The first question on a bond draws its answer evenly;
-the second, at another setting, draws its answer conditioned on the first,
-with the singlet's law that the two answers agree with probability sin^2 of
-half the difference of the settings. The registry is one object for the whole
-world, so the second answer knows the first at once, at any distance: that is
-the one influence that skips Nodes. It carries no energy, no momentum and no
-message, since each end alone sees an even coin, so postulate 4 keeps its
-hold on everything physical. Every number is a bounded integer.
+This historical candidate queries a world-wide mutable registry. Its supplied
+conditional law is not derived from local ray transport, and no-signalling has
+not been established for every lifecycle or repeated query. The unbounded
+history, finite birth-code collisions and nontransactional draws exclude it
+from the ordinary physical planner. The existing explicit quantum owner is
+separate and unchanged. See docs/SPATIAL_FIELDS.md for the integration boundary.
 """
 
 from __future__ import annotations

@@ -77,10 +77,10 @@ every heading covers equal Euclidean distance per tick. A ray field with
 `claim` (`claim-gather-ray-field-v1`) gathers a captured train to the Node
 that captured it: a claim floods Node to Node at link speed, the train's rays
 turn homeward along its parent ports, and the capturing record takes them
-whole; the earlier of two claims wins where they meet. A Kerengonen field
-with `bond` (`bonded-ray-field-v1`) is the declared split of postulate 4:
-the joint outcome of a bonded pair is answered for both ends at once by one
-registry, carrying no energy, momentum or message.
+whole; the earlier of two claims wins where they meet. The historical global
+`bonded-ray-field-v1` reference supplies nonlocal outcomes and is rejected by
+ordinary initialization. Q-ORACLE-1 remains confined to its explicit quantum
+owner; this reference does not extend that exception to field capture.
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio

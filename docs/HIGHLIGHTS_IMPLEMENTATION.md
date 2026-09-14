@@ -1,5 +1,18 @@
 # Highlights implementation coverage
 
+## Ray integration and local Focus - 2026-09-14
+
+The repository now distinguishes the optional [local Focus scheduler](LOCAL_FOCUS.md)
+from quantum Focus. It skips certified empty carrier Nodes while retaining exact
+local transitions, clocks and model cost. A sparse 256-tick carrier probe measured
+2.32x host speed with matching inventory; this is not a universal speed claim.
+Integrated ray policies now validate retained owners, preserve funded stock during
+load waits, prepare bounded immutable pace tables and reject unproved self-exclusion
+combinations. The global bond reference remains historical, explicitly nonlocal
+and unavailable to ordinary Simulation. Q-ORACLE remains an independent option.
+See [validation](VALIDATION.md) for scope and evidence. This entry updates the Git
+companion only; it does not claim a live Google Docs revision was changed.
+
 ## General research scope and effective formulas - 2026-09-14
 
 Reviewed main: `18bc9eef361f1199e198aa13901a5a67f29c5ed8`.
@@ -187,10 +200,11 @@ sequence, not physical randomness; the event audit re-measures every owner per
 event, so audited worlds stay small; and the ray is a local model, so
 [Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
 bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
-it gives, the excess correlation it cannot, unless the field is bonded
-(`bonded-ray-field-v1`, the split of postulate 4: a registry answers the
-pair's joint outcome for both ends with nothing physical in it, and S reaches
-2.86); and gathering a gravity train to
+it gives in the stated probes, and the excess correlation it cannot derive.
+The historical global bond reference reported S around 2.86 by supplying a
+conditional singlet law. Ordinary initialization now refuses it under the
+[local owner boundary](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1);
+it is not an additional postulate exception. Gathering a gravity train to
 its catcher ([gathered gravity](../examples/gathered-gravity/README.md))
 focuses quanta, not a force law, so no flat rotation curve comes from it.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not

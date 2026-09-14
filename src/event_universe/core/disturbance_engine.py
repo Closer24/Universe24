@@ -98,6 +98,16 @@ class DisturbanceEngine:
         self._record_policy = record_policy
         self._observer = observer
         self._nodes: dict[Address3, DisturbanceNode] = {}
+        self._focus_fallback = (
+            "event resolver"
+            if resolver is not None
+            else "shared field clock"
+            if initial.spatial_computation_delay
+            else None
+        )
+        self._focus_enabled = initial.focus and self._focus_fallback is None
+        self._awake_carriers: set[Address3] = set()
+        self._carrier_phase_visits = 0
         self._links: PortTable[Packet] = PortTable((None,) * (6 * initial.slots_per_node))
         self.tick = 0
         self.faulted = False
@@ -249,6 +259,10 @@ class DisturbanceEngine:
         return MappingProxyType(self._links)
 
     def _at(self, position: Address3) -> DisturbanceNode:
+        if self._focus_enabled:
+            # Actual creation/access, including completed Link delivery, wakes
+            # the owner before this tick's commit phase. No future packet is read.
+            self._awake_carriers.add(position)
         if position not in self._nodes:
             capacity = self.initial.slots_per_node
             self._nodes[position] = DisturbanceNode(
@@ -326,7 +340,22 @@ class DisturbanceEngine:
 
     def execution_report(self) -> dict[str, object]:
         """Report host scheduling separately from modeled local computation cost."""
-        return self._execution.report()
+        return {
+            **self._execution.report(),
+            "focus_requested": self.initial.focus,
+            "focus_enabled": self._focus_enabled,
+            "focus_fallback": self._focus_fallback if self.initial.focus else None,
+            "carrier_phase_visits": self._carrier_phase_visits,
+            "awake_carrier_nodes": len(self._awake_carriers)
+            if self._focus_enabled
+            else len(self._nodes),
+        }
+
+    def _sleep_carriers(self, positions: tuple[Address3, ...]) -> None:
+        if self._focus_enabled:
+            for position in positions:
+                if self._nodes[position].can_sleep(self._services):
+                    self._awake_carriers.discard(position)
 
     def close(self) -> None:
         """Release host worker interpreters without changing simulation state."""
@@ -481,10 +510,11 @@ class DisturbanceEngine:
                     # The field phase completes its links before any carrier samples them.
                     self._spatial.deliver(self.tick, self._nodes)
                     self._spatial.freeze_samples(self._nodes)
-            positions = set(self._nodes)
+            positions = set(self._awake_carriers if self._focus_enabled else self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
             ordered = tuple(sorted(positions))
+            self._carrier_phase_visits += 2 * len(ordered)
             if self._execution.parallel:
                 cycles = []
                 for position in ordered:
@@ -504,6 +534,7 @@ class DisturbanceEngine:
                     node = self._at(position)
                     self._begin(position, node)
                     self._commit(position, node)
+            self._sleep_carriers(ordered)
             if isinstance(self._resolver, CausalSourceResolver):
                 self._resolver.start_sources(
                     self.tick, None if readings is None else readings.__getitem__
@@ -521,8 +552,11 @@ class DisturbanceEngine:
                 self._spatial.close(self.tick, self._nodes)
             if isinstance(self._resolver, CommitResolver):
                 self._resolver.begin_tick(self.tick)
-            for position in sorted(self._nodes):
+            closing = tuple(sorted(self._awake_carriers if self._focus_enabled else self._nodes))
+            self._carrier_phase_visits += len(closing)
+            for position in closing:
                 self._commit(position, self._nodes[position])
+            self._sleep_carriers(closing)
             if self._resolver is not None:
                 self._resolver.advance(self.tick)
         except Exception:

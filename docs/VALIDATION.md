@@ -1,5 +1,41 @@
 # Validation evidence
 
+## Integrated ray ownership and local Focus - 2026-09-14
+
+Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,
+including PR #93, against main `e705435aef311e9000ac6f19136835fa860a6958`.
+The first ten targeted counterexamples failed on that input. Their corrections
+cover retained-ray validation, funded inventory during a load wait, absorption,
+bounded pace state, exact shares, negative threshold funding and claim admission.
+Later controls cover directed self-exclusion, explicit unsupported compositions,
+observer failure, immutable pace preparation and release of an empty wait.
+
+`tests/test_local_focus.py` and `tests/test_ray_merge_contracts.py`: **50 passed**
+on Python 3.14.7. The independent physics review passed the first 49 cases and
+the final empty-wait regression separately. The full affected gate and required
+CI remain the merge requirements; their actual outcome is recorded in the PR.
+The global bond reference is preserved but cannot drive ordinary Simulation.
+The existing quantum owner and Q-ORACLE option are unchanged.
+
+Runtime fingerprint for the measured candidate:
+`c297b049e409c84a56906ecf6267fcd4af10b2c9a556ba25c74818e669bfb1f7`.
+It hashes sorted `src/event_universe/**/*.py` paths and bytes, separated by NULs.
+A headless 256-tick periodic world, shape 513 x 5 x 5, one moving scalar carrier,
+one slot and no fields, produced the same complete inventory and model-cost
+fingerprint in both modes. Three alternating timing samples had medians
+0.2008405 seconds ordinary and 0.0866774 seconds Focus (**2.32x**). Carrier phase
+visits fell from 98,944 to 768. Separate tracemalloc runs peaked at 295,185 and
+292,785 bytes; that small difference is not a general memory-saving claim.
+Both modes retain the same historical Nodes; Focus retains one awake address.
+This result does not promise faster dense-world or pure-ray execution.
+
+The input and measured report use the normal 24-hour artifact retention under
+`artifacts/local-focus-integration-20260914`. The scheduler argument, memory scope
+and reproducible A/B controls remain in [Local Focus](LOCAL_FOCUS.md) and its
+tests. Existing architecture/physics-review Skills already require local owner
+validation, bounded state and independent expectations; no new Skill rule is
+needed for these fixes.
+
 ## Funded envelope emission - 2026-09-14
 
 Base: `0299cb98bf07f00dc10bad858b674ded449be03e` (main after PR #108). Runtime
