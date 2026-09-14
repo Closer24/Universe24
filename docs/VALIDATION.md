@@ -1656,3 +1656,25 @@ At full or zero coherence the lottery and the share rule are the same law; at
 partial coherence the lottery turns the coherent share into a click rate on
 whole quanta. The ticket is a configured local sequence, not a claim about
 physical randomness.
+
+## Kerengonen carried phase: one lamp, two re-emitting slits — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A record that absorbs on a
+Kerengonen field keeps, per absorb rule, the phase step nearest the direction
+of the coherent sum of what it took (`absorbed_phases`, a record row, from
+integer cosine and sine tables), and an emission with
+`"kerengonen_phase": "carried"` starts its rays at that phase plus one advance.
+A carried phase requires an absorb rule on the same field for the emitter.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,358 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), partial at a fixed re-emission phase (3); a carried phase without an absorb rule is rejected |
+| Single-source double slit | 31 x 31 x 3 open world, one lamp of 64 quanta per ray over a 117-heading forward cone for 64 ticks, an absorbing wall eight links on with re-emitting slits at y = -3 and +3, a 25-Node screen twelve links beyond: with phase, 2,430 at the center, 978 at a quarter turn, 140 at a half turn, about one half at three quarters, and exactly the single-slit value where only one slit's rays reach; without phase, two slits give exactly the sum of the two single slits at every Node; the wall keeps 332,800 quanta in both; every world closes on its initial stock |
+| Unchanged | Constant emission phases, the lottery and the plain field keep their results |
+| Visualization | Not requested or generated |
+
+The wave's phase survives absorption and re-emission at a Node: two slits lit
+by one lamp are two sources in the lamp's phase, and the fringe needs no
+second lamp. The re-emission is over the field's whole heading set, a point
+Huygens source; no diffraction law is derived from the slit's shape.
