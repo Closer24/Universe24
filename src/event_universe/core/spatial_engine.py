@@ -36,6 +36,7 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    coherent_stock,
     ray_stock,
     validate_rays,
 )
@@ -422,7 +423,7 @@ class SpatialEngine:
             if definition.rays:
                 node_rays = self.nodes[position].rays if position in self.nodes else ()
                 rays = node_rays[index] if node_rays else ()
-                local[0] = checked_work(local[0] + ray_stock(rays))
+                local[0] = checked_work(local[0] + coherent_stock(rays, definition))
                 field.validate(pack(tuple(local)))
             result[field.name] = {
                 "baseline": unpack(definition.baseline),

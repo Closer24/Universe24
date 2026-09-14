@@ -1550,3 +1550,214 @@ world/event audit at host Euclidean distance, not as an operational observer.
 The result is geometric dilution of straight rays, not a gravitational law: no
 constant, mass coupling or attraction is claimed, and node-level graininess at
 large radius is finite direction sampling.
+
+## Gravity probe on the straight-ray field — 2026-09-13
+
+Base: `cc042ce` (main after PR #92). Configuration only, plus one engine fix:
+a coupling reaction that amends a departing packet now keeps the rays on that
+port, so rays pass through Nodes whose carriers respond to them (previously they
+were dropped there). The [probe](../examples/gravity-probe/README.md) couples
+held and moving bodies to the ray flux with `mass x flux / D`, `D = 16`, and
+reads the result as a read-only world/event audit at host Euclidean distance.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| New tests | `tests/test_gravity_probe.py`: momentum toward the source proportional to mass within the integer remainder, combined momentum conserved, a body that falls through the source and oscillates; `tests/test_ray_field.py`: rays pass a reacting receiver unchanged |
+| Held bodies | 41-cubed open world, 4,096 headings, 64 rays per tick, one 64-tick sweep measured: mass-1 acceleration slopes -2.03 (axis), -1.94 (face diagonal), -1.92 (body diagonal) against host `r`; `a x r^2 x D / emission` between 0.06 and 0.11 in every direction; identical acceleration for masses 1, 2 and 4 at every Node; combined momentum exactly zero |
+| Falling bodies | Rate scale 64, start eight links out: masses 1 and 2 share every Node on every tick with momenta in exact ratio 2; the sparse field gives a few inbound kicks (momentum -20 and -40), one outbound kick, and escape through the open boundary at tick 139; the dense-field small-world test shows a bound oscillation instead |
+| Visualization | Not requested or generated |
+
+The coupling constant is the configured `1 / D`; the emission per tick plays
+the role of the source mass. The reaction stays in the local momentum field at
+the body's Node and never reaches the source, so this is attraction toward a
+fixed source, not a two-body law. No physical constant is identified.
+
+## Particle interaction probes — 2026-09-13
+
+Base: `8b9f79f` on this branch. Configuration only. Each charged body emits its
+own signed straight-ray field and responds to the others' with `-(charge x flux)`;
+a bound pair converts into a free proton and a recoiling core through the
+existing two-record conversion. Read as a read-only world/event audit.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| New tests | `tests/test_particle_interactions.py`: head-on repulsion without sharing a Node with reversed equal-and-opposite momenta, attraction at rest, neutral crossing, matched kicks with unequal recoil, timed emission with mass 4 and zero momentum conserved |
+| Dense field | 21-cubed open world, 512 headings all firing every tick: like charges turn at distance 2 (tick 13) and reverse; opposite charges meet at tick 14 and pass through; neutral bodies cross at tick 14 unchanged; a light body is pulled in or pushed out by the sign of the charge product; emission at tick 10 with the proton at one hop per tick and the core at one third |
+| Self-field | With one shared field a moving body met its own rays at the next Node and pushed itself regardless of the other charge; separate fields per body remove this in configuration |
+| Visualization | Not requested or generated |
+
+No energy is represented, so encounters within one link produce unbounded
+kicks; no species, constant or unit is identified.
+
+## Local self-exclusion for ray emitters — 2026-09-13
+
+Base: `1d28d5f` on this branch. A ray field may set `self_exclusion`: a
+departing emitter carries the `(amount, cursor)` of its departure cycle and, on
+arrival, subtracts the rays of that cycle whose first DDA step took the port it
+left through from the flux and value it samples. Work is bounded by
+`rays_per_tick`; only the record's own registers are read.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 2,035 tests with five visualization skips |
+| Lone mover | Six axis rays, momentum 16, speed one quarter hop per tick: momentum stays 16 through every move with exclusion; without it the body reaches 7,696 in eight ticks from its own wake |
+| Shared field | Like charges repel through one field (closest approach 2 at tick 13, both reverse); opposite charges meet at tick 14; neutral bodies cross; light body pulled in or pushed out by the charge product; emission unchanged |
+| Positional laws | `emissions` is a keyword-only field on the coupling laws, so existing positional joint-law construction is unchanged |
+| Visualization | Not requested or generated |
+
+Self-field returning from any distance other than one link is not excluded; a
+general self-field law remains the open hypothesis in `POSTULATES.md`.
+
+
+## Funded emission, absorption and rays in the audit — 2026-09-13
+
+Base: `09190d0` on this branch. The conservation audit measures a ray as a
+quantum: its amount joins the declared spatial energy expression and
+`amount x heading` is intrinsic momentum. An emission with `source: false`
+pays each quantum from the record field of the same name, clipped to stock, and
+`recoil_field` takes `-(amount x heading)`. A coupling in `absorb` mode banks
+every ray that arrives at the record's Node into the same-named field and adds
+`amount x heading` to `momentum_field`, from arrivals only, so an emitter never
+absorbs its own fresh emission.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 58 files, 2,041 tests with five visualization skips |
+| New tests | `tests/test_energy_audit.py`: funded emission debits and recoils with the audit closed; a stock of 5 emits 2, 2, 1, 0; escaped quanta are measured escape; an absorber banks five quanta with momentum (5, 0, 0); a moving absorber-emitter never eats its own wake; absorb validation |
+| Radiation pressure | 21-cubed open world, lamp of 200,000 quanta firing 252 mirrored headings at 8 quanta per ray, sail of mass 64 four links away: 11,249,738 Node events checked with zero residual; at tick 12 the world holds 199,976 quanta and 24 escaped; the sail carries (512, 0, 64) from 32 absorbed quanta and the lamp's momentum is zero at every tick |
+| Earlier probes | Head-on, light-beside-heavy and proton emission tables repeated unchanged at the new source |
+| Audit cost | Every checked event re-measures every active Node and packet: 4 ticks of the probe take 1 s, 8 ticks 51 s, and the 512-heading, 40-tick version did not finish in hours, so the probe runs 12 ticks |
+| Visualization | Not requested or generated |
+
+Only the repulsive push closes this way. An attraction that pays for the
+kinetic energy it creates has no local rule yet, and the charge probes still
+carry no energy.
+
+## Quantum-to-classical probes — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. Three host-side
+measurements on existing rules only, in
+[examples/quantum-classical](../examples/quantum-classical/README.md).
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,349 tests with five visualization skips |
+| New tests | `tests/test_quantum_classical.py`: the dephased walk equals the classical chain with variance `t - 3/4` while the coherent walk is wider; quanta click as 0 or 1 and every emitted quantum is accounted for; capture attempts land on the pass ticks with charge and mass exact |
+| Walk | 25 registers, 14 steps: coherent width exponent 1.005; record discarded every step or every second step reproduces the classical Markov chain exactly at every step (exponent 0.558 with the `-3/4` offset); every fourth step gives 0.778 |
+| Counting | One quantum per tick over 4,096 golden-stride headings, six detectors per radius: values only 0 or 1; `rate x r^2` between 0.066 and 0.100 for r = 2 to 8, log-log slope -2.17; relative spread of window counts falls about twofold per fourfold window; 4,077 escaped and 20 in flight after the sweep |
+| Capture | 10,000 seeded worlds of the causal charge example: capture fractions 0.6335, 0.2383, 0.0837, 0.0280 and 0.0165 uncaptured against 16/25, 144/625, 1296/15625, 11664/390625 and 6561/390625; chi-square 4.65 on four degrees of freedom; charge -1 and mass 1 at every tick |
+| Visualization | Not requested or generated |
+
+The mixers and instruments are explicit configured laws. Nothing here derives
+a Hamiltonian, a collapse criterion or a species; the seam between the finite
+quantum rules and the classical ones is measured, not explained.
+
+## Signed-quanta gravity: attraction paid by the pulled body — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A funded emission may emit
+a negative amount, an `absorb` coupling takes the share
+`amount x fraction / fraction_denominator` of each crossing ray and pays a
+negative share from the record's own stock, never beyond it, forwarding the
+rest; a ray field is absorbed or exchanged, never both.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,349 tests with five visualization skips |
+| New tests | `tests/test_energy_audit.py`: a fraction 1/4 absorbs one quantum of each 4-quantum ray and forwards 3; negative quanta pull an absorber with stock 3 by 2 then 1 and credit the emitter; absorb and exchange on one ray field rejected. `tests/test_gravity_probe.py`: bodies pay exactly the momentum they gain, the far body takes its share of what the near one left, a body with stock 50 stops at -50 with the event audit passed |
+| Held bodies | 41-cubed world, one mass per world, source of -1,048,576 quanta per tick over 4,096 mirrored headings: the three masses agree within 3 percent at every Node; mass-1 log-log slopes axis -1.96, face diagonal -2.37, body diagonal -2.29; `a x r^2 x D / emission` between 1.4 and 3.1; every body paid exactly the quanta of its absorbed shares; records plus rays in flight plus escaped equal the initial stock in all three worlds |
+| Audited world | 16 ticks, 16 rays per tick, mass 4 one link above the source: 595,153 Node events with zero residual; body paid 30,720 quanta for momentum (1024, 1792, -694272); source credited 4,194,304 |
+| Fall | Dense field of 512 rays per tick: masses 1 and 2 follow the same path tick for tick with momentum in ratio 2, pay from stock, pass the source and leave at nine tenths of a hop per tick without turning back |
+| Visualization | Not requested or generated |
+
+The source's stock rises by what it emits, and a radial fall through the
+lattice `r = 1` singularity escapes at the speed cap: both are properties of
+this candidate, recorded rather than corrected.
+
+## Kerengonen phased rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. The optional `kerengonen`
+key on a ray field gives every ray a phase step that advances per link; rays
+merge only with equal phase, and the coherence of the rays resident at a Node,
+from a fixed-point integer cosine table, gates the sampled value and the
+absorbed share. Amounts are never changed by phase. Funded emission and
+absorption are now booked as field reactions, so the runner's per-tick
+accounting balances for them.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,355 tests with five visualization skips; the integer audit of physical modules passes with the fixed-point cosine table |
+| New tests | `tests/test_kerengonen.py`: phase advance and wrap, merge by phase, exact coherence at equal, opposite and quarter phases, the two-lamp line reading 4, 0, 4, 0, 4 against a plain 4 everywhere with the audit closed, coherence-gated absorption (4 then nothing at the dark Node, 20 at the bright one, 20 at the dark one with a half-turn offset), runner identity `kerengonen-ray-field-v1`, six validation rejections, and the double-slit probe's composition and closure |
+| Double slit | 31 x 31 x 3 open world, lamps at y = -3 and +3, 59 planar headings, 16 quanta per ray, 8 phase steps, 48 ticks: screen absorption 928 at the center, 704 at a quarter turn, 64 at a half turn, about one half in the wings, against a plain 928, 1376, 928; a half-turn offset on the second lamp inverts the even Nodes (0 at the center, 928 at y = +-2); quanta closed in all three worlds |
+| Audited world | 8 headings, 24 ticks, five-Node screen: 1,280,412 Node events with zero residual, 160 quanta absorbed in phase at the center, energy 5,632 plus 512 escaped against 6,144 initial, momentum (-2112, 0, 0) against (2112, 0, 0) escaped |
+| Unchanged | The plain ray field, the gravity, particle, radiation-pressure and quantum-to-classical probes keep their results without the key |
+| Visualization | Not requested or generated |
+
+Quanta that cancel are not redistributed; they continue and escape. That is the
+candidate's open question, recorded in `POSTULATES.md`.
+
+## Kerengonen lottery capture — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. `kerengonen.capture`
+selects how an absorber takes a ray: `share` (the coherent share of the
+amount, truncated toward zero) or `lottery` (the whole ray or nothing, drawn by
+a local ticket seeded by `capture_seed` and salted by the ray met). The ticket
+state is a record row, `absorb_tickets`; the same seed and rays repeat the same
+clicks.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,357 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: the ticket rule and its bound; in-phase and dark Nodes take 18 and 2 quanta exactly like the share rule; at a quarter turn two seeds take between 2 and 16 whole single quanta where the share rule takes 2, with the audit closed on 800 quanta; unknown capture, a seed without the lottery and a seed at the modulus rejected |
+| Single-quantum double slit | 96 ticks, one quantum per ray, two seeds: 154 at the center, 4 at the half turn and 152 at a one-lamp Node for both seeds and for the share rule; 127 to 135 at the quarter turn and 60 to 121 in the wings for the lottery against 2 to 6 for the share rule; absorbed totals 2,354 for either seed against 578; quanta closed in all three worlds |
+| Unchanged | With `capture` absent the share rule and every earlier result stand |
+| Visualization | Not requested or generated |
+
+At full or zero coherence the lottery and the share rule are the same law; at
+partial coherence the lottery turns the coherent share into a click rate on
+whole quanta. The ticket is a configured local sequence, not a claim about
+physical randomness.
+
+## Kerengonen carried phase: one lamp, two re-emitting slits — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A record that absorbs on a
+Kerengonen field keeps, per absorb rule, the phase step nearest the direction
+of the coherent sum of what it took (`absorbed_phases`, a record row, from
+integer cosine and sine tables), and an emission with
+`"kerengonen_phase": "carried"` starts its rays at that phase plus one advance.
+A carried phase requires an absorb rule on the same field for the emitter.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,358 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), partial at a fixed re-emission phase (3); a carried phase without an absorb rule is rejected |
+| Single-source double slit | 31 x 31 x 3 open world, one lamp of 64 quanta per ray over a 117-heading forward cone for 64 ticks, an absorbing wall eight links on with re-emitting slits at y = -3 and +3, a 25-Node screen twelve links beyond: with phase, 2,430 at the center, 978 at a quarter turn, 140 at a half turn, about one half at three quarters, and exactly the single-slit value where only one slit's rays reach; without phase, two slits give exactly the sum of the two single slits at every Node; the wall keeps 332,800 quanta in both; every world closes on its initial stock |
+| Unchanged | Constant emission phases, the lottery and the plain field keep their results |
+| Visualization | Not requested or generated |
+
+The wave's phase survives absorption and re-emission at a Node: two slits lit
+by one lamp are two sources in the lamp's phase, and the fringe needs no
+second lamp. The re-emission is over the field's whole heading set, a point
+Huygens source; no diffraction law is derived from the slit's shape.
+
+## De Broglie on matter rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A ray may carry its own
+phase advance per link, stamped at emission by `kerengonen_advance` from an
+expression over the emitter's fields divided by a denominator and taken modulo
+the phase steps; rays merge only with equal advance, and a Huygens slit
+carries the advance of the largest share it absorbed with the phase.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,361 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a ray's own advance overrides the field's, rays of different advance do not merge, beams of momentum 16 and 32 at `|p| / 4` carry advances 4 and 8 with phases in ratio two, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance (readings 2, 4, 0 for lamp offsets 0, 16, 48 on 64 steps); `tests/test_de_broglie.py`: the probe composes for every momentum and closes |
+| De Broglie probe | Beams of momentum 16, 32 and 64 (advance 4, 8, 16) through Huygens slits at y = +-6, 117-heading cone, 64 ticks: first dark fringe at y = 4, 2, 1 as predicted, period 8, 4, 2; bright Nodes at 0; 0 and +-4; 0, +-2, +-4, +-6; ratios exactly one where only one slit reaches; the plain field gives exactly the sum of the single slits for every momentum; all twelve worlds close on their initial matter |
+| Unchanged | Rays without their own advance use the field's; every earlier Kerengonen result stands |
+| Visualization | Not requested or generated |
+
+The rule `|p| / D` is configured, not derived; what the measurement shows is
+that the lattice, the Huygens slits and the coherence gate carry it from the
+source to the screen: wavelength inverse to momentum, three doublings in a
+row. The beam is a held source; a record in flight is not yet a matter ray.

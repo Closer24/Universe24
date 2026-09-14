@@ -12,6 +12,7 @@ from .disturbance_state import (
     Packet,
     PendingCycle,
     bounded,
+    pack,
     unpack,
 )
 from .event_resolution import CommitResolver, LocalContext
@@ -338,7 +339,12 @@ class DisturbanceNode(DisturbanceNodeState):
         field_plan = replace(
             field_plan, cost=bounded(checked_work(field_plan.cost + spatial_services.node_merge_cost))
         )
-        self._validate_emission_records(self.records, field_plan.emission_records)
+        self._validate_emission_records(
+            self.records,
+            field_plan.emission_records,
+            funded=any(rule.funded for rule in spatial_services.initial.emissions)
+            or any(rule.mode == "absorb" for rule in spatial_services.initial.spatial_couplings),
+        )
         records = field_plan.emission_records
         coupled = (
             spatial.node_coupling(records, spatial_services)
@@ -456,7 +462,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 spatial_services.coupler.validate_guards(
                     guarded, pending.plan.spatial_reaction, pending.plan.spatial_guards
                 )
-            field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services)
+            field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services, field_plan.rays)
         if services.events.enabled:
             services.events.require_room(
                 1
@@ -476,6 +482,7 @@ class DisturbanceNode(DisturbanceNodeState):
         records = list(source_records)
         for slot, record in pending.plan.replacements:
             records[slot] = self._current_emission_state(record, source_records[slot])
+        records = [self._staying(record) for record in records]
         alternatives: list[tuple[DisturbanceRecord | None, ...]] = []
         resolver = services.resolver
         context = LocalContext(
@@ -503,7 +510,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 for slot, record in option:
                     proposed[slot] = self._current_emission_state(record, source_records[slot])
                 validate_records(services.initial, tuple(proposed), len(self.records))
-                alternatives.append(tuple(proposed))
+                alternatives.append(tuple(self._staying(record) for record in proposed))
         departure_tick = bounded(tick + services.initial.link_ticks)
         links: list[Packet | None] = [None] * len(old_links)
         for index, departure in enumerate(pending.plan.departures):
@@ -515,7 +522,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 merged = self._current_emission_state(record, current)
                 assert merged is not None
                 record = merged
-            links[index] = Packet(departure_tick, self.position, departure.port, record)
+            links[index] = Packet(departure_tick, self.position, departure.port, self._departing(record))
         if spatial is not None and spatial_services is not None and field_plan is None:
             spatial.validate_guards(
                 spatial_services, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -710,18 +717,41 @@ class DisturbanceNode(DisturbanceNodeState):
             emission_remainders=current.emission_remainders,
             emission_phases=current.emission_phases,
             emission_remaining=current.emission_remaining,
+            emission_last=current.emission_last,
+            emission_departed=current.emission_departed,
+            absorb_tickets=current.absorb_tickets,
+            absorbed_phases=current.absorbed_phases,
         )
+
+    @staticmethod
+    def _staying(record: DisturbanceRecord | None) -> DisturbanceRecord | None:
+        """A record that stays meets none of its own rays on the next cycle."""
+        if record is None or not record.emission_last:
+            return record
+        return replace(record, emission_departed=tuple(pack((0, 0)) for _ in record.emission_last))
+
+    @staticmethod
+    def _departing(record: DisturbanceRecord) -> DisturbanceRecord:
+        """A departing record carries this cycle's emission to subtract on arrival."""
+        if not record.emission_last:
+            return record
+        return replace(record, emission_departed=record.emission_last)
 
     def accept_emission(
         self,
         records: tuple[DisturbanceRecord | None, ...],
+        *,
+        funded: bool = False,
     ) -> None:
-        self._validate_emission_records(self.records, records)
+        self._validate_emission_records(self.records, records, funded=funded)
         self.records = records
 
     @staticmethod
     def _validate_emission_records(
-        originals: tuple[DisturbanceRecord | None, ...], records: tuple[DisturbanceRecord | None, ...]
+        originals: tuple[DisturbanceRecord | None, ...],
+        records: tuple[DisturbanceRecord | None, ...],
+        *,
+        funded: bool = False,
     ) -> None:
         if len(records) != len(originals):
             raise ValueError("spatial emission cannot change disturbance capacity")
@@ -729,5 +759,10 @@ class DisturbanceNode(DisturbanceNodeState):
             if before is None or after is None:
                 if before is not after:
                     raise ValueError("spatial emission cannot change disturbance occupancy")
+            elif funded:
+                # Funded emission and absorption move the record's own stock; the
+                # type and every other register must still be untouched.
+                if before.type_index != after.type_index or len(before.values) != len(after.values):
+                    raise ValueError("spatial emission cannot change a disturbance's identity")
             elif DisturbanceNode._current_emission_state(before, after) != after:
                 raise ValueError("spatial emission cannot change a disturbance's physical values")

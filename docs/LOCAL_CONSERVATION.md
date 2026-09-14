@@ -40,7 +40,21 @@ measurement expressions; it neither constructs a world nor executes an update,
 and it contributes no model operation cost.
 
 This scope requires zero spatial baselines and rejects declared external sources,
-ongoing emissions, nonzero decay and native event programs. Open boundaries are supported as explicitly measured escape.
+unfunded emissions, nonzero decay and native event programs. Open boundaries are supported as explicitly measured escape.
+
+Straight-ray fields are measured as quanta. A ray of amount `a` adds `a` to its
+field's value, so the declared spatial energy expression sees it, and carries
+momentum `a x heading` intrinsically, in amount times heading units, which no
+field expression can express; the spatial momentum expression must therefore
+not count ray fields. A [funded emission](SPATIAL_FIELDS.md#funded-emission-and-absorption)
+is admitted: the emitter pays each quantum from its own field of the same name
+and, with `recoil_field`, loses the emitted `a x heading`, so the transfer is
+internal and the audit stays closed. An `absorb` coupling is the reverse
+transfer, of a whole ray or of a share of it. Quanta may be negative on a signed
+field: the emitter is then credited, the ray's momentum points back at it, and
+the absorber pays the share it takes from its own stock, so attraction closes
+the same way. A Kerengonen phase changes what is absorbed and sampled, never
+the amounts the audit sums. Unfunded `source: true` emissions remain rejected.
 These restrictions describe supported measurement composition, not a claim that
 the excluded physics is impossible.
 
@@ -145,7 +159,9 @@ the fixed configured field and slot bounds. The audit obtains host-wide
 read-only inventory snapshots and computes a residual for each affected node.
 This is an analyst's world/event audit, not information available to a physical
 node or local reception observer. Snapshot traversal, storage and report
-aggregation scale with the inspected world and are host work.
+aggregation scale with the inspected world and are host work: every checked
+event re-measures every active Node and in-flight packet, so a run with many
+active Nodes and many events per tick costs their product in host time.
 
 The expressions and comparisons cannot become inputs to physical selection,
 routing, updates, timing or local cost. Enabling measurement adds no model

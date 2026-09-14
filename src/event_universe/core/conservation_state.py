@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .disturbance_state import Address3, DisturbanceRecord, Expression
-    from .spatial_state import SpatialPopulations, SpatialState
+    from .spatial_state import Rays, SpatialPopulations, SpatialState
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,6 +35,7 @@ class InventoryNode:
     records: tuple[DisturbanceRecord | None, ...]
     spatial: tuple[SpatialState, ...]
     incoming_spatial: tuple[SpatialState, ...] = ()
+    rays: tuple[Rays, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,6 +47,7 @@ class InventoryPacket:
     arrival_tick: int
     record: DisturbanceRecord | None = None
     spatial: tuple[SpatialPopulations, ...] = ()
+    rays: tuple[Rays, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
