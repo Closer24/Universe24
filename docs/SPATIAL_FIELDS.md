@@ -257,9 +257,20 @@ it took (`absorbed_phases`, a record row), and an emission with
 the emitter's own tick. A slit that absorbs and re-emits its stock every cycle
 therefore continues the wave that reached it, and two slits lit by one lamp are
 two sources in the lamp's phase. A carried phase requires an absorb rule on the
-same field for the emitting type. Without the key the field is the plain
-`isotropic-ray-field-v1`; a `kerengonen_phase` on an emission requires the key. The runner records the
-identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+same field for the emitting type.
+
+A ray may also carry its own advance per link. An emission with
+`"kerengonen_advance": {"amount": <expression>, "denominator": D}` evaluates the
+expression over the emitter's own fields, divides by `D`, takes the result
+modulo the phase steps, and stamps it on every ray it emits; rays merge only
+with equal advance, and a Huygens re-emission carries the advance of the
+largest share it absorbed with the phase. An advance from the emitter's
+momentum, `|p| / D`, is the de Broglie rule: a faster beam has a shorter
+wavelength, and the [de Broglie probe](../examples/de-broglie/README.md)
+measures the fringe spacing it gives. A ray without its own advance uses the
+field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
+runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 
 ## Finite completed-link decay

@@ -43,6 +43,7 @@ RESOURCE_CONSUMERS = {
     "examples/particle-interactions/run_experiments.py": ("tests/test_particle_interactions.py",),
     "examples/quantum-classical/run_experiments.py": ("tests/test_quantum_classical.py",),
     "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
+    "examples/de-broglie/run_experiments.py": ("tests/test_de_broglie.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),

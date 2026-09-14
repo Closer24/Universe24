@@ -66,8 +66,10 @@ class Ray:
     heading: int
     accumulators: tuple[int, int, int]
     amount: int
-    # Kerengonen fields only: the ray's phase step, advanced on every link.
+    # Kerengonen fields only: the ray's phase step, advanced on every link, and
+    # the ray's own advance per link when nonnegative (-1 uses the field's).
     phase: int = 0
+    advance: int = -1
 
 
 Rays = tuple[Ray, ...]
@@ -180,6 +182,10 @@ class EmissionDefinition:
     # when carried, the phase of what the record last absorbed plus one advance.
     phase: int = 0
     phase_carried: bool = False
+    # Kerengonen fields only: the emitted rays' own advance per link, an owned-field
+    # expression over advance_denominator, taken modulo the phase steps.
+    advance: Expression | None = None
+    advance_denominator: int = 1
 
 
 @dataclass(frozen=True, slots=True)
@@ -355,6 +361,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         field.validate(pack((ray.amount,)))
         if type(ray.phase) is not int or not 0 <= ray.phase < max(definition.phase_steps, 1):
             raise ValueError("ray phase must index the field's phase steps")
+        if type(ray.advance) is not int or not -1 <= ray.advance < max(definition.phase_steps, 1):
+            raise ValueError("ray advance must be -1 or index the field's phase steps")
 
 
 def advance_ray(
@@ -369,7 +377,8 @@ def advance_ray(
     axis = max(range(3), key=lambda i: (accumulators[i], -i))
     accumulators[axis] -= length
     port = 2 * axis + (0 if heading[axis] > 0 else 1)
-    phase = (ray.phase + phase_advance) % phase_steps if phase_steps else ray.phase
+    step = ray.advance if ray.advance >= 0 else phase_advance
+    phase = (ray.phase + step) % phase_steps if phase_steps else ray.phase
     return port, replace(
         ray, accumulators=(accumulators[0], accumulators[1], accumulators[2]), phase=phase
     )
@@ -377,13 +386,13 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int], int] = {}
     for ray in rays:
-        key = (ray.heading, ray.accumulators, ray.phase)
+        key = (ray.heading, ray.accumulators, ray.phase, ray.advance)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase)
-        for (heading, accumulators, phase), amount in sorted(combined.items())
+        Ray(heading, accumulators, bounded(amount), phase, advance)
+        for (heading, accumulators, phase, advance), amount in sorted(combined.items())
         if amount
     )
 

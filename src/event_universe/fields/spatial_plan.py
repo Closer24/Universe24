@@ -74,14 +74,17 @@ class SpatialLaw:
                     keys.add((moved.heading, moved.accumulators))
         return keys
 
-    def _carried_phase(self, record: DisturbanceRecord, definition: SpatialFieldDefinition) -> int:
-        """The phase of the record's last absorption on this field, plus one link's advance."""
+    def _carried_phase(
+        self, record: DisturbanceRecord, definition: SpatialFieldDefinition
+    ) -> tuple[int, int]:
+        """The phase and advance of the record's last absorption on this field, one link on."""
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field == definition.field and matches_type(rule, record.type_index):
                 if rule_index < len(record.absorbed_phases):
-                    stored = unpack(record.absorbed_phases[rule_index])[0]
-                    return (stored + definition.phase_advance) % definition.phase_steps
-                return 0
+                    stored, advance = unpack(record.absorbed_phases[rule_index])
+                    step = advance if advance >= 0 else definition.phase_advance
+                    return (stored + step) % definition.phase_steps, advance
+                return 0, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
     def _absorb(
@@ -121,6 +124,7 @@ class SpatialLaw:
                     tickets = [pack((definition.capture_seed,)) for _ in self.absorptions]
                 ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 absorbed_terms: list[tuple[int, int]] = []
+                carried_share, carried_advance = 0, -1
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -165,6 +169,8 @@ class SpatialLaw:
                     absorbed_total = checked_work(absorbed_total + share)
                     if share and definition.kerengonen:
                         absorbed_terms.append((abs(share), ray.phase))
+                        if abs(share) > carried_share:
+                            carried_share, carried_advance = abs(share), ray.advance
                     if momentum is not None:
                         heading = definition.headings[ray.heading]
                         for axis in range(3):
@@ -183,11 +189,15 @@ class SpatialLaw:
                 phases = list(record.absorbed_phases)
                 if definition.kerengonen:
                     if len(phases) != len(self.absorptions):
-                        phases = [pack((0,)) for _ in self.absorptions]
+                        phases = [pack((0, -1)) for _ in self.absorptions]
                     if absorbed_terms:
+                        # The phase of the coherent sum; the advance of the largest share.
                         meter.charge("evaluate", definition.phase_steps)
                         phases[rule_index] = pack(
-                            (phase_of_sum(tuple(absorbed_terms), definition.phase_steps),)
+                            (
+                                phase_of_sum(tuple(absorbed_terms), definition.phase_steps),
+                                carried_advance,
+                            )
                         )
                 records[slot] = replace(
                     record,
@@ -337,12 +347,18 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
-                    phase = rule.phase
+                    phase, advance = rule.phase, -1
                     if rule.phase_carried:
                         # Huygens: continue the wave absorbed last cycle, one advance on.
-                        phase = self._carried_phase(record, definition)
+                        phase, advance = self._carried_phase(record, definition)
+                    if rule.advance is not None:
+                        # De Broglie: the rays' own advance per link from the emitter's state.
+                        raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
+                        if raw_advance < 0:
+                            raise ValueError("kerengonen_advance must not be negative")
+                        advance = (raw_advance // rule.advance_denominator) % definition.phase_steps
                     new_rays, cursor = emit_rays(
-                        unpack(amount)[0], cursor_before, definition, meter, phase
+                        unpack(amount)[0], cursor_before, definition, meter, phase, advance
                     )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
