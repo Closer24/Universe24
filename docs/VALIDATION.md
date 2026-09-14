@@ -2226,3 +2226,43 @@ Runtime source SHA-256
 value is the model's prediction, one half of the quantum owner's correlation
 at every setting pair, and not a loss of visibility. No physical constant or
 species is identified.
+
+## Crossing null notices corrected locally - 2026-09-14
+
+Base: `6d37bcd` on `main`. The opt-in null notice now carries the null's
+ordering key (tick, position), every Node that records a null with a notice
+keeps a null record (its unscaled weight and the scale it assumed), and a
+notice ordered before the Node's own null that arrives afterwards is answered
+with the exact correction `(1 - w s) / (1 - w s g)`, sent through a separate
+six-slot correction bank. `OUTPUT_SLOTS` is twenty-four. The default profile
+and the option's existing acceptance are unchanged.
+
+| Check | Result |
+| --- | --- |
+| Crossing nulls at tick 4 on registers M and D of a three-register split | stale product `390625/177489` at the source, corrected to the conditional `25/9` at every Node by tick 7 with one correction, at D |
+| Sequential nulls one and two ticks apart | `25/9` with no correction |
+| Analytic targets computed independently in the probe | `625/481 x 625/369 x 19721/15625 = 25/9` |
+| Spatial accounting | balanced at every tick in all three worlds |
+| Existing envelope, notice, contract, interference, funded and field-phase suites | 243 passed before the new cases; `tests/test_null_notices.py` 18 passed with them |
+| Affected gate against `origin/main`, shared with the emission-scale sweep below | 3013 passed, 32 visual-only skipped, in 1187 seconds; ruff lint, format and strict mypy passed on 120 source files |
+
+Runtime source SHA-256
+`6c5eb5f5151944a865ec91d2b7ffb786d7c56a898a02446733dc6bd78a2c4fdf`, Python
+3.14.0rc2, headless. Several excitations in one domain remain outside the
+candidate by construction, as the contract now states.
+
+## Emission-scale sweep of the two-arm interferometer - 2026-09-14
+
+Base: the crossing-null commit on this branch. Configuration only: the
+two-arm harness gains `scale_configuration`, which raises the full source
+emission to 25, 250, 2500 and 25000 units per tick at `phi = pi/2` and `pi`.
+
+| Check | Result |
+| --- | --- |
+| Per-tick departure of the S emission from `amount x |a_S|^2` | below one unit at every amount and phase; 0.52, 0.8, 0, 0 at `pi/2` and 0.04, 0.6, 0, 0 at `pi` |
+| Relative departure of the six-tick mean | 1.5e-3, 2.5e-4, 0, 0 at `pi/2`; 2.0e-2, 3.4e-3, 0, 0 at `pi`; exact on every tick at multiples of 625 |
+| Accounting | balanced at every completed tick in all eight worlds |
+| Affected gate against `origin/main` | the same run as the crossing-null entry above: 3013 passed, 32 visual-only skipped |
+
+This is the emission-side classical limit only: the integer field becomes the
+continuous law as the amount grows. The wave's dynamics are configured.

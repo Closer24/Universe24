@@ -68,3 +68,22 @@ def cross_product(left: tuple[int, ...], right: tuple[int, ...]) -> tuple[int, .
         checked_work(checked_work(left[a] * right[b]) - checked_work(left[b] * right[a]))
         for a, b in ((1, 2), (2, 0), (0, 1))
     )
+
+
+def bounded_gcd(first: int, second: int) -> int:
+    """Euclid on checked magnitudes; 128 divisions is a fixed upper bound."""
+    a, b = abs(checked_work(first)), abs(checked_work(second))
+    for _ in range(128):
+        if b == 0:
+            return a
+        a, b = b, a % b
+    raise ArithmeticError("bounded gcd iteration limit exceeded")
+
+
+def reduced_ratio(numerator: int, denominator: int) -> tuple[int, int]:
+    """The ratio in lowest terms with a positive denominator, checked."""
+    checked_work(numerator)
+    if checked_work(denominator) <= 0:
+        raise ValueError("positive rational denominator required")
+    divisor = bounded_gcd(numerator, denominator)
+    return numerator // divisor, denominator // divisor

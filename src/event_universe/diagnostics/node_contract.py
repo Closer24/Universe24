@@ -20,6 +20,7 @@ from event_universe.core.source_emission_node import EmittingEnvelopeNode
 from event_universe.core.source_envelope_node import (
     EnvelopeGate,
     EnvelopePacket,
+    PendingEnvelopeCorrection,
     PendingEnvelopeGate,
     PendingEnvelopeScale,
     PendingEnvelopeStop,
@@ -29,6 +30,7 @@ from event_universe.core.source_envelope_state import (
     EnvelopeAmplitude,
     EnvelopeRemainder,
     EnvelopeScale,
+    NullRecord,
 )
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
@@ -64,6 +66,7 @@ STATE_RECORDS = (
     EnvelopeAmplitude,
     EnvelopeRemainder,
     EnvelopeScale,
+    NullRecord,
     EnvelopeGate,
     EnvelopePacket,
     PendingEnvelopeGate,
@@ -73,6 +76,7 @@ STATE_RECORDS = (
     EnvelopeEmissionState,
     PendingEnvelopeEmission,
     EmittingEnvelopeNode,
+    PendingEnvelopeCorrection,
 )
 
 

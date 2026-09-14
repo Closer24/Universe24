@@ -117,12 +117,12 @@ changes nothing when absent.
 
 | Part | Contract |
 | --- | --- |
-| Law | At a null result on a Node whose scaled local weight is `p < 1`, the Node multiplies its own weight scale by `1/(1-p)` and sends that rational factor through its domain Ports as a null notice. A receiving Node waits its local control delay, multiplies its own scale by the delivered factor, and forwards the notice through its other Ports. |
+| Law | At a null result on a Node whose scaled local weight is `p < 1`, the Node multiplies its own weight scale by `1/(1-p)` and sends that rational factor through its domain Ports as a null notice, stamped with the null's ordering key (tick, position). A receiving Node waits its local control delay, multiplies its own scale by the delivered factor, and forwards the notice through its other Ports. A Node that has itself recorded a null keeps a null record, its unscaled weight `w` and the scale `s` it assumed; when a notice whose key is ordered before its own null arrives, it multiplies the assumed scale by the delivered factor, `s' = s g`, applies the correction `(1 - w s) / (1 - w s')` to its own scale and sends it through every Port as a notice under its own key. |
 | Inputs | Only the deciding Node's own amplitude and scale, and factors actually delivered through Links. No Node reads the conditional quantum state or another Node's weight. |
-| State | One `EnvelopeScale` per Node, a rational of at least one; six pending-notice slots, one per Port; a fixed bank of the six most recently applied notice identities; six additional output slots for notices. |
+| State | One `EnvelopeScale` per Node, a rational of at least one; six pending-notice slots, one per Port; a fixed bank of the six most recently applied notice identities; six output slots for notices and six for corrections; at most one null record per Node and a queue of at most six computed corrections waiting for free Ports. |
 | Effect | Ordinary emission is full strength times the local squared weight times the scale, clipped at one. Amplitudes, gates and the quantum owner are unchanged. |
-| Limits | A vacuum null (`p = 0`) and a certain occupation (`p = 1`) send nothing. A notice identity already in the bank is ignored; a Node that has retired ignores notices. A Node holds at most one pending notice per Port. |
-| Acceptance | Factor 25/9 after a 16/25 null; one-Link and two-Link arrival ticks; forwarding away from the arrival Port; duplicate and retired rejection; the fixed bank; exact 9/16 emission after the next gate; unchanged behavior without the option. |
+| Limits | A vacuum null (`p = 0`) and a certain occupation (`p = 1`) send nothing. A notice identity already in the bank is ignored; a Node that has retired ignores notices. A Node holds at most one pending notice per Port. A correction is sent one tick after it is computed when its Port bank is free, one per tick; a null record describes the Node's most recent null only; a correction whose corrected weight would reach one is not sent. |
+| Acceptance | Factor 25/9 after a 16/25 null; one-Link and two-Link arrival ticks; forwarding away from the arrival Port; duplicate and retired rejection; the fixed bank; exact 9/16 emission after the next gate; unchanged behavior without the option; two nulls crossing on one tick corrected to the conditional scale 25/9 by the later Node alone, sequential nulls exact with no correction. |
 
 For one excitation in the domain the delivered factor equals the exact
 conditional renormalization: after all notices have arrived, every scaled
@@ -132,15 +132,21 @@ the source recovers to 25 of 25 units one Link after an arm null, and the next
 gate emits 9 and 16, the conditional weights, instead of 3 and 5.
 
 The approximation remains causal. Between the null and the notice's arrival a
-remote Node still emits its stale weight, and a second null decided before an
-earlier notice reached the deciding Node computes its factor from a stale
-scale. The scale is a multiplier of squared weights, so no square root enters;
-two-mode gates combine amplitudes, not scales, and a gate between a Node that
-has received a notice and one that has not is the residual error of this
-candidate. For several excitations or entangled registers the local factor is
-the marginal renormalization only, and the departure from conditional weights
-is not removed. The clip at one and the fixed notice bank are explicit bounds,
-not physical claims.
+remote Node still emits its stale weight. A second null decided before an
+earlier notice reached the deciding Node sends its factor from a stale scale;
+the [crossing-nulls experiment](../examples/quantum/crossing_nulls.md) measures
+that product, `390625/177489` against the conditional `25/9`, and the
+correction above restores `25/9` at every Node two Links after it leaves. The
+ordering by (tick, position) is total, so of two crossing nulls exactly one
+corrects, and a chain of corrections telescopes; the deciding Node uses only
+its own null record and the delivered factor. The scale is a multiplier of
+squared weights, so no square root enters; two-mode gates combine amplitudes,
+not scales, and a gate between a Node that has received a notice and one that
+has not is the remaining residual of this candidate. Several excitations in
+one domain are outside the candidate: a domain holds one conserved carrier and
+each envelope is a one-excitation amplitude, so a joint state of two carriers
+has no local envelope to renormalize. The clip at one and the fixed banks are
+explicit bounds, not physical claims.
 
 ## Opt-in field-dependent phase
 

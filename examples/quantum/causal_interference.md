@@ -170,6 +170,33 @@ sources in the capture run are the source Node's one emission committed after
 the capture, before the terminal notice reached it: the same causal residual
 that the null notice shows, now as an energy term.
 
+### The field converges to the squared weight as the scale grows
+
+The same interferometer with the full source emission raised from 25 to
+25000 units per tick, at `phi = pi/2` (source weight 337/625) and `phi = pi`
+(49/625). The emission is the integer floor of `amount x |a_S|^2` with the
+remainder carried, so the per-tick value never departs from the exact real
+value by one unit or more, and the mean over ticks 8 to 13 departs by less
+than one unit in six ticks:
+
+| Full emission per tick | phi | Recorded S emission, ticks 8-13 | Exact `amount x weight` | Largest departure per tick | Relative departure of the mean |
+| --- | --- | --- | --- | --- | --- |
+| 25 | pi/2 | 13, 14, 13, 14, 13, 14 | 13.48 | 0.52 | 1.5 x 10^-3 |
+| 250 | pi/2 | 135, 135, 134, 135, 135, 135 | 134.8 | 0.8 | 2.5 x 10^-4 |
+| 2500 | pi/2 | 1348 x 6 | 1348 | 0 | 0 |
+| 25000 | pi/2 | 13480 x 6 | 13480 | 0 | 0 |
+| 25 | pi | 2 x 6 | 1.96 | 0.04 | 2.0 x 10^-2 |
+| 250 | pi | 20, 20, 19, 20, 19, 20 | 19.6 | 0.6 | 3.4 x 10^-3 |
+| 2500 | pi | 196 x 6 | 196 | 0 | 0 |
+| 25000 | pi | 1960 x 6 | 1960 | 0 | 0 |
+
+At amounts that are multiples of 625 the emission is exact on every tick. This
+is the emission-side classical limit of the candidate: the integer field
+becomes the continuous law `amount x |psi|^2` as the amount grows, with the
+departure bounded by one unit per tick at every scale. It says nothing about
+the wave's own dynamics becoming classical, which the mixers and instruments
+fix by configuration.
+
 ## What this does and does not show
 
 - It shows that, in this candidate, the classical field emitted by a coherent
@@ -182,6 +209,9 @@ that the null notice shows, now as an energy term.
   that the shift is local: the same field elsewhere does nothing.
 - It shows, with funded emission, that the field can be paid from the wave's
   own stock with constant totals and a measured residual.
+- It shows that raising the emission scale brings the integer field to the
+  exact squared weight, within one unit per tick at every scale: the
+  emission-side classical limit.
 - It does not show momentum exchange, the field acting back on the stock, a
   continuum limit, or a derivation of the classical limit.
   The mixers, the phase gate and the instrument are configured data. The

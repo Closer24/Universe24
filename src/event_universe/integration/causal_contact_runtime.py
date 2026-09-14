@@ -30,7 +30,14 @@ from event_universe.fields.source_emission import (
     initial_emission_state,
     prepare_emission,
 )
-from event_universe.fields.source_envelope import Matrix, local_output, null_factor, output_cost
+from event_universe.fields.source_envelope import (
+    Matrix,
+    local_output,
+    null_correction,
+    null_factor,
+    output_cost,
+    squared_weight,
+)
 from event_universe.quantum import LocalUnitary
 
 from .contact_program import ContactDomain, FieldPhase
@@ -286,6 +293,7 @@ class CausalContactResolver(ContactEventResolver):
                 0,
                 self.initial.link_ticks,
                 self._source_events,
+                null_correction if self._null_notices else None,
             )
 
     def propagation_phase(
@@ -406,6 +414,7 @@ class CausalContactResolver(ContactEventResolver):
                 link_ticks=self.initial.link_ticks,
                 costs=self.initial.operation_costs,
                 events=self._source_events,
+                null_weight=squared_weight if self._null_notices else None,
             )
             node.pending_emission = None
         return outcome, event_id
@@ -556,7 +565,9 @@ class CausalContactResolver(ContactEventResolver):
                     if node.pending_stop is None
                     else node.pending_stop.ready_tick,
                     "weight_scale": (node.scale.numerator, node.scale.denominator),
+                    "corrections": node.corrections,
                 }
                 for address, node in self._source_nodes.items()
             ],
+            "null_corrections": sum(node.corrections for node in self._source_nodes.values()),
         }

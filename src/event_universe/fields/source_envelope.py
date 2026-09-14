@@ -19,6 +19,7 @@ from event_universe.core.source_envelope_state import (
     EnvelopeAmplitude,
     EnvelopeRemainder,
     EnvelopeScale,
+    NullRecord,
 )
 from event_universe.core.state import bounded_gcd
 
@@ -221,6 +222,48 @@ def null_factor(
         return None
     meter.charge("evaluate", 2)
     return _ratio(denominator, remaining, meter)
+
+
+def null_correction(
+    record: NullRecord, delivered: tuple[int, int], meter: CostMeter
+) -> tuple[tuple[int, int], tuple[int, int]] | None:
+    """Correct a null factor sent before an earlier-ordered notice arrived.
+
+    The Node sent ``1 / (1 - w s_old)`` from its unscaled weight ``w`` and the
+    scale ``s_old`` it held at the null. The delivered factor ``g`` from a null
+    ordered before its own makes the exact prior scale ``s_new = s_old g``, so
+    the factor should have been ``1 / (1 - w s_new)``. The correction is the
+    quotient ``(1 - w s_old) / (1 - w s_new)``, a rational of at least one, and
+    ``s_new`` becomes the assumed scale for later corrections; a chain of
+    corrections telescopes. Returns nothing when the corrected weight would
+    reach one, which no null decided by the quantum owner can produce.
+    """
+    if type(record) is not NullRecord:
+        raise TypeError("a null correction requires the Node's own null record")
+    if bounded(delivered[1]) < 1 or bounded(delivered[0]) < delivered[1]:
+        raise ValueError("a delivered null factor must be a rational of at least one")
+    meter.charge("read", 3)
+    meter.charge("evaluate", 4)
+    new_n, new_d = _ratio(
+        checked_work(record.scale_numerator * delivered[0]),
+        checked_work(record.scale_denominator * delivered[1]),
+        meter,
+    )
+    old_remaining = checked_work(
+        checked_work(record.weight_denominator * record.scale_denominator)
+        - checked_work(record.weight_numerator * record.scale_numerator)
+    )
+    new_remaining = checked_work(
+        checked_work(record.weight_denominator * new_d) - checked_work(record.weight_numerator * new_n)
+    )
+    if old_remaining <= 0 or new_remaining <= 0:
+        return None
+    correction = _ratio(
+        checked_work(old_remaining * new_d),
+        checked_work(new_remaining * record.scale_denominator),
+        meter,
+    )
+    return correction, (new_n, new_d)
 
 
 def weighted_emission(

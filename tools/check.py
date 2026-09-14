@@ -46,6 +46,7 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/event_paths.json": ("tests/test_quantum_node_events.py",),
     "examples/quantum/wave_origins.json": ("tests/test_native_wave_origins.py",),
     "examples/quantum/causal_interference.py": ("tests/test_causal_interference.py",),
+    "examples/quantum/crossing_nulls.py": ("tests/test_null_notices.py",),
     "examples/quantum/bell_chsh.py": ("tests/test_bell_chsh.py",),
     "examples/quantum/bell_chsh.json": ("tests/test_bell_chsh.py",),
     "examples/quantum/bell_chsh_view.py": ("tests/test_bell_chsh.py",),

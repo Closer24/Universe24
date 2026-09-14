@@ -255,3 +255,175 @@ def test_headless_run_records_scales_and_keeps_balanced_accounting(tmp_path):
     assert report["accounting_balanced_at_every_completed_tick"]
     assert report["final_totals"]["charge"] == [-1]
     assert all(e["weight_scale"] == [625, 81] for e in resolver["source_envelopes"])
+
+
+# Crossing nulls: a null decided before an earlier-ordered notice arrives is corrected.
+
+
+def test_null_correction_is_the_exact_quotient_and_telescopes():
+    from event_universe.core.source_envelope_state import NullRecord
+    from event_universe.fields.source_envelope import null_correction
+
+    record = NullRecord(4, 256, 625)
+    result = null_correction(record, (625, 481), meter())
+    assert result is not None
+    (numerator, denominator), assumed = result
+    assert Fraction(numerator, denominator) == Fraction(177489, 140625) and assumed == (625, 481)
+    assert Fraction(625, 481) * Fraction(625, 369) * Fraction(numerator, denominator) == Fraction(25, 9)
+    # Two corrections in sequence equal one correction by the product of the factors.
+    first = null_correction(record, (5, 4), meter())
+    assert first is not None
+    second = null_correction(NullRecord(4, 256, 625, *first[1]), (6, 5), meter())
+    once = null_correction(record, (30, 20), meter())
+    assert second is not None and once is not None
+    assert Fraction(*first[0]) * Fraction(*second[0]) == Fraction(*once[0]) and second[1] == once[1]
+    # A weight that would reach one under the delivered scale admits no correction.
+    assert null_correction(NullRecord(0, 1, 2), (2, 1), meter()) is None
+    with pytest.raises(ValueError, match="at least one"):
+        null_correction(record, (1, 2), meter())
+    with pytest.raises(ValueError, match="probability"):
+        NullRecord(0, 3, 2)
+
+
+def test_notice_packets_carry_an_optional_ordering_key():
+    packet = EnvelopePacket(
+        3, (1, 1, 1), 0, 7, None, scale=(25, 9), notice_id=4, null_tick=2, null_origin=(2, 1, 1)
+    )
+    assert packet.order_key == (2, (2, 1, 1))
+    assert EnvelopePacket(3, (1, 1, 1), 0, 7, None, scale=(25, 9), notice_id=4).order_key is None
+    with pytest.raises(ValueError, match="ordering key requires the deciding"):
+        EnvelopePacket(3, (1, 1, 1), 0, 7, None, scale=(25, 9), notice_id=4, null_tick=2)
+    with pytest.raises(ValueError, match="belongs to a notice"):
+        EnvelopePacket(3, (1, 1, 1), 0, 7, None, null_origin=(2, 1, 1))
+
+
+def crossing_configuration(offset):
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[1] / "examples/quantum/crossing_nulls.py"
+    spec = importlib.util.spec_from_file_location("crossing_nulls", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module, module.configuration(offset)
+
+
+def source_scales(resolver):
+    return {
+        tuple(e["position"]): (Fraction(*e["weight_scale"]), e["corrections"])
+        for e in resolver.report()["source_envelopes"]
+    }
+
+
+def test_crossing_nulls_are_corrected_to_the_conditional_scale_by_the_later_null():
+    probe, raw = crossing_configuration(0)
+    world, resolver = world_for(raw)
+    step(world, 5)
+    # Both probes decide at tick 4: M with the exact conditional weights, D given M's null.
+    decisions = [
+        (r.decision.tick, r.decision.register_index, tuple(r.decision.weights))
+        for r in resolver.space.records
+    ]
+    assert decisions[:2] == [(4, 1, (481, 144)), (4, 2, (225, 256))]
+    scales = source_scales(resolver)
+    # M sent 625/481 from its exact scale and D sent 625/369 from the stale one; one Link
+    # later M's notice reached D, and D, the later null by (tick, position), corrected itself
+    # to the conditional 25/9 and queued the correction. D's stale notice reached M, and S
+    # so far holds M's factor only.
+    assert scales[DETECTOR] == (Fraction(25, 9), 1)
+    assert scales[MIDDLE] == (Fraction(390625, 177489), 0)
+    assert scales[SOURCE] == (Fraction(625, 481), 0)
+    step(world, 1)
+    scales = source_scales(resolver)
+    assert scales[MIDDLE] == (Fraction(25, 9), 0) and scales[SOURCE] == (Fraction(390625, 177489), 0)
+    step(world, 1)
+    scales = source_scales(resolver)
+    assert scales == {
+        SOURCE: (Fraction(25, 9), 0),
+        MIDDLE: (Fraction(25, 9), 0),
+        DETECTOR: (Fraction(25, 9), 1),
+    }
+    assert resolver.report()["null_corrections"] == 1
+    assert all(value["balanced"] for value in world.spatial_accounting().values())
+    # The probe's own analytic targets agree.
+    targets = probe.analytic()
+    assert targets["exact_source_scale"] == Fraction(25, 9)
+    assert targets["stale_product"] == Fraction(390625, 177489)
+
+
+@pytest.mark.parametrize("offset", [1, 2])
+def test_sequential_nulls_need_no_correction(offset):
+    _, raw = crossing_configuration(offset)
+    world, resolver = world_for(raw)
+    step(world, 8)
+    scales = source_scales(resolver)
+    assert scales[SOURCE] == (Fraction(25, 9), 0) and resolver.report()["null_corrections"] == 0
+
+
+def test_corrections_leave_through_their_own_bank_and_are_bounded():
+    from event_universe.core.source_envelope_node import CORRECTION_QUEUE
+    from event_universe.core.source_envelope_state import NullRecord
+    from event_universe.fields.source_envelope import null_correction, squared_weight
+
+    events = NodeEvents(CausalEventSpace(400), None)
+    node = SourceEnvelopeNode((2, 1, 1), source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
+    node.null(
+        4,
+        None,
+        null_factor=null_factor,
+        neighbor_ports=(0, 1),
+        costs=COSTS,
+        events=events,
+        null_weight=squared_weight,
+    )
+    assert node.null_record == NullRecord(4, 16, 25, 1, 1)
+    assert node.output[12].null_tick == 4 and node.output[12].null_origin == (2, 1, 1)
+    # A notice from a null ordered earlier (tick 3) arrives; the Node corrects itself.
+    node.receive(
+        EnvelopePacket(
+            5, (1, 1, 1), 0, 7, None, scale=(5, 4), notice_id=90, null_tick=3, null_origin=(1, 1, 1)
+        ),
+        5,
+        1,
+        0,
+        events,
+        costs=COSTS,
+    )
+    node.clear_output(12, node.output[12])
+    node.clear_output(13, node.output[13])
+    node.complete(5, lambda *a: EnvelopeAmplitude(), (), COSTS, (0, 1), 0, 1, events, null_correction)
+    expected = null_correction(NullRecord(4, 16, 25, 1, 1), (5, 4), meter())
+    assert expected is not None and node.corrections == 1
+    assert node.null_record is not None and (
+        node.null_record.scale_numerator,
+        node.null_record.scale_denominator,
+    ) == (5, 4)
+    sent = [node.output[18 + port] for port in (0, 1)]
+    assert all(
+        p is not None and (p.scale, p.null_tick, p.null_origin) == (expected[0], 4, (2, 1, 1))
+        for p in sent
+    )
+    assert node.pending_corrections == ()
+    assert not node_state_violations(node)
+    # A notice ordered later than the Node's own null is applied and forwarded, never corrected.
+    node.receive(
+        EnvelopePacket(
+            6, (3, 1, 1), 1, 7, None, scale=(7, 6), notice_id=91, null_tick=4, null_origin=(3, 1, 1)
+        ),
+        6,
+        1,
+        0,
+        events,
+        costs=COSTS,
+    )
+    for slot in (12, 13, 18, 19):
+        if node.output[slot] is not None:
+            node.clear_output(slot, node.output[slot])
+    node.complete(6, lambda *a: EnvelopeAmplitude(), (), COSTS, (0, 1), 0, 1, events, null_correction)
+    assert node.corrections == 1 and node.output[18] is None
+    # Without a weight law there is no record and no correction; the queue is bounded.
+    plain = SourceEnvelopeNode((2, 1, 1), source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
+    plain.null(4, None, null_factor=null_factor, neighbor_ports=(0,), costs=COSTS, events=events)
+    assert plain.null_record is None and plain.output[12].order_key is None
+    with pytest.raises(ValueError, match="at most six pending corrections"):
+        SourceEnvelopeNode((2, 1, 1), pending_corrections=(None,) * (CORRECTION_QUEUE + 1))
