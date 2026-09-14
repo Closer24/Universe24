@@ -312,7 +312,9 @@ rises by what it emits. Kerengonen phased rays are the interference hypothesis:
 a ray carries a phase that advances per link, rays that meet combine by phase,
 and the coherence gates what is absorbed and sampled while every quantum stays
 whole and accounted for. Quanta that cancel continue; whether that is the right
-place for them is the question the candidate is meant to test.
+place for them is the question the candidate is meant to test. A ray's advance
+per link may come from its emitter's momentum, `|p| / D`, the de Broglie
+hypothesis: measured as a fringe period inverse to momentum, not derived.
 
 ## 12. Quantum behavior and entanglement remain open
 
