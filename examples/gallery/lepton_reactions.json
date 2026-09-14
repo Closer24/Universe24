@@ -1,0 +1,2107 @@
+{
+  "schema_version": 1,
+  "model_id": "configured-lepton-reactions-v1",
+  "shape": [
+    15,
+    15,
+    3
+  ],
+  "boundary": "open",
+  "slots_per_node": 6,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 12,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "energy",
+      "components": 1,
+      "units": "0.1 MeV",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "0.1 MeV/c",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "direction",
+      "components": 3,
+      "units": "unit lattice direction",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "elementary charge",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "lepton_e",
+      "components": 1,
+      "units": "electron lepton number",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "lepton_mu",
+      "components": 1,
+      "units": "muon lepton number",
+      "signed": true,
+      "conserved": true
+    },
+    {
+      "name": "baryon",
+      "components": 1,
+      "units": "baryon number",
+      "signed": true,
+      "conserved": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "electron",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 13,
+        "momentum": [
+          12,
+          0,
+          0
+        ],
+        "charge": -1,
+        "lepton_e": 1,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "positron",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 13,
+        "momentum": [
+          -12,
+          0,
+          0
+        ],
+        "charge": 1,
+        "lepton_e": -1,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          -1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "photon",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "muon",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 1100,
+        "momentum": [
+          0,
+          306,
+          0
+        ],
+        "charge": -1,
+        "lepton_e": 0,
+        "lepton_mu": 1,
+        "baryon": 0,
+        "direction": [
+          0,
+          1,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "antimuon",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 1100,
+        "momentum": [
+          0,
+          -306,
+          0
+        ],
+        "charge": 1,
+        "lepton_e": 0,
+        "lepton_mu": -1,
+        "baryon": 0,
+        "direction": [
+          0,
+          -1,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "muon_neutrino",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 0,
+        "lepton_mu": 1,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "muon_antineutrino",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 0,
+        "lepton_mu": -1,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "electron_neutrino",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 1,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "electron_antineutrino",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": -1,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "w_minus",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": -1,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "w_plus",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 1,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "neutron",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 9396,
+        "momentum": [
+          2,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 1,
+        "direction": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "proton",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 9382,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 1,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 1,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "direction"
+      }
+    },
+    {
+      "name": "vacuum_slot",
+      "fields": [
+        "energy",
+        "momentum",
+        "direction",
+        "charge",
+        "lepton_e",
+        "lepton_mu",
+        "baryon"
+      ],
+      "defaults": {
+        "energy": 0,
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": 0,
+        "lepton_e": 0,
+        "lepton_mu": 0,
+        "baryon": 0,
+        "direction": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "name": "pair_to_muons",
+      "left_type": "electron",
+      "right_type": "positron",
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          },
+          2114
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "energy",
+                    "side": "left"
+                  },
+                  {
+                    "field": "energy",
+                    "side": "right"
+                  }
+                ]
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              306,
+              0
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": -1
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": 1
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "energy",
+                    "side": "left"
+                  },
+                  {
+                    "field": "energy",
+                    "side": "right"
+                  }
+                ]
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              -306,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": 1
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": -1
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  0,
+                  306,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          0,
+                          306,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  0,
+                  -306,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          0,
+                          -306,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "muon",
+        "right": "antimuon"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "annihilation",
+      "left_type": "electron",
+      "right_type": "positron",
+      "when": {
+        "op": "gt",
+        "args": [
+          2114,
+          {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "field": "energy",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "field": "energy",
+            "side": "right"
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "field": "energy",
+                    "side": "right"
+                  }
+                ]
+              },
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "field": "energy",
+                    "side": "left"
+                  },
+                  0,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          {
+                            "field": "energy",
+                            "side": "left"
+                          },
+                          0,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "op": "neg",
+                    "args": [
+                      {
+                        "field": "energy",
+                        "side": "right"
+                      }
+                    ]
+                  },
+                  0,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          {
+                            "op": "neg",
+                            "args": [
+                              {
+                                "field": "energy",
+                                "side": "right"
+                              }
+                            ]
+                          },
+                          0,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "photon",
+        "right": "photon"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "w_minus_decay",
+      "left_type": "w_minus",
+      "right_type": "vacuum_slot",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "op": "exact_div",
+                    "args": [
+                      {
+                        "field": "energy",
+                        "side": "left"
+                      },
+                      2
+                    ]
+                  },
+                  0,
+                  0
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": {
+            "field": "charge",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 1
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "op": "exact_div",
+                    "args": [
+                      {
+                        "field": "energy",
+                        "side": "left"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": -1
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  },
+                  {
+                    "op": "vector",
+                    "args": [
+                      {
+                        "op": "exact_div",
+                        "args": [
+                          {
+                            "field": "energy",
+                            "side": "left"
+                          },
+                          2
+                        ]
+                      },
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "field": "momentum",
+                            "side": "left"
+                          },
+                          {
+                            "op": "vector",
+                            "args": [
+                              {
+                                "op": "exact_div",
+                                "args": [
+                                  {
+                                    "field": "energy",
+                                    "side": "left"
+                                  },
+                                  2
+                                ]
+                              },
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "op": "neg",
+                    "args": [
+                      {
+                        "op": "exact_div",
+                        "args": [
+                          {
+                            "field": "energy",
+                            "side": "left"
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  0,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          {
+                            "op": "neg",
+                            "args": [
+                              {
+                                "op": "exact_div",
+                                "args": [
+                                  {
+                                    "field": "energy",
+                                    "side": "left"
+                                  },
+                                  2
+                                ]
+                              }
+                            ]
+                          },
+                          0,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "electron",
+        "right": "electron_antineutrino"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "w_plus_decay",
+      "left_type": "w_plus",
+      "right_type": "vacuum_slot",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "op": "exact_div",
+                    "args": [
+                      {
+                        "field": "energy",
+                        "side": "left"
+                      },
+                      2
+                    ]
+                  },
+                  0,
+                  0
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": {
+            "field": "charge",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": -1
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              2
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              {
+                "op": "neg",
+                "args": [
+                  {
+                    "op": "exact_div",
+                    "args": [
+                      {
+                        "field": "energy",
+                        "side": "left"
+                      },
+                      2
+                    ]
+                  }
+                ]
+              },
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 1
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  },
+                  {
+                    "op": "vector",
+                    "args": [
+                      {
+                        "op": "exact_div",
+                        "args": [
+                          {
+                            "field": "energy",
+                            "side": "left"
+                          },
+                          2
+                        ]
+                      },
+                      0,
+                      0
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "field": "momentum",
+                            "side": "left"
+                          },
+                          {
+                            "op": "vector",
+                            "args": [
+                              {
+                                "op": "exact_div",
+                                "args": [
+                                  {
+                                    "field": "energy",
+                                    "side": "left"
+                                  },
+                                  2
+                                ]
+                              },
+                              0,
+                              0
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "vector",
+                "args": [
+                  {
+                    "op": "neg",
+                    "args": [
+                      {
+                        "op": "exact_div",
+                        "args": [
+                          {
+                            "field": "energy",
+                            "side": "left"
+                          },
+                          2
+                        ]
+                      }
+                    ]
+                  },
+                  0,
+                  0
+                ]
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "vector",
+                        "args": [
+                          {
+                            "op": "neg",
+                            "args": [
+                              {
+                                "op": "exact_div",
+                                "args": [
+                                  {
+                                    "field": "energy",
+                                    "side": "left"
+                                  },
+                                  2
+                                ]
+                              }
+                            ]
+                          },
+                          0,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "positron",
+        "right": "electron_neutrino"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "muon_decay_step_1",
+      "left_type": "muon",
+      "right_type": "vacuum_slot",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": {
+            "field": "lepton_mu",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": {
+            "field": "charge",
+            "side": "left"
+          }
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "muon_neutrino",
+        "right": "w_minus"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "antimuon_decay_step_1",
+      "left_type": "antimuon",
+      "right_type": "vacuum_slot",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "sum",
+            "args": [
+              {
+                "op": "abs",
+                "args": [
+                  {
+                    "field": "momentum",
+                    "side": "left"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": {
+            "field": "lepton_mu",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": {
+            "field": "charge",
+            "side": "left"
+          }
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "muon_antineutrino",
+        "right": "w_plus"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "beta_decay_step_1",
+      "left_type": "neutron",
+      "right_type": "vacuum_slot",
+      "assignments": [
+        {
+          "side": "left",
+          "field": "energy",
+          "expression": {
+            "op": "sub",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              14
+            ]
+          }
+        },
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "field": "momentum",
+            "side": "left"
+          }
+        },
+        {
+          "side": "left",
+          "field": "charge",
+          "expression": 1
+        },
+        {
+          "side": "left",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "baryon",
+          "expression": {
+            "field": "baryon",
+            "side": "left"
+          }
+        },
+        {
+          "side": "right",
+          "field": "energy",
+          "expression": 14
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "charge",
+          "expression": -1
+        },
+        {
+          "side": "right",
+          "field": "lepton_e",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "lepton_mu",
+          "expression": 0
+        },
+        {
+          "side": "right",
+          "field": "baryon",
+          "expression": 0
+        },
+        {
+          "side": "left",
+          "field": "direction",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "op": "sum",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "direction",
+          "expression": {
+            "op": "vector",
+            "args": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "output_types": {
+        "left": "proton",
+        "right": "w_minus"
+      },
+      "invariants": [
+        {
+          "name": "total_energy",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "energy",
+                "side": "left"
+              },
+              {
+                "field": "energy",
+                "side": "right"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        2,
+        7,
+        1
+      ],
+      "type": "electron"
+    },
+    {
+      "position": [
+        12,
+        7,
+        1
+      ],
+      "type": "positron"
+    }
+  ]
+}

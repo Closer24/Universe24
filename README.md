@@ -18,7 +18,10 @@ local quantum decisions to that same engine and charge the executed mechanical
 path. They currently cannot be combined with spatial fields.
 For what the quantum and classical parts do and do not establish together,
 read [the coupling summary](docs/QUANTUM_CLASSICAL_COUPLING.md) and its
-[two-arm interference experiment](examples/quantum/causal_interference.md).
+[two-arm interference experiment](examples/quantum/causal_interference.md) and
+its [two-wing Bell test](examples/quantum/bell_chsh.md). The
+[named-particle gallery](examples/gallery/README.md) renders recorded
+electron and positron runs as three-dimensional animations.
 
 For a complete authoring walkthrough, use the
 [simulation configuration Skill](skills/simulation-configuration/SKILL.md):

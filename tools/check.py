@@ -46,6 +46,13 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/event_paths.json": ("tests/test_quantum_node_events.py",),
     "examples/quantum/wave_origins.json": ("tests/test_native_wave_origins.py",),
     "examples/quantum/causal_interference.py": ("tests/test_causal_interference.py",),
+    "examples/quantum/bell_chsh.py": ("tests/test_bell_chsh.py",),
+    "examples/quantum/bell_chsh.json": ("tests/test_bell_chsh.py",),
+    "examples/quantum/bell_chsh_view.py": ("tests/test_bell_chsh.py",),
+    "examples/gallery/particle_gallery.py": ("tests/test_particle_gallery.py",),
+    "examples/gallery/lepton_reactions.json": ("tests/test_particle_gallery.py",),
+    "examples/isotropy-probe/run_experiments.py": ("tests/test_isotropy_probe.py",),
+    "examples/particle-contracts/electron-positron.json": ("tests/test_particle_gallery.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",

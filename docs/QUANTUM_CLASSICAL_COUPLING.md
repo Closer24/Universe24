@@ -38,12 +38,22 @@ records, with exact integers on the canonical runner:
 | Opt-in [funded emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission): the wave pays for its field from its own stock | totals constant at 3000 with zero sources while the wave is live; 211 units paid into the field over fourteen ticks; after a capture the localized record holds the unspent stock and keeps paying; the only external term is the one retarded emission after the capture |
 | An external classical field on one arm with the opt-in [field phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase) | coil fields 0, 200, 400, 800 select phase exponents 0, 0, 1, 2 and move the capture probability from 0 to `576/3125` and `9216/15625`; the same field beside the far side of the source moves nothing |
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
-| [Bell test in CHSH form on the phased-ray candidate](../examples/kerengonen-bell/README.md), same settings and combination as the quantum owner's | share rule `S = 826177/589824 = 1.4007`, equal to the local model's prediction `cos(a - b) / 2` averaged over the hidden phase; lottery clicks `397/279 = 1.42` from 8928 single-quantum pairs; plain field exactly 2; quantum owner 14/5 |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
+| [Bell test in CHSH form on the phased-ray candidate](../examples/kerengonen-bell/README.md), same settings and combination as the quantum owner's | share rule `S = 826177/589824 = 1.4007`, equal to the local model's prediction `cos(a - b) / 2` averaged over the hidden phase; lottery clicks `397/279 = 1.42` from 8928 single-quantum pairs; plain field exactly 2; quantum owner 14/5 |
 
-Earlier experiments established the finite quantum owner itself: exact CHSH
-value 14/5 for a two-register state, exact Born weights with no random draw for
-certain outcomes, and phase-sensitive split and recombination
+The [two-wing Bell test](../examples/quantum/bell_chsh.md) records, on the
+same runner under `local-quantum-events-v2`:
+
+| Observation | Result |
+| --- | --- |
+| Bell pair prepared at x = 12, 13, carried by configured SWAP gates to wings at x = 8 and x = 17, and read at both wings at tick 8 by arriving detector bodies | recorded correlations `3/5, 3/5, 4/5, -4/5` for Alice `Z, X` against Bob `(3Z +/- 4X)/5`; CHSH `14/5 = 2.8`, above the local bound 2, equal to the exact rational prediction |
+| The same runs read for signalling | Alice's weights are `[4, 4]` for every Bob setting and Bob's marginal is `1/2` for every Alice setting; no Link signal can cross the nine Links between the wings inside the nine-tick run |
+| 100 seeded coincidence trials per setting | estimated CHSH `74/25 = 2.96` from 400 runs, each writing its outcome codes into the classical detector records |
+| Same layout with a dephasing channel on one member before separation | correlations `3/5, 3/5, 0, 0` and CHSH `6/5`: a classically correlated source stays inside the local bound |
+
+Earlier experiments established the finite quantum owner itself: the same CHSH
+value 14/5 computed directly on a two-register state, exact Born weights with
+no random draw for certain outcomes, and phase-sensitive split and recombination
 ([quantum checks](../examples/quantum/run_physics_checks.py),
 [many-contact experiment](../examples/quantum/many_contacts.md)).
 
