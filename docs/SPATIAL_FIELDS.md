@@ -569,6 +569,12 @@ integration requires a bounded, transactional owner and an explicitly reviewed
 model contract. It cannot inherit the existing quantum owner's Q-ORACLE exception.
 No-signalling across arbitrary lifecycles or repeated queries has not been proved.
 
+The retained reference uses one draw per pair: the first query stores the number
+alongside its answer and setting; the second query uses that same number's
+remainder and the supplied cosine table. The reference tests check the draw
+count. This update does not reopen ordinary activation; see
+[postulate 22](../POSTULATES.md#22-configured-integer-lottery-and-replay-hypothesis).
+
 ## Integrated ray ownership boundaries
 
 Load-delayed rays remain visible to absorption and gathering. Surviving residents,

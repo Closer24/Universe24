@@ -625,3 +625,22 @@ local envelope; remote quantum generation changes cannot choose an ordinary
 source bank. Existing field stock follows its configured transport and decay.
 This is a finite configured hypothesis, preserving the older profiles and their
 limits; it does not derive the matrices or establish physical energy closure.
+
+## 22. Configured integer lottery and replay hypothesis
+
+Given the same rules, initial state, event ordering and configured ticket
+sequence, deterministic execution can replay the same history forward. The
+local ray lottery and the explicit quantum owner retain their own documented
+draw protocols; one ticket is not a universal replacement for the state or the
+interaction rule. Replay alone establishes neither reversibility nor a physical
+origin for the probabilities.
+
+The standalone [bond reference](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
+now draws one integer on the first query of a pair. Its half selects the first
+answer; the retained remainder and the settings select the second answer using
+the supplied finite-table singlet law. The second query draws no new number.
+This remains a nonlocal research reference, unavailable to ordinary Simulation.
+It does not establish a new exception to postulate 4, unique pair lifetimes,
+transactional ownership, or no-signalling for arbitrary repeated queries.
+The [Bell probe](examples/bell-chsh/README.md) records historical measurements
+under the source versions named there; it does not derive the conditional law.
