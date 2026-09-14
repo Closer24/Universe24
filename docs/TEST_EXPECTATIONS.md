@@ -1,5 +1,25 @@
 # Test inputs and expected results
 
+## Spatial momentum and position output
+
+`test_spatial_momentum.py` verifies the
+[finite observable](../examples/quantum/position_moment_response.md) against
+independent phase and mixed-state expectations. Equal spatial probabilities
+can have mean +2, -2 or zero; real coherent and incoherent uniform states have
+variance 0 and 2. Endpoint superpositions distinguish second-neighbor coherence.
+Vacuum has unavailable particle moments, partial occupation is explicit, and
+multiple excitations or nonlocal/duplicate edges are rejected.
+
+`test_position_moment_response.py` runs the primary native middle-capture input,
+six endpoint orientations, absent reservoir, delayed computation and longer
+Links. Local re-encoding gives variance 1 or 2 from the operator row. Wave
+diagnostics leave native events and model cost exactly unchanged. The actual
+combined second moment changes 10 -> 11 -> 10 during endpoint propagation,
+and remains 11 after middle capture. This is an exposed closure gap, not a
+conserved quantum energy claim. Subsequent ordinary exchange and escape balance;
+invalid first/second moment proposals reject before conversion.
+Projective controls separate the ensemble drift from selected conditional change.
+The target's later direction still comes from the supplied reservoir.
 
 ## Local moment response after capture
 
@@ -191,6 +211,12 @@ the source selecting exponent 0; source port weight `2549/3125` after the
 shifted recombination; rejection of `start_sources` without field values; the
 headless report listing the retained choice; and zero field phases in the
 unchanged default example.
+
+Complex-coefficient regressions require unchanged interference under a common
+phase for exponents -3 through 3 and exact reversal for positive/negative powers
+in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
+both must select -1, capture with probability `576/3125` at tick 7, retain source
+envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
 
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event

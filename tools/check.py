@@ -11,16 +11,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/quantum/spatial_momentum.py": (
+        "tests/test_spatial_momentum.py",
+        "tests/test_position_moment_response.py",
+    ),
+    "examples/quantum/position_moment_response.py": ("tests/test_position_moment_response.py",),
+    "examples/quantum/run_position_moment_response.py": ("tests/test_position_moment_response.py",),
+    "examples/quantum/spatial_measurement_controls.py": ("tests/test_position_moment_response.py",),
     "examples/quantum/local_moment_exchange.py": ("tests/test_local_moment_exchange.py",),
     "examples/quantum/run_local_moment_exchange.py": ("tests/test_local_moment_exchange.py",),
     "examples/quantum/momentum_state_exchange.py": ("tests/test_local_moment_exchange.py",),
     "examples/quantum/localized_charge.json": (
         "tests/test_localized_quantum_contact.py",
         "tests/test_local_moment_exchange.py",
+        "tests/test_position_moment_response.py",
     ),
     "examples/quantum/repeated_contacts.json": (
         "tests/test_recurrent_quantum_contact.py",
         "tests/test_quantum_classical_experiment.py",
+        "tests/test_contact_profile_composition.py",
     ),
     "examples/quantum/quantum_classical_check.py": ("tests/test_quantum_classical_experiment.py",),
     "examples/quantum/environment_coherence_check.py": ("tests/test_quantum_classical_experiment.py",),
@@ -40,6 +49,7 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
+        "tests/test_contact_profile_composition.py",
         "tests/test_causal_interference.py",
         "tests/test_null_notices.py",
         "tests/test_field_phase.py",

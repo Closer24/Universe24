@@ -18,6 +18,27 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
+def test_contact_composition_resources_select_their_preflight_regressions(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_contact_profile_composition.py" in selected
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "spatial_momentum.py",
+        "position_moment_response.py",
+        "run_position_moment_response.py",
+        "spatial_measurement_controls.py",
+        "localized_charge.json",
+    ],
+)
+def test_position_moment_resources_select_native_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_position_moment_response.py" in selected
+
+
 @pytest.mark.parametrize(
     "name",
     [

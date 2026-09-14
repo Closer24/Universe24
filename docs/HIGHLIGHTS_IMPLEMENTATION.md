@@ -1,5 +1,31 @@
 # Highlights implementation coverage
 
+## Signed relative field phase - 2026-09-14
+
+The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+now explicitly preserves `(unit / vacuum)^n` for negative field exponents by
+conjugating both coefficients. Equivalent complex representations produce the
+same quantum capture probabilities and ordinary envelope weights. This repairs
+the existing configured law; it adds no field back-reaction or conservation
+claim. The one-shot phase and null-notice options remain separate from recurrent
+generations, whose unsupported combinations fail at initialization. The live
+Highlights document was not edited; numerical regressions and source evidence
+are linked in [validation](VALIDATION.md).
+
+## Wave moments and position output - 2026-09-14
+
+Live Highlights was read at revision
+`ANLCKQnb_MKZlmGPU0eRFQTq-PfRQNEaF8JpkHRYNx58nnn7H11urV_7dwY5zowVhXcHfXiEHj6GRps58iAW2NBny79oKonaGgH8baBaQtE`.
+Section 4.7.5 requires position and momentum to describe the same wave without
+assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
+derives a finite derivative observable from actual spatial density and output
+moments from a local operator row. Its Fourier eigenvalue `2 sin(k)` gives
+partial coverage of the Fourier-momentum target, not canonical momentum or a
+free-particle law. The readout is diagnostic; Nodes receive only bounded
+prepared values at capture. The report exposes unclosed gate/measurement energy
+and distinguishes output re-encoding from vacuum. This is a candidate under
+existing contracts. The live Highlights document was not edited.
+
 ## Local response candidate - 2026-09-14
 
 The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)

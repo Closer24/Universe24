@@ -1,5 +1,13 @@
 # Project status and restart guide
 
+The [position-output experiment](../examples/quantum/position_moment_response.md)
+derives localized mean/spread from a finite neighboring-mode operator and reads
+incident wave moments from actual density only as a diagnostic. Its ordinary
+output re-encodes a position state, distinct from post-absorption vacuum.
+Endpoint/middle variance is 1/2. Later local exchange works, but propagation
+changes the new kinetic readout; joint quantum/apparatus closure remains open.
+No global wave readout controls ordinary motion.
+
 The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
 composes the existing held quantum capture with later generic local conversions.
 It transfers supplied mean momentum and variance to/from an arriving reservoir,

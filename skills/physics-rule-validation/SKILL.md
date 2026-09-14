@@ -82,6 +82,21 @@ not prove conservation in every sampled branch or retention of quantum phase and
 correlations. Check mass assumptions in kinetic-energy readouts, and reject
 missing diagnostic payloads instead of treating them as zero.
 
+For wave-derived moments, distinguish the incident density, selected measurement
+state and any ordinary output re-encoding. Absorption vacuum has no particle
+momentum distribution. A finite derivative observable is not automatically
+canonical momentum; check phase-sensitive states with identical position
+probabilities, mixed states and boundary rows. Keep exact density diagnostics
+outside physical inputs. Separate nonselective operation drift from selected
+conditional changes; neither is a simulated apparatus recoil without an actual
+owner and interaction. Audit propagation against a newly introduced energy
+readout instead of reusing an older fixed inventory as proof of closure.
+
+For configured relative phases, compare equivalent coefficient pairs that differ
+by a common complex factor. Exercise negative exponents and inverse composition
+through interference probabilities, including the ordinary envelope consumer;
+real reference coefficients alone cannot expose a partial-conjugation defect.
+
 ## Review the declared rules
 
 For [recurrent contact outcomes](../../docs/RECURRENT_QUANTUM_CONTACT.md),

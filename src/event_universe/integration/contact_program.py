@@ -40,7 +40,7 @@ class FieldPhase:
     """A one-mode phase whose exponent is the local classical field value at schedule time.
 
     ``matrices[n + max_exponent]`` is ``diag(vacuum^|n|, unit^|n|)`` for ``n >= 0``
-    and uses the conjugate unit for ``n < 0``. The exponent is the field value
+    and conjugates both coefficients for ``n < 0``. The exponent is the field value
     divided by ``divisor`` toward zero. All matrices are fixed at initialization.
     """
 
@@ -187,15 +187,17 @@ def _field_phase(initial: InitialState, raw: object) -> FieldPhase:
     maximum = _integer(obj.get("max_exponent", 4), "field phase max_exponent", 0)
     if maximum > MAX_FIELD_EXPONENT:
         raise ValueError("field phase max_exponent is limited to twelve")
-    conjugate = Amplitude(unit.real, -unit.imag)
+    conjugate_vacuum = Amplitude(vacuum.real, -vacuum.imag)
+    conjugate_unit = Amplitude(unit.real, -unit.imag)
     zero = Amplitude(0, 0)
     matrices = []
     for exponent in range(-maximum, maximum + 1):
-        base = unit if exponent >= 0 else conjugate
+        vacuum_base = vacuum if exponent >= 0 else conjugate_vacuum
+        unit_base = unit if exponent >= 0 else conjugate_unit
         rule = LocalUnitary(
             (
-                (_power(vacuum, abs(exponent)), zero),
-                (zero, _power(base, abs(exponent))),
+                (_power(vacuum_base, abs(exponent)), zero),
+                (zero, _power(unit_base, abs(exponent))),
             )
         )
         preserves_occupation(rule)
@@ -221,8 +223,8 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
             "bounds",
             "seed",
             "tickets",
-            "null_notices",
             "max_generations",
+            "null_notices",
         },
         {"model", "capacity", "addresses", "domains"},
     )
@@ -240,6 +242,8 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         raise ValueError("null_notices must be true or false")
     if null_notices and not causal_sources:
         raise ValueError("null notices require the causal contact field model")
+    if recurrent and null_notices:
+        raise ValueError("null notices are not supported with recurrent contact generations")
     if causal_sources and (not initial.spatial_fields or not initial.emissions):
         raise ValueError("causal contact fields require configured spatial sources")
     if causal_sources and any(definition.rays for definition in initial.spatial_fields):
@@ -390,6 +394,10 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                 if "field_phase" in op:
                     if not causal_sources:
                         raise ValueError("field phases require the causal contact field model")
+                    if recurrent:
+                        raise ValueError(
+                            "field phases are not supported with recurrent contact generations"
+                        )
                     if len(qs) != 1:
                         raise ValueError("a field phase acts on one register")
                     phase.append((_field_phase(initial, op["field_phase"]), qs))
@@ -486,8 +494,8 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         _integer(obj.get("seed", 0), "seed", 0),
         tickets,
         contacts=ContactConfiguration(
-            tuple(domains),
-            causal_sources,
+            domains=tuple(domains),
+            causal_sources=causal_sources,
             null_notices=null_notices,
             max_generations=generations,
             recurrent=recurrent,

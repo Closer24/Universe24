@@ -72,6 +72,12 @@ closure, unrestricted many-body collisions or parallel Node execution.
 
 ## Implementation and evidence
 
+The one-shot causal profile's `null_notices: true` and `field_phase` operations
+are not composed with recurrent generation banks. Selecting either in this
+profile is rejected during preflight; an explicit `null_notices: false` retains
+the existing behavior. Generation-specific renormalization and dynamic gate
+selection require separate ownership and timing evidence before admission.
+
 [Contact parsing](../src/event_universe/integration/contact_program.py) owns the
 strict schema. [Quantum support checks](../src/event_universe/quantum/contact_outcomes.py)
 and the [event network](../src/event_universe/quantum/event_network.py) own complete

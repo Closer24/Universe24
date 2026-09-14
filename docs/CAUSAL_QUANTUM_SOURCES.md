@@ -151,7 +151,7 @@ wave: a local phase, no amplitude change and no transfer to the field.
 
 | Part | Contract |
 | --- | --- |
-| Law | At the gate's schedule tick the Node reads its own value of one configured spatial field component, present at the start of that cycle. The exponent is that value divided by `divisor` toward zero. The gate is `diag(vacuum^n, unit^n)` for `n >= 0` and uses the conjugate unit for `n < 0`. |
+| Law | At the gate's schedule tick the Node reads its own value of one configured spatial field component, present at the start of that cycle. The exponent is that value divided by `divisor` toward zero. The gate is `diag(vacuum^n, unit^n)` for `n >= 0`; for `n < 0`, both coefficients are conjugated and raised to `|n|`. Thus the relative phase is `(unit / vacuum)^n` for either sign. |
 | Inputs | The Node's own local field readout, the configured `vacuum` and `unit` Gaussian integers of equal nonzero norm, `divisor`, `component` and `max_exponent` (at most twelve). No remote value and no quantum query. |
 | State | Nothing evolving is added to NodeState. The `2 * max_exponent + 1` matrices are fixed at initialization; the chosen matrix index enters the ordinary pending gate, and the same unitary is recorded for the quantum owner's recipe of that epoch. |
 | Effect | Both owners apply the identical matrix: the envelope through its delayed one-mode gate, the quantum owner in the propagation phase of the same epoch. A phase read is charged one `read` tariff on the gate start. |
@@ -166,6 +166,13 @@ leaves the fringe unchanged. This is an Aharonov-Bohm-like local coupling in
 integer form. It does not make the field react to the wave, does not conserve
 a field-plus-matter quantity and does not select the coupling constant; the
 `unit / vacuum` ratio is configured data.
+
+Negative values preserve the inverse of the relative phase even when `vacuum`
+is complex. Multiplying both coefficients by the same phase cannot change
+interference probabilities. Regression controls exercise exponents -3 through 3,
+positive/negative inverse composition in both orders, and a native negative-coil
+run. The equivalent pairs `(5, 3+4i)` and `(5i, -4+3i)` both give capture
+probability `576/3125` and source envelope weight `2549/3125` at exponent -1.
 
 ## Configuration, implementation and acceptance
 
