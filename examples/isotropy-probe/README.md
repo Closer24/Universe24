@@ -60,29 +60,37 @@ sweep; the sum over 16 is the number of rays that crossed it.
 | 256 | 4 | 0.45 | 0.32 | 1.11 | 1.49 | 421 of 762 | 0.33 | 0.46 | 2.6 |
 | 1024 | 16 | 1.92 | 1.27 | 0.37 | 0.72 | 3 | 1.50 | 2.23 | 10.9 |
 | 4096 | 64 | 10.13 | 5.09 | 0.20 | 0.31 | 0 | 9.50 | 11.25 | 257.9 |
-| 16384 | 256 | run in progress at the time of this commit; the row is filled by the follow-up commit |  |  |  |  |  |  |  |
+| 16384 (256 rays per tick) | 64 | 40.52 | 20.37 | 0.16 | 0.16 | 0 | 35.67 | 44.98 | 367.1 |
 
-Each fourfold increase in headings halves the spread between Nodes: the
-spread follows the square root of the rays per Node, as counting does, and
-sits below the Poisson value because the golden spiral is more regular than
-random directions. The mean per Node is about twice the solid-angle estimate
-because a ray crosses about two Nodes of a shell one unit thick. A residual
-directional bias remains: near-diagonal Nodes see about one fifth more rays
-than axis Nodes at 4096 headings, the integer-heading and digital-line effect
-also seen in the [gravity probe](../gravity-probe/README.md). Host time grows
-faster than the number of rays alive.
+From 256 to 4096 headings each fourfold increase halves the spread between
+Nodes: the spread follows the square root of the rays per Node, as counting
+does, and sits below the Poisson value because the golden spiral is more
+regular than random directions. At 16384 headings the halving stops: the
+spread is 0.16 with 40 rays per Node, where pure counting would give 0.10
+at that rate, and it now equals the Poisson value only by coincidence. What
+remains is a systematic directional bias, not counting noise: near-diagonal
+Nodes see 45 rays and axis Nodes 36, a ratio of 1.26 that was 1.18 at 4096
+and 1.5 at 1024. Integer headings drawn on digital lines put more distinct
+lines through near-diagonal Nodes than through axis Nodes, the same effect
+seen in the [gravity probe](../gravity-probe/README.md). The mean per Node is
+about twice the solid-angle estimate because a ray crosses about two Nodes of
+a shell one unit thick. The 16384 sweep was run with 256 rays per tick so that
+one sweep stays at 64 ticks; the same sweep at 64 rays per tick did not finish
+in the host's memory. Host time grows faster than the rays alive.
 
 ## What this establishes
 
 - A known number, the directional ratio 1, and the model's numbers in its
   place: 5.2 (and 140 at r = 9 on the axis) for the outward rule; 1.2 with a
-  counting spread of 0.2 at 4096 headings for the ray rule.
+  counting spread of 0.2 at 4096 headings, and 1.26 with a floor spread of
+  0.16 at 16384 headings, for the ray rule.
 - The outward rule cannot be repaired by weights; it is the right tool for
   conserved dilution and accounting, not for a field read at a point.
-- The ray rule approaches isotropy at a cost: the spread at radius `r` and
-  precision `e` needs of order `r^2 / e^2` headings per sweep, and the host
-  time grows with the rays alive. Reaching one percent at radius 8 would need
-  of order a million headings per sweep.
+- The ray rule approaches isotropy at a cost, and only down to a floor: the
+  counting spread needs of order `r^2 / e^2` headings per sweep, but below
+  about 0.15 at radius 8 a directional bias of about one quarter between axis
+  and diagonal Nodes remains at every heading count tried. Closing that gap
+  needs a different line-drawing or heading rule, not more headings.
 - Nothing here is a new prediction about nature; it is a measured limit of
   the model, with the number that a laboratory would use to reject or keep
   each rule.
