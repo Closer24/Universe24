@@ -9,7 +9,7 @@ observer: it records only the arrival tick of each body. Spacing above one link
 per tick is a redshift z = spacing - 1 produced by delay growth, with no
 recession and no expansion term. The control keeps the emission at zero.
 
-usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget]
+usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget] [open|periodic] [constant emission]
 """
 
 import sys
@@ -20,10 +20,16 @@ from event_universe.initialization import parse_initial_state
 
 GROWTH = int(sys.argv[1]) if len(sys.argv) > 1 else 600  # emission added per mass cycle
 BUDGET = int(sys.argv[2]) if len(sys.argv) > 2 else 40
-SHAPE = [37, 9, 5]
-MASS = (18, 6, 2)
+# A closed universe: constant emission accumulates, so the load grows without a growing source.
+BOUNDARY = sys.argv[3] if len(sys.argv) > 3 else "open"
+CONSTANT = int(sys.argv[4]) if len(sys.argv) > 4 else 0  # emission per cycle added to age * growth
+TICKS = int(sys.argv[5]) if len(sys.argv) > 5 else 60
+# Closed: a taller box with the mass twelve rows from the path, so the direct field
+# is weak and the growing load is the accumulated, wrapped field; the train laps
+# the row and the eye records every lap (successive epochs of the same signal).
+SHAPE = [37, 25, 5] if BOUNDARY == "periodic" else [37, 9, 5]
+MASS = (18, 14, 2) if BOUNDARY == "periodic" else (18, 6, 2)
 ROW, EYE_X, TRAIN = 2, 34, 12
-TICKS = 60
 
 
 def op(name, *args):
@@ -34,7 +40,7 @@ def document(growth):
     return {
         "schema_version": 1,
         "model_id": "redshift-from-delay-growth-v1",
-        "boundary": "open",
+        "boundary": BOUNDARY,
         "shape": SHAPE,
         "slots_per_node": 4,
         "link_ticks": 1,
@@ -108,7 +114,7 @@ def document(growth):
             {
                 "type": "mass body",
                 "field": "computation",
-                "amount": op("mul", {"field": "age"}, growth),
+                "amount": op("add", CONSTANT, op("mul", {"field": "age"}, growth)),
                 "denominator": 1,
                 "source": True,
             }
@@ -134,22 +140,31 @@ def observe(growth):
             and e.get("disturbance") == "light"
             and tuple(e["position"]) == (EYE_X, ROW, MASS[2])
         ):
-            arrivals[e["values"]["tag"][0]] = e["tick"]
+            arrivals.setdefault(e["values"]["tag"][0], []).append(e["tick"])
     return arrivals
 
 
-for growth in (0, GROWTH):
-    arrivals = observe(growth)
-    order = sorted(arrivals)
-    ticks = [arrivals[t] for t in order]
+def report_lap(label, ticks):
     gaps = [b - a for a, b in zip(ticks, ticks[1:])]
-    print(f"\n=== emission growth {growth} per mass cycle, budget {BUDGET}: what the eye records ===")
-    print("  body (1 = first to pass the mass) -> arrival tick:", dict(zip(order, ticks)))
-    print("  gaps between successive arrivals:", gaps)
+    print(f"  {label}: arrival ticks {ticks}")
+    print(f"    gaps {gaps}")
     if gaps:
         early, late = gaps[: len(gaps) // 2], gaps[len(gaps) // 2 :]
         print(
-            f"  z = spacing - 1: early pairs {sum(early) / len(early) - 1:+.2f}, "
-            f"late pairs {sum(late) / len(late) - 1:+.2f}"
+            f"    z = spacing - 1: early pairs {sum(early) / len(early) - 1:+.2f}, "
+            f"late pairs {sum(late) / len(late) - 1:+.2f}, whole lap {sum(gaps) / len(gaps) - 1:+.2f}"
         )
-    print(f"  bodies not received within {TICKS} ticks: {TRAIN - len(arrivals)}")
+
+
+for growth in sorted({0, GROWTH}):
+    arrivals = observe(growth)
+    order = sorted(arrivals)
+    print(
+        f"\n=== emission {CONSTANT} + {growth} per mass cycle, budget {BUDGET}, "
+        f"boundary {BOUNDARY}: what the eye records ==="
+    )
+    laps = max((len(v) for v in arrivals.values()), default=0)
+    for lap in range(laps):
+        ticks = [arrivals[t][lap] for t in order if len(arrivals[t]) > lap]
+        report_lap(f"lap {lap + 1} ({len(ticks)} of {TRAIN} bodies)", ticks)
+    print(f"  bodies never received within {TICKS} ticks: {TRAIN - len(arrivals)}")

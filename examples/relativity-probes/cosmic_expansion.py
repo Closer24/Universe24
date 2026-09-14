@@ -11,7 +11,7 @@ For each v0 the probe reports the mean distance of the bodies from the centre
 over time, whether the bodies turned around (recollapse) or left the slab
 (escape), and the speed at which the two regimes separate.
 
-usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks]
+usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic]
 """
 
 import sys
@@ -24,6 +24,8 @@ EMISSION = int(sys.argv[1]) if len(sys.argv) > 1 else 24000
 DENOMINATOR = int(sys.argv[2]) if len(sys.argv) > 2 else 80
 R = int(sys.argv[3]) if len(sys.argv) > 3 else 5
 TICKS = int(sys.argv[4]) if len(sys.argv) > 4 else 60
+# "periodic": a closed universe; nothing escapes and the field accumulates.
+BOUNDARY = sys.argv[5] if len(sys.argv) > 5 else "open"
 SHAPE = [29, 29, 3]
 CENTER = (14, 14, 1)
 AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -46,7 +48,7 @@ def document(v0, emission):
     return {
         "schema_version": 1,
         "model_id": f"four-body-universe-v0-{v0}-v1",
-        "boundary": "open",
+        "boundary": BOUNDARY,
         "shape": SHAPE,
         "slots_per_node": 4,
         "link_ticks": 1,
@@ -123,6 +125,18 @@ def document(v0, emission):
     }
 
 
+def signed_gap(value, origin, size):
+    """Displacement from the centre along one axis, through the nearest image when closed."""
+    gap = value - origin
+    if BOUNDARY == "periodic" and abs(gap) > size // 2:
+        gap -= size if gap > 0 else -size
+    return gap
+
+
+def axis_gap(value, origin, size):
+    return abs(signed_gap(value, origin, size))
+
+
 def positions(world):
     found = {}
     snap = world.snapshot()
@@ -150,8 +164,13 @@ def run(v0, emission):
                 escaped[e["values"]["tag"][0]] = e["tick"]
         found = positions(world)
         if tick % 10 == 0 or tick == 1:
-            distances = [abs(p[0] - CENTER[0]) + abs(p[1] - CENTER[1]) for p, _ in found.values()]
-            radial = [(p[0] - CENTER[0]) * m[0] + (p[1] - CENTER[1]) * m[1] for p, m in found.values()]
+            distances = [
+                sum(axis_gap(p[i], CENTER[i], SHAPE[i]) for i in range(2)) for p, _ in found.values()
+            ]
+            radial = [
+                sum(signed_gap(p[i], CENTER[i], SHAPE[i]) * m[i] for i in range(2))
+                for p, m in found.values()
+            ]
             history.append(
                 (
                     tick,
@@ -178,7 +197,7 @@ def label(history, escaped):
 
 
 if __name__ == "__main__":
-    print(f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}")
+    print(f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, boundary {BOUNDARY}")
     print("control without a field: v0 = 60 ->", label(*run(60, 0)))
     for v0 in (0, 15, 30, 45, 60, 90, 120):
         history, escaped = run(v0, EMISSION)

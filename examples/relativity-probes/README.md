@@ -211,8 +211,20 @@ momentum coupling removes more than 120 units within ten ticks. This is a
 bound, black-hole-like configuration — the escape speed of the four-body
 system exceeds the link speed — and the bodies then oscillate within one or two
 links of their turning radius. The universe here is attraction plus initial
-motion, and the initial motion loses. Weaker fields (emission 2400 and 600)
-are recorded below to locate the critical speed.
+motion, and the initial motion loses. Weaker fields locate the critical speed:
+
+| emission | v0 = 0 | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c | 1 c |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 24000 | recollapse | bound | bound | bound | bound (5 → 6) | bound | bound |
+| 600 (÷40) | falling in | expanding, decelerating (5 → 10 in 60 ticks) | escaped by tick 51 | escaped by 31 | escaped by 22 | escaped by 15 | escaped by 11 |
+
+At emission 600 the critical speed lies between 0.125 c and 0.25 c; forty
+times the emission would put it near 0.8-1.6 c if v_esc² scales with the
+source, which is what the 24000 run shows (nothing escapes at c). So the
+configuration has an ordinary escape speed that grows as the square root of
+the field strength — the Newtonian scaling again, read off a four-body lattice
+universe — and a universe of this kind expands forever only when launched above
+it, decelerating all the way; nothing in it accelerates the expansion.
 
 ## 5. Redshift without recession (`redshift_without_expansion.py`)
 
