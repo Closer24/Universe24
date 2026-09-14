@@ -198,7 +198,8 @@ as implemented laws.
 Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
 [examples/relativity-probes](../examples/relativity-probes/README.md) couples the
 computation field's flux to momentum by configuration. The Newtonian velocity law
-appears exactly, the 1/b lensing law does not (axis-column far field), twin clocks
+appears exactly, the 1/b lensing law does not with the octant far field (axis
+columns; straight rays bring the b = 3/7 ratio from 18 to 5.6), twin clocks
 show no Lorentz dilation, and a localized quantum domain ignores the field's
 delay while a classical carrier on the same path is delayed. These are recorded
 findings of the generic engine, not implemented gravity or relativity.

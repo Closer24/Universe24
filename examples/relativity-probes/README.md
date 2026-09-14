@@ -68,6 +68,85 @@ the relativistic deflection in this engine; that would need the wait itself to
 count as interaction time (a declared coupling choice), or spatial curvature,
 which no lattice quantity represents yet.
 
+### With straight rays instead of octant populations (`... default 30 rays`)
+
+Main's `isotropic-ray-field-v1` (`"transport": "ray"`) moves the field as
+straight rays along integer headings, so the far field is not concentrated on
+the lattice axes. The same probe with the mass emitting rays (4096 golden-spiral
+headings, 512 rays per tick, 47 units per ray, balanced routing, default clock):
+
+| body | b | angle (+ side) | angle (− side) |
+| --- | --- | --- | --- |
+| light | 3 | 0.117 | 0.164 |
+| light | 5 | 0.033 | 0.074 |
+| light | 7 | 0.033 | 0.017 |
+| slow | 3 | 0.397 | 0.385 |
+| slow | 5 | 0.136 | 0.150 |
+| slow | 7 | 0.083 | 0.083 |
+
+- b = 3 / b = 7: light 5.6, slow 4.7 (Newton 2.33) — down from 18 with the
+  octant far field. slow/light at b = 5: 2.7 (Newton 4.0). The remaining
+  scatter is ray quantization: a body meets a whole ray or none, and momentum is
+  exchanged in units of 47/80 with a carried remainder.
+- Two configuration lessons on the way, both about sampling, not physics:
+  512 headings at 64 rays per tick (375 units per ray) left b = 7 without a
+  single hit in 30 ticks; and the golden-spiral index runs pole to pole, so
+  consecutive rays per tick formed one latitude band per tick and the equatorial
+  plane saw rays only in bursts every eight ticks (b = 7 light again at zero
+  while b = 5 outscored b = 3). A stride coprime to the heading count spreads
+  each tick's rays over the sphere and restores the monotonic b-dependence.
+- The ray field activates only the nodes rays cross, so these runs take a
+  fraction of the octant runs' time.
+
+### Seen from the side (`lensing_from_the_side.py`)
+
+A lamp column at x = 2 sends one light body per row past the mass to a column of
+held eyes at x = 34. Each eye is a local observer: it reports only the tick, the
+entry port and the arriving momentum of what lands on its own node, and traces
+the ray back along −p to where the lamp appears to be.
+
+With the default *cyclic* routing every eye still received its own row's light
+at tick 32 through −x, carrying transverse momentum up to (120, ±75, 0) that
+had never turned into transverse motion: cyclic routing walks the raw weight
+cycle, so weights 120:75 spend the first 120 moves on x. That is a transport
+artifact of large momentum scales, not a physical statement; the momentum-based
+angles above are unaffected (they were measured with cyclic routing, bodies
+staying in their rows), positions are. `"routing": "balanced"` reduces the
+weights by their gcd and interleaves lanes (20:3 for (120, 18, 0)). Both
+scripts now default to balanced routing. What the eyes then report:
+
+| eye y | tick | via | arriving p | lamp row | apparent lamp y |
+| --- | --- | --- | --- | --- | --- |
+| 3 | 32 | −x | (120, 4, 0) | 3 | 1.9 |
+| 5 | 33 | −x | (120, 9, 0) | 4 | 2.6 |
+| 6 | 33 | −x | (120, 18, 0) | 5 | 1.2 |
+| 6 | 36 | −x | (120, −37, 0) | 10 | 15.9 |
+| 7 | 34 | −y | (120, 18, 0) | 5 | 2.2 |
+| 9 | 34 | +y | (120, −18, 0) | 11 | 13.8 |
+| 10 | 33 | −x | (120, −18, 0) | 11 | 14.8 |
+| 10 | 36 | −x | (120, 37, 0) | 6 | 0.1 |
+| 1 | 40 | −x | (119, −74, 0) | 9 | 20.9 |
+| 15 | 40 | −x | (119, 74, 0) | 7 | −4.9 |
+
+Without the mass every eye sees its own row at tick 32. With it, from the eye's
+own node alone: light arrives later (33-40 ticks, the bent path is longer),
+sometimes through a ±y port, the traced-back lamp is displaced away from the
+mass (row 5 appears at 1.2, row 11 at 14.8), rows 6/7 and 9/10 cross the axis
+and land on the far side, and an eye at y = 6 or y = 10 receives two images at
+different ticks from opposite sides of the mass. Everything here is what a
+local observer can know: arrival tick, entry port and the arriving record. The
+lamp-position inference is the observer's own post-processing, not engine
+state.
+
+With the ray field (`... 24000 80 rays`) the eyes see the same signature
+without the axis structure: every row's traced-back lamp is displaced away from
+the mass, monotonically from the outer rows inward (row 1 → 0.5, row 2 → 1.2,
+row 4 → 1.1, row 5 → 1.8; row 11 → 14.7, row 13 → 13.8, row 14 → 15.3,
+row 15 → 16.1), arrivals are late (33-36) and cross-overs land on the far side
+(row 10 → eye 6 and 7, row 6 → eye 9). Rows 7 and 9 (b = 1) reach no eye: they
+pass through the mass node and leave the plane. The isotropic field lenses the
+outer rows too, which the octant field could not.
+
 ## 2. Twin clocks (`twins_dilation.py`, `observer_twins.py`)
 
 A traveller (momentum 30..120 out of 120) goes to a mirror 12 links away and

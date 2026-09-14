@@ -517,7 +517,10 @@ charge). Findings, each a branch result and not a law:
   exactly (a body at c/2 deflects four times more than light at the same impact
   parameter) but not the 1/b law: the lattice far field along an axis column
   falls faster than 1/r² under `"straight"` allocation phases (b = 3/7 ratio 18
-  instead of 2.33).
+  instead of 2.33). With the mass emitting straight rays
+  (`isotropic-ray-field-v1`, headings spread over the sphere every tick) the
+  ratio falls to 5.6 for light and 4.7 for the slow body, symmetric on both
+  sides; the remainder is ray quantization, not axis structure.
 - Under 4.4: with the load defined as the stock present at a node, the source
   node's own emission is its own load, so a strong source throttles itself and
   the far field never forms under the shared clock. The directional delay does

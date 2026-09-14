@@ -23,11 +23,38 @@ LAMP_X, EYE_X = 2, 34
 EMISSION = int(sys.argv[1]) if len(sys.argv) > 1 else 24000
 DENOMINATOR = int(sys.argv[2]) if len(sys.argv) > 2 else 80
 TICKS = 40
+RAYS = len(sys.argv) > 3 and sys.argv[3] == "rays"
 PORT = {0: "+x", 1: "-x", 2: "+y", 3: "-y", 4: "+z", 5: "-z"}
 
 
 def op(name, *args):
     return {"op": name, "args": list(args)}
+
+
+def computation_definition():
+    if RAYS:
+        from pathlib import Path
+
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        saved, sys.argv = sys.argv, sys.argv[:1]  # gravity_lensing parses its own argv
+        from gravity_lensing import (
+            RAY_HEADINGS,
+            RAY_SCALE,
+            RAY_SLOTS,
+            RAYS_PER_TICK,
+            golden_headings,
+        )
+
+        sys.argv = saved
+        return {
+            "field": "computation",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+            "rays_per_tick": RAYS_PER_TICK,
+            "ray_slots": RAY_SLOTS,
+        }
+    return {"field": "computation", "baseline": 0, "transport": "outward"}
 
 
 def document(emission):
@@ -40,7 +67,6 @@ def document(emission):
         "link_ticks": 1,
         "normal_budget": 1_000_000,
         "ticks": TICKS,
-        "computation_field": "computation",
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
             {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
@@ -87,11 +113,16 @@ def document(emission):
                     "direction_field": "momentum",
                     "rate": op("min", 120, op("sum", op("abs", {"field": "momentum"}))),
                     "rate_denominator": 120,
+                    # Cyclic routing walks the raw weight cycle (120 moves along x
+                    # before the first along y); balanced routing reduces the
+                    # weights by their gcd and interleaves lanes, so a body with
+                    # momentum (120, 18, 0) actually drifts as 20:3.
+                    "routing": "balanced",
                 },
             },
         ],
         "spatial_fields": [
-            {"field": "computation", "baseline": 0, "transport": "outward"},
+            computation_definition(),
             {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
         ],
         "emissions": [

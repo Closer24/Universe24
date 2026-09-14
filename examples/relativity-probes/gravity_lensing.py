@@ -32,13 +32,58 @@ BUDGET = int(sys.argv[3]) if len(sys.argv) > 3 else 60
 # first run with -1 pushed every body away); the sign is supplied, not derived.
 SIGN = int(sys.argv[4]) if len(sys.argv) > 4 else 1
 TICKS = int(sys.argv[6]) if len(sys.argv) > 6 else 30
+# "rays": the mass emits straight rays (isotropic-ray-field-v1) instead of octant
+# populations, so the far field is not concentrated on the lattice axes.
+RAYS = len(sys.argv) > 7 and sys.argv[7] == "rays"
 BODIES = {"light": 120, "slow": 60}  # momentum along x; mass 1, so speed = p/120 c
+# 512 headings at 64 rays per tick gave 375 units per ray: a body at b = 7 met no
+# ray in 30 ticks and b = 5 outscored b = 3. Finer quanta (47 units per ray, 512
+# rays per tick over 4096 headings) sample the sphere densely enough per node.
+RAY_HEADINGS, RAY_SCALE, RAYS_PER_TICK, RAY_SLOTS = 4096, 24, 512, 4096
 
 
 def op(name, *args, **kw):
     node = {"op": name, "args": list(args)}
     node.update(kw)
     return node
+
+
+def golden_headings(count, scale):
+    """Integer headings spread evenly over the sphere (configuration data only)."""
+    import math
+
+    ratio = (1 + 5**0.5) / 2
+    result = []
+    for i in range(count):
+        z = 1 - 2 * (i + 0.5) / count
+        radius = math.sqrt(1 - z * z)
+        angle = 2 * math.pi * i / ratio
+        heading = [
+            round(scale * radius * math.cos(angle)),
+            round(scale * radius * math.sin(angle)),
+            round(scale * z),
+        ]
+        result.append(heading if any(heading) else [scale, 0, 0])
+    # The spiral index runs from the north pole to the south pole, so consecutive
+    # rays_per_tick headings would form one latitude band per tick and the
+    # equatorial plane would see rays only in bursts. A stride coprime to the
+    # count spreads every tick's rays over the whole sphere (still a fixed,
+    # deterministic sequence).
+    stride = 1597
+    return [result[(i * stride) % count] for i in range(count)]
+
+
+def computation_definition():
+    if RAYS:
+        return {
+            "field": "computation",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+            "rays_per_tick": RAYS_PER_TICK,
+            "ray_slots": RAY_SLOTS,
+        }
+    return {"field": "computation", "baseline": 0, "transport": "outward"}
 
 
 def body(name, momentum):
@@ -51,6 +96,9 @@ def body(name, momentum):
             "direction_field": "momentum",
             "rate": op("min", 120, op("sum", op("abs", {"field": "momentum"}))),
             "rate_denominator": 120,
+            # Balanced routing interleaves lanes by the reduced weight ratio;
+            # the default cyclic walk would spend 120 moves on x first.
+            "routing": "balanced",
         },
     }
 
@@ -81,7 +129,6 @@ def document(clock, emission=EMISSION):
         "link_ticks": 1,
         "normal_budget": BUDGET if clock == "shared" else 1_000_000,
         "ticks": TICKS,
-        "computation_field": "computation",
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
             {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
@@ -121,7 +168,7 @@ def document(clock, emission=EMISSION):
             *(body(kind, momentum) for kind, momentum in BODIES.items()),
         ],
         "spatial_fields": [
-            {"field": "computation", "baseline": 0, "transport": "outward"},
+            computation_definition(),
             {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
         ],
         "emissions": [
@@ -146,6 +193,9 @@ def document(clock, emission=EMISSION):
         ],
         "seeds": seeds,
     }
+    if clock != "default":
+        # Only the delay modes read the field as computation load (outward only).
+        doc["computation_field"] = "computation"
     if clock == "shared":
         doc["spatial_computation_delay"] = True
     elif clock in ("along", "against"):
@@ -179,7 +229,10 @@ def run(clock, emission=EMISSION):
 
 def report(clock, emission=EMISSION):
     tags, final, total, delays = run(clock, emission)
-    print(f"\n=== clock {clock}, emission {emission}, denominator {DENOMINATOR}, budget {BUDGET} ===")
+    print(
+        f"\n=== clock {clock}, field {'rays' if RAYS else 'octants'}, emission {emission}, "
+        f"denominator {DENOMINATOR}, budget {BUDGET} ==="
+    )
     print(f"momentum total (carriers + field): {total}; carrier nodes by delay count: {delays}")
     angles = {}
     for tag, (kind, b, side) in tags.items():
