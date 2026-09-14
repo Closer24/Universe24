@@ -53,7 +53,8 @@ internal and the audit stays closed. An `absorb` coupling is the reverse
 transfer, of a whole ray or of a share of it. Quanta may be negative on a signed
 field: the emitter is then credited, the ray's momentum points back at it, and
 the absorber pays the share it takes from its own stock, so attraction closes
-the same way. Unfunded `source: true` emissions remain rejected.
+the same way. A Kerengonen phase changes what is absorbed and sampled, never
+the amounts the audit sums. Unfunded `source: true` emissions remain rejected.
 These restrictions describe supported measurement composition, not a claim that
 the excluded physics is impossible.
 

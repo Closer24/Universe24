@@ -308,7 +308,11 @@ Signed quanta are the attraction hypothesis under test: a source emits negative
 quanta paid into its own stock, a body absorbs a share proportional to its mass
 and pays for the momentum it gains toward the source. Energy and momentum stay
 exact at every event; no gravitational constant is derived, and a source's stock
-rises by what it emits.
+rises by what it emits. Kerengonen phased rays are the interference hypothesis:
+a ray carries a phase that advances per link, rays that meet combine by phase,
+and the coherence gates what is absorbed and sampled while every quantum stays
+whole and accounted for. Quanta that cancel continue; whether that is the right
+place for them is the question the candidate is meant to test.
 
 ## 12. Quantum behavior and entanglement remain open
 

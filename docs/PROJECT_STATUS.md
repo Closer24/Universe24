@@ -167,6 +167,10 @@ with that audit closed. The
 where the finite quantum rules meet these classical ones: a dephased walk is the
 classical random walk exactly, single ray quanta click whole and average to the
 inverse square, and repeated capture attempts follow the geometric decay law.
+The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+(`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
+coherence gates absorption and sampling, and two sources in phase give a fringe
+in Manhattan path difference; the plain ray field is unchanged without the key.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

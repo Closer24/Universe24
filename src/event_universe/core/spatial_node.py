@@ -44,6 +44,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     attenuate_rays,
+    coherent_stock,
     merge_rays,
     ray_stock,
     validate_rays,
@@ -248,7 +249,9 @@ class SpatialNode(SpatialNodeState):
             zip(services.initial.spatial_fields, self.states, strict=True)
         ):
             if definition.rays and index < len(self.rays) and self.rays[index]:
-                populations = (pack((ray_stock(self.rays[index]),)),) + state.populations[1:]
+                populations = (
+                    pack((coherent_stock(self.rays[index], definition),)),
+                ) + state.populations[1:]
                 result.append(replace(state, populations=populations))
             else:
                 result.append(state)
@@ -503,6 +506,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         notifications: list[dict[str, object]] = []
         cause = self._event(
             "spatial_cycle",
@@ -761,6 +766,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         services.accounting.record_reactions(reaction)
 
     def validate_guards(

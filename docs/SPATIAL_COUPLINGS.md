@@ -51,7 +51,12 @@ negative share is paid from the record's stock and never beyond it: the clipped
 remainder continues as a ray. One ray field is either absorbed or exchanged and
 rotated, never both. Absorb runs inside the spatial plan before forwarding,
 needs no response law, and is described with funded emission in
-[SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#funded-emission-and-absorption).
+[SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#funded-emission-and-absorption). On a
+[Kerengonen field](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+every share is further scaled by the coherence of the rays resident at the
+Node, so opposite phases are not absorbed and pass on; with the field's
+`"capture": "lottery"` the record instead takes each whole ray or nothing,
+by a local ticket drawn against that share.
 
 ## Exchange and rotation
 

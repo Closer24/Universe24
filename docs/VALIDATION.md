@@ -1812,3 +1812,47 @@ rest; a ray field is absorbed or exchanged, never both.
 The source's stock rises by what it emits, and a radial fall through the
 lattice `r = 1` singularity escapes at the speed cap: both are properties of
 this candidate, recorded rather than corrected.
+
+## Kerengonen phased rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. The optional `kerengonen`
+key on a ray field gives every ray a phase step that advances per link; rays
+merge only with equal phase, and the coherence of the rays resident at a Node,
+from a fixed-point integer cosine table, gates the sampled value and the
+absorbed share. Amounts are never changed by phase. Funded emission and
+absorption are now booked as field reactions, so the runner's per-tick
+accounting balances for them.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,355 tests with five visualization skips; the integer audit of physical modules passes with the fixed-point cosine table |
+| New tests | `tests/test_kerengonen.py`: phase advance and wrap, merge by phase, exact coherence at equal, opposite and quarter phases, the two-lamp line reading 4, 0, 4, 0, 4 against a plain 4 everywhere with the audit closed, coherence-gated absorption (4 then nothing at the dark Node, 20 at the bright one, 20 at the dark one with a half-turn offset), runner identity `kerengonen-ray-field-v1`, six validation rejections, and the double-slit probe's composition and closure |
+| Double slit | 31 x 31 x 3 open world, lamps at y = -3 and +3, 59 planar headings, 16 quanta per ray, 8 phase steps, 48 ticks: screen absorption 928 at the center, 704 at a quarter turn, 64 at a half turn, about one half in the wings, against a plain 928, 1376, 928; a half-turn offset on the second lamp inverts the even Nodes (0 at the center, 928 at y = +-2); quanta closed in all three worlds |
+| Audited world | 8 headings, 24 ticks, five-Node screen: 1,280,412 Node events with zero residual, 160 quanta absorbed in phase at the center, energy 5,632 plus 512 escaped against 6,144 initial, momentum (-2112, 0, 0) against (2112, 0, 0) escaped |
+| Unchanged | The plain ray field, the gravity, particle, radiation-pressure and quantum-to-classical probes keep their results without the key |
+| Visualization | Not requested or generated |
+
+Quanta that cancel are not redistributed; they continue and escape. That is the
+candidate's open question, recorded in `POSTULATES.md`.
+
+## Kerengonen lottery capture — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. `kerengonen.capture`
+selects how an absorber takes a ray: `share` (the coherent share of the
+amount, truncated toward zero) or `lottery` (the whole ray or nothing, drawn by
+a local ticket seeded by `capture_seed` and salted by the ray met). The ticket
+state is a record row, `absorb_tickets`; the same seed and rays repeat the same
+clicks.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,357 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: the ticket rule and its bound; in-phase and dark Nodes take 18 and 2 quanta exactly like the share rule; at a quarter turn two seeds take between 2 and 16 whole single quanta where the share rule takes 2, with the audit closed on 800 quanta; unknown capture, a seed without the lottery and a seed at the modulus rejected |
+| Single-quantum double slit | 96 ticks, one quantum per ray, two seeds: 154 at the center, 4 at the half turn and 152 at a one-lamp Node for both seeds and for the share rule; 127 to 135 at the quarter turn and 60 to 121 in the wings for the lottery against 2 to 6 for the share rule; absorbed totals 2,354 for either seed against 578; quanta closed in all three worlds |
+| Unchanged | With `capture` absent the share rule and every earlier result stand |
+| Visualization | Not requested or generated |
+
+At full or zero coherence the lottery and the share rule are the same law; at
+partial coherence the lottery turns the coherent share into a click rate on
+whole quanta. The ticket is a configured local sequence, not a claim about
+physical randomness.

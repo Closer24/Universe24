@@ -66,6 +66,8 @@ class Ray:
     heading: int
     accumulators: tuple[int, int, int]
     amount: int
+    # Kerengonen fields only: the ray's phase step, advanced on every link.
+    phase: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -87,10 +89,23 @@ class SpatialFieldDefinition:
     # Ray transport only: an emitting record that departs subtracts its own rays
     # from the flux it samples at the next Node, using only its own bookkeeping.
     self_exclusion: bool = False
+    # Kerengonen (phased rays) only: the number of phase steps in one cycle and
+    # the steps a ray advances on every link. Zero steps is the plain ray field.
+    phase_steps: int = 0
+    phase_advance: int = 0
+    # Kerengonen only: how an absorber takes a ray. "share" takes the coherent
+    # share of its amount; "lottery" takes the whole ray or nothing, decided by a
+    # local ticket whose probability is that share.
+    capture: str = "share"
+    capture_seed: int = 0
 
     @property
     def rays(self) -> bool:
         return self.transport == "ray"
+
+    @property
+    def kerengonen(self) -> bool:
+        return self.phase_steps > 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -161,6 +176,10 @@ class EmissionDefinition:
     # and subtract the emitted rays' amount x heading from an owned vector field.
     funded: bool = False
     recoil_field: int | None = None
+    # Kerengonen fields only: the phase step every emitted ray starts with, or,
+    # when carried, the phase of what the record last absorbed plus one advance.
+    phase: int = 0
+    phase_carried: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -283,6 +302,9 @@ class SpatialPlan:
     rays: tuple[tuple[Rays, ...], ...] = ()
     # Per port, per field, eight carried allocation phases; empty under node-owned phases.
     outgoing_phases: tuple[SpatialBundle, ...] = ()
+    # Funded emission minus absorption per field: stock that moved between a
+    # record and its field, booked as a reaction, never as a source.
+    transfer_delta: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -340,27 +362,37 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         if bounded(ray.amount) == 0:
             raise ValueError("a resident ray must carry a nonzero amount")
         field.validate(pack((ray.amount,)))
+        if type(ray.phase) is not int or not 0 <= ray.phase < max(definition.phase_steps, 1):
+            raise ValueError("ray phase must index the field's phase steps")
 
 
-def advance_ray(ray: Ray, heading: Heading) -> tuple[int, Ray]:
-    """Choose the port of the axis furthest behind the heading; ties take the lowest axis."""
+def advance_ray(
+    ray: Ray, heading: Heading, phase_steps: int = 0, phase_advance: int = 0
+) -> tuple[int, Ray]:
+    """Choose the port of the axis furthest behind the heading; ties take the lowest axis.
+
+    A Kerengonen ray also advances its phase by the field's steps per link.
+    """
     length = validate_heading(heading)
     accumulators = [a + abs(h) for a, h in zip(ray.accumulators, heading, strict=True)]
     axis = max(range(3), key=lambda i: (accumulators[i], -i))
     accumulators[axis] -= length
     port = 2 * axis + (0 if heading[axis] > 0 else 1)
-    return port, replace(ray, accumulators=(accumulators[0], accumulators[1], accumulators[2]))
+    phase = (ray.phase + phase_advance) % phase_steps if phase_steps else ray.phase
+    return port, replace(
+        ray, accumulators=(accumulators[0], accumulators[1], accumulators[2]), phase=phase
+    )
 
 
 def merge_rays(rays: Rays) -> Rays:
-    """Combine rays that share heading and phase; they follow one line, so this is exact."""
-    combined: dict[tuple[int, tuple[int, int, int]], int] = {}
+    """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
+    combined: dict[tuple[int, tuple[int, int, int], int], int] = {}
     for ray in rays:
-        key = (ray.heading, ray.accumulators)
+        key = (ray.heading, ray.accumulators, ray.phase)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount))
-        for (heading, accumulators), amount in sorted(combined.items())
+        Ray(heading, accumulators, bounded(amount), phase)
+        for (heading, accumulators, phase), amount in sorted(combined.items())
         if amount
     )
 
@@ -385,3 +417,156 @@ def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tupl
         if kept:
             survivors.append(replace(ray, amount=kept))
     return tuple(survivors), bounded(removed)
+
+
+# Kerengonen rules. A ray carries a phase step; rays that meet at a Node combine
+# by phase. Coherence is |sum a e^(i phi)|^2 / (sum |a|)^2 in bounded integers:
+# a fixed cosine table over phase differences, scaled by PHASE_COSINE_SCALE, so
+# equal phases give exactly one and opposite phases of equal amounts exactly zero.
+
+MAX_PHASE_STEPS = 4096
+PHASE_COSINE_SCALE = 256
+# pi in fixed point: integer arithmetic only, as every physical module requires.
+_PI_FIXED = 314159265358979323846264338327950288
+_FIXED = 10**35
+_COSINE_TABLES: dict[int, tuple[int, ...]] = {}
+
+
+def _fixed_cosine(angle: int) -> int:
+    """cos of a fixed-point angle in [0, pi/2], scaled by _FIXED, by its series."""
+    magnitude, total, k, sign = _FIXED, 0, 0, 1
+    while magnitude:
+        total += sign * magnitude
+        k += 2
+        magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
+        sign = -sign
+    return total
+
+
+def _fixed_sine(angle: int) -> int:
+    """sin of a fixed-point angle in [0, pi/2], scaled by _FIXED, by its series."""
+    magnitude, total, k, sign = angle, 0, 1, 1
+    while magnitude:
+        total += sign * magnitude
+        k += 2
+        magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
+        sign = -sign
+    return total
+
+
+_SINE_TABLES: dict[int, tuple[int, ...]] = {}
+
+
+def phase_sines(phase_steps: int) -> tuple[int, ...]:
+    """Scaled sine of every phase step, the companion of phase_cosines."""
+    phase_cosines(phase_steps)
+    table = _SINE_TABLES.get(phase_steps)
+    if table is None:
+        entries = []
+        for step in range(phase_steps):
+            reduced = step if 2 * step <= phase_steps else phase_steps - step
+            angle = 2 * _PI_FIXED * reduced // phase_steps
+            if 4 * reduced > phase_steps:
+                angle = _PI_FIXED - angle
+            scaled = (_fixed_sine(angle) * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
+            entries.append(scaled if 2 * step <= phase_steps else -scaled)
+        table = tuple(entries)
+        _SINE_TABLES[phase_steps] = table
+    return table
+
+
+def phase_of_sum(terms: tuple[tuple[int, int], ...], phase_steps: int) -> int:
+    """The phase step nearest the direction of sum a e^(i phi): the best projection.
+
+    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
+    """
+    cosines, sines = phase_cosines(phase_steps), phase_sines(phase_steps)
+    x = y = 0
+    for amount, phase in terms:
+        x = checked_work(x + amount * cosines[phase % phase_steps])
+        y = checked_work(y + amount * sines[phase % phase_steps])
+    best, best_projection = 0, None
+    for step in range(phase_steps):
+        projection = checked_work(x * cosines[step] + y * sines[step])
+        if best_projection is None or projection > best_projection:
+            best, best_projection = step, projection
+    return best
+
+
+def phase_cosines(phase_steps: int) -> tuple[int, ...]:
+    """Scaled cosine of every phase difference; immutable law data, computed once.
+
+    cos(2 pi d / P) x 256, rounded to the nearest integer. The only rational
+    values on that circle are 0, +-1/2 and +-1, so no entry is a half-integer.
+    """
+    if type(phase_steps) is not int or not 2 <= phase_steps <= MAX_PHASE_STEPS:
+        raise ValueError("kerengonen phase_steps must be between 2 and 4096")
+    table = _COSINE_TABLES.get(phase_steps)
+    if table is None:
+        entries = []
+        for difference in range(phase_steps):
+            reduced = min(difference, phase_steps - difference)
+            angle = 2 * _PI_FIXED * reduced // phase_steps
+            flip = 4 * reduced > phase_steps
+            if flip:
+                angle = _PI_FIXED - angle
+            cosine = _fixed_cosine(angle)
+            scaled = (cosine * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
+            entries.append(-scaled if flip else scaled)
+        table = tuple(entries)
+        _COSINE_TABLES[phase_steps] = table
+    return table
+
+
+def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]:
+    """Numerator and denominator of the coherent fraction of one Node's rays, in [0, 1]."""
+    if not definition.kerengonen or not rays:
+        return (1, 1)
+    steps = definition.phase_steps
+    cosines = phase_cosines(steps)
+    by_phase: dict[int, int] = {}
+    magnitude = 0
+    for ray in rays:
+        by_phase[ray.phase] = checked_work(by_phase.get(ray.phase, 0) + ray.amount)
+        magnitude = checked_work(magnitude + abs(ray.amount))
+    numerator = 0
+    for phase, amount in by_phase.items():
+        for other, other_amount in by_phase.items():
+            numerator = checked_work(
+                numerator + checked_work(amount * other_amount) * cosines[(phase - other) % steps]
+            )
+    denominator = checked_work(checked_work(magnitude * magnitude) * PHASE_COSINE_SCALE)
+    return (min(max(numerator, 0), denominator), denominator)
+
+
+CAPTURE_MODES = ("share", "lottery")
+TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
+
+
+def next_ticket(state: int, salt: int) -> int:
+    """Advance a local ticket state: a multiplicative congruence salted by the ray met."""
+    if not 0 <= state < TICKET_MODULUS:
+        raise ValueError("absorb ticket state must stay below the ticket modulus")
+    return (state * 48271 + salt + 1) % TICKET_MODULUS
+
+
+def ray_salt(ray: Ray) -> int:
+    """A bounded integer that differs between rays of different line, phase or amount."""
+    return (
+        ray.heading * 7919
+        + ray.accumulators[0] * 104729
+        + ray.accumulators[1] * 1299709
+        + ray.accumulators[2] * 15485863
+        + ray.phase * 32452843
+        + abs(ray.amount)
+    ) % TICKET_MODULUS
+
+
+def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The stock a reader sees: the ray total scaled by the Node's coherence, toward zero."""
+    total = ray_stock(rays)
+    numerator, denominator = coherence(rays, definition)
+    if numerator == denominator:
+        return total
+    magnitude = checked_work(abs(total) * numerator) // denominator
+    return bounded(-magnitude if total < 0 else magnitude)

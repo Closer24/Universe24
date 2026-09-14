@@ -44,9 +44,12 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
+    CAPTURE_MODES,
     DECAY_RESIDUES,
     MAX_HEADINGS,
+    MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    TICKET_MODULUS,
     DecayDefinition,
     EmissionDefinition,
     FieldAssignment,
@@ -890,7 +893,7 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
-            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion"}
+            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion", "kerengonen"}
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -909,8 +912,32 @@ def _spatial_fields(
             raise ValueError("local spatial transport requires schema_version 1")
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
         self_exclusion = False
+        phase_steps, phase_advance = 0, 0
+        capture, capture_seed = "share", 0
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
+            if "kerengonen" in obj:
+                # Kerengonen: phased rays. Both keys are required and explicit.
+                phased = _object(
+                    obj["kerengonen"],
+                    "kerengonen",
+                    {"phase_steps", "phase_advance", "capture", "capture_seed"},
+                    {"phase_steps", "phase_advance"},
+                )
+                capture = _text(phased.get("capture", "share"), "kerengonen.capture")
+                if capture not in CAPTURE_MODES:
+                    raise ValueError("kerengonen.capture must be share or lottery")
+                capture_seed = _integer(phased.get("capture_seed", 0), "kerengonen.capture_seed", 0)
+                if capture_seed >= TICKET_MODULUS:
+                    raise ValueError("kerengonen.capture_seed must be below the ticket modulus")
+                if capture == "share" and "capture_seed" in phased:
+                    raise ValueError("kerengonen.capture_seed requires the lottery capture")
+                phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
+                if phase_steps > MAX_PHASE_STEPS:
+                    raise ValueError("kerengonen phase_steps must be between 2 and 4096")
+                phase_advance = _integer(phased["phase_advance"], "kerengonen.phase_advance", 0)
+                if phase_advance >= phase_steps:
+                    raise ValueError("kerengonen phase_advance must be below phase_steps")
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -931,9 +958,9 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif (ray_keys | {"self_exclusion"}) & obj.keys():
+        elif (ray_keys | {"self_exclusion", "kerengonen"}) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots and self_exclusion require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion and kerengonen require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -962,6 +989,10 @@ def _spatial_fields(
                 rays_per_tick,
                 ray_slots,
                 self_exclusion,
+                phase_steps,
+                phase_advance,
+                capture,
+                capture_seed,
             )
         )
     return tuple(result)
@@ -980,7 +1011,16 @@ def _emissions(
         obj = _object(
             raw,
             "emission",
-            {"type", "requires", "field", "amount", "denominator", "source", "recoil_field"}
+            {
+                "type",
+                "requires",
+                "field",
+                "amount",
+                "denominator",
+                "source",
+                "recoil_field",
+                "kerengonen_phase",
+            }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
         )
@@ -1003,6 +1043,18 @@ def _emissions(
             recoil = _index(obj["recoil_field"], _names(fields), "emission.recoil_field")
             if recoil not in owned or fields[recoil].components != 3 or not fields[recoil].signed:
                 raise ValueError("recoil_field must be a signed vector owned by the emitting type")
+        phase, carried = 0, False
+        if "kerengonen_phase" in obj:
+            if not spatial[index].kerengonen:
+                raise ValueError("kerengonen_phase requires a kerengonen ray field")
+            if obj["kerengonen_phase"] == "carried":
+                # The phase of what the emitter last absorbed; checked against the
+                # absorb rules once every spatial coupling is parsed.
+                carried = True
+            else:
+                phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
+                if phase >= spatial[index].phase_steps:
+                    raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1024,6 +1076,8 @@ def _emissions(
                 kinds if "requires" in obj else (),
                 not source,
                 recoil,
+                phase,
+                carried,
             )
         )
     return tuple(result)
@@ -1558,6 +1612,14 @@ def parse_initial_state(document: object) -> InitialState:
         from .integration.event_program import parse_event_program
 
         parse_event_program(initial)
+    for rule in initial.emissions:
+        if rule.phase_carried and not any(
+            coupling.mode == "absorb"
+            and coupling.field == initial.spatial_fields[rule.spatial_field].field
+            and set(selected_types(coupling)) & set(selected_types(rule))
+            for coupling in initial.spatial_couplings
+        ):
+            raise ValueError("a carried kerengonen_phase requires an absorb rule on the same field")
     _validate_conversions(initial)
     if "conservation" in obj:
         initial = replace(initial, conservation=_conservation(obj["conservation"], initial))
