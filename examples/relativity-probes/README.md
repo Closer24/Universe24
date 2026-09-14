@@ -337,6 +337,49 @@ below the distance a free body covers in the run — which is the general point:
 in a closed Universe24 "escape" does not exist, only the size of the box
 against the launch speed and the accumulating field.
 
+### A compressed third dimension (`... 50 periodic rays 61`)
+
+The hypothesis: dark matter is what a 1/r² law looks like when the far
+region is represented with one dimension fewer. The test needs nothing new:
+the same reservoir coupling and ray field as the 3D sweep, in a 61 × 61 × 3
+box that is periodic — closed in z, so the field cannot leave the plane and
+spreads in two dimensions — with the box wide enough that no body meets its
+image in 50 ticks (the field-free control at 0.5 c reaches its free path,
+28-30 links, with nothing turning around).
+
+| R | 0 | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c | c |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 3 | recollapse → 0.5 | turned at 4.2 | 7.5 (free 15.5) | 10.5 (free 21.8) | 13.8 (free 28) | 22.5 (free 40.5) | 29.5 (free 53) |
+| 5 | recollapse → 4 | 7.2 (free 11.3) | 10.0 (free 17.5) | 12.8 (free 23.8) | 16.0 (free 30) | 24.0 (free 42.5) | half-box |
+| 9 | at rest | 11.2 (free 15.3) | 14.0 (free 21.5) | 16.5 (free 27.8) | 19.8 (free 34) | 27.8 (half-box) | half-box |
+
+Read the loss against the free path:
+
+| launch | loss from R = 3 | from R = 5 | from R = 9 |
+| --- | --- | --- | --- |
+| 0.25 c | 8.0 | 7.5 | 7.5 |
+| 0.375 c | 11.3 | 11.0 | 11.3 |
+| 0.5 c | 14.2 | 14.0 | 14.2 |
+
+The momentum lost along an outward path is the same from R = 3, 5 and 9. In
+the open 3D box the same coupling and the same ray field gave a critical speed
+falling as 1/√R (Newton, ×2 between R = 3 and 9); for a 1/r² force the loss
+along an outward path scales as 1/R, so R = 9 should have lost three times
+less than R = 3. A loss independent of the starting radius means a force whose
+outward integral does not depend on where the body starts — at least as flat
+as the logarithmic potential of two-dimensional gravity, i.e. a flat rotation
+curve, and by this measure flatter. Nothing in the law changed between the two
+sweeps; only the third dimension was closed. What remains to pin the exponent
+is a direct force reading (held bodies at several radii in the slab, as in
+main's gravity probe) rather than an integrated loss.
+
+Taken together with probe 6, this is the model's own answer to dark matter:
+the same 1/r² transport looks Newtonian in three open dimensions and flat when
+one dimension is closed or compressed. Whether real galaxies' far fields are
+carried in a lower-dimensional representation is a hypothesis this lattice
+cannot decide; what it can say is that the flat curve needs no extra mass
+here, only a change in how the far region is represented.
+
 ### Four masses on Kerengonen signed quanta (`kerengonen_universe.py`)
 
 The same radius sweep with every mass a funded source of negative quanta
@@ -439,9 +482,14 @@ field (stock creating stock, a "field gravitates" rule) either decays away
 (Yukawa, steeper) or grows without bound; neither is a 1/r force. The
 unlocalized quantum sector is the opposite of dark matter: it neither attracts
 nor falls (probe 3). The escape-speed-against-radius sweep in probe 4 is the
-model's own rotation-curve test and comes out Newtonian (v_esc ∝ 1/√R within
-resolution, if anything steeper); a flat rotation curve in this model would
-require an explicitly extended source, which is dark matter by another name.
+model's own rotation-curve test and comes out Newtonian in three open
+dimensions (v_esc ∝ 1/√R within resolution) — and flat when the third
+dimension is closed: in the 61 × 61 × 3 periodic slab the momentum lost along
+an outward path is the same from R = 3, 5 and 9 under the identical coupling.
+So the model does have a dark-matter substitute, and it is not extra mass: a
+1/r² law whose far field is represented in one dimension fewer. That is a
+representation hypothesis about galaxies, not a derivation; the lattice shows
+only that the flat curve follows from the compression alone.
 
 ## What these probes do not show
 
