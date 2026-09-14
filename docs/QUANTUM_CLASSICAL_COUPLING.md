@@ -35,6 +35,7 @@ records, with exact integers on the canonical runner:
 | Classical field emitted at the source Node after recombination | integer floor of `25 (337 + 288 cos phi)/625` with carried remainder: 25, 13.5, 2, 13.5 per tick |
 | Same experiment with a held detector on one arm | the arm decision is `[9, 16]` for every `phi`; the output detector never receives a nonzero capture weight |
 | Cancellation after a capture two Links away | the source Node emits once more and then stops |
+| Opt-in [funded emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission): the wave pays for its field from its own stock | totals constant at 3000 with zero sources while the wave is live; 211 units paid into the field over fourteen ticks; after a capture the localized record holds the unspent stock and keeps paying; the only external term is the one retarded emission after the capture |
 | An external classical field on one arm with the opt-in [field phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase) | coil fields 0, 200, 400, 800 select phase exponents 0, 0, 1, 2 and move the capture probability from 0 to `576/3125` and `9216/15625`; the same field beside the far side of the source moves nothing |
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
@@ -107,8 +108,12 @@ natural next measurement.
   tick, an Aharonov-Bohm-like coupling. The field is not changed by the wave
   except through emission, no momentum or energy passes between them, and
   the coupling ratio `unit / vacuum` is configured, not derived.
-- **Not energy closure.** Field emission draws from finite configured
-  allowances; there is no field-plus-matter energy that is conserved.
+- **Energy closure holds for the emission side only.** With funded emission
+  the field is paid from the wave's own conserved stock, totals stay constant
+  and the localized winner inherits the remainder; the retarded emission
+  after a remote capture is the measured residual. The stock is bookkept by
+  the quantum owner, not transported between modes, and the field returns
+  nothing to it: absorption of the octant field by the wave is not modeled.
 - **Not a continuum or asymptotic result.** Every table is a finite lattice at
   a finite number of ticks.
 - **Not quantum electrodynamics, gravity, spin, statistics or many-body
@@ -164,10 +169,9 @@ integer realization, not any of the parts.
    excitations or entangled registers converge to the conditional weights, or
    a proof that no such rule exists. The single-excitation case is closed by
    the null notice above; the general case is the largest open gap.
-2. Back-action with a stated conserved quantity: the field phase above shifts
-   the fringe but transfers nothing to the field. A rule in which the field
-   loses what the wave gains, checked by the same interference experiment, is
-   the next step.
+2. The return path: the field now costs the wave what it emits, but nothing
+   flows back. An absorption rule for the octant field by the wave, checked by
+   the same interference experiment, would close the loop.
 3. A classical-limit experiment: increasing amplitude scale or instrument rate
    and measuring convergence of capture statistics to the classical lattice
    dynamics of a localized record.

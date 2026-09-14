@@ -4,12 +4,16 @@ from collections.abc import Mapping
 from dataclasses import replace
 from types import MappingProxyType
 
+from event_universe.core.coupling_selectors import selected_types
 from event_universe.core.disturbance_state import (
     Address3,
     DisturbanceRecord,
     InitialState,
     LocalPlan,
+    Values,
     bounded,
+    pack,
+    unpack,
 )
 from event_universe.core.event_resolution import FieldValues, LocalContext, Planner
 from event_universe.core.event_space import CausalEventSpace
@@ -41,6 +45,22 @@ class CausalContactResolver(ContactEventResolver):
         super().__init__(initial, program, events)
         assert program.contacts is not None
         self._null_notices = program.contacts.null_notices
+        # Funded envelope emission per domain: stock already paid by the wave, and
+        # retarded emission committed after the domain localized (external residual).
+        self._funded_paid: dict[str, list[list[int]]] = {
+            d.name: [[0] * f.components for f in initial.fields] for d in self.domains
+        }
+        self._funded_after_capture: dict[str, list[list[int]]] = {
+            d.name: [[0] * f.components for f in initial.fields] for d in self.domains
+        }
+        self._funded_fields = {
+            d.name: tuple(
+                initial.spatial_fields[e.spatial_field].field
+                for e in initial.emissions
+                if e.funded and d.source_type in selected_types(e)
+            )
+            for d in self.domains
+        }
         self._source_events = NodeEvents(events, None)
         self._source_law = SourceEmissionLaw(
             initial.fields, initial.spatial_fields, initial.emissions, initial.operation_costs
@@ -311,6 +331,15 @@ class CausalContactResolver(ContactEventResolver):
         choices = super().alternatives(context, token)
         reservation, domain = self._reservation(context, token)
         node = self._source_nodes[context.address]
+        if not reservation.source and self._funded_fields[domain.name]:
+            # The localized winner inherits the stock not yet spent on the field.
+            choices = tuple(
+                tuple(
+                    (slot, self._funded_output(domain, record) if record is domain.output else record)
+                    for slot, record in option
+                )
+                for option in choices
+            )
         if reservation.source:
             node.check_activation(context.tick)
         elif not node.retired:
@@ -331,9 +360,23 @@ class CausalContactResolver(ContactEventResolver):
         reservation, domain = self._reservation(context, token)
         # Reserve the local source event together with both original owners.
         self.events.require_room((4 if reservation.source else 3) + following_events)
+        spent: dict[int, tuple[int, ...]] = {}
+        if reservation.source and self._funded_fields[domain.name]:
+            record = context.records[reservation.slots[0]]
+            assert record is not None
+            for field in self._funded_fields[domain.name]:
+                spent[field] = tuple(
+                    checked_work(full - have)
+                    for have, full in zip(
+                        unpack(record.values[field]), unpack(domain.output.values[field]), strict=True
+                    )
+                )
         outcome, event_id = super().commit_choice(context, token, following_events + 1)
         node = self._source_nodes[context.address]
         if reservation.source:
+            # Stock the record spent before delocalizing counts as already paid.
+            for field, values in spent.items():
+                self._funded_paid[domain.name][field] = list(values)
             # This identity was created by the colocated committed preparation;
             # no remote value is copied through the origin reference.
             assert self.space.waves is not None
@@ -366,6 +409,39 @@ class CausalContactResolver(ContactEventResolver):
             )
             node.pending_emission = None
         return outcome, event_id
+
+    def _funded_output(self, domain: ContactDomain, record: DisturbanceRecord) -> DisturbanceRecord:
+        values = list(record.values)
+        paid = self._funded_paid[domain.name]
+        for field in self._funded_fields[domain.name]:
+            remaining = tuple(
+                checked_work(have - spent)
+                for have, spent in zip(unpack(values[field]), paid[field], strict=True)
+            )
+            if any(value < 0 for value in remaining):
+                raise ValueError("funded envelope emission exceeded the wave's stock")
+            values[field] = pack(remaining)
+            self.initial.fields[field].validate(values[field])
+        return replace(record, values=tuple(values))
+
+    def funded_fields(self, domain: ContactDomain) -> tuple[int, ...]:
+        return self._funded_fields[domain.name]
+
+    def _domain_live(self, domain: ContactDomain) -> bool:
+        assert self.space.waves is not None
+        origin = self.space.waves.names.get(domain.name)
+        return origin is not None and self.space.waves.relevant(origin)
+
+    def inventory(self) -> Values:
+        """Sector inventory less the stock the live wave already paid into the field."""
+        values = [list(components) for components in super().inventory()]
+        for domain in self.domains:
+            if not self._funded_fields[domain.name] or not self._domain_live(domain):
+                continue
+            for field in self._funded_fields[domain.name]:
+                for component, spent in enumerate(self._funded_paid[domain.name][field]):
+                    values[field][component] = checked_work(values[field][component] - spent)
+        return tuple(tuple(v) for v in values)
 
     def prepare_source(
         self, address: Address3, tick: int, states: tuple[SpatialState, ...], node_cost: int
@@ -407,10 +483,24 @@ class CausalContactResolver(ContactEventResolver):
         pending = node.pending_emission
         if pending is None or pending.ready_tick > tick:
             return None
+        domain = self._domain_at[address]
+        funded: Values = ()
+        if pending.funded_delta and any(any(v) for v in pending.funded_delta):
+            if self._domain_live(domain):
+                funded = pending.funded_delta
+            else:
+                # The wave already localized elsewhere; this retarded emission has no
+                # payer left and is booked as an explicit external residual.
+                for field, values in enumerate(pending.funded_delta):
+                    for component, value in enumerate(values):
+                        self._funded_after_capture[domain.name][field][component] = checked_work(
+                            self._funded_after_capture[domain.name][field][component] + value
+                        )
         return SourceDeposit(
             deposit_populations(self._source_law, states, pending.populations),
             pending.source_delta,
             pending.cause_id,
+            funded,
         )
 
     def commit_source(self, address: Address3, tick: int) -> None:
@@ -421,6 +511,12 @@ class CausalContactResolver(ContactEventResolver):
         node.emission_state = pending.following
         node.emission_next_tick = pending.next_tick
         node.pending_emission = None
+        domain = self._domain_at[address]
+        if pending.funded_delta and self._domain_live(domain):
+            paid = self._funded_paid[domain.name]
+            for field, values in enumerate(pending.funded_delta):
+                for component, value in enumerate(values):
+                    paid[field][component] = checked_work(paid[field][component] + value)
 
     def report(self) -> dict[str, object]:
         return {
@@ -428,6 +524,20 @@ class CausalContactResolver(ContactEventResolver):
             "model": "causal-contact-fields-v1",
             "classical_field_source": "causal_local_envelope",
             "null_notices": self._null_notices,
+            "funded_emission": {
+                domain.name: {
+                    "paid": {
+                        self.initial.fields[f].name: tuple(self._funded_paid[domain.name][f])
+                        for f in self._funded_fields[domain.name]
+                    },
+                    "after_capture": {
+                        self.initial.fields[f].name: tuple(self._funded_after_capture[domain.name][f])
+                        for f in self._funded_fields[domain.name]
+                    },
+                }
+                for domain in self.domains
+                if self._funded_fields[domain.name]
+            },
             "field_phases": len(self._field_gates),
             "field_phase_choices": [
                 {"domain": domain, "epoch": epoch, "register": register, "exponent": exponent}

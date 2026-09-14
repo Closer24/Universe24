@@ -74,6 +74,7 @@ def prepare_emission(
         for definition in initial.spatial_fields
     ]
     source = [[0] * field.components for field in initial.fields]
+    funded = [[0] * field.components for field in initial.fields]
     for index, rule in enumerate(initial.emissions):
         if not matches_type(rule, record.type_index):
             continue
@@ -103,6 +104,10 @@ def prepare_emission(
             source[definition.field][component] = checked_work(
                 source[definition.field][component] + value
             )
+            if rule.funded:
+                funded[definition.field][component] = checked_work(
+                    funded[definition.field][component] + value
+                )
     # Reserve the final addition against current local stock now, before the
     # caller computes the delay. Its tariff is fixed by the field layout.
     for definition in initial.spatial_fields:
@@ -119,6 +124,7 @@ def prepare_emission(
         EnvelopeEmissionState(tuple(residuals), tuple(phases), tuple(remaining)),
         meter.total,
         cause_id,
+        tuple(tuple(values) for values in funded),
     )
 
 

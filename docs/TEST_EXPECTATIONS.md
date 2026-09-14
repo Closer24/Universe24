@@ -211,6 +211,17 @@ in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
 both must select -1, capture with probability `576/3125` at tick 7, retain source
 envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
 
+`test_funded_envelope.py` owns the opt-in
+[funded envelope emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission):
+funded octant emission accepted when the type owns the field and rejected
+otherwise; stock 2999 rejected against three modes of budget 1000 and 3000
+accepted; rejection without the causal model; totals constant at 3000 with zero
+sources and balanced spatial accounting for seven ticks while the inventory
+equals stock minus paid; the localized winner holding stock minus paid and
+paying 25 per tick afterwards; the post-capture residual equal to the recorded
+sources in a headless run with the strict conservation flag true; and an empty
+funded report for the default profile.
+
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event
 tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,

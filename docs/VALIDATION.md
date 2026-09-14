@@ -1,5 +1,32 @@
 # Validation evidence
 
+## Funded envelope emission - 2026-09-14
+
+Base: `0299cb98bf07f00dc10bad858b674ded449be03e` (main after PR #108). Runtime
+source fingerprint of the executed harness:
+`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`. The opt-in
+[funded envelope emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission)
+lets `"source": false` pay the wave's classical field from its own conserved
+stock. Funded octant emission by ordinary records is now admitted under both
+schemas; the plan's conservation check counts it and books the transfer.
+
+Recorded on the interference harness at `phi = pi`, stock 3000, budget 1000
+per mode: with no capture the wave paid 211 units, sources stayed zero, totals
+stayed at 3000 and the quantum inventory ended at 2789; with a capture at tick
+7 the wave paid 199, the localized record received 2801 and then paid 25 per
+tick, and the one retarded emission after the capture (2 units) was the entire
+recorded source. The runner's strict conservation flag held in both runs.
+
+```sh
+python tools/check.py --base 0299cb98bf07f00dc10bad858b674ded449be03e
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **2,655 passed and five visual-only skipped**. Ruff,
+formatting and strict mypy passed on 120 source files. Python 3.14.0rc2 on
+Linux. The stock is bookkept by the quantum owner and the field returns nothing
+to it; this is emission-side closure, not a complete field-matter loop.
+
 ## Null notices and field-dependent phase - 2026-09-14
 
 Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of

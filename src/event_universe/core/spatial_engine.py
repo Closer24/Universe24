@@ -107,7 +107,19 @@ class SpatialEngine:
             },
         )
         node.states, node.cause_id = proposal.states, cause
-        self._services.accounting.record_sources(proposal.source_delta)
+        external = proposal.source_delta
+        if proposal.funded_delta:
+            if len(proposal.funded_delta) != len(proposal.source_delta):
+                raise ValueError("funded accounting layout differs from the fields")
+            external = tuple(
+                tuple(checked_work(value - paid) for value, paid in zip(values, funded, strict=True))
+                for values, funded in zip(proposal.source_delta, proposal.funded_delta, strict=True)
+            )
+        self._services.accounting.record_sources(external)
+        if proposal.funded_delta:
+            # Stock the wave paid into the field is an internal transfer, like a
+            # funded carrier emission, so the per-field audit stays balanced.
+            self._services.accounting.record_reactions(proposal.funded_delta)
         self._active.add(position)
         return notifications
 

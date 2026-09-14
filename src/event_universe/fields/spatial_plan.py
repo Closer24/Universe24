@@ -523,6 +523,9 @@ class SpatialLaw:
                 outgoing_phases[port].append(channel_phases[port])
             for component in range(field.components):
                 before = source[definition.field][component]
+                if component == 0:
+                    # A funded octant emission entered the populations paid by the record.
+                    before = checked_work(before + funded[definition.field])
                 for payload in states[index].populations:
                     before = checked_work(before + unpack(payload)[component])
                 after = 0
@@ -559,7 +562,7 @@ class SpatialLaw:
                 (checked_work(funded[i] - absorbed_by_field[i]),) + (0,) * (f.components - 1)
                 for i, f in enumerate(self.fields)
             )
-            if has_rays and any(funded) or any(absorbed_by_field)
+            if any(funded) or any(absorbed_by_field)
             else (),
             outgoing_phases=tuple(tuple(fields) for fields in outgoing_phases)
             if self.allocation_phase != "node"

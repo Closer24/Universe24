@@ -450,6 +450,21 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                     raise ValueError("causal source domains must be connected through physical Links")
                 reached.update(adjacent)
                 remaining.difference_update(adjacent)
+    for domain in domains:
+        for emission in initial.emissions:
+            if not emission.funded or domain.source_type not in selected_types(emission):
+                continue
+            if not causal_sources:
+                raise ValueError("funded envelope emission requires the causal contact field model")
+            if emission.budget is None:
+                raise ValueError("funded envelope emission requires a finite per-mode budget")
+            field = initial.spatial_fields[emission.spatial_field].field
+            stock = unpack(domain.output.values[field])
+            caps = tuple(checked_work(len(domain.registers) * cap) for cap in unpack(emission.budget))
+            if any(cap > have for cap, have in zip(caps, stock, strict=True)):
+                raise ValueError(
+                    "funded envelope emission requires the source stock to cover every mode's budget"
+                )
     localized_types = {kind for d in domains for kind in (d.source_type, d.output.type_index)}
     localized_types.update(
         outcome.output.type_index
