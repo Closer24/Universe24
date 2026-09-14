@@ -2249,7 +2249,7 @@ combination of the quantum owner's two-wing experiment, read as phases on a
 | Check | Result |
 | --- | --- |
 | Share rule, 288 worlds, hidden phase on a five-step grid | `S = 826177/589824 = 1.4007`, equal in every correlation to the local model `mean cos(phase - a) cos(phase - b)` computed from the cosine table independently of the update code |
-| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423`, consistent with 1.40 within the counting spread of about 0.04 |
+| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423` under the original draw; `386/279 = 1.384` re-measured after the lottery draw became the square of the ticket state (source `ae732df611ba461d40f355e13f4d335fcc82203bbfb760f43c77614bc777bc2f`); both consistent with 1.40 within the counting spread of about 0.05 |
 | Plain ray field, same worlds without the key | every outcome +1, `S = 2` exactly |
 | Quantum owner, same settings (two-wing Bell experiment) | `S = 14/5` |
 | Closure | every world's quanta in records, in flight and escaped equal the initial stock; the audited world passes the local conservation audit with 21504 source and 21504 lamp quanta absorbed at each analyzer |
