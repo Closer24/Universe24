@@ -1,5 +1,33 @@
 # Project status and restart guide
 
+The [position-output experiment](../examples/quantum/position_moment_response.md)
+derives localized mean/spread from a finite neighboring-mode operator and reads
+incident wave moments from actual density only as a diagnostic. Its ordinary
+output re-encodes a position state, distinct from post-absorption vacuum.
+Endpoint/middle variance is 1/2. Later local exchange works, but propagation
+changes the new kinetic readout; joint quantum/apparatus closure remains open.
+No global wave readout controls ordinary motion.
+
+The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+composes the existing held quantum capture with later generic local conversions.
+It transfers supplied mean momentum and variance to/from an arriving reservoir,
+records one-shot detector completion, and produces slow ordinary motion.
+This is an expectation-level candidate; spatial amplitudes do not derive the
+moments, and the uncertain reservoir does not spread. A separate exact quantum
+SWAP control verifies phase and branch balances. The associated receipt fix
+keeps empty pending-output slots reserved while accepting arrivals into unlocked
+spares. Exact source and completed checks are in [validation](VALIDATION.md).
+
+The explicit [recurrent contact profile](RECURRENT_QUANTUM_CONTACT.md) adds
+configured localized, continued-wave and new-wave outcomes to local encounters.
+Complete instruments determine probabilities; a new wave atomically receives a
+fresh event-space origin while retaining one inventory owner. Finite preallocated
+ordinary envelope generations keep cancellation causal and source allowances
+bounded. The [48-tick input](../examples/quantum/repeated_contacts.md) exercises
+three new-wave encounters, several continuations, final localization and field
+decay. Existing one-shot profiles remain supported. This is a finite configured
+candidate; source identity and completed checks are in [validation](VALIDATION.md).
+
 The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
 the contact path with bounded source envelopes attached to participating Nodes.
 Local squared weights scale finite ordinary emission; amplitude updates and
@@ -126,7 +154,48 @@ one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
 values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
 straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
 anisotropy: rays carry their heading and phase, and the time-averaged flux per
-node follows solid angle. Mass coupling and attraction remain unaddressed.
+node follows solid angle. The [gravity probe](../examples/gravity-probe/README.md)
+composes existing rules only: an `exchange` coupling with amount `mass x flux / D`
+gives held bodies momentum toward the ray source in proportion to mass, and a
+moving body falls inward. The reaction stays in the local momentum field at the
+body's Node; no reaction reaches the source, and no gravitational constant is
+identified beyond the configured `1 / D`. The
+[particle interaction probes](../examples/particle-interactions/README.md) give
+all charged bodies one signed ray field with the local one-link `self_exclusion`
+rule: like charges repel head-on, opposite charges attract, neutral bodies
+cross, and a timed two-record conversion emits a proton with a recoiling core.
+Energy has no representation in the exchange rules, so kicks near a source are
+unbounded. The [conservation audit](LOCAL_CONSERVATION.md) now measures rays as
+quanta, funded emission with recoil and the `absorb` coupling move energy and
+momentum only between records and rays; signed quanta with a mass-proportional
+absorbed share give attraction that the pulled body pays for, and the
+radiation-pressure probe runs
+with that audit closed. The
+[quantum-to-classical probes](../examples/quantum-classical/README.md) measure
+where the finite quantum rules meet these classical ones: a dephased walk is the
+classical random walk exactly, single ray quanta click whole and average to the
+inverse square, and repeated capture attempts follow the geometric decay law.
+The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+(`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
+coherence gates absorption and sampling, and two sources in phase give a fringe
+in Manhattan path difference; the plain ray field is unchanged without the key.
+A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
+two slits gives the fringe, and rays may carry their own advance from the
+emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
+halves the fringe period each time the beam's momentum doubles.
+
+Optional whole-ray lottery capture and carried-phase re-emission also run through
+the same local ray owners. Prepared immutable phase tables and explicit ray
+momentum inventory support ordinary headless runs. Delayed funded/absorbed carrier
+plans and phased/attenuating self-exclusion with response couplings are explicitly unsupported;
+see the candidate contract rather than treating a passing probe as complete quantum
+or gravitational dynamics.
+
+A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
+two slits gives the fringe, and rays may carry their own advance from the
+emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
+halves the fringe period each time the beam's momentum doubles in its measured
+range. The momentum-to-advance relation is supplied by configuration, not derived.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

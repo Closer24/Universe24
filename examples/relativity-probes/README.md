@@ -98,6 +98,36 @@ headings, 512 rays per tick, 47 units per ray, balanced routing, default clock):
 - The ray field activates only the nodes rays cross, so these runs take a
   fraction of the octant runs' time.
 
+### On Kerengonen signed quanta (`kerengonen_lensing.py`)
+
+Main's [funded emission and absorption](../../docs/SPATIAL_FIELDS.md#funded-emission-and-absorption)
+replaces the momentum reservoir: the mass is a funded source of negative
+quanta rays (mirrored golden headings, 512 rays per tick, 4096 quanta each),
+credited with what it emits; a passing body absorbs the share mass / 256 of
+every ray crossing its Node, pays it from its own quanta and gains the share's
+momentum toward the source. Momentum scale 65536 = one hop per tick.
+
+| body | b | angle (+ side) | angle (− side) | quanta paid |
+| --- | --- | --- | --- | --- |
+| light | 3 | 0.169 | 0.263 | 567, 938 |
+| light | 5 | 0.116 | 0.088 | 363, 284 |
+| light | 7 | 0.075 | 0.060 | 249, 188 |
+| slow | 3 | 0.489 | 0.652 | 909, 1076 |
+| slow | 5 | 0.282 | 0.339 | 418, 496 |
+| slow | 7 | 0.178 | 0.136 | 261, 199 |
+
+- b = 3 / b = 7 for light: **3.2** (Newton 2.33) — the closest of all the
+  transports (octants 18, spread rays 5.6). slow/light at b = 5: 3.0
+  (Newton 4.0); the slow body spends twice as long in the field but the
+  absorbed share per crossing ray is the same, and the crossing count is what
+  the lattice quantizes.
+- The ledger closes exactly: quanta in the world 27,340,041 + escaped
+  −24,194,313 = the initial stock 3,145,728; momentum in the world plus
+  escaped = (589,824, 0, 0), the twelve launches. Every body paid a few
+  hundred quanta for its deflection — attraction with the pulled body paying.
+- The two sides differ by ray quantization (which rays happen to cross which
+  Node); nothing in the configuration distinguishes them.
+
 ### Seen from the side (`lensing_from_the_side.py`)
 
 A lamp column at x = 2 sends one light body per row past the mass to a column of
@@ -306,6 +336,47 @@ images. A closed universe this small is bound by construction — its size is
 below the distance a free body covers in the run — which is the general point:
 in a closed Universe24 "escape" does not exist, only the size of the box
 against the launch speed and the accumulating field.
+
+### Four masses on Kerengonen signed quanta (`kerengonen_universe.py`)
+
+The same radius sweep with every mass a funded source of negative quanta
+(mirrored headings, 128 rays per tick per mass, 16384 quanta per ray) that
+absorbs the share mass / 256 of every ray from the others, paying from its own
+stock; open 41 × 41 × 3 slab, 60 ticks:
+
+| R | 0 | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | recollapse → 1 | recollapse | recollapse | recollapse | recollapse → 0 | still expanding at 3.5 |
+| 5 | recollapse → 4 | recollapse | recollapse | recollapse | expanding, 5 → 5.5 | turned around at 6 |
+| 9 | at rest | 9 → 9 | recollapse | 9 → 10 | 9 → 10 | turned around at 11.5 |
+
+At this strength nothing escapes at any radius up to 0.75 c: the escape speed
+is above the sweep at R = 3, 5 and 9 alike, so this sweep cannot separate
+1/√R from flat. Two things are already visible. The pull is much stronger
+than the reservoir version at emission 2400 (the closed ledger transfers
+about 24 momentum per quantum), and the thin open slab (z = 3) keeps rays
+with a small z heading in the plane for tens of links while the octant field
+leaked out of the plane every hop — so the ray density here falls closer to
+1/r than 1/r², a compressed third dimension arising from straight-ray
+transport in a thin universe. The eight-times weaker sweep (2048 quanta per
+ray, everything else equal):
+
+| R | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c | critical speed |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | turned at 4 | turned at 7 | expanding, slowed to 9.5 | expanding, slowed to 12 | turned around at 17 | above 0.75 c |
+| 5 | turned at 7 | expanding, slowed to 9.5 | turned at 12.5 | expanding, slowed to 14 | turned around at 19 | above 0.75 c |
+| 9 | expanding slowly | turned at 14 | turned at 16.5 | expanding, slowed to 18 | escaped by tick 32 | 0.5-0.75 c |
+
+("Slowed to" compares with the free path: at 0.5 c a free body is 30 links
+further out after 60 ticks.) Between R = 3 and R = 9 the critical speed drops
+by a factor between 1 and 1.5, where the three-dimensional reservoir sweep
+gave Newton's 2.0 (0.62 → 0.31 c). Flatter than 1/√R, as the in-plane ray
+density of the thin slab predicts — but the six-speed sweep resolves the
+bracket only to "above 0.75 c" at R = 3 and 5, so this is a lean, not a
+measurement; a finer sweep between 0.75 c and c, and the same coupling in a
+thick box, are what would settle it. The kicks are discrete (a body meets a
+whole ray or none), which is why 0.5 c can still be expanding while 0.75 c has
+turned.
 
 ### In a closed universe (`... periodic ...`)
 

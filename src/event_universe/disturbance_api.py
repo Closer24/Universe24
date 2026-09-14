@@ -34,15 +34,17 @@ class Simulation(DisturbanceEngine):
             from event_universe.integration.event_runtime import build_event_runtime
 
             event_space, resolver = build_event_runtime(initial)
+        responses = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
         spatial_law = SpatialLaw(
             initial.fields,
             initial.spatial_fields,
             initial.emissions,
             initial.operation_costs,
             initial.field_rules,
-            initial.allocation_phase,
-            initial.computation_field,
-            initial.delay_direction if initial.least_delay_routing else None,
+            absorptions=tuple(rule for rule in initial.spatial_couplings if rule.mode == "absorb"),
+            allocation_phase=initial.allocation_phase,
+            computation_field=initial.computation_field,
+            least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
         )
         super().__init__(
             initial,
@@ -59,23 +61,22 @@ class Simulation(DisturbanceEngine):
             (
                 JointSpatialCouplingLaw(
                     initial.fields,
-                    initial.spatial_couplings,
+                    responses,
                     initial.operation_costs,
                     initial.spatial_fields,
-                    initial.spatial_interactions,
+                    emissions=initial.emissions,
+                    interactions=initial.spatial_interactions,
                 )
                 if initial.spatial_interactions
-                or (
-                    initial.spatial_couplings
-                    and any(field.transport == "local" for field in initial.spatial_fields)
-                )
+                or (responses and any(field.transport == "local" for field in initial.spatial_fields))
                 else SpatialCouplingLaw(
                     initial.fields,
-                    initial.spatial_couplings,
+                    responses,
                     initial.operation_costs,
                     initial.spatial_fields,
+                    emissions=initial.emissions,
                 )
-                if initial.spatial_couplings
+                if responses
                 else None
             ),
             (

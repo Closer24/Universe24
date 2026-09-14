@@ -8,7 +8,7 @@ quantum candidate, not a derived field law; native integration shares the causal
 """
 
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from functools import wraps
 from typing import Concatenate
 
@@ -75,8 +75,13 @@ class EventNetworkConfig:
     waves: tuple[WaveDefinition, ...] = ()
     local_contacts: bool = False
     occupation_domains: tuple[tuple[int, ...], ...] = ()
+    contact_outcomes: bool = False
 
     def __post_init__(self) -> None:
+        if type(self.contact_outcomes) is not bool or (
+            self.contact_outcomes and not self.local_contacts
+        ):
+            raise ValueError("contact outcomes require the explicit local contact profile")
         if type(self.local_contacts) is not bool:
             raise ValueError("local contact selection must be boolean")
         if self.local_contacts and (
@@ -207,6 +212,8 @@ class EventDecision:
     terminal_origins: tuple[int, ...] = ()
     terminal_outcomes: tuple[int, ...] = ()
     null_outcome: int | None = None
+    contact_effects: tuple[str, ...] = ()
+    contact_source: bool = False
 
     @property
     def total_weight(self) -> int:
@@ -264,6 +271,7 @@ class EventNetwork:
         self._constraints: dict[int, tuple[frozenset[int], frozenset[int]]] = {}
         self._prepared: dict[int, EventDecision] = {}
         self._records: dict[int, NetworkRecord] = {}
+        self._contact_activations: dict[int, int] = {}
         self._queries = 0
         self._evaluated = 0
         self._cancellation_checks = 0
@@ -733,6 +741,8 @@ class EventNetwork:
         terminal_origins: tuple[int, ...] = (),
         terminal_outcomes: tuple[int, ...] = (),
         null_outcome: int | None = None,
+        contact_effects: tuple[str, ...] = (),
+        contact_source: bool = False,
     ) -> EventDecision:
         """Resolve branches before asking the external sampler for a ticket.
 
@@ -747,7 +757,18 @@ class EventNetwork:
 
             if not isinstance(instrument, LocalInstrument):
                 raise ValueError("local contacts require a complete absorption instrument")
-            validates_capture(instrument)
+            if self.config.contact_outcomes:
+                from .contact_outcomes import validate_outcomes
+
+                validate_outcomes(instrument, contact_effects, source=contact_source)
+                if null_outcome != (None if contact_source else 0):
+                    raise ValueError("contact null selection must match its declared effect")
+            else:
+                if contact_effects or contact_source:
+                    raise ValueError("configured outcomes require their explicit contact profile")
+                validates_capture(instrument)
+        elif contact_effects or contact_source:
+            raise ValueError("contact effects require an occupation-owning contact profile")
         self._validate_register_index(register_index)
         groups = outcome_groups(instrument)
         if null_outcome is not None and (
@@ -773,6 +794,8 @@ class EventNetwork:
                 or old.terminal_origins != terminal_origins
                 or old.terminal_outcomes != terminal_outcomes
                 or old.null_outcome != null_outcome
+                or old.contact_effects != contact_effects
+                or old.contact_source != contact_source
             ):
                 raise ValueError("record identity cannot be rebound")
             if record_id not in self._records and old.revision != self._revision:
@@ -785,8 +808,17 @@ class EventNetwork:
         if len(self._prepared) >= self.config.max_records:
             raise OverflowError("quantum decision budget exceeded")
         self._room(1)
-        ids, _ = self._plan((register_index,))
+        domain_registers = next(
+            (qs for qs in self.config.occupation_domains if register_index in qs),
+            (register_index,),
+        )
+        ids, _ = self._plan(domain_registers if contact_source else (register_index,))
         state, _ = self._evaluate(ids)
+        if contact_source:
+            if origins or terminal_origins or terminal_outcomes:
+                raise ValueError("ordinary source preparation cannot consume an active origin")
+            if any(marginal(state, q, self.config.local_dimensions)[1] for q in domain_registers):
+                raise ValueError("contact preparation requires the entire domain to be vacuum")
         weights = tuple(
             trace(
                 evolve(
@@ -797,10 +829,39 @@ class EventNetwork:
         )
         if (
             self.config.local_contacts
+            and not self.config.contact_outcomes
             and weights[1]
             and (len(origins) != 1 or terminal_origins != origins or terminal_outcomes != (1,))
         ):
             raise ValueError("occupied contact capture must retire its delivered origin")
+        if self.config.contact_outcomes and not contact_source:
+            terminal = tuple(
+                i for i, effect in enumerate(contact_effects) if effect in ("localized", "new_wave")
+            )
+            if origins and (
+                len(origins) != 1
+                or terminal_origins != (origins if terminal else ())
+                or terminal_outcomes != terminal
+            ):
+                raise ValueError("contact outcome must retain or retire its own delivered origin")
+            if not origins and (
+                terminal_origins
+                or terminal_outcomes
+                or any(weights[i] for i, effect in enumerate(contact_effects) if effect != "null")
+            ):
+                raise ValueError("occupied contact outcome requires its delivered origin")
+        if self.config.contact_outcomes and any(
+            weights[i] for i, effect in enumerate(contact_effects) if effect == "new_wave"
+        ):
+            assert self.waves is not None
+            domain_index = self.config.occupation_domains.index(domain_registers)
+            definition = self.config.waves[domain_index]
+            if self.waves.generations.get(definition.name, 0) >= definition.max_generations:
+                raise OverflowError("configured wave generation capacity exhausted")
+            bank = self.waves.banks[self.config.addresses[register_index]]
+            retained = sum(self.waves.relevant(v) and v not in terminal_origins for v in bank.origins)
+            if retained >= 6:
+                raise OverflowError("local quantum wave capacity exceeds six")
         if self.config.local_contacts:
             ancestors, _ = self._ancestors((self._head(register_index),))
             if len(ancestors) + 1 > self.config.max_eval_nodes:
@@ -818,12 +879,55 @@ class EventNetwork:
             terminal_origins=terminal_origins,
             terminal_outcomes=terminal_outcomes,
             null_outcome=null_outcome,
+            contact_effects=contact_effects,
+            contact_source=contact_source,
         )
         if decision.total_weight == 0:
             raise ArithmeticError("zero total branch weight")
         self._count_query(len(ids))
         self._prepared[record_id] = decision
         return decision
+
+    @_serialized
+    def activate_contact_result(self, name: str, record: NetworkRecord) -> int:
+        """Attach a fresh local origin to an already committed occupied outcome."""
+        if not self.config.contact_outcomes or self.waves is None:
+            raise ValueError("contact result activation requires its explicit profile")
+        decision = record.decision
+        if self._records.get(decision.record_id) is not record:
+            raise ValueError("new wave requires its current committed local result")
+        if decision.contact_effects[record.outcome] != "new_wave":
+            raise ValueError("only a declared new-wave outcome creates an origin")
+        index = next(i for i, w in enumerate(self.config.waves) if w.name == name)
+        if decision.register_index not in self.config.occupation_domains[index]:
+            raise ValueError("new wave must remain in its local occupation domain")
+        previous = self._contact_activations.get(decision.record_id)
+        if previous is not None:
+            return previous
+        if decision.tick != self.tick:
+            raise ValueError("new wave requires its current committed local result")
+        origin = self.waves.activate(
+            name, self.tick, record.event_id, register_index=decision.register_index, renew=True
+        )
+        self._contact_activations[decision.record_id] = origin
+        return origin
+
+    @_serialized
+    def bind_contact_request(self, decision: EventDecision, cause: int) -> EventDecision:
+        """Bind the just-published local request after its complete preflight."""
+        if not self.config.contact_outcomes or self._prepared.get(decision.record_id) is not decision:
+            raise ValueError("contact binding requires its prepared decision")
+        event = self.event_space.event(cause)
+        if (
+            decision.cause is not None
+            or event.id != decision.record_id
+            or event.tick != self.tick
+            or self.config.addresses[decision.register_index] not in event.addresses
+        ):
+            raise ValueError("contact binding requires its current local request event")
+        bound = replace(decision, cause=cause)
+        self._prepared[decision.record_id] = bound
+        return bound
 
     @_serialized
     def commit(self, decision: EventDecision, ticket: int | None = None) -> NetworkRecord:
@@ -835,6 +939,8 @@ class EventNetwork:
         """
         if type(decision) is not EventDecision or self._prepared.get(decision.record_id) is not decision:
             raise ValueError("decision was not prepared by this quantum owner")
+        if decision.contact_effects and decision.cause is None:
+            raise ValueError("contact outcome requires its bound local request")
         previous = self._records.get(decision.record_id)
         if previous is not None:
             return previous
@@ -859,6 +965,11 @@ class EventNetwork:
                     break
         self._room(1)
         revision = checked(self._revision + 1)
+        new_contact_wave = (
+            bool(decision.contact_effects) and decision.contact_effects[outcome] == "new_wave"
+        )
+        if new_contact_wave:
+            self.event_space.require_room(2)
         parents = (self._head(decision.register_index),)
         ids, register_indices = self._ancestors(parents)
         if len(ids) + 1 > self.config.max_eval_nodes:
@@ -881,6 +992,11 @@ class EventNetwork:
         if outcome in decision.terminal_outcomes:
             assert self.waves is not None
             self.waves.resolve(decision.terminal_origins, i)
+        if new_contact_wave:
+            domain = next(
+                j for j, qs in enumerate(self.config.occupation_domains) if decision.register_index in qs
+            )
+            self.activate_contact_result(self.config.waves[domain].name, record)
         self._revision = revision
         return record
 

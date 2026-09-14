@@ -124,6 +124,21 @@ class CausalContactResolver(ContactEventResolver):
                     if neighbor_address(address, p, initial.shape, initial.boundary) in addresses
                 )
         self._matrices = tuple(matrices)
+        assert program.contacts is not None
+        self._source_banks = (self._source_nodes,) + tuple(
+            {
+                address: EmittingEnvelopeNode(
+                    address,
+                    emission_state=initial_emission_state(
+                        self._source_law, self._domain_at[address].output
+                    ),
+                )
+                for address in self._source_nodes
+            }
+            for _ in range(program.contacts.max_generations - 1)
+        )
+        for address, node in self._source_nodes.items():
+            node.generations = tuple(bank[address] for bank in self._source_banks[1:])
         self._compute_delay = cycle_timing(
             bounded(compute_cost), initial.normal_budget, initial.link_ticks
         )[0]
@@ -177,7 +192,17 @@ class CausalContactResolver(ContactEventResolver):
         if tick % self._gate_period:
             return
         epoch = tick // self._gate_period
-        for address, node in self._source_nodes.items():
+        for bank in self._source_banks:
+            self._start_bank(bank, tick, epoch, values)
+
+    def _start_bank(
+        self,
+        bank: Mapping[Address3, EmittingEnvelopeNode],
+        tick: int,
+        epoch: int,
+        values: FieldValues | None = None,
+    ) -> None:
+        for address, node in bank.items():
             phases = self._phase_gates[address]
             phase = epoch % len(phases)
             gate = phases[phase]
@@ -201,9 +226,13 @@ class CausalContactResolver(ContactEventResolver):
             )
 
     def _advance_sources(self, tick: int) -> None:
+        for bank in self._source_banks:
+            self._advance_bank(bank, tick)
+
+    def _advance_bank(self, bank: Mapping[Address3, EmittingEnvelopeNode], tick: int) -> None:
         arrivals = tuple(
             (address, slot, packet)
-            for address, node in self._source_nodes.items()
+            for address, node in bank.items()
             for slot, packet in enumerate(node.output)
             if packet is not None and packet.arrival_tick == tick
         )
@@ -213,11 +242,11 @@ class CausalContactResolver(ContactEventResolver):
             destination = neighbor_address(
                 address, packet.port, self.initial.shape, self.initial.boundary
             )
-            if destination is None or destination not in self._source_nodes:
+            if destination is None or destination not in bank:
                 raise ValueError("source packet must follow a declared domain Link")
             if self._domain_at[destination] is not self._domain_at[address]:
                 raise ValueError("source packets cannot cross independent domains")
-            target = self._source_nodes[destination]
+            target = bank[destination]
             target.receive(
                 packet,
                 tick,
@@ -226,8 +255,8 @@ class CausalContactResolver(ContactEventResolver):
                 self._source_events,
                 costs=self.initial.operation_costs,
             )
-            self._source_nodes[address].clear_output(slot, packet)
-        for address, node in self._source_nodes.items():
+            bank[address].clear_output(slot, packet)
+        for address, node in bank.items():
             node.complete(
                 tick,
                 local_output,
@@ -341,7 +370,7 @@ class CausalContactResolver(ContactEventResolver):
     def prepare_source(
         self, address: Address3, tick: int, states: tuple[SpatialState, ...], node_cost: int
     ) -> SourceDeposit | None:
-        node = self._source_nodes[address]
+        node = self._source_banks[tick % len(self._source_banks)][address]
         if node.retired or not node.source_id:
             node.pending_emission = None
             return None
@@ -385,7 +414,7 @@ class CausalContactResolver(ContactEventResolver):
         )
 
     def commit_source(self, address: Address3, tick: int) -> None:
-        node = self._source_nodes[address]
+        node = self._source_banks[tick % len(self._source_banks)][address]
         pending = node.pending_emission
         if pending is None or pending.ready_tick > tick or node.retired:
             raise ValueError("source emission must commit its live ready local proposal")

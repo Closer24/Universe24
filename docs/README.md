@@ -1,5 +1,9 @@
 # Documentation index
 
+The [spatial momentum and position-output experiment](../examples/quantum/position_moment_response.md)
+distinguishes evolved wave readouts, locally derived capture moments and missing
+gate/measurement energy closure.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
@@ -44,6 +48,10 @@ established particle references to the existing causal source/contact mechanism.
 | [Quantum origin cells](WAVE_ORIGINS.md) | Six local origin references, atomic terminal decisions and next-tick local invalidation in event spacetime |
 | [Localized quantum contacts](LOCALIZED_QUANTUM_CONTACT.md) | Commit-time inventory transfer, finite localized field sources and repeating coherent propagation |
 | [Causal quantum sources](CAUSAL_QUANTUM_SOURCES.md) | Locally retained complex source envelopes, finite weighted ordinary emission and Link-delivered termination |
+| [Recurrent quantum contacts](RECURRENT_QUANTUM_CONTACT.md) | Configured outcome instruments, atomic new origins and finite isolated source generations |
+| [Repeated-contact experiment](../examples/quantum/repeated_contacts.md) | Reproducible local continuations, fresh origins, final localization and finite field decay |
+| [Quantum-to-classical investigation](../examples/quantum/quantum_classical_check.md) | Exact interference suppression/reversal, classical probabilities and the unestablished trajectory limit |
+| [Local moment-response candidate](../examples/quantum/local_moment_exchange.md) | Post-capture mean/variance exchange, finite detector lifecycle and slow ordinary transport |
 | [Quantum and classical coupling](QUANTUM_CLASSICAL_COUPLING.md) | Claims, non-claims, measured evidence and related work for the hybrid model, written for external review |
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |

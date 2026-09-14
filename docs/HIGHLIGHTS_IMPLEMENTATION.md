@@ -1,5 +1,78 @@
 # Highlights implementation coverage
 
+## Signed relative field phase - 2026-09-14
+
+The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+now explicitly preserves `(unit / vacuum)^n` for negative field exponents by
+conjugating both coefficients. Equivalent complex representations produce the
+same quantum capture probabilities and ordinary envelope weights. This repairs
+the existing configured law; it adds no field back-reaction or conservation
+claim. The one-shot phase and null-notice options remain separate from recurrent
+generations, whose unsupported combinations fail at initialization. The live
+Highlights document was not edited; numerical regressions and source evidence
+are linked in [validation](VALIDATION.md).
+
+## Wave moments and position output - 2026-09-14
+
+Live Highlights was read at revision
+`ANLCKQnb_MKZlmGPU0eRFQTq-PfRQNEaF8JpkHRYNx58nnn7H11urV_7dwY5zowVhXcHfXiEHj6GRps58iAW2NBny79oKonaGgH8baBaQtE`.
+Section 4.7.5 requires position and momentum to describe the same wave without
+assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
+derives a finite derivative observable from actual spatial density and output
+moments from a local operator row. Its Fourier eigenvalue `2 sin(k)` gives
+partial coverage of the Fourier-momentum target, not canonical momentum or a
+free-particle law. The readout is diagnostic; Nodes receive only bounded
+prepared values at capture. The report exposes unclosed gate/measurement energy
+and distinguishes output re-encoding from vacuum. This is a candidate under
+existing contracts. The live Highlights document was not edited.
+
+## Local response candidate - 2026-09-14
+
+The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+now composes quantum capture with an explicitly supplied ordinary local law.
+Mean momentum and its variance swap with a colocated equal-mass reservoir;
+the one-shot detector records completion locally. The resulting carrier moves,
+while the reservoir retains unresolved momentum. This is an expectation-level
+moment closure and a tested candidate, not a derived classical limit or full
+field/matter quantum dynamics. Its independent exact quantum SWAP control retains
+phase and branch balances; those capabilities do not transfer to the ordinary
+moment-only state. No binding postulate was changed. The live Highlights
+document was not edited for this experimental candidate.
+
+## Quantum-to-classical claim check - 2026-09-14
+
+The [bounded investigation](../examples/quantum/quantum_classical_check.md) verifies
+configured dephasing, coherent recovery and classical probability evolution.
+Spatial localization produces a held record with unknown momentum; an emerging
+Newtonian trajectory remains unestablished. This adds measured evidence, not a
+new physical rule or entity. The live Highlights document was not edited.
+
+## Recurrent local contact outcomes - 2026-09-14
+
+Live Highlights section **4.7.8, Configured recurrent local outcomes**, now records
+the complete configured instrument, local/new-wave/continuing outcomes, single
+inventory ownership, atomic new origins, finite ordinary source generations and
+causal cancellation. It retains the finite-candidate and physical-closure limits.
+The document was read through the trusted file-backed control inventory before
+this targeted addition; no protected controls were present. Connector readback
+verified the new heading and body in the original tab without changing adjacent
+sections. The prior revision was
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`;
+the verified updated revision is
+`ANLCKQkHRRrlLk-0HV9uWe-o47GgA6Dzbugy7caBZLF1JV9slR4tKuGLUzLZS6xS9qpWNw7kmF1VLFQvA8X58ZaqdYd4yuLvEtke55nPntc`.
+
+| Highlights rule | Authoritative owner | Acceptance |
+| --- | --- | --- |
+| Complete local outcomes with no separate random switch | [Recurrent contract](RECURRENT_QUANTUM_CONTACT.md), postulate 21 and Q-RECURRENT-1 | Exact source 9/16 and capture 9/16/144 ticket counts |
+| Fresh origin without duplicate inventory or replay | [Quantum event network](../src/event_universe/quantum/event_network.py) | Occupied-domain rejection, atomic result and same-tick replay tests |
+| Local ordinary source banks and causal cancellation | [Recurrent resolver](../src/event_universe/integration/recurrent_contact_runtime.py) | Remote-prefix equality, finite allowances and signed vector inventory |
+| Repeated encounters followed by localization | [Initialization and recorded expectations](../examples/quantum/repeated_contacts.md) | Fresh-wave ticks 3/9/21, localization 24, balanced field decay |
+
+The [validation record](VALIDATION.md) binds these results to the exact tested
+source. This is not a general many-body Hamiltonian, physical energy closure or
+a completed derivation of the classical limit. Older dated rows below retain
+their own source revisions and do not describe this addition.
+
 ## Causal quantum source envelopes - 2026-09-13
 
 The user's latest selection extends the preceding localized-source choice:

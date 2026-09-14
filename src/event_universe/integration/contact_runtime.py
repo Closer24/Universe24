@@ -36,7 +36,9 @@ class ContactEventResolver(NativeEventResolver):
         assert program.contacts is not None
         self.domains = program.contacts.domains
         self._sources = {
-            self.space.config.addresses[d.source_register]: i for i, d in enumerate(self.domains)
+            self.space.config.addresses[q]: i
+            for i, d in enumerate(self.domains)
+            for q in (d.source_registers or (d.source_register,))
         }
         self._captures = {
             self.space.config.addresses[q]: (i, q)
@@ -73,7 +75,10 @@ class ContactEventResolver(NativeEventResolver):
         domain = self.domains[domain_index]
         # A successful local result is observable here and ends this detector's
         # repeated attempts. A remote resolution never selects the attempt clock.
-        if any(r is not None and r.type_index == domain.output.type_index for r in context.records):
+        output_types = {domain.output.type_index} | {
+            result.output.type_index for result in domain.capture_outcomes if result.output is not None
+        }
+        if any(r is not None and r.type_index in output_types for r in context.records):
             return None
         detector = next(
             (
@@ -86,6 +91,8 @@ class ContactEventResolver(NativeEventResolver):
         if detector is None:
             return None
         empty = next((i for i, r in enumerate(context.records) if r is None), -1)
+        if domain.capture_outcomes and not any(o.effect == "localized" for o in domain.capture_outcomes):
+            empty = detector
         return ContactReservation(domain_index, False, (detector, empty))
 
     def has_work(self, context: LocalContext) -> bool:
@@ -195,6 +202,7 @@ class ContactEventResolver(NativeEventResolver):
             assert self.space.waves is not None
             waves = self.space.waves
             if reservation.source:
+                assert domain.preparation is not None
                 event_id = self.space.activate_contact(domain.name, domain.preparation, trigger.id)
                 outcome = 0
             else:

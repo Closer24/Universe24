@@ -11,6 +11,29 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/quantum/spatial_momentum.py": (
+        "tests/test_spatial_momentum.py",
+        "tests/test_position_moment_response.py",
+    ),
+    "examples/quantum/position_moment_response.py": ("tests/test_position_moment_response.py",),
+    "examples/quantum/run_position_moment_response.py": ("tests/test_position_moment_response.py",),
+    "examples/quantum/spatial_measurement_controls.py": ("tests/test_position_moment_response.py",),
+    "examples/quantum/local_moment_exchange.py": ("tests/test_local_moment_exchange.py",),
+    "examples/quantum/run_local_moment_exchange.py": ("tests/test_local_moment_exchange.py",),
+    "examples/quantum/momentum_state_exchange.py": ("tests/test_local_moment_exchange.py",),
+    "examples/quantum/localized_charge.json": (
+        "tests/test_localized_quantum_contact.py",
+        "tests/test_local_moment_exchange.py",
+        "tests/test_position_moment_response.py",
+    ),
+    "examples/quantum/repeated_contacts.json": (
+        "tests/test_recurrent_quantum_contact.py",
+        "tests/test_quantum_classical_experiment.py",
+        "tests/test_contact_profile_composition.py",
+    ),
+    "examples/quantum/quantum_classical_check.py": ("tests/test_quantum_classical_experiment.py",),
+    "examples/quantum/environment_coherence_check.py": ("tests/test_quantum_classical_experiment.py",),
+    "examples/quantum/trajectory_support_check.py": ("tests/test_quantum_classical_experiment.py",),
     "examples/catalog-contact/experiment.json": ("tests/test_catalog_contact.py",),
     "examples/catalog-contact/prepare.py": ("tests/test_catalog_contact.py",),
     "examples/known-entities/physical-units.json": (
@@ -26,6 +49,7 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
+        "tests/test_contact_profile_composition.py",
         "tests/test_causal_interference.py",
         "tests/test_null_notices.py",
         "tests/test_field_phase.py",
@@ -44,6 +68,11 @@ RESOURCE_CONSUMERS = {
     "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
     "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
     "examples/inverse-square/run_experiments.py": ("tests/test_inverse_square_experiments.py",),
+    "examples/gravity-probe/run_experiments.py": ("tests/test_gravity_probe.py",),
+    "examples/particle-interactions/run_experiments.py": ("tests/test_particle_interactions.py",),
+    "examples/quantum-classical/run_experiments.py": ("tests/test_quantum_classical.py",),
+    "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
+    "examples/de-broglie/run_experiments.py": ("tests/test_de_broglie.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
@@ -55,11 +84,20 @@ RESOURCE_CONSUMERS = {
         "tests/test_node_state_contract.py",
         "tests/test_local_lorentz_field.py",
     ),
-    "examples/quantum/interference.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/interference.json": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
     "examples/quantum/phase_reversal.json": ("tests/test_native_quantum_channels.py",),
     "examples/quantum/dephasing.json": ("tests/test_native_quantum_channels.py",),
-    "examples/quantum/partial_dephasing.json": ("tests/test_native_quantum_channels.py",),
-    "examples/quantum/run_physics_checks.py": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/partial_dephasing.json": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
+    "examples/quantum/run_physics_checks.py": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
     "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),

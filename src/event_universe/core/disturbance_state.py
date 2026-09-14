@@ -208,6 +208,18 @@ class DisturbanceRecord:
     spatial_remainders: Values = ()
     emission_remaining: Values = ()
     spatial_remaining: Values = ()
+    # Self-excluding ray bookkeeping: (amount, cursor, wave phase, advance) per rule.
+    # emission_last is this cycle's emission; emission_departed is the emission
+    # of the cycle the record last left a Node, zero while it stays. After a move
+    # the record subtracts the rays of that departure from the flux it samples.
+    emission_last: Values = ()
+    emission_departed: Values = ()
+    # Kerengonen lottery capture: one local ticket state per absorb rule, advanced
+    # on every draw from the record's own row and the ray it meets.
+    absorb_tickets: Values = ()
+    # Kerengonen carried phase: per absorb rule, the phase of the coherent sum of
+    # what the record last absorbed, so a re-emission can continue the wave.
+    absorbed_phases: Values = ()
     route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     rate_credit_denominator: int = 1

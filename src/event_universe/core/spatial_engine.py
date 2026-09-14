@@ -36,6 +36,8 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    coherent_stock,
+    ray_momentum,
     ray_stock,
     validate_rays,
 )
@@ -317,6 +319,11 @@ class SpatialEngine:
                 amounts[definition.field][0] = checked_work(
                     amounts[definition.field][0] + ray_stock(rays)
                 )
+                if definition.momentum_field is not None:
+                    for axis, value in enumerate(ray_momentum(rays, definition)):
+                        amounts[definition.momentum_field][axis] = checked_work(
+                            amounts[definition.momentum_field][axis] + value
+                        )
         for index, values in enumerate(amounts):
             for component, value in enumerate(values):
                 self.escaped[index][component] += value
@@ -412,10 +419,18 @@ class SpatialEngine:
                     node = self.nodes[position]
                     if node.rays:
                         result[definition.field][0] += ray_stock(node.rays[index])
+                        if definition.momentum_field is not None:
+                            for axis, value in enumerate(ray_momentum(node.rays[index], definition)):
+                                result[definition.momentum_field][axis] += value
                 for packets in self.links.values():
                     for packet in packets:
                         if packet is not None and packet.rays:
                             result[definition.field][0] += ray_stock(packet.rays[index])
+                            if definition.momentum_field is not None:
+                                for axis, value in enumerate(
+                                    ray_momentum(packet.rays[index], definition)
+                                ):
+                                    result[definition.momentum_field][axis] += value
         return result
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:
@@ -433,7 +448,7 @@ class SpatialEngine:
             if definition.rays:
                 node_rays = self.nodes[position].rays if position in self.nodes else ()
                 rays = node_rays[index] if node_rays else ()
-                local[0] = checked_work(local[0] + ray_stock(rays))
+                local[0] = checked_work(local[0] + coherent_stock(rays, definition))
                 field.validate(pack(tuple(local)))
             result[field.name] = {
                 "baseline": unpack(definition.baseline),

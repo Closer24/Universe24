@@ -18,6 +18,41 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
+def test_contact_composition_resources_select_their_preflight_regressions(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_contact_profile_composition.py" in selected
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "spatial_momentum.py",
+        "position_moment_response.py",
+        "run_position_moment_response.py",
+        "spatial_measurement_controls.py",
+        "localized_charge.json",
+    ],
+)
+def test_position_moment_resources_select_native_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_position_moment_response.py" in selected
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "local_moment_exchange.py",
+        "run_local_moment_exchange.py",
+        "momentum_state_exchange.py",
+        "localized_charge.json",
+    ],
+)
+def test_local_moment_resources_select_their_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_local_moment_exchange.py" in selected
+
+
 def test_local_field_example_selects_state_and_physical_contract_consumers():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected
@@ -32,6 +67,30 @@ def test_spatial_graph_example_selects_its_causal_contract():
 def test_many_contacts_selects_its_experiment_contract():
     selected, _ = CHECK.select(["examples/quantum/many_contacts.json"], {})
     assert "tests/test_many_contacts.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
+def test_repeated_contacts_selects_its_runtime_input_consumer():
+    selected, _ = CHECK.select(["examples/quantum/repeated_contacts.json"], {})
+    assert "tests/test_recurrent_quantum_contact.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "quantum_classical_check.py",
+        "environment_coherence_check.py",
+        "trajectory_support_check.py",
+        "run_physics_checks.py",
+        "interference.json",
+        "partial_dephasing.json",
+        "repeated_contacts.json",
+    ],
+)
+def test_quantum_classical_resources_select_the_bounded_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_quantum_classical_experiment.py" in selected
     assert "tests/test_collisions.py" not in selected
 
 
