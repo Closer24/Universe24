@@ -549,6 +549,35 @@ phase +11 mod 8 = 3 under C. Both keys are declared timing rules; the probe
 shows which one puts the computation clock and the wave in the same
 measurement.
 
+## 9. The lottery aside, and back in time (`time_symmetry.py`)
+
+**One number.** The seeded quantum world (`examples/quantum/native_quantum.json`,
+seed 17) drew one ticket, 16, in eight ticks. Logged aside and supplied back as
+an explicit `tickets` stream in place of the seed, the world reproduces the
+same complete snapshot at every tick (digests `d73f16ddc584`, `10bc49bba7f7`,
+… identical); run again from the seed alone, identical again; seed 18 diverges
+at tick 5, the first draw. Any earlier point of the history — ticks 2, 4, 6 —
+is reached by running the one number forward to it: the same point. The
+history is a function of the configuration and one integer; there is no other
+state to keep.
+
+**Reversal.** The elastic collision of two equal masses at link speed, run 12
+ticks forward (they meet at x = 10 on tick 5 and swap), then every momentum
+negated and the world run 12 ticks more:
+
+| | Body A | Body B |
+| --- | --- | --- |
+| start | x = 5, p = +120 | x = 15, p = −120 |
+| tick 12 forward | x = 3, p = −120 | x = 17, p = +120 |
+| 12 ticks after reversal | x = 5, p = −120 | x = 15, p = +120 |
+
+The bodies retrace their paths, swap back at the same Node and arrive at their
+starting positions with their starting momenta reversed: the transport and
+collision laws are time symmetric, exactly, in integers. What is not
+asserted: the outward field has no inward law and a truncated absorption is
+not a bijection, so a world with fields is replayed from its one number, not
+run backward.
+
 ## 7. Focus and computing less
 
 The repository's [Focus](../../docs/QUANTUM_FOCUS.md) is an octree over

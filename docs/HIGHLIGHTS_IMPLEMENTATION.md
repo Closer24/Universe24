@@ -629,6 +629,14 @@ charge). Findings, each a branch result and not a law:
   they darken (6176 → 5636, y = 10 from 552 to 211): the waits carry phase and
   the fringe shifts in whole steps — the gravitational-phase (COW) signature,
   present only when a waiting interval counts as phase.
+- Under 7 (postulates) and 4.7: the seeded quantum world's tickets, logged
+  aside and supplied back, reproduce the complete snapshot at every tick; the
+  history is a function of the configuration and one integer, and any earlier
+  point is reached by running it forward. The elastic collision at link speed
+  reversed after 12 ticks returns both bodies to their starting Nodes with
+  their starting momenta negated: the mechanical laws are time symmetric in
+  integers. Outward fields have no inward law and truncated absorption is not
+  a bijection; those are replayed, not reversed.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the
