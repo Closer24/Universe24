@@ -417,7 +417,23 @@ The test (`... 50 periodic rays 61 9`): the 61 × 61 slab with the third
 dimension closed at period 9 instead of 3, the same coupling and field, at
 R = 3, 5 (inside the period), 9 and 15 (beyond it). Newton predicts the loss
 along an outward path falling as 1/R at R = 3 and 5; the compressed regime
-predicts equal losses at 9 and 15. Results are recorded below.
+predicts equal losses at 9 and 15. Measured losses against the free path
+(launches whose free path exceeds the half-box are omitted):
+
+| launch | R = 3 | R = 5 | R = 9 | R = 15 |
+| --- | --- | --- | --- | --- |
+| 0.25 c | 7.5 | 7.5 | 7.5 | 7.5 |
+| 0.375 c | 11.3 | 11.0 | 10.75 | 10.75 |
+| 0.5 c | 14.8 | 14.8 | 14.8 | — |
+
+The loss is the same at every radius, inside and beyond the period, to the
+resolution of the lattice — the same as in the period-3 slab. The prediction's
+second half (flat beyond L) holds; its first half (Newton inside L, a 1/R
+fall from R = 3 to 5) does not appear. Either the outward integral is
+dominated by the long two-dimensional part of the path in both cases, or the
+radius independence is a property of this four-body coupling rather than of
+closure. Only the open-3D box with the identical metric decides that; it is
+the control the whole section rests on and is recorded below when it lands.
 
 ### Four masses on Kerengonen signed quanta (`kerengonen_universe.py`)
 
