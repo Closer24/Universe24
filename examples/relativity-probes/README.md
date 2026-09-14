@@ -380,6 +380,22 @@ carried in a lower-dimensional representation is a hypothesis this lattice
 cannot decide; what it can say is that the flat curve needs no extra mass
 here, only a change in how the far region is represented.
 
+### Solved from the model: the short closed dimension sets the transition radius
+
+Universe24 is closed. If one of its dimensions is closed with a short period
+L, the field of a mass spreads in three dimensions while r < L and in two once
+r > L: the same 1/r² transport gives Newton inside L and a flat curve outside
+it, and the transition radius is L itself — a prediction with no parameter
+beyond the shape of the universe. Real rotation curves are Newtonian in the
+bright inner disc and flat beyond it; in this reading the radius where they
+flatten measures the size of the short closed dimension.
+
+The test (`... 50 periodic rays 61 9`): the 61 × 61 slab with the third
+dimension closed at period 9 instead of 3, the same coupling and field, at
+R = 3, 5 (inside the period), 9 and 15 (beyond it). Newton predicts the loss
+along an outward path falling as 1/R at R = 3 and 5; the compressed regime
+predicts equal losses at 9 and 15. Results are recorded below.
+
 ### Four masses on Kerengonen signed quanta (`kerengonen_universe.py`)
 
 The same radius sweep with every mass a funded source of negative quanta

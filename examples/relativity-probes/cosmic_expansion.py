@@ -11,7 +11,7 @@ For each v0 the probe reports the mean distance of the bodies from the centre
 over time, whether the bodies turned around (recollapse) or left the slab
 (escape), and the speed at which the two regimes separate.
 
-usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays] [side]
+usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays] [side] [depth]
 """
 
 import sys
@@ -31,8 +31,11 @@ RAYS = len(sys.argv) > 6 and sys.argv[6] == "rays"
 # Box side in x and y; a periodic box must be wide enough that no body meets its
 # own image within the run (a body at c covers ticks links).
 SIDE = int(sys.argv[7]) if len(sys.argv) > 7 else 29
-SHAPE = [SIDE, SIDE, 3]
-CENTER = (SIDE // 2, SIDE // 2, 1)
+# Extent of the third dimension. Closed and short, it is the scale beyond which
+# the field spreads in two dimensions instead of three.
+DEPTH = int(sys.argv[8]) if len(sys.argv) > 8 else 3
+SHAPE = [SIDE, SIDE, DEPTH]
+CENTER = (SIDE // 2, SIDE // 2, DEPTH // 2)
 AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 
@@ -229,7 +232,7 @@ def label(history, escaped):
 if __name__ == "__main__":
     print(
         f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, "
-        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}, side {SIDE}"
+        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}, side {SIDE}, depth {DEPTH}"
     )
     print("control without a field: v0 = 60 ->", label(*run(60, 0)))
     for v0 in (0, 15, 30, 45, 60, 90, 120):
