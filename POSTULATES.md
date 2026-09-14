@@ -355,6 +355,14 @@ timing; it cannot explain the correlations beyond the bound, and no local
 rule on this lattice can. That excess is the open question of this section,
 answered in this repository only by the explicitly nonlocal quantum query.
 
+The dark-matter question was put to the same rule. Gathering a gravity train
+to whoever catches a ray of it does focus the pull, but into the momentum of
+the part of the train the flood can reach: it falls slowly while the catch
+is partial and cancels when the catch is complete, and a rotation curve from
+it would rise, not stay flat. The plain ray gravity stays inverse square. The
+[gathered gravity probe](examples/gathered-gravity/README.md) records it: the
+lattice has no focusing that mimics unseen mass.
+
 Until these requirements have been tested for the proposed laws, do not claim that
 the simulator solves quantum collapse or entanglement consistency.
 

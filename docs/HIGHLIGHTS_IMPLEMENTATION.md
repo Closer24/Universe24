@@ -46,7 +46,9 @@ sequence, not physical randomness; the event audit re-measures every owner per
 event, so audited worlds stay small; and the ray is a local model, so
 [Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
 bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
-it gives, the excess correlation it cannot.
+it gives, the excess correlation it cannot; and gathering a gravity train to
+its catcher ([gathered gravity](../examples/gathered-gravity/README.md))
+focuses quanta, not a force law, so no flat rotation curve comes from it.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not
 derived. Exact sources and completed checks are in
 [validation evidence](VALIDATION.md).

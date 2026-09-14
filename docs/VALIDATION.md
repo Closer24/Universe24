@@ -1906,3 +1906,23 @@ Kerengonen coherence with a reference ray at the setting phase.
 
 A local model's answer, as the theorem requires: the ray reproduces Malus's
 law, the shared origin and no-signaling, and not the correlation beyond 2.
+
+## Gathered gravity: claim-and-gather does not make dark matter — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Configuration only: the signed-quanta
+gravity field with `claim`, a source whose train label advances every tick,
+and one body per world with or without a claiming absorb rule. The question
+was whether gathering a train to its catcher focuses the pull enough to fall
+slower than the inverse square, the dark-matter signature.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,451 tests with five visualization skips |
+| New tests | `tests/test_gathered_gravity.py`: on a 13-cubed world with 128 headings the claiming body pays more and is pulled more than four times harder than the plain one, both closed |
+| Gathered gravity | 21-cubed world, 512 mirrored headings, one negative quantum per ray per tick, 60 ticks: plain axis pull 148, 24, 26, 26 at r = 3, 5, 7, 9 (the floor is the one axis quantum); claiming axis pull 2,962, 2,705, 2,395, 2,046 (slope -0.32), paid 9,548 down to 3,636; off axis at (r, 2, 1) plain 47.8, 49.9, 24.2, 0 and claiming 924, 745, 572, 0 (slope -0.71 over the crossed Nodes; no line crosses r = 9.27); at half pace and r = 5 the claiming pull falls to 243 while the body pays 11,045, a whole train's momentum cancelling; every world closed |
+| Visualization | Not requested or generated |
+
+The claim delivers a train's quanta to its catcher and the momentum of only
+the part the flood can reach; the pull it makes is neither inverse square nor
+flat, and it disappears when the gather is complete. No dark-matter
+appearance from focusing.
