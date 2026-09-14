@@ -1,5 +1,28 @@
 # Relativity probes: gravity from the computation field, twin clocks, quantum transport
 
+## Bottom line (2026-09-14)
+
+What the generic integer engine gives by itself, with laws supplied only as
+JSON and nothing physical in the code:
+
+| | result | probe |
+| --- | --- | --- |
+| **light** | one link per tick in every direction, independent of the source; classical Doppler; no kinematic time dilation | earlier session, twins (2) |
+| **gravity** | one coupling (momentum += mass × flux, sign supplied) gives attraction, the Newtonian velocity law exactly (4.00), escape speed ∝ √M, and on signed quanta a closed ledger where the pulled body pays | 1, 4, Kerengonen |
+| **lensing** | what a local observer sees: the lamp displaced away from the mass, double images from opposite sides, late arrival, a caustic (focal distance ∝ b^2.5-3) — a gravitational lens, not a glass one | 1 (from the side) |
+| **cosmology** | expansion is only an initial condition; there is no repulsive term; a closed universe is bound by its size, its field never leaves, and the growing load makes all light slow with age: a distance-proportional redshift without recession, in whole steps | 4, 5 |
+| **gravitational phase** | absent on the fixed field clock; present with `ray_delay` + `ray_phase_per_tick` (an engine rule, opt-in): the interferometer fringe beside a mass shifts by the waits — the COW signature | 8 |
+| **dark matter** | the same 1/r² transport gives radius-independent outward losses in every closed box tried (period 3 and period 9, R = 3-15): a flat curve from a compressed third dimension, no extra mass. **Pending:** the open-3D control with the identical metric; until it lands this is a candidate, not a result | 4, 6 |
+| **dark energy** | not needed for a redshift-distance relation (closure supplies one); nothing here accelerates it | 5, 6 |
+| **time** | one integer: the logged tickets replay the whole history bit for bit, any earlier point is reached by running the number forward, and the collision law runs backward to the starting point exactly | 9 |
+| **quantum** | a localized domain does not feel the field's delay (6 → 13 ticks for the carrier, unchanged for the click); main's `field_phase` gives it a phase, not a fall | 3 |
+
+What needed a declared rule, all generic and opt-in: self-field policies,
+carried allocation phases, the computation field as delay (isotropic,
+directional, least-delay), a ray field as computation field, ray delay and
+phase per interval. What does not emerge: Lorentz dilation, accelerated
+expansion, quantum matter that gravitates.
+
 Three configuration-only probes of what the generic engine does with a mass whose
 `computation` field is the local cost of computing (Highlights 4.4), run on
 2026-09-14 on branch `feat/self-field-policies-and-carried-phase` after merging

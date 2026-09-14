@@ -589,7 +589,15 @@ treating its omissions as current gaps.
 Configuration-only probes in [examples/relativity-probes](../examples/relativity-probes/README.md)
 test what section 4.4's computational field yields when a mass emits it and
 bodies exchange momentum with its delivered flux (the sign is supplied, as for
-charge). Findings, each a branch result and not a law:
+charge). Bottom line, against the project goal of physics from local integer
+laws: constant light speed, Newtonian gravity from one coupling with an exact
+ledger, gravitational lensing as a local observer sees it, a bound closed
+universe whose growing load redshifts light in proportion to path, and exact
+time symmetry come out of the generic engine; a gravitational phase needs the
+declared `ray_delay`/`ray_phase_per_tick` rules; a flat rotation curve from a
+compressed third dimension is the dark-matter candidate pending its open-3D
+control; Lorentz dilation, accelerated expansion and gravitating quantum
+matter do not emerge. Findings, each a branch result and not a law:
 
 - Under 4.4 and 7.2: the momentum coupling reproduces the Newtonian velocity law
   exactly (a body at c/2 deflects four times more than light at the same impact

@@ -218,14 +218,21 @@ Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
 Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
-Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
-[examples/relativity-probes](../examples/relativity-probes/README.md) couples the
-computation field's flux to momentum by configuration. The Newtonian velocity law
-appears exactly, the 1/b lensing law does not with the octant far field (axis
-columns; straight rays bring the b = 3/7 ratio from 18 to 5.6), twin clocks
-show no Lorentz dilation, and a localized quantum domain ignores the field's
-delay while a classical carrier on the same path is delayed. These are recorded
-findings of the generic engine, not implemented gravity or relativity.
+Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`
+([bottom line](../examples/relativity-probes/README.md#bottom-line-2026-09-14)):
+with laws supplied only as JSON the generic engine gives constant light speed,
+Newtonian gravity from one coupling (velocity law exact, escape speed ∝ √M, a
+closed ledger on signed quanta), gravitational lensing as a local observer
+sees it (displaced and double images, a caustic), a bound closed universe whose
+age-growing load redshifts all light in proportion to path length, and exact
+time symmetry (one integer replays the history; the collision law runs
+backward to its start). Declared opt-in rules add what the fixed clocks lack: a
+gravitational phase in an interferometer (`ray_delay`, `ray_phase_per_tick`).
+Radius-independent outward losses in every closed box make a flat rotation
+curve from a compressed third dimension the model's dark-matter candidate,
+pending the open-3D control with the same metric. Not emerging: Lorentz
+dilation, accelerated expansion, quantum matter that gravitates. These are
+recorded findings of the generic engine, not implemented gravity or relativity.
 
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
