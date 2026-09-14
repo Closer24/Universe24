@@ -230,6 +230,8 @@ def _execute_run(
                     else "finite-dissipative-v1"
                 )
                 if initial.schema_version == 2
+                else "kerengonen-ray-field-v1"
+                if any(field.kerengonen for field in initial.spatial_fields)
                 else "isotropic-ray-field-v1"
                 if any(field.rays for field in initial.spatial_fields)
                 else "configured-local-fields-v1"
@@ -254,6 +256,38 @@ def _execute_run(
             spatial_couplings=[rule.name for rule in initial.spatial_couplings],
             spatial_response="local-exchange-or-quarter-turn",
             spatial_sampling="resident-before-emission",
+        )
+    if initial.field_phase_first:
+        metadata.update(
+            field_phase_first=True,
+            spatial_sampling="after-field-phase-delivery",
+            field_order="causal-front-first-v1",
+            self_field_filter="field-phase-first-v1",
+        )
+    if initial.arrival_port_blind:
+        metadata.update(
+            arrival_port_blind=True,
+            spatial_sampling="entry-port-blind-on-arrival",
+            self_field_filter="arrival-port-blind-v1",
+        )
+    if initial.computation_field is not None:
+        metadata.update(
+            computation_field=initial.fields[initial.computation_field].name,
+            local_delay=(
+                "computation-field-load-v1"
+                if initial.delay_direction is None
+                else f"directional-departure-delay-{initial.delay_direction}-v1"
+            ),
+            least_delay_routing=initial.least_delay_routing,
+        )
+    if initial.spatial_fields:
+        metadata.update(
+            allocation_phase=initial.allocation_phase,
+            spatial_allocation=(
+                "node-phase-legacy"
+                if initial.allocation_phase == "node"
+                else f"carried-{initial.allocation_phase}-phase-v1"
+            ),
         )
     (output / "state.json").write_text(json.dumps(final, indent=2) + "\n", encoding="utf-8")
     observation = None if probe is None else probe.recording()

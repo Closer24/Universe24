@@ -1,5 +1,78 @@
 # Highlights implementation coverage
 
+## Signed relative field phase - 2026-09-14
+
+The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+now explicitly preserves `(unit / vacuum)^n` for negative field exponents by
+conjugating both coefficients. Equivalent complex representations produce the
+same quantum capture probabilities and ordinary envelope weights. This repairs
+the existing configured law; it adds no field back-reaction or conservation
+claim. The one-shot phase and null-notice options remain separate from recurrent
+generations, whose unsupported combinations fail at initialization. The live
+Highlights document was not edited; numerical regressions and source evidence
+are linked in [validation](VALIDATION.md).
+
+## Wave moments and position output - 2026-09-14
+
+Live Highlights was read at revision
+`ANLCKQnb_MKZlmGPU0eRFQTq-PfRQNEaF8JpkHRYNx58nnn7H11urV_7dwY5zowVhXcHfXiEHj6GRps58iAW2NBny79oKonaGgH8baBaQtE`.
+Section 4.7.5 requires position and momentum to describe the same wave without
+assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
+derives a finite derivative observable from actual spatial density and output
+moments from a local operator row. Its Fourier eigenvalue `2 sin(k)` gives
+partial coverage of the Fourier-momentum target, not canonical momentum or a
+free-particle law. The readout is diagnostic; Nodes receive only bounded
+prepared values at capture. The report exposes unclosed gate/measurement energy
+and distinguishes output re-encoding from vacuum. This is a candidate under
+existing contracts. The live Highlights document was not edited.
+
+## Local response candidate - 2026-09-14
+
+The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+now composes quantum capture with an explicitly supplied ordinary local law.
+Mean momentum and its variance swap with a colocated equal-mass reservoir;
+the one-shot detector records completion locally. The resulting carrier moves,
+while the reservoir retains unresolved momentum. This is an expectation-level
+moment closure and a tested candidate, not a derived classical limit or full
+field/matter quantum dynamics. Its independent exact quantum SWAP control retains
+phase and branch balances; those capabilities do not transfer to the ordinary
+moment-only state. No binding postulate was changed. The live Highlights
+document was not edited for this experimental candidate.
+
+## Quantum-to-classical claim check - 2026-09-14
+
+The [bounded investigation](../examples/quantum/quantum_classical_check.md) verifies
+configured dephasing, coherent recovery and classical probability evolution.
+Spatial localization produces a held record with unknown momentum; an emerging
+Newtonian trajectory remains unestablished. This adds measured evidence, not a
+new physical rule or entity. The live Highlights document was not edited.
+
+## Recurrent local contact outcomes - 2026-09-14
+
+Live Highlights section **4.7.8, Configured recurrent local outcomes**, now records
+the complete configured instrument, local/new-wave/continuing outcomes, single
+inventory ownership, atomic new origins, finite ordinary source generations and
+causal cancellation. It retains the finite-candidate and physical-closure limits.
+The document was read through the trusted file-backed control inventory before
+this targeted addition; no protected controls were present. Connector readback
+verified the new heading and body in the original tab without changing adjacent
+sections. The prior revision was
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`;
+the verified updated revision is
+`ANLCKQkHRRrlLk-0HV9uWe-o47GgA6Dzbugy7caBZLF1JV9slR4tKuGLUzLZS6xS9qpWNw7kmF1VLFQvA8X58ZaqdYd4yuLvEtke55nPntc`.
+
+| Highlights rule | Authoritative owner | Acceptance |
+| --- | --- | --- |
+| Complete local outcomes with no separate random switch | [Recurrent contract](RECURRENT_QUANTUM_CONTACT.md), postulate 21 and Q-RECURRENT-1 | Exact source 9/16 and capture 9/16/144 ticket counts |
+| Fresh origin without duplicate inventory or replay | [Quantum event network](../src/event_universe/quantum/event_network.py) | Occupied-domain rejection, atomic result and same-tick replay tests |
+| Local ordinary source banks and causal cancellation | [Recurrent resolver](../src/event_universe/integration/recurrent_contact_runtime.py) | Remote-prefix equality, finite allowances and signed vector inventory |
+| Repeated encounters followed by localization | [Initialization and recorded expectations](../examples/quantum/repeated_contacts.md) | Fresh-wave ticks 3/9/21, localization 24, balanced field decay |
+
+The [validation record](VALIDATION.md) binds these results to the exact tested
+source. This is not a general many-body Hamiltonian, physical energy closure or
+a completed derivation of the classical limit. Older dated rows below retain
+their own source revisions and do not describe this addition.
+
 ## Causal quantum source envelopes - 2026-09-13
 
 The user's latest selection extends the preceding localized-source choice:
@@ -459,6 +532,105 @@ treating its omissions as current gaps.
 - Preserve source, specifications, skills and original configurations in Git.
   Generated results expire under the 24-hour policy; idle cleanup needs a scheduler.
 
+## Relativity probes of 2026-09-14
+
+Configuration-only probes in [examples/relativity-probes](../examples/relativity-probes/README.md)
+test what section 4.4's computational field yields when a mass emits it and
+bodies exchange momentum with its delivered flux (the sign is supplied, as for
+charge). Findings, each a branch result and not a law:
+
+- Under 4.4 and 7.2: the momentum coupling reproduces the Newtonian velocity law
+  exactly (a body at c/2 deflects four times more than light at the same impact
+  parameter) but not the 1/b law: the lattice far field along an axis column
+  falls faster than 1/r² under `"straight"` allocation phases (b = 3/7 ratio 18
+  instead of 2.33). With the mass emitting straight rays
+  (`isotropic-ray-field-v1`, headings spread over the sphere every tick) the
+  ratio falls to 5.6 for light and 4.7 for the slow body, symmetric on both
+  sides; the remainder is ray quantization, not axis structure.
+- Under 4.4: with the load defined as the stock present at a node, the source
+  node's own emission is its own load, so a strong source throttles itself and
+  the far field never forms under the shared clock. The directional delay does
+  not have this problem. A load definition that excludes a node's own emission
+  is an open design choice.
+- Under 5 and the local observer: no kinematic time dilation. Twin clocks agree
+  at every speed under any budget above the moving cycle's cost; a tighter
+  budget slows the traveller linearly in moves, not as √(1−v²).
+- Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
+  regardless of the local computation load, while a classical carrier on the
+  same path is delayed 6 → 13 ticks. The quantum gate clock does not read the
+  node's delay; this is an equivalence-principle gap of the profile, not
+  configurable.
+
+## Proposed amendments of 2026-09-13
+
+Status: applied to the live Google document on 2026-09-13 as an appended
+section 11 with subsections 11.1 to 11.7, each naming the section it amends;
+earlier paragraphs were preserved. Section 10 above is unchanged so that it
+remains the recorded snapshot. Each bullet below is written in the document's style and names the
+heading it belongs under. Evidence: `examples/collisions`, `examples/charged-pair`,
+`tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
+`tests/test_rotation_self_interaction.py`.
+
+Under 3.3.1 Discrete directional-flux conservation:
+
+- An indivisible unit must carry its own allocation phase; a node-owned phase
+  decides its direction by lattice axis order.
+- Observed: without decay, every far-field unit follows the first axis weight,
+  so the far field is rays, not a shell. Status: open defect, not a law.
+- Repository status after the live edit: `allocation_phase` carries each
+  portion's phase and merges phases on arrival. `"straight"` (default) keeps
+  a lone unit on its axis so rays move at link speed while the axes share
+  the units; `"rotate"` cycles the axes and is Manhattan-isotropic but slows
+  axial propagation to a third; `"node"` retains the legacy behavior.
+  See [spatial fields](SPATIAL_FIELDS.md#carried-allocation-phases).
+  Reported to the live document on 2026-09-14 as two bullets under 11.8
+  (the `allocation_phase` modes and PR #93 head `8f04758`).
+
+Under 3.5.2 Local collisions:
+
+- Status: the configured elastic, inelastic, three-body and rotated-axis
+  examples pass the momentum, mass and energy checks; a nonintegral outcome
+  faults instead of rounding. This verifies the supplied law, not emergence.
+
+Under 4.2 Update cycle:
+
+- The order of the field phase relative to the carrier sample within one
+  interval is a declared model choice; see 10.3.
+
+Under 5.2 Fixed link travel:
+
+- Matter and field share the link time; whether the field phase precedes the
+  carrier sample inside an interval is declared, not implied by c.
+
+Under 7.2 Attraction between masses:
+
+- Verified for charge, not mass: a configured charge-times-flux exchange gives
+  attraction of unlike and repulsion of like charges for held and free pairs.
+  The sign is supplied in initialization, so this tests the mechanism, not
+  emergence.
+
+Under 10.3 Spatial fields and finite propagation, replacing the self-field
+bullet:
+
+- Self-field attribution is not implemented as a source-identity filter.
+- Under one shared clock a source and its departure-interval emission cross
+  one link together; a value-driven response therefore reads its own field
+  after every hop and an isolated charge accelerates itself.
+- Two declared policies remove this without identity: field-phase-first
+  delivery keeps own field one link ahead on every free-space path;
+  arrival-port-blind sampling keeps the default clock and ignores the entry
+  travel port for the arrival interval, so straight paths are self-blind
+  while maximum-speed turns still coarrive.
+- The flux-driven rotation law is self-blind on straight paths by geometry and
+  turns at maximum-speed corners.
+- Periodic return remains outside every guarantee. None of these is a derived
+  self-force law.
+
+Under 10.5 Couplings, interactions and rotation:
+
+- The generic value exchange was observed to accelerate an isolated straight
+  emitter by its own coarriving packet; that baseline is retained as a test.
+
 ## Coverage map
 
 ### Local observer reconciliation
@@ -505,6 +677,28 @@ energy, physical light speed and indefinite bounded-integer mixing remain gaps.
 The experiment does not promote full electromagnetic emergence to a verified
 result. This entry records repository coverage; it does not claim a live
 Highlights edit or replace the earlier revision record above.
+
+### Self-field ordering reconciliation
+
+Highlights was read again on 2026-09-13 through the Drive connector for
+sections 1.1.1, 3.3.1, 3.5.2, 3.5.4, 4.2, 5.2, 10.3 and 10.5. Section 10.3
+states that self-field attribution is not implemented as a general
+source-identity filter; that remains true. The generic engine's default clock
+delivers a carrier and its departure-interval emission through the same link
+together, so a value-driven exchange read one own packet after every hop and
+an isolated moving charge violated POSTULATES section 7. Two opt-in policies
+now exist without source identity: `field_phase_first` orders the field phase
+before carrier sampling, matching the causal stream candidate, so own field is
+at least one link ahead on every free-space path; `arrival_port_blind` keeps
+the default clock and excludes the arrival travel port from an arriving
+carrier's single sample, so straight paths are self-blind while maximum-speed
+corners still coarrive. Both pass isolated-source and external-source controls
+in `tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
+`tests/test_rotation_self_interaction.py`. The same probes recorded that a
+decay-free schema 1 pulse keeps every unit on the Manhattan shell but that
+indivisible far-field units all follow the first axis weight, which is a
+separate open finding. This reconciliation edits repository contracts only;
+the live Google document was not edited.
 
 ### Source contracts and evidence
 

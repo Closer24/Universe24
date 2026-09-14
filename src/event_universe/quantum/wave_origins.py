@@ -17,6 +17,7 @@ class WaveDefinition:
     name: str
     register_index: int
     deferred: bool = False
+    max_generations: int = 1
 
     def __post_init__(self) -> None:
         if type(self.name) is not str or not self.name or len(self.name) > 128:
@@ -25,6 +26,8 @@ class WaveDefinition:
             raise ValueError("nonnegative wave source register required")
         if type(self.deferred) is not bool:
             raise ValueError("deferred wave selection must be boolean")
+        if type(self.max_generations) is not int or not 1 <= self.max_generations <= 6:
+            raise ValueError("wave generation capacity must be one through six")
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,6 +62,7 @@ class WaveOrigins:
         self.banks = dict(zip(unique, banks, strict=True))
         self.definitions = {definition.name: definition for definition in definitions}
         self.names: dict[str, int] = {}
+        self.generations: dict[str, int] = {}
         for definition in definitions:
             if definition.deferred:
                 continue
@@ -71,26 +75,46 @@ class WaveOrigins:
                 parents=(heads[definition.register_index],),
             )
             self.names[definition.name] = origin.id
+            self.generations[definition.name] = 1
             bank = self.banks[address]
             bank.replace((*bank.origins, origin.id), origin.id)
         self._origin_ids = frozenset(self.names.values())
 
-    def check_activation(self, name: str) -> WaveDefinition:
+    def check_activation(
+        self, name: str, *, register_index: int | None = None, renew: bool = False
+    ) -> WaveDefinition:
         definition = self.definitions.get(name)
-        if definition is None or not definition.deferred or name in self.names:
+        if definition is None or not definition.deferred or (name in self.names and not renew):
             raise ValueError("wave activation requires an unused deferred origin")
-        bank = self.banks[self.addresses[definition.register_index]]
+        if name in self.names and self.relevant(self.names[name]):
+            raise ValueError("a new generation requires its preceding origin to be resolved")
+        if self.generations.get(name, 0) >= definition.max_generations:
+            raise OverflowError("configured wave generation capacity exhausted")
+        register = definition.register_index if register_index is None else register_index
+        if type(register) is not int or not 0 <= register < len(self.addresses):
+            raise ValueError("wave activation register outside configured space")
+        bank = self.banks[self.addresses[register]]
         if sum(self.relevant(origin) for origin in bank.origins) >= 6:
             raise OverflowError("local quantum wave capacity exceeds six")
         return definition
 
-    def activate(self, name: str, tick: int, parent: int) -> int:
-        definition = self.check_activation(name)
-        address = self.addresses[definition.register_index]
+    def activate(
+        self,
+        name: str,
+        tick: int,
+        parent: int,
+        *,
+        register_index: int | None = None,
+        renew: bool = False,
+    ) -> int:
+        definition = self.check_activation(name, register_index=register_index, renew=renew)
+        register = definition.register_index if register_index is None else register_index
+        address = self.addresses[register]
         origin = self.events.append(
             tick=tick, addresses=(address,), owner="quantum", kind="wave-origin", parents=(parent,)
         )
         self.names[name] = origin.id
+        self.generations[name] = self.generations.get(name, 0) + 1
         self._origin_ids = self._origin_ids | {origin.id}
         bank = self.banks[address]
         retained = tuple(i for i in bank.origins if self.relevant(i))

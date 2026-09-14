@@ -37,6 +37,27 @@ by this sampling rule. Each local sample and carried remainder has fixed size;
 no source identifiers, histories, other-world simulations or global measurements
 enter the response.
 
+## Absorb
+
+`"mode": "absorb"` applies to a straight-ray field that the absorbing type also
+carries. It takes no `amount`: of every ray resident at the record's Node on the
+cycle after it arrived, the share `amount x fraction / fraction_denominator`
+(truncated toward zero; the whole ray without a `fraction`) is removed, added to
+the record's field of the same name, and with `"momentum_field"` its
+`share x heading` is added to that owned vector; the rest of the ray is
+forwarded. `fraction` is a nonnegative expression over the record's own fields,
+so a share proportional to `mass` gives every body the same acceleration. A
+negative share is paid from the record's stock and never beyond it: the clipped
+remainder continues as a ray. One ray field is either absorbed or exchanged and
+rotated, never both. Absorb runs inside the spatial plan before forwarding,
+needs no response law, and is described with funded emission in
+[SPATIAL_FIELDS.md](SPATIAL_FIELDS.md#funded-emission-and-absorption). On a
+[Kerengonen field](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+every share is further scaled by the coherence of the rays resident at the
+Node, so opposite phases are not absorbed and pass on; with the field's
+`"capture": "lottery"` the record instead takes each whole ray or nothing,
+by a local ticket drawn against that share.
+
 ## Exchange and rotation
 
 An `exchange` rule evaluates `amount`, divides it by `denominator` with a signed
@@ -178,3 +199,50 @@ source attribution remains a separate feature: a carried own-front register coul
 support unsigned straight paths with a defined partition order, but is not
 implemented by this response extension. Current rules always operate on the
 declared local samples and do not claim to identify their sources.
+
+## Field phase first ordering
+
+Under the default clock a carrier and the field it emits in its departure
+interval cross the same link together and are sampled together at the
+destination. A value-driven `exchange` therefore reads one packet of its own
+field after every hop: a coarrival self push proportional to the emitted share
+on the travel port. The top-level boolean `"field_phase_first": true` selects
+the `causal-front-first-v1` ordering already used by
+[the causal stream candidate](CAUSAL_STREAM_FIELD.md): every field packet
+completes its link inside the interval in which it departs, delivery happens
+before any carrier sample is frozen, and carriers still cross one link per
+interval. A straight-moving emitter's own field is then at least one link ahead
+at every read, by Manhattan distance alone; no source identity, history or
+subtraction is used.
+
+Adjacent receivers consequently read a source one interval earlier than under
+the default clock. Turns with alternate shortest paths and periodic return
+remain outside the guarantee, exactly as above. The option requires outward
+spatial fields, `link_ticks` 1 and the default clock, and cannot combine with
+local field rules or joint spatial interactions. Run metadata records
+`field_phase_first` and `spatial_sampling: after-field-phase-delivery`.
+
+## Arrival-port-blind sampling
+
+`field_phase_first` removes own-field coarrival on every path, including
+turns. The alternative top-level boolean `"arrival_port_blind": true` keeps
+the default clock and instead lets a carrier that arrived in the current
+interval ignore, for that one sample, the value and scalar flux delivered
+through the travel port it came in on. The rule reads only the carrier's own
+arrival port and the six delivered channels; it stores no source identity or
+history, and it lapses at the end of the arrival interval.
+
+The consequences follow from geometry. On a straight path the packet emitted
+in the departure interval always travels through that same port, so an
+isolated straight emitter changes nothing at any speed. At a corner at maximum
+speed an own packet reaches the same node along the alternate shortest path
+through a side port, so it still acts; below maximum speed no own packet
+coincides at all. A held carrier never arrives and reads external sources in
+full. A receding carrier loses the overtaking external flux of its arrival
+interval only, which reduces that response by its hop fraction; head-on
+flux is unaffected. This is a configured self-interaction policy under
+sections 3.5.2 and 10.3 of Highlights, not a derived radiation-reaction law.
+It requires outward spatial fields and the default clock, cannot combine with
+local field rules, joint spatial interactions or `field_phase_first`, and is
+recorded as `spatial_sampling: entry-port-blind-on-arrival` with
+`self_field_filter: arrival-port-blind-v1` in run metadata.

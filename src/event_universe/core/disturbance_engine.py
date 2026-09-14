@@ -14,14 +14,13 @@ from .disturbance_state import (
     Address3,
     DisturbanceRecord,
     InitialState,
-    LocalPlan,
     NodeView,
     Packet,
     bounded,
     decode,
     unpack,
 )
-from .event_resolution import CausalSourceResolver, CommitResolver, EventResolver
+from .event_resolution import CausalSourceResolver, CommitResolver, EventResolver, Planner
 from .event_space import CausalEventSpace
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
@@ -54,7 +53,6 @@ def _consistent_read[**P, T](
     return read
 
 
-Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
 
 
@@ -105,10 +103,12 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = selected_type_set(initial.spatial_couplings, initial.spatial_interactions)
+        # Absorption runs inside the spatial plan; only response rules need the coupler.
+        response_rules = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
+        self._coupled_types = selected_type_set(response_rules, initial.spatial_interactions)
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
-        if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
+        if (response_rules or initial.spatial_interactions) and spatial_coupler is None:
             raise ValueError("spatial couplings require an explicitly composed response law")
         if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
             raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
@@ -212,6 +212,7 @@ class DisturbanceEngine:
                 ()
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].incoming,
+                () if spatial is None or position not in spatial.nodes else spatial.nodes[position].rays,
             )
             for position in sorted(positions)
         )
@@ -226,7 +227,13 @@ class DisturbanceEngine:
         if spatial is not None:
             packets.extend(
                 InventoryPacket(
-                    "spatial", origin, slot, packet.port, packet.arrival_tick, spatial=packet.fields
+                    "spatial",
+                    origin,
+                    slot,
+                    packet.port,
+                    packet.arrival_tick,
+                    spatial=packet.fields,
+                    rays=packet.rays,
                 )
                 for origin, links in spatial.links.items()
                 for slot, packet in enumerate(links)
@@ -467,6 +474,10 @@ class DisturbanceEngine:
                     self._nodes,
                     execution=self._execution,
                 )
+                if self.initial.field_phase_first:
+                    # The field phase completes its links before any carrier samples them.
+                    self._spatial.deliver(self.tick, self._nodes)
+                    self._spatial.freeze_samples(self._nodes)
             positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
@@ -494,8 +505,13 @@ class DisturbanceEngine:
                 self._resolver.start_sources(
                     self.tick, None if readings is None else readings.__getitem__
                 )
+            if self.initial.arrival_port_blind:
+                # The entry-port exclusion applies only to the arrival interval's sample.
+                for node in self._nodes.values():
+                    node.arrival_port_codes = ()
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
+                # Under field_phase_first only carrier reactions still arrive here.
                 self._spatial.deliver(self.tick, self._nodes)
             self._deliver()
             if self._spatial is not None:

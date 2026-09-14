@@ -1,5 +1,92 @@
 # Test inputs and expected results
 
+## Spatial momentum and position output
+
+`test_spatial_momentum.py` verifies the
+[finite observable](../examples/quantum/position_moment_response.md) against
+independent phase and mixed-state expectations. Equal spatial probabilities
+can have mean +2, -2 or zero; real coherent and incoherent uniform states have
+variance 0 and 2. Endpoint superpositions distinguish second-neighbor coherence.
+Vacuum has unavailable particle moments, partial occupation is explicit, and
+multiple excitations or nonlocal/duplicate edges are rejected.
+
+`test_position_moment_response.py` runs the primary native middle-capture input,
+six endpoint orientations, absent reservoir, delayed computation and longer
+Links. Local re-encoding gives variance 1 or 2 from the operator row. Wave
+diagnostics leave native events and model cost exactly unchanged. The actual
+combined second moment changes 10 -> 11 -> 10 during endpoint propagation,
+and remains 11 after middle capture. This is an exposed closure gap, not a
+conserved quantum energy claim. Subsequent ordinary exchange and escape balance;
+invalid first/second moment proposals reject before conversion.
+Projective controls separate the ensemble drift from selected conditional change.
+The target's later direction still comes from the supplied reservoir.
+
+## Local moment response after capture
+
+`test_local_moment_exchange.py` runs the
+[candidate](../examples/quantum/local_moment_exchange.md) in all six directions,
+with no reservoir, longer Links and computation delay. A unit-mass target with
+mean 0 and variance 1 exchanges moments with a unit-mass reservoir with mean 3
+and variance 0. Total mean momentum 3 and doubled expected kinetic energy 10
+include ordinary, quantum-inventory and escaped owners. The target follows the
+selected axis at nominal c/100; the zero-mean recoil remains uncertain. Test
+mass/validity rejection, renamed fields/types and nonlinear energy rejection
+despite an unchanged mean sum. Separate exact quantum-owner controls preserve
+all sixteen basis momentum/energy cases and coherent reversal.
+
+`test_record_operations.py` verifies that reserved empty slots cannot receive
+new records: select the first unlocked spare, or reject the entire proposal
+without mutation when capacity is insufficient. The delayed quantum capture
+regression in `test_localized_quantum_contact.py` receives a messenger into
+spare slot 2 at tick 4 and commits capture at tick 11 with both owners intact.
+
+## Quantum-to-classical investigation
+
+`test_quantum_classical_experiment.py` runs the bounded
+[investigation](../examples/quantum/quantum_classical_check.md). Ten native controls
+must give exact visibility `(9/25)^n` at fixed contact tick 8; zero coupling and
+phase reversal cover both certain outputs. Explicit coherent environment controls
+must restore interference after retained interactions are inverted. The existing
+five-cycle Markov comparison remains exact. Three spatial outcome controls
+preserve inventory and field accounting while recording configured hold and
+unknown momentum; direct moving capture remains a rejected composition. A pass
+must retain the report's `not_established` trajectory conclusion. No statistical
+or Newtonian emergence claim follows from this acceptance test.
+
+## Recurrent quantum contacts
+
+`test_recurrent_quantum_contact.py` owns the
+[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
+matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
+Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
+and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
+Check no extra draw for a certain outcome, one scalar/vector inventory owner,
+renamed entities/fields, equal-inventory alternate outputs, finite original
+source allowances and capacity rejection before RNG. The checked-in 48-tick
+example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
+-36 and eventual zero field stock under explicit dissipation.
+
+`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
+a remote event at tick 3 cannot select which ordinary local bank clears before
+the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
+It also rejects preparation into local vacuum when another mode is occupied and
+checks same-tick result replay after absorption without origin resurrection.
+Retain all affected localized/causal contact, origin, state and field regressions.
+
+The Kerengonen integration regressions in `test_ray_integration_guards.py` cover
+ordinary runner momentum accounting through absorption and escape, frozen phase
+tables after host-cache eviction, independent trigonometric reference entries,
+distinguishable external phases and advances under self-exclusion, frozen
+departure metadata after emitter changes, largest-share carried advance with
+explicit-zero and field-fallback cases, per-field ticket seeds,
+whole negative lottery rays with insufficient/exact stock, delayed-owner
+rejection before stale commits, immutable carrier routing/unrelated fields,
+expired emission metadata and conflicting momentum or unsupported response
+bindings. `test_kerengonen.py` retains the actual recoil configuration through
+the ordinary runner identity test. Coherence work is quadratic in the configured
+local phase/ray count; it is bounded relative to world size for fixed capacities,
+not a claim of linear host work.
+
 ## Active contract coverage and shared execution
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports
@@ -44,6 +131,27 @@ while honoring explicit `--tests`. Prior source reads use two Git processes and
 preserve exact blobs, including empty files and deleted providers. Old and current
 dependency selections, dynamic resource consumers and failure evidence remain
 part of the gate; batching does not authorize dropping related tests.
+
+## Recurrent quantum contacts
+
+`test_recurrent_quantum_contact.py` owns the
+[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
+matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
+Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
+and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
+Check no extra draw for a certain outcome, one scalar/vector inventory owner,
+renamed entities/fields, equal-inventory alternate outputs, finite original
+source allowances and capacity rejection before RNG. The checked-in 48-tick
+example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
+-36 and eventual zero field stock under explicit dissipation.
+
+`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
+a remote event at tick 3 cannot select which ordinary local bank clears before
+the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
+It also rejects preparation into local vacuum when another mode is occupied and
+checks same-tick result replay after absorption without origin resurrection.
+Retain all affected localized/causal contact, origin, state and field regressions.
+
 
 ## Causal quantum sources
 
@@ -128,6 +236,12 @@ the source selecting exponent 0; source port weight `2549/3125` after the
 shifted recombination; rejection of `start_sources` without field values; the
 headless report listing the retained choice; and zero field phases in the
 unchanged default example.
+
+Complex-coefficient regressions require unchanged interference under a common
+phase for exponents -3 through 3 and exact reversal for positive/negative powers
+in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
+both must select -1, capture with probability `576/3125` at tick 7, retain source
+envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
 
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event
@@ -421,7 +535,12 @@ the key selects the default localizing residue.
 | `test_dissipative_initialization.py` | Version 2 requires strict integer retention and nonnegative component budgets; version 1 rejects new keys; invalid signs, shapes, bounds, missing fields and splitting sources fail |
 | `test_spatial_decay.py` | Half retention maps 20 through 10, 5, 2, 1 to 0; both signed one-unit tails vanish even at retention `(MAX_VALUE-1)/MAX_VALUE`; unsigned invalid input cannot be erased by decay |
 | `test_finite_spatial_engine.py` | Link times 1, 2 and 3 preserve in-flight stock until arrival; budget 5/request 2 emits 2, 2, 1 then 0; moving and delayed sources cannot restore allowances; baseline remains; delivery failure commits neither loss nor packet removal; the default localizing residue keeps a 20-unit pulse at total 20 with deposits 10, 5, 3, 1, 1 along its path and zero dissipation under both field clocks, deposits two separate 1-unit arrivals before merging, leaves deposits in place under later arrivals, and rejects unknown residues while the runner records `finite-localizing-v1` |
-| `test_ray_field.py` | DDA rays return to their heading after one period with bounded accumulators; emission shares 5 over 2 rays as 3 and 2 and cycles the cursor; a 64-unit ray source keeps totals at 64 per tick and 64 on every Manhattan shell; a receiver gains 15 momentum from three ticks of 5-unit ray flux; retention 1/2 deposits 4, 2, 1, 1 along a ray or dissipates 8; a third ray phase at a two-slot Node fails explicitly; open boundaries count escaped rays; invalid keys, zero headings, vector fields, octant seeds and the shared clock are rejected; the runner records `isotropic-ray-field-v1` |
+| `test_ray_field.py` | DDA rays return to their heading after one period with bounded accumulators; emission shares 5 over 2 rays as 3 and 2 and cycles the cursor; a 64-unit ray source keeps totals at 64 per tick and 64 on every Manhattan shell; a receiver gains 15 momentum from three ticks of 5-unit ray flux; retention 1/2 deposits 4, 2, 1, 1 along a ray or dissipates 8; a third ray phase at a two-slot Node fails explicitly; open boundaries count escaped rays; invalid keys, zero headings, vector fields, octant seeds and the shared clock are rejected; the runner records `isotropic-ray-field-v1`; a ray passes a Node whose receiver reacts to it and reaches the Nodes beyond |
+| `test_gravity_probe.py` | Held bodies beside an axis-ray source gain momentum toward it, proportional to mass within the carried integer remainder, with combined carrier plus local-field momentum conserved; a moving body starting five links out only moves inward with growing inward momentum, turns between five and seven links past the source with zero momentum, and comes back through it: a bound oscillation with combined momentum still zero; signed quanta pull held bodies toward the source and each pays exactly the momentum it gains from its stock, the far body takes its share of what the near one left, the source is credited 65,536 per tick with zero recoil and the quanta close; a body with stock 50 stops at momentum -50 with the event audit passed |
+| `test_energy_audit.py` | Funded emission along (1,0,0) and (0,2,0) debits the emitter by 2 per tick and recoils by (-1,-2,0) per tick with the audit closed; a stock of 5 emits 2, 2, 1, 0; `source: true` is still rejected and `recoil_field` needs funding; escaped quanta are measured escape; an absorber banks five quanta with momentum (5,0,0) while quanta beyond it vanish and the audit stays closed; a moving absorber-emitter never eats its own wake (40, 38, 36, 34, 32, 30); absorb validation rejects a scalar momentum field and an amount key; a fraction 1/4 absorbs one quantum of each 4-quantum ray and forwards 3; negative quanta pull an absorber with stock 3 by (-2, -1, 0, 0) and credit the emitter 16 with recoil (16, 0, 0); a ray field cannot be both absorbed and exchanged |
+| `test_kerengonen.py` | A phase advances by the field's step on every link and wraps, a plain field leaves it alone, and rays merge only with equal phase; the cosine table for four steps is (256, 0, -256, 0), equal phases give coherence exactly one, opposite equal amounts exactly zero and a quarter turn one half; two lamps three links from a Node fire 2-quantum rays at each other and the sampled values along the line are 4, 0, 4, 0, 4 with four steps and 4, 2, 0 with eight, while the plain field reads 4 everywhere and the audit closes on 800 quanta; an absorber between the lamps takes 4 quanta before the opposite pair arrives and nothing after, takes 20 at the in-phase Node, and 20 at the dark Node when the second lamp is offset two steps; the runner records `kerengonen-ray-field-v1` and rejects one phase step, an advance equal to the steps, a missing advance, an emission phase beyond the steps, a phase without the key and the key without ray transport; the double-slit probe composes and closes; the lottery capture takes 18 in-phase quanta and 2 before the dark pair meets like the share rule, takes between 2 and 16 whole single quanta at a quarter turn where the share rule truncates to 2, and rejects an unknown capture, a seed without the lottery and a seed at the ticket modulus; a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), and partial at a fixed re-emission phase (3), and a carried phase without an absorb rule is rejected; a ray with its own advance ignores the field's, rays of different advance do not merge, beams of momentum 16 and 32 at advance |p|/4 carry advances 4 and 8 with phases in ratio two after the same links, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance so readings are 2, 4, 0 for lamp offsets 0, 16, 48 on a 64-step field |
+| `test_quantum_classical.py` | A one-excitation walk with the position record discarded after every step equals the classical Markov chain exactly, with variance `t - 3/4`, while the coherent walk is wider and not the classical bell at step 6; single quanta on the ray field click as 0 or 1 at a detector and every emitted quantum is a record, in flight or escaped; repeated capture attempts land only on pass ticks 3 and 7 with charge and mass exact |
+| `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 
 The runner must distinguish actual physical conservation from balanced loss

@@ -1,6 +1,6 @@
 """A bounded Node owns spatial transitions and its own field output bank."""
 
-from collections.abc import Callable, Generator
+from collections.abc import Callable, Generator, Mapping
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING, Protocol
 
@@ -15,7 +15,7 @@ from .disturbance_state import (
     pack,
     unpack,
 )
-from .integer import add_components, checked_work
+from .integer import add_components, checked_work, subtract_components
 from .node_boundary import (
     validate_decay,
     validate_reaction_state,
@@ -44,6 +44,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     attenuate_rays,
+    coherent_stock,
     merge_rays,
     ray_stock,
     validate_rays,
@@ -84,6 +85,9 @@ class SpatialCoupler(Protocol):
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
         received_masks: tuple[int, ...] = (),
+        *,
+        slot_samples: Mapping[int, Values] | None = None,
+        slot_fluxes: Mapping[int, Values] | None = None,
     ) -> SpatialCouplingResult: ...
 
     def validate_guards(
@@ -245,7 +249,9 @@ class SpatialNode(SpatialNodeState):
             zip(services.initial.spatial_fields, self.states, strict=True)
         ):
             if definition.rays and index < len(self.rays) and self.rays[index]:
-                populations = (pack((ray_stock(self.rays[index]),)),) + state.populations[1:]
+                populations = (
+                    pack((coherent_stock(self.rays[index], definition),)),
+                ) + state.populations[1:]
                 result.append(replace(state, populations=populations))
             else:
                 result.append(state)
@@ -278,6 +284,11 @@ class SpatialNode(SpatialNodeState):
         if any(packet is not None for packet in self.output.packets):
             raise ValueError("outgoing spatial links are occupied")
         records = () if carrier is None else carrier.records
+        if services.initial.computation_field is not None:
+            # Stock present before forwarding is this interval's local computation load.
+            index = self._computation_index(services)
+            self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+            self.load_channels = tuple(unpack(payload)[0] for payload in self.states[index].delivered)
         sample_values, sample_fluxes, sample_ports = (
             self.sample_values,
             self.sample_fluxes,
@@ -285,13 +296,17 @@ class SpatialNode(SpatialNodeState):
         )
         sample_cause = self.sample_cause_id
         sample_received_masks = self.sample_received_masks
-        if services.coupler is not None and any(
-            record is not None and record.type_index in coupled_types for record in records
+        if (
+            services.coupler is not None
+            and not services.initial.field_phase_first
+            and any(record is not None and record.type_index in coupled_types for record in records)
         ):
             # Freeze only locally delivered input, before fresh source injection.
             sample_values = services.coupler.sample(self._sampled_states(services))
             sample_fluxes = services.coupler.sample_fluxes(self.states)
             sample_cause = self.cause_id
+            if services.initial.arrival_port_blind:
+                self.sample_delivered = tuple(state.delivered for state in self.states)
             if services.initial.spatial_interactions:
                 sample_ports = services.coupler.sample_ports(self.states)
                 sample_received_masks = services.coupler.sample_received_masks(self.states)
@@ -319,6 +334,12 @@ class SpatialNode(SpatialNodeState):
         active_field = any(
             any(unpack(payload)) for state in states for payload in state.populations
         ) or any(self.rays)
+        # An exhausted source still clears its last emission before a later move.
+        active_source = active_source or any(
+            any(any(unpack(row)) for row in record.emission_last)
+            for record in records
+            if record is not None
+        )
         if not active_source and not active_field and self.received_count == 0:
             self.states = tuple(
                 replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6, received_mask=0)
@@ -433,15 +454,18 @@ class SpatialNode(SpatialNodeState):
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
         packets: list[SpatialPacket | None] = [None] * 6
+        # Field-phase-first packets complete their link inside the departure interval.
+        arrival = bounded(tick + services.initial.link_ticks - int(services.initial.field_phase_first))
         for port, bundle in enumerate(plan.outgoing):
             port_rays = plan.rays[port] if plan.rays else ()
             if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
                 packets[port] = SpatialPacket(
-                    bounded(tick + services.initial.link_ticks),
+                    arrival,
                     self.position,
                     port,
                     bundle,
                     rays=port_rays if any(port_rays) else (),
+                    phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
                 )
         # All physical calculations and validation precede the local commit.
         if services.balance_guard is not None:
@@ -463,7 +487,10 @@ class SpatialNode(SpatialNodeState):
             if plan.emission_records:
                 raise ValueError("spatial emission cannot create disturbance records")
         else:
-            carrier.accept_emission(plan.emission_records)
+            carrier.accept_emission(
+                plan.emission_records,
+                initial=services.initial,
+            )
         self.states = plan.states
         if self.rays:
             # Every resident ray left on this cycle along its own line.
@@ -484,6 +511,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         notifications: list[dict[str, object]] = []
         cause = self._event(
             "spatial_cycle",
@@ -555,10 +584,25 @@ class SpatialNode(SpatialNodeState):
             )
 
     def couple(
-        self, records: tuple[DisturbanceRecord | None, ...], services: SpatialServices, tick: int
+        self,
+        records: tuple[DisturbanceRecord | None, ...],
+        services: SpatialServices,
+        tick: int,
+        blind_ports: Mapping[int, int] | None = None,
     ) -> SpatialCouplingResult:
         if services.coupler is None:
             raise ValueError("spatial coupling requires an explicitly composed law")
+        if blind_ports:
+            slot_samples, slot_fluxes = self.blind_samples(records, blind_ports, services)
+            return services.coupler(
+                records,
+                self.sample_values,
+                self.sample_fluxes,
+                self.sample_ports,
+                self.sample_received_masks,
+                slot_samples=slot_samples,
+                slot_fluxes=slot_fluxes,
+            )
         if services.initial.node_execution:
             if self.pending is not None:
                 raise ValueError("pending field inputs are reserved by their local interaction")
@@ -654,17 +698,33 @@ class SpatialNode(SpatialNodeState):
         )
 
     def packets(
-        self, tick: int, outgoing: tuple[SpatialBundle, ...], services: SpatialServices
+        self,
+        tick: int,
+        outgoing: tuple[SpatialBundle, ...],
+        services: SpatialServices,
+        rays: tuple[tuple[Rays, ...], ...] = (),
+        outgoing_phases: tuple[SpatialBundle, ...] = (),
     ) -> tuple[SpatialPacket | None, ...]:
         if len(outgoing) != 6:
             raise ValueError("spatial output requires exactly six bounded ports")
         arrival = bounded(checked_work(tick + services.initial.link_ticks))
-        return tuple(
-            SpatialPacket(arrival, self.position, port, bundle)
-            if any(any(unpack(payload)) for field in bundle for payload in field)
-            else None
-            for port, bundle in enumerate(outgoing)
-        )
+        result: list[SpatialPacket | None] = []
+        for port, bundle in enumerate(outgoing):
+            port_rays = rays[port] if rays else ()
+            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
+                result.append(
+                    SpatialPacket(
+                        arrival,
+                        self.position,
+                        port,
+                        bundle,
+                        rays=port_rays if any(port_rays) else (),
+                        phases=outgoing_phases[port] if outgoing_phases else (),
+                    )
+                )
+            else:
+                result.append(None)
+        return tuple(result)
 
     def node_states(self, plan: SpatialPlan, services: SpatialServices) -> tuple[SpatialState, ...]:
         """Merge completed later inputs only after the frozen transformation."""
@@ -711,6 +771,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         services.accounting.record_reactions(reaction)
 
     def validate_guards(
@@ -734,7 +796,11 @@ class SpatialNode(SpatialNodeState):
             return ReactionCommit(states, phases, None)
         # Only this instant's departure buffers are still locally appendable.
         # Packets from an earlier departure are immutable while in transit.
-        old_links = self.output.packets if plan is None else self.packets(tick, plan.outgoing, services)
+        old_links = (
+            self.output.packets
+            if plan is None
+            else self.packets(tick, plan.outgoing, services, plan.rays, plan.outgoing_phases)
+        )
         arrival = bounded(tick + services.initial.link_ticks)
         if any(packet is not None and packet.arrival_tick != arrival for packet in old_links):
             raise ValueError("reaction cannot alter a spatial packet already in transit")
@@ -761,9 +827,19 @@ class SpatialNode(SpatialNodeState):
                     combined.append(payload)
                 merged.append(tuple(combined))
             values = tuple(merged)
+            # Rays already leaving on this port are untouched by the field reaction.
+            rays = () if old is None else old.rays
             links.append(
-                SpatialPacket(arrival, self.position, port, values)
-                if any(any(unpack(payload)) for field in values for payload in field)
+                # A reaction appended to a departing packet keeps that packet's carried phases.
+                SpatialPacket(
+                    arrival,
+                    self.position,
+                    port,
+                    values,
+                    rays=rays,
+                    phases=() if old is None else old.phases,
+                )
+                if any(any(unpack(payload)) for field in values for payload in field) or any(rays)
                 else None
             )
         return ReactionCommit(states, phases, tuple(links))
@@ -781,7 +857,86 @@ class SpatialNode(SpatialNodeState):
         services.accounting.record_reactions(reaction)
 
     def cost(self, tick: int, services: SpatialServices) -> int:
-        return 0 if tick % services.initial.link_ticks else self.last_cost
+        # Under a directional delay the load prices departures, not the whole cycle.
+        load = 0 if services.initial.delay_direction is not None else self.load_value(services)
+        if tick % services.initial.link_ticks:
+            return load
+        return bounded(checked_work(self.last_cost + load))
+
+    @staticmethod
+    def _computation_index(services: SpatialServices) -> int:
+        index = services.initial.computation_field
+        return next(i for i, d in enumerate(services.initial.spatial_fields) if d.field == index)
+
+    @staticmethod
+    def _baseline_load(services: SpatialServices) -> int:
+        if services.initial.computation_field is None:
+            return 0
+        definition = services.initial.spatial_fields[SpatialNode._computation_index(services)]
+        return unpack(definition.baseline)[0]
+
+    def load_value(self, services: SpatialServices) -> int:
+        """Local value of the configured computation field: baseline plus stock present this interval."""
+        if services.initial.computation_field is None:
+            return 0
+        return bounded(checked_work(self._baseline_load(services) + self.load))
+
+    def refresh_load(self, services: SpatialServices) -> int:
+        """Read the computation stock owned now, for the shared clock's field forwarding."""
+        if services.initial.computation_field is None:
+            return 0
+        index = self._computation_index(services)
+        self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+        return self.load_value(services)
+
+    def directional_load(self, port: int, services: SpatialServices) -> int:
+        """Load pricing a departure through `port`: field travelling along it, or against it."""
+        if services.initial.computation_field is None or services.initial.delay_direction is None:
+            return 0
+        channel = port if services.initial.delay_direction == "along" else port ^ 1
+        return bounded(checked_work(self._baseline_load(services) + self.load_channels[channel]))
+
+    def freeze_sample(self, services: SpatialServices) -> None:
+        """Freeze coupled samples after this interval's field phase has delivered."""
+        assert services.coupler is not None
+        self.sample_values = services.coupler.sample(self._sampled_states(services))
+        self.sample_fluxes = services.coupler.sample_fluxes(self.states)
+        if services.initial.spatial_interactions:
+            self.sample_ports = services.coupler.sample_ports(self.states)
+            self.sample_received_masks = services.coupler.sample_received_masks(self.states)
+        self.sample_cause_id = self.cause_id
+
+    def blind_samples(
+        self,
+        records: tuple[DisturbanceRecord | None, ...],
+        blind_ports: Mapping[int, int],
+        services: SpatialServices,
+    ) -> tuple[dict[int, Values], dict[int, Values]]:
+        """Per-slot samples that exclude what arrived through each record's own entry port."""
+        slot_samples: dict[int, Values] = {}
+        slot_fluxes: dict[int, Values] = {}
+        for slot, port in blind_ports.items():
+            if slot >= len(records) or records[slot] is None or not self.sample_delivered:
+                continue
+            values, fluxes = list(self.sample_values), list(self.sample_fluxes)
+            for definition, delivered in zip(
+                services.initial.spatial_fields, self.sample_delivered, strict=True
+            ):
+                through = unpack(delivered[port])
+                if not any(through):
+                    continue
+                index = definition.field
+                values[index] = pack(subtract_components(unpack(values[index]), through))
+                if len(through) == 1:
+                    flux = list(unpack(fluxes[index]))
+                    axis, opposite = divmod(port, 2)
+                    flux[axis] = checked_work(
+                        flux[axis] + through[0] if opposite else flux[axis] - through[0]
+                    )
+                    fluxes[index] = pack(tuple(flux))
+            slot_samples[slot] = tuple(values)
+            slot_fluxes[slot] = tuple(fluxes)
+        return slot_samples, slot_fluxes
 
     def receive(
         self,
@@ -882,6 +1037,8 @@ class SpatialNode(SpatialNodeState):
             field = services.initial.fields[definition.field]
             old = receiving[index]
             populations = [list(unpack(v)) for v in old.populations]
+            phases = [list(unpack(v)) for v in old.allocation_phases]
+            phase_denominator = sum(definition.axis_weights) if definition.axis_weights else 1
             directions = (
                 [list(unpack(payload)) for payload in old.delivered]
                 if services.initial.node_execution
@@ -900,7 +1057,15 @@ class SpatialNode(SpatialNodeState):
                         directions[packet.port][component] = checked_work(
                             directions[packet.port][component] + value
                         )
+                if packet.phases:
+                    # Carried remainders merge by addition modulo the axis cycle.
+                    for octant, payload in enumerate(packet.phases[index]):
+                        for component, value in enumerate(unpack(payload)):
+                            phases[octant][component] = (
+                                phases[octant][component] + value
+                            ) % phase_denominator
             packed = tuple(pack(tuple(v)) for v in populations)
+            merged_phases = tuple(pack(tuple(v)) for v in phases)
             arrival_readings.append(tuple(tuple(v) for v in directions))
             delivered = tuple(
                 pack(add_components(tuple(v), unpack(old.delivered[port])))
@@ -918,7 +1083,7 @@ class SpatialNode(SpatialNodeState):
             received_mask = old.received_mask if services.initial.node_execution else 0
             for packet in arrivals:
                 received_mask |= 1 << packet.port
-            states.append(SpatialState(packed, old.allocation_phases, delivered, received_mask))
+            states.append(SpatialState(packed, merged_phases, delivered, received_mask))
         received_count = bounded(
             checked_work(
                 (self.incoming_count if self.shared_pending else self.received_count) + len(arrivals)

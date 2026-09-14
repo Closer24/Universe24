@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "model_id": "computational-curvature-probe-v1",
+  "shape": [25, 17, 7],
+  "boundary": "open",
+  "slots_per_node": 8,
+  "link_ticks": 1,
+  "normal_budget": 32,
+  "ticks": 28,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "source mass unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "ray_token",
+      "components": 1,
+      "units": "probe unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "direction",
+      "components": 3,
+      "units": "lattice direction weight",
+      "signed": true,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "clock_count",
+      "components": 1,
+      "units": "completed local cycles",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "measured_cycle_cost",
+      "components": 1,
+      "units": "model operation cost",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    },
+    {
+      "name": "wave",
+      "components": 1,
+      "units": "wave probe unit",
+      "signed": true,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "computation_field",
+      "components": 1,
+      "units": "computational field unit",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "mass_source",
+      "fields": ["mass"],
+      "defaults": {"mass": 512},
+      "transport": {"mode": "hold"}
+    },
+    {
+      "name": "massless_ray",
+      "fields": ["ray_token", "direction"],
+      "defaults": {"ray_token": 1, "direction": [1, 0, 0]},
+      "transport": {"mode": "move", "direction_field": "direction"}
+    },
+    {
+      "name": "local_clock",
+      "fields": ["clock_count", "measured_cycle_cost"],
+      "defaults": {"clock_count": 0, "measured_cycle_cost": 0},
+      "updates": [
+        {
+          "field": "clock_count",
+          "expression": {"op": "add", "args": [{"field": "clock_count"}, 1]}
+        }
+      ],
+      "transport": {"mode": "hold"},
+      "cost_field": "measured_cycle_cost"
+    },
+    {
+      "name": "unused_spatial_owner",
+      "fields": ["wave", "computation_field"],
+      "transport": {"mode": "hold"}
+    }
+  ],
+  "seeds": [
+    {"position": [12, 8, 3], "type": "mass_source"},
+    {"position": [1, 12, 4], "type": "massless_ray"},
+    {"position": [12, 10, 3], "type": "local_clock"},
+    {"position": [12, 14, 3], "type": "local_clock"}
+  ],
+  "spatial_fields": [
+    {
+      "field": "wave",
+      "baseline": 0,
+      "transport": "local"
+    },
+    {
+      "field": "computation_field",
+      "baseline": 0,
+      "transport": "outward",
+      "axis_weights": [1, 1, 1],
+      "octant_weights": [1, 1, 1, 1, 1, 1, 1, 1]
+    }
+  ],
+  "emissions": [
+    {
+      "type": "mass_source",
+      "field": "computation_field",
+      "amount": {"field": "mass"},
+      "denominator": 1,
+      "source": true
+    }
+  ],
+  "spatial_seeds": [
+    {
+      "position": [1, 12, 2],
+      "field": "wave",
+      "populations": [64, 0, 0, 0, 0, 0, 0, 0]
+    }
+  ],
+  "field_rules": [
+    {
+      "name": "stream_wave_plus_x",
+      "assignments": [
+        {"field": "wave", "expression": 0},
+        {"field": "wave", "port": 0, "expression": {"field": "wave", "side": "right"}}
+      ],
+      "invariants": [
+        {
+          "name": "wave_stock",
+          "expression": {
+            "op": "add",
+            "args": [
+              {"field": "wave", "side": "right"},
+              {"outgoing": "wave", "port": 0}
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

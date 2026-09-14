@@ -8,6 +8,7 @@ from event_universe.core.integer import checked_work
 from event_universe.core.topology import neighbor_address
 from event_universe.initialization import _address, _array, _index, _integer, _object, _seeds, _text
 from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
+from event_universe.quantum.contact_outcomes import validate_outcomes
 from event_universe.quantum.contact_rules import (
     preserves_occupation,
     validates_capture,
@@ -39,7 +40,7 @@ class FieldPhase:
     """A one-mode phase whose exponent is the local classical field value at schedule time.
 
     ``matrices[n + max_exponent]`` is ``diag(vacuum^|n|, unit^|n|)`` for ``n >= 0``
-    and uses the conjugate unit for ``n < 0``. The exponent is the field value
+    and conjugates both coefficients for ``n < 0``. The exponent is the field value
     divided by ``divisor`` toward zero. All matrices are fixed at initialization.
     """
 
@@ -67,6 +68,12 @@ PhaseOperation = tuple[LocalUnitary | FieldPhase, tuple[int, ...]]
 
 
 @dataclass(frozen=True, slots=True)
+class ContactOutcome:
+    effect: str
+    output: DisturbanceRecord | None = None
+
+
+@dataclass(frozen=True, slots=True)
 class ContactDomain:
     name: str
     registers: tuple[int, ...]
@@ -75,12 +82,16 @@ class ContactDomain:
     partner_type: int
     validity_field: int
     unknown_value: int
-    preparation: LocalUnitary
+    preparation: LocalUnitary | None
     output: DisturbanceRecord
     detector_type: int
     captures: tuple[int, ...]
     instrument: LocalInstrument
     phases: tuple[tuple[PhaseOperation, ...], ...]
+    source_registers: tuple[int, ...] = ()
+    source_instrument: LocalInstrument | None = None
+    source_outcomes: tuple[ContactOutcome, ...] = ()
+    capture_outcomes: tuple[ContactOutcome, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -88,6 +99,55 @@ class ContactConfiguration:
     domains: tuple[ContactDomain, ...]
     causal_sources: bool = False
     null_notices: bool = False
+    max_generations: int = 1
+    recurrent: bool = False
+
+
+def _outcomes(
+    raw: object,
+    initial: InitialState,
+    address: tuple[int, int, int],
+    default: DisturbanceRecord,
+    validity: int,
+    unknown: int,
+    *,
+    source: bool,
+) -> tuple[LocalInstrument, tuple[ContactOutcome, ...]]:
+    definitions = []
+    matrices = []
+    for item in _array(raw, "contact outcomes", 4, 1):
+        obj = _object(item, "contact outcome", {"effect", "matrix", "output"}, {"effect", "matrix"})
+        effect = _text(obj["effect"], "contact outcome effect")
+        output = default if effect == "localized" and not source else None
+        if "output" in obj:
+            if source or effect != "localized":
+                raise ValueError("only localized capture outcomes may declare an output template")
+            seed = _object(obj["output"], "contact outcome output", {"type", "values"}, {"type"})
+            output = _seeds(
+                [{**seed, "position": list(address)}],
+                initial.fields,
+                initial.disturbances,
+                initial.shape,
+                initial.slots_per_node,
+            )[0].record
+        if output is not None:
+            kind = initial.disturbances[output.type_index]
+            if (
+                validity not in kind.fields
+                or unpack(output.values[validity]) != (unknown,)
+                or kind.transport.mode != "hold"
+            ):
+                raise ValueError("contact output must retain unknown momentum and held transport")
+            if any(
+                f.conserved and output.values[i] != default.values[i]
+                for i, f in enumerate(initial.fields)
+            ):
+                raise ValueError("contact outcome output differs from its conserved inventory")
+        definitions.append(ContactOutcome(effect, output))
+        matrices.append(_matrix(obj["matrix"]))
+    instrument = LocalInstrument(tuple(matrices))
+    validate_outcomes(instrument, tuple(d.effect for d in definitions), source=source)
+    return instrument, tuple(definitions)
 
 
 def _coefficient(value: object, label: str) -> Amplitude:
@@ -127,15 +187,17 @@ def _field_phase(initial: InitialState, raw: object) -> FieldPhase:
     maximum = _integer(obj.get("max_exponent", 4), "field phase max_exponent", 0)
     if maximum > MAX_FIELD_EXPONENT:
         raise ValueError("field phase max_exponent is limited to twelve")
-    conjugate = Amplitude(unit.real, -unit.imag)
+    conjugate_vacuum = Amplitude(vacuum.real, -vacuum.imag)
+    conjugate_unit = Amplitude(unit.real, -unit.imag)
     zero = Amplitude(0, 0)
     matrices = []
     for exponent in range(-maximum, maximum + 1):
-        base = unit if exponent >= 0 else conjugate
+        vacuum_base = vacuum if exponent >= 0 else conjugate_vacuum
+        unit_base = unit if exponent >= 0 else conjugate_unit
         rule = LocalUnitary(
             (
-                (_power(vacuum, abs(exponent)), zero),
-                (zero, _power(base, abs(exponent))),
+                (_power(vacuum_base, abs(exponent)), zero),
+                (zero, _power(unit_base, abs(exponent))),
             )
         )
         preserves_occupation(rule)
@@ -153,15 +215,35 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
     obj = _object(
         raw,
         "localized contact program",
-        {"model", "capacity", "addresses", "domains", "bounds", "seed", "tickets", "null_notices"},
+        {
+            "model",
+            "capacity",
+            "addresses",
+            "domains",
+            "bounds",
+            "seed",
+            "tickets",
+            "max_generations",
+            "null_notices",
+        },
         {"model", "capacity", "addresses", "domains"},
     )
-    causal_sources = obj["model"] == "causal-contact-fields-v1"
+    recurrent = obj["model"] == "recurrent-contact-fields-v1"
+    if recurrent and "max_generations" not in obj:
+        raise ValueError("recurrent contacts require an explicit max_generations")
+    if not recurrent and "max_generations" in obj:
+        raise ValueError("generation capacity requires the recurrent contact profile")
+    generations = _integer(obj.get("max_generations", 1), "max_generations", 1)
+    if generations > 6:
+        raise ValueError("max_generations must not exceed six")
+    causal_sources = recurrent or obj["model"] == "causal-contact-fields-v1"
     null_notices = obj.get("null_notices", False)
     if type(null_notices) is not bool:
         raise ValueError("null_notices must be true or false")
     if null_notices and not causal_sources:
         raise ValueError("null notices require the causal contact field model")
+    if recurrent and null_notices:
+        raise ValueError("null notices are not supported with recurrent contact generations")
     if causal_sources and (not initial.spatial_fields or not initial.emissions):
         raise ValueError("causal contact fields require configured spatial sources")
     if causal_sources and any(definition.rays for definition in initial.spatial_fields):
@@ -196,8 +278,10 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         s = _object(
             d["source"],
             "contact source",
-            {"register_index", "type", "partner_type", "validity_field", "unknown_value", "preparation"},
-            {"register_index", "type", "partner_type", "validity_field", "unknown_value", "preparation"},
+            {"register_index", "type", "partner_type", "validity_field", "unknown_value"}
+            | ({"register_indices", "outcomes"} if recurrent else {"preparation"}),
+            {"register_index", "type", "partner_type", "validity_field", "unknown_value"}
+            | ({"outcomes"} if recurrent else {"preparation"}),
         )
         register = _integer(s["register_index"], "source register", 0)
         if register not in registers:
@@ -217,13 +301,14 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         unknown = _integer(s["unknown_value"], "unknown marker")
         if not f.signed and unknown < 0:
             raise ValueError("negative marker for unsigned validity field")
-        preparation = LocalUnitary(_matrix(s["preparation"]))
-        validates_preparation(preparation)
+        preparation = None if recurrent else LocalUnitary(_matrix(s["preparation"]))
+        if preparation is not None:
+            validates_preparation(preparation)
         c = _object(
             d["capture"],
             "contact capture",
-            {"register_indices", "detector_type", "output", "instrument"},
-            {"register_indices", "detector_type", "output", "instrument"},
+            {"register_indices", "detector_type", "output", "outcomes" if recurrent else "instrument"},
+            {"register_indices", "detector_type", "output", "outcomes" if recurrent else "instrument"},
         )
         captures = tuple(
             _integer(q, "capture register", 0)
@@ -254,10 +339,32 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
             f.conserved and source.defaults[i] != record.values[i] for i, f in enumerate(initial.fields)
         ):
             raise ValueError("source and capture templates must agree on conserved inventory")
-        instrument = LocalInstrument(
-            tuple(_matrix(m) for m in _array(c["instrument"], "capture instrument", 2, 2))
-        )
-        validates_capture(instrument)
+        source_instrument = None
+        source_outcomes: tuple[ContactOutcome, ...] = ()
+        capture_outcomes: tuple[ContactOutcome, ...] = ()
+        source_registers: tuple[int, ...] = (register,)
+        if recurrent:
+            source_registers = tuple(
+                _integer(q, "source register", 0)
+                for q in _array(s.get("register_indices", [register]), "source registers", 30, 1)
+            )
+            if (
+                len(set(source_registers)) != len(source_registers)
+                or register not in source_registers
+                or any(q not in registers for q in source_registers)
+            ):
+                raise ValueError("source registers must be distinct members of their domain")
+            source_instrument, source_outcomes = _outcomes(
+                s["outcomes"], initial, addresses[register], record, validity, unknown, source=True
+            )
+            instrument, capture_outcomes = _outcomes(
+                c["outcomes"], initial, addresses[register], record, validity, unknown, source=False
+            )
+        else:
+            instrument = LocalInstrument(
+                tuple(_matrix(m) for m in _array(c["instrument"], "capture instrument", 2, 2))
+            )
+            validates_capture(instrument)
         phases = []
         for raw_phase in _array(d["phases"], "propagation phases", 32, 1):
             phase: list[PhaseOperation] = []
@@ -287,6 +394,10 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                 if "field_phase" in op:
                     if not causal_sources:
                         raise ValueError("field phases require the causal contact field model")
+                    if recurrent:
+                        raise ValueError(
+                            "field phases are not supported with recurrent contact generations"
+                        )
                     if len(qs) != 1:
                         raise ValueError("a field phase acts on one register")
                     phase.append((_field_phase(initial, op["field_phase"]), qs))
@@ -312,6 +423,10 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                 captures,
                 instrument,
                 tuple(phases),
+                source_registers,
+                source_instrument,
+                source_outcomes,
+                capture_outcomes,
             )
         )
     if used != set(range(len(addresses))):
@@ -336,6 +451,12 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                 reached.update(adjacent)
                 remaining.difference_update(adjacent)
     localized_types = {kind for d in domains for kind in (d.source_type, d.output.type_index)}
+    localized_types.update(
+        outcome.output.type_index
+        for d in domains
+        for outcome in d.capture_outcomes
+        if outcome.output is not None
+    )
     if any(
         emission.budget is None and localized_types.intersection(selected_types(emission))
         for emission in initial.emissions
@@ -353,9 +474,10 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         max_eval_nodes=_integer(bounds.get("max_eval_nodes", 10000), "max_eval_nodes", 1),
         max_terms=_integer(bounds.get("max_terms", 4096), "max_terms", 1),
         max_records=_integer(bounds.get("max_records", 1024), "max_records", 1),
-        waves=tuple(WaveDefinition(d.name, d.source_register, True) for d in domains),
+        waves=tuple(WaveDefinition(d.name, d.source_register, True, generations) for d in domains),
         local_contacts=True,
         occupation_domains=tuple(d.registers for d in domains),
+        contact_outcomes=recurrent,
     )
     capacity = _integer(obj["capacity"], "event capacity", 1)
     _require_initial_capacity(initial, capacity, len(addresses))
@@ -371,5 +493,11 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         (),
         _integer(obj.get("seed", 0), "seed", 0),
         tickets,
-        contacts=ContactConfiguration(tuple(domains), causal_sources, null_notices),
+        contacts=ContactConfiguration(
+            domains=tuple(domains),
+            causal_sources=causal_sources,
+            null_notices=null_notices,
+            max_generations=generations,
+            recurrent=recurrent,
+        ),
     )

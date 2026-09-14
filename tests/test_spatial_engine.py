@@ -177,7 +177,11 @@ def test_field_front_keeps_fixed_transit_while_the_source_waits_for_computation(
         assert residents(world, ORIGIN) == [{"strength": (72,), "heading": (1, 0, 0)}]
         assert world.nodes[ORIGIN].pending is not None
         assert world.totals() == {"strength": (72,), "radiation": (72 * tick,)}
-    assert value(world, offset(ORIGIN, (3, 0, 0)))[0] > 0
+    # The front is at Manhattan distance three; which shell cells hold units depends
+    # on the allocation phase policy, not on the fixed transit.
+    front = [p for p in product(range(-3, 4), repeat=3) if sum(map(abs, p)) == 3]
+    assert any(value(world, offset(ORIGIN, p))[0] > 0 for p in front)
+    assert value(world, offset(ORIGIN, (4, 0, 0)))[0] == 0
     origin_cost = next(
         event["cost"]
         for event in events

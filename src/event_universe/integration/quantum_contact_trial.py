@@ -78,6 +78,8 @@ class ContactPlanner:
         records: tuple[DisturbanceRecord | None, ...],
         residuals: tuple[int, ...],
         received: int,
+        *,
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0),
     ) -> LocalPlan:
         if len(records) != 2:
             raise ValueError("contact fixture requires exactly two local slots")

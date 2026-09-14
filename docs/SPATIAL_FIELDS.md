@@ -125,6 +125,108 @@ delivered populations as specified below. For vector fields each entry is an int
 Spatial fields must be extensive. Unsupported laws, wrong shapes, nonintegral
 values, duplicate seeds and unknown keys are rejected.
 
+## Carried allocation phases
+
+`split_outward` partitions each octant population over the three allowed
+cardinal directions by walking a cycle of axis weights from an allocation
+phase. Highlights 3.3.1 requires the remainder of that integer division to be
+carried into later updates. `"allocation_phase"` selects who owns it:
+
+- `"straight"` (default): every nonzero portion leaves with the first slot of
+  its own axis. A lone unit therefore keeps its axis and travels a straight
+  ray at link speed; only when portions of the same octant meet at a node do
+  their phases merge (by addition modulo the axis weight total) and the group
+  spreads again. Directions are decided where the field is still divisible,
+  near its source, and kept afterwards.
+- `"rotate"`: every portion leaves with the slot after its last allocated slot,
+  so a lone unit visits the axes in turn along its octant. The far field is
+  isotropic in the Manhattan sense but no lone unit advances along an axis
+  faster than one third of link speed.
+- `"node"`: the legacy node-owned phase for identified old configurations. A
+  fresh node starts at the first axis weight, so far-field units all follow
+  that axis.
+
+The transported quantity is unchanged by this choice: every portion is still
+allocated exactly and every component is conserved. Only the destination of
+indivisible units differs. With node-owned phases a decay-free 216-unit pulse
+froze into 178 far-field cells whose units all travelled along the first axis
+weight; with rotating phases the unit-weighted mean distances along x, y and z
+agreed within a few percent but a lamp sixteen links away was never seen on
+its axis within forty ticks; with straight phases the axial front moves at
+link speed again while the axes share the units. Reaction packets committed
+from carrier responses keep the node-owned phase in every mode. Run metadata
+records `spatial_allocation` as `carried-straight-phase-v1`,
+`carried-rotate-phase-v1` or `node-phase-legacy`.
+
+## Computation field and local delay
+
+Highlights 4.4 defines the computational field as a configured field whose
+local scalar describes the cycle's modeled work and couples to delay through
+`k = max(1, ceil(C / B))`. The top-level member `"computation_field"` names an
+unsigned conserved scalar outward field for that role. Its local value at a
+node, the immutable baseline plus the stock present before that interval's
+forwarding, is added to the cost `C` of every carrier cycle at the node, in
+addition to the priced field operations already contributed. Nothing else
+changes: the field is emitted, transported, diluted and accounted like any
+other conserved outward field, and no mass, distance or force enters the law.
+
+Because the field is conserved, its total stays constant while it dilutes
+with distance, so the extra cost decays with the field itself. With a mass
+emitting 24000 units per interval and `normal_budget` 100, held clocks at
+distances 1, 2, 3, 4 and 8 completed 2, 6, 12, 23 and 40 of 40 cycles; a large
+budget restores 40 everywhere without changing the field. A moving carrier
+crossing such a region is delayed the same way. Under the
+[shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) the same load also
+prices field forwarding, so other fields crossing the region are delayed: with
+budget 200 a light pulse reached a node 16 links behind an emitting mass at
+tick 16 without the mass and not within 40 ticks with it, while a node six
+links off that line saw its first light at the same tick in both cases. This
+is the local delay law applied to a configured field, not a derived
+gravitational potential; whether the resulting profile matches any physical
+law is a separate measurement.
+
+### Directional delay
+
+The six delivered channels of the computation field carry more than its local
+sum. With `"delay_direction": "along"` or `"against"`, the load no longer
+delays the whole cycle. Local updates commit after the bare cycle time, and
+each departure through a port waits for its own `k`, computed from the cycle
+cost plus the baseline plus the load delivered through one channel: the field
+travelling in the same direction as the departure (`along`), or the field
+arriving from the side the departure heads to (`against`). The extra wait is
+spent before the transfer's arrival, the `sent` event reports that arrival,
+and the node starts no new cycle until its slowest departure has arrived.
+
+The two conventions have opposite consequences. Under `along` a probe moving
+towards the emitting mass is never delayed while a probe moving away stalls
+where the outward field is dense: falling in is free and climbing out is
+slow. Under `against` the approach slows and the climb out is free. With a
+mass emitting 24000 units per interval, budget 100 and probes at half link
+speed, `along` left the inward probe on its two-tick cadence through the mass
+and stalled the outward probe for seven ticks, and `against` did the reverse.
+A resting body is never moved. Both are configured hypotheses; neither is a
+derived force, and the option requires the default clock.
+
+### Least-delay routing
+
+Directional delay alone changes when a hop happens, not where: the balanced
+router picks lanes by their counters and the carried split walks its axis
+cycle in a fixed order. `"least_delay_routing": true` closes the loop. A
+carrier's balanced router and an outward field's carried split both read the
+load pricing each port (the same `along` or `against` channel as the delay)
+and take the cheapest eligible option first. Every lane still receives
+exactly its reduced weight per cycle, so directional ratios remain exact
+(Highlights 3.3.1) and only the order inside a cycle changes. Everything
+therefore flows first towards the neighbor where computation is free.
+
+That exactness also bounds the effect: a mover with one lane, such as
+momentum `(0, 60, 0)`, has nothing to choose and is never turned, and a 1:1
+diagonal can be reordered by at most one hop per two. Bending a straight
+trajectory requires changing the momentum itself, which is a coupling, not a
+routing choice. Light and other outward fields, whose octants always own
+three lanes, are the natural users of this option. It requires
+`delay_direction` and is recorded in run metadata as `least_delay_routing`.
+
 ## Straight-ray transport (`isotropic-ray-field-v1`)
 
 `"transport": "ray"` replaces octant splitting by straight-moving rays for a
@@ -144,13 +246,30 @@ between arrival and the next cycle; there is no octant stock.
 | `headings` | One to 65536 nonzero integer vectors, components at most 4096 in magnitude; the emission sequence |
 | `rays_per_tick` | Rays each emitting source creates per tick; the amount is shared as evenly as integers allow |
 | `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
+| `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
 spread evenly over the observer's sphere is swept over time. Rays with the same
 heading and phase merge exactly at a Node because they share one line. Delivered
 samples and the `flux` leaf see ray arrivals per port, resident ray stock is the
-local `value`, and node values report `ray_count`. Schema 2 decay attenuates each
+local `value`, and node values report `ray_count`. A coupling reaction that
+amends a departing packet leaves the rays on that port untouched, so rays pass
+through Nodes whose carriers respond to them.
+
+A record that emits rays and moves one link meets, at the next Node, exactly the
+rays it emitted on the cycle it departed whose first DDA step took the same
+port. With `"self_exclusion": true` the record carries two rows per emission
+rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
+(zero while it stays), and every coupling it evaluates after arriving reads the
+sampled flux and value with those rays subtracted. The work is bounded by
+`rays_per_tick`, uses only the record's own registers and the port it left
+through, and reads no ray identity or remote state. Rays of another record
+that merged with them at that Node are subtracted too; that coincidence needs
+the same heading, lattice accumulators, wave phase and advance from an adjacent
+Node. Rays that return later, from
+any distance, are not excluded: this is one-link exclusion of the emitter's own
+wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
@@ -159,7 +278,140 @@ the shared field clock. Host work per Node is bounded by `ray_slots`.
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
 with an evenly spread heading sequence the time-averaged flux per node follows the
-solid angle the node subtends from the source, in every direction.
+solid angle the node subtends from the source, in every direction. The
+[gravity probe](../examples/gravity-probe/README.md) then couples held and moving
+bodies to that flux with `mass x flux / D` and reports attraction, an inverse
+square in every direction, and mass-independent acceleration.
+
+### Funded emission and absorption
+
+A ray field whose emitting type also carries a scalar field of the same name may
+emit with `"source": false`: the emitted amount is paid from the record's own
+stock, clipped to what it holds, and no external source is recorded. An optional
+`"recoil_field"` names an owned signed vector that loses `amount x heading` for
+every emitted ray. The reverse is the `absorb` coupling mode: a record of the
+absorbing type takes a share of every ray resident at its Node on the cycle
+after arrival (`amount x fraction / fraction_denominator`, or the whole ray),
+adds it to its own field of the same name and, with `momentum_field`,
+`share x heading` to that vector; the rest of the ray is forwarded. Absorption
+happens before forwarding and before this cycle's emission joins the residents,
+so a record never swallows its fresh rays; with `self_exclusion` the rays of its
+own last departure are left alone by their complete ray key. Absorbers act in
+slot order.
+
+Quanta are signed when the field is. A funded emission of a negative amount
+credits the emitter with what it emits, and the ray's momentum `amount x heading`
+points back at the emitter; a record that absorbs a share of such a ray pays it
+from its own stock, never beyond what it holds, and gains momentum toward the
+source. That is attraction with the ledger closed: the pulled body pays for its
+pull, and a body with nothing left is not pulled.
+
+```json
+"emissions": [{"type": "lamp", "field": "quanta", "amount": 2048, "source": false,
+               "recoil_field": "momentum"}],
+"spatial_couplings": [{"name": "sail_absorbs", "type": "sail", "field": "quanta",
+                       "mode": "absorb", "momentum_field": "momentum"}]
+```
+
+Together with the [conservation audit](LOCAL_CONSERVATION.md), which measures
+rays as quanta, this closes the ledger: energy is the amount, momentum is amount
+times heading, and both move only between records and rays. Positive quanta
+give radiation pressure; negative quanta give attraction paid by the absorber.
+Schema 2 attenuation of such fields is not supported.
+
+### Kerengonen: phased rays (`kerengonen-ray-field-v1`)
+
+The candidate uses immutable cosine/sine tables prepared with the field definition,
+before physical stepping. Each table has at most 4096 bounded entries; the two
+host preparation caches retain at most 16 tables each. A bounded integer series
+uses fixed-point scale 1,000,000,000, checked 64-bit intermediates and at most 32
+terms. Physical events read the prepared tuples and never construct trigonometric
+tables. Preparation and cache storage are host costs outside NodeState.
+
+A ray field may add `"kerengonen": {"phase_steps": P, "phase_advance": k}`,
+with `2 <= P <= 4096` and `0 <= k < P`. Every ray then carries a phase step,
+starting at the emission rule's `kerengonen_phase` (default 0) and advancing by
+`k` on every link. Rays merge only when heading, lattice phase and wave phase
+all agree. Nothing else about transport changes: a ray still follows one
+integer line, keeps its amount, and is counted whole by the ledger and the
+audit.
+
+Phase acts where rays meet. The coherence of the rays resident at one Node is
+`|sum a e^(i phi)|^2 / (sum |a|)^2`, computed in bounded integers from a fixed
+cosine table over phase differences (scale 256), so equal phases give exactly
+one and opposite phases of equal amounts exactly zero. It gates two things:
+the value a reader samples at the Node (couplings and `spatial_values` see the
+ray total times the coherence, toward zero), and the share an `absorb` coupling
+takes of each ray. Quanta that cancel are not absorbed and not seen; they
+continue along their lines and are absorbed or escape elsewhere. The total is
+never changed by phase: the audit measures amounts, not coherence.
+
+How an absorber takes a ray is a run-time choice, `"capture"`. The default
+`"share"` takes the coherent share of each ray's amount, truncated toward
+zero, and forwards the rest: a single quantum at a half-coherent Node is never
+taken. `"lottery"` takes the whole ray or nothing: the record advances a local
+ticket, seeded by `"capture_seed"` and salted by the ray it meets, and takes
+the ray when the ticket falls below the coherent share. At full coherence the
+two are identical when the complete amount can be funded; at partial coherence the lottery builds the fringe click
+by click, one whole quantum at a time, with the coherent share as its rate.
+The ticket state is a record row (`absorb_tickets`), never a global number,
+and the same seed with the same rays repeats the same clicks.
+Each absorption row uses its own field's configured seed. In lottery mode a
+winning negative ray is left whole when the absorber cannot pay its complete
+amount; only the share mode may take a smaller stock-limited amount.
+
+Two sources in phase therefore give a fringe in Manhattan path difference:
+`k x (d_a - d_b)` steps. One source alone never interferes with itself, because
+rays that meet at one Node on one tick have traveled the same number of links;
+it does through a Huygens source. A record that absorbs on the field keeps, per
+absorb rule, the phase step nearest the direction of the coherent sum of what
+it took (`absorbed_phases`, a record row), and an emission with
+`"kerengonen_phase": "carried"` starts its rays at that phase plus one advance,
+the emitter's own tick. A slit that absorbs and re-emits its stock every cycle
+therefore continues the wave that reached it, and two slits lit by one lamp are
+two sources in the lamp's phase. A carried phase requires an absorb rule on the
+same field for the emitting type.
+
+A ray may also carry its own advance per link. An emission with
+`"kerengonen_advance": {"amount": <expression>, "denominator": D}` evaluates the
+expression over the emitter's own fields, divides by `D`, takes the result
+modulo the phase steps, and stamps it on every ray it emits; rays merge only
+with equal advance, and a Huygens re-emission carries the advance of the
+largest share it absorbed with the phase. An advance from the emitter's
+momentum, `|p| / D`, supplies a candidate de Broglie relation: a faster beam has a
+shorter wavelength within the probe's configured range. The
+[de Broglie probe](../examples/de-broglie/README.md) measures the fringe spacing
+it gives; this relation is configured, not derived. A ray without its own advance uses the
+field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
+runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+measures the fringe on a line of absorbers.
+
+Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
+departure cycle and compares heading, lattice accumulators, wave phase and advance.
+A distinguishable external phase or advance is not excluded, even if the emitter's
+properties have changed since departure. A cycle without emission clears the
+previous emission row to four zeros, so the fallback advance sentinel cannot keep
+an exhausted source active. A foreign ray that has already merged with the same complete key
+still cannot be distinguished by this candidate. Phased or attenuating
+self-exclusion alongside response couplings is rejected: subtracting a raw own
+amount from a coherent or decayed sample is not the corresponding local
+subtraction; the supported combination is absorption. Coherence evaluation is
+quadratic in the configured local phase count, bounded relative to world size.
+
+Funded emission and absorption currently require an immediate carrier commit on
+the independent fixed field clock. If the local carrier cost requires a delayed
+plan, the Node rejects it before publishing that plan. This prevents a later
+carrier commit from restoring stock changed by intervening field cycles. The
+candidate does not yet arbitrate these two clocks for delayed shared ownership.
+
+Declared component accounting associates ray momentum with the vector explicitly
+named by `recoil_field` or absorption's `momentum_field`. All declarations for one
+ray field must agree; that vector cannot also own spatial populations. Actual
+resident rays, in-flight rays, external injection and completed escape contribute
+`amount x heading` to that vector's read-only totals. No field name supplies a
+binding, and this accounting never repairs state or replaces the separate local
+energy/momentum audit.
 
 ## Finite completed-link decay
 
@@ -316,7 +568,11 @@ own field. Both can traverse the same link together. A turn can collect earlier
 contributions along multiple paths; a periodic boundary can return old field.
 Merged integer allocation is not generally source-linear. Automatic self
 subtraction is not enabled by this extension. Unknown self-filter settings fail
-instead of being silently ignored. Optional [spatial couplings](SPATIAL_COUPLINGS.md)
+instead of being silently ignored. Two explicit opt-in policies change when a
+carrier samples relative to its own emission without identifying sources:
+[`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
+[`arrival_port_blind`](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling).
+Optional [spatial couplings](SPATIAL_COUPLINGS.md)
 now provide generic exchange and exact discrete rotation with a local opposite
 field reaction. Their straight-line flux response has a restricted geometric
 self-interaction guarantee; it does not claim general source attribution.

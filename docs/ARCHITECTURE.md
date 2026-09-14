@@ -254,6 +254,18 @@ of engine scheduling. Carrier and field owners validate together before committi
 the response; fixed sample registers and departure timestamps prevent future
 reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUPLINGS.md).
 
+The optional phased-ray law retains its bounded prepared cosine/sine tuples in
+immutable `SpatialFieldDefinition`, outside NodeState. Per-record departure,
+capture-ticket and absorbed-phase rows have fixed configuration-derived sizes.
+Each departure row carries four integers (amount, cursor, phase, advance); an
+absorbed-phase row carries phase and advance. These bounded owner registers
+preserve a ray's emitted advance without looking up a later emitter state;
+Nodes validate that a field proposal changes only selected stock/vector fields
+and permitted bookkeeping, preserving transport metadata. Funded/absorbed owners
+currently reject delayed carrier plans on the independent spatial clock. The
+read-only runner inventory binds ray momentum through explicit recoil/absorption
+field references and counts actual resident, in-flight and escaped owners.
+
 The opt-in [local field-rule contract](LOCAL_FIELD_RULES.md) reuses these owners.
 `fields/local_field_rules.py` evaluates bounded multi-field retained/outgoing
 proposals using delivered six-port data; `fields/spatial_plan.py` composes them
@@ -576,6 +588,15 @@ quantum state or shared origin flags. Local source commits use write-only
 capture atomically ends its source and installs its ordinary output; remote
 termination requires a received notice and local delay. The candidate contract
 owns its retarded approximation, numerical bounds and clock restrictions.
+
+The [recurrent extension](RECURRENT_QUANTUM_CONTACT.md) preallocates one to six
+such envelope banks per participating Node. The root envelope retains a flat
+tuple of at most five additional same-address owners, exposing all evolving
+state to the transitive NodeState audit. Fixed generation routing and emission
+turns keep old packets isolated without storing growing local history. The
+recurrent resolver composes existing envelope arithmetic and inventory commits;
+`quantum/contact_outcomes.py` validates matrix/effect support, and the quantum
+event network owns atomic result/origin creation and idempotent result lookup.
 
 ## Opt-in quantum ownership — Q-ORACLE-1
 

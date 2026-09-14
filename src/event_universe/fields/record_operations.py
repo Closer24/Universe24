@@ -115,12 +115,12 @@ class RecordOperations:
                     combined.append(value)
                 records[match] = replace(old, values=tuple(combined))
             else:
-                try:
-                    slot = records.index(None)
-                except ValueError as error:
-                    raise ValueError(
-                        "local receiving capacity exhausted; no disturbance was discarded"
-                    ) from error
+                slot = next(
+                    (index for index, old in enumerate(records) if old is None and index not in locked),
+                    None,
+                )
+                if slot is None:
+                    raise ValueError("local receiving capacity exhausted; no disturbance was discarded")
                 records[slot] = incoming
         return tuple(records)
 

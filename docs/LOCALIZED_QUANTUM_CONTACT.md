@@ -10,6 +10,9 @@ The separately selected [causal source extension](CAUSAL_QUANTUM_SOURCES.md),
 Link-delivered cancellation. The localized-only contract on this page remains
 the behavior of `localized-contact-quantum-v1`.
 
+The [recurrent extension](RECURRENT_QUANTUM_CONTACT.md) separately selects
+complete outcome instruments and fresh local continuations after interactions.
+
 | Part | Contract |
 | --- | --- |
 | Law | A local contact with an explicit unknown-momentum marker transfers one configured disturbance into a vacuum quantum domain. Configured number-preserving neighbor gates propagate it. A complete local absorption instrument transfers it back into one localized disturbance. |
@@ -93,6 +96,20 @@ Headless runs load no renderer. Field emission requires finite budgets; schema 2
 also declares decay and localized/dissipated residue under the existing field law.
 
 ## Numerical acceptance
+
+The [position-output candidate](../examples/quantum/position_moment_response.md)
+derives held output moments from a local position-state operator row. This is
+explicit re-encoding after absorption, whose quantum state is vacuum. Incident
+density remains diagnostic only. It does not assign incident direction to the
+localized output or claim closed gate/measurement energy. The original held,
+unknown-momentum capture contract remains unchanged.
+
+The [local moment-response candidate](../examples/quantum/local_moment_exchange.md)
+uses a later ordinary pair conversion after capture, preserving this profile's
+initial held/unknown output. Its supplied mean and variance are not derived from
+the spatial wave. Converted emitters remain unsupported. A separate regression
+checks arrival into an unused slot during delayed capture: an empty reserved
+output slot stays locked, while an unlocked spare receives the incoming record.
 
 [The focused tests](../tests/test_localized_quantum_contact.py) check source
 conversion at tick 0, capture at tick 2 two Links away, charge -1 and mass 1 at
