@@ -1,5 +1,9 @@
 # Documentation index
 
+The [spatial momentum and position-output experiment](../examples/quantum/position_moment_response.md)
+distinguishes evolved wave readouts, locally derived capture moments and missing
+gate/measurement energy closure.
+
 Start with [project status](PROJECT_STATUS.md) and the [repository entry point](../AGENTS.md).
 Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured

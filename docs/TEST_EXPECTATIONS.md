@@ -1,5 +1,26 @@
 # Test inputs and expected results
 
+## Spatial momentum and position output
+
+`test_spatial_momentum.py` verifies the
+[finite observable](../examples/quantum/position_moment_response.md) against
+independent phase and mixed-state expectations. Equal spatial probabilities
+can have mean +2, -2 or zero; real coherent and incoherent uniform states have
+variance 0 and 2. Endpoint superpositions distinguish second-neighbor coherence.
+Vacuum has unavailable particle moments, partial occupation is explicit, and
+multiple excitations or nonlocal/duplicate edges are rejected.
+
+`test_position_moment_response.py` runs the primary native middle-capture input,
+six endpoint orientations, absent reservoir, delayed computation and longer
+Links. Local re-encoding gives variance 1 or 2 from the operator row. Wave
+diagnostics leave native events and model cost exactly unchanged. The actual
+combined second moment changes 10 -> 11 -> 10 during endpoint propagation,
+and remains 11 after middle capture. This is an exposed closure gap, not a
+conserved quantum energy claim. Subsequent ordinary exchange and escape balance;
+invalid first/second moment proposals reject before conversion.
+Projective controls separate the ensemble drift from selected conditional change.
+The target's later direction still comes from the supplied reservoir.
+
 ## Local moment response after capture
 
 `test_local_moment_exchange.py` runs the

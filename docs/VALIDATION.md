@@ -1,5 +1,39 @@
 # Validation evidence
 
+## Spatial wave moments and local position output - 2026-09-14
+
+Continuation base: `86eeb9c5b1c0297067a0ce828ba2faa147c3c151` on draft PR #104,
+including open PR #100; fetched main was `d66b43eb193954a9a14a5a33deefd290d61ed547`.
+The [new candidate report](../examples/quantum/position_moment_response.md)
+specifies the finite observable, local re-encoding and unclosed energy terms.
+There are no production changes relative to this base. Production fingerprint
+remains `1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
+
+Initial focused integration: **4 passed in 14.07 seconds**, including the full
+headless aggregate, two deliberately invalid moment proposals and renamed,
+bounded owners. The observable helper separately passed 30 cases before the
+additional entangled-environment regression. Independent physics review passed
+the scoped implementation, 33 focused checks and the explicit measurement
+controls; the entangled case has mean1, second3 and variance2 without records.
+The affected gate `python tools/check.py --base 86eeb9c` passed **151 tests**
+with **two opt-in visualization skips** in **39.59 seconds**. Ruff and format
+passed on eight changed Python files; no production module needed type checking.
+The selected scope includes the new integration/observable tests, resource
+selection, repository gates, workspace and headless movie consumers.
+
+Native middle capture derives variance2 and later transfers it to the reservoir;
+endpoint capture derives1. Actual propagated wave energy readouts change
+10 -> 11 -> 10, or remain11 after middle capture. These are reported as a missing
+joint closure, not repaired. Opposite-phase loop states have means +2/-2 despite
+equal position probabilities. Position re-encoding does not recover that
+incident direction; target mean3 still comes from the configured reservoir.
+
+The physics Skill now requires the distinction between incident state,
+re-encoding, vacuum, ensemble drift and selected change. Boss, configuration,
+runner and PR Skills were reviewed; their existing scope, ownership and evidence
+rules need no further change. Live Highlights was read and reconciled in the
+versioned coverage map; it was not edited. No build or visualization ran.
+
 ## Local moment response and reserved receipts - 2026-09-14
 
 Task base: `3a2fdfdc796212961a2f305544f0d98998506864`; current main was

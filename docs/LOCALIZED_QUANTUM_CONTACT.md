@@ -97,6 +97,13 @@ also declares decay and localized/dissipated residue under the existing field la
 
 ## Numerical acceptance
 
+The [position-output candidate](../examples/quantum/position_moment_response.md)
+derives held output moments from a local position-state operator row. This is
+explicit re-encoding after absorption, whose quantum state is vacuum. Incident
+density remains diagnostic only. It does not assign incident direction to the
+localized output or claim closed gate/measurement energy. The original held,
+unknown-momentum capture contract remains unchanged.
+
 The [local moment-response candidate](../examples/quantum/local_moment_exchange.md)
 uses a later ordinary pair conversion after capture, preserving this profile's
 initial held/unknown output. Its supplied mean and variance are not derived from
