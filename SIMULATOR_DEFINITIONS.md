@@ -65,7 +65,10 @@ Maxwell, Lorentz or quantum law, and does not alter schema 2 finite decay.
 A scalar spatial field may instead select `"transport": "ray"`
 (`isotropic-ray-field-v1`): rays carry an integer heading and accumulators and
 move one link per tick along their own lattice line, with a per-Node slot
-capacity. Schema version 1 retains those conservative spatial laws. Schema version 2
+capacity. Such a field may add `kerengonen` (`kerengonen-ray-field-v1`): rays
+carry a phase that advances per link, and the coherence of the rays meeting at
+a Node gates what is absorbed and sampled there while every amount stays whole.
+Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio
 `0 <= p < q`; each original packet/octant/component is attenuated to

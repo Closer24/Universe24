@@ -230,6 +230,8 @@ def _execute_run(
                     else "finite-dissipative-v1"
                 )
                 if initial.schema_version == 2
+                else "kerengonen-ray-field-v1"
+                if any(field.kerengonen for field in initial.spatial_fields)
                 else "isotropic-ray-field-v1"
                 if any(field.rays for field in initial.spatial_fields)
                 else "configured-local-fields-v1"

@@ -216,6 +216,34 @@ times heading, and both move only between records and rays. Positive quanta
 give radiation pressure; negative quanta give attraction paid by the absorber.
 Schema 2 attenuation of such fields is not supported.
 
+### Kerengonen: phased rays (`kerengonen-ray-field-v1`)
+
+A ray field may add `"kerengonen": {"phase_steps": P, "phase_advance": k}`,
+with `2 <= P <= 4096` and `0 <= k < P`. Every ray then carries a phase step,
+starting at the emission rule's `kerengonen_phase` (default 0) and advancing by
+`k` on every link. Rays merge only when heading, lattice phase and wave phase
+all agree. Nothing else about transport changes: a ray still follows one
+integer line, keeps its amount, and is counted whole by the ledger and the
+audit.
+
+Phase acts where rays meet. The coherence of the rays resident at one Node is
+`|sum a e^(i phi)|^2 / (sum |a|)^2`, computed in bounded integers from a fixed
+cosine table over phase differences (scale 256), so equal phases give exactly
+one and opposite phases of equal amounts exactly zero. It gates two things:
+the value a reader samples at the Node (couplings and `spatial_values` see the
+ray total times the coherence, toward zero), and the share an `absorb` coupling
+takes of each ray. Quanta that cancel are not absorbed and not seen; they
+continue along their lines and are absorbed or escape elsewhere. The total is
+never changed by phase: the audit measures amounts, not coherence.
+
+Two sources in phase therefore give a fringe in Manhattan path difference:
+`k x (d_a - d_b)` steps. One source alone never interferes with itself, because
+rays that meet at one Node on one tick have traveled the same number of links.
+Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase` on an emission requires the key. The runner records the
+identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+measures the fringe on a line of absorbers.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

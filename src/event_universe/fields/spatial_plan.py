@@ -27,6 +27,7 @@ from event_universe.core.spatial_state import (
     SpatialPopulations,
     SpatialState,
     advance_ray,
+    coherence,
     ray_stock,
 )
 
@@ -87,6 +88,10 @@ class SpatialLaw:
         """
         definition = self.definitions[index]
         absorbed_total = 0
+        # Kerengonen: the coherence of everything that arrived gates every share.
+        coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
+        if definition.kerengonen:
+            meter.charge("evaluate", len(resident))
         for rule in self.absorptions:
             if rule.field != definition.field:
                 continue
@@ -116,10 +121,16 @@ class SpatialLaw:
                     meter.charge("read")
                     meter.charge("couple")
                     share = ray.amount
-                    if numerator is not None and numerator < rule.fraction_denominator:
-                        magnitude = (
-                            checked_work(abs(ray.amount) * numerator) // rule.fraction_denominator
-                        )
+                    fractional = numerator is not None and numerator < rule.fraction_denominator
+                    if fractional or coherent_numerator < coherent_denominator:
+                        share_numerator, share_denominator = coherent_numerator, coherent_denominator
+                        if fractional:
+                            assert numerator is not None
+                            share_numerator = checked_work(share_numerator * numerator)
+                            share_denominator = checked_work(
+                                share_denominator * rule.fraction_denominator
+                            )
+                        magnitude = checked_work(abs(ray.amount) * share_numerator) // share_denominator
                         share = -magnitude if ray.amount < 0 else magnitude
                     if share < 0:
                         # A pull is paid from the record's own stock, never borrowed.
@@ -239,6 +250,7 @@ class SpatialLaw:
         ]
         source = [[0] * field.components for field in self.fields]
         funded = [0] * len(self.fields)
+        absorbed_by_field = [0] * len(self.fields)
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
@@ -281,7 +293,9 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
-                    new_rays, cursor = emit_rays(unpack(amount)[0], cursor_before, definition, meter)
+                    new_rays, cursor = emit_rays(
+                        unpack(amount)[0], cursor_before, definition, meter, rule.phase
+                    )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
                         last[index] = pack((unpack(amount)[0], cursor_before))
@@ -344,6 +358,9 @@ class SpatialLaw:
                 if any(any(unpack(payload)) for payload in working[index].populations):
                     raise ValueError("ray transport does not own octant populations")
                 absorbed = self._absorb(index, resident_rays[index], updated_records, meter)
+                absorbed_by_field[definition.field] = checked_work(
+                    absorbed_by_field[definition.field] + absorbed
+                )
                 ports = forward_rays(
                     tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
                 )
@@ -415,4 +432,10 @@ class SpatialLaw:
             meter.interaction_ticks,
             tuple(guards),
             tuple(tuple(port_rays) for port_rays in outgoing_rays) if has_rays else (),
+            tuple(
+                (checked_work(funded[i] - absorbed_by_field[i]),) + (0,) * (f.components - 1)
+                for i, f in enumerate(self.fields)
+            )
+            if has_rays and any(funded) or any(absorbed_by_field)
+            else (),
         )
