@@ -554,26 +554,43 @@ probability of its wave.
 
 ### Bonded rays (`bonded-ray-field-v1`)
 
-This standalone historical reference uses a global mutable registry and a
-supplied conditional singlet law. It is **not available in ordinary Simulation**:
-initialization rejects `bond` before a physical run. The independent
-[registry tests](../tests/test_bonds.py) retain reference-law checks; they do not
-certify a local or transactional physical model. The old
-[Bell probe](../examples/bell-chsh/README.md) records historical results, and its
-`--capture bond` input now fails explicitly. Local lottery and threshold inputs
-remain available.
+The one declared exception to the causal bound, split off in postulate 4. A
+Kerengonen ray field may add `"bond": {"seed": s}` (identity
+`bonded-ray-field-v1` in the run metadata); an emission with
+`"bond_field": "origin"` then bonds every ray it emits to its birth: the Node
+that emits it stamps the ray with the code of its own address and the tick,
+and the ray carries that origin, unchanged, until its next interaction, so
+everything born at one Node on one tick is one pair. (`"bond_field":
+"<owned scalar>"` bonds by the emitter's label instead.) An absorb rule with
+`"bond_setting": "<owned scalar>"` is a detector whose setting is that field's
+value in phase steps. When such a record meets a bonded ray it does not draw a
+ticket or read the coherence: it asks the bond registry, one object for the
+whole world seeded by `s`.
 
-The registry can change during a failed proposal, its history grows indefinitely,
-and its finite birth hash collides across some Node/tick pairs. A future
-integration requires a bounded, transactional owner and an explicitly reviewed
-model contract. It cannot inherit the existing quantum owner's Q-ORACLE exception.
-No-signalling across arbitrary lifecycles or repeated queries has not been proved.
+The pair's one number is a fixed function of the seed and the bond, two salted
+ticket steps with a square between them. The first question on a bond is
+answered by the number's upper half, an even coin, and the registry keeps the
+asking end's salt, its setting and its answer; the second question, from the
+other end at its own setting, draws nothing and is answered by the lower half
+of the same number so that the two ends agree with probability
+`(1 - cos(difference)) / 2` from the fixed cosine table, the singlet's law
+([postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)).
+An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's
+second answer knows the first at once, at any distance; it moves no energy, no
+momentum and no message, and the [Bell probe](../examples/bell-chsh/README.md)
+measures each end's plus rate unmoved by the other end's setting.
 
-The retained reference uses one draw per pair: the first query stores the number
-alongside its answer and setting; the second query uses that same number's
-remainder and the supplied cosine table. The reference tests check the draw
-count. This update does not reopen ordinary activation; see
-[postulate 22](../POSTULATES.md#22-configured-integer-lottery-and-replay-hypothesis).
+The registry is bounded and idempotent. It holds at most 4096 open pairs, those
+whose first end has answered and whose second has not, and rejects a further
+first question while the bank is full; it releases a pair at its second
+answer; and a question repeated by the same end with the same setting gets the
+same answer, so a proposal prepared twice does not move it. A pair's identity
+is its birth code, the Node address and tick modulo the ticket modulus, unique
+within any run shorter than that modulus. A pair whose second answer released
+it and is asked again is treated as a new pair; that is the registry's stated
+limit. Rays merge only within one bond. The registry lives in one process:
+bonded worlds run on a single Node worker. The Bell probe with `--capture bond`
+measures the quantum value of S with it.
 
 ## Integrated ray ownership boundaries
 

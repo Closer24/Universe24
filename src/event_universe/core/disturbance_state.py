@@ -282,10 +282,6 @@ class InitialState:
     focus: bool = False
 
     def __post_init__(self) -> None:
-        if any(definition.bonded for definition in self.spatial_fields):
-            raise ValueError(
-                "bonded capture is a nonlocal research candidate, unsupported by local Simulation"
-            )
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

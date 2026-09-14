@@ -5,9 +5,11 @@ with the ordinary scheduler retained for event resolvers and shared field clocks
 The integrated ray policies now validate retained rays and incoming claims,
 retain funded emissions during load delay, and prepare bounded immutable pace
 tables. Exact share capture and whole-ray threshold funding have regression
-coverage. Unsupported self-exclusion compositions fail preflight. The global
-bond-registry experiment is preserved as a nonlocal reference and cannot drive
-ordinary Simulation; the explicit Q-ORACLE option remains separate and available.
+coverage. Unsupported self-exclusion compositions fail preflight. The bond
+registry is bounded and idempotent (at most 4096 open pairs, released at the
+second answer, one number per pair fixed by seed and birth code) and drives
+ordinary Simulation as the declared split of postulate 4; the explicit
+Q-ORACLE option remains separate and available.
 See the exact submitted source and check results in the integration PR.
 
 The [position-output experiment](../examples/quantum/position_moment_response.md)
@@ -226,10 +228,10 @@ the flood's parent ports, and the record takes them whole; the
 particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
 two phased rays from one source through CHSH detectors built from the
 coherence and the lottery, and measures S below the local bound 2 for the
-lottery (1.48) and deterministic hidden variables (2.00). The historical global
-bond reference reported S around 2.86 with a supplied conditional singlet law;
-ordinary initialization now rejects it under the
-[local owner boundary](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1). The
+lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
+(`bonded-ray-field-v1`, the declared split of postulate 4) the bounded
+registry answers the pair's joint outcome from one number and S reaches the
+quantum value ([the contract](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)). The
 [gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
 gathering a gravity train focuses the pull like unseen mass: it does not.
 

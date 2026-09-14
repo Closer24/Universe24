@@ -8,8 +8,9 @@ local transitions, clocks and model cost. A sparse 256-tick carrier probe measur
 2.32x host speed with matching inventory; this is not a universal speed claim.
 Integrated ray policies now validate retained owners, preserve funded stock during
 load waits, prepare bounded immutable pace tables and reject unproved self-exclusion
-combinations. The global bond reference remains historical, explicitly nonlocal
-and unavailable to ordinary Simulation. Q-ORACLE remains an independent option.
+combinations. The bond registry is bounded and idempotent and remains the
+declared nonlocal exception of postulate 4 in ordinary Simulation. Q-ORACLE
+remains an independent option.
 See [validation](VALIDATION.md) for scope and evidence. This entry updates the Git
 companion only; it does not claim a live Google Docs revision was changed.
 
@@ -200,11 +201,11 @@ sequence, not physical randomness; the event audit re-measures every owner per
 event, so audited worlds stay small; and the ray is a local model, so
 [Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
 bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
-it gives in the stated probes, and the excess correlation it cannot derive.
-The historical global bond reference reported S around 2.86 by supplying a
-conditional singlet law. Ordinary initialization now refuses it under the
-[local owner boundary](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1);
-it is not an additional postulate exception. Gathering a gravity train to
+it gives in the stated probes, and the excess correlation it cannot derive,
+unless the field is bonded (`bonded-ray-field-v1`, the split of postulate 4:
+a bounded registry answers the pair's joint outcome for both ends from one
+number, with nothing physical in it, and S reaches the quantum value);
+gathering a gravity train to
 its catcher ([gathered gravity](../examples/gathered-gravity/README.md))
 focuses quanta, not a force law, so no flat rotation curve comes from it.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not

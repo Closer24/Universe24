@@ -14,12 +14,12 @@ observer failure, immutable pace preparation and release of an empty wait.
 on Python 3.14.7. The independent physics review passed the first 49 cases and
 the final empty-wait regression separately. The full affected gate and required
 CI remain the merge requirements; their actual outcome is recorded in the PR.
-The global bond reference is preserved but cannot drive ordinary Simulation.
-The existing quantum owner and Q-ORACLE option are unchanged.
+That integration set the bond registry aside; the bounded registry entry
+below restores it as the declared split of postulate 4. The existing quantum
+owner and Q-ORACLE option are unchanged.
 
 Follow-up integration includes main `a686925`, the single-draw reference branch
-at `df9c350`, and the relativity probe branch at `280a43b`. The single-draw
-change remains isolated from ordinary Simulation. Replay now compares the
+at `df9c350`, and the relativity probe branch at `280a43b`. Replay now compares the
 actual exposed snapshots (hashes are display only), with assertion failures for
 mismatches and a changed-seed control. The eight-tick quantum replay and the
 12-tick equal-mass collision restart passed; this is no claim about inverting
@@ -2524,10 +2524,8 @@ of postulate 4 and nothing else.
 
 ## Postulate 22: one integer per interaction - 2026-09-14
 
-Historical branch evidence only. The single-draw registry is retained as a
-standalone reference, while ordinary activation is rejected. Current postulate
-22 scopes replay separately from physical reversibility and does not assert
-no-signalling for this registry across arbitrary queries or lifecycles.
+The registry below was then made bounded and idempotent (the entry that
+follows); its numbers were re-measured there.
 
 Base: `a686925` on `main` (after PR #116). The bond registry now draws one
 number per bonded pair: the first question draws it and answers by its upper
@@ -2546,3 +2544,27 @@ Runtime source SHA-256
 `48ea5e8b167319719a7f25edbd3cea66b69fe5f3d57e1575b55099084061b880`, Python
 3.14.0rc2, headless. The number is a hidden variable in Bell's sense, shared
 between the two ends of a pair; no end can read it, so nothing is signalled.
+
+## The bond as physics: a bounded, idempotent registry - 2026-09-14
+
+Base: `cd5e2df` on `main` (after PR #118), with `integrate/focus-and-ray-updates`
+merged. The bond registry drives ordinary Simulation again as the declared
+split of postulate 4, and answers the objections raised against it: it holds
+at most 4096 open pairs and releases a pair at its second answer; a question
+repeated by the same end with the same setting returns the same answer with
+no new number; the pair's one number is a fixed function of the seed and the
+birth code (two salted ticket steps with a square between them, so that
+consecutive birth codes draw independent numbers). Postulates 4 and 22 carry
+the bounded wording.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_bonds.py` | 400 bonds: first answers 199, 187 and 185 of 400 positive on three seeds, quarter-turn agreements 208, 199 and 170; equal settings never agree, a half turn always; the same end asking again gets the same answer without a new number; the other end releases the pair; the 4097th open pair is refused |
+| `tests/test_ray_bell_chsh.py`, one seed | E = -0.6562, 0.8125, -0.6562, -0.6562, S = 2.7811, E(0, 0) = -1.0, closed |
+| Bonded Bell probe, 16 seeds, 1,024 pairs per correlation | E = -0.709, 0.762, -0.709, -0.709; S = 2.889 against the quantum 2.828 and the bound 2; E(0, 0) = -1.0; plus rates 0.48 to 0.51 whatever the other setting; 0 missing pairs; every run closed |
+| Ray, bond, Focus, merge-contract, guard, Kerengonen, claim, pace, delay, contract, architecture, locality and configuration suites | 373 passed; document suites 97 passed |
+
+Runtime source SHA-256
+`9c3eedc70b2ba4d55142615bb1afe9b49dff846b204ef45830f4a83a122a81c9`, Python
+3.14.0rc2, headless. A run above 2 sqrt 2 is counting spread: the registry's
+law gives E = -cos exactly in expectation.

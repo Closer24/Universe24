@@ -43,6 +43,7 @@ from event_universe.core.spatial_state import (
     validate_rays,
 )
 
+from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
@@ -71,6 +72,9 @@ class SpatialLaw:
     # When set, indivisible portions prefer the axis whose port carries the least
     # computation load travelling along ("along") or against it ("against").
     least_delay_direction: str | None = None
+    # The one shared object: the bond registry, the declared exception to the
+    # causal bound. None when no field is bonded.
+    bonds: BondRegistry | None = None
 
     def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
         """Complete keys of the record's own rays that arrived here with it."""
@@ -286,7 +290,13 @@ class SpatialLaw:
                         # truncated share stay within the working register.
                         share_numerator //= 2
                         share_denominator //= 2
-                    if lottery:
+                    if rule.bond_setting is not None and ray.bond and self.bonds is not None:
+                        # A bonded ray: the registry answers for both ends of the pair.
+                        setting = unpack(record.values[rule.bond_setting])[0]
+                        meter.charge("evaluate")
+                        if self.bonds.draw(ray.bond, setting, ray_salt(ray)) < 0:
+                            share = 0
+                    elif lottery:
                         # Whole ray or nothing: the local ticket draws against the share.
                         ticket = next_ticket(ticket, ray_salt(ray))
                         meter.charge("evaluate")
