@@ -473,8 +473,9 @@ class SpatialNode(SpatialNodeState):
             )
         self.states = plan.states
         if self.rays:
-            # Every resident ray left on this cycle along its own line.
-            self.rays = tuple(() for _ in self.rays)
+            # Every resident ray that was due left along its own line; on a
+            # Euclidean pace the rays not yet due stay.
+            self.rays = plan.kept_rays if plan.kept_rays else tuple(() for _ in self.rays)
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)

@@ -893,7 +893,7 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
-            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion", "kerengonen"}
+            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion", "kerengonen", "metric"}
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -914,8 +914,12 @@ def _spatial_fields(
         self_exclusion = False
         phase_steps, phase_advance = 0, 0
         capture, capture_seed = "share", 0
+        metric = "links"
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
+            metric = _text(obj.get("metric", "links"), "spatial field metric")
+            if metric not in ("links", "euclidean"):
+                raise ValueError("spatial field metric must be links or euclidean")
             if "kerengonen" in obj:
                 # Kerengonen: phased rays. Both keys are required and explicit.
                 phased = _object(
@@ -958,9 +962,10 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif (ray_keys | {"self_exclusion", "kerengonen"}) & obj.keys():
+        elif (ray_keys | {"self_exclusion", "kerengonen", "metric"}) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion and kerengonen require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen and metric "
+                "require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -993,6 +998,7 @@ def _spatial_fields(
                 phase_advance,
                 capture,
                 capture_seed,
+                metric,
             )
         )
     return tuple(result)
@@ -1087,16 +1093,30 @@ def _emissions(
             )
             dissolve_after = _integer(schedule["after_ticks"], "emission.dissolve.after_ticks", 0)
             dissolve_over = _integer(schedule["over_ticks"], "emission.dissolve.over_ticks", 1)
-        mirror: tuple[int, int, int] | None = None
+        mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
         if "kerengonen_mirror" in obj:
             if not spatial[index].kerengonen:
                 raise ValueError("kerengonen_mirror requires a kerengonen ray field")
             axis = _text(obj["kerengonen_mirror"], "emission.kerengonen_mirror")
-            if axis not in ("x", "y", "z"):
-                raise ValueError("kerengonen_mirror must be x, y or z")
-            mirror = cast(tuple[int, int, int], tuple(-1 if "xyz"[i] == axis else 1 for i in range(3)))
+            if axis in ("x", "y", "z"):
+                # A mirror across the plane normal to one axis: that component flips.
+                mirror = cast(
+                    tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
+                    tuple((i, -1 if "xyz"[i] == axis else 1) for i in range(3)),
+                )
+            elif axis in ("xy", "xz", "yz"):
+                # A mirror across the diagonal plane of two axes: they swap.
+                first, second = "xyz".index(axis[0]), "xyz".index(axis[1])
+                order = [0, 1, 2]
+                order[first], order[second] = second, first
+                mirror = cast(
+                    tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
+                    tuple((order[i], 1) for i in range(3)),
+                )
+            else:
+                raise ValueError("kerengonen_mirror must be x, y, z, xy, xz or yz")
             for heading in spatial[index].headings:
-                image = tuple(component * sign for component, sign in zip(heading, mirror, strict=True))
+                image = tuple(heading[source] * sign for source, sign in mirror)
                 if image not in spatial[index].headings:
                     raise ValueError(
                         "kerengonen_mirror requires the heading sequence to contain every mirror image"

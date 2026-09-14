@@ -33,6 +33,7 @@ from event_universe.core.spatial_state import (
     phase_of_sum,
     ray_salt,
     ray_stock,
+    validate_rays,
 )
 
 from .disturbances import evaluate
@@ -88,11 +89,18 @@ class SpatialLaw:
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
     def _mirrored_heading(
-        self, heading: int, mirror: tuple[int, int, int], definition: SpatialFieldDefinition
+        self,
+        heading: int,
+        mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]],
+        definition: SpatialFieldDefinition,
     ) -> int:
         """The index of the absorbed heading's mirror image; the parser proved it exists."""
         source = definition.headings[heading]
-        image = (source[0] * mirror[0], source[1] * mirror[1], source[2] * mirror[2])
+        image = (
+            source[mirror[0][0]] * mirror[0][1],
+            source[mirror[1][0]] * mirror[1][1],
+            source[mirror[2][0]] * mirror[2][1],
+        )
         return definition.headings.index(image)
 
     def _absorb(
@@ -451,6 +459,7 @@ class SpatialLaw:
             working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
+        kept_rays: list[Rays] = [() for _ in self.definitions]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -464,14 +473,16 @@ class SpatialLaw:
                 absorbed_by_field[definition.field] = checked_work(
                     absorbed_by_field[definition.field] + absorbed
                 )
-                ports = forward_rays(
+                ports, kept = forward_rays(
                     tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
                 )
+                validate_rays(kept, definition, field)
+                kept_rays[index] = kept
                 before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
                 before_rays = checked_work(
                     before_rays + source[definition.field][0] + funded[definition.field]
                 )
-                after_rays = absorbed
+                after_rays = checked_work(absorbed + ray_stock(kept))
                 for port_rays in ports:
                     after_rays = checked_work(after_rays + ray_stock(port_rays))
                 if field.conserved and before_rays != after_rays:
@@ -541,4 +552,5 @@ class SpatialLaw:
             )
             if has_rays and any(funded) or any(absorbed_by_field)
             else (),
+            tuple(kept_rays) if has_rays and any(kept_rays) else (),
         )

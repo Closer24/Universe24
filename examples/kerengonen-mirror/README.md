@@ -52,6 +52,8 @@ Reflection is absorption followed by re-emission along the mirrored heading
 with the phase carried, and that suffices for a standing wave with the
 half-wavelength period the phase advance dictates. With the Huygens slit this
 gives the field two ways to turn a wave around a corner, both local and both
-closed on the ledger. What it does not give: a mirror that reflects at an
-angle other than across a lattice axis, or a partial mirror; both would need a
-heading map beyond one sign flip.
+closed on the ledger. A diagonal mirror (`xy`, `xz` or `yz`) swaps two heading
+components, and an absorb `fraction` makes a mirror partial, returning the
+fraction it takes; `tests/test_kerengonen.py` checks both. What it does not
+give: a mirror at an arbitrary angle, which would need a heading map beyond a
+signed permutation.

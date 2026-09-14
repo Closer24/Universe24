@@ -153,7 +153,9 @@ fringe, so the wave's phase survives absorption and re-emission at a Node and
 the double slit needs no second lamp. Two limits are visible in the numbers. Interference needs rays
 of both lamps at one Node on one tick, so ticks on which only one lamp's rays
 are present pass ungated; and the pattern follows Manhattan path difference on
-this lattice, not Euclidean. Quanta that cancel are not redistributed to the
+this lattice's links metric, while the
+[Euclidean pace](../euclidean-pace/README.md) gives the Euclidean one at the
+price of rays that wait. Quanta that cancel are not redistributed to the
 bright fringes; they continue, and a thick screen absorbs them behind the
 first layer, which keeps the rule local and the total exact but differs from
 a wave that carries its energy to where it adds.

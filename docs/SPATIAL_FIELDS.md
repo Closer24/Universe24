@@ -283,16 +283,40 @@ A mirror is the same rule turned around. The absorbed row also keeps the
 heading of the largest share, and an emission with
 `"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
 one ray along the mirror image of that heading across the named axis, at the
-carried phase and advance when `"kerengonen_phase": "carried"` is set. The
-heading sequence must contain every mirror image, the emission must name a
-`recoil_field` (the mirror takes the momentum it reverses), and the emitting
-type must absorb on the field. A lamp facing a mirror then holds a standing
-wave: the reading along the line repeats every `phase_steps / (2 x advance)`
-links, as the [mirror probe](../examples/kerengonen-mirror/README.md) measures.
+carried phase and advance when `"kerengonen_phase": "carried"` is set. A
+diagonal mirror, `"xy"`, `"xz"` or `"yz"`, swaps the two named components
+instead, so a ray along `+x` returns along `+y`. The heading sequence must
+contain every mirror image, the emission must name a `recoil_field` (the
+mirror takes the momentum it reverses), and the emitting type must absorb on
+the field. A mirror whose absorb rule carries a `fraction` is partial: it
+returns the fraction it takes and lets the rest pass. A lamp facing a mirror
+then holds a standing wave: the reading along the line repeats every
+`phase_steps / (2 x advance)` links, as the
+[mirror probe](../examples/kerengonen-mirror/README.md) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
 `kerengonen_phase`, `kerengonen_advance` or `kerengonen_mirror` on an emission
 requires the key. The runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
+
+### Euclidean pace (`"metric": "euclidean"`)
+
+A ray field moves every ray one link per tick, so a wave front reaches the
+same Manhattan distance in every heading and the fringe of two sources follows
+Manhattan path difference. A ray field may instead set `"metric": "euclidean"`
+(identity `euclidean-ray-pace-v1` in the run metadata, beside the field's
+policy). Every heading then has a pace, the ratio of its Euclidean length to
+its Manhattan length scaled by 4096 and computed by integer square root; the
+slowest heading (the one nearest a body diagonal) hops every tick, and every
+other ray adds that slowest pace to a per-ray `wait` on every tick and hops
+only when the wait passes its own pace, carrying the remainder. A ray that
+waits stays resident at its Node, counted by the ledger, sampled by readers
+and open to absorption like any other, and its phase still advances by one
+step for the tick. No ray ever moves faster than one link per tick; the
+Euclidean metric only makes rays slower, so that every heading covers the same
+Euclidean distance per tick and the front is round to within one link. Rays
+merge only with equal wait. Two sources in phase then give a fringe in
+Euclidean path difference, and the
+[Euclidean pace probe](../examples/euclidean-pace/README.md) measures both.
 
 ## Finite completed-link decay
 

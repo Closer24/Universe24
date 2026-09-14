@@ -1833,3 +1833,30 @@ cycles, never more than is left.
 
 A moving source during its train is a different experiment, recorded as such;
 the schedule is local to the record and follows it wherever it goes.
+
+## Can the ray be what it is not: whole landing, oblique mirrors, Euclidean fringes — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Three limits recorded for the ray were
+put to the engine. Whole landing of a dissolved particle at one Node was
+argued, not implemented: rays carry conserved stock at link speed, and no
+local rule can retire the rest of the wave when one Node captures without a
+signal faster than the rays, so the escape routes (domain-owned inventory or
+sub-luminal matter rays with causal retirement) are recorded in the
+postulates. Diagonal mirrors (`xy`, `xz`, `yz`) and partial mirrors (an
+absorb `fraction`) were added; a ray field may set `"metric": "euclidean"`
+(`euclidean-ray-pace-v1`): the slowest heading hops every tick and every other
+ray waits at its Node by its pace, so every heading covers equal Euclidean
+distance per tick.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,439 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: integer square root, paces 2364/4096, 2364/2896 and 1 for the axis, face and body diagonal, reaches 6, 9 and 12 links after twelve ticks, closure on 400 quanta, an unknown metric rejected; a diagonal `xy` mirror returns +x along +y with nothing back along -x; a quarter-fraction mirror passes 3 of 4 and returns 1, closed. `tests/test_euclidean_pace.py` on the probe |
+| Round front | One lamp on the 26 neighbor headings, twelve ticks: links metric reaches 12 links in every heading, Euclidean radii 12, 8.49 and 6.93 (spread 1.732, an octahedron); Euclidean metric reaches 6, 9 and 12 links, radii 6, 6.4 and 6.93 (spread 1.155, round to within a link); both closed |
+| Euclidean fringe | Two lamps four links apart, 29 headings to a screen twelve links away, 64 steps at advance 16, readings summed over the last eight of forty ticks: links metric darkest 0 at x = -1 and 1 and a flat 64 from x = 3 to 9 (Manhattan path difference saturates at four links, a full turn); Euclidean metric darkest 0 at x = -5 and 5 with 64 at the center and 96 at the edges, where the predicted half turn falls at x = -5, -4, 4, 5; the plain field on the Euclidean metric reads 64 to 128 as one or two rays of each lamp are resident per tick; all closed |
+| Visualization | Not requested or generated |
+
+The metric is a configured choice: the lattice's Manhattan fringe and the
+Euclidean fringe are both exact consequences of where rays meet, and the
+Euclidean pace buys the round front with rays that are slower, never faster,
+than one link per tick.

@@ -68,6 +68,9 @@ move one link per tick along their own lattice line, with a per-Node slot
 capacity. Such a field may add `kerengonen` (`kerengonen-ray-field-v1`): rays
 carry a phase that advances per link, and the coherence of the rays meeting at
 a Node gates what is absorbed and sampled there while every amount stays whole.
+A ray field may set `"metric": "euclidean"` (`euclidean-ray-pace-v1`): rays
+wait at Nodes by their heading's pace, never faster than one link per tick, so
+every heading covers equal Euclidean distance per tick.
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio

@@ -187,8 +187,8 @@ def test_emission_shares_amount_over_the_next_headings_and_cycles_the_cursor():
     # and moves the cursor on by the headings it filled, not the whole sweep.
     rays, cursor = emit_rays(1, 1, definition, meter())
     assert rays == (Ray(1, (0, 0, 0), 1),) and cursor == 2
-    ports = forward_rays(rays, definition, meter())
-    assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0]
+    ports, kept = forward_rays(rays, definition, meter())
+    assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0] and kept == ()
     assert merge_rays((Ray(1, (0, 0, 0), 1), Ray(1, (0, 0, 0), 2), Ray(1, (1, 0, 0), 1))) == (
         Ray(1, (0, 0, 0), 3),
         Ray(1, (1, 0, 0), 1),

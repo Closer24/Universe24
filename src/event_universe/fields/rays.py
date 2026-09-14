@@ -1,5 +1,7 @@
 """Pure emission and forwarding for straight-moving ray fields."""
 
+from dataclasses import replace
+
 from event_universe.core.disturbance_state import CostMeter, FieldDefinition, bounded
 from event_universe.core.spatial_state import (
     MAX_HEADINGS,
@@ -8,6 +10,7 @@ from event_universe.core.spatial_state import (
     Rays,
     SpatialFieldDefinition,
     advance_ray,
+    heading_pace,
     merge_rays,
     phase_cosines,
     validate_heading,
@@ -64,14 +67,29 @@ def emit_rays(
     return tuple(rays), (cursor + (count if base else extra)) % headings
 
 
-def forward_rays(rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter) -> tuple[Rays, ...]:
-    """Move every resident ray one link along its own line; the Node keeps none."""
+def forward_rays(
+    rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter
+) -> tuple[tuple[Rays, ...], Rays]:
+    """Move every ray that is due one link along its own line; return the ports and the kept.
+
+    On the links metric every ray is due every tick and the Node keeps none. On
+    the Euclidean metric a ray hops when its wait passes its heading's pace; a
+    ray that waits stays resident, and its phase still advances with the tick.
+    """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
+    kept: list[Ray] = []
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
+        numerator, denominator = heading_pace(definition, ray.heading)
+        wait = ray.wait + numerator
+        if wait < denominator:
+            step = ray.advance if ray.advance >= 0 else definition.phase_advance
+            phase = (ray.phase + step) % definition.phase_steps if definition.phase_steps else ray.phase
+            kept.append(replace(ray, wait=wait, phase=phase))
+            continue
         port, moved = advance_ray(
-            ray,
+            replace(ray, wait=wait - denominator),
             definition.headings[ray.heading],
             definition.phase_steps,
             definition.phase_advance,
@@ -79,4 +97,4 @@ def forward_rays(rays: Rays, definition: SpatialFieldDefinition, meter: CostMete
         outgoing[port].append(moved)
     result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
     meter.charge("send", sum(1 for port_rays in result if port_rays))
-    return result
+    return result, merge_rays(tuple(kept))

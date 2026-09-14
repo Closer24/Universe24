@@ -70,6 +70,9 @@ class Ray:
     # the ray's own advance per link when nonnegative (-1 uses the field's).
     phase: int = 0
     advance: int = -1
+    # Euclidean pace only: how far the ray is toward its next link, below its
+    # heading's pace denominator.
+    wait: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -100,10 +103,18 @@ class SpatialFieldDefinition:
     # local ticket whose probability is that share.
     capture: str = "share"
     capture_seed: int = 0
+    # Ray transport only: "links" moves every ray one link per tick; "euclidean"
+    # paces each heading so that every ray covers the same Euclidean distance
+    # per tick, the slowest lattice direction setting the speed.
+    metric: str = "links"
 
     @property
     def rays(self) -> bool:
         return self.transport == "ray"
+
+    @property
+    def euclidean(self) -> bool:
+        return self.metric == "euclidean"
 
     @property
     def kerengonen(self) -> bool:
@@ -187,8 +198,9 @@ class EmissionDefinition:
     advance: Expression | None = None
     advance_denominator: int = 1
     # Kerengonen fields only: re-emit the whole amount along the mirror image of the
-    # heading last absorbed, with these component signs (a mirror across one axis).
-    mirror: tuple[int, int, int] | None = None
+    # heading last absorbed: for each output component, the source component and
+    # its sign (a mirror across an axis plane or a diagonal plane).
+    mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
     # Dissolution (funded ray fields only): emit nothing for dissolve_after cycles,
     # then the record's initial stock over dissolve_over cycles, never more than
     # is left. Zero dissolve_over means no dissolution.
@@ -311,6 +323,8 @@ class SpatialPlan:
     # Funded emission minus absorption per field: stock that moved between a
     # record and its field, booked as a reaction, never as a source.
     transfer_delta: Values = ()
+    # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
+    kept_rays: tuple[Rays, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -371,6 +385,9 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray phase must index the field's phase steps")
         if type(ray.advance) is not int or not -1 <= ray.advance < max(definition.phase_steps, 1):
             raise ValueError("ray advance must be -1 or index the field's phase steps")
+        pace = heading_pace(definition, ray.heading)
+        if type(ray.wait) is not int or not 0 <= ray.wait < pace[1]:
+            raise ValueError("ray wait must stay below its heading's pace denominator")
 
 
 def advance_ray(
@@ -394,13 +411,13 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int, int], int] = {}
     for ray in rays:
-        key = (ray.heading, ray.accumulators, ray.phase, ray.advance)
+        key = (ray.heading, ray.accumulators, ray.phase, ray.advance, ray.wait)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance)
-        for (heading, accumulators, phase, advance), amount in sorted(combined.items())
+        Ray(heading, accumulators, bounded(amount), phase, advance, wait)
+        for (heading, accumulators, phase, advance, wait), amount in sorted(combined.items())
         if amount
     )
 
@@ -578,3 +595,46 @@ def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
         return total
     magnitude = checked_work(abs(total) * numerator) // denominator
     return bounded(-magnitude if total < 0 else magnitude)
+
+
+# Euclidean pace. A heading of Manhattan length L and Euclidean length E covers
+# E / L of a Euclidean unit per link. Pacing every ray to the slowest direction
+# makes the wave front round: a ray hops when its wait passes its denominator.
+
+PACE_SCALE = 4096
+_PACE_TABLES: dict[tuple[Heading, ...], tuple[tuple[int, int], ...]] = {}
+
+
+def integer_sqrt(value: int) -> int:
+    """The floor of the square root, by Newton's method on integers."""
+    if value < 0:
+        raise ValueError("square root of a negative integer")
+    if value < 2:
+        return value
+    guess = value
+    better = (guess + value // guess) // 2
+    while better < guess:
+        guess, better = better, (better + value // better) // 2
+    return guess
+
+
+def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], ...]:
+    """(numerator, denominator) hops per tick for every heading; (1, 1) on the links metric."""
+    if not definition.euclidean:
+        return tuple((1, 1) for _ in definition.headings)
+    table = _PACE_TABLES.get(definition.headings)
+    if table is None:
+        ratios = []
+        for heading in definition.headings:
+            manhattan = sum(abs(c) for c in heading)
+            squared = sum(c * c for c in heading)
+            # E / L scaled: the Euclidean length in units of 1 / PACE_SCALE per Manhattan link.
+            ratios.append(integer_sqrt(squared * PACE_SCALE * PACE_SCALE) // manhattan)
+        slowest = min(ratios)
+        table = tuple((slowest, ratio) for ratio in ratios)
+        _PACE_TABLES[definition.headings] = table
+    return table
+
+
+def heading_pace(definition: SpatialFieldDefinition, heading: int) -> tuple[int, int]:
+    return heading_paces(definition)[heading]

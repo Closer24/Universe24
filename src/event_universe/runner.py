@@ -220,6 +220,11 @@ def _execute_run(
             ),
             emission_interval_ticks=initial.link_ticks,
             self_field_filter="unsupported",
+            spatial_metric=(
+                "euclidean-ray-pace-v1"
+                if any(field.euclidean for field in initial.spatial_fields)
+                else "links"
+            ),
             spatial_policy=(
                 (
                     "finite-localizing-v1"

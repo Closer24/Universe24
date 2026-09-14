@@ -27,15 +27,20 @@ a schedule (`dissolve`: a particle becoming its own wave train).
 | 10.3.2 | Straight rays: isotropic inverse square, shell conservation, a small stock sweeping the heading sequence in turn. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
 | 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
 | 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
-| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [validation](VALIDATION.md) |
+| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), [validation](VALIDATION.md) |
 | 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | [Quantum-to-classical probes](../examples/quantum-classical/README.md) |
 
 What the ray is not, recorded rather than claimed: a single particle's matter
-lands spread as its wave, not at one Node, because the ray field has no causal
-retirement of the rest of a wave when one Node captures; a mirror reflects
-across a lattice axis only; fringes follow Manhattan path difference; the
-lottery ticket is a configured local sequence, not physical randomness; the
-event audit re-measures every owner per event, so audited worlds stay small.
+lands spread as its wave, not at one Node, because rays carry conserved stock
+at link speed and no local rule can retire the rest of a wave when one Node
+captures without a faster signal; a mirror reflects across a lattice axis or a
+lattice diagonal, whole or by a fraction, not at an arbitrary angle; fringes
+follow Manhattan path difference on the links metric and Euclidean path
+difference on the [Euclidean pace](SPATIAL_FIELDS.md#euclidean-pace-metric-euclidean)
+(`euclidean-ray-pace-v1`), where rays wait at Nodes and are slower, never
+faster, than one link per tick; the lottery ticket is a configured local
+sequence, not physical randomness; the event audit re-measures every owner per
+event, so audited worlds stay small.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not
 derived. Exact sources and completed checks are in
 [validation evidence](VALIDATION.md).

@@ -183,6 +183,11 @@ influence in the simulator. Oracle evaluation is not physical propagation.
 A particle can also move at most one neighbor per step. The same movement law
 applies at all speeds; there are no separate low-speed and high-speed laws.
 
+A ray on the Euclidean pace waits at a Node for part of its journey so that
+every heading covers the same Euclidean distance per step. Waiting is slower,
+never faster: the bound holds for every heading, and the lattice metric is a
+configured choice, not a derivation.
+
 ## 5. Physical calculations use integers only
 
 Every value affecting simulation evolution is an integer: position, time, field,
@@ -298,6 +303,20 @@ whole and accounted for. Quanta that cancel continue; whether that is the right
 place for them is the question the candidate is meant to test. A ray's advance
 per link may come from its emitter's momentum, `|p| / D`, the de Broglie
 hypothesis: measured as a fringe period inverse to momentum, not derived.
+
+Three limits of the ray were tested rather than assumed. A single particle
+dissolved into rays lands where its wave is absorbed, spread over the screen;
+it cannot land whole at one Node, because each ray carries conserved stock at
+link speed and no local rule can retire the other rays when one is captured
+without a signal faster than the rays themselves, which postulate 4 forbids.
+Whole landing needs either inventory that a domain owns rather than rays
+carry, as the quantum layer keeps it, or matter rays slower than the causal
+speed with a retirement that travels at that speed. A mirror can reflect
+across a lattice axis or a lattice diagonal, and a fraction makes it partial;
+an arbitrary angle needs a heading map beyond a signed permutation. The
+fringe follows Manhattan path difference on the links metric and Euclidean
+path difference on the Euclidean pace: the metric is a configured choice
+under test, with every quantum still counted whole.
 
 ## 12. Quantum behavior and entanglement remain open
 

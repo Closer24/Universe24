@@ -160,7 +160,11 @@ pays its matter out as a wave train and lands it on the screen with the fringe
 of the momentum it flew with. A mirror emission re-emits along the reflected
 absorbed heading, and the [mirror probe](../examples/kerengonen-mirror/README.md)
 reads the standing wave between a lamp and a mirror with period
-`phase_steps / (2 x advance)`.
+`phase_steps / (2 x advance)`. A ray field may set `"metric": "euclidean"`
+(`euclidean-ray-pace-v1`): rays wait at Nodes by their heading's pace so every
+heading covers equal Euclidean distance per tick, and the
+[Euclidean pace probe](../examples/euclidean-pace/README.md) reads a round
+front and a fringe in Euclidean path difference.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

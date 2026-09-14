@@ -636,7 +636,7 @@ def test_the_mirror_emission_is_validated():
         parse_initial_state(raw)
     raw = mirror_document()
     raw["emissions"][1]["kerengonen_mirror"] = "w"
-    with pytest.raises(ValueError, match="x, y or z"):
+    with pytest.raises(ValueError, match="xy, xz or yz"):
         parse_initial_state(raw)
     raw = mirror_document()
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
@@ -743,3 +743,90 @@ def test_dissolution_is_validated():
     raw["emissions"][0]["dissolve"] = {"after_ticks": 0, "over_ticks": 0}
     with pytest.raises(ValueError, match="over_ticks"):
         parse_initial_state(raw)
+
+
+def test_a_euclidean_pace_makes_the_wave_front_round_and_keeps_waiting_rays():
+    from event_universe.core.spatial_state import heading_paces, integer_sqrt
+
+    assert [integer_sqrt(v) for v in (0, 1, 2, 3, 4, 15, 16, 17, 1000000)] == [
+        0,
+        1,
+        1,
+        1,
+        2,
+        3,
+        4,
+        4,
+        1000,
+    ]
+    raw = two_lamps(64, 1, ticks=12)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [1, 1, 0], [1, 1, 1]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 3
+    raw["spatial_fields"][0]["metric"] = "euclidean"
+    definition = parse_initial_state(raw).spatial_fields[0]
+    paces = heading_paces(definition)
+    # Manhattan 1, 2, 3 against Euclidean 1, sqrt 2, sqrt 3: the body diagonal hops
+    # every tick and the axis ray once in sqrt 3 ticks.
+    assert paces[2] == (paces[2][0], paces[2][0]) and paces[0][1] == 4096
+    assert paces[0][0] == 2364 and paces[1] == (2364, 2896)
+    raw["emissions"] = raw["emissions"][:1]
+    raw["emissions"][0]["amount"] = 3
+    raw["seeds"] = raw["seeds"][:1]
+    world = Simulation(parse_initial_state(raw))
+    lamp = raw["seeds"][0]["position"][0]
+    reach = []
+    for _ in range(12):
+        world.step()
+        far = {}
+        for node in world.inventory_view().nodes:
+            for ray in node.rays[0] if node.rays else ():
+                offset = (node.position[0] - lamp, node.position[1] - CENTER, node.position[2] - CENTER)
+                far[ray.heading] = max(far.get(ray.heading, 0), sum(abs(o) for o in offset))
+        reach.append(far)
+    # The body diagonal hops every tick, so every heading moves 0.577 link-lengths of
+    # Euclidean distance per tick: after twelve ticks the first axis ray has made
+    # about 6.9 links, the first face diagonal 9.8 links along its staircase, the
+    # body diagonal 12; measured from the lamp, which keeps emitting behind them.
+    assert reach[-1][0] in (6, 7) and reach[-1][1] in (9, 10) and reach[-1][2] == 12
+    assert reach[3][0] == 2 and reach[3][2] == 4
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400
+    raw["spatial_fields"][0]["metric"] = "hops"
+    with pytest.raises(ValueError, match="links or euclidean"):
+        parse_initial_state(raw)
+
+
+def test_a_diagonal_mirror_swaps_the_heading_axes_and_a_fraction_makes_it_partial():
+    raw = mirror_document(advance=4)
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [0, 1, 0], [-1, 0, 0], [0, -1, 0]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 4
+    raw["emissions"][0]["amount"] = 8
+    raw["emissions"][1]["kerengonen_mirror"] = "xy"
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(16):
+        world.step()
+    # The +x ray reaching the mirror at x = 6 comes back along +y: the mirror's Node
+    # column above it holds rays of heading index 1 and nothing returns along -x.
+    rays = {
+        tuple(p - CENTER for p in node.position): [r.heading for r in node.rays[0]]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    above = [h for (x, y, z), hs in rays.items() if x == 6 and y > 0 for h in hs]
+    assert above and set(above) == {1}
+    assert not [h for (x, y, z), hs in rays.items() if 0 < x < 6 and y == 0 for h in hs if h == 2]
+    # A partial mirror: absorb a quarter, let the rest pass; the quarter comes back.
+    raw = mirror_document(advance=4)
+    raw["spatial_couplings"][-1].update({"fraction": 1, "fraction_denominator": 4})
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(20):
+        world.step()
+    rays = {
+        node.position[0] - CENTER: [(r.heading, r.amount) for r in node.rays[0]]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    passed = [amount for x, rs in rays.items() if x > 6 for h, amount in rs if h == 0]
+    reflected = [amount for x, rs in rays.items() if 0 < x < 6 for h, amount in rs if h == 1]
+    assert passed and set(passed) == {3} and reflected and set(reflected) == {1}
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400
