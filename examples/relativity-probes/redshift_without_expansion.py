@@ -9,7 +9,7 @@ observer: it records only the arrival tick of each body. Spacing above one link
 per tick is a redshift z = spacing - 1 produced by delay growth, with no
 recession and no expansion term. The control keeps the emission at zero.
 
-usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget] [open|periodic] [constant emission] [ticks] [straight|rotate|node]
+usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget] [open|periodic] [constant emission] [ticks] [straight|rotate|node] [rays]
 """
 
 import sys
@@ -27,6 +27,8 @@ TICKS = int(sys.argv[5]) if len(sys.argv) > 5 else 60
 # "rotate" keeps the field Manhattan-isotropic: with "straight" phases the mass's
 # axis ray runs down the column x = 18 across the train's row and stalls it there.
 ALLOCATION = sys.argv[6] if len(sys.argv) > 6 else "straight"
+# "rays": the mass emits straight rays; the load is then the delivered ray arrivals.
+RAYS = len(sys.argv) > 7 and sys.argv[7] == "rays"
 # Closed: a taller box with the mass twelve rows from the path, so the direct field
 # is weak and the growing load is the accumulated, wrapped field; the train laps
 # the row and the eye records every lap (successive epochs of the same signal).
@@ -37,6 +39,32 @@ ROW, EYE_X, TRAIN = 2, 34, 12
 
 def op(name, *args):
     return {"op": name, "args": list(args)}
+
+
+def computation_definition():
+    if RAYS:
+        from pathlib import Path
+
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        saved, sys.argv = sys.argv, sys.argv[:1]  # gravity_lensing parses its own argv
+        from gravity_lensing import (
+            RAY_HEADINGS,
+            RAY_SCALE,
+            RAY_SLOTS,
+            RAYS_PER_TICK,
+            golden_headings,
+        )
+
+        sys.argv = saved
+        return {
+            "field": "computation",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+            "rays_per_tick": RAYS_PER_TICK,
+            "ray_slots": RAY_SLOTS,
+        }
+    return {"field": "computation", "baseline": 0, "transport": "outward"}
 
 
 def document(growth):
@@ -113,7 +141,7 @@ def document(growth):
                 },
             },
         ],
-        "spatial_fields": [{"field": "computation", "baseline": 0, "transport": "outward"}],
+        "spatial_fields": [computation_definition()],
         "emissions": [
             {
                 "type": "mass body",
@@ -165,7 +193,7 @@ for growth in sorted({0, GROWTH}):
     order = sorted(arrivals)
     print(
         f"\n=== emission {CONSTANT} + {growth} per mass cycle, budget {BUDGET}, "
-        f"boundary {BOUNDARY}, phases {ALLOCATION}: what the eye records ==="
+        f"boundary {BOUNDARY}, phases {ALLOCATION}, field {'rays' if RAYS else 'octants'}: what the eye records ==="
     )
     laps = max((len(v) for v in arrivals.values()), default=0)
     for lap in range(laps):

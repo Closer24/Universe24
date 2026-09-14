@@ -11,7 +11,7 @@ For each v0 the probe reports the mean distance of the bodies from the centre
 over time, whether the bodies turned around (recollapse) or left the slab
 (escape), and the speed at which the two regimes separate.
 
-usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic]
+usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays]
 """
 
 import sys
@@ -26,6 +26,8 @@ R = int(sys.argv[3]) if len(sys.argv) > 3 else 5
 TICKS = int(sys.argv[4]) if len(sys.argv) > 4 else 60
 # "periodic": a closed universe; nothing escapes and the field accumulates.
 BOUNDARY = sys.argv[5] if len(sys.argv) > 5 else "open"
+# "rays": the masses emit straight rays (isotropic far field) instead of octants.
+RAYS = len(sys.argv) > 6 and sys.argv[6] == "rays"
 SHAPE = [29, 29, 3]
 CENTER = (14, 14, 1)
 AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -33,6 +35,32 @@ AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 def op(name, *args):
     return {"op": name, "args": list(args)}
+
+
+def computation_definition():
+    if RAYS:
+        from pathlib import Path
+
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        saved, sys.argv = sys.argv, sys.argv[:1]  # gravity_lensing parses its own argv
+        from gravity_lensing import (
+            RAY_HEADINGS,
+            RAY_SCALE,
+            RAY_SLOTS,
+            RAYS_PER_TICK,
+            golden_headings,
+        )
+
+        sys.argv = saved
+        return {
+            "field": "computation",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+            "rays_per_tick": RAYS_PER_TICK,
+            "ray_slots": RAY_SLOTS,
+        }
+    return {"field": "computation", "baseline": 0, "transport": "outward"}
 
 
 def document(v0, emission):
@@ -54,7 +82,6 @@ def document(v0, emission):
         "link_ticks": 1,
         "normal_budget": 1_000_000,
         "ticks": TICKS,
-        "computation_field": "computation",
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
             {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
@@ -99,7 +126,7 @@ def document(v0, emission):
             }
         ],
         "spatial_fields": [
-            {"field": "computation", "baseline": 0, "transport": "outward"},
+            computation_definition(),
             {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
         ],
         "emissions": [
@@ -197,7 +224,10 @@ def label(history, escaped):
 
 
 if __name__ == "__main__":
-    print(f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, boundary {BOUNDARY}")
+    print(
+        f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, "
+        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}"
+    )
     print("control without a field: v0 = 60 ->", label(*run(60, 0)))
     for v0 in (0, 15, 30, 45, 60, 90, 120):
         history, escaped = run(v0, EMISSION)

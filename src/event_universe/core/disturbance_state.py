@@ -279,8 +279,8 @@ class InitialState:
                 raise ValueError("computation_field must name a configured field")
             field = self.fields[index]
             definition = next((d for d in self.spatial_fields if d.field == index), None)
-            if definition is None or definition.transport != "outward":
-                raise ValueError("computation_field must be an outward spatial field")
+            if definition is None or definition.transport not in ("outward", "ray"):
+                raise ValueError("computation_field must be an outward or ray spatial field")
             if field.components != 1 or field.signed or not field.conserved:
                 raise ValueError("computation_field must be an unsigned conserved scalar field")
         if self.spatial_computation_delay and not self.spatial_fields:

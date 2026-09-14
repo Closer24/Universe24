@@ -116,7 +116,7 @@ def test_without_a_computation_field_the_field_costs_only_its_operations():
 @pytest.mark.parametrize(
     ("patch", "message"),
     [
-        ({"computation_field": "mass"}, "outward spatial field"),
+        ({"computation_field": "mass"}, "outward or ray spatial field"),
         ({"computation_field": "nothing"}, "unknown name"),
     ],
 )

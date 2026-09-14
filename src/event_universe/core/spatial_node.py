@@ -282,9 +282,10 @@ class SpatialNode(SpatialNodeState):
             raise ValueError("outgoing spatial links are occupied")
         records = () if carrier is None else carrier.records
         if services.initial.computation_field is not None:
-            # Stock present before forwarding is this interval's local computation load.
+            # Stock present before forwarding is this interval's local computation load;
+            # for a ray field that stock is the resident rays, delivered per travel port.
             index = self._computation_index(services)
-            self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+            self.load = self._resident_load(index)
             self.load_channels = tuple(unpack(payload)[0] for payload in self.states[index].delivered)
         sample_values, sample_fluxes, sample_ports = (
             self.sample_values,
@@ -852,12 +853,17 @@ class SpatialNode(SpatialNodeState):
             return 0
         return bounded(checked_work(self._baseline_load(services) + self.load))
 
+    def _resident_load(self, index: int) -> int:
+        stock = sum(unpack(payload)[0] for payload in self.states[index].populations)
+        if self.rays and index < len(self.rays) and self.rays[index]:
+            stock = checked_work(stock + ray_stock(self.rays[index]))
+        return stock
+
     def refresh_load(self, services: SpatialServices) -> int:
         """Read the computation stock owned now, for the shared clock's field forwarding."""
         if services.initial.computation_field is None:
             return 0
-        index = self._computation_index(services)
-        self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+        self.load = self._resident_load(self._computation_index(services))
         return self.load_value(services)
 
     def directional_load(self, port: int, services: SpatialServices) -> int:

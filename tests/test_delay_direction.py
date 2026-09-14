@@ -143,6 +143,35 @@ def test_extra_delay_is_reported_on_the_departure_and_a_resting_body_stays(direc
     )
 
 
+RAY_FIELD = {
+    "field": "computation",
+    "baseline": 0,
+    "transport": "ray",
+    "headings": [[24, 0, 0], [-24, 0, 0], [0, 24, 0], [0, -24, 0], [0, 0, 24], [0, 0, -24]],
+    "rays_per_tick": 6,
+    "ray_slots": 64,
+}
+
+
+def ray_document(start_x, momentum, direction):
+    doc = document(start_x, momentum, direction)
+    doc["spatial_fields"] = [RAY_FIELD]
+    return doc
+
+
+def test_a_ray_field_prices_departures_by_delivered_ray_arrivals():
+    """A ray field may be the computation field: its arrivals per travel port are the load."""
+    along, _, _ = hop_ticks(ray_document(*AWAY, "along"))
+    against, _, _ = hop_ticks(ray_document(*AWAY, "against"))
+    isotropic, _, world = hop_ticks(ray_document(*AWAY, None))
+    # The +x ray travels with the departing probe: "along" delays it, "against" reads the
+    # -x channel, which no ray reaches beyond the source, and leaves it free.
+    assert max(gaps(along)) > 2
+    assert gaps(against)[:11] == [2] * 11
+    assert max(gaps(isotropic)) > 2
+    assert world.spatial_values((22, 2, 2))["computation"]["ray_count"] >= 0
+
+
 @pytest.mark.parametrize(
     ("extra", "message"),
     [
