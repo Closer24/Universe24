@@ -147,6 +147,25 @@ row 15 → 16.1), arrivals are late (33-36) and cross-overs land on the far side
 pass through the mass node and leave the plane. The isotropic field lenses the
 outer rows too, which the octant field could not.
 
+### Does the beam converge? (from the ray-field observer data)
+
+A glass lens brings parallel rays to one focus; a gravitational lens does not
+(its deflection falls with impact parameter, so the focal distance grows with
+b and the beam forms a caustic, the Einstein-ring geometry). Tracing each
+observed ray back to where it crosses the mass's axis, focal distance =
+b × p_x / |p_y| behind the mass:
+
+| b | 2 | 3 | 4 | 5 | 6 | 7 |
+| --- | --- | --- | --- | --- | --- | --- |
+| side + | 7.9 | 18.4 | 33.1 | 67.8 | 240 | 420 |
+| side − | 8.9 | 26.1 | 44.4 | 87.1 | 143 | 210 |
+
+The focal distance grows roughly as b^2.5-3: the lattice mass is a
+gravitational-type lens with a caustic, not a focusing lens, and the two sides
+agree within the ray quantization. There is no converging-beam or inward-ray
+mode in the engine; rays are straight lines from a source, and convergence
+here is what the momentum coupling does to them.
+
 ## 2. Twin clocks (`twins_dilation.py`, `observer_twins.py`)
 
 A traveller (momentum 30..120 out of 120) goes to a mirror 12 links away and
