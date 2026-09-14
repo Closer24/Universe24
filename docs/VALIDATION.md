@@ -1678,3 +1678,24 @@ The wave's phase survives absorption and re-emission at a Node: two slits lit
 by one lamp are two sources in the lamp's phase, and the fringe needs no
 second lamp. The re-emission is over the field's whole heading set, a point
 Huygens source; no diffraction law is derived from the slit's shape.
+
+## De Broglie on matter rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A ray may carry its own
+phase advance per link, stamped at emission by `kerengonen_advance` from an
+expression over the emitter's fields divided by a denominator and taken modulo
+the phase steps; rays merge only with equal advance, and a Huygens slit
+carries the advance of the largest share it absorbed with the phase.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,361 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a ray's own advance overrides the field's, rays of different advance do not merge, beams of momentum 16 and 32 at `|p| / 4` carry advances 4 and 8 with phases in ratio two, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance (readings 2, 4, 0 for lamp offsets 0, 16, 48 on 64 steps); `tests/test_de_broglie.py`: the probe composes for every momentum and closes |
+| De Broglie probe | Beams of momentum 16, 32 and 64 (advance 4, 8, 16) through Huygens slits at y = +-6, 117-heading cone, 64 ticks: first dark fringe at y = 4, 2, 1 as predicted, period 8, 4, 2; bright Nodes at 0; 0 and +-4; 0, +-2, +-4, +-6; ratios exactly one where only one slit reaches; the plain field gives exactly the sum of the single slits for every momentum; all twelve worlds close on their initial matter |
+| Unchanged | Rays without their own advance use the field's; every earlier Kerengonen result stands |
+| Visualization | Not requested or generated |
+
+The rule `|p| / D` is configured, not derived; what the measurement shows is
+that the lattice, the Huygens slits and the coherence gate carry it from the
+source to the screen: wavelength inverse to momentum, three doublings in a
+row. The beam is a held source; a record in flight is not yet a matter ray.
