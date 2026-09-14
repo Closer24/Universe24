@@ -384,10 +384,19 @@ def test_successful_loss_or_escape_is_displayed_as_balanced_with_signed_ledger(l
     assert any("accounting balances" in text for text in paragraphs)
     assert not any("failed" in text for text in paragraphs)
     headers = [item["text"] for item in nodes if item["tag"] == "th"]
-    assert headers == ["TRACKED FIELD", "INITIAL", "FINAL", "SOURCE CHANGE", "DISSIPATED", "ESCAPED"]
+    assert headers == [
+        "TRACKED FIELD",
+        "INITIAL",
+        "FINAL",
+        "SOURCE CHANGE",
+        "DISSIPATED",
+        "LOCALIZED",
+        "ESCAPED",
+    ]
     rows = [item for item in nodes if item["tag"] == "tr"]
-    assert [item["text"] for item in rows[1]["children"]][-2:] == [
+    assert [item["text"] for item in rows[1]["children"]][-3:] == [
         json.dumps(loss, separators=(",", ":")),
+        "[0,0,0]",
         json.dumps(escaped, separators=(",", ":")),
     ]
 

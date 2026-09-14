@@ -16,16 +16,21 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     EmissionDefinition,
+    FieldRuleGuard,
     NodeFieldRuleDefinition,
+    Ray,
+    Rays,
     SpatialFieldDefinition,
     SpatialOutgoing,
     SpatialPlan,
     SpatialPopulations,
     SpatialState,
+    ray_stock,
 )
 
 from .disturbances import evaluate
-from .local_field_rules import apply_field_rules
+from .local_field_rules import apply_field_rules, validate_field_guards
+from .rays import emit_rays, forward_rays, validate_ray_definition
 from .spatial import (
     add_populations,
     bounded_emission_amount,
@@ -50,6 +55,9 @@ class SpatialLaw:
     # When set, indivisible portions prefer the axis whose port carries the least
     # computation load travelling along ("along") or against it ("against").
     least_delay_direction: str | None = None
+
+    def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
+        validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
 
     def _emitter(self, record: DisturbanceRecord) -> DisturbanceRecord:
         """Validate fixed carried source metadata, or initialize an untouched emitter."""
@@ -80,7 +88,8 @@ class SpatialLaw:
             residues, allocation = unpack(remainder), unpack(phase)
             if any(abs(value) >= rule.denominator for value in residues):
                 raise ValueError("carried emission residual must be below its denominator")
-            denominator = sum(self.definitions[rule.spatial_field].octant_weights)
+            definition = self.definitions[rule.spatial_field]
+            denominator = len(definition.headings) if definition.rays else sum(definition.octant_weights)
             if any(not 0 <= value < denominator for value in allocation):
                 raise ValueError("carried emission phase must be below the octant weight total")
             if not matches_type(rule, record.type_index) and (any(residues) or any(allocation)):
@@ -113,9 +122,16 @@ class SpatialLaw:
         states: tuple[SpatialState, ...],
         records: tuple[DisturbanceRecord | None, ...],
         received_count: int = 0,
+        node_cost: int | None = None,
+        rays: tuple[Rays, ...] = (),
     ) -> SpatialPlan:
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
+        has_rays = any(definition.rays for definition in self.definitions)
+        resident_rays: list[list[Ray]] = [
+            list(rays[index]) if rays and index < len(rays) else []
+            for index in range(len(self.definitions))
+        ]
         meter = CostMeter(self.costs)
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
@@ -138,7 +154,9 @@ class SpatialLaw:
                 meter.charge("read")
                 if rule.budget is not None and not any(unpack(record.emission_remaining[index])):
                     continue
-                proposed = evaluate(rule.amount, record.values, record.values, meter)
+                proposed = evaluate(
+                    rule.amount, record.values, record.values, meter, node_cost=node_cost
+                )
                 residuals, allocation = list(record.emission_remainders), list(record.emission_phases)
                 remaining = list(record.emission_remaining)
                 if rule.budget is None:
@@ -149,15 +167,25 @@ class SpatialLaw:
                     amount, residuals[index], remaining[index] = bounded_emission_amount(
                         proposed, residuals[index], rule.denominator, remaining[index], field, meter
                     )
-                populations, allocation[index] = emit(
-                    amount, allocation[index], definition, field, meter
-                )
-                old = working[rule.spatial_field]
-                working[rule.spatial_field] = SpatialState(
-                    add_populations(old.populations, populations, field, meter),
-                    old.allocation_phases,
-                    old.delivered,
-                )
+                if definition.rays:
+                    # Straight rays: the amount is shared over the next headings of the
+                    # sequence and leaves this Node on the same cycle with the residents.
+                    validate_ray_definition(definition, field)
+                    new_rays, cursor = emit_rays(
+                        unpack(amount)[0], unpack(allocation[index])[0], definition, meter
+                    )
+                    allocation[index] = pack((cursor,))
+                    resident_rays[rule.spatial_field].extend(new_rays)
+                else:
+                    populations, allocation[index] = emit(
+                        amount, allocation[index], definition, field, meter
+                    )
+                    old = working[rule.spatial_field]
+                    working[rule.spatial_field] = SpatialState(
+                        add_populations(old.populations, populations, field, meter),
+                        old.allocation_phases,
+                        old.delivered,
+                    )
                 updated_records[slot] = replace(
                     record,
                     emission_remainders=tuple(residuals),
@@ -171,13 +199,15 @@ class SpatialLaw:
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
+        guards: list[FieldRuleGuard] = []
         if has_local:
             ruled_states, local_outgoing = apply_field_rules(
-                self.fields, self.definitions, self.field_rules, tuple(working), meter
+                self.fields, self.definitions, self.field_rules, tuple(working), meter, guards=guards
             )
             working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
+        outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -185,6 +215,28 @@ class SpatialLaw:
             channels: SpatialOutgoing
             blank = pack((0,) * field.components)
             channel_phases: SpatialOutgoing = ((blank,) * 8,) * 6
+            if definition.rays:
+                # Ray fields keep no octant stock; every resident ray moves one link.
+                if any(any(unpack(payload)) for payload in working[index].populations):
+                    raise ValueError("ray transport does not own octant populations")
+                ports = forward_rays(tuple(resident_rays[index]), definition, meter)
+                before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
+                before_rays = checked_work(before_rays + source[definition.field][0])
+                after_rays = 0
+                for port_rays in ports:
+                    after_rays = checked_work(after_rays + ray_stock(port_rays))
+                if field.conserved and before_rays != after_rays:
+                    raise ValueError("ray transport violates declared conservation")
+                channels = tuple((blank,) * 8 for _ in range(6))
+                for port, port_rays in enumerate(ports):
+                    outgoing_rays[port].append(port_rays)
+                retained.append(working[index])
+                for port, payloads in enumerate(channels):
+                    outgoing[port].append(payloads)
+                    outgoing_phases[port].append(channel_phases[port])
+                continue
+            for port in range(6):
+                outgoing_rays[port].append(())
             if definition.transport == "local":
                 channels = tuple(
                     (channel[definition.field],) + (blank,) * 7 for channel in local_outgoing
@@ -204,7 +256,7 @@ class SpatialLaw:
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
             if has_local:
-                state = replace(state, delivered=(pack((0,) * field.components),) * 6)
+                state = replace(state, delivered=(pack((0,) * field.components),) * 6, received_mask=0)
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)
@@ -240,7 +292,10 @@ class SpatialLaw:
             tuple(tuple(v) for v in source),
             meter.total,
             tuple(tuple(v) for v in rule_delta) if has_local else (),
-            tuple(tuple(fields) for fields in outgoing_phases)
+            meter.interaction_ticks,
+            tuple(guards),
+            tuple(tuple(port_rays) for port_rays in outgoing_rays) if has_rays else (),
+            outgoing_phases=tuple(tuple(fields) for fields in outgoing_phases)
             if self.allocation_phase != "node"
             else (),
         )

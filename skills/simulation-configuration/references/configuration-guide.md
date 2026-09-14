@@ -19,6 +19,12 @@ by a supported adapter. Do not put Python expressions or callbacks into JSON.
 
 ## 1. Start with a complete working configuration
 
+For catalog particles using the existing causal quantum contact/source rule, use
+[catalog-contact](../../../examples/catalog-contact/README.md). Select entity IDs
+in its authoring JSON or CLI; its adapter reuses the original interaction template
+and shared unit encoder. Retain the binding report and unassigned-mass marker.
+Selecting a catalog identity does not activate its descriptive QCD/weak channels.
+
 For fields that count as local computation, use
 [`spatial_computation_delay`](../../../docs/SPATIAL_COMPUTATION_DELAY.md).
 It selects the shared node cycle; `link_ticks: 1` gives one-tick neighbor transit.
@@ -61,8 +67,9 @@ The authoritative top-level table is in
 
 | Key | How to choose it |
 | --- | --- |
-| `schema_version` | `1` for conservative outward or configured local fields; `2` for finite dissipative outward fields |
+| `schema_version` | `1` for conservative outward or configured local fields; `2` for finite attenuating outward fields whose removed fractions come to rest at the receiving node (`"residue": "dissipate"` selects loss instead) |
 | `model_id` | A descriptive identity for the selected rules; use a new identity for a new hypothesis |
+| `spatial_fields[].transport` | `outward` octant splitting, `local` six-port rules, or `ray` straight rays with `headings`, `rays_per_tick` and `ray_slots` for direction-free dilution |
 | `shape` | Three integer node counts, such as `[9,9,9]` or `[64,64,64]`; the latter is 64 cubed, not a 2D plane |
 | `boundary` | `periodic` connects opposite faces; `open` records escaping stock |
 | `slots_per_node` | Maximum co-resident carried records, 1 through 32; this is not the number of spatial modes |

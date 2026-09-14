@@ -41,9 +41,9 @@ def test_field_only_budget_boundaries_preserve_originals_until_commit(cost, comm
     events = []
     world = Simulation(parse_initial_state(raw), observer=events.append)
     planner = world._spatial.planner
-    assert world._spatial.node_merge_cost == 32
-    world._spatial.planner = lambda states, records, received: replace(
-        planner(states, records, received), cost=cost
+    assert world._spatial._services.node_merge_cost == 32
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(planner(*args), cost=cost)
     )
     for tick in range(1, arrival + 1):
         world.step()
@@ -79,8 +79,12 @@ def test_shared_budget_counts_field_and_carrier_work_once_and_defers_emission(mo
     raw["disturbance_types"][0]["defaults"]["strength"] = 2
     world = Simulation(parse_initial_state(traced(raw)))
     field_planner, carrier_planner = world._spatial.planner, world._planner
-    world._spatial.planner = lambda *args: replace(field_planner(*args), cost=20)
-    world._planner = lambda *args: replace(carrier_planner(*args), cost=20)
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(field_planner(*args), cost=20)
+    )
+    world._services = replace(
+        world._services, planner=lambda *args, **kw: replace(carrier_planner(*args, **kw), cost=20)
+    )
     initial_record = all_records(world)[0]
     world.step()
     pending = next(node.pending for node in world.nodes.values() if node.pending is not None)
@@ -105,7 +109,9 @@ def test_arrival_during_joint_wait_is_preserved_without_changing_the_frozen_samp
     raw["spatial_interactions"][0]["invariants"] = raw["spatial_interactions"][0]["invariants"][:1]
     world = Simulation(parse_initial_state(traced(raw)))
     field_planner = world._spatial.planner
-    world._spatial.planner = lambda *args: replace(field_planner(*args), cost=1)
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(field_planner(*args), cost=1)
+    )
     world.step()
     pending = world.nodes[ORIGIN].pending
     assert pending is not None and pending.ready_tick > 1
@@ -131,7 +137,9 @@ def test_late_merge_cannot_bypass_a_joint_nonlinear_guard():
     raw["normal_budget"] = 40
     world = Simulation(parse_initial_state(raw))
     planner = world._spatial.planner
-    world._spatial.planner = lambda *args: replace(planner(*args), cost=1)
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(planner(*args), cost=1)
+    )
     world.step()
     ready = world.nodes[ORIGIN].pending.ready_tick
     while world.tick < ready - 1:
@@ -153,7 +161,9 @@ def test_ready_commit_reserves_all_events_before_mutating_field_stock(capacity):
     raw["normal_budget"] = 100
     world = Simulation(parse_initial_state(traced(raw, capacity)))
     planner = world._spatial.planner
-    world._spatial.planner = lambda *args: replace(planner(*args), cost=169)
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(planner(*args), cost=169)
+    )
     world.step()
     original = world._spatial.nodes[(2, 0, 0)].states
     for _ in range(2):
@@ -222,7 +232,7 @@ def test_real_field_cost_controls_arrival_for_scalar_and_vector_fields(component
     cycles = max(1, (start["cost"] + 39) // 40)
     assert cycles > 1
     assert start["ready_tick"] == (cycles - 1) * travel
-    assert world._spatial.node_merge_cost == 32 * components
+    assert world._spatial._services.node_merge_cost == 32 * components
     while world.tick < cycles * travel:
         world.step()
     sent = next(e for e in trace if e["event"] == "spatial_sent")
@@ -308,7 +318,9 @@ def test_continuous_port_input_can_be_empty_without_retiming_frozen_output():
     events = []
     world = Simulation(parse_initial_state(raw), observer=events.append)
     planner = world._spatial.planner
-    world._spatial.planner = lambda *args: replace(planner(*args), cost=369)
+    world._spatial._services = replace(
+        world._spatial._services, planner=lambda *args: replace(planner(*args), cost=369)
+    )
     world.step()
     pending = world.nodes[(2, 0, 0)].pending
     assert pending.ready_tick == 4  # C = 369 + 32; ceil(C/100) = 5.

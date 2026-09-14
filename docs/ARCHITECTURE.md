@@ -1,11 +1,28 @@
 # Architecture and change boundaries
 
+[Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
+pending completion and publication in `core/disturbance_node.py` and
+`core/spatial_node.py`. Shared services contain seed-free immutable definitions,
+local law providers and write-side accounting; Nodes receive no world lookup.
+Transport indexes local fixed output banks and validates adjacent delivery.
+`core/node_conservation.py` is a DTO/protocol boundary; generic readout arithmetic
+lives in `fields/node_conservation.py`, and its parser reuses initialization's
+expression grammar. A configured exact balance check precedes physical mutation.
+The profile's declared k and counted operation cost are separate quantities.
+Indexed spatial rules reuse carrier role selection and the existing expression
+evaluator with an additional local field owner. Pending proposals contain bounded
+slot snapshots and deltas, never executable expressions. Field-only pending
+proposals similarly retain per-rule deltas and outgoing views. Shared immutable
+law services revalidate them before Node-owned commits; they receive local state
+only. The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates consumed
+start triggers from persistent conditions and defines their failure behavior.
+
 The opt-in [shared field computation cycle](SPATIAL_COMPUTATION_DELAY.md)
 extends `PendingCycle` with one immutable spatial proposal, reaction phases
 and cached joint-guard input. `SpatialNodeState` retains fixed incoming populations,
 port readings, counts and decay cost while pending. Inventory includes these
 actual input owners once and excludes proposals. No expressions or histories
-enter evolving state. The existing scheduler coordinates both owners atomically.
+enter evolving state. The carrier Node coordinates both local owners atomically.
 
 [Property selectors](PROPERTY_COUPLINGS.md) compile into fixed layout compatibility
 sets in `core/coupling_selectors.py`, shared by parsing, scheduling and local laws.
@@ -28,6 +45,12 @@ catalogs, compiles them into ordinary initialization, and delegates runtime sche
 validation to `initialization.py`. Reference properties and interaction lists do
 not enter runtime laws or select species-specific behavior. See
 [entity catalog](ENTITY_CATALOG.md).
+The [reference units](REFERENCE_UNITS.md) authoring tool owns the shared external
+constant/unit registry and one-time exact rational conversion into bounded
+Scalar/Vector initialization components. Rational calibration and error reports
+remain host metadata; they are never a physical arithmetic fallback or a runtime
+unit conversion. Integer scales and future physical intermediates still obey
+the ordinary bounds. Unit names do not select interactions or propagation laws.
 Optional two-record type conversion follows the existing frozen pair proposal
 and delayed engine commit; its ownership restrictions are in
 [local conversions](LOCAL_CONVERSIONS.md).
@@ -517,6 +540,42 @@ equivalence. Reclaiming them is a separate scheduler change requiring physical
 contract checks. This refactor does not claim constant total memory or
 worst-case constant-time Python dictionary operations.
 
+## Commit-time local quantum transfer
+
+The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) uses a generic
+`CommitResolver` protocol. Pending Node state carries one bounded integer token;
+immutable definitions and bounded reservations stay with the resolver. The Node
+validates all reserved replacement alternatives and the common field reaction
+before requesting a choice. Routing, sources and cycle cost cannot vary between
+those alternatives. Spare unreserved slots remain available during a wait.
+The event-backed tick and snapshot use the same transaction lock, making quantum
+transfer and ordinary installation one observable publication.
+
+`integration/contact_program.py` validates configuration and
+`integration/contact_runtime.py` composes existing owners. Occupation/capture
+arithmetic constraints belong to `quantum/contact_rules.py`; the quantum semantic
+owner enforces them even for typed callers. Ordinary core and fields do not import
+quantum laws. Inventory sector totals and possible-origin display are diagnostic
+reads, not physical inputs. Contact model limits are owned by its linked contract.
+
+The opt-in [causal source extension](CAUSAL_QUANTUM_SOURCES.md) adds a bounded
+source-envelope component attached to the same ordinary Node. The `core/source_*`
+modules own formula-free amplitudes, finite source state, pending proposals,
+twelve Port slots and local transitions. No component holds a world reference,
+quantum query, executable matrix or expression tree in its physical state.
+`fields/source_envelope.py` owns the shared rational complex and weighted-source
+arithmetic; `fields/source_emission.py` composes generic spatial primitives.
+Immutable matrix/emission definitions and initialization routing remain outside
+NodeState in `integration/causal_contact_runtime.py`.
+
+Only actual Link packets supply neighbor inputs. The controller transports frozen
+messages and advances local owners; it does not reconstruct sources from the
+quantum state or shared origin flags. Local source commits use write-only
+`NodeEvents` provenance and the existing ordinary spatial accounting. A local
+capture atomically ends its source and installs its ordinary output; remote
+termination requires a received notice and local delay. The candidate contract
+owns its retarded approximation, numerical bounds and clock restrictions.
+
 ## Opt-in quantum ownership — Q-ORACLE-1
 
 The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its
@@ -547,8 +606,21 @@ it cannot be added by turning a diagnostic observer into a second state owner.
 ### Selected joint-state event backend
 
 `DeferredQuantum.bind_event_network` composes the selected finite backend from
-`quantum/event_network.py`. That module owns the per-node heads, immutable event
-DAG, conditional-record closure and exact host checkpoints. `quantum/event_rules.py`
+`quantum/event_network.py`. That module owns immutable quantum payloads,
+conditional-record closure and exact host checkpoints. `core/event_space.py`
+owns immutable event identities, dependency edges and write-once origin-resolution
+slots. It stores no separate predecessor list. Each native Node and the quantum
+backend share fixed `EventCursor` handles for current register state, preserving
+each register's physical time across checkpoints. Native v3 also gives each
+participating Node a bank of at most six integer wave-origin references. These
+are distinct from the finite virtual register heads, never amplitudes or a local
+history. `quantum/wave_origins.py` owns their configured quantum lifecycle;
+ordinary field rules cannot consume remote resolution state. See
+[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
+[origin cells](WAVE_ORIGINS.md) for the transaction, polling and cost contracts.
+Retired-gate and null-instrument cancellation require exact correlated-density
+certificates in the quantum owner; direct origin lookup does not replace them.
+`quantum/event_rules.py`
 owns generic bounded local matrix validation/evaluation. It does not infer a
 physical law from a name. The existing scalar-expression backend is preserved;
 an owner cannot mix the two representations or silently switch a live history.
@@ -770,3 +842,13 @@ Carrier emission bookkeeping and joint responses connect the owners through
 local event IDs, with fixed parent fan-in and capacity checked before local
 ownership commits. Shared history remains a bounded host audit; quantum-plus-field
 clock composition and observer inference are separate features.
+
+
+Parallel planning preserves Node-owned transitions. A transient scheduler-thread
+continuation yields only immutable carrier or spatial planning records; the spatial
+request includes the colocated committed-cost scalar. Worker interpreters receive
+no Node, continuation, world or event graph. After each bounded planning phase,
+the scheduler resumes owners in address order. Each owner performs its existing
+validation and atomic commit. Continuations are closed and discarded every tick;
+they are never part of NodeState. Shared-clock cycles use two planning barriers,
+while ordinary carrier and field phases each use one.

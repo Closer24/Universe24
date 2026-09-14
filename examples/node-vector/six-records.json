@@ -1,0 +1,446 @@
+{
+  "schema_version": 1,
+  "model_id": "generic-node-six-record-permutation-v1",
+  "node_execution": true,
+  "shape": [
+    5,
+    5,
+    5
+  ],
+  "boundary": "periodic",
+  "slots_per_node": 8,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "registers",
+      "components": 8,
+      "units": "configured integer registers",
+      "signed": true,
+      "conserved": false,
+      "aggregation": "vector_sum"
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "parcel",
+      "fields": [
+        "registers"
+      ],
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          1,
+          -2,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          2,
+          -1,
+          0,
+          0,
+          -1,
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          3,
+          0,
+          0,
+          0,
+          1,
+          0,
+          2,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          4,
+          1,
+          0,
+          0,
+          -1,
+          0,
+          3,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          5,
+          2,
+          0,
+          0,
+          1,
+          0,
+          4,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        2,
+        2
+      ],
+      "type": "parcel",
+      "values": {
+        "registers": [
+          6,
+          3,
+          0,
+          0,
+          -1,
+          0,
+          5,
+          0
+        ]
+      }
+    }
+  ],
+  "interactions": [
+    {
+      "name": "cyclic_permutation",
+      "k": 3,
+      "participants": [
+        {
+          "requires": [
+            "registers"
+          ]
+        },
+        {
+          "requires": [
+            "registers"
+          ]
+        },
+        {
+          "requires": [
+            "registers"
+          ]
+        },
+        {
+          "requires": [
+            "registers"
+          ]
+        },
+        {
+          "requires": [
+            "registers"
+          ]
+        },
+        {
+          "requires": [
+            "registers"
+          ]
+        }
+      ],
+      "assignments": [
+        {
+          "participant": 0,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 1
+          }
+        },
+        {
+          "participant": 1,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 2
+          }
+        },
+        {
+          "participant": 2,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 3
+          }
+        },
+        {
+          "participant": 3,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 4
+          }
+        },
+        {
+          "participant": 4,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 5
+          }
+        },
+        {
+          "participant": 5,
+          "field": "registers",
+          "expression": {
+            "field": "registers",
+            "participant": 0
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "sum_of_registers",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "add",
+                    "args": [
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "op": "add",
+                            "args": [
+                              {
+                                "field": "registers",
+                                "participant": 0
+                              },
+                              {
+                                "field": "registers",
+                                "participant": 1
+                              }
+                            ]
+                          },
+                          {
+                            "field": "registers",
+                            "participant": 2
+                          }
+                        ]
+                      },
+                      {
+                        "field": "registers",
+                        "participant": 3
+                      }
+                    ]
+                  },
+                  {
+                    "field": "registers",
+                    "participant": 4
+                  }
+                ]
+              },
+              {
+                "field": "registers",
+                "participant": 5
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "conservation_contract": {
+    "name": "explicit register projections",
+    "quantities": [
+      {
+        "name": "declared_energy",
+        "components": 1,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "registers"
+            ],
+            "value": {
+              "op": "component",
+              "args": [
+                {
+                  "field": "registers"
+                }
+              ],
+              "index": 0
+            }
+          }
+        ]
+      },
+      {
+        "name": "declared_momentum",
+        "components": 3,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "registers"
+            ],
+            "value": {
+              "op": "vector",
+              "args": [
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 1
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 2
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 3
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "declared_charge",
+        "components": 1,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "registers"
+            ],
+            "value": {
+              "op": "component",
+              "args": [
+                {
+                  "field": "registers"
+                }
+              ],
+              "index": 4
+            }
+          }
+        ]
+      },
+      {
+        "name": "declared_angular_momentum",
+        "components": 3,
+        "units": "model integer unit",
+        "carriers": [
+          {
+            "requires": [
+              "registers"
+            ],
+            "value": {
+              "op": "vector",
+              "args": [
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 5
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 6
+                },
+                {
+                  "op": "component",
+                  "args": [
+                    {
+                      "field": "registers"
+                    }
+                  ],
+                  "index": 7
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

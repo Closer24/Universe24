@@ -31,7 +31,8 @@ def test_open_runner_reports_escape_separately_from_dissipation(ticks, tmp_path)
     assert metadata["completed_ticks"] == ticks
     assert metadata["boundary"] == state["boundary"] == "open"
     assert metadata["escaped_totals"] == state["escaped_totals"] == escaped
-    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [56 if ticks else 0]}
+    assert metadata["dissipation_totals"] == {"strength": [0], "radiation": [0]}
+    assert metadata["localized_totals"] == {"strength": [0], "radiation": [56 if ticks else 0]}
     assert metadata["accounting_balanced_at_every_completed_tick"]
     assert metadata["conserved_at_every_completed_tick"] == (ticks == 0)
     assert metadata["display"] == "none"

@@ -6,6 +6,7 @@ from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
 from event_universe.fields.disturbances import DisturbanceLaw
+from event_universe.fields.node_conservation import LocalBalanceGuard
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
 from event_universe.fields.spatial_decay import SpatialDecayLaw
@@ -33,6 +34,16 @@ class Simulation(DisturbanceEngine):
             from event_universe.integration.event_runtime import build_event_runtime
 
             event_space, resolver = build_event_runtime(initial)
+        spatial_law = SpatialLaw(
+            initial.fields,
+            initial.spatial_fields,
+            initial.emissions,
+            initial.operation_costs,
+            initial.field_rules,
+            initial.allocation_phase,
+            initial.computation_field,
+            initial.delay_direction if initial.least_delay_routing else None,
+        )
         super().__init__(
             initial,
             DisturbanceLaw(
@@ -44,16 +55,7 @@ class Simulation(DisturbanceEngine):
                 initial.least_delay_routing,
             ),
             observer,
-            SpatialLaw(
-                initial.fields,
-                initial.spatial_fields,
-                initial.emissions,
-                initial.operation_costs,
-                initial.field_rules,
-                initial.allocation_phase,
-                initial.computation_field,
-                initial.delay_direction if initial.least_delay_routing else None,
-            ),
+            spatial_law,
             (
                 JointSpatialCouplingLaw(
                     initial.fields,
@@ -90,6 +92,17 @@ class Simulation(DisturbanceEngine):
             ),
             event_space=event_space,
             resolver=resolver,
+            field_guard=spatial_law.validate_guards,
+            balance_guard=(
+                LocalBalanceGuard(
+                    initial.fields,
+                    initial.spatial_fields,
+                    initial.operation_costs,
+                    initial.conservation_contract,
+                )
+                if initial.conservation_contract is not None
+                else None
+            ),
             node_workers=node_workers,
         )
         self._audit: LocalConservationAudit | None = None
@@ -112,5 +125,15 @@ class Simulation(DisturbanceEngine):
                 self._external_observer(event)
 
     def conservation_report(self) -> dict[str, object]:
-        """Read the optional candidate energy/momentum audit without advancing time."""
-        return {"status": "not_configured"} if self._audit is None else self._audit.report()
+        """Read configured guard coverage and optional passive measurements."""
+        report: dict[str, object] = (
+            {"status": "not_configured"} if self._audit is None else self._audit.report()
+        )
+        contract = self.initial.conservation_contract
+        if contract is not None:
+            from event_universe.diagnostics.node_conservation import node_contract_report
+
+            if self._audit is None:
+                report = {"status": "guarded"}
+            report["node_contract"] = node_contract_report(self.initial, self.inventory_view())
+        return report

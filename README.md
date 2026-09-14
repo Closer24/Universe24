@@ -104,8 +104,9 @@ For a moving source that continuously emits a separate conserved outward field:
 python -m event_universe --init examples/moving_source.json --output artifacts/moving-source
 ```
 
-For the schema 2 finite dissipative candidate, with bounded source allowances
-and explicitly configured decay on each completed field link:
+For the schema 2 finite attenuation candidate, with bounded source allowances and
+explicitly configured decay on each completed field link, where removed fractions
+come to rest at the receiving node instead of being lost:
 
 ```bash
 python -m event_universe --init examples/finite_fields.json --output artifacts/finite-fields
@@ -137,7 +138,9 @@ limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.m
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
-Compare selected behavior using the [small-space physics suite](examples/small-space/README.md).
+Compare selected behavior using the [small-space physics suite](examples/small-space/README.md),
+or probe the outward field from outside the event space with the
+[inverse-square experiment](examples/inverse-square/README.md).
 The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
 reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
 Emergence probes use elementary local vector operations; known continuum equations remain
@@ -327,8 +330,9 @@ active contracts, explicit experiments and revision-specific evidence.
 Each configured disturbance type carries named scalar/vector fields together.
 Choose whole-record movement for coupled attributes or extensive splitting for
 divisible quantities. Conservation is a declared component-wise local balance,
-including explicit sources and in-flight amounts. Schema 2 explicitly subtracts
-committed dissipation; its finite allowances are separate from inventory.
+including explicit sources and in-flight amounts. Schema 2 counts localized
+deposits as inventory and subtracts committed dissipation only under the explicit
+`"residue": "dissipate"` option; its finite allowances are separate from inventory.
 Coupling rules exchange a shared field between local records atomically. See
 [DISTURBANCES.md](docs/DISTURBANCES.md).
 
@@ -381,3 +385,15 @@ The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
 configured N-to-M node reactions, bounded rational vector arithmetic and exact
 conservation tests. It is an independent experiment, not the active simulator.
 Run `python -m tools.generic_vector_lab.run_demo` from this repository.
+
+## License and citation
+
+Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
+Version 0.2.0 is archived on Zenodo under DOI
+[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746).
+Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
+citation entry on the repository page. Reference form:
+
+> Gonen, A. (2026). Universe24: a discrete simulator of local physical laws
+> (Version 0.2.0) [Computer software]. Zenodo.
+> https://doi.org/10.5281/zenodo.22738746

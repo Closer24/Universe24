@@ -29,12 +29,13 @@ contracts when the new features are absent.
 
 Local transport, `field_rules` and `spatial_interactions` require schema 1.
 Schema 2 rejects the two rule keys even when their lists are empty and continues
-to use its finite dissipative candidate. The new rules do not bypass schema 2
+to use its finite attenuation candidate. The new rules do not bypass schema 2
 allowances or remove its required decay.
 
 Run metadata identifies local transport as `configured-local-fields-v1`.
-Outward-only schema 1 runs keep `conservative-outward-v1`; schema 2 keeps
-`finite-dissipative-v1`. Physical field names do not select any of these policies.
+Outward-only schema 1 runs keep `conservative-outward-v1`; schema 2 records
+`finite-localizing-v1`, or `finite-dissipative-v1` when a field selects
+`"residue": "dissipate"`. Physical field names do not select any of these policies.
 
 Optional `field_groups` describe logical grouping without allocating new physical
 stock or selecting a law:
@@ -91,11 +92,19 @@ the phase so old arrivals do not become a permanent input trail.
 ## Field rules
 
 `field_rules` is an optional list of at most 32 named rules. Each rule has 1 to
-32 `assignments`, 1 to 16 named `invariants`, and an optional scalar `when`.
+32 `assignments`, 1 to 16 named `invariants`, and optional scalar `when` and
+`commit_when` conditions.
 Absent `when` means active whenever the node has relevant work; otherwise a
 strictly positive result activates the rule. Assignment targets must be unique
 within one rule. Unsupported names, directions, shapes and duplicate targets
 fail initialization.
+
+`when` is a start trigger. `commit_when` must be positive at selection and at
+commit, reading owned field values only. It cannot read received, presence, flux
+or outgoing views. A false initial condition skips that rule; invalidation during
+a wait faults before committing the proposal. These guard checks add no physical
+operation cost. The [Node profile](NODE_VECTOR_PROCESSOR.md#local-rules) defines
+the explicit k*h wait, ordered frozen-delta revalidation and ownership behavior.
 
 ```json
 "field_rules": [{
@@ -151,10 +160,13 @@ committed events remain real.
 
 ## Joint field/carrier transactions
 
-`spatial_interactions` extends local response to assignments across a resident
-carrier and one or more local fields. Every rule selects a whole-record `hold`
-or `move` disturbance `type`; splitting participants are rejected. It has the
-same limits on rules, assignments and invariants as `field_rules`.
+`spatial_interactions` extends local response to assignments across resident
+carriers and one or more local fields. A rule selects one `type`/`requires` role
+or an indexed `participants` array of 2 through `slots_per_node` roles (at most
+32). Each role selects a whole-record `hold` or `move` layout; splitting
+participants are rejected. There are at most 32 rules and 16 invariants per
+rule. Assignments are bounded by the field count limit times the number of
+participant owners plus one field owner. Duplicate targets are rejected.
 Nonempty joint rules require at least one declared spatial field, even when a
 particular rule reads that field and assigns only carrier values.
 
@@ -165,6 +177,13 @@ right-side leaves read observable field values. Unlike a retained field-rule
 assignment, a right-side interaction assignment proposes an observable value.
 The engine derives its dynamic-stock change by subtracting the previous
 observable value, leaving the baseline unchanged.
+
+For an indexed rule, carrier references and targets use `participant: i`, and
+`side: "right"` still selects spatial fields. Left-side or default references
+are ambiguous and rejected. Roles use the same bounded deterministic disjoint
+selection as [indexed carrier interactions](NODE_VECTOR_PROCESSOR.md#local-rules).
+One group reads one frozen snapshot of all its carriers and local fields.
+Selection by properties cannot mix with a top-level type selector.
 
 ```json
 "spatial_interactions": [{
@@ -190,12 +209,14 @@ observable value, leaving the baseline unchanged.
 These rules run after existing spatial exchange/rotation and before ordinary
 carrier updates, pair couplings/interactions and transport planning. Rule order,
 then local slot order, determines evaluation order. Each transaction evaluates
-its assignments from one frozen carrier/field view; later transactions see its
+its assignments from one frozen participant/field view; later transactions see its
 proposed changes. Named invariants and automatic conserved-field combined sums
 must hold. The initial spatial samples precede fresh emission and field-rule
 updates in that interval, matching the existing carrier response contract.
 
-Assignments and `when` may read six received channels. Joint invariants use
+Assignments and `when` may read six received channels. Optional `commit_when`
+uses owned participant and field values, with the same persistent-condition
+semantics as field rules. Joint invariants use
 carrier and field values only; received and outgoing leaves are rejected there.
 The frozen transaction stores each carrier before/after view and its additive
 field delta. A pending proposal is not new inventory.

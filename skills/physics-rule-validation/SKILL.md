@@ -43,6 +43,28 @@ model contracts and does not add a new physical law.
 
 ## Review energy and momentum claims
 
+For [ordinary/quantum contact conversion](../../docs/LOCALIZED_QUANTUM_CONTACT.md),
+check ownership at the actual delayed commit, not merely at branch planning.
+Exercise a coupled third resident and arrivals into spare slots. Validate all
+local outcomes before sampling, including common field reactions; require a
+semantic-owner occupation guard in addition to JSON preflight. Test finite
+localized emission, causal field fronts and equal vacuum/click controller cost.
+Keep possible origin references distinct from probability or copied inventory.
+
+For [causal weighted sources](../../docs/CAUSAL_QUANTUM_SOURCES.md), trace every
+ordinary source weight to retained local amplitudes and actual frozen Link
+packets. Quantum conditional queries, global normalization and shared retirement
+flags must not control ordinary field values or clocks. Check phase-sensitive
+split/recombination, rational complex vacuum normalization, receipt and evaluation
+tariffs, and every intermediate Link/control delay. Compare remote ordinary
+source, field and cost prefixes before a terminal notice can arrive. Exercise
+null results without remote renormalization, capture during pending emission,
+charged duplicate notices and stale packets after local termination. Inspect
+transitive NodeState for bounded values, indices and fixed proposal/Port banks,
+with immutable laws outside it. Keep retarded source weights, single conserved
+carrier inventory and finite field injection as separate quantities; do not
+report a source-weight sum as charge conservation or physical energy closure.
+
 Use the [local conservation contract](../../docs/LOCAL_CONSERVATION.md) when a
 model claims joint energy and momentum balance. Identify all actual owners and
 fluxes, and inspect the complete update chain, including arrival merging and
@@ -53,6 +75,13 @@ of all admitted inputs. Require a separate scope statement for omitted energy
 terms, external reservoirs and unimplemented field or spin dynamics.
 
 ## Review the declared rules
+
+For [delayed Node rules](../../docs/NODE_VECTOR_PROCESSOR.md#local-rules),
+distinguish a consumed start trigger from a persistent commit condition. Exercise
+an arrival during the wait and inspect every frozen substep against live stock,
+including chains with zero net delta. A balanced final component sum does not
+prove each nonlinear rule invariant remained valid. Check that rejected proposals
+leave all actual owners and already received inventory intact.
 
 For initialization-defined simulation, use
 [DISTURBANCES.md](../../docs/DISTURBANCES.md) for active contracts. Verify
@@ -77,6 +106,31 @@ For each changed rule, verify:
 Q-ORACLE-1 applies only to the explicit quantum owner and its reported host work;
 it does not exempt ordinary field, force, movement or geometry inputs. Diagnostics
 may inspect global state and reject a run but must not supply physical repairs.
+
+For quantum event storage, follow the
+[event-spacetime contract](../../docs/QUANTUM_EVENTS.md#event-spacetime-and-current-references)
+and [origin-cell contract](../../docs/WAVE_ORIGINS.md). The immutable spacetime
+is the history; do not add a second linked list per Node or wave. Distinguish
+six local origin IDs from finite virtual-register heads and exact joint state.
+An origin is a continuation identity, not a disturbance count; one-origin joint
+interactions require explicit state/coupling/instrument evidence like any other.
+Check atomic conditional sampling and terminal marking, next-tick local pruning,
+no-click/continuation semantics, and unchanged source events. Independent stale
+lotteries followed by first-writer selection do not prove correct probabilities.
+Require origin-tagged gates and instrument requests in the wave profile. Verify
+that unarrived support cannot execute a gate. Retired-gate suppression must preserve
+the complete retained correlated density, not only one marginal; otherwise it
+must fail before publication. A retired instrument additionally needs its explicit
+null outcome to be the sole possible result with unchanged full density. Exercise
+an unsafe remote X, a deterministic non-null record and a state-changing null.
+Check native recertification when a target head changes without a fresh arrival.
+Count guard queries/audit costs separately from O(1) origin lookup; neither audit
+cost nor suppression metadata is an ordinary physical observer or delay channel.
+Check that no older untagged binding bypasses the lifecycle. Distinguish retained
+conditional audit state from a claim of physical
+absorption. Verify Link readiness, phase and correlation preservation across checkpoints.
+Keep shared quantum bookkeeping out of ordinary fields and physical remote
+observables; bounded origin lookup does not make the complete host query O(1).
 
 Do not infer a universal causal proof from a one-hop test or fixed callback size.
 Separate tested finite cases, analytic arguments and unestablished physics. A

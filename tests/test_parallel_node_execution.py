@@ -1,6 +1,7 @@
 """Deterministic tick barriers for parallel active-Node planning."""
 
 import json
+from dataclasses import replace
 from pathlib import Path
 from threading import Event, Thread
 
@@ -19,6 +20,8 @@ ROOT = Path(__file__).resolve().parents[1]
         ("basic.json", 8, False),
         ("finite_fields.json", 8, False),
         ("finite_fields.json", 8, True),
+        ("three_mass_finite.json", 8, False),
+        ("isotropic_rays.json", 6, False),
         ("spatial_turning.json", 4, False),
         ("local_lorentz_field.json", 8, False),
         ("open_world.json", 8, False),
@@ -86,7 +89,7 @@ def test_only_one_caller_can_advance_a_tick() -> None:
         assert release.wait(timeout=5)
         return original(records, residuals, received, **options)
 
-    world._planner = blocking
+    world._services = replace(world._services, planner=blocking)
     worker = Thread(target=world.step)
     worker.start()
     assert entered.wait(timeout=5)
@@ -108,3 +111,42 @@ def test_runner_records_parallel_host_execution_separately_from_model_cost(tmp_p
     assert metadata["execution"]["node_workers"] == 2
     assert metadata["execution"]["disturbance_node_tasks"] > 0
     assert metadata["computation"]["model_operations_cost"] > 0
+
+
+@pytest.mark.parametrize(
+    "example",
+    [
+        "node-vector/two-fields.json",
+        "node-vector/joint-reaction.json",
+        "computational-response/moving-pair.json",
+    ],
+)
+def test_local_node_profiles_keep_parallel_events_and_committed_work(example):
+    initial = load_initial_state(ROOT / "examples" / example)
+    serial_events, parallel_events = [], []
+    with (
+        Simulation(initial, observer=serial_events.append) as serial,
+        Simulation(initial, observer=parallel_events.append, node_workers=2) as parallel,
+    ):
+        for _ in range(8):
+            serial.step()
+            parallel.step()
+            assert parallel.snapshot() == serial.snapshot()
+            assert parallel.computation_report() == serial.computation_report()
+            assert parallel_events == serial_events
+        assert parallel.execution_report()["spatial_node_tasks"] > 0
+
+
+def test_parallel_execution_does_not_allocate_fields_for_uncoupled_carriers():
+    from .test_node_work_emission import document
+
+    raw = document()
+    raw["emissions"] = []
+    initial = parse_initial_state(raw)
+    with Simulation(initial) as serial, Simulation(initial, node_workers=2) as parallel:
+        for _ in range(4):
+            serial.step()
+            parallel.step()
+            assert parallel.snapshot() == serial.snapshot()
+            assert not serial._spatial.nodes
+            assert not parallel._spatial.nodes

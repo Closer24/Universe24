@@ -1,5 +1,9 @@
 # Native event programs and charged classical paths
 
+The separate [localized contact profile](LOCALIZED_QUANTUM_CONTACT.md) adds actual
+commit-time ordinary/quantum conversion and localized classical field emission.
+Its explicit model selection does not relax the v1/v2/v3 restrictions below.
+
 ## Contract and ownership
 
 The primary `Simulation(initial)` and the ordinary `event-universe --init ...`
@@ -18,9 +22,13 @@ There are not two competing authoritative copies of that metadata.
 The core `EventResolver` protocol receives only a local immutable context and
 the existing local planner. `integration/event_runtime.py` composes the selected
 quantum owner with that protocol. Generic core and field modules do not import
-quantum. Initialization resolves arbitrary type/field labels to indices. Carrier
-nodes, packets and pending cycles acquire only one optional event ID each; they never
-hold a growing history or a wave vector. Global counters and the bounded ledger
+quantum. Initialization resolves arbitrary type/field labels to indices. Packets
+and pending cycles acquire one optional event ID. Each configured quantum Node
+also retains shared current-register handles as defined in
+[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references).
+Native v3 adds at most six integer [wave-origin references](WAVE_ORIGINS.md) to
+that same Node. It never holds a growing history or a wave vector. No separate
+predecessor lists are retained. Global counters and the bounded ledger
 are host bookkeeping, not a nonlocal input to local physics.
 
 Dependencies must refer to existing, nonfuture event IDs. Physical parent edges
@@ -28,13 +36,36 @@ additionally require the same node or a completed nearest-neighbor link, includi
 configured periodic seams. Dependency-only edges confer no physical read access.
 Global numbering is bookkeeping, not a preferred physical signal. Coherent quantum
 operations preserve the existing disjoint local-layer contract; the native binder
-also checks actual parent times against the world's fixed link transit.
+also checks each register's last modeled operation time against fixed link
+transit. Host checkpoints preserve those times even when head IDs change.
+
+Quantum-only addresses use the same `DisturbanceNode` owner with empty carrier
+slots. Their construction emits no carrier source event, starts no carrier cycle
+and adds no ordinary model cost. `Simulation.nodes[address].event_heads` returns
+immutable `(stream_id, event_id)` pairs, including Nodes with no carriers. The
+resolver's `node_event_heads` report also records the last modeled tick. Ordinary
+carrier snapshots omit these empty, never-activated owners; once they receive
+carriers they enter the existing carrier snapshot path. No rendering is required.
 
 ## Finite quantum-register extension
 
 The explicit [v2 register/channel contract](QUANTUM_ENTITIES.md) adds dimensions,
 initial levels, colocated named registers, unobserved channels and grouped
 measurement outcomes. It uses this same resolver and preserves path cost rules.
+
+The explicit v3 [origin-cell contract](WAVE_ORIGINS.md) adds configured wave
+identities, local encounter instruments and terminal outcome policies. Nodes
+check their own six-origin banks every native tick. Conditional sampling and
+terminal source marking share one transaction; other banks are pruned locally
+on their next tick. Every v3 operation declares its participating origins;
+unarrived support cannot execute it. Retired-origin suppression requires a
+full correlated-density invariance certificate. Suppressing an instrument also
+requires its explicit `null_outcome` to be the sole possible result and preserve
+that density. An unsafe cancellation fails explicitly. One to six origin names
+can participate in an interaction; one origin may describe several disturbances.
+V3 rejects the older carrier bindings, which have no origin lifecycle contract.
+This does not enable parallel Node planning or a general field/quantum clock
+composition.
 
 ## Initialization
 
@@ -67,8 +98,9 @@ Examples are [native_classical.json](../examples/quantum/native_classical.json),
 [native_reflection.json](../examples/quantum/native_reflection.json), and
 [native_cost_delay.json](../examples/quantum/native_cost_delay.json).
 Matrices and instruments are explicit candidate data, not derived physical laws.
+For v3 origin and encounter definitions, see [origin cells](WAVE_ORIGINS.md).
 
-## Local trigger, retained history and classical output
+## Local trigger, event spacetime and classical output
 
 A binding requests a calculation when its participants are co-resident and new
 records have arrived since the last local cycle, or are initially present at tick
@@ -107,10 +139,17 @@ Link transit itself remains tau. Waiting ticks do not charge C again. Pending
 proposals keep their original record until the normal commit. Accumulated run
 cost is a diagnostic total, **not debt** that delays later cycles.
 
-`computation.model_operations_cost` sums begun cycles, including still-pending
-ones. The ledger charges that cost only on `cycle_started`, never again on
+Carrier-cycle cost sums begun cycles, including still-pending ones. The ledger
+charges that cost only on `cycle_started`, never again on
 `cycle_committed` or `sent`. Quantum records carry zero additional ledger cost
 because their unit charge is already included in the enclosing physical cycle.
+
+When an event ledger is selected, the reported total includes all ledger costs;
+`carrier_model_operations_cost` separately reports the begun carrier cycles.
+The v3 `wave_control_cost` subtotal includes origin reads, instrument requests
+and one model operation for each `wave-skip-check` or `wave-null-check` certificate.
+It is already part of the total. These quantum audit checks do not add a physical
+observer signal or carrier delay, and their host evaluation is not constant work.
 
 Building/evaluating possible histories, alternative-plan validation, copying
 records, full diagnostics and graph maintenance also take host computation.
@@ -158,7 +197,7 @@ finite expectations of the declared candidate, not a Newtonian emergence proof.
 
 The classical `causal-events-v1` graph supports spatial clocks and joint
 field/carrier provenance under the [generic graph contract](EVENT_GRAPH_CONFIGURATION.md#spatial-provenance-and-resource-bounds).
-Both native quantum models still reject `spatial_fields`; their independent
+Native quantum models still reject `spatial_fields`; their independent
 physical and quantum clocks have not been composed. Existing spatial
 configurations without a graph remain unchanged. Infinite-time finite memory and a universal objective event trigger remain
 outside the selected contract. Multiple indistinguishable Kraus terms are now

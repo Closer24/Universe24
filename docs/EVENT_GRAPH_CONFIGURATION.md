@@ -11,6 +11,8 @@ rules. The ordinary action log and the causal graph are separate outputs.
 | Omit `event_program` entirely | Off | Off in the native event-program path |
 | `model: "causal-events-v1"` | On | Off |
 | `model: "local-quantum-events-v1"` or `"local-quantum-events-v2"` | On | On; requires the full quantum configuration |
+| `model: "local-quantum-events-v3"` | On | Explicit wave origins and instruments |
+| `model: "localized-contact-quantum-v1"` | On | Local ordinary contacts, coherent domains and localized field sources |
 
 There is no separate graph-recording switch for a running quantum program.
 Removing its `event_program` also removes its configured quantum dynamics; this
@@ -83,8 +85,11 @@ turning on the graph does not automatically visualize causal geometry.
 `causal-events-v1` supports spatial fields, configured emissions, local field
 rules, spatial responses and existing computation-dependent carrier waits.
 It selects no quantum resolver and does not change their physical results,
-operation prices or link times. Both native quantum models still reject spatial
-fields: their independent clocks have not been composed. The separate
+operation prices or link times. Native quantum v1/v2/v3 still reject spatial
+fields. The explicit [localized contact profile](LOCALIZED_QUANTUM_CONTACT.md)
+supports ordinary fields sourced at localized events with its fixed spatial clock
+and finite quantum domains. It is selected by importing its full configuration,
+not by enabling graph recording alone. The separate
 directional-wait candidate in PR65 still requires its own integration; this
 extension does not activate that candidate or a checkpoint format.
 

@@ -1,5 +1,238 @@
 # Highlights implementation coverage
 
+## Causal quantum source envelopes - 2026-09-13
+
+The user's latest selection extends the preceding localized-source choice:
+each wave mode may source an ordinary field with its local squared weight, and
+weight changes or cancellation must travel through Nodes and Links with delay.
+This maps Highlights sections 1.2.7, 4.7.1-4.7.7 and 10.3/10.6 to the explicit
+[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains
+read-only; this reconciliation reuses the same-hour read at revision
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
+modified `2026-09-13T18:53:30.879Z`.
+
+`causal-contact-fields-v1` retains a bounded complex source envelope at each
+participating ordinary Node, immutable definitions outside NodeState, finite
+allowances and fixed packet/proposal slots. Actual contact creates the source;
+successful local absorption creates one full-strength ordinary output and sends
+terminal notices over physical Links. Existing field stock continues. Shared
+origin status remains quantum bookkeeping and never controls remote ordinary
+emission, response or delay. The older localized-only profile is unchanged.
+
+After measurement the local source weights are retarded and may be unnormalized;
+their sum is not conserved charge or proof of field/matter energy closure. The
+candidate preserves one inventory owner and specifies separate source accounting,
+phase-sensitive propagation, causal termination and unsupported combinations.
+Its implementation owners and numerical acceptance expectations are linked from
+the contract. Exact source, completed runs and review outcomes belong in
+[validation evidence](VALIDATION.md); no pending test is represented here as a
+passed result. This extension does not complete the broader unified-dynamics goal.
+
+## Localized quantum contacts - 2026-09-13
+
+Live Highlights was reconciled read-only at revision
+`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
+modified `2026-09-13T18:53:30.879Z`. Its sections 1.2.7, 4.7.1-4.7.7 and
+10.3/10.6 map to the [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md).
+The later user selection explicitly chooses ordinary fields only at localized
+events. This finite hybrid is an additional configured candidate, not a claim
+that the project's separate goal of emergent unified dynamics is complete.
+
+Actual local source contact creates an origin only at committed event time.
+Finite coherent domains retain one configured inventory through number-preserving
+operations; a complete local absorption instrument transfers it into one ordinary
+record. Existing classical fields evolve causally. Quantum probabilities never
+reconstruct or erase remote ordinary field stock. Definitions, implementation
+owners, tests and configuration are linked in the candidate contract.
+
+The separate predecessor list remains absent. Node state adds only a bounded
+reservation token; six-entry origin banks and immutable event history retain their
+owners. Common local field reactions preserve every coupled resident, including
+third participants, and all alternatives validate before sampling. Unknown
+momentum is explicit; no sharp momentum or physical energy is inferred from a
+position record. Public snapshots serialize with event-backed commits and expose
+possible support separately from localized charge.
+
+The focused acceptance suite covers fifty-one numerical and failure cases, including
+3:4 interference, exhaustive Born tickets, delayed ownership, external-field
+exchange, finite emission, six periodic directions and unchanged unconditional
+receiver statistics. The authoritative run/gate evidence belongs in
+[validation](VALIDATION.md). Full quantum fields, unrestricted no-signalling,
+exterior quantum escape and shared Node clock composition remain outside scope.
+The live Google Doc was not changed. Its section 11 reports other unmerged
+branch candidates; those results are not imported or claimed by this change.
+
+## Quantum origin cells and event spacetime - 2026-09-13
+
+Live Highlights revision
+`ANLCKQm21ChtG5HceOfGOhoBYGoFe1Cevq9Birt---q9RtLGv682cdVsad6nwquwgJtGWbHqSKP2pw9ExatR-Mlf533Guti25QsAZLMtJ0c`
+was reread; its modification time was `2026-09-13T15:06:39.393Z`. Implementation
+starts from `fb54f3306ce8172f5ed3f2d3a65eb03cb021a6b7`, integrating current main
+`2c20d00094639263fbe387c0a62420dcef108285` with the prior Node-event work.
+
+The user's later explicit contract replaces the separate per-stream predecessor
+list. Sections 1.2.7 and 4.7.1-4.7.6 now map to
+[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
+[origin cells](WAVE_ORIGINS.md): immutable events are the sole history, each
+participating Node stores up to six origin IDs, and a direct origin status check
+does not traverse a history. Current virtual-register heads remain separate
+bounded state. One conditional terminal decision atomically resolves its selected
+origins; peers prune their local references on their next native tick. Every v3
+gate declares participating origins. Unarrived support cannot execute the gate;
+suppression after resolution requires unchanged complete correlated density.
+A retired instrument also needs an explicit `null_outcome` that is certain and
+preserves that density. Unsafe suppression fails. One origin may describe several
+disturbances; interaction lists accept one to six names, not a particle count.
+Untagged gates and the older carrier bindings are rejected in
+this profile. Continuing outcomes retain the conditional state and do not assign
+sharp momentum after a position record. Origin bookkeeping does not grant an
+ordinary remote field read.
+
+Explicit matrices and exact joint state retain interference and correlation.
+Component checkpoints preserve phases, origin identity and individual Link
+readiness. `examples/quantum/event_paths.json` retains the four-Node coherent,
+phase, record and checkpoint cases; the v3 origin contract specifies the new
+local-capacity, contention, conditional-sampling and pruning acceptance checks.
+The terminal policy stops future operations requiring its named origins; it does
+so only through the guarded contract. The example instrument explicitly resets
+occupation on its terminal branch; this is not a derived absorption or energy law.
+Direct origin lookup is O(1); cancellation certification is separately counted
+quantum-owner work, without an added physical observer or carrier-delay channel.
+Check results require the exact tested tree and completed validation evidence.
+
+This is a finite configured candidate. It does not establish spontaneous free
+dynamics, a universal trigger or conservation law, general field composition,
+full Focus, host O(1) evaluation or bounded total memory for infinite spacetime.
+The live Google document was read only; its text was not changed by this
+repository reconciliation.
+
+## Quantum time-direction clarification - 2026-09-13
+
+Highlights sections 1.2.7 and 4.7 distinguish direct origin relevance lookup
+from deferred quantum evaluation. Neither is reverse physical-time computation.
+Required stored dependencies and recorded constraints are collected as bounded
+host work; their recipes evaluate forward from sources or exact checkpoints.
+Earlier events and outcomes are not rewritten or resampled.
+
+This terminology review uses merged main
+`63983788140bc06d5e8f581e3609c0520c00f43b` and the then-reported
+`Quantom -> Classic` run in [PR #91](https://github.com/Closer24/Universe24/pull/91),
+head `49bcbc74c69a47814945efce8600edbc824ee04f`. PR #91 was open and unmerged
+at review. Its `local-quantum-events-v3` candidate removes separate chronological
+predecessor lists and `history(register)` traversal, while retaining immutable
+events and quantum dependencies. Direct event-ID/status lookup is O(1); full
+retained-state evaluation and cancellation certification are separate host work.
+Source resolution adds a later write-once status without rewriting the source.
+
+The PR reports `wave_origins.json` completing 5/5 ticks in 0.0123118 seconds:
+one outcome draw, origin 3 resolved at tick 2 to record 13, peer references retired
+at tick 3, and origin 4 still active. Three oracle calls include two cancellation
+certifications. These are branch-reported results, not a new experiment in this
+documentation task or proof of a universal quantum-to-classical limit.
+See [the quantum contract](QUANTUM_EVENTS.md#time-direction-and-origin-lookup).
+The Google Doc receives the same clarification in sections 1.2.7, 4.7.2 and 4.7.7.
+No reaction law or evaluation algorithm changes in this correction.
+
+## Latest synchronized snapshot - 2026-09-13
+
+This is the repository implementation map for
+[Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit),
+not a second specification or an automatic live mirror. Both this map and the
+Google Doc were reconciled against main
+`cc042ce6c51a34775c292371538c5cd6acd4e423`, including merged
+[PR #89](https://github.com/Closer24/Universe24/pull/89),
+[PR #90](https://github.com/Closer24/Universe24/pull/90) and
+[PR #92](https://github.com/Closer24/Universe24/pull/92).
+The older entries below retain their historical source and validation scope;
+their statements that the live document was not edited refer to those earlier tasks.
+
+### Current implementation coverage
+
+| Highlights sections | Implemented contract and limits | Repository owner |
+| --- | --- | --- |
+| 2.2.1-2.2.2 | Bounded integer physical inputs and intermediates; shared SI unit/constant registry prepares Scalar/Vector values outside physical stepping. Explicit conversion errors are separate from measurement uncertainty. Model time h is not Planck action. | [Reference units](REFERENCE_UNITS.md), [architecture](ARCHITECTURE.md) |
+| 3.3.4, 3.5.5, 4.3.1 | Declared aggregation, indexed local participants, joint carrier/field proposals and complete-owner conserved readouts. Nonlinear balances use actual before/after state; labels do not supply physical laws. | [Node processor](NODE_VECTOR_PROCESSOR.md) |
+| 4.4.1-4.4.2 | Explicit k*h Node execution and optional shared field/carrier cost-budget timing remain separate, incompatible modes. Waiting input has bounded destination ownership. | [Node processor](NODE_VECTOR_PROCESSOR.md), [shared clock](SPATIAL_COMPUTATION_DELAY.md) |
+| 4.4.3 | Emission can read the Node's last committed work. Configured received-Port response exchanges momentum with a local field register; this is not derived gravity or physical energy. | [Computational response](COMPUTATIONAL_RESPONSE.md) |
+| 6.5-6.7, 10.10 | Node-owned commits, immutable worker planning, deterministic barriers and bounded physical-owner memory have scoped tests. Total host memory and full-world work are separate costs. | [Architecture](ARCHITECTURE.md), [validation](VALIDATION.md) |
+| 10.3.1 | Schema 2 localizes attenuation residue by default. Explicit dissipate retains the earlier loss policy. Stationary deposits remain owned inventory and are not sampled by local rules. | [Spatial fields](SPATIAL_FIELDS.md) |
+| 10.3.2 | Scalar straight-ray transport retains heading and integer routing phase; ray_slots bounds resident capacity. Unsupported vector, octant-seed, field-rule, joint-interaction and alternative-clock combinations are rejected. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1), [ray tests](../tests/test_ray_field.py) |
+| 10.9, 10.11 | Sourced particle reference data, explicit representation profiles, preflight, finite quantum events and read-only observers remain distinct from verified species dynamics. | [Entity catalog](ENTITY_CATALOG.md), [project status](PROJECT_STATUS.md) |
+
+### Merged field changes and evidence
+
+PR #90 adds `residue: localize`, selected when a schema 2 decay definition omits
+the key. At completed interior arrival, the removed fraction becomes bounded
+stationary stock at the receiving Node. It is included in inventory, not
+dissipation; moving flux still diminishes. Explicit `residue: dissipate` selects
+the earlier loss law. Open exit, signed components, source allowances and in-flight
+ownership retain their separate accounting. The 40-tick finite-source run
+accounted for 720 emitted units as deposits, with zero dissipation. Tests include
+signed vectors, mixed residue policies and overflow rejection without partial
+receipt. Neither a component ledger nor a stationary deposit establishes physical
+field energy or a gravitational law.
+
+PR #92 adds `transport: ray` under `isotropic-ray-field-v1`. A source sweeps
+configured integer headings using its emission cursor. Each ray retains its
+heading index, three integer routing accumulators and amount while moving over
+adjacent Links. Matching heading and phase may merge; capacity exhaustion fails.
+Ray fields currently reject vector payloads, octant seeds/weights, field rules,
+spatial interactions, `node_execution` and `spatial_computation_delay`.
+
+The published [inverse-square probe](../examples/inverse-square/README.md) reports
+a 41-cubed open world with 4,096 headings, 64 rays per tick and a 64-tick measurement
+sweep. Finite fitted slopes are -2.25, -2.05 and -1.92 on the axis, face diagonal
+and body diagonal. Angular-patch coefficients of variation are 6-8 percent over
+72 patches at tested radii. This statistic is not a maximum error bound or exact
+isotropy; individual nodes show greater variation. These are reported world/event
+audit measurements of stock, not operational observer records or an independent
+rerun in this documentation task. Scalar shell stock is not oriented surface
+flux, and finite fits do not establish asymptotic scaling, mass coupling,
+attraction, Newton's law or physical energy conservation.
+
+### Unmerged amendments remain separate
+
+The live document's section 11 contains branch-reported self-field policies,
+carried allocation phase, scattering and collision results. Its cited
+[PR #93](https://github.com/Closer24/Universe24/pull/93), head
+`7149ec961df330b460dd3dc7262c4a98c5c17221`, was open and unmerged when checked
+against the main commit above. The live section now states that scope explicitly.
+Its findings are retained without being promoted to merged-main capabilities or
+independently revalidated physical results. This sync does not merge PR #93.
+
+The Google Doc update adds sections 6.7 and 10.3.1-10.3.2, reconciles the prior
+decay accounting bullets, and labels section 11's branch scope. Existing Node,
+unit, quantum and pending-hypothesis content is retained. Documentation-only
+validation applies here; no simulator behavior or experiment input changes.
+
+## Joint local reaction contract - 2026-09-13
+
+The live source was reread at revision
+`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+Implementation base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`.
+Sections 3.1, 3.3 and 4.3 motivate the bounded property-selected
+[joint Node reaction](NODE_VECTOR_PROCESSOR.md#local-rules). The user's explicit
+reaction contract refines delayed execution: one group reads several carriers
+and fields from one snapshot, and each frozen substep must still pass its
+declared invariants and optional persistent condition before atomic commit.
+Start triggers remain separate. The supplied register-rotation example checks
+externally defined readouts; it does not derive physical species, energy laws or
+quantum behavior. No live Highlights text was edited.
+
+## Integer Node timing reconciliation - 2026-09-13
+
+The live Highlights source was read again with modification timestamp
+`2026-09-13T05:10:29.655Z`; integration started from main
+`bb177121ec2efdc6c998a8290b9e7b09c7706c62`.
+Sections 3.2, 3.3 and 4.3 motivate bounded generic local properties and rules.
+The user's subsequent explicit h/k clarification selects the new
+[Node profile](NODE_VECTOR_PROCESSOR.md): h is one hop; k is configured per
+interaction, independently of operation cost. This supersedes the cost-derived
+k description in section 10.6 for the opt-in profile only. Node vector width is
+also explicitly generalized while world topology remains the current six-port
+lattice. Section 1.3's distinction between assumptions, tested consequences and
+emergence claims remains binding. The live document was not edited.
+
 ## Shared field computation cycle reconciliation - 2026-09-13
 
 The live Highlights revision

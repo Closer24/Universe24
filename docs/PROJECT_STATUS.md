@@ -1,5 +1,55 @@
 # Project status and restart guide
 
+The opt-in [causal quantum source candidate](CAUSAL_QUANTUM_SOURCES.md) extends
+the contact path with bounded source envelopes attached to participating Nodes.
+Local squared weights scale finite ordinary emission; amplitude updates and
+termination traverse real Links and tariff-derived local delays. Capture creates
+one full-strength localized output, while previously emitted fields continue.
+After measurement the envelopes are a retarded, potentially unnormalized source
+approximation, separate from conserved carrier inventory and exact conditional
+quantum state. The existing localized-only profile remains available. Consult
+[validation evidence](VALIDATION.md) for the tested source and completed checks.
+
+The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) now connects
+actual committed ordinary contacts, deferred origin creation, coherent propagation
+and local capture through the primary runner. Classical fields are emitted only
+at localized sources and continue causally after conversion. Finite templates,
+number-preserving matrices and separate source accounting define this explicit
+hybrid; it is not full quantum electromagnetism. Its configuration, supported
+clocks and acceptance evidence are linked from the contract.
+
+The native [quantum origin cells](WAVE_ORIGINS.md) use the shared immutable event
+spacetime as their history. Each participating physical Node holds up to six
+origin IDs and checks their resolution on every native tick. A terminal configured
+outcome closes its selected origins atomically; other Nodes discard those IDs
+on their next tick, without an eager sweep at commit. Later gates requiring
+resolved origins may be suppressed only when a full-density check proves them
+inert; retired instruments additionally require a certain explicit null outcome.
+Unsafe cancellation fails. One origin can describe several disturbances, and
+continuing outcomes keep the conditional joint state. Separate linked histories
+have been removed.
+Current register heads and individual Link readiness still survive checkpoints.
+Reproduce coherent paths with `examples/quantum/event_paths.json`; native v3 adds
+explicit origin and interaction definitions. This remains the finite configured
+register candidate, with supplied propagation and instrument matrices. Exact
+source, passing checks and remaining blockers require current validation evidence.
+
+[Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
+of the colocated Node's last committed carrier-cycle cost. A moving-pair candidate
+uses existing received-port interactions and paired momentum updates. The impulse
+law is explicitly configured; gravitational attraction and physical energy are
+not established by this mechanism.
+
+The [integer Node profile](NODE_VECTOR_PROCESSOR.md) adds bounded indexed rules,
+explicit k*h local duration, declared aggregation and complete-owner pre-commit
+readouts. Indexed spatial rules now read several carriers and fields from one
+snapshot. Delayed field phases recheck each rule's invariants, and optional
+`commit_when` is separate from the consumed `when` trigger. Nodes own their
+physical transitions and fixed output banks. Example
+configurations demonstrate register permutations and local field exchange;
+they do not establish physical species laws or quantum emergence. General graph
+topology and interacting coarse-graining remain outside this profile.
+
 The [shared field computation delay](SPATIAL_COMPUTATION_DELAY.md) candidate
 adds an explicit configuration switch and bounded later-input ownership.
 Existing inputs keep fixed-clock spatial transport. See its contract and
@@ -62,6 +112,13 @@ selected mechanisms pass; field/particle physical laws remain incomplete.
 Finite owned-reservoir transfer, a ray-speed parameter and a restricted
 zero-total-momentum unequal-mass candidate are explicit configuration solutions,
 not replacements for the default entity profiles or derived universal laws.
+The [inverse-square probe](../examples/inverse-square/README.md) measures the
+outward field from outside the event space: every Manhattan shell carries exactly
+one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
+values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
+straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
+anisotropy: rays carry their heading and phase, and the time-averaged flux per
+node follows solid angle. Mass coupling and attraction remain unaddressed.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
@@ -164,9 +221,12 @@ local configuration is distinct from total host scheduling and history costs.
 Capacity exhaustion rejects a run rather than silently losing state.
 
 [Spatial fields](SPATIAL_FIELDS.md) and [couplings](SPATIAL_COUPLINGS.md) retain
-candidate-specific behavior. Schema 2 (`finite-dissipative-v1`) records completed-link
-loss and finite source/response allowances; accounting for decay is not physical
-energy or momentum conservation through decay. Periodic and open boundaries have
+candidate-specific behavior. Schema 2 (`finite-localizing-v1` by default) attenuates
+moving stock on each completed link and deposits the removed fraction as stationary
+stock at the receiving Node, so total inventory is preserved; the explicit
+`"residue": "dissipate"` option (`finite-dissipative-v1`) records completed-link
+loss instead. Finite source/response allowances apply to both. Accounting through
+attenuation is not physical energy or momentum conservation. Periodic and open boundaries have
 separate explicit contracts. General automatic self-field attribution after turns
 or periodic return remains unsupported. Two opt-in ordering policies,
 [`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
@@ -179,7 +239,11 @@ repair the underlying candidate law.
 [Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
 method. Querying computes branch weights; an explicit instrument and ticket select
 a recorded outcome without advancing the physical clock. Host dependency evaluation
-is counted separately from Q-ORACLE-1. [Focus](QUANTUM_FOCUS.md) remains a separate
+is counted separately from Q-ORACLE-1. Required stored dependencies are collected
+and evaluated forward; neither physical time nor earlier outcomes are reversed.
+The [origin lookup clarification](QUANTUM_EVENTS.md#time-direction-and-origin-lookup)
+separates that evaluation from direct origin status access in unmerged PR #91.
+[Focus](QUANTUM_FOCUS.md) remains a separate
 opt-in candidate-selection experiment. The [native event program](NATIVE_QUANTUM_EVENTS.md)
 now composes the optional quantum owner through the ordinary `Simulation` and
 runner, with shared causal identities, repeated local encounters and explicit

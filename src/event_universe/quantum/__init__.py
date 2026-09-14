@@ -25,6 +25,7 @@ from .mixed import DensityState
 from .postulates import ORACLE_COST, QUANTUM_MODEL_ID, OracleCost
 from .query import QuantumQuery, QuantumQueryStats, QuantumReply
 from .state import Amplitude, QuantumConfig, amplitude_weight
+from .wave_origins import WaveDefinition
 
 __all__ = [
     "EVENT_NETWORK_MODEL_ID",
@@ -55,6 +56,7 @@ __all__ = [
     "QuantumQueryStats",
     "QuantumReply",
     "Region3D",
+    "WaveDefinition",
     "amplitude_weight",
     "region_from_shape",
     "split_region",

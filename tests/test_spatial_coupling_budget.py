@@ -265,13 +265,13 @@ def initialization(*, delayed=False, emitting=False):
                 "field": "inventory",
                 "baseline": [0, 0, 0],
                 "transport": "outward",
-                "decay": {"retain_numerator": 1, "retain_denominator": 2},
+                "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
             },
             {
                 "field": "driver",
                 "baseline": [0, 0, 1],
                 "transport": "outward",
-                "decay": {"retain_numerator": 1, "retain_denominator": 2},
+                "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
             },
         ],
         "spatial_couplings": [

@@ -109,9 +109,10 @@ proposal and opposite field reaction. A delayed proposal cannot spend its budget
 twice, and an unrelated emission updates only its own separate source allowance.
 
 At that commit, equal-and-opposite exchange remains exact. Once the reaction
-completes a link, schema 2's explicitly dissipative transport applies. Consequently
-the later combined physical vector total need not remain constant; its change is
-recorded as dissipation. The configured rotation itself still preserves the
+completes a link, schema 2 attenuation applies. By default the removed fraction
+comes to rest at the receiving node, so the combined physical vector total stays
+constant while its moving part shrinks; under `"residue": "dissipate"` the total
+need not remain constant and its change is recorded as dissipation. The configured rotation itself still preserves the
 carrier norm exactly. Schema 1 rejects `budget` and retains unlimited response.
 
 ## Timing, prices and atomicity

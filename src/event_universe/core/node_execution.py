@@ -1,16 +1,23 @@
 """Host-only parallel execution for immutable local Node planning inputs."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Generator
 from concurrent.futures import InterpreterPoolExecutor
 from dataclasses import dataclass
 from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
-from .spatial_state import SpatialPlan, SpatialState
+from .spatial_state import Rays, SpatialPlan, SpatialState
 
 SpatialPlanner = Callable[
-    [tuple[SpatialState, ...], tuple[DisturbanceRecord | None, ...], int], SpatialPlan
+    [
+        tuple[SpatialState, ...],
+        tuple[DisturbanceRecord | None, ...],
+        int,
+        int,
+        tuple[Rays, ...],
+    ],
+    SpatialPlan,
 ]
 
 MAX_NODE_WORKERS = 64
@@ -30,6 +37,43 @@ class SpatialPlanningInput:
     states: tuple[SpatialState, ...]
     records: tuple[DisturbanceRecord | None, ...]
     received: int
+    node_cost: int = 0
+    rays: tuple[Rays, ...] = ()
+
+
+PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
+PlanningResult = LocalPlan | SpatialPlan | None
+PlanningCycle = Generator[PlanningRequest, PlanningResult]
+
+
+def finish_local_cycle(
+    cycle: PlanningCycle, disturbance: DisturbancePlanner | None, spatial: SpatialPlanner | None
+) -> None:
+    """Drive one Node's transition locally with the same immutable request boundary."""
+    result: PlanningResult = None
+    try:
+        while True:
+            try:
+                request = cycle.send(result)
+            except StopIteration:
+                return
+            if isinstance(request, DisturbancePlanningInput):
+                assert disturbance is not None
+                result = disturbance(
+                    request.records,
+                    request.residuals,
+                    request.received,
+                    port_loads=request.port_loads,
+                )
+            elif isinstance(request, SpatialPlanningInput):
+                assert spatial is not None
+                result = spatial(
+                    request.states, request.records, request.received, request.node_cost, request.rays
+                )
+            else:
+                result = None
+    finally:
+        cycle.close()
 
 
 def _plan_disturbance_batch(
@@ -44,7 +88,9 @@ def _plan_disturbance_batch(
 def _plan_spatial_batch(
     planner: SpatialPlanner, items: tuple[SpatialPlanningInput, ...]
 ) -> tuple[SpatialPlan, ...]:
-    return tuple(planner(item.states, item.records, item.received) for item in items)
+    return tuple(
+        planner(item.states, item.records, item.received, item.node_cost, item.rays) for item in items
+    )
 
 
 class NodeExecution:
@@ -126,6 +172,45 @@ class NodeExecution:
             pool.submit(_plan_spatial_batch, self._spatial_planner, chunk) for chunk in chunks
         )
         return tuple(plan for future in futures for plan in future.result())
+
+    def finish_cycles(self, cycles: tuple[PlanningCycle, ...]) -> None:
+        """Batch immutable requests, then resume local owners in deterministic order.
+
+        Generators stay on the scheduler thread and are discarded after this tick.
+        Workers receive only request records and immutable configured planners.
+        """
+        active = list(cycles)
+        results: list[PlanningResult] = [None] * len(active)
+        try:
+            while active:
+                waiting = []
+                requests: list[PlanningRequest] = []
+                for cycle, result in zip(active, results, strict=True):
+                    try:
+                        request = cycle.send(result)
+                    except StopIteration:
+                        continue
+                    waiting.append(cycle)
+                    requests.append(request)
+                carrier = self.plan_disturbances(
+                    tuple(r for r in requests if isinstance(r, DisturbancePlanningInput))
+                )
+                fields = self.plan_spatial(
+                    tuple(r for r in requests if isinstance(r, SpatialPlanningInput))
+                )
+                carrier_results, field_results = iter(carrier), iter(fields)
+                results = [
+                    next(carrier_results)
+                    if isinstance(r, DisturbancePlanningInput)
+                    else next(field_results)
+                    if isinstance(r, SpatialPlanningInput)
+                    else None
+                    for r in requests
+                ]
+                active = waiting
+        finally:
+            for cycle in cycles:
+                cycle.close()
 
     def report(self) -> dict[str, object]:
         return {

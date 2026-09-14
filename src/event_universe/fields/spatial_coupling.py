@@ -243,6 +243,11 @@ class SpatialCouplingLaw:
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
         raise ValueError("port-aware interactions require a configured joint law")
 
+    def sample_received_masks(self, states: tuple[SpatialState, ...]) -> tuple[int, ...]:
+        from .local_field_rules import received_masks
+
+        return received_masks(self.fields, self.spatial_definitions, states)
+
     def validate_guards(
         self,
         states: tuple[SpatialState, ...],
@@ -337,6 +342,7 @@ class SpatialCouplingLaw:
         sample: Values,
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
+        received_masks: tuple[int, ...] = (),
         *,
         slot_samples: Mapping[int, Values] | None = None,
         slot_fluxes: Mapping[int, Values] | None = None,

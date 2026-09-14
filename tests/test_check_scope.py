@@ -27,6 +27,36 @@ def test_spatial_graph_example_selects_its_causal_contract():
     assert "tests/test_spatial_causal_events.py" in selected
 
 
+def test_many_contacts_selects_its_experiment_contract():
+    selected, _ = CHECK.select(["examples/quantum/many_contacts.json"], {})
+    assert "tests/test_many_contacts.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "examples/catalog-contact/experiment.json",
+        "examples/catalog-contact/prepare.py",
+        "examples/known-entities/catalog.json",
+        "examples/known-entities/physical-units.json",
+        "examples/quantum/causal_charge.json",
+    ],
+)
+def test_catalog_contact_dependencies_select_their_integration_contract(path):
+    selected, _ = CHECK.select([path], {})
+    assert "tests/test_catalog_contact.py" in selected
+
+
+def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():
+    selected, typed = CHECK.select(["examples/quantum/causal_charge.json"], {})
+    assert "tests/test_causal_contact_fields.py" in selected
+    assert "tests/test_configuration_validation.py" in selected
+    assert "tests/test_collisions.py" not in selected
+    assert "tests/test_native_wave_origins.py" not in selected
+    assert not typed
+
+
 @pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
 def test_standalone_lab_changes_select_its_contract_suite(name):
     tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})

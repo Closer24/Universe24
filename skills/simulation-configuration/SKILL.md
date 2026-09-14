@@ -28,9 +28,13 @@ the example family in the guide for fields, catalog entities or native events.
    meet, where, duration, quantities to measure and whether visual output is wanted.
    Reuse explicit user choices. Resolve routine defaults from an existing example.
 2. Choose the supported schema and mechanism before assigning physical labels.
-   Use schema 1 for local field rules, schema 2 for finite dissipative outward
-   fields. The classical causal graph supports both; native quantum programs
-   still reject spatial fields. Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
+   Use schema 1 for local field rules, schema 2 for finite attenuating outward
+   fields with explicitly selected localization or dissipation of attenuated flux.
+   The classical causal graph supports both. Quantum spatial-field composition
+   requires an explicit [localized-contact](../../docs/LOCALIZED_QUANTUM_CONTACT.md)
+   or [causal-source](../../docs/CAUSAL_QUANTUM_SOURCES.md) profile and its restrictions;
+   other native quantum profiles still reject spatial fields.
+   Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
    for provenance granularity, capacity and failure behavior.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed
    in range, and distinguish transit time, computation delay and playback speed.
@@ -39,6 +43,10 @@ the example family in the guide for fields, catalog entities or native events.
 4. Define field structure and units once, then reusable disturbance types or catalog
    profiles. Place repeated occurrences through seeds with value overrides. A name
    such as electron, mass or electric_field does not select a force or formula.
+   For known physical numbers, use the shared [reference units](../../docs/REFERENCE_UNITS.md)
+   registry and explicit Scalar/Vector encoder. Preserve reported rounding error,
+   distinguish model timing from Planck h, and do not repeat defining constants
+   in per-entity profiles or treat unit conversion as a new interaction law.
 5. Choose carried-record or spatial-field ownership for each amount. Add explicit
    source, response or encounter rules only as needed. Count resident and actual
    in-flight stock once; received projections and display vectors are not new stock.

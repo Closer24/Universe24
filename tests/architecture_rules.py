@@ -92,12 +92,18 @@ def violations(source, module):
                     or dependency.startswith("core.disturbance_state.")
                     or dependency == "core.spatial_state"
                     or dependency.startswith("core.spatial_state.")
+                    or dependency == "core.source_envelope_state"
+                    or dependency.startswith("core.source_envelope_state.")
+                    or dependency == "core.source_emission"
+                    or dependency.startswith("core.source_emission.")
                     or dependency == "core.coupling_selectors"
                     or dependency.startswith("core.coupling_selectors.")
                     or dependency == "core.validation"
                     or dependency.startswith("core.validation.")
                     or dependency == "core.integer"
                     or dependency.startswith("core.integer.")
+                    or dependency == "core.node_conservation"
+                    or dependency.startswith("core.node_conservation.")
                     or target_layer == layer
                 ):
                     found.append((line, "generic calculation imports another layer"))

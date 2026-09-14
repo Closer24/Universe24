@@ -1,5 +1,420 @@
 # Validation evidence
 
+## Causal quantum source envelopes - 2026-09-13
+
+Recorded change base: `d8261d4d239e524d18011166f6372ec2949cbe42`; integrated
+main remains `523b39804e8be78ec2069b7af8b6498ccb19810a` after a fresh fetch.
+Final active source SHA-256:
+`1ac603cc9fb6bc34967dcd1b9c4dc6c6e08680229e6e6ed7527f8d4dbf432aaa`.
+The affected gate passed **2,273 tests with five opt-in visual skips** in
+154.64 seconds. Ruff and formatting on 24 changed Python files and strict mypy
+on 69 affected production modules passed. Shared NodeState and resolver interfaces
+select the carrier, field, quantum, locality, boundaries, headless-output and
+retention consumers. No full-suite flag or package build was used.
+
+```sh
+python tools/check.py --base d8261d4d239e524d18011166f6372ec2949cbe42
+python -m event_universe --init examples/quantum/causal_charge.json --output artifacts/causal-charge-final-verified
+python -m event_universe --init examples/quantum/localized_charge.json --output artifacts/causal-localized-final-verified
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/causal-origins-final-verified
+```
+
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used. Windows'
+existing default pytest temporary root denied directory enumeration; the successful
+gate sets `PYTEST_ADDOPTS` to a fresh explicit workspace `--basetemp`.
+Two initial type annotation failures were corrected before the successful gate.
+
+The new arithmetic, integration and atomic-publication modules contribute 59
+focused cases, all included above. A 3:4 split emits -9 and -16 from configured
+full strength -25; inverse propagation recombines the complex amplitudes. Tests
+cover finite fractional allowances, low-budget source deposits, every periodic
+seam and both Port choices on length-two axes, immutable frozen gate inputs,
+local null versus capture, delayed terminal handling, generic label substitution,
+formula-free NodeState and rejection before sampling or changing inventory.
+Observers see the deposited field stock and consumed emission allowance together.
+Two terminal regressions added after that gate passed separately: duplicate
+notices charge receive/read work without restarting termination, and a terminal
+commit before a later valid amplitude prevents reactivation. Thus all 61 new
+focused cases have passing evidence; these last two are not included in 2,273.
+
+Independent physics review passed those 59 cases and confirmed the final source
+after preserving the two existing engine files' line endings. Its separate
+five-Link comparison captured remotely at tick 9: the distant ordinary envelope
+remained 3/5, with the same finite allowance as the detector-free control, through
+tick 13. The terminal notice retired it at tick 14. A null outcome did not
+renormalize that distant source. The ordinary source never queried quantum
+probabilities or used shared origin retirement to change its remote state.
+
+The checked-in causal example completed **10/10 ticks in 0.0884438 seconds**,
+with `display=none`, one random draw and total reported model cost 1,555.
+Source preparation commits at tick 0 and successful absorption at tick 3.
+All three local envelopes retire by tick 5. Charge -1 and mass 1 retain one
+owner at every completed tick. Cumulative ordinary field injection is
+`[-25, -50, -75, -100, -134, -159, -159, -159, -159, -159]`.
+Its configured localization residue retains the final -159 field quantity;
+there is no global erasure of previously emitted stock. Source, residue,
+dissipation and escape accounting balances at every tick.
+
+On the same source, the unchanged localized-only example completed **8/8 ticks
+in 0.0267102 seconds**, retaining field injection -18 and model cost 268.
+The existing origin example completed **5/5 ticks in 0.0078832 seconds**, retaining
+one random draw and model cost 17. All three actual runner outputs are headless,
+excluded from Git and enrolled in 24-hour retention.
+
+The [causal source contract](CAUSAL_QUANTUM_SOURCES.md), postulates, definitions,
+architecture, Highlights coverage, examples, test expectations and physics-review
+Skill are updated together. The example now has an explicit affected-test mapping.
+Existing Boss and test-runner instructions already cover the required coordination
+and validation; no extra scheduled task was added. Live Highlights was reconciled
+read-only. After measurement, the ordinary envelope is an explicitly retarded,
+potentially unnormalized approximation, not a globally conditioned Born query.
+Already started gates retain both frozen operands across null results and can
+subsequently repopulate a local source. This candidate does not establish QED,
+field/matter energy closure, shared aggregate CPU contention or a universal
+classical limit.
+
+## Localized contact, quantum propagation and classical fields - 2026-09-13
+
+Integrated base: `523b39804e8be78ec2069b7af8b6498ccb19810a`. Implementation
+commit `8cd2156` and integration commit `b459a45` have active source SHA-256
+`fc69868e9e282e7c157258f8a454653e095fa366f077dab403652c58009effca`.
+The affected gate passed **2,195 tests with seven opt-in visual skips** in
+147.94 seconds. Ruff, formatting on 23 changed Python files and strict mypy on
+63 affected production modules passed. The scope includes contact conversion,
+quantum origins, ordinary fields, movement, boundaries, locality, genericity,
+interfaces, headless output and retention. Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1 were used; no full-suite flag or package build was used.
+
+```sh
+python tools/check.py --base origin/main
+python -m event_universe --init examples/quantum/localized_charge.json --output artifacts/localized-contact-final
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/wave-origins-contact-regression
+```
+
+The 51 focused contact cases are included in the gate. They check committed
+ownership transfer, valid zero versus undefined momentum, null/click instruments,
+finite classical sources, delayed cycles, Link timing, all six periodic seams,
+split/recombination, exhaustive capture tickets, label substitution and rejection
+before drawing. A third coupled resident retains its quantity and the common
+field reaction in every capture alternative. Public concurrent readouts cannot
+observe a half-completed ordinary/quantum transfer. A moving disturbance creates
+no origin before arrival; its actual source and capture events occur at ticks 1
+and 4. A legacy capacity-boundary regression was corrected by restricting early
+preflight to the contact profile; the original legacy test remains unchanged.
+
+Independent physics review passed 50 focused cases and a separate moving-arrival
+probe, then reviewed the final delta at `b459a45` and passed both targeted checks.
+The later source changes add the public read lock, scope the early preflight and
+retain the moving-arrival regression. Merged main's quantum changes clarify
+terminology without changing physical behavior. The final affected gate above
+covers the complete integrated source.
+
+The localized example completed **8/8 ticks in 0.0245987 seconds**, with
+`display=none`. Source conversion occurs at tick 0 and capture two Links away at
+tick 2. Charge -1 and mass 1 are conserved at every completed tick, including the
+quantum inventory exactly once. Classical source injection is -6 before conversion
+and -12 after capture; it is zero during the delocalized interval. The final -18
+field quantity is localized residue under the selected schema-2 field law, with
+zero escaped or dissipated quantity. Source accounting balances at every tick;
+it is not an equality between charge and field energy. The deterministic example
+uses no random draws and records total model cost 268, including carrier cost 246.
+
+The existing origin example completed **5/5 ticks in 0.0074054 seconds** on the
+same source, preserving one random draw and three oracle calls. Origin 3 resolves
+to record 13 at tick 2; origin 4 remains active. Both runs are headless and their
+generated outputs remain outside Git under the 24-hour retention policy.
+
+The [contact contract](LOCALIZED_QUANTUM_CONTACT.md), postulates, definitions,
+architecture, test expectations and Highlights coverage describe the same finite
+hybrid model. The physics-review Skill now requires commit-time ownership,
+complete alternative validation and explicit field-source accounting. Boss,
+architecture and test-runner Skills already cover the necessary workflow and
+need no additional role or procedure. Live Highlights was reconciled read-only.
+This candidate does not derive QED, a physical momentum observable, field/matter
+energy conservation or a universal classical limit. Optional playback references
+are conservative support, not localized charge or probability; no visualization
+was generated or visually inspected.
+
+## Quantum origin cells and certified cancellation - 2026-09-13
+
+The final submission integrates main `cc042ce6c51a34775c292371538c5cd6acd4e423`
+(straight-ray fields). Final active source SHA-256:
+`9d561027fce33c2c63a73cd003c84f3cd4bc988933177755f8e1598869c400e8`.
+The resulting affected gate passed **2,141 tests with five opt-in visual skips**
+in 158.74 seconds; Ruff/format and strict mypy on 60 affected source modules
+passed. This includes the native cancellation tests and new ray-field consumers.
+The ordinary runner again completed 5/5 ticks, in 0.0123118 seconds, with the
+same one draw, 23 events and model cost 17. Its output is
+`artifacts/wave-origins-integrated`, with headless display and 24-hour retention.
+
+Independent integration review confirmed that the quantum/origin/event/runtime
+files are unchanged, the Node audit supports both origin references and rays,
+and native v3 still rejects independent spatial fields. No unsupported quantum
+and ray-field composition was introduced by the merge.
+
+### Initial implementation checks
+
+Base: `2c20d00094639263fbe387c0a62420dcef108285`. Validated active source SHA-256:
+`25be12915099c34f027563bb6844bf0dcf99299787fad1ba1b7e5dd9460b4ed2`.
+The affected gate passed **2,114 tests with five opt-in visual skips** in
+159.43 seconds. Five additional native cancellation regressions added after
+selection passed separately in 0.32 seconds. Ruff, formatting and strict mypy
+on 59 affected production modules passed. The final documentation, navigation,
+language and hygiene checks passed all 28 cases in 16.46 seconds. Python 3.14.7,
+pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used.
+The shared NodeState/event interfaces select broad carrier, field, boundary,
+locality, genericity, retention and quantum consumers; no `--full`, package build
+or visualization was requested.
+
+```sh
+python tools/check.py --base origin/main
+python -m pytest tests/test_native_wave_cancellation.py
+python -m event_universe --init examples/quantum/wave_origins.json --output artifacts/wave-origins-verified
+```
+
+The new origin tests exercise six-entry Node banks, a rejected seventh arrival,
+simultaneous one-Link propagation, concurrent first claims, both detector orders,
+conditional Born weights, phase reversal, exact checkpoints, continuing outcomes
+and next-tick retirement. Direct status lookup needs no historical traversal.
+The separate chronological predecessor list and its traversal API are removed;
+immutable events, causal dependencies and current register heads remain.
+
+Independent physics review passed 45 focused tests in 0.59 seconds on the exact
+source above. It also independently reproduced target-head invalidation of a
+cached null certificate. The initial proposal could suppress a remote X gate or
+an observable instrument through shared retirement status. The final code rejects
+that composition: a skipped gate must preserve the complete joint density; a
+skipped instrument must have only its declared null outcome, also preserving that
+density. Tests include phase changes invisible in local marginals and random
+records from an unchanged unobserved channel. Quantum certification is extra
+bounded host work; only the origin relevance lookup is O(1).
+
+The ordinary runner completed 5/5 ticks in 0.0072459 seconds, with `display=none`.
+The saved initialization matches the checked-in example. Origin 3 resolves to
+record 13 at tick 2; other Nodes remove its reference at tick 3. Origin 4 remains
+active. The final report has one random draw, three oracle calls including two
+cancellation certifications, 23 causal events, total model cost 17 and carrier
+cost zero. The configured terminal instrument resets occupation to vacuum;
+the continuing test variant explicitly uses a position instrument. This finite
+candidate does not derive a physical momentum observable, generic absorption
+exchange, a universal classical limit or unrestricted no-signalling.
+
+The [origin contract](WAVE_ORIGINS.md), postulates, definitions, Highlights coverage
+and physics-review Skill describe the same supported scope and rejection paths.
+Boss and test-runner instructions already cover bounded ownership and proportional
+verification. Generated outputs and validation logs remain outside source commits
+and are enrolled in 24-hour retention.
+
+## Linked quantum histories on native Nodes - 2026-09-13
+
+Base: `5a2e21d892eba82c5aaff0582152e79f94c0fdc5`. Active source SHA-256:
+`4eff11aa7181a6c0105ded591467d9205f92a797cc8346d1ce76c2c92fbbdeb9`.
+The affected gate passed **2,019 tests with five explicitly visual skips** in
+138 seconds, with Ruff and strict mypy on 58 affected production modules.
+The selection includes ordinary carrier/field, native quantum, NodeState,
+locality, genericity, boundary, retention and interface consumers; no full-suite
+flag, package build or rendering was used.
+
+```sh
+python tools/check.py --base origin/main --tests tests/test_quantum_linked_nodes.py tests/test_native_event_runtime.py tests/test_native_quantum_channels.py
+python -m event_universe --init examples/quantum/linked_paths.json --output artifacts/linked-paths-verified
+```
+
+Python 3.14.7, pytest 9.1.1, Ruff 0.16.7 and mypy 2.3.1 were used. On Windows,
+the gate used a short external temporary path with forward slashes in
+`PYTEST_ADDOPTS`. An earlier backslash-only value was parsed as a relative path,
+putting generated fixtures inside the repository and exceeding Windows path
+limits. That run had 14 environment/hygiene failures; moving those fixtures out
+and correcting the invocation produced the complete pass without a source fix.
+The existing tracked CRLF in `disturbance_engine.py` is preserved; Git whitespace
+validation uses `core.whitespace=cr-at-eol` rather than rewriting the whole file.
+
+The new 28 focused cases cover local predecessor histories, immutable snapshots,
+split/join interference, both recorded outcomes, complex phases, exact correlated
+checkpoints, distinct colocated registers, fixed cursor size and atomic failures.
+An independent reviewer passed 110 relevant tests, then confirmed that the only
+later source adjustment was a local type annotation and formatting. The reviewed
+contract and final fingerprint are unchanged in behavior. The original timing
+defect was independently reproduced: a tick-1 checkpoint incorrectly rejected
+a valid tick-2 operation across a two-tick Link. The corrected cursor keeps its
+last modeled time, including distinct times within one checkpointed component.
+
+The ordinary headless run completed 4/4 ticks in 0.005711 seconds on the exact
+source above. Saved initialization equals the checked-in JSON byte for byte;
+display is `none`. Its eight causal records finish with heads `(5, 6, 7, 7)`.
+The output retains each stream's predecessor separately. No carrier sources,
+ordinary cycles or model costs are invented for empty quantum-only Nodes.
+Independent test readouts give final C/D probabilities 0/1, 1/0 after a phase
+reversal, and 1/2 each after either intermediate position outcome. Every case
+is repeated with and without compaction. These are configured finite-register
+laws, not a derivation of quantum field dynamics or the classical limit.
+
+The physics-review Skill now links to the checkpoint/readiness contract;
+`quick_validate.py` passed using the existing isolated PyYAML 6.0.3 dependency.
+Boss, architecture and test-runner instructions already cover ownership,
+independent expectations and proportional checks; no extra role or Skill is
+needed. Live Highlights reconciliation is recorded in
+[the coverage map](HIGHLIGHTS_IMPLEMENTATION.md#quantum-origin-cells-and-event-spacetime---2026-09-13).
+Generated artifacts stay outside source commits and retain their 24-hour leases.
+
+## Joint reactions and delayed rule validity - 2026-09-13
+
+Incremental base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`, continuing PR 86
+on main `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Final active source SHA-256:
+`1c85d9200fc57378c971fc7409532555713be04916139027eb9c08439cc918c8`.
+The [rule contract](NODE_VECTOR_PROCESSOR.md#local-rules) separates indexed
+participant/field proposals, consumed triggers and persistent conditions.
+The final affected gate passed: **1,879 tests passed and five visual-only tests
+were skipped**. Ruff, formatting and strict mypy (55 affected modules) passed.
+The final documentation checks also passed (28 cases).
+
+The focused regressions include 23 parser cases, 16 joint-reaction cases and
+21 field-guard cases. The independent reviewer ran 85 related cases before the
+final read-only audit registration, then all 10 NodeState checks afterward.
+The declaration audit initially rejected the new `FieldRuleGuard` owner. It now
+recursively audits that record; a negative test rejects a hidden expression in
+its outgoing metadata. The check was extended, not bypassed.
+
+```sh
+python tools/check.py --base a7a0000e3005ae41b37639f5dcf76e56532be69f
+python -m event_universe --init examples/node-vector/joint-reaction.json --output artifacts/joint-reaction-final-run
+python tools/profile_node_vectors.py . artifacts/joint-reaction-memory/report.json reactions
+```
+
+Python: 3.14.7. The first gate hit access-denied errors in the existing Windows
+pytest temporary root. The final gate uses a fresh external temporary directory
+and cache through `PYTEST_ADDOPTS`; no test or engine behavior is changed to
+work around filesystem permissions. Both modified Skills passed `quick_validate.py`
+using a separate PyYAML 6.0.3 validation dependency directory.
+
+The final headless run completed 8/8 ticks on the final source, with commits at
+ticks 3 and 7. Saved initialization matches the checked-in configuration. Both
+spatial ledgers balance; externally defined squared-length and vector-sum
+readouts remain 34 and (4, 6, 2). Final carriers are (0, 2, 0) and (1, 0, 0);
+the local fields are (0, 0, 2) and (3, 4, 0). This is a supplied register
+permutation, not a derivation of physical energy or particle interactions.
+
+All five host-memory cases used source
+`44640835b60c5623fdc0104b3a95f927b1a1fd7856e3d52dce0c3af5d7ac2342`.
+The only subsequent production change registers `FieldRuleGuard` with the
+read-only NodeState auditor; reconstructing that file's earlier bytes reproduces
+the measured source hash exactly. No evolving-state or stepping code changed.
+The joint owner graph remains constant at ticks 16/32/64/128/256:
+
+| Nodes | Reachable owner graph bytes |
+| --- | ---: |
+| 1 | 5,908 |
+| 8 | 40,068 |
+| 27 | 132,712 |
+
+The field-rule probes measured 6,892 bytes for one Node and 48,248 to 48,444
+bytes for eight Nodes; the latter change reflects Python integer object sharing
+at later clock values. The largest traced interval peak was 485,116 bytes.
+These are reachable Python allocations and tracemalloc observations, excluding
+native allocator/RSS coverage. Pending rule metadata is bounded by configured
+rules, slots, components and six outputs. Host indexes still scale with visited
+Nodes; no whole-world O(1) or speedup claim follows.
+
+The established joint reaction delta limit is unchanged: an extreme endpoint
+swap can fail if the transfer itself exceeds `MAX_VALUE`, even when each
+endpoint fits. Failure is explicit. Physics-validation and regression Skills
+now cover delayed substep checks; Boss and architecture Skills already route
+this work correctly, so no new Skill or scheduler was introduced.
+
+## Guarded integer Node execution - 2026-09-13
+
+Base: `bb177121ec2efdc6c998a8290b9e7b09c7706c62`. Tested active source SHA-256:
+`68cec05fc6463e4ef2ced0f1d0d2ff1b63de4d1cb30b6b011424e26245bebf9f`.
+The [Node contract](NODE_VECTOR_PROCESSOR.md) defines the supported scope and
+separates imposed constraints from unestablished physical emergence.
+
+The dependency-selected gate completed with **1,814 passed and five visual-only
+skips**. Ruff, formatting and strict mypy passed. The default package import
+regression initially caught an eagerly loaded diagnostic module; the report now
+loads it only when requested, and the final gate passes that original assertion.
+
+```sh
+python tools/check.py --base bb177121ec2efdc6c998a8290b9e7b09c7706c62
+```
+
+Python was 3.14.7. Coverage includes existing carrier/spatial/causal/quantum
+regressions, locality and formula-free state, bounded indexed rules, generic
+renaming, k timing, zero/canceling arrivals, pending field deltas and paired
+reactions. The new pre-commit guard tests reject nonlinear merging and changes
+to momentum or charge without changing actual owners or accounting. Constructor
+and direct-service tests prevent silently omitting the mandatory guard.
+Known initial readout overflow is rejected in preflight without constructing a
+world or creating output. Failed diagnostic projection reports an explicit error
+and no partial values. Named host totals include actual owners once and do not
+apply the local capacity limit to an entire multi-Node world.
+
+Two ordinary headless CLI runs each completed eight requested ticks on that
+source. `six-records.json` (input SHA-256
+`12d3464890ff80df034aa5ea4bcead6fbef31a2ff916c06789b5f18fedc9ae2e`)
+committed at ticks 3 and 7 and retained declared E=21, P=(3,0,0), Q=0,
+J=(0,15,0). `two-fields.json` (input SHA-256
+`faf174035d96cc66d2382dc600cc2c06131087cb50dfddad9d4d42d8e6b38605`)
+performed the paired exchange at tick 2 and retained E=7 and zero P/Q/J.
+Run metadata and event logs were inspected; display was `none`.
+These are externally defined register readouts and permutation/exchange laws,
+not derived electromagnetic or quantum dynamics.
+
+### Memory and architecture
+
+The reproducible host probe is [profile_node_vectors.py](../tools/profile_node_vectors.py):
+
+```sh
+python tools/profile_node_vectors.py . artifacts/node-vector-memory/report.json
+```
+
+Use `PYTHONPATH=src` and a new output file. It records source/configuration identity,
+plain stepping time, traced peaks and unique reachable owner allocations for
+nine fixed-degree cases through 256 ticks. On the tested source, carrier owner
+graphs at equivalent cycle checkpoints remained unchanged from tick 16 to 256:
+
+| Nodes | Components | Slots per Node | Retained owner bytes |
+| ---: | ---: | ---: | ---: |
+| 1 | 8 | 8 | 3,680 |
+| 8 | 8 | 8 | 24,008 |
+| 27 | 8 | 8 | 79,184 |
+| 8 | 16 | 8 | 27,144 |
+| 8 | 32 | 8 | 33,416 |
+| 8 | 8 | 16 | 27,592 |
+| 8 | 8 | 32 | 34,760 |
+
+Eight colocated carrier/field Nodes retained 48,444 bytes at tick 256. Their
+196-byte rise from tick 128 reflects seven additional 28-byte Python integer
+objects after clock values leave the shared small-integer cache. A separate
+1,024-tick follow-up on source `785c9ec2b01b7caf8756906eb24075f067fa73f2f88e9b6f248b9150a4c9081e`
+held exactly 48,444 bytes at ticks 256, 512 and 1,024; that earlier source precedes
+the final initial-readout and receipt-bound checks and is identified separately.
+
+The largest final-source measured interval peak was 363,444 traced bytes.
+Measurements exclude native allocator/RSS, configuration allocation before tracing,
+observers and recorded history. Shared Python objects are counted once; these
+numbers are not physical register counts. Timing is a single host sample and
+tracing adds substantial overhead; no simulation speedup is claimed.
+
+State and output capacity are fixed per Node, and shared definitions/services are
+outside evolving Node payloads. However, the host retains maps and port banks for
+all visited positions. Whole-host memory therefore scales with visited Nodes,
+not just currently active Nodes. Repeated sorting and immutable temporary tuples
+also remain runtime costs. The fixed-Node probes do not establish bounded memory
+for unbounded exploration or generic graph/coarse-graining support.
+
+### Review and workflow
+
+Independent reviews checked schema/aggregation, local clock/field ownership,
+nonlinear balances, API bypasses, and current-value reporting. Review findings
+were fixed with retained regressions: nonadditive spatial ownership rejection,
+unrelated-field merge eligibility, received-mask consumption, missing guards and
+initial-readout overflow. The regression Skill now links the Node contract and
+the focused checks; its frontmatter validator passed using existing local
+validation dependencies. Other reviewed Skills already express the needed
+architecture and physical-evidence boundaries. No schedule or live Highlights
+document was changed. The [Highlights map](HIGHLIGHTS_IMPLEMENTATION.md) records
+the explicit user clarification of h and k.
+
 ## Property-selected couplings and passive local conservation - 2026-09-13
 
 Base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. The
@@ -1011,3 +1426,65 @@ workers. It completed with balanced accounting, eight disturbance Node tasks,
 The run reported `display: none` and created no visualization. These checks
 establish deterministic barrier behavior for the tested inputs; they do not
 claim that parallel host scheduling speeds up small or inexpensive worlds.
+
+## Localizing decay residue as the schema 2 default — 2026-09-13
+
+Base: `5a2e21d` (main after PR #89). Schema 2 decay gained an optional
+`residue` key. The default `"localize"` keeps the completed-link attenuation of
+moving stock but deposits every removed fraction as stationary stock owned by
+the receiving Node, so total spatial inventory is preserved and a thinning wave
+comes to rest as whole units at known Nodes. The explicit `"dissipate"` value
+selects the earlier loss law unchanged; the historical dissipative tests and the
+records above were produced under that law and now name it explicitly.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, full affected pytest scope |
+| Finite moving source | `finite_fields.json`, 40 headless ticks: injection 720, dissipation 0, localized deposits 720, final field total 720, conserved and balanced at every completed tick |
+| Open example | `open_world.json`, 12 ticks: carried escape 72, spatial escape 20, localized deposits 52, dissipation 0 |
+| New tests | 20-unit pulse keeps total 20 with deposits 10, 5, 3, 1, 1 under both field clocks; separate deposits before merging; deposits survive later arrivals; residue validation; runner identity `finite-localizing-v1`; parallel/serial equivalence on `finite_fields.json` and `three_mass_finite.json` |
+| Visualization | Not requested or generated |
+
+Deposits are never transported, decayed, sampled or read by rules, and the
+schema 1 conservation audits still do not cover schema 2. This is a configured
+integer law, not a derived particle, absorption or energy model.
+
+Integration review of the Claude candidate added signed-vector, mixed-residue
+and deposit-overflow atomicity checks: all 23 finite spatial-engine tests passed
+on Python 3.14.7. The independent local-law review found no implementation
+blocker and required distinguishing conserved signed inventory from moving flux.
+The 40-tick headless `finite_fields.json` run at runtime source SHA-256
+`061b1fcc2d6b210b6450b11ecb33ee8e1b8c479c33e222d21451c2927803d3a7`
+completed with source 720, localized inventory 720 and zero dissipation.
+At ticks 40, 80 and 120 the same probe retained 155 spatial Nodes and a
+140-byte deposit tuple/payload allocation per Node. This is a Python-owned
+deposit-storage measurement, not total process RSS or universal memory proof.
+The existing merge and physics review Skills already require these boundaries;
+no additional Skill rule was needed.
+The integration affected check passed Ruff, formatting and strict mypy, with
+2000 pytest passes and 5 visualization skips. One retention test encountered a
+Windows file-replacement permission error; rerunning its entire 17-test module
+in a fresh temporary directory passed. All 28 repository language, navigation
+and hygiene checks also passed. Required CI is checked on the published head.
+
+## Straight-ray field candidate and the inverse-square probe — 2026-09-13
+
+Base: `ca51869` on this branch. `"transport": "ray"` (`isotropic-ray-field-v1`)
+adds straight-moving rays that carry an integer heading and three accumulators,
+a per-Node ray slot capacity, emission over a configured heading sequence, and
+attenuation, deposits, escape and flux samples through the existing accounting.
+The [probe](../examples/inverse-square/README.md) measured it as a read-only
+world/event audit at host Euclidean distance, not as an operational observer.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy, 2,022 tests with five explicit visualization skips |
+| New tests | `tests/test_ray_field.py`: DDA period, emission shares and cursor, per-tick totals and shell stock, receiver flux, localize/dissipate attenuation, explicit slot failure, open-boundary escape, configuration limits, runner identity; parallel/serial equivalence on `isotropic_rays.json` |
+| Ray probe | 41-cubed open world, 4,096 headings at scale 24, 64 rays per tick, one 64-tick sweep measured: log-log slopes -2.25 (axis), -2.05 (face diagonal), -1.92 (body diagonal); flux per solid angle uniform to a 6 to 8 percent coefficient of variation over 72 detector patches at R = 4, 8, 12, 16; no empty nodes through R = 12 |
+| Octant law on the same probe | Slopes -4.96, -3.40, -0.90; shell means exact `emission / (4R^2 + 2)` |
+| Accounting | 544,195,584 emitted units resident, in flight or escaped; zero dissipation; balanced at every tick; finite fitted slopes, not asymptotic proofs |
+| Visualization | Not requested or generated |
+
+The result is geometric dilution of straight rays, not a gravitational law: no
+constant, mass coupling or attraction is claimed, and node-level graininess at
+large radius is finite direction sampling.

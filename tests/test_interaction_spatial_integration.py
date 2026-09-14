@@ -36,7 +36,7 @@ def combined(*, budget=100000, couple_price=1):
             "transport": "outward",
             "axis_weights": [1, 0, 0],
             "octant_weights": [1] + [0] * 7,
-            "decay": {"retain_numerator": 1, "retain_denominator": 2},
+            "decay": {"retain_numerator": 1, "retain_denominator": 2, "residue": "dissipate"},
         }
         for name, baseline in (("p", [0, 0, 0]), ("turn", [0, 0, 1]), ("signal", 0))
     ]
