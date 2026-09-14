@@ -164,7 +164,12 @@ reads the standing wave between a lamp and a mirror with period
 (`euclidean-ray-pace-v1`): rays wait at Nodes by their heading's pace so every
 heading covers equal Euclidean distance per tick, and the
 [Euclidean pace probe](../examples/euclidean-pace/README.md) reads a round
-front and a fringe in Euclidean path difference.
+front and a fringe in Euclidean path difference. A ray field with `claim`
+(`claim-gather-ray-field-v1`) gathers a captured train: the capturing Node's
+claim floods the world at link speed, rays of that train turn homeward along
+the flood's parent ports, and the record takes them whole; the
+[claim and gather probe](../examples/claim-gather/README.md) lands a whole
+particle at one Node.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

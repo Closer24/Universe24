@@ -31,6 +31,7 @@ from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
+    Claims,
     Rays,
     SpatialBundle,
     SpatialPacket,
@@ -49,6 +50,8 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
+        tuple[Claims, ...],
+        int,
     ],
     SpatialPlan,
 ]

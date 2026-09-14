@@ -225,6 +225,11 @@ def _execute_run(
                 if any(field.euclidean for field in initial.spatial_fields)
                 else "links"
             ),
+            spatial_claims=(
+                "claim-gather-ray-field-v1"
+                if any(field.claims for field in initial.spatial_fields)
+                else "none"
+            ),
             spatial_policy=(
                 (
                     "finite-localizing-v1"

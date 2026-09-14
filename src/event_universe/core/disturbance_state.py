@@ -224,6 +224,9 @@ class DisturbanceRecord:
     # stock it held when the rule first saw it, so a record can pay itself out
     # as rays on a schedule.
     dissolve_clocks: Values = ()
+    # Claim and gather: per absorb rule, the train of the largest share the record
+    # last absorbed, so a re-emission can keep the train a claim will gather.
+    absorbed_trains: Values = ()
     route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     rate_credit_denominator: int = 1

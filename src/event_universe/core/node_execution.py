@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
-from .spatial_state import Rays, SpatialPlan, SpatialState
+from .spatial_state import Claims, Rays, SpatialPlan, SpatialState
 
 DisturbancePlanner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 SpatialPlanner = Callable[
@@ -16,6 +16,8 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
+        tuple[Claims, ...],
+        int,
     ],
     SpatialPlan,
 ]
@@ -38,6 +40,8 @@ class SpatialPlanningInput:
     received: int
     node_cost: int = 0
     rays: tuple[Rays, ...] = ()
+    claims: tuple[Claims, ...] = ()
+    tick: int = 0
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -62,7 +66,13 @@ def finish_local_cycle(
             elif isinstance(request, SpatialPlanningInput):
                 assert spatial is not None
                 result = spatial(
-                    request.states, request.records, request.received, request.node_cost, request.rays
+                    request.states,
+                    request.records,
+                    request.received,
+                    request.node_cost,
+                    request.rays,
+                    request.claims,
+                    request.tick,
                 )
             else:
                 result = None
@@ -80,7 +90,10 @@ def _plan_spatial_batch(
     planner: SpatialPlanner, items: tuple[SpatialPlanningInput, ...]
 ) -> tuple[SpatialPlan, ...]:
     return tuple(
-        planner(item.states, item.records, item.received, item.node_cost, item.rays) for item in items
+        planner(
+            item.states, item.records, item.received, item.node_cost, item.rays, item.claims, item.tick
+        )
+        for item in items
     )
 
 

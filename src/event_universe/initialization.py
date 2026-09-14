@@ -46,6 +46,7 @@ from .core.integer import checked_work
 from .core.spatial_state import (
     CAPTURE_MODES,
     DECAY_RESIDUES,
+    MAX_CLAIM_SLOTS,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
@@ -893,7 +894,16 @@ def _spatial_fields(
             raw,
             "spatial field",
             {"field", "baseline", "transport", "axis_weights", "octant_weights"}
-            | {"headings", "rays_per_tick", "ray_slots", "self_exclusion", "kerengonen", "metric"}
+            | {
+                "headings",
+                "rays_per_tick",
+                "ray_slots",
+                "self_exclusion",
+                "kerengonen",
+                "metric",
+                "pace",
+                "claim",
+            }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
         )
@@ -915,11 +925,26 @@ def _spatial_fields(
         phase_steps, phase_advance = 0, 0
         capture, capture_seed = "share", 0
         metric = "links"
+        pace_numerator, pace_denominator = 1, 1
+        claim_ticks, claim_slots = 0, 0
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
                 raise ValueError("spatial field metric must be links or euclidean")
+            if "pace" in obj:
+                # Slower than link speed: the fastest heading hops numerator links
+                # every denominator ticks. Never faster: the causal bound stands.
+                pace = tuple(_integer(v, "pace term", 1) for v in _array(obj["pace"], "pace", 2, 2))
+                pace_numerator, pace_denominator = pace
+                if pace_numerator > pace_denominator:
+                    raise ValueError("pace must not exceed one link per tick")
+            if "claim" in obj:
+                claim = _object(obj["claim"], "claim", {"ticks", "slots"}, {"ticks", "slots"})
+                claim_ticks = _integer(claim["ticks"], "claim.ticks", 1)
+                claim_slots = _integer(claim["slots"], "claim.slots", 1)
+                if claim_slots > MAX_CLAIM_SLOTS:
+                    raise ValueError("claim.slots must be at most 64")
             if "kerengonen" in obj:
                 # Kerengonen: phased rays. Both keys are required and explicit.
                 phased = _object(
@@ -962,10 +987,10 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif (ray_keys | {"self_exclusion", "kerengonen", "metric"}) & obj.keys():
+        elif (ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "claim"}) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen and metric "
-                "require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace "
+                "and claim require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -999,6 +1024,10 @@ def _spatial_fields(
                 capture,
                 capture_seed,
                 metric,
+                pace_numerator,
+                pace_denominator,
+                claim_ticks,
+                claim_slots,
             )
         )
     return tuple(result)
@@ -1029,6 +1058,7 @@ def _emissions(
                 "kerengonen_advance",
                 "kerengonen_mirror",
                 "dissolve",
+                "train_field",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1125,6 +1155,19 @@ def _emissions(
                 raise ValueError(
                     "kerengonen_mirror requires a recoil_field: a mirror takes the momentum it reverses"
                 )
+        train_field: int | None = None
+        train_carried = False
+        if "train_field" in obj:
+            if not spatial[index].claims:
+                raise ValueError("train_field requires a ray field with claims")
+            if obj["train_field"] == "carried":
+                # The train of what the emitter last absorbed; checked against the
+                # absorb rules once every spatial coupling is parsed.
+                train_carried = True
+            else:
+                train_field = _index(obj["train_field"], _names(fields), "emission.train_field")
+                if train_field not in owned or fields[train_field].components != 1:
+                    raise ValueError("train_field must be a scalar owned by the emitting type")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1153,6 +1196,8 @@ def _emissions(
                 mirror,
                 dissolve_after,
                 dissolve_over,
+                train_field,
+                train_carried,
             )
         )
     return tuple(result)
@@ -1225,6 +1270,7 @@ def _spatial_couplings(
                 "momentum_field",
                 "fraction",
                 "fraction_denominator",
+                "claim",
             },
             required,
         )
@@ -1241,12 +1287,16 @@ def _spatial_couplings(
             obj = _object(
                 obj,
                 "spatial coupling",
-                required | {"type", "requires", "momentum_field", "fraction", "fraction_denominator"},
+                required
+                | {"type", "requires", "momentum_field", "fraction", "fraction_denominator", "claim"},
                 required,
             )
             definition = next((d for d in spatial if d.field == target), None)
             if definition is None or not definition.rays or target not in owned:
                 raise ValueError("absorb requires a ray field that the absorbing type also carries")
+            claim = _boolean(obj.get("claim", False), "spatial coupling.claim")
+            if claim and not definition.claims:
+                raise ValueError("a claiming absorb rule requires a ray field with claims")
             if schema_version != 1:
                 raise ValueError("absorb requires schema_version 1")
             if any(disturbances[index].transport.mode == "split" for index in kinds):
@@ -1286,6 +1336,7 @@ def _spatial_couplings(
                     momentum,
                     fraction,
                     fraction_denominator,
+                    claim,
                 )
             )
             continue
@@ -1670,14 +1721,15 @@ def parse_initial_state(document: object) -> InitialState:
 
         parse_event_program(initial)
     for rule in initial.emissions:
-        if (rule.phase_carried or rule.mirror is not None) and not any(
+        if (rule.phase_carried or rule.mirror is not None or rule.train_carried) and not any(
             coupling.mode == "absorb"
             and coupling.field == initial.spatial_fields[rule.spatial_field].field
             and set(selected_types(coupling)) & set(selected_types(rule))
             for coupling in initial.spatial_couplings
         ):
             raise ValueError(
-                "a carried kerengonen_phase or a kerengonen_mirror requires an absorb rule on the same field"
+                "a carried kerengonen_phase, train_field or kerengonen_mirror requires an absorb rule "
+                "on the same field"
             )
     _validate_conversions(initial)
     if "conservation" in obj:

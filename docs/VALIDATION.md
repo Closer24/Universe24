@@ -1860,3 +1860,26 @@ The metric is a configured choice: the lattice's Manhattan fringe and the
 Euclidean fringe are both exact consequences of where rays meet, and the
 Euclidean pace buys the round front with rays that are slower, never faster,
 than one link per tick.
+
+## Claim and gather: a captured wave lands whole at one Node — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. The second escape route was built: a
+ray field with `claim` (`claim-gather-ray-field-v1`) and a `pace` below link
+speed. Rays carry a train (`train_field`, stamped or carried through a
+Huygens slit); an absorb rule with `claim` opens a claim at the capturing
+Node, which floods Node to Node at link speed with a parent port per Node;
+free rays of the train that meet the claim turn homeward along those ports
+and the claiming record takes them whole; where two claims meet the earlier
+opening wins, then the lower origin, and the later root yields.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,446 tests with five visualization skips |
+| New tests | `tests/test_claim_gather.py`: the isotropic gather tick by tick (first claim at tick 26, 1,875 Nodes claimed, 64 quanta at the screen with momentum zero, closed), the same world without a claim, a rival that clicks first and gathers 62 while the later root keeps 2, one double-slit landing at one root, claim and homing validation, rejected configurations, the identity, a quarter pace, and the event audit closing through capture, flood and gather (819,183 Node events on a 13 x 13 x 3 world, 13 gathered and 3 escaped before the flood) |
+| Isotropic gather | 64 quanta at a quarter link per tick, screen six links away: first claim at tick 26, every quantum at the screen by tick 57, screen momentum (0, 0, 0), nothing escaped, closed at every tick; without the claim the screen keeps its line's 8; a rival four links away clicks first at tick 18, gathers 62 by tick 39 and the farther screen keeps 2 |
+| Double-slit landing | 48 capture seeds on the Euclidean metric at half pace with 1/256 lottery clicks: 48 of 48 landed at one root with nothing in flight, closed; winner holds 0.585 to 1.0 of what reached the screen (median 0.891); landings by band against the fringe's share: `\|y\| <= 1` 6 of 8.2 expected, `2..3` 11 of 16.9, `4..5` 10 of 9.5, `>= 6` 21 of 13.5; on the links metric the same run put no landing within `\|y\| <= 1` because the Manhattan front reaches the outer Nodes first |
+| Visualization | Not requested or generated |
+
+The landing is whole and takes time; the first-click bias toward the Nodes
+the wave reaches first, and the pieces kept by captures that raced the
+flood, are measured limits of the rule, not hidden by it.

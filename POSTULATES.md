@@ -318,6 +318,19 @@ fringe follows Manhattan path difference on the links metric and Euclidean
 path difference on the Euclidean pace: the metric is a configured choice
 under test, with every quantum still counted whole.
 
+The whole landing was then built by the second route, claim and gather: a
+matter wave slower than link speed, and a claim that spreads from the
+capturing Node at link speed, Node to Node, each Node remembering the port it
+came from. Rays of the claimed train that meet the claim turn homeward along
+those ports, and the capturing record takes them whole. The wave becomes one
+particle at one known place, but not at once: the rest arrives over the ticks
+the claim and the return take, and until it does the particle is a claim plus
+matter in transit, all counted. Where two captures race, the earlier one wins
+when their claims meet and the later keeps only what it took first. This is
+the hypothesis under test for postulate 12's open question: a local,
+causal, exactly counted collapse, whose measured signature is a landing that
+takes time.
+
 ## 12. Quantum behavior and entanglement remain open
 
 The physical core describes discrete fields and particles. The selected quantum

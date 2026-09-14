@@ -318,6 +318,51 @@ merge only with equal wait. Two sources in phase then give a fringe in
 Euclidean path difference, and the
 [Euclidean pace probe](../examples/euclidean-pace/README.md) measures both.
 
+A ray field may also set `"pace": [n, d]` with `n <= d`: the fastest heading
+then hops `n` links every `d` ticks, on either metric, by the same wait. A
+pace is never faster than one link per tick; it exists so that a matter wave
+can be slower than the signals that chase it.
+
+### Claim and gather (`claim-gather-ray-field-v1`)
+
+A wave that is captured at one Node lands there whole, later. A ray field with
+`"claim": {"ticks": T, "slots": N}` (identity `claim-gather-ray-field-v1` in
+the run metadata) lets every ray carry a train: an emission with
+`"train_field": "<owned scalar>"` stamps its rays with the emitter's value of
+that field (a particle's label), and `"train_field": "carried"` stamps them
+with the train of the largest share the emitter last absorbed (a Huygens
+slit; it requires an absorb rule on the field and the record row
+`absorbed_trains`). Zero is no train: such rays are never gathered.
+
+An absorb rule with `"claim": true` opens a claim when the record takes any
+share of a train's ray: the Node keeps `Claim(train, parent, since, sent,
+origin)` with parent -1, the root. On its next cycle the Node passes the claim
+to every port but its parent, and a Node that receives one it does not hold
+adopts it with the arrival port as parent and passes it on in turn: a flood
+at link speed, one cycle per Node, that expires `T` ticks after `since`. A
+Node holds at most `N` claims; a claim it cannot hold is unknown there. Where
+two claims for one train meet, the earlier `since` wins, then the lower
+origin address, and the later root yields: it points at the winner and passes
+the winner's claim on, keeping the share it already took.
+
+Every free ray of a claimed train that a claiming Node meets, on arrival or
+after the claim arrives, becomes homing: it keeps its amount, heading, phase
+and train, is skipped by every ordinary absorb rule (an absorber between it
+and home does not stop it), and moves one link per tick along the claim's
+parent ports back to the root, ahead of any wave on a slower pace. At the
+root a record with a claiming rule takes every homing ray of its trains
+whole, amount to its field and amount x heading to its momentum field, with
+no coherence and no lottery: the claim owns the train. Rays merge only within
+one train and one direction of travel. Homing rays at a root without such a
+record, or of a train no claim here knows, wait where they are. The ledger
+counts homing rays like any other, the audit measures their amounts and
+headings, and nothing is created or lost at any step: the capture takes what
+the ray carried, and the rest arrives over the ticks the flood and the return
+take. The [claim and gather probe](../examples/claim-gather/README.md)
+measures an isotropic wave gathered by one screen and contested by two, and
+the double slit landing a whole particle at one screen Node with the
+probability of its wave.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

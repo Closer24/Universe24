@@ -72,6 +72,7 @@ def validate_record(initial: InitialState, record: DisturbanceRecord) -> None:
         record.absorb_tickets,
         record.absorbed_phases,
         record.dissolve_clocks,
+        record.absorbed_trains,
     ):
         _tuple(rows, max(len(initial.fields), MAX_RULES))
         for row in rows:
@@ -259,6 +260,29 @@ def validate_spatial_plan(
     if bounded(plan.interaction_ticks) < 0:
         raise ValueError("node I/O interaction duration must be nonnegative")
     validate_plan_rays(initial, plan)
+    validate_plan_claims(initial, plan)
+
+
+def validate_plan_claims(initial: InitialState, plan: SpatialPlan) -> None:
+    """Claims: one tuple per field for the Node and per port, each within its slot budget."""
+    from .spatial_state import validate_claims
+
+    has_claims = any(definition.claims for definition in initial.spatial_fields)
+    if not plan.claims and not plan.outgoing_claims:
+        # A plan without claim state leaves the Node's claims as they are.
+        return
+    if not has_claims:
+        raise ValueError("claims require a claim field")
+    count = len(initial.spatial_fields)
+    _tuple(plan.claims, count, count)
+    for definition, claims in zip(initial.spatial_fields, plan.claims, strict=True):
+        validate_claims(claims, definition)
+    degree = port_count(initial)
+    _tuple(plan.outgoing_claims, degree, degree)
+    for port_claims in plan.outgoing_claims:
+        _tuple(port_claims, count, count)
+        for definition, claims in zip(initial.spatial_fields, port_claims, strict=True):
+            validate_claims(claims, definition)
 
 
 def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:

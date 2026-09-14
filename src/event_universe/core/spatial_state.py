@@ -73,9 +73,40 @@ class Ray:
     # Euclidean pace only: how far the ray is toward its next link, below its
     # heading's pace denominator.
     wait: int = 0
+    # Claim and gather only: the train (particle) this ray belongs to, zero for
+    # a ray no claim can gather, and whether a claim has turned it homeward.
+    train: int = 0
+    homing: int = 0
 
 
 Rays = tuple[Ray, ...]
+
+
+@dataclass(frozen=True, slots=True)
+class Claim:
+    """One Node's knowledge that a train has been captured: gather it homeward.
+
+    The parent port leads one link toward the capturing Node (-1 at that Node
+    itself); since is the tick the claim was opened; sent records that this
+    Node has already passed the claim to its neighbors.
+    """
+
+    train: int
+    parent: int
+    since: int
+    sent: int = 0
+    # The Node that opened the claim, stamped by that Node when it commits; the
+    # earlier opening tick wins where two claims for one train meet, then the
+    # lower address, so every Node ends up pointing at one root.
+    origin: Address3 = (-1, -1, -1)
+
+    @property
+    def priority(self) -> tuple[int, Address3]:
+        return (self.since, self.origin)
+
+
+Claims = tuple[Claim, ...]
+MAX_CLAIM_SLOTS = 64
 
 
 @dataclass(frozen=True, slots=True)
@@ -107,6 +138,15 @@ class SpatialFieldDefinition:
     # paces each heading so that every ray covers the same Euclidean distance
     # per tick, the slowest lattice direction setting the speed.
     metric: str = "links"
+    # Ray transport only: the fastest heading hops pace_numerator links every
+    # pace_denominator ticks (1 / 1 is link speed); a slower matter wave lets a
+    # claim, traveling at link speed, overtake it.
+    pace_numerator: int = 1
+    pace_denominator: int = 1
+    # Claim and gather only: a Node keeps a claim for claim_ticks ticks after it
+    # was opened, at most claim_slots claims at once. Zero ticks disables claims.
+    claim_ticks: int = 0
+    claim_slots: int = 0
 
     @property
     def rays(self) -> bool:
@@ -115,6 +155,10 @@ class SpatialFieldDefinition:
     @property
     def euclidean(self) -> bool:
         return self.metric == "euclidean"
+
+    @property
+    def claims(self) -> bool:
+        return self.claim_ticks > 0
 
     @property
     def kerengonen(self) -> bool:
@@ -206,6 +250,11 @@ class EmissionDefinition:
     # is left. Zero dissolve_over means no dissolution.
     dissolve_after: int = 0
     dissolve_over: int = 0
+    # Claim and gather (ray fields with claims only): the owned scalar field whose
+    # value stamps every emitted ray with its train, so a claim can gather it; or,
+    # when carried, the train of what the record last absorbed (a Huygens slit).
+    train_field: int | None = None
+    train_carried: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -226,6 +275,9 @@ class SpatialCouplingDefinition:
     # the ray is forwarded. None absorbs whole rays.
     fraction: Expression | None = None
     fraction_denominator: int = 1
+    # Absorb mode on a claim field only: taking any share of a train's ray opens
+    # a claim at this Node, and the record gathers that train's homing rays whole.
+    claim: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -303,6 +355,9 @@ class SpatialNodeState:
     # Resident rays per spatial field (empty for non-ray fields). They arrived on
     # the previous link and leave on the next cycle along their own lines.
     rays: tuple[Rays, ...] = ()
+    # Claims held per spatial field (empty for fields without claims): which
+    # trains are gathered through this Node and toward which port.
+    claims: tuple[Claims, ...] = ()
     incoming: tuple[SpatialState, ...] = ()
     incoming_count: int = 0
     incoming_decay_cost: int = 0
@@ -325,6 +380,10 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
+    # Claim and gather: the Node's claims after this cycle, one tuple per field,
+    # and the claims passed to each port, one tuple per field per port.
+    claims: tuple[Claims, ...] = ()
+    outgoing_claims: tuple[tuple[Claims, ...], ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -335,6 +394,7 @@ class SpatialPacket:
     fields: SpatialBundle
     cause_id: int | None = None
     rays: tuple[Rays, ...] = ()
+    claims: tuple[Claims, ...] = ()
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -388,6 +448,40 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         pace = heading_pace(definition, ray.heading)
         if type(ray.wait) is not int or not 0 <= ray.wait < pace[1]:
             raise ValueError("ray wait must stay below its heading's pace denominator")
+        if type(ray.train) is not int or bounded(ray.train) < 0:
+            raise ValueError("ray train must be a nonnegative bounded integer")
+        if type(ray.homing) is not int or ray.homing not in (0, 1):
+            raise ValueError("ray homing must be 0 or 1")
+        if ray.homing and not (definition.claims and ray.train):
+            raise ValueError("a homing ray requires a claim field and a train")
+
+
+def validate_claims(claims: Claims, definition: SpatialFieldDefinition) -> None:
+    if type(claims) is not tuple or len(claims) > definition.claim_slots:
+        raise ValueError("claim slot budget exceeded")
+    if claims and not definition.claims:
+        raise ValueError("claims require a claim field")
+    trains = set()
+    for claim in claims:
+        if type(claim) is not Claim:
+            raise ValueError("claims require immutable Claim entries")
+        if type(claim.train) is not int or bounded(claim.train) < 1:
+            raise ValueError("a claim requires a positive bounded train")
+        if type(claim.parent) is not int or not -1 <= claim.parent < 6:
+            raise ValueError("a claim's parent must be -1 or a port")
+        if type(claim.since) is not int or bounded(claim.since) < 0:
+            raise ValueError("a claim's opening tick must be nonnegative")
+        if type(claim.sent) is not int or claim.sent not in (0, 1):
+            raise ValueError("a claim's sent flag must be 0 or 1")
+        if (
+            type(claim.origin) is not tuple
+            or len(claim.origin) != 3
+            or any(type(c) is not int or bounded(c) < -1 for c in claim.origin)
+        ):
+            raise ValueError("a claim's origin must be a lattice address")
+        if claim.train in trains:
+            raise ValueError("a Node holds one claim per train")
+        trains.add(claim.train)
 
 
 def advance_ray(
@@ -411,13 +505,15 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int, int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int], int] = {}
     for ray in rays:
-        key = (ray.heading, ray.accumulators, ray.phase, ray.advance, ray.wait)
+        key = (ray.heading, ray.accumulators, ray.phase, ray.advance, ray.wait, ray.train, ray.homing)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance, wait)
-        for (heading, accumulators, phase, advance, wait), amount in sorted(combined.items())
+        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing)
+        for (heading, accumulators, phase, advance, wait, train, homing), amount in sorted(
+            combined.items()
+        )
         if amount
     )
 
@@ -602,7 +698,7 @@ def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
 # makes the wave front round: a ray hops when its wait passes its denominator.
 
 PACE_SCALE = 4096
-_PACE_TABLES: dict[tuple[Heading, ...], tuple[tuple[int, int], ...]] = {}
+_PACE_TABLES: dict[tuple[tuple[Heading, ...], bool, int, int], tuple[tuple[int, int], ...]] = {}
 
 
 def integer_sqrt(value: int) -> int:
@@ -619,20 +715,36 @@ def integer_sqrt(value: int) -> int:
 
 
 def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], ...]:
-    """(numerator, denominator) hops per tick for every heading; (1, 1) on the links metric."""
-    if not definition.euclidean:
-        return tuple((1, 1) for _ in definition.headings)
-    table = _PACE_TABLES.get(definition.headings)
+    """(numerator, denominator) hops per tick for every heading.
+
+    (1, 1) for every heading on the links metric at link speed; the configured
+    pace scales every heading alike, and the Euclidean metric slows each heading
+    to the slowest lattice direction on top of it.
+    """
+    key = (
+        definition.headings,
+        definition.euclidean,
+        definition.pace_numerator,
+        definition.pace_denominator,
+    )
+    table = _PACE_TABLES.get(key)
     if table is None:
-        ratios = []
-        for heading in definition.headings:
-            manhattan = sum(abs(c) for c in heading)
-            squared = sum(c * c for c in heading)
-            # E / L scaled: the Euclidean length in units of 1 / PACE_SCALE per Manhattan link.
-            ratios.append(integer_sqrt(squared * PACE_SCALE * PACE_SCALE) // manhattan)
-        slowest = min(ratios)
-        table = tuple((slowest, ratio) for ratio in ratios)
-        _PACE_TABLES[definition.headings] = table
+        numerator, denominator = definition.pace_numerator, definition.pace_denominator
+        if not definition.euclidean:
+            table = tuple((numerator, denominator) for _ in definition.headings)
+        else:
+            ratios = []
+            for heading in definition.headings:
+                manhattan = sum(abs(c) for c in heading)
+                squared = sum(c * c for c in heading)
+                # E / L scaled: the Euclidean length in units of 1 / PACE_SCALE per link.
+                ratios.append(integer_sqrt(squared * PACE_SCALE * PACE_SCALE) // manhattan)
+            slowest = min(ratios)
+            table = tuple(
+                (checked_work(slowest * numerator), checked_work(ratio * denominator))
+                for ratio in ratios
+            )
+        _PACE_TABLES[key] = table
     return table
 
 
