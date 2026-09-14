@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
-title: "Universe24: a discrete simulator of local physical laws"
+title: "Universe24: a discrete simulator of local physical laws (Reality Theory)"
 type: software
 version: 0.2.0
 date-released: 2026-09-13
@@ -22,7 +22,8 @@ keywords:
   - computational physics
   - cellular automata
 abstract: >-
-  A research simulator in which physical content is expressed as configured
+  The reference implementation of Reality Theory (Universe24): a research
+  simulator in which physical content is expressed as configured
   disturbances on a three-dimensional lattice with six-neighbor causal links,
   bounded integer arithmetic and explicit local conservation checks. Field
   laws, transport candidates and quantum event programs are supplied by

@@ -1,5 +1,10 @@
 # Universe24 — a three-dimensional event simulator
 
+Universe24 implements **Reality Theory (Universe24)**: one discrete world of
+Nodes and Links, bounded integer arithmetic, local rules, and a finite quantum
+owner coupled to the classical lattice by local contacts. The name of the
+framework is Reality Theory; the simulator that realizes it is Universe24.
+
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
 branch `main`. The Python package remains `event_universe`.
 
@@ -398,7 +403,8 @@ Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
 Version 0.2.0 is archived on Zenodo under DOI
 [10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746).
 Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
-citation entry on the repository page. Reference form:
+citation entry on the repository page. From version 0.3.0 the title carries the
+framework name, Reality Theory (Universe24). Reference form of the archived 0.2.0:
 
 > Gonen, A. (2026). Universe24: a discrete simulator of local physical laws
 > (Version 0.2.0) [Computer software]. Zenodo.
