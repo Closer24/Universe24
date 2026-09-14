@@ -488,7 +488,15 @@ charge). Findings, each a branch result and not a law:
   initial condition and no repulsive term exists. A light train past a mass
   whose emission grows each cycle arrives late and stretched (mean spacing 2.7
   per link-tick, z ≈ 1.7) under the directional delay: a distance-redshift
-  relation from delay growth without recession, quantized in bunches.
+  relation from delay growth without recession, quantized in bunches. In a
+  closed (periodic) universe the field never leaves, so a constant source
+  makes the load grow with the age of the universe: with a ray computation
+  field a unit-spaced light train stretches to z ≈ 9 within one lap (first
+  seven bodies unshifted, then 6, 60, 12, 26-tick gaps) — a distance-
+  proportional redshift from closure alone, whose lattice form is stepwise.
+  Under `straight` phases the mass's axis ray stalls the train at one column
+  and under `rotate` the wrapped Manhattan field piles up at the antipode;
+  neither is a uniform load.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the

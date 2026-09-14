@@ -269,7 +269,30 @@ crossed the budget everywhere at about the same age, so every hop slowed
 together. That is the closed universe's signature — a uniform slowdown of all
 light with age, not a local one — and to read it as a redshift the eye must
 compare laps, which needs a source weak enough for the slowdown to deepen
-gradually (recorded below when the 150-tick run completes).
+gradually. With `rotate` phases at emission 6000 and budget 20 the field
+reached the row at tick ~30 (axial propagation is c/3 under `rotate`) and then
+cost 80-189 per hop: the wrapped Manhattan-shaped field piles up at the
+diagonals and the antipode (stock 152 at x = 0 and 36, zero at x = 20), so the
+train crawled at one hop per nine ticks and never lapped.
+
+With the mass emitting **rays** as the computation field (a ray field may now
+be the computation field; its delivered ray arrivals per travel port are the
+load) the closed box finally shows the stretch inside one lap:
+
+| body | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| arrival tick | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 33 | 93 | 93 | 105 | 131 |
+| gap | | 1 | 1 | 1 | 1 | 1 | 1 | 6 | 60 | 0 | 12 | 26 |
+
+Seven bodies pass before the accumulated ray density (512 rays per tick with
+nowhere to go) crosses the budget; the later ones meet one or two extra
+cycles per hop and the train stretches to z ≈ 9 over the lap, in bunches. For a
+load growing linearly with age, a train emitted with unit spacing and crossing
+D links arrives with spacing 1 + D × (growth rate per hop): the redshift is
+proportional to distance at a fixed reception epoch — a Hubble-like relation
+from closure alone, with no recession — and the same delay stretches durations.
+What the lattice adds is quantization: nothing until the load crosses a budget
+multiple, then whole extra cycles at once.
 
 ## 6. Dark matter and dark energy: what the model does and does not offer
 
