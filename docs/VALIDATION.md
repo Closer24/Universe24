@@ -2175,3 +2175,27 @@ The bounded prepared-table/cache design is unchanged; the new metadata remains
 fixed by configuration. The explicit delayed-owner and response-sampling limits
 remain documented in the candidate contract. The configured momentum-to-advance
 relation is not a derived de Broglie law.
+
+## Bell test on the phased-ray field - 2026-09-14
+
+Base: `2e50880` on `main`. Configuration only: no source module changed. The
+new probe `examples/kerengonen-bell/run_experiments.py` runs the CHSH form of
+Bell's test on `kerengonen-ray-field-v1` with the four settings and the
+combination of the quantum owner's two-wing experiment, read as phases on a
+360-step circle (0, 90, 53 and 307 degrees).
+
+| Check | Result |
+| --- | --- |
+| Share rule, 288 worlds, hidden phase on a five-step grid | `S = 826177/589824 = 1.4007`, equal in every correlation to the local model `mean cos(phase - a) cos(phase - b)` computed from the cosine table independently of the update code |
+| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423`, consistent with 1.40 within the counting spread of about 0.04 |
+| Plain ray field, same worlds without the key | every outcome +1, `S = 2` exactly |
+| Quantum owner, same settings (two-wing Bell experiment) | `S = 14/5` |
+| Closure | every world's quanta in records, in flight and escaped equal the initial stock; the audited world passes the local conservation audit with 21504 source and 21504 lamp quanta absorbed at each analyzer |
+| New tests | `tests/test_kerengonen_bell.py`: five cases, 7.3 seconds |
+
+Runtime source SHA-256
+`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`, Python
+3.14.0rc2, headless; the harness took 4 minutes 14 seconds. The classical
+value is the model's prediction, one half of the quantum owner's correlation
+at every setting pair, and not a loss of visibility. No physical constant or
+species is identified.

@@ -38,6 +38,7 @@ records, with exact integers on the canonical runner:
 | Opt-in [funded emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission): the wave pays for its field from its own stock | totals constant at 3000 with zero sources while the wave is live; 211 units paid into the field over fourteen ticks; after a capture the localized record holds the unspent stock and keeps paying; the only external term is the one retarded emission after the capture |
 | An external classical field on one arm with the opt-in [field phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase) | coil fields 0, 200, 400, 800 select phase exponents 0, 0, 1, 2 and move the capture probability from 0 to `576/3125` and `9216/15625`; the same field beside the far side of the source moves nothing |
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
+| [Bell test in CHSH form on the phased-ray candidate](../examples/kerengonen-bell/README.md), same settings and combination as the quantum owner's | share rule `S = 826177/589824 = 1.4007`, equal to the local model's prediction `cos(a - b) / 2` averaged over the hidden phase; lottery clicks `397/279 = 1.42` from 8928 single-quantum pairs; plain field exactly 2; quantum owner 14/5 |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
 
 Earlier experiments established the finite quantum owner itself: exact CHSH
@@ -68,9 +69,13 @@ The boundary between them is sharp and is a result rather than a choice: a
 local phased field cannot exceed the CHSH bound of 2, whatever its phase rule,
 because it carries no joint state. Everything one excitation does at a screen
 can be described by either candidate; entanglement, Bell violation and
-causally delivered conditional collapse belong only to the quantum owner. A
-Bell experiment run on both candidates is the decisive comparison and is the
-natural next measurement.
+causally delivered conditional collapse belong only to the quantum owner. The
+[Bell test on both candidates](../examples/kerengonen-bell/README.md) is the
+measurement that separates them: with the same four settings and the same
+combination, the phased field gives `S = 1.4007` exactly, one half of the
+quantum owner's `14/5` in every correlation, and the plain field gives exactly
+2. The classical candidate is at or below the bound and the quantum owner is
+above it, on the same lattice and the same runner.
 
 ## What is claimed
 

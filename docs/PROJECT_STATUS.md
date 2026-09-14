@@ -191,6 +191,11 @@ two slits gives the fringe, and rays may carry their own advance from the
 emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
 halves the fringe period each time the beam's momentum doubles in its measured
 range. The momentum-to-advance relation is supplied by configuration, not derived.
+The [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md)
+places the candidate: with the quantum owner's four CHSH settings it measures
+1.40 exactly, one half of the owner's 14/5 in every correlation, and the plain
+field 2, so the classical candidate stays inside the local bound that the
+finite quantum owner exceeds.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

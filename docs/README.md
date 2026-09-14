@@ -54,6 +54,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Local moment-response candidate](../examples/quantum/local_moment_exchange.md) | Post-capture mean/variance exchange, finite detector lifecycle and slow ordinary transport |
 | [Quantum and classical coupling](QUANTUM_CLASSICAL_COUPLING.md) | Claims, non-claims, measured evidence and related work for the hybrid model, written for external review |
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
+| [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md) | CHSH on the classical Kerengonen candidate: 1.40 exact against the quantum owner's 14/5 at the same settings, plain field at the bound of 2 |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
