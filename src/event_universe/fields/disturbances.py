@@ -206,6 +206,7 @@ class DisturbanceLaw:
     couplings: tuple[CouplingDefinition, ...]
     operation_costs: OperationCosts
     interactions: tuple[InteractionDefinition, ...] = ()
+    least_delay: bool = False
 
     def _interact_group(
         self, rule: InteractionDefinition, records: tuple[DisturbanceRecord, ...], meter: CostMeter
@@ -341,7 +342,10 @@ class DisturbanceLaw:
                     raise ValueError("record does not own this coupling's exchange remainder")
 
     def _route(
-        self, record: DisturbanceRecord, meter: CostMeter
+        self,
+        record: DisturbanceRecord,
+        meter: CostMeter,
+        port_loads: tuple[int, ...] | None = None,
     ) -> tuple[DisturbanceRecord | None, tuple[Departure, ...]]:
         rule = self.definitions[record.type_index].transport
         meter.charge("route")
@@ -418,7 +422,9 @@ class DisturbanceLaw:
             tuple(v - 1 for v in record.route_weight_codes),
         )
         if rule.routing == "balanced":
-            selected, counts, previous = balanced_port(weights, counts, previous, meter)
+            selected, counts, previous = balanced_port(
+                weights, counts, previous, meter, loads=port_loads if self.least_delay else None
+            )
             phase_code = record.route_phase_code
         else:
             denominator = bounded(sum(weights))
@@ -446,6 +452,8 @@ class DisturbanceLaw:
         records: tuple[DisturbanceRecord | None, ...],
         coupling_remainders: tuple[int, ...],
         received_count: int,
+        *,
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0),
     ) -> LocalPlan:
         meter = CostMeter(self.operation_costs)
         meter.charge("receive", received_count)
@@ -571,7 +579,7 @@ class DisturbanceLaw:
         for slot, record in enumerate(updated):
             if record is None:
                 continue
-            retained, outgoing = self._route(record, meter)
+            retained, outgoing = self._route(record, meter, port_loads)
             replacements.append((slot, retained))
             departures.extend(Departure(item.port, item.record, slot) for item in outgoing)
             if self.definitions[record.type_index].cost_field is not None:

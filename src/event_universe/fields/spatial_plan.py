@@ -33,7 +33,14 @@ from event_universe.core.spatial_state import (
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .rays import emit_rays, forward_rays, validate_ray_definition
-from .spatial import add_populations, bounded_emission_amount, emission_amount, emit, split_outward
+from .spatial import (
+    add_populations,
+    bounded_emission_amount,
+    emission_amount,
+    emit,
+    split_outward,
+    split_outward_carried,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -44,6 +51,13 @@ class SpatialLaw:
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     absorptions: tuple[SpatialCouplingDefinition, ...] = ()
+    # "straight": a portion keeps its axis; "rotate": it continues the weight cycle;
+    # "node": legacy node-owned phase.
+    allocation_phase: str = "straight"
+    computation_field: int | None = None
+    # When set, indivisible portions prefer the axis whose port carries the least
+    # computation load travelling along ("along") or against it ("against").
+    least_delay_direction: str | None = None
 
     def _own_departed_keys(
         self, record: DisturbanceRecord, index: int, meter: CostMeter
@@ -207,6 +221,16 @@ class SpatialLaw:
             raise ValueError("self-exclusion state requires a self-excluding ray field")
         return record
 
+    def _port_loads(self, states: tuple[SpatialState, ...]) -> tuple[int, ...] | None:
+        """Computation load pricing a departure through each port, read from local channels only."""
+        if self.least_delay_direction is None or self.computation_field is None:
+            return None
+        index = next(i for i, d in enumerate(self.definitions) if d.field == self.computation_field)
+        delivered = tuple(unpack(payload)[0] for payload in states[index].delivered)
+        if self.least_delay_direction == "along":
+            return delivered
+        return tuple(delivered[port ^ 1] for port in range(6))
+
     def __call__(
         self,
         states: tuple[SpatialState, ...],
@@ -333,12 +357,15 @@ class SpatialLaw:
             )
             working = list(ruled_states)
         outgoing: list[list[SpatialPopulations]] = [[] for _ in range(6)]
+        outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
             field = self.fields[definition.field]
             channels: SpatialOutgoing
+            blank = pack((0,) * field.components)
+            channel_phases: SpatialOutgoing = ((blank,) * 8,) * 6
             if definition.rays:
                 # Ray fields keep no octant stock; every resident ray moves one link.
                 if any(any(unpack(payload)) for payload in working[index].populations):
@@ -356,24 +383,32 @@ class SpatialLaw:
                     after_rays = checked_work(after_rays + ray_stock(port_rays))
                 if field.conserved and before_rays != after_rays:
                     raise ValueError("ray transport violates declared conservation")
-                blank = pack((0,) * field.components)
                 channels = tuple((blank,) * 8 for _ in range(6))
                 for port, port_rays in enumerate(ports):
                     outgoing_rays[port].append(port_rays)
                 retained.append(working[index])
                 for port, payloads in enumerate(channels):
                     outgoing[port].append(payloads)
+                    outgoing_phases[port].append(channel_phases[port])
                 continue
             for port in range(6):
                 outgoing_rays[port].append(())
             if definition.transport == "local":
-                blank = pack((0,) * field.components)
                 channels = tuple(
                     (channel[definition.field],) + (blank,) * 7 for channel in local_outgoing
                 )
                 state = working[index]
                 meter.charge("route")
                 meter.charge("send", sum(any(unpack(channel[0])) for channel in channels))
+            elif self.allocation_phase != "node":
+                channels, state, channel_phases = split_outward_carried(
+                    working[index],
+                    definition,
+                    field,
+                    meter,
+                    self._port_loads(states),
+                    straight=self.allocation_phase == "straight",
+                )
             else:
                 channels, state = split_outward(working[index], definition, field, meter)
             if has_local:
@@ -381,6 +416,7 @@ class SpatialLaw:
             retained.append(state)
             for port, payloads in enumerate(channels):
                 outgoing[port].append(payloads)
+                outgoing_phases[port].append(channel_phases[port])
             for component in range(field.components):
                 before = source[definition.field][component]
                 for payload in states[index].populations:
@@ -415,4 +451,7 @@ class SpatialLaw:
             meter.interaction_ticks,
             tuple(guards),
             tuple(tuple(port_rays) for port_rays in outgoing_rays) if has_rays else (),
+            outgoing_phases=tuple(tuple(fields) for fields in outgoing_phases)
+            if self.allocation_phase != "node"
+            else (),
         )

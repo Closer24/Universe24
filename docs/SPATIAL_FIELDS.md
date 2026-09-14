@@ -125,6 +125,108 @@ delivered populations as specified below. For vector fields each entry is an int
 Spatial fields must be extensive. Unsupported laws, wrong shapes, nonintegral
 values, duplicate seeds and unknown keys are rejected.
 
+## Carried allocation phases
+
+`split_outward` partitions each octant population over the three allowed
+cardinal directions by walking a cycle of axis weights from an allocation
+phase. Highlights 3.3.1 requires the remainder of that integer division to be
+carried into later updates. `"allocation_phase"` selects who owns it:
+
+- `"straight"` (default): every nonzero portion leaves with the first slot of
+  its own axis. A lone unit therefore keeps its axis and travels a straight
+  ray at link speed; only when portions of the same octant meet at a node do
+  their phases merge (by addition modulo the axis weight total) and the group
+  spreads again. Directions are decided where the field is still divisible,
+  near its source, and kept afterwards.
+- `"rotate"`: every portion leaves with the slot after its last allocated slot,
+  so a lone unit visits the axes in turn along its octant. The far field is
+  isotropic in the Manhattan sense but no lone unit advances along an axis
+  faster than one third of link speed.
+- `"node"`: the legacy node-owned phase for identified old configurations. A
+  fresh node starts at the first axis weight, so far-field units all follow
+  that axis.
+
+The transported quantity is unchanged by this choice: every portion is still
+allocated exactly and every component is conserved. Only the destination of
+indivisible units differs. With node-owned phases a decay-free 216-unit pulse
+froze into 178 far-field cells whose units all travelled along the first axis
+weight; with rotating phases the unit-weighted mean distances along x, y and z
+agreed within a few percent but a lamp sixteen links away was never seen on
+its axis within forty ticks; with straight phases the axial front moves at
+link speed again while the axes share the units. Reaction packets committed
+from carrier responses keep the node-owned phase in every mode. Run metadata
+records `spatial_allocation` as `carried-straight-phase-v1`,
+`carried-rotate-phase-v1` or `node-phase-legacy`.
+
+## Computation field and local delay
+
+Highlights 4.4 defines the computational field as a configured field whose
+local scalar describes the cycle's modeled work and couples to delay through
+`k = max(1, ceil(C / B))`. The top-level member `"computation_field"` names an
+unsigned conserved scalar outward field for that role. Its local value at a
+node, the immutable baseline plus the stock present before that interval's
+forwarding, is added to the cost `C` of every carrier cycle at the node, in
+addition to the priced field operations already contributed. Nothing else
+changes: the field is emitted, transported, diluted and accounted like any
+other conserved outward field, and no mass, distance or force enters the law.
+
+Because the field is conserved, its total stays constant while it dilutes
+with distance, so the extra cost decays with the field itself. With a mass
+emitting 24000 units per interval and `normal_budget` 100, held clocks at
+distances 1, 2, 3, 4 and 8 completed 2, 6, 12, 23 and 40 of 40 cycles; a large
+budget restores 40 everywhere without changing the field. A moving carrier
+crossing such a region is delayed the same way. Under the
+[shared computation cycle](SPATIAL_COMPUTATION_DELAY.md) the same load also
+prices field forwarding, so other fields crossing the region are delayed: with
+budget 200 a light pulse reached a node 16 links behind an emitting mass at
+tick 16 without the mass and not within 40 ticks with it, while a node six
+links off that line saw its first light at the same tick in both cases. This
+is the local delay law applied to a configured field, not a derived
+gravitational potential; whether the resulting profile matches any physical
+law is a separate measurement.
+
+### Directional delay
+
+The six delivered channels of the computation field carry more than its local
+sum. With `"delay_direction": "along"` or `"against"`, the load no longer
+delays the whole cycle. Local updates commit after the bare cycle time, and
+each departure through a port waits for its own `k`, computed from the cycle
+cost plus the baseline plus the load delivered through one channel: the field
+travelling in the same direction as the departure (`along`), or the field
+arriving from the side the departure heads to (`against`). The extra wait is
+spent before the transfer's arrival, the `sent` event reports that arrival,
+and the node starts no new cycle until its slowest departure has arrived.
+
+The two conventions have opposite consequences. Under `along` a probe moving
+towards the emitting mass is never delayed while a probe moving away stalls
+where the outward field is dense: falling in is free and climbing out is
+slow. Under `against` the approach slows and the climb out is free. With a
+mass emitting 24000 units per interval, budget 100 and probes at half link
+speed, `along` left the inward probe on its two-tick cadence through the mass
+and stalled the outward probe for seven ticks, and `against` did the reverse.
+A resting body is never moved. Both are configured hypotheses; neither is a
+derived force, and the option requires the default clock.
+
+### Least-delay routing
+
+Directional delay alone changes when a hop happens, not where: the balanced
+router picks lanes by their counters and the carried split walks its axis
+cycle in a fixed order. `"least_delay_routing": true` closes the loop. A
+carrier's balanced router and an outward field's carried split both read the
+load pricing each port (the same `along` or `against` channel as the delay)
+and take the cheapest eligible option first. Every lane still receives
+exactly its reduced weight per cycle, so directional ratios remain exact
+(Highlights 3.3.1) and only the order inside a cycle changes. Everything
+therefore flows first towards the neighbor where computation is free.
+
+That exactness also bounds the effect: a mover with one lane, such as
+momentum `(0, 60, 0)`, has nothing to choose and is never turned, and a 1:1
+diagonal can be reordered by at most one hop per two. Bending a straight
+trajectory requires changing the momentum itself, which is a coupling, not a
+routing choice. Light and other outward fields, whose octants always own
+three lanes, are the natural users of this option. It requires
+`delay_direction` and is recorded in run metadata as `least_delay_routing`.
+
 ## Straight-ray transport (`isotropic-ray-field-v1`)
 
 `"transport": "ray"` replaces octant splitting by straight-moving rays for a
@@ -371,7 +473,11 @@ own field. Both can traverse the same link together. A turn can collect earlier
 contributions along multiple paths; a periodic boundary can return old field.
 Merged integer allocation is not generally source-linear. Automatic self
 subtraction is not enabled by this extension. Unknown self-filter settings fail
-instead of being silently ignored. Optional [spatial couplings](SPATIAL_COUPLINGS.md)
+instead of being silently ignored. Two explicit opt-in policies change when a
+carrier samples relative to its own emission without identifying sources:
+[`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
+[`arrival_port_blind`](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling).
+Optional [spatial couplings](SPATIAL_COUPLINGS.md)
 now provide generic exchange and exact discrete rotation with a local opposite
 field reaction. Their straight-line flux response has a restricted geometric
 self-interaction guarantee; it does not claim general source attribution.

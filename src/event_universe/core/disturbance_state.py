@@ -254,14 +254,62 @@ class InitialState:
     conservation_contract: NodeConservationDefinition | None = None
 
     spatial_computation_delay: bool = False
+    field_phase_first: bool = False
+    arrival_port_blind: bool = False
+    allocation_phase: str = "straight"
+    computation_field: int | None = None
+    delay_direction: str | None = None
+    least_delay_routing: bool = False
 
     def __post_init__(self) -> None:
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
+        if type(self.least_delay_routing) is not bool:
+            raise ValueError("least_delay_routing must be boolean")
+        if self.least_delay_routing and self.delay_direction is None:
+            raise ValueError("least_delay_routing requires delay_direction")
+        if self.delay_direction is not None:
+            if self.delay_direction not in ("along", "against"):
+                raise ValueError("delay_direction must be along or against")
+            if self.computation_field is None:
+                raise ValueError("delay_direction requires computation_field")
+            if self.spatial_computation_delay:
+                raise ValueError("delay_direction requires the default clock")
         if type(self.spatial_computation_delay) is not bool:
             raise ValueError("spatial_computation_delay must be boolean")
+        if self.allocation_phase not in ("straight", "rotate", "node"):
+            raise ValueError("allocation_phase must be straight, rotate or node")
+        if self.computation_field is not None:
+            index = self.computation_field
+            if type(index) is not int or not 0 <= index < len(self.fields):
+                raise ValueError("computation_field must name a configured field")
+            field = self.fields[index]
+            definition = next((d for d in self.spatial_fields if d.field == index), None)
+            if definition is None or definition.transport != "outward":
+                raise ValueError("computation_field must be an outward spatial field")
+            if field.components != 1 or field.signed or not field.conserved:
+                raise ValueError("computation_field must be an unsigned conserved scalar field")
         if self.spatial_computation_delay and not self.spatial_fields:
             raise ValueError("spatial_computation_delay requires spatial fields")
+        for name in ("field_phase_first", "arrival_port_blind"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} must be boolean")
+            if not getattr(self, name):
+                continue
+            if not self.spatial_fields:
+                raise ValueError(f"{name} requires spatial fields")
+            if any(field.transport != "outward" for field in self.spatial_fields):
+                raise ValueError(f"{name} requires outward spatial fields only")
+            if self.spatial_computation_delay:
+                raise ValueError(f"{name} cannot combine with spatial_computation_delay")
+            if self.field_rules or self.spatial_interactions:
+                raise ValueError(f"{name} cannot combine with field rules or spatial interactions")
+        if self.field_phase_first and self.link_ticks != 1:
+            raise ValueError("field_phase_first requires link_ticks 1")
+        if self.field_phase_first and self.arrival_port_blind:
+            raise ValueError(
+                "field_phase_first and arrival_port_blind are alternative self-field policies"
+            )
 
 
 class Departure(NamedTuple):
@@ -290,6 +338,8 @@ class PendingCycle:
     next_tick: int
     plan: LocalPlan
     cause_id: int | None = None
+    # Extra ticks each departure spends before arrival under a directional delay.
+    departure_delays: tuple[int, ...] = ()
     spatial_plan: SpatialPlan | None = None
     spatial_phases: Values = ()
     spatial_guard_states: tuple[SpatialState, ...] = ()
@@ -315,6 +365,8 @@ class DisturbanceNodeState:
     received_count: int = 0
     last_cost: int = 0
     cause_id: int | None = None
+    # Per slot: 0, or travel port + 1 of a record that arrived in the current interval.
+    arrival_port_codes: tuple[int, ...] = ()
     event_cursors: tuple[EventCursor, ...] = ()
     event_references: EventReferences | None = None
     source_envelope: EmittingEnvelopeNode | None = None

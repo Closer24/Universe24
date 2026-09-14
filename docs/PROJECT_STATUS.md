@@ -187,6 +187,14 @@ Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
 Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
+Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
+[examples/relativity-probes](../examples/relativity-probes/README.md) couples the
+computation field's flux to momentum by configuration. The Newtonian velocity law
+appears exactly, the 1/b lensing law does not (axis-column far field), twin clocks
+show no Lorentz dilation, and a localized quantum domain ignores the field's
+delay while a classical carrier on the same path is delayed. These are recorded
+findings of the generic engine, not implemented gravity or relativity.
+
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
 [local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
@@ -276,8 +284,13 @@ stock at the receiving Node, so total inventory is preserved; the explicit
 loss instead. Finite source/response allowances apply to both. Accounting through
 attenuation is not physical energy or momentum conservation. Periodic and open boundaries have
 separate explicit contracts. General automatic self-field attribution after turns
-or periodic return remains unsupported. A passing isolated-motion rejection test
-identifies invalid behavior; it does not repair the underlying candidate law.
+or periodic return remains unsupported. Two opt-in ordering policies,
+[`field_phase_first`](SPATIAL_COUPLINGS.md#field-phase-first-ordering) and
+[`arrival_port_blind`](SPATIAL_COUPLINGS.md#arrival-port-blind-sampling), keep an
+isolated straight emitter's momentum unchanged without source identity; the default
+clock is unchanged and still shows the coarrival self push for value-driven exchange.
+A passing isolated-motion rejection test identifies invalid behavior; it does not
+repair the underlying candidate law.
 
 [Quantum events](QUANTUM_EVENTS.md) implement the selected finite deferred-state
 method. Querying computes branch weights; an explicit instrument and ticket select

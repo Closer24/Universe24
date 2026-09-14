@@ -1,5 +1,6 @@
 """Generic field/carrier transactions with rebased delayed-commit guards."""
 
+from collections.abc import Mapping
 from dataclasses import dataclass, replace
 
 from event_universe.core.coupling_selectors import matches_type, participant_groups
@@ -172,7 +173,12 @@ class JointSpatialCouplingLaw(SpatialCouplingLaw):
         fluxes: Values = (),
         ports: tuple[Values, ...] = (),
         received_masks: tuple[int, ...] = (),
+        *,
+        slot_samples: Mapping[int, Values] | None = None,
+        slot_fluxes: Mapping[int, Values] | None = None,
     ) -> SpatialCouplingResult:
+        if slot_samples or slot_fluxes:
+            raise ValueError("joint spatial interactions do not support per-slot samples")
         if len(records) > MAX_SLOTS or len(self.interactions) > MAX_RULES:
             raise ValueError("spatial interactions exceed fixed local capacity")
         legacy = SpatialCouplingLaw.__call__(self, records, sample, fluxes)

@@ -426,13 +426,13 @@ def test_classical_control_with_same_operation_cost_matches_delayed_world(budget
         initial.interactions,
     )
 
-    def classical_plan(records, residuals, received):
+    def classical_plan(records, residuals, received, *, port_loads=(0,) * 6):
         if all(r is not None for r in records):
             local = tuple(replace(r, values=(*r.values[:2], pack((1,)))) for r in records)
-            plan = law(local, residuals, received)
+            plan = law(local, residuals, received, port_loads=port_loads)
             # Same explicit local inspection, constant-result primitive and two writes.
             return replace(plan, cost=plan.cost + 4)
-        return law(records, residuals, received)
+        return law(records, residuals, received, port_loads=port_loads)
 
     classical = DisturbanceEngine(
         initial,

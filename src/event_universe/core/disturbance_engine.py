@@ -14,14 +14,13 @@ from .disturbance_state import (
     Address3,
     DisturbanceRecord,
     InitialState,
-    LocalPlan,
     NodeView,
     Packet,
     bounded,
     decode,
     unpack,
 )
-from .event_resolution import CausalSourceResolver, CommitResolver, EventResolver
+from .event_resolution import CausalSourceResolver, CommitResolver, EventResolver, Planner
 from .event_space import CausalEventSpace
 from .node_boundary import validate_record
 from .node_conservation import NodeConservationGuard
@@ -54,7 +53,6 @@ def _consistent_read[**P, T](
     return read
 
 
-Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
 EventSink = Callable[[dict[str, object]], None]
 
 
@@ -476,6 +474,10 @@ class DisturbanceEngine:
                     self._nodes,
                     execution=self._execution,
                 )
+                if self.initial.field_phase_first:
+                    # The field phase completes its links before any carrier samples them.
+                    self._spatial.deliver(self.tick, self._nodes)
+                    self._spatial.freeze_samples(self._nodes)
             positions = set(self._nodes)
             if self._spatial is not None and self.initial.spatial_computation_delay:
                 positions.update(self._spatial._active)
@@ -503,8 +505,13 @@ class DisturbanceEngine:
                 self._resolver.start_sources(
                     self.tick, None if readings is None else readings.__getitem__
                 )
+            if self.initial.arrival_port_blind:
+                # The entry-port exclusion applies only to the arrival interval's sample.
+                for node in self._nodes.values():
+                    node.arrival_port_codes = ()
             self.tick = bounded(self.tick + 1)
             if self._spatial is not None:
+                # Under field_phase_first only carrier reactions still arrive here.
                 self._spatial.deliver(self.tick, self._nodes)
             self._deliver()
             if self._spatial is not None:

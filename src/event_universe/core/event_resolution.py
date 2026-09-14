@@ -9,7 +9,17 @@ from .source_emission import SourceDeposit
 from .source_emission_node import EmittingEnvelopeNode
 from .spatial_state import SpatialState
 
-Planner = Callable[[tuple[DisturbanceRecord | None, ...], tuple[int, ...], int], LocalPlan]
+
+class Planner(Protocol):
+    def __call__(
+        self,
+        records: tuple[DisturbanceRecord | None, ...],
+        coupling_remainders: tuple[int, ...],
+        received_count: int,
+        /,
+        *,
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0),
+    ) -> LocalPlan: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,6 +30,8 @@ class LocalContext:
     residuals: tuple[int, ...]
     received: int
     cause: int | None
+    # Computation load pricing a departure through each of the six ports.
+    port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
 
 
 class EventResolver(Protocol):

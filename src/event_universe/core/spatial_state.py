@@ -246,6 +246,12 @@ class SpatialNodeState:
     received_decay_cost: int = 0
     sample_ports: tuple[Values, ...] = ()
     sample_received_masks: tuple[int, ...] = ()
+    # Frozen six delivered channels per spatial field, for arrival-port-blind samples.
+    sample_delivered: tuple[tuple[Payload, ...], ...] = ()
+    # Computation-field stock present at this node before its last forwarding.
+    load: int = 0
+    # The same stock split by the six travel channels it was delivered through.
+    load_channels: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
     # Fixed host provenance references; never inputs to a physical field law.
     cause_id: int | None = None
     sample_cause_id: int | None = None
@@ -275,6 +281,8 @@ class SpatialPlan:
     field_guards: tuple[FieldRuleGuard, ...] = ()
     # Outgoing rays per port, each entry holding one tuple per spatial field.
     rays: tuple[tuple[Rays, ...], ...] = ()
+    # Per port, per field, eight carried allocation phases; empty under node-owned phases.
+    outgoing_phases: tuple[SpatialBundle, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -285,6 +293,7 @@ class SpatialPacket:
     fields: SpatialBundle
     cause_id: int | None = None
     rays: tuple[Rays, ...] = ()
+    phases: SpatialBundle = ()
 
 
 def zero_spatial_state(components: int) -> SpatialState:

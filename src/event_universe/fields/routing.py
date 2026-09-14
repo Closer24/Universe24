@@ -7,10 +7,23 @@ from .ratios import Ratio, gcd
 
 
 def balanced_port(
-    weights: tuple[int, ...], counts: tuple[int, ...], previous: tuple[int, ...], meter: CostMeter
+    weights: tuple[int, ...],
+    counts: tuple[int, ...],
+    previous: tuple[int, ...],
+    meter: CostMeter,
+    loads: tuple[int, ...] | None = None,
 ) -> tuple[int, tuple[int, ...], tuple[int, ...]]:
+    """Select the next lane of the reduced weight cycle.
+
+    Every lane is used exactly its reduced weight per cycle, so directional
+    ratios are exact. Without loads the least-served lane goes first; with
+    loads the cheapest eligible lane goes first and the cycle only fixes the
+    order within it.
+    """
     if len(weights) != 6 or len(counts) != 6 or len(previous) != 6:
         raise ValueError("balanced routing requires six fixed lanes")
+    if loads is not None and len(loads) != 6:
+        raise ValueError("least-delay routing requires six lane loads")
     meter.charge("route", 512)
     factor = 0
     for weight in weights:
@@ -29,7 +42,14 @@ def balanced_port(
     for port, weight in enumerate(reduced):
         if not weight or current[port] == weight:
             continue
-        if selected < 0 or checked_work((2 * current[port] + 1) * reduced[selected]) < checked_work(
+        if selected < 0:
+            selected = port
+            continue
+        if loads is not None and loads[port] != loads[selected]:
+            if loads[port] < loads[selected]:
+                selected = port
+            continue
+        if checked_work((2 * current[port] + 1) * reduced[selected]) < checked_work(
             (2 * current[selected] + 1) * weight
         ):
             selected = port

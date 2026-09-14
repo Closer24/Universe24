@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "model_id": "collision-equal-mass-elastic-head-on-z-v1",
+  "shape": [
+    21,
+    7,
+    7
+  ],
+  "slots_per_node": 4,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 240,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "mass",
+      "components": 1,
+      "units": "mass unit",
+      "signed": false,
+      "conserved": true
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "mass unit times c / 120",
+      "signed": true,
+      "conserved": true,
+      "scale": 120
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "Body A",
+      "fields": [
+        "mass",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          0,
+          0,
+          4
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": {
+          "op": "exact_div",
+          "args": [
+            {
+              "op": "sum",
+              "args": [
+                {
+                  "op": "abs",
+                  "args": [
+                    {
+                      "field": "momentum"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field": "mass"
+            }
+          ]
+        },
+        "rate_denominator": 120
+      }
+    },
+    {
+      "name": "Body B",
+      "fields": [
+        "mass",
+        "momentum"
+      ],
+      "defaults": {
+        "mass": 1,
+        "momentum": [
+          0,
+          0,
+          -4
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": {
+          "op": "exact_div",
+          "args": [
+            {
+              "op": "sum",
+              "args": [
+                {
+                  "op": "abs",
+                  "args": [
+                    {
+                      "field": "momentum"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "field": "mass"
+            }
+          ]
+        },
+        "rate_denominator": 120
+      }
+    }
+  ],
+  "couplings": [],
+  "interactions": [
+    {
+      "name": "elastic_contact",
+      "left_type": "Body A",
+      "right_type": "Body B",
+      "when": {
+        "op": "gt",
+        "args": [
+          {
+            "op": "component",
+            "args": [
+              {
+                "op": "sub",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      },
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "field": "momentum",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "index": 2
+          },
+          0
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "momentum",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "left"
+                      },
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "field": "momentum",
+                            "side": "left"
+                          },
+                          {
+                            "field": "momentum",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "transform",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              },
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              },
+                              {
+                                "field": "momentum",
+                                "side": "right"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "matrix": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        0,
+                        0,
+                        -1
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "mass",
+                    "side": "left"
+                  },
+                  {
+                    "field": "mass",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "momentum",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "sub",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "field": "mass",
+                        "side": "right"
+                      },
+                      {
+                        "op": "add",
+                        "args": [
+                          {
+                            "field": "momentum",
+                            "side": "left"
+                          },
+                          {
+                            "field": "momentum",
+                            "side": "right"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "transform",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "right"
+                              },
+                              {
+                                "field": "momentum",
+                                "side": "left"
+                              }
+                            ]
+                          },
+                          {
+                            "op": "mul",
+                            "args": [
+                              {
+                                "field": "mass",
+                                "side": "left"
+                              },
+                              {
+                                "field": "momentum",
+                                "side": "right"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "matrix": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        0,
+                        0,
+                        -1
+                      ]
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "mass",
+                    "side": "left"
+                  },
+                  {
+                    "field": "mass",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "left_mass",
+          "expression": {
+            "field": "mass",
+            "side": "left"
+          }
+        },
+        {
+          "name": "right_mass",
+          "expression": {
+            "field": "mass",
+            "side": "right"
+          }
+        },
+        {
+          "name": "total_momentum",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "field": "momentum",
+                "side": "left"
+              },
+              {
+                "field": "momentum",
+                "side": "right"
+              }
+            ]
+          }
+        },
+        {
+          "name": "kinetic_energy_scaled",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "mass",
+                    "side": "right"
+                  },
+                  {
+                    "op": "dot",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      },
+                      {
+                        "field": "momentum",
+                        "side": "left"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "field": "mass",
+                    "side": "left"
+                  },
+                  {
+                    "op": "dot",
+                    "args": [
+                      {
+                        "field": "momentum",
+                        "side": "right"
+                      },
+                      {
+                        "field": "momentum",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        10,
+        3,
+        1
+      ],
+      "type": "Body A"
+    },
+    {
+      "position": [
+        10,
+        3,
+        5
+      ],
+      "type": "Body B"
+    }
+  ]
+}

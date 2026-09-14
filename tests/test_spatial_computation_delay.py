@@ -83,7 +83,7 @@ def test_shared_budget_counts_field_and_carrier_work_once_and_defers_emission(mo
         world._spatial._services, planner=lambda *args: replace(field_planner(*args), cost=20)
     )
     world._services = replace(
-        world._services, planner=lambda *args: replace(carrier_planner(*args), cost=20)
+        world._services, planner=lambda *args, **kw: replace(carrier_planner(*args, **kw), cost=20)
     )
     initial_record = all_records(world)[0]
     world.step()
