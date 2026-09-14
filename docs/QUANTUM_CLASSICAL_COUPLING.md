@@ -97,7 +97,7 @@ three captures on one probe and places every candidate on one scale:
 | Phased rays, share rule ([this experiment](../examples/kerengonen-bell/README.md)) | the coherent share of the source ray against a local reference | 1.40 exact |
 | Phased rays, lottery | a local ticket at the coherent rate | 1.48 and 1.38 measured on the two probes, 1.41 predicted |
 | Phased rays, threshold | deterministic: the whole ray when the share reaches one half | 2.00 exactly, the bound |
-| Bonded rays | the bond registry, one object for the world, answers the pair's joint outcome for both ends | 2.70 and 2.86 on two bonding modes, around the quantum 2.83 within the counting spread |
+| Bonded rays | the bond registry, one object for the world, answers the pair's joint outcome for both ends from one number per pair | 2.86 measured, 2.70 and 2.86 in earlier two-draw runs, around the quantum 2.83 within the counting spread |
 | Finite quantum owner | the joint conditional state, queried at each contact | 14/5 exact at 3-4-5 settings |
 
 The first three are local models and stay at or below 2, as Bell's theorem

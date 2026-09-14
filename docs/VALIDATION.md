@@ -2470,3 +2470,23 @@ even coin and the second so that the ends agree with probability
 The three captures on one probe: lottery 1.48, deterministic hidden
 variables 2.00, bond 2.86 against the quantum 2.83; the last needs the split
 of postulate 4 and nothing else.
+
+## Postulate 22: one integer per interaction - 2026-09-14
+
+Base: `a686925` on `main` (after PR #116). The bond registry now draws one
+number per bonded pair: the first question draws it and answers by its upper
+half; the second question draws nothing and answers by the lower half of the
+same number against the settings' difference. Postulate 22 states the rule for
+every uncertain interaction. The lottery and the quantum owner's tickets are
+unchanged.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_bonds.py` | 400 bonds: 800 questions, 400 numbers, first answers split evenly, equal settings never agree, a half turn always, a quarter turn about half |
+| `tests/test_ray_bell_chsh.py`, one seed | E = -0.6875, 0.7188, -0.6875, -0.6875, S = 2.7813, E(0, 0) = -1.0, closed |
+| Bonded Bell probe, 16 seeds, 1,024 pairs per correlation | E = -0.721, 0.699, -0.721, -0.721; S = 2.861 against the quantum 2.828 and the bound 2; E(0, 0) = -1.0; plus rates 0.49 to 0.51 whatever the other setting; 0 missing pairs; every run closed |
+
+Runtime source SHA-256
+`48ea5e8b167319719a7f25edbd3cea66b69fe5f3d57e1575b55099084061b880`, Python
+3.14.0rc2, headless. The number is a hidden variable in Bell's sense, shared
+between the two ends of a pair; no end can read it, so nothing is signalled.

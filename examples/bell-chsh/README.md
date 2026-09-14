@@ -84,16 +84,20 @@ pairs per correlation:
 
 | Quantity | Bonded value |
 | --- | --- |
-| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.670, 0.690, -0.670, -0.670 (quantum -0.707, 0.707, -0.707, -0.707) |
-| S | 2.699 (quantum 2.828, local bound 2) |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.721, 0.699, -0.721, -0.721 (quantum -0.707, 0.707, -0.707, -0.707) |
+| S | 2.861 (quantum 2.828, local bound 2) |
 | Same setting, E(0, 0) | -1.0 |
-| Plus rates, Alice and Bob | 0.50 to 0.52, whatever the other side's setting |
+| Plus rates, Alice and Bob | 0.49 to 0.51, whatever the other side's setting |
 | Missing pairs, closure | 0 of 4,096; every run closed |
 
-The first bonded measurement, with the pair bonded by a configured label
-instead of its origin, read S = 2.863 on the same seeds; the two are the same
-law drawing different tickets, both around the quantum value and both far
-above the bound.
+Under [postulate 22](../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+the registry draws one number per pair: the first end's coin is its upper
+half and the other end's agreement its lower half. Earlier runs, with a second
+draw for the second end, read S = 2.699 bonded by origin and 2.863 bonded by a
+configured label; all three are the same law on different numbers, around the
+quantum value within the counting spread of about 0.05 and far above the
+bound. S above 2 sqrt 2 in a run is that spread, not a value beyond the
+quantum one: the registry's law gives E = -cos exactly in expectation.
 
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against
