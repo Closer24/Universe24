@@ -97,8 +97,10 @@ states the hybrid hypothesis, its measured evidence and its non-claims for an
 external reader, with related work. Its [two-arm interference experiment](../examples/quantum/causal_interference.md)
 records exact phase-dependent capture weights, classical emission carrying the
 interference term, which-path decoherence by a held arm detector, and the 9/25
-retarded-source departure after a null result. No classical limit, field
-back-action or energy closure is established.
+retarded-source departure after a null result. Its [two-wing Bell test](../examples/quantum/bell_chsh.md)
+records CHSH 14/5 from two lattice wings nine Links apart on the canonical
+runner, with no-signalling marginals and a dephased control at 6/5. No
+classical limit, field back-action or energy closure is established.
 
 The [finite quantum-register extension](QUANTUM_ENTITIES.md) adds unobserved
 channels, mixed conditional states, grouped outcomes, finite multilevel registers

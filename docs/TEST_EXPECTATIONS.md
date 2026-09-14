@@ -90,6 +90,17 @@ scales 625/337. With a `field_phase` on the M arm, coil fields 0, 200, 400 and
 800 give capture probabilities 0, 0, `576/3125` and `9216/15625`, and a coil on
 the far side of the source gives 0.
 
+`test_bell_chsh.py` runs the [two-wing Bell test](../examples/quantum/bell_chsh.md)
+in the fast gate: exact correlations `3/5, 3/5, 4/5, -4/5` and CHSH `14/5` from
+recorded decision weights at two wings nine Links apart, both deciding at tick
+8; Alice's weights `[4, 4]` for every Bob setting; Bob's conditional weights
+`[360, 40]` and `[40, 360]` for `a1b0` and reversed for `a1b1`; Bob's marginal
+`1/2` for every Alice setting; a dephased control with correlations
+`3/5, 3/5, 0, 0` and CHSH `6/5`; classical outcome codes at the wings equal to
+the recorded quantum outcomes plus one; and five seeded trials per setting with
+complete counts. The 100-trial coincidence evidence belongs to the experiment
+report.
+
 `test_null_notices.py` owns the opt-in
 [null notice extension](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices):
 factor 25/9 from a 16/25 null and `None` for vacuum or certain occupation;

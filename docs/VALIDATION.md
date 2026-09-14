@@ -1,5 +1,32 @@
 # Validation evidence
 
+## Two-wing Bell test - 2026-09-14
+
+Base: `53e44a5` (main after PR #101). Runtime source fingerprint of the
+executed harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
+No source module under `src/` changed; the addition is the
+[two-wing Bell test](../examples/quantum/bell_chsh.md) harness and template,
+its acceptance test, a check-scope entry and index updates.
+
+The harness ran sixteen exact and 400 seeded headless nine-tick worlds under
+the unchanged `local-quantum-events-v2` program. Recorded correlations were
+`3/5, 3/5, 4/5, -4/5` and CHSH `14/5`, equal to the exact rational prediction
+computed before the runs; Alice's weights were `[4, 4]` for every Bob setting
+and Bob's marginal `1/2` for every Alice setting; the seeded coincidence
+estimate was `74/25`; the dephased control gave `6/5`. Every run reported
+conserved totals, two decisions at tick 8 nine Links apart, and classical
+outcome codes equal to the recorded quantum outcomes.
+
+```sh
+python tools/check.py --base origin/main
+PYTHONPATH=src python examples/quantum/bell_chsh.py --output artifacts/bell-chsh --trials 100
+```
+
+The affected gate passed: **219 passed, two visual-only skipped**, including
+check-scope, configuration validation, repository navigation, language and
+hygiene checks. Ruff and formatting passed. Python 3.14.0rc2 on Linux. This is
+an exact model calculation with simulated tickets, not a laboratory Bell test.
+
 ## Null notices and field-dependent phase - 2026-09-14
 
 Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of

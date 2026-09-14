@@ -46,6 +46,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Causal quantum sources](CAUSAL_QUANTUM_SOURCES.md) | Locally retained complex source envelopes, finite weighted ordinary emission and Link-delivered termination |
 | [Quantum and classical coupling](QUANTUM_CLASSICAL_COUPLING.md) | Claims, non-claims, measured evidence and related work for the hybrid model, written for external review |
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
+| [Two-wing Bell test](../examples/quantum/bell_chsh.md) | CHSH 14/5 from two separated lattice wings on the canonical runner, seeded coincidence counts, no-signalling marginals and a dephased control at 6/5 |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
