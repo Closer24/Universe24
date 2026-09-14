@@ -237,6 +237,27 @@ the same delay acts on every part of a signal. This is the model's own
 candidate for a distance-redshift relation; it does not by itself give an
 accelerating relation, and its statistical form is quantized.
 
+## 6. Dark matter and dark energy: what the model does and does not offer
+
+Dark energy stands in for a distance-redshift relation that recession alone
+does not fit. Probe 5 shows the model has a relation of its own: delay growth
+along the path stretches signals without any recession or expansion term. It is
+quantized and it does not accelerate by itself; whether it can match an observed
+Hubble relation is a question of how the field fills space over time, which the
+configuration sets.
+
+Dark matter stands in for rotation curves that stay flat: a force falling as
+1/r, i.e. an enclosed source growing with r. Nothing in the generic transport
+produces that. The octant far field falls faster than 1/r² on the lattice axes
+(probe 1), the ray field as 1/r², and a field that re-radiates from every node
+reaches a diffusive steady state whose flux is again 1/r². A self-sourcing
+field (stock creating stock, a "field gravitates" rule) either decays away
+(Yukawa, steeper) or grows without bound; neither is a 1/r force. The
+unlocalized quantum sector is the opposite of dark matter: it neither attracts
+nor falls (probe 3). No probe was run for dark matter because no candidate
+survived this analysis; a flat rotation curve in this model would require an
+explicitly extended source, which is dark matter by another name.
+
 ## What these probes do not show
 
 They do not derive gravity, the 1/b lensing law, the factor two of general
