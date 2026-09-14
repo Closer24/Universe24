@@ -82,7 +82,6 @@ def figure_convergence(sweep: dict, output: Path) -> None:
         )
     ax.axhline(sweep["expected_S"], color="black", linestyle=":", linewidth=1)
     ax.axhline(2 * math.sqrt(2), color="gray", linestyle="-.", linewidth=1)
-    ax.axhline(2, color="black", linestyle="--", linewidth=1)
     at = ax.get_yaxis_transform()
     ax.text(
         0.98,
@@ -95,8 +94,8 @@ def figure_convergence(sweep: dict, output: Path) -> None:
     ax.text(
         0.98, 2 * math.sqrt(2) + 0.03, "2 sqrt 2", ha="right", fontsize=8, color="gray", transform=at
     )
-    ax.text(0.98, 2.03, "local bound 2", ha="right", fontsize=8, transform=at)
     ax.set_xscale("log")
+    ax.set_ylim(2.6, 3.05)
     ax.set_xlabel("bonded pairs per correlation")
     ax.set_ylabel("CHSH S (mean of replicas, binomial error)")
     ax.set_title("The bonded value against the number of pairs")

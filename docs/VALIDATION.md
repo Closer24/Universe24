@@ -2599,12 +2599,19 @@ document name the assumption of Bell's theorem each candidate breaks.
 
 | Check | Result |
 | --- | --- |
-SWEEPVALTABLE
-| `--causal`, 256 hidden variables per candidate | CAUSALVAL |
+| `--sweep`, 64 pairs per correlation, lattice, 4 replicas | S = 3.0938, 2.7188, 3.2188, 2.6875; mean 2.9297, predicted error of the mean 0.0791, spread 0.2668; expectation 2.828125; 1,024 of 1,024 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 256 pairs per correlation, lattice, 4 replicas | S = 2.8828, 2.8984, 2.8047, 2.8203; mean 2.8516, predicted error of the mean 0.0432, spread 0.0460; expectation 2.828125; 4,096 of 4,096 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 1,024 pairs per correlation, lattice, 4 replicas | S = 2.7383, 2.8672, 2.8887, 2.8887; mean 2.8457, predicted error of the mean 0.0228, spread 0.0723; expectation 2.828125; 16,384 of 16,384 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 4,096 pairs per correlation, lattice, 4 replicas | S = 2.8774, 2.8052, 2.8325, 2.8325; mean 2.8369, predicted error of the mean 0.0109, spread 0.0299; expectation 2.828125; 65,536 of 65,536 lattice outcomes identical to the registry's; every run closed, no pair missing |
+| `--sweep`, 1,000 pairs per correlation, registry alone, 4 replicas | S = 2.8540, 2.8500, 2.8500, 2.8560; mean 2.8525, predicted error of the mean 0.0221, spread 0.0030; expectation 2.828125 |
+| `--sweep`, 10,000 pairs per correlation, registry alone, 4 replicas | S = 2.8522, 2.8412, 2.8544, 2.8216; mean 2.8424, predicted error of the mean 0.0070, spread 0.0150; expectation 2.828125 |
+| `--sweep`, 100,000 pairs per correlation, registry alone, 4 replicas | S = 2.8284, 2.8319, 2.8325, 2.8232; mean 2.8290, predicted error of the mean 0.0022, spread 0.0043; expectation 2.828125 |
+| `--sweep`, 1,000,000 pairs per correlation, registry alone, 4 replicas | S = 2.8263, 2.8257, 2.8300, 2.8256; mean 2.8269, predicted error of the mean 0.0007, spread 0.0021; expectation 2.828125 |
+| `--causal`, 256 hidden variables per candidate | lottery and threshold: no outcome moves with the other end's setting at either end (0 of 256); bonded: Alice's coin never moves with Bob's setting, Bob's answer moves with Alice's setting for 184 of 256 hidden variables at b' (0.7188, the law's 362/512 = 0.7070) and 0 at b; every run closed |
 | `tests/test_ray_bell_chsh.py` | the registry's expectation is 181/64; 16 lattice pairs per setting pair equal the registry's 64 outcomes one by one; a hundred thousand registry pairs land within three standard errors of 2.828125; the lottery never moves an outcome with the other end's setting, the bonded pair moves Bob's answer with Alice's setting for 47 of 64 hidden variables at b' and never at b |
 | Affected gate against `origin/main` | GATERESULT |
 
-Runtime source SHA-256 `SOURCESHA`, Python 3.14.0rc2, headless.
+Runtime source SHA-256 `0beb4d822bd98980e5947c8e8c20f76825e52dabe64aac8abf8346ecb67b467b`, Python 3.14.0rc2, headless.
 The lattice equals the registry pair by pair at every level: the Bell value
 lives in the registry's law and the lattice adds transport. The 2.889 of the
 first run was sampling spread on correlated samples. In Bell's terms the

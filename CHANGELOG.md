@@ -21,7 +21,7 @@ gains two modes and the framework's claims are narrowed to what is measured.
   fixed hidden variable by `--causal`: the lottery and the threshold are
   parameter independent; the bonded pair is deterministic and
   measurement-independent and breaks parameter independence (Bob's answer
-  moves with Alice's setting for SWEEPCAUSALBOND of the hidden variables at
+  moves with Alice's setting for 0.72 of the hidden variables at
   `b'`); the quantum owner breaks outcome independence
   ([report](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks),
   [coupling](docs/QUANTUM_CLASSICAL_COUPLING.md)).

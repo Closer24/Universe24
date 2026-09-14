@@ -98,7 +98,7 @@ beside a historical global-registry reference on the same comparison scale:
 | Phased rays, share rule ([this experiment](../examples/kerengonen-bell/README.md)) | the coherent share of the source ray against a local reference | 1.40 exact |
 | Phased rays, lottery | a local ticket at the coherent rate | 1.48 and 1.38 measured on the two probes, 1.41 predicted |
 | Phased rays, threshold | deterministic: the whole ray when the share reaches one half | 2.00 exactly, the bound |
-| Bonded rays | the bond registry, one bounded object for the world, answers the pair's joint outcome for both ends from one number per pair | SWEEPLATTICE +- SWEEPLATTICEERR at 4096 fresh pairs per correlation, four replicas; the registry alone SWEEPREGISTRY +- SWEEPREGISTRYERR at a million pairs; the law's expectation 724/256 = 2.828125; the first 1,024-pair run read 2.89 on correlated samples |
+| Bonded rays | the bond registry, one bounded object for the world, answers the pair's joint outcome for both ends from one number per pair | 2.837 +- 0.015 at 4096 fresh pairs per correlation, four replicas; the registry alone 2.8269 +- 0.0010 at a million pairs; the law's expectation 724/256 = 2.828125; the first 1,024-pair run read 2.89 on correlated samples |
 | Finite quantum owner | the joint conditional state, queried at each contact | 14/5 exact at 3-4-5 settings |
 
 The first three are local models and stay at or below 2, as Bell's theorem
@@ -122,7 +122,7 @@ outcome moves when only the other end's setting changes:
 | --- | --- | --- | --- | --- | --- |
 | Phased rays, lottery | the hidden phase and the detectors' seed | holds by construction: chosen before the settings, never read by them | holds, measured: `A` moves with `b` for 0 of 256 `lambda`, `B` with `a` for 0 of 256 | holds: two independent tickets | 1.48 |
 | Phased rays, threshold | the hidden phase | holds by construction | holds, measured: 0 of 256 at either end | holds: deterministic in `lambda` and the local setting | 2 |
-| Bonded rays | the registry's number, fixed at birth by the seed and the birth code | holds by construction: the same number serves every setting pair | **broken**, measured: `A` never moves with `b`; `B` moves with `a` for 0.71 of the `lambda` at `b'` (the law says `362/512`) | holds trivially: both outcomes are functions of `lambda` and the settings | 2.83 |
+| Bonded rays | the registry's number, fixed at birth by the seed and the birth code | holds by construction: the same number serves every setting pair | **broken**, measured: `A` never moves with `b`; `B` moves with `a` for 0.72 of the `lambda` at `b'` (184 of 256; the law says `362/512 = 0.707`) | holds trivially: both outcomes are functions of `lambda` and the settings | 2.83 |
 | Finite quantum owner | the prepared joint state | holds | holds: each end's marginal is the state's, whatever the other setting | **broken**: the joint conditional state | 14/5 |
 
 The bonded ray is therefore a deterministic, measurement-independent,

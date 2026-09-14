@@ -167,14 +167,25 @@ The registry alone is run on to a million pairs per correlation.
 
 | Pairs per correlation | Where | S, mean of 4 replicas | Predicted error of the mean | Spread of the replicas | Lattice outcomes identical to the registry's |
 | --- | --- | --- | --- | --- | --- |
-SWEEPTABLE
+| 64 | lattice | 2.9297 | 0.0791 | 0.2668 | 1,024 of 1,024 |
+| 256 | lattice | 2.8516 | 0.0432 | 0.0460 | 4,096 of 4,096 |
+| 1,024 | lattice | 2.8457 | 0.0228 | 0.0723 | 16,384 of 16,384 |
+| 4,096 | lattice | 2.8369 | 0.0109 | 0.0299 | 65,536 of 65,536 |
+| 1,000 | registry alone | 2.8525 | 0.0221 | 0.0030 | n/a |
+| 10,000 | registry alone | 2.8424 | 0.0070 | 0.0150 | n/a |
+| 100,000 | registry alone | 2.8290 | 0.0022 | 0.0043 | n/a |
+| 1,000,000 | registry alone | 2.8269 | 0.0007 | 0.0021 | n/a |
 
 The expectation of the registry's law on the 64-step table is
 `4 x 181 / 256 = 724 / 256 = 2.828125`, three parts in ten thousand below
 `2 sqrt 2 = 2.828427` because the table holds `cos 45 degrees` as `181 / 256`.
 The lattice equals the registry pair by pair at every level: the Bell value
 lives in the registry's law, and the lattice adds transport and nothing else.
-The first bonded run's 2.889 was sampling spread on correlated samples.
+The first bonded run's 2.889 was sampling spread on correlated samples. The
+world's sequence is a polynomial congruence, not a random source: replicas
+drawn from consecutive seed blocks vary less than a random sample at small
+counts (a spread of 0.003 against a binomial 0.044 at 1,000 registry pairs),
+and the mean settles on the expectation only above a hundred thousand pairs.
 
 ### Which assumption of Bell's theorem each candidate breaks
 
@@ -201,12 +212,14 @@ per candidate:
 
 | Candidate | `A` moves with Bob's setting (at `a`, at `a'`) | `B` moves with Alice's setting (at `b`, at `b'`) | Parameter independent | Closed |
 | --- | --- | --- | --- | --- |
-CAUSALTABLE
+| Phased rays, lottery | 0 of 256, 0 of 256 | 0 of 256, 0 of 256 | yes | every run |
+| Phased rays, threshold | 0 of 256, 0 of 256 | 0 of 256, 0 of 256 | yes | every run |
+| Bonded rays | 0 of 256, 0 of 256 | 0 of 256, 184 of 256 (0.7188; the law's 362/512 = 0.7070) | no | every run |
 
 The lottery and the threshold never move an outcome with the other end's
 setting: they are local in Bell's sense and stay at or below 2. The bonded
 pair never moves Alice's coin with Bob's setting and moves Bob's answer with
-Alice's setting for CAUSALBOND of the hidden variables at `b'` (the law says
+Alice's setting for 0.72 of the hidden variables at `b'` (the law says
 `362 / 512 = 0.707`: the agreement thresholds at `a - b'` and `a' - b'` are
 `437 / 512` and `75 / 512` of the number's lower half, and the answers differ
 between them) and never at `b` (the two thresholds coincide). The bonded pair
