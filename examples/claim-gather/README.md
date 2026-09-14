@@ -48,9 +48,9 @@ one landing, the claim rules and the identity.
 
 | World | Result |
 | --- | --- |
-| Gathered | First claim at tick 26; the flood covers all 1,875 Nodes; every quantum is at the screen by tick 57 and stays; screen momentum (0, 0, 0); nothing escaped; closed at every tick |
+| Gathered | First claim at tick 27; the flood covers all 1,875 Nodes; every quantum is at the screen by tick 57 and stays; screen momentum (0, 0, 0); nothing escaped; closed at every tick |
 | Without a claim | The screen keeps the 8 quanta of its own line; the axis rays have escaped by tick 80 and the diagonals are still walking out; closed |
-| Contested | The rival four links away clicks first at tick 18 and gathers 62; the farther screen keeps the 2 it took before its claim met the earlier one and yielded; gathered by tick 39; one root; closed |
+| Contested | The rival four links away clicks first at tick 19 and gathers 62; the farther screen keeps the 2 it took before its claim met the earlier one and yielded; gathered by tick 39; one root; closed |
 
 Landings over 48 seeds, screen `y` of the winning record (the root of the
 surviving claim), against the fringe of the same wave taken as a coherent

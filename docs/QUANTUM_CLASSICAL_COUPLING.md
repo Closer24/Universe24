@@ -41,7 +41,7 @@ records, with exact integers on the canonical runner:
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
 | [Two nulls crossing on one tick](../examples/quantum/crossing_nulls.md), one excitation over three registers | the stale factors multiply to `390625/177489` where the conditional scale is `25/9`; the later Node by (tick, position) corrects itself from its own null record and the delivered factor, and every Node holds `25/9` two Links after the correction leaves; sequential nulls are exact with no correction |
-| [Bell test in CHSH form on the phased-ray candidate](../examples/kerengonen-bell/README.md), same settings and combination as the quantum owner's | share rule `S = 826177/589824 = 1.4007`, equal to the local model's prediction `cos(a - b) / 2` averaged over the hidden phase; lottery clicks `397/279 = 1.42` from 8928 single-quantum pairs; plain field exactly 2; quantum owner 14/5 |
+| [Bell test in CHSH form on the phased-ray candidate](../examples/kerengonen-bell/README.md), same settings and combination as the quantum owner's | share rule `S = 826177/589824 = 1.4007`, equal to the local model's prediction `cos(a - b) / 2` averaged over the hidden phase; lottery clicks `386/279 = 1.38` from 8928 single-quantum pairs; plain field exactly 2; quantum owner 14/5 |
 
 The [two-wing Bell test](../examples/quantum/bell_chsh.md) records, on the
 same runner under `local-quantum-events-v2`:
@@ -88,6 +88,29 @@ combination, the phased field gives `S = 1.4007` exactly, one half of the
 quantum owner's `14/5` in every correlation, and the plain field gives exactly
 2. The classical candidate is at or below the bound and the quantum owner is
 above it, on the same lattice and the same runner.
+
+The [ray Bell probe](../examples/bell-chsh/README.md) runs the same test with
+three captures on one probe and places every candidate on one scale:
+
+| Candidate | What decides the outcome | S |
+| --- | --- | --- |
+| Phased rays, share rule ([this experiment](../examples/kerengonen-bell/README.md)) | the coherent share of the source ray against a local reference | 1.40 exact |
+| Phased rays, lottery | a local ticket at the coherent rate | 1.48 and 1.38 measured on the two probes, 1.41 predicted |
+| Phased rays, threshold | deterministic: the whole ray when the share reaches one half | 2.00 exactly, the bound |
+| Bonded rays | the bond registry, one object for the world, answers the pair's joint outcome for both ends | 2.70 and 2.86 on two bonding modes, around the quantum 2.83 within the counting spread |
+| Finite quantum owner | the joint conditional state, queried at each contact | 14/5 exact at 3-4-5 settings |
+
+The first three are local models and stay at or below 2, as Bell's theorem
+requires. The last two exceed it, and both do so through one shared object
+that no Link carries: the bond registry, which the ray candidate declares as
+the one exception to postulate 4, and the quantum owner's joint state. Both
+are non-signalling, so each end alone sees an even coin. The difference is
+not locality but bookkeeping: the registry answers a correlation and carries
+no inventory, while the quantum owner also carries the conserved carrier, the
+conditional collapse and the retarded classical emission. A reader should
+therefore not take the bonded ray as a local explanation of the Bell value;
+it is the classical field's counterpart of the quantum owner's joint state,
+and what the registry is remains the open question the postulate names.
 
 ## What is claimed
 
