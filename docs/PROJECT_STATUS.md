@@ -134,7 +134,11 @@ quanta, funded emission with recoil and the `absorb` coupling move energy and
 momentum only between records and rays; signed quanta with a mass-proportional
 absorbed share give attraction that the pulled body pays for, and the
 radiation-pressure probe runs
-with that audit closed.
+with that audit closed. The
+[quantum-to-classical probes](../examples/quantum-classical/README.md) measure
+where the finite quantum rules meet these classical ones: a dephased walk is the
+classical random walk exactly, single ray quanta click whole and average to the
+inverse square, and repeated capture attempts follow the geometric decay law.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
