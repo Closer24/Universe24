@@ -16,6 +16,20 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize(
+    "name",
+    [
+        "local_moment_exchange.py",
+        "run_local_moment_exchange.py",
+        "momentum_state_exchange.py",
+        "localized_charge.json",
+    ],
+)
+def test_local_moment_resources_select_their_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_local_moment_exchange.py" in selected
+
+
 def test_local_field_example_selects_state_and_physical_contract_consumers():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected

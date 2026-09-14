@@ -1,5 +1,38 @@
 # Validation evidence
 
+## Local moment response and reserved receipts - 2026-09-14
+
+Task base: `3a2fdfdc796212961a2f305544f0d98998506864`; current main was
+`1c782390456ea9629eb0f73c030095574d80e454`. This work includes the still-open
+PR #100 dependency and the earlier bounded quantum-to-classical investigation.
+The [local response report](../examples/quantum/local_moment_exchange.md) defines
+the supplied candidate, input authoring, exact outcomes and remaining limits.
+
+The complete headless experiment passed in **10.8934 seconds** on the final
+source. It includes the primary 800-tick native recording, six signed-axis
+audits through escape, no-reservoir control, three-tick Links, computation budget
+20, and independent exact quantum state-exchange controls. The ordinary audits
+preserve mean momentum and expected quadratic kinetic energy, including quantum
+inventory and escaped stock. They do not retain full phase or branch correlations.
+Independent physics review passed this restricted scope, including rejection of
+non-unit masses, false certainty and missing audit fields. Independent ownership
+review also accepted the generic unlocked-spare receipt correction.
+
+Active-source SHA-256, checked before and after the experiment:
+`1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
+This identifies the tested Windows checkout bytes, including its line endings.
+All physical source changes are confined to the reserved-slot receipt fix.
+
+`python tools/check.py --base 3a2fdfd` passed **1,723 tests with five opt-in
+visual skips** in 183.53 seconds. Ruff/format passed for nine changed Python
+files; strict mypy passed for ten affected source files. The selector covered
+native/quantum contacts, field/carrier ownership, local conversions, integer
+arithmetic, Node/Link timing, boundaries, generic names, UI/runner consumers and
+retention. Eight receipt regressions first failed on the original implementation;
+the two focused files then passed 71 tests after repair. No full-suite flag,
+simulator build or visualization was used. Versions: Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1; Windows pytest used a fresh explicit base directory.
+
 ## Quantum-to-classical claim investigation - 2026-09-14
 
 The [reproducible investigation](../examples/quantum/quantum_classical_check.md)

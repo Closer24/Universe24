@@ -1,5 +1,18 @@
 # Highlights implementation coverage
 
+## Local response candidate - 2026-09-14
+
+The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+now composes quantum capture with an explicitly supplied ordinary local law.
+Mean momentum and its variance swap with a colocated equal-mass reservoir;
+the one-shot detector records completion locally. The resulting carrier moves,
+while the reservoir retains unresolved momentum. This is an expectation-level
+moment closure and a tested candidate, not a derived classical limit or full
+field/matter quantum dynamics. Its independent exact quantum SWAP control retains
+phase and branch balances; those capabilities do not transfer to the ordinary
+moment-only state. No binding postulate was changed. The live Highlights
+document was not edited for this experimental candidate.
+
 ## Quantum-to-classical claim check - 2026-09-14
 
 The [bounded investigation](../examples/quantum/quantum_classical_check.md) verifies

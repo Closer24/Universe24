@@ -1,5 +1,24 @@
 # Test inputs and expected results
 
+## Local moment response after capture
+
+`test_local_moment_exchange.py` runs the
+[candidate](../examples/quantum/local_moment_exchange.md) in all six directions,
+with no reservoir, longer Links and computation delay. A unit-mass target with
+mean 0 and variance 1 exchanges moments with a unit-mass reservoir with mean 3
+and variance 0. Total mean momentum 3 and doubled expected kinetic energy 10
+include ordinary, quantum-inventory and escaped owners. The target follows the
+selected axis at nominal c/100; the zero-mean recoil remains uncertain. Test
+mass/validity rejection, renamed fields/types and nonlinear energy rejection
+despite an unchanged mean sum. Separate exact quantum-owner controls preserve
+all sixteen basis momentum/energy cases and coherent reversal.
+
+`test_record_operations.py` verifies that reserved empty slots cannot receive
+new records: select the first unlocked spare, or reject the entire proposal
+without mutation when capacity is insufficient. The delayed quantum capture
+regression in `test_localized_quantum_contact.py` receives a messenger into
+spare slot 2 at tick 4 and commits capture at tick 11 with both owners intact.
+
 ## Quantum-to-classical investigation
 
 `test_quantum_classical_experiment.py` runs the bounded
