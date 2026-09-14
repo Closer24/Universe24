@@ -9,7 +9,6 @@ from event_universe.core.spatial_state import (
     SpatialFieldDefinition,
     advance_ray,
     merge_rays,
-    phase_cosines,
     validate_heading,
 )
 
@@ -28,7 +27,8 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
     if not 1 <= definition.rays_per_tick <= definition.ray_slots:
         raise ValueError("rays_per_tick must be between 1 and ray_slots")
     if definition.kerengonen:
-        phase_cosines(definition.phase_steps)
+        if len(definition.cosine_table) != definition.phase_steps:
+            raise ValueError("ray phase law must be prepared before transport")
         if not 0 <= definition.phase_advance < definition.phase_steps:
             raise ValueError("kerengonen phase_advance must be below phase_steps")
 

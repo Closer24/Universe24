@@ -334,6 +334,12 @@ class SpatialNode(SpatialNodeState):
         active_field = any(
             any(unpack(payload)) for state in states for payload in state.populations
         ) or any(self.rays)
+        # An exhausted source still clears its last emission before a later move.
+        active_source = active_source or any(
+            any(any(unpack(row)) for row in record.emission_last)
+            for record in records
+            if record is not None
+        )
         if not active_source and not active_field and self.received_count == 0:
             self.states = tuple(
                 replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6, received_mask=0)
@@ -483,8 +489,7 @@ class SpatialNode(SpatialNodeState):
         else:
             carrier.accept_emission(
                 plan.emission_records,
-                funded=any(rule.funded for rule in services.initial.emissions)
-                or any(rule.mode == "absorb" for rule in services.initial.spatial_couplings),
+                initial=services.initial,
             )
         self.states = plan.states
         if self.rays:

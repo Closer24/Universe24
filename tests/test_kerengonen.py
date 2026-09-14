@@ -255,11 +255,7 @@ def test_an_absorber_takes_whole_quanta_gated_by_coherence():
 
 
 def test_kerengonen_is_validated_and_identified(tmp_path):
-    # The runner's per-tick accounting counts record momentum only, so the identity
-    # run keeps the lamps recoil-free; the event audit covers recoil in the tests above.
     raw = two_lamps(4, 1)
-    for rule in raw["emissions"]:
-        del rule["recoil_field"]
     path = tmp_path / "two_lamps.json"
     path.write_text(json.dumps(raw))
     run_initialization(path, tmp_path / "out", ticks=2)

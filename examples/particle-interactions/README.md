@@ -140,4 +140,3 @@ and momentum exact at every event, and the only force that closes this way is
 repulsive. An attraction that pays for the kinetic energy it creates is still
 open. Proton emission is a configured conversion that conserves what its
 invariants declare and nothing more.
-

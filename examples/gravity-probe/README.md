@@ -178,4 +178,3 @@ closed variant keeps all three statements and adds the ledger: the pulled body
 pays its own stock for the momentum it gains, the source is credited with the
 negative quanta it emits, and energy and momentum are exact at every event. No
 physical constant, unit or mass is identified.
-

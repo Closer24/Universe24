@@ -260,10 +260,10 @@ class SpatialCouplingLaw:
                 continue
             if rule_index >= len(record.emission_departed):
                 continue
-            amount, cursor = unpack(record.emission_departed[rule_index])
+            amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
             if not amount:
                 continue
-            rays, _ = emit_rays(amount, cursor, definition, meter)
+            rays, _ = emit_rays(amount, cursor, definition, meter, phase, advance)
             own = 0
             for ray in rays:
                 first_port, _ = advance_ray(ray, definition.headings[ray.heading])

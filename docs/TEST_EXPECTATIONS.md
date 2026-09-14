@@ -73,6 +73,20 @@ It also rejects preparation into local vacuum when another mode is occupied and
 checks same-tick result replay after absorption without origin resurrection.
 Retain all affected localized/causal contact, origin, state and field regressions.
 
+The Kerengonen integration regressions in `test_ray_integration_guards.py` cover
+ordinary runner momentum accounting through absorption and escape, frozen phase
+tables after host-cache eviction, independent trigonometric reference entries,
+distinguishable external phases and advances under self-exclusion, frozen
+departure metadata after emitter changes, largest-share carried advance with
+explicit-zero and field-fallback cases, per-field ticket seeds,
+whole negative lottery rays with insufficient/exact stock, delayed-owner
+rejection before stale commits, immutable carrier routing/unrelated fields,
+expired emission metadata and conflicting momentum or unsupported response
+bindings. `test_kerengonen.py` retains the actual recoil configuration through
+the ordinary runner identity test. Coherence work is quadratic in the configured
+local phase/ray count; it is bounded relative to world size for fixed capacities,
+not a claim of linear host work.
+
 ## Active contract coverage and shared execution
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports

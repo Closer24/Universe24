@@ -2014,6 +2014,61 @@ partial coherence the lottery turns the coherent share into a click rate on
 whole quanta. The ticket is a configured local sequence, not a claim about
 physical randomness.
 
+## Kerengonen integration and ownership guards - 2026-09-14
+
+Integrated main `53e44a51dd238dff34d5e7ced0f337e8f1c7341f` with the ray candidate
+through `289499798058230323b005ecb09c4421fbb459bc`. This entry records the reviewed
+`a5c17b3` snapshot; the later de Broglie commits were not part of that snapshot. Existing main's
+quantum field-phase and causal-null features are preserved.
+
+Independent physics review found and reproduced missing ray momentum in ordinary
+runner accounting, physical-step trigonometric construction beyond integer
+bounds, phase-blind self-exclusion, stale stock under delayed carrier plans,
+cross-field capture seeds, partial unfunded negative lottery capture and an
+emission I/O guard that admitted unrelated carrier changes. The integration fixes
+these paths and rejects the unsupported delayed/response compositions explicitly.
+An exhausted emission now performs one normally priced metadata-clearing cycle
+before a later departure. The candidate contract records these limits.
+
+Validation uses Python 3.14.7 with the intended checkout on PYTHONPATH:
+
+- Final affected gate against `53e44a5`: **2,441 passed, five opt-in visual skips**
+  in 238.08 seconds; Ruff lint/format and strict mypy passed. The selection follows
+  changed providers and their consumers; no `--full` selection was used.
+- Independent integration regressions: 18 passed in 1.04 seconds, including
+  constructor-only immutable phase tables after cache eviction and the maximum
+  phase count. The earlier pre-correction gate passed 2,423 tests but did not
+  expose the now-preserved counterexamples; it is not reused as final evidence.
+- Three actual 24-tick headless runner cases use
+  `examples/kerengonen-double-slit/run_experiments.py`'s `document` with eight
+  planar headings, `audit=True` and `screen_half=2`: ordinary phases, a four-step
+  offset at the second lamp, and the plain ray control. The center absorber
+  receives respectively **160, 0, 160** quanta; other four screen Nodes receive 0.
+  Every completed tick passes component/escape accounting and the independent
+  local energy/momentum audit. All cases start with 6,144 quanta and zero total
+  momentum, end with 5,632 quanta and momentum (-2112, 0, 0) in the domain, and
+  record escaped (512 quanta, momentum (2112, 0, 0)).
+- Those three audit reports record 1,280,412 / 1,293,638 / 1,280,412 Node balance
+  checks and take 63.42 / 70.88 / 73.01 seconds on this host while checks also run.
+  These are read-only global audit costs, not model event costs or a speed benchmark.
+- A separate reference probe compares 19,236 prepared sine/cosine entries across
+  14 phase counts, including 4,095 and 4,096, with host mathematical reference
+  values. All agree. Preparing 97 distinct near-maximum definitions retains only
+  16 entries in each host table cache; traced additional allocations are
+  3,116,560 bytes retained and 3,246,976 bytes peak. This measures host law/cache
+  allocations, not total process RSS or world storage. Each live field retains
+  at most two 4,096-entry immutable tables outside NodeState.
+
+Verified runner source SHA-256 before and after all three cases:
+`b44d9898a10b64b7609a4a57351d70a9b9898634856f51984bb4fd499c8d2fb7`.
+Inputs, state, events and run metadata were retained outside the source tree under
+`kerengonen-verified-runs-20260914` and follow the ordinary retention policy.
+No visualization, simulator/package build or new physical species law was added.
+Independent physics review gives a scoped pass; live PR/CI state supplies the
+separate publication and merge evidence. Existing Skills already require these
+ownership, arithmetic and provenance checks; no duplicate Skill rule was needed.
+
+
 ## Kerengonen carried phase: one lamp, two re-emitting slits — 2026-09-14
 
 Base: `3c52a08` on this branch, after merging main. A record that absorbs on a
@@ -2056,3 +2111,41 @@ The rule `|p| / D` is configured, not derived; what the measurement shows is
 that the lattice, the Huygens slits and the coherence gate carry it from the
 source to the screen: wavelength inverse to momentum, three doublings in a
 row. The beam is a held source; a record in flight is not yet a matter ray.
+
+## Kerengonen guards reconciled with current main - 2026-09-14
+
+Main `c3c39d035a1020f2acde0cbf2e80ee442e29fa03` includes PR #98 and its
+per-ray advance extension. This reconciliation preserves that extension and the
+reviewed ownership/accounting corrections from `a5c17b3`. Departure rows now keep
+four integers: amount, cursor, phase and advance. Self-exclusion compares the
+complete key, independently of later emitter changes. Clearing uses four zeros;
+the fallback sentinel alone cannot keep an exhausted source active indefinitely.
+These are fixed per-rule owner registers, not a new world index or ray history.
+
+- The affected gate included architecture,
+  locality, energy accounting, Kerengonen, de Broglie and the new guard cases:
+  **2,448 passed, five opt-in visual skips in 208.61 seconds**. Ruff lint/format
+  and strict mypy passed. The base was `origin/main` at `c3c39d0`; with the merge
+  not yet committed, its merge-base was `53e44a5`, so this selection also covered
+  the incoming main changes. No full-suite flag or simulator build was used.
+- Independent re-review: scoped pass; all 22 guard cases passed. Added cases
+  distinguish foreign advances, preserve departure state after emitter changes,
+  select the largest actually absorbed share's advance, and distinguish explicit
+  zero from field fallback. Existing Kerengonen/de Broglie tests also passed.
+- Four actual headless runner cases use the reconciled source. Three eight-tick
+  two-lamp controls absorb **20 / 0 / 20** quanta at the center (equal phases,
+  opposite phases, plain rays). Each ends with 784 quanta in the domain and 16
+  escaped, with zero combined momentum. A twelve-tick funded emitter with its own
+  advance 2 on a field whose fallback is 1 exercises absorption and escape: the
+  domain holds 595 quanta and momentum (0, -10, 0), while escaped rays hold 5
+  quanta and momentum (0, 10, 0). Every completed tick passes ordinary accounting
+  and the independent local conservation audit.
+
+Verified runtime source SHA-256 before and after all four runs:
+`ee714a5470fa98b4ceccf254c8182060e1af512184d018828a69f4f5e37a563c`.
+Inputs, states, events and metadata are retained outside the checkout under
+`kerengonen-reconciled-runs-20260914` with the ordinary artifact retention policy.
+The bounded prepared-table/cache design is unchanged; the new metadata remains
+fixed by configuration. The explicit delayed-owner and response-sampling limits
+remain documented in the candidate contract. The configured momentum-to-advance
+relation is not a derived de Broglie law.
