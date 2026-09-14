@@ -67,13 +67,14 @@ def test_bonded_pairs_break_the_local_bound_with_the_singlet_law():
     result = PROBE.chsh(seeds=1, capture="bond")
     assert result["closed"] and result["predicted_S"] == 2.8284
     assert all(value["missing"] == 0 for value in result["correlations"].values())
+    # One number per bonded pair: the second end reads the first end's number.
     assert [value["E"] for value in result["correlations"].values()] == [
-        -0.7188,
+        -0.6875,
         0.7188,
-        -0.7188,
-        -0.7188,
+        -0.6875,
+        -0.6875,
     ]
-    assert result["S"] == 2.8752 and result["same_setting_E"] == -1.0
+    assert result["S"] == 2.7813 and result["same_setting_E"] == -1.0
     assert result["S"] > result["local_bound"]
 
 

@@ -1,4 +1,4 @@
-"""The bond registry: an even first coin, the singlet's conditional second, and its validation."""
+"""The bond registry: one number per pair, an even first coin, the singlet's second, and its validation."""
 
 import pytest
 
@@ -20,7 +20,9 @@ def test_the_first_answer_is_even_and_the_second_follows_the_singlet():
     firsts = [registry.draw(bond, 0, bond * 13) for bond in range(1, 401)]
     agreements = sum(registry.draw(bond, 16, 5) == first for bond, first in enumerate(firsts, 1))
     assert 150 < agreements < 250
-    assert registry.questions == 800
+    # Two questions per bond, one number per bond: the second end reads the first's number.
+    assert registry.questions == 800 and registry.numbers == 400
+    assert all(len(value) == 3 for value in registry.first.values())
 
 
 def test_the_registry_is_validated():
