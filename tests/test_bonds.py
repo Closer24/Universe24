@@ -46,3 +46,21 @@ def test_the_registry_is_validated():
         BondRegistry(TICKET_MODULUS, 64)
     with pytest.raises(ValueError, match="positive"):
         BondRegistry(1, 64).draw(0, 0, 0)
+
+
+def test_an_external_stream_supplies_one_number_per_pair_in_order():
+    stream = (5, TICKET_MODULUS - 1, 123456789)
+    registry = BondRegistry(7, 64, stream)
+    # The first pair takes the first number: 5 is below one half, so +1.
+    assert registry.draw(11, 0, 1) == 1 and registry.consumed == 1
+    assert registry.draw(11, 0, 1) == 1 and registry.consumed == 1  # idempotent, no new number
+    assert registry.open[11][3] == 5
+    # The second pair takes the second number: just below the modulus, so -1.
+    assert registry.draw(12, 0, 1) == -1 and registry.open[12][3] == TICKET_MODULUS - 1
+    assert registry.draw(13, 0, 1) in (1, -1) and registry.consumed == 3
+    with pytest.raises(OverflowError, match="stream is exhausted"):
+        registry.draw(14, 0, 1)
+    # The other end of a streamed pair answers from the same number.
+    assert registry.draw(11, 0, 2) == -1 and registry.open.get(11) is None
+    with pytest.raises(ValueError, match="below the ticket modulus"):
+        BondRegistry(7, 64, (TICKET_MODULUS,))

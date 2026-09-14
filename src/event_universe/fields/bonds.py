@@ -12,6 +12,12 @@ first at once, at any distance: that is the one influence that skips Nodes.
 It carries no energy, no momentum and no message, since each end alone sees an
 even coin, so postulate 4 keeps its hold on everything physical.
 
+An external stream, configured as `bond.stream`, replaces the registry's own
+numbers one per pair in the order pairs first ask: the model is indifferent to
+where the numbers come from, and the stream is the door through which a
+source outside the world's state can choose outcomes. Its bias is measurable:
+the Bell probe compares uniform and biased streams.
+
 The registry's state is bounded: it holds at most MAX_OPEN_BONDS pairs whose
 first end has answered and whose second has not, and releases a pair at its
 second answer. A question repeated by the same end with the same setting gets
@@ -36,11 +42,17 @@ MAX_OPEN_BONDS = 4096
 class BondRegistry:
     """The joint outcomes of bonded pairs, one number per pair, a bounded open bank."""
 
-    def __init__(self, seed: int, phase_steps: int) -> None:
+    def __init__(self, seed: int, phase_steps: int, stream: tuple[int, ...] = ()) -> None:
         if type(seed) is not int or not 0 <= seed < TICKET_MODULUS:
             raise ValueError("bond seed must be below the ticket modulus")
+        if any(type(n) is not int or not 0 <= n < TICKET_MODULUS for n in stream):
+            raise ValueError("bond stream numbers must be below the ticket modulus")
         self.seed = seed
         self.phase_steps = phase_steps
+        # An external number stream, consumed one number per pair in the order pairs
+        # first ask; empty for the world's own sequence. Configuration data, finite.
+        self.stream = tuple(stream)
+        self.consumed = 0
         # bond -> (asking end's salt, its setting, its outcome, the pair's number)
         self.open: dict[int, tuple[int, int, int, int]] = {}
         self.questions = 0
@@ -67,11 +79,16 @@ class BondRegistry:
         if entry is None:
             if len(self.open) >= MAX_OPEN_BONDS:
                 raise OverflowError("the bond registry holds at most 4096 open pairs")
+            if self.stream:
+                if self.consumed >= len(self.stream):
+                    raise OverflowError("the external bond stream is exhausted")
+                number = self.stream[self.consumed]
+                self.consumed += 1
             self.numbers += 1
             outcome = 1 if checked_work(2 * number) < TICKET_MODULUS else -1
             self.open[bond] = (salt, setting, outcome, number)
             return outcome
-        first_salt, first_setting, first_outcome, _ = entry
+        first_salt, first_setting, first_outcome, number = entry
         if salt == first_salt and setting == first_setting:
             # The same end asks again: the deposit is idempotent.
             return first_outcome
