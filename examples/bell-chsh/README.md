@@ -1,5 +1,10 @@
 # Bell probe: CHSH on two phased rays from one source
 
+> Integration status: ordinary initialization rejects `--capture bond`. The
+> global-registry results below are historical supplied-law reference results,
+> not evidence of local quantum emergence. Lottery and threshold runs remain
+> supported. See [the owner boundary](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1).
+
 A configuration on the [Kerengonen candidate](../../docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
 with the lottery capture, directed emitters (`heading`), a per-detector
 `capture_salt`, and [claims](../../docs/SPATIAL_FIELDS.md#claim-and-gather-claim-gather-ray-field-v1)
@@ -71,15 +76,15 @@ the correlation is the triangle wave of the sign model:
 | Plus rates | 0.5156 on both sides |
 | Missing pairs, closure | 0 of 256; every run closed |
 
-With `--capture bond` the two rays are bonded to their origin: the source
+In the historical `--capture bond` run the two rays were bonded to their origin: the source
 Node stamps each with the code of its own address and the tick of the
 emission, and each ray carries that code through the lattice at link speed
 until its next interaction. The plus detectors hold their settings, there are
 no reference lamps, and at the interaction the
 [bond registry](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1),
 looked up by the origin the ray brought, answers for both ends with the
-singlet's law: the split of postulate 4, the one influence that skips Nodes
-and carries nothing physical. 16 registry seeds per hidden-phase slot, 1,024
+supplied singlet law through a nonlocal lookup. Ordinary activation is now
+rejected under postulate 4. The recorded run used 16 registry seeds per hidden-phase slot, 1,024
 pairs per correlation:
 
 | Quantity | Bonded value |
@@ -90,14 +95,15 @@ pairs per correlation:
 | Plus rates, Alice and Bob | 0.49 to 0.51, whatever the other side's setting |
 | Missing pairs, closure | 0 of 4,096; every run closed |
 
-Under [postulate 22](../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+Under the [reference hypothesis](../../POSTULATES.md#22-configured-integer-lottery-and-replay-hypothesis)
 the registry draws one number per pair: the first end's coin is its upper
 half and the other end's agreement its lower half. Earlier runs, with a second
 draw for the second end, read S = 2.699 bonded by origin and 2.863 bonded by a
 configured label; all three are the same law on different numbers, around the
 quantum value within the counting spread of about 0.05 and far above the
 bound. S above 2 sqrt 2 in a run is that spread, not a value beyond the
-quantum one: the registry's law gives E = -cos exactly in expectation.
+quantum one. The reference supplies a finite cosine table; these sampled runs
+do not prove no-signalling for arbitrary repeated queries or pair lifecycles.
 
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against
@@ -115,9 +121,8 @@ hidden variables the equal-setting correlation becomes near perfect and S
 rises to exactly 2, the bound itself, and not a step beyond it. Hidden
 variables instead of dice buy the missing half of the correlation and stop
 at the theorem's line, because the outcome at each side still depends only
-on what is at that side. The bond gives the third answer: with the pair's
-joint outcome answered once for both ends, S reaches the quantum value, the
-equal-setting correlation is perfect, and each side alone still sees an even
-coin, so nothing signals. The ray carries everything physical at link speed;
-the bond carries the one thing the experiments say is not carried. What the
-registry is, beyond a table the world shares, the model does not say.
+on what is at that side. The historical bond run gives a third answer through
+a supplied joint rule in a global registry. Its sampled Bell value is evidence
+about that reference law, not a local derivation. The registry remains outside
+ordinary Simulation because its lifetime and transactional ownership do not
+meet the Node contract.

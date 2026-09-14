@@ -874,3 +874,15 @@ the scheduler resumes owners in address order. Each owner performs its existing
 validation and atomic commit. Continuations are closed and discarded every tick;
 they are never part of NodeState. Shared-clock cycles use two planning barriers,
 while ordinary carrier and field phases each use one.
+
+
+### Local carrier scheduling and prepared ray laws
+
+[Local Focus](LOCAL_FOCUS.md) owns a host address set and visit counters, never
+physical history or a new per-Node state type. Nodes certify dormancy from fixed
+local state; actual delivery wakes them. The spatial active index remains shared
+by both scheduling modes. Frozen field definitions own bounded immutable phase
+and pace tables prepared before any tick; no lazy pace cache grows across runs.
+New retained-ray and claim owners pass the same trusted pre-commit/receipt
+validation boundary as outgoing payloads. The global bond reference is excluded
+from ordinary initialization and planner composition.

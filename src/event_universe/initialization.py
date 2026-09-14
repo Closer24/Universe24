@@ -1704,6 +1704,7 @@ def parse_initial_state(document: object) -> InitialState:
             "delay_direction",
             "least_delay_routing",
             "ray_delay",
+            "focus",
             "ray_phase_per_tick",
         },
         required,
@@ -1781,6 +1782,7 @@ def parse_initial_state(document: object) -> InitialState:
         ),
         least_delay_routing=_boolean(obj.get("least_delay_routing", False), "least_delay_routing"),
         ray_delay=_boolean(obj.get("ray_delay", False), "ray_delay"),
+        focus=_boolean(obj.get("focus", False), "focus"),
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):

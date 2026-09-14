@@ -17,7 +17,9 @@ from .disturbance_state import (
 )
 from .integer import add_components, checked_work, subtract_components
 from .node_boundary import (
+    validate_claim_bundle,
     validate_decay,
+    validate_ray_bundle,
     validate_reaction_state,
     validate_samples,
     validate_spatial_bundle,
@@ -68,6 +70,7 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         tuple[Claims, ...],
+        int,
         int,
     ],
     SpatialPlan,
@@ -371,7 +374,7 @@ class SpatialNode(SpatialNodeState):
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
         resident_rays: tuple[Rays, ...] = self.rays
-        held: tuple[Rays, ...] = ()
+        ray_hold, next_ray_wait = 0, self.ray_wait
         if services.initial.ray_delay and any(self.rays):
             # Rays wait the intervals the Node's computation load alone would add to
             # a cycle; a waiting Kerengonen ray may advance its phase per interval.
@@ -381,16 +384,15 @@ class SpatialNode(SpatialNodeState):
                     services.initial.normal_budget,
                     services.initial.link_ticks,
                 )
-                self.ray_wait = extra // services.initial.link_ticks
-                waiting = self.ray_wait > 0
+                next_ray_wait = extra // services.initial.link_ticks
+                waiting = next_ray_wait > 0
             else:
-                self.ray_wait -= 1
-                waiting = self.ray_wait > 0
+                next_ray_wait = self.ray_wait - 1
+                waiting = next_ray_wait > 0
             if waiting:
-                held = self._waited_rays(services)
-                resident_rays = tuple(() for _ in self.rays)
+                ray_hold = 2 if services.initial.ray_phase_per_tick else 1
         plan = yield SpatialPlanningInput(
-            states, records, self.received_count, node_cost, resident_rays, self.claims, tick
+            states, records, self.received_count, node_cost, resident_rays, self.claims, tick, ray_hold
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -435,36 +437,7 @@ class SpatialNode(SpatialNodeState):
         )
         self.sample_cause_id = sample_cause
         self.sample_received_masks = sample_received_masks
-        self._commit_plan(tick, carrier, services, plan, cost)
-        if held:
-            # The waiting rays stay owned here; only fresh emissions left this cycle.
-            self.rays = held
-
-    def _waited_rays(self, services: SpatialServices) -> tuple[Rays, ...]:
-        """Resident rays after one waiting interval: unchanged, or phase-advanced per tick."""
-        if not services.initial.ray_phase_per_tick:
-            return self.rays
-        result = []
-        for definition, rays in zip(services.initial.spatial_fields, self.rays, strict=False):
-            if not definition.phase_steps or not rays:
-                result.append(rays)
-                continue
-            result.append(
-                merge_rays(
-                    tuple(
-                        replace(
-                            ray,
-                            phase=(
-                                ray.phase
-                                + (ray.advance if ray.advance >= 0 else definition.phase_advance)
-                            )
-                            % definition.phase_steps,
-                        )
-                        for ray in rays
-                    )
-                )
-            )
-        return tuple(result)
+        self._commit_plan(tick, carrier, services, plan, cost, next_ray_wait=next_ray_wait)
 
     def commit_ready(
         self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices
@@ -510,6 +483,7 @@ class SpatialNode(SpatialNodeState):
         cost: int,
         *,
         pending_cause: int | None = None,
+        next_ray_wait: int | None = None,
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
@@ -585,6 +559,9 @@ class SpatialNode(SpatialNodeState):
             self.rays = plan.kept_rays if plan.kept_rays else tuple(() for _ in self.rays)
         if plan.claims:
             self.claims = plan.claims
+        if next_ray_wait is not None:
+            # A later unrelated arrival starts its own load-priced wait.
+            self.ray_wait = next_ray_wait if any(self.rays) else 0
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -1076,6 +1053,10 @@ class SpatialNode(SpatialNodeState):
             ):
                 raise ValueError("node received a spatial packet addressed to another Node")
             validate_spatial_bundle(services.initial, packet.fields)
+            validate_ray_bundle(services.initial, packet.rays, optional=True)
+            validate_claim_bundle(services.initial, packet.claims, optional=True)
+            if any(claim.since > tick for claims in packet.claims for claim in claims):
+                raise ValueError("a received claim cannot originate in a future tick")
         if services.events.enabled:
             services.events.require_room(1 + int(services.decayer is not None))
         losses = [[0] * field.components for field in services.initial.fields]
@@ -1127,9 +1108,12 @@ class SpatialNode(SpatialNodeState):
                 )
                 resident_rays[index] = merge_rays(tuple(resident_rays[index]) + incoming_rays)
                 validate_rays(resident_rays[index], definition, field)
-        resident_claims = [list(field_claims) for field_claims in self.claims] or [
-            [] for _ in services.initial.spatial_fields
-        ]
+        resident_claims = [
+            [claim for claim in field_claims if tick - claim.since <= definition.claim_ticks]
+            for definition, field_claims in zip(
+                services.initial.spatial_fields, self.claims, strict=False
+            )
+        ] or [[] for _ in services.initial.spatial_fields]
         for packet in arrivals:
             for index, packet_claims in enumerate(packet.claims):
                 if not packet_claims:
@@ -1138,6 +1122,8 @@ class SpatialNode(SpatialNodeState):
                 if not definition.claims:
                     raise ValueError("claims delivered to a field without claims")
                 for claim in packet_claims:
+                    if tick - claim.since > definition.claim_ticks:
+                        continue
                     # Adopt a train's claim, remembering the port it came from as the
                     # way home. Where two claims for one train meet, the earlier one
                     # wins, then the lower origin: a later root yields and points at

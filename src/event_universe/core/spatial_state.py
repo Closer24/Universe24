@@ -19,7 +19,7 @@ from .disturbance_state import (
     pack,
     unpack,
 )
-from .integer import checked_work
+from .integer import checked_work, reduced_ratio
 
 SpatialPopulations = tuple[Payload, ...]
 SpatialOutgoing = tuple[SpatialPopulations, ...]
@@ -158,8 +158,11 @@ class SpatialFieldDefinition:
     bond_seed: int = -1
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
+    pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
 
     def __post_init__(self) -> None:
+        if self.rays:
+            object.__setattr__(self, "pace_table", prepare_heading_paces(self))
         if self.phase_steps:
             # Immutable law preparation precedes every physical event.
             object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
@@ -492,7 +495,7 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
         if type(ray.advance) is not int or not -1 <= ray.advance < max(definition.phase_steps, 1):
             raise ValueError("ray advance must be -1 or index the field's phase steps")
         pace = heading_pace(definition, ray.heading)
-        if type(ray.wait) is not int or not 0 <= ray.wait < pace[1]:
+        if type(ray.wait) is not int or not 0 <= bounded(ray.wait) < pace[1]:
             raise ValueError("ray wait must stay below its heading's pace denominator")
         if type(ray.train) is not int or bounded(ray.train) < 0:
             raise ValueError("ray train must be a nonnegative bounded integer")
@@ -786,54 +789,53 @@ def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:
 # makes the wave front round: a ray hops when its wait passes its denominator.
 
 PACE_SCALE = 4096
-_PACE_TABLES: dict[tuple[tuple[Heading, ...], bool, int, int], tuple[tuple[int, int], ...]] = {}
 
 
 def integer_sqrt(value: int) -> int:
     """The floor of the square root, by Newton's method on integers."""
-    if value < 0:
+    if checked_work(value) < 0:
         raise ValueError("square root of a negative integer")
     if value < 2:
         return value
     guess = value
     better = (guess + value // guess) // 2
-    while better < guess:
+    for _ in range(64):
+        if better >= guess:
+            return guess
         guess, better = better, (better + value // better) // 2
-    return guess
+    raise OverflowError("integer square root exceeded its fixed iteration bound")
 
 
-def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], ...]:
+def prepare_heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], ...]:
     """(numerator, denominator) hops per tick for every heading.
 
     (1, 1) for every heading on the links metric at link speed; the configured
     pace scales every heading alike, and the Euclidean metric slows each heading
     to the slowest lattice direction on top of it.
     """
-    key = (
-        definition.headings,
-        definition.euclidean,
-        definition.pace_numerator,
-        definition.pace_denominator,
-    )
-    table = _PACE_TABLES.get(key)
-    if table is None:
-        numerator, denominator = definition.pace_numerator, definition.pace_denominator
-        if not definition.euclidean:
-            table = tuple((numerator, denominator) for _ in definition.headings)
-        else:
-            ratios = []
-            for heading in definition.headings:
-                manhattan = sum(abs(c) for c in heading)
-                squared = sum(c * c for c in heading)
-                # E / L scaled: the Euclidean length in units of 1 / PACE_SCALE per link.
-                ratios.append(integer_sqrt(squared * PACE_SCALE * PACE_SCALE) // manhattan)
-            slowest = min(ratios)
-            table = tuple(
-                (checked_work(slowest * numerator), checked_work(ratio * denominator))
-                for ratio in ratios
-            )
-        _PACE_TABLES[key] = table
-    return table
+    numerator, denominator = bounded(definition.pace_numerator), bounded(definition.pace_denominator)
+    if not 1 <= numerator <= denominator:
+        raise ValueError("pace must be positive and not exceed one link per tick")
+    if not 1 <= len(definition.headings) <= MAX_HEADINGS:
+        raise ValueError("ray transport requires one to 65536 headings")
+    if not definition.euclidean:
+        return tuple((numerator, denominator) for _ in definition.headings)
+    ratios = []
+    for heading in definition.headings:
+        manhattan = validate_heading(heading)
+        squared = sum(c * c for c in heading)
+        ratios.append(integer_sqrt(checked_work(squared * PACE_SCALE * PACE_SCALE)) // manhattan)
+    slowest = min(ratios)
+    table = []
+    for ratio in ratios:
+        terms = reduced_ratio(checked_work(slowest * numerator), checked_work(ratio * denominator))
+        table.append((bounded(terms[0]), bounded(terms[1])))
+    return tuple(table)
+
+
+def heading_paces(definition: SpatialFieldDefinition) -> tuple[tuple[int, int], ...]:
+    """Read immutable configured pace data; physical stepping never prepares a table."""
+    return definition.pace_table
 
 
 def heading_pace(definition: SpatialFieldDefinition, heading: int) -> tuple[int, int]:
