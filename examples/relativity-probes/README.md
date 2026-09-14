@@ -188,6 +188,32 @@ domain does not feel the computation field: an equivalence-principle gap that a
 configuration cannot close, because gate admissibility reads only the fixed
 Link time, never the node's delay.
 
+## 4. Expansion or recollapse (`cosmic_expansion.py`)
+
+Four equal masses on the axes at R = 5 in an open 29 × 29 × 3 slab, each
+emitting the octant `computation` field (24000 per tick) and exchanging
+momentum with its flux (attractive, denominator 80, balanced routing), are
+launched outward at a common speed v0. The configuration holds no expansion
+term, pressure or cosmological constant.
+
+| v0 (c) | control, no field | with the field |
+| --- | --- | --- |
+| 0 | at rest | recollapse: all four moving inward from tick 20, mean distance 5 → 4.5 |
+| 0.125 | | turned around at distance 6 by tick 10 |
+| 0.25 | | turned around at distance 5 by tick 10 |
+| 0.375 | | turned around at distance 6 by tick 10 |
+| 0.5 | escaped the slab by tick 20 | still expanding at tick 60, mean distance 5 → 6, nothing escaped |
+| 0.75 | | turned around at distance 7 by tick 10 |
+| 1.0 | | turned around at distance 8 by tick 10 |
+
+At this field strength nothing escapes, not even bodies launched at c: the
+momentum coupling removes more than 120 units within ten ticks. This is a
+bound, black-hole-like configuration — the escape speed of the four-body
+system exceeds the link speed — and the bodies then oscillate within one or two
+links of their turning radius. The universe here is attraction plus initial
+motion, and the initial motion loses. Weaker fields (emission 2400 and 600)
+are recorded below to locate the critical speed.
+
 ## What these probes do not show
 
 They do not derive gravity, the 1/b lensing law, the factor two of general
