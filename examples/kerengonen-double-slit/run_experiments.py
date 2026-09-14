@@ -34,6 +34,10 @@ PHASE_STEPS = 8
 TICKS = 48
 LOTTERY_TICKS = 96  # single quanta, whole or nothing: twice the ticks for the counts
 LOTTERY_SEEDS = (1, 2)
+SOURCE_X = CENTER - 12  # the single lamp of the wall experiment
+WALL_X = CENTER - 4  # an absorbing wall with two re-emitting slits at y = +-3
+SOURCE_PER_RAY = 64
+SOURCE_TICKS = 64
 COSTS = {
     name: 1
     for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
@@ -180,6 +184,121 @@ def document(
     return raw
 
 
+def wall_document(
+    ticks: int,
+    headings: list[list[int]],
+    slits: tuple[int, ...] = (-SLIT_HALF, SLIT_HALF),
+    phase_steps: int = PHASE_STEPS,
+) -> dict:
+    """One lamp, an absorbing wall whose slits re-emit what they absorb, and the screen.
+
+    A slit is a Huygens source: it absorbs the rays that reach it and next cycle
+    re-emits its whole stock over the field's headings at the phase it absorbed,
+    one advance on. The wall keeps what it absorbs. The plain field has no phase,
+    so its slits re-emit without one.
+    """
+    raw = document(ticks, headings, per_ray=SOURCE_PER_RAY, phase_steps=phase_steps)
+    raw["model_id"] = "kerengonen-single-source-wall-probe-v1"
+    raw["disturbance_types"] = [
+        {
+            "name": "lamp",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": SOURCE_PER_RAY * len(headings) * ticks, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        },
+        {
+            "name": "wall",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        },
+        {
+            "name": "slit",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        },
+        {
+            "name": "screen",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        },
+    ]
+    slit_emission: dict = {
+        "type": "slit",
+        "field": "quanta",
+        "amount": {"field": "quanta"},
+        "denominator": 1,
+        "source": False,
+        "recoil_field": "momentum",
+    }
+    if phase_steps:
+        slit_emission["kerengonen_phase"] = "carried"
+    raw["emissions"] = [
+        {
+            "type": "lamp",
+            "field": "quanta",
+            "amount": SOURCE_PER_RAY * len(headings),
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+        },
+        slit_emission,
+    ]
+    raw["spatial_couplings"] = [
+        {
+            "name": f"{name}_absorbs",
+            "type": name,
+            "field": "quanta",
+            "mode": "absorb",
+            "momentum_field": "momentum",
+        }
+        for name in ("wall", "slit", "screen")
+    ]
+    raw["seeds"] = (
+        [{"position": [SOURCE_X, CENTER, 1], "type": "lamp"}]
+        + [
+            {"position": [WALL_X, CENTER + y, 1], "type": "slit" if y in slits else "wall"}
+            for y in range(-(SIZE // 2), SIZE // 2 + 1)
+        ]
+        + [
+            {"position": [SCREEN_X, CENTER + y, 1], "type": "screen"}
+            for y in range(-SCREEN_HALF, SCREEN_HALF + 1)
+        ]
+    )
+    return raw
+
+
+def run_wall(raw: dict) -> dict:
+    world = Simulation(parse_initial_state(raw))
+    initial = world.totals()["quanta"][0]
+    for _ in range(raw["ticks"]):
+        world.step()
+    totals, escaped = world.totals(), world.escaped_totals()
+    profile = {}
+    kept = {"wall": 0, "slit": 0}
+    names = [kind["name"] for kind in raw["disturbance_types"]]
+    for position, node in world.nodes.items():
+        for record in node.records:
+            if record is None:
+                continue
+            name = names[record.type_index]
+            quanta = world.record_values(record)["quanta"][0]
+            if name == "screen":
+                profile[position[1] - CENTER] = quanta
+            elif name in kept:
+                kept[name] += quanta
+    return {
+        "profile": dict(sorted(profile.items())),
+        "absorbed_total": sum(profile.values()),
+        "wall_kept": kept["wall"],
+        "slit_stock": kept["slit"],
+        "quanta_closed": totals["quanta"][0] + escaped["quanta"][0] == initial,
+        "escaped": escaped["quanta"][0],
+    }
+
+
 def screen_profile(world: Simulation) -> dict[int, int]:
     profile = {}
     for position, node in world.nodes.items():
@@ -236,6 +355,12 @@ def main() -> None:
         for seed in LOTTERY_SEEDS
     }
     lottery["share_single_quanta"] = run(document(LOTTERY_TICKS, headings, per_ray=1))
+    # One source behind a wall: the two slits are Huygens sources of the same wave.
+    wall = {
+        "two_slits": run_wall(wall_document(SOURCE_TICKS, headings)),
+        "one_slit": run_wall(wall_document(SOURCE_TICKS, headings, slits=(-SLIT_HALF,))),
+        "two_slits_plain": run_wall(wall_document(SOURCE_TICKS, headings, phase_steps=0)),
+    }
     # Eight headings, 24 ticks, a five-Node screen: the (16, +-3) headings of both
     # lamps meet at y = 0 after 19 links each, in phase, under the event audit.
     audited = run(document(24, planar_headings(8, HEADING_SCALE), audit=True, screen_half=2))
@@ -248,6 +373,7 @@ def main() -> None:
             "half_turn": runs["kerengonen_lamp_b_half_turn"]["profile"].get(y, 0),
             "plain": runs["plain"]["profile"].get(y, 0),
             **{name: world["profile"].get(y, 0) for name, world in lottery.items()},
+            **{f"wall_{name}": world["profile"].get(y, 0) for name, world in wall.items()},
         }
         for y in range(-SCREEN_HALF, SCREEN_HALF + 1)
     ]
@@ -265,6 +391,10 @@ def main() -> None:
             name: {k: v for k, v in world.items() if k != "profile"} for name, world in lottery.items()
         },
         "lottery_ticks": LOTTERY_TICKS,
+        "wall": {
+            name: {k: v for k, v in world.items() if k != "profile"} for name, world in wall.items()
+        },
+        "wall_ticks": SOURCE_TICKS,
         "audited": {k: v for k, v in audited.items() if k != "profile"}
         | {"profile": audited["profile"]},
     }
@@ -279,8 +409,11 @@ def main() -> None:
             "lottery",
             [row[f"seed_{seed}"] for seed in LOTTERY_SEEDS],
             row["share_single_quanta"],
+            "wall",
+            [row[f"wall_{name}"] for name in wall],
         )
     print("lottery", result["lottery"])
+    print("wall", result["wall"])
     print("runs", result["runs"])
     print("audited", result["audited"]["audit"]["status"], result["audited"]["quanta_closed"])
     print("Wrote report: " + str(args.output / "summary.json"))

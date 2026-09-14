@@ -720,6 +720,7 @@ class DisturbanceNode(DisturbanceNodeState):
             emission_last=current.emission_last,
             emission_departed=current.emission_departed,
             absorb_tickets=current.absorb_tickets,
+            absorbed_phases=current.absorbed_phases,
         )
 
     @staticmethod

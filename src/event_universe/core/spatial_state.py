@@ -176,8 +176,10 @@ class EmissionDefinition:
     # and subtract the emitted rays' amount x heading from an owned vector field.
     funded: bool = False
     recoil_field: int | None = None
-    # Kerengonen fields only: the phase step every emitted ray starts with.
+    # Kerengonen fields only: the phase step every emitted ray starts with, or,
+    # when carried, the phase of what the record last absorbed plus one advance.
     phase: int = 0
+    phase_carried: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -430,6 +432,56 @@ def _fixed_cosine(angle: int) -> int:
         magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
         sign = -sign
     return total
+
+
+def _fixed_sine(angle: int) -> int:
+    """sin of a fixed-point angle in [0, pi/2], scaled by _FIXED, by its series."""
+    magnitude, total, k, sign = angle, 0, 1, 1
+    while magnitude:
+        total += sign * magnitude
+        k += 2
+        magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
+        sign = -sign
+    return total
+
+
+_SINE_TABLES: dict[int, tuple[int, ...]] = {}
+
+
+def phase_sines(phase_steps: int) -> tuple[int, ...]:
+    """Scaled sine of every phase step, the companion of phase_cosines."""
+    phase_cosines(phase_steps)
+    table = _SINE_TABLES.get(phase_steps)
+    if table is None:
+        entries = []
+        for step in range(phase_steps):
+            reduced = step if 2 * step <= phase_steps else phase_steps - step
+            angle = 2 * _PI_FIXED * reduced // phase_steps
+            if 4 * reduced > phase_steps:
+                angle = _PI_FIXED - angle
+            scaled = (_fixed_sine(angle) * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
+            entries.append(scaled if 2 * step <= phase_steps else -scaled)
+        table = tuple(entries)
+        _SINE_TABLES[phase_steps] = table
+    return table
+
+
+def phase_of_sum(terms: tuple[tuple[int, int], ...], phase_steps: int) -> int:
+    """The phase step nearest the direction of sum a e^(i phi): the best projection.
+
+    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
+    """
+    cosines, sines = phase_cosines(phase_steps), phase_sines(phase_steps)
+    x = y = 0
+    for amount, phase in terms:
+        x = checked_work(x + amount * cosines[phase % phase_steps])
+        y = checked_work(y + amount * sines[phase % phase_steps])
+    best, best_projection = 0, None
+    for step in range(phase_steps):
+        projection = checked_work(x * cosines[step] + y * sines[step])
+        if best_projection is None or projection > best_projection:
+            best, best_projection = step, projection
+    return best
 
 
 def phase_cosines(phase_steps: int) -> tuple[int, ...]:

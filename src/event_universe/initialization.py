@@ -1043,13 +1043,18 @@ def _emissions(
             recoil = _index(obj["recoil_field"], _names(fields), "emission.recoil_field")
             if recoil not in owned or fields[recoil].components != 3 or not fields[recoil].signed:
                 raise ValueError("recoil_field must be a signed vector owned by the emitting type")
-        phase = 0
+        phase, carried = 0, False
         if "kerengonen_phase" in obj:
             if not spatial[index].kerengonen:
                 raise ValueError("kerengonen_phase requires a kerengonen ray field")
-            phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
-            if phase >= spatial[index].phase_steps:
-                raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
+            if obj["kerengonen_phase"] == "carried":
+                # The phase of what the emitter last absorbed; checked against the
+                # absorb rules once every spatial coupling is parsed.
+                carried = True
+            else:
+                phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
+                if phase >= spatial[index].phase_steps:
+                    raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1072,6 +1077,7 @@ def _emissions(
                 not source,
                 recoil,
                 phase,
+                carried,
             )
         )
     return tuple(result)
@@ -1588,6 +1594,14 @@ def parse_initial_state(document: object) -> InitialState:
         from .integration.event_program import parse_event_program
 
         parse_event_program(initial)
+    for rule in initial.emissions:
+        if rule.phase_carried and not any(
+            coupling.mode == "absorb"
+            and coupling.field == initial.spatial_fields[rule.spatial_field].field
+            and set(selected_types(coupling)) & set(selected_types(rule))
+            for coupling in initial.spatial_couplings
+        ):
+            raise ValueError("a carried kerengonen_phase requires an absorb rule on the same field")
     _validate_conversions(initial)
     if "conservation" in obj:
         initial = replace(initial, conservation=_conservation(obj["conservation"], initial))

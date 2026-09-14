@@ -249,9 +249,16 @@ and the same seed with the same rays repeats the same clicks.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because
-rays that meet at one Node on one tick have traveled the same number of links.
-Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_phase` on an emission requires the key. The runner records the
+rays that meet at one Node on one tick have traveled the same number of links;
+it does through a Huygens source. A record that absorbs on the field keeps, per
+absorb rule, the phase step nearest the direction of the coherent sum of what
+it took (`absorbed_phases`, a record row), and an emission with
+`"kerengonen_phase": "carried"` starts its rays at that phase plus one advance,
+the emitter's own tick. A slit that absorbs and re-emits its stock every cycle
+therefore continues the wave that reached it, and two slits lit by one lamp are
+two sources in the lamp's phase. A carried phase requires an absorb rule on the
+same field for the emitting type. Without the key the field is the plain
+`isotropic-ray-field-v1`; a `kerengonen_phase` on an emission requires the key. The runner records the
 identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 

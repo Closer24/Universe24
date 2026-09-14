@@ -217,6 +217,9 @@ class DisturbanceRecord:
     # Kerengonen lottery capture: one local ticket state per absorb rule, advanced
     # on every draw from the record's own row and the ray it meets.
     absorb_tickets: Values = ()
+    # Kerengonen carried phase: per absorb rule, the phase of the coherent sum of
+    # what the record last absorbed, so a re-emission can continue the wave.
+    absorbed_phases: Values = ()
     route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     rate_credit_denominator: int = 1

@@ -381,3 +381,82 @@ def test_lottery_capture_is_validated():
     raw = lottery_document(4, 1, 0, seed=1073741789)
     with pytest.raises(ValueError, match="ticket modulus"):
         parse_initial_state(raw)
+
+
+def huygens_document(lamp_b_phase=0, carried=True, ticks=12):
+    """Lamp A -> slit -> Node (3, 0) <- lamp B from above: the slit re-emits what it absorbed.
+
+    Headings +x and -y only, so nothing ever comes back to the slit.
+    """
+    raw = two_lamps(8, 1, ticks=ticks)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [0, -1, 0]]
+    raw["disturbance_types"].append(
+        {
+            "name": "slit",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        }
+    )
+    for rule in raw["emissions"]:
+        del rule["recoil_field"]
+    raw["emissions"][0]["amount"] = 8
+    raw["emissions"][1]["amount"] = 4
+    if lamp_b_phase:
+        raw["emissions"][1]["kerengonen_phase"] = lamp_b_phase
+    slit_emission = {
+        "type": "slit",
+        "field": "quanta",
+        "amount": {"field": "quanta"},
+        "denominator": 1,
+        "source": False,
+    }
+    if carried:
+        slit_emission["kerengonen_phase"] = "carried"
+    raw["emissions"].append(slit_emission)
+    raw["spatial_couplings"].append(
+        {"name": "slit_absorbs", "type": "slit", "field": "quanta", "mode": "absorb"}
+    )
+    raw["seeds"] = [
+        {"position": [CENTER - 4, CENTER, CENTER], "type": "lamp_a"},
+        {"position": [CENTER + 3, CENTER + 4, CENTER], "type": "lamp_b"},
+        {"position": [CENTER, CENTER, CENTER], "type": "slit"},
+    ]
+    return raw
+
+
+def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it():
+    # Lamp A's +x rays (4 quanta) reach the slit after four links, phase 4. The slit
+    # absorbs them, stores that phase, and next cycle re-emits its stock over both
+    # headings (2 quanta each way) at phase 5: the slit's own tick counts as one
+    # advance. Three more links to (3, 0) make phase 0. Lamp B's -y rays (2 quanta)
+    # reach (3, 0) after four links at phase 4: opposite, and the Node reads zero
+    # although 4 quanta are resident. Offsetting lamp B by four steps makes them
+    # equal: the Node reads 4. A slit that re-emits at a fixed phase 0 instead
+    # arrives at phase 3, a partial 4 x |2 e^0 + 2 e^(i pi/4)|^2 / 16 = 3.
+    readings = {}
+    for name, raw in (
+        ("carried", huygens_document()),
+        ("offset", huygens_document(lamp_b_phase=4)),
+        ("fixed", huygens_document(carried=False)),
+    ):
+        world = Simulation(parse_initial_state(raw))
+        initial = world.totals()["quanta"][0]
+        for _ in range(12):
+            world.step()
+        readings[name] = value_at(world, 3)
+        assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == initial
+        slit = next(
+            world.record_values(r)
+            for node in world.nodes.values()
+            for r in node.records
+            if r is not None and r.type_index == 3
+        )
+        assert slit["quanta"] == (4,)  # this cycle's absorption, re-emitted next cycle
+    assert readings == {"carried": 0, "offset": 4, "fixed": 3}
+    # A carried phase needs an absorb rule for the emitter on that field.
+    raw = huygens_document()
+    raw["spatial_couplings"] = raw["spatial_couplings"][:1]
+    with pytest.raises(ValueError, match="carried kerengonen_phase requires"):
+        parse_initial_state(raw)

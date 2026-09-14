@@ -30,6 +30,7 @@ from event_universe.core.spatial_state import (
     advance_ray,
     coherence,
     next_ticket,
+    phase_of_sum,
     ray_salt,
     ray_stock,
 )
@@ -73,6 +74,16 @@ class SpatialLaw:
                     keys.add((moved.heading, moved.accumulators))
         return keys
 
+    def _carried_phase(self, record: DisturbanceRecord, definition: SpatialFieldDefinition) -> int:
+        """The phase of the record's last absorption on this field, plus one link's advance."""
+        for rule_index, rule in enumerate(self.absorptions):
+            if rule.field == definition.field and matches_type(rule, record.type_index):
+                if rule_index < len(record.absorbed_phases):
+                    stored = unpack(record.absorbed_phases[rule_index])[0]
+                    return (stored + definition.phase_advance) % definition.phase_steps
+                return 0
+        raise ValueError("a carried emission phase requires an absorb rule on the same field")
+
     def _absorb(
         self,
         index: int,
@@ -109,6 +120,7 @@ class SpatialLaw:
                 if lottery and len(tickets) != len(self.absorptions):
                     tickets = [pack((definition.capture_seed,)) for _ in self.absorptions]
                 ticket = unpack(tickets[rule_index])[0] if lottery else 0
+                absorbed_terms: list[tuple[int, int]] = []
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -151,6 +163,8 @@ class SpatialLaw:
                         share = max(share, -max(stock, 0))
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
+                    if share and definition.kerengonen:
+                        absorbed_terms.append((abs(share), ray.phase))
                     if momentum is not None:
                         heading = definition.headings[ray.heading]
                         for axis in range(3):
@@ -166,9 +180,21 @@ class SpatialLaw:
                 meter.charge("update", 1 + (3 if momentum is not None else 0))
                 if lottery:
                     tickets[rule_index] = pack((ticket,))
-                    records[slot] = replace(record, values=tuple(values), absorb_tickets=tuple(tickets))
-                else:
-                    records[slot] = replace(record, values=tuple(values))
+                phases = list(record.absorbed_phases)
+                if definition.kerengonen:
+                    if len(phases) != len(self.absorptions):
+                        phases = [pack((0,)) for _ in self.absorptions]
+                    if absorbed_terms:
+                        meter.charge("evaluate", definition.phase_steps)
+                        phases[rule_index] = pack(
+                            (phase_of_sum(tuple(absorbed_terms), definition.phase_steps),)
+                        )
+                records[slot] = replace(
+                    record,
+                    values=tuple(values),
+                    absorb_tickets=tuple(tickets) if lottery else record.absorb_tickets,
+                    absorbed_phases=tuple(phases) if definition.kerengonen else record.absorbed_phases,
+                )
         return absorbed_total
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
@@ -311,8 +337,12 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
+                    phase = rule.phase
+                    if rule.phase_carried:
+                        # Huygens: continue the wave absorbed last cycle, one advance on.
+                        phase = self._carried_phase(record, definition)
                     new_rays, cursor = emit_rays(
-                        unpack(amount)[0], cursor_before, definition, meter, rule.phase
+                        unpack(amount)[0], cursor_before, definition, meter, phase
                     )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
