@@ -35,7 +35,8 @@ records, with exact integers on the canonical runner:
 | Classical field emitted at the source Node after recombination | integer floor of `25 (337 + 288 cos phi)/625` with carried remainder: 25, 13.5, 2, 13.5 per tick |
 | Same experiment with a held detector on one arm | the arm decision is `[9, 16]` for every `phi`; the output detector never receives a nonzero capture weight |
 | Cancellation after a capture two Links away | the source Node emits once more and then stops |
-| Source weight after a null result on the arm | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
+| Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
+| Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
 
 Earlier experiments established the finite quantum owner itself: exact CHSH
 value 14/5 for a two-register state, exact Born weights with no random draw for
@@ -62,13 +63,16 @@ certain outcomes, and phase-sensitive split and recombination
   mixer, the phase gate and the instrument are configured data. Nothing here
   shows that large amplitudes or frequent measurements reduce the quantum
   owner to the classical lattice dynamics.
-- **Not Born-rule consistency after null results.** After a null outcome the
-  retained envelopes are a retarded, unnormalized approximation. The measured
-  9/25 factor above is the size of this departure in the simplest case. A
-  globally conditioned source would require nonlocal renormalization, which
-  the model refuses by design; the gap is therefore a physical prediction of
-  the candidate, not an implementation bug, and it is open whether any local
-  rule can close it.
+- **Born-rule consistency after null results is closed only for one
+  excitation.** Under the default rule the retained envelopes are a retarded,
+  unnormalized approximation, measured as 9/25 above. The opt-in null notice
+  carries the deciding Node's own factor `1/(1-p)` through Links and restores
+  the exact conditional weights once it arrives; this is local, causal and
+  integer, and it is exact because a single excitation's conditional state is
+  renormalized by a factor known at the null Node. Before arrival the remote
+  weights are stale, which is the candidate's prediction rather than a bug.
+  For several excitations or entangled registers the local factor is only a
+  marginal correction and the gap remains open.
 - **Not back-action.** The classical field does not act on the amplitudes.
   The coupling is one directional.
 - **Not energy closure.** Field emission draws from finite configured
@@ -124,9 +128,10 @@ integer realization, not any of the parts.
 
 ## What would make this a physics result
 
-1. A rule, local and integer, under which the post-null envelope converges to
-   the conditional weight, or a proof that no such rule exists. Either closes
-   the largest open gap.
+1. A rule, local and integer, under which the post-null envelopes of several
+   excitations or entangled registers converge to the conditional weights, or
+   a proof that no such rule exists. The single-excitation case is closed by
+   the null notice above; the general case is the largest open gap.
 2. Field back-action on amplitudes with a stated conserved quantity, tested by
    the same interference experiment.
 3. A classical-limit experiment: increasing amplitude scale or instrument rate

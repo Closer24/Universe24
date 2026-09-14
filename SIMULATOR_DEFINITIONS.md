@@ -791,6 +791,16 @@ continues under its configured laws and separate injection accounting. The linke
 contract defines the finite domain, clock, transport and conservation limitations;
 the older localized-only profile is unchanged.
 
+The explicit `null_notices` option adds one rational weight scale per Node, six
+pending-notice slots, a fixed six-entry bank of applied notice identities and
+six notice output slots, so the envelope output bank has eighteen fixed slots.
+A null with local scaled weight `p < 1` multiplies the local scale by `1/(1-p)`
+and sends that factor as a notice through the domain Ports; receivers apply it
+after their control delay and forward it away from the arrival Port. Emission
+uses the scaled weight, clipped at one. Without the option the scale stays one
+and no notice is sent. The candidate does not read the quantum owner and does
+not remove the departure for several excitations.
+
 ## Quantum origin cells in event spacetime - Q-ORIGINS-3
 
 The explicit native v3 candidate is specified in

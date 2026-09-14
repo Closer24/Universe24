@@ -38,7 +38,24 @@ balanced Hadamard capture probabilities 0, 1/2, 1 and 1/2 with arm emission
 (12, 12); mean source emission after recombination within 1/6 unit of `25 |a_S|^2`;
 one localized capture at D at tick 7 when the ticket selects it; an arm
 detector giving `[9, 16]` for every phase with no later uncertain output
-decision; and a retarded source emission of 9 of 25 after an arm null.
+decision; and a retarded source emission of 9 of 25 after an arm null. With
+`null_notices` the same arm null gives 25 of 25 from tick 2, 9 and 16 at the
+next gate and final scales 625/81; the output null gives 25 from tick 9 and
+scales 625/337.
+
+`test_null_notices.py` owns the opt-in
+[null notice extension](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices):
+factor 25/9 from a 16/25 null and `None` for vacuum or certain occupation;
+scaled weight clipped at one; notice packets require a factor of at least one
+and an event identity; a null without the option sends nothing and keeps scale
+one; a null with it scales itself and fills one notice slot per Port; a received
+notice waits the control delay, applies, forwards away from its arrival Port
+and is ignored when repeated or at a retired Node; the applied bank keeps six
+identities; the option is rejected without the causal model; in the two-arm
+world the source emits 25 from tick 2 after an arm null at tick 1, the next
+gate emits 9 and 16, all scales reach 625/81 after the second null, and an
+output null at tick 7 reaches the source at tick 9 with scale 625/337.
+The default profile without the option is unchanged.
 
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event

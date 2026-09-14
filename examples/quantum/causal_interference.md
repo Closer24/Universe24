@@ -109,6 +109,27 @@ seen as a number: the classical field after a null result carries 9/25 of the
 strength a globally conditioned source would carry. It is a limit of the
 candidate, not a measurement error.
 
+### Null notices restore the conditional weight after one Link
+
+With `"null_notices": true` the Node that records a null sends its own factor
+`1/(1 - p)` through its Links. In the which-path variant, M's null at tick 1 has
+`p = 16/25`, so the factor is 25/9:
+
+| Tick | Default rule, S emission | With notices, S emission | With notices, M emission |
+| --- | --- | --- | --- |
+| 1 | 9 | 9 | 16 |
+| 2, 3, 4 | 9 | 25 | 0 |
+| 5 (next gate) | 3 | 9 | 16 |
+| 6 onward | 3 or 4 | 25 | 0 |
+
+At tick 5 the scaled envelopes give 9 and 16: the exact conditional Born
+weights of the state after the first null, where the default rule gave 3 and 5.
+After the second null every scale is `(25/9)^2 = 625/81`. In the plain
+interferometer at `phi = pi/2`, the output null at D at tick 7 sends 625/337; it
+reaches M at tick 8 and S at tick 9, and S emits 25 from tick 9. Notices cost
+Link transit: the source recovers one tick after a one-Link null and two ticks
+after a two-Link null. This is the candidate's causal residual.
+
 ## What this does and does not show
 
 - It shows that, in this candidate, the classical field emitted by a coherent
@@ -118,5 +139,7 @@ candidate, not a measurement error.
   statistics phase independent, with only local and causally delivered inputs.
 - It does not show field back-action on amplitudes, energy closure between
   field and matter, a continuum limit, or a derivation of the classical limit.
-  The mixers, the phase gate and the instrument are configured data. The retarded source rule is a known departure from the
-  conditional Born weights and is left visible above.
+  The mixers, the phase gate and the instrument are configured data. The
+  default retarded source rule is a known departure from the conditional Born
+  weights and is left visible above; the opt-in null notice removes it for one
+  excitation at the cost of Link transit, and not for entangled registers.

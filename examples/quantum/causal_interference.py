@@ -73,7 +73,7 @@ def analytic(phase, splitter="rotation"):
     }
 
 
-def configuration(phase, *, which_path, tickets, splitter="rotation"):
+def configuration(phase, *, which_path, tickets, splitter="rotation", null_notices=False):
     raw = json.loads(TEMPLATE.read_text(encoding="utf-8"))
     mixer, inverse = SPLITTERS[splitter]
     raw["ticks"] = TICKS
@@ -81,6 +81,8 @@ def configuration(phase, *, which_path, tickets, splitter="rotation"):
         emission["budget"] = 1000
     program = raw["event_program"]
     program["tickets"] = list(tickets)
+    if null_notices:
+        program["null_notices"] = True
     domain = program["domains"][0]
     re, im = PHASES[phase]
     coefficient = re if im == 0 else [re, im]
@@ -147,6 +149,9 @@ def run_case(name, raw, output):
         "source_emission_total": -report["source_totals"]["electric_signal"][0],
         "escaped_total": escaped,
         "random_draws": resolver["random_draws"],
+        "final_weight_scales": {
+            str(e["position"][0]): e["weight_scale"] for e in resolver["source_envelopes"]
+        },
     }
 
 
@@ -260,6 +265,35 @@ def run_experiment(output):
                 }
             )
 
+    # Opt-in causal null notices: the same which-path and output-null runs, with
+    # the null Node's factor 1/(1-p) carried through Links to the other envelopes.
+    notices = []
+    for phase in ("0", "pi"):
+        case = run_case(
+            "notices_which_path_" + phase.replace("/", "_"),
+            configuration(phase, which_path=True, tickets=NULL_TICKETS, null_notices=True),
+            output,
+        )
+        arm = [d for d in case["uncertain_decisions"] if d["register"] == 1]
+        assert [d["weights"] for d in arm] == [[9, 16], [9, 16]] and [d["tick"] for d in arm] == [1, 5]
+        emission = case["emission_by_tick"]
+        assert [emission[str(t)][SOURCE] for t in (2, 3, 4)] == [FULL_EMISSION] * 3, emission
+        assert emission["5"] == {SOURCE: 9, MIDDLE: 16}, emission["5"]
+        assert [emission[str(t)][SOURCE] for t in range(6, TICKS)] == [FULL_EMISSION] * (TICKS - 6)
+        assert case["final_weight_scales"] == {"1": [625, 81], "2": [625, 81], "3": [625, 81]}
+        notices.append({"phase": phase, "variant": "arm_null", "case": case})
+    case = run_case(
+        "notices_output_null_pi_2",
+        configuration("pi/2", which_path=False, tickets=NULL_TICKETS, null_notices=True),
+        output,
+    )
+    decisions = [d for d in case["uncertain_decisions"] if d["register"] == 2]
+    assert len(decisions) == 1 and decisions[0]["weights"] == [337, 288] and decisions[0]["tick"] == 7
+    emission = case["emission_by_tick"]
+    assert emission["8"][SOURCE] == 13 and all(emission[str(t)][SOURCE] == 25 for t in range(9, TICKS))
+    assert case["final_weight_scales"] == {"1": [625, 337], "2": [625, 337], "3": [625, 337]}
+    notices.append({"phase": "pi/2", "variant": "output_null", "case": case})
+
     return {
         "status": "pass",
         "python": platform.python_version(),
@@ -272,9 +306,11 @@ def run_experiment(output):
         "localized_capture_at_output": localized,
         "which_path": which_path,
         "retarded_source_fraction_after_arm_null": str(Fraction(9, FULL_EMISSION)),
+        "null_notices": notices,
         "limits": [
             "The 3:4 mixer gives visibility from 9/25 and 16/25; the balanced Hadamard with vacuum 1+i gives full visibility.",
-            "Source weights after a null result are retarded and unnormalized: S keeps emitting 9 of 25.",
+            "Without null notices the source weights after a null are retarded and unnormalized: S keeps emitting 9 of 25.",
+            "With null notices the factor 1/(1-p) reaches the other envelopes after Link transit; exact for one excitation.",
             "One configured domain and one conserved inventory; no field back-action on amplitudes.",
             "Finite range of ticks and one Link per tick; no continuum limit is measured.",
         ],

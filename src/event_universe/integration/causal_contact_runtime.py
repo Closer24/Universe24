@@ -26,7 +26,7 @@ from event_universe.fields.source_emission import (
     initial_emission_state,
     prepare_emission,
 )
-from event_universe.fields.source_envelope import Matrix, local_output, output_cost
+from event_universe.fields.source_envelope import Matrix, local_output, null_factor, output_cost
 from event_universe.quantum import LocalUnitary
 
 from .contact_program import ContactDomain
@@ -39,6 +39,8 @@ class CausalContactResolver(ContactEventResolver):
 
     def __init__(self, initial: InitialState, program: Program, events: CausalEventSpace) -> None:
         super().__init__(initial, program, events)
+        assert program.contacts is not None
+        self._null_notices = program.contacts.null_notices
         self._source_events = NodeEvents(events, None)
         self._source_law = SourceEmissionLaw(
             initial.fields, initial.spatial_fields, initial.emissions, initial.operation_costs
@@ -261,7 +263,16 @@ class CausalContactResolver(ContactEventResolver):
             )
             node.pending_emission = None
         elif not node.retired:
-            node.null(context.tick, event_id)
+            node.null(
+                context.tick,
+                event_id,
+                null_factor=null_factor if self._null_notices else None,
+                neighbor_ports=self._ports_at[context.address],
+                send_delay=0,
+                link_ticks=self.initial.link_ticks,
+                costs=self.initial.operation_costs,
+                events=self._source_events,
+            )
             node.pending_emission = None
         return outcome, event_id
 
@@ -282,6 +293,7 @@ class CausalContactResolver(ContactEventResolver):
                 node_cost,
                 node.source_id,
                 node.cause_id,
+                node.scale if self._null_notices else None,
             )
             delay, interval = cycle_timing(
                 prepared.cost, self.initial.normal_budget, self.initial.link_ticks
@@ -324,6 +336,7 @@ class CausalContactResolver(ContactEventResolver):
             **super().report(),
             "model": "causal-contact-fields-v1",
             "classical_field_source": "causal_local_envelope",
+            "null_notices": self._null_notices,
             "source_gate_period": self._gate_period,
             "source_gate_commit_offset": self._gate_end,
             "source_envelopes": [
@@ -335,6 +348,7 @@ class CausalContactResolver(ContactEventResolver):
                     "terminal_ready_tick": None
                     if node.pending_stop is None
                     else node.pending_stop.ready_tick,
+                    "weight_scale": (node.scale.numerator, node.scale.denominator),
                 }
                 for address, node in self._source_nodes.items()
             ],

@@ -54,4 +54,9 @@ def test_interference_is_visible_at_the_output_and_removed_by_an_arm_detector(tm
         else:
             assert row["captures"] == [{"tick": 1, "x": 2}]
     assert result["retarded_source_fraction_after_arm_null"] == "9/25"
+    variants = {(row["variant"], row["phase"]) for row in result["null_notices"]}
+    assert variants == {("arm_null", "0"), ("arm_null", "pi"), ("output_null", "pi/2")}
+    for row in result["null_notices"]:
+        scales = set(map(tuple, row["case"]["final_weight_scales"].values()))
+        assert scales == ({(625, 81)} if row["variant"] == "arm_null" else {(625, 337)})
     assert not list((tmp_path / "experiment").rglob("*.html"))

@@ -38,6 +38,7 @@ class ContactDomain:
 class ContactConfiguration:
     domains: tuple[ContactDomain, ...]
     causal_sources: bool = False
+    null_notices: bool = False
 
 
 def parse_contact_program(initial: InitialState, raw: object) -> Program:
@@ -48,10 +49,15 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
     obj = _object(
         raw,
         "localized contact program",
-        {"model", "capacity", "addresses", "domains", "bounds", "seed", "tickets"},
+        {"model", "capacity", "addresses", "domains", "bounds", "seed", "tickets", "null_notices"},
         {"model", "capacity", "addresses", "domains"},
     )
     causal_sources = obj["model"] == "causal-contact-fields-v1"
+    null_notices = obj.get("null_notices", False)
+    if type(null_notices) is not bool:
+        raise ValueError("null_notices must be true or false")
+    if null_notices and not causal_sources:
+        raise ValueError("null notices require the causal contact field model")
     if causal_sources and (not initial.spatial_fields or not initial.emissions):
         raise ValueError("causal contact fields require configured spatial sources")
     if causal_sources and any(definition.rays for definition in initial.spatial_fields):
@@ -252,5 +258,5 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         (),
         _integer(obj.get("seed", 0), "seed", 0),
         tickets,
-        contacts=ContactConfiguration(tuple(domains), causal_sources),
+        contacts=ContactConfiguration(tuple(domains), causal_sources, null_notices),
     )

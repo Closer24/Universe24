@@ -17,7 +17,7 @@ selection continues to emit ordinary fields only at localized events.
 | Parameters | The contact profile's disjoint finite mode domains, source/capture definitions and phases; generic field emission rules, finite budgets, operation tariffs, normal budget and Link transit. |
 | Derived values | The local squared weight and proposed field injection. They are neither copied charge inventory nor a query of the globally conditioned Born distribution. |
 | Outputs | Delayed local amplitude commits, finite ordinary field deposits and causal terminal packets. Localized capture installs one full-strength ordinary source and terminates only the colocated envelope immediately. |
-| Consistency | Validate bounded inputs and proposals before publication; preserve signed fractional emission residue across changing denominators; keep previously emitted field stock and its source accounting. |
+| Consistency | Validate bounded inputs and proposals before publication; preserve signed fractional emission residue across changing denominators; keep previously emitted field stock and its source accounting. The optional [null notices](#opt-in-causal-null-notices) add one rational weight scale per Node. |
 | Acceptance | Phase-sensitive splitting/recombination, real Link fronts, delayed terminal propagation, remote-prefix equality, single inventory ownership, finite allowances, stale-output rejection and explicit unsupported-input rejection. |
 
 The source envelope is actual locally evolved state in this candidate. It is
@@ -104,6 +104,39 @@ Ordinary injection, remaining field stock, dissipation and escape retain their
 separate spatial accounting. Previously emitted packets are never swept or
 erased by origin retirement. This hybrid does not establish field/matter energy
 closure, quantum electromagnetism or a universal classical limit.
+
+## Opt-in causal null notices
+
+`"null_notices": true` on the contact program object selects an explicit
+extension of the null rule above. It requires `causal-contact-fields-v1` and
+changes nothing when absent.
+
+| Part | Contract |
+| --- | --- |
+| Law | At a null result on a Node whose scaled local weight is `p < 1`, the Node multiplies its own weight scale by `1/(1-p)` and sends that rational factor through its domain Ports as a null notice. A receiving Node waits its local control delay, multiplies its own scale by the delivered factor, and forwards the notice through its other Ports. |
+| Inputs | Only the deciding Node's own amplitude and scale, and factors actually delivered through Links. No Node reads the conditional quantum state or another Node's weight. |
+| State | One `EnvelopeScale` per Node, a rational of at least one; six pending-notice slots, one per Port; a fixed bank of the six most recently applied notice identities; six additional output slots for notices. |
+| Effect | Ordinary emission is full strength times the local squared weight times the scale, clipped at one. Amplitudes, gates and the quantum owner are unchanged. |
+| Limits | A vacuum null (`p = 0`) and a certain occupation (`p = 1`) send nothing. A notice identity already in the bank is ignored; a Node that has retired ignores notices. A Node holds at most one pending notice per Port. |
+| Acceptance | Factor 25/9 after a 16/25 null; one-Link and two-Link arrival ticks; forwarding away from the arrival Port; duplicate and retired rejection; the fixed bank; exact 9/16 emission after the next gate; unchanged behavior without the option. |
+
+For one excitation in the domain the delivered factor equals the exact
+conditional renormalization: after all notices have arrived, every scaled
+weight equals the quantum owner's conditional Born weight for that Node. The
+[two-arm experiment](../examples/quantum/causal_interference.md) records this:
+the source recovers to 25 of 25 units one Link after an arm null, and the next
+gate emits 9 and 16, the conditional weights, instead of 3 and 5.
+
+The approximation remains causal. Between the null and the notice's arrival a
+remote Node still emits its stale weight, and a second null decided before an
+earlier notice reached the deciding Node computes its factor from a stale
+scale. The scale is a multiplier of squared weights, so no square root enters;
+two-mode gates combine amplitudes, not scales, and a gate between a Node that
+has received a notice and one that has not is the residual error of this
+candidate. For several excitations or entangled registers the local factor is
+the marginal renormalization only, and the departure from conditional weights
+is not removed. The clip at one and the fixed notice bank are explicit bounds,
+not physical claims.
 
 ## Configuration, implementation and acceptance
 
