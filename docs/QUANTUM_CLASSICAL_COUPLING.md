@@ -235,4 +235,6 @@ integer realization, not any of the parts.
 Until at least one of these exists, the correct description of this work is
 an exact, reproducible, local integer hybrid model with a measured
 interference and decoherence behavior and a measured, explained departure
-from conditional Born weights.
+from conditional Born weights. The questions the framework raises beyond
+these, with what a run could and could not decide about each, are kept on
+the [hypotheses page](HYPOTHESES.md), apart from the results.
