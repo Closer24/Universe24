@@ -1943,3 +1943,25 @@ ticket. The Bell probe runs it with `--capture threshold`.
 
 Hidden variables instead of dice reach the bound and stop there, as Bell's
 theorem requires of any local model; the quantum excess stays out of reach.
+
+## Bonded rays: the split of postulate 4 and the quantum CHSH value — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Postulate 4 is split: energy, momentum,
+matter and every controllable message move at most one Node per step; the
+joint outcome of a bonded pair is answered for both ends at once by the bond
+registry, one object for the world. A Kerengonen field may add `bond`
+(`bonded-ray-field-v1`), an emission `bond_field`, an absorb rule
+`bond_setting`; the registry answers the first question on a bond by an
+even coin and the second so that the ends agree with probability
+`(1 - cos(difference)) / 2`. The Bell probe runs it with `--capture bond`.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 70 files, 2,456 tests with five visualization skips |
+| New tests | `tests/test_bonds.py`: 400 first answers split 150 to 250 each way, equal settings always disagree, a half turn always agree, a quarter turn agree 150 to 250 times of 400; seed at the modulus and a bond of zero rejected. `tests/test_bell_chsh.py`: equal settings never agree and a half turn always do for three seeds; one seed per slot gives E = -0.7188, 0.8125, -0.7188, -0.7188, S = 2.9689 and E(0, 0) = -1.0, above 2; bond seed at the modulus, bond_field and bond_setting without a bonded field, and a bond without kerengonen rejected |
+| CHSH, bonded | 16 registry seeds x 64 slots x 4 setting pairs: E = -0.7188, 0.707, -0.7188, -0.7188 against the quantum -0.7071, 0.7071, -0.7071, -0.7071; S = 2.8634 (quantum 2.8284, local bound 2); E(0, 0) = -1.0; plus rates 0.47 to 0.52 on either side whatever the other side's setting; no missing pair of 4,096; every run closed |
+| Visualization | Not requested or generated |
+
+The three captures on one probe: lottery 1.48, deterministic hidden
+variables 2.00, bond 2.86 against the quantum 2.83; the last needs the split
+of postulate 4 and nothing else.

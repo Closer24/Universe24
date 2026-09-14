@@ -55,3 +55,44 @@ def test_deterministic_hidden_variables_reach_the_bound_and_stop_there():
     assert [value["predicted_E"] for value in result["correlations"].values()] == [-0.5, 0.5, -0.5, -0.5]
     assert result["S"] == 2.0 == result["local_bound"] < result["quantum_S"]
     assert result["same_setting_E"] == -0.9375
+
+
+def test_bonded_pairs_break_the_local_bound_with_the_singlet_law():
+    for seed in (1, 2, 3):
+        same = PROBE.outcomes(PROBE.document(0, 0, 0, seed, capture="bond"))
+        opposite = PROBE.outcomes(PROBE.document(0, 0, PROBE.HALF_TURN, seed, capture="bond"))
+        # Equal settings never agree, settings a half turn apart always do; both closed.
+        assert same["alice"] == -same["bob"] and same["closed"]
+        assert opposite["alice"] == opposite["bob"] and opposite["closed"]
+    result = PROBE.chsh(seeds=1, capture="bond")
+    assert result["closed"] and result["predicted_S"] == 2.8284
+    assert all(value["missing"] == 0 for value in result["correlations"].values())
+    assert [value["E"] for value in result["correlations"].values()] == [
+        -0.7188,
+        0.8125,
+        -0.7188,
+        -0.7188,
+    ]
+    assert result["S"] == 2.9689 and result["same_setting_E"] == -1.0
+    assert result["S"] > result["local_bound"]
+
+
+def test_bonds_are_validated():
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    raw["spatial_fields"][0]["bond"]["seed"] = 1073741789
+    with pytest.raises(ValueError, match="ticket modulus"):
+        parse_initial_state(raw)
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    del raw["spatial_fields"][0]["bond"]
+    with pytest.raises(ValueError, match="bond_field requires"):
+        parse_initial_state(raw)
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    del raw["spatial_fields"][0]["bond"]
+    for rule in raw["emissions"]:
+        rule.pop("bond_field", None)
+    with pytest.raises(ValueError, match="bond_setting requires"):
+        parse_initial_state(raw)
+    raw = PROBE.document(0, 0, 0, 1, capture="bond")
+    del raw["spatial_fields"][0]["kerengonen"]
+    with pytest.raises(ValueError, match="requires a kerengonen"):
+        parse_initial_state(raw)

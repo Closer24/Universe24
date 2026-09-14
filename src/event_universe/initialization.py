@@ -903,6 +903,7 @@ def _spatial_fields(
                 "metric",
                 "pace",
                 "claim",
+                "bond",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -927,6 +928,7 @@ def _spatial_fields(
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
         claim_ticks, claim_slots = 0, 0
+        bond_seed = -1
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
@@ -945,6 +947,13 @@ def _spatial_fields(
                 claim_slots = _integer(claim["slots"], "claim.slots", 1)
                 if claim_slots > MAX_CLAIM_SLOTS:
                     raise ValueError("claim.slots must be at most 64")
+            if "bond" in obj:
+                if "kerengonen" not in obj:
+                    raise ValueError("bond requires a kerengonen ray field: settings are phase steps")
+                bond = _object(obj["bond"], "bond", {"seed"}, {"seed"})
+                bond_seed = _integer(bond["seed"], "bond.seed", 0)
+                if bond_seed >= TICKET_MODULUS:
+                    raise ValueError("bond.seed must be below the ticket modulus")
             if "kerengonen" in obj:
                 # Kerengonen: phased rays. Both keys are required and explicit.
                 phased = _object(
@@ -987,10 +996,12 @@ def _spatial_fields(
             rays_per_tick = _integer(obj["rays_per_tick"], "rays_per_tick", 1)
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
-        elif (ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "claim"}) & obj.keys():
+        elif (
+            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "claim", "bond"}
+        ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace "
-                "and claim require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
+                "claim and bond require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1028,6 +1039,7 @@ def _spatial_fields(
                 pace_denominator,
                 claim_ticks,
                 claim_slots,
+                bond_seed,
             )
         )
     return tuple(result)
@@ -1060,6 +1072,7 @@ def _emissions(
                 "dissolve",
                 "train_field",
                 "heading",
+                "bond_field",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1185,6 +1198,13 @@ def _emissions(
             if fixed not in spatial[index].headings:
                 raise ValueError("emission.heading must be one of the field's headings")
             fixed_heading = spatial[index].headings.index(fixed)
+        bond_field: int | None = None
+        if "bond_field" in obj:
+            if not spatial[index].bonded:
+                raise ValueError("bond_field requires a bonded ray field")
+            bond_field = _index(obj["bond_field"], _names(fields), "emission.bond_field")
+            if bond_field not in owned or fields[bond_field].components != 1:
+                raise ValueError("bond_field must be a scalar owned by the emitting type")
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1216,6 +1236,7 @@ def _emissions(
                 train_field,
                 train_carried,
                 fixed_heading,
+                bond_field,
             )
         )
     return tuple(result)
@@ -1290,6 +1311,7 @@ def _spatial_couplings(
                 "fraction_denominator",
                 "claim",
                 "capture_salt",
+                "bond_setting",
             },
             required,
         )
@@ -1315,6 +1337,7 @@ def _spatial_couplings(
                     "fraction_denominator",
                     "claim",
                     "capture_salt",
+                    "bond_setting",
                 },
                 required,
             )
@@ -1327,6 +1350,13 @@ def _spatial_couplings(
                 raise ValueError("capture_salt requires the lottery capture")
             if capture_salt >= TICKET_MODULUS:
                 raise ValueError("capture_salt must be below the ticket modulus")
+            bond_setting: int | None = None
+            if "bond_setting" in obj:
+                if not definition.bonded:
+                    raise ValueError("bond_setting requires a bonded ray field")
+                bond_setting = _index(obj["bond_setting"], field_names, "spatial coupling.bond_setting")
+                if bond_setting not in owned or fields[bond_setting].components != 1:
+                    raise ValueError("bond_setting must be a scalar owned by the absorbing type")
             if claim and not definition.claims:
                 raise ValueError("a claiming absorb rule requires a ray field with claims")
             if schema_version != 1:
@@ -1370,6 +1400,7 @@ def _spatial_couplings(
                     fraction_denominator,
                     claim,
                     capture_salt,
+                    bond_setting,
                 )
             )
             continue

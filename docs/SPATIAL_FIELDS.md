@@ -375,6 +375,28 @@ measures an isotropic wave gathered by one screen and contested by two, and
 the double slit landing a whole particle at one screen Node with the
 probability of its wave.
 
+### Bonded rays (`bonded-ray-field-v1`)
+
+The one declared exception to the causal bound, split off in postulate 4. A
+Kerengonen ray field may add `"bond": {"seed": s}` (identity
+`bonded-ray-field-v1` in the run metadata); an emission with
+`"bond_field": "<owned scalar>"` then bonds every ray it emits with that
+value, so two rays emitted together by two records holding the same value
+are one pair. An absorb rule with `"bond_setting": "<owned scalar>"` is a
+detector whose setting is that field's value in phase steps. When such a
+record meets a bonded ray it does not draw a ticket or read the coherence: it
+asks the bond registry, one object for the whole world seeded by `s`. The
+first question on a bond is answered by an even coin and remembered with its
+setting; the second, at another setting, is answered so that the two ends
+agree with probability `(1 - cos(difference)) / 2` from the fixed cosine
+table, the singlet's law. An answer of +1 takes the whole ray, -1 leaves it
+to walk on. The registry's second answer knows the first at once, at any
+distance; it moves no energy, no momentum and no message, since each end
+alone sees an even coin whatever the other end's setting. Rays merge only
+within one bond. The registry lives in one process: bonded worlds run on a
+single Node worker. The [Bell probe](../examples/bell-chsh/README.md) with
+`--capture bond` measures the quantum value of S with it.
+
 ## Finite completed-link decay
 
 Schema 2 requires integer parameters `0 <= p < q <= 1_073_741_823`, with

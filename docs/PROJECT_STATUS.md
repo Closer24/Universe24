@@ -171,7 +171,10 @@ the flood's parent ports, and the record takes them whole; the
 [claim and gather probe](../examples/claim-gather/README.md) lands a whole
 particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
 two phased rays from one source through CHSH detectors built from the
-coherence and the lottery, and measures S below the local bound 2. The
+coherence and the lottery, and measures S below the local bound 2 for the
+lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
+(`bonded-ray-field-v1`, the declared split of postulate 4) the registry
+answers the pair's joint outcome and S reaches 2.86. The
 [gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
 gathering a gravity train focuses the pull like unseen mass: it does not.
 

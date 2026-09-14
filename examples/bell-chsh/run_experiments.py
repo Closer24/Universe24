@@ -56,7 +56,11 @@ def document(
 
     With capture "threshold" the detectors are deterministic hidden-variable
     devices: a ray is taken when its coherence with the reference reaches one
-    half, so the outcome is fixed by lambda and the setting alone.
+    half, so the outcome is fixed by lambda and the setting alone. With capture
+    "bond" the two rays share a bond and each plus detector holds its setting:
+    the bond registry, the declared exception to the causal bound, answers for
+    both ends with the singlet's joint law; the seed then seeds the registry
+    and there are no reference lamps.
     """
     body = {
         "fields": ["quanta", "momentum"],
@@ -64,7 +68,12 @@ def document(
         "transport": {"mode": "hold"},
     }
     plus_alice, plus_bob = CENTER - DISTANCE, CENTER + DISTANCE
-    return {
+    bonded = capture == "bond"
+    detector = {
+        "fields": ["quanta", "momentum", "setting"],
+        "transport": {"mode": "hold"},
+    }
+    raw = {
         "schema_version": 1,
         "model_id": "bell-chsh-ray-probe-v1",
         "shape": [WIDTH, 3, 3],
@@ -99,18 +108,34 @@ def document(
                 "conserved": False,
                 "extensive": False,
             },
+            {
+                "name": "bond",
+                "components": 1,
+                "units": "label",
+                "signed": False,
+                "conserved": False,
+                "extensive": False,
+            },
+            {
+                "name": "setting",
+                "components": 1,
+                "units": "phase step",
+                "signed": False,
+                "conserved": False,
+                "extensive": False,
+            },
         ],
         "disturbance_types": [
             {
                 "name": "source_alice",
-                "fields": ["quanta", "momentum", "train"],
-                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 1},
+                "fields": ["quanta", "momentum", "train", "bond"],
+                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 1, "bond": 1},
                 "transport": {"mode": "hold"},
             },
             {
                 "name": "source_bob",
-                "fields": ["quanta", "momentum", "train"],
-                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 2},
+                "fields": ["quanta", "momentum", "train", "bond"],
+                "defaults": {"quanta": 1, "momentum": [0, 0, 0], "train": 2, "bond": 1},
                 "transport": {"mode": "hold"},
             },
             {
@@ -125,9 +150,17 @@ def document(
                 "defaults": {"quanta": ticks, "momentum": [0, 0, 0]},
                 "transport": {"mode": "hold"},
             },
-            {"name": "plus_alice", **body},
+            {
+                "name": "plus_alice",
+                **detector,
+                "defaults": {"quanta": 0, "momentum": [0, 0, 0], "setting": alice % PHASE_STEPS},
+            },
             {"name": "minus_alice", **body},
-            {"name": "plus_bob", **body},
+            {
+                "name": "plus_bob",
+                **detector,
+                "defaults": {"quanta": 0, "momentum": [0, 0, 0], "setting": bob % PHASE_STEPS},
+            },
             {"name": "minus_bob", **body},
         ],
         "spatial_fields": [
@@ -141,10 +174,11 @@ def document(
                 "kerengonen": {
                     "phase_steps": PHASE_STEPS,
                     "phase_advance": 0,
-                    "capture": capture,
+                    "capture": "share" if bonded else capture,
                     **({"capture_seed": seed} if capture == "lottery" else {}),
                 },
                 "claim": {"ticks": 4 * ticks, "slots": 4},
+                **({"bond": {"seed": seed}} if bonded else {}),
             }
         ],
         "emissions": [
@@ -158,6 +192,7 @@ def document(
                 "kerengonen_phase": hidden_phase % PHASE_STEPS,
                 "train_field": "train",
                 "heading": [-1, 0, 0],
+                **({"bond_field": "bond"} if bonded else {}),
             },
             {
                 "type": "source_bob",
@@ -169,6 +204,7 @@ def document(
                 "kerengonen_phase": (hidden_phase + HALF_TURN) % PHASE_STEPS,
                 "train_field": "train",
                 "heading": [1, 0, 0],
+                **({"bond_field": "bond"} if bonded else {}),
             },
             {
                 "type": "reference_alice",
@@ -200,6 +236,8 @@ def document(
                 "claim": True,
                 # Each detector draws its own ticket sequence: two devices, two dice.
                 **({"capture_salt": salt} if capture == "lottery" else {}),
+                # Bonded: the plus detectors hold their settings; the registry answers.
+                **({"bond_setting": "setting"} if bonded and name.startswith("plus") else {}),
                 "type": name,
             }
             for name, salt in (
@@ -220,6 +258,16 @@ def document(
             {"position": [plus_bob, 2, 1], "type": "reference_bob"},
         ],
     }
+    if bonded:
+        # No reference lamps: the setting lives in the detector, the coin in the registry.
+        raw["disturbance_types"] = [
+            kind for kind in raw["disturbance_types"] if not kind["name"].startswith("reference")
+        ]
+        raw["emissions"] = [
+            rule for rule in raw["emissions"] if not rule["type"].startswith("reference")
+        ]
+        raw["seeds"] = [seed_ for seed_ in raw["seeds"] if not seed_["type"].startswith("reference")]
+    return raw
 
 
 def outcomes(raw: dict) -> dict:
@@ -256,7 +304,9 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lotter
     closed = True
     for hidden in range(PHASE_STEPS):
         for seed in range(1, seeds + 1):
-            result = outcomes(document(hidden, alice, bob, seed, capture=capture))
+            # A bonded pair has no hidden phase: every run seeds the registry afresh.
+            registry_seed = hidden * seeds + seed if capture == "bond" else seed
+            result = outcomes(document(hidden, alice, bob, registry_seed, capture=capture))
             closed = closed and result["closed"]
             if result["alice"] is None or result["bob"] is None:
                 missing += 1
@@ -271,6 +321,9 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lotter
         fraction = (abs(alice - bob) % PHASE_STEPS) / PHASE_STEPS
         fraction = min(fraction, 1 - fraction)
         predicted = -(1 - 4 * fraction)
+    elif capture == "bond":
+        # The registry draws the singlet: the quantum correlation itself.
+        predicted = -math.cos(turn)
     else:
         predicted = -0.5 * math.cos(turn)
     return {
@@ -324,10 +377,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seeds", type=int, default=SEEDS)
-    parser.add_argument("--capture", choices=("lottery", "threshold"), default="lottery")
+    parser.add_argument("--capture", choices=("lottery", "threshold", "bond"), default="lottery")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    result = chsh(args.seeds if args.capture == "lottery" else 1, args.capture)
+    result = chsh(args.seeds if args.capture != "threshold" else 1, args.capture)
     report = {
         "source_sha256": source_fingerprint(),
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

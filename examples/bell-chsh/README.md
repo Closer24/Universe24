@@ -71,6 +71,21 @@ the correlation is the triangle wave of the sign model:
 | Plus rates | 0.5156 on both sides |
 | Missing pairs, closure | 0 of 256; every run closed |
 
+With `--capture bond` the two rays share a bond, the plus detectors hold
+their settings, there are no reference lamps, and the
+[bond registry](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
+answers for both ends with the singlet's law: the split of postulate 4, the
+one influence that skips Nodes and carries nothing physical. 16 registry
+seeds per hidden-phase slot, 1,024 pairs per correlation:
+
+| Quantity | Bonded value |
+| --- | --- |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -0.719, 0.707, -0.719, -0.719 (quantum -0.707, 0.707, -0.707, -0.707) |
+| S | 2.863 (quantum 2.828, local bound 2) |
+| Same setting, E(0, 0) | -1.0 |
+| Plus rates, Alice and Bob | 0.47 to 0.52, whatever the other side's setting |
+| Missing pairs, closure | 0 of 4,096; every run closed |
+
 Per detector Malus's law holds: over 32 seeds the plus rate at hidden phase
 0, 8, 16, 24 and 32 steps reads 1.0, 0.84, 0.53, 0.12 and 0.0 against
 `cos^2` 1.0, 0.85, 0.5, 0.15 and 0.0, and Bob's the complement. The first
@@ -87,7 +102,9 @@ hidden variables the equal-setting correlation becomes near perfect and S
 rises to exactly 2, the bound itself, and not a step beyond it. Hidden
 variables instead of dice buy the missing half of the correlation and stop
 at the theorem's line, because the outcome at each side still depends only
-on what is at that side. The excess that the quantum singlet shows, `2 sqrt
-2`, is what no rule on this lattice can produce, whatever the capture, the
-claim or the pace: the ray explains the shared origin and the collapse's
-timing, not the correlation beyond the bound.
+on what is at that side. The bond gives the third answer: with the pair's
+joint outcome answered once for both ends, S reaches the quantum value, the
+equal-setting correlation is perfect, and each side alone still sees an even
+coin, so nothing signals. The ray carries everything physical at link speed;
+the bond carries the one thing the experiments say is not carried. What the
+registry is, beyond a table the world shares, the model does not say.

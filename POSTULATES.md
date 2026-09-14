@@ -180,6 +180,17 @@ Physical influence cannot skip nodes. It travels at most one neighboring node pe
 elementary step. This is the role of c: the maximum propagation speed of causal
 influence in the simulator. Oracle evaluation is not physical propagation.
 
+The bound is split in two, as the experiments split it. Energy, momentum,
+matter and every message that a record can control move at most one Node per
+step, without exception. The joint outcome of a bonded pair, two rays emitted
+together, is the one thing that does not: when either end is measured, the
+bond registry answers for both ends at once, at any distance (the
+[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
+That answer carries no energy, no momentum and no message, because each end
+alone sees an even coin whatever the other end does; it is the correlation
+Bell's test measures beyond the local bound, and nothing else. A world with
+no bonded field has no exception at all.
+
 A particle can also move at most one neighbor per step. The same movement law
 applies at all speeds; there are no separate low-speed and high-speed laws.
 
@@ -354,8 +365,12 @@ The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
 rule on this lattice can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
-the theorem says. That excess is the open question of this section, answered
-in this repository only by the explicitly nonlocal quantum query.
+the theorem says. The excess is reached only by the bonded ray field, which
+takes the split of postulate 4: the pair's joint outcome is answered for both
+ends at once by the bond registry, with no energy, momentum or message in it,
+and S rises to the quantum value. The ray then carries everything physical at
+link speed and the bond carries the one thing the experiments say is not
+carried: the correlation. What remains open is what the registry is.
 
 The dark-matter question was put to the same rule. Gathering a gravity train
 to whoever catches a ray of it does focus the pull, but into the momentum of

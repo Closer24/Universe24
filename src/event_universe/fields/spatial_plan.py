@@ -41,6 +41,7 @@ from event_universe.core.spatial_state import (
     validate_rays,
 )
 
+from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .rays import emit_rays, forward_rays, validate_ray_definition
@@ -55,6 +56,9 @@ class SpatialLaw:
     costs: OperationCosts
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     absorptions: tuple[SpatialCouplingDefinition, ...] = ()
+    # The one shared object: the bond registry, the declared exception to the
+    # causal bound. None when no field is bonded.
+    bonds: BondRegistry | None = None
 
     def _own_departed_keys(
         self, record: DisturbanceRecord, index: int, meter: CostMeter
@@ -260,7 +264,13 @@ class SpatialLaw:
                         # truncated share stay within the working register.
                         share_numerator //= 2
                         share_denominator //= 2
-                    if lottery:
+                    if rule.bond_setting is not None and ray.bond and self.bonds is not None:
+                        # A bonded ray: the registry answers for both ends of the pair.
+                        setting = unpack(record.values[rule.bond_setting])[0]
+                        meter.charge("evaluate")
+                        if self.bonds.draw(ray.bond, setting, ray_salt(ray)) < 0:
+                            share = 0
+                    elif lottery:
                         # Whole ray or nothing: the local ticket draws against the share.
                         ticket = next_ticket(ticket, ray_salt(ray))
                         meter.charge("evaluate")
@@ -560,6 +570,12 @@ class SpatialLaw:
                         if train < 0:
                             raise ValueError("a train must not be negative")
                         new_rays = tuple(replace(ray, train=train) for ray in new_rays)
+                        meter.charge("update", len(new_rays))
+                    if rule.bond_field is not None and new_rays:
+                        bond = unpack(record_values[rule.bond_field])[0]
+                        if bond < 0:
+                            raise ValueError("a bond must not be negative")
+                        new_rays = tuple(replace(ray, bond=bond) for ray in new_rays)
                         meter.charge("update", len(new_rays))
                     emitted_rays[rule.spatial_field].extend(new_rays)
                     if rule.recoil_field is not None and new_rays:

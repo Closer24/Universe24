@@ -77,6 +77,9 @@ class Ray:
     # a ray no claim can gather, and whether a claim has turned it homeward.
     train: int = 0
     homing: int = 0
+    # Bonded pairs only: the bond this ray shares with the ray emitted with it,
+    # zero for an unbonded ray.
+    bond: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -147,10 +150,16 @@ class SpatialFieldDefinition:
     # was opened, at most claim_slots claims at once. Zero ticks disables claims.
     claim_ticks: int = 0
     claim_slots: int = 0
+    # Bonded pairs only: the seed of the world's bond registry, -1 for none.
+    bond_seed: int = -1
 
     @property
     def rays(self) -> bool:
         return self.transport == "ray"
+
+    @property
+    def bonded(self) -> bool:
+        return self.bond_seed >= 0
 
     @property
     def euclidean(self) -> bool:
@@ -258,6 +267,8 @@ class EmissionDefinition:
     # Ray fields only: emit every ray on this one heading of the sequence instead
     # of sweeping the sequence (a directed emitter). None sweeps.
     heading: int | None = None
+    # Bonded fields only: the owned scalar whose value bonds every emitted ray.
+    bond_field: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -284,6 +295,9 @@ class SpatialCouplingDefinition:
     # Absorb mode with the lottery only: added to the field's capture seed for
     # this rule's ticket, so two detectors draw their own sequences.
     capture_salt: int = 0
+    # Absorb mode on a bonded field only: the owned scalar holding this
+    # detector's setting; a bonded ray is taken or left by the bond registry.
+    bond_setting: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -460,6 +474,10 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray homing must be 0 or 1")
         if ray.homing and not (definition.claims and ray.train):
             raise ValueError("a homing ray requires a claim field and a train")
+        if type(ray.bond) is not int or bounded(ray.bond) < 0:
+            raise ValueError("ray bond must be a nonnegative bounded integer")
+        if ray.bond and not definition.bonded:
+            raise ValueError("a bonded ray requires a bonded field")
 
 
 def validate_claims(claims: Claims, definition: SpatialFieldDefinition) -> None:
@@ -511,13 +529,22 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int, int], int] = {}
     for ray in rays:
-        key = (ray.heading, ray.accumulators, ray.phase, ray.advance, ray.wait, ray.train, ray.homing)
+        key = (
+            ray.heading,
+            ray.accumulators,
+            ray.phase,
+            ray.advance,
+            ray.wait,
+            ray.train,
+            ray.homing,
+            ray.bond,
+        )
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing)
-        for (heading, accumulators, phase, advance, wait, train, homing), amount in sorted(
+        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing, bond)
+        for (heading, accumulators, phase, advance, wait, train, homing, bond), amount in sorted(
             combined.items()
         )
         if amount
