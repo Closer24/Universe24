@@ -11,7 +11,7 @@ For each v0 the probe reports the mean distance of the bodies from the centre
 over time, whether the bodies turned around (recollapse) or left the slab
 (escape), and the speed at which the two regimes separate.
 
-usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks]
+usage: python examples/relativity-probes/cosmic_expansion.py [emission] [denominator] [R] [ticks] [open|periodic] [rays] [side] [depth]
 """
 
 import sys
@@ -24,13 +24,49 @@ EMISSION = int(sys.argv[1]) if len(sys.argv) > 1 else 24000
 DENOMINATOR = int(sys.argv[2]) if len(sys.argv) > 2 else 80
 R = int(sys.argv[3]) if len(sys.argv) > 3 else 5
 TICKS = int(sys.argv[4]) if len(sys.argv) > 4 else 60
-SHAPE = [29, 29, 3]
-CENTER = (14, 14, 1)
+# "periodic": a closed universe; nothing escapes and the field accumulates.
+BOUNDARY = sys.argv[5] if len(sys.argv) > 5 else "open"
+# "rays": the masses emit straight rays (isotropic far field) instead of octants.
+RAYS = len(sys.argv) > 6 and sys.argv[6] == "rays"
+# Box side in x and y; a periodic box must be wide enough that no body meets its
+# own image within the run (a body at c covers ticks links).
+SIDE = int(sys.argv[7]) if len(sys.argv) > 7 else 29
+# Extent of the third dimension. Closed and short, it is the scale beyond which
+# the field spreads in two dimensions instead of three.
+DEPTH = int(sys.argv[8]) if len(sys.argv) > 8 else 3
+SHAPE = [SIDE, SIDE, DEPTH]
+CENTER = (SIDE // 2, SIDE // 2, DEPTH // 2)
 AXES = ((1, 0), (-1, 0), (0, 1), (0, -1))
 
 
 def op(name, *args):
     return {"op": name, "args": list(args)}
+
+
+def computation_definition():
+    if RAYS:
+        from pathlib import Path
+
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        saved, sys.argv = sys.argv, sys.argv[:1]  # gravity_lensing parses its own argv
+        from gravity_lensing import (
+            RAY_HEADINGS,
+            RAY_SCALE,
+            RAY_SLOTS,
+            RAYS_PER_TICK,
+            golden_headings,
+        )
+
+        sys.argv = saved
+        return {
+            "field": "computation",
+            "baseline": 0,
+            "transport": "ray",
+            "headings": golden_headings(RAY_HEADINGS, RAY_SCALE),
+            "rays_per_tick": RAYS_PER_TICK,
+            "ray_slots": RAY_SLOTS,
+        }
+    return {"field": "computation", "baseline": 0, "transport": "outward"}
 
 
 def document(v0, emission):
@@ -46,13 +82,12 @@ def document(v0, emission):
     return {
         "schema_version": 1,
         "model_id": f"four-body-universe-v0-{v0}-v1",
-        "boundary": "open",
+        "boundary": BOUNDARY,
         "shape": SHAPE,
         "slots_per_node": 4,
         "link_ticks": 1,
         "normal_budget": 1_000_000,
         "ticks": TICKS,
-        "computation_field": "computation",
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
             {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
@@ -97,7 +132,7 @@ def document(v0, emission):
             }
         ],
         "spatial_fields": [
-            {"field": "computation", "baseline": 0, "transport": "outward"},
+            computation_definition(),
             {"field": "momentum", "baseline": [0, 0, 0], "transport": "outward"},
         ],
         "emissions": [
@@ -121,6 +156,18 @@ def document(v0, emission):
         ],
         "seeds": seeds,
     }
+
+
+def signed_gap(value, origin, size):
+    """Displacement from the centre along one axis, through the nearest image when closed."""
+    gap = value - origin
+    if BOUNDARY == "periodic" and abs(gap) > size // 2:
+        gap -= size if gap > 0 else -size
+    return gap
+
+
+def axis_gap(value, origin, size):
+    return abs(signed_gap(value, origin, size))
 
 
 def positions(world):
@@ -150,8 +197,13 @@ def run(v0, emission):
                 escaped[e["values"]["tag"][0]] = e["tick"]
         found = positions(world)
         if tick % 10 == 0 or tick == 1:
-            distances = [abs(p[0] - CENTER[0]) + abs(p[1] - CENTER[1]) for p, _ in found.values()]
-            radial = [(p[0] - CENTER[0]) * m[0] + (p[1] - CENTER[1]) * m[1] for p, m in found.values()]
+            distances = [
+                sum(axis_gap(p[i], CENTER[i], SHAPE[i]) for i in range(2)) for p, _ in found.values()
+            ]
+            radial = [
+                sum(signed_gap(p[i], CENTER[i], SHAPE[i]) * m[i] for i in range(2))
+                for p, m in found.values()
+            ]
             history.append(
                 (
                     tick,
@@ -178,7 +230,10 @@ def label(history, escaped):
 
 
 if __name__ == "__main__":
-    print(f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}")
+    print(
+        f"emission {EMISSION}, denominator {DENOMINATOR}, R {R}, ticks {TICKS}, "
+        f"boundary {BOUNDARY}, field {'rays' if RAYS else 'octants'}, side {SIDE}, depth {DEPTH}"
+    )
     print("control without a field: v0 = 60 ->", label(*run(60, 0)))
     for v0 in (0, 15, 30, 45, 60, 90, 120):
         history, escaped = run(v0, EMISSION)

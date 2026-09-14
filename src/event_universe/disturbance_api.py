@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
+from event_universe.fields.bonds import BondRegistry
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.node_conservation import LocalBalanceGuard
 from event_universe.fields.record_operations import RecordOperations
@@ -35,6 +36,9 @@ class Simulation(DisturbanceEngine):
 
             event_space, resolver = build_event_runtime(initial)
         responses = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
+        bonded = [field for field in initial.spatial_fields if field.bonded]
+        if bonded and type(node_workers) is int and node_workers > 1:
+            raise ValueError("bonded rays share one registry and require a single Node worker")
         spatial_law = SpatialLaw(
             initial.fields,
             initial.spatial_fields,
@@ -45,6 +49,7 @@ class Simulation(DisturbanceEngine):
             allocation_phase=initial.allocation_phase,
             computation_field=initial.computation_field,
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
+            bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps) if bonded else None,
         )
         super().__init__(
             initial,

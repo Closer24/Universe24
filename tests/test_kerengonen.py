@@ -368,7 +368,7 @@ def test_lottery_capture_takes_whole_rays_with_the_coherent_probability():
 def test_lottery_capture_is_validated():
     raw = lottery_document(4, 1, 0)
     raw["spatial_fields"][0]["kerengonen"]["capture"] = "dice"
-    with pytest.raises(ValueError, match="share or lottery"):
+    with pytest.raises(ValueError, match="share, lottery or threshold"):
         parse_initial_state(raw)
     raw = lottery_document(4, 1, 0)
     raw["spatial_fields"][0]["kerengonen"]["capture"] = "share"
@@ -454,7 +454,7 @@ def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it(
     # A carried phase needs an absorb rule for the emitter on that field.
     raw = huygens_document()
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
-    with pytest.raises(ValueError, match="carried kerengonen_phase requires"):
+    with pytest.raises(ValueError, match="requires an absorb rule on the same field"):
         parse_initial_state(raw)
 
 
@@ -531,3 +531,323 @@ def test_a_slit_carries_the_absorbed_advance_with_the_phase():
             world.step()
         readings.append(value_at(world, 3))
     assert readings == [2, 4, 0]
+
+
+def mirror_document(advance=4, mirror_x=6, ticks=24, phase_b=0):
+    """Lamp A at x = -6 fires +x; a mirror at x = mirror_x sends the wave back along -x."""
+    raw = two_lamps(64, 1, ticks=ticks)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [-1, 0, 0]]
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64, "phase_advance": advance}
+    raw["disturbance_types"].append(
+        {
+            "name": "mirror",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        }
+    )
+    raw["emissions"] = [
+        {
+            "type": "lamp_a",
+            "field": "quanta",
+            "amount": 8,
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+        },
+        {
+            "type": "mirror",
+            "field": "quanta",
+            "amount": {"field": "quanta"},
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+            "kerengonen_phase": "carried",
+            "kerengonen_mirror": "x",
+        },
+    ]
+    raw["spatial_couplings"].append(
+        {
+            "name": "mirror_absorbs",
+            "type": "mirror",
+            "field": "quanta",
+            "mode": "absorb",
+            "momentum_field": "momentum",
+        }
+    )
+    raw["seeds"] = [
+        {"position": [CENTER - 6, CENTER, CENTER], "type": "lamp_a"},
+        {"position": [CENTER + mirror_x, CENTER, CENTER], "type": "mirror"},
+    ]
+    return raw
+
+
+def test_a_mirror_sends_the_wave_back_along_the_reflected_heading_as_a_standing_wave():
+    # The lamp fires 4 quanta each way every tick; the +x rays reach the mirror at
+    # x = 6 after 12 links, phase 48 at advance 4. The mirror re-emits its stock along
+    # -x only, at the carried phase plus one advance. Between them incident and
+    # reflected rays meet with equal amounts: the reading is 8 cos^2 of half their
+    # phase difference, which changes by 2 x advance per link, so the standing wave
+    # repeats every 64 / (2 x advance) links: 8 at advance 4, 4 at advance 8.
+    world = Simulation(parse_initial_state(mirror_document(advance=4)))
+    for _ in range(24):
+        world.step()
+    rays = {
+        node.position[0] - CENTER: node.rays[0]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    # Reflected rays exist, travel -x, and carry the field's advance and the mirror's phase.
+    backward = [ray for x in rays for ray in rays[x] if ray.heading == 1 and x < 6]
+    assert backward and all(ray.advance == -1 for ray in backward)
+    mirror = next(
+        world.record_values(r)
+        for node in world.nodes.values()
+        for r in node.records
+        if r is not None and r.type_index == 3
+    )
+    # The mirror holds what it absorbed this cycle and has taken the reversed momentum.
+    assert mirror["quanta"] == (4,) and mirror["momentum"][0] > 0
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400
+    readings = [value_at(world, x) for x in range(-5, 6)]
+    assert readings == [0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5]
+    assert readings[:3] == readings[8:11]
+    faster = Simulation(parse_initial_state(mirror_document(advance=8)))
+    for _ in range(24):
+        faster.step()
+    readings = [value_at(faster, x) for x in range(-5, 6)]
+    assert readings[:3] == readings[4:7] == readings[8:11]
+    assert readings == [6, 1, 1, 6, 6, 1, 1, 6, 6, 1, 1]  # period 4, no exact node on this grid
+
+
+def test_the_mirror_emission_is_validated():
+    raw = mirror_document()
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [0, 1, 0]]
+    with pytest.raises(ValueError, match="mirror image"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    del raw["emissions"][1]["recoil_field"]
+    with pytest.raises(ValueError, match="recoil_field"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["emissions"][1]["kerengonen_mirror"] = "w"
+    with pytest.raises(ValueError, match="xy, xz or yz"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["spatial_couplings"] = raw["spatial_couplings"][:1]
+    with pytest.raises(ValueError, match="requires an absorb rule"):
+        parse_initial_state(raw)
+
+
+def test_a_directed_emitter_fires_one_heading_and_is_validated():
+    raw = mirror_document()
+    raw["emissions"][0]["heading"] = [-1, 0, 0]
+    world = Simulation(parse_initial_state(raw))
+    initial = world.totals()["quanta"][0]
+    for _ in range(6):
+        world.step()
+    headings = {
+        ray.heading
+        for node in world.inventory_view().nodes
+        for ray in (node.rays[0] if node.rays else ())
+    }
+    # Every ray of the lamp went along -x (heading index 1); nothing swept +x.
+    assert headings == {1}
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == initial
+    raw = mirror_document()
+    raw["emissions"][0]["heading"] = [0, 1, 0]
+    with pytest.raises(ValueError, match="one of the field's headings"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["emissions"][1]["heading"] = [1, 0, 0]
+    with pytest.raises(ValueError, match="kerengonen_mirror"):
+        parse_initial_state(raw)
+
+
+def test_a_thick_screen_absorbs_what_a_thin_one_lets_pass():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "double_slit_probe_thick",
+        Path(__file__).resolve().parents[1] / "examples/kerengonen-double-slit/run_experiments.py",
+    )
+    probe = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(probe)
+    headings = probe.planar_headings(32, probe.HEADING_SCALE)
+    thin = probe.run(probe.document(24, headings, screen_half=4))
+    thick = probe.run(probe.document(24, headings, screen_half=4, layers=3))
+    assert thin["quanta_closed"] and thick["quanta_closed"]
+    assert thick["layer_totals"][0] == thin["absorbed_total"]
+    assert thick["absorbed_total"] >= thin["absorbed_total"] and len(thick["layer_totals"]) == 3
+
+
+def dissolving_document(after=3, over=4, stock=10, ticks=12, moving=False):
+    """One particle of `stock` quanta on a one-heading field pays itself out on a schedule."""
+    raw = two_lamps(8, 1, ticks=ticks)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 1
+    raw["disturbance_types"] = [
+        {
+            "name": "particle",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": stock, "momentum": [4, 0, 0]},
+            "transport": {"mode": "hold"}
+            if not moving
+            else {
+                "mode": "move",
+                "direction_field": "momentum",
+                "rate": {"op": "min", "args": [1, {"field": "quanta"}]},
+                "rate_denominator": 1,
+            },
+        }
+    ]
+    raw["emissions"] = [
+        {
+            "type": "particle",
+            "field": "quanta",
+            "source": False,
+            "dissolve": {"after_ticks": after, "over_ticks": over},
+        }
+    ]
+    raw["spatial_couplings"] = []
+    raw["seeds"] = [{"position": [CENTER - 4, CENTER, CENTER], "type": "particle"}]
+    return raw
+
+
+def particle_stock(world):
+    return [
+        world.record_values(r)["quanta"][0]
+        for node in world.nodes.values()
+        for r in node.records
+        if r is not None and r.type_index == 0
+    ]
+
+
+def test_a_dissolving_record_pays_its_initial_stock_out_on_the_schedule():
+    world = Simulation(parse_initial_state(dissolving_document()))
+    stocks = []
+    for _ in range(9):
+        world.step()
+        stocks.append(particle_stock(world)[0])
+    # Nothing for three cycles, then ceil(10 / 4) = 3 per cycle until the last quantum.
+    assert stocks == [10, 10, 10, 7, 4, 1, 0, 0, 0]
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
+    # A moving particle keeps flying while it holds quanta and stops when empty; the
+    # schedule counts its own cycles wherever it is.
+    world = Simulation(parse_initial_state(dissolving_document(moving=True)))
+    positions = []
+    for _ in range(9):
+        world.step()
+        found = [
+            position[0] - CENTER
+            for position, node in world.nodes.items()
+            for r in node.records
+            if r is not None and r.type_index == 0
+        ]
+        positions.append(found[0] if found else None)
+    assert positions[0] == -3 and positions[5] == 2 and positions[6] == positions[8] == 2
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 10
+
+
+def test_dissolution_is_validated():
+    raw = dissolving_document()
+    raw["emissions"][0]["source"] = True
+    with pytest.raises(ValueError, match="funded emission on a ray field"):
+        parse_initial_state(raw)
+    raw = dissolving_document()
+    del raw["emissions"][0]["dissolve"]
+    with pytest.raises(ValueError, match="requires an amount"):
+        parse_initial_state(raw)
+    raw = dissolving_document()
+    raw["emissions"][0]["dissolve"] = {"after_ticks": 0, "over_ticks": 0}
+    with pytest.raises(ValueError, match="over_ticks"):
+        parse_initial_state(raw)
+
+
+def test_a_euclidean_pace_makes_the_wave_front_round_and_keeps_waiting_rays():
+    from event_universe.core.spatial_state import heading_paces, integer_sqrt
+
+    assert [integer_sqrt(v) for v in (0, 1, 2, 3, 4, 15, 16, 17, 1000000)] == [
+        0,
+        1,
+        1,
+        1,
+        2,
+        3,
+        4,
+        4,
+        1000,
+    ]
+    raw = two_lamps(64, 1, ticks=12)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [1, 1, 0], [1, 1, 1]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 3
+    raw["spatial_fields"][0]["metric"] = "euclidean"
+    definition = parse_initial_state(raw).spatial_fields[0]
+    paces = heading_paces(definition)
+    # Manhattan 1, 2, 3 against Euclidean 1, sqrt 2, sqrt 3: the body diagonal hops
+    # every tick and the axis ray once in sqrt 3 ticks.
+    assert paces[2] == (paces[2][0], paces[2][0]) and paces[0][1] == 4096
+    assert paces[0][0] == 2364 and paces[1] == (2364, 2896)
+    raw["emissions"] = raw["emissions"][:1]
+    raw["emissions"][0]["amount"] = 3
+    raw["seeds"] = raw["seeds"][:1]
+    world = Simulation(parse_initial_state(raw))
+    lamp = raw["seeds"][0]["position"][0]
+    reach = []
+    for _ in range(12):
+        world.step()
+        far = {}
+        for node in world.inventory_view().nodes:
+            for ray in node.rays[0] if node.rays else ():
+                offset = (node.position[0] - lamp, node.position[1] - CENTER, node.position[2] - CENTER)
+                far[ray.heading] = max(far.get(ray.heading, 0), sum(abs(o) for o in offset))
+        reach.append(far)
+    # The body diagonal hops every tick, so every heading moves 0.577 link-lengths of
+    # Euclidean distance per tick: after twelve ticks the first axis ray has made
+    # about 6.9 links, the first face diagonal 9.8 links along its staircase, the
+    # body diagonal 12; measured from the lamp, which keeps emitting behind them.
+    assert reach[-1][0] in (6, 7) and reach[-1][1] in (9, 10) and reach[-1][2] == 12
+    assert reach[3][0] == 2 and reach[3][2] == 4
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400
+    raw["spatial_fields"][0]["metric"] = "hops"
+    with pytest.raises(ValueError, match="links or euclidean"):
+        parse_initial_state(raw)
+
+
+def test_a_diagonal_mirror_swaps_the_heading_axes_and_a_fraction_makes_it_partial():
+    raw = mirror_document(advance=4)
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [0, 1, 0], [-1, 0, 0], [0, -1, 0]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 4
+    raw["emissions"][0]["amount"] = 8
+    raw["emissions"][1]["kerengonen_mirror"] = "xy"
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(16):
+        world.step()
+    # The +x ray reaching the mirror at x = 6 comes back along +y: the mirror's Node
+    # column above it holds rays of heading index 1 and nothing returns along -x.
+    rays = {
+        tuple(p - CENTER for p in node.position): [r.heading for r in node.rays[0]]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    above = [h for (x, y, z), hs in rays.items() if x == 6 and y > 0 for h in hs]
+    assert above and set(above) == {1}
+    assert not [h for (x, y, z), hs in rays.items() if 0 < x < 6 and y == 0 for h in hs if h == 2]
+    # A partial mirror: absorb a quarter, let the rest pass; the quarter comes back.
+    raw = mirror_document(advance=4)
+    raw["spatial_couplings"][-1].update({"fraction": 1, "fraction_denominator": 4})
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(20):
+        world.step()
+    rays = {
+        node.position[0] - CENTER: [(r.heading, r.amount) for r in node.rays[0]]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    passed = [amount for x, rs in rays.items() if x > 6 for h, amount in rs if h == 0]
+    reflected = [amount for x, rs in rays.items() if 0 < x < 6 for h, amount in rs if h == 1]
+    assert passed and set(passed) == {3} and reflected and set(reflected) == {1}
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400

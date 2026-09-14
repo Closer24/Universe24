@@ -220,6 +220,21 @@ def _execute_run(
             ),
             emission_interval_ticks=initial.link_ticks,
             self_field_filter="unsupported",
+            spatial_metric=(
+                "euclidean-ray-pace-v1"
+                if any(field.euclidean for field in initial.spatial_fields)
+                else "links"
+            ),
+            spatial_claims=(
+                "claim-gather-ray-field-v1"
+                if any(field.claims for field in initial.spatial_fields)
+                else "none"
+            ),
+            spatial_bonds=(
+                "bonded-ray-field-v1"
+                if any(field.bonded for field in initial.spatial_fields)
+                else "none"
+            ),
             spatial_policy=(
                 (
                     "finite-localizing-v1"
@@ -279,6 +294,11 @@ def _execute_run(
                 else f"directional-departure-delay-{initial.delay_direction}-v1"
             ),
             least_delay_routing=initial.least_delay_routing,
+        )
+    if initial.ray_delay:
+        metadata.update(
+            ray_delay=True,
+            ray_phase="per-tick-and-link" if initial.ray_phase_per_tick else "per-link",
         )
     if initial.spatial_fields:
         metadata.update(

@@ -71,6 +71,16 @@ a Node gates what is absorbed and sampled there while every amount stays whole.
 Its fixed law tables are prepared before stepping. Funded/absorbed ray owners
 currently reject delayed carrier plans; phased/attenuating self-exclusion composes with
 absorption only. See the exact [candidate bounds](docs/SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1).
+A ray field may set `"metric": "euclidean"` (`euclidean-ray-pace-v1`): rays
+wait at Nodes by their heading's pace, never faster than one link per tick, so
+every heading covers equal Euclidean distance per tick. A ray field with
+`claim` (`claim-gather-ray-field-v1`) gathers a captured train to the Node
+that captured it: a claim floods Node to Node at link speed, the train's rays
+turn homeward along its parent ports, and the capturing record takes them
+whole; the earlier of two claims wins where they meet. A Kerengonen field
+with `bond` (`bonded-ray-field-v1`) is the declared split of postulate 4:
+the joint outcome of a bonded pair is answered for both ends at once by one
+registry, carrying no energy, momentum or message.
 Schema version 1 retains those conservative spatial laws. Schema version 2
 selects finite attenuation, derived from the schema version independently of
 user-defined names. Every spatial field requires a bounded integer ratio

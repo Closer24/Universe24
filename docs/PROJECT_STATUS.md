@@ -198,6 +198,29 @@ places the candidate: with the quantum owner's four CHSH settings it measures
 1.40 exactly, one half of the owner's 14/5 in every correlation, and the plain
 field 2, so the classical candidate stays inside the local bound that the
 finite quantum owner exceeds.
+halves the fringe period each time the beam's momentum doubles, and the
+[matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
+pays its matter out as a wave train and lands it on the screen with the fringe
+of the momentum it flew with. A mirror emission re-emits along the reflected
+absorbed heading, and the [mirror probe](../examples/kerengonen-mirror/README.md)
+reads the standing wave between a lamp and a mirror with period
+`phase_steps / (2 x advance)`. A ray field may set `"metric": "euclidean"`
+(`euclidean-ray-pace-v1`): rays wait at Nodes by their heading's pace so every
+heading covers equal Euclidean distance per tick, and the
+[Euclidean pace probe](../examples/euclidean-pace/README.md) reads a round
+front and a fringe in Euclidean path difference. A ray field with `claim`
+(`claim-gather-ray-field-v1`) gathers a captured train: the capturing Node's
+claim floods the world at link speed, rays of that train turn homeward along
+the flood's parent ports, and the record takes them whole; the
+[claim and gather probe](../examples/claim-gather/README.md) lands a whole
+particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
+two phased rays from one source through CHSH detectors built from the
+coherence and the lottery, and measures S below the local bound 2 for the
+lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
+(`bonded-ray-field-v1`, the declared split of postulate 4) the registry
+answers the pair's joint outcome and S reaches 2.86. The
+[gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
+gathering a gravity train focuses the pull like unseen mass: it does not.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

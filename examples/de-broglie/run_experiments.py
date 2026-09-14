@@ -74,7 +74,9 @@ def document(
     }
     if phased:
         field["kerengonen"] = {"phase_steps": PHASE_STEPS, "phase_advance": 0}
-    magnitude = {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]}
+    # The de Broglie advance reads the momentum the emitter set out with; the
+    # momentum field itself takes the recoil of every emitted ray.
+    wavenumber = {"field": "wavenumber"}
     beam_emission: dict = {
         "type": "beam",
         "field": "matter",
@@ -92,7 +94,7 @@ def document(
         "recoil_field": "momentum",
     }
     if phased:
-        beam_emission["kerengonen_advance"] = {"amount": magnitude, "denominator": ADVANCE_DENOMINATOR}
+        beam_emission["kerengonen_advance"] = {"amount": wavenumber, "denominator": ADVANCE_DENOMINATOR}
         slit_emission["kerengonen_phase"] = "carried"
     body = {
         "fields": ["matter", "momentum"],
@@ -126,12 +128,24 @@ def document(
                 "conserved": True,
                 "extensive": True,
             },
+            {
+                "name": "wavenumber",
+                "components": 1,
+                "units": "matter quantum times heading",
+                "signed": False,
+                "conserved": False,
+                "extensive": False,
+            },
         ],
         "disturbance_types": [
             {
                 "name": "beam",
-                "fields": ["matter", "momentum"],
-                "defaults": {"matter": PER_RAY * count * ticks, "momentum": [momentum, 0, 0]},
+                "fields": ["matter", "momentum", "wavenumber"],
+                "defaults": {
+                    "matter": PER_RAY * count * ticks,
+                    "momentum": [momentum, 0, 0],
+                    "wavenumber": momentum,
+                },
                 "transport": {"mode": "hold"},
             },
             {"name": "wall", **body},

@@ -2213,7 +2213,7 @@ combination of the quantum owner's two-wing experiment, read as phases on a
 | Check | Result |
 | --- | --- |
 | Share rule, 288 worlds, hidden phase on a five-step grid | `S = 826177/589824 = 1.4007`, equal in every correlation to the local model `mean cos(phase - a) cos(phase - b)` computed from the cosine table independently of the update code |
-| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423`, consistent with 1.40 within the counting spread of about 0.04 |
+| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423` under the original draw; `386/279 = 1.384` re-measured after the lottery draw became the square of the ticket state (source `ae732df611ba461d40f355e13f4d335fcc82203bbfb760f43c77614bc777bc2f`); both consistent with 1.40 within the counting spread of about 0.05 |
 | Plain ray field, same worlds without the key | every outcome +1, `S = 2` exactly |
 | Quantum owner, same settings (two-wing Bell experiment) | `S = 14/5` |
 | Closure | every world's quanta in records, in flight and escaped equal the initial stock; the audited world passes the local conservation audit with 21504 source and 21504 lamp quanta absorbed at each analyzer |
@@ -2266,3 +2266,207 @@ emission to 25, 250, 2500 and 25000 units per tick at `phi = pi/2` and `pi`.
 
 This is the emission-side classical limit only: the integer field becomes the
 continuous law as the amount grows. The wave's dynamics are configured.
+## A particle in flight as a matter wave, and the small-stock sweep — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Engine: an emitted amount below
+`rays_per_tick` fills only as many headings as it has quanta and moves the
+cursor on by that many, so a small stock sweeps the whole sequence in turn
+instead of the same few headings every tick. Probes: the de Broglie beam and
+the new matter-wave particle read the advance from a `wavenumber` field set
+from the momentum of the flight, never from the recoiling momentum.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed on the affected scope: Ruff lint and formatting, strict mypy, 1,780 tests with five visualization skips |
+| New tests | `tests/test_ray_field.py`: 2 quanta over a four-heading sweep take headings 0 and 1, then 2 and 3, then 0 and 1, while a covering stock still advances by the count; `tests/test_matter_wave.py`: the particle flies, stops on its tick, pays its matter out and the world closes |
+| Matter wave | One particle of 479,232 quanta, momentum 32 or 64, a sixteen-tick train through Huygens slits at y = +-6: first dark fringe at y = 2 and y = 1, bright Nodes at 0, +-4 and at 0, +-2, +-4, +-6; ratios exactly one where only one slit reaches; the plain field exactly the sum of the single slits; the husk stops with the recoil its rays carried; matter closed in all eight worlds |
+| De Broglie beam | Re-run on the `wavenumber` field: first dark at 4, 2, 1 for momenta 16, 32, 64, unchanged |
+| Earlier versions | A one-tick pulse gave no fringe (the two paths meet only where they are equal); a 7,488-quantum train gave a momentum-independent pattern because the slits' small stock re-emitted over the same few headings, the engine fix above |
+| Visualization | Not requested or generated |
+
+The particle's matter lands spread as its wave, not at one Node; landing whole
+at one place needs a causal retirement of the rest of the wave, which the
+quantum layer has and the ray field does not yet.
+
+## Kerengonen mirror: a standing wave between a lamp and a mirror — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. The absorbed row keeps the heading of
+the largest share; an emission with `kerengonen_mirror` (x, y or z) sends its
+whole amount back as one ray along the mirror image of that heading, at the
+carried phase and advance. The heading sequence must contain every image, the
+emission must name a recoil field, and the emitter must absorb on the field.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,431 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: reflected rays travel -x with the field's advance, the mirror holds 4 quanta and the reversed momentum, the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 and 6, 1, 1, 6 repeating at advance 8, closure on 400 quanta, four validation rejections; `tests/test_kerengonen_mirror.py`: periods 8 and 4 at advances 4 and 8 on a shorter run |
+| Mirror probe | Lamp at x = -16, mirror at x = +16, 8 quanta each way per tick, 96 ticks: periods 16, 8 and 4 for advances 2, 4 and 8, all as predicted by `64 / (2 x advance)`, readings from 0 at the nodes to 15 at the antinodes; a flat 8 without the mirror; the mirror ends with momentum +1016 along x; quanta closed in every world |
+| Visualization | Not requested or generated |
+
+A mirror across a lattice axis only; an oblique or partial mirror needs a
+heading map beyond one sign flip.
+
+## A thick screen behind the double slit — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Configuration only: the two-lamp
+double-slit world with screens one, two, four and eight Nodes deep.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,432 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed |
+| Thick screen | Phased totals 13,280, 17,062, 18,752 and 19,682 for one, two, four and eight layers against a plain 21,408 absorbed entirely in the first layer; the first-layer fringe (928 at the center, 64 at the half turn) unchanged by the layers behind; every world closed |
+| Visualization | Not requested or generated |
+
+The thin-screen deficit is energy that lands deeper, not energy lost.
+
+## Dissolution as an engine parameter — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A funded ray emission may carry
+`"dissolve": {"after_ticks": N, "over_ticks": K}` instead of an amount: a
+record row counts the record's cycles and keeps the stock it held when the
+rule first saw it; nothing is emitted for `N` cycles, then that stock over `K`
+cycles, never more than is left.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,434 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0; a moving one flies while it holds quanta and stops when empty; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected. `tests/test_matter_wave.py` on the engine schedule |
+| Matter wave | The probe on the engine schedule with the particle stopping at its first quantum: first dark at y = 2 and y = 1 for momenta 32 and 64, bright at 0, +-4 and at 0, +-2, +-4, +-6, ratios exactly one beyond the slits' reach, the plain field exactly the sum of the single slits, matter closed; a particle that kept moving during its train gave first darks in place but a blurred fringe (0.40 and 0.36 at the dark Nodes) and the plain field no longer the sum of the single slits |
+| Visualization | Not requested or generated |
+
+A moving source during its train is a different experiment, recorded as such;
+the schedule is local to the record and follows it wherever it goes.
+
+## Can the ray be what it is not: whole landing, oblique mirrors, Euclidean fringes — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Three limits recorded for the ray were
+put to the engine. Whole landing of a dissolved particle at one Node was
+argued, not implemented: rays carry conserved stock at link speed, and no
+local rule can retire the rest of the wave when one Node captures without a
+signal faster than the rays, so the escape routes (domain-owned inventory or
+sub-luminal matter rays with causal retirement) are recorded in the
+postulates. Diagonal mirrors (`xy`, `xz`, `yz`) and partial mirrors (an
+absorb `fraction`) were added; a ray field may set `"metric": "euclidean"`
+(`euclidean-ray-pace-v1`): the slowest heading hops every tick and every other
+ray waits at its Node by its pace, so every heading covers equal Euclidean
+distance per tick.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,439 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: integer square root, paces 2364/4096, 2364/2896 and 1 for the axis, face and body diagonal, reaches 6, 9 and 12 links after twelve ticks, closure on 400 quanta, an unknown metric rejected; a diagonal `xy` mirror returns +x along +y with nothing back along -x; a quarter-fraction mirror passes 3 of 4 and returns 1, closed. `tests/test_euclidean_pace.py` on the probe |
+| Round front | One lamp on the 26 neighbor headings, twelve ticks: links metric reaches 12 links in every heading, Euclidean radii 12, 8.49 and 6.93 (spread 1.732, an octahedron); Euclidean metric reaches 6, 9 and 12 links, radii 6, 6.4 and 6.93 (spread 1.155, round to within a link); both closed |
+| Euclidean fringe | Two lamps four links apart, 29 headings to a screen twelve links away, 64 steps at advance 16, readings summed over the last eight of forty ticks: links metric darkest 0 at x = -1 and 1 and a flat 64 from x = 3 to 9 (Manhattan path difference saturates at four links, a full turn); Euclidean metric darkest 0 at x = -5 and 5 with 64 at the center and 96 at the edges, where the predicted half turn falls at x = -5, -4, 4, 5; the plain field on the Euclidean metric reads 64 to 128 as one or two rays of each lamp are resident per tick; all closed |
+| Visualization | Not requested or generated |
+
+The metric is a configured choice: the lattice's Manhattan fringe and the
+Euclidean fringe are both exact consequences of where rays meet, and the
+Euclidean pace buys the round front with rays that are slower, never faster,
+than one link per tick.
+
+## Claim and gather: a captured wave lands whole at one Node — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. The second escape route was built: a
+ray field with `claim` (`claim-gather-ray-field-v1`) and a `pace` below link
+speed. Rays carry a train (`train_field`, stamped or carried through a
+Huygens slit); an absorb rule with `claim` opens a claim at the capturing
+Node, which floods Node to Node at link speed with a parent port per Node;
+free rays of the train that meet the claim turn homeward along those ports
+and the claiming record takes them whole; where two claims meet the earlier
+opening wins, then the lower origin, and the later root yields.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,446 tests with five visualization skips |
+| New tests | `tests/test_claim_gather.py`: the isotropic gather tick by tick (first claim at tick 26, 1,875 Nodes claimed, 64 quanta at the screen with momentum zero, closed), the same world without a claim, a rival that clicks first and gathers 62 while the later root keeps 2, one double-slit landing at one root, claim and homing validation, rejected configurations, the identity, a quarter pace, and the event audit closing through capture, flood and gather (819,183 Node events on a 13 x 13 x 3 world, 13 gathered and 3 escaped before the flood) |
+| Isotropic gather | 64 quanta at a quarter link per tick, screen six links away: first claim at tick 26, every quantum at the screen by tick 57, screen momentum (0, 0, 0), nothing escaped, closed at every tick; without the claim the screen keeps its line's 8; a rival four links away clicks first at tick 18, gathers 62 by tick 39 and the farther screen keeps 2 |
+| Double-slit landing | 48 capture seeds on the Euclidean metric at half pace with 1/256 lottery clicks: 48 of 48 landed at one root with nothing in flight, closed; winner holds 0.585 to 1.0 of what reached the screen (median 0.891); landings by band against the fringe's share: `\|y\| <= 1` 6 of 8.2 expected, `2..3` 11 of 16.9, `4..5` 10 of 9.5, `>= 6` 21 of 13.5; on the links metric the same run put no landing within `\|y\| <= 1` because the Manhattan front reaches the outer Nodes first. Re-measured the same day with the lottery drawing the square of its ticket state: 48 of 48 landed, winner 0.614 to 0.992 (median 0.87), bands 5, 7, 13 and 23 |
+| Visualization | Not requested or generated |
+
+The landing is whole and takes time; the first-click bias toward the Nodes
+the wave reaches first, and the pieces kept by captures that raced the
+flood, are measured limits of the rule, not hidden by it.
+
+## Bell's test on the ray: CHSH below the local bound — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A funded ray emission may name a fixed
+`heading` (a directed emitter); an absorb rule may add `capture_salt` so two
+detectors on one field draw their own ticket sequences; and the lottery now
+draws the square of its ticket state, because the state is affine in its
+salts and two records that met the same rays drew numbers a fixed distance
+apart. The [Bell probe](../examples/bell-chsh/README.md) puts two phased rays
+from one source through plus/minus detectors whose capture probability is the
+Kerengonen coherence with a reference ray at the setting phase.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,450 tests with five visualization skips |
+| New tests | `tests/test_ray_bell_chsh.py`: aligned and opposite hidden phases land deterministically for three seeds, closed; one seed over the 64 hidden phases gives S = 1.5001 and E(0, 0) = -0.5312, below 2 and against the quantum 2.828; capture_salt at the modulus or without the lottery rejected. `tests/test_kerengonen.py`: a directed emitter fires every ray along -x and closes, a heading outside the list or with a mirror is rejected |
+| CHSH | 16 seeds x 64 hidden phases x 4 setting pairs: E = -0.422, 0.326, -0.387, -0.346 against the two-lottery prediction -0.354, 0.354, -0.354, -0.354 and the quantum -0.707, 0.707, -0.707, -0.707; S = 1.481 (predicted 1.414, local bound 2, quantum 2.828); E(0, 0) = -0.525 (predicted -0.5); plus rates 0.47 to 0.51; no missing pair of 4,096; every run closed |
+| Malus's law | Plus rate over 32 seeds at hidden phase 0, 8, 16, 24, 32: 1.0, 0.84, 0.53, 0.12, 0.0 against cos^2 1.0, 0.85, 0.5, 0.15, 0.0 |
+| Re-measured under the squared draw | Single-quantum double slit, two seeds: 154 at the center, 4 at the half turn and 152 at the one-lamp Node as before; 122/128 and 121/118 at y = +-1, 79/82 and 85/81 at +-3, 93/96 and 96/110 at +-5, 112/110 and 109/101 at +-10; totals 2,340 and 2,347 against 578 for the share rule (first measurement 2,354 each); the claim-and-gather landing ensemble is re-measured in its own entry below |
+| Visualization | Not requested or generated |
+
+A local model's answer, as the theorem requires: the ray reproduces Malus's
+law, the shared origin and no-signaling, and not the correlation beyond 2.
+
+## Gathered gravity: claim-and-gather does not make dark matter — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Configuration only: the signed-quanta
+gravity field with `claim`, a source whose train label advances every tick,
+and one body per world with or without a claiming absorb rule. The question
+was whether gathering a train to its catcher focuses the pull enough to fall
+slower than the inverse square, the dark-matter signature.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,451 tests with five visualization skips |
+| New tests | `tests/test_gathered_gravity.py`: on a 13-cubed world with 128 headings the claiming body pays more and is pulled more than four times harder than the plain one, both closed |
+| Gathered gravity | 21-cubed world, 512 mirrored headings, one negative quantum per ray per tick, 60 ticks: plain axis pull 148, 24, 26, 26 at r = 3, 5, 7, 9 (the floor is the one axis quantum); claiming axis pull 2,962, 2,705, 2,395, 2,046 (slope -0.32), paid 9,548 down to 3,636; off axis at (r, 2, 1) plain 47.8, 49.9, 24.2, 0 and claiming 924, 745, 572, 0 (slope -0.71 over the crossed Nodes; no line crosses r = 9.27); at half pace and r = 5 the claiming pull falls to 243 while the body pays 11,045, a whole train's momentum cancelling; every world closed |
+| Visualization | Not requested or generated |
+
+The claim delivers a train's quanta to its catcher and the momentum of only
+the part the flood can reach; the pull it makes is neither inverse square nor
+flat, and it disappears when the gather is complete. No dark-matter
+appearance from focusing.
+
+## Bell's test with deterministic hidden variables: S = 2 exactly — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A third Kerengonen capture,
+`threshold`: the whole ray is taken when its coherent share reaches one half,
+so a detector's outcome is fixed by the hidden phase and its setting, with no
+ticket. The Bell probe runs it with `--capture threshold`.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,452 tests with five visualization skips |
+| New tests | `tests/test_ray_bell_chsh.py`: the threshold run over the 64 hidden phases gives E = -0.5, 0.5, -0.5, -0.5, S = 2.0 and E(0, 0) = -0.9375, closed, below the quantum 2.828; `tests/test_kerengonen.py`: the capture wording |
+| CHSH, threshold | 64 hidden phases, one run each: E(a, b) = -0.5, E(a, b') = 0.5, E(a', b) = -0.5, E(a', b') = -0.5, exactly the triangle-wave prediction; S = 2.0, the local bound; E(0, 0) = -0.9375; plus rates 0.5156; no missing pair; every run closed |
+| Visualization | Not requested or generated |
+
+Hidden variables instead of dice reach the bound and stop there, as Bell's
+theorem requires of any local model; the quantum excess stays out of reach.
+
+## Bonded rays: the split of postulate 4 and the quantum CHSH value — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. Postulate 4 is split: energy, momentum,
+matter and every controllable message move at most one Node per step; the
+joint outcome of a bonded pair is answered for both ends at once by the bond
+registry, one object for the world. A Kerengonen field may add `bond`
+(`bonded-ray-field-v1`), an emission `bond_field`, an absorb rule
+`bond_setting`; the registry answers the first question on a bond by an
+even coin and the second so that the ends agree with probability
+`(1 - cos(difference)) / 2`. The Bell probe runs it with `--capture bond`.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 70 files, 2,457 tests with five visualization skips |
+| New tests | `tests/test_bonds.py`: 400 first answers split 150 to 250 each way, equal settings always disagree, a half turn always agree, a quarter turn agree 150 to 250 times of 400; seed at the modulus and a bond of zero rejected. `tests/test_bell_chsh.py`: equal settings never agree and a half turn always do for three seeds; one seed per slot gives E = -0.7188, 0.8125, -0.7188, -0.7188, S = 2.9689 and E(0, 0) = -1.0, above 2; bond seed at the modulus, bond_field and bond_setting without a bonded field, and a bond without kerengonen rejected |
+| CHSH, bonded | 16 registry seeds x 64 slots x 4 setting pairs, the pair bonded by a configured label: E = -0.7188, 0.707, -0.7188, -0.7188 against the quantum -0.7071, 0.7071, -0.7071, -0.7071; S = 2.8634 (quantum 2.8284, local bound 2); E(0, 0) = -1.0; plus rates 0.47 to 0.52 on either side whatever the other side's setting; no missing pair of 4,096; every run closed |
+| CHSH, bonded to the origin | The same run with `"bond_field": "origin"`, each ray stamped at birth with its Node and tick and carrying it to the detector: E = -0.6699, 0.6895, -0.6699, -0.6699; S = 2.6992; E(0, 0) = -1.0; plus rates 0.50 to 0.52; no missing pair; every run closed; both rays of a pair verified to carry one origin code |
+| Visualization | Not requested or generated |
+
+The three captures on one probe: lottery 1.48, deterministic hidden
+variables 2.00, bond 2.86 against the quantum 2.83; the last needs the split
+of postulate 4 and nothing else.

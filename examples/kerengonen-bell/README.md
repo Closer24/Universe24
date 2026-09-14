@@ -64,25 +64,28 @@ owner's `cos(a - b)`.
 ## Observed outcomes on 2026-09-14
 
 Runtime source SHA-256
-`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`, Python
-3.14, headless. `tests/test_kerengonen_bell.py` checks the shares at four
+`ae732df611ba461d40f355e13f4d335fcc82203bbfb760f43c77614bc777bc2f`, Python
+3.14, headless; the share and plain rows are unchanged from the first run under
+`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`, and the
+lottery row was re-measured after the lottery draw changed to the square of
+the ticket state (it read 397/279 = 1.423 under the earlier draw). `tests/test_kerengonen_bell.py` checks the shares at four
 hidden phases, the share rule against the model on a coarse grid, the model's
 bound, the plain field and a short lottery.
 
 | Setting pair | Local model | Share rule, measured | Lottery clicks, 2232 pairs | Plain field | Quantum owner |
 | --- | --- | --- | --- | --- | --- |
-| a0 b0 | 118351/393216 = 0.3010 | 118351/393216 | 91/279 = 0.326 | 1 | 3/5 |
-| a0 b1 | 118351/393216 = 0.3010 | 118351/393216 | 9/31 = 0.290 | 1 | 3/5 |
-| a1 b0 | 117781/294912 = 0.3994 | 117781/294912 | 113/279 = 0.405 | 1 | 4/5 |
-| a1 b1 | -117781/294912 = -0.3994 | -117781/294912 | -112/279 = -0.401 | 1 | -4/5 |
-| S | 826177/589824 = 1.4007 | 826177/589824 = 1.4007 | 397/279 = 1.423 | 2 | 14/5 = 2.8 |
+| a0 b0 | 118351/393216 = 0.3010 | 118351/393216 | 325/1116 = 0.291 | 1 | 3/5 |
+| a0 b1 | 118351/393216 = 0.3010 | 118351/393216 | 17/62 = 0.274 | 1 | 3/5 |
+| a1 b0 | 117781/294912 = 0.3994 | 117781/294912 | 7/18 = 0.389 | 1 | 4/5 |
+| a1 b1 | -117781/294912 = -0.3994 | -117781/294912 | -479/1116 = -0.429 | 1 | -4/5 |
+| S | 826177/589824 = 1.4007 | 826177/589824 = 1.4007 | 386/279 = 1.384 | 2 | 14/5 = 2.8 |
 
 The share rule equals the local model exactly in all four pairs: every
 absorbed share is an integer because 1024 is a multiple of the table scale
 256, and the average over 72 hidden phases is the same rational number. On the
 full 360-step circle the model gives 1.4001, and with exact cosines it would be
 7/5, one half of the quantum owner's 14/5 at the same settings. The lottery
-estimate, 1.423 from 8928 single-quantum pairs, is consistent with 1.40 and
+estimate, 1.384 from 8928 single-quantum pairs, is consistent with 1.40 and
 its statistical spread of about 0.04. The plain field reaches the bound and
 no further: with every outcome +1, three correlations of 1 minus one of 1 give
 exactly 2. In every world the quanta in records, in flight and escaped equal

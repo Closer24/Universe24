@@ -141,6 +141,61 @@ The [validation record](VALIDATION.md) binds these results to the exact tested
 source. This is not a general many-body Hamiltonian, physical energy closure or
 a completed derivation of the classical limit. Older dated rows below retain
 their own source revisions and do not describe this addition.
+## The ray: one object for wave and particle - 2026-09-14
+
+This entry maps the straight-ray field and its Kerengonen extension to the
+Highlights sections on fields, quanta and the classical limit (1.2, 4.7, 10.3).
+It reconciles the repository at main `c3c39d0` after
+[PR #98](https://github.com/Closer24/Universe24/pull/98) plus the eight later
+commits on the working branch; the live document was not edited.
+
+A ray is a whole amount of one scalar field with a fixed integer heading and
+three routing accumulators that keep it on one lattice line, one link per tick.
+With the `kerengonen` key it also carries a phase that advances per link, and
+each ray may carry its own advance, stamped at emission from an expression over
+the emitter's fields (`|p| / D` is the de Broglie rule). Rays that meet at a
+Node combine by phase; the coherence of what met, from a fixed-point integer
+cosine table, gates the value a reader samples and the share an absorber
+takes. Amounts are never changed by phase: the audit sums quanta. Absorption
+is a run-time choice, the coherent share or a whole-ray lottery drawn by a
+record-row ticket. A record that absorbs keeps the phase, advance and heading
+of what it took: an emission may carry that phase on (a Huygens slit), send
+the amount back along the mirrored heading (a mirror), or pay a record out on
+a schedule (`dissolve`: a particle becoming its own wave train).
+
+| Highlights sections | Implemented contract and limits | Repository owner |
+| --- | --- | --- |
+| 10.3.2 | Straight rays: isotropic inverse square, shell conservation, a small stock sweeping the heading sequence in turn. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
+| 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
+| 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
+| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), [claim and gather](../examples/claim-gather/README.md), [validation](VALIDATION.md) |
+| 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | [Quantum-to-classical probes](../examples/quantum-classical/README.md) |
+
+What the ray is not, recorded rather than claimed: a single particle's matter
+lands spread as its wave unless the field has claims, because rays carry
+conserved stock and no local rule can retire the rest of a wave when one Node
+captures without a faster signal; with [claim and gather](SPATIAL_FIELDS.md#claim-and-gather-claim-gather-ray-field-v1)
+(`claim-gather-ray-field-v1`) a slower matter wave is gathered whole to the
+capturing Node by a claim that floods at link speed, so the landing is whole
+but takes time, and the earlier of two captures wins; a mirror reflects across a lattice axis or a
+lattice diagonal, whole or by a fraction, not at an arbitrary angle; fringes
+follow Manhattan path difference on the links metric and Euclidean path
+difference on the [Euclidean pace](SPATIAL_FIELDS.md#euclidean-pace-metric-euclidean)
+(`euclidean-ray-pace-v1`), where rays wait at Nodes and are slower, never
+faster, than one link per tick; the lottery ticket is a configured local
+sequence, not physical randomness; the event audit re-measures every owner per
+event, so audited worlds stay small; and the ray is a local model, so
+[Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
+bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
+it gives, the excess correlation it cannot, unless the field is bonded
+(`bonded-ray-field-v1`, the split of postulate 4: a registry answers the
+pair's joint outcome for both ends with nothing physical in it, and S reaches
+2.86); and gathering a gravity train to
+its catcher ([gathered gravity](../examples/gathered-gravity/README.md))
+focuses quanta, not a force law, so no flat rotation curve comes from it.
+The `|p| / D` rule and every mixer are configured laws, measured to hold, not
+derived. Exact sources and completed checks are in
+[validation evidence](VALIDATION.md).
 
 ## Causal quantum source envelopes - 2026-09-13
 
@@ -502,6 +557,12 @@ treating its omissions as current gaps.
   remaining physical inventory is conserved indefinitely.
 - Self-field attribution is not implemented as a general source-identity filter.
   Arrival order is not a general proof of ownership after turning or periodic return.
+  A ray field's `self_exclusion` subtracts a departing emitter's own one-link rays
+  on arrival, from its own registers only.
+- A ray is a whole amount on one lattice line; with `kerengonen` it carries a
+  phase and its own advance, combines by phase where rays meet, and is absorbed
+  whole or by its coherent share. Slits, mirrors and dissolving particles are
+  emissions that carry the absorbed phase, heading or schedule on.
 
 ### 10.4 Local field rules and field groups
 
@@ -607,6 +668,28 @@ charge). Findings, each a branch result and not a law:
 - Under 5 and the local observer: no kinematic time dilation. Twin clocks agree
   at every speed under any budget above the moving cycle's cost; a tighter
   budget slows the traveller linearly in moves, not as √(1−v²).
+- Under 7.2 (cosmology): four masses launched outward under the momentum
+  coupling recollapse at every speed up to c at emission 24000 — the escape
+  speed of the configuration exceeds the link speed — so expansion is only an
+  initial condition and no repulsive term exists. A light train past a mass
+  whose emission grows each cycle arrives late and stretched (mean spacing 2.7
+  per link-tick, z ≈ 1.7) under the directional delay: a distance-redshift
+  relation from delay growth without recession, quantized in bunches. In a
+  closed (periodic) universe the field never leaves, so a constant source
+  makes the load grow with the age of the universe: with a ray computation
+  field a unit-spaced light train stretches to z ≈ 9 within one lap (first
+  seven bodies unshifted, then 6, 60, 12, 26-tick gaps) — a distance-
+  proportional redshift from closure alone, whose lattice form is stepwise.
+  Under `straight` phases the mass's axis ray stalls the train at one column
+  and under `rotate` the wrapped Manhattan field piles up at the antipode;
+  neither is a uniform load.
+- Under 4.4 and the Kerengonen field: a two-lamp interferometer beside a mass
+  is unchanged at every screen Node under the fixed field clock (gravity
+  invisible to interference); with the opt-in `ray_delay` the delayed rows
+  gain quanta (decoherence, 6176 → 6404); with `ray_phase_per_tick` as well
+  they darken (6176 → 5636, y = 10 from 552 to 211): the waits carry phase and
+  the fringe shifts in whole steps — the gravitational-phase (COW) signature,
+  present only when a waiting interval counts as phase.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the

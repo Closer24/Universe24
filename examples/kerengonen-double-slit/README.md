@@ -72,20 +72,23 @@ the share rule on the same single quanta for comparison.
 | Screen y | Path difference | Lottery, seed 1 | Lottery, seed 2 | Share rule |
 | --- | --- | --- | --- | --- |
 | 0 | 0 | 154 | 154 | 154 |
-| +-1 | +-2 | 133, 127 | 135, 127 | 2 |
+| +-1 | +-2 | 122, 128 | 121, 118 | 2 |
 | +-2 | +-4 | 4 | 4 | 4 |
-| +-3 | +-6 | 71, 79 | 84, 62 | 6 |
-| +-5 | +-6 | 89, 93 | 106, 96 | 6 |
+| +-3 | +-6 | 79, 82 | 85, 81 | 6 |
+| +-5 | +-6 | 93, 96 | 96, 110 | 6 |
 | +-7 | +-6 | 152 | 152 | 152 |
-| +-10 | +-6 | 116, 121 | 108, 113 | 6 |
+| +-10 | +-6 | 112, 110 | 109, 101 | 6 |
 
 Where the coherence is one or zero the two seeds agree exactly with the share
 rule: 154 at the center, 4 at the half turn, 152 at `y = +-7`, a Node that
 only ever sees one lamp's rays at a time. Where the coherence is one half the
 share rule truncates a lone quantum's half share to nothing and takes 2 to 6,
 while the lottery takes whole quanta at that rate and the two seeds scatter
-around each other. The absorbed totals are 2,354 for either seed against 578
-for the share rule; every quantum is accounted for in all three worlds. This
+around each other. The absorbed totals are 2,340 and 2,347 for the two seeds
+against 578 for the share rule; every quantum is accounted for in all three
+worlds. (Re-measured on 2026-09-14 after the lottery began drawing the
+square of its ticket state; the first measurement read 2,354 for either
+seed, with the same exact agreement where the coherence is one or zero.) This
 is the fringe as single detections: each quantum lands whole at one Node, and
 the pattern is in how often.
 
@@ -122,6 +125,28 @@ are the two slits, lit by one wave, and their phases are what the wave carried
 to them, 11 links from the lamp for both. The wall keeps 332,800 quanta in the
 phased and the plain world alike, and every world closes on its initial stock.
 
+### A thick screen: what a dark Node lets pass is absorbed behind it
+
+The two-lamp world again, 16 quanta per ray, with the screen one, two, four
+and eight Nodes deep. The first layer is the screen above; each layer behind
+it is another line of absorbers one link on, where the path difference, and
+so the phase, is different.
+
+| Layers | Phased, total absorbed | Per layer | Plain, total absorbed | Phased over plain | First layer at y = 0 and y = 2 |
+| --- | --- | --- | --- | --- | --- |
+| 1 | 13,280 | 13,280 | 21,408 | 0.62 | 928, 64 |
+| 2 | 17,062 | 13,280, 3,782 | 21,408 | 0.80 | 928, 64 |
+| 4 | 18,752 | 13,280, 3,782, 1,244, 446 | 21,408 | 0.88 | 928, 64 |
+| 8 | 19,682 | 13,280, 3,782, 1,244, 446, 148, 190, 290, 302 | 21,408 | 0.92 | 928, 64 |
+
+The plain field absorbs everything in its first layer, and the layers behind
+it stay empty. With phase, the first layer keeps its fringe unchanged, and the
+quanta it let pass at its dark Nodes are absorbed in the layers behind, where
+they meet a different path difference: eight layers recover 92 percent of the
+plain total, the rest still in flight or escaped, and every world closes on
+its initial stock. The thin-screen deficit is not lost energy but energy that
+lands deeper.
+
 ## Conclusion
 
 Rays with a phase interfere where they meet and are absorbed whole where they
@@ -131,6 +156,9 @@ fringe, so the wave's phase survives absorption and re-emission at a Node and
 the double slit needs no second lamp. Two limits are visible in the numbers. Interference needs rays
 of both lamps at one Node on one tick, so ticks on which only one lamp's rays
 are present pass ungated; and the pattern follows Manhattan path difference on
-this lattice, not Euclidean. Quanta that cancel are not redistributed to the
-bright fringes; they continue and escape, which keeps the rule local and the
-total exact but differs from a wave that carries its energy to where it adds.
+this lattice's links metric, while the
+[Euclidean pace](../euclidean-pace/README.md) gives the Euclidean one at the
+price of rays that wait. Quanta that cancel are not redistributed to the
+bright fringes; they continue, and a thick screen absorbs them behind the
+first layer, which keeps the rule local and the total exact but differs from
+a wave that carries its energy to where it adds.
