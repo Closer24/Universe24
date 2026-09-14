@@ -24,6 +24,8 @@ class PendingEnvelopeEmission:
     following: EnvelopeEmissionState
     cost: int
     cause_id: int | None = None
+    # The part of source_delta paid by the wave's own conserved stock.
+    funded_delta: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,3 +33,5 @@ class SourceDeposit:
     states: tuple[SpatialState, ...]
     source_delta: Values
     cause_id: int | None = None
+    # Funded part of source_delta: booked as an internal transfer, not injection.
+    funded_delta: Values = ()

@@ -53,6 +53,7 @@ RESOURCE_CONSUMERS = {
         "tests/test_causal_interference.py",
         "tests/test_null_notices.py",
         "tests/test_field_phase.py",
+        "tests/test_funded_envelope.py",
     ),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",

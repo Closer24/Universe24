@@ -95,6 +95,10 @@ class ContactEventResolver(NativeEventResolver):
             empty = detector
         return ContactReservation(domain_index, False, (detector, empty))
 
+    def funded_fields(self, domain: ContactDomain) -> tuple[int, ...]:
+        """Fields whose stock the wave pays into the field; none in the plain profile."""
+        return ()
+
     def has_work(self, context: LocalContext) -> bool:
         return self._contact(context) is not None
 
@@ -162,11 +166,20 @@ class ContactEventResolver(NativeEventResolver):
                 or unpack(record.values[domain.validity_field]) != (domain.unknown_value,)
             ):
                 raise ValueError("reserved contact participants or validity changed")
+            paid = self.funded_fields(domain)
             if any(
-                f.conserved and record.values[i] != domain.output.values[i]
+                f.conserved and i not in paid and record.values[i] != domain.output.values[i]
                 for i, f in enumerate(self.initial.fields)
             ):
                 raise ValueError("contact inventory differs from its declared capture template")
+            for i in paid:
+                if any(
+                    have > full
+                    for have, full in zip(
+                        unpack(record.values[i]), unpack(domain.output.values[i]), strict=True
+                    )
+                ):
+                    raise ValueError("funded stock cannot exceed its declared template")
             records = list(context.records)
             records[first] = None
             return (tuple((i, records[i]) for i in reservation.locked),)

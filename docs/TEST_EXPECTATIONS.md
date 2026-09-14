@@ -132,27 +132,6 @@ preserve exact blobs, including empty files and deleted providers. Old and curre
 dependency selections, dynamic resource consumers and failure evidence remain
 part of the gate; batching does not authorize dropping related tests.
 
-## Recurrent quantum contacts
-
-`test_recurrent_quantum_contact.py` owns the
-[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
-matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
-Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
-and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
-Check no extra draw for a certain outcome, one scalar/vector inventory owner,
-renamed entities/fields, equal-inventory alternate outputs, finite original
-source allowances and capacity rejection before RNG. The checked-in 48-tick
-example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
--36 and eventual zero field stock under explicit dissipation.
-
-`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
-a remote event at tick 3 cannot select which ordinary local bank clears before
-the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
-It also rejects preparation into local vacuum when another mode is occupied and
-checks same-tick result replay after absorption without origin resurrection.
-Retain all affected localized/causal contact, origin, state and field regressions.
-
-
 ## Causal quantum sources
 
 The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing
@@ -231,6 +210,17 @@ phase for exponents -3 through 3 and exact reversal for positive/negative powers
 in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
 both must select -1, capture with probability `576/3125` at tick 7, retain source
 envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
+
+`test_funded_envelope.py` owns the opt-in
+[funded envelope emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission):
+funded octant emission accepted when the type owns the field and rejected
+otherwise; stock 2999 rejected against three modes of budget 1000 and 3000
+accepted; rejection without the causal model; totals constant at 3000 with zero
+sources and balanced spatial accounting for seven ticks while the inventory
+equals stock minus paid; the localized winner holding stock minus paid and
+paying 25 per tick afterwards; the post-capture residual equal to the recorded
+sources in a headless run with the strict conservation flag true; and an empty
+funded report for the default profile.
 
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event

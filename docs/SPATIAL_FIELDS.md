@@ -285,9 +285,12 @@ square in every direction, and mass-independent acceleration.
 
 ### Funded emission and absorption
 
-A ray field whose emitting type also carries a scalar field of the same name may
+A field whose emitting type also carries a scalar field of the same name may
 emit with `"source": false`: the emitted amount is paid from the record's own
-stock, clipped to what it holds, and no external source is recorded. An optional
+stock, clipped to what it holds, and no external source is recorded. Ray fields
+require schema 1 for this; octant fields accept it under both schemas, and the
+[causal source envelope](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission)
+extends it to a delocalized wave. An optional
 `"recoil_field"` names an owned signed vector that loses `amount x heading` for
 every emitted ray. The reverse is the `absorb` coupling mode: a record of the
 absorbing type takes a share of every ray resident at its Node on the cycle
