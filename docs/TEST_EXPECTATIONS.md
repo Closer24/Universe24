@@ -1,5 +1,18 @@
 # Test inputs and expected results
 
+## Quantum-to-classical investigation
+
+`test_quantum_classical_experiment.py` runs the bounded
+[investigation](../examples/quantum/quantum_classical_check.md). Ten native controls
+must give exact visibility `(9/25)^n` at fixed contact tick 8; zero coupling and
+phase reversal cover both certain outputs. Explicit coherent environment controls
+must restore interference after retained interactions are inverted. The existing
+five-cycle Markov comparison remains exact. Three spatial outcome controls
+preserve inventory and field accounting while recording configured hold and
+unknown momentum; direct moving capture remains a rejected composition. A pass
+must retain the report's `not_established` trajectory conclusion. No statistical
+or Newtonian emergence claim follows from this acceptance test.
+
 ## Recurrent quantum contacts
 
 `test_recurrent_quantum_contact.py` owns the

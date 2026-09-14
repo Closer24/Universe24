@@ -10,7 +10,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
-    "examples/quantum/repeated_contacts.json": ("tests/test_recurrent_quantum_contact.py",),
+    "examples/quantum/repeated_contacts.json": (
+        "tests/test_recurrent_quantum_contact.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
+    "examples/quantum/quantum_classical_check.py": ("tests/test_quantum_classical_experiment.py",),
+    "examples/quantum/environment_coherence_check.py": ("tests/test_quantum_classical_experiment.py",),
+    "examples/quantum/trajectory_support_check.py": ("tests/test_quantum_classical_experiment.py",),
     "examples/catalog-contact/experiment.json": ("tests/test_catalog_contact.py",),
     "examples/catalog-contact/prepare.py": ("tests/test_catalog_contact.py",),
     "examples/known-entities/physical-units.json": (
@@ -51,11 +57,20 @@ RESOURCE_CONSUMERS = {
         "tests/test_node_state_contract.py",
         "tests/test_local_lorentz_field.py",
     ),
-    "examples/quantum/interference.json": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/interference.json": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
     "examples/quantum/phase_reversal.json": ("tests/test_native_quantum_channels.py",),
     "examples/quantum/dephasing.json": ("tests/test_native_quantum_channels.py",),
-    "examples/quantum/partial_dephasing.json": ("tests/test_native_quantum_channels.py",),
-    "examples/quantum/run_physics_checks.py": ("tests/test_native_quantum_channels.py",),
+    "examples/quantum/partial_dephasing.json": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
+    "examples/quantum/run_physics_checks.py": (
+        "tests/test_native_quantum_channels.py",
+        "tests/test_quantum_classical_experiment.py",
+    ),
     "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
     "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),

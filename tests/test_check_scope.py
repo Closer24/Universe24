@@ -40,6 +40,24 @@ def test_repeated_contacts_selects_its_runtime_input_consumer():
 
 
 @pytest.mark.parametrize(
+    "name",
+    [
+        "quantum_classical_check.py",
+        "environment_coherence_check.py",
+        "trajectory_support_check.py",
+        "run_physics_checks.py",
+        "interference.json",
+        "partial_dephasing.json",
+        "repeated_contacts.json",
+    ],
+)
+def test_quantum_classical_resources_select_the_bounded_experiment(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_quantum_classical_experiment.py" in selected
+    assert "tests/test_collisions.py" not in selected
+
+
+@pytest.mark.parametrize(
     "path",
     [
         "examples/catalog-contact/experiment.json",

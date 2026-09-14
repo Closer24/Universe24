@@ -1,5 +1,13 @@
 # Highlights implementation coverage
 
+## Quantum-to-classical claim check - 2026-09-14
+
+The [bounded investigation](../examples/quantum/quantum_classical_check.md) verifies
+configured dephasing, coherent recovery and classical probability evolution.
+Spatial localization produces a held record with unknown momentum; an emerging
+Newtonian trajectory remains unestablished. This adds measured evidence, not a
+new physical rule or entity. The live Highlights document was not edited.
+
 ## Recurrent local contact outcomes - 2026-09-14
 
 Live Highlights section **4.7.8, Configured recurrent local outcomes**, now records

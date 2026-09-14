@@ -46,6 +46,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Causal quantum sources](CAUSAL_QUANTUM_SOURCES.md) | Locally retained complex source envelopes, finite weighted ordinary emission and Link-delivered termination |
 | [Recurrent quantum contacts](RECURRENT_QUANTUM_CONTACT.md) | Configured outcome instruments, atomic new origins and finite isolated source generations |
 | [Repeated-contact experiment](../examples/quantum/repeated_contacts.md) | Reproducible local continuations, fresh origins, final localization and finite field decay |
+| [Quantum-to-classical investigation](../examples/quantum/quantum_classical_check.md) | Exact interference suppression/reversal, classical probabilities and the unestablished trajectory limit |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
