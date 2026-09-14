@@ -1815,3 +1815,21 @@ double-slit world with screens one, two, four and eight Nodes deep.
 | Visualization | Not requested or generated |
 
 The thin-screen deficit is energy that lands deeper, not energy lost.
+
+## Dissolution as an engine parameter — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A funded ray emission may carry
+`"dissolve": {"after_ticks": N, "over_ticks": K}` instead of an amount: a
+record row counts the record's cycles and keeps the stock it held when the
+rule first saw it; nothing is emitted for `N` cycles, then that stock over `K`
+cycles, never more than is left.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,434 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0; a moving one flies while it holds quanta and stops when empty; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected. `tests/test_matter_wave.py` on the engine schedule |
+| Matter wave | The probe on the engine schedule with the particle stopping at its first quantum: first dark at y = 2 and y = 1 for momenta 32 and 64, bright at 0, +-4 and at 0, +-2, +-4, +-6, ratios exactly one beyond the slits' reach, the plain field exactly the sum of the single slits, matter closed; a particle that kept moving during its train gave first darks in place but a blurred fringe (0.40 and 0.36 at the dark Nodes) and the plain field no longer the sum of the single slits |
+| Visualization | Not requested or generated |
+
+A moving source during its train is a different experiment, recorded as such;
+the schedule is local to the record and follows it wherever it goes.
