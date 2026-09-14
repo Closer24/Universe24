@@ -6,7 +6,7 @@ from event_universe import Simulation
 from event_universe.core.disturbance_state import unpack
 from event_universe.initialization import parse_initial_state
 
-from .test_disturbance_engine import document, field, kind
+from .support.disturbances import document, field, kind
 
 ORIGIN = (2, 2, 2)
 BEFORE = {"left": (5, 0, 0), "right": (-1, 0, 0)}

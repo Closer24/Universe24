@@ -14,7 +14,7 @@ from event_universe.quantum.event_network import EventNetwork, EventNetworkConfi
 from event_universe.quantum.event_rules import LocalInstrument, LocalUnitary
 from event_universe.quantum.wave_origins import WaveDefinition
 
-from .test_quantum_event_network import CX, POSITION, RI, H, R, Z, matrix, probability
+from .support.quantum import CX, POSITION, RI, H, R, Z, matrix, probability
 
 A, B, C = (0, 0, 0), (1, 0, 0), (2, 0, 0)
 IDENTITY_PAIR = LocalUnitary(matrix(((1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1))))
