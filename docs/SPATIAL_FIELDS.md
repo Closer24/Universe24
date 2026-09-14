@@ -580,6 +580,15 @@ second answer knows the first at once, at any distance; it moves no energy, no
 momentum and no message, and the [Bell probe](../examples/bell-chsh/README.md)
 measures each end's plus rate unmoved by the other end's setting.
 
+`"bond": {"seed": s, "stream": [n, ...]}` replaces the registry's own numbers
+by an external stream, one number per pair in the order pairs first ask, at
+most 4096 numbers below the ticket modulus, exhausted with an explicit error.
+The stream is the door of postulate 22 for a source outside the world's
+state: the model uses its numbers exactly as its own, so a uniform stream
+gives the same physics, and a biased stream moves one end's plus rate with
+the other end's setting, which the [Bell probe](../examples/bell-chsh/README.md)
+measures with `--source uniform` and `--source biased`.
+
 The registry is bounded and idempotent. It holds at most 4096 open pairs, those
 whose first end has answered and whose second has not, and rejects a further
 first question while the bank is full; it releases a pair at its second

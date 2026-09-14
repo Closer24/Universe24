@@ -24,8 +24,12 @@ and the even plus rates must be unchanged; with a biased stream the other
 end's plus rate must begin to depend on the first end's setting, which is a
 signal faster than the causal speed, and the size of that signal is a
 measurement. The hypothesis is therefore sharp: outside influence enters only
-through the number, and is visible exactly when it is biased. Not built yet;
-planned as the next probe.
+through the number, and is visible exactly when it is biased. Measured: the
+[Bell probe](../examples/bell-chsh/README.md) with `--source uniform` gives
+S = 2.7911 and rate shifts below 0.1, and with `--source biased` keeps
+S = 2.7792 while Bob's plus rate moves by 0.6866 with Alice's
+setting. The derivation holds in the model; whether any real source is outside
+the world in this sense stays a hypothesis.
 
 ## 2. Living and inanimate as two kinds of number source
 

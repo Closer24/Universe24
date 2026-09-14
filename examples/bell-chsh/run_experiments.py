@@ -22,6 +22,7 @@ import argparse
 import hashlib
 import json
 import math
+import random
 from pathlib import Path
 
 from event_universe import Simulation
@@ -51,8 +52,13 @@ def document(
     seed: int,
     ticks: int = TICKS,
     capture: str = "lottery",
+    stream: int | None = None,
 ) -> dict:
     """One pair at hidden phase lambda, detector settings for Alice and Bob, one capture seed.
+
+    With capture "bond" and a stream number, the registry takes the pair's
+    number from outside the world instead of from its own sequence: the door
+    of postulate 22 for a source outside the world's state.
 
     With capture "threshold" the detectors are deterministic hidden-variable
     devices: a ray is taken when its coherence with the reference reaches one
@@ -171,7 +177,11 @@ def document(
                     **({"capture_seed": seed} if capture == "lottery" else {}),
                 },
                 "claim": {"ticks": 4 * ticks, "slots": 4},
-                **({"bond": {"seed": seed}} if bonded else {}),
+                **(
+                    {"bond": {"seed": seed, **({"stream": [stream]} if stream is not None else {})}}
+                    if bonded
+                    else {}
+                ),
             }
         ],
         "emissions": [
@@ -289,7 +299,29 @@ def outcomes(raw: dict) -> dict:
     }
 
 
-def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lottery") -> dict:
+TICKET_MODULUS = 1073741789
+SOURCES = ("sequence", "uniform", "biased")
+
+
+def external_number(key: int, source: str) -> int | None:
+    """The pair's number from outside the world: none, a uniform draw, or a biased one.
+
+    The uniform source is a generator that is not the registry's: the same physics
+    must follow. The biased source keeps the upper half of every number below one
+    half, so the end that asks first always answers +1; its lower half stays
+    uniform, so the singlet's agreement law is untouched.
+    """
+    if source == "sequence":
+        return None
+    draw = random.Random(1_000_003 * key + 7).randrange(TICKET_MODULUS)
+    if source == "biased":
+        return draw // 2
+    return draw
+
+
+def correlation(
+    alice: int, bob: int, seeds: int = SEEDS, capture: str = "lottery", source: str = "sequence"
+) -> dict:
     """E(a, b) over every hidden phase and the given number of capture seeds."""
     total = count = 0
     plus_alice = plus_bob = 0
@@ -299,7 +331,10 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lotter
         for seed in range(1, seeds + 1):
             # A bonded pair has no hidden phase: every run seeds the registry afresh.
             registry_seed = hidden * seeds + seed if capture == "bond" else seed
-            result = outcomes(document(hidden, alice, bob, registry_seed, capture=capture))
+            stream = external_number(registry_seed, source) if capture == "bond" else None
+            result = outcomes(
+                document(hidden, alice, bob, registry_seed, capture=capture, stream=stream)
+            )
             closed = closed and result["closed"]
             if result["alice"] is None or result["bob"] is None:
                 missing += 1
@@ -333,9 +368,22 @@ def correlation(alice: int, bob: int, seeds: int = SEEDS, capture: str = "lotter
     }
 
 
-def chsh(seeds: int = SEEDS, capture: str = "lottery") -> dict:
+def signalling(results: dict) -> dict:
+    """How far each end's plus rate moves with the other end's setting: zero without a signal."""
+    alice = max(
+        abs(results["a,b"]["alice_plus_rate"] - results["a,b2"]["alice_plus_rate"]),
+        abs(results["a2,b"]["alice_plus_rate"] - results["a2,b2"]["alice_plus_rate"]),
+    )
+    bob = max(
+        abs(results["a,b"]["bob_plus_rate"] - results["a2,b"]["bob_plus_rate"]),
+        abs(results["a,b2"]["bob_plus_rate"] - results["a2,b2"]["bob_plus_rate"]),
+    )
+    return {"alice_rate_shift": round(alice, 4), "bob_rate_shift": round(bob, 4)}
+
+
+def chsh(seeds: int = SEEDS, capture: str = "lottery", source: str = "sequence") -> dict:
     results = {
-        f"{left},{right}": correlation(SETTINGS[left], SETTINGS[right], seeds, capture)
+        f"{left},{right}": correlation(SETTINGS[left], SETTINGS[right], seeds, capture, source)
         for left, right in PAIRS
     }
     e = {key: value["E"] for key, value in results.items()}
@@ -361,8 +409,10 @@ def chsh(seeds: int = SEEDS, capture: str = "lottery") -> dict:
         "predicted_S": round(predicted, 4),
         "local_bound": 2,
         "quantum_S": round(quantum, 4),
-        "same_setting_E": correlation(0, 0, seeds, capture)["E"],
+        "same_setting_E": correlation(0, 0, seeds, capture, source)["E"],
         "closed": all(value["closed"] for value in results.values()),
+        "source": source,
+        **signalling(results),
     }
 
 
@@ -371,9 +421,12 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--seeds", type=int, default=SEEDS)
     parser.add_argument("--capture", choices=("lottery", "threshold", "bond"), default="lottery")
+    parser.add_argument("--source", choices=SOURCES, default="sequence")
     args = parser.parse_args()
+    if args.source != "sequence" and args.capture != "bond":
+        raise SystemExit("an external number source applies to the bonded capture only")
     args.output.mkdir(parents=True, exist_ok=True)
-    result = chsh(args.seeds if args.capture != "threshold" else 1, args.capture)
+    result = chsh(args.seeds if args.capture != "threshold" else 1, args.capture, args.source)
     report = {
         "source_sha256": source_fingerprint(),
         "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -381,7 +434,8 @@ def main() -> None:
         "phase_steps": PHASE_STEPS,
         **result,
     }
-    (args.output / f"summary-{args.capture}.json").write_text(json.dumps(report, indent=2) + "\n")
+    name = args.capture if args.source == "sequence" else f"{args.capture}-{args.source}"
+    (args.output / f"summary-{name}.json").write_text(json.dumps(report, indent=2) + "\n")
     for key, value in result["correlations"].items():
         print(
             key,
@@ -411,7 +465,10 @@ def main() -> None:
         "same setting E",
         result["same_setting_E"],
     )
-    print("Wrote report: " + str(args.output / f"summary-{args.capture}.json"))
+    print(
+        "source", result["source"], "rate shifts", result["alice_rate_shift"], result["bob_rate_shift"]
+    )
+    print("Wrote report: " + str(args.output / f"summary-{name}.json"))
 
 
 if __name__ == "__main__":

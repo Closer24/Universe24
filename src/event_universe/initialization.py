@@ -929,6 +929,7 @@ def _spatial_fields(
         pace_numerator, pace_denominator = 1, 1
         claim_ticks, claim_slots = 0, 0
         bond_seed = -1
+        bond_stream: tuple[int, ...] = ()
         if transport == "ray":
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
@@ -950,10 +951,18 @@ def _spatial_fields(
             if "bond" in obj:
                 if "kerengonen" not in obj:
                     raise ValueError("bond requires a kerengonen ray field: settings are phase steps")
-                bond = _object(obj["bond"], "bond", {"seed"}, {"seed"})
+                bond = _object(obj["bond"], "bond", {"seed", "stream"}, {"seed"})
                 bond_seed = _integer(bond["seed"], "bond.seed", 0)
                 if bond_seed >= TICKET_MODULUS:
                     raise ValueError("bond.seed must be below the ticket modulus")
+                if "stream" in bond:
+                    if type(bond["stream"]) is not list or not bond["stream"]:
+                        raise ValueError("bond.stream must be a non-empty list of integers")
+                    bond_stream = tuple(_integer(number, "bond.stream", 0) for number in bond["stream"])
+                    if len(bond_stream) > 4096 or any(n >= TICKET_MODULUS for n in bond_stream):
+                        raise ValueError(
+                            "bond.stream holds at most 4096 numbers below the ticket modulus"
+                        )
             if "kerengonen" in obj:
                 # Kerengonen: phased rays. Both keys are required and explicit.
                 phased = _object(
@@ -1040,6 +1049,7 @@ def _spatial_fields(
                 claim_ticks=claim_ticks,
                 claim_slots=claim_slots,
                 bond_seed=bond_seed,
+                bond_stream=bond_stream,
             )
         )
     return tuple(result)

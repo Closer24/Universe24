@@ -2568,3 +2568,21 @@ Runtime source SHA-256
 `9c3eedc70b2ba4d55142615bb1afe9b49dff846b204ef45830f4a83a122a81c9`, Python
 3.14.0rc2, headless. A run above 2 sqrt 2 is counting spread: the registry's
 law gives E = -cos exactly in expectation.
+
+## An outside number source for bonded pairs - 2026-09-14
+
+Base: `064f7be` on `main` (after PR #120). `bond.stream` hands the registry
+each pair's number from configuration instead of its own sequence; the
+second end answers from the pair's stored number. The Bell probe's
+`--source uniform` and `--source biased` measure the door of postulate 22.
+
+| Check | Result |
+| --- | --- |
+| Uniform outside source, 16 seeds, 1,024 pairs per correlation | E = -0.697, 0.699, -0.697, -0.697; S = 2.7911; E(0, 0) = -1.0; rate shifts 0.0 and 0.0049; every run closed |
+| Biased outside source, same runs | E = -0.703, 0.670, -0.703, -0.703; S = 2.7792; E(0, 0) = -1.0; Alice +1 always; Bob's plus rate 0.8350 at Alice's `a` and 0.1484 at her `a'` for `b'`, a shift of 0.6866; every run closed |
+| `tests/test_bonds.py`, `tests/test_ray_bell_chsh.py` | stream order, idempotent repeats, exhaustion, validation; one-seed uniform and biased sources pinned (S = 2.625 both, Bob's shift 0.6875 biased) |
+
+Runtime source SHA-256 `0beb4d822bd98980e5947c8e8c20f76825e52dabe64aac8abf8346ecb67b467b`, Python 3.14.0rc2, headless.
+The bias leaves the Bell value untouched, since the agreement law reads the
+lower half of the number, and shows only in the marginal: a signal, as the
+postulate's derivation states.

@@ -121,3 +121,34 @@ def test_bonds_are_validated():
     raw["emissions"][0]["bond_field"] = "momentum"
     with pytest.raises(ValueError, match="scalar owned"):
         parse_initial_state(raw)
+
+
+def test_an_external_number_source_is_invisible_when_uniform_and_a_signal_when_biased():
+    # One seed per slot. A uniform outside source gives the same physics: S near the
+    # quantum value and plus rates that do not move with the other end's setting.
+    uniform = PROBE.chsh(seeds=1, capture="bond", source="uniform")
+    assert uniform["closed"] and uniform["S"] == 2.625 and uniform["same_setting_E"] == -1.0
+    assert uniform["alice_rate_shift"] == 0.0 and uniform["bob_rate_shift"] < 0.1
+    # A biased source keeps S but moves Bob's plus rate with Alice's setting: a signal.
+    biased = PROBE.chsh(seeds=1, capture="bond", source="biased")
+    assert biased["closed"] and biased["S"] == 2.625 and biased["same_setting_E"] == -1.0
+    assert all(value["alice_plus_rate"] == 1.0 for value in biased["correlations"].values())
+    assert biased["correlations"]["a,b2"]["bob_plus_rate"] == 0.875
+    assert biased["correlations"]["a2,b2"]["bob_plus_rate"] == 0.1875
+    assert biased["alice_rate_shift"] == 0.0 and biased["bob_rate_shift"] == 0.6875
+    assert PROBE.external_number(1, "sequence") is None
+    assert PROBE.external_number(1, "biased") < PROBE.TICKET_MODULUS // 2
+
+
+def test_the_bond_stream_is_validated():
+    raw = PROBE.document(0, 0, 0, 1, capture="bond", stream=5)
+    parse_initial_state(raw)
+    raw["spatial_fields"][0]["bond"]["stream"] = []
+    with pytest.raises(ValueError, match="non-empty list"):
+        parse_initial_state(raw)
+    raw["spatial_fields"][0]["bond"]["stream"] = [PROBE.TICKET_MODULUS]
+    with pytest.raises(ValueError, match="below the ticket modulus"):
+        parse_initial_state(raw)
+    raw["spatial_fields"][0]["bond"]["stream"] = [1] * 4097
+    with pytest.raises(ValueError, match="at most 4096"):
+        parse_initial_state(raw)

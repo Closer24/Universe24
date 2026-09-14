@@ -156,11 +156,23 @@ class SpatialFieldDefinition:
     claim_slots: int = 0
     # Bonded pairs only: the seed of the world's bond registry, -1 for none.
     bond_seed: int = -1
+    # Bonded pairs only: an external number stream, one bounded integer per pair
+    # in the order pairs first ask, in place of the registry's own sequence. Empty
+    # for the world's sequence; at most MAX_BOND_STREAM numbers.
+    bond_stream: tuple[int, ...] = ()
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
 
     def __post_init__(self) -> None:
+        if self.bond_stream:
+            if not self.bonded:
+                raise ValueError("a bond stream requires a bonded field")
+            if type(self.bond_stream) is not tuple or len(self.bond_stream) > MAX_BOND_STREAM:
+                raise ValueError("a bond stream holds at most 4096 numbers")
+            for number in self.bond_stream:
+                if type(number) is not int or not 0 <= number < TICKET_MODULUS:
+                    raise ValueError("bond stream numbers must be below the ticket modulus")
         if self.rays:
             object.__setattr__(self, "pace_table", prepare_heading_paces(self))
         if self.phase_steps:
@@ -732,6 +744,7 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
 
 CAPTURE_MODES = ("share", "lottery", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
+MAX_BOND_STREAM = 4096
 
 
 def next_ticket(state: int, salt: int) -> int:

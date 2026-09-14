@@ -49,7 +49,9 @@ class Simulation(DisturbanceEngine):
             allocation_phase=initial.allocation_phase,
             computation_field=initial.computation_field,
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
-            bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps) if bonded else None,
+            bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps, bonded[0].bond_stream)
+            if bonded
+            else None,
         )
         super().__init__(
             initial,
