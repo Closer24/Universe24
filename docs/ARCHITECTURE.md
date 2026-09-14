@@ -577,6 +577,15 @@ capture atomically ends its source and installs its ordinary output; remote
 termination requires a received notice and local delay. The candidate contract
 owns its retarded approximation, numerical bounds and clock restrictions.
 
+The [recurrent extension](RECURRENT_QUANTUM_CONTACT.md) preallocates one to six
+such envelope banks per participating Node. The root envelope retains a flat
+tuple of at most five additional same-address owners, exposing all evolving
+state to the transitive NodeState audit. Fixed generation routing and emission
+turns keep old packets isolated without storing growing local history. The
+recurrent resolver composes existing envelope arithmetic and inventory commits;
+`quantum/contact_outcomes.py` validates matrix/effect support, and the quantum
+event network owns atomic result/origin creation and idempotent result lookup.
+
 ## Opt-in quantum ownership — Q-ORACLE-1
 
 The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its

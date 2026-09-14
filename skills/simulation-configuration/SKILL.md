@@ -34,6 +34,11 @@ the example family in the guide for fields, catalog entities or native events.
    requires an explicit [localized-contact](../../docs/LOCALIZED_QUANTUM_CONTACT.md)
    or [causal-source](../../docs/CAUSAL_QUANTUM_SOURCES.md) profile and its restrictions;
    other native quantum profiles still reject spatial fields.
+   Repeated localized/continued/new-wave outcomes require the explicit
+   [recurrent profile](../../docs/RECURRENT_QUANTUM_CONTACT.md), complete matrices,
+   a finite generation capacity and emission allowances. Use its
+   [example](../../examples/quantum/repeated_contacts.md); do not add a separate
+   random switch or infer a collapse law from a missing momentum value.
    Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
    for provenance granularity, capacity and failure behavior.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed

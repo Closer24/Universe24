@@ -9,6 +9,10 @@ selection continues to emit ordinary fields only at localized events.
 
 ## Local law and ownership
 
+This page specifies the one-shot profile. The separately selected
+[recurrent extension](RECURRENT_QUANTUM_CONTACT.md) adds outcome effects and
+finite isolated envelope generations, preserving the original selection.
+
 | Part | Contract |
 | --- | --- |
 | Law | Multiply the configured full emission by the squared magnitude of the local source envelope. Evolve its complex amplitude through configured number-preserving neighbor operations. |
