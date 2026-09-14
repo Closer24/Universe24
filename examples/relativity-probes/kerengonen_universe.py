@@ -14,7 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 ARGS, sys.argv = sys.argv, sys.argv[:1]
-from gravity_lensing import RAY_HEADINGS, RAY_SCALE, golden_headings  # noqa: E402
+from gravity_lensing import RAY_HEADINGS, RAY_SCALE  # noqa: E402
 from kerengonen_lensing import mirrored_headings  # noqa: E402
 
 sys.argv = ARGS
