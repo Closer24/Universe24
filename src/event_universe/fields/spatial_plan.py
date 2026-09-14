@@ -53,22 +53,22 @@ class SpatialLaw:
 
     def _own_departed_keys(
         self, record: DisturbanceRecord, index: int, meter: CostMeter
-    ) -> set[tuple[int, tuple[int, int, int], int]]:
-        """Heading and phase of the record's own rays that arrived here with it."""
+    ) -> set[tuple[int, tuple[int, int, int], int, int]]:
+        """Complete keys of the record's own rays that arrived here with it."""
         definition = self.definitions[index]
         if not definition.self_exclusion or not record.emission_departed or record.channel_code < 2:
             return set()
         port = record.channel_code - 2
-        keys: set[tuple[int, tuple[int, int, int], int]] = set()
+        keys: set[tuple[int, tuple[int, int, int], int, int]] = set()
         for rule_index, rule in enumerate(self.emissions):
             if rule.spatial_field != index or not matches_type(rule, record.type_index):
                 continue
             if rule_index >= len(record.emission_departed):
                 continue
-            amount, cursor, phase = unpack(record.emission_departed[rule_index])
+            amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
             if not amount:
                 continue
-            for ray in emit_rays(amount, cursor, definition, meter, phase)[0]:
+            for ray in emit_rays(amount, cursor, definition, meter, phase, advance)[0]:
                 first_port, moved = advance_ray(
                     ray,
                     definition.headings[ray.heading],
@@ -77,17 +77,20 @@ class SpatialLaw:
                 )
                 meter.charge("evaluate")
                 if first_port == port:
-                    keys.add((moved.heading, moved.accumulators, moved.phase))
+                    keys.add((moved.heading, moved.accumulators, moved.phase, moved.advance))
         return keys
 
-    def _carried_phase(self, record: DisturbanceRecord, definition: SpatialFieldDefinition) -> int:
-        """The phase of the record's last absorption on this field, plus one link's advance."""
+    def _carried_phase(
+        self, record: DisturbanceRecord, definition: SpatialFieldDefinition
+    ) -> tuple[int, int]:
+        """The phase and advance of the record's last absorption on this field, one link on."""
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field == definition.field and matches_type(rule, record.type_index):
                 if rule_index < len(record.absorbed_phases):
-                    stored = unpack(record.absorbed_phases[rule_index])[0]
-                    return (stored + definition.phase_advance) % definition.phase_steps
-                return 0
+                    stored, advance = unpack(record.absorbed_phases[rule_index])
+                    step = advance if advance >= 0 else definition.phase_advance
+                    return (stored + step) % definition.phase_steps, advance
+                return 0, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
     def _absorb(
@@ -120,7 +123,9 @@ class SpatialLaw:
                 if record is None or not matches_type(rule, record.type_index) or not resident:
                     continue
                 own = self._own_departed_keys(record, index, meter)
-                if all((ray.heading, ray.accumulators, ray.phase) in own for ray in resident):
+                if all(
+                    (ray.heading, ray.accumulators, ray.phase, ray.advance) in own for ray in resident
+                ):
                     continue
                 tickets = list(record.absorb_tickets)
                 if lottery and len(tickets) != len(self.absorptions):
@@ -128,6 +133,7 @@ class SpatialLaw:
                     tickets = [pack((seeds[item.field],)) for item in self.absorptions]
                 ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 absorbed_terms: list[tuple[int, int]] = []
+                carried_share, carried_advance = 0, -1
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -142,7 +148,7 @@ class SpatialLaw:
                         raise ValueError("absorb fraction must not be negative")
                 remaining: list[Ray] = []
                 for ray in resident:
-                    if (ray.heading, ray.accumulators, ray.phase) in own:
+                    if (ray.heading, ray.accumulators, ray.phase, ray.advance) in own:
                         remaining.append(ray)
                         continue
                     meter.charge("read")
@@ -175,6 +181,8 @@ class SpatialLaw:
                     absorbed_total = checked_work(absorbed_total + share)
                     if share and definition.kerengonen:
                         absorbed_terms.append((abs(share), ray.phase))
+                        if abs(share) > carried_share:
+                            carried_share, carried_advance = abs(share), ray.advance
                     if momentum is not None:
                         heading = definition.headings[ray.heading]
                         for axis in range(3):
@@ -193,10 +201,13 @@ class SpatialLaw:
                 phases = list(record.absorbed_phases)
                 if definition.kerengonen:
                     if len(phases) != len(self.absorptions):
-                        phases = [pack((0,)) for _ in self.absorptions]
+                        phases = [pack((0, -1)) for _ in self.absorptions]
                     if absorbed_terms:
+                        # The phase of the coherent sum; the advance of the largest share.
                         meter.charge("evaluate", definition.phase_steps)
-                        phases[rule_index] = pack((phase_of_sum(tuple(absorbed_terms), definition),))
+                        phases[rule_index] = pack(
+                            (phase_of_sum(tuple(absorbed_terms), definition), carried_advance)
+                        )
                 records[slot] = replace(
                     record,
                     values=tuple(values),
@@ -221,7 +232,7 @@ class SpatialLaw:
         )
         finite = any(rule.budget is not None for rule in self.emissions)
         excluding = any(self.definitions[rule.spatial_field].self_exclusion for rule in self.emissions)
-        blank_last = tuple(pack((0, 0, 0)) for _ in self.emissions)
+        blank_last = tuple(pack((0, 0, 0, 0)) for _ in self.emissions)
         if not remainders and not phases:
             if record.emission_remaining:
                 raise ValueError("partial carried emission metadata cannot reset an allowance")
@@ -263,16 +274,18 @@ class SpatialLaw:
                 if len(rows) != len(blank_last):
                     raise ValueError("carried self-exclusion state must match the fixed emission rules")
                 for index, row in enumerate(rows):
-                    if len(row) != 3:
+                    if len(row) != 4:
                         raise ValueError(
-                            "carried self-exclusion rows hold amount, cursor and wave phase"
+                            "carried self-exclusion rows hold amount, cursor, wave phase and advance"
                         )
-                    _amount, cursor, wave_phase = unpack(row)
+                    _amount, cursor, wave_phase, wave_advance = unpack(row)
                     definition = self.definitions[self.emissions[index].spatial_field]
                     if not 0 <= cursor < max(len(definition.headings), 1):
                         raise ValueError("carried self-exclusion cursor is outside its heading sequence")
                     if not 0 <= wave_phase < max(definition.phase_steps, 1):
                         raise ValueError("carried self-exclusion phase is outside its phase steps")
+                    if not -1 <= wave_advance < max(definition.phase_steps, 1):
+                        raise ValueError("carried self-exclusion advance is outside its phase steps")
         elif record.emission_last or record.emission_departed:
             raise ValueError("self-exclusion state requires a self-excluding ray field")
         return replace(record, emission_last=blank_last) if excluding else record
@@ -352,16 +365,22 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
-                    phase = rule.phase
+                    phase, advance = rule.phase, -1
                     if rule.phase_carried:
                         # Huygens: continue the wave absorbed last cycle, one advance on.
-                        phase = self._carried_phase(record, definition)
+                        phase, advance = self._carried_phase(record, definition)
+                    if rule.advance is not None:
+                        # De Broglie: the rays' own advance per link from the emitter's state.
+                        raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
+                        if raw_advance < 0:
+                            raise ValueError("kerengonen_advance must not be negative")
+                        advance = (raw_advance // rule.advance_denominator) % definition.phase_steps
                     new_rays, cursor = emit_rays(
-                        unpack(amount)[0], cursor_before, definition, meter, phase
+                        unpack(amount)[0], cursor_before, definition, meter, phase, advance
                     )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
-                        last[index] = pack((unpack(amount)[0], cursor_before, phase))
+                        last[index] = pack((unpack(amount)[0], cursor_before, phase, advance))
                     emitted_rays[rule.spatial_field].extend(new_rays)
                     if not rule.funded and definition.momentum_field is not None:
                         for axis, value in enumerate(ray_momentum(new_rays, definition)):

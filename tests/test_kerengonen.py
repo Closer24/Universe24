@@ -456,3 +456,78 @@ def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it(
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
     with pytest.raises(ValueError, match="carried kerengonen_phase requires"):
         parse_initial_state(raw)
+
+
+def test_a_ray_carries_its_own_advance_and_an_emitter_sets_it_from_its_momentum():
+    # A ray with its own advance ignores the field's; -1 means the field's.
+    own = Ray(0, (0, 0, 0), 3, 0, 4)
+    assert advance_ray(own, (1, 0, 0), 64, 1)[1].phase == 4
+    assert advance_ray(Ray(0, (0, 0, 0), 3, 0), (1, 0, 0), 64, 1)[1].phase == 1
+    assert merge_rays((Ray(0, (0, 0, 0), 1, 0, 4), Ray(0, (0, 0, 0), 1, 0, 8))) == (
+        Ray(0, (0, 0, 0), 1, 0, 4),
+        Ray(0, (0, 0, 0), 1, 0, 8),
+    )
+    # Two beams of momentum 16 and 32 on one 64-step field, advance = |p| / 4:
+    # after three links their rays sit at phases 12 and 24.
+    raw = two_lamps(64, 1, ticks=6)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0]]
+    raw["spatial_fields"][0]["rays_per_tick"] = 1
+    momentum = {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]}
+    for rule in raw["emissions"]:
+        del rule["recoil_field"]
+        rule["amount"] = 2
+        rule["kerengonen_advance"] = {"amount": momentum, "denominator": 4}
+    raw["disturbance_types"][0]["defaults"]["momentum"] = [16, 0, 0]
+    raw["disturbance_types"][1]["defaults"]["momentum"] = [32, 0, 0]
+    raw["seeds"] = [
+        {"position": [CENTER - 6, CENTER, CENTER], "type": "lamp_a"},
+        {"position": [CENTER - 6, CENTER + 2, CENTER], "type": "lamp_b"},
+    ]
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(4):
+        world.step()
+    rays = {
+        node.position[1] - CENTER: node.rays[0]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    assert {r.advance for r in rays[0]} == {4} and {r.advance for r in rays[2]} == {8}
+    # Same links traveled, twice the phase: the fast beam's wavelength is half.
+    slow = sorted(r.phase for r in rays[0])
+    fast = sorted(r.phase for r in rays[2])
+    assert slow and fast == [2 * phase for phase in slow] and all(phase % 4 == 0 for phase in slow)
+    # A negative or non-kerengonen advance is rejected.
+    raw["emissions"][0]["kerengonen_advance"] = {"amount": -4}
+    with pytest.raises(ValueError, match="must not be negative"):
+        Simulation(parse_initial_state(raw)).step()
+    del raw["spatial_fields"][0]["kerengonen"]
+    with pytest.raises(ValueError, match="kerengonen_advance requires"):
+        parse_initial_state(raw)
+
+
+def test_a_slit_carries_the_absorbed_advance_with_the_phase():
+    # The Huygens test again, on a 64-step field whose lamps advance 4 per link
+    # from momentum 16 while the field's own advance is 1: the slit must re-emit
+    # at the lamps' advance, or the wave changes wavelength at the slit.
+    raw = huygens_document(ticks=12)
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64, "phase_advance": 1}
+    momentum = {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]}
+    for rule in raw["emissions"][:2]:
+        rule["kerengonen_advance"] = {"amount": momentum, "denominator": 4}
+    for kind in raw["disturbance_types"][:2]:
+        kind["defaults"]["momentum"] = [16, 0, 0]
+    # Lamp A -> slit: 4 links at 4 = 16; the slit's tick adds 4 and three links add
+    # 12: phase 32. Lamp B -> (3, 0): 4 links at 4 = 16. A quarter turn apart,
+    # reading 2; with lamp B offset 16 steps equal, reading 4; offset 48, opposite,
+    # reading 0. Had the slit used the field's advance 1 the readings would differ.
+    readings = []
+    for offset in (0, 16, 48):
+        doc = json.loads(json.dumps(raw))
+        if offset:
+            doc["emissions"][1]["kerengonen_phase"] = offset
+        world = Simulation(parse_initial_state(doc))
+        for _ in range(12):
+            world.step()
+        readings.append(value_at(world, 3))
+    assert readings == [2, 4, 0]

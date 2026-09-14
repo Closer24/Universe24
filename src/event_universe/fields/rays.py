@@ -34,7 +34,12 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
 
 
 def emit_rays(
-    amount: int, cursor: int, definition: SpatialFieldDefinition, meter: CostMeter, phase: int = 0
+    amount: int,
+    cursor: int,
+    definition: SpatialFieldDefinition,
+    meter: CostMeter,
+    phase: int = 0,
+    advance: int = -1,
 ) -> tuple[Rays, int]:
     """Share one emitted amount over the next rays_per_tick headings of the sequence."""
     count = definition.rays_per_tick
@@ -43,6 +48,8 @@ def emit_rays(
         raise ValueError("ray emission cursor must index the heading sequence")
     if not 0 <= phase < max(definition.phase_steps, 1):
         raise ValueError("ray emission phase must index the field's phase steps")
+    if not -1 <= advance < max(definition.phase_steps, 1):
+        raise ValueError("ray emission advance must be -1 or index the field's phase steps")
     magnitude, sign = abs(bounded(amount)), -1 if amount < 0 else 1
     base, extra = divmod(magnitude, count)
     meter.charge("read")
@@ -51,7 +58,7 @@ def emit_rays(
     for offset in range(count):
         share = base + int(offset < extra)
         if share:
-            rays.append(Ray((cursor + offset) % headings, (0, 0, 0), sign * share, phase))
+            rays.append(Ray((cursor + offset) % headings, (0, 0, 0), sign * share, phase, advance))
     return tuple(rays), (cursor + count) % headings
 
 

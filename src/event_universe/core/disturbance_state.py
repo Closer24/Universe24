@@ -208,7 +208,7 @@ class DisturbanceRecord:
     spatial_remainders: Values = ()
     emission_remaining: Values = ()
     spatial_remaining: Values = ()
-    # Self-excluding ray bookkeeping, one (amount, cursor, wave phase) row per rule:
+    # Self-excluding ray bookkeeping: (amount, cursor, wave phase, advance) per rule.
     # emission_last is this cycle's emission; emission_departed is the emission
     # of the cycle the record last left a Node, zero while it stays. After a move
     # the record subtracts the rays of that departure from the flux it samples.

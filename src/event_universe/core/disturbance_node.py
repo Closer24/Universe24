@@ -740,7 +740,7 @@ class DisturbanceNode(DisturbanceNodeState):
         """A record that stays meets none of its own rays on the next cycle."""
         if record is None or not record.emission_last:
             return record
-        return replace(record, emission_departed=tuple(pack((0, 0, 0)) for _ in record.emission_last))
+        return replace(record, emission_departed=tuple(pack((0, 0, 0, 0)) for _ in record.emission_last))
 
     @staticmethod
     def _departing(record: DisturbanceRecord) -> DisturbanceRecord:

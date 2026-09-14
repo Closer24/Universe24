@@ -158,13 +158,14 @@ through Nodes whose carriers respond to them.
 A record that emits rays and moves one link meets, at the next Node, exactly the
 rays it emitted on the cycle it departed whose first DDA step took the same
 port. With `"self_exclusion": true` the record carries two rows per emission
-rule, this cycle's `(amount, cursor, wave phase)` and the row from its last departure
+rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
 (zero while it stays), and every coupling it evaluates after arriving reads the
 sampled flux and value with those rays subtracted. The work is bounded by
 `rays_per_tick`, uses only the record's own registers and the port it left
 through, and reads no ray identity or remote state. Rays of another record
 that merged with them at that Node are subtracted too; that coincidence needs
-the same heading and phase from an adjacent Node. Rays that return later, from
+the same heading, lattice accumulators, wave phase and advance from an adjacent
+Node. Rays that return later, from
 any distance, are not excluded: this is one-link exclusion of the emitter's own
 wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
@@ -193,7 +194,7 @@ adds it to its own field of the same name and, with `momentum_field`,
 `share x heading` to that vector; the rest of the ray is forwarded. Absorption
 happens before forwarding and before this cycle's emission joins the residents,
 so a record never swallows its fresh rays; with `self_exclusion` the rays of its
-own last departure are left alone by exact heading and phase. Absorbers act in
+own last departure are left alone by their complete ray key. Absorbers act in
 slot order.
 
 Quanta are signed when the field is. A funded emission of a negative amount
@@ -267,15 +268,29 @@ it took (`absorbed_phases`, a record row), and an emission with
 the emitter's own tick. A slit that absorbs and re-emits its stock every cycle
 therefore continues the wave that reached it, and two slits lit by one lamp are
 two sources in the lamp's phase. A carried phase requires an absorb rule on the
-same field for the emitting type. Without the key the field is the plain
-`isotropic-ray-field-v1`; a `kerengonen_phase` on an emission requires the key. The runner records the
-identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+same field for the emitting type.
+
+A ray may also carry its own advance per link. An emission with
+`"kerengonen_advance": {"amount": <expression>, "denominator": D}` evaluates the
+expression over the emitter's own fields, divides by `D`, takes the result
+modulo the phase steps, and stamps it on every ray it emits; rays merge only
+with equal advance, and a Huygens re-emission carries the advance of the
+largest share it absorbed with the phase. An advance from the emitter's
+momentum, `|p| / D`, supplies a candidate de Broglie relation: a faster beam has a
+shorter wavelength within the probe's configured range. The
+[de Broglie probe](../examples/de-broglie/README.md) measures the fringe spacing
+it gives; this relation is configured, not derived. A ray without its own advance uses the
+field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
+runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 
-Self-exclusion carries `(amount, cursor, wave phase)` for the actual departure
-cycle and compares heading, lattice accumulators and wave phase. A distinguishable
-external phase is not excluded. A cycle without emission clears the previous
-emission row. A foreign ray that has already merged with the same complete key
+Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
+departure cycle and compares heading, lattice accumulators, wave phase and advance.
+A distinguishable external phase or advance is not excluded, even if the emitter's
+properties have changed since departure. A cycle without emission clears the
+previous emission row to four zeros, so the fallback advance sentinel cannot keep
+an exhausted source active. A foreign ray that has already merged with the same complete key
 still cannot be distinguished by this candidate. Phased or attenuating
 self-exclusion alongside response couplings is rejected: subtracting a raw own
 amount from a coherent or decayed sample is not the corresponding local

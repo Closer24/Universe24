@@ -1722,8 +1722,8 @@ physical randomness.
 ## Kerengonen integration and ownership guards - 2026-09-14
 
 Integrated main `53e44a51dd238dff34d5e7ced0f337e8f1c7341f` with the ray candidate
-through `289499798058230323b005ecb09c4421fbb459bc`. The later de Broglie commits
-are a separate unreviewed change, not part of this integration. Existing main's
+through `289499798058230323b005ecb09c4421fbb459bc`. This entry records the reviewed
+`a5c17b3` snapshot; the later de Broglie commits were not part of that snapshot. Existing main's
 quantum field-phase and causal-null features are preserved.
 
 Independent physics review found and reproduced missing ray momentum in ordinary
@@ -1772,3 +1772,85 @@ No visualization, simulator/package build or new physical species law was added.
 Independent physics review gives a scoped pass; live PR/CI state supplies the
 separate publication and merge evidence. Existing Skills already require these
 ownership, arithmetic and provenance checks; no duplicate Skill rule was needed.
+
+
+## Kerengonen carried phase: one lamp, two re-emitting slits — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A record that absorbs on a
+Kerengonen field keeps, per absorb rule, the phase step nearest the direction
+of the coherent sum of what it took (`absorbed_phases`, a record row, from
+integer cosine and sine tables), and an emission with
+`"kerengonen_phase": "carried"` starts its rays at that phase plus one advance.
+A carried phase requires an absorb rule on the same field for the emitter.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,358 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), partial at a fixed re-emission phase (3); a carried phase without an absorb rule is rejected |
+| Single-source double slit | 31 x 31 x 3 open world, one lamp of 64 quanta per ray over a 117-heading forward cone for 64 ticks, an absorbing wall eight links on with re-emitting slits at y = -3 and +3, a 25-Node screen twelve links beyond: with phase, 2,430 at the center, 978 at a quarter turn, 140 at a half turn, about one half at three quarters, and exactly the single-slit value where only one slit's rays reach; without phase, two slits give exactly the sum of the two single slits at every Node; the wall keeps 332,800 quanta in both; every world closes on its initial stock |
+| Unchanged | Constant emission phases, the lottery and the plain field keep their results |
+| Visualization | Not requested or generated |
+
+The wave's phase survives absorption and re-emission at a Node: two slits lit
+by one lamp are two sources in the lamp's phase, and the fringe needs no
+second lamp. The re-emission is over the field's whole heading set, a point
+Huygens source; no diffraction law is derived from the slit's shape.
+
+## De Broglie on matter rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A ray may carry its own
+phase advance per link, stamped at emission by `kerengonen_advance` from an
+expression over the emitter's fields divided by a denominator and taken modulo
+the phase steps; rays merge only with equal advance, and a Huygens slit
+carries the advance of the largest share it absorbed with the phase.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,361 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: a ray's own advance overrides the field's, rays of different advance do not merge, beams of momentum 16 and 32 at `|p| / 4` carry advances 4 and 8 with phases in ratio two, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance (readings 2, 4, 0 for lamp offsets 0, 16, 48 on 64 steps); `tests/test_de_broglie.py`: the probe composes for every momentum and closes |
+| De Broglie probe | Beams of momentum 16, 32 and 64 (advance 4, 8, 16) through Huygens slits at y = +-6, 117-heading cone, 64 ticks: first dark fringe at y = 4, 2, 1 as predicted, period 8, 4, 2; bright Nodes at 0; 0 and +-4; 0, +-2, +-4, +-6; ratios exactly one where only one slit reaches; the plain field gives exactly the sum of the single slits for every momentum; all twelve worlds close on their initial matter |
+| Unchanged | Rays without their own advance use the field's; every earlier Kerengonen result stands |
+| Visualization | Not requested or generated |
+
+The rule `|p| / D` is configured, not derived; what the measurement shows is
+that the lattice, the Huygens slits and the coherence gate carry it from the
+source to the screen: wavelength inverse to momentum, three doublings in a
+row. The beam is a held source; a record in flight is not yet a matter ray.
+
+## Kerengonen guards reconciled with current main - 2026-09-14
+
+Main `c3c39d035a1020f2acde0cbf2e80ee442e29fa03` includes PR #98 and its
+per-ray advance extension. This reconciliation preserves that extension and the
+reviewed ownership/accounting corrections from `a5c17b3`. Departure rows now keep
+four integers: amount, cursor, phase and advance. Self-exclusion compares the
+complete key, independently of later emitter changes. Clearing uses four zeros;
+the fallback sentinel alone cannot keep an exhausted source active indefinitely.
+These are fixed per-rule owner registers, not a new world index or ray history.
+
+- The affected gate included architecture,
+  locality, energy accounting, Kerengonen, de Broglie and the new guard cases:
+  **2,448 passed, five opt-in visual skips in 208.61 seconds**. Ruff lint/format
+  and strict mypy passed. The base was `origin/main` at `c3c39d0`; with the merge
+  not yet committed, its merge-base was `53e44a5`, so this selection also covered
+  the incoming main changes. No full-suite flag or simulator build was used.
+- Independent re-review: scoped pass; all 22 guard cases passed. Added cases
+  distinguish foreign advances, preserve departure state after emitter changes,
+  select the largest actually absorbed share's advance, and distinguish explicit
+  zero from field fallback. Existing Kerengonen/de Broglie tests also passed.
+- Four actual headless runner cases use the reconciled source. Three eight-tick
+  two-lamp controls absorb **20 / 0 / 20** quanta at the center (equal phases,
+  opposite phases, plain rays). Each ends with 784 quanta in the domain and 16
+  escaped, with zero combined momentum. A twelve-tick funded emitter with its own
+  advance 2 on a field whose fallback is 1 exercises absorption and escape: the
+  domain holds 595 quanta and momentum (0, -10, 0), while escaped rays hold 5
+  quanta and momentum (0, 10, 0). Every completed tick passes ordinary accounting
+  and the independent local conservation audit.
+
+Verified runtime source SHA-256 before and after all four runs:
+`ee714a5470fa98b4ceccf254c8182060e1af512184d018828a69f4f5e37a563c`.
+Inputs, states, events and metadata are retained outside the checkout under
+`kerengonen-reconciled-runs-20260914` with the ordinary artifact retention policy.
+The bounded prepared-table/cache design is unchanged; the new metadata remains
+fixed by configuration. The explicit delayed-owner and response-sampling limits
+remain documented in the candidate contract. The configured momentum-to-advance
+relation is not a derived de Broglie law.

@@ -1020,6 +1020,7 @@ def _emissions(
                 "source",
                 "recoil_field",
                 "kerengonen_phase",
+                "kerengonen_advance",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1055,6 +1056,21 @@ def _emissions(
                 phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
                 if phase >= spatial[index].phase_steps:
                     raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
+        advance: Expression | None = None
+        advance_denominator = 1
+        if "kerengonen_advance" in obj:
+            if not spatial[index].kerengonen:
+                raise ValueError("kerengonen_advance requires a kerengonen ray field")
+            advance_object = _object(
+                obj["kerengonen_advance"],
+                "emission.kerengonen_advance",
+                {"amount", "denominator"},
+                {"amount"},
+            )
+            advance = _Expressions(fields, owned).parse(advance_object["amount"], 1)
+            advance_denominator = _integer(
+                advance_object.get("denominator", 1), "emission.kerengonen_advance.denominator", 1
+            )
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1078,6 +1094,8 @@ def _emissions(
                 recoil,
                 phase,
                 carried,
+                advance,
+                advance_denominator,
             )
         )
     return tuple(result)

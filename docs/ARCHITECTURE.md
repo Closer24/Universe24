@@ -256,7 +256,10 @@ reads or edits to old in-flight packets. See [SPATIAL_COUPLINGS.md](SPATIAL_COUP
 
 The optional phased-ray law retains its bounded prepared cosine/sine tuples in
 immutable `SpatialFieldDefinition`, outside NodeState. Per-record departure,
-capture-ticket and absorbed-phase rows have fixed configuration-derived sizes;
+capture-ticket and absorbed-phase rows have fixed configuration-derived sizes.
+Each departure row carries four integers (amount, cursor, phase, advance); an
+absorbed-phase row carries phase and advance. These bounded owner registers
+preserve a ray's emitted advance without looking up a later emitter state;
 Nodes validate that a field proposal changes only selected stock/vector fields
 and permitted bookkeeping, preserving transport metadata. Funded/absorbed owners
 currently reject delayed carrier plans on the independent spatial clock. The

@@ -158,6 +158,12 @@ plans and phased/attenuating self-exclusion with response couplings are explicit
 see the candidate contract rather than treating a passing probe as complete quantum
 or gravitational dynamics.
 
+A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
+two slits gives the fringe, and rays may carry their own advance from the
+emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
+halves the fringe period each time the beam's momentum doubles in its measured
+range. The momentum-to-advance relation is supplied by configuration, not derived.
+
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
 It covers 11 field families, 35 particle records and 14 disturbance families, with

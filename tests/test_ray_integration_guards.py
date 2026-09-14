@@ -126,7 +126,7 @@ def test_self_exclusion_distinguishes_a_foreign_wave_phase_on_the_same_line():
     record = replace(
         _record(Simulation(initial), 0),
         channel_code=2,
-        emission_departed=(pack((4, 0, 0)), pack((0, 0, 0))),
+        emission_departed=(pack((4, 0, 0, -1)), pack((0, 0, 0, 0))),
     )
     own = Ray(0, (0, 0, 0), 2, 1)
     foreign = Ray(0, (0, 0, 0), 2, 2)
@@ -138,6 +138,50 @@ def test_self_exclusion_distinguishes_a_foreign_wave_phase_on_the_same_line():
     assert residents == [own, replace(foreign, amount=1)]
     assert unpack(records[0].values[0]) == (401,)
     assert unpack(records[0].values[1]) == (1, 0, 0)
+
+
+def test_self_exclusion_keeps_the_departed_advance_and_distinguishes_a_foreign_one():
+    raw = two_lamps(16, 1)
+    raw["spatial_fields"][0]["self_exclusion"] = True
+    raw["spatial_couplings"][0]["type"] = "lamp_a"
+    raw["emissions"][0]["kerengonen_advance"] = {
+        "amount": {"op": "sum", "args": [{"op": "abs", "args": [{"field": "momentum"}]}]},
+        "denominator": 1,
+    }
+    initial = parse_initial_state(raw)
+    record = replace(
+        _record(Simulation(initial), 0),
+        values=(pack((400,)), pack((7, 0, 0))),
+        channel_code=2,
+        emission_departed=(pack((4, 0, 0, 3)), pack((0, 0, 0, 0))),
+    )
+    own = Ray(0, (0, 0, 0), 2, 3, 3)
+    foreign = Ray(0, (0, 0, 0), 2, 3, 5)
+    residents, records = [own, foreign], [record]
+    taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))
+    # Both rays have the same phase here, so coherence is one. The emitter's
+    # current momentum would select advance 7; its actual departed ray carried 3.
+    # The foreign ray with advance 5 is distinguishable and must be absorbed.
+    assert taken == 2 and residents == [own]
+    assert unpack(records[0].values[0]) == (402,)
+    assert unpack(records[0].values[1]) == (9, 0, 0)
+    assert unpack(records[0].absorbed_phases[0]) == (3, 5)
+
+
+@pytest.mark.parametrize("advance,next_phase", [(-1, 6), (0, 5), (7, 12)])
+def test_carried_phase_uses_the_largest_absorbed_share_advance(advance, next_phase):
+    initial = parse_initial_state(two_lamps(16, 1, absorber=0))
+    records = [_record(Simulation(initial), 2)]
+    residents = [Ray(0, (0, 0, 0), 1, 5, 2), Ray(1, (0, 0, 0), 3, 5, advance)]
+    law = _law(initial)
+    assert law._absorb(0, residents, records, CostMeter(initial.operation_costs)) == 4
+    assert not residents
+    assert unpack(records[0].values[0]) == (4,)
+    assert unpack(records[0].values[1]) == (-2, 0, 0)
+    # Largest-share inheritance is the configured candidate's policy. Explicit
+    # zero must remain zero; only -1 selects the field's one-step advance.
+    assert unpack(records[0].absorbed_phases[0]) == (5, advance)
+    assert law._carried_phase(records[0], initial.spatial_fields[0]) == (next_phase, advance)
 
 
 def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
@@ -161,14 +205,14 @@ def test_exhausted_emission_clears_departure_bookkeeping_before_a_later_move():
     }
     world = Simulation(parse_initial_state(raw))
     world.step()
-    assert unpack(_record(world, 0).emission_last[0]) == (1, 0, 2)
+    assert unpack(_record(world, 0).emission_last[0]) == (1, 0, 2, -1)
     assert unpack(_record(world, 0).emission_remaining[0]) == (0,)
     world.step()
-    assert unpack(_record(world, 0).emission_last[0]) == (0, 0, 0)
+    assert unpack(_record(world, 0).emission_last[0]) == (0, 0, 0, 0)
     world.step()
     # Departure happens two cycles after the only emission. It cannot claim
     # that an old, already dissipated ray traveled alongside this move.
-    assert unpack(_record(world, 0).emission_departed[0]) == (0, 0, 0)
+    assert unpack(_record(world, 0).emission_departed[0]) == (0, 0, 0, 0)
 
 
 @pytest.mark.parametrize("moving", [False, True])
