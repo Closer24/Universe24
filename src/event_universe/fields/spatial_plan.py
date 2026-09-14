@@ -76,16 +76,24 @@ class SpatialLaw:
 
     def _carried_phase(
         self, record: DisturbanceRecord, definition: SpatialFieldDefinition
-    ) -> tuple[int, int]:
-        """The phase and advance of the record's last absorption on this field, one link on."""
+    ) -> tuple[int, int, int]:
+        """Phase, advance and heading of the record's last absorption on this field, one link on."""
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field == definition.field and matches_type(rule, record.type_index):
                 if rule_index < len(record.absorbed_phases):
-                    stored, advance = unpack(record.absorbed_phases[rule_index])
+                    stored, advance, heading = unpack(record.absorbed_phases[rule_index])
                     step = advance if advance >= 0 else definition.phase_advance
-                    return (stored + step) % definition.phase_steps, advance
-                return 0, -1
+                    return (stored + step) % definition.phase_steps, advance, heading
+                return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
+
+    def _mirrored_heading(
+        self, heading: int, mirror: tuple[int, int, int], definition: SpatialFieldDefinition
+    ) -> int:
+        """The index of the absorbed heading's mirror image; the parser proved it exists."""
+        source = definition.headings[heading]
+        image = (source[0] * mirror[0], source[1] * mirror[1], source[2] * mirror[2])
+        return definition.headings.index(image)
 
     def _absorb(
         self,
@@ -124,7 +132,7 @@ class SpatialLaw:
                     tickets = [pack((definition.capture_seed,)) for _ in self.absorptions]
                 ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 absorbed_terms: list[tuple[int, int]] = []
-                carried_share, carried_advance = 0, -1
+                carried_share, carried_advance, carried_heading = 0, -1, -1
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -171,6 +179,7 @@ class SpatialLaw:
                         absorbed_terms.append((abs(share), ray.phase))
                         if abs(share) > carried_share:
                             carried_share, carried_advance = abs(share), ray.advance
+                            carried_heading = ray.heading
                     if momentum is not None:
                         heading = definition.headings[ray.heading]
                         for axis in range(3):
@@ -189,14 +198,16 @@ class SpatialLaw:
                 phases = list(record.absorbed_phases)
                 if definition.kerengonen:
                     if len(phases) != len(self.absorptions):
-                        phases = [pack((0, -1)) for _ in self.absorptions]
+                        phases = [pack((0, -1, -1)) for _ in self.absorptions]
                     if absorbed_terms:
-                        # The phase of the coherent sum; the advance of the largest share.
+                        # The phase of the coherent sum; the advance and heading of the
+                        # largest share.
                         meter.charge("evaluate", definition.phase_steps)
                         phases[rule_index] = pack(
                             (
                                 phase_of_sum(tuple(absorbed_terms), definition.phase_steps),
                                 carried_advance,
+                                carried_heading,
                             )
                         )
                 records[slot] = replace(
@@ -347,19 +358,31 @@ class SpatialLaw:
                     # sequence and leaves this Node on the same cycle with the residents.
                     validate_ray_definition(definition, field)
                     cursor_before = unpack(allocation[index])[0]
-                    phase, advance = rule.phase, -1
-                    if rule.phase_carried:
+                    phase, advance, absorbed_heading = rule.phase, -1, -1
+                    if rule.phase_carried or rule.mirror is not None:
                         # Huygens: continue the wave absorbed last cycle, one advance on.
-                        phase, advance = self._carried_phase(record, definition)
+                        phase, advance, absorbed_heading = self._carried_phase(record, definition)
+                        if not rule.phase_carried:
+                            phase, advance = rule.phase, -1
                     if rule.advance is not None:
                         # De Broglie: the rays' own advance per link from the emitter's state.
                         raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
                         if raw_advance < 0:
                             raise ValueError("kerengonen_advance must not be negative")
                         advance = (raw_advance // rule.advance_denominator) % definition.phase_steps
-                    new_rays, cursor = emit_rays(
-                        unpack(amount)[0], cursor_before, definition, meter, phase, advance
-                    )
+                    if rule.mirror is not None:
+                        # A mirror: the whole amount back along the image of the absorbed
+                        # heading, or nothing until something has been absorbed.
+                        cursor = cursor_before
+                        new_rays: Rays = ()
+                        if absorbed_heading >= 0 and unpack(amount)[0]:
+                            meter.charge("route")
+                            image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
+                            new_rays = (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),)
+                    else:
+                        new_rays, cursor = emit_rays(
+                            unpack(amount)[0], cursor_before, definition, meter, phase, advance
+                        )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
                         last[index] = pack((unpack(amount)[0], cursor_before))

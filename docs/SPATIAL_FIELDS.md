@@ -268,9 +268,21 @@ largest share it absorbed with the phase. An advance from the emitter's
 momentum, `|p| / D`, is the de Broglie rule: a faster beam has a shorter
 wavelength, and the [de Broglie probe](../examples/de-broglie/README.md)
 measures the fringe spacing it gives. A ray without its own advance uses the
-field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
-`kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
-runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+field's.
+
+A mirror is the same rule turned around. The absorbed row also keeps the
+heading of the largest share, and an emission with
+`"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
+one ray along the mirror image of that heading across the named axis, at the
+carried phase and advance when `"kerengonen_phase": "carried"` is set. The
+heading sequence must contain every mirror image, the emission must name a
+`recoil_field` (the mirror takes the momentum it reverses), and the emitting
+type must absorb on the field. A lamp facing a mirror then holds a standing
+wave: the reading along the line repeats every `phase_steps / (2 x advance)`
+links, as the [mirror probe](../examples/kerengonen-mirror/README.md) measures.
+Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase`, `kerengonen_advance` or `kerengonen_mirror` on an emission
+requires the key. The runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
 
 ## Finite completed-link decay

@@ -458,7 +458,7 @@ def test_a_slit_re_emits_the_phase_it_absorbed_so_the_wave_continues_through_it(
     # A carried phase needs an absorb rule for the emitter on that field.
     raw = huygens_document()
     raw["spatial_couplings"] = raw["spatial_couplings"][:1]
-    with pytest.raises(ValueError, match="carried kerengonen_phase requires"):
+    with pytest.raises(ValueError, match="requires an absorb rule on the same field"):
         parse_initial_state(raw)
 
 
@@ -535,3 +535,110 @@ def test_a_slit_carries_the_absorbed_advance_with_the_phase():
             world.step()
         readings.append(value_at(world, 3))
     assert readings == [2, 4, 0]
+
+
+def mirror_document(advance=4, mirror_x=6, ticks=24, phase_b=0):
+    """Lamp A at x = -6 fires +x; a mirror at x = mirror_x sends the wave back along -x."""
+    raw = two_lamps(64, 1, ticks=ticks)
+    del raw["conservation"]
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [-1, 0, 0]]
+    raw["spatial_fields"][0]["kerengonen"] = {"phase_steps": 64, "phase_advance": advance}
+    raw["disturbance_types"].append(
+        {
+            "name": "mirror",
+            "fields": ["quanta", "momentum"],
+            "defaults": {"quanta": 0, "momentum": [0, 0, 0]},
+            "transport": {"mode": "hold"},
+        }
+    )
+    raw["emissions"] = [
+        {
+            "type": "lamp_a",
+            "field": "quanta",
+            "amount": 8,
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+        },
+        {
+            "type": "mirror",
+            "field": "quanta",
+            "amount": {"field": "quanta"},
+            "denominator": 1,
+            "source": False,
+            "recoil_field": "momentum",
+            "kerengonen_phase": "carried",
+            "kerengonen_mirror": "x",
+        },
+    ]
+    raw["spatial_couplings"].append(
+        {
+            "name": "mirror_absorbs",
+            "type": "mirror",
+            "field": "quanta",
+            "mode": "absorb",
+            "momentum_field": "momentum",
+        }
+    )
+    raw["seeds"] = [
+        {"position": [CENTER - 6, CENTER, CENTER], "type": "lamp_a"},
+        {"position": [CENTER + mirror_x, CENTER, CENTER], "type": "mirror"},
+    ]
+    return raw
+
+
+def test_a_mirror_sends_the_wave_back_along_the_reflected_heading_as_a_standing_wave():
+    # The lamp fires 4 quanta each way every tick; the +x rays reach the mirror at
+    # x = 6 after 12 links, phase 48 at advance 4. The mirror re-emits its stock along
+    # -x only, at the carried phase plus one advance. Between them incident and
+    # reflected rays meet with equal amounts: the reading is 8 cos^2 of half their
+    # phase difference, which changes by 2 x advance per link, so the standing wave
+    # repeats every 64 / (2 x advance) links: 8 at advance 4, 4 at advance 8.
+    world = Simulation(parse_initial_state(mirror_document(advance=4)))
+    for _ in range(24):
+        world.step()
+    rays = {
+        node.position[0] - CENTER: node.rays[0]
+        for node in world.inventory_view().nodes
+        if node.rays and node.rays[0]
+    }
+    # Reflected rays exist, travel -x, and carry the field's advance and the mirror's phase.
+    backward = [ray for x in rays for ray in rays[x] if ray.heading == 1 and x < 6]
+    assert backward and all(ray.advance == -1 for ray in backward)
+    mirror = next(
+        world.record_values(r)
+        for node in world.nodes.values()
+        for r in node.records
+        if r is not None and r.type_index == 3
+    )
+    # The mirror holds what it absorbed this cycle and has taken the reversed momentum.
+    assert mirror["quanta"] == (4,) and mirror["momentum"][0] > 0
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == 400
+    readings = [value_at(world, x) for x in range(-5, 6)]
+    assert readings == [0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5]
+    assert readings[:3] == readings[8:11]
+    faster = Simulation(parse_initial_state(mirror_document(advance=8)))
+    for _ in range(24):
+        faster.step()
+    readings = [value_at(faster, x) for x in range(-5, 6)]
+    assert readings[:3] == readings[4:7] == readings[8:11]
+    assert readings == [6, 1, 1, 6, 6, 1, 1, 6, 6, 1, 1]  # period 4, no exact node on this grid
+
+
+def test_the_mirror_emission_is_validated():
+    raw = mirror_document()
+    raw["spatial_fields"][0]["headings"] = [[1, 0, 0], [0, 1, 0]]
+    with pytest.raises(ValueError, match="mirror image"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    del raw["emissions"][1]["recoil_field"]
+    with pytest.raises(ValueError, match="recoil_field"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["emissions"][1]["kerengonen_mirror"] = "w"
+    with pytest.raises(ValueError, match="x, y or z"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["spatial_couplings"] = raw["spatial_couplings"][:1]
+    with pytest.raises(ValueError, match="requires an absorb rule"):
+        parse_initial_state(raw)

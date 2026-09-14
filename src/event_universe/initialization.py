@@ -1021,6 +1021,7 @@ def _emissions(
                 "recoil_field",
                 "kerengonen_phase",
                 "kerengonen_advance",
+                "kerengonen_mirror",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "amount", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1071,6 +1072,24 @@ def _emissions(
             advance_denominator = _integer(
                 advance_object.get("denominator", 1), "emission.kerengonen_advance.denominator", 1
             )
+        mirror: tuple[int, int, int] | None = None
+        if "kerengonen_mirror" in obj:
+            if not spatial[index].kerengonen:
+                raise ValueError("kerengonen_mirror requires a kerengonen ray field")
+            axis = _text(obj["kerengonen_mirror"], "emission.kerengonen_mirror")
+            if axis not in ("x", "y", "z"):
+                raise ValueError("kerengonen_mirror must be x, y or z")
+            mirror = cast(tuple[int, int, int], tuple(-1 if "xyz"[i] == axis else 1 for i in range(3)))
+            for heading in spatial[index].headings:
+                image = tuple(component * sign for component, sign in zip(heading, mirror, strict=True))
+                if image not in spatial[index].headings:
+                    raise ValueError(
+                        "kerengonen_mirror requires the heading sequence to contain every mirror image"
+                    )
+            if "recoil_field" not in obj:
+                raise ValueError(
+                    "kerengonen_mirror requires a recoil_field: a mirror takes the momentum it reverses"
+                )
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1096,6 +1115,7 @@ def _emissions(
                 carried,
                 advance,
                 advance_denominator,
+                mirror,
             )
         )
     return tuple(result)
@@ -1613,13 +1633,15 @@ def parse_initial_state(document: object) -> InitialState:
 
         parse_event_program(initial)
     for rule in initial.emissions:
-        if rule.phase_carried and not any(
+        if (rule.phase_carried or rule.mirror is not None) and not any(
             coupling.mode == "absorb"
             and coupling.field == initial.spatial_fields[rule.spatial_field].field
             and set(selected_types(coupling)) & set(selected_types(rule))
             for coupling in initial.spatial_couplings
         ):
-            raise ValueError("a carried kerengonen_phase requires an absorb rule on the same field")
+            raise ValueError(
+                "a carried kerengonen_phase or a kerengonen_mirror requires an absorb rule on the same field"
+            )
     _validate_conversions(initial)
     if "conservation" in obj:
         initial = replace(initial, conservation=_conservation(obj["conservation"], initial))

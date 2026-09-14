@@ -186,6 +186,9 @@ class EmissionDefinition:
     # expression over advance_denominator, taken modulo the phase steps.
     advance: Expression | None = None
     advance_denominator: int = 1
+    # Kerengonen fields only: re-emit the whole amount along the mirror image of the
+    # heading last absorbed, with these component signs (a mirror across one axis).
+    mirror: tuple[int, int, int] | None = None
 
 
 @dataclass(frozen=True, slots=True)
