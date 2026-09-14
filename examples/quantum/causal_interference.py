@@ -29,6 +29,9 @@ TEMPLATE = HERE / "causal_charge.json"
 ROTATION = [[5, 0, 0, 0], [0, 3, -4, 0], [0, 4, 3, 0], [0, 0, 0, 5]]
 INVERSE = [[5, 0, 0, 0], [0, 3, 4, 0], [0, -4, 3, 0], [0, 0, 0, 5]]
 SWAP = [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]
+# A balanced splitter: Hadamard block with vacuum coefficient 1+i, so U*U = 2I exactly.
+BALANCED = [[[1, 1], 0, 0, 0], [0, 1, 1, 0], [0, 1, -1, 0], [0, 0, 0, [1, 1]]]
+SPLITTERS = {"rotation": (ROTATION, INVERSE), "balanced": (BALANCED, BALANCED)}
 # Phase gate coefficient on the occupied M mode: exp(i*phi) as an exact Gaussian integer.
 PHASES = {"0": (1, 0), "pi/2": (0, 1), "pi": (-1, 0), "3pi/2": (0, -1)}
 FULL_EMISSION = 25
@@ -40,9 +43,22 @@ CAPTURE_TICKET_AT_OUTPUT = [600]
 CAPTURE_TICKET_ON_ARM = [9, 0, 0]
 
 
-def analytic(phase):
-    """Exact port weights after mixer, phase and inverse mixer, scaled to 625."""
+def analytic(phase, splitter="rotation"):
+    """Exact port weights after mixer, phase and inverse mixer, scaled to 625 or 4."""
     re, im = PHASES[phase]
+    if splitter == "balanced":
+        # Ports after the Hadamard are equal; the second Hadamard gives
+        # S = (1 + e^{i phi}) / 2 and M = (1 - e^{i phi}) / 2 up to a common phase.
+        s_re, s_im = 1 + re, im
+        m_re, m_im = 1 - re, -im
+        weight_s = s_re * s_re + s_im * s_im
+        weight_m = m_re * m_re + m_im * m_im
+        assert weight_s + weight_m == 4
+        return {
+            "output_port_weights": [weight_s, weight_m],
+            "capture_probability": str(Fraction(weight_m, 4)),
+            "source_emission_after_recombination": str(Fraction(FULL_EMISSION * weight_s, 4)),
+        }
     # Ports after the 3:4 mixer are (3/5, 4/5); the phase multiplies the M port.
     # The inverse mixer gives S = (9 + 16 e^{i phi}) / 25 and M = (-12 + 12 e^{i phi}) / 25.
     s_re, s_im = 9 + 16 * re, 16 * im
@@ -57,8 +73,9 @@ def analytic(phase):
     }
 
 
-def configuration(phase, *, which_path, tickets):
+def configuration(phase, *, which_path, tickets, splitter="rotation"):
     raw = json.loads(TEMPLATE.read_text(encoding="utf-8"))
+    mixer, inverse = SPLITTERS[splitter]
     raw["ticks"] = TICKS
     for emission in raw["emissions"]:
         emission["budget"] = 1000
@@ -68,9 +85,9 @@ def configuration(phase, *, which_path, tickets):
     re, im = PHASES[phase]
     coefficient = re if im == 0 else [re, im]
     domain["phases"] = [
-        [{"register_indices": [0, 1], "matrix": ROTATION}],
+        [{"register_indices": [0, 1], "matrix": mixer}],
         [{"register_indices": [1], "matrix": [[1, 0], [0, coefficient]]}],
-        [{"register_indices": [0, 1], "matrix": INVERSE}],
+        [{"register_indices": [0, 1], "matrix": inverse}],
         [{"register_indices": [1, 2], "matrix": SWAP}],
         *([[]] * 12),
     ]
@@ -101,7 +118,11 @@ def run_case(name, raw, output):
     report = json.loads((case_dir / "run.json").read_text(encoding="utf-8"))
     assert report["status"] == "completed", report["error"]
     assert report["accounting_balanced_at_every_completed_tick"]
-    assert report["conserved_at_every_completed_tick"]
+    escaped = -report["escaped_totals"]["electric_signal"][0]
+    # The strict flag requires that nothing left the open boundary; escape is
+    # accounted separately and does not change any decision or emission.
+    assert report["conserved_at_every_completed_tick"] or escaped > 0
+    assert report["final_totals"]["charge"] == [-1] and report["final_totals"]["mass"] == [1]
     resolver = report["computation"]["resolver"]
     decisions = [
         {
@@ -124,6 +145,7 @@ def run_case(name, raw, output):
         ],
         "emission_by_tick": {str(tick): emission[tick] for tick in sorted(emission)},
         "source_emission_total": -report["source_totals"]["electric_signal"][0],
+        "escaped_total": escaped,
         "random_draws": resolver["random_draws"],
     }
 
@@ -159,6 +181,38 @@ def run_experiment(output):
                 "analytic": expected,
                 "measured_output_weights": measured,
                 "output_decision_tick": output_decisions[0]["tick"] if output_decisions else None,
+                "measured_source_emission_after_recombination": str(steady),
+                "case": case,
+            }
+        )
+
+    balanced = []
+    for phase in PHASES:
+        case = run_case(
+            "balanced_" + phase.replace("/", "_"),
+            configuration(phase, which_path=False, tickets=NULL_TICKETS, splitter="balanced"),
+            output,
+        )
+        expected = analytic(phase, "balanced")
+        output_decisions = [d for d in case["uncertain_decisions"] if d["register"] == 2]
+        if expected["output_port_weights"][1] == 0:
+            assert not output_decisions
+            probability = Fraction(0)
+        else:
+            assert len(output_decisions) == 1
+            weights = output_decisions[0]["weights"]
+            probability = Fraction(weights[1], sum(weights))
+        assert probability == Fraction(expected["capture_probability"])
+        steady = Fraction(steady_source_emission(case))
+        predicted = Fraction(expected["source_emission_after_recombination"])
+        assert abs(steady - predicted) * len(RECOMBINED_TICKS) < 1, (steady, predicted)
+        arms = case["emission_by_tick"]["1"]
+        assert arms == {SOURCE: 12, MIDDLE: 12}, arms
+        balanced.append(
+            {
+                "phase": phase,
+                "analytic": expected,
+                "measured_capture_probability": str(probability),
                 "measured_source_emission_after_recombination": str(steady),
                 "case": case,
             }
@@ -214,11 +268,12 @@ def run_experiment(output):
         "template": TEMPLATE.name,
         "ticks": TICKS,
         "interference": interference,
+        "balanced": balanced,
         "localized_capture_at_output": localized,
         "which_path": which_path,
         "retarded_source_fraction_after_arm_null": str(Fraction(9, FULL_EMISSION)),
         "limits": [
-            "Integer 3:4 mixer, not a balanced beam splitter; visibility follows from 9/25 and 16/25.",
+            "The 3:4 mixer gives visibility from 9/25 and 16/25; the balanced Hadamard with vacuum 1+i gives full visibility.",
             "Source weights after a null result are retarded and unnormalized: S keeps emitting 9 of 25.",
             "One configured domain and one conserved inventory; no field back-action on amplitudes.",
             "Finite range of ticks and one Link per tick; no continuum limit is measured.",

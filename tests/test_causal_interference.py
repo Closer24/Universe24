@@ -20,6 +20,9 @@ def test_analytic_port_weights_follow_the_configured_mixer_and_phase():
     assert EXPERIMENT.analytic("pi")["output_port_weights"] == [49, 576]
     assert EXPERIMENT.analytic("3pi/2")["output_port_weights"] == [337, 288]
     assert EXPERIMENT.analytic("pi")["capture_probability"] == "576/625"
+    assert EXPERIMENT.analytic("0", "balanced")["output_port_weights"] == [4, 0]
+    assert EXPERIMENT.analytic("pi/2", "balanced")["capture_probability"] == "1/2"
+    assert EXPERIMENT.analytic("pi", "balanced")["capture_probability"] == "1"
 
 
 def test_generated_inputs_are_valid_and_keep_the_profile():
@@ -39,6 +42,8 @@ def test_interference_is_visible_at_the_output_and_removed_by_an_arm_detector(tm
         steady = Fraction(row["measured_source_emission_after_recombination"])
         predicted = Fraction(row["analytic"]["source_emission_after_recombination"])
         assert abs(steady - predicted) < Fraction(1, 6)
+    balanced = {row["phase"]: row["measured_capture_probability"] for row in result["balanced"]}
+    assert balanced == {"0": "0", "pi/2": "1/2", "pi": "1", "3pi/2": "1/2"}
     assert result["localized_capture_at_output"]["captures"] == [{"tick": 7, "x": 3}]
     assert {row["arm_ticket"] for row in result["which_path"]} == {"null", "capture"}
     for row in result["which_path"]:

@@ -66,6 +66,24 @@ appears at D at tick 7. M and D envelopes stop emitting immediately. S emits onc
 more at tick 8 and then stops: the terminal notice crossed two Links with local
 delay. The localized output emits at full strength from its own allowance.
 
+### A balanced splitter is available in the integer contract
+
+The Hadamard block `[[1, 1], [1, -1]]` with vacuum coefficient `1 + i` satisfies
+`U*U = 2I`, so the exact integer contract admits a balanced splitter. Replacing
+both 3:4 mixers with it gives full visibility:
+
+| phi | Analytic (S, D) weights x 4 | Recorded capture probability at D | Arm emission (S, M) per tick | Mean S emission, ticks 8-13 |
+| --- | --- | --- | --- | --- |
+| 0 | (4, 0) | none: weight zero | (12, 12) | 25 |
+| pi/2 | (2, 2) | 1/2 | (12, 12) | 12.5 |
+| pi | (0, 4) | 1 | (12, 12) | 0 |
+| 3pi/2 | (2, 2) | 1/2 | (12, 12) | 12.5 |
+
+At `phi = pi` the whole wave reaches D and S stops emitting entirely. In the
+`phi = 0` balanced run four field units left the open boundary; escape is
+accounted separately and the harness requires balanced accounting rather than
+the strict no-escape flag.
+
 ### A detector on the arm removes the phase dependence
 
 The which-path variant adds a held `contact_probe` at M and lists register 1 as
@@ -98,8 +116,7 @@ candidate, not a measurement error.
   recombination, so the classical field carries the interference term.
 - It shows that an actual local instrument on one arm makes the later
   statistics phase independent, with only local and causally delivered inputs.
-- It does not show a balanced beam splitter, field back-action on amplitudes,
-  energy closure between field and matter, a continuum limit, or a derivation
-  of the classical limit. The 3:4 mixer, the phase gate and the instrument are
-  configured data. The retarded source rule is a known departure from the
+- It does not show field back-action on amplitudes, energy closure between
+  field and matter, a continuum limit, or a derivation of the classical limit.
+  The mixers, the phase gate and the instrument are configured data. The retarded source rule is a known departure from the
   conditional Born weights and is left visible above.

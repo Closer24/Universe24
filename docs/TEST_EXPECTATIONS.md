@@ -34,7 +34,8 @@ Changing only one frozen operand is forbidden because it can increase the norm.
 [two-arm interference harness](../examples/quantum/causal_interference.md) in
 the fast gate: exact output decision weights `[337, 288]`, `[49, 576]` and
 `[337, 288]` for `phi = pi/2, pi, 3pi/2` and no uncertain decision at `phi = 0`;
-mean source emission after recombination within 1/6 unit of `25 |a_S|^2`;
+balanced Hadamard capture probabilities 0, 1/2, 1 and 1/2 with arm emission
+(12, 12); mean source emission after recombination within 1/6 unit of `25 |a_S|^2`;
 one localized capture at D at tick 7 when the ticket selects it; an arm
 detector giving `[9, 16]` for every phase with no later uncertain output
 decision; and a retarded source emission of 9 of 25 after an arm null.

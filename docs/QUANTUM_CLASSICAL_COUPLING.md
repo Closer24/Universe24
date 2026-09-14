@@ -31,6 +31,7 @@ records, with exact integers on the canonical runner:
 | Observation | Result |
 | --- | --- |
 | Capture weights at the output detector after a 3:4 split, a phase `phi` and inverse recombination | `[625, 0]`, `[337, 288]`, `[49, 576]`, `[337, 288]` for `phi = 0, pi/2, pi, 3pi/2`, equal to the exact rational prediction `288(1 - cos phi)/625` |
+| Same experiment with a balanced Hadamard splitter (vacuum coefficient `1 + i`, scale 2) | capture probabilities 0, 1/2, 1, 1/2: full visibility inside the integer contract |
 | Classical field emitted at the source Node after recombination | integer floor of `25 (337 + 288 cos phi)/625` with carried remainder: 25, 13.5, 2, 13.5 per tick |
 | Same experiment with a held detector on one arm | the arm decision is `[9, 16]` for every `phi`; the output detector never receives a nonzero capture weight |
 | Cancellation after a capture two Links away | the source Node emits once more and then stops |
@@ -72,8 +73,6 @@ certain outcomes, and phase-sensitive split and recombination
   The coupling is one directional.
 - **Not energy closure.** Field emission draws from finite configured
   allowances; there is no field-plus-matter energy that is conserved.
-- **Not a balanced beam splitter.** The exact integer contract admits 3:4:5
-  rotations but not `1/sqrt(2)`; visibility follows from 9/25 and 16/25.
 - **Not a continuum or asymptotic result.** Every table is a finite lattice at
   a finite number of ticks.
 - **Not quantum electrodynamics, gravity, spin, statistics or many-body
