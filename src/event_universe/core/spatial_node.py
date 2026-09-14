@@ -33,7 +33,7 @@ from .node_execution import (
     finish_local_cycle,
 )
 from .node_ports import PortBank
-from .node_services import NodeEvents, add_audit_delta, port_count
+from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
     BOND_ORIGIN_MARK,
     Claim,
@@ -292,9 +292,10 @@ class SpatialNode(SpatialNodeState):
             raise ValueError("outgoing spatial links are occupied")
         records = () if carrier is None else carrier.records
         if services.initial.computation_field is not None:
-            # Stock present before forwarding is this interval's local computation load.
+            # Stock present before forwarding is this interval's local computation load;
+            # for a ray field that stock is the resident rays, delivered per travel port.
             index = self._computation_index(services)
-            self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+            self.load = self._resident_load(index)
             self.load_channels = tuple(unpack(payload)[0] for payload in self.states[index].delivered)
         sample_values, sample_fluxes, sample_ports = (
             self.sample_values,
@@ -369,8 +370,27 @@ class SpatialNode(SpatialNodeState):
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
+        resident_rays: tuple[Rays, ...] = self.rays
+        held: tuple[Rays, ...] = ()
+        if services.initial.ray_delay and any(self.rays):
+            # Rays wait the intervals the Node's computation load alone would add to
+            # a cycle; a waiting Kerengonen ray may advance its phase per interval.
+            if self.ray_wait == 0:
+                extra, _ = cycle_timing(
+                    self.load_value(services),
+                    services.initial.normal_budget,
+                    services.initial.link_ticks,
+                )
+                self.ray_wait = extra // services.initial.link_ticks
+                waiting = self.ray_wait > 0
+            else:
+                self.ray_wait -= 1
+                waiting = self.ray_wait > 0
+            if waiting:
+                held = self._waited_rays(services)
+                resident_rays = tuple(() for _ in self.rays)
         plan = yield SpatialPlanningInput(
-            states, records, self.received_count, node_cost, self.rays, self.claims, tick
+            states, records, self.received_count, node_cost, resident_rays, self.claims, tick
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -416,6 +436,35 @@ class SpatialNode(SpatialNodeState):
         self.sample_cause_id = sample_cause
         self.sample_received_masks = sample_received_masks
         self._commit_plan(tick, carrier, services, plan, cost)
+        if held:
+            # The waiting rays stay owned here; only fresh emissions left this cycle.
+            self.rays = held
+
+    def _waited_rays(self, services: SpatialServices) -> tuple[Rays, ...]:
+        """Resident rays after one waiting interval: unchanged, or phase-advanced per tick."""
+        if not services.initial.ray_phase_per_tick:
+            return self.rays
+        result = []
+        for definition, rays in zip(services.initial.spatial_fields, self.rays, strict=False):
+            if not definition.phase_steps or not rays:
+                result.append(rays)
+                continue
+            result.append(
+                merge_rays(
+                    tuple(
+                        replace(
+                            ray,
+                            phase=(
+                                ray.phase
+                                + (ray.advance if ray.advance >= 0 else definition.phase_advance)
+                            )
+                            % definition.phase_steps,
+                        )
+                        for ray in rays
+                    )
+                )
+            )
+        return tuple(result)
 
     def commit_ready(
         self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices
@@ -939,12 +988,17 @@ class SpatialNode(SpatialNodeState):
             return 0
         return bounded(checked_work(self._baseline_load(services) + self.load))
 
+    def _resident_load(self, index: int) -> int:
+        stock = sum(unpack(payload)[0] for payload in self.states[index].populations)
+        if self.rays and index < len(self.rays) and self.rays[index]:
+            stock = checked_work(stock + ray_stock(self.rays[index]))
+        return stock
+
     def refresh_load(self, services: SpatialServices) -> int:
         """Read the computation stock owned now, for the shared clock's field forwarding."""
         if services.initial.computation_field is None:
             return 0
-        index = self._computation_index(services)
-        self.load = sum(unpack(payload)[0] for payload in self.states[index].populations)
+        self.load = self._resident_load(self._computation_index(services))
         return self.load_value(services)
 
     def directional_load(self, port: int, services: SpatialServices) -> int:

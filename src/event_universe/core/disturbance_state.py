@@ -273,10 +273,30 @@ class InitialState:
     computation_field: int | None = None
     delay_direction: str | None = None
     least_delay_routing: bool = False
+    # Rays resident at a Node wait the extra intervals its computation load alone
+    # would add to a cycle (default clock); with ray_phase_per_tick a Kerengonen
+    # ray's phase advances on every waiting interval as well as on every link.
+    ray_delay: bool = False
+    ray_phase_per_tick: bool = False
 
     def __post_init__(self) -> None:
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
+        for name in ("ray_delay", "ray_phase_per_tick"):
+            if type(getattr(self, name)) is not bool:
+                raise ValueError(f"{name} must be boolean")
+        if self.ray_delay:
+            if self.computation_field is None:
+                raise ValueError("ray_delay requires computation_field")
+            if self.spatial_computation_delay:
+                raise ValueError("ray_delay requires the default clock")
+            if not any(definition.rays for definition in self.spatial_fields):
+                raise ValueError("ray_delay requires a ray spatial field")
+        if self.ray_phase_per_tick:
+            if not self.ray_delay:
+                raise ValueError("ray_phase_per_tick requires ray_delay")
+            if not any(definition.phase_steps for definition in self.spatial_fields):
+                raise ValueError("ray_phase_per_tick requires a Kerengonen ray field")
         if type(self.least_delay_routing) is not bool:
             raise ValueError("least_delay_routing must be boolean")
         if self.least_delay_routing and self.delay_direction is None:
@@ -298,8 +318,8 @@ class InitialState:
                 raise ValueError("computation_field must name a configured field")
             field = self.fields[index]
             definition = next((d for d in self.spatial_fields if d.field == index), None)
-            if definition is None or definition.transport != "outward":
-                raise ValueError("computation_field must be an outward spatial field")
+            if definition is None or definition.transport not in ("outward", "ray"):
+                raise ValueError("computation_field must be an outward or ray spatial field")
             if field.components != 1 or field.signed or not field.conserved:
                 raise ValueError("computation_field must be an unsigned conserved scalar field")
         if self.spatial_computation_delay and not self.spatial_fields:

@@ -295,6 +295,11 @@ def _execute_run(
             ),
             least_delay_routing=initial.least_delay_routing,
         )
+    if initial.ray_delay:
+        metadata.update(
+            ray_delay=True,
+            ray_phase="per-tick-and-link" if initial.ray_phase_per_tick else "per-link",
+        )
     if initial.spatial_fields:
         metadata.update(
             allocation_phase=initial.allocation_phase,

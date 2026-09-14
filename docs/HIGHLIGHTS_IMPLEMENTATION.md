@@ -668,6 +668,28 @@ charge). Findings, each a branch result and not a law:
 - Under 5 and the local observer: no kinematic time dilation. Twin clocks agree
   at every speed under any budget above the moving cycle's cost; a tighter
   budget slows the traveller linearly in moves, not as √(1−v²).
+- Under 7.2 (cosmology): four masses launched outward under the momentum
+  coupling recollapse at every speed up to c at emission 24000 — the escape
+  speed of the configuration exceeds the link speed — so expansion is only an
+  initial condition and no repulsive term exists. A light train past a mass
+  whose emission grows each cycle arrives late and stretched (mean spacing 2.7
+  per link-tick, z ≈ 1.7) under the directional delay: a distance-redshift
+  relation from delay growth without recession, quantized in bunches. In a
+  closed (periodic) universe the field never leaves, so a constant source
+  makes the load grow with the age of the universe: with a ray computation
+  field a unit-spaced light train stretches to z ≈ 9 within one lap (first
+  seven bodies unshifted, then 6, 60, 12, 26-tick gaps) — a distance-
+  proportional redshift from closure alone, whose lattice form is stepwise.
+  Under `straight` phases the mass's axis ray stalls the train at one column
+  and under `rotate` the wrapped Manhattan field piles up at the antipode;
+  neither is a uniform load.
+- Under 4.4 and the Kerengonen field: a two-lamp interferometer beside a mass
+  is unchanged at every screen Node under the fixed field clock (gravity
+  invisible to interference); with the opt-in `ray_delay` the delayed rows
+  gain quanta (decoherence, 6176 → 6404); with `ray_phase_per_tick` as well
+  they darken (6176 → 5636, y = 10 from 552 to 211): the waits carry phase and
+  the fringe shifts in whole steps — the gravitational-phase (COW) signature,
+  present only when a waiting interval counts as phase.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the

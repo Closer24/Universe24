@@ -207,6 +207,28 @@ and stalled the outward probe for seven ticks, and `against` did the reverse.
 A resting body is never moved. Both are configured hypotheses; neither is a
 derived force, and the option requires the default clock.
 
+### Ray delay and phase per interval
+
+By default the field clock is fixed: a ray crosses one link per interval
+whatever the computation load of the Node it rests at, so a mass delays the
+carriers that pass it and not the rays. `"ray_delay": true` (default clock,
+`computation_field` set) makes rays wait too: on a field cycle at a Node whose
+resident rays have no wait pending, the Node prices its load alone with the
+carrier timing rule, `k = ceil(load / normal_budget) - 1`, and holds its
+resident rays for the next `k` field cycles; fresh emissions still leave, and
+held rays stay owned by the Node, counted by every audit and exposed to its
+absorbers on each waiting cycle. The waiting register is one bounded integer
+per Node (`ray_wait`).
+
+A Kerengonen ray's phase advances per link, so a delayed ray arrives later with
+the phase of an undelayed one and an interferometer cannot see the delay.
+`"ray_phase_per_tick": true` (requires `ray_delay` and a Kerengonen field)
+advances the phase of every held ray by its advance on each waiting interval as
+well, so two arms that waited differently meet with a phase difference of
+`advance x (waits)` steps. Both keys are declared timing rules, not a
+gravitational law: which of the two the world uses is a configuration choice
+that the relativity probes compare.
+
 ### Least-delay routing
 
 Directional delay alone changes when a hop happens, not where: the balanced
