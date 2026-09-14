@@ -817,6 +817,15 @@ run. The ordinary envelope gate and the quantum owner's recipe for that epoch
 use the same matrix. The read costs one `read` tariff; no evolving state is
 added to NodeState and the field is not changed by the gate.
 
+An envelope emission rule with `source: false` is funded: its amount is booked
+as an internal transfer from the wave's conserved stock of the same field, the
+quantum inventory decreases by what the modes have paid, the localized output
+receives the remainder, and an emission committed after the domain localized
+elsewhere is recorded as an explicit external residual. Parsing requires the
+causal model, ownership of the field by the source and output types, and
+`modes x budget <= stock`. Funded octant emission by ordinary records is
+admitted under both schemas; funded ray emission keeps schema 1.
+
 ## Recurrent contact outcomes - Q-RECURRENT-1
 
 The separate [recurrent contact profile](docs/RECURRENT_QUANTUM_CONTACT.md),

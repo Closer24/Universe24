@@ -174,6 +174,35 @@ positive/negative inverse composition in both orders, and a native negative-coil
 run. The equivalent pairs `(5, 3+4i)` and `(5i, -4+3i)` both give capture
 probability `576/3125` and source envelope weight `2549/3125` at exponent -1.
 
+## Opt-in funded envelope emission
+
+An emission rule selecting the source type may declare `"source": false`. The
+emitted field is then paid from the wave's own conserved stock of the field
+with the same name, and the runner records no external injection for it. It
+requires `causal-contact-fields-v1`, the emitting and output types must own the
+field, and the source stock must cover every mode's finite `budget`, so that no
+local cap can overdraw the wave. Nothing changes when `source` stays true.
+
+| Part | Contract |
+| --- | --- |
+| Law | Each envelope emission is booked as an internal transfer from the wave's stock into the field. The stock is the conserved value the source record carried into the quantum domain; the quantum owner holds it as it holds charge and mass, less what the modes have paid. Per-mode budgets remain the only local bound on emission. |
+| Inputs | The local envelope weight and allowance as before. No mode reads the remaining stock; the parse-time cap `modes x budget <= stock` guarantees it is never exceeded. |
+| Effect | `totals()` stays constant and `source_totals()` stays zero while the wave is live. At localization the output record receives the unspent stock and continues paying its own ordinary funded emission from it. Stock the ordinary record spent before delocalizing counts as already paid. |
+| Residual | An envelope emission committed after the domain localized elsewhere has no payer left: it is booked as an explicit external source and reported as `after_capture`. It is the causal residual of the terminal notice's Link transit. |
+| Report | `funded_emission` per domain: `paid` and `after_capture` per field; `quantum_inventory` shows the stock less what was paid. |
+| Acceptance | Parser: ownership, causal model, budget coverage. Runtime: constant totals with zero sources, inventory equal to stock minus paid, the localized winner holding stock minus paid and paying 25 per tick afterwards, the post-capture residual equal to the recorded sources, balanced spatial accounting, unchanged default profile. |
+
+For the [two-arm experiment](../examples/quantum/causal_interference.md) at
+`phi = pi` with stock 3000 and budget 1000 per mode, the wave pays 211 units
+into the field over fourteen ticks with no capture, the totals stay at 3000 and
+the runner's strict conservation flag holds. With a capture at tick 7 the
+localized record receives the unspent stock, keeps paying 25 per tick, and the
+source Node's one retarded emission after the capture is the entire external
+residual. This is energy closure between the wave and its classical field under
+a bookkeeping that the quantum owner holds centrally, as it does the charge; it
+is not a local transport of stock between modes, and the field still does not
+act back on the stock.
+
 ## Configuration, implementation and acceptance
 
 The [two-arm interference experiment](../examples/quantum/causal_interference.md)

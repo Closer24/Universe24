@@ -1,5 +1,81 @@
 # Highlights implementation coverage
 
+## General research scope and effective formulas - 2026-09-14
+
+Reviewed main: `18bc9eef361f1199e198aa13901a5a67f29c5ed8`.
+
+Universe24 is intended as a general-purpose experimental model for investigating
+physical phenomena throughout the universe, from individual disturbances and
+light to matter, fields and large-scale systems. Any physical phenomenon can be
+a research target; each experiment requires an explicit representation, supported
+local rules and independent validation. The aim is broad scientific testing, with
+demonstrated coverage growing as experiments are added. This research scope does
+not imply that every phenomenon is already represented or computationally feasible.
+
+The model may also help discover and derive effective mathematical relations from
+its discrete local rules. Measure patterns and scaling, propose a candidate
+formula, and test it on new configurations and scales. A derivation must explain
+why the relation follows from the rules and identify its domain of validity and
+approximation errors; curve fitting alone is not a derivation. An input formula,
+a fitted observation and a relation derived from local dynamics remain distinct.
+Comparison with independent physical evidence is needed before identifying a
+candidate relation with a law of nature.
+
+This extends the research purpose of live Highlights section **1.2.8** while
+preserving the preceding experiment evidence and its stated limitations.
+Connector readback verified both new paragraphs, inherited typography and the
+unchanged surrounding text and source link at revision
+`ANLCKQmjYawB_yYVKG1SxUrPM1Db4J80QFFRHMgHtFeUKkhQBL2qH9no65jFVVJ3A5H72BkF5xM0moWk87qw3ghhpfuSYLKR2WiWLthjl1o`.
+It adds no simulator capability, physical law or new run result. The existing
+postulates and validation workflow already require the distinction between
+research goals, configured assumptions and demonstrated behavior.
+
+## Discrete space, classical mechanics and light - 2026-09-14
+
+Reviewed main: `0299cb98bf07f00dc10bad858b674ded449be03e`.
+
+Live [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
+now includes section **1.2.8, Discrete space as a bridge between mechanics and
+light**. The targeted addition preserves the original tab and adjacent sections.
+A trusted file-backed read found no protected controls; connector readback
+verified the text, heading, six native bullets and eight source links, including
+their inherited typography. The verified revision is
+`ANLCKQnABgyxqtiJn8wArsNKkX0YrpvZ_aAX8xLsUDpWQSK7uhoaEdZbA6M8rFZXGZEzbdH1ZT3XyE9L35kbJyOz9lwDerOKvQfnxSVCd8k`.
+
+Universe24 provides a common discrete setting for classical mechanical records,
+finite quantum states and ray-like radiation: Nodes hold state, Links carry
+arrivals, and Events change the participating owners. The current experiments
+connect wave interference, individual detections and effective classical behavior
+within this setting. This makes a light-beam model a useful meeting point between
+wave behavior and mechanical exchange. The ray and quantum-register candidates
+remain distinct representations; a shared setting is not yet a single derived
+theory of matter and light.
+
+The role of discreteness is concrete: geometry determines available paths,
+neighboring encounters and integer transit times. Given a configured phase
+advance per Link, different path lengths produce different phases at a detector.
+The fringe is measured after local propagation and capture; no screen pattern is
+prescribed. Discrete geometry alone does not supply the phase/coherence rule,
+quantization of the carried amount or the capture instrument. Those are explicit
+model choices whose consequences can be tested.
+
+| Connection demonstrated | Recorded evidence | Necessary qualification |
+| --- | --- | --- |
+| Optical wave behavior from local ray transport | [Kerengonen double slit](../examples/kerengonen-double-slit/README.md): one lamp illuminates two absorbing/re-emitting slits; phase changes the screen pattern, while the plain field gives the sum of the two single-slit controls | Carried phase, coherent capture and the slit re-emission rule are configured |
+| Where the classical wave stops and the quantum owner begins | [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md): the same CHSH settings give 1.40 on the classical candidate and 2 on the plain field, against 14/5 from the finite quantum owner | The phase is the only hidden variable and local absorption the only instrument; the classical value is the model's prediction, not a loss of visibility |
+| Whole detections and a classical mean flux | [Counting probe](../examples/quantum-classical/README.md): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
+| Radiation and mechanical exchange | [Local conservation contract](LOCAL_CONSERVATION.md) and [runner validation](VALIDATION.md#kerengonen-guards-reconciled-with-current-main---2026-09-14): funded emission, recoil, absorption and escaped rays close the declared energy/momentum accounting | The quantity definitions and exchange laws are explicit; this is not complete electromagnetic dynamics |
+| Coherent evolution and classical probability | [Quantum-to-classical probes](../examples/quantum-classical/README.md) and [claim check](../examples/quantum/quantum_classical_check.md): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
+| Matter-wave wavelength and momentum | [De Broglie probe](../examples/de-broglie/README.md): momenta 16, 32 and 64 move the first dark fringe to 4, 2 and 1 | The phase advance `abs(p) / 4` is supplied; the inverse relation is propagated and measured, not derived from spatial discreteness |
+| Quantum contact and later ordinary motion | [Recurrent contacts](RECURRENT_QUANTUM_CONTACT.md) and [local moment response](../examples/quantum/local_moment_exchange.md): local encounters can continue a wave, create a new one or localize a record; a later local exchange can produce slow motion | Finite instruments and the response law are supplied; complete field/matter closure and an emergent classical trajectory remain open |
+
+The supported highlight is therefore a tested bridge between selected classical,
+quantum and optical behaviors on discrete space, with a clear route for stronger
+tests. Deriving their common microscopic law, physical constants and full
+matter/field dynamics from discreteness remains a research goal. The linked
+reports retain their own tested source identities; this documentation update
+does not represent them as fresh executions on the reviewed main commit.
+
 ## Signed relative field phase - 2026-09-14
 
 The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
@@ -14,8 +90,7 @@ are linked in [validation](VALIDATION.md).
 
 ## Wave moments and position output - 2026-09-14
 
-Live Highlights was read at revision
-`ANLCKQnb_MKZlmGPU0eRFQTq-PfRQNEaF8JpkHRYNx58nnn7H11urV_7dwY5zowVhXcHfXiEHj6GRps58iAW2NBny79oKonaGgH8baBaQtE`.
+Live Highlights was reconciled read-only at the time of this entry.
 Section 4.7.5 requires position and momentum to describe the same wave without
 assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
 derives a finite derivative observable from actual spatial density and output
@@ -53,13 +128,7 @@ Live Highlights section **4.7.8, Configured recurrent local outcomes**, now reco
 the complete configured instrument, local/new-wave/continuing outcomes, single
 inventory ownership, atomic new origins, finite ordinary source generations and
 causal cancellation. It retains the finite-candidate and physical-closure limits.
-The document was read through the trusted file-backed control inventory before
-this targeted addition; no protected controls were present. Connector readback
-verified the new heading and body in the original tab without changing adjacent
-sections. The prior revision was
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`;
-the verified updated revision is
-`ANLCKQkHRRrlLk-0HV9uWe-o47GgA6Dzbugy7caBZLF1JV9slR4tKuGLUzLZS6xS9qpWNw7kmF1VLFQvA8X58ZaqdYd4yuLvEtke55nPntc`.
+The new section was verified in the live document without changing adjacent sections.
 
 | Highlights rule | Authoritative owner | Acceptance |
 | --- | --- | --- |
@@ -79,10 +148,7 @@ The user's latest selection extends the preceding localized-source choice:
 each wave mode may source an ordinary field with its local squared weight, and
 weight changes or cancellation must travel through Nodes and Links with delay.
 This maps Highlights sections 1.2.7, 4.7.1-4.7.7 and 10.3/10.6 to the explicit
-[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains
-read-only; this reconciliation reuses the same-hour read at revision
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
-modified `2026-09-13T18:53:30.879Z`.
+[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains read-only.
 
 `causal-contact-fields-v1` retains a bounded complex source envelope at each
 participating ordinary Node, immutable definitions outside NodeState, finite
@@ -103,9 +169,7 @@ passed result. This extension does not complete the broader unified-dynamics goa
 
 ## Localized quantum contacts - 2026-09-13
 
-Live Highlights was reconciled read-only at revision
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
-modified `2026-09-13T18:53:30.879Z`. Its sections 1.2.7, 4.7.1-4.7.7 and
+Live Highlights was reconciled read-only. Its sections 1.2.7, 4.7.1-4.7.7 and
 10.3/10.6 map to the [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md).
 The later user selection explicitly chooses ordinary fields only at localized
 events. This finite hybrid is an additional configured candidate, not a claim
@@ -137,9 +201,7 @@ branch candidates; those results are not imported or claimed by this change.
 
 ## Quantum origin cells and event spacetime - 2026-09-13
 
-Live Highlights revision
-`ANLCKQm21ChtG5HceOfGOhoBYGoFe1Cevq9Birt---q9RtLGv682cdVsad6nwquwgJtGWbHqSKP2pw9ExatR-Mlf533Guti25QsAZLMtJ0c`
-was reread; its modification time was `2026-09-13T15:06:39.393Z`. Implementation
+Live Highlights was reread. Implementation
 starts from `fb54f3306ce8172f5ed3f2d3a65eb03cb021a6b7`, integrating current main
 `2c20d00094639263fbe387c0a62420dcef108285` with the prior Node-event work.
 
@@ -280,8 +342,7 @@ validation applies here; no simulator behavior or experiment input changes.
 
 ## Joint local reaction contract - 2026-09-13
 
-The live source was reread at revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+The live source was reread.
 Implementation base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`.
 Sections 3.1, 3.3 and 4.3 motivate the bounded property-selected
 [joint Node reaction](NODE_VECTOR_PROCESSOR.md#local-rules). The user's explicit
@@ -308,9 +369,7 @@ emergence claims remains binding. The live document was not edited.
 
 ## Shared field computation cycle reconciliation - 2026-09-13
 
-The live Highlights revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`
-was read against source base `1784acdd140f260c0fb5e568b2e28241df573fa2`.
+The live Highlights document was read against source base `1784acdd140f260c0fb5e568b2e28241df573fa2`.
 Section 4.4 maps to the opt-in
 [shared field/carrier cycle](SPATIAL_COMPUTATION_DELAY.md): C counts combined
 local work once, one integer ceiling sets the entire cycle, proposals stay
@@ -322,8 +381,7 @@ gravity or quantum/spatial composition. The live document was not edited.
 
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
-The live Highlights document was read at revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+The live Highlights document was read.
 Source base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. Sections 10.2, 10.5,
 10.6 and 10.7 map to [property selection](PROPERTY_COUPLINGS.md), shared explicit
 entity profiles and [passive local conservation](LOCAL_CONSERVATION.md).
@@ -343,8 +401,7 @@ the input while a carrier computation is pending. This is a configured mechanism
 under the unverified emergence hypothesis in sections 1.1.3 and 1.3.3, not a new
 claim that electron/photon dynamics or quantum occupation have emerged.
 
-The live document was read on 2026-09-13 at revision
-`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`.
+The live document was read on 2026-09-13.
 Source base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. The finite unit-state,
 single-packet and held-receiver restrictions belong to this experiment. No core
 law, catalog measurement or live Highlights text changes in this work.
@@ -355,9 +412,7 @@ The [read-only preflight](CONFIGURATION_VALIDATION.md) implements explicit input
 rejection and shared ownership under Highlights sections 4.5 and 10.7. It validates
 configuration data without generating a physical state or inferring a law from
 catalog measurements. Passing preflight remains distinct from the verified
-behavior and physical hypotheses in sections 1.3 and 6.3. The live document was
-read on 2026-09-13 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+behavior and physical hypotheses in sections 1.3 and 6.3. The live document was read on 2026-09-13.
 Source base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. This is a host validation
 and Skill workflow change; it adds no physical law and does not edit Highlights.
 
@@ -372,9 +427,7 @@ of emergence. The original 46 experiment profiles move to a separate file.
 
 This implements the Highlights goals of deriving effective laws from local
 operations, preserving generic field/type definitions and separating established
-physics from hypotheses and verified results. The live document was read on
-2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+physics from hypotheses and verified results. The live document was read on 2026-09-12.
 This repository update does not modify that document or claim additional derived
 physics. Source base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
 
@@ -384,8 +437,7 @@ This versioned companion records the implementation inventory added to
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
 Scope: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`.
 The live document was updated on 2026-09-12 with section 10 below, preserving
-all earlier paragraphs. Verified revision:
-`ANLCKQkcdo3E9Q9qA92kvEzUjmFE9kJmMiJsmZQ8jTo0wroDlz5YbBRcKpGlvLu6PDzqvRncp0x2R4ecCgECBJFygKGssxx8uQW2M6WYTQg`.
+all earlier paragraphs.
 Highlights is the high-level specification; linked contracts define exact schemas
 and rejection cases. Neither a prose document nor Git restores credentials or
 expired outputs. Together, this map, the contracts and versioned initialization
@@ -650,9 +702,7 @@ Under 10.5 Couplings, interactions and rotation:
 
 ### Local observer reconciliation
 
-For the [local reception observer](LOCAL_OBSERVER.md), Highlights was reread on
-2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+For the [local reception observer](LOCAL_OBSERVER.md), Highlights was reread on 2026-09-12.
 Sections 2.1, 4.6, 5.1-5.2 and 10.7 require discrete connected nodes, causal
 delivery and read-only output. The probe records completed local inputs and
 preserves exact playback prefixes. The user's event-time interpretation
@@ -661,8 +711,7 @@ hypotheses. The live document itself was not edited by this implementation.
 
 ### Directional-wave candidate reconciliation
 
-Read the live Highlights on 2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The live Highlights document was read on 2026-09-12.
 The [directional-wave contract](DIRECTIONAL_WAVE.md) is a new explicit candidate
 under sections 3.3, 3.3.2, 3.5, 10.4 and 10.5. Six transverse directional modes,
 bounded vector operations and local encounter guards preserve the declared
@@ -681,8 +730,7 @@ the repository. This reconciliation does not edit the live Google document.
 ### Local Maxwell research reconciliation
 
 For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),
-Highlights was reread on 2026-09-12 at live revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Highlights was reread on 2026-09-12.
 Sections 1.3.3, 1.3.4 and 10.4 are reconciled as follows: the existing generic
 local field interface can express a transverse reflection and one-link
 streaming hypothesis without adding an engine field equation. Conditional

@@ -66,6 +66,14 @@ def test_interference_is_visible_at_the_output_and_removed_by_an_arm_detector(tm
         "coil_800": (2, "9216/15625"),
         "coil_400_control": (0, "0"),
     }
+    funded = {row["variant"]: row for row in result["funded"]}
+    assert funded["null"]["residual_after_capture"] == 0
+    assert funded["null"]["final_total"] == EXPERIMENT.FUNDED_STOCK
+    assert funded["capture"]["residual_after_capture"] > 0
+    assert (
+        funded["capture"]["final_total"]
+        == EXPERIMENT.FUNDED_STOCK + funded["capture"]["residual_after_capture"]
+    )
     variants = {(row["variant"], row["phase"]) for row in result["null_notices"]}
     assert variants == {("arm_null", "0"), ("arm_null", "pi"), ("output_null", "pi/2")}
     for row in result["null_notices"]:

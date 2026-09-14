@@ -147,6 +147,24 @@ def field_phase_configuration(coil_amount, *, coil=COIL, divisor=25):
     return raw
 
 
+FUNDED_STOCK = 3000
+FUNDED_BUDGET = 1000
+
+
+def funded_configuration(phase, *, tickets):
+    """The rotation interferometer whose classical field is paid from the wave's own stock."""
+    raw = configuration(phase, which_path=False, tickets=tickets)
+    for kind in raw["disturbance_types"]:
+        if kind["name"] in ("incoming_charge", "localized_charge"):
+            kind["fields"].append("electric_signal")
+            kind["defaults"]["electric_signal"] = FUNDED_STOCK
+    for emission in raw["emissions"]:
+        emission["source"] = False
+        emission["budget"] = FUNDED_BUDGET
+        emission["amount"] = FULL_EMISSION
+    return raw
+
+
 def configuration(phase, *, which_path, tickets, splitter="rotation", null_notices=False):
     raw = json.loads(TEMPLATE.read_text(encoding="utf-8"))
     mixer, inverse = SPLITTERS[splitter]
@@ -228,6 +246,11 @@ def run_case(name, raw, output):
             str(e["position"][0]): e["weight_scale"] for e in resolver["source_envelopes"]
         },
         "field_phase_choices": resolver.get("field_phase_choices", []),
+        "funded_emission": resolver.get("funded_emission", {}),
+        "quantum_inventory": resolver.get("quantum_inventory", {}),
+        "source_totals": report["source_totals"],
+        "final_totals": report["final_totals"],
+        "conserved": report["conserved_at_every_completed_tick"],
     }
 
 
@@ -411,6 +434,32 @@ def run_experiment(output):
         )
     assert [row["exponent"] for row in back_action] == [0, 0, 1, 2, 0]
 
+    # Opt-in funded emission: the wave's own conserved stock pays for the field.
+    funded = []
+    for label, tickets in (("null", NULL_TICKETS), ("capture", CAPTURE_TICKET_AT_OUTPUT)):
+        case = run_case("funded_pi_" + label, funded_configuration("pi", tickets=tickets), output)
+        ledger = case["funded_emission"]["charge_mode"]
+        paid = ledger["paid"]["electric_signal"][0]
+        residual = ledger["after_capture"]["electric_signal"][0]
+        assert case["conserved"], case["name"]
+        assert case["source_totals"]["electric_signal"] == [residual]
+        assert case["final_totals"]["electric_signal"] == [FUNDED_STOCK + residual]
+        if label == "null":
+            assert residual == 0 and case["captures"] == []
+            assert case["quantum_inventory"]["electric_signal"] == [FUNDED_STOCK - paid]
+        else:
+            assert case["captures"] == [{"tick": 7, "x": DETECTOR}] and residual > 0
+            assert case["quantum_inventory"]["electric_signal"] == [0]
+        funded.append(
+            {
+                "variant": label,
+                "paid_by_wave": paid,
+                "residual_after_capture": residual,
+                "final_total": case["final_totals"]["electric_signal"][0],
+                "case": case,
+            }
+        )
+
     return {
         "status": "pass",
         "python": platform.python_version(),
@@ -425,12 +474,14 @@ def run_experiment(output):
         "retarded_source_fraction_after_arm_null": str(Fraction(9, FULL_EMISSION)),
         "null_notices": notices,
         "field_phase": back_action,
+        "funded": funded,
         "limits": [
             "The 3:4 mixer gives visibility from 9/25 and 16/25; the balanced Hadamard with vacuum 1+i gives full visibility.",
             "Without null notices the source weights after a null are retarded and unnormalized: S keeps emitting 9 of 25.",
             "With null notices the factor 1/(1-p) reaches the other envelopes after Link transit; exact for one excitation.",
             "One configured domain and one conserved inventory.",
             "Field back-action is a configured local phase on one arm; it transfers no energy or momentum to the field.",
+            "With funded emission the field is paid from the wave's stock; emission committed after a remote capture is an explicit external residual.",
             "Finite range of ticks and one Link per tick; no continuum limit is measured.",
         ],
     }

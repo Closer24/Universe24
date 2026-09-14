@@ -1032,12 +1032,10 @@ def _emissions(
         recoil: int | None = None
         if not source:
             # Funded emission: the record pays from its own field of the same name.
-            if not spatial[index].rays:
-                raise ValueError("emission with source: false requires a ray field funded by the record")
             if spatial[index].field not in owned:
-                raise ValueError("funded emission requires the emitting type to own the ray field")
-            if schema_version == 2:
-                raise ValueError("funded emission requires schema_version 1")
+                raise ValueError("funded emission requires the emitting type to own the emitted field")
+            if spatial[index].rays and schema_version == 2:
+                raise ValueError("funded ray emission requires schema_version 1")
         if "recoil_field" in obj:
             if source:
                 raise ValueError("recoil_field requires a funded emission (source: false)")

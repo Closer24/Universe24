@@ -43,8 +43,8 @@ and a combined `summary.json`. It is headless and records no frames.
 ## Observed results, 2026-09-14
 
 Python 3.14.0rc2, runtime source fingerprint
-`fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a` (with the
-opt-in null notice and field phase extensions; the default rules are unchanged).
+`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a` (with the
+opt-in null notice, field phase and funded emission extensions; the default rules are unchanged).
 
 ### The output detector sees the interference term
 
@@ -154,6 +154,22 @@ M by the schedule tick, selects no phase. This is the classical field acting on
 the wave: a local phase at one Node, read once, with the same matrix used by
 the ordinary envelope and by the quantum owner.
 
+### The wave pays for its own field
+
+With `"source": false` on both emission rules, `electric_signal` stock 3000 on
+the source and output types and budget 1000 per mode, every emitted unit is
+paid from the wave's own stock:
+
+| Variant | Paid by the wave | Sources recorded | Final total | Quantum inventory at the end |
+| --- | --- | --- | --- | --- |
+| phi = pi, no capture | 211 | 0 | 3000 | 2789 |
+| phi = pi, capture at tick 7 | 199 | 2 | 3002 | 0; the localized record holds 2801 and then pays 25 per tick |
+
+The runner's strict conservation flag holds in both runs. The two units of
+sources in the capture run are the source Node's one emission committed after
+the capture, before the terminal notice reached it: the same causal residual
+that the null notice shows, now as an energy term.
+
 ## What this does and does not show
 
 - It shows that, in this candidate, the classical field emitted by a coherent
@@ -164,9 +180,10 @@ the ordinary envelope and by the quantum owner.
 - It shows, with the opt-in field phase, that an external classical field on
   one arm shifts the fringe by an exact configured phase per field unit, and
   that the shift is local: the same field elsewhere does nothing.
-- It does not show energy or momentum exchange between field and wave, energy
-  closure between field and matter, a continuum limit, or a derivation of the
-  classical limit.
+- It shows, with funded emission, that the field can be paid from the wave's
+  own stock with constant totals and a measured residual.
+- It does not show momentum exchange, the field acting back on the stock, a
+  continuum limit, or a derivation of the classical limit.
   The mixers, the phase gate and the instrument are configured data. The
   default retarded source rule is a known departure from the conditional Born
   weights and is left visible above; the opt-in null notice removes it for one

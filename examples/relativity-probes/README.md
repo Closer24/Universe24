@@ -507,6 +507,33 @@ So the model does have a dark-matter substitute, and it is not extra mass: a
 representation hypothesis about galaxies, not a derivation; the lattice shows
 only that the flat curve follows from the compression alone.
 
+## 7. Focus and computing less
+
+The repository's [Focus](../../docs/QUANTUM_FOCUS.md) is an octree over
+regions used to narrow one ticket to one quantum event; it is
+probability-preserving by contract and never touches field transport, so it
+cannot by itself make the field cheaper or flatter. What already computes
+less is the ray transport (only the Nodes a ray crosses are active: the ray
+lensing runs took minutes where the octant runs took most of an hour), and
+main's [isotropy probe](../isotropy-probe/README.md) shows why the octant
+field is the wrong thing to make cheap anyway: its stock falls exponentially
+along an axis and only the shell mean is 1/r².
+
+The Focus region machinery (`Region3D`, `split_region`) is, however, exactly
+the data structure a far-field compression would use: represent the field
+beyond a radius L from each source at block resolution (blocks of side
+growing with distance, six ports per block, populations aggregated by the
+same integer split), let a carrier inside a block read the block's flux, and
+refine only the blocks that carriers occupy. Two things follow at once. The
+active-node count for a filling field drops from the volume to roughly the
+surface of the refined region, which is the computing-less the probes need;
+and beyond L the field is carried in a lower-dimensional representation, which
+probes 4 and 6 show yields a flat rotation curve with the transition at L.
+This is an engine change (a multi-resolution lattice with conserved
+integer aggregation), not a configuration; it is the natural next PR, and it
+is the point at which "compute less" and "dark matter" become the same
+mechanism.
+
 ## What these probes do not show
 
 They do not derive gravity, the 1/b lensing law, the factor two of general

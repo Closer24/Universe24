@@ -535,6 +535,14 @@ conservation follows from it. Negative field exponents invert that relative
 phase by conjugating both coefficients; a common phase on the coefficient pair
 does not change observable probabilities.
 
+The optional [funded envelope emission](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission)
+pays the wave's classical field from the wave's own conserved stock instead of
+an external source, so the field and the wave close together: totals stay
+constant, the localized winner inherits the unspent stock, and the only
+external term is the retarded emission committed after a remote localization,
+which is reported. The stock is held by the quantum owner like charge and mass;
+it is not transported between modes, and the field still exerts no force on it.
+
 ## 21. Configured recurrent contact outcomes
 
 The explicit [recurrent contact candidate](docs/RECURRENT_QUANTUM_CONTACT.md),
