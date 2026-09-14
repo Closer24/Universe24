@@ -11,7 +11,12 @@ from event_universe import Simulation
 from event_universe.core.disturbance_state import Packet, pack, unpack
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
-from event_universe.core.source_envelope_node import EnvelopeGate, EnvelopePacket, SourceEnvelopeNode
+from event_universe.core.source_envelope_node import (
+    OUTPUT_SLOTS,
+    EnvelopeGate,
+    EnvelopePacket,
+    SourceEnvelopeNode,
+)
 from event_universe.core.source_envelope_state import EnvelopeAmplitude
 from event_universe.core.spatial_state import SpatialPacket
 from event_universe.core.topology import neighbor_address
@@ -153,7 +158,7 @@ def fixture(owner, port, remote_count):
         def result():
             assert node.amplitude == EnvelopeAmplitude(3, 0, 5)
             assert node.pending_gate is None and node.incoming_gate is None
-            assert len(node.output) == 12
+            assert len(node.output) == OUTPUT_SLOTS
             return retained_slots(node), len(ledger.events) - remote_count
 
     # The same real services still run; only prohibited host read paths are poisoned.

@@ -1,5 +1,28 @@
 # Validation evidence
 
+## Current-main contact integration - 2026-09-14
+
+Integrated main `53e44a51dd238dff34d5e7ced0f337e8f1c7341f` (PR #101) with
+experiment commit `47b7ea01fa7f568dfdd2eca6db99d0da9dca9658`. Retained both
+causal and recurrent definitions, using keyword construction for their options.
+Recurrent generations explicitly reject unimplemented null-notice/field-phase
+combinations. Fixed an automatic-merge error that lost the local field callback
+between `start_sources` and `_start_bank`.
+
+On source fingerprint
+`5f50a477f657361842f6ed45def673bed50bf30262e0d36cde2088dbe9a349ed`, the user's
+requested full gate `python tools/check.py --base 47b7ea0 --full` passed:
+**2,865 tests, 30 opt-in visual skips, 313.81 seconds**. Ruff and formatting
+passed on 390 files; strict mypy passed on 120 source files. All original quantum,
+moment, locality, field, retention, parallelism and new experiments were included.
+Focused phase/null/recurrent integration additionally passed 44 tests.
+
+The new composition regressions subsequently use canonical JSON resources rather
+than importing other test modules. Their eight cases passed after correcting an
+event-label typo; 91 related selector/repository checks passed. Runtime source
+remained identical. The updated selector includes both JSON dependencies.
+The optional rendering tests were skipped deliberately, and no build ran.
+
 ## Spatial wave moments and local position output - 2026-09-14
 
 Continuation base: `86eeb9c5b1c0297067a0ce828ba2faa147c3c151` on draft PR #104,
@@ -171,6 +194,68 @@ and architecture-review were reviewed: their existing ownership and evidence
 rules cover this extension, so no duplicate workflow was added. The scope remains
 finite supplied one-excitation domains and retarded ordinary sources, not a
 derived Hamiltonian, reciprocal field action or physical energy/momentum closure.
+
+## Null notices and field-dependent phase - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of
+the interference harness below. Runtime source fingerprint of the executed
+harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
+Two opt-in extensions of `causal-contact-fields-v1` were added, both inactive
+without their configuration keys: [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
+and the [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase).
+The envelope output bank grew from twelve to eighteen fixed slots; the
+NodeState contract fixture was widened accordingly and no other test changed.
+
+Recorded on the interference harness: after an arm null at tick 1 with notices
+enabled, the source emits 25 of 25 units from tick 2, the next gate emits 9 and
+16, and every scale ends at 625/81; an output null at tick 7 reaches the source
+at tick 9 with scale 625/337. With a field phase on the M arm, coil fields 0,
+200, 400 and 800 select exponents 0, 0, 1 and 2 and record output weights
+`[12745, 2880]` and `[160225, 230400]`, equal to the independent Gaussian-integer
+prediction; a coil beside the far side of the source selects exponent 0.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **2,348 passed and five visual-only skipped**, with
+seven setup errors in `test_maxwell_configuration.py` and `test_run_live.py`
+that came from a missing render extra; after installing `.[render]` those two
+files passed (14 passed, two skipped). Ruff, formatting and strict mypy passed
+with no issues on 118 source files. Python 3.14.0rc2 on Linux. These are
+measured behaviors of configured candidates; no classical limit, energy closure
+or multi-excitation Born consistency is established.
+
+## Two-arm interference and coupling summary - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99). Runtime
+source fingerprint of the executed harness:
+`4916707db38c4f364552a24a727678698912f509a27969c4217ca02005ca6cf6`. No source
+module under `src/` changed; the addition is an experiment harness, its
+acceptance test, a reader-facing coupling summary and index updates.
+
+The [interference harness](../examples/quantum/causal_interference.md) ran
+thirteen headless 14-tick worlds on the unchanged `causal-contact-fields-v1`
+profile. Recorded output decision weights were `[337, 288]`, `[49, 576]` and
+`[337, 288]` for `phi = pi/2, pi, 3pi/2`, with no uncertain decision at
+`phi = 0`; all equal the exact rational prediction computed before the runs.
+Mean source emission after recombination was 25, 13.5, 2 and 13.5 units per
+tick against 25, 13.48, 1.96 and 13.48 predicted. The arm-detector variant gave
+`[9, 16]` at tick 1 for every phase and no uncertain output decision. After an
+arm null the source Node emitted 9 of 25 units per tick: the retarded-source
+rule measured. Every run reported balanced accounting and conserved totals.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **101 passed, two visual-only skipped**, including
+repository navigation, language and hygiene checks. Ruff and formatting passed.
+Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
+candidate; it does not establish a classical limit, field back-action or
+energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
 
 ## Causal quantum source envelopes - 2026-09-13
 

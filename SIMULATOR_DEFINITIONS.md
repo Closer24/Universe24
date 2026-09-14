@@ -791,6 +791,25 @@ continues under its configured laws and separate injection accounting. The linke
 contract defines the finite domain, clock, transport and conservation limitations;
 the older localized-only profile is unchanged.
 
+The explicit `null_notices` option adds one rational weight scale per Node, six
+pending-notice slots, a fixed six-entry bank of applied notice identities and
+six notice output slots, so the envelope output bank has eighteen fixed slots.
+A null with local scaled weight `p < 1` multiplies the local scale by `1/(1-p)`
+and sends that factor as a notice through the domain Ports; receivers apply it
+after their control delay and forward it away from the arrival Port. Emission
+uses the scaled weight, clipped at one. Without the option the scale stays one
+and no notice is sent. The candidate does not read the quantum owner and does
+not remove the departure for several excitations.
+
+The explicit `field_phase` propagation operation replaces one one-mode matrix
+by a fixed table `diag(vacuum^|n|, unit^|n|)`, conjugate for negative `n`,
+with `|n| <= max_exponent <= 12`. At the gate's schedule tick the Node reads its
+own start-of-cycle value of one spatial field component and sets `n` to that
+value divided by `divisor` toward zero; an exponent beyond the table stops the
+run. The ordinary envelope gate and the quantum owner's recipe for that epoch
+use the same matrix. The read costs one `read` tariff; no evolving state is
+added to NodeState and the field is not changed by the gate.
+
 ## Recurrent contact outcomes - Q-RECURRENT-1
 
 The separate [recurrent contact profile](docs/RECURRENT_QUANTUM_CONTACT.md),

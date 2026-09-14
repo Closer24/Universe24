@@ -18,6 +18,12 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
+def test_contact_composition_resources_select_their_preflight_regressions(name):
+    selected, _ = CHECK.select(["examples/quantum/" + name], {})
+    assert "tests/test_contact_profile_composition.py" in selected
+
+
 @pytest.mark.parametrize(
     "name",
     [
@@ -101,6 +107,13 @@ def test_quantum_classical_resources_select_the_bounded_experiment(name):
 def test_catalog_contact_dependencies_select_their_integration_contract(path):
     selected, _ = CHECK.select([path], {})
     assert "tests/test_catalog_contact.py" in selected
+
+
+def test_causal_interference_harness_selects_its_acceptance_contract():
+    for path in ("examples/quantum/causal_interference.py", "examples/quantum/causal_charge.json"):
+        selected, _ = CHECK.select([path], {})
+        assert "tests/test_causal_interference.py" in selected
+        assert "tests/test_collisions.py" not in selected
 
 
 def test_causal_charge_example_selects_its_field_contract_without_unrelated_worlds():

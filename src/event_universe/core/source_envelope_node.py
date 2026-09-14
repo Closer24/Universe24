@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from .disturbance_state import Address3, CostMeter, OperationCosts, bounded
 from .integer import checked_work
-from .source_envelope_state import EnvelopeAmplitude
+from .source_envelope_state import EnvelopeAmplitude, EnvelopeScale
 
 if TYPE_CHECKING:
     from .node_services import NodeEvents
@@ -15,6 +15,9 @@ EnvelopeMatrix = tuple[tuple[tuple[int, int], ...], ...]
 EnvelopePlanner = Callable[
     [EnvelopeMatrix, tuple[EnvelopeAmplitude, ...], int, CostMeter], EnvelopeAmplitude
 ]
+NullFactor = Callable[[EnvelopeAmplitude, EnvelopeScale, CostMeter], tuple[int, int] | None]
+OUTPUT_SLOTS = 18
+NOTICE_BANK = 6
 
 
 def _nonnegative(value: int, name: str) -> int:
@@ -66,6 +69,8 @@ class EnvelopePacket:
     amplitude: EnvelopeAmplitude | None
     epoch: int = -1
     cause_id: int | None = None
+    scale: tuple[int, int] | None = None
+    notice_id: int = -1
 
     def __post_init__(self) -> None:
         _nonnegative(self.arrival_tick, "source arrival tick")
@@ -82,6 +87,23 @@ class EnvelopePacket:
             raise ValueError("an amplitude packet requires a value and nonnegative gate epoch")
         if self.cause_id is not None:
             _nonnegative(self.cause_id, "source packet cause")
+        if self.scale is None:
+            if self.notice_id != -1:
+                raise ValueError("a notice identity requires a scale factor")
+        else:
+            if self.amplitude is not None or bounded(self.notice_id) < 0:
+                raise ValueError("a null notice carries a scale factor and an event identity")
+            if (
+                type(self.scale) is not tuple
+                or len(self.scale) != 2
+                or bounded(self.scale[1]) < 1
+                or bounded(self.scale[0]) < self.scale[1]
+            ):
+                raise ValueError("a null notice factor must be a rational of at least one")
+
+    @property
+    def is_notice(self) -> bool:
+        return self.scale is not None
 
 
 @dataclass(frozen=True, slots=True)
@@ -101,6 +123,19 @@ class PendingEnvelopeStop:
     cause_id: int | None
 
 
+@dataclass(frozen=True, slots=True)
+class PendingEnvelopeScale:
+    """One delivered null notice waiting for this Node's local control delay."""
+
+    ready_tick: int
+    source_id: int
+    numerator: int
+    denominator: int
+    notice_id: int
+    port: int
+    cause_id: int | None
+
+
 @dataclass(slots=True)
 class SourceEnvelopeNode:
     """One domain's local mode; no world, remote origin or quantum-query access."""
@@ -113,8 +148,11 @@ class SourceEnvelopeNode:
     pending_gate: PendingEnvelopeGate | None = None
     incoming_gate: EnvelopePacket | None = None
     pending_stop: PendingEnvelopeStop | None = None
-    output: tuple[EnvelopePacket | None, ...] = (None,) * 12
+    output: tuple[EnvelopePacket | None, ...] = (None,) * OUTPUT_SLOTS
     cause_id: int | None = None
+    scale: EnvelopeScale = EnvelopeScale()
+    pending_scales: tuple[PendingEnvelopeScale | None, ...] = (None,) * 6
+    applied_notices: tuple[int, ...] = (-1,) * NOTICE_BANK
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -131,12 +169,18 @@ class SourceEnvelopeNode:
             raise ValueError("a retired source Node must retain its identity and zero amplitude")
         if not self.source_id and (self.amplitude.real or self.amplitude.imag):
             raise ValueError("an unactivated source Node must retain vacuum")
-        if type(self.output) is not tuple or len(self.output) != 12:
-            raise ValueError("source output bank requires twelve fixed slots")
+        if type(self.output) is not tuple or len(self.output) != OUTPUT_SLOTS:
+            raise ValueError("source output bank requires eighteen fixed slots")
         if any(packet is not None and type(packet) is not EnvelopePacket for packet in self.output):
             raise TypeError("source output bank accepts only immutable packets")
         if self.cause_id is not None:
             _nonnegative(self.cause_id, "source Node cause")
+        if type(self.scale) is not EnvelopeScale:
+            raise TypeError("source Node requires an immutable weight scale")
+        if type(self.pending_scales) is not tuple or len(self.pending_scales) != 6:
+            raise ValueError("source Node holds one pending notice per Port")
+        if type(self.applied_notices) is not tuple or len(self.applied_notices) != NOTICE_BANK:
+            raise ValueError("source Node retains a fixed bank of applied notices")
 
     def _identity(self, source_id: int) -> None:
         _nonnegative(source_id, "source identity")
@@ -183,8 +227,8 @@ class SourceEnvelopeNode:
         if bounded(link_ticks) < 1:
             raise ValueError("source Links require positive transit time")
         arrival = _future(tick, send_delay, link_ticks)
-        if len(self.output) != 12:
-            raise ValueError("source output bank requires twelve fixed slots")
+        if len(self.output) != OUTPUT_SLOTS:
+            raise ValueError("source output bank requires eighteen fixed slots")
         updated = list(self.output)
         for port in ports:
             if updated[6 + port] is not None:
@@ -193,6 +237,49 @@ class SourceEnvelopeNode:
                 arrival, self.position, port, source_id, None, cause_id=cause_id
             )
         return tuple(updated)
+
+    def _notice_outputs(
+        self,
+        source_id: int,
+        tick: int,
+        ports: tuple[int, ...],
+        send_delay: int,
+        link_ticks: int,
+        factor: tuple[int, int],
+        notice_id: int,
+        cause_id: int | None,
+    ) -> tuple[EnvelopePacket | None, ...]:
+        _ports(ports)
+        if bounded(link_ticks) < 1:
+            raise ValueError("source Links require positive transit time")
+        arrival = _future(tick, send_delay, link_ticks)
+        updated = list(self.output)
+        for port in ports:
+            if updated[12 + port] is not None:
+                raise OverflowError("source notice output Port is occupied")
+            updated[12 + port] = EnvelopePacket(
+                arrival,
+                self.position,
+                port,
+                source_id,
+                None,
+                cause_id=cause_id,
+                scale=factor,
+                notice_id=notice_id,
+            )
+        return tuple(updated)
+
+    def _known_notice(self, notice_id: int) -> bool:
+        if notice_id in self.applied_notices:
+            return True
+        return any(p is not None and p.notice_id == notice_id for p in self.pending_scales)
+
+    def _apply_factor(self, numerator: int, denominator: int, notice_id: int) -> None:
+        old = self.scale
+        top = checked_work(old.numerator * numerator)
+        bottom = checked_work(old.denominator * denominator)
+        self.scale = EnvelopeScale(bounded(top), bounded(bottom))
+        self.applied_notices = (*self.applied_notices[1:], notice_id)
 
     def start_gate(
         self,
@@ -212,7 +299,7 @@ class SourceEnvelopeNode:
             raise ValueError("a source Node already owns an unfinished gate")
         if bounded(link_ticks) < 1:
             raise ValueError("source Links require positive transit time")
-        if type(gate) is not EnvelopeGate or len(self.output) != 12:
+        if type(gate) is not EnvelopeGate or len(self.output) != OUTPUT_SLOTS:
             raise ValueError("a source gate requires its fixed local output bank")
         if gate.port >= 0 and self.output[gate.port] is not None:
             raise OverflowError("source amplitude output Port is occupied")
@@ -250,7 +337,11 @@ class SourceEnvelopeNode:
             raise ValueError("source Links require positive transit time")
         self._identity(packet.source_id)
         duplicate = False
-        if packet.amplitude is None:
+        if packet.scale is not None:
+            duplicate = bool(self.retired) or self._known_notice(packet.notice_id)
+            if not duplicate and self.pending_scales[packet.port ^ 1] is not None:
+                raise OverflowError("a source Node holds one pending notice per Port")
+        elif packet.amplitude is None:
             duplicate = self.retired == packet.source_id or self.pending_stop is not None
             pending = PendingEnvelopeStop(
                 _future(tick, control_delay), packet.source_id, packet.cause_id
@@ -271,7 +362,9 @@ class SourceEnvelopeNode:
         meter.charge("read")
         events.require_room(1)
         kind = "source-amplitude-received"
-        if packet.amplitude is None:
+        if packet.scale is not None:
+            kind = "source-notice-ignored" if duplicate else "source-notice-received"
+        elif packet.amplitude is None:
             kind = "source-terminal-ignored" if duplicate else "source-terminal-received"
         cause, message = self._record(
             kind,
@@ -283,7 +376,21 @@ class SourceEnvelopeNode:
         if duplicate:
             events.publish(message)
             return
-        if packet.amplitude is None:
+        if packet.scale is not None:
+            # The notice entered through this Node's opposite Port; it is not
+            # forwarded back through it.
+            slots = list(self.pending_scales)
+            slots[packet.port ^ 1] = PendingEnvelopeScale(
+                _future(tick, control_delay),
+                packet.source_id,
+                packet.scale[0],
+                packet.scale[1],
+                packet.notice_id,
+                packet.port ^ 1,
+                cause,
+            )
+            self.pending_scales = tuple(slots)
+        elif packet.amplitude is None:
             self.pending_stop = PendingEnvelopeStop(pending.ready_tick, pending.source_id, cause)
         else:
             self.incoming_gate = packet
@@ -303,6 +410,9 @@ class SourceEnvelopeNode:
     ) -> bool:
         """Commit only frozen local and delivered inputs, with terminal priority."""
         stopped = self._complete_stop(tick, costs, neighbor_ports, send_delay, link_ticks, events)
+        stopped = (
+            self._complete_scales(tick, costs, neighbor_ports, send_delay, link_ticks, events) or stopped
+        )
         pending = self.pending_gate
         if pending is None or pending.ready_tick > tick:
             return stopped
@@ -381,6 +491,62 @@ class SourceEnvelopeNode:
         events.publish(message)
         return True
 
+    def _complete_scales(
+        self,
+        tick: int,
+        costs: OperationCosts,
+        neighbor_ports: tuple[int, ...],
+        send_delay: int,
+        link_ticks: int,
+        events: NodeEvents,
+    ) -> bool:
+        """Apply delivered null factors after the local control delay, then forward them."""
+        changed = False
+        for port, pending in enumerate(self.pending_scales):
+            if pending is None or pending.ready_tick > tick:
+                continue
+            slots = list(self.pending_scales)
+            slots[port] = None
+            self.pending_scales = tuple(slots)
+            changed = True
+            if self.retired or self._known_notice(pending.notice_id):
+                continue
+            self._identity(pending.source_id)
+            forward = tuple(p for p in neighbor_ports if p != pending.port)
+            factor = (pending.numerator, pending.denominator)
+            updated = self._notice_outputs(
+                pending.source_id,
+                tick,
+                forward,
+                send_delay,
+                link_ticks,
+                factor,
+                pending.notice_id,
+                pending.cause_id,
+            )
+            meter = CostMeter(costs)
+            meter.charge("update", 3)
+            meter.charge("send", len(forward))
+            meter.charge("commit")
+            events.require_room(1)
+            cause, message = self._record(
+                "source-scale-committed",
+                tick,
+                events,
+                causes=() if pending.cause_id is None else (pending.cause_id,),
+                cost=meter.total,
+            )
+            updated = tuple(
+                replace(packet, cause_id=cause)
+                if packet is not None and slot - 12 in forward
+                else packet
+                for slot, packet in enumerate(updated)
+            )
+            self._apply_factor(pending.numerator, pending.denominator, pending.notice_id)
+            self.output, self.cause_id = updated, cause
+            events.publish(message)
+        return changed
+
     def activate(self, origin_id: int, tick: int, eventcause: int | None) -> None:
         """Activate only the local source at an already committed contact."""
         self.check_activation(tick)
@@ -444,11 +610,36 @@ class SourceEnvelopeNode:
         self.pending_stop = None
         events.publish(message)
 
-    def null(self, tick: int, cause: int | None) -> None:
-        """A local null result removes only this amplitude; no remote normalization."""
+    def null(
+        self,
+        tick: int,
+        cause: int | None,
+        *,
+        null_factor: NullFactor | None = None,
+        neighbor_ports: tuple[int, ...] = (),
+        send_delay: int = 0,
+        link_ticks: int = 1,
+        costs: OperationCosts | None = None,
+        events: NodeEvents | None = None,
+    ) -> None:
+        """A local null result removes this amplitude; optional notices carry its factor.
+
+        Without ``null_factor`` no remote normalization occurs. With it, the
+        factor ``1 / (1 - p)`` computed from this Node's own scaled weight is
+        applied locally and sent through the given Ports as a null notice.
+        """
         self.check_null(tick)
         if cause is not None:
             _nonnegative(cause, "source null cause")
+        factor: tuple[int, int] | None = None
+        if null_factor is not None and self.source_id:
+            if costs is None or events is None:
+                raise ValueError("null notices require the local tariff and event owner")
+            meter = CostMeter(costs)
+            factor = null_factor(self.amplitude, self.scale, meter)
+            if factor is not None and factor[0] == factor[1]:
+                # A vacuum null carries no information; no notice is sent.
+                factor = None
         generation = bounded(checked_work(self.generation + 1))
         self.amplitude = EnvelopeAmplitude()
         self.generation, self.cause_id = generation, cause
@@ -458,10 +649,31 @@ class SourceEnvelopeNode:
             # unitary normalization. This delayed source gate may repopulate
             # the Node; it is not the conditioned quantum probability.
             self.pending_gate = replace(self.pending_gate, generation=generation)
+        if factor is None or events is None or costs is None:
+            return
+        meter.charge("update", 3)
+        meter.charge("send", len(neighbor_ports))
+        meter.charge("commit")
+        events.require_room(1)
+        notice, message = self._record(
+            "source-null-notice",
+            tick,
+            events,
+            causes=() if cause is None else (cause,),
+            cost=meter.total,
+        )
+        if notice is None:
+            raise ValueError("null notices require a recording event owner")
+        self.output = self._notice_outputs(
+            self.source_id, tick, neighbor_ports, send_delay, link_ticks, factor, notice, notice
+        )
+        self._apply_factor(factor[0], factor[1], notice)
+        self.cause_id = notice
+        events.publish(message)
 
     def clear_output(self, slot: int, packet: EnvelopePacket) -> None:
         """Release one sender-owned packet only after the receiver accepted it."""
-        if type(slot) is not int or not 0 <= slot < 12 or self.output[slot] is not packet:
+        if type(slot) is not int or not 0 <= slot < OUTPUT_SLOTS or self.output[slot] is not packet:
             raise ValueError("source output acknowledgement does not match the retained packet")
         updated = list(self.output)
         updated[slot] = None

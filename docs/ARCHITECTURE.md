@@ -561,7 +561,8 @@ reads, not physical inputs. Contact model limits are owned by its linked contrac
 The opt-in [causal source extension](CAUSAL_QUANTUM_SOURCES.md) adds a bounded
 source-envelope component attached to the same ordinary Node. The `core/source_*`
 modules own formula-free amplitudes, finite source state, pending proposals,
-twelve Port slots and local transitions. No component holds a world reference,
+eighteen Port slots (amplitude, terminal and null-notice), one rational weight
+scale and local transitions. No component holds a world reference,
 quantum query, executable matrix or expression tree in its physical state.
 `fields/source_envelope.py` owns the shared rational complex and weighted-source
 arithmetic; `fields/source_emission.py` composes generic spatial primitives.
