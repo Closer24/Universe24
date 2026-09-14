@@ -120,7 +120,7 @@ def test_signed_quanta_pull_bodies_toward_the_source_and_they_pay_their_own_stoc
         # the six axis rays cancel exactly. Credited quanta are bounded integers
         # like any other stock; a source that emits forever eventually fails loudly.
         (_, source), *_ = PROBE.bodies(world, 0)
-        assert source["quanta"] == (8 * PROBE.CLOSED_STRENGTH,)
+        assert source["quanta"] == (8 * 6 * PROBE.CLOSED_PER_RAY,)
         assert source["momentum"] == (0, 0, 0)
         assert PROBE.closure(world, initial)["quanta_closed"]
         pulled[mass] = -near["momentum"][0]

@@ -98,6 +98,46 @@ oscillation with combined momentum still zero. An earlier configuration with
 rate scale 8 let the body reach one hop per tick, where a ray moving the same
 way can never catch it; that is why the scale is 64 here.
 
+### The closed variant: signed quanta, the same acceleration, and the ledger exact
+
+Runtime source `05f80cf02e37...` on the merged tree. One mass per world; the
+product `a x r^2 x D / emission` uses `D = 256` and the emission `1,048,576`.
+
+| Direction | Host r | Momentum gained by mass 1 over 64 ticks | Quanta paid | Acceleration by mass 1, 2, 4 | a x r^2 x D / emission |
+| --- | --- | --- | --- | --- | --- |
+| axis | 2.00 | (-137920, -1088, 448) | 5,888 | -2155.0, -2155.0, -2155.0 | 2.10 |
+| axis | 4.00 | (-30240, -126, -126) | 1,260 | -472.5, -476.3, -472.5 | 1.85 |
+| axis | 6.00 | (-10584, 0, 63) | 441 | -165.4, -165.4, -162.8 | 1.45 |
+| axis | 8.00 | (-7560, 0, 63) | 315 | -118.1, -117.2, -114.4 | 1.85 |
+| axis | 12.00 | (-4536, 0, -63) | 189 | -70.9, -69.8, -67.5 | 2.49 |
+| face diagonal | 2.83 | (-57536, -57728, 512) | 3,456 | -1273.5 for all three | 2.49 |
+| face diagonal | 5.66 | (-10521, -10710, -63) | 630 | -234.6, -236.4, -234.6 | 1.83 |
+| face diagonal | 8.49 | (-4284, -4284, 0) | 252 | -94.7, -94.7, -93.2 | 1.66 |
+| face diagonal | 11.31 | (-2079, -2205, 0) | 126 | -47.3, -47.0, -45.8 | 1.48 |
+| body diagonal | 3.46 | (-38336, -37824, -39616) | 2,816 | -1044.4 for all three | 3.06 |
+| body diagonal | 5.20 | (-15624, -15813, -15561) | 1,134 | -424.0, -427.3, -424.0 | 2.79 |
+| body diagonal | 6.93 | (-9765, -9513, -9576) | 693 | -260.3, -260.3, -256.2 | 3.05 |
+| body diagonal | 8.66 | (-4347, -4410, -4347) | 315 | -118.2, -117.3, -114.5 | 2.16 |
+
+Every gained momentum points at the source, and every body paid exactly the
+quanta of the shares it absorbed: the momentum a body gains is the momentum
+those shares carried, at about 24 quanta of momentum per quantum. The three
+masses agree to within 3 percent at every Node; the residual is the truncated
+integer share of rays already thinned by a nearer body on the same line. Log-log
+slopes of the mass-1 acceleration against host `r`: axis -1.96, face diagonal
+-2.37, body diagonal -2.29. The product `a x r^2 x D / emission` scatters
+between 1.4 and 3.1, wider than the exchange variant's 0.06 to 0.11, and it is
+larger on the body diagonal: the exchange rule weighs the delivered flux
+vector, while absorption weighs every ray whose integer path crosses the Node,
+and more paths cross a diagonal Node. In all three worlds the quanta in
+records, in flight and escaped sum to the initial stock exactly.
+
+A separate 16-tick world with the event audit on, a held body of mass 4 one
+link above the source and 16 rays per tick, checked 595,153 Node events with
+zero residual: the body paid 30,720 quanta for momentum (1024, 1792, -694272),
+the source was credited 4,194,304, and the world's energy and momentum,
+including the rays in flight, stayed at their initial values.
+
 ## Conclusion
 
 Three statements follow from configuration on top of the straight-ray field:

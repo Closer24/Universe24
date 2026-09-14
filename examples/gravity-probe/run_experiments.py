@@ -325,7 +325,11 @@ def fall_trajectory(mass: int, start: int, ticks: int) -> list[dict]:
 CLOSED_STRENGTH = 1048576  # quanta per tick over 64 rays: 16384 per ray, 64 x mass absorbed per hit
 CLOSED_DENOMINATOR = 256  # absorbed share of each crossing ray is mass / 256
 CLOSED_STOCK = 65536  # quanta a body of unit mass can pay for its pull
-CLOSED_FALL_SCALE = 16384  # a share's momentum is about 64 x mass x 24: one hit is 3/32 hop per tick
+CLOSED_FALL_SCALE = 65536  # hops per tick = |p| / (65,536 x mass): the body stays well below link speed
+CLOSED_PER_RAY = CLOSED_STRENGTH // RAYS_PER_TICK  # 16,384 quanta per ray in the held worlds
+FALL_RAYS_PER_TICK = 512  # the falling body meets a dense field: an eight-tick sweep
+FALL_PER_RAY = 4096  # 16 x mass quanta per hit, about 3/512 hop per tick per hit
+CLOSED_FALL_TICKS = 384
 
 
 def mirrored_headings(count: int, scale: int) -> list[list[int]]:
@@ -338,7 +342,12 @@ def mirrored_headings(count: int, scale: int) -> list[list[int]]:
     return result
 
 
-def closed_document(ticks: int, rays_per_tick: int = RAYS_PER_TICK, audit: bool = False) -> dict:
+def closed_document(
+    ticks: int,
+    rays_per_tick: int = RAYS_PER_TICK,
+    audit: bool = False,
+    per_ray: int = CLOSED_PER_RAY,
+) -> dict:
     """A funded source of negative quanta; bodies absorb a mass share and pay for it."""
     raw = base_document(ticks)
     raw["model_id"] = "signed-quanta-gravity-host-probe-v1"
@@ -375,7 +384,7 @@ def closed_document(ticks: int, rays_per_tick: int = RAYS_PER_TICK, audit: bool 
         {
             "type": "source",
             "field": "quanta",
-            "amount": -CLOSED_STRENGTH * rays_per_tick // RAYS_PER_TICK,
+            "amount": -per_ray * rays_per_tick,
             "denominator": 1,
             "source": False,
             "recoil_field": "momentum",
@@ -441,7 +450,7 @@ def closed_held_document(ticks: int, mass: int) -> dict:
 
 
 def closed_falling_document(ticks: int, mass: int, start: int) -> dict:
-    raw = closed_document(ticks)
+    raw = closed_document(ticks, FALL_RAYS_PER_TICK, per_ray=FALL_PER_RAY)
     raw["disturbance_types"].append(
         closed_body(
             "falling_body",
@@ -645,7 +654,7 @@ def main() -> None:
             }
             for (d, r), values in sorted(closed_ratios.items())
         ],
-        "falls": {f"mass_{m}": closed_fall_trajectory(m, 8, FALL_TICKS) for m in (1, 2)},
+        "falls": {f"mass_{m}": closed_fall_trajectory(m, 8, CLOSED_FALL_TICKS) for m in (1, 2)},
         "audited": closed_audit(),
     }
     result = {

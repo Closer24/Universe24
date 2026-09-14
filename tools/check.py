@@ -41,6 +41,7 @@ RESOURCE_CONSUMERS = {
     "examples/inverse-square/run_experiments.py": ("tests/test_inverse_square_experiments.py",),
     "examples/gravity-probe/run_experiments.py": ("tests/test_gravity_probe.py",),
     "examples/particle-interactions/run_experiments.py": ("tests/test_particle_interactions.py",),
+    "examples/quantum-classical/run_experiments.py": ("tests/test_quantum_classical.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
