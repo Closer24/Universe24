@@ -216,15 +216,17 @@ motion, and the initial motion loses. Weaker fields locate the critical speed:
 | emission | v0 = 0 | 0.125 c | 0.25 c | 0.375 c | 0.5 c | 0.75 c | 1 c |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 24000 | recollapse | bound | bound | bound | bound (5 → 6) | bound | bound |
-| 600 (÷40) | falling in | expanding, decelerating (5 → 10 in 60 ticks) | escaped by tick 51 | escaped by 31 | escaped by 22 | escaped by 15 | escaped by 11 |
+| 2400 (÷10) | falling in | turned around at 8 | expanding, decelerating (5 → 10.5) | expanding, decelerating (5 → 13) | escaped by tick 38 | escaped by 20 | escaped by 14 |
+| 600 (÷40) | falling in | expanding, decelerating (5 → 10) | escaped by tick 51 | escaped by 31 | escaped by 22 | escaped by 15 | escaped by 11 |
 
-At emission 600 the critical speed lies between 0.125 c and 0.25 c; forty
-times the emission would put it near 0.8-1.6 c if v_esc² scales with the
-source, which is what the 24000 run shows (nothing escapes at c). So the
-configuration has an ordinary escape speed that grows as the square root of
-the field strength — the Newtonian scaling again, read off a four-body lattice
-universe — and a universe of this kind expands forever only when launched above
-it, decelerating all the way; nothing in it accelerates the expansion.
+The critical speed lies between 0.125 c and 0.25 c at emission 600 and between
+0.375 c and 0.5 c at 2400: four times the source, about twice the speed. Ten
+times more again puts it near 1-1.4 c, which is what the 24000 run shows
+(nothing escapes at c). So the configuration has an ordinary escape speed that
+grows as the square root of the field strength — the Newtonian scaling again,
+read off a four-body lattice universe — and an open universe of this kind
+expands forever only when launched above it, decelerating all the way; nothing
+in it accelerates the expansion.
 
 ## 5. Redshift without recession (`redshift_without_expansion.py`)
 
@@ -248,6 +250,26 @@ load crosses each budget multiple. Durations stretch with the spacing, since
 the same delay acts on every part of a signal. This is the model's own
 candidate for a distance-redshift relation; it does not by itself give an
 accelerating relation, and its statistical form is quantized.
+
+### In a closed universe (`... periodic ...`)
+
+Universe24 is closed. With a periodic boundary the field never leaves, so the
+load grows with the age of the universe under a *constant* source, and the
+train laps the row: the eye sees the same signal at successive epochs. First
+attempt (37 × 25 × 5 periodic, mass twelve rows from the path, constant
+emission 18000, `straight` phases): the first seven bodies arrived at ticks
+21-27 with gaps of one, the other five never arrived in 110 ticks and nobody
+completed a second lap. The stall is the axis-ray artifact of `straight`
+phases: the mass's y-axis ray runs down the column x = 18, crosses the train's
+row and (with its wrapped images) piles load on that one node, so every body
+reaching it after tick 27 waits there. With `rotate` phases (Manhattan-isotropic
+field) all twelve bodies complete lap 1 at ticks 21-32 with gaps of one, and
+then nobody completes a second lap within 110 ticks: the accumulated load
+crossed the budget everywhere at about the same age, so every hop slowed
+together. That is the closed universe's signature — a uniform slowdown of all
+light with age, not a local one — and to read it as a redshift the eye must
+compare laps, which needs a source weak enough for the slowdown to deepen
+gradually (recorded below when the 150-tick run completes).
 
 ## 6. Dark matter and dark energy: what the model does and does not offer
 

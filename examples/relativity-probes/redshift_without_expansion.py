@@ -9,7 +9,7 @@ observer: it records only the arrival tick of each body. Spacing above one link
 per tick is a redshift z = spacing - 1 produced by delay growth, with no
 recession and no expansion term. The control keeps the emission at zero.
 
-usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget] [open|periodic] [constant emission]
+usage: python examples/relativity-probes/redshift_without_expansion.py [growth] [budget] [open|periodic] [constant emission] [ticks] [straight|rotate|node]
 """
 
 import sys
@@ -24,6 +24,9 @@ BUDGET = int(sys.argv[2]) if len(sys.argv) > 2 else 40
 BOUNDARY = sys.argv[3] if len(sys.argv) > 3 else "open"
 CONSTANT = int(sys.argv[4]) if len(sys.argv) > 4 else 0  # emission per cycle added to age * growth
 TICKS = int(sys.argv[5]) if len(sys.argv) > 5 else 60
+# "rotate" keeps the field Manhattan-isotropic: with "straight" phases the mass's
+# axis ray runs down the column x = 18 across the train's row and stalls it there.
+ALLOCATION = sys.argv[6] if len(sys.argv) > 6 else "straight"
 # Closed: a taller box with the mass twelve rows from the path, so the direct field
 # is weak and the growing load is the accumulated, wrapped field; the train laps
 # the row and the eye records every lap (successive epochs of the same signal).
@@ -48,6 +51,7 @@ def document(growth):
         "ticks": TICKS,
         "computation_field": "computation",
         "delay_direction": "along",
+        "allocation_phase": ALLOCATION,
         "operation_costs": {name: 1 for name in OPERATIONS},
         "fields": [
             {"name": "mass", "components": 1, "units": "unit", "signed": False, "conserved": True},
@@ -161,7 +165,7 @@ for growth in sorted({0, GROWTH}):
     order = sorted(arrivals)
     print(
         f"\n=== emission {CONSTANT} + {growth} per mass cycle, budget {BUDGET}, "
-        f"boundary {BOUNDARY}: what the eye records ==="
+        f"boundary {BOUNDARY}, phases {ALLOCATION}: what the eye records ==="
     )
     laps = max((len(v) for v in arrivals.values()), default=0)
     for lap in range(laps):
