@@ -74,6 +74,14 @@ report a committed violation; it neither repairs that event nor proves closure
 of all admitted inputs. Require a separate scope statement for omitted energy
 terms, external reservoirs and unimplemented field or spin dynamics.
 
+For unresolved momentum, distinguish a missing value from a declared zero mean
+with nonzero variance. A local kick cannot recover an unknown incoming momentum.
+If a candidate transfers uncertainty, identify its receiving owner and retained
+state. Conserving means and second moments is expectation-level closure; it does
+not prove conservation in every sampled branch or retention of quantum phase and
+correlations. Check mass assumptions in kinetic-energy readouts, and reject
+missing diagnostic payloads instead of treating them as zero.
+
 ## Review the declared rules
 
 For [recurrent contact outcomes](../../docs/RECURRENT_QUANTUM_CONTACT.md),

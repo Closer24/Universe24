@@ -1,5 +1,15 @@
 # Project status and restart guide
 
+The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+composes the existing held quantum capture with later generic local conversions.
+It transfers supplied mean momentum and variance to/from an arriving reservoir,
+records one-shot detector completion, and produces slow ordinary motion.
+This is an expectation-level candidate; spatial amplitudes do not derive the
+moments, and the uncertain reservoir does not spread. A separate exact quantum
+SWAP control verifies phase and branch balances. The associated receipt fix
+keeps empty pending-output slots reserved while accepting arrivals into unlocked
+spares. Exact source and completed checks are in [validation](VALIDATION.md).
+
 The explicit [recurrent contact profile](RECURRENT_QUANTUM_CONTACT.md) adds
 configured localized, continued-wave and new-wave outcomes to local encounters.
 Complete instruments determine probabilities; a new wave atomically receives a

@@ -1,5 +1,58 @@
 # Test inputs and expected results
 
+
+## Local moment response after capture
+
+`test_local_moment_exchange.py` runs the
+[candidate](../examples/quantum/local_moment_exchange.md) in all six directions,
+with no reservoir, longer Links and computation delay. A unit-mass target with
+mean 0 and variance 1 exchanges moments with a unit-mass reservoir with mean 3
+and variance 0. Total mean momentum 3 and doubled expected kinetic energy 10
+include ordinary, quantum-inventory and escaped owners. The target follows the
+selected axis at nominal c/100; the zero-mean recoil remains uncertain. Test
+mass/validity rejection, renamed fields/types and nonlinear energy rejection
+despite an unchanged mean sum. Separate exact quantum-owner controls preserve
+all sixteen basis momentum/energy cases and coherent reversal.
+
+`test_record_operations.py` verifies that reserved empty slots cannot receive
+new records: select the first unlocked spare, or reject the entire proposal
+without mutation when capacity is insufficient. The delayed quantum capture
+regression in `test_localized_quantum_contact.py` receives a messenger into
+spare slot 2 at tick 4 and commits capture at tick 11 with both owners intact.
+
+## Quantum-to-classical investigation
+
+`test_quantum_classical_experiment.py` runs the bounded
+[investigation](../examples/quantum/quantum_classical_check.md). Ten native controls
+must give exact visibility `(9/25)^n` at fixed contact tick 8; zero coupling and
+phase reversal cover both certain outputs. Explicit coherent environment controls
+must restore interference after retained interactions are inverted. The existing
+five-cycle Markov comparison remains exact. Three spatial outcome controls
+preserve inventory and field accounting while recording configured hold and
+unknown momentum; direct moving capture remains a rejected composition. A pass
+must retain the report's `not_established` trajectory conclusion. No statistical
+or Newtonian emergence claim follows from this acceptance test.
+
+## Recurrent quantum contacts
+
+`test_recurrent_quantum_contact.py` owns the
+[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
+matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
+Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
+and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
+Check no extra draw for a certain outcome, one scalar/vector inventory owner,
+renamed entities/fields, equal-inventory alternate outputs, finite original
+source allowances and capacity rejection before RNG. The checked-in 48-tick
+example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
+-36 and eventual zero field stock under explicit dissipation.
+
+`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
+a remote event at tick 3 cannot select which ordinary local bank clears before
+the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
+It also rejects preparation into local vacuum when another mode is occupied and
+checks same-tick result replay after absorption without origin resurrection.
+Retain all affected localized/causal contact, origin, state and field regressions.
+
 ## Active contract coverage and shared execution
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports
@@ -64,6 +117,7 @@ the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree
 It also rejects preparation into local vacuum when another mode is occupied and
 checks same-tick result replay after absorption without origin resurrection.
 Retain all affected localized/causal contact, origin, state and field regressions.
+
 
 ## Causal quantum sources
 

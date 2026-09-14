@@ -97,6 +97,13 @@ also declares decay and localized/dissipated residue under the existing field la
 
 ## Numerical acceptance
 
+The [local moment-response candidate](../examples/quantum/local_moment_exchange.md)
+uses a later ordinary pair conversion after capture, preserving this profile's
+initial held/unknown output. Its supplied mean and variance are not derived from
+the spatial wave. Converted emitters remain unsupported. A separate regression
+checks arrival into an unused slot during delayed capture: an empty reserved
+output slot stays locked, while an unlocked spare receives the incoming record.
+
 [The focused tests](../tests/test_localized_quantum_contact.py) check source
 conversion at tick 0, capture at tick 2 two Links away, charge -1 and mass 1 at
 every tick. Finite ordinary sources inject -6 before conversion and -12 after

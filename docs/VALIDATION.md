@@ -62,6 +62,71 @@ Python 3.14.0rc2 on Linux. This records a measured behavior of a configured
 candidate; it does not establish a classical limit, field back-action or
 energy closure, as stated in the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md).
 
+## Local moment response and reserved receipts - 2026-09-14
+
+Task base: `3a2fdfdc796212961a2f305544f0d98998506864`; current main was
+`1c782390456ea9629eb0f73c030095574d80e454`. This work includes the still-open
+PR #100 dependency and the earlier bounded quantum-to-classical investigation.
+The [local response report](../examples/quantum/local_moment_exchange.md) defines
+the supplied candidate, input authoring, exact outcomes and remaining limits.
+
+The complete headless experiment passed in **10.8934 seconds** on the final
+source. It includes the primary 800-tick native recording, six signed-axis
+audits through escape, no-reservoir control, three-tick Links, computation budget
+20, and independent exact quantum state-exchange controls. The ordinary audits
+preserve mean momentum and expected quadratic kinetic energy, including quantum
+inventory and escaped stock. They do not retain full phase or branch correlations.
+Independent physics review passed this restricted scope, including rejection of
+non-unit masses, false certainty and missing audit fields. Independent ownership
+review also accepted the generic unlocked-spare receipt correction.
+
+Active-source SHA-256, checked before and after the experiment:
+`1cf98faec97a7a58fd4ba1b7703d4521e6ea9f02646c6e3338d49753de42e419`.
+This identifies the tested Windows checkout bytes, including its line endings.
+All physical source changes are confined to the reserved-slot receipt fix.
+
+`python tools/check.py --base 3a2fdfd` passed **1,723 tests with five opt-in
+visual skips** in 183.53 seconds. Ruff/format passed for nine changed Python
+files; strict mypy passed for ten affected source files. The selector covered
+native/quantum contacts, field/carrier ownership, local conversions, integer
+arithmetic, Node/Link timing, boundaries, generic names, UI/runner consumers and
+retention. Eight receipt regressions first failed on the original implementation;
+the two focused files then passed 71 tests after repair. No full-suite flag,
+simulator build or visualization was used. Versions: Python 3.14.7, pytest 9.1.1,
+Ruff 0.16.7 and mypy 2.3.1; Windows pytest used a fresh explicit base directory.
+
+Main advanced during publication to `d66b43eb193954a9a14a5a33deefd290d61ed547`
+with PR #102's shared-test builders and active local-contract coverage. Merge
+`2baa7c7` retains both the new upstream expectations and this branch's quantum
+and moment-response cases. Production source is byte-identical to the fingerprint
+above, so the actual experiment remains applicable. The integration gate,
+`python tools/check.py --base 304445d`, passed **646 tests** in 29.57 seconds;
+Ruff/format passed for 27 affected files. The final documentation and prior
+quantum-to-classical experiment regression had also passed 23 tests before this
+test-only integration. No failed check was bypassed, and no upstream production
+law changed.
+
+## Quantum-to-classical claim investigation - 2026-09-14
+
+The [reproducible investigation](../examples/quantum/quantum_classical_check.md)
+ran on `be518fe1089457032b201324372201086e1edbcf` with experiment-only additions;
+production source was unchanged. Its source fingerprint, exact numerical
+results and limitations are recorded in that report. The aggregate completed
+in 3.88 seconds: ten native interference worlds, sixteen coherent-environment
+controls, the existing five-cycle Markov comparison and three 96-tick spatial
+contact controls. Numerical expectations pass; emergence of a Newtonian
+trajectory is **not established**. Independent review checked the saved native
+weights, fixed timing and the distinction between configured hold and emergence.
+
+`python tools/check.py --base be518fe1089457032b201324372201086e1edbcf` passed
+**106 tests with two opt-in visual skips** in 27.72 seconds. Ruff and formatting
+passed for six changed Python files. The affected scope includes the new
+headless CLI experiment, resource-consumer selection and repository language,
+hygiene, navigation, workspace and recorded-output contracts. Production source
+and its prior physics evidence are unchanged; no full-suite run, package build
+or visualization was requested. Python 3.14.7, pytest 9.1.1 and Ruff 0.16.7 were
+used with a fresh explicit Windows pytest base directory.
+
 ## Recurrent local contact outcomes - 2026-09-14
 
 Recorded task base: `3e5eaea5ad88688b2509ec34f5d43246dc62d15e`. The branch then
