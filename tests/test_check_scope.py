@@ -2,8 +2,10 @@
 
 import importlib.util
 import json
+import subprocess
 import time
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pytest
 
@@ -214,10 +216,77 @@ def no_change_main(monkeypatch, tmp_path, *arguments):
     monkeypatch.setattr(CHECK, "ROOT", tmp_path)
     monkeypatch.setattr(CHECK, "git", lambda *args: "base" if args[0] == "merge-base" else "")
     monkeypatch.setattr(CHECK.sys, "argv", ["check.py", *arguments])
+    monkeypatch.setattr(CHECK, "previous_sources", lambda *args: pytest.fail("no prior tree needed"))
+    monkeypatch.setattr(CHECK, "select", lambda *args: pytest.fail("no dependency graph needed"))
     monkeypatch.setattr(
         CHECK.subprocess, "run", lambda *args, **kwargs: pytest.fail("no checks were selected")
     )
     CHECK.main()
+
+
+def test_clean_checkout_still_honors_explicit_test_selection(monkeypatch, tmp_path, capsys):
+    target = tmp_path / "tests/test_selected.py"
+    target.parent.mkdir()
+    target.write_text("def test_boundary(): pass", encoding="utf-8")
+    no_change_main(
+        monkeypatch, tmp_path, "--dry-run", "--tests", "tests/test_selected.py::test_boundary"
+    )
+    report = json.loads(capsys.readouterr().out)
+    assert report["changed"] == []
+    assert report["commands"] == [
+        ["pytest", "tests/test_selected.py::test_boundary", "--junitxml=artifacts/junit.xml"]
+    ]
+
+
+@pytest.fixture
+def git_checkout():
+    # Git init cannot use a Windows reserved directory name in an ancestor path.
+    with TemporaryDirectory(prefix="universe-check-tree-") as directory:
+        yield Path(directory)
+
+
+def test_batched_prior_tree_preserves_exact_sources_and_deleted_consumers(monkeypatch, git_checkout):
+    # A real tiny Git tree tests framing, empty blobs, spaces and missing final newlines.
+    tmp_path = git_checkout
+    monkeypatch.setenv("GIT_DIR", ".git")
+    monkeypatch.setenv("GIT_WORK_TREE", ".")
+    monkeypatch.setattr(CHECK, "ROOT", tmp_path)
+    sources = {
+        "src/demo/old.py": "def calculate(): return 7\n",
+        "src/demo/empty.py": "",
+        "tests/test_old.py": "from demo.old import calculate",
+        "tools/with space.py": "# framed\n\n",
+    }
+    for path, content in {
+        **sources,
+        "tests/reference/archive.py": "archived",
+        "src/data.json": "{}",
+    }.items():
+        target = tmp_path / path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content, encoding="utf-8", newline="")
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "-c", "core.autocrlf=false", "add", "."], cwd=tmp_path, check=True)
+    subprocess.run(
+        ["git", "-c", "user.name=Test", "-c", "user.email=test@example.org", "commit", "-qm", "fixture"],
+        cwd=tmp_path,
+        check=True,
+    )
+    (tmp_path / "src/demo/old.py").unlink()
+    (tmp_path / "tests/test_old.py").write_text("def test_replacement(): pass", encoding="utf-8")
+    actual = CHECK.subprocess.check_output
+    calls = []
+
+    def counted(command, **kwargs):
+        calls.append(command)
+        return actual(command, **kwargs)
+
+    monkeypatch.setattr(CHECK.subprocess, "check_output", counted)
+    previous = CHECK.previous_sources("HEAD")
+    assert previous == sources
+    assert len(calls) == 2
+    tests, _ = CHECK.select(["src/demo/old.py"], previous)
+    assert "tests/test_old.py" in tests
 
 
 def test_scope_report_is_registered_and_expires_without_removing_unregistered_files(

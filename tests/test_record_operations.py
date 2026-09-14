@@ -9,7 +9,7 @@ from event_universe.core.disturbance_state import MAX_VALUE, pack, unpack
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.initialization import parse_initial_state
-from tests.test_disturbance_engine import document, field, kind
+from tests.support.disturbances import document, field, kind
 
 
 def fixture(mode="split", value=(2, -3, 1)):

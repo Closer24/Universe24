@@ -52,6 +52,51 @@ It also rejects preparation into local vacuum when another mode is occupied and
 checks same-tick result replay after absorption without origin resurrection.
 Retain all affected localized/causal contact, origin, state and field regressions.
 
+## Active contract coverage and shared execution
+
+`test_active_node_contracts.py` exercises receipt and completion at all six Ports
+for the active carrier Node, spatial Node and source-envelope Node. For the same
+local payload and fixed capacity it varies world extent, unrelated resident/event
+counts (0, 8, 128) and elapsed model ticks. The measured production-path line counts,
+modeled carrier cost, local event count and recursively retained payload size must
+stay equal. Host world indexes are made unreadable during each local transition.
+Expected outputs remain explicit: one carrier crosses one Link, spatial stock 64
+is owned locally or in outgoing packets, and the source mixer yields amplitude 3/5.
+These are bounded-work regressions plus state/locality guards, not a timing-based
+proof for arbitrary callbacks, whole-world scheduling or quantum evaluation.
+
+Shared builders live in narrowly scoped `tests/support/` modules. Their imports
+remain dependencies of every consuming test. They do not contain alternate
+simulation engines. `test_generic_identity.py` records one immutable seven-tick
+baseline per configuration; rename, reorder and combined variants each retain
+their own world and all state/event/accounting comparisons. Baseline conservation,
+activity and input immutability assertions are retained.
+
+| Removed or consolidated execution | Retained or stronger acceptance |
+| --- | --- |
+| Three self-identity assertions in the obsolete Node alias test | Recursive NodeState/schema rejection tests remain; no supported alias requirement was being checked by the self-comparisons |
+| 21 repeated classic baseline worlds | Seven immutable baselines and all 21 independent transformed worlds; all original trace and accounting assertions |
+| 34 full catalog-contact worlds | All 34 preparation bindings checked through parsed source records and capture templates; 11 dynamic representatives cover every charge value, passive spin value, zero/unknown/positive mass and maximum mass, plus the original simultaneous-domain and rejection tests |
+| Contact renaming checked only charge/source totals | Semantic rename, declaration reorder and combined variants compare complete public snapshots, events, balances and quantum outcomes at each tick; real capture and nonzero emission are required |
+
+The representative regime-coverage test must fail if a new catalog property value
+is not represented. Data preparation remains checked for every entry. Catalog
+mass and spin are passive inventory/properties in this candidate; these tests do
+not establish species dynamics. Distinct signed, overflow, denominator, boundary,
+null/capture and correlated-state cases are not removed. The exact 25-ticket
+fixtures remain exhaustive.
+
+The remote-detector causal comparison also requires equal local source-cost and
+delay prefixes before delivery, with observed source work and an actual later
+capture/terminal effect. Globally conditioned quantum state remains distinct from
+the retarded ordinary source envelope after a measurement.
+
+`test_check_scope.py` requires empty selections to avoid source/dependency scans
+while honoring explicit `--tests`. Prior source reads use two Git processes and
+preserve exact blobs, including empty files and deleted providers. Old and current
+dependency selections, dynamic resource consumers and failure evidence remain
+part of the gate; batching does not authorize dropping related tests.
+
 ## Causal quantum sources
 
 The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing

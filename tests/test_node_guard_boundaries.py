@@ -14,7 +14,7 @@ from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.initialization import parse_initial_state
 
-from .test_disturbance_engine import document, field, kind
+from .support.disturbances import document, field, kind
 from .test_local_field_rules import document as spatial_document
 from .test_local_field_rules import invariant, local, operation, seed
 from .test_node_conservation_configuration import large_initial_readouts

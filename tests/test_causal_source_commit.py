@@ -7,13 +7,13 @@ import pytest
 from event_universe.core.disturbance_state import MAX_VALUE, unpack
 from event_universe.core.event_resolution import LocalContext
 
+from .support.contact import step, world_for
 from .test_causal_contact_fields import (
     DETECTOR,
     SOURCE,
     causal_configuration,
     frozen_split_configuration,
 )
-from .test_localized_quantum_contact import step, world_for
 
 
 def contact_context(world, address):
