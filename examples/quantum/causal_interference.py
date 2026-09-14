@@ -165,6 +165,18 @@ def funded_configuration(phase, *, tickets):
     return raw
 
 
+SCALE_AMOUNTS = (25, 250, 2500, 25000)
+
+
+def scale_configuration(phase, amount):
+    """The plain interferometer with the full source emission raised to `amount` per tick."""
+    raw = configuration(phase, which_path=False, tickets=NULL_TICKETS)
+    for emission in raw["emissions"]:
+        emission["amount"] = -amount
+        emission["budget"] = amount * 40
+    return raw
+
+
 def configuration(phase, *, which_path, tickets, splitter="rotation", null_notices=False):
     raw = json.loads(TEMPLATE.read_text(encoding="utf-8"))
     mixer, inverse = SPLITTERS[splitter]
@@ -460,6 +472,37 @@ def run_experiment(output):
             }
         )
 
+    # Emission scale: the classical field follows the local squared weight to within
+    # one unit per tick at every scale, so the relative departure falls as 1/amount.
+    scale = []
+    for phase in ("pi/2", "pi"):
+        weights = analytic(phase)["output_port_weights"]
+        weight = Fraction(weights[0], sum(weights))
+        for amount in SCALE_AMOUNTS:
+            case = run_case(
+                f"scale_{amount}_" + phase.replace("/", "_"), scale_configuration(phase, amount), output
+            )
+            per_tick = [
+                case["emission_by_tick"].get(str(t), {}).get(SOURCE, 0) for t in RECOMBINED_TICKS
+            ]
+            exact = amount * weight
+            deviation = max(abs(value - exact) for value in per_tick)
+            mean = Fraction(sum(per_tick), len(per_tick))
+            assert deviation < 1, (amount, phase, per_tick)
+            assert abs(mean - exact) * len(RECOMBINED_TICKS) < 1
+            scale.append(
+                {
+                    "phase": phase,
+                    "amount": amount,
+                    "source_emission_per_tick": per_tick,
+                    "exact_source_emission": str(exact),
+                    "mean_source_emission": str(mean),
+                    "max_deviation_per_tick": str(deviation),
+                    "relative_deviation_of_mean": str(abs(mean - exact) / exact),
+                    "case": case,
+                }
+            )
+
     return {
         "status": "pass",
         "python": platform.python_version(),
@@ -475,6 +518,7 @@ def run_experiment(output):
         "null_notices": notices,
         "field_phase": back_action,
         "funded": funded,
+        "scale": scale,
         "limits": [
             "The 3:4 mixer gives visibility from 9/25 and 16/25; the balanced Hadamard with vacuum 1+i gives full visibility.",
             "Without null notices the source weights after a null are retarded and unnormalized: S keeps emitting 9 of 25.",
@@ -482,6 +526,7 @@ def run_experiment(output):
             "One configured domain and one conserved inventory.",
             "Field back-action is a configured local phase on one arm; it transfers no energy or momentum to the field.",
             "With funded emission the field is paid from the wave's stock; emission committed after a remote capture is an explicit external residual.",
+            "Raising the emission amount shows the field converging to the exact squared weight within one unit per tick; it does not show the dynamics of the wave becoming classical.",
             "Finite range of ticks and one Link per tick; no continuum limit is measured.",
         ],
     }

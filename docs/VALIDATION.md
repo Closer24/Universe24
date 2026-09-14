@@ -2249,3 +2249,18 @@ Runtime source SHA-256
 `6c5eb5f5151944a865ec91d2b7ffb786d7c56a898a02446733dc6bd78a2c4fdf`, Python
 3.14.0rc2, headless. Several excitations in one domain remain outside the
 candidate by construction, as the contract now states.
+
+## Emission-scale sweep of the two-arm interferometer - 2026-09-14
+
+Base: the crossing-null commit on this branch. Configuration only: the
+two-arm harness gains `scale_configuration`, which raises the full source
+emission to 25, 250, 2500 and 25000 units per tick at `phi = pi/2` and `pi`.
+
+| Check | Result |
+| --- | --- |
+| Per-tick departure of the S emission from `amount x |a_S|^2` | below one unit at every amount and phase; 0.52, 0.8, 0, 0 at `pi/2` and 0.04, 0.6, 0, 0 at `pi` |
+| Relative departure of the six-tick mean | 1.5e-3, 2.5e-4, 0, 0 at `pi/2`; 2.0e-2, 3.4e-3, 0, 0 at `pi`; exact on every tick at multiples of 625 |
+| Accounting | balanced at every completed tick in all eight worlds |
+
+This is the emission-side classical limit only: the integer field becomes the
+continuous law as the amount grows. The wave's dynamics are configured.

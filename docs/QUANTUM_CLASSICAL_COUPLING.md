@@ -37,6 +37,7 @@ records, with exact integers on the canonical runner:
 | Cancellation after a capture two Links away | the source Node emits once more and then stops |
 | Opt-in [funded emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission): the wave pays for its field from its own stock | totals constant at 3000 with zero sources while the wave is live; 211 units paid into the field over fourteen ticks; after a capture the localized record holds the unspent stock and keeps paying; the only external term is the one retarded emission after the capture |
 | An external classical field on one arm with the opt-in [field phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase) | coil fields 0, 200, 400, 800 select phase exponents 0, 0, 1, 2 and move the capture probability from 0 to `576/3125` and `9216/15625`; the same field beside the far side of the source moves nothing |
+| Full emission raised from 25 to 25000 units per tick at `phi = pi/2` and `phi = pi` | the recorded field departs from `amount x |a_S|^2` by less than one unit on every tick and the mean's relative departure falls as `1/amount`; exact on every tick at multiples of 625 |
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
 | [Two nulls crossing on one tick](../examples/quantum/crossing_nulls.md), one excitation over three registers | the stale factors multiply to `390625/177489` where the conditional scale is `25/9`; the later Node by (tick, position) corrects itself from its own null record and the delivered factor, and every Node holds `25/9` two Links after the correction leaves; sequential nulls are exact with no correction |
@@ -106,9 +107,14 @@ above it, on the same lattice and the same runner.
 ## What is not claimed
 
 - **Not a derivation of the classical limit.** The classical field law, the
-  mixer, the phase gate and the instrument are configured data. Nothing here
-  shows that large amplitudes or frequent measurements reduce the quantum
-  owner to the classical lattice dynamics.
+  mixer, the phase gate and the instrument are configured data. The emission
+  side has a measured limit: as the amount grows the integer field becomes
+  the continuous law `amount x |psi|^2` within one unit per tick. Nothing
+  here shows that large amplitudes or frequent measurements reduce the
+  quantum owner's own dynamics to the classical lattice dynamics; the
+  [counting probe](../examples/quantum-classical/README.md) shows a dephased
+  walk equal to the classical random walk, which is decoherence by
+  configuration, not a limit.
 - **Born-rule consistency after null results is closed for one excitation
   only.** Under the default rule the retained envelopes are a retarded,
   unnormalized approximation, measured as 9/25 above. The opt-in null notice
@@ -193,9 +199,10 @@ integer realization, not any of the parts.
 2. The return path: the field now costs the wave what it emits, but nothing
    flows back. An absorption rule for the octant field by the wave, checked by
    the same interference experiment, would close the loop.
-3. A classical-limit experiment: increasing amplitude scale or instrument rate
-   and measuring convergence of capture statistics to the classical lattice
-   dynamics of a localized record.
+3. A classical-limit experiment for the dynamics: the emission side converges
+   as measured above, but nothing shows the capture statistics of a coherent
+   wave converging to the classical lattice dynamics of a localized record as
+   the amplitude scale or the instrument rate grows.
 4. A prediction that differs from standard quantum mechanics plus a classical
    field, at a scale where it could be checked.
 

@@ -79,4 +79,13 @@ def test_interference_is_visible_at_the_output_and_removed_by_an_arm_detector(tm
     for row in result["null_notices"]:
         scales = set(map(tuple, row["case"]["final_weight_scales"].values()))
         assert scales == ({(625, 81)} if row["variant"] == "arm_null" else {(625, 337)})
+    scale = {(row["phase"], row["amount"]): row for row in result["scale"]}
+    assert set(scale) == {(p, a) for p in ("pi/2", "pi") for a in EXPERIMENT.SCALE_AMOUNTS}
+    assert scale[("pi/2", 25)]["source_emission_per_tick"] == [13, 14, 13, 14, 13, 14]
+    assert scale[("pi", 25)]["source_emission_per_tick"] == [2, 2, 2, 2, 2, 2]
+    assert scale[("pi/2", 2500)]["source_emission_per_tick"] == [1348] * 6
+    assert scale[("pi", 25000)]["source_emission_per_tick"] == [1960] * 6
+    for row in result["scale"]:
+        assert Fraction(row["max_deviation_per_tick"]) < 1
+        assert Fraction(row["relative_deviation_of_mean"]) < Fraction(1, row["amount"])
     assert not list((tmp_path / "experiment").rglob("*.html"))

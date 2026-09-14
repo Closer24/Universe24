@@ -214,6 +214,13 @@ earlier-ordered notice produces one correction in the correction bank under
 the Node's own key, a later-ordered one produces none, a null without the
 weight law keeps no record, and more than six queued corrections are rejected.
 
+`test_causal_interference.py` also owns the emission-scale sweep of the
+two-arm harness: at full emissions 25, 250, 2500 and 25000 per tick and
+`phi = pi/2` and `pi`, the recorded S emission is 13, 14, 13, 14, 13, 14 and
+2 x 6 at 25, 1348 x 6 at 2500 for `pi/2` and 1960 x 6 at 25000 for `pi`, every
+per-tick departure from `amount x weight` is below one unit and the mean's
+relative departure is below `1/amount`.
+
 `test_field_phase.py` owns the opt-in
 [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase):
 a nine-entry table for `max_exponent` 4 with identity at zero, `(3, 4)` at one,
