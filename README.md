@@ -400,8 +400,10 @@ Run `python -m tools.generic_vector_lab.run_demo` from this repository.
 ## License and citation
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
-Version 0.2.0 is archived on Zenodo under DOI
-[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746).
+Versions are archived on Zenodo under the concept DOI
+[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746), which
+resolves to the latest version; 0.3.0 is the version this repository is at
+(see [CHANGELOG.md](CHANGELOG.md)).
 Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
 citation entry on the repository page. From version 0.3.0 the title carries the
 framework name, Reality Theory (Universe24). Reference form of the archived 0.2.0:

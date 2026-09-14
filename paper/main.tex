@@ -1,0 +1,331 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{caption}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\title{A discrete integer lattice with a finite quantum owner:\\
+exact interference, causal collapse, and a Bell test that separates\\
+local from shared-state candidates on one lattice}
+\author{Alon Gonen\\
+\small Reality Theory (Universe24) \quad \texttt{logic24@gmail.com}}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We report exact, reproducible measurements on Universe24, a simulator in which
+space is a three-dimensional lattice of Nodes joined by six Links, every
+evolving quantity is a bounded integer, and every rule is local. Ordinary
+matter and fields are configured disturbances; a quantum excitation is a finite
+joint state over at most thirty lattice registers, evolved by number-preserving
+Gaussian-integer unitaries and read by local Kraus instruments. The two are
+joined by a causal source candidate: each participating Node keeps a bounded
+complex envelope of the wave and emits the classical field at full strength
+times its local squared magnitude. On the canonical runner we measure
+two-path interference with exact rational capture weights, which-path
+decoherence by an actual local instrument, a collapse that reaches remote
+sources only after Link transit, a local null-notice rule that restores the
+exact conditional Born weights after one Link and corrects crossing nulls, an
+Aharonov--Bohm-like phase from an external classical field, an emission-side
+energy closure, and the emission-side classical limit. We then run the CHSH
+form of Bell's test five times on one lattice with the same settings. Three
+candidates whose information travels only on Links give $S = 1.40$ (exact),
+$1.48$, and exactly $2$; two candidates with one shared object that no Link
+carries give $S = 2.89$ (a bounded registry answering a bonded pair from one
+number) and $S = 14/5$ (the finite quantum owner). We state a postulate under
+which every uncertain interaction consumes one bounded integer, derive that
+the integer sequence is the only entry for information outside the world and
+is bound by no-signalling, and measure that bound: a uniform outside source is
+invisible, a biased one is a signal. We list what is not claimed: no derivation
+of the classical limit or of the configured laws, no continuum limit, and no
+prediction yet distinguishable from quantum mechanics with a classical field.
+The framework is called Reality Theory (Universe24); every number is
+reproducible from the archived code.
+\end{abstract}
+
+\section{Introduction}
+
+Discrete, local, integer models of physics have a long history: conservative
+logic and cellular automata \cite{fredkin1982,thooft2016}, lattice gases
+\cite{fhp1986,succi2001}, quantum cellular automata and quantum lattice gases
+\cite{bialynicki1994,meyer1996,arrighi2019}, hybrid quantum--classical
+dynamics \cite{rosenfeld1963,diosi1984,oppenheim2023}, collapse and
+decoherence \cite{grw1986,bassi2013,zurek2003}, and histories and causal sets
+\cite{griffiths1984,bombelli1987}. This paper does not claim any of these ideas
+as new. It reports a specific combination, realized exactly in bounded
+integers, together with a set of measurements that the combination makes
+possible because all of its parts run on one lattice under one runner.
+
+The combination is this. Space is a lattice; every Node holds bounded local
+information; influence moves at most one Link per tick; all arithmetic is
+integer. Classical matter and fields are configured disturbances. A quantum
+excitation is not a second world but a finite joint state over lattice
+registers, evolved by explicit integer unitaries and read by explicit local
+instruments. The join between them is a local envelope rule at each Node. On
+this footing we can ask a question that is usually asked of separate models:
+when the same lattice carries a classical phased wave and a finite quantum
+state, what separates them experimentally? The answer we measure is Bell's
+test, and it separates them by one thing only: whether all information
+travels on Links.
+
+Section~\ref{sec:model} states the model and its postulates, including the
+postulate on randomness. Section~\ref{sec:coupling} reports the coupling
+experiments. Section~\ref{sec:bell} reports the five Bell candidates.
+Section~\ref{sec:outside} reports the outside-source measurement.
+Section~\ref{sec:notclaimed} lists what is not claimed and what would make
+the work a physics result. All code, configurations and recorded runs are
+archived \cite{zenodo}.
+
+\section{The model}\label{sec:model}
+
+\paragraph{Lattice and locality.} Nodes lie on a three-dimensional integer
+lattice with open or periodic boundary; each Node has six Links. One tick
+moves a packet across one Link. A Node's state is a fixed set of bounded
+integer registers; there is no global variable that a physical rule reads.
+Postulate 4 states the causal bound: energy, momentum, matter and every
+message a record can control move at most one Node per step.
+
+\paragraph{Integers.} Every physical quantity, intermediate and law table is
+a bounded integer or a ratio of bounded integers; there is no floating point
+in any physical module, and an audit test enforces it. Trigonometric tables
+for phased rays are prepared once in fixed point with a bounded series.
+
+\paragraph{Computation cost and delay.} Every local cycle has a cost in
+configured operation prices, and a cycle whose cost exceeds the normal budget
+$B$ delays its Node by $k = \lceil C/B \rceil$ intervals; Link transit stays
+one tick and no debt accumulates. A configured conserved field may be named the
+computation field: its local value adds to the cost of every cycle at the Node,
+so a mass that emits it slows the carriers, and optionally the rays, that pass
+it. With directional delay each departure waits for the load on its own
+channel, and with least-delay routing every carrier and every outward split
+takes the cheapest eligible port first while keeping its exact directional
+ratios: everything flows first toward the neighbor where computation is free.
+These are declared timing rules, not a gravitational law; their measured
+consequences are a light pulse that does not cross a loaded region within the
+run, an interferometer fringe that shifts by the waits beside a mass, and a
+distance-proportional redshift on a closed lattice whose load grows with age,
+without any recession term. Host scheduling that skips empty Nodes (local
+Focus) changes no physical clock and is checked against the ordinary
+scheduler event by event.
+
+\paragraph{Classical disturbances and fields.} Records with configured fields
+move and interact by local rules. Spatial fields are transported by an octant
+rule (outward splitting with carried allocation phases) or by straight rays
+that keep one integer line, one Link per tick, and are counted whole by the
+ledger. Ray emission may be funded from the emitter's stock, with recoil;
+absorption adds the ray's amount and momentum to the absorber. A local
+conservation audit closes energy and momentum per event.
+
+\paragraph{Phased rays (the Kerengonen candidate).} A ray field may carry a
+phase step per ray, advanced once per Link; rays meeting at a Node combine by
+a fixed-point cosine of their phase differences, and the coherence
+$|\sum a e^{i\phi}|^2 / (\sum |a|)^2$ gates what a reader samples and what an
+absorber takes. Capture is a run-time choice: the coherent share, a whole-ray
+lottery drawn from a record-row ticket, a deterministic threshold, or, for
+bonded pairs, an answer of the bond registry.
+
+\paragraph{The finite quantum owner.} A domain of at most thirty registers
+holds a joint state with Gaussian-integer amplitudes. Gates are local
+unitaries $U$ with $U^\dagger U = s I$ for an integer scale $s$; instruments
+are Kraus pairs $(sI + O, sI - O)$; decisions carry exact rational Born
+weights, and a ticket selects an outcome only when more than one weight is
+nonzero.
+
+\paragraph{The causal source candidate.} At an actual local contact a record
+becomes a unit source envelope: a bounded complex amplitude at that Node. Two-mode
+gates between neighboring Nodes exchange frozen amplitudes through Links and
+commit after the neighbor's packet arrives. Each Node emits the ordinary
+classical field at the configured full strength times its local squared
+magnitude. A capture localizes the excitation into an ordinary record and sends
+a terminal notice through Links; remote envelopes stop when it arrives. A null
+result zeros only the local envelope; with the opt-in null notice the deciding
+Node sends its own factor $1/(1-p)$ through Links, and a Node whose own null
+was decided before an earlier-ordered notice arrived answers with the exact
+correction $(1 - w s)/(1 - w s g)$ from its own record.
+
+\paragraph{Bonded pairs.} Two rays emitted together carry the code of their
+birth Node and tick. A detector meeting a bonded ray asks the bond registry,
+one bounded object for the world (at most 4096 open pairs, each released at its
+second answer, repeated questions idempotent). The pair's one number is a fixed
+function of the registry seed and the birth code; its upper half answers the
+first end evenly, its lower half, against the difference of the two settings,
+decides whether the second end agrees with probability $(1 - \cos)/2$. The
+answer carries no energy, momentum or message: each end alone sees an even
+coin. This is the one declared exception to the causal bound.
+
+\paragraph{Postulate 22: one integer per interaction.} Every interaction whose
+outcome is not certain consumes exactly one bounded integer from a configured
+sequence: the record's ticket, the quantum owner's ticket, or the registry's
+number. The world's history is fixed by the rules, the initial state and this
+sequence. Three consequences follow without further assumption: the sequence
+is the only place where information not in the world's state enters; the
+model is indifferent to where the sequence comes from; and whatever supplies
+it is bound by no-signalling, since a biased supply moves one end's marginal
+with the other end's setting. Section~\ref{sec:outside} measures the third.
+
+\section{Coupling experiments}\label{sec:coupling}
+
+All runs use the canonical headless runner on a $7\times3\times3$ open world
+with one domain of three registers $S=(1,1,1)$, $M=(2,1,1)$, $D=(3,1,1)$, a
+$3{:}4$ mixer with amplitudes $(3/5, 4/5)$, a one-mode phase gate on $M$, the
+inverse mixer, and a SWAP to $D$ where a held probe attempts capture. Analytic
+targets are computed independently of the update code.
+
+\begin{table}[h]\centering\small
+\resizebox{\linewidth}{!}{\begin{tabular}{lll}
+\toprule
+Observation & Result & Prediction\\
+\midrule
+Capture weights at $D$, $\phi=0,\pi/2,\pi,3\pi/2$ & $[625,0],[337,288],[49,576],[337,288]$ & $288(1-\cos\phi)/625$ exact\\
+Balanced Hadamard splitter (vacuum $1+i$) & capture probability $0,\tfrac12,1,\tfrac12$ & exact\\
+Classical emission at $S$ after recombination & $25, 13.5, 2, 13.5$ per tick & $\lfloor 25(337+288\cos\phi)/625\rfloor$ with carry\\
+Held detector on the arm & $[9,16]$ for every $\phi$; no capture at $D$ & which-path\\
+Capture two Links away & $S$ emits once more, then stops & Link transit\\
+Null notice after an arm null & $S$ emits $25/25$ from the next tick; next gate $9$ and $16$ & conditional Born weights\\
+Crossing nulls on one tick & stale product $390625/177489$; corrected to $25/9$ at every Node & exact conditional scale\\
+External field phase, coil $0,200,400,800$ & exponents $0,0,1,2$; capture $0, 0, 576/3125, 9216/15625$ & $144((a-5^n)^2+b^2)$\\
+Funded emission, stock 3000 & totals constant; paid 211 (null) / 199 (capture); residual 2 & emission-side closure\\
+Emission scale $25\to25000$ & departure $<1$ unit per tick; exact at multiples of 625 & $\text{amount}\times|\psi|^2$\\
+\bottomrule
+\end{tabular}}
+\caption{Coupling measurements on the canonical runner. Every recorded weight equals the exact rational prediction.}
+\end{table}
+
+Three of these deserve a sentence each. The which-path row is decoherence by
+an actual local instrument using only local state and Link-delivered inputs.
+The null-notice rows show that, for one excitation, the retarded local
+approximation can be made exact by a factor known at the null Node, at the
+cost of Link transit, and that two nulls crossing in flight are corrected
+locally by the later Node; the stale emission in between is the candidate's
+causal residual, a prediction rather than an error. The emission-scale row is
+the classical limit on the emission side only: the integer field becomes the
+continuous law, while the wave's own dynamics stay configured.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/interference.pdf}
+\caption{Capture probability at $D$ against the arm phase for the $3{:}4$ mixer and the balanced splitter; curves are the exact rational predictions, points the recorded decision weights.}
+\end{figure}
+\begin{figure}[h]\centering
+\includegraphics[width=0.48\linewidth]{figures/null_notices.pdf}\hfill
+\includegraphics[width=0.48\linewidth]{figures/crossing_nulls.pdf}
+\caption{Left: the source's classical emission per tick after an arm null at tick 1, under the default retarded rule and with null notices; the notice restores $25/25$ one Link later and the next gate emits the conditional weights. Right: the weight scale at the source when two nulls cross in flight and when they are sequential; the later Node's correction brings both to the conditional scale $25/9$.}
+\end{figure}
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/scale.pdf}
+\caption{Largest per-tick departure of the classical emission from $\mathrm{amount}\times|a_S|^2$ as the full emission grows; below one unit at every scale and exactly zero at multiples of 625.}
+\end{figure}
+
+\section{Bell's test five times on one lattice}\label{sec:bell}
+
+We run the CHSH form with the same four settings, Alice $Z$ or $X$ and Bob
+$(3Z \pm 4X)/5$, read as phases $0^\circ, 90^\circ, 53^\circ, 307^\circ$ on the
+ray candidates, and the same combination
+$S = E(a_0 b_0) + E(a_0 b_1) + E(a_1 b_0) - E(a_1 b_1)$.
+
+\begin{table}[h]\centering\small
+\resizebox{\linewidth}{!}{\begin{tabular}{lll}
+\toprule
+Candidate & What decides the outcome & $S$\\
+\midrule
+Phased rays, share rule & coherent share against a local reference & $826177/589824 = 1.4007$ exact\\
+Phased rays, lottery & a local ticket at the coherent rate & $1.48$, $1.38$ (two probes; $1.41$ predicted)\\
+Phased rays, threshold & deterministic: whole ray when the share reaches $\tfrac12$ & $2.00$ exactly\\
+Plain rays, no phase & every ray absorbed whole & $2$ exactly\\
+Bonded rays & the bond registry, one number per pair & $2.89$ ($2.83$ quantum)\\
+Finite quantum owner & the joint conditional state at each contact & $14/5$ exact; dephased control $6/5$\\
+\bottomrule
+\end{tabular}}
+\caption{One lattice, one runner, one set of settings. Candidates whose information travels only on Links stay at or below 2; candidates with one shared object exceed it.}
+\end{table}
+
+The share rule equals the local model $E = \tfrac12\cos(a-b)$ exactly, one
+half of the quantum owner's $\cos(a-b)$ in every correlation: Malus's law, not
+a loss of visibility. The plain field sits exactly at the bound. The bonded
+ray and the quantum owner both exceed it through one shared object that no
+Link carries; both are non-signalling in the measured sense (each end's plus
+rate does not move with the other end's setting). The difference between them
+is bookkeeping, not locality: the registry answers a correlation from one
+number and carries no inventory; the quantum owner also carries the conserved
+carrier, the conditional collapse and the retarded classical emission. Bell's
+theorem is here a table rather than a claim.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/bell_candidates.pdf}
+\caption{The five Bell candidates and the plain field on one lattice. Blue: information travels only on Links. Red: one shared object no Link carries.}
+\end{figure}
+
+\section{A number source outside the world}\label{sec:outside}
+
+The registry may take each pair's number from a configured stream instead of
+its own sequence. With 16 seeds per hidden-phase slot and 1024 pairs per
+correlation: a uniform outside stream gives $S = 2.79$ and plus
+rates that move by less than $0.1$ with the other end's setting; a biased
+stream, whose upper halves always answer $+1$, keeps $S = 2.78$
+and moves Bob's plus rate by $0.69$ with Alice's setting
+(from $0.85$ to $0.15$ at $b'$), the singlet's $(1-\cos(a-b'))/2$ with Alice's
+coin fixed. An outside source may choose every single outcome without a
+trace; it cannot do so with a bias without producing a signal faster than the
+causal speed, and that signal is measured. Whether any real system is such a
+source is outside the model.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/outside_source.pdf}
+\caption{Bob's plus rate for each setting pair with the world's own sequence, a uniform outside source and a biased outside source, 1024 pairs each. Only the biased source moves Bob's rate with Alice's setting.}
+\end{figure}
+
+\section{What is not claimed}\label{sec:notclaimed}
+
+\begin{itemize}
+\item Not a derivation of the classical limit or of the configured laws: the
+mixers, instruments, phase advance, the $|p|/D$ rule, the cosine table and the
+singlet law in the registry are data, measured to hold.
+\item Born-rule consistency after null results is closed for one excitation
+only; two carriers in one domain are outside the candidate by construction.
+\item Back-action is a phase only; energy closure holds on the emission side
+only; the field returns nothing to the wave.
+\item Not a continuum or asymptotic result; every table is a finite lattice at
+a finite number of ticks.
+\item Not quantum electrodynamics, gravity, spin, statistics or many-body
+dynamics.
+\item The bonded ray is not a local explanation of the Bell value.
+\end{itemize}
+
+What would make this a physics result: a local integer rule for several
+excitations in one domain; the return path from field to wave; a dynamical
+classical-limit experiment; a prediction that differs from quantum mechanics
+with a classical field at a checkable scale. Beyond these, the framework
+raises questions it cannot yet decide (the size of the universe, flat rotation
+curves from a compressed closed dimension, redshift without recession, what
+the integer sequence is); they are kept on a hypotheses page apart from the
+results \cite{zenodo}.
+
+\section*{Reproducibility}
+Every table is produced by a checked-in harness that writes a summary with the
+runtime source fingerprint; the archived version is \cite{zenodo}. Python 3.14,
+no floating point in any physical module.
+
+\begin{thebibliography}{99}
+\bibitem{fredkin1982} E. Fredkin and T. Toffoli, Conservative logic, Int. J. Theor. Phys. 21, 219 (1982).
+\bibitem{thooft2016} G. 't Hooft, The Cellular Automaton Interpretation of Quantum Mechanics (Springer, 2016).
+\bibitem{fhp1986} U. Frisch, B. Hasslacher and Y. Pomeau, Phys. Rev. Lett. 56, 1505 (1986).
+\bibitem{succi2001} S. Succi, The Lattice Boltzmann Equation (Oxford, 2001).
+\bibitem{bialynicki1994} I. Bialynicki-Birula, Phys. Rev. D 49, 6920 (1994).
+\bibitem{meyer1996} D. A. Meyer, J. Stat. Phys. 85, 551 (1996).
+\bibitem{arrighi2019} P. Arrighi, Natural Computing 18, 885 (2019).
+\bibitem{rosenfeld1963} L. Rosenfeld, Nucl. Phys. 40, 353 (1963).
+\bibitem{diosi1984} L. Di\'osi, Phys. Lett. A 105, 199 (1984).
+\bibitem{oppenheim2023} J. Oppenheim, Phys. Rev. X 13, 041040 (2023).
+\bibitem{grw1986} G. C. Ghirardi, A. Rimini and T. Weber, Phys. Rev. D 34, 470 (1986).
+\bibitem{bassi2013} A. Bassi et al., Rev. Mod. Phys. 85, 471 (2013).
+\bibitem{zurek2003} W. H. Zurek, Rev. Mod. Phys. 75, 715 (2003).
+\bibitem{griffiths1984} R. B. Griffiths, J. Stat. Phys. 36, 219 (1984).
+\bibitem{bombelli1987} L. Bombelli, J. Lee, D. Meyer and R. D. Sorkin, Phys. Rev. Lett. 59, 521 (1987).
+\bibitem{zenodo} A. Gonen, Universe24: a discrete simulator of local physical laws (Reality Theory), version 0.3.0, Zenodo (2026), doi:10.5281/zenodo.22738746.
+\end{thebibliography}
+
+\end{document}
