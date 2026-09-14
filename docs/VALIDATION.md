@@ -26,6 +26,32 @@ The affected gate passed: **2,655 passed and five visual-only skipped**. Ruff,
 formatting and strict mypy passed on 120 source files. Python 3.14.0rc2 on
 Linux. The stock is bookkept by the quantum owner and the field returns nothing
 to it; this is emission-side closure, not a complete field-matter loop.
+## Two-wing Bell test - 2026-09-14
+
+Base: `53e44a5` (main after PR #101). Runtime source fingerprint of the
+executed harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
+No source module under `src/` changed; the addition is the
+[two-wing Bell test](../examples/quantum/bell_chsh.md) harness and template,
+its acceptance test, a check-scope entry and index updates.
+
+The harness ran sixteen exact and 400 seeded headless nine-tick worlds under
+the unchanged `local-quantum-events-v2` program. Recorded correlations were
+`3/5, 3/5, 4/5, -4/5` and CHSH `14/5`, equal to the exact rational prediction
+computed before the runs; Alice's weights were `[4, 4]` for every Bob setting
+and Bob's marginal `1/2` for every Alice setting; the seeded coincidence
+estimate was `74/25`; the dephased control gave `6/5`. Every run reported
+conserved totals, two decisions at tick 8 nine Links apart, and classical
+outcome codes equal to the recorded quantum outcomes.
+
+```sh
+python tools/check.py --base origin/main
+PYTHONPATH=src python examples/quantum/bell_chsh.py --output artifacts/bell-chsh --trials 100
+```
+
+The affected gate passed: **219 passed, two visual-only skipped**, including
+check-scope, configuration validation, repository navigation, language and
+hygiene checks. Ruff and formatting passed. Python 3.14.0rc2 on Linux. This is
+an exact model calculation with simulated tickets, not a laboratory Bell test.
 
 ## Null notices and field-dependent phase - 2026-09-14
 
@@ -2175,3 +2201,28 @@ The bounded prepared-table/cache design is unchanged; the new metadata remains
 fixed by configuration. The explicit delayed-owner and response-sampling limits
 remain documented in the candidate contract. The configured momentum-to-advance
 relation is not a derived de Broglie law.
+
+## Bell test on the phased-ray field - 2026-09-14
+
+Base: `2e50880` on `main`. Configuration only: no source module changed. The
+new probe `examples/kerengonen-bell/run_experiments.py` runs the CHSH form of
+Bell's test on `kerengonen-ray-field-v1` with the four settings and the
+combination of the quantum owner's two-wing experiment, read as phases on a
+360-step circle (0, 90, 53 and 307 degrees).
+
+| Check | Result |
+| --- | --- |
+| Share rule, 288 worlds, hidden phase on a five-step grid | `S = 826177/589824 = 1.4007`, equal in every correlation to the local model `mean cos(phase - a) cos(phase - b)` computed from the cosine table independently of the update code |
+| Lottery rule, single quanta, 96 worlds, 2232 pairs per setting | `S = 397/279 = 1.423`, consistent with 1.40 within the counting spread of about 0.04 |
+| Plain ray field, same worlds without the key | every outcome +1, `S = 2` exactly |
+| Quantum owner, same settings (two-wing Bell experiment) | `S = 14/5` |
+| Closure | every world's quanta in records, in flight and escaped equal the initial stock; the audited world passes the local conservation audit with 21504 source and 21504 lamp quanta absorbed at each analyzer |
+| New tests | `tests/test_kerengonen_bell.py`: five cases, 7.3 seconds |
+| Affected gate against `origin/main`, including the merged two-wing Bell test, gallery and isotropy probe | 339 passed, four visual-only skipped, in 62 seconds; ruff lint and format passed |
+
+Runtime source SHA-256
+`f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`, Python
+3.14.0rc2, headless; the harness took 4 minutes 14 seconds. The classical
+value is the model's prediction, one half of the quantum owner's correlation
+at every setting pair, and not a loss of visibility. No physical constant or
+species is identified.
