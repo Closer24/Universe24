@@ -200,7 +200,19 @@ identities; the option is rejected without the causal model; in the two-arm
 world the source emits 25 from tick 2 after an arm null at tick 1, the next
 gate emits 9 and 16, all scales reach 625/81 after the second null, and an
 output null at tick 7 reaches the source at tick 9 with scale 625/337.
-The default profile without the option is unchanged.
+The default profile without the option is unchanged. Crossing nulls: the
+correction of a 256/625 null after a delivered 625/481 is 19721/15625 and
+completes 625/481 x 625/369 to 25/9, two corrections telescope to one, a
+weight that would reach one gives none, and a factor below one or a weight
+above one is rejected; notice packets carry an optional (tick, position) key
+that requires both parts; in the crossing world both probes null at tick 4
+with owner weights [481, 144] and [225, 256], D corrects itself to 25/9 one
+tick later while M holds 390625/177489, and every Node holds 25/9 at tick 7
+with one correction, while the sequential variants reach 25/9 with none; at
+the Node level a null with the weight law keeps the record (4, 16/25, 1), an
+earlier-ordered notice produces one correction in the correction bank under
+the Node's own key, a later-ordered one produces none, a null without the
+weight law keeps no record, and more than six queued corrections are rejected.
 
 `test_field_phase.py` owns the opt-in
 [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase):

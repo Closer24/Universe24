@@ -6,7 +6,8 @@ from typing import TYPE_CHECKING
 
 from .disturbance_state import Address3, CostMeter, OperationCosts, bounded
 from .integer import checked_work
-from .source_envelope_state import EnvelopeAmplitude, EnvelopeScale
+from .source_envelope_state import EnvelopeAmplitude, EnvelopeScale, NullRecord
+from .state import reduced_ratio
 
 if TYPE_CHECKING:
     from .node_services import NodeEvents
@@ -16,8 +17,14 @@ EnvelopePlanner = Callable[
     [EnvelopeMatrix, tuple[EnvelopeAmplitude, ...], int, CostMeter], EnvelopeAmplitude
 ]
 NullFactor = Callable[[EnvelopeAmplitude, EnvelopeScale, CostMeter], tuple[int, int] | None]
-OUTPUT_SLOTS = 18
+WeightOf = Callable[[EnvelopeAmplitude, CostMeter], tuple[int, int]]
+NullCorrection = Callable[
+    [NullRecord, tuple[int, int], CostMeter], tuple[tuple[int, int], tuple[int, int]] | None
+]
+# Six amplitude, six terminal, six null-notice and six correction Port slots.
+OUTPUT_SLOTS = 24
 NOTICE_BANK = 6
+CORRECTION_QUEUE = 6
 
 
 def _nonnegative(value: int, name: str) -> int:
@@ -71,6 +78,8 @@ class EnvelopePacket:
     cause_id: int | None = None
     scale: tuple[int, int] | None = None
     notice_id: int = -1
+    null_tick: int = -1
+    null_origin: Address3 | None = None
 
     def __post_init__(self) -> None:
         _nonnegative(self.arrival_tick, "source arrival tick")
@@ -100,10 +109,25 @@ class EnvelopePacket:
                 or bounded(self.scale[0]) < self.scale[1]
             ):
                 raise ValueError("a null notice factor must be a rational of at least one")
+        if self.null_origin is None:
+            if self.null_tick != -1:
+                raise ValueError("a null ordering key requires the deciding Node's position")
+        else:
+            if self.scale is None or bounded(self.null_tick) < 0:
+                raise ValueError("a null ordering key belongs to a notice with a null tick")
+            if type(self.null_origin) is not tuple or len(self.null_origin) != 3:
+                raise ValueError("a null ordering key requires three coordinates")
+            for coordinate in self.null_origin:
+                _nonnegative(coordinate, "null ordering coordinate")
 
     @property
     def is_notice(self) -> bool:
         return self.scale is not None
+
+    @property
+    def order_key(self) -> tuple[int, Address3] | None:
+        """The (tick, position) of the null this notice reports, if it carries one."""
+        return None if self.null_origin is None else (self.null_tick, self.null_origin)
 
 
 @dataclass(frozen=True, slots=True)
@@ -134,6 +158,22 @@ class PendingEnvelopeScale:
     notice_id: int
     port: int
     cause_id: int | None
+    null_tick: int = -1
+    null_origin: Address3 | None = None
+
+    @property
+    def order_key(self) -> tuple[int, Address3] | None:
+        return None if self.null_origin is None else (self.null_tick, self.null_origin)
+
+
+@dataclass(frozen=True, slots=True)
+class PendingEnvelopeCorrection:
+    """One computed correction of this Node's own null factor, waiting for free Ports."""
+
+    numerator: int
+    denominator: int
+    notice_id: int
+    cause_id: int | None
 
 
 @dataclass(slots=True)
@@ -153,6 +193,9 @@ class SourceEnvelopeNode:
     scale: EnvelopeScale = EnvelopeScale()
     pending_scales: tuple[PendingEnvelopeScale | None, ...] = (None,) * 6
     applied_notices: tuple[int, ...] = (-1,) * NOTICE_BANK
+    null_record: NullRecord | None = None
+    pending_corrections: tuple[PendingEnvelopeCorrection, ...] = ()
+    corrections: int = 0
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -170,7 +213,7 @@ class SourceEnvelopeNode:
         if not self.source_id and (self.amplitude.real or self.amplitude.imag):
             raise ValueError("an unactivated source Node must retain vacuum")
         if type(self.output) is not tuple or len(self.output) != OUTPUT_SLOTS:
-            raise ValueError("source output bank requires eighteen fixed slots")
+            raise ValueError("source output bank requires twenty-four fixed slots")
         if any(packet is not None and type(packet) is not EnvelopePacket for packet in self.output):
             raise TypeError("source output bank accepts only immutable packets")
         if self.cause_id is not None:
@@ -181,6 +224,14 @@ class SourceEnvelopeNode:
             raise ValueError("source Node holds one pending notice per Port")
         if type(self.applied_notices) is not tuple or len(self.applied_notices) != NOTICE_BANK:
             raise ValueError("source Node retains a fixed bank of applied notices")
+        if self.null_record is not None and type(self.null_record) is not NullRecord:
+            raise TypeError("source Node retains at most one immutable null record")
+        if (
+            type(self.pending_corrections) is not tuple
+            or len(self.pending_corrections) > CORRECTION_QUEUE
+        ):
+            raise ValueError("source Node queues at most six pending corrections")
+        _nonnegative(self.corrections, "source correction count")
 
     def _identity(self, source_id: int) -> None:
         _nonnegative(source_id, "source identity")
@@ -228,7 +279,7 @@ class SourceEnvelopeNode:
             raise ValueError("source Links require positive transit time")
         arrival = _future(tick, send_delay, link_ticks)
         if len(self.output) != OUTPUT_SLOTS:
-            raise ValueError("source output bank requires eighteen fixed slots")
+            raise ValueError("source output bank requires twenty-four fixed slots")
         updated = list(self.output)
         for port in ports:
             if updated[6 + port] is not None:
@@ -248,16 +299,22 @@ class SourceEnvelopeNode:
         factor: tuple[int, int],
         notice_id: int,
         cause_id: int | None,
+        *,
+        base: int = 12,
+        null_tick: int = -1,
+        null_origin: Address3 | None = None,
     ) -> tuple[EnvelopePacket | None, ...]:
         _ports(ports)
         if bounded(link_ticks) < 1:
             raise ValueError("source Links require positive transit time")
+        if base not in (12, 18):
+            raise ValueError("source notices leave through the notice or correction bank")
         arrival = _future(tick, send_delay, link_ticks)
         updated = list(self.output)
         for port in ports:
-            if updated[12 + port] is not None:
+            if updated[base + port] is not None:
                 raise OverflowError("source notice output Port is occupied")
-            updated[12 + port] = EnvelopePacket(
+            updated[base + port] = EnvelopePacket(
                 arrival,
                 self.position,
                 port,
@@ -266,6 +323,8 @@ class SourceEnvelopeNode:
                 cause_id=cause_id,
                 scale=factor,
                 notice_id=notice_id,
+                null_tick=null_tick,
+                null_origin=null_origin,
             )
         return tuple(updated)
 
@@ -276,8 +335,9 @@ class SourceEnvelopeNode:
 
     def _apply_factor(self, numerator: int, denominator: int, notice_id: int) -> None:
         old = self.scale
-        top = checked_work(old.numerator * numerator)
-        bottom = checked_work(old.denominator * denominator)
+        top, bottom = reduced_ratio(
+            checked_work(old.numerator * numerator), checked_work(old.denominator * denominator)
+        )
         self.scale = EnvelopeScale(bounded(top), bounded(bottom))
         self.applied_notices = (*self.applied_notices[1:], notice_id)
 
@@ -388,6 +448,8 @@ class SourceEnvelopeNode:
                 packet.notice_id,
                 packet.port ^ 1,
                 cause,
+                packet.null_tick,
+                packet.null_origin,
             )
             self.pending_scales = tuple(slots)
         elif packet.amplitude is None:
@@ -407,11 +469,15 @@ class SourceEnvelopeNode:
         send_delay: int,
         link_ticks: int,
         events: NodeEvents,
+        correction: NullCorrection | None = None,
     ) -> bool:
         """Commit only frozen local and delivered inputs, with terminal priority."""
         stopped = self._complete_stop(tick, costs, neighbor_ports, send_delay, link_ticks, events)
         stopped = (
-            self._complete_scales(tick, costs, neighbor_ports, send_delay, link_ticks, events) or stopped
+            self._complete_scales(
+                tick, costs, neighbor_ports, send_delay, link_ticks, events, correction
+            )
+            or stopped
         )
         pending = self.pending_gate
         if pending is None or pending.ready_tick > tick:
@@ -499,9 +565,18 @@ class SourceEnvelopeNode:
         send_delay: int,
         link_ticks: int,
         events: NodeEvents,
+        correction: NullCorrection | None = None,
     ) -> bool:
-        """Apply delivered null factors after the local control delay, then forward them."""
-        changed = False
+        """Apply delivered null factors after the local control delay, then forward them.
+
+        A delivered notice ordered before this Node's own null, by (tick, position),
+        arrived after that null's factor was sent from a stale scale. With a
+        correction law the Node then computes the exact quotient from its own null
+        record, applies it, and queues it for its correction Ports under its own
+        null's ordering key. Ordering is total, so of two crossing nulls exactly
+        one corrects, and a chain of corrections telescopes to the conditional scale.
+        """
+        changed = self._flush_corrections(tick, costs, neighbor_ports, send_delay, link_ticks, events)
         for port, pending in enumerate(self.pending_scales):
             if pending is None or pending.ready_tick > tick:
                 continue
@@ -523,6 +598,8 @@ class SourceEnvelopeNode:
                 factor,
                 pending.notice_id,
                 pending.cause_id,
+                null_tick=pending.null_tick,
+                null_origin=pending.null_origin,
             )
             meter = CostMeter(costs)
             meter.charge("update", 3)
@@ -538,14 +615,112 @@ class SourceEnvelopeNode:
             )
             updated = tuple(
                 replace(packet, cause_id=cause)
-                if packet is not None and slot - 12 in forward
+                if packet is not None and 12 <= slot < 18 and slot - 12 in forward
                 else packet
                 for slot, packet in enumerate(updated)
             )
             self._apply_factor(pending.numerator, pending.denominator, pending.notice_id)
             self.output, self.cause_id = updated, cause
             events.publish(message)
+            self._correct_own_null(pending, factor, tick, costs, events, correction)
+        changed = (
+            self._flush_corrections(tick, costs, neighbor_ports, send_delay, link_ticks, events)
+            or changed
+        )
         return changed
+
+    def _correct_own_null(
+        self,
+        pending: PendingEnvelopeScale,
+        factor: tuple[int, int],
+        tick: int,
+        costs: OperationCosts,
+        events: NodeEvents,
+        correction: NullCorrection | None,
+    ) -> None:
+        record, key = self.null_record, pending.order_key
+        if correction is None or record is None or key is None or self.retired:
+            return
+        if key >= (record.tick, self.position):
+            return
+        meter = CostMeter(costs)
+        result = correction(record, factor, meter)
+        if result is None:
+            return
+        (numerator, denominator), (scale_numerator, scale_denominator) = result
+        self.null_record = replace(
+            record, scale_numerator=scale_numerator, scale_denominator=scale_denominator
+        )
+        if numerator == denominator:
+            return
+        if len(self.pending_corrections) >= CORRECTION_QUEUE:
+            raise OverflowError("source correction queue is full")
+        meter.charge("update", 3)
+        meter.charge("commit")
+        events.require_room(1)
+        corrected, message = self._record(
+            "source-scale-corrected",
+            tick,
+            events,
+            causes=() if pending.cause_id is None else (pending.cause_id,),
+            cost=meter.total,
+        )
+        if corrected is None:
+            raise ValueError("null corrections require a recording event owner")
+        self._apply_factor(numerator, denominator, corrected)
+        self.pending_corrections = (
+            *self.pending_corrections,
+            PendingEnvelopeCorrection(numerator, denominator, corrected, corrected),
+        )
+        self.corrections = bounded(checked_work(self.corrections + 1))
+        self.cause_id = corrected
+        events.publish(message)
+
+    def _flush_corrections(
+        self,
+        tick: int,
+        costs: OperationCosts,
+        neighbor_ports: tuple[int, ...],
+        send_delay: int,
+        link_ticks: int,
+        events: NodeEvents,
+    ) -> bool:
+        """Send the oldest queued correction through every Port once the bank is free."""
+        if not self.pending_corrections:
+            return False
+        if self.retired or self.null_record is None:
+            self.pending_corrections = ()
+            return True
+        if any(self.output[18 + port] is not None for port in neighbor_ports):
+            return False
+        first, *rest = self.pending_corrections
+        meter = CostMeter(costs)
+        meter.charge("send", len(neighbor_ports))
+        events.require_room(1)
+        cause, message = self._record(
+            "source-correction-sent",
+            tick,
+            events,
+            causes=() if first.cause_id is None else (first.cause_id,),
+            cost=meter.total,
+        )
+        self.output = self._notice_outputs(
+            self.source_id,
+            tick,
+            neighbor_ports,
+            send_delay,
+            link_ticks,
+            (first.numerator, first.denominator),
+            first.notice_id,
+            cause,
+            base=18,
+            null_tick=self.null_record.tick,
+            null_origin=self.position,
+        )
+        self.pending_corrections = tuple(rest)
+        self.cause_id = cause
+        events.publish(message)
+        return True
 
     def activate(self, origin_id: int, tick: int, eventcause: int | None) -> None:
         """Activate only the local source at an already committed contact."""
@@ -558,6 +733,7 @@ class SourceEnvelopeNode:
         generation = bounded(checked_work(self.generation + 1))
         self.source_id, self.amplitude = origin_id, EnvelopeAmplitude(1)
         self.generation, self.cause_id = generation, eventcause
+        self.null_record, self.pending_corrections = None, ()
 
     def check_activation(self, tick: int) -> None:
         """Preflight the local transition before the quantum owner commits."""
@@ -621,12 +797,16 @@ class SourceEnvelopeNode:
         link_ticks: int = 1,
         costs: OperationCosts | None = None,
         events: NodeEvents | None = None,
+        null_weight: WeightOf | None = None,
     ) -> None:
         """A local null result removes this amplitude; optional notices carry its factor.
 
         Without ``null_factor`` no remote normalization occurs. With it, the
         factor ``1 / (1 - p)`` computed from this Node's own scaled weight is
-        applied locally and sent through the given Ports as a null notice.
+        applied locally and sent through the given Ports as a null notice. With
+        ``null_weight`` the Node also keeps its own null record, the unscaled
+        weight and the scale it assumed, so that a notice ordered before this
+        null can later be answered with the exact correction.
         """
         self.check_null(tick)
         if cause is not None:
@@ -640,6 +820,11 @@ class SourceEnvelopeNode:
             if factor is not None and factor[0] == factor[1]:
                 # A vacuum null carries no information; no notice is sent.
                 factor = None
+        record: NullRecord | None = None
+        if factor is not None and null_weight is not None:
+            weight = null_weight(self.amplitude, meter)
+            record = NullRecord(tick, weight[0], weight[1], self.scale.numerator, self.scale.denominator)
+        self.null_record, self.pending_corrections = record, ()
         generation = bounded(checked_work(self.generation + 1))
         self.amplitude = EnvelopeAmplitude()
         self.generation, self.cause_id = generation, cause
@@ -665,7 +850,16 @@ class SourceEnvelopeNode:
         if notice is None:
             raise ValueError("null notices require a recording event owner")
         self.output = self._notice_outputs(
-            self.source_id, tick, neighbor_ports, send_delay, link_ticks, factor, notice, notice
+            self.source_id,
+            tick,
+            neighbor_ports,
+            send_delay,
+            link_ticks,
+            factor,
+            notice,
+            notice,
+            null_tick=tick if record is not None else -1,
+            null_origin=self.position if record is not None else None,
         )
         self._apply_factor(factor[0], factor[1], notice)
         self.cause_id = notice

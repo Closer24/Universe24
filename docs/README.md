@@ -54,6 +54,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Local moment-response candidate](../examples/quantum/local_moment_exchange.md) | Post-capture mean/variance exchange, finite detector lifecycle and slow ordinary transport |
 | [Quantum and classical coupling](QUANTUM_CLASSICAL_COUPLING.md) | Claims, non-claims, measured evidence and related work for the hybrid model, written for external review |
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
+| [Crossing null notices](../examples/quantum/crossing_nulls.md) | Two nulls before either notice arrives: the stale product, the local correction by the later Node and the exact conditional scale after Link transit |
 | [Two-wing Bell test](../examples/quantum/bell_chsh.md) | CHSH 14/5 from two separated lattice wings on the canonical runner, seeded coincidence counts, no-signalling marginals and a dephased control at 6/5 |
 | [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact, catalog electron/positron contact fields, and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges and masses |
 | [Isotropy probe](../examples/isotropy-probe/README.md) | Directional ratio of the outward and straight-ray fields against the isotropic expectation: exact path counts, counting spread and the heading cost of isotropy |
