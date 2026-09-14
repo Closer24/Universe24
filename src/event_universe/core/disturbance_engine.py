@@ -105,10 +105,12 @@ class DisturbanceEngine:
         self.faulted = False
         self._source_totals = [[0] * f.components for f in initial.fields]
         self._escaped_totals = [[0] * f.components for f in initial.fields]
-        self._coupled_types = selected_type_set(initial.spatial_couplings, initial.spatial_interactions)
+        # Absorption runs inside the spatial plan; only response rules need the coupler.
+        response_rules = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
+        self._coupled_types = selected_type_set(response_rules, initial.spatial_interactions)
         if initial.spatial_fields and spatial_planner is None:
             raise ValueError("spatial fields require an explicitly composed spatial planner")
-        if (initial.spatial_couplings or initial.spatial_interactions) and spatial_coupler is None:
+        if (response_rules or initial.spatial_interactions) and spatial_coupler is None:
             raise ValueError("spatial couplings require an explicitly composed response law")
         if initial.schema_version == 2 and initial.spatial_fields and spatial_decayer is None:
             raise ValueError("schema 2 spatial fields require an explicitly composed decay law")
@@ -212,6 +214,7 @@ class DisturbanceEngine:
                 ()
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].incoming,
+                () if spatial is None or position not in spatial.nodes else spatial.nodes[position].rays,
             )
             for position in sorted(positions)
         )
@@ -226,7 +229,13 @@ class DisturbanceEngine:
         if spatial is not None:
             packets.extend(
                 InventoryPacket(
-                    "spatial", origin, slot, packet.port, packet.arrival_tick, spatial=packet.fields
+                    "spatial",
+                    origin,
+                    slot,
+                    packet.port,
+                    packet.arrival_tick,
+                    spatial=packet.fields,
+                    rays=packet.rays,
                 )
                 for origin, links in spatial.links.items()
                 for slot, packet in enumerate(links)

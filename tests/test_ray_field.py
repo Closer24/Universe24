@@ -324,3 +324,26 @@ def test_runner_records_the_ray_identity(tmp_path):
     assert metadata["spatial_transport"] == "straight-rays"
     assert metadata["conserved_at_every_completed_tick"]
     assert metadata["final_totals"]["radiation"] == [256]
+
+
+def test_rays_pass_through_a_node_whose_receiver_reacts_to_them():
+    raw = document(headings=[[1, 0, 0]], rays_per_tick=1, strength=6)
+    raw["seeds"].append({"position": [CENTER + 2, CENTER, CENTER], "type": "receiver"})
+    world = Simulation(parse_initial_state(raw))
+    for _ in range(6):
+        world.step()
+    # The receiver's reaction amends its departing momentum packet; the ray on that
+    # port must ride along unchanged and reach the next Nodes.
+    assert value(world := world, position=(CENTER + 3, CENTER, CENTER)) == (6,)
+    assert value(world, (CENTER + 5, CENTER, CENTER)) == (6,)
+    record = next(
+        r
+        for r in world.nodes[(CENTER + 2, CENTER, CENTER)].records
+        if r is not None and r.type_index == 1
+    )
+    assert world.record_values(record)["momentum"][0] > 0
+    assert world.totals()["radiation"] == (36,)
+
+
+def value(world, position):
+    return world.spatial_values(position)["radiation"]["value"]

@@ -126,7 +126,37 @@ one tick of emission, so the shell mean is `emission / (4R^2 + 2)`, while node
 values are anisotropic (geometric on axes, about `1/r` on body diagonals). The
 straight-ray candidate `isotropic-ray-field-v1` (`"transport": "ray"`) removes that
 anisotropy: rays carry their heading and phase, and the time-averaged flux per
-node follows solid angle. Mass coupling and attraction remain unaddressed.
+node follows solid angle. The [gravity probe](../examples/gravity-probe/README.md)
+composes existing rules only: an `exchange` coupling with amount `mass x flux / D`
+gives held bodies momentum toward the ray source in proportion to mass, and a
+moving body falls inward. The reaction stays in the local momentum field at the
+body's Node; no reaction reaches the source, and no gravitational constant is
+identified beyond the configured `1 / D`. The
+[particle interaction probes](../examples/particle-interactions/README.md) give
+all charged bodies one signed ray field with the local one-link `self_exclusion`
+rule: like charges repel head-on, opposite charges attract, neutral bodies
+cross, and a timed two-record conversion emits a proton with a recoiling core.
+Energy has no representation in the exchange rules, so kicks near a source are
+unbounded. The [conservation audit](LOCAL_CONSERVATION.md) now measures rays as
+quanta, funded emission with recoil and the `absorb` coupling move energy and
+momentum only between records and rays; signed quanta with a mass-proportional
+absorbed share give attraction that the pulled body pays for, and the
+radiation-pressure probe runs
+with that audit closed. The
+[quantum-to-classical probes](../examples/quantum-classical/README.md) measure
+where the finite quantum rules meet these classical ones: a dephased walk is the
+classical random walk exactly, single ray quanta click whole and average to the
+inverse square, and repeated capture attempts follow the geometric decay law.
+The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+(`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
+coherence gates absorption and sampling, and two sources in phase give a fringe
+in Manhattan path difference; the plain ray field is unchanged without the key.
+Optional whole-ray lottery capture and carried-phase re-emission also run through
+the same local ray owners. Prepared immutable phase tables and explicit ray
+momentum inventory support ordinary headless runs. Delayed funded/absorbed carrier
+plans and phased/attenuating self-exclusion with response couplings are explicitly unsupported;
+see the candidate contract rather than treating a passing probe as complete quantum
+or gravitational dynamics.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

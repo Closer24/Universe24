@@ -44,6 +44,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     attenuate_rays,
+    coherent_stock,
     merge_rays,
     ray_stock,
     validate_rays,
@@ -245,7 +246,9 @@ class SpatialNode(SpatialNodeState):
             zip(services.initial.spatial_fields, self.states, strict=True)
         ):
             if definition.rays and index < len(self.rays) and self.rays[index]:
-                populations = (pack((ray_stock(self.rays[index]),)),) + state.populations[1:]
+                populations = (
+                    pack((coherent_stock(self.rays[index], definition),)),
+                ) + state.populations[1:]
                 result.append(replace(state, populations=populations))
             else:
                 result.append(state)
@@ -319,6 +322,12 @@ class SpatialNode(SpatialNodeState):
         active_field = any(
             any(unpack(payload)) for state in states for payload in state.populations
         ) or any(self.rays)
+        # An exhausted source still clears its last emission before a later move.
+        active_source = active_source or any(
+            any(any(unpack(row)) for row in record.emission_last)
+            for record in records
+            if record is not None
+        )
         if not active_source and not active_field and self.received_count == 0:
             self.states = tuple(
                 replace(state, delivered=(pack((0,) * len(state.populations[0])),) * 6, received_mask=0)
@@ -463,7 +472,10 @@ class SpatialNode(SpatialNodeState):
             if plan.emission_records:
                 raise ValueError("spatial emission cannot create disturbance records")
         else:
-            carrier.accept_emission(plan.emission_records)
+            carrier.accept_emission(
+                plan.emission_records,
+                initial=services.initial,
+            )
         self.states = plan.states
         if self.rays:
             # Every resident ray left on this cycle along its own line.
@@ -484,6 +496,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         notifications: list[dict[str, object]] = []
         cause = self._event(
             "spatial_cycle",
@@ -654,17 +668,31 @@ class SpatialNode(SpatialNodeState):
         )
 
     def packets(
-        self, tick: int, outgoing: tuple[SpatialBundle, ...], services: SpatialServices
+        self,
+        tick: int,
+        outgoing: tuple[SpatialBundle, ...],
+        services: SpatialServices,
+        rays: tuple[tuple[Rays, ...], ...] = (),
     ) -> tuple[SpatialPacket | None, ...]:
         if len(outgoing) != 6:
             raise ValueError("spatial output requires exactly six bounded ports")
         arrival = bounded(checked_work(tick + services.initial.link_ticks))
-        return tuple(
-            SpatialPacket(arrival, self.position, port, bundle)
-            if any(any(unpack(payload)) for field in bundle for payload in field)
-            else None
-            for port, bundle in enumerate(outgoing)
-        )
+        result: list[SpatialPacket | None] = []
+        for port, bundle in enumerate(outgoing):
+            port_rays = rays[port] if rays else ()
+            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
+                result.append(
+                    SpatialPacket(
+                        arrival,
+                        self.position,
+                        port,
+                        bundle,
+                        rays=port_rays if any(port_rays) else (),
+                    )
+                )
+            else:
+                result.append(None)
+        return tuple(result)
 
     def node_states(self, plan: SpatialPlan, services: SpatialServices) -> tuple[SpatialState, ...]:
         """Merge completed later inputs only after the frozen transformation."""
@@ -711,6 +739,8 @@ class SpatialNode(SpatialNodeState):
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
         services.accounting.record_transformations(plan.rule_delta)
+        if plan.transfer_delta:
+            services.accounting.record_reactions(plan.transfer_delta)
         services.accounting.record_reactions(reaction)
 
     def validate_guards(
@@ -734,7 +764,11 @@ class SpatialNode(SpatialNodeState):
             return ReactionCommit(states, phases, None)
         # Only this instant's departure buffers are still locally appendable.
         # Packets from an earlier departure are immutable while in transit.
-        old_links = self.output.packets if plan is None else self.packets(tick, plan.outgoing, services)
+        old_links = (
+            self.output.packets
+            if plan is None
+            else self.packets(tick, plan.outgoing, services, plan.rays)
+        )
         arrival = bounded(tick + services.initial.link_ticks)
         if any(packet is not None and packet.arrival_tick != arrival for packet in old_links):
             raise ValueError("reaction cannot alter a spatial packet already in transit")
@@ -761,9 +795,11 @@ class SpatialNode(SpatialNodeState):
                     combined.append(payload)
                 merged.append(tuple(combined))
             values = tuple(merged)
+            # Rays already leaving on this port are untouched by the field reaction.
+            rays = () if old is None else old.rays
             links.append(
-                SpatialPacket(arrival, self.position, port, values)
-                if any(any(unpack(payload)) for field in values for payload in field)
+                SpatialPacket(arrival, self.position, port, values, rays=rays)
+                if any(any(unpack(payload)) for field in values for payload in field) or any(rays)
                 else None
             )
         return ReactionCommit(states, phases, tuple(links))

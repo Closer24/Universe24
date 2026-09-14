@@ -1,6 +1,7 @@
 """Bounded local field exchange and exact lattice rotations with opposite reaction."""
 
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
 
 from event_universe.core.coupling_selectors import matches_type
 from event_universe.core.disturbance_state import (
@@ -18,15 +19,18 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work, dot_product, signed_divrem, subtract_components
 from event_universe.core.spatial_state import (
+    EmissionDefinition,
     FieldInteractionGuard,
     SpatialCouplingDefinition,
     SpatialCouplingResult,
     SpatialFieldDefinition,
     SpatialState,
+    advance_ray,
     zero_spatial_state,
 )
 
 from .disturbances import evaluate
+from .rays import emit_rays
 from .spatial import add_populations, emission_amount, emit, split_outward
 
 
@@ -232,6 +236,51 @@ class SpatialCouplingLaw:
     definitions: tuple[SpatialCouplingDefinition, ...]
     costs: OperationCosts
     spatial_definitions: tuple[SpatialFieldDefinition, ...] = ()
+    emissions: tuple[EmissionDefinition, ...] = dataclass_field(default=(), kw_only=True)
+
+    def _without_own_rays(
+        self, record: DisturbanceRecord, sample: Values, fluxes: Values, meter: CostMeter
+    ) -> tuple[Values, Values]:
+        """Subtract the record's own one-link-old rays from the local sample it reads.
+
+        Uses only the record's bookkeeping: the amount each rule emitted on the cycle
+        it departed, its heading cursor and the port it left through. The rays whose
+        first step took that port reached this Node together with the record. Work is
+        bounded by rays_per_tick; no ray identity and no remote state is read.
+        """
+        if not record.emission_departed or record.channel_code < 2 or not fluxes:
+            return sample, fluxes
+        port = record.channel_code - 2
+        sample_list, flux_list = list(sample), list(fluxes)
+        changed = False
+        for rule_index, rule in enumerate(self.emissions):
+            definition = self.spatial_definitions[rule.spatial_field]
+            if not definition.self_exclusion or not matches_type(rule, record.type_index):
+                continue
+            if rule_index >= len(record.emission_departed):
+                continue
+            amount, cursor, phase = unpack(record.emission_departed[rule_index])
+            if not amount:
+                continue
+            rays, _ = emit_rays(amount, cursor, definition, meter, phase)
+            own = 0
+            for ray in rays:
+                first_port, _ = advance_ray(ray, definition.headings[ray.heading])
+                meter.charge("evaluate")
+                if first_port == port:
+                    own = checked_work(own + ray.amount)
+            if not own:
+                continue
+            axis, sign = port // 2, (1 if port % 2 == 0 else -1)
+            flux = list(unpack(flux_list[definition.field]))
+            flux[axis] = checked_work(flux[axis] - sign * own)
+            flux_list[definition.field] = pack(tuple(flux))
+            value = list(unpack(sample_list[definition.field]))
+            value[0] = checked_work(value[0] - own)
+            sample_list[definition.field] = pack(tuple(value))
+            meter.charge("update", 2)
+            changed = True
+        return (tuple(sample_list), tuple(flux_list)) if changed else (sample, fluxes)
 
     def sample(self, states: tuple[SpatialState, ...]) -> Values:
         return sample_values(states, self.spatial_definitions, self.fields)
@@ -392,7 +441,10 @@ class SpatialCouplingLaw:
                     meter.charge("read", field.components)
                     if not any(unpack(remaining[index])):
                         continue
-                request = evaluate(definition.expression, record.values, sample, meter, fluxes)
+                record_sample, record_fluxes = self._without_own_rays(record, sample, fluxes, meter)
+                request = evaluate(
+                    definition.expression, record.values, record_sample, meter, record_fluxes
+                )
                 before = unpack(record.values[definition.field])
                 if definition.mode == "rotation":
                     after, residuals[index] = _rotate(
