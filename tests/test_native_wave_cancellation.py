@@ -7,8 +7,8 @@ from event_universe.initialization import parse_initial_state
 from event_universe.integration.event_runtime import NativeEventResolver
 from event_universe.quantum.event_rules import LocalInstrument
 
+from .support.quantum import matrix, probability
 from .test_native_wave_origins import configuration
-from .test_quantum_event_network import matrix, probability
 
 IDENTITY = [[1, 0], [0, 1]]
 FLIP = [[0, 1], [1, 0]]

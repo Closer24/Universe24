@@ -18,7 +18,7 @@ from event_universe.diagnostics.node_contract import node_state_violations
 from event_universe.fields.source_envelope import local_output
 from event_universe.runner import run_initialization
 
-from .test_localized_quantum_contact import (
+from .support.contact import (
     INVERSE,
     ROTATION,
     configuration,
@@ -26,7 +26,8 @@ from .test_localized_quantum_contact import (
     step,
     world_for,
 )
-from .test_quantum_event_network import probability
+from .support.identity import normalize, observation, renamed_document, reorder_declarations
+from .support.quantum import probability
 
 SOURCE = (1, 1, 1)
 MIDDLE = (2, 1, 1)
@@ -145,6 +146,14 @@ def test_remote_capture_preserves_local_source_prefix_until_terminal_delivery(mo
     unmeasured, unmeasured_resolver = world_for(absent)
     measured_trace = source_trace(measured, monkeypatch)
     unmeasured_trace = source_trace(unmeasured, monkeypatch)
+
+    def local_costs(resolver):
+        return [
+            (event.tick, event.kind, event.model_cost)
+            for event in resolver.events.events
+            if event.owner == "source-envelope" and event.addresses == (SOURCE,)
+        ]
+
     for _ in range(4):
         step(measured, 1)
         step(unmeasured, 1)
@@ -152,6 +161,9 @@ def test_remote_capture_preserves_local_source_prefix_until_terminal_delivery(mo
             unmeasured_resolver.source_nodes()[SOURCE].amplitude
         )
         assert measured.spatial_values(SOURCE) == unmeasured.spatial_values(SOURCE)
+        assert local_costs(measured_resolver) == local_costs(unmeasured_resolver)
+        assert measured.nodes[SOURCE].delay_counts == unmeasured.nodes[SOURCE].delay_counts
+    assert any(cost > 0 for _, _, cost in local_costs(measured_resolver))
     assert localized(measured) == [(DETECTOR, 1)]
     assert localized(unmeasured) == []
     origin = measured_resolver.space.waves.names["charge_mode"]
@@ -474,22 +486,31 @@ def test_periodic_extent_two_uses_opposite_ports_in_both_gate_orders_on_every_ax
             assert all(node.retired for node in nodes.values())
 
 
-def test_generic_field_and_disturbance_labels_do_not_select_source_behavior():
+@pytest.mark.parametrize("change", ["rename", "reorder", "both"])
+def test_generic_field_and_disturbance_labels_do_not_select_source_behavior(change):
     raw = causal_configuration()
-    renamed = json.loads(
-        json.dumps(raw)
-        .replace('"charge"', '"inventory_alpha"')
-        .replace('"electric_signal"', '"ordinary_beta"')
-        .replace('"incoming_charge"', '"entity_alpha"')
-        .replace('"localized_charge"', '"entity_beta"')
-    )
-    world, _ = world_for(raw)
-    other, _ = world_for(renamed)
+    transformed, fields, types = renamed_document(raw)
+    if change == "reorder":
+        transformed, fields, types = deepcopy(raw), {}, {}
+    if change != "rename":
+        reorder_declarations(transformed)
+    events, other_events = [], []
+    world, resolver = world_for(raw, observer=events.append)
+    other, other_resolver = world_for(transformed, observer=other_events.append)
     for _ in range(6):
         world.step()
         other.step()
-        assert world.totals()["charge"] == other.totals()["inventory_alpha"] == (-1,)
-        assert world.source_totals()["electric_signal"] == other.source_totals()["ordinary_beta"]
+        assert world.totals()["charge"] == (-1,)
+        assert world.totals()["mass"] == (1,)
+        assert normalize(observation(world, events), {}, {}) == normalize(
+            observation(other, other_events), fields, types
+        )
+        assert [record.outcome for record in resolver.space.records] == [
+            record.outcome for record in other_resolver.space.records
+        ]
+    assert localized(world) == [(DETECTOR, 1)]
+    assert resolver.draws == other_resolver.draws == 1
+    assert world.source_totals()["electric_signal"][0] < 0
 
 
 def test_all_evolving_source_records_are_formula_free_with_injected_counterexample():

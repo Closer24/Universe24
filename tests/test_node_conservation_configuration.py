@@ -12,7 +12,7 @@ from event_universe.disturbance_api import Simulation
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
-from .test_disturbance_engine import document, field, kind
+from .support.disturbances import document, field, kind
 from .test_local_field_rules import document as spatial_document
 from .test_local_field_rules import local, operation, seed
 from .test_node_rule_contract import node_profile
