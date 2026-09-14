@@ -213,6 +213,9 @@ class DisturbanceEngine:
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].incoming,
                 () if spatial is None or position not in spatial.nodes else spatial.nodes[position].rays,
+                ()
+                if spatial is None or position not in spatial.nodes
+                else spatial.nodes[position].claims,
             )
             for position in sorted(positions)
         )

@@ -35,6 +35,9 @@ from .node_execution import (
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, port_count
 from .spatial_state import (
+    BOND_ORIGIN_MARK,
+    Claim,
+    Claims,
     FieldInteractionGuard,
     Rays,
     SpatialBundle,
@@ -46,7 +49,9 @@ from .spatial_state import (
     attenuate_rays,
     coherent_stock,
     merge_rays,
+    origin_bond,
     ray_stock,
+    validate_claims,
     validate_rays,
     zero_spatial_state,
 )
@@ -62,6 +67,8 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
+        tuple[Claims, ...],
+        int,
     ],
     SpatialPlan,
 ]
@@ -331,9 +338,11 @@ class SpatialNode(SpatialNodeState):
             for record in records
             for index, rule in enumerate(services.initial.emissions)
         )
-        active_field = any(
-            any(unpack(payload)) for state in states for payload in state.populations
-        ) or any(self.rays)
+        active_field = (
+            any(any(unpack(payload)) for state in states for payload in state.populations)
+            or any(self.rays)
+            or any(not claim.sent for field_claims in self.claims for claim in field_claims)
+        )
         # An exhausted source still clears its last emission before a later move.
         active_source = active_source or any(
             any(any(unpack(row)) for row in record.emission_last)
@@ -360,7 +369,9 @@ class SpatialNode(SpatialNodeState):
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
-        plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost, self.rays)
+        plan = yield SpatialPlanningInput(
+            states, records, self.received_count, node_cost, self.rays, self.claims, tick
+        )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
         validate_spatial_plan(services.initial, plan, len(records), records)
@@ -453,12 +464,38 @@ class SpatialNode(SpatialNodeState):
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
+        if plan.claims or plan.outgoing_claims:
+            # A claim opened here is rooted here: stamp this Node as its origin.
+            plan = replace(
+                plan,
+                claims=tuple(self._stamped(field_claims) for field_claims in plan.claims),
+                outgoing_claims=tuple(
+                    tuple(self._stamped(field_claims) for field_claims in port_claims)
+                    for port_claims in plan.outgoing_claims
+                ),
+            )
+        if plan.rays and any(definition.bonded for definition in services.initial.spatial_fields):
+            # A ray bonded to its origin carries this Node and tick from here on.
+            code = origin_bond(self.position, services.initial.shape, tick)
+            plan = replace(
+                plan,
+                rays=tuple(
+                    tuple(self._origin_bonded(field_rays, code) for field_rays in port_rays)
+                    for port_rays in plan.rays
+                ),
+                kept_rays=tuple(self._origin_bonded(field_rays, code) for field_rays in plan.kept_rays),
+            )
         packets: list[SpatialPacket | None] = [None] * 6
         # Field-phase-first packets complete their link inside the departure interval.
         arrival = bounded(tick + services.initial.link_ticks - int(services.initial.field_phase_first))
         for port, bundle in enumerate(plan.outgoing):
             port_rays = plan.rays[port] if plan.rays else ()
-            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
+            port_claims = plan.outgoing_claims[port] if plan.outgoing_claims else ()
+            if (
+                any(any(unpack(payload)) for field in bundle for payload in field)
+                or any(port_rays)
+                or any(port_claims)
+            ):
                 packets[port] = SpatialPacket(
                     arrival,
                     self.position,
@@ -466,6 +503,7 @@ class SpatialNode(SpatialNodeState):
                     bundle,
                     rays=port_rays if any(port_rays) else (),
                     phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
+                    claims=port_claims if any(port_claims) else (),
                 )
         # All physical calculations and validation precede the local commit.
         if services.balance_guard is not None:
@@ -493,8 +531,11 @@ class SpatialNode(SpatialNodeState):
             )
         self.states = plan.states
         if self.rays:
-            # Every resident ray left on this cycle along its own line.
-            self.rays = tuple(() for _ in self.rays)
+            # Every resident ray that was due left along its own line; on a
+            # Euclidean pace the rays not yet due stay.
+            self.rays = plan.kept_rays if plan.kept_rays else tuple(() for _ in self.rays)
+        if plan.claims:
+            self.claims = plan.claims
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -557,6 +598,16 @@ class SpatialNode(SpatialNodeState):
         self.output.publish(tuple(packets))
         for message in notifications:
             services.events.publish(message)
+
+    @staticmethod
+    def _origin_bonded(rays: Rays, code: int) -> Rays:
+        return tuple(replace(ray, bond=code) if ray.bond == BOND_ORIGIN_MARK else ray for ray in rays)
+
+    def _stamped(self, claims: Claims) -> Claims:
+        return tuple(
+            replace(claim, origin=self.position) if claim.origin == (-1, -1, -1) else claim
+            for claim in claims
+        )
 
     def cycle_causes(self, tick: int, services: SpatialServices, *, sampled: bool) -> tuple[int, ...]:
         """IDs of the exact frozen sample and current cost consumed by a carrier."""
@@ -704,6 +755,7 @@ class SpatialNode(SpatialNodeState):
         services: SpatialServices,
         rays: tuple[tuple[Rays, ...], ...] = (),
         outgoing_phases: tuple[SpatialBundle, ...] = (),
+        claims: tuple[tuple[Claims, ...], ...] = (),
     ) -> tuple[SpatialPacket | None, ...]:
         if len(outgoing) != 6:
             raise ValueError("spatial output requires exactly six bounded ports")
@@ -711,7 +763,12 @@ class SpatialNode(SpatialNodeState):
         result: list[SpatialPacket | None] = []
         for port, bundle in enumerate(outgoing):
             port_rays = rays[port] if rays else ()
-            if any(any(unpack(payload)) for field in bundle for payload in field) or any(port_rays):
+            port_claims = claims[port] if claims else ()
+            if (
+                any(any(unpack(payload)) for field in bundle for payload in field)
+                or any(port_rays)
+                or any(port_claims)
+            ):
                 result.append(
                     SpatialPacket(
                         arrival,
@@ -720,6 +777,7 @@ class SpatialNode(SpatialNodeState):
                         bundle,
                         rays=port_rays if any(port_rays) else (),
                         phases=outgoing_phases[port] if outgoing_phases else (),
+                        claims=port_claims if any(port_claims) else (),
                     )
                 )
             else:
@@ -1015,6 +1073,31 @@ class SpatialNode(SpatialNodeState):
                 )
                 resident_rays[index] = merge_rays(tuple(resident_rays[index]) + incoming_rays)
                 validate_rays(resident_rays[index], definition, field)
+        resident_claims = [list(field_claims) for field_claims in self.claims] or [
+            [] for _ in services.initial.spatial_fields
+        ]
+        for packet in arrivals:
+            for index, packet_claims in enumerate(packet.claims):
+                if not packet_claims:
+                    continue
+                definition = services.initial.spatial_fields[index]
+                if not definition.claims:
+                    raise ValueError("claims delivered to a field without claims")
+                for claim in packet_claims:
+                    # Adopt a train's claim, remembering the port it came from as the
+                    # way home. Where two claims for one train meet, the earlier one
+                    # wins, then the lower origin: a later root yields and points at
+                    # the winner. A full slot budget leaves a claim unknown here.
+                    adopted = Claim(claim.train, packet.port ^ 1, claim.since, 0, claim.origin)
+                    held = [i for i, h in enumerate(resident_claims[index]) if h.train == claim.train]
+                    if held:
+                        if adopted.priority < resident_claims[index][held[0]].priority:
+                            resident_claims[index][held[0]] = adopted
+                        continue
+                    if len(resident_claims[index]) >= definition.claim_slots:
+                        continue
+                    resident_claims[index].append(adopted)
+                validate_claims(tuple(resident_claims[index]), definition)
         localized = list(self.localized) or [
             pack((0,) * services.initial.fields[d.field].components)
             for d in services.initial.spatial_fields
@@ -1119,6 +1202,8 @@ class SpatialNode(SpatialNodeState):
         self.localized = tuple(localized)
         if any(definition.rays for definition in services.initial.spatial_fields):
             self.rays = tuple(tuple(rays) for rays in resident_rays)
+        if any(definition.claims for definition in services.initial.spatial_fields):
+            self.claims = tuple(tuple(field_claims) for field_claims in resident_claims)
         services.activity.mark(self.position, True)
         services.accounting.record_dissipation(tuple(tuple(values) for values in losses))
         if any(any(values) for values in deposited):

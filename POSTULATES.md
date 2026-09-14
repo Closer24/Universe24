@@ -189,8 +189,25 @@ Physical influence cannot skip nodes. It travels at most one neighboring node pe
 elementary step. This is the role of c: the maximum propagation speed of causal
 influence in the simulator. Oracle evaluation is not physical propagation.
 
+The bound is split in two, as the experiments split it. Energy, momentum,
+matter and every message that a record can control move at most one Node per
+step, without exception. The joint outcome of a bonded pair, two rays emitted
+together, is the one thing that does not: each ray carries the Node and tick
+of its birth through the lattice at link speed, and when either end is
+measured, the bond registry answers for both ends at once, at any distance (the
+[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
+That answer carries no energy, no momentum and no message, because each end
+alone sees an even coin whatever the other end does; it is the correlation
+Bell's test measures beyond the local bound, and nothing else. A world with
+no bonded field has no exception at all.
+
 A particle can also move at most one neighbor per step. The same movement law
 applies at all speeds; there are no separate low-speed and high-speed laws.
+
+A ray on the Euclidean pace waits at a Node for part of its journey so that
+every heading covers the same Euclidean distance per step. Waiting is slower,
+never faster: the bound holds for every heading, and the lattice metric is a
+configured choice, not a derivation.
 
 ## 5. Physical calculations use integers only
 
@@ -316,6 +333,33 @@ place for them is the question the candidate is meant to test. A ray's advance
 per link may come from its emitter's momentum, `|p| / D`, the de Broglie
 hypothesis: measured as a fringe period inverse to momentum, not derived.
 
+Three limits of the ray were tested rather than assumed. A single particle
+dissolved into rays lands where its wave is absorbed, spread over the screen;
+it cannot land whole at one Node, because each ray carries conserved stock at
+link speed and no local rule can retire the other rays when one is captured
+without a signal faster than the rays themselves, which postulate 4 forbids.
+Whole landing needs either inventory that a domain owns rather than rays
+carry, as the quantum layer keeps it, or matter rays slower than the causal
+speed with a retirement that travels at that speed. A mirror can reflect
+across a lattice axis or a lattice diagonal, and a fraction makes it partial;
+an arbitrary angle needs a heading map beyond a signed permutation. The
+fringe follows Manhattan path difference on the links metric and Euclidean
+path difference on the Euclidean pace: the metric is a configured choice
+under test, with every quantum still counted whole.
+
+The whole landing was then built by the second route, claim and gather: a
+matter wave slower than link speed, and a claim that spreads from the
+capturing Node at link speed, Node to Node, each Node remembering the port it
+came from. Rays of the claimed train that meet the claim turn homeward along
+those ports, and the capturing record takes them whole. The wave becomes one
+particle at one known place, but not at once: the rest arrives over the ticks
+the claim and the return take, and until it does the particle is a claim plus
+matter in transit, all counted. Where two captures race, the earlier one wins
+when their claims meet and the later keeps only what it took first. This is
+the hypothesis under test for postulate 12's open question: a local,
+causal, exactly counted collapse, whose measured signature is a landing that
+takes time.
+
 ## 12. Quantum behavior and entanglement remain open
 
 The physical core describes discrete fields and particles. The selected quantum
@@ -328,6 +372,31 @@ separate, explicitly selected historical contracts.
 
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
+
+The ray was put to Bell's test. Two rays from one Node share a hidden phase,
+each side's detector takes its ray with the coherence of that phase against a
+local reference (Malus's law on the Kerengonen coherence), and the
+[CHSH probe](examples/bell-chsh/README.md) measures the correlations. The
+result is what a local model must give: S near the value the two independent
+lotteries predict, below the local bound 2, and far from the quantum 2 sqrt 2.
+The ray explains the shared origin, the no-signaling and the collapse's
+timing; it cannot explain the correlations beyond the bound, and no local
+rule on this lattice can. Replacing the lottery by deterministic hidden
+variables (the `threshold` capture) raises S to exactly 2 and no further, as
+the theorem says. The excess is reached only by the bonded ray field, which
+takes the split of postulate 4: the pair's joint outcome is answered for both
+ends at once by the bond registry, with no energy, momentum or message in it,
+and S rises to the quantum value. The ray then carries everything physical at
+link speed and the bond carries the one thing the experiments say is not
+carried: the correlation. What remains open is what the registry is.
+
+The dark-matter question was put to the same rule. Gathering a gravity train
+to whoever catches a ray of it does focus the pull, but into the momentum of
+the part of the train the flood can reach: it falls slowly while the catch
+is partial and cancels when the catch is complete, and a rotation curve from
+it would rise, not stay flat. The plain ray gravity stays inverse square. The
+[gathered gravity probe](examples/gathered-gravity/README.md) records it: the
+lattice has no focusing that mimics unseen mass.
 
 Until these requirements have been tested for the proposed laws, do not claim that
 the simulator solves quantum collapse or entanglement consistency.

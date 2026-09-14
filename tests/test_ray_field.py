@@ -183,11 +183,12 @@ def test_emission_shares_amount_over_the_next_headings_and_cycles_the_cursor():
     )
     rays, cursor = emit_rays(5, 2, definition, meter())
     assert rays == (Ray(2, (0, 0, 0), 3), Ray(0, (0, 0, 0), 2)) and cursor == 1
-    # Edge case: an amount smaller than the ray count skips empty rays and keeps the sum.
+    # Edge case: an amount smaller than the ray count skips empty rays, keeps the sum,
+    # and moves the cursor on by the headings it filled, not the whole sweep.
     rays, cursor = emit_rays(1, 1, definition, meter())
-    assert rays == (Ray(1, (0, 0, 0), 1),) and cursor == 0
-    ports = forward_rays(rays, definition, meter())
-    assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0]
+    assert rays == (Ray(1, (0, 0, 0), 1),) and cursor == 2
+    ports, kept = forward_rays(rays, definition, meter())
+    assert [len(p) for p in ports] == [0, 0, 1, 0, 0, 0] and kept == ()
     assert merge_rays((Ray(1, (0, 0, 0), 1), Ray(1, (0, 0, 0), 2), Ray(1, (1, 0, 0), 1))) == (
         Ray(1, (0, 0, 0), 3),
         Ray(1, (1, 0, 0), 1),
@@ -347,3 +348,23 @@ def test_rays_pass_through_a_node_whose_receiver_reacts_to_them():
 
 def value(world, position):
     return world.spatial_values(position)["radiation"]["value"]
+
+
+def test_a_stock_below_the_sweep_count_takes_the_next_headings_in_turn():
+    definition = SpatialFieldDefinition(
+        0,
+        (0,),
+        transport="ray",
+        headings=((1, 0, 0), (0, 1, 0), (-1, 0, 0), (0, -1, 0)),
+        rays_per_tick=4,
+        ray_slots=8,
+    )
+    cursor, taken = 0, []
+    for _ in range(3):
+        rays, cursor = emit_rays(2, cursor, definition, meter())
+        taken.append(sorted(ray.heading for ray in rays))
+    # Two quanta over a four-heading sweep: headings 0 and 1, then 2 and 3, then 0 and 1.
+    assert taken == [[0, 1], [2, 3], [0, 1]]
+    # A stock that covers the sweep still advances by the whole count.
+    rays, cursor = emit_rays(5, 1, definition, meter())
+    assert sorted(ray.heading for ray in rays) == [0, 1, 2, 3] and cursor == 1

@@ -273,7 +273,7 @@ wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
 boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
-the shared field clock. Host work per Node is bounded by `ray_slots`.
+the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
 
 The [inverse-square probe](../examples/inverse-square/README.md) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
@@ -301,6 +301,15 @@ happens before forwarding and before this cycle's emission joins the residents,
 so a record never swallows its fresh rays; with `self_exclusion` the rays of its
 own last departure are left alone by their complete ray key. Absorbers act in
 slot order.
+
+A funded emission may carry a `"dissolve": {"after_ticks": N, "over_ticks": K}`
+schedule instead of an amount: the record emits nothing for its first `N`
+cycles, then the stock it held when the rule first saw it, divided over `K`
+cycles and never more than is left. The count and the initial stock are a
+record row (`dissolve_clocks`), so the schedule follows the record wherever it
+moves. A particle that pays itself out as rays this way is a matter wave in
+flight; the [matter-wave probe](../examples/matter-wave/README.md) lands one
+on a screen as the fringe of its momentum.
 
 Quanta are signed when the field is. A funded emission of a negative amount
 credits the emitter with what it emits, and the ray's momentum `amount x heading`
@@ -362,6 +371,18 @@ and the same seed with the same rays repeats the same clicks.
 Each absorption row uses its own field's configured seed. In lottery mode a
 winning negative ray is left whole when the absorber cannot pay its complete
 amount; only the share mode may take a smaller stock-limited amount.
+the ray when the ticket's draw (its square modulo the ticket modulus, so
+that two records that met the same rays do not draw a fixed distance apart)
+falls below the coherent share. At full coherence the two are identical; at
+partial coherence the lottery builds the fringe click by click, one whole
+quantum at a time, with the coherent share as its rate. The ticket state is a
+record row (`absorb_tickets`), never a global number, and the same seed with
+the same rays repeats the same clicks. An absorb rule may add
+`"capture_salt": k` to start its ticket at the seed plus `k`, so two
+detectors on one field draw their own sequences, two devices with two dice.
+The third choice, `"threshold"`, is the deterministic hidden-variable rule:
+the whole ray is taken when its coherent share reaches one half and left
+otherwise, so the outcome is fixed by the phases alone, with no ticket.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because
@@ -415,6 +436,124 @@ resident rays, in-flight rays, external injection and completed escape contribut
 `amount x heading` to that vector's read-only totals. No field name supplies a
 binding, and this accounting never repairs state or replaces the separate local
 energy/momentum audit.
+momentum, `|p| / D`, is the de Broglie rule: a faster beam has a shorter
+wavelength, and the [de Broglie probe](../examples/de-broglie/README.md)
+measures the fringe spacing it gives. A ray without its own advance uses the
+field's.
+
+A mirror is the same rule turned around. The absorbed row also keeps the
+heading of the largest share, and an emission with
+`"kerengonen_mirror": "x"` (or `"y"`, `"z"`) sends its whole amount back as
+one ray along the mirror image of that heading across the named axis, at the
+carried phase and advance when `"kerengonen_phase": "carried"` is set. A
+diagonal mirror, `"xy"`, `"xz"` or `"yz"`, swaps the two named components
+instead, so a ray along `+x` returns along `+y`. The heading sequence must
+contain every mirror image, the emission must name a `recoil_field` (the
+mirror takes the momentum it reverses), and the emitting type must absorb on
+the field. A mirror whose absorb rule carries a `fraction` is partial: it
+returns the fraction it takes and lets the rest pass. A lamp facing a mirror
+then holds a standing wave: the reading along the line repeats every
+`phase_steps / (2 x advance)` links, as the
+[mirror probe](../examples/kerengonen-mirror/README.md) measures.
+Without the key the field is the plain `isotropic-ray-field-v1`; a
+`kerengonen_phase`, `kerengonen_advance` or `kerengonen_mirror` on an emission
+requires the key. The runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
+measures the fringe on a line of absorbers.
+
+### Euclidean pace (`"metric": "euclidean"`)
+
+A ray field moves every ray one link per tick, so a wave front reaches the
+same Manhattan distance in every heading and the fringe of two sources follows
+Manhattan path difference. A ray field may instead set `"metric": "euclidean"`
+(identity `euclidean-ray-pace-v1` in the run metadata, beside the field's
+policy). Every heading then has a pace, the ratio of its Euclidean length to
+its Manhattan length scaled by 4096 and computed by integer square root; the
+slowest heading (the one nearest a body diagonal) hops every tick, and every
+other ray adds that slowest pace to a per-ray `wait` on every tick and hops
+only when the wait passes its own pace, carrying the remainder. A ray that
+waits stays resident at its Node, counted by the ledger, sampled by readers
+and open to absorption like any other, and its phase still advances by one
+step for the tick. No ray ever moves faster than one link per tick; the
+Euclidean metric only makes rays slower, so that every heading covers the same
+Euclidean distance per tick and the front is round to within one link. Rays
+merge only with equal wait. Two sources in phase then give a fringe in
+Euclidean path difference, and the
+[Euclidean pace probe](../examples/euclidean-pace/README.md) measures both.
+
+A ray field may also set `"pace": [n, d]` with `n <= d`: the fastest heading
+then hops `n` links every `d` ticks, on either metric, by the same wait. A
+pace is never faster than one link per tick; it exists so that a matter wave
+can be slower than the signals that chase it.
+
+A funded ray emission may also name `"heading": [x, y, z]`, one of the
+field's headings: every ray it emits leaves on that heading instead of
+sweeping the sequence, a directed emitter. It cannot be combined with a
+mirror, which chooses its heading from what it absorbed.
+
+### Claim and gather (`claim-gather-ray-field-v1`)
+
+A wave that is captured at one Node lands there whole, later. A ray field with
+`"claim": {"ticks": T, "slots": N}` (identity `claim-gather-ray-field-v1` in
+the run metadata) lets every ray carry a train: an emission with
+`"train_field": "<owned scalar>"` stamps its rays with the emitter's value of
+that field (a particle's label), and `"train_field": "carried"` stamps them
+with the train of the largest share the emitter last absorbed (a Huygens
+slit; it requires an absorb rule on the field and the record row
+`absorbed_trains`). Zero is no train: such rays are never gathered.
+
+An absorb rule with `"claim": true` opens a claim when the record takes any
+share of a train's ray: the Node keeps `Claim(train, parent, since, sent,
+origin)` with parent -1, the root. On its next cycle the Node passes the claim
+to every port but its parent, and a Node that receives one it does not hold
+adopts it with the arrival port as parent and passes it on in turn: a flood
+at link speed, one cycle per Node, that expires `T` ticks after `since`. A
+Node holds at most `N` claims; a claim it cannot hold is unknown there. Where
+two claims for one train meet, the earlier `since` wins, then the lower
+origin address, and the later root yields: it points at the winner and passes
+the winner's claim on, keeping the share it already took.
+
+Every free ray of a claimed train that a claiming Node meets, on arrival or
+after the claim arrives, becomes homing: it keeps its amount, heading, phase
+and train, is skipped by every ordinary absorb rule (an absorber between it
+and home does not stop it), and moves one link per tick along the claim's
+parent ports back to the root, ahead of any wave on a slower pace. At the
+root a record with a claiming rule takes every homing ray of its trains
+whole, amount to its field and amount x heading to its momentum field, with
+no coherence and no lottery: the claim owns the train. Rays merge only within
+one train and one direction of travel. Homing rays at a root without such a
+record, or of a train no claim here knows, wait where they are. The ledger
+counts homing rays like any other, the audit measures their amounts and
+headings, and nothing is created or lost at any step: the capture takes what
+the ray carried, and the rest arrives over the ticks the flood and the return
+take. The [claim and gather probe](../examples/claim-gather/README.md)
+measures an isotropic wave gathered by one screen and contested by two, and
+the double slit landing a whole particle at one screen Node with the
+probability of its wave.
+
+### Bonded rays (`bonded-ray-field-v1`)
+
+The one declared exception to the causal bound, split off in postulate 4. A
+Kerengonen ray field may add `"bond": {"seed": s}` (identity
+`bonded-ray-field-v1` in the run metadata); an emission with
+`"bond_field": "origin"` then bonds every ray it emits to its birth: the Node
+that emits it stamps the ray with the code of its own address and the tick,
+and the ray carries that origin, unchanged, until its next interaction, so
+everything born at one Node on one tick is one pair. (`"bond_field":
+"<owned scalar>"` bonds by the emitter's label instead.) An absorb rule with
+`"bond_setting": "<owned scalar>"` is a
+detector whose setting is that field's value in phase steps. When such a
+record meets a bonded ray it does not draw a ticket or read the coherence: it
+asks the bond registry, one object for the whole world seeded by `s`. The
+first question on a bond is answered by an even coin and remembered with its
+setting; the second, at another setting, is answered so that the two ends
+agree with probability `(1 - cos(difference)) / 2` from the fixed cosine
+table, the singlet's law. An answer of +1 takes the whole ray, -1 leaves it
+to walk on. The registry's second answer knows the first at once, at any
+distance; it moves no energy, no momentum and no message, since each end
+alone sees an even coin whatever the other end's setting. Rays merge only
+within one bond. The registry lives in one process: bonded worlds run on a
+single Node worker. The [Bell probe](../examples/bell-chsh/README.md) with
+`--capture bond` measures the quantum value of S with it.
 
 ## Finite completed-link decay
 
