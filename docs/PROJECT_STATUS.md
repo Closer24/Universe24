@@ -92,6 +92,14 @@ genericity skill and local retention setup.
 The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
 live specification reconciliation, entity coverage and exact source contracts.
 
+The [quantum and classical coupling summary](QUANTUM_CLASSICAL_COUPLING.md)
+states the hybrid hypothesis, its measured evidence and its non-claims for an
+external reader, with related work. Its [two-arm interference experiment](../examples/quantum/causal_interference.md)
+records exact phase-dependent capture weights, classical emission carrying the
+interference term, which-path decoherence by a held arm detector, and the 9/25
+retarded-source departure after a null result. No classical limit, field
+back-action or energy closure is established.
+
 The [finite quantum-register extension](QUANTUM_ENTITIES.md) adds unobserved
 channels, mixed conditional states, grouped outcomes, finite multilevel registers
 and quantum preparation profiles for the existing 46 catalog entries. Species
@@ -142,7 +150,8 @@ as implemented laws.
 Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
 [examples/relativity-probes](../examples/relativity-probes/README.md) couples the
 computation field's flux to momentum by configuration. The Newtonian velocity law
-appears exactly, the 1/b lensing law does not (axis-column far field), twin clocks
+appears exactly, the 1/b lensing law does not with the octant far field (axis
+columns; straight rays bring the b = 3/7 ratio from 18 to 5.6), twin clocks
 show no Lorentz dilation, and a localized quantum domain ignores the field's
 delay while a classical carrier on the same path is delayed. These are recorded
 findings of the generic engine, not implemented gravity or relativity.

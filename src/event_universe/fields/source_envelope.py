@@ -15,7 +15,11 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work, signed_divrem
-from event_universe.core.source_envelope_state import EnvelopeAmplitude, EnvelopeRemainder
+from event_universe.core.source_envelope_state import (
+    EnvelopeAmplitude,
+    EnvelopeRemainder,
+    EnvelopeScale,
+)
 from event_universe.core.state import bounded_gcd
 
 from .spatial import bounded_emission_amount
@@ -175,6 +179,50 @@ def squared_weight(value: EnvelopeAmplitude, meter: CostMeter) -> tuple[int, int
     )
 
 
+def scaled_weight(
+    amplitude: EnvelopeAmplitude, scale: EnvelopeScale | None, meter: CostMeter
+) -> tuple[int, int]:
+    """Local squared weight times the delivered null-notice scale, clipped at one.
+
+    The clip is explicit: notices from nulls that were decided before an
+    earlier notice reached the deciding Node can overshoot. The Node never
+    emits above its full configured strength.
+    """
+    weight_n, weight_d = squared_weight(amplitude, meter)
+    if scale is None or (scale.numerator == scale.denominator):
+        return weight_n, weight_d
+    if type(scale) is not EnvelopeScale:
+        raise TypeError("an immutable source weight scale is required")
+    meter.charge("evaluate", 3)
+    first = _gcd(weight_n, scale.denominator, meter)
+    second = _gcd(scale.numerator, weight_d, meter)
+    numerator, denominator = _ratio(
+        checked_work((weight_n // first) * (scale.numerator // second)),
+        checked_work((weight_d // second) * (scale.denominator // first)),
+        meter,
+    )
+    if numerator > denominator:
+        return 1, 1
+    return numerator, denominator
+
+
+def null_factor(
+    amplitude: EnvelopeAmplitude, scale: EnvelopeScale, meter: CostMeter
+) -> tuple[int, int] | None:
+    """The conditional renormalization factor 1 / (1 - p) from this Node's own weight.
+
+    ``p`` is the Node's scaled local weight before the null. A weight of one
+    admits no null; the caller then sends no notice. The factor is exact and
+    rational; it multiplies squared weights, so no square root is needed.
+    """
+    numerator, denominator = scaled_weight(amplitude, scale, meter)
+    remaining = checked_work(denominator - numerator)
+    if remaining <= 0:
+        return None
+    meter.charge("evaluate", 2)
+    return _ratio(denominator, remaining, meter)
+
+
 def weighted_emission(
     full_numerator: tuple[int, ...],
     full_denominator: int,
@@ -183,12 +231,14 @@ def weighted_emission(
     remaining: Payload,
     field: FieldDefinition,
     meter: CostMeter,
+    scale: EnvelopeScale | None = None,
 ) -> tuple[Payload, tuple[EnvelopeRemainder, ...], Payload]:
     """Emit full strength times local weight, preserving changing-denominator residue.
 
     The absolute finite allowance is consumed by the existing generic primitive.
     Exhaustion discards un-emitted demand, including the fractional remainder;
     clipped demand is not a debt. Returned values are a single immutable proposal.
+    An optional delivered scale multiplies the weight before emission.
     """
     if bounded(full_denominator) < 1:
         raise ValueError("full source denominator must be positive")
@@ -196,7 +246,7 @@ def weighted_emission(
         len(values) != field.components for values in (full_numerator, residuals, remaining)
     ):
         raise ValueError("weighted source component count differs from the field")
-    weight_n, weight_d = squared_weight(amplitude, meter)
+    weight_n, weight_d = scaled_weight(amplitude, scale, meter)
     quotients = []
     fractions = []
     for full, old in zip(full_numerator, residuals, strict=True):

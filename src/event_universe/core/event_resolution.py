@@ -1,6 +1,6 @@
 """Local extension protocol; the scheduler does not interpret domain payloads."""
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
@@ -65,13 +65,16 @@ class CommitResolver(Protocol):
     def inventory(self) -> Values: ...
 
 
+FieldValues = Callable[[Address3], dict[str, dict[str, object]]]
+
+
 @runtime_checkable
 class CausalSourceResolver(Protocol):
     """A local source owner, separate from quantum status and ordinary inventory."""
 
     def source_nodes(self) -> Mapping[Address3, EmittingEnvelopeNode]: ...
 
-    def start_sources(self, tick: int) -> None: ...
+    def start_sources(self, tick: int, values: FieldValues | None = None) -> None: ...
 
     def prepare_source(
         self, address: Address3, tick: int, states: tuple[SpatialState, ...], node_cost: int

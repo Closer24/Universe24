@@ -13,7 +13,7 @@ from event_universe.disturbance_api import Simulation
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.initialization import parse_initial_state
-from tests.test_disturbance_engine import document, kind
+from tests.support.disturbances import document, kind
 from tests.test_local_field_rules import ORIGIN, field, invariant, local, operation, seed, value
 from tests.test_local_field_rules import document as spatial_document
 from tests.test_node_rule_contract import indexed_document, node_profile

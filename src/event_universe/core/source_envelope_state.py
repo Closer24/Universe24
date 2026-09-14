@@ -31,3 +31,15 @@ class EnvelopeRemainder:
         bounded(self.numerator)
         if bounded(self.denominator) < 1 or abs(self.numerator) >= self.denominator:
             raise ValueError("source remainder must have magnitude below its positive denominator")
+
+
+@dataclass(frozen=True, slots=True)
+class EnvelopeScale:
+    """A positive rational weight multiplier of at least one, applied to squared weights."""
+
+    numerator: int = 1
+    denominator: int = 1
+
+    def __post_init__(self) -> None:
+        if bounded(self.denominator) < 1 or bounded(self.numerator) < self.denominator:
+            raise ValueError("source weight scale must be a rational of at least one")

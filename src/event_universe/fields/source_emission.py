@@ -13,7 +13,11 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.integer import checked_work
 from event_universe.core.source_emission import EnvelopeEmissionState, PendingEnvelopeEmission
-from event_universe.core.source_envelope_state import EnvelopeAmplitude, EnvelopeRemainder
+from event_universe.core.source_envelope_state import (
+    EnvelopeAmplitude,
+    EnvelopeRemainder,
+    EnvelopeScale,
+)
 from event_universe.core.spatial_state import (
     EmissionDefinition,
     SpatialBundle,
@@ -59,6 +63,7 @@ def prepare_emission(
     node_cost: int,
     source_id: int,
     cause_id: int | None,
+    scale: EnvelopeScale | None = None,
 ) -> PendingEnvelopeEmission:
     """Freeze one local source cycle; the caller supplies its commit clock."""
     meter = CostMeter(initial.operation_costs)
@@ -81,7 +86,14 @@ def prepare_emission(
             continue
         proposed = evaluate(rule.amount, record.values, record.values, meter, node_cost=node_cost)
         amount, residuals[index], remaining[index] = weighted_emission(
-            proposed, rule.denominator, amplitude, residuals[index], remaining[index], field, meter
+            proposed,
+            rule.denominator,
+            amplitude,
+            residuals[index],
+            remaining[index],
+            field,
+            meter,
+            scale,
         )
         emitted, phases[index] = emit(amount, phases[index], definition, field, meter)
         populations[rule.spatial_field] = add_populations(

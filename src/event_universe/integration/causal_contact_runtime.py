@@ -11,7 +11,7 @@ from event_universe.core.disturbance_state import (
     LocalPlan,
     bounded,
 )
-from event_universe.core.event_resolution import LocalContext, Planner
+from event_universe.core.event_resolution import FieldValues, LocalContext, Planner
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.integer import checked_work
 from event_universe.core.node_services import NodeEvents, cycle_timing
@@ -26,10 +26,10 @@ from event_universe.fields.source_emission import (
     initial_emission_state,
     prepare_emission,
 )
-from event_universe.fields.source_envelope import Matrix, local_output, output_cost
+from event_universe.fields.source_envelope import Matrix, local_output, null_factor, output_cost
 from event_universe.quantum import LocalUnitary
 
-from .contact_program import ContactDomain
+from .contact_program import ContactDomain, FieldPhase
 from .contact_runtime import ContactEventResolver
 from .event_program import Program
 
@@ -39,6 +39,8 @@ class CausalContactResolver(ContactEventResolver):
 
     def __init__(self, initial: InitialState, program: Program, events: CausalEventSpace) -> None:
         super().__init__(initial, program, events)
+        assert program.contacts is not None
+        self._null_notices = program.contacts.null_notices
         self._source_events = NodeEvents(events, None)
         self._source_law = SourceEmissionLaw(
             initial.fields, initial.spatial_fields, initial.emissions, initial.operation_costs
@@ -47,9 +49,14 @@ class CausalContactResolver(ContactEventResolver):
         self._domain_at: dict[Address3, ContactDomain] = {}
         self._ports_at: dict[Address3, tuple[int, ...]] = {}
         self._phase_gates: dict[Address3, tuple[EnvelopeGate | None, ...]] = {}
+        # Field-dependent phases: (address, phase) -> (definition, register, first matrix index).
+        self._field_gates: dict[tuple[Address3, int], tuple[FieldPhase, int, int]] = {}
+        # Chosen unitaries per (domain, epoch) for the quantum owner; two epochs retained.
+        self._field_choices: dict[tuple[str, int], dict[int, tuple[int, LocalUnitary]]] = {}
         matrices: list[Matrix] = []
         price = initial.operation_costs.price
         self._send_cost = bounded(2 * price("read") + price("update") + price("send"))
+        self._field_read_cost = bounded(price("read"))
         self._send_delay = cycle_timing(self._send_cost, initial.normal_budget, initial.link_ticks)[0]
         compute_cost = 0
         for domain in self.domains:
@@ -59,6 +66,27 @@ class CausalContactResolver(ContactEventResolver):
             }
             for phase, operations in enumerate(domain.phases):
                 for rule, registers in operations:
+                    if isinstance(rule, FieldPhase):
+                        field_address = self.space.config.addresses[registers[0]]
+                        first_index = len(matrices)
+                        for unitary in rule.matrices:
+                            matrix = tuple(
+                                tuple((v.real, v.imag) for v in row) for row in unitary.matrix
+                            )
+                            matrices.append(matrix)
+                            compute_cost = max(
+                                compute_cost,
+                                output_cost(matrix, initial.operation_costs)
+                                + price("receive")
+                                + price("read")
+                                + price("update")
+                                + price("commit"),
+                            )
+                        self._field_gates[(field_address, phase)] = (rule, registers[0], first_index)
+                        plans[field_address][phase] = EnvelopeGate(
+                            first_index + rule.max_exponent, 0, -1
+                        )
+                        continue
                     matrix = tuple(tuple((v.real, v.imag) for v in row) for row in rule.matrix)
                     index = len(matrices)
                     matrices.append(matrix)
@@ -120,7 +148,29 @@ class CausalContactResolver(ContactEventResolver):
         )
         return cycle_timing(cost, self.initial.normal_budget, self.initial.link_ticks)[0]
 
-    def start_sources(self, tick: int) -> None:
+    def _select_field_gate(
+        self,
+        address: Address3,
+        phase: int,
+        epoch: int,
+        gate: EnvelopeGate,
+        values: FieldValues | None,
+    ) -> tuple[EnvelopeGate, int]:
+        """Choose this epoch's one-mode phase from the Node's own field value now."""
+        definition, register, first = self._field_gates[(address, phase)]
+        if values is None:
+            raise ValueError("field phases require the spatial field owner")
+        readout = values(address)[definition.field_name]["value"]
+        value = readout[definition.component] if isinstance(readout, tuple) else 0
+        exponent = definition.exponent(int(value))
+        domain = self._domain_at[address].name
+        choices = self._field_choices.setdefault((domain, epoch), {})
+        choices[register] = (exponent, definition.unitary(exponent))
+        for key in [k for k in self._field_choices if k[0] == domain and k[1] < epoch - 1]:
+            del self._field_choices[key]
+        return EnvelopeGate(first + definition.max_exponent + exponent, 0, -1), self._field_read_cost
+
+    def start_sources(self, tick: int, values: FieldValues | None = None) -> None:
         if tick == self._source_started_tick:
             raise ValueError("source gate clock may start only once per tick")
         self._source_started_tick = tick
@@ -129,9 +179,13 @@ class CausalContactResolver(ContactEventResolver):
         epoch = tick // self._gate_period
         for address, node in self._source_nodes.items():
             phases = self._phase_gates[address]
-            gate = phases[epoch % len(phases)]
+            phase = epoch % len(phases)
+            gate = phases[phase]
             if gate is None:
                 continue
+            extra = 0
+            if (address, phase) in self._field_gates:
+                gate, extra = self._select_field_gate(address, phase, epoch, gate, values)
             # A one-mode phase waits for the same fixed phase boundary. It
             # carries no physical message and no received neighbor value.
             local_wait = self._compute_delay + (self.initial.link_ticks if gate.port < 0 else 0)
@@ -142,7 +196,7 @@ class CausalContactResolver(ContactEventResolver):
                 self._send_delay,
                 self.initial.link_ticks,
                 local_wait,
-                self._send_cost,
+                bounded(self._send_cost + extra),
                 self._source_events,
             )
 
@@ -193,7 +247,17 @@ class CausalContactResolver(ContactEventResolver):
         start = tick - self._gate_end
         if self._activation_ticks.get(domain.name, tick) > start:
             return ()
-        return domain.phases[(start // self._gate_period) % len(domain.phases)]
+        epoch = start // self._gate_period
+        operations = []
+        for rule, registers in domain.phases[epoch % len(domain.phases)]:
+            if isinstance(rule, FieldPhase):
+                chosen = self._field_choices.get((domain.name, epoch), {}).get(registers[0])
+                if chosen is None:
+                    raise ValueError("field phase was not selected at its schedule tick")
+                operations.append((chosen[1], registers))
+            else:
+                operations.append((rule, registers))
+        return tuple(operations)
 
     def begin_tick(self, tick: int) -> None:
         self._advance_sources(tick)
@@ -261,7 +325,16 @@ class CausalContactResolver(ContactEventResolver):
             )
             node.pending_emission = None
         elif not node.retired:
-            node.null(context.tick, event_id)
+            node.null(
+                context.tick,
+                event_id,
+                null_factor=null_factor if self._null_notices else None,
+                neighbor_ports=self._ports_at[context.address],
+                send_delay=0,
+                link_ticks=self.initial.link_ticks,
+                costs=self.initial.operation_costs,
+                events=self._source_events,
+            )
             node.pending_emission = None
         return outcome, event_id
 
@@ -282,6 +355,7 @@ class CausalContactResolver(ContactEventResolver):
                 node_cost,
                 node.source_id,
                 node.cause_id,
+                node.scale if self._null_notices else None,
             )
             delay, interval = cycle_timing(
                 prepared.cost, self.initial.normal_budget, self.initial.link_ticks
@@ -324,6 +398,13 @@ class CausalContactResolver(ContactEventResolver):
             **super().report(),
             "model": "causal-contact-fields-v1",
             "classical_field_source": "causal_local_envelope",
+            "null_notices": self._null_notices,
+            "field_phases": len(self._field_gates),
+            "field_phase_choices": [
+                {"domain": domain, "epoch": epoch, "register": register, "exponent": exponent}
+                for (domain, epoch), choices in sorted(self._field_choices.items())
+                for register, (exponent, _) in sorted(choices.items())
+            ],
             "source_gate_period": self._gate_period,
             "source_gate_commit_offset": self._gate_end,
             "source_envelopes": [
@@ -335,6 +416,7 @@ class CausalContactResolver(ContactEventResolver):
                     "terminal_ready_tick": None
                     if node.pending_stop is None
                     else node.pending_stop.ready_tick,
+                    "weight_scale": (node.scale.numerator, node.scale.denominator),
                 }
                 for address, node in self._source_nodes.items()
             ],

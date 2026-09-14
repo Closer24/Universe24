@@ -13,7 +13,7 @@ from event_universe.initialization import parse_initial_state
 from event_universe.integration.event_runtime import NativeEventResolver
 from event_universe.runner import run_initialization
 
-from .test_quantum_event_network import probability
+from .support.quantum import probability
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples/quantum/wave_origins.json"
 
@@ -106,7 +106,7 @@ def test_inactive_world_advances_at_capacity_without_dummy_requests():
     # exactly its two resident checks before reaching the finite audit bound.
     waves = resolver.space.waves
     origin = waves.names["probe"]
-    from .test_quantum_event_network import POSITION
+    from .support.quantum import POSITION
 
     resolver.space.interact(
         500, 2, POSITION, origins=(origin,), terminal_origins=(origin,), terminal_outcomes=(0,)

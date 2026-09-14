@@ -16,6 +16,9 @@ Read [the disturbance contract](docs/DISTURBANCES.md) before defining a run.
 Optional [native event programs](docs/NATIVE_QUANTUM_EVENTS.md) bind repeated
 local quantum decisions to that same engine and charge the executed mechanical
 path. They currently cannot be combined with spatial fields.
+For what the quantum and classical parts do and do not establish together,
+read [the coupling summary](docs/QUANTUM_CLASSICAL_COUPLING.md) and its
+[two-arm interference experiment](examples/quantum/causal_interference.md).
 
 For a complete authoring walkthrough, use the
 [simulation configuration Skill](skills/simulation-configuration/SKILL.md):
