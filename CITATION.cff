@@ -14,7 +14,7 @@ identifiers:
 authors:
   - family-names: Gonen
     given-names: Alon
-    email: logic24@gmail.com
+    email: alon@defounder.ai
 keywords:
   - event simulator
   - integer lattice
