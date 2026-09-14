@@ -88,7 +88,24 @@ source: every emitted quantum is accounted for.
 
 ### Capture: repeated attempts follow the geometric decay law
 
-CAPTURE_TABLE
+10,000 independent worlds of 16 ticks, seeds 1 to 10,000, four passes each.
+
+| Pass | Capture tick | Observed | Observed fraction | Geometric law |
+| --- | --- | --- | --- | --- |
+| 1 | 3 | 6,335 | 0.6335 | 16/25 = 0.6400 |
+| 2 | 7 | 2,383 | 0.2383 | 144/625 = 0.2304 |
+| 3 | 11 | 837 | 0.0837 | 1296/15625 = 0.0829 |
+| 4 | 15 | 280 | 0.0280 | 11664/390625 = 0.0299 |
+| none in 16 ticks | | 165 | 0.0165 | 6561/390625 = 0.0168 |
+
+Chi-square against the geometric law is 4.65 on four degrees of freedom. The
+mean pass of the captured worlds is 1.498; the law truncated at four passes
+gives 1.494. Charge stayed at -1 and mass at 1 at every tick of every world,
+through the transfer into the quantum domain and back: the quantum episode
+moves nothing the classical ledger counts. A single world is one capture at
+one tick, never a fraction of a charge; only the ensemble follows the law.
+An earlier ensemble of 2,000 worlds gave 0.633, 0.239, 0.094, 0.023 and 0.012,
+within its statistics.
 
 ## Conclusion
 
