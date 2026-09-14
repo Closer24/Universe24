@@ -51,6 +51,7 @@ RESOURCE_CONSUMERS = {
     "examples/quantum/bell_chsh_view.py": ("tests/test_bell_chsh.py",),
     "examples/gallery/particle_gallery.py": ("tests/test_particle_gallery.py",),
     "examples/gallery/lepton_reactions.json": ("tests/test_particle_gallery.py",),
+    "examples/isotropy-probe/run_experiments.py": ("tests/test_isotropy_probe.py",),
     "examples/particle-contracts/electron-positron.json": ("tests/test_particle_gallery.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
