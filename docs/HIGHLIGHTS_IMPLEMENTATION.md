@@ -664,7 +664,13 @@ treating its omissions as current gaps.
 Configuration-only probes in [examples/relativity-probes](../examples/relativity-probes/README.md)
 test what section 4.4's computational field yields when a mass emits it and
 bodies exchange momentum with its delivered flux (the sign is supplied, as for
-charge). Findings, each a branch result and not a law:
+charge). The supplied couplings and transport/phase policies produce finite
+attraction, velocity-scaling, lensing-like and delay observations. They do not
+derive Newtonian gravity, relativity or dark matter. The open-3D control remains
+pending. Forward replay and one configured collision restart are reproducible;
+they do not prove reversal of arbitrary state. Lorentz dilation, accelerated
+expansion and gravitating quantum matter have not emerged in these probes.
+Findings, each a branch result and not a law:
 
 - Under 4.4 and 7.2: the momentum coupling reproduces the Newtonian velocity law
   exactly (a body at c/2 deflects four times more than light at the same impact
@@ -704,6 +710,13 @@ charge). Findings, each a branch result and not a law:
   they darken (6176 → 5636, y = 10 from 552 to 211): the waits carry phase and
   the fringe shifts in whole steps — the gravitational-phase (COW) signature,
   present only when a waiting interval counts as phase.
+- Under 7 (postulates) and 4.7: the eight-tick seeded quantum example replays
+  the same exposed snapshots from its logged ticket or original seed. Earlier
+  snapshots are reached by executing forward from the original configuration.
+  The equal-mass collision example, restarted after 12 ticks with negated
+  momenta, returns the initial positions and reversed momenta after 12 more
+  ticks. This does not prove inversion of retained queues, counters or arbitrary
+  fields. Outward transport and truncated absorption have no tested inverse.
 - Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
   regardless of the local computation load, while a classical carrier on the
   same path is delayed 6 → 13 ticks. The quantum gate clock does not read the

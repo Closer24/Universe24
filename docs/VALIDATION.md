@@ -17,6 +17,18 @@ CI remain the merge requirements; their actual outcome is recorded in the PR.
 The global bond reference is preserved but cannot drive ordinary Simulation.
 The existing quantum owner and Q-ORACLE option are unchanged.
 
+Follow-up integration includes main `a686925`, the single-draw reference branch
+at `df9c350`, and the relativity probe branch at `280a43b`. The single-draw
+change remains isolated from ordinary Simulation. Replay now compares the
+actual exposed snapshots (hashes are display only), with assertion failures for
+mismatches and a changed-seed control. The eight-tick quantum replay and the
+12-tick equal-mass collision restart passed; this is no claim about inverting
+private queues or arbitrary evolution. The original full local and CI gates
+each found one obsolete unreduced-pace assertion (2,780 passed, 7 skipped).
+The corrected exact-ratio assertion retains physical trajectory and inventory
+checks; its 79-test affected gate passed. Final combined CI is recorded in
+[PR #117](https://github.com/Closer24/Universe24/pull/117).
+
 Runtime fingerprint for the measured candidate:
 `c297b049e409c84a56906ecf6267fcd4af10b2c9a556ba25c74818e669bfb1f7`.
 It hashes sorted `src/event_universe/**/*.py` paths and bytes, separated by NULs.

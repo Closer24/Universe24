@@ -38,8 +38,8 @@ class BondRegistry:
             raise ValueError("a bond must be a positive integer")
         self.questions += 1
         if bond not in self.first:
-            # The pair's one number: its upper half is this end's even coin, its
-            # lower half is kept for the other end.
+            # Retain one number for the pair. Its threshold selects the first
+            # answer; its remainder selects the second under the supplied table.
             self.state = next_ticket(self.state, (salt + bond) % TICKET_MODULUS)
             self.numbers += 1
             number = ticket_draw(self.state)
@@ -49,8 +49,8 @@ class BondRegistry:
         first_setting, first_outcome, number = self.first[bond]
         difference = (setting - first_setting) % self.phase_steps
         cosine = phase_cosines(self.phase_steps)[difference]
-        # The singlet: the two ends agree with probability (1 - cos) / 2, decided by
-        # the lower half of the same number, independent of the coin in its upper half.
+        # Compare the retained coordinate with the supplied singlet threshold.
+        # This deterministic finite remainder is not an independent random draw.
         rest = checked_work(2 * number) % TICKET_MODULUS
         agree = checked_work(rest * 2 * PHASE_COSINE_SCALE) < checked_work(
             (PHASE_COSINE_SCALE - cosine) * TICKET_MODULUS

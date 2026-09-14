@@ -252,14 +252,19 @@ Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
 Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
-Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
-[examples/relativity-probes](../examples/relativity-probes/README.md) couples the
-computation field's flux to momentum by configuration. The Newtonian velocity law
-appears exactly, the 1/b lensing law does not with the octant far field (axis
-columns; straight rays bring the b = 3/7 ratio from 18 to 5.6), twin clocks
-show no Lorentz dilation, and a localized quantum domain ignores the field's
-delay while a classical carrier on the same path is delayed. These are recorded
-findings of the generic engine, not implemented gravity or relativity.
+Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`
+([bottom line](../examples/relativity-probes/README.md#bottom-line-2026-09-14)):
+the supplied JSON couplings and declared transport/phase policies produce
+finite attraction, velocity-scaling, lensing-like and delay observations.
+These are configured candidates, not a derivation of Newtonian gravity or
+relativity. Forward replay matches the quantum example's exposed snapshots,
+and the equal-mass collision example returns positions and reversed momenta
+after restarting with negated momenta. Neither establishes reversal of arbitrary
+hidden state. The radius-independent loss observations remain inconclusive
+until the same-metric open-3D control is completed; they do not establish dark
+matter. Lorentz dilation, accelerated expansion and gravitating quantum matter
+have not emerged in these probes. `ray_delay` and `ray_phase_per_tick` are
+supplied engine rules, and physical collision laws are supplied in JSON.
 
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
