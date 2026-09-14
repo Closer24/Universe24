@@ -33,6 +33,17 @@ the two focused files then passed 71 tests after repair. No full-suite flag,
 simulator build or visualization was used. Versions: Python 3.14.7, pytest 9.1.1,
 Ruff 0.16.7 and mypy 2.3.1; Windows pytest used a fresh explicit base directory.
 
+Main advanced during publication to `d66b43eb193954a9a14a5a33deefd290d61ed547`
+with PR #102's shared-test builders and active local-contract coverage. Merge
+`2baa7c7` retains both the new upstream expectations and this branch's quantum
+and moment-response cases. Production source is byte-identical to the fingerprint
+above, so the actual experiment remains applicable. The integration gate,
+`python tools/check.py --base 304445d`, passed **646 tests** in 29.57 seconds;
+Ruff/format passed for 27 affected files. The final documentation and prior
+quantum-to-classical experiment regression had also passed 23 tests before this
+test-only integration. No failed check was bypassed, and no upstream production
+law changed.
+
 ## Quantum-to-classical claim investigation - 2026-09-14
 
 The [reproducible investigation](../examples/quantum/quantum_classical_check.md)
