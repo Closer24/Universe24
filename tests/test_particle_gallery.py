@@ -87,7 +87,7 @@ def test_reactions_record_annihilation_muon_chain_and_beta_decay(tmp_path):
     results = GALLERY.run_reactions(tmp_path / "gallery")
     annihilation = results["annihilation"]["summary"]
     assert annihilation["events"] == [{"tick": 5, "position": [7, 7, 1], "rule": "annihilation"}]
-    assert [r[1:3] for r in annihilation["final_records"]] == [["photon", 13], ["photon", 13]]
+    assert [list(r[1:3]) for r in annihilation["final_records"]] == [["photon", 13], ["photon", 13]]
     assert annihilation["final_totals"] == annihilation["initial_totals"]
     muon = results["muon_pair"]["summary"]
     assert [(e["tick"], e["rule"]) for e in muon["events"]] == [
