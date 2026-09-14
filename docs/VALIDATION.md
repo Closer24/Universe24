@@ -2544,3 +2544,27 @@ Runtime source SHA-256
 `48ea5e8b167319719a7f25edbd3cea66b69fe5f3d57e1575b55099084061b880`, Python
 3.14.0rc2, headless. The number is a hidden variable in Bell's sense, shared
 between the two ends of a pair; no end can read it, so nothing is signalled.
+
+## The bond as physics: a bounded, idempotent registry - 2026-09-14
+
+Base: `cd5e2df` on `main` (after PR #118), with `integrate/focus-and-ray-updates`
+merged. The bond registry drives ordinary Simulation again as the declared
+split of postulate 4, and answers the objections raised against it: it holds
+at most 4096 open pairs and releases a pair at its second answer; a question
+repeated by the same end with the same setting returns the same answer with
+no new number; the pair's one number is a fixed function of the seed and the
+birth code (two salted ticket steps with a square between them, so that
+consecutive birth codes draw independent numbers). Postulates 4 and 22 carry
+the bounded wording.
+
+| Check | Result |
+| --- | --- |
+| `tests/test_bonds.py` | 400 bonds: first answers 199, 187 and 185 of 400 positive on three seeds, quarter-turn agreements 208, 199 and 170; equal settings never agree, a half turn always; the same end asking again gets the same answer without a new number; the other end releases the pair; the 4097th open pair is refused |
+| `tests/test_ray_bell_chsh.py`, one seed | E = -0.6562, 0.8125, -0.6562, -0.6562, S = 2.7811, E(0, 0) = -1.0, closed |
+| Bonded Bell probe, 16 seeds, 1,024 pairs per correlation | E = -0.709, 0.762, -0.709, -0.709; S = 2.889 against the quantum 2.828 and the bound 2; E(0, 0) = -1.0; plus rates 0.48 to 0.51 whatever the other setting; 0 missing pairs; every run closed |
+| Ray, bond, Focus, merge-contract, guard, Kerengonen, claim, pace, delay, contract, architecture, locality and configuration suites | 373 passed; document suites 97 passed |
+
+Runtime source SHA-256
+`9c3eedc70b2ba4d55142615bb1afe9b49dff846b204ef45830f4a83a122a81c9`, Python
+3.14.0rc2, headless. A run above 2 sqrt 2 is counting spread: the registry's
+law gives E = -cos exactly in expectation.
