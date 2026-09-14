@@ -34,6 +34,7 @@ SUMMARY_FRAMES = 8
 FRAME_MS = 520
 SUMMARY_MS = 900
 ZOOM = 2.2
+AZIMUTH_SWEEP = 7.0
 ELEVATION = 20
 
 
@@ -387,7 +388,9 @@ def render_experiment(output: Path, target: Path | None = None) -> tuple[Path, .
             run = _load_run(case_dir)
             measurement = min(r["tick"] for r in run["records"].values())
             for tick in range(run["ticks"] + 1):
-                azimuth = -77 + 7 * (run_index * (run["ticks"] + 1) + tick) / (4 * (run["ticks"] + 1))
+                azimuth = -77 + AZIMUTH_SWEEP * (run_index * (run["ticks"] + 1) + tick) / (
+                    4 * (run["ticks"] + 1)
+                )
                 fig = _draw_frame(run, tick, key, plt, Line3DCollection, azimuth)
                 image = _image(fig, plt)
                 hold = HOLD_AT_MEASUREMENT if tick == measurement else 1
