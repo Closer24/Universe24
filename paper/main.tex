@@ -177,7 +177,7 @@ inverse mixer, and a SWAP to $D$ where a held probe attempts capture. Analytic
 targets are computed independently of the update code.
 
 \begin{table}[h]\centering\small
-\begin{tabular}{lll}
+\resizebox{\linewidth}{!}{\begin{tabular}{lll}
 \toprule
 Observation & Result & Prediction\\
 \midrule
@@ -192,7 +192,7 @@ External field phase, coil $0,200,400,800$ & exponents $0,0,1,2$; capture $0, 0,
 Funded emission, stock 3000 & totals constant; paid 211 (null) / 199 (capture); residual 2 & emission-side closure\\
 Emission scale $25\to25000$ & departure $<1$ unit per tick; exact at multiples of 625 & $\text{amount}\times|\psi|^2$\\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{Coupling measurements on the canonical runner. Every recorded weight equals the exact rational prediction.}
 \end{table}
 
@@ -206,6 +206,20 @@ causal residual, a prediction rather than an error. The emission-scale row is
 the classical limit on the emission side only: the integer field becomes the
 continuous law, while the wave's own dynamics stay configured.
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/interference.pdf}
+\caption{Capture probability at $D$ against the arm phase for the $3{:}4$ mixer and the balanced splitter; curves are the exact rational predictions, points the recorded decision weights.}
+\end{figure}
+\begin{figure}[h]\centering
+\includegraphics[width=0.48\linewidth]{figures/null_notices.pdf}\hfill
+\includegraphics[width=0.48\linewidth]{figures/crossing_nulls.pdf}
+\caption{Left: the source's classical emission per tick after an arm null at tick 1, under the default retarded rule and with null notices; the notice restores $25/25$ one Link later and the next gate emits the conditional weights. Right: the weight scale at the source when two nulls cross in flight and when they are sequential; the later Node's correction brings both to the conditional scale $25/9$.}
+\end{figure}
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/scale.pdf}
+\caption{Largest per-tick departure of the classical emission from $\mathrm{amount}\times|a_S|^2$ as the full emission grows; below one unit at every scale and exactly zero at multiples of 625.}
+\end{figure}
+
 \section{Bell's test five times on one lattice}\label{sec:bell}
 
 We run the CHSH form with the same four settings, Alice $Z$ or $X$ and Bob
@@ -214,7 +228,7 @@ ray candidates, and the same combination
 $S = E(a_0 b_0) + E(a_0 b_1) + E(a_1 b_0) - E(a_1 b_1)$.
 
 \begin{table}[h]\centering\small
-\begin{tabular}{lll}
+\resizebox{\linewidth}{!}{\begin{tabular}{lll}
 \toprule
 Candidate & What decides the outcome & $S$\\
 \midrule
@@ -225,7 +239,7 @@ Plain rays, no phase & every ray absorbed whole & $2$ exactly\\
 Bonded rays & the bond registry, one number per pair & $2.89$ ($2.83$ quantum)\\
 Finite quantum owner & the joint conditional state at each contact & $14/5$ exact; dephased control $6/5$\\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{One lattice, one runner, one set of settings. Candidates whose information travels only on Links stay at or below 2; candidates with one shared object exceed it.}
 \end{table}
 
@@ -240,6 +254,11 @@ number and carries no inventory; the quantum owner also carries the conserved
 carrier, the conditional collapse and the retarded classical emission. Bell's
 theorem is here a table rather than a claim.
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/bell_candidates.pdf}
+\caption{The five Bell candidates and the plain field on one lattice. Blue: information travels only on Links. Red: one shared object no Link carries.}
+\end{figure}
+
 \section{A number source outside the world}\label{sec:outside}
 
 The registry may take each pair's number from a configured stream instead of
@@ -253,6 +272,11 @@ coin fixed. An outside source may choose every single outcome without a
 trace; it cannot do so with a bias without producing a signal faster than the
 causal speed, and that signal is measured. Whether any real system is such a
 source is outside the model.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\linewidth]{figures/outside_source.pdf}
+\caption{Bob's plus rate for each setting pair with the world's own sequence, a uniform outside source and a biased outside source, 1024 pairs each. Only the biased source moves Bob's rate with Alice's setting.}
+\end{figure}
 
 \section{What is not claimed}\label{sec:notclaimed}
 
