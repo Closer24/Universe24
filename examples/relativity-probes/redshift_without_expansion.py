@@ -177,7 +177,7 @@ def observe(growth):
 
 
 def report_lap(label, ticks):
-    gaps = [b - a for a, b in zip(ticks, ticks[1:])]
+    gaps = [b - a for a, b in zip(ticks, ticks[1:], strict=False)]
     print(f"  {label}: arrival ticks {ticks}")
     print(f"    gaps {gaps}")
     if gaps:
