@@ -179,11 +179,6 @@ The [Kerengonen candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-r
 (`kerengonen-ray-field-v1`) gives rays a phase: rays that meet combine by phase,
 coherence gates absorption and sampling, and two sources in phase give a fringe
 in Manhattan path difference; the plain ray field is unchanged without the key.
-A Huygens slit re-emits the phase and advance it absorbed, so one lamp behind
-two slits gives the fringe, and rays may carry their own advance from the
-emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
-halves the fringe period each time the beam's momentum doubles.
-
 Optional whole-ray lottery capture and carried-phase re-emission also run through
 the same local ray owners. Prepared immutable phase tables and explicit ray
 momentum inventory support ordinary headless runs. Delayed funded/absorbed carrier

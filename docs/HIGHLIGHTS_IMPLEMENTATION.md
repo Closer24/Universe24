@@ -14,8 +14,7 @@ are linked in [validation](VALIDATION.md).
 
 ## Wave moments and position output - 2026-09-14
 
-Live Highlights was read at revision
-`ANLCKQnb_MKZlmGPU0eRFQTq-PfRQNEaF8JpkHRYNx58nnn7H11urV_7dwY5zowVhXcHfXiEHj6GRps58iAW2NBny79oKonaGgH8baBaQtE`.
+Live Highlights was reconciled read-only at the time of this entry.
 Section 4.7.5 requires position and momentum to describe the same wave without
 assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
 derives a finite derivative observable from actual spatial density and output
@@ -53,13 +52,7 @@ Live Highlights section **4.7.8, Configured recurrent local outcomes**, now reco
 the complete configured instrument, local/new-wave/continuing outcomes, single
 inventory ownership, atomic new origins, finite ordinary source generations and
 causal cancellation. It retains the finite-candidate and physical-closure limits.
-The document was read through the trusted file-backed control inventory before
-this targeted addition; no protected controls were present. Connector readback
-verified the new heading and body in the original tab without changing adjacent
-sections. The prior revision was
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`;
-the verified updated revision is
-`ANLCKQkHRRrlLk-0HV9uWe-o47GgA6Dzbugy7caBZLF1JV9slR4tKuGLUzLZS6xS9qpWNw7kmF1VLFQvA8X58ZaqdYd4yuLvEtke55nPntc`.
+The new section was verified in the live document without changing adjacent sections.
 
 | Highlights rule | Authoritative owner | Acceptance |
 | --- | --- | --- |
@@ -79,10 +72,7 @@ The user's latest selection extends the preceding localized-source choice:
 each wave mode may source an ordinary field with its local squared weight, and
 weight changes or cancellation must travel through Nodes and Links with delay.
 This maps Highlights sections 1.2.7, 4.7.1-4.7.7 and 10.3/10.6 to the explicit
-[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains
-read-only; this reconciliation reuses the same-hour read at revision
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
-modified `2026-09-13T18:53:30.879Z`.
+[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains read-only.
 
 `causal-contact-fields-v1` retains a bounded complex source envelope at each
 participating ordinary Node, immutable definitions outside NodeState, finite
@@ -103,9 +93,7 @@ passed result. This extension does not complete the broader unified-dynamics goa
 
 ## Localized quantum contacts - 2026-09-13
 
-Live Highlights was reconciled read-only at revision
-`ANLCKQlo9slgaScJWuZCbzOF1YiWfHysY-vP-NhMlUFzFa10_DrgmhOoK5onyxvmYeBwWJdovQJJm4If_lGbAJCgJ7HzWLE1j14J4YJjmiY`,
-modified `2026-09-13T18:53:30.879Z`. Its sections 1.2.7, 4.7.1-4.7.7 and
+Live Highlights was reconciled read-only. Its sections 1.2.7, 4.7.1-4.7.7 and
 10.3/10.6 map to the [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md).
 The later user selection explicitly chooses ordinary fields only at localized
 events. This finite hybrid is an additional configured candidate, not a claim
@@ -137,9 +125,7 @@ branch candidates; those results are not imported or claimed by this change.
 
 ## Quantum origin cells and event spacetime - 2026-09-13
 
-Live Highlights revision
-`ANLCKQm21ChtG5HceOfGOhoBYGoFe1Cevq9Birt---q9RtLGv682cdVsad6nwquwgJtGWbHqSKP2pw9ExatR-Mlf533Guti25QsAZLMtJ0c`
-was reread; its modification time was `2026-09-13T15:06:39.393Z`. Implementation
+Live Highlights was reread. Implementation
 starts from `fb54f3306ce8172f5ed3f2d3a65eb03cb021a6b7`, integrating current main
 `2c20d00094639263fbe387c0a62420dcef108285` with the prior Node-event work.
 
@@ -280,8 +266,7 @@ validation applies here; no simulator behavior or experiment input changes.
 
 ## Joint local reaction contract - 2026-09-13
 
-The live source was reread at revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+The live source was reread.
 Implementation base: `a7a0000e3005ae41b37639f5dcf76e56532be69f`.
 Sections 3.1, 3.3 and 4.3 motivate the bounded property-selected
 [joint Node reaction](NODE_VECTOR_PROCESSOR.md#local-rules). The user's explicit
@@ -308,9 +293,7 @@ emergence claims remains binding. The live document was not edited.
 
 ## Shared field computation cycle reconciliation - 2026-09-13
 
-The live Highlights revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`
-was read against source base `1784acdd140f260c0fb5e568b2e28241df573fa2`.
+The live Highlights document was read against source base `1784acdd140f260c0fb5e568b2e28241df573fa2`.
 Section 4.4 maps to the opt-in
 [shared field/carrier cycle](SPATIAL_COMPUTATION_DELAY.md): C counts combined
 local work once, one integer ceiling sets the entire cycle, proposals stay
@@ -322,8 +305,7 @@ gravity or quantum/spatial composition. The live document was not edited.
 
 ## Property coupling and local conservation reconciliation - 2026-09-13
 
-The live Highlights document was read at revision
-`ANLCKQluUGX_afG63QQM9IQBX-qmjBbhP-b8UVvMJ-mCjZQ30ZYQ_Kkyk4MKp-O_P1PvMixFu3_pO-w-dDxrnekqUXbwar_XXVKECHy5vBA`.
+The live Highlights document was read.
 Source base: `ed65f829a6ddc797cafec1bf34156ca59bdcb7dd`. Sections 10.2, 10.5,
 10.6 and 10.7 map to [property selection](PROPERTY_COUPLINGS.md), shared explicit
 entity profiles and [passive local conservation](LOCAL_CONSERVATION.md).
@@ -343,8 +325,7 @@ the input while a carrier computation is pending. This is a configured mechanism
 under the unverified emergence hypothesis in sections 1.1.3 and 1.3.3, not a new
 claim that electron/photon dynamics or quantum occupation have emerged.
 
-The live document was read on 2026-09-13 at revision
-`ANLCKQmE1CS353UW3vWf9cdweVRw0CiohpQ85_euvi1zz8TP_ijhldHMIs45KNJzO19_xt67LnVLnj03t2IyvWRQ8kS8TCH8jcFGKfmj3UE`.
+The live document was read on 2026-09-13.
 Source base: `6a2816526083c23069bf3b0f3fcb6a9dc5b17944`. The finite unit-state,
 single-packet and held-receiver restrictions belong to this experiment. No core
 law, catalog measurement or live Highlights text changes in this work.
@@ -355,9 +336,7 @@ The [read-only preflight](CONFIGURATION_VALIDATION.md) implements explicit input
 rejection and shared ownership under Highlights sections 4.5 and 10.7. It validates
 configuration data without generating a physical state or inferring a law from
 catalog measurements. Passing preflight remains distinct from the verified
-behavior and physical hypotheses in sections 1.3 and 6.3. The live document was
-read on 2026-09-13 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+behavior and physical hypotheses in sections 1.3 and 6.3. The live document was read on 2026-09-13.
 Source base: `521b63567d186bab2fac982a1e1f9d0a592a73a5`. This is a host validation
 and Skill workflow change; it adds no physical law and does not edit Highlights.
 
@@ -372,9 +351,7 @@ of emergence. The original 46 experiment profiles move to a separate file.
 
 This implements the Highlights goals of deriving effective laws from local
 operations, preserving generic field/type definitions and separating established
-physics from hypotheses and verified results. The live document was read on
-2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+physics from hypotheses and verified results. The live document was read on 2026-09-12.
 This repository update does not modify that document or claim additional derived
 physics. Source base: `98b774ac3b02aa5cd350d5513b1e1fddbe3a2c81`.
 
@@ -384,8 +361,7 @@ This versioned companion records the implementation inventory added to
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit).
 Scope: main `09464b41b2c44a191aa2fcbdf4b036680bd646a5`.
 The live document was updated on 2026-09-12 with section 10 below, preserving
-all earlier paragraphs. Verified revision:
-`ANLCKQkcdo3E9Q9qA92kvEzUjmFE9kJmMiJsmZQ8jTo0wroDlz5YbBRcKpGlvLu6PDzqvRncp0x2R4ecCgECBJFygKGssxx8uQW2M6WYTQg`.
+all earlier paragraphs.
 Highlights is the high-level specification; linked contracts define exact schemas
 and rejection cases. Neither a prose document nor Git restores credentials or
 expired outputs. Together, this map, the contracts and versioned initialization
@@ -635,9 +611,7 @@ Under 10.5 Couplings, interactions and rotation:
 
 ### Local observer reconciliation
 
-For the [local reception observer](LOCAL_OBSERVER.md), Highlights was reread on
-2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+For the [local reception observer](LOCAL_OBSERVER.md), Highlights was reread on 2026-09-12.
 Sections 2.1, 4.6, 5.1-5.2 and 10.7 require discrete connected nodes, causal
 delivery and read-only output. The probe records completed local inputs and
 preserves exact playback prefixes. The user's event-time interpretation
@@ -646,8 +620,7 @@ hypotheses. The live document itself was not edited by this implementation.
 
 ### Directional-wave candidate reconciliation
 
-Read the live Highlights on 2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+The live Highlights document was read on 2026-09-12.
 The [directional-wave contract](DIRECTIONAL_WAVE.md) is a new explicit candidate
 under sections 3.3, 3.3.2, 3.5, 10.4 and 10.5. Six transverse directional modes,
 bounded vector operations and local encounter guards preserve the declared
@@ -666,8 +639,7 @@ the repository. This reconciliation does not edit the live Google document.
 ### Local Maxwell research reconciliation
 
 For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),
-Highlights was reread on 2026-09-12 at live revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Highlights was reread on 2026-09-12.
 Sections 1.3.3, 1.3.4 and 10.4 are reconciled as follows: the existing generic
 local field interface can express a transverse reflection and one-link
 streaming hypothesis without adding an engine field equation. Conditional

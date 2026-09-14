@@ -1720,8 +1720,7 @@ incoming-pair regression now verifies conversion after neighbor arrival; channel
 provenance is preserved while actual carried fractional progress remains rejected.
 Boss, architecture, fields, physics, tests and simulation Skills were reviewed;
 their existing workflow covers this change, so no Skill edit was necessary.
-Highlights was read on 2026-09-12 at revision
-`ANLCKQnu00jY0NhSjcfyTkt2A8oPZs3_d4dpkEsZ7TI37moZ-eXNntyf4MfeRPttXmu_vnMlIlwe1xt0qmZsn1KXkJoxrMoESFC4_eG9MWA`.
+Highlights was read on 2026-09-12.
 No change to that Google document is implied.
 
 Three CLI runs generated recorded HTML with source fingerprint

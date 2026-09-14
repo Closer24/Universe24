@@ -45,6 +45,32 @@ certain outcomes, and phase-sensitive split and recombination
 ([quantum checks](../examples/quantum/run_physics_checks.py),
 [many-contact experiment](../examples/quantum/many_contacts.md)).
 
+## Two candidates for one-particle interference
+
+Since the [Kerengonen phased-ray candidate](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
+was integrated, the repository holds two different mechanisms that produce
+interference, and a reader should not confuse them.
+
+- **Phased classical rays.** Whole integer quanta travel on straight rays that
+  carry a phase step advanced once per Link; rays meeting at a Node combine by
+  a fixed-point cosine of their phase difference, and the coherence gates what
+  a screen absorbs. This is a local classical field. It reproduces a two-lamp
+  fringe (centre 928 in phase, 0 with a half-turn offset), a Huygens slit, a
+  single-quantum lottery and a de Broglie-like dependence of the fringe period
+  on the emitter's momentum, all with configured integers.
+- **The finite quantum owner.** Gaussian-integer amplitudes over lattice
+  registers, unitary gates, Kraus instruments and conditional Born weights.
+  It reproduces the two-arm fringe above and, unlike any local phased field,
+  exact CHSH value 14/5 for two registers.
+
+The boundary between them is sharp and is a result rather than a choice: a
+local phased field cannot exceed the CHSH bound of 2, whatever its phase rule,
+because it carries no joint state. Everything one excitation does at a screen
+can be described by either candidate; entanglement, Bell violation and
+causally delivered conditional collapse belong only to the quantum owner. A
+Bell experiment run on both candidates is the decisive comparison and is the
+natural next measurement.
+
 ## What is claimed
 
 1. A single local update rule per Node, with a complex part and a real part,
