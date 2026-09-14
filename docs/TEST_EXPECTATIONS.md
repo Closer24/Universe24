@@ -191,6 +191,12 @@ shifted recombination; rejection of `start_sources` without field values; the
 headless report listing the retained choice; and zero field phases in the
 unchanged default example.
 
+Complex-coefficient regressions require unchanged interference under a common
+phase for exponents -3 through 3 and exact reversal for positive/negative powers
+in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
+both must select -1, capture with probability `576/3125` at tick 7, retain source
+envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
+
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event
 tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,

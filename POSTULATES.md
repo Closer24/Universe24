@@ -501,7 +501,9 @@ lets a configured one-mode gate choose its exact integer phase from the Node's
 own classical field value at the schedule tick. The classical field then acts
 on the wave, locally and causally, as a phase only. Its `unit / vacuum` ratio
 is configured data, not a derived coupling constant, and no field-plus-matter
-conservation follows from it.
+conservation follows from it. Negative field exponents invert that relative
+phase by conjugating both coefficients; a common phase on the coefficient pair
+does not change observable probabilities.
 
 ## 21. Configured recurrent contact outcomes
 

@@ -802,7 +802,8 @@ and no notice is sent. The candidate does not read the quantum owner and does
 not remove the departure for several excitations.
 
 The explicit `field_phase` propagation operation replaces one one-mode matrix
-by a fixed table `diag(vacuum^|n|, unit^|n|)`, conjugate for negative `n`,
+by a fixed table `diag(vacuum^|n|, unit^|n|)`, conjugating both coefficients
+for negative `n` so the relative phase is `(unit / vacuum)^n`,
 with `|n| <= max_exponent <= 12`. At the gate's schedule tick the Node reads its
 own start-of-cycle value of one spatial field component and sets `n` to that
 value divided by `divisor` toward zero; an exponent beyond the table stops the

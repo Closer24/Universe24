@@ -1,5 +1,17 @@
 # Highlights implementation coverage
 
+## Signed relative field phase - 2026-09-14
+
+The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+now explicitly preserves `(unit / vacuum)^n` for negative field exponents by
+conjugating both coefficients. Equivalent complex representations produce the
+same quantum capture probabilities and ordinary envelope weights. This repairs
+the existing configured law; it adds no field back-reaction or conservation
+claim. The one-shot phase and null-notice options remain separate from recurrent
+generations, whose unsupported combinations fail at initialization. The live
+Highlights document was not edited; numerical regressions and source evidence
+are linked in [validation](VALIDATION.md).
+
 ## Wave moments and position output - 2026-09-14
 
 Live Highlights was read at revision

@@ -40,7 +40,7 @@ class FieldPhase:
     """A one-mode phase whose exponent is the local classical field value at schedule time.
 
     ``matrices[n + max_exponent]`` is ``diag(vacuum^|n|, unit^|n|)`` for ``n >= 0``
-    and uses the conjugate unit for ``n < 0``. The exponent is the field value
+    and conjugates both coefficients for ``n < 0``. The exponent is the field value
     divided by ``divisor`` toward zero. All matrices are fixed at initialization.
     """
 
@@ -187,15 +187,17 @@ def _field_phase(initial: InitialState, raw: object) -> FieldPhase:
     maximum = _integer(obj.get("max_exponent", 4), "field phase max_exponent", 0)
     if maximum > MAX_FIELD_EXPONENT:
         raise ValueError("field phase max_exponent is limited to twelve")
-    conjugate = Amplitude(unit.real, -unit.imag)
+    conjugate_vacuum = Amplitude(vacuum.real, -vacuum.imag)
+    conjugate_unit = Amplitude(unit.real, -unit.imag)
     zero = Amplitude(0, 0)
     matrices = []
     for exponent in range(-maximum, maximum + 1):
-        base = unit if exponent >= 0 else conjugate
+        vacuum_base = vacuum if exponent >= 0 else conjugate_vacuum
+        unit_base = unit if exponent >= 0 else conjugate_unit
         rule = LocalUnitary(
             (
-                (_power(vacuum, abs(exponent)), zero),
-                (zero, _power(base, abs(exponent))),
+                (_power(vacuum_base, abs(exponent)), zero),
+                (zero, _power(unit_base, abs(exponent))),
             )
         )
         preserves_occupation(rule)

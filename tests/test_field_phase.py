@@ -2,13 +2,16 @@
 
 import json
 from copy import deepcopy
+from fractions import Fraction
 
 import pytest
 
 from event_universe.diagnostics.node_contract import node_state_violations
 from event_universe.initialization import parse_initial_state
 from event_universe.integration.contact_program import MAX_FIELD_EXPONENT, FieldPhase
-from event_universe.quantum import Amplitude, LocalUnitary
+from event_universe.integration.event_program import parse_event_program
+from event_universe.quantum import Amplitude, DeferredQuantum, EventNetworkConfig, LocalUnitary
+from event_universe.quantum.operations import integer_matrix
 from event_universe.runner import run_initialization
 
 from .test_causal_contact_fields import MIDDLE, SOURCE, causal_configuration
@@ -115,6 +118,61 @@ def test_field_phase_table_is_exact_and_conjugate_for_negative_exponents():
     assert rule.exponent(-49) == -1 and rule.exponent(100) == 4
     with pytest.raises(ValueError, match="exceeds"):
         rule.exponent(125)
+
+
+def parsed_phase(vacuum, unit):
+    raw = field_phase_configuration()
+    raw["event_program"]["domains"][0]["phases"][1][0]["field_phase"].update(vacuum=vacuum, unit=unit)
+    parsed = parse_event_program(parse_initial_state(raw))
+    assert parsed.contacts is not None
+    phase = parsed.contacts.domains[0].phases[1][0][0]
+    assert isinstance(phase, FieldPhase)
+    return phase
+
+
+def interference_return_probability(*operations):
+    graph = DeferredQuantum().bind_event_network(EventNetworkConfig(((0, 0, 0),)))
+    hadamard = LocalUnitary(integer_matrix(((1, 1), (1, -1))))
+    for operation in (hadamard, *operations, hadamard):
+        graph.step(((operation, (0,)),))
+    decision = graph.query(0)
+    return Fraction(decision.weights[0], sum(decision.weights))
+
+
+@pytest.mark.parametrize("exponent", [-3, -2, -1, 0, 1, 2, 3])
+def test_common_complex_phase_does_not_change_interference(exponent):
+    # Both configurations have unit/vacuum = 1, so H U H returns the input.
+    for coefficient in (1, [0, 1], [3, 4]):
+        phase = parsed_phase(coefficient, coefficient)
+        assert interference_return_probability(phase.unitary(exponent)) == 1
+
+
+@pytest.mark.parametrize("exponent", [1, 2, 3])
+@pytest.mark.parametrize("vacuum,unit", [([0, 1], 1), ([3, 4], 5), ([-4, 3], [3, 4])])
+def test_positive_and_negative_field_phases_undo_each_other(vacuum, unit, exponent):
+    phase = parsed_phase(vacuum, unit)
+    for first, second in ((exponent, -exponent), (-exponent, exponent)):
+        assert interference_return_probability(phase.unitary(first), phase.unitary(second)) == 1
+
+
+def test_native_negative_field_phase_is_invariant_under_common_complex_phase():
+    probabilities = []
+    source_weights = []
+    for vacuum, unit in ((5, [3, 4]), ([0, 5], [-4, 3])):
+        raw = field_phase_configuration(-400)
+        raw["event_program"]["domains"][0]["phases"][1][0]["field_phase"].update(
+            vacuum=vacuum, unit=unit
+        )
+        world, resolver = world_for(raw)
+        step(world, 12)
+        assert resolver.report()["field_phase_choices"][0]["exponent"] == -1
+        decisions = output_decisions(resolver)
+        probabilities.append([(tick, Fraction(weights[1], sum(weights))) for tick, weights in decisions])
+        amplitude = resolver.source_nodes()[SOURCE].amplitude
+        source_weights.append(Fraction(amplitude.real**2 + amplitude.imag**2, amplitude.denominator**2))
+        assert all(value["balanced"] for value in world.spatial_accounting().values())
+    assert probabilities == [[(7, Fraction(2880, 15625))]] * 2
+    assert source_weights == [Fraction(2549, 3125)] * 2
 
 
 @pytest.mark.parametrize(

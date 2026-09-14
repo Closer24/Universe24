@@ -1,5 +1,43 @@
 # Validation evidence
 
+## Negative field phase with complex reference - 2026-09-14
+
+Base: integration commit `3a5e7d1`. Independent physics review found that a
+negative field exponent conjugated `unit` alone. With `vacuum = unit = i`,
+the configured relative phase is one but H U(-1) H returned probability zero
+instead of one. Native equivalent coefficient pairs also disagreed: a -400 coil
+gave capture probability `576/3125` for `(5, 3+4i)` and `2304/3125` for
+`(5i, -4+3i)`.
+
+After correcting a test-only query API typo, the new regressions produced
+**12 failures and 5 passes before the runtime fix**. Conjugating both
+coefficients repaired the negative relative phase; all **33 field-phase tests
+passed in 4.96 seconds**, including the headless runner. The native twelve-tick
+controls now agree on capture probability `576/3125`, source envelope weight
+`2549/3125` and balanced ordinary field accounting. Inverse powers in both orders
+and common complex representations are checked using actual interference
+queries, not only matrix entries.
+
+Independent read-only review passed the fix and separately ran 32 tests with
+the artifact-writing headless case deselected. Both quantum and ordinary
+consumers use the same corrected table; local field scheduling, costs, fixed
+NodeState and causal callback inputs are unchanged. The physics Skill records
+the missed complex-reference case. Real-vacuum examples retain their behavior.
+
+Final active-source SHA-256:
+`8fa258a94a71641e0c71b69038ad57b632e344b998b78d728b99af923a738d3f`.
+The earlier full-suite result below predates this focused correction.
+
+On that final source, `python tools/check.py --base 3a5e7d1` passed **2,093
+tests with five opt-in visual skips in 216.85 seconds**. Ruff/format passed on
+both changed Python files and strict mypy passed on 22 affected source files.
+The selection covered causal/recurrent contacts, generic fields and carriers,
+conservation, Node/Link timing, parallelism, boundaries, retention and repository
+contracts. The saved position-output aggregate passed in **12.48 seconds** with
+unchanged native traces and costs when diagnostics were enabled or disabled.
+Its source hash matches the final fingerprint above; joint quantum/apparatus
+energy closure remains explicitly false. No local build or visualization ran.
+
 ## Current-main contact integration - 2026-09-14
 
 Integrated main `53e44a51dd238dff34d5e7ced0f337e8f1c7341f` (PR #101) with

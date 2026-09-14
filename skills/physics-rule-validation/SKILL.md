@@ -92,6 +92,11 @@ conditional changes; neither is a simulated apparatus recoil without an actual
 owner and interaction. Audit propagation against a newly introduced energy
 readout instead of reusing an older fixed inventory as proof of closure.
 
+For configured relative phases, compare equivalent coefficient pairs that differ
+by a common complex factor. Exercise negative exponents and inverse composition
+through interference probabilities, including the ordinary envelope consumer;
+real reference coefficients alone cannot expose a partial-conjugation defect.
+
 ## Review the declared rules
 
 For [recurrent contact outcomes](../../docs/RECURRENT_QUANTUM_CONTACT.md),
