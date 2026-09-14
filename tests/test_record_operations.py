@@ -48,6 +48,43 @@ def test_independent_owners_are_never_folded_into_a_resident(boundary):
     assert result == (resident, incoming)
 
 
+@pytest.mark.parametrize("mode", ["move", "split"])
+def test_arrival_uses_spare_slot_after_a_reserved_empty_slot(mode):
+    _, policy, resident = fixture(mode)
+    local = (resident, None, None)
+    result = policy.receive(local, (resident,), frozenset({0, 1}))
+    assert result == (resident, None, resident)
+    assert local == (resident, None, None)
+
+
+def test_reserved_empty_slots_do_not_count_as_receiving_capacity():
+    _, policy, incoming = fixture("move")
+    local, arrivals = (None, None), (incoming,)
+    with pytest.raises(ValueError, match="receiving capacity exhausted"):
+        policy.receive(local, arrivals, frozenset({0, 1}))
+    assert local == (None, None)
+    assert arrivals == (incoming,)
+
+
+@pytest.mark.parametrize("mode", ["move", "split"])
+@pytest.mark.parametrize("count", [2, 3])
+def test_arrival_batch_respects_reservations_and_remaining_capacity(mode, count):
+    _, policy, resident = fixture(mode)
+    local = (resident, None, None, None)
+    arrivals = tuple(replace(resident, channel_code=i + 1) for i in range(count))
+    if count == 2:
+        assert policy.receive(local, arrivals, frozenset({0, 1})) == (
+            resident,
+            None,
+            *arrivals,
+        )
+    else:
+        with pytest.raises(ValueError, match="receiving capacity exhausted"):
+            policy.receive(local, arrivals, frozenset({0, 1}))
+    assert local == (resident, None, None, None)
+    assert tuple(record.channel_code for record in arrivals) == tuple(range(1, count + 1))
+
+
 @pytest.mark.parametrize("failure", ["overflow", "capacity"])
 def test_failed_arrival_batch_keeps_all_input_records_unchanged(failure):
     _, policy, resident = fixture(value=(MAX_VALUE - 1, 0, 0))
