@@ -138,6 +138,31 @@ the marginal renormalization only, and the departure from conditional weights
 is not removed. The clip at one and the fixed notice bank are explicit bounds,
 not physical claims.
 
+## Opt-in field-dependent phase
+
+A one-mode propagation operation may declare `"field_phase"` instead of
+`"matrix"`. It requires `causal-contact-fields-v1` and changes nothing when
+absent. This is the candidate's only action of the classical field on the
+wave: a local phase, no amplitude change and no transfer to the field.
+
+| Part | Contract |
+| --- | --- |
+| Law | At the gate's schedule tick the Node reads its own value of one configured spatial field component, present at the start of that cycle. The exponent is that value divided by `divisor` toward zero. The gate is `diag(vacuum^n, unit^n)` for `n >= 0` and uses the conjugate unit for `n < 0`. |
+| Inputs | The Node's own local field readout, the configured `vacuum` and `unit` Gaussian integers of equal nonzero norm, `divisor`, `component` and `max_exponent` (at most twelve). No remote value and no quantum query. |
+| State | Nothing evolving is added to NodeState. The `2 * max_exponent + 1` matrices are fixed at initialization; the chosen matrix index enters the ordinary pending gate, and the same unitary is recorded for the quantum owner's recipe of that epoch. |
+| Effect | Both owners apply the identical matrix: the envelope through its delayed one-mode gate, the quantum owner in the propagation phase of the same epoch. A phase read is charged one `read` tariff on the gate start. |
+| Limits | An exponent beyond `max_exponent` stops the run. A field phase requires the spatial owner at schedule time. The field is read, never changed, by the gate. Rational phase angles only: `unit / vacuum` such as `(3 + 4i) / 5`. |
+| Acceptance | Identity at exponent zero, conjugate for negative values, exact table; parser rejections; exponent 0, 1 and 2 from coil fields 0/200, 400 and 800 with recorded output weights `[12745, 2880]` and `[160225, 230400]`; a coil on the far side of the source selects no phase; the envelope port weight `2549/3125` after the shifted recombination. |
+
+The [two-arm experiment](../examples/quantum/causal_interference.md) records the
+fringe shift: an external `vector_potential` field next to the M arm moves the
+output capture probability from 0 to `576/3125` and `9216/15625` for exponents
+one and two, while the same field placed beside the source arm's other side
+leaves the fringe unchanged. This is an Aharonov-Bohm-like local coupling in
+integer form. It does not make the field react to the wave, does not conserve
+a field-plus-matter quantity and does not select the coupling constant; the
+`unit / vacuum` ratio is configured data.
+
 ## Configuration, implementation and acceptance
 
 The [two-arm interference experiment](../examples/quantum/causal_interference.md)

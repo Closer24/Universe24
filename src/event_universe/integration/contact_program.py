@@ -4,9 +4,10 @@ from dataclasses import dataclass
 
 from event_universe.core.coupling_selectors import selected_types
 from event_universe.core.disturbance_state import DisturbanceRecord, InitialState, unpack
+from event_universe.core.integer import checked_work
 from event_universe.core.topology import neighbor_address
 from event_universe.initialization import _address, _array, _index, _integer, _object, _seeds, _text
-from event_universe.quantum import EventNetworkConfig, LocalInstrument, LocalUnitary
+from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
 from event_universe.quantum.contact_rules import (
     preserves_occupation,
     validates_capture,
@@ -15,6 +16,54 @@ from event_universe.quantum.contact_rules import (
 from event_universe.quantum.wave_origins import WaveDefinition
 
 from .event_program import Program, _matrix, _require_initial_capacity
+
+MAX_FIELD_EXPONENT = 12
+
+
+def _times(a: Amplitude, b: Amplitude) -> Amplitude:
+    return Amplitude(
+        checked_work(checked_work(a.real * b.real) - checked_work(a.imag * b.imag)),
+        checked_work(checked_work(a.real * b.imag) + checked_work(a.imag * b.real)),
+    )
+
+
+def _power(base: Amplitude, exponent: int) -> Amplitude:
+    value = Amplitude(1, 0)
+    for _ in range(exponent):
+        value = _times(value, base)
+    return value
+
+
+@dataclass(frozen=True, slots=True)
+class FieldPhase:
+    """A one-mode phase whose exponent is the local classical field value at schedule time.
+
+    ``matrices[n + max_exponent]`` is ``diag(vacuum^|n|, unit^|n|)`` for ``n >= 0``
+    and uses the conjugate unit for ``n < 0``. The exponent is the field value
+    divided by ``divisor`` toward zero. All matrices are fixed at initialization.
+    """
+
+    spatial_field: int
+    field_name: str
+    component: int
+    divisor: int
+    vacuum: Amplitude
+    unit: Amplitude
+    max_exponent: int
+    matrices: tuple[LocalUnitary, ...]
+
+    def exponent(self, value: int) -> int:
+        magnitude, _ = divmod(abs(checked_work(value)), self.divisor)
+        exponent = magnitude if value >= 0 else -magnitude
+        if abs(exponent) > self.max_exponent:
+            raise ValueError("field phase exponent exceeds its configured maximum")
+        return exponent
+
+    def unitary(self, exponent: int) -> LocalUnitary:
+        return self.matrices[exponent + self.max_exponent]
+
+
+PhaseOperation = tuple[LocalUnitary | FieldPhase, tuple[int, ...]]
 
 
 @dataclass(frozen=True, slots=True)
@@ -31,7 +80,7 @@ class ContactDomain:
     detector_type: int
     captures: tuple[int, ...]
     instrument: LocalInstrument
-    phases: tuple[tuple[tuple[LocalUnitary, tuple[int, ...]], ...], ...]
+    phases: tuple[tuple[PhaseOperation, ...], ...]
 
 
 @dataclass(frozen=True, slots=True)
@@ -39,6 +88,61 @@ class ContactConfiguration:
     domains: tuple[ContactDomain, ...]
     causal_sources: bool = False
     null_notices: bool = False
+
+
+def _coefficient(value: object, label: str) -> Amplitude:
+    if type(value) is int:
+        return Amplitude(_integer(value, label), 0)
+    pair = _array(value, label, 2, 2)
+    return Amplitude(*(_integer(v, label) for v in pair))
+
+
+def _field_phase(initial: InitialState, raw: object) -> FieldPhase:
+    obj = _object(
+        raw,
+        "field phase",
+        {"field", "component", "divisor", "vacuum", "unit", "max_exponent"},
+        {"field", "divisor", "vacuum", "unit"},
+    )
+    fields = {definition.name: i for i, definition in enumerate(initial.fields)}
+    field = _index(obj["field"], fields, "field phase field")
+    spatial = next(
+        (i for i, definition in enumerate(initial.spatial_fields) if definition.field == field), None
+    )
+    if spatial is None:
+        raise ValueError("field phase requires a configured spatial field")
+    component = _integer(obj.get("component", 0), "field phase component", 0)
+    if component >= initial.fields[field].components:
+        raise ValueError("field phase component is outside the field")
+    divisor = _integer(obj["divisor"], "field phase divisor", 1)
+    vacuum = _coefficient(obj["vacuum"], "field phase vacuum coefficient")
+    unit = _coefficient(obj["unit"], "field phase unit coefficient")
+    norm = checked_work(
+        checked_work(vacuum.real * vacuum.real) + checked_work(vacuum.imag * vacuum.imag)
+    )
+    if norm == 0 or norm != checked_work(
+        checked_work(unit.real * unit.real) + checked_work(unit.imag * unit.imag)
+    ):
+        raise ValueError("field phase vacuum and unit coefficients must share one nonzero norm")
+    maximum = _integer(obj.get("max_exponent", 4), "field phase max_exponent", 0)
+    if maximum > MAX_FIELD_EXPONENT:
+        raise ValueError("field phase max_exponent is limited to twelve")
+    conjugate = Amplitude(unit.real, -unit.imag)
+    zero = Amplitude(0, 0)
+    matrices = []
+    for exponent in range(-maximum, maximum + 1):
+        base = unit if exponent >= 0 else conjugate
+        rule = LocalUnitary(
+            (
+                (_power(vacuum, abs(exponent)), zero),
+                (zero, _power(base, abs(exponent))),
+            )
+        )
+        preserves_occupation(rule)
+        matrices.append(rule)
+    return FieldPhase(
+        spatial, initial.fields[field].name, component, divisor, vacuum, unit, maximum, tuple(matrices)
+    )
 
 
 def parse_contact_program(initial: InitialState, raw: object) -> Program:
@@ -156,15 +260,17 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
         validates_capture(instrument)
         phases = []
         for raw_phase in _array(d["phases"], "propagation phases", 32, 1):
-            phase = []
+            phase: list[PhaseOperation] = []
             phase_used: set[int] = set()
             for raw_op in _array(raw_phase, "phase operations", 30):
                 op = _object(
                     raw_op,
                     "contact propagation",
-                    {"register_indices", "matrix"},
-                    {"register_indices", "matrix"},
+                    {"register_indices", "matrix", "field_phase"},
+                    {"register_indices"},
                 )
+                if ("matrix" in op) == ("field_phase" in op):
+                    raise ValueError("contact propagation requires exactly one matrix or field_phase")
                 qs = tuple(
                     _integer(q, "propagation register", 0)
                     for q in _array(op["register_indices"], "propagation registers", 2, 1)
@@ -178,6 +284,13 @@ def parse_contact_program(initial: InitialState, raw: object) -> Program:
                     for p in range(6)
                 ):
                     raise ValueError("contact propagation requires one physical Link")
+                if "field_phase" in op:
+                    if not causal_sources:
+                        raise ValueError("field phases require the causal contact field model")
+                    if len(qs) != 1:
+                        raise ValueError("a field phase acts on one register")
+                    phase.append((_field_phase(initial, op["field_phase"]), qs))
+                    continue
                 rule = LocalUnitary(_matrix(op["matrix"]))
                 if len(rule.matrix) != 2 ** len(qs):
                     raise ValueError("propagation matrix dimension differs from support")

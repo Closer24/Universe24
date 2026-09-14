@@ -41,7 +41,9 @@ detector giving `[9, 16]` for every phase with no later uncertain output
 decision; and a retarded source emission of 9 of 25 after an arm null. With
 `null_notices` the same arm null gives 25 of 25 from tick 2, 9 and 16 at the
 next gate and final scales 625/81; the output null gives 25 from tick 9 and
-scales 625/337.
+scales 625/337. With a `field_phase` on the M arm, coil fields 0, 200, 400 and
+800 give capture probabilities 0, 0, `576/3125` and `9216/15625`, and a coil on
+the far side of the source gives 0.
 
 `test_null_notices.py` owns the opt-in
 [null notice extension](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices):
@@ -56,6 +58,20 @@ world the source emits 25 from tick 2 after an arm null at tick 1, the next
 gate emits 9 and 16, all scales reach 625/81 after the second null, and an
 output null at tick 7 reaches the source at tick 9 with scale 625/337.
 The default profile without the option is unchanged.
+
+`test_field_phase.py` owns the opt-in
+[field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase):
+a nine-entry table for `max_exponent` 4 with identity at zero, `(3, 4)` at one,
+`(3, -4)` at minus one and `(-7, 24)` over `25` at two; exponent 0/1/4 for
+values 24/25/100 and rejection at 125; parser rejections for unequal norms,
+zero divisor, a limit above twelve, a non-spatial field, a bad component, the
+localized model, two registers and a matrix given together; coil fields 0, 200,
+400 and 800 selecting exponents 0, 0, 1 and 2 with output weights
+`[12745, 2880]` and `[160225, 230400]` at tick 7; a coil beside the far side of
+the source selecting exponent 0; source port weight `2549/3125` after the
+shifted recombination; rejection of `start_sources` without field values; the
+headless report listing the retained choice; and zero field phases in the
+unchanged default example.
 
 `test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
 target separation and its fixed-seed one-shot result: three A captures at event

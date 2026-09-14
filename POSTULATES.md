@@ -495,3 +495,10 @@ conditional renormalization once delivered. Between decision and arrival the
 remote weights remain stale. This is a candidate rule that closes a measured
 gap in the single-excitation sector; it is not a general Born-rule mechanism
 for entangled registers and it never reads the shared quantum state.
+
+The optional [field-dependent phase](docs/CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+lets a configured one-mode gate choose its exact integer phase from the Node's
+own classical field value at the schedule tick. The classical field then acts
+on the wave, locally and causally, as a phase only. Its `unit / vacuum` ratio
+is configured data, not a derived coupling constant, and no field-plus-matter
+conservation follows from it.

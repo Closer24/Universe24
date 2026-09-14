@@ -35,6 +35,7 @@ records, with exact integers on the canonical runner:
 | Classical field emitted at the source Node after recombination | integer floor of `25 (337 + 288 cos phi)/625` with carried remainder: 25, 13.5, 2, 13.5 per tick |
 | Same experiment with a held detector on one arm | the arm decision is `[9, 16]` for every `phi`; the output detector never receives a nonzero capture weight |
 | Cancellation after a capture two Links away | the source Node emits once more and then stops |
+| An external classical field on one arm with the opt-in [field phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase) | coil fields 0, 200, 400, 800 select phase exponents 0, 0, 1, 2 and move the capture probability from 0 to `576/3125` and `9216/15625`; the same field beside the far side of the source moves nothing |
 | Source weight after a null result on the arm, default rule | the source Node keeps emitting 9 of 25 units: the retarded envelope is not renormalized to the conditional state |
 | Same with the opt-in [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices) | the null Node sends `1/(1-p) = 25/9` through its Links; the source emits 25 of 25 from the next tick, and the next gate emits 9 and 16, the exact conditional Born weights; an output null two Links away reaches the source after two ticks |
 
@@ -49,6 +50,8 @@ certain outcomes, and phase-sensitive split and recombination
 1. A single local update rule per Node, with a complex part and a real part,
    reproduces two-path interference at a detector and, at the same time,
    drives a classical field whose strength carries the interference term.
+   With the opt-in field phase the classical field also shifts the fringe,
+   so the two parts act on each other through local reads only.
 2. Measurement-induced loss of interference follows from an actual local
    instrument on one arm, using only local state and Link-delivered inputs.
    No global wavefunction is read by any Node.
@@ -73,8 +76,11 @@ certain outcomes, and phase-sensitive split and recombination
   weights are stale, which is the candidate's prediction rather than a bug.
   For several excitations or entangled registers the local factor is only a
   marginal correction and the gap remains open.
-- **Not back-action.** The classical field does not act on the amplitudes.
-  The coupling is one directional.
+- **Back-action is a phase only.** With the opt-in field phase the classical
+  field acts on the wave as an exact local phase read at the gate's schedule
+  tick, an Aharonov-Bohm-like coupling. The field is not changed by the wave
+  except through emission, no momentum or energy passes between them, and
+  the coupling ratio `unit / vacuum` is configured, not derived.
 - **Not energy closure.** Field emission draws from finite configured
   allowances; there is no field-plus-matter energy that is conserved.
 - **Not a continuum or asymptotic result.** Every table is a finite lattice at
@@ -132,8 +138,10 @@ integer realization, not any of the parts.
    excitations or entangled registers converge to the conditional weights, or
    a proof that no such rule exists. The single-excitation case is closed by
    the null notice above; the general case is the largest open gap.
-2. Field back-action on amplitudes with a stated conserved quantity, tested by
-   the same interference experiment.
+2. Back-action with a stated conserved quantity: the field phase above shifts
+   the fringe but transfers nothing to the field. A rule in which the field
+   loses what the wave gains, checked by the same interference experiment, is
+   the next step.
 3. A classical-limit experiment: increasing amplitude scale or instrument rate
    and measuring convergence of capture statistics to the classical lattice
    dynamics of a localized record.

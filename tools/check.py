@@ -27,6 +27,7 @@ RESOURCE_CONSUMERS = {
         "tests/test_catalog_contact.py",
         "tests/test_causal_interference.py",
         "tests/test_null_notices.py",
+        "tests/test_field_phase.py",
     ),
     "examples/node-vector/six-records.json": (
         "tests/test_node_vector_examples.py",

@@ -54,6 +54,18 @@ def test_interference_is_visible_at_the_output_and_removed_by_an_arm_detector(tm
         else:
             assert row["captures"] == [{"tick": 1, "x": 2}]
     assert result["retarded_source_fraction_after_arm_null"] == "9/25"
+    assert EXPERIMENT.analytic_field_phase(1)["output_port_weights"] == [12745, 2880]
+    assert EXPERIMENT.analytic_field_phase(2)["output_port_weights"] == [160225, 230400]
+    back_action = {
+        row["label"]: (row["exponent"], row["capture_probability"]) for row in result["field_phase"]
+    }
+    assert back_action == {
+        "no_coil": (0, "0"),
+        "coil_200": (0, "0"),
+        "coil_400": (1, "576/3125"),
+        "coil_800": (2, "9216/15625"),
+        "coil_400_control": (0, "0"),
+    }
     variants = {(row["variant"], row["phase"]) for row in result["null_notices"]}
     assert variants == {("arm_null", "0"), ("arm_null", "pi"), ("output_null", "pi/2")}
     for row in result["null_notices"]:

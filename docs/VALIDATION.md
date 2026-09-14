@@ -1,5 +1,37 @@
 # Validation evidence
 
+## Null notices and field-dependent phase - 2026-09-14
+
+Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99), on top of
+the interference harness below. Runtime source fingerprint of the executed
+harness: `fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a`.
+Two opt-in extensions of `causal-contact-fields-v1` were added, both inactive
+without their configuration keys: [null notices](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices)
+and the [field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase).
+The envelope output bank grew from twelve to eighteen fixed slots; the
+NodeState contract fixture was widened accordingly and no other test changed.
+
+Recorded on the interference harness: after an arm null at tick 1 with notices
+enabled, the source emits 25 of 25 units from tick 2, the next gate emits 9 and
+16, and every scale ends at 625/81; an output null at tick 7 reaches the source
+at tick 9 with scale 625/337. With a field phase on the M arm, coil fields 0,
+200, 400 and 800 select exponents 0, 0, 1 and 2 and record output weights
+`[12745, 2880]` and `[160225, 230400]`, equal to the independent Gaussian-integer
+prediction; a coil beside the far side of the source selects exponent 0.
+
+```sh
+python tools/check.py --base 1c782390456ea9629eb0f73c030095574d80e454
+PYTHONPATH=src python examples/quantum/causal_interference.py --output artifacts/causal-interference
+```
+
+The affected gate passed: **2,348 passed and five visual-only skipped**, with
+seven setup errors in `test_maxwell_configuration.py` and `test_run_live.py`
+that came from a missing render extra; after installing `.[render]` those two
+files passed (14 passed, two skipped). Ruff, formatting and strict mypy passed
+with no issues on 118 source files. Python 3.14.0rc2 on Linux. These are
+measured behaviors of configured candidates; no classical limit, energy closure
+or multi-excitation Born consistency is established.
+
 ## Two-arm interference and coupling summary - 2026-09-14
 
 Base: `1c782390456ea9629eb0f73c030095574d80e454` (main after PR #99). Runtime

@@ -43,7 +43,8 @@ and a combined `summary.json`. It is headless and records no frames.
 ## Observed results, 2026-09-14
 
 Python 3.14.0rc2, runtime source fingerprint
-`4916707db38c4f364552a24a727678698912f509a27969c4217ca02005ca6cf6`.
+`fcd527461961e59fd1295547db9318716245303b7384aa15612a4d7ca23f387a` (with the
+opt-in null notice and field phase extensions; the default rules are unchanged).
 
 ### The output detector sees the interference term
 
@@ -130,6 +131,29 @@ reaches M at tick 8 and S at tick 9, and S emits 25 from tick 9. Notices cost
 Link transit: the source recovers one tick after a one-Link null and two ticks
 after a two-Link null. This is the candidate's causal residual.
 
+### An external field on one arm shifts the fringe
+
+With `"field_phase"` in place of the fixed phase gate on M, the gate reads the
+Node's own value of a second spatial field, `vector_potential`, at its
+schedule tick (tick 2) and applies `((3 + 4i) / 5)^n` with
+`n = floor(value / 25)`. A held `coil` record at (2, 2, 1), next to M, sources
+that field; nothing else emits it. The wave's own `electric_signal` is not read.
+
+| Coil emission per tick | Coil position | Exponent n | Recorded (S, D) weights | Capture probability at D | Mean S emission, ticks 8-13 |
+| --- | --- | --- | --- | --- | --- |
+| 0 | none | 0 | none: weight zero | 0 | 25 |
+| 200 | (2, 2, 1) | 0 | none: weight zero | 0 | 25 |
+| 400 | (2, 2, 1) | 1 | [12745, 2880] | 576/3125 | 20.33 |
+| 800 | (2, 2, 1) | 2 | [160225, 230400] | 9216/15625 | 10.33 |
+| 400 | (1, 2, 1), beside S | 0 | none: weight zero | 0 | 25 |
+
+The recorded weights equal `144 ((a - 5^n)^2 + b^2)` for the D port with
+`a + bi = (3 + 4i)^n`, computed independently. The control row shows that a
+field of the same strength on the far side of the source, which does not reach
+M by the schedule tick, selects no phase. This is the classical field acting on
+the wave: a local phase at one Node, read once, with the same matrix used by
+the ordinary envelope and by the quantum owner.
+
 ## What this does and does not show
 
 - It shows that, in this candidate, the classical field emitted by a coherent
@@ -137,8 +161,12 @@ after a two-Link null. This is the candidate's causal residual.
   recombination, so the classical field carries the interference term.
 - It shows that an actual local instrument on one arm makes the later
   statistics phase independent, with only local and causally delivered inputs.
-- It does not show field back-action on amplitudes, energy closure between
-  field and matter, a continuum limit, or a derivation of the classical limit.
+- It shows, with the opt-in field phase, that an external classical field on
+  one arm shifts the fringe by an exact configured phase per field unit, and
+  that the shift is local: the same field elsewhere does nothing.
+- It does not show energy or momentum exchange between field and wave, energy
+  closure between field and matter, a continuum limit, or a derivation of the
+  classical limit.
   The mixers, the phase gate and the instrument are configured data. The
   default retarded source rule is a known departure from the conditional Born
   weights and is left visible above; the opt-in null notice removes it for one

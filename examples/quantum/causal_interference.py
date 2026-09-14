@@ -73,6 +73,80 @@ def analytic(phase, splitter="rotation"):
     }
 
 
+COIL = [2, 2, 1]
+COIL_CONTROL = [1, 2, 1]
+
+
+def gaussian_power(base, exponent):
+    real, imag = 1, 0
+    for _ in range(exponent):
+        real, imag = real * base[0] - imag * base[1], real * base[1] + imag * base[0]
+    return real, imag
+
+
+def analytic_field_phase(exponent):
+    """Port weights after the 3:4 interferometer with M phase ((3+4i)/5)^n, scaled to 625*25^n."""
+    a, b = gaussian_power((3, 4), exponent)
+    scale = 5**exponent
+    total = 625 * scale * scale
+    weight_m = 144 * ((a - scale) ** 2 + b * b)
+    return {"output_port_weights": [total - weight_m, weight_m], "exponent": exponent}
+
+
+def field_phase_configuration(coil_amount, *, coil=COIL, divisor=25):
+    """The rotation interferometer whose M phase is read from an external coil field."""
+    raw = configuration("0", which_path=False, tickets=NULL_TICKETS)
+    raw["fields"].append(
+        {
+            "name": "vector_potential",
+            "components": 1,
+            "units": "potential unit",
+            "signed": True,
+            "conserved": True,
+        }
+    )
+    raw["disturbance_types"].append(
+        {
+            "name": "coil",
+            "fields": ["vector_potential"],
+            "defaults": {"vector_potential": 0},
+            "transport": {"mode": "hold"},
+        }
+    )
+    raw["spatial_fields"].append(
+        {
+            "field": "vector_potential",
+            "baseline": 0,
+            "transport": "outward",
+            "decay": {"retain_numerator": 1, "retain_denominator": 2},
+        }
+    )
+    raw["emissions"].append(
+        {
+            "type": "coil",
+            "field": "vector_potential",
+            "amount": coil_amount,
+            "source": True,
+            "budget": 100000,
+        }
+    )
+    if coil_amount:
+        raw["seeds"].append({"position": list(coil), "type": "coil"})
+    raw["event_program"]["domains"][0]["phases"][1] = [
+        {
+            "register_indices": [1],
+            "field_phase": {
+                "field": "vector_potential",
+                "divisor": divisor,
+                "vacuum": 5,
+                "unit": [3, 4],
+                "max_exponent": 4,
+            },
+        }
+    ]
+    return raw
+
+
 def configuration(phase, *, which_path, tickets, splitter="rotation", null_notices=False):
     raw = json.loads(TEMPLATE.read_text(encoding="utf-8"))
     mixer, inverse = SPLITTERS[splitter]
@@ -121,9 +195,10 @@ def run_case(name, raw, output):
     assert report["status"] == "completed", report["error"]
     assert report["accounting_balanced_at_every_completed_tick"]
     escaped = -report["escaped_totals"]["electric_signal"][0]
+    any_escape = any(any(values) for values in report["escaped_totals"].values())
     # The strict flag requires that nothing left the open boundary; escape is
     # accounted separately and does not change any decision or emission.
-    assert report["conserved_at_every_completed_tick"] or escaped > 0
+    assert report["conserved_at_every_completed_tick"] or any_escape
     assert report["final_totals"]["charge"] == [-1] and report["final_totals"]["mass"] == [1]
     resolver = report["computation"]["resolver"]
     decisions = [
@@ -152,6 +227,7 @@ def run_case(name, raw, output):
         "final_weight_scales": {
             str(e["position"][0]): e["weight_scale"] for e in resolver["source_envelopes"]
         },
+        "field_phase_choices": resolver.get("field_phase_choices", []),
     }
 
 
@@ -294,6 +370,47 @@ def run_experiment(output):
     assert case["final_weight_scales"] == {"1": [625, 337], "2": [625, 337], "3": [625, 337]}
     notices.append({"phase": "pi/2", "variant": "output_null", "case": case})
 
+    # Opt-in field-dependent phase: an external coil field on the M arm selects
+    # the phase ((3+4i)/5)^n at the gate's schedule tick, n = floor(value / 25).
+    back_action = []
+    for label, amount, coil in (
+        ("no_coil", 0, COIL),
+        ("coil_200", 200, COIL),
+        ("coil_400", 400, COIL),
+        ("coil_800", 800, COIL),
+        ("coil_400_control", 400, COIL_CONTROL),
+    ):
+        case = run_case("field_phase_" + label, field_phase_configuration(amount, coil=coil), output)
+        choices = case["field_phase_choices"]
+        assert len(choices) == 1 and choices[0]["epoch"] == 1, choices
+        exponent = choices[0]["exponent"]
+        expected = analytic_field_phase(exponent)
+        decisions = [d for d in case["uncertain_decisions"] if d["register"] == 2]
+        if expected["output_port_weights"][1] == 0:
+            assert not decisions
+            measured = expected["output_port_weights"]
+        else:
+            assert len(decisions) == 1 and decisions[0]["weights"] == expected["output_port_weights"]
+            measured = decisions[0]["weights"]
+        total = sum(measured)
+        steady = Fraction(steady_source_emission(case))
+        predicted = Fraction(FULL_EMISSION * measured[0], total)
+        assert abs(steady - predicted) * len(RECOMBINED_TICKS) < 1, (steady, predicted)
+        back_action.append(
+            {
+                "label": label,
+                "coil_amount": amount,
+                "coil": coil,
+                "exponent": exponent,
+                "analytic": expected,
+                "measured_output_weights": measured,
+                "capture_probability": str(Fraction(measured[1], total)),
+                "measured_source_emission_after_recombination": str(steady),
+                "case": case,
+            }
+        )
+    assert [row["exponent"] for row in back_action] == [0, 0, 1, 2, 0]
+
     return {
         "status": "pass",
         "python": platform.python_version(),
@@ -307,11 +424,13 @@ def run_experiment(output):
         "which_path": which_path,
         "retarded_source_fraction_after_arm_null": str(Fraction(9, FULL_EMISSION)),
         "null_notices": notices,
+        "field_phase": back_action,
         "limits": [
             "The 3:4 mixer gives visibility from 9/25 and 16/25; the balanced Hadamard with vacuum 1+i gives full visibility.",
             "Without null notices the source weights after a null are retarded and unnormalized: S keeps emitting 9 of 25.",
             "With null notices the factor 1/(1-p) reaches the other envelopes after Link transit; exact for one excitation.",
-            "One configured domain and one conserved inventory; no field back-action on amplitudes.",
+            "One configured domain and one conserved inventory.",
+            "Field back-action is a configured local phase on one arm; it transfers no energy or momentum to the field.",
             "Finite range of ticks and one Link per tick; no continuum limit is measured.",
         ],
     }

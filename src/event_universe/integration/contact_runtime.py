@@ -238,7 +238,12 @@ class ContactEventResolver(NativeEventResolver):
     def propagation_phase(
         self, tick: int, domain: ContactDomain
     ) -> tuple[tuple[LocalUnitary, tuple[int, ...]], ...]:
-        return domain.phases[(tick - 1) % len(domain.phases)]
+        operations = []
+        for rule, registers in domain.phases[(tick - 1) % len(domain.phases)]:
+            if not isinstance(rule, LocalUnitary):
+                raise ValueError("field phases require the causal source owner")
+            operations.append((rule, registers))
+        return tuple(operations)
 
     def begin_tick(self, tick: int) -> None:
         if tick != self.space.tick + 1:
