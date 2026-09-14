@@ -1634,3 +1634,25 @@ accounting balances for them.
 
 Quanta that cancel are not redistributed; they continue and escape. That is the
 candidate's open question, recorded in `POSTULATES.md`.
+
+## Kerengonen lottery capture — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. `kerengonen.capture`
+selects how an absorber takes a ray: `share` (the coherent share of the
+amount, truncated toward zero) or `lottery` (the whole ray or nothing, drawn by
+a local ticket seeded by `capture_seed` and salted by the ray met). The ticket
+state is a record row, `absorb_tickets`; the same seed and rays repeat the same
+clicks.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,357 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: the ticket rule and its bound; in-phase and dark Nodes take 18 and 2 quanta exactly like the share rule; at a quarter turn two seeds take between 2 and 16 whole single quanta where the share rule takes 2, with the audit closed on 800 quanta; unknown capture, a seed without the lottery and a seed at the modulus rejected |
+| Single-quantum double slit | 96 ticks, one quantum per ray, two seeds: 154 at the center, 4 at the half turn and 152 at a one-lamp Node for both seeds and for the share rule; 127 to 135 at the quarter turn and 60 to 121 in the wings for the lottery against 2 to 6 for the share rule; absorbed totals 2,354 for either seed against 578; quanta closed in all three worlds |
+| Unchanged | With `capture` absent the share rule and every earlier result stand |
+| Visualization | Not requested or generated |
+
+At full or zero coherence the lottery and the share rule are the same law; at
+partial coherence the lottery turns the coherent share into a click rate on
+whole quanta. The ticket is a configured local sequence, not a claim about
+physical randomness.

@@ -27,8 +27,9 @@ plain ray field without the key, where amounts simply add.
 
 ## Observed outcomes on 2026-09-14
 
-Runtime source SHA-256 `07ecc6729b3d...` (full value in `summary.json`),
-Python 3.14, headless, 48 ticks. `tests/test_kerengonen.py` checks the same
+Runtime source SHA-256 `07ecc6729b3d...` for the 16-quanta worlds and
+`0682c2926013...` (probe) for the single-quantum lottery worlds (full values
+in `summary.json`), Python 3.14, headless, 48 ticks. `tests/test_kerengonen.py` checks the same
 coherence rule on two lamps three links from a Node and the composition of
 this probe.
 
@@ -60,6 +61,33 @@ ran 24 ticks: the `(16, +-3)` headings of both lamps meet at the center after
 closed with zero residual, energy 5,632 in the world plus 512 escaped against
 6,144 initial, momentum (-2112, 0, 0) in the world against (2112, 0, 0)
 escaped.
+
+### Single quanta, whole or nothing: the fringe built click by click
+
+The same lamps fire one quantum per ray for 96 ticks, and the field selects
+`"capture": "lottery"`: a screen Node takes each whole quantum or leaves it,
+by a local ticket drawn against the coherent share. Two seeds are run, and
+the share rule on the same single quanta for comparison.
+
+| Screen y | Path difference | Lottery, seed 1 | Lottery, seed 2 | Share rule |
+| --- | --- | --- | --- | --- |
+| 0 | 0 | 154 | 154 | 154 |
+| +-1 | +-2 | 133, 127 | 135, 127 | 2 |
+| +-2 | +-4 | 4 | 4 | 4 |
+| +-3 | +-6 | 71, 79 | 84, 62 | 6 |
+| +-5 | +-6 | 89, 93 | 106, 96 | 6 |
+| +-7 | +-6 | 152 | 152 | 152 |
+| +-10 | +-6 | 116, 121 | 108, 113 | 6 |
+
+Where the coherence is one or zero the two seeds agree exactly with the share
+rule: 154 at the center, 4 at the half turn, 152 at `y = +-7`, a Node that
+only ever sees one lamp's rays at a time. Where the coherence is one half the
+share rule truncates a lone quantum's half share to nothing and takes 2 to 6,
+while the lottery takes whole quanta at that rate and the two seeds scatter
+around each other. The absorbed totals are 2,354 for either seed against 578
+for the share rule; every quantum is accounted for in all three worlds. This
+is the fringe as single detections: each quantum lands whole at one Node, and
+the pattern is in how often.
 
 ## Conclusion
 
