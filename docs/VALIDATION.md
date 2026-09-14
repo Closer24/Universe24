@@ -2218,6 +2218,7 @@ combination of the quantum owner's two-wing experiment, read as phases on a
 | Quantum owner, same settings (two-wing Bell experiment) | `S = 14/5` |
 | Closure | every world's quanta in records, in flight and escaped equal the initial stock; the audited world passes the local conservation audit with 21504 source and 21504 lamp quanta absorbed at each analyzer |
 | New tests | `tests/test_kerengonen_bell.py`: five cases, 7.3 seconds |
+| Affected gate against `origin/main`, including the merged two-wing Bell test, gallery and isotropy probe | 339 passed, four visual-only skipped, in 62 seconds; ruff lint and format passed |
 
 Runtime source SHA-256
 `f12f349495c0bfd156390a79a7f49fc5df9c368117b25604e212fe68798e676a`, Python
