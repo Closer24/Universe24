@@ -250,11 +250,15 @@ How an absorber takes a ray is a run-time choice, `"capture"`. The default
 zero, and forwards the rest: a single quantum at a half-coherent Node is never
 taken. `"lottery"` takes the whole ray or nothing: the record advances a local
 ticket, seeded by `"capture_seed"` and salted by the ray it meets, and takes
-the ray when the ticket falls below the coherent share. At full coherence the
-two are identical; at partial coherence the lottery builds the fringe click
-by click, one whole quantum at a time, with the coherent share as its rate.
-The ticket state is a record row (`absorb_tickets`), never a global number,
-and the same seed with the same rays repeats the same clicks.
+the ray when the ticket's draw (its square modulo the ticket modulus, so
+that two records that met the same rays do not draw a fixed distance apart)
+falls below the coherent share. At full coherence the two are identical; at
+partial coherence the lottery builds the fringe click by click, one whole
+quantum at a time, with the coherent share as its rate. The ticket state is a
+record row (`absorb_tickets`), never a global number, and the same seed with
+the same rays repeats the same clicks. An absorb rule may add
+`"capture_salt": k` to start its ticket at the seed plus `k`, so two
+detectors on one field draw their own sequences, two devices with two dice.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because
@@ -322,6 +326,11 @@ A ray field may also set `"pace": [n, d]` with `n <= d`: the fastest heading
 then hops `n` links every `d` ticks, on either metric, by the same wait. A
 pace is never faster than one link per tick; it exists so that a matter wave
 can be slower than the signals that chase it.
+
+A funded ray emission may also name `"heading": [x, y, z]`, one of the
+field's headings: every ray it emits leaves on that heading instead of
+sweeping the sequence, a directed emitter. It cannot be combined with a
+mirror, which chooses its heading from what it absorbed.
 
 ### Claim and gather (`claim-gather-ray-field-v1`)
 

@@ -36,6 +36,7 @@ from event_universe.core.spatial_state import (
     phase_of_sum,
     ray_salt,
     ray_stock,
+    ticket_draw,
     validate_claims,
     validate_rays,
 )
@@ -220,7 +221,10 @@ class SpatialLaw:
                     continue
                 tickets = list(record.absorb_tickets)
                 if lottery and len(tickets) != len(self.absorptions):
-                    tickets = [pack((definition.capture_seed,)) for _ in self.absorptions]
+                    tickets = [
+                        pack(((definition.capture_seed + item.capture_salt) % TICKET_MODULUS,))
+                        for item in self.absorptions
+                    ]
                 ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 absorbed_terms: list[tuple[int, int]] = []
                 carried_share, carried_advance, carried_heading = 0, -1, -1
@@ -260,7 +264,7 @@ class SpatialLaw:
                         # Whole ray or nothing: the local ticket draws against the share.
                         ticket = next_ticket(ticket, ray_salt(ray))
                         meter.charge("evaluate")
-                        if checked_work(ticket * share_denominator) >= checked_work(
+                        if checked_work(ticket_draw(ticket) * share_denominator) >= checked_work(
                             share_numerator * TICKET_MODULUS
                         ):
                             share = 0
@@ -524,6 +528,13 @@ class SpatialLaw:
                             meter.charge("route")
                             image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
                             new_rays = (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),)
+                    elif rule.heading is not None:
+                        # A directed emitter: the whole amount on one fixed heading.
+                        cursor = cursor_before
+                        new_rays = ()
+                        if unpack(amount)[0]:
+                            meter.charge("route")
+                            new_rays = (Ray(rule.heading, (0, 0, 0), unpack(amount)[0], phase, advance),)
                     else:
                         new_rays, cursor = emit_rays(
                             unpack(amount)[0], cursor_before, definition, meter, phase, advance

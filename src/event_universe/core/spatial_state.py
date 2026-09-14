@@ -255,6 +255,9 @@ class EmissionDefinition:
     # when carried, the train of what the record last absorbed (a Huygens slit).
     train_field: int | None = None
     train_carried: bool = False
+    # Ray fields only: emit every ray on this one heading of the sequence instead
+    # of sweeping the sequence (a directed emitter). None sweeps.
+    heading: int | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -278,6 +281,9 @@ class SpatialCouplingDefinition:
     # Absorb mode on a claim field only: taking any share of a train's ray opens
     # a claim at this Node, and the record gathers that train's homing rays whole.
     claim: bool = False
+    # Absorb mode with the lottery only: added to the field's capture seed for
+    # this rule's ticket, so two detectors draw their own sequences.
+    capture_salt: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -669,6 +675,16 @@ def next_ticket(state: int, salt: int) -> int:
     if not 0 <= state < TICKET_MODULUS:
         raise ValueError("absorb ticket state must stay below the ticket modulus")
     return (state * 48271 + salt + 1) % TICKET_MODULUS
+
+
+def ticket_draw(state: int) -> int:
+    """The number a ticket state draws: its square modulo the ticket modulus.
+
+    The state itself is affine in its salts, so two records that met the same
+    rays would draw numbers a fixed distance apart; the square breaks that, so
+    two detectors with their own seeds draw independently for every ray.
+    """
+    return checked_work(state * state) % TICKET_MODULUS
 
 
 def ray_salt(ray: Ray) -> int:

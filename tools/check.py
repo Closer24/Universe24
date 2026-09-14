@@ -56,6 +56,7 @@ RESOURCE_CONSUMERS = {
     "examples/kerengonen-mirror/run_experiments.py": ("tests/test_kerengonen_mirror.py",),
     "examples/euclidean-pace/run_experiments.py": ("tests/test_euclidean_pace.py",),
     "examples/claim-gather/run_experiments.py": ("tests/test_claim_gather.py",),
+    "examples/bell-chsh/run_experiments.py": ("tests/test_bell_chsh.py",),
     "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
     "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),

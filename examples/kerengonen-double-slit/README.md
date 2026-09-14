@@ -72,20 +72,23 @@ the share rule on the same single quanta for comparison.
 | Screen y | Path difference | Lottery, seed 1 | Lottery, seed 2 | Share rule |
 | --- | --- | --- | --- | --- |
 | 0 | 0 | 154 | 154 | 154 |
-| +-1 | +-2 | 133, 127 | 135, 127 | 2 |
+| +-1 | +-2 | 122, 128 | 121, 118 | 2 |
 | +-2 | +-4 | 4 | 4 | 4 |
-| +-3 | +-6 | 71, 79 | 84, 62 | 6 |
-| +-5 | +-6 | 89, 93 | 106, 96 | 6 |
+| +-3 | +-6 | 79, 82 | 85, 81 | 6 |
+| +-5 | +-6 | 93, 96 | 96, 110 | 6 |
 | +-7 | +-6 | 152 | 152 | 152 |
-| +-10 | +-6 | 116, 121 | 108, 113 | 6 |
+| +-10 | +-6 | 112, 110 | 109, 101 | 6 |
 
 Where the coherence is one or zero the two seeds agree exactly with the share
 rule: 154 at the center, 4 at the half turn, 152 at `y = +-7`, a Node that
 only ever sees one lamp's rays at a time. Where the coherence is one half the
 share rule truncates a lone quantum's half share to nothing and takes 2 to 6,
 while the lottery takes whole quanta at that rate and the two seeds scatter
-around each other. The absorbed totals are 2,354 for either seed against 578
-for the share rule; every quantum is accounted for in all three worlds. This
+around each other. The absorbed totals are 2,340 and 2,347 for the two seeds
+against 578 for the share rule; every quantum is accounted for in all three
+worlds. (Re-measured on 2026-09-14 after the lottery began drawing the
+square of its ticket state; the first measurement read 2,354 for either
+seed, with the same exact agreement where the coherence is one or zero.) This
 is the fringe as single detections: each quantum lands whole at one Node, and
 the pattern is in how often.
 

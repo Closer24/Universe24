@@ -1877,9 +1877,32 @@ opening wins, then the lower origin, and the later root yields.
 | `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,446 tests with five visualization skips |
 | New tests | `tests/test_claim_gather.py`: the isotropic gather tick by tick (first claim at tick 26, 1,875 Nodes claimed, 64 quanta at the screen with momentum zero, closed), the same world without a claim, a rival that clicks first and gathers 62 while the later root keeps 2, one double-slit landing at one root, claim and homing validation, rejected configurations, the identity, a quarter pace, and the event audit closing through capture, flood and gather (819,183 Node events on a 13 x 13 x 3 world, 13 gathered and 3 escaped before the flood) |
 | Isotropic gather | 64 quanta at a quarter link per tick, screen six links away: first claim at tick 26, every quantum at the screen by tick 57, screen momentum (0, 0, 0), nothing escaped, closed at every tick; without the claim the screen keeps its line's 8; a rival four links away clicks first at tick 18, gathers 62 by tick 39 and the farther screen keeps 2 |
-| Double-slit landing | 48 capture seeds on the Euclidean metric at half pace with 1/256 lottery clicks: 48 of 48 landed at one root with nothing in flight, closed; winner holds 0.585 to 1.0 of what reached the screen (median 0.891); landings by band against the fringe's share: `\|y\| <= 1` 6 of 8.2 expected, `2..3` 11 of 16.9, `4..5` 10 of 9.5, `>= 6` 21 of 13.5; on the links metric the same run put no landing within `\|y\| <= 1` because the Manhattan front reaches the outer Nodes first |
+| Double-slit landing | 48 capture seeds on the Euclidean metric at half pace with 1/256 lottery clicks: 48 of 48 landed at one root with nothing in flight, closed; winner holds 0.585 to 1.0 of what reached the screen (median 0.891); landings by band against the fringe's share: `\|y\| <= 1` 6 of 8.2 expected, `2..3` 11 of 16.9, `4..5` 10 of 9.5, `>= 6` 21 of 13.5; on the links metric the same run put no landing within `\|y\| <= 1` because the Manhattan front reaches the outer Nodes first. Re-measured the same day with the lottery drawing the square of its ticket state: 48 of 48 landed, winner 0.614 to 0.992 (median 0.87), bands 5, 7, 13 and 23 |
 | Visualization | Not requested or generated |
 
 The landing is whole and takes time; the first-click bias toward the Nodes
 the wave reaches first, and the pieces kept by captures that raced the
 flood, are measured limits of the rule, not hidden by it.
+
+## Bell's test on the ray: CHSH below the local bound — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. A funded ray emission may name a fixed
+`heading` (a directed emitter); an absorb rule may add `capture_salt` so two
+detectors on one field draw their own ticket sequences; and the lottery now
+draws the square of its ticket state, because the state is affine in its
+salts and two records that met the same rays drew numbers a fixed distance
+apart. The [Bell probe](../examples/bell-chsh/README.md) puts two phased rays
+from one source through plus/minus detectors whose capture probability is the
+Kerengonen coherence with a reference ray at the setting phase.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,450 tests with five visualization skips |
+| New tests | `tests/test_bell_chsh.py`: aligned and opposite hidden phases land deterministically for three seeds, closed; one seed over the 64 hidden phases gives S = 1.5001 and E(0, 0) = -0.5312, below 2 and against the quantum 2.828; capture_salt at the modulus or without the lottery rejected. `tests/test_kerengonen.py`: a directed emitter fires every ray along -x and closes, a heading outside the list or with a mirror is rejected |
+| CHSH | 16 seeds x 64 hidden phases x 4 setting pairs: E = -0.422, 0.326, -0.387, -0.346 against the two-lottery prediction -0.354, 0.354, -0.354, -0.354 and the quantum -0.707, 0.707, -0.707, -0.707; S = 1.481 (predicted 1.414, local bound 2, quantum 2.828); E(0, 0) = -0.525 (predicted -0.5); plus rates 0.47 to 0.51; no missing pair of 4,096; every run closed |
+| Malus's law | Plus rate over 32 seeds at hidden phase 0, 8, 16, 24, 32: 1.0, 0.84, 0.53, 0.12, 0.0 against cos^2 1.0, 0.85, 0.5, 0.15, 0.0 |
+| Re-measured under the squared draw | Single-quantum double slit, two seeds: 154 at the center, 4 at the half turn and 152 at the one-lamp Node as before; 122/128 and 121/118 at y = +-1, 79/82 and 85/81 at +-3, 93/96 and 96/110 at +-5, 112/110 and 109/101 at +-10; totals 2,340 and 2,347 against 578 for the share rule (first measurement 2,354 each); the claim-and-gather landing ensemble is re-measured in its own entry below |
+| Visualization | Not requested or generated |
+
+A local model's answer, as the theorem requires: the ray reproduces Malus's
+law, the shared origin and no-signaling, and not the correlation beyond 2.

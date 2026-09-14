@@ -1059,6 +1059,7 @@ def _emissions(
                 "kerengonen_mirror",
                 "dissolve",
                 "train_field",
+                "heading",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1168,6 +1169,22 @@ def _emissions(
                 train_field = _index(obj["train_field"], _names(fields), "emission.train_field")
                 if train_field not in owned or fields[train_field].components != 1:
                     raise ValueError("train_field must be a scalar owned by the emitting type")
+        fixed_heading: int | None = None
+        if "heading" in obj:
+            if not spatial[index].rays:
+                raise ValueError("emission.heading requires a ray field")
+            if mirror is not None:
+                raise ValueError("emission.heading cannot be combined with kerengonen_mirror")
+            fixed = cast(
+                tuple[int, int, int],
+                tuple(
+                    _integer(v, "emission.heading component")
+                    for v in _array(obj["heading"], "emission.heading", 3, 3)
+                ),
+            )
+            if fixed not in spatial[index].headings:
+                raise ValueError("emission.heading must be one of the field's headings")
+            fixed_heading = spatial[index].headings.index(fixed)
         if any(disturbances[index].transport.mode == "split" for index in kinds):
             raise ValueError("an emitting disturbance must hold or move as a whole record")
         if any(
@@ -1198,6 +1215,7 @@ def _emissions(
                 dissolve_over,
                 train_field,
                 train_carried,
+                fixed_heading,
             )
         )
     return tuple(result)
@@ -1271,6 +1289,7 @@ def _spatial_couplings(
                 "fraction",
                 "fraction_denominator",
                 "claim",
+                "capture_salt",
             },
             required,
         )
@@ -1288,13 +1307,26 @@ def _spatial_couplings(
                 obj,
                 "spatial coupling",
                 required
-                | {"type", "requires", "momentum_field", "fraction", "fraction_denominator", "claim"},
+                | {
+                    "type",
+                    "requires",
+                    "momentum_field",
+                    "fraction",
+                    "fraction_denominator",
+                    "claim",
+                    "capture_salt",
+                },
                 required,
             )
             definition = next((d for d in spatial if d.field == target), None)
             if definition is None or not definition.rays or target not in owned:
                 raise ValueError("absorb requires a ray field that the absorbing type also carries")
             claim = _boolean(obj.get("claim", False), "spatial coupling.claim")
+            capture_salt = _integer(obj.get("capture_salt", 0), "spatial coupling.capture_salt", 0)
+            if capture_salt and definition.capture != "lottery":
+                raise ValueError("capture_salt requires the lottery capture")
+            if capture_salt >= TICKET_MODULUS:
+                raise ValueError("capture_salt must be below the ticket modulus")
             if claim and not definition.claims:
                 raise ValueError("a claiming absorb rule requires a ray field with claims")
             if schema_version != 1:
@@ -1337,6 +1369,7 @@ def _spatial_couplings(
                     fraction,
                     fraction_denominator,
                     claim,
+                    capture_salt,
                 )
             )
             continue

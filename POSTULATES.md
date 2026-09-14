@@ -344,6 +344,17 @@ separate, explicitly selected historical contracts.
 A future full quantum layer must preserve both consistent joint results and the
 inability to use those correlations to send information faster than c.
 
+The ray was put to Bell's test. Two rays from one Node share a hidden phase,
+each side's detector takes its ray with the coherence of that phase against a
+local reference (Malus's law on the Kerengonen coherence), and the
+[CHSH probe](examples/bell-chsh/README.md) measures the correlations. The
+result is what a local model must give: S near the value the two independent
+lotteries predict, below the local bound 2, and far from the quantum 2 sqrt 2.
+The ray explains the shared origin, the no-signaling and the collapse's
+timing; it cannot explain the correlations beyond the bound, and no local
+rule on this lattice can. That excess is the open question of this section,
+answered in this repository only by the explicitly nonlocal quantum query.
+
 Until these requirements have been tested for the proposed laws, do not claim that
 the simulator solves quantum collapse or entanglement consistency.
 

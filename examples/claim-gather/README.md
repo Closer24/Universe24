@@ -58,29 +58,32 @@ share without a claim:
 
 | Screen band | Share of the wave's fringe | Landings expected of 48 | Landings measured |
 | --- | --- | --- | --- |
-| `\|y\| <= 1` | 0.170 | 8.2 | 6 |
-| `2 <= \|y\| <= 3` | 0.351 | 16.9 | 11 |
-| `4 <= \|y\| <= 5` | 0.197 | 9.5 | 10 |
-| `\|y\| >= 6` | 0.281 | 13.5 | 21 |
+| `\|y\| <= 1` | 0.170 | 8.2 | 5 |
+| `2 <= \|y\| <= 3` | 0.351 | 16.9 | 7 |
+| `4 <= \|y\| <= 5` | 0.197 | 9.5 | 13 |
+| `\|y\| >= 6` | 0.281 | 13.5 | 23 |
 
-Landings by screen Node: -11: 2, -10: 1, -9: 1, -8: 4, -7: 5, -6: 3, -5: 3,
--4: 3, -3: 2, -2: 1, 0: 3, 1: 3, 2: 4, 3: 4, 4: 1, 5: 3, 6: 2, 7: 2, 10: 1.
+Landings by screen Node: -9: 2, -8: 4, -7: 6, -6: 3, -5: 3, -4: 4, -3: 3,
+-2: 1, 0: 3, 1: 2, 2: 2, 3: 1, 4: 2, 5: 4, 6: 1, 7: 3, 8: 2, 9: 1, 11: 1
+(measured with the lottery drawing the square of its ticket state; the first
+measurement, drawing the state itself, put 6, 11, 10 and 21 in the bands).
 The wave's fringe on the same screen (coherent share, no claim): 2,340 and
 2,357 at `y = -3` and `3`, 1,516 at the center, 1,130 and 1,145 at `y = -1`
 and `1`, about 1,100 at `y = -5, -4, 4, 5`, 300 to 620 beyond; 22,269 of the
 479,232 quanta reached the screen, 425,661 stayed in the wall and the slits.
 
 Every one of the 48 runs landed: one surviving root, nothing in flight at the
-end, matter closed. The winning record holds between 0.585 and 1.0 of what
-reached the screen, median 0.891; the rest is the clicks other screen Nodes
+end, matter closed. The winning record holds between 0.614 and 0.992 of what
+reached the screen, median 0.87; the rest is the clicks other screen Nodes
 drew in the ticks before the winner's flood reached them and their claims
-yielded (from 2,464 to 20,458 quanta in the first ten runs), and 577 to 3,946
+yielded (from 471 to 20,406 quanta in the first ten runs), and 729 to 2,485
 quanta per run escaped past the screen line before any click. The landings
-follow the fringe within the sample in the two middle bands, fall short at
-the center and exceed it beyond `|y| = 6`: the outer Nodes lie nearest the
-slits, so the wave reaches them a few ticks earlier even on the Euclidean
-metric, and the first click is drawn while only they see the wave. On the
-links metric the same run put no landing at all within `|y| <= 1`.
+sit inside the wave's fringe but lean outward: short of the fringe's share at
+the center and in the bright band at `|y| = 2, 3`, above it at `4, 5` and
+beyond `6`. The outer Nodes lie nearest the slits, so the wave reaches them a
+few ticks earlier even on the Euclidean metric, and the first click is drawn
+while only they see the wave. On the links metric the same run put no
+landing at all within `|y| <= 1`.
 
 ## Conclusion
 

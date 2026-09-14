@@ -644,6 +644,31 @@ def test_the_mirror_emission_is_validated():
         parse_initial_state(raw)
 
 
+def test_a_directed_emitter_fires_one_heading_and_is_validated():
+    raw = mirror_document()
+    raw["emissions"][0]["heading"] = [-1, 0, 0]
+    world = Simulation(parse_initial_state(raw))
+    initial = world.totals()["quanta"][0]
+    for _ in range(6):
+        world.step()
+    headings = {
+        ray.heading
+        for node in world.inventory_view().nodes
+        for ray in (node.rays[0] if node.rays else ())
+    }
+    # Every ray of the lamp went along -x (heading index 1); nothing swept +x.
+    assert headings == {1}
+    assert world.totals()["quanta"][0] + world.escaped_totals()["quanta"][0] == initial
+    raw = mirror_document()
+    raw["emissions"][0]["heading"] = [0, 1, 0]
+    with pytest.raises(ValueError, match="one of the field's headings"):
+        parse_initial_state(raw)
+    raw = mirror_document()
+    raw["emissions"][1]["heading"] = [1, 0, 0]
+    with pytest.raises(ValueError, match="kerengonen_mirror"):
+        parse_initial_state(raw)
+
+
 def test_a_thick_screen_absorbs_what_a_thin_one_lets_pass():
     import importlib.util
 

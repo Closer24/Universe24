@@ -169,7 +169,9 @@ front and a fringe in Euclidean path difference. A ray field with `claim`
 claim floods the world at link speed, rays of that train turn homeward along
 the flood's parent ports, and the record takes them whole; the
 [claim and gather probe](../examples/claim-gather/README.md) lands a whole
-particle at one Node.
+particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
+two phased rays from one source through CHSH detectors built from the
+coherence and the lottery, and measures S below the local bound 2.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.

@@ -43,7 +43,10 @@ difference on the [Euclidean pace](SPATIAL_FIELDS.md#euclidean-pace-metric-eucli
 (`euclidean-ray-pace-v1`), where rays wait at Nodes and are slower, never
 faster, than one link per tick; the lottery ticket is a configured local
 sequence, not physical randomness; the event audit re-measures every owner per
-event, so audited worlds stay small.
+event, so audited worlds stay small; and the ray is a local model, so
+[Bell's test](../examples/bell-chsh/README.md) on it stays below the CHSH
+bound 2, where the quantum value is 2 sqrt 2: shared origin and no-signaling
+it gives, the excess correlation it cannot.
 The `|p| / D` rule and every mixer are configured laws, measured to hold, not
 derived. Exact sources and completed checks are in
 [validation evidence](VALIDATION.md).
