@@ -1,5 +1,50 @@
 # Highlights implementation coverage
 
+## Discrete space, classical mechanics and light - 2026-09-14
+
+Reviewed main: `0299cb98bf07f00dc10bad858b674ded449be03e`.
+
+Live [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
+now includes section **1.2.8, Discrete space as a bridge between mechanics and
+light**. The targeted addition preserves the original tab and adjacent sections.
+A trusted file-backed read found no protected controls; connector readback
+verified the text, heading, six native bullets and eight source links, including
+their inherited typography. The verified revision is
+`ANLCKQnABgyxqtiJn8wArsNKkX0YrpvZ_aAX8xLsUDpWQSK7uhoaEdZbA6M8rFZXGZEzbdH1ZT3XyE9L35kbJyOz9lwDerOKvQfnxSVCd8k`.
+
+Universe24 provides a common discrete setting for classical mechanical records,
+finite quantum states and ray-like radiation: Nodes hold state, Links carry
+arrivals, and Events change the participating owners. The current experiments
+connect wave interference, individual detections and effective classical behavior
+within this setting. This makes a light-beam model a useful meeting point between
+wave behavior and mechanical exchange. The ray and quantum-register candidates
+remain distinct representations; a shared setting is not yet a single derived
+theory of matter and light.
+
+The role of discreteness is concrete: geometry determines available paths,
+neighboring encounters and integer transit times. Given a configured phase
+advance per Link, different path lengths produce different phases at a detector.
+The fringe is measured after local propagation and capture; no screen pattern is
+prescribed. Discrete geometry alone does not supply the phase/coherence rule,
+quantization of the carried amount or the capture instrument. Those are explicit
+model choices whose consequences can be tested.
+
+| Connection demonstrated | Recorded evidence | Necessary qualification |
+| --- | --- | --- |
+| Optical wave behavior from local ray transport | [Kerengonen double slit](../examples/kerengonen-double-slit/README.md): one lamp illuminates two absorbing/re-emitting slits; phase changes the screen pattern, while the plain field gives the sum of the two single-slit controls | Carried phase, coherent capture and the slit re-emission rule are configured |
+| Whole detections and a classical mean flux | [Counting probe](../examples/quantum-classical/README.md): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
+| Radiation and mechanical exchange | [Local conservation contract](LOCAL_CONSERVATION.md) and [runner validation](VALIDATION.md#kerengonen-guards-reconciled-with-current-main---2026-09-14): funded emission, recoil, absorption and escaped rays close the declared energy/momentum accounting | The quantity definitions and exchange laws are explicit; this is not complete electromagnetic dynamics |
+| Coherent evolution and classical probability | [Quantum-to-classical probes](../examples/quantum-classical/README.md) and [claim check](../examples/quantum/quantum_classical_check.md): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
+| Matter-wave wavelength and momentum | [De Broglie probe](../examples/de-broglie/README.md): momenta 16, 32 and 64 move the first dark fringe to 4, 2 and 1 | The phase advance `abs(p) / 4` is supplied; the inverse relation is propagated and measured, not derived from spatial discreteness |
+| Quantum contact and later ordinary motion | [Recurrent contacts](RECURRENT_QUANTUM_CONTACT.md) and [local moment response](../examples/quantum/local_moment_exchange.md): local encounters can continue a wave, create a new one or localize a record; a later local exchange can produce slow motion | Finite instruments and the response law are supplied; complete field/matter closure and an emergent classical trajectory remain open |
+
+The supported highlight is therefore a tested bridge between selected classical,
+quantum and optical behaviors on discrete space, with a clear route for stronger
+tests. Deriving their common microscopic law, physical constants and full
+matter/field dynamics from discreteness remains a research goal. The linked
+reports retain their own tested source identities; this documentation update
+does not represent them as fresh executions on the reviewed main commit.
+
 ## Signed relative field phase - 2026-09-14
 
 The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
