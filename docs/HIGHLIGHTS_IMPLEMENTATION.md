@@ -459,6 +459,32 @@ treating its omissions as current gaps.
 - Preserve source, specifications, skills and original configurations in Git.
   Generated results expire under the 24-hour policy; idle cleanup needs a scheduler.
 
+## Relativity probes of 2026-09-14
+
+Configuration-only probes in [examples/relativity-probes](../examples/relativity-probes/README.md)
+test what section 4.4's computational field yields when a mass emits it and
+bodies exchange momentum with its delivered flux (the sign is supplied, as for
+charge). Findings, each a branch result and not a law:
+
+- Under 4.4 and 7.2: the momentum coupling reproduces the Newtonian velocity law
+  exactly (a body at c/2 deflects four times more than light at the same impact
+  parameter) but not the 1/b law: the lattice far field along an axis column
+  falls faster than 1/r² under `"straight"` allocation phases (b = 3/7 ratio 18
+  instead of 2.33).
+- Under 4.4: with the load defined as the stock present at a node, the source
+  node's own emission is its own load, so a strong source throttles itself and
+  the far field never forms under the shared clock. The directional delay does
+  not have this problem. A load definition that excludes a node's own emission
+  is an open design choice.
+- Under 5 and the local observer: no kinematic time dilation. Twin clocks agree
+  at every speed under any budget above the moving cycle's cost; a tighter
+  budget slows the traveller linearly in moves, not as √(1−v²).
+- Under 4.7 and 10.6: a localized quantum domain hops one Link per world tick
+  regardless of the local computation load, while a classical carrier on the
+  same path is delayed 6 → 13 ticks. The quantum gate clock does not read the
+  node's delay; this is an equivalence-principle gap of the profile, not
+  configurable.
+
 ## Proposed amendments of 2026-09-13
 
 Status: applied to the live Google document on 2026-09-13 as an appended

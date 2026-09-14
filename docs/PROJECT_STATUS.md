@@ -139,6 +139,14 @@ Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
 Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
+Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
+[examples/relativity-probes](../examples/relativity-probes/README.md) couples the
+computation field's flux to momentum by configuration. The Newtonian velocity law
+appears exactly, the 1/b lensing law does not (axis-column far field), twin clocks
+show no Lorentz dilation, and a localized quantum domain ignores the field's
+delay while a classical carrier on the same path is delayed. These are recorded
+findings of the generic engine, not implemented gravity or relativity.
+
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in
 [local rule contract](LOCAL_FIELD_RULES.md) adds logical field groups, independent
