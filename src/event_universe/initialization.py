@@ -1592,6 +1592,44 @@ def parse_initial_state(document: object) -> InitialState:
             raise ValueError("ray transport requires the fixed field clock without node_execution")
         if initial.spatial_interactions or initial.field_rules:
             raise ValueError("ray transport does not support field rules or spatial interactions")
+        bindings: dict[int, int] = {}
+        for emission in initial.emissions:
+            if emission.recoil_field is not None:
+                bindings[emission.spatial_field] = emission.recoil_field
+        for index, definition in enumerate(initial.spatial_fields):
+            targets = {
+                rule.recoil_field
+                for rule in initial.emissions
+                if rule.spatial_field == index and rule.recoil_field is not None
+            } | {
+                rule.momentum_field
+                for rule in initial.spatial_couplings
+                if rule.field == definition.field
+                and rule.mode == "absorb"
+                and rule.momentum_field is not None
+            }
+            if len(targets) > 1:
+                raise ValueError("a ray field requires one consistent momentum field binding")
+            if targets:
+                target = next(iter(targets))
+                if any(item.field == target for item in initial.spatial_fields):
+                    raise ValueError("ray momentum field cannot also own spatial populations")
+                bindings[index] = target
+            if (
+                (definition.kerengonen or definition.decay is not None)
+                and definition.self_exclusion
+                and any(rule.mode != "absorb" for rule in initial.spatial_couplings)
+            ):
+                raise ValueError(
+                    "phased or decaying self-exclusion supports absorption only, not response sampling"
+                )
+        initial = replace(
+            initial,
+            spatial_fields=tuple(
+                replace(definition, momentum_field=bindings.get(index))
+                for index, definition in enumerate(initial.spatial_fields)
+            ),
+        )
     if node_execution:
         if "conservation_contract" not in obj:
             raise ValueError("node_execution requires an explicit conservation_contract")

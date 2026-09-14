@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING
 
+from .coupling_selectors import matches_type
 from .disturbance_state import (
     Address3,
     DisturbanceNodeState,
@@ -294,6 +295,18 @@ class DisturbanceNode(DisturbanceNodeState):
             extra, duration = cycle_timing(
                 plan.cost, services.initial.normal_budget, services.initial.link_ticks
             )
+        if (
+            extra
+            and spatial_services is not None
+            and any(
+                self._ray_owned_fields(record, spatial_services.initial)
+                for record in self.records
+                if record is not None
+            )
+        ):
+            raise ValueError(
+                "funded ray emission or absorption does not support a delayed carrier cycle"
+            )
         services.accounting.charge_cycle(plan.cost)
         pending = PendingCycle(bounded(tick + extra), bounded(tick + duration), plan)
         if services.initial.node_execution and coupled is not None and spatial is not None:
@@ -342,8 +355,7 @@ class DisturbanceNode(DisturbanceNodeState):
         self._validate_emission_records(
             self.records,
             field_plan.emission_records,
-            funded=any(rule.funded for rule in spatial_services.initial.emissions)
-            or any(rule.mode == "absorb" for rule in spatial_services.initial.spatial_couplings),
+            initial=spatial_services.initial,
         )
         records = field_plan.emission_records
         coupled = (
@@ -728,7 +740,7 @@ class DisturbanceNode(DisturbanceNodeState):
         """A record that stays meets none of its own rays on the next cycle."""
         if record is None or not record.emission_last:
             return record
-        return replace(record, emission_departed=tuple(pack((0, 0)) for _ in record.emission_last))
+        return replace(record, emission_departed=tuple(pack((0, 0, 0, 0)) for _ in record.emission_last))
 
     @staticmethod
     def _departing(record: DisturbanceRecord) -> DisturbanceRecord:
@@ -742,9 +754,26 @@ class DisturbanceNode(DisturbanceNodeState):
         records: tuple[DisturbanceRecord | None, ...],
         *,
         funded: bool = False,
+        initial: InitialState | None = None,
     ) -> None:
-        self._validate_emission_records(self.records, records, funded=funded)
+        self._validate_emission_records(self.records, records, funded=funded, initial=initial)
         self.records = records
+
+    @staticmethod
+    def _ray_owned_fields(record: DisturbanceRecord, initial: InitialState) -> set[int]:
+        """Fields explicitly writable by this record's funded emission or absorption."""
+        allowed: set[int] = set()
+        for rule in initial.emissions:
+            if rule.funded and matches_type(rule, record.type_index):
+                allowed.add(initial.spatial_fields[rule.spatial_field].field)
+                if rule.recoil_field is not None:
+                    allowed.add(rule.recoil_field)
+        for coupling in initial.spatial_couplings:
+            if coupling.mode == "absorb" and matches_type(coupling, record.type_index):
+                allowed.add(coupling.field)
+                if coupling.momentum_field is not None:
+                    allowed.add(coupling.momentum_field)
+        return allowed
 
     @staticmethod
     def _validate_emission_records(
@@ -752,17 +781,26 @@ class DisturbanceNode(DisturbanceNodeState):
         records: tuple[DisturbanceRecord | None, ...],
         *,
         funded: bool = False,
+        initial: InitialState | None = None,
     ) -> None:
+        if funded and initial is None:
+            raise ValueError("funded emission updates require explicit owned field definitions")
         if len(records) != len(originals):
             raise ValueError("spatial emission cannot change disturbance capacity")
         for before, after in zip(originals, records, strict=True):
             if before is None or after is None:
                 if before is not after:
                     raise ValueError("spatial emission cannot change disturbance occupancy")
-            elif funded:
-                # Funded emission and absorption move the record's own stock; the
-                # type and every other register must still be untouched.
-                if before.type_index != after.type_index or len(before.values) != len(after.values):
-                    raise ValueError("spatial emission cannot change a disturbance's identity")
-            elif DisturbanceNode._current_emission_state(before, after) != after:
-                raise ValueError("spatial emission cannot change a disturbance's physical values")
+            else:
+                allowed = (
+                    set() if initial is None else DisturbanceNode._ray_owned_fields(before, initial)
+                )
+                values = tuple(
+                    after.values[index] if index in allowed and index < len(after.values) else value
+                    for index, value in enumerate(before.values)
+                )
+                expected = DisturbanceNode._current_emission_state(replace(before, values=values), after)
+                if expected != after:
+                    raise ValueError(
+                        "spatial emission cannot change unowned values or transport metadata"
+                    )

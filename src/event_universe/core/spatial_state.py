@@ -1,6 +1,8 @@
 """Fixed local records for optional initialization-defined spatial fields."""
 
 from dataclasses import dataclass, replace
+from dataclasses import field as dataclass_field
+from functools import lru_cache
 
 from .disturbance_state import (
     MAX_COMPONENTS,
@@ -100,6 +102,16 @@ class SpatialFieldDefinition:
     # local ticket whose probability is that share.
     capture: str = "share"
     capture_seed: int = 0
+    # Declared carrier-vector association for read-only ray inventory accounting.
+    momentum_field: int | None = None
+    cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
+    sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
+
+    def __post_init__(self) -> None:
+        if self.phase_steps:
+            # Immutable law preparation precedes every physical event.
+            object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
+            object.__setattr__(self, "sine_table", phase_sines(self.phase_steps))
 
     @property
     def rays(self) -> bool:
@@ -404,6 +416,15 @@ def ray_stock(rays: Rays) -> int:
     return bounded(total)
 
 
+def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
+    """Read the candidate's amount-times-heading inventory from actual ray owners."""
+    result = [0, 0, 0]
+    for ray in rays:
+        for axis, component in enumerate(definition.headings[ray.heading]):
+            result[axis] = checked_work(result[axis] + checked_work(ray.amount * component))
+    return result[0], result[1], result[2]
+
+
 def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tuple[Rays, int]:
     """Apply the completed-link ratio to each ray; return survivors and the removed total."""
     numerator, denominator = decay.retain_numerator, decay.retain_denominator
@@ -427,60 +448,62 @@ def attenuate_rays(rays: Rays, decay: DecayDefinition, meter: CostMeter) -> tupl
 MAX_PHASE_STEPS = 4096
 PHASE_COSINE_SCALE = 256
 # pi in fixed point: integer arithmetic only, as every physical module requires.
-_PI_FIXED = 314159265358979323846264338327950288
-_FIXED = 10**35
-_COSINE_TABLES: dict[int, tuple[int, ...]] = {}
+_PI_FIXED = 3141592654
+_FIXED = 1000000000
 
 
 def _fixed_cosine(angle: int) -> int:
     """cos of a fixed-point angle in [0, pi/2], scaled by _FIXED, by its series."""
-    magnitude, total, k, sign = _FIXED, 0, 0, 1
-    while magnitude:
-        total += sign * magnitude
-        k += 2
-        magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
+    if not 0 <= angle <= _PI_FIXED // 2:
+        raise ValueError("phase table angle is outside the first quadrant")
+    magnitude, total, sign = _FIXED, 0, 1
+    for k in range(2, 66, 2):
+        total = checked_work(total + sign * magnitude)
+        magnitude = checked_work(magnitude * angle) // _FIXED
+        magnitude = checked_work(magnitude * angle) // _FIXED // ((k - 1) * k)
+        if not magnitude:
+            return total
         sign = -sign
-    return total
+    raise OverflowError("phase table cosine did not converge within its fixed bound")
 
 
 def _fixed_sine(angle: int) -> int:
     """sin of a fixed-point angle in [0, pi/2], scaled by _FIXED, by its series."""
-    magnitude, total, k, sign = angle, 0, 1, 1
-    while magnitude:
-        total += sign * magnitude
-        k += 2
-        magnitude = magnitude * angle * angle // (_FIXED * _FIXED * (k - 1) * k)
+    if not 0 <= angle <= _PI_FIXED // 2:
+        raise ValueError("phase table angle is outside the first quadrant")
+    magnitude, total, sign = angle, 0, 1
+    for k in range(3, 67, 2):
+        total = checked_work(total + sign * magnitude)
+        magnitude = checked_work(magnitude * angle) // _FIXED
+        magnitude = checked_work(magnitude * angle) // _FIXED // ((k - 1) * k)
+        if not magnitude:
+            return total
         sign = -sign
-    return total
+    raise OverflowError("phase table sine did not converge within its fixed bound")
 
 
-_SINE_TABLES: dict[int, tuple[int, ...]] = {}
-
-
+@lru_cache(maxsize=16)
 def phase_sines(phase_steps: int) -> tuple[int, ...]:
     """Scaled sine of every phase step, the companion of phase_cosines."""
     phase_cosines(phase_steps)
-    table = _SINE_TABLES.get(phase_steps)
-    if table is None:
-        entries = []
-        for step in range(phase_steps):
-            reduced = step if 2 * step <= phase_steps else phase_steps - step
-            angle = 2 * _PI_FIXED * reduced // phase_steps
-            if 4 * reduced > phase_steps:
-                angle = _PI_FIXED - angle
-            scaled = (_fixed_sine(angle) * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
-            entries.append(scaled if 2 * step <= phase_steps else -scaled)
-        table = tuple(entries)
-        _SINE_TABLES[phase_steps] = table
-    return table
+    entries = []
+    for step in range(phase_steps):
+        reduced = step if 2 * step <= phase_steps else phase_steps - step
+        angle = checked_work(2 * _PI_FIXED * reduced) // phase_steps
+        if 4 * reduced > phase_steps:
+            angle = _PI_FIXED - angle
+        scaled = checked_work(_fixed_sine(angle) * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
+        entries.append(scaled if 2 * step <= phase_steps else -scaled)
+    return tuple(entries)
 
 
-def phase_of_sum(terms: tuple[tuple[int, int], ...], phase_steps: int) -> int:
+def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
     """The phase step nearest the direction of sum a e^(i phi): the best projection.
 
     Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
     """
-    cosines, sines = phase_cosines(phase_steps), phase_sines(phase_steps)
+    phase_steps = definition.phase_steps
+    cosines, sines = definition.cosine_table, definition.sine_table
     x = y = 0
     for amount, phase in terms:
         x = checked_work(x + amount * cosines[phase % phase_steps])
@@ -493,6 +516,7 @@ def phase_of_sum(terms: tuple[tuple[int, int], ...], phase_steps: int) -> int:
     return best
 
 
+@lru_cache(maxsize=16)
 def phase_cosines(phase_steps: int) -> tuple[int, ...]:
     """Scaled cosine of every phase difference; immutable law data, computed once.
 
@@ -501,21 +525,17 @@ def phase_cosines(phase_steps: int) -> tuple[int, ...]:
     """
     if type(phase_steps) is not int or not 2 <= phase_steps <= MAX_PHASE_STEPS:
         raise ValueError("kerengonen phase_steps must be between 2 and 4096")
-    table = _COSINE_TABLES.get(phase_steps)
-    if table is None:
-        entries = []
-        for difference in range(phase_steps):
-            reduced = min(difference, phase_steps - difference)
-            angle = 2 * _PI_FIXED * reduced // phase_steps
-            flip = 4 * reduced > phase_steps
-            if flip:
-                angle = _PI_FIXED - angle
-            cosine = _fixed_cosine(angle)
-            scaled = (cosine * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
-            entries.append(-scaled if flip else scaled)
-        table = tuple(entries)
-        _COSINE_TABLES[phase_steps] = table
-    return table
+    entries = []
+    for difference in range(phase_steps):
+        reduced = min(difference, phase_steps - difference)
+        angle = checked_work(2 * _PI_FIXED * reduced) // phase_steps
+        flip = 4 * reduced > phase_steps
+        if flip:
+            angle = _PI_FIXED - angle
+        cosine = _fixed_cosine(angle)
+        scaled = checked_work(cosine * PHASE_COSINE_SCALE + _FIXED // 2) // _FIXED
+        entries.append(-scaled if flip else scaled)
+    return tuple(entries)
 
 
 def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]:
@@ -523,7 +543,7 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     if not definition.kerengonen or not rays:
         return (1, 1)
     steps = definition.phase_steps
-    cosines = phase_cosines(steps)
+    cosines = definition.cosine_table
     by_phase: dict[int, int] = {}
     magnitude = 0
     for ray in rays:

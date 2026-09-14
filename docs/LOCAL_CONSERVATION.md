@@ -55,6 +55,13 @@ field: the emitter is then credited, the ray's momentum points back at it, and
 the absorber pays the share it takes from its own stock, so attraction closes
 the same way. A Kerengonen phase changes what is absorbed and sampled, never
 the amounts the audit sums. Unfunded `source: true` emissions remain rejected.
+The ordinary runner also counts actual ray momentum through the explicitly
+configured recoil/absorption vector binding, including transit and escape. This
+component inventory and the intrinsic ray contribution above are separate audit
+views; neither is added twice. Conflicting vector bindings and a vector that also
+owns spatial populations are rejected. Delayed carrier plans with funded or
+absorbed stock are currently rejected before publication, because the independent
+field clock cannot safely update values held by such a plan.
 These restrictions describe supported measurement composition, not a claim that
 the excluded physics is impossible.
 

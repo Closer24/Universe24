@@ -158,13 +158,14 @@ through Nodes whose carriers respond to them.
 A record that emits rays and moves one link meets, at the next Node, exactly the
 rays it emitted on the cycle it departed whose first DDA step took the same
 port. With `"self_exclusion": true` the record carries two rows per emission
-rule, this cycle's `(amount, cursor)` and the pair from its last departure
+rule, this cycle's `(amount, cursor, wave phase, advance)` and the row from its last departure
 (zero while it stays), and every coupling it evaluates after arriving reads the
 sampled flux and value with those rays subtracted. The work is bounded by
 `rays_per_tick`, uses only the record's own registers and the port it left
 through, and reads no ray identity or remote state. Rays of another record
 that merged with them at that Node are subtracted too; that coincidence needs
-the same heading and phase from an adjacent Node. Rays that return later, from
+the same heading, lattice accumulators, wave phase and advance from an adjacent
+Node. Rays that return later, from
 any distance, are not excluded: this is one-link exclusion of the emitter's own
 wake, not a general self-field law. Schema 2 decay attenuates each
 ray on arrival with the same ratio and residue rules as octant stock. Open
@@ -193,7 +194,7 @@ adds it to its own field of the same name and, with `momentum_field`,
 `share x heading` to that vector; the rest of the ray is forwarded. Absorption
 happens before forwarding and before this cycle's emission joins the residents,
 so a record never swallows its fresh rays; with `self_exclusion` the rays of its
-own last departure are left alone by exact heading and phase. Absorbers act in
+own last departure are left alone by their complete ray key. Absorbers act in
 slot order.
 
 Quanta are signed when the field is. A funded emission of a negative amount
@@ -217,6 +218,13 @@ give radiation pressure; negative quanta give attraction paid by the absorber.
 Schema 2 attenuation of such fields is not supported.
 
 ### Kerengonen: phased rays (`kerengonen-ray-field-v1`)
+
+The candidate uses immutable cosine/sine tables prepared with the field definition,
+before physical stepping. Each table has at most 4096 bounded entries; the two
+host preparation caches retain at most 16 tables each. A bounded integer series
+uses fixed-point scale 1,000,000,000, checked 64-bit intermediates and at most 32
+terms. Physical events read the prepared tuples and never construct trigonometric
+tables. Preparation and cache storage are host costs outside NodeState.
 
 A ray field may add `"kerengonen": {"phase_steps": P, "phase_advance": k}`,
 with `2 <= P <= 4096` and `0 <= k < P`. Every ray then carries a phase step,
@@ -242,10 +250,13 @@ zero, and forwards the rest: a single quantum at a half-coherent Node is never
 taken. `"lottery"` takes the whole ray or nothing: the record advances a local
 ticket, seeded by `"capture_seed"` and salted by the ray it meets, and takes
 the ray when the ticket falls below the coherent share. At full coherence the
-two are identical; at partial coherence the lottery builds the fringe click
+two are identical when the complete amount can be funded; at partial coherence the lottery builds the fringe click
 by click, one whole quantum at a time, with the coherent share as its rate.
 The ticket state is a record row (`absorb_tickets`), never a global number,
 and the same seed with the same rays repeats the same clicks.
+Each absorption row uses its own field's configured seed. In lottery mode a
+winning negative ray is left whole when the absorber cannot pay its complete
+amount; only the share mode may take a smaller stock-limited amount.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because
@@ -265,13 +276,40 @@ expression over the emitter's own fields, divides by `D`, takes the result
 modulo the phase steps, and stamps it on every ray it emits; rays merge only
 with equal advance, and a Huygens re-emission carries the advance of the
 largest share it absorbed with the phase. An advance from the emitter's
-momentum, `|p| / D`, is the de Broglie rule: a faster beam has a shorter
-wavelength, and the [de Broglie probe](../examples/de-broglie/README.md)
-measures the fringe spacing it gives. A ray without its own advance uses the
+momentum, `|p| / D`, supplies a candidate de Broglie relation: a faster beam has a
+shorter wavelength within the probe's configured range. The
+[de Broglie probe](../examples/de-broglie/README.md) measures the fringe spacing
+it gives; this relation is configured, not derived. A ray without its own advance uses the
 field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
 `kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
 runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
 measures the fringe on a line of absorbers.
+
+Self-exclusion carries `(amount, cursor, wave phase, advance)` for the actual
+departure cycle and compares heading, lattice accumulators, wave phase and advance.
+A distinguishable external phase or advance is not excluded, even if the emitter's
+properties have changed since departure. A cycle without emission clears the
+previous emission row to four zeros, so the fallback advance sentinel cannot keep
+an exhausted source active. A foreign ray that has already merged with the same complete key
+still cannot be distinguished by this candidate. Phased or attenuating
+self-exclusion alongside response couplings is rejected: subtracting a raw own
+amount from a coherent or decayed sample is not the corresponding local
+subtraction; the supported combination is absorption. Coherence evaluation is
+quadratic in the configured local phase count, bounded relative to world size.
+
+Funded emission and absorption currently require an immediate carrier commit on
+the independent fixed field clock. If the local carrier cost requires a delayed
+plan, the Node rejects it before publishing that plan. This prevents a later
+carrier commit from restoring stock changed by intervening field cycles. The
+candidate does not yet arbitrate these two clocks for delayed shared ownership.
+
+Declared component accounting associates ray momentum with the vector explicitly
+named by `recoil_field` or absorption's `momentum_field`. All declarations for one
+ray field must agree; that vector cannot also own spatial populations. Actual
+resident rays, in-flight rays, external injection and completed escape contribute
+`amount x heading` to that vector's read-only totals. No field name supplies a
+binding, and this accounting never repairs state or replaces the separate local
+energy/momentum audit.
 
 ## Finite completed-link decay
 
