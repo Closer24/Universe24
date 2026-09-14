@@ -1591,3 +1591,24 @@ measurements on existing rules only, in
 The mixers and instruments are explicit configured laws. Nothing here derives
 a Hamiltonian, a collapse criterion or a species; the seam between the finite
 quantum rules and the classical ones is measured, not explained.
+
+## Signed-quanta gravity: attraction paid by the pulled body — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. A funded emission may emit
+a negative amount, an `absorb` coupling takes the share
+`amount x fraction / fraction_denominator` of each crossing ray and pays a
+negative share from the record's own stock, never beyond it, forwarding the
+rest; a ray field is absorbed or exchanged, never both.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,349 tests with five visualization skips |
+| New tests | `tests/test_energy_audit.py`: a fraction 1/4 absorbs one quantum of each 4-quantum ray and forwards 3; negative quanta pull an absorber with stock 3 by 2 then 1 and credit the emitter; absorb and exchange on one ray field rejected. `tests/test_gravity_probe.py`: bodies pay exactly the momentum they gain, the far body takes its share of what the near one left, a body with stock 50 stops at -50 with the event audit passed |
+| Held bodies | 41-cubed world, one mass per world, source of -1,048,576 quanta per tick over 4,096 mirrored headings: the three masses agree within 3 percent at every Node; mass-1 log-log slopes axis -1.96, face diagonal -2.37, body diagonal -2.29; `a x r^2 x D / emission` between 1.4 and 3.1; every body paid exactly the quanta of its absorbed shares; records plus rays in flight plus escaped equal the initial stock in all three worlds |
+| Audited world | 16 ticks, 16 rays per tick, mass 4 one link above the source: 595,153 Node events with zero residual; body paid 30,720 quanta for momentum (1024, 1792, -694272); source credited 4,194,304 |
+| Fall | Dense field of 512 rays per tick: masses 1 and 2 follow the same path tick for tick with momentum in ratio 2, pay from stock, pass the source and leave at nine tenths of a hop per tick without turning back |
+| Visualization | Not requested or generated |
+
+The source's stock rises by what it emits, and a radial fall through the
+lattice `r = 1` singularity escapes at the speed cap: both are properties of
+this candidate, recorded rather than corrected.

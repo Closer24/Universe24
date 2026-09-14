@@ -138,6 +138,33 @@ zero residual: the body paid 30,720 quanta for momentum (1024, 1792, -694272),
 the source was credited 4,194,304, and the world's energy and momentum,
 including the rays in flight, stayed at their initial values.
 
+### The closed fall: paid from stock, the same path for every mass, and the link-speed limit
+
+The falling body meets a denser field than the held bodies, 512 rays per tick
+of 4,096 quanta each (an eight-tick sweep), absorbs `mass / 256` of every
+crossing ray and moves at `|p| / (65,536 x mass)` hops per tick.
+
+| Tick | Mass 1: offset, momentum x, quanta | Mass 2: offset, momentum x, quanta |
+| --- | --- | --- |
+| 9 | 8, 0, 65,536 | 8, 0, 131,072 |
+| 25 | 8, -3,840, 65,376 | 8, -7,680, 130,752 |
+| 41 | 6, -9,600, 65,136 | 6, -19,200, 130,272 |
+| 57 | 3, -25,728, 64,464 | 3, -51,456, 128,928 |
+| 65 | -3, -58,656, 61,696 | -3, -117,312, 123,392 |
+| 81 | -18, -58,656, 61,696 | -18, -117,312, 123,392 |
+| 84 | left the open boundary | left the open boundary |
+
+Both masses follow the same path tick for tick, with the momentum of mass 2
+exactly twice that of mass 1 at every tick: the absorbed share scales with the
+mass and the move rule divides by it. Each body pays its pull from its own
+stock. Within one link of the source the body absorbs a sixth of every sweep,
+the discrete `1/r^2` at `r = 1`, and leaves the far side at nine tenths of a
+hop per tick; from there no ray from behind catches it before the boundary,
+so it escapes instead of turning back. The quanta in records, in flight and
+escaped sum to the initial stock exactly in both worlds. A bound orbit needs a
+body that stays well below link speed at its closest approach, which this
+lattice speed cap and the `r = 1` singularity do not give a radial fall.
+
 ## Conclusion
 
 Three statements follow from configuration on top of the straight-ray field:
@@ -146,6 +173,9 @@ direction to within the finite direction sampling, and the acceleration does not
 depend on the body's mass. The coupling constant is the configured `1 / D` and
 the emission per tick stands in for the source mass. The reaction never reaches
 the source, so this is attraction toward a fixed source, not a two-body law; a
-smooth orbit in the sparse field needs more rays per tick or a slower body. No
+smooth orbit in the sparse field needs more rays per tick or a slower body. The
+closed variant keeps all three statements and adds the ledger: the pulled body
+pays its own stock for the momentum it gains, the source is credited with the
+negative quanta it emits, and energy and momentum are exact at every event. No
 physical constant, unit or mass is identified.
 
