@@ -7,7 +7,7 @@ work against the literature. Contracts remain in the linked owner documents.
 
 ## The hypothesis in one paragraph
 
-Space is a lattice of Nodes with six Links, one Link per tick, and every
+The framework is called Reality Theory (Universe24). Space is a lattice of Nodes with six Links, one Link per tick, and every
 evolving quantity is a bounded integer. Ordinary matter and fields are
 configured disturbances that move and interact by local rules. A quantum
 excitation is not a second world: it is a finite joint state over at most
