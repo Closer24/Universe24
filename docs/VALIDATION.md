@@ -1783,3 +1783,21 @@ from the momentum of the flight, never from the recoiling momentum.
 The particle's matter lands spread as its wave, not at one Node; landing whole
 at one place needs a causal retirement of the rest of the wave, which the
 quantum layer has and the ray field does not yet.
+
+## Kerengonen mirror: a standing wave between a lamp and a mirror — 2026-09-14
+
+Base: `c3c39d0` on main after PR #98. The absorbed row keeps the heading of
+the largest share; an emission with `kerengonen_mirror` (x, y or z) sends its
+whole amount back as one ray along the mirror image of that heading, at the
+carried phase and advance. The heading sequence must contain every image, the
+emission must name a recoil field, and the emitter must absorb on the field.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,431 tests with five visualization skips |
+| New tests | `tests/test_kerengonen.py`: reflected rays travel -x with the field's advance, the mirror holds 4 quanta and the reversed momentum, the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 and 6, 1, 1, 6 repeating at advance 8, closure on 400 quanta, four validation rejections; `tests/test_kerengonen_mirror.py`: periods 8 and 4 at advances 4 and 8 on a shorter run |
+| Mirror probe | Lamp at x = -16, mirror at x = +16, 8 quanta each way per tick, 96 ticks: periods 16, 8 and 4 for advances 2, 4 and 8, all as predicted by `64 / (2 x advance)`, readings from 0 at the nodes to 15 at the antinodes; a flat 8 without the mirror; the mirror ends with momentum +1016 along x; quanta closed in every world |
+| Visualization | Not requested or generated |
+
+A mirror across a lattice axis only; an oblique or partial mirror needs a
+heading map beyond one sign flip.

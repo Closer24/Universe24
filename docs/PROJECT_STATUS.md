@@ -157,7 +157,10 @@ emitter's momentum: the [de Broglie probe](../examples/de-broglie/README.md)
 halves the fringe period each time the beam's momentum doubles, and the
 [matter-wave probe](../examples/matter-wave/README.md) stops a moving particle,
 pays its matter out as a wave train and lands it on the screen with the fringe
-of the momentum it flew with.
+of the momentum it flew with. A mirror emission re-emits along the reflected
+absorbed heading, and the [mirror probe](../examples/kerengonen-mirror/README.md)
+reads the standing wave between a lamp and a mirror with period
+`phase_steps / (2 x advance)`.
 
 The [physical reference catalog](ENTITY_CATALOG.md) separates sourced properties
 and possible interactions from explicitly supplied representation experiments.
