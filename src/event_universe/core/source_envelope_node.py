@@ -5,9 +5,8 @@ from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING
 
 from .disturbance_state import Address3, CostMeter, OperationCosts, bounded
-from .integer import checked_work
+from .integer import checked_work, reduced_ratio
 from .source_envelope_state import EnvelopeAmplitude, EnvelopeScale, NullRecord
-from .state import reduced_ratio
 
 if TYPE_CHECKING:
     from .node_services import NodeEvents
