@@ -5,16 +5,20 @@ type: software
 version: 0.3.0
 date-released: 2026-09-14
 license: MIT
-doi: 10.5281/zenodo.22738746
+doi: 10.5281/zenodo.22749342
 repository-code: "https://github.com/Closer24/Universe24"
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.22749342
+    description: "Zenodo archive of version 0.3.0"
+  - type: doi
     value: 10.5281/zenodo.22738746
-    description: "Zenodo archive of version 0.2.0"
+    description: "Zenodo concept DOI, resolving to the latest version"
 authors:
   - family-names: Gonen
     given-names: Alon
-    email: logic24@gmail.com
+    email: alon@defounder.ai
+    orcid: https://orcid.org/0009-0008-2701-4599
 keywords:
   - event simulator
   - integer lattice

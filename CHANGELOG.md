@@ -5,8 +5,8 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## 0.3.0 - 2026-09-14
 
-153 commits since 0.2.0. Every number below is recorded with its source
-fingerprint in [validation](docs/VALIDATION.md).
+153 commits since 0.2.0. Zenodo DOI 10.5281/zenodo.22749342. Every number
+below is recorded with its source fingerprint in [validation](docs/VALIDATION.md).
 
 ### Framework
 
