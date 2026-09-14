@@ -16,7 +16,7 @@ from .disturbance_state import (
     bounded,
 )
 from .node_services import port_count
-from .spatial_state import FieldInteractionGuard, SpatialBundle, SpatialPlan, SpatialState
+from .spatial_state import Claims, FieldInteractionGuard, Rays, SpatialBundle, SpatialPlan, SpatialState
 
 
 def _tuple(value: object, maximum: int, size: int | None = None) -> None:
@@ -268,6 +268,8 @@ def validate_plan_claims(initial: InitialState, plan: SpatialPlan) -> None:
     from .spatial_state import validate_claims
 
     has_claims = any(definition.claims for definition in initial.spatial_fields)
+    _tuple(plan.claims, len(initial.spatial_fields))
+    _tuple(plan.outgoing_claims, port_count(initial))
     if not plan.claims and not plan.outgoing_claims:
         # A plan without claim state leaves the Node's claims as they are.
         return
@@ -287,9 +289,9 @@ def validate_plan_claims(initial: InitialState, plan: SpatialPlan) -> None:
 
 def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
     """Outgoing rays: six ports, one tuple per spatial field, each within its slot budget."""
-    from .spatial_state import validate_rays
-
     has_rays = any(definition.rays for definition in initial.spatial_fields)
+    validate_ray_bundle(initial, plan.kept_rays, optional=True)
+    _tuple(plan.rays, port_count(initial))
     if not plan.rays:
         if has_rays:
             raise ValueError("ray transport requires outgoing rays for every port")
@@ -298,10 +300,37 @@ def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
         raise ValueError("outgoing rays require a ray transport field")
     degree = port_count(initial)
     _tuple(plan.rays, degree, degree)
-    count = len(initial.spatial_fields)
     for port_rays in plan.rays:
-        _tuple(port_rays, count, count)
-        for definition, rays in zip(initial.spatial_fields, port_rays, strict=True):
-            if rays and not definition.rays:
-                raise ValueError("outgoing rays on a field without ray transport")
-            validate_rays(rays, definition, initial.fields[definition.field])
+        validate_ray_bundle(initial, port_rays)
+
+
+def validate_ray_bundle(
+    initial: InitialState, bundle: tuple[Rays, ...], *, optional: bool = False
+) -> None:
+    """Validate a complete incoming, retained or outgoing owner before filtering it."""
+    from .spatial_state import validate_rays
+
+    count = len(initial.spatial_fields)
+    _tuple(bundle, count)
+    if optional and not bundle:
+        return
+    _tuple(bundle, count, count)
+    for definition, rays in zip(initial.spatial_fields, bundle, strict=True):
+        if rays and not definition.rays:
+            raise ValueError("rays on a field without ray transport")
+        validate_rays(rays, definition, initial.fields[definition.field])
+
+
+def validate_claim_bundle(
+    initial: InitialState, bundle: tuple[Claims, ...], *, optional: bool = False
+) -> None:
+    """Reject malformed claim packets even when the receiving slots are full."""
+    from .spatial_state import validate_claims
+
+    count = len(initial.spatial_fields)
+    _tuple(bundle, count)
+    if optional and not bundle:
+        return
+    _tuple(bundle, count, count)
+    for definition, claims in zip(initial.spatial_fields, bundle, strict=True):
+        validate_claims(claims, definition)

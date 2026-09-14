@@ -53,6 +53,7 @@ SpatialPlanner = Callable[
         tuple[Rays, ...],
         tuple[Claims, ...],
         int,
+        int,
     ],
     SpatialPlan,
 ]

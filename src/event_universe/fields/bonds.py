@@ -1,17 +1,11 @@
-"""Bonded pairs: the declared exception to the causal bound, one number per pair.
+"""Standalone nonlocal singlet reference, unavailable to ordinary Simulation.
 
-Two rays emitted together may share a bond. When a detector takes a bonded ray
-it does not draw a local ticket: it asks the bond registry, which holds the
-pair's joint outcome. The first question on a bond draws one bounded integer;
-its upper half answers that end evenly. The second question, at another
-setting, draws nothing: the same integer's lower half answers it, conditioned
-on the first, with the singlet's law that the two answers agree with
-probability sin^2 of half the difference of the settings. One number decides
-the pair, whichever end asks first. The registry is one object for the whole
-world, so the second answer knows the first at once, at any distance: that is
-the one influence that skips Nodes. It carries no energy, no momentum and no
-message, since each end alone sees an even coin, so postulate 4 keeps its
-hold on everything physical. Every number is a bounded integer.
+This historical candidate queries a world-wide mutable registry. Its supplied
+conditional law is not derived from local ray transport, and no-signalling has
+not been established for every lifecycle or repeated query. The unbounded
+history, finite birth-code collisions and nontransactional draws exclude it
+from the ordinary physical planner. The existing explicit quantum owner is
+separate and unchanged. See docs/SPATIAL_FIELDS.md for the integration boundary.
 """
 
 from __future__ import annotations
@@ -44,8 +38,8 @@ class BondRegistry:
             raise ValueError("a bond must be a positive integer")
         self.questions += 1
         if bond not in self.first:
-            # The pair's one number: its upper half is this end's even coin, its
-            # lower half is kept for the other end.
+            # Retain one number for the pair. Its threshold selects the first
+            # answer; its remainder selects the second under the supplied table.
             self.state = next_ticket(self.state, (salt + bond) % TICKET_MODULUS)
             self.numbers += 1
             number = ticket_draw(self.state)
@@ -55,8 +49,8 @@ class BondRegistry:
         first_setting, first_outcome, number = self.first[bond]
         difference = (setting - first_setting) % self.phase_steps
         cosine = phase_cosines(self.phase_steps)[difference]
-        # The singlet: the two ends agree with probability (1 - cos) / 2, decided by
-        # the lower half of the same number, independent of the coin in its upper half.
+        # Compare the retained coordinate with the supplied singlet threshold.
+        # This deterministic finite remainder is not an independent random draw.
         rest = checked_work(2 * number) % TICKET_MODULUS
         agree = checked_work(rest * 2 * PHASE_COSINE_SCALE) < checked_work(
             (PHASE_COSINE_SCALE - cosine) * TICKET_MODULUS

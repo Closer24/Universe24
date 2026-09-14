@@ -73,7 +73,7 @@ optional local one-link exclusion exists: a departing emitter subtracts the rays
 of its own departure cycle from the flux it samples on arrival, using only its
 own registers; returning self-field at any other distance is not excluded.
 
-hypothesis and is not enabled by this extension. Two explicit opt-in policies now
+Two explicit opt-in policies now
 exist for the generic engine, described in [spatial couplings](docs/SPATIAL_COUPLINGS.md#field-phase-first-ordering):
 `field_phase_first` completes every field link before carriers sample, so an
 emitter's own field is one link ahead on every free-space path; `arrival_port_blind`
@@ -189,17 +189,13 @@ Physical influence cannot skip nodes. It travels at most one neighboring node pe
 elementary step. This is the role of c: the maximum propagation speed of causal
 influence in the simulator. Oracle evaluation is not physical propagation.
 
-The bound is split in two, as the experiments split it. Energy, momentum,
-matter and every message that a record can control move at most one Node per
-step, without exception. The joint outcome of a bonded pair, two rays emitted
-together, is the one thing that does not: each ray carries the Node and tick
-of its birth through the lattice at link speed, and when either end is
-measured, the bond registry answers for both ends at once, at any distance (the
-[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
-That answer carries no energy, no momentum and no message, because each end
-alone sees an even coin whatever the other end does; it is the correlation
-Bell's test measures beyond the local bound, and nothing else. A world with
-no bonded field has no exception at all.
+The standalone bonded-ray experiment supplies a global conditional singlet
+law. It is a nonlocal research reference, not an additional exception for the
+ordinary physical engine. Ordinary initialization rejects it because its
+registry lacks bounded lifetime, unique lifetime identities and transactional
+outcomes. The existing explicit quantum owner remains available under
+Q-ORACLE-1. A new ordinary-field exception requires a separate model decision;
+no-signalling cannot be inferred merely from the absence of energy in a query.
 
 A particle can also move at most one neighbor per step. The same movement law
 applies at all speeds; there are no separate low-speed and high-speed laws.
@@ -383,12 +379,11 @@ The ray explains the shared origin, the no-signaling and the collapse's
 timing; it cannot explain the correlations beyond the bound, and no local
 rule on this lattice can. Replacing the lottery by deterministic hidden
 variables (the `threshold` capture) raises S to exactly 2 and no further, as
-the theorem says. The excess is reached only by the bonded ray field, which
-takes the split of postulate 4: the pair's joint outcome is answered for both
-ends at once by the bond registry, with no energy, momentum or message in it,
-and S rises to the quantum value. The ray then carries everything physical at
-link speed and the bond carries the one thing the experiments say is not
-carried: the correlation. What remains open is what the registry is.
+the theorem says. The historical global bonded-ray reference exceeds the
+local bound by supplying the conditional singlet law. That result is not a
+local derivation of quantum correlations. Ordinary Simulation refuses this
+candidate; a finite, transactional owner and a separately reviewed contract
+remain necessary before any integration of global bonded capture.
 
 The dark-matter question was put to the same rule. Gathering a gravity train
 to whoever catches a ray of it does focus the pull, but into the momentum of
@@ -631,26 +626,21 @@ source bank. Existing field stock follows its configured transport and decay.
 This is a finite configured hypothesis, preserving the older profiles and their
 limits; it does not derive the matrices or establish physical energy closure.
 
-## 22. The lottery is the reality: one integer per interaction
+## 22. Configured integer lottery and replay hypothesis
 
-Every interaction whose outcome is not certain consumes exactly one bounded
-integer from a configured sequence, and nothing else decides it: the record's
-own ticket for a lottery capture on a ray field, the quantum owner's ticket at
-a contact, and the bond registry's number for a bonded pair. The world's
-history is fixed by its rules, its initial state and this sequence of integers,
-one per interaction, and the same sequence replays the same history.
+Given the same rules, initial state, event ordering and configured ticket
+sequence, deterministic execution can replay the same history forward. The
+local ray lottery and the explicit quantum owner retain their own documented
+draw protocols; one ticket is not a universal replacement for the state or the
+interaction rule. Replay alone establishes neither reversibility nor a physical
+origin for the probabilities.
 
-A bonded pair is one interaction and draws one number, whichever end asks
-first, Alice's or Bob's. That number's upper half is the first end's even
-coin; its lower half, read against the difference of the two settings,
-decides whether the second end agrees, with the singlet's probability
-`(1 - cos(difference)) / 2`. Neither end can read the number: each sees an even
-coin whatever the other end's setting, so the number carries no message and
-postulate 4 holds for everything physical. The number is a hidden variable in
-Bell's sense, local for a lottery capture, where it lives in the detector's
-record row and `S` stays at or below 2, and shared for a bonded pair, where
-one number answers both ends and `S` reaches the quantum value. The
-[bonded ray field](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
-implements the pair's single number; the [Bell probe](examples/bell-chsh/README.md)
-measures it. What the sequence is, beyond a configured seed, is the open
-question of postulate 12 in another form.
+The standalone [bond reference](docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)
+now draws one integer on the first query of a pair. Its half selects the first
+answer; the retained remainder and the settings select the second answer using
+the supplied finite-table singlet law. The second query draws no new number.
+This remains a nonlocal research reference, unavailable to ordinary Simulation.
+It does not establish a new exception to postulate 4, unique pair lifetimes,
+transactional ownership, or no-signalling for arbitrary repeated queries.
+The [Bell probe](examples/bell-chsh/README.md) records historical measurements
+under the source versions named there; it does not derive the conditional law.

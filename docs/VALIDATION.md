@@ -1,5 +1,53 @@
 # Validation evidence
 
+## Integrated ray ownership and local Focus - 2026-09-14
+
+Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,
+including PR #93, against main `e705435aef311e9000ac6f19136835fa860a6958`.
+The first ten targeted counterexamples failed on that input. Their corrections
+cover retained-ray validation, funded inventory during a load wait, absorption,
+bounded pace state, exact shares, negative threshold funding and claim admission.
+Later controls cover directed self-exclusion, explicit unsupported compositions,
+observer failure, immutable pace preparation and release of an empty wait.
+
+`tests/test_local_focus.py` and `tests/test_ray_merge_contracts.py`: **50 passed**
+on Python 3.14.7. The independent physics review passed the first 49 cases and
+the final empty-wait regression separately. The full affected gate and required
+CI remain the merge requirements; their actual outcome is recorded in the PR.
+The global bond reference is preserved but cannot drive ordinary Simulation.
+The existing quantum owner and Q-ORACLE option are unchanged.
+
+Follow-up integration includes main `a686925`, the single-draw reference branch
+at `df9c350`, and the relativity probe branch at `280a43b`. The single-draw
+change remains isolated from ordinary Simulation. Replay now compares the
+actual exposed snapshots (hashes are display only), with assertion failures for
+mismatches and a changed-seed control. The eight-tick quantum replay and the
+12-tick equal-mass collision restart passed; this is no claim about inverting
+private queues or arbitrary evolution. The original full local and CI gates
+each found one obsolete unreduced-pace assertion (2,780 passed, 7 skipped).
+The corrected exact-ratio assertion retains physical trajectory and inventory
+checks; its 79-test affected gate passed. Final combined CI is recorded in
+[PR #117](https://github.com/Closer24/Universe24/pull/117).
+
+Runtime fingerprint for the measured candidate:
+`c297b049e409c84a56906ecf6267fcd4af10b2c9a556ba25c74818e669bfb1f7`.
+It hashes sorted `src/event_universe/**/*.py` paths and bytes, separated by NULs.
+A headless 256-tick periodic world, shape 513 x 5 x 5, one moving scalar carrier,
+one slot and no fields, produced the same complete inventory and model-cost
+fingerprint in both modes. Three alternating timing samples had medians
+0.2008405 seconds ordinary and 0.0866774 seconds Focus (**2.32x**). Carrier phase
+visits fell from 98,944 to 768. Separate tracemalloc runs peaked at 295,185 and
+292,785 bytes; that small difference is not a general memory-saving claim.
+Both modes retain the same historical Nodes; Focus retains one awake address.
+This result does not promise faster dense-world or pure-ray execution.
+
+The input and measured report use the normal 24-hour artifact retention under
+`artifacts/local-focus-integration-20260914`. The scheduler argument, memory scope
+and reproducible A/B controls remain in [Local Focus](LOCAL_FOCUS.md) and its
+tests. Existing architecture/physics-review Skills already require local owner
+validation, bounded state and independent expectations; no new Skill rule is
+needed for these fixes.
+
 ## Funded envelope emission - 2026-09-14
 
 Base: `0299cb98bf07f00dc10bad858b674ded449be03e` (main after PR #108). Runtime
@@ -2450,6 +2498,9 @@ theorem requires of any local model; the quantum excess stays out of reach.
 
 ## Bonded rays: the split of postulate 4 and the quantum CHSH value — 2026-09-14
 
+Historical branch evidence only. The integrated ordinary engine rejects bonded
+activation; the current ownership boundary is recorded at the top of this file.
+
 Base: `c3c39d0` on main after PR #98. Postulate 4 is split: energy, momentum,
 matter and every controllable message move at most one Node per step; the
 joint outcome of a bonded pair is answered for both ends at once by the bond
@@ -2472,6 +2523,11 @@ variables 2.00, bond 2.86 against the quantum 2.83; the last needs the split
 of postulate 4 and nothing else.
 
 ## Postulate 22: one integer per interaction - 2026-09-14
+
+Historical branch evidence only. The single-draw registry is retained as a
+standalone reference, while ordinary activation is rejected. Current postulate
+22 scopes replay separately from physical reversibility and does not assert
+no-signalling for this registry across arbitrary queries or lifecycles.
 
 Base: `a686925` on `main` (after PR #116). The bond registry now draws one
 number per bonded pair: the first question draws it and answers by its upper

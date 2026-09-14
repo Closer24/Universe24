@@ -18,6 +18,7 @@ SpatialPlanner = Callable[
         tuple[Rays, ...],
         tuple[Claims, ...],
         int,
+        int,
     ],
     SpatialPlan,
 ]
@@ -43,6 +44,8 @@ class SpatialPlanningInput:
     rays: tuple[Rays, ...] = ()
     claims: tuple[Claims, ...] = ()
     tick: int = 0
+    # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
+    ray_hold: int = 0
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -79,6 +82,7 @@ def finish_local_cycle(
                     request.rays,
                     request.claims,
                     request.tick,
+                    request.ray_hold,
                 )
             else:
                 result = None
@@ -100,7 +104,14 @@ def _plan_spatial_batch(
 ) -> tuple[SpatialPlan, ...]:
     return tuple(
         planner(
-            item.states, item.records, item.received, item.node_cost, item.rays, item.claims, item.tick
+            item.states,
+            item.records,
+            item.received,
+            item.node_cost,
+            item.rays,
+            item.claims,
+            item.tick,
+            item.ray_hold,
         )
         for item in items
     )

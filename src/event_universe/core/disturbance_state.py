@@ -278,17 +278,37 @@ class InitialState:
     # ray's phase advances on every waiting interval as well as on every link.
     ray_delay: bool = False
     ray_phase_per_tick: bool = False
+    # Host scheduling only; physical rules and their clocks do not read this flag.
+    focus: bool = False
 
     def __post_init__(self) -> None:
+        if any(definition.bonded for definition in self.spatial_fields):
+            raise ValueError(
+                "bonded capture is a nonlocal research candidate, unsupported by local Simulation"
+            )
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
-        for name in ("ray_delay", "ray_phase_per_tick"):
+        for index, spatial_definition in enumerate(self.spatial_fields):
+            if spatial_definition.self_exclusion and (
+                self.ray_delay
+                or spatial_definition.euclidean
+                or spatial_definition.claims
+                or spatial_definition.bonded
+                or spatial_definition.pace_numerator != spatial_definition.pace_denominator
+                or any(
+                    rule.spatial_field == index and rule.mirror is not None for rule in self.emissions
+                )
+            ):
+                raise ValueError(
+                    "one-Link self-exclusion does not support paced, delayed, mirrored, claimed or bonded rays"
+                )
+        for name in ("ray_delay", "ray_phase_per_tick", "focus"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")
-            if self.spatial_computation_delay:
+            if self.spatial_computation_delay or self.node_execution:
                 raise ValueError("ray_delay requires the default clock")
             if not any(definition.rays for definition in self.spatial_fields):
                 raise ValueError("ray_delay requires a ray spatial field")

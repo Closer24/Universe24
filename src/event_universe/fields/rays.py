@@ -3,6 +3,7 @@
 from dataclasses import replace
 
 from event_universe.core.disturbance_state import CostMeter, FieldDefinition, bounded
+from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     MAX_HEADINGS,
     MAX_RAY_SLOTS,
@@ -43,6 +44,7 @@ def emit_rays(
     meter: CostMeter,
     phase: int = 0,
     advance: int = -1,
+    heading: int | None = None,
 ) -> tuple[Rays, int]:
     """Share one emitted amount over the next rays_per_tick headings of the sequence."""
     count = definition.rays_per_tick
@@ -54,6 +56,13 @@ def emit_rays(
     if not -1 <= advance < max(definition.phase_steps, 1):
         raise ValueError("ray emission advance must be -1 or index the field's phase steps")
     magnitude, sign = abs(bounded(amount)), -1 if amount < 0 else 1
+    if heading is not None:
+        if type(heading) is not int or not 0 <= heading < headings:
+            raise ValueError("directed emission must index the heading sequence")
+        if not amount:
+            return (), cursor
+        meter.charge("route")
+        return (Ray(heading, (0, 0, 0), amount, phase, advance),), cursor
     base, extra = divmod(magnitude, count)
     meter.charge("read")
     meter.charge("split", count)
@@ -82,11 +91,11 @@ def forward_rays(
         meter.charge("read")
         meter.charge("route")
         numerator, denominator = heading_pace(definition, ray.heading)
-        wait = ray.wait + numerator
+        wait = checked_work(ray.wait + numerator)
         if wait < denominator:
             step = ray.advance if ray.advance >= 0 else definition.phase_advance
             phase = (ray.phase + step) % definition.phase_steps if definition.phase_steps else ray.phase
-            kept.append(replace(ray, wait=wait, phase=phase))
+            kept.append(replace(ray, wait=bounded(wait), phase=phase))
             continue
         port, moved = advance_ray(
             replace(ray, wait=wait - denominator),
@@ -98,3 +107,23 @@ def forward_rays(
     result = tuple(merge_rays(tuple(port_rays)) for port_rays in outgoing)
     meter.charge("send", sum(1 for port_rays in result if port_rays))
     return result, merge_rays(tuple(kept))
+
+
+def hold_rays(
+    rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter, *, advance_phase: bool
+) -> Rays:
+    """Retain the post-interaction rays during one configured local delay interval."""
+    meter.charge("read", len(rays))
+    if not advance_phase or not definition.phase_steps:
+        return rays
+    meter.charge("update", len(rays))
+    return merge_rays(
+        tuple(
+            replace(
+                ray,
+                phase=(ray.phase + (ray.advance if ray.advance >= 0 else definition.phase_advance))
+                % definition.phase_steps,
+            )
+            for ray in rays
+        )
+    )

@@ -1,5 +1,30 @@
 # Relativity probes: gravity from the computation field, twin clocks, quantum transport
 
+## Bottom line (2026-09-14)
+
+Finite observations under supplied JSON couplings and declared engine transport,
+capture and phase policies follow. These are candidate measurements, not a
+derivation of gravity, relativity or cosmology. Names in the table identify the
+questions being probed rather than established physical laws.
+
+| | result | probe |
+| --- | --- | --- |
+| **light** | one link per tick in every direction, independent of the source; classical Doppler; no kinematic time dilation | earlier session, twins (2) |
+| **gravity** | one coupling (momentum += mass × flux, sign supplied) gives attraction, the Newtonian velocity law exactly (4.00), escape speed ∝ √M, and on signed quanta a closed ledger where the pulled body pays | 1, 4, Kerengonen |
+| **lensing** | what a local observer sees: the lamp displaced away from the mass, double images from opposite sides, late arrival, a caustic (focal distance ∝ b^2.5-3) — a gravitational lens, not a glass one | 1 (from the side) |
+| **cosmology** | expansion is only an initial condition; there is no repulsive term; a closed universe is bound by its size, its field never leaves, and the growing load makes all light slow with age: a distance-proportional redshift without recession, in whole steps | 4, 5 |
+| **gravitational phase** | absent on the fixed field clock; present with `ray_delay` + `ray_phase_per_tick` (an engine rule, opt-in): the interferometer fringe beside a mass shifts by the waits — the COW signature | 8 |
+| **dark matter** | the same 1/r² transport gives radius-independent outward losses in every closed box tried (period 3 and period 9, R = 3-15): a flat curve from a compressed third dimension, no extra mass. **Pending:** the open-3D control with the identical metric; until it lands this is a candidate, not a result | 4, 6 |
+| **dark energy** | not needed for a redshift-distance relation (closure supplies one); nothing here accelerates it | 5, 6 |
+| **time** | the eight-tick example replays its exposed snapshots; a restarted equal-mass collision returns positions and reversed momenta | 9 |
+| **quantum** | a localized domain does not feel the field's delay (6 → 13 ticks for the carrier, unchanged for the click); main's `field_phase` gives it a phase, not a fall | 3 |
+
+What needed a declared rule, all generic and opt-in: self-field policies,
+carried allocation phases, the computation field as delay (isotropic,
+directional, least-delay), a ray field as computation field, ray delay and
+phase per interval. What does not emerge: Lorentz dilation, accelerated
+expansion, quantum matter that gravitates.
+
 Three configuration-only probes of what the generic engine does with a mass whose
 `computation` field is the local cost of computing (Highlights 4.4), run on
 2026-09-14 on branch `feat/self-field-policies-and-carried-phase` after merging
@@ -394,7 +419,23 @@ The test (`... 50 periodic rays 61 9`): the 61 × 61 slab with the third
 dimension closed at period 9 instead of 3, the same coupling and field, at
 R = 3, 5 (inside the period), 9 and 15 (beyond it). Newton predicts the loss
 along an outward path falling as 1/R at R = 3 and 5; the compressed regime
-predicts equal losses at 9 and 15. Results are recorded below.
+predicts equal losses at 9 and 15. Measured losses against the free path
+(launches whose free path exceeds the half-box are omitted):
+
+| launch | R = 3 | R = 5 | R = 9 | R = 15 |
+| --- | --- | --- | --- | --- |
+| 0.25 c | 7.5 | 7.5 | 7.5 | 7.5 |
+| 0.375 c | 11.3 | 11.0 | 10.75 | 10.75 |
+| 0.5 c | 14.8 | 14.8 | 14.8 | — |
+
+The loss is the same at every radius, inside and beyond the period, to the
+resolution of the lattice — the same as in the period-3 slab. The prediction's
+second half (flat beyond L) holds; its first half (Newton inside L, a 1/R
+fall from R = 3 to 5) does not appear. Either the outward integral is
+dominated by the long two-dimensional part of the path in both cases, or the
+radius independence is a property of this four-body coupling rather than of
+closure. Only the open-3D box with the identical metric decides that; it is
+the control the whole section rests on and is recorded below when it lands.
 
 ### Four masses on Kerengonen signed quanta (`kerengonen_universe.py`)
 
@@ -548,6 +589,35 @@ ray delayed 11 intervals arrives with the undelayed phase under B and with
 phase +11 mod 8 = 3 under C. Both keys are declared timing rules; the probe
 shows which one puts the computation clock and the wave in the same
 measurement.
+
+## 9. Forward replay and a collision restart (`time_symmetry.py`)
+
+**One number.** The seeded quantum world (`examples/quantum/native_quantum.json`,
+seed 17) drew one ticket, 16, in eight ticks. Logged aside and supplied back as
+an explicit `tickets` stream in place of the seed, the world reproduces the
+same exposed snapshot at every tick (digests `d73f16ddc584`, `10bc49bba7f7`,
+… identical); run again from the seed alone, identical again; seed 18 diverges
+at tick 5, the first draw. Any earlier point of the history — ticks 2, 4, 6 —
+is reached by restarting the original configuration and executing forward.
+This example uses one ticket; other runs can require more. Snapshot equality
+does not compare every private queue or counter and is not inverse evolution.
+
+**Reversal.** The elastic collision of two equal masses at link speed, run 12
+ticks forward (they meet at x = 10 on tick 5 and swap on tick 6), then a fresh
+world starts at the final positions with negated momenta and runs 12 ticks:
+
+| | Body A | Body B |
+| --- | --- | --- |
+| start | x = 5, p = +120 | x = 15, p = −120 |
+| tick 12 forward | x = 3, p = −120 | x = 17, p = +120 |
+| 12 ticks after reversal | x = 5, p = −120 | x = 15, p = +120 |
+
+The bodies retrace their paths, swap back at the same Node and arrive at their
+starting positions with their starting momenta reversed in this supplied
+equal-mass, link-speed example. The restart does not preserve or invert arbitrary
+private queues, counters, fields or fractional routing state. The outward field
+has no tested inward law and truncated absorption is not a bijection. Forward
+replay and this finite collision return are separate claims.
 
 ## 7. Focus and computing less
 

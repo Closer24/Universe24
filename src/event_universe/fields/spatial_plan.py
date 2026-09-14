@@ -13,7 +13,7 @@ from event_universe.core.disturbance_state import (
     pack,
     unpack,
 )
-from event_universe.core.integer import checked_work
+from event_universe.core.integer import checked_work, reduced_ratio
 from event_universe.core.spatial_state import (
     BOND_ORIGIN_MARK,
     TICKET_MODULUS,
@@ -43,10 +43,9 @@ from event_universe.core.spatial_state import (
     validate_rays,
 )
 
-from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
-from .rays import emit_rays, forward_rays, validate_ray_definition
+from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
     bounded_emission_amount,
@@ -72,19 +71,14 @@ class SpatialLaw:
     # When set, indivisible portions prefer the axis whose port carries the least
     # computation load travelling along ("along") or against it ("against").
     least_delay_direction: str | None = None
-    # The one shared object: the bond registry, the declared exception to the
-    # causal bound. None when no field is bonded.
-    bonds: BondRegistry | None = None
 
-    def _own_departed_keys(
-        self, record: DisturbanceRecord, index: int, meter: CostMeter
-    ) -> set[tuple[int, tuple[int, int, int], int, int]]:
+    def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
         """Complete keys of the record's own rays that arrived here with it."""
         definition = self.definitions[index]
         if not definition.self_exclusion or not record.emission_departed or record.channel_code < 2:
             return set()
         port = record.channel_code - 2
-        keys: set[tuple[int, tuple[int, int, int], int, int]] = set()
+        keys: set[Ray] = set()
         for rule_index, rule in enumerate(self.emissions):
             if rule.spatial_field != index or not matches_type(rule, record.type_index):
                 continue
@@ -93,7 +87,7 @@ class SpatialLaw:
             amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
             if not amount:
                 continue
-            for ray in emit_rays(amount, cursor, definition, meter, phase, advance)[0]:
+            for ray in emit_rays(amount, cursor, definition, meter, phase, advance, rule.heading)[0]:
                 first_port, moved = advance_ray(
                     ray,
                     definition.headings[ray.heading],
@@ -102,7 +96,7 @@ class SpatialLaw:
                 )
                 meter.charge("evaluate")
                 if first_port == port:
-                    keys.add((moved.heading, moved.accumulators, moved.phase, moved.advance))
+                    keys.add(replace(moved, amount=1))
         return keys
 
     def _carried_phase(
@@ -242,9 +236,7 @@ class SpatialLaw:
                 if record is None or not matches_type(rule, record.type_index) or not resident:
                     continue
                 own = self._own_departed_keys(record, index, meter)
-                if all(
-                    (ray.heading, ray.accumulators, ray.phase, ray.advance) in own for ray in resident
-                ):
+                if all(replace(ray, amount=1) in own for ray in resident):
                     continue
                 tickets = list(record.absorb_tickets)
                 if lottery and len(tickets) != len(self.absorptions):
@@ -271,30 +263,30 @@ class SpatialLaw:
                         raise ValueError("absorb fraction must not be negative")
                 remaining: list[Ray] = []
                 for ray in resident:
-                    if (ray.heading, ray.accumulators, ray.phase, ray.advance) in own or ray.homing:
+                    if replace(ray, amount=1) in own or ray.homing:
                         remaining.append(ray)
                         continue
                     meter.charge("read")
                     meter.charge("couple")
                     share = ray.amount
                     fractional = numerator is not None and numerator < rule.fraction_denominator
-                    share_numerator, share_denominator = coherent_numerator, coherent_denominator
+                    share_numerator, share_denominator = reduced_ratio(
+                        coherent_numerator, coherent_denominator
+                    )
                     if fractional:
                         assert numerator is not None
-                        share_numerator = checked_work(share_numerator * numerator)
-                        share_denominator = checked_work(share_denominator * rule.fraction_denominator)
-                    while share_denominator > TICKET_MODULUS:
+                        left, right_denominator = reduced_ratio(
+                            share_numerator, rule.fraction_denominator
+                        )
+                        right, left_denominator = reduced_ratio(numerator, share_denominator)
+                        share_numerator = checked_work(left * right)
+                        share_denominator = checked_work(left_denominator * right_denominator)
+                    while lottery and share_denominator > TICKET_MODULUS:
                         # Keep the share at the ticket's resolution so the draw and the
                         # truncated share stay within the working register.
                         share_numerator //= 2
                         share_denominator //= 2
-                    if rule.bond_setting is not None and ray.bond and self.bonds is not None:
-                        # A bonded ray: the registry answers for both ends of the pair.
-                        setting = unpack(record.values[rule.bond_setting])[0]
-                        meter.charge("evaluate")
-                        if self.bonds.draw(ray.bond, setting, ray_salt(ray)) < 0:
-                            share = 0
-                    elif lottery:
+                    if lottery:
                         # Whole ray or nothing: the local ticket draws against the share.
                         ticket = next_ticket(ticket, ray_salt(ray))
                         meter.charge("evaluate")
@@ -315,7 +307,9 @@ class SpatialLaw:
                         # A pull is paid from the record's own stock, never borrowed.
                         available = max(stock, 0)
                         share = (
-                            (0 if -share > available else share) if lottery else max(share, -available)
+                            (0 if -share > available else share)
+                            if definition.capture != "share" or rule.bond_setting is not None
+                            else max(share, -available)
                         )
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
@@ -476,7 +470,10 @@ class SpatialLaw:
         rays: tuple[Rays, ...] = (),
         claims: tuple[Claims, ...] = (),
         tick: int = 0,
+        ray_hold: int = 0,
     ) -> SpatialPlan:
+        if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
+            raise ValueError("ray hold must be a bounded local delay mode")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
@@ -590,16 +587,15 @@ class SpatialLaw:
                             meter.charge("route")
                             image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
                             new_rays = (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),)
-                    elif rule.heading is not None:
-                        # A directed emitter: the whole amount on one fixed heading.
-                        cursor = cursor_before
-                        new_rays = ()
-                        if unpack(amount)[0]:
-                            meter.charge("route")
-                            new_rays = (Ray(rule.heading, (0, 0, 0), unpack(amount)[0], phase, advance),)
                     else:
                         new_rays, cursor = emit_rays(
-                            unpack(amount)[0], cursor_before, definition, meter, phase, advance
+                            unpack(amount)[0],
+                            cursor_before,
+                            definition,
+                            meter,
+                            phase,
+                            advance,
+                            rule.heading,
                         )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
@@ -718,7 +714,17 @@ class SpatialLaw:
                 )
                 free = tuple(ray for ray in resident_rays[index] if not ray.homing)
                 homing = tuple(ray for ray in resident_rays[index] if ray.homing)
-                ports, kept = forward_rays(free + tuple(emitted_rays[index]), definition, meter)
+                if ray_hold:
+                    ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
+                    kept = merge_rays(
+                        hold_rays(
+                            tuple(resident_rays[index]), definition, meter, advance_phase=ray_hold == 2
+                        )
+                        + fresh_kept
+                    )
+                    homing = ()
+                else:
+                    ports, kept = forward_rays(free + tuple(emitted_rays[index]), definition, meter)
                 if homing:
                     # Homing rays follow the claim's parent port one link per tick;
                     # without a parent here (the root, or no claim) they wait.

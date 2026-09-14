@@ -1,5 +1,15 @@
 # Project status and restart guide
 
+The [local Focus option](LOCAL_FOCUS.md) skips certified empty carrier Nodes,
+with the ordinary scheduler retained for event resolvers and shared field clocks.
+The integrated ray policies now validate retained rays and incoming claims,
+retain funded emissions during load delay, and prepare bounded immutable pace
+tables. Exact share capture and whole-ray threshold funding have regression
+coverage. Unsupported self-exclusion compositions fail preflight. The global
+bond-registry experiment is preserved as a nonlocal reference and cannot drive
+ordinary Simulation; the explicit Q-ORACLE option remains separate and available.
+See the exact submitted source and check results in the integration PR.
+
 The [position-output experiment](../examples/quantum/position_moment_response.md)
 derives localized mean/spread from a finite neighboring-mode operator and reads
 incident wave moments from actual density only as a diagnostic. Its ordinary
@@ -216,9 +226,10 @@ the flood's parent ports, and the record takes them whole; the
 particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
 two phased rays from one source through CHSH detectors built from the
 coherence and the lottery, and measures S below the local bound 2 for the
-lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
-(`bonded-ray-field-v1`, the declared split of postulate 4) the registry
-answers the pair's joint outcome and S reaches 2.86. The
+lottery (1.48) and deterministic hidden variables (2.00). The historical global
+bond reference reported S around 2.86 with a supplied conditional singlet law;
+ordinary initialization now rejects it under the
+[local owner boundary](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1). The
 [gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
 gathering a gravity train focuses the pull like unseen mass: it does not.
 
@@ -241,14 +252,19 @@ Maxwell dynamics, gravity or matter/antimatter creation and annihilation.
 Use the linked catalog and exact PR evidence instead of treating physical labels
 as implemented laws.
 
-Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`:
-[examples/relativity-probes](../examples/relativity-probes/README.md) couples the
-computation field's flux to momentum by configuration. The Newtonian velocity law
-appears exactly, the 1/b lensing law does not with the octant far field (axis
-columns; straight rays bring the b = 3/7 ratio from 18 to 5.6), twin clocks
-show no Lorentz dilation, and a localized quantum domain ignores the field's
-delay while a classical carrier on the same path is delayed. These are recorded
-findings of the generic engine, not implemented gravity or relativity.
+Relativity probes, 2026-09-14, branch `feat/self-field-policies-and-carried-phase`
+([bottom line](../examples/relativity-probes/README.md#bottom-line-2026-09-14)):
+the supplied JSON couplings and declared transport/phase policies produce
+finite attraction, velocity-scaling, lensing-like and delay observations.
+These are configured candidates, not a derivation of Newtonian gravity or
+relativity. Forward replay matches the quantum example's exposed snapshots,
+and the equal-mass collision example returns positions and reversed momenta
+after restarting with negated momenta. Neither establishes reversal of arbitrary
+hidden state. The radius-independent loss observations remain inconclusive
+until the same-metric open-3D control is completed; they do not establish dark
+matter. Lorentz dilation, accelerated expansion and gravitating quantum matter
+have not emerged in these probes. `ray_delay` and `ray_phase_per_tick` are
+supplied engine rules, and physical collision laws are supplied in JSON.
 
 Local field-rule extension base: 2026-09-12, main
 `12c85316f011d0601adcd0f4a31f0f52e59eaa27`. The opt-in

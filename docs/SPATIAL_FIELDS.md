@@ -554,30 +554,47 @@ probability of its wave.
 
 ### Bonded rays (`bonded-ray-field-v1`)
 
-The one declared exception to the causal bound, split off in postulate 4. A
-Kerengonen ray field may add `"bond": {"seed": s}` (identity
-`bonded-ray-field-v1` in the run metadata); an emission with
-`"bond_field": "origin"` then bonds every ray it emits to its birth: the Node
-that emits it stamps the ray with the code of its own address and the tick,
-and the ray carries that origin, unchanged, until its next interaction, so
-everything born at one Node on one tick is one pair. (`"bond_field":
-"<owned scalar>"` bonds by the emitter's label instead.) An absorb rule with
-`"bond_setting": "<owned scalar>"` is a
-detector whose setting is that field's value in phase steps. When such a
-record meets a bonded ray it does not draw a ticket or read the coherence: it
-asks the bond registry, one object for the whole world seeded by `s`. The
-first question on a bond draws the pair's one number and is answered by its
-upper half, an even coin, remembered with its setting and the number; the
-second, at another setting, draws nothing and is answered by the lower half
-of the same number so that the two ends agree with probability
-`(1 - cos(difference)) / 2` from the fixed cosine table, the singlet's law
-([postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)).
-An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's second answer knows the first at once, at any
-distance; it moves no energy, no momentum and no message, since each end
-alone sees an even coin whatever the other end's setting. Rays merge only
-within one bond. The registry lives in one process: bonded worlds run on a
-single Node worker. The [Bell probe](../examples/bell-chsh/README.md) with
-`--capture bond` measures the quantum value of S with it.
+This standalone historical reference uses a global mutable registry and a
+supplied conditional singlet law. It is **not available in ordinary Simulation**:
+initialization rejects `bond` before a physical run. The independent
+[registry tests](../tests/test_bonds.py) retain reference-law checks; they do not
+certify a local or transactional physical model. The old
+[Bell probe](../examples/bell-chsh/README.md) records historical results, and its
+`--capture bond` input now fails explicitly. Local lottery and threshold inputs
+remain available.
+
+The registry can change during a failed proposal, its history grows indefinitely,
+and its finite birth hash collides across some Node/tick pairs. A future
+integration requires a bounded, transactional owner and an explicitly reviewed
+model contract. It cannot inherit the existing quantum owner's Q-ORACLE exception.
+No-signalling across arbitrary lifecycles or repeated queries has not been proved.
+
+The retained reference uses one draw per pair: the first query stores the number
+alongside its answer and setting; the second query uses that same number's
+remainder and the supplied cosine table. The reference tests check the draw
+count. This update does not reopen ordinary activation; see
+[postulate 22](../POSTULATES.md#22-configured-integer-lottery-and-replay-hypothesis).
+
+## Integrated ray ownership boundaries
+
+Load-delayed rays remain visible to absorption and gathering. Surviving residents,
+fresh emissions, owned carrier stock and retained pace state commit together,
+before observers see the result. Every retained ray and every incoming claim is
+validated before filtering or adoption. Expired claims release their local slots
+before new claims are admitted; a full live capacity remains the declared local
+admission limit.
+
+Euclidean pace tables are immutable configuration data prepared before stepping.
+Ratios are reduced before physical-register bounds are checked; irreducible terms
+outside those bounds fail preflight. There is no growing global pace cache.
+Share and threshold capture retain exact rational decisions, and an unfundable
+negative whole-ray capture is rejected rather than partially paid.
+
+One-Link self-exclusion reconstructs swept or fixed directed emissions and matches
+all ray metadata except amount. Its current departure record does not prove
+coarrival for paced, load-delayed, mirrored, claimed or bonded rays; these
+combinations fail preflight. This is still a scoped candidate and cannot identify
+otherwise identical waves by an absent source label.
 
 ## Finite completed-link decay
 

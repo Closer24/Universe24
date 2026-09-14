@@ -789,8 +789,10 @@ def test_a_euclidean_pace_makes_the_wave_front_round_and_keeps_waiting_rays():
     paces = heading_paces(definition)
     # Manhattan 1, 2, 3 against Euclidean 1, sqrt 2, sqrt 3: the body diagonal hops
     # every tick and the axis ray once in sqrt 3 ticks.
-    assert paces[2] == (paces[2][0], paces[2][0]) and paces[0][1] == 4096
-    assert paces[0][0] == 2364 and paces[1] == (2364, 2896)
+    # Reducing the integer ratios must preserve the same physical schedule.
+    assert paces[2][0] == paces[2][1]
+    assert paces[0][0] * 4096 == paces[0][1] * 2364
+    assert paces[1][0] * 2896 == paces[1][1] * 2364
     raw["emissions"] = raw["emissions"][:1]
     raw["emissions"][0]["amount"] = 3
     raw["seeds"] = raw["seeds"][:1]
