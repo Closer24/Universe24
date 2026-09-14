@@ -1572,3 +1572,22 @@ absorbs its own fresh emission.
 Only the repulsive push closes this way. An attraction that pays for the
 kinetic energy it creates has no local rule yet, and the charge probes still
 carry no energy.
+
+## Quantum-to-classical probes — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. Three host-side
+measurements on existing rules only, in
+[examples/quantum-classical](../examples/quantum-classical/README.md).
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,349 tests with five visualization skips |
+| New tests | `tests/test_quantum_classical.py`: the dephased walk equals the classical chain with variance `t - 3/4` while the coherent walk is wider; quanta click as 0 or 1 and every emitted quantum is accounted for; capture attempts land on the pass ticks with charge and mass exact |
+| Walk | 25 registers, 14 steps: coherent width exponent 1.005; record discarded every step or every second step reproduces the classical Markov chain exactly at every step (exponent 0.558 with the `-3/4` offset); every fourth step gives 0.778 |
+| Counting | One quantum per tick over 4,096 golden-stride headings, six detectors per radius: values only 0 or 1; `rate x r^2` between 0.066 and 0.100 for r = 2 to 8, log-log slope -2.17; relative spread of window counts falls about twofold per fourfold window; 4,077 escaped and 20 in flight after the sweep |
+| Capture | 10,000 seeded worlds of the causal charge example: capture fractions 0.6335, 0.2383, 0.0837, 0.0280 and 0.0165 uncaptured against 16/25, 144/625, 1296/15625, 11664/390625 and 6561/390625; chi-square 4.65 on four degrees of freedom; charge -1 and mass 1 at every tick |
+| Visualization | Not requested or generated |
+
+The mixers and instruments are explicit configured laws. Nothing here derives
+a Hamiltonian, a collapse criterion or a species; the seam between the finite
+quantum rules and the classical ones is measured, not explained.
