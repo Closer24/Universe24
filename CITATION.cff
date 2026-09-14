@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata below."
 title: "Universe24: a discrete simulator of local physical laws (Reality Theory)"
 type: software
-version: 0.2.0
-date-released: 2026-09-13
+version: 0.3.0
+date-released: 2026-09-14
 license: MIT
 doi: 10.5281/zenodo.22738746
 repository-code: "https://github.com/Closer24/Universe24"
