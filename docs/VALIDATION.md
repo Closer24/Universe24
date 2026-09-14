@@ -1612,3 +1612,25 @@ rest; a ray field is absorbed or exchanged, never both.
 The source's stock rises by what it emits, and a radial fall through the
 lattice `r = 1` singularity escapes at the speed cap: both are properties of
 this candidate, recorded rather than corrected.
+
+## Kerengonen phased rays — 2026-09-14
+
+Base: `3c52a08` on this branch, after merging main. The optional `kerengonen`
+key on a ray field gives every ray a phase step that advances per link; rays
+merge only with equal phase, and the coherence of the rays resident at a Node,
+from a fixed-point integer cosine table, gates the sampled value and the
+absorbed share. Amounts are never changed by phase. Funded emission and
+absorption are now booked as field reactions, so the runner's per-tick
+accounting balances for them.
+
+| Check | Result |
+| --- | --- |
+| `python tools/check.py` | Passed: Ruff lint and formatting, strict mypy on 69 files, 2,355 tests with five visualization skips; the integer audit of physical modules passes with the fixed-point cosine table |
+| New tests | `tests/test_kerengonen.py`: phase advance and wrap, merge by phase, exact coherence at equal, opposite and quarter phases, the two-lamp line reading 4, 0, 4, 0, 4 against a plain 4 everywhere with the audit closed, coherence-gated absorption (4 then nothing at the dark Node, 20 at the bright one, 20 at the dark one with a half-turn offset), runner identity `kerengonen-ray-field-v1`, six validation rejections, and the double-slit probe's composition and closure |
+| Double slit | 31 x 31 x 3 open world, lamps at y = -3 and +3, 59 planar headings, 16 quanta per ray, 8 phase steps, 48 ticks: screen absorption 928 at the center, 704 at a quarter turn, 64 at a half turn, about one half in the wings, against a plain 928, 1376, 928; a half-turn offset on the second lamp inverts the even Nodes (0 at the center, 928 at y = +-2); quanta closed in all three worlds |
+| Audited world | 8 headings, 24 ticks, five-Node screen: 1,280,412 Node events with zero residual, 160 quanta absorbed in phase at the center, energy 5,632 plus 512 escaped against 6,144 initial, momentum (-2112, 0, 0) against (2112, 0, 0) escaped |
+| Unchanged | The plain ray field, the gravity, particle, radiation-pressure and quantum-to-classical probes keep their results without the key |
+| Visualization | Not requested or generated |
+
+Quanta that cancel are not redistributed; they continue and escape. That is the
+candidate's open question, recorded in `POSTULATES.md`.
