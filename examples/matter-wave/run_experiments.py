@@ -1,11 +1,13 @@
 """A particle in flight dissolves into a matter wave and lands on a screen as a fringe.
 
 Configuration only, on rules that already exist. A particle record of matter M
-and momentum p moves along its heading at an eighth of a link per tick. Its funded
+and momentum p moves along its heading at half a link per tick. Its funded
 emission carries the engine's `dissolve` schedule: nothing for four cycles,
 then its initial matter over sixteen cycles as Kerengonen rays over a forward
-cone, each ray advancing `|p| / 4` phase steps per link. The particle keeps
-flying while it holds matter and stops when it is empty. Sixteen ticks is
+cone, each ray advancing `|p| / 4` phase steps per link. The particle flies
+while its matter is whole and stands still from the first quantum it pays out:
+a source that moved during its train blurred the fringe and coupled the two
+slits, which the first run of this version measured. Sixteen ticks is
 longer than any path difference to the screen, so the two slits' contributions
 overlap at every screen Node; a one-tick pulse would meet itself only where
 the paths are equal. The
@@ -45,7 +47,7 @@ DISSOLVE_TICK = 4  # the particle flies two links before its train starts
 TRAIN_TICKS = (
     16  # it pays out its matter over sixteen ticks: a wave train longer than any path difference
 )
-SPEED_NUMERATOR = 8  # hops per tick = 8 / 64 while it holds matter, then 0: it stays far from the wall
+SPEED_NUMERATOR = 32  # hops per tick = 32 / 64 while its matter is whole; the train stops it
 SPEED_DENOMINATOR = 64
 TICKS = 84
 COSTS = {
@@ -171,7 +173,10 @@ def document(
                     "direction_field": "heading",
                     "rate": {
                         "op": "mul",
-                        "args": [SPEED_NUMERATOR, {"op": "gt", "args": [{"field": "matter"}, 0]}],
+                        "args": [
+                            SPEED_NUMERATOR,
+                            {"op": "gt", "args": [{"field": "matter"}, matter - 1]},
+                        ],
                     },
                     "rate_denominator": SPEED_DENOMINATOR,
                 },
