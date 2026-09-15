@@ -137,7 +137,7 @@ the best power law, `k ~ t^1.4`, is still behind by `delta chi^2 = 9` with
 one fitted parameter each (the families are not nested, so no significance
 level follows; as an information criterion, a relative likelihood of about
 0.01), and the reading in
-which only the arrival rate is redshifted fails at every exponent, its
+which only the arrival rate is redshifted is behind at every exponent, its
 `n -> infinity` limit included. The Tolman surface-brightness exponent is
 where the lattice and expansion differ, `(1 + z)^-2` against `(1 + z)^-4`,
 and the raw measured exponents (2.59 and 3.37 in R and I, Lubin and Sandage

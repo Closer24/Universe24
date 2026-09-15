@@ -2703,3 +2703,22 @@ delta chi-square = 9 does not follow for two families that are not nested.
 | Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 26 seconds; ruff lint and format passed |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
+
+## Redshift: preference against exclusion, the clock's stakes, and the nearest literature - 2026-09-15
+
+Base: `724241f` on `main` (after PR #130). No engine change. A sixth
+review of the second manuscript, read as a standalone paper.
+
+| Check | Result |
+| --- | --- |
+| Goodness of fit against model preference | covariance chi-square per degree of freedom (1,579): flat LambdaCDM 0.88, fitted power law (reading B, n = 1.4) 0.88, reading-A limit (n -> infinity) 0.93, quadratic load A 1.32, linear load A 2.08; "excluded" and "fails" replaced by "behind" wherever the shape passes on its own |
+| `redshift_hubble.py` | the fitted power law (n = 1.4, reading B) is a named shape, so its binned residuals are reported and drawn: chi-square 699.31 diagonal (0.4429 per dof), 1396.1 covariance, +9.0 against LambdaCDM, as before |
+| Single source against the continuum | the measured gap of 49.6 ticks is 1.2 ticks below the continuum's 50.8 and 2.0 above the launch-offset value of 47.6; the manuscript had said "within a tick" |
+| Pantheon+ sample | 1,701 light curves of 1,550 supernovae; 1,580 Hubble-flow light curves kept |
+| Tolman | Lubin and Sandage's exponents are reduced under an assumed q0 = 1/2 geometry, so they are not model-independent; the manuscript now calls the comparison an indication, not a test of the model |
+| Clock | the stakes stated: a clock at r(t) cycles per tick reads (r_o / r_e)(k_o / k_e), and one that slowed as 1 / k would cancel the stretch |
+| Literature | the cosmic-refraction models (Chen and Kantowski 2008) named as the nearest continuum relatives, with what the lattice adds and does not add |
+| Figures | the law figure's legend moved outside the axes; the residual figure gains the fitted power law |
+| Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 25 seconds; ruff lint and format passed (a first run reported four failures in `test_ray_integration_guards.py` whose assertion text was an older version of the file: stale pytest bytecode; the file passes directly and the gate passed after the caches were cleared) |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.

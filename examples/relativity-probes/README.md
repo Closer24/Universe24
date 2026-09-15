@@ -831,8 +831,8 @@ emission growing with age was not used because it couples the emitters'
 cycle count to the traffic through the Node's single cycle.
 `redshift_hubble.py` fits the shape of each reading, of flat LambdaCDM
 (`Omega_m = 0.334`) and of the Einstein-de Sitter universe to the 1,580
-Hubble-flow supernovae of the public Pantheon+ release (not calibrators,
-`z >= 0.01`) with one free offset each, the absolute magnitude and the scale
+Hubble-flow light curves of the public Pantheon+ release (1,701 light
+curves of 1,550 supernovae; not calibrators, `z >= 0.01`) with one free offset each, the absolute magnitude and the scale
 `alpha` being degenerate, twice: with the diagonal errors (the bins and
 residuals are read from this fit) and, with `--covariance`, with the
 release's full statistical-plus-systematic covariance restricted to the kept
@@ -857,8 +857,13 @@ limit is listed as well:
 | flat LambdaCDM, `Omega_m = 0.334` | -0.50 | 694.8 | 0 | 1387.1 | 0 | -0.01, +0.01, 0.00, +0.03, -0.10 |
 | Einstein-de Sitter | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
 
-The full covariance changes none of the conclusions. The reading in which
-only the arrival rate is redshifted (A) is excluded at every exponent: its
+The full covariance changes none of the conclusions, and every conclusion
+is a comparison between models, not a goodness-of-fit verdict: with 1,579
+degrees of freedom the covariance chi-square per degree of freedom is 0.88
+for LambdaCDM, 0.88 for the fitted power law and 0.93 for the reading-A
+limit, all acceptable on their own; only the linear and quadratic loads in
+reading A (2.08 and 1.32) fail outright. The reading in which
+only the arrival rate is redshifted (A) is behind at every exponent: its
 chi-square falls monotonically across the grid and is still 114 above
 LambdaCDM at `n = 20` and 81 above it in the `n -> infinity` limit, which
 bounds every exponent beyond the grid. The two load histories the model
@@ -880,14 +885,15 @@ dilation: the law stretches durations by `1 + z` (the same integers as
 `z`), as supernova spectra age (`(1 + z)^-b`, `b = 0.97 +- 0.10`, Blondin et
 al. 2008), where tired light fails. Surface brightness: the Tolman exponent
 is 1 in reading A and 2 in reading B against 4 for expansion; Lubin and
-Sandage (2001) measure 2.59 +- 0.17 in R and 3.37 +- 0.13 in I before any
-luminosity-evolution correction and read the shortfall from 4 as the
-evolution expansion requires, so the raw exponents lie above the lattice's
+Sandage (2001) find 2.59 +- 0.17 in R and 3.37 +- 0.13 in I before any
+luminosity-evolution correction, with distances reduced under an assumed
+`q0 = 1/2` geometry, and read the shortfall from 4 as the evolution
+expansion requires, so the raw exponents lie above the lattice's
 by 0.6 to 1.4 and an evolution of the opposite sign would be needed to
 close the gap; a quantitative statement needs the data reduced under the
 lattice's own angular-size relation, not done here. This is the test on
-which the lattice and expansion differ, and the lattice is in tension with
-it now. The temperature of the background: the model has no blackbody and
+which the lattice and expansion differ; until the model's own reduction is
+done it is an indication against the lattice, not a quantitative test. The temperature of the background: the model has no blackbody and
 so makes no prediction yet, a gap rather than an exemption. The temperature of the background does not apply: the
 model has no blackbody. The model does not remove dark energy; it relabels
 the acceleration as a load growing faster than linearly, which no rule of the

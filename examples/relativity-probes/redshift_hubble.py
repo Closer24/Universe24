@@ -76,6 +76,9 @@ SHAPES = {
     "linear load (n = 1), rate and amount loss (B)": shape(1, "B"),
     "quadratic load (n = 2), rate loss only (A)": shape(2, "A"),
     "quadratic load (n = 2), rate and amount loss (B)": shape(2, "B"),
+    # The fitted exponent of the free-exponent scan below, kept here so that its binned
+    # residuals are reported and drawn like the others.
+    "power law (n = 1.4), rate and amount loss (B)": shape(1.4, "B"),
     "flat LambdaCDM, Omega_m 0.334": lambda z: (1 + z) * comoving_integral(z, OMEGA_M),
     "Einstein-de Sitter": lambda z: 2 * (1 + z) * (1 - 1 / math.sqrt(1 + z)),
 }
@@ -85,6 +88,7 @@ DECELERATION = {
     "linear load (n = 1), rate and amount loss (B)": 0.0,
     "quadratic load (n = 2), rate loss only (A)": 0.5,
     "quadratic load (n = 2), rate and amount loss (B)": -0.5,
+    "power law (n = 1.4), rate and amount loss (B)": -0.4 / 1.4,
     "flat LambdaCDM, Omega_m 0.334": OMEGA_M / 2 - (1 - OMEGA_M),
     "Einstein-de Sitter": 0.5,
 }

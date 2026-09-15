@@ -26,9 +26,11 @@ record).
   covariance, the exponent fitted under each error model with its interval
   (refined in steps of 0.001 around the minimum) and the reading-A family
   bounded by its `n -> infinity` limit; the model's own load histories are
-  disfavoured, and the best power law is behind LambdaCDM by nine units of
-  chi-square with one fitted parameter each; the Tolman exponent is the
-  discriminating test and the lattice is in tension with it. Manuscript in `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
+  behind LambdaCDM, and the best power law by nine units of chi-square with
+  one fitted parameter each, as preferences between models (the shapes pass
+  a goodness-of-fit test on their own); the Tolman exponent is the
+  discriminating test, an indication against the lattice until the data
+  are reduced under its own distance relations. Manuscript in `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
 
 
 A review pass on the paper's Bell narrative. No engine change; the Bell probe
