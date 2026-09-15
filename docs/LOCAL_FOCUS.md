@@ -37,6 +37,8 @@ is present, spatial reuse. Event resolvers bypass both caches. Low-level custom
 DisturbanceEngine planners are not assumed pure; their reuse flags default off.
 The empty-carrier scheduler fallback and planner reuse are separate decisions:
 shared field clocks keep the ordinary carrier schedule but can reuse pure plans.
+The spatial engine retains its original planner object for direct law inspection;
+only its execution service receives the reuse adapter.
 
 Equality means the complete immutable planning input, not equal output on the
 previous tick. Carrier keys include every record field (including residuals and

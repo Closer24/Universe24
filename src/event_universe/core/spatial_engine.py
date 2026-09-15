@@ -148,6 +148,7 @@ class SpatialEngine:
         event_space: CausalEventSpace | None = None,
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
+        execution_planner: SpatialPlanner | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
@@ -178,7 +179,7 @@ class SpatialEngine:
             meter.charge("update", components)
         self._services = SpatialServices(
             replace(initial, seeds=(), spatial_seeds=()),
-            planner,
+            planner if execution_planner is None else execution_planner,
             NodeEvents(event_space, observer),
             coupler,
             decayer,

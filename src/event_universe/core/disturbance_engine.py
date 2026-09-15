@@ -139,16 +139,17 @@ class DisturbanceEngine:
             )
         self._spatial = (
             None
-            if field_planner is None or not initial.spatial_fields
+            if spatial_planner is None or not initial.spatial_fields
             else SpatialEngine(
                 initial,
-                field_planner,
+                spatial_planner,
                 observer,
                 spatial_coupler,
                 spatial_decayer,
                 event_space=event_space,
                 balance_guard=balance_guard,
                 field_guard=field_guard,
+                execution_planner=field_planner,
             )
         )
         self._services = NodeServices(

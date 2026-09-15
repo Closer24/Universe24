@@ -40,6 +40,15 @@ Optimized source fingerprint:
 `7c5375d1731082a27cb9f50fd2fe5e87c0bad761d8a67b6c679b469d2f83b346`.
 The fingerprint covers active Python source, not generated outputs or this text.
 
+A subsequent constructor correction preserves the original spatial planner object
+for direct law inspection while passing the same reuse adapter to execution.
+Its source fingerprint is
+`4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`.
+All four inputs were replayed on this corrected source and matched the recorded
+state, event, cost and accounting evidence exactly. The table remains the earlier
+isolated timing measurement: constructor setup is outside its timer, the stepping
+callback is unchanged, and timings from the extra acceptance replays are not used.
+
 Reproduce with the same environment and `tools/benchmark_focus.py`, setting
 `PYTHONPATH` to each chosen checkout's `src`. Select `--case trail`, `repeated`,
 `fields` or `finite`, provide that checkout with `--source`, and use a fresh
