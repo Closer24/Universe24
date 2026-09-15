@@ -44,7 +44,7 @@ as well, only the frequency's excess over the advance rate redshifts. A train of
 choice of light, is not usable: a Node starts no new cycle until its delayed
 departure has arrived, so bodies stall the clocks of the Nodes they wait at.
 We then show a kinematic correspondence: with $D = \int dt/k$ the hop time
-$k(t)$ plays the part of $a(t)$ in a Friedmann universe for the Hubble
+$k(t)$ plays the part of $a(t)$ in a flat Friedmann universe for the Hubble
 diagram and the time dilation, so those two tests are reproduced by a
 static lattice with the matching load history, and the question of dark
 energy becomes the question of what makes the load grow. The luminosity
@@ -94,7 +94,7 @@ the law is the expected consequence of the rule, and the runs test its
 discrete realisation and its reading, not its existence.
 Second, a kinematic correspondence: the hop time is a scale factor for the
 Hubble diagram and the time dilation, so the lattice reproduces those two
-tests of any Friedmann model with the matching load history and cannot be
+tests of any flat Friedmann model with the matching load history and cannot be
 told from expansion by them alone; the correspondence is kinematic because
 nothing dynamical (no Friedmann equation, no equation of state) is derived.
 Third, the data: the load histories the model supplies by itself do not fit
@@ -102,8 +102,9 @@ the supernova diagram, a fitted power law comes within three standard
 deviations of $\Lambda$CDM, and the surface-brightness
 exponent is where the lattice and expansion part, with the measured value on
 expansion's side. The conclusion is negative for the strong claim
-(no dark energy) and positive for a narrower one (a lattice mechanism that
-carries the whole Hubble diagram in one function, with a stated test).
+(no dark energy) and positive for a narrower one (a lattice mechanism whose one-parameter
+family comes within three standard deviations of the Hubble diagram, with
+a stated test on which it is behind).
 
 \section{The lattice and the rule}\label{sec:rule}
 
@@ -155,7 +156,7 @@ eye over the interval at the source, and $k_o/k_e$ read ray by ray)
 \frac{\text{duration at reception}}{\text{duration at emission}} = 1 + z,
 \label{eq:law}
 \end{equation}
-both of which the lattice states as integers. Equation \eqref{eq:law} follows from the rule by construction, since every hop takes the hop time in force; what is not given by construction, and what the runs establish, is that an eye reads it on its own clock, that the wave's frequency follows it, and how the distance enters. The distance enters through the travel time: $D$ hops each taking $k(t)$ ticks give
+both of which the lattice states as integers. Equation \eqref{eq:law} follows from the rule by construction, since every hop takes the hop time in force; what is not given by construction, and what the runs establish, is that an eye reads it on its own clock, how the distance enters, and the size of the discrete corrections. The distance enters through the travel time: $D$ hops each taking $k(t)$ ticks give
 \begin{equation}
 D = \int_{t_e}^{t_o} \frac{dt}{k(t)},
 \label{eq:distance}
@@ -196,7 +197,7 @@ launch at k = 1 & 48, 16, 1000, 900 & 41.5 & 1 & 1.818 & 2.750 & 2.818 & 0.0250 
 launch at k = 4 & 48, 16, 1000, 3000 & 41.5 & 4 & 0.659 & 1.646 & 1.659 & 0.0122 & 0.0150\\
 launch at k = 16 & 48, 16, 1000, 15000 & 41.5 & 16 & 0.830 & 1.818 & 1.829 & 0.0146 & 0.0159\\
 single source & 48, 16, 1000, 7000 & 47.0 & 8 & 1.068 & 2.032 & 2.068 & 0.0155 & 0.0160\\
-single source, no emission & 48, 0, 1000, 7000 & 47.0 & 7 & 0.000 & 1.000 & 1.000 & n/a & n/a\\
+single source, control & 48, 0, 1000, 7000 & 47.0 & 7 & 0.000 & 1.000 & 1.000 & n/a & n/a\\
 \bottomrule
 \end{tabular}
 \caption{The closed-row runs. $D$ is the mean distance from the twelve lamps to the eye ($L - 1$ for the single source); $z$ is the mean gap between consecutive absorptions on the eye's clock divided by the interval at the source ($k_e$ for the train, $3 k_e = 24$ ticks for the single source), minus one; $k_o/k_e$ is the mean hop time in force while the train is absorbed over the hop time at launch (ray by ray for the single source, whose launch hop rises during the emission); duration is the train's span at the eye over its span at launch; $\alpha_{\rm meas} = \ln(1+z)/D$; $\alpha_{\rm sched}$ is the rate at which the hop time rose during the run, read off every ray's hops. In every run the eye's clock equals the tick count, the field's total grows linearly, and the twelve quanta are conserved.}
@@ -339,11 +340,12 @@ Second, how a quantum's amount is read. Bodies arrive at a rate reduced by
 $1 + z$ in every run. If each quantum keeps its amount (reading A) the
 luminosity distance is $d_L = D\sqrt{1+z}$; if a quantum's energy is read
 down by $1 + z$ as well (reading B) it is $d_L = D(1+z)$, the
-expanding-universe form. The lattice measures that the frequency of a
-phased ray falls by $1 + z$ under the default rule (the wave paragraph of
-Section~\ref{sec:measure}); that a quantum's energy is its frequency, $E
-\propto \nu$, is a relation the lattice does not contain, and reading B
-rests on it as an assumption. The angular size of a source is $1/D$ in both
+expanding-universe form. Under the default phase rule the frequency of a phased ray follows the
+arrival gaps by construction (the wave paragraph of
+Section~\ref{sec:measure}), so the first step of reading B, that a
+frequency falls by $1 + z$, is the rule restated; the second, that a
+quantum's energy is its frequency, $E \propto \nu$, is a relation the
+lattice does not contain, and reading B rests on it as an assumption. The angular size of a source is $1/D$ in both
 readings, so the surface brightness goes as $(1+z)^{-1}$ (A) or
 $(1+z)^{-2}$ (B), against $(1+z)^{-4}$ for expansion.
 
@@ -448,7 +450,7 @@ that produces it.
 as a load growing faster than linearly; the unexplained quantity moves from
 $\Lambda$ to the emission law and is not smaller for the move.
 \item Not a passing of the Tolman test: the predicted exponent is below the
-measured range in both readings.
+raw measured exponents in both readings.
 \item Not a measured luminosity distance: the $1/D^2$ dilution is carried
 over from open three-dimensional runs, and reading B takes a quantum's
 energy to follow its measured frequency; the closed row measures rates,
