@@ -1202,3 +1202,18 @@ negative threshold capture, directed self-exclusion and maximum pace inputs.
 modeled cost against the unchanged ordinary scheduler, including six-Port
 revisits, pending delays, failure timing, parallel execution and explicit fallback.
 Host visit reduction is distinct from physical O(1) local work.
+
+
+### Exact transition reuse and active transport
+
+`test_plan_reuse.py` checks all carrier and spatial planning arguments, including
+local phases, claim inputs, computation cost and time; hash collisions; bounded
+LRU eviction; retry after failure; independent configurations; and default reuse
+of repeated moving patterns in serial and parallel execution. Each tick retains
+identical inventory, snapshots, ordered events, operation cost and local clocks.
+Event programs retain their uncached owners. `test_active_ports.py` checks stable
+bank-creation order after reactivation, release during iteration, preserved empty
+mapping entries and continued stepping without scans of inactive bank history.
+The existing Focus, field, delay, boundary, parallel and formula-free state tests
+remain consumers of this host-only optimization. Timing is measured outside CI
+assertions with identical inputs; no speed threshold replaces physical equality.

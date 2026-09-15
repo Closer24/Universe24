@@ -279,7 +279,7 @@ class InitialState:
     ray_delay: bool = False
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
-    focus: bool = False
+    focus: bool = True
 
     def __post_init__(self) -> None:
         if self.node_execution and self.spatial_computation_delay:

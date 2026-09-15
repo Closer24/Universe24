@@ -878,7 +878,16 @@ while ordinary carrier and field phases each use one.
 
 ### Local carrier scheduling and prepared ray laws
 
-[Local Focus](LOCAL_FOCUS.md) owns a host address set and visit counters, never
+[Local Focus](LOCAL_FOCUS.md) defaults on. `core/plan_reuse.py` shares immutable
+pure transition results through the host `NodeExecution` service with bounded
+per-simulation caches. Full input equality is required; laws cannot read cache
+state. Local commits, guards, model charges and timing remain Node-owned.
+Mutable bond planners and event resolvers bypass reuse. `PortTable` indexes only
+active transport banks and retains stable creation order; schedulers refresh
+changed banks without adding callbacks or world references to PortBank.
+The detailed limits, metrics and supercell boundary are in the Focus contract.
+
+Local Focus owns a host address set and visit counters, never
 physical history or a new per-Node state type. Nodes certify dormancy from fixed
 local state; actual delivery wakes them. The spatial active index remains shared
 by both scheduling modes. Frozen field definitions own bounded immutable phase

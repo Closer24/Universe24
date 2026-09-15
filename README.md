@@ -96,6 +96,11 @@ python -m event_universe.configuration_validation examples/basic.json --json
 See [configuration validation](docs/CONFIGURATION_VALIDATION.md) for catalog,
 profile and observer files, explicit dependencies and the limits of a valid report.
 
+[Local Focus](docs/LOCAL_FOCUS.md) is enabled by default: identical pure local
+planning inputs share their calculated result, and certified empty carrier Nodes
+sleep until needed. Set `"focus": false` for uncached ordinary carrier scheduling.
+Host reuse never reduces modeled operation cost or changes world time.
+
 The initialization file is required. It supplies `ticks`; `--ticks` can override
 duration. Missing input is an error, not a request to load a built-in universe.
 Field definitions, disturbance types, seeds, formulas and cost settings are
