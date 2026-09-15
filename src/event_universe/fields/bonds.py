@@ -18,8 +18,9 @@ where the numbers come from, only how they are read, and the stream is the
 door through which a source outside the world's state can choose outcomes.
 In Bell's terms the registry is measurement-independent (the number is fixed
 before the settings) and parameter-dependent (the second answer reads the
-first end's setting): a nonlocal resource, not a local model. Its bias is measurable:
-the Bell probe compares uniform and biased streams.
+first end's setting): a nonlocal resource, not a local model. Its bias is measurable
+half by half: the Bell probe compares uniform, coin-biased and agreement-biased
+streams, and only the coin's bias is a signal.
 
 The registry's state is bounded: it holds at most MAX_OPEN_BONDS pairs whose
 first end has answered and whose second has not, and releases a pair at its

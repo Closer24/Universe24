@@ -199,3 +199,16 @@ def test_only_the_bonded_candidate_moves_an_outcome_with_the_other_ends_setting(
     assert not bond["parameter_independent"]
     assert bond["alice_moves_with_bob_setting"] == {"a": 0.0, "a2": 0.0}
     assert bond["bob_moves_with_alice_setting"] == {"b": 0.0, "b2": 0.7344}
+
+
+def test_a_source_biased_in_the_agreement_half_is_a_box_above_the_quantum_value_without_a_signal():
+    # The coin stays even and only the lower half of the number is fixed: the ends
+    # disagree at three setting pairs and agree at the fourth, S = 4, the
+    # Popescu-Rohrlich box, while neither end's plus rate moves with the other's setting.
+    box = PROBE.chsh(seeds=1, capture="bond", source="agreement")
+    assert box["closed"] and box["S"] == 4.0 and box["same_setting_E"] == -1.0
+    assert [value["E"] for value in box["correlations"].values()] == [-1.0, 1.0, -1.0, -1.0]
+    assert box["alice_rate_shift"] == 0.0 and box["bob_rate_shift"] == 0.0312
+    assert all(0.45 < value["alice_plus_rate"] < 0.55 for value in box["correlations"].values())
+    number = PROBE.external_number(1, "agreement")
+    assert number in (PROBE.TICKET_MODULUS // 4, PROBE.TICKET_MODULUS // 4 + PROBE.TICKET_MODULUS // 2)

@@ -145,9 +145,27 @@ and moves Bob's plus rate with Alice's setting by 0.6866: Bob at
 `b'` reads 0.83 when Alice measures `a` and
 0.15 when she measures `a'`, the
 singlet's `(1 - cos(a - b')) / 2` with Alice's coin fixed. That is a signal
-faster than the causal speed, and it is the only trace an outside source can
-leave: it may choose every single outcome, but not without a bias, and a bias
-is measured at the other end.
+faster than the causal speed. It is not the only thing a bias can do:
+`--source agreement` keeps the coin even and fixes the lower half of every
+number at one half of the modulus, above the agreement threshold of the
+settings a quarter turn apart (`75/512`) and below that of the settings three
+quarters apart (`437/512`), so the ends disagree at `(a, b)`, `(a', b)` and
+`(a', b')` and agree at `(a, b')`:
+
+| Quantity | Agreement-biased outside source |
+| --- | --- |
+| E(a, b), E(a, b'), E(a', b), E(a', b') | -1.0, 1.0, -1.0, -1.0 |
+| S | 4.0 (the Popescu-Rohrlich box; quantum 2.828, local bound 2) |
+| Alice's and Bob's plus rates per setting pair | 0.49 at every pair; 0.51, 0.49, 0.51, 0.51 |
+| Rate shifts with the other end's setting | 0.0 and 0.0156 (16 seeds per slot, 1,024 pairs per correlation) |
+
+This source moves no marginal and is not a signal, yet its correlation is
+above the quantum value. So the door of postulate 22 is bound half by half:
+a bias in the coin is a signal and a bias in the agreement is not, and
+no-signalling bounds the coin, not the correlation. What holds the
+correlation at the quantum value is the singlet law in the lower half, and
+that law is configured; an outside source may choose every single outcome,
+and only its bias in the coin is measured at the other end.
 
 ### Standard errors and convergence of the bonded value
 

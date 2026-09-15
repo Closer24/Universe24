@@ -25,6 +25,10 @@ gains two modes and the framework's claims are narrowed to what is measured.
   `b'`); the quantum owner breaks outcome independence
   ([report](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks),
   [coupling](docs/QUANTUM_CLASSICAL_COUPLING.md)).
+- The door of postulate 22 is measured half by half: `--source agreement`
+  keeps the coin even and fixes the agreement half, giving S = 4 (the
+  Popescu-Rohrlich box) with even marginals and no signal; no-signalling
+  bounds the coin, not the correlation ([report](examples/bell-chsh/README.md#the-door-of-postulate-22-a-number-source-outside-the-world)).
 - Postulates 4 and 22 name the broken assumption: the registry is a nonlocal
   resource in Bell's sense, its unmoved plus rates are no-signalling and not
   locality, and how a number is read (one end, both ends, or correlated with

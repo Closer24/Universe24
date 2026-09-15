@@ -49,8 +49,10 @@ and $S = 14/5$ (the quantum owner at 3-4-5 settings). For each candidate we iden
 measurement at fixed hidden variable, which assumption of Bell's theorem it
 breaks: the bonded pair is deterministic and measurement-independent and
 breaks parameter independence, the quantum owner breaks outcome independence,
-and the local candidates break none. A no-signalling check on the number
-source is reported and distinguished from locality. Nothing here derives
+and the local candidates break none. The number source is biased half by
+half: a bias in the coin is a signal, a bias in the agreement is not and
+reaches the Popescu--Rohrlich value $S = 4$ with even marginals, so
+no-signalling bounds the coin and not the correlation. Nothing here derives
 quantum mechanics or explains the Bell value locally; the contribution is a
 reproducible integer framework in which the causal assumptions behind Bell's
 theorem, and the cost of finite causal delay, appear as measured tables.
@@ -75,10 +77,13 @@ claims none of these results as new.
 What it reports is a testbed. Universe24 runs classical fields, a finite
 quantum state, a hybrid coupling and a shared-registry pair on one lattice,
 under one scheduler, with one arithmetic (bounded integers), one causal rule
-(one Link per tick) and one audit (per-event conservation). Because the
-candidates share everything except the resource under test, the same
-experiment can be run on each of them and the differences attributed to that
-resource. The paper asks three questions of this kind. Which candidates
+(one Link per tick) and one audit (per-event conservation). The candidates differ in
+how they represent state and how they read it, so a difference in $S$ is
+not attributed to one resource by the comparison alone; what the shared
+lattice, arithmetic, scheduler and audit buy is that the same experiment
+runs on each, and the attribution is then made by the causal analysis of
+Section~\ref{sec:causal}, which measures at fixed hidden variable which
+assumption each candidate breaks. The paper asks three questions of this kind. Which candidates
 reproduce two-path interference, and with which configured inputs? What does
 a finite causal delay do to conditional collapse, and can a local rule repair
 it? And, for Bell's test, which resource each candidate needs to reach its
@@ -113,11 +118,21 @@ Postulate 4 states the causal bound: energy, momentum, matter and every
 message a record can control move at most one Node per step. The bond
 registry of the last paragraph below is the one declared exception.
 
-\paragraph{Integers.} Every physical quantity, intermediate and law table is
-a bounded integer or a ratio of bounded integers; there is no floating point
-in any physical module, and an audit test enforces it. Trigonometric tables
-for phased rays are prepared once in fixed point (scale 256) with a bounded
-series.
+\paragraph{Integers and their bound.} Every physical quantity, intermediate
+and law table is a bounded integer or a ratio of bounded integers; there is
+no floating point in any physical module, and an audit test enforces it.
+The bound is concrete: a register holds at most $2^{30}-1$, every
+intermediate is checked against a 63-bit working range and a value beyond
+it raises an error that stops the run rather than rounding; the quantum
+owner's state is divided by the greatest common divisor of its amplitudes
+and scale after every gate, so repeated $3{:}5$ and $4{:}5$ mixers do not
+compound their denominators beyond what the state needs ($625$ for the two
+mixers of Section~\ref{sec:coupling}); ratios in the causal candidate are
+reduced the same way. Boundedness is therefore a property of each recorded
+run, not of an unbounded limit: a configuration whose exact state outgrows
+the registers is refused, and none of the runs reported here approaches
+them. Trigonometric tables for phased rays are prepared once in fixed point
+(scale 256) with a bounded series.
 
 \paragraph{Computation cost and delay.} Every local cycle has a cost in
 configured operation prices, and a cycle whose cost exceeds the normal budget
@@ -194,9 +209,11 @@ keeps $S \le 2$. A number chosen before the settings and read by both ends
 (the registry) keeps measurement independence and gives up parameter
 independence. A number correlated with the settings would relax measurement
 independence \cite{hall2010}; no rule in the model does that, and no claim
-about such a source is made. Whatever supplies the numbers is also bound by
-no-signalling, which Section~\ref{sec:outside} measures; no-signalling is a
-weaker condition than locality and is not offered as one.
+about such a source is made. What a supply of numbers can do is
+measured in Section~\ref{sec:outside} half by half: a bias in the coin half
+is a signal, a bias in the agreement half is not, and no-signalling bounds
+the coin and not the correlation; no-signalling is a weaker condition than
+locality and is not offered as one.
 
 \section{Coupling experiments}\label{sec:coupling}
 
@@ -233,11 +250,22 @@ Emission scale $25\to25000$ & departure $<1$ unit per tick; exact at multiples o
 
 Three rows deserve a sentence each. The which-path row is decoherence by an
 actual local instrument using only local state and Link-delivered inputs.
-The null-notice rows show that, for one excitation, the retarded local
-approximation can be made exact by a factor known at the null Node, at the
-cost of Link transit, and that two nulls crossing in flight are corrected
-locally by the later Node; the stale emission in between is the candidate's
-causal residual, a property of finite delay rather than an error. The
+The null-notice rows are the rule this candidate adds and the one most
+worth stating exactly. For one excitation whose envelope is spread over
+Nodes with weights $w_i$, a null at Node $j$ with weight $p = w_j$ leaves the
+true conditional state with weights $w_i/(1-p)$; the deciding Node knows $p$
+and sends the factor $1/(1-p)$ through its Links, and every Node applies it
+on arrival, so the remote envelopes are exact once the notice has crossed
+the Link distance, and stale by the factor $(1-p)$ before. When two nulls
+are decided before either notice arrives, a Node that already applied its
+own factor $1/(1-w s)$ receives the other's and answers with the exact
+correction $(1-ws)/(1-wsg)$ from its own record, which the crossing row
+verifies at every Node. The rule holds for one excitation per domain, which
+is the stated limit, and the stale emission in between is the candidate's
+causal residual: the classical field emitted during the notice's transit
+exceeds the conditional value by the factor $1/(1-p)$ for exactly the Link
+distance in ticks, a quantity the table records and that any realization of
+the rule would have to show. The
 emission-scale row is the classical limit on the emission side only: the
 integer field becomes the continuous law, while the wave's own dynamics stay
 configured.
@@ -258,18 +286,44 @@ configured.
 
 \section{Bell's test on every candidate}\label{sec:bell}
 
-We run the CHSH form, $S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')|$, on two
-probes. The phased-ray probe uses the quantum owner's settings, Alice $Z$ or
-$X$ and Bob $(3Z \pm 4X)/5$, read as phases $0^\circ, 90^\circ, 53^\circ,
-307^\circ$ on a 360-step circle; the quantum value at these settings is
-$14/5$. The ray Bell probe uses the optimal settings $0^\circ, 90^\circ,
-45^\circ, 135^\circ$ on a 64-step circle, whose quantum value is $2\sqrt2$;
-on that circle the table cosine of $45^\circ$ is $181/256$, so the exact
-expectation of a mechanism obeying the table's singlet law is
+We run the CHSH form on two probes, and the sign placement of the combination
+follows each probe's labelling, so the four correlations are given for every
+candidate in Table~\ref{tab:corr}. The phased-ray probe uses the quantum
+owner's settings, Alice $a = Z$, $a' = X$ and Bob $b, b' = (3Z \pm 4X)/5$,
+read as phases $0^\circ, 90^\circ, 53^\circ, 307^\circ$ on a 360-step
+circle, with $S = |E(a,b) + E(a,b') + E(a',b) - E(a',b')|$; the quantum value
+there is $14/5$. The ray Bell probe uses the settings $a = 0^\circ$,
+$a' = 90^\circ$, $b = 45^\circ$, $b' = 135^\circ$ on a 64-step circle with
+the singlet's sign, $S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')|$, the pair
+$(a,b')$ being the one three quarters of a turn apart; the quantum value is
+$2\sqrt2$, and on that circle the table cosine of $45^\circ$ is $181/256$,
+so the exact expectation of a mechanism obeying the table's singlet law is
 $4 \times 181/256 = 724/256 = 2.828125$. The reading of a measurement
 setting as a phase on the ray field is a configured correspondence. Each row
 of Table~\ref{tab:bell} is compared with the quantum value at its own
-settings; where a value is a count, its binomial standard error is given.
+settings. Errors: a single run's value is a count, and its binomial standard
+error is given; for the bonded sweep, which has four independent replicas,
+the error of the mean of the replicas is given, and the binomial prediction
+for it is stated beside it, so that a reader can see the two agree.
+
+\begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{3.4cm}p{2.6cm}p{6.6cm}p{2.2cm}}
+\toprule
+Candidate & Settings & $E(a,b),\ E(a,b'),\ E(a',b),\ E(a',b')$ & $S$\\
+\midrule
+Phased rays, share rule & 3-4-5 & $0.3010,\ 0.3010,\ 0.3994,\ -0.3994$ (exact fractions in the report) & $826177/589824$\\
+Phased rays, lottery & 3-4-5 & $0.291,\ 0.274,\ 0.389,\ -0.429$ (2232 pairs each) & $1.38$\\
+Plain rays & 3-4-5 & $1,\ 1,\ 1,\ 1$ & $2$\\
+Finite quantum owner & 3-4-5 & $3/5,\ 3/5,\ 4/5,\ -4/5$ & $14/5$\\
+Phased rays, lottery & $45^\circ$ & $-0.422,\ 0.326,\ -0.387,\ -0.346$ (1024 pairs each) & $1.48$\\
+Phased rays, threshold & $45^\circ$ & $-0.5,\ 0.5,\ -0.5,\ -0.5$ & $2$\\
+Bonded rays, 4096 pairs, 4 replicas & $45^\circ$ & $-0.716 \pm 0.005,\ 0.712 \pm 0.008,\ -0.697 \pm 0.006,\ -0.713 \pm 0.008$ & $2.837$\\
+Registry alone, $10^6$ pairs & $45^\circ$ & within $0.002$ of $\mp 181/256$ & $2.827$\\
+\bottomrule
+\end{tabular}
+\caption{The four correlations behind every $S$ of Table~\ref{tab:bell}, so that each combination can be checked directly: $S = |E(a,b) + E(a,b') + E(a',b) - E(a',b')|$ at the 3-4-5 settings and $S = |E(a,b) - E(a,b') + E(a',b) + E(a',b')|$ at $45^\circ$.}
+\label{tab:corr}
+\end{table}
 
 \begin{table}[H]\centering\footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabular}{p{3.0cm}p{4.5cm}p{2.6cm}p{4.6cm}}
@@ -302,7 +356,8 @@ which states in one number where the Bell value lives: in the registry's
 law, with the lattice adding transport and nothing else. Figure~\ref{fig:conv}
 shows the convergence to the table expectation $724/256$; at 4096 pairs the
 mean of four lattice replicas is 2.837 with an error of the mean of
-0.015 (binomial prediction 0.011) and replica spread 0.030, and at $10^6$ registry
+0.015 from the replica spread of 0.030 (the binomial prediction for that
+error is 0.011), and at $10^6$ registry
 pairs it is 2.8269 $\pm$ 0.0010. The excess of the first run
 was sampling. One property of the world's sequence shows in the replicas: it
 is a polynomial congruence, not a random source, and replicas drawn from
@@ -363,13 +418,30 @@ Bonded pair & the registry's number & by construction & \textbf{broken}: $A$ nev
 Quantum owner & the joint state & holds & holds: each marginal is the state's & \textbf{broken}: the joint conditional state & $14/5$\\
 \bottomrule
 \end{tabular}
-\caption{The causal anatomy of every candidate, measured at fixed hidden variable over 256 hidden variables. A local candidate never moves an outcome with the other end's setting; the bonded pair moves Bob's outcome with Alice's setting, which is parameter dependence; the quantum owner keeps parameter independence and breaks outcome independence, as quantum mechanics does.}
+\caption{The causal anatomy of every candidate at the level of the model averaged over the integers consumed after the settings exist, measured at fixed hidden variable over 256 hidden variables for the ray candidates and read from the joint state for the quantum owner. A local candidate never moves an outcome with the other end's setting; the bonded pair moves Bob's outcome with Alice's setting, which is parameter dependence; the quantum owner keeps parameter independence and breaks outcome independence, as quantum mechanics does.}
 \label{tab:causal}
 \end{table}
 
-The bonded pair is therefore a deterministic, measurement-independent,
-parameter-dependent model, in the class that Bell's theorem requires of any
-deterministic model above the bound. The second end's answer is a function of
+Two levels of description must be kept apart here. Every candidate is a
+deterministic program once the integer sequence of postulate 22 is fixed,
+and at that level any program above the bound is parameter-dependent: the
+quantum owner's second outcome is a function of its ticket, of the first
+outcome and of both settings, exactly as the registry's second answer is a
+function of its number and both settings. The classification of
+Table~\ref{tab:causal} is at the level of the model obtained by averaging
+over the integers consumed after the settings exist: the registry consumes
+its number at the pair's birth, before any setting, so the number is part
+of $\lambda$ and the dependence of the second answer on the first end's
+setting is parameter dependence at fixed $\lambda$; the quantum owner
+consumes its tickets at the contacts, after the settings, so at fixed
+$\lambda$ (the prepared state) its marginals are the state's and the
+dependence sits in the joint conditional distribution, which is outcome
+dependence. The difference between the two shared-object candidates is
+therefore when the integer is consumed, before or after the settings, and
+not a different physics; averaged over everything, both give the singlet's
+$P(A,B|a,b)$. With that stated, the bonded pair is a deterministic,
+measurement-independent, parameter-dependent model, in the class that
+Bell's theorem requires of any deterministic model above the bound. The second end's answer is a function of
 $(\lambda, a, b)$, and the dependence on the distant setting is the nonlocal
 resource; that no energy, momentum or controllable message accompanies it
 makes the model non-signalling, not local. The quantum owner sits in the other
@@ -386,14 +458,22 @@ correlation: a uniform outside stream gives $S = 2.79$ and plus rates that
 move by less than $0.01$ with the other end's setting; a biased stream, whose
 upper halves always answer $+1$, keeps $S = 2.78$ and moves Bob's plus rate
 by $0.69$ with Alice's setting (from $0.85$ to $0.15$ at $b'$), the singlet's
-$(1-\cos(a-b'))/2$ with Alice's coin fixed. This is a check of the
-no-signalling condition $P(B|a,b) = P(B|b)$ on the marginals: an unbiased
-source leaves them unmoved, a biased source moves them, and the size of the
-move is measured. No-signalling is what quantum mechanics also satisfies
-while violating the inequality; it is not the factorization
-\eqref{eq:factor}, and the previous section shows the bonded pair breaking
-that factorization while passing this check. Whether any real system is such
-a source is outside the model.
+$(1-\cos(a-b'))/2$ with Alice's coin fixed. A third stream keeps the coin
+even and fixes the lower half of every number at one half of the modulus,
+above the agreement threshold of the settings a quarter turn apart
+($75/512$) and below that of the settings three quarters apart ($437/512$):
+the ends disagree at $(a,b)$, $(a',b)$, $(a',b')$ and agree at $(a,b')$, so
+$S = 4$ exactly, the Popescu--Rohrlich box \cite{pr1994}, while every marginal
+stays even (rate shifts $0.00$ and $0.016$ over 1024 pairs). The three streams together bound the
+door half by half: a bias in the coin half is a signal, $P(B|a,b) \ne
+P(B|b)$; a bias in the agreement half moves no marginal and is not a signal,
+and it is not held to the quantum value either. No-signalling bounds the
+coin, not the correlation; what holds the correlation at $2\sqrt2$ is the
+configured singlet law in the lower half. No-signalling is also what quantum
+mechanics satisfies while violating the inequality; it is not the
+factorization \eqref{eq:factor}, and the previous section shows the bonded
+pair breaking that factorization while passing this check. Whether any real
+system is such a source is outside the model.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\linewidth]{figures/outside_source.pdf}
@@ -415,8 +495,9 @@ residual in between.
 assumption of Bell's theorem it breaks is read off runs at fixed hidden
 variable, and the bonded value is shown to be the registry's law pair by
 pair, with its statistics.
-\item A finite-integer statement of the no-signalling bound on the number
-source, measured, and kept distinct from locality.
+\item A finite-integer statement of what the number source can and cannot
+do, measured half by half: the coin's bias is a signal, the agreement's bias
+is a box above the quantum value without one.
 \end{itemize}
 
 \section{What is not claimed}\label{sec:notclaimed}
@@ -478,6 +559,7 @@ rates of Section~\ref{sec:causal} by its causal mode; both are pinned by tests.
 \bibitem{jarrett1984} J. P. Jarrett, No\^us 18, 569 (1984).
 \bibitem{shimony1986} A. Shimony, in Quantum Concepts in Space and Time, edited by R. Penrose and C. J. Isham (Oxford, 1986), p. 182.
 \bibitem{hall2010} M. J. W. Hall, Phys. Rev. Lett. 105, 250404 (2010).
+\bibitem{pr1994} S. Popescu and D. Rohrlich, Found. Phys. 24, 379 (1994).
 \bibitem{zenodo} A. Gonen, Universe24: a discrete simulator of local physical laws (Reality Theory), version 0.3.1, Zenodo (2026), doi:10.5281/zenodo.22738746 (concept DOI; the version DOI is listed on the record).
 \end{thebibliography}
 

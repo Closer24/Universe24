@@ -308,20 +308,28 @@ def outcomes(raw: dict) -> dict:
     }
 
 
-SOURCES = ("sequence", "uniform", "biased")
+SOURCES = ("sequence", "uniform", "biased", "agreement")
 
 
 def external_number(key: int, source: str) -> int | None:
-    """The pair's number from outside the world: none, a uniform draw, or a biased one.
+    """The pair's number from outside the world: none, uniform, coin-biased or agreement-biased.
 
     The uniform source is a generator that is not the registry's: the same physics
     must follow. The biased source keeps the upper half of every number below one
     half, so the end that asks first always answers +1; its lower half stays
-    uniform, so the singlet's agreement law is untouched.
+    uniform, so the singlet's agreement law is untouched. The agreement source
+    keeps the coin even and fixes the lower half at one half of the modulus,
+    which lies above the agreement threshold of the settings a quarter turn
+    apart (75/512) and below that of the settings three quarters apart
+    (437/512): the ends disagree at (a, b), (a', b) and (a', b') and agree at
+    (a, b'), the Popescu-Rohrlich box, with each end's marginal still even.
     """
     if source == "sequence":
         return None
-    draw = random.Random(1_000_003 * key + 7).randrange(TICKET_MODULUS)
+    generator = random.Random(1_000_003 * key + 7)
+    if source == "agreement":
+        return TICKET_MODULUS // 4 + generator.randrange(2) * (TICKET_MODULUS // 2)
+    draw = generator.randrange(TICKET_MODULUS)
     if source == "biased":
         return draw // 2
     return draw

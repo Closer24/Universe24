@@ -683,8 +683,12 @@ settings and read by one end only is a local hidden variable and keeps `S` at
 or below 2 (the lottery); a number chosen before the settings and read by
 both ends keeps measurement independence and breaks parameter independence
 (the registry); a number correlated with the settings would relax measurement
-independence, and no rule in the model does that. And whatever supplies the numbers is bound
-by no-signalling: it may choose any single outcome without leaving a
-statistical trace, but a biased supply moves one end's plus rate with the
-other end's setting, which is a signal faster than the causal speed and is
-measured as such. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
+independence, and no rule in the model does that. And the two halves of a bonded pair's number are bound
+differently: a supply biased in the coin half moves one end's plus rate
+with the other end's setting, a signal faster than the causal speed,
+measured as such; a supply biased in the agreement half moves no marginal
+and is not a signal, and it is not held to the quantum value either, since a
+fixed lower half gives the Popescu-Rohrlich box, `S = 4`, with even
+marginals. No-signalling bounds the coin, not the correlation; what bounds
+the correlation at the quantum value is the singlet law in the lower half,
+and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
