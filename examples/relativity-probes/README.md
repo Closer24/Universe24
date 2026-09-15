@@ -653,3 +653,174 @@ relativity, Lorentz dilation or quantum matter in a gravitational field. They
 locate exactly which parts follow from the generic engine (exact momentum
 bookkeeping, the 1/v² velocity law, directional delay) and which need a new
 declared rule (a self-excluding load, a delay-aware gate clock).
+
+## Redshift sweep: the law, its statistics and the supernova test
+
+```sh
+python examples/relativity-probes/redshift_sweep.py --output artifacts/redshift-sweep
+python examples/relativity-probes/redshift_hubble.py --pantheon Pantheon+SH0ES.dat --output artifacts/redshift-sweep --sweep artifacts/redshift-sweep/summary.json
+```
+
+Probe 5 above shows the stretch beside one growing mass on an open row. The
+sweep measures the law on a closed row read by a local clock: `L` Nodes
+periodic in `x`, one Node across, a mass body at every Node emitting a
+constant amount of the `computation` field per cycle, so the field's total
+grows linearly with age and, by symmetry, the load at every Node grows
+alike, a closed universe filling uniformly. Two opt-in rules carry the
+physics: `delay_direction: "along"` prices only the departures of moving
+records and leaves local cycles at the bare cycle time, and `ray_delay` makes
+a ray wait `ceil(load / budget) - 1` extra field cycles at every Node it
+crosses, so a hop takes `k` ticks and `k` rises with age while a waiting ray
+stalls no record. Light is a train of twelve single-quantum rays, one link
+apart, from twelve lamps at `x = 0..11` at tick 1, each carrying its lamp's
+label so that rays never merge; an eye at `x = L - 1` absorbs every ray
+(twelve quanta conserved into its inventory) and counts its own cycles, its
+clock. Rays leave one hop apart, `k_e` ticks, and are absorbed `k_o` ticks
+apart on the eye's clock:
+
+```
+1 + z = k_o / k_e,    duration at reception / duration at launch = 1 + z,    D = int dt / k
+```
+
+The stretch is the ratio of the hop time at reception to the hop time at
+launch, whole numbers on the lattice; every ray waits the same hops, so the
+train's duration stretches by the same ratio; distance enters through the
+travel time, so a hop time rising by one every `1 / alpha` ticks gives
+`1 + z = exp(alpha D)`, and a hop time growing as `t^n` gives
+`D ~ (1 + z)^((n - 1) / n) - 1`. The sweep varies the row's length (the
+distance from the lamps to the eye), the emission (`alpha` must scale with
+it) and the baseline (the hop time at launch, which sets the resolution of
+`z`). Every number is a read-only inventory audit; the eye's clock equals
+the tick count in every run, the field's total is linear in age, and the
+twelve quanta are conserved.
+
+Moving bodies were the first choice of light and are not used: a Node starts
+no new cycle until its delayed departure has arrived, so a train of bodies
+stalls the clocks of the Nodes it waits at (the emitters of a 24-row
+completed 320 to 436 cycles in 700 ticks with the train and 700 without), and
+an observer that hosts the bodies' departures reads no stretch on its own
+clock. Rays wait without stalling anyone. A redshift that only the global
+tick can see is not an observation, so this is reported as a measured
+property of the rule.
+
+| Run | row, emission, budget, baseline | `D` | `k` at launch | `z` | `k_o / k_e` | duration ratio | `alpha` measured, `ln(1 + z) / D` | `alpha` from the hop schedule | gaps on the eye's clock |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| row 16 | 16, 16, 1000, 7000 | 9.5 | 8 | 0.068 | 1.062 | 1.068 | 0.0069 | 0.0116 | 8 8 8 8 8 9 9 9 9 9 9 |
+| row 24 | 24, 16, 1000, 7000 | 17.5 | 8 | 0.216 | 1.208 | 1.216 | 0.0112 | 0.0145 | 9 9 9 9 10 10 10 10 10 10 11 |
+| row 32 | 32, 16, 1000, 7000 | 25.5 | 8 | 0.386 | 1.375 | 1.386 | 0.0128 | 0.0155 | 10 10 11 11 11 11 11 11 12 12 12 |
+| row 48 | 48, 16, 1000, 7000 | 41.5 | 8 | 0.773 | 1.760 | 1.773 | 0.0138 | 0.0158 | 13 13 14 14 14 14 14 15 15 15 15 |
+| row 64 | 64, 16, 1000, 7000 | 57.5 | 8 | 1.296 | 2.281 | 2.296 | 0.0145 | 0.0158 | 17 17 17 18 18 18 19 19 19 20 20 |
+| row 96 | 96, 16, 1000, 7000 | 89.5 | 8 | 2.807 | 3.781 | 3.807 | 0.0149 | 0.0159 | 28 29 29 30 30 30 31 31 32 32 33 |
+| control, no emission | 48, 0, 1000, 7000 | 41.5 | 7 | 0.000 | 1.000 | 1.000 | n/a | n/a | 7 7 7 7 7 7 7 7 7 7 7 |
+| half the emission | 48, 8, 1000, 7000 | 41.5 | 8 | 0.284 | 1.281 | 1.284 | 0.0060 | 0.0073 | 10 10 10 10 10 10 10 10 11 11 11 |
+| double the emission | 48, 32, 1000, 7000 | 41.5 | 8 | 2.329 | 3.281 | 3.329 | 0.0290 | 0.0318 | 23 23 24 25 26 27 27 28 29 30 31 |
+| launch at k = 1 | 48, 16, 1000, 900 | 41.5 | 1 | 1.818 | 2.750 | 2.818 | 0.0250 | 0.0154 | 2 2 3 3 3 3 3 3 3 3 3 |
+| launch at k = 4 | 48, 16, 1000, 3000 | 41.5 | 4 | 0.659 | 1.646 | 1.659 | 0.0122 | 0.0150 | 6 6 6 6 7 7 7 7 7 7 7 |
+| launch at k = 16 | 48, 16, 1000, 15000 | 41.5 | 16 | 0.830 | 1.818 | 1.829 | 0.0146 | 0.0159 | 27 27 28 28 29 29 30 30 31 31 32 |
+
+`--labels wave` runs the same row with the light field carrying a Kerengonen
+phase (64 steps, one step per link) and the lamps launching 16 steps apart,
+so the train is a wave; the frequency is the phase difference between
+consecutive rays over their time apart, one link past the lamps and at the
+eye. Phase per link (the default): frequency -1.82 steps per tick at the
+source, -1.06 at the eye, ratio 0.583 against `1 / (1 + z) = 0.564` at
+`z = 0.773`: the frequency redshifts with the rate. `ray_phase_per_tick`:
+ratio 0.140 against the law's `(a + (nu_e - a) / (1 + z)) / nu_e = 0.100`
+with `a = 1`: only the excess over the advance rate redshifts, the advance
+counting intervals like a clock. Without emission the ratio is 1.000.
+
+What the table shows. In every run the twelve rays are absorbed, the twelve quanta are conserved, the
+field's total grows linearly with age, and the eye's cycle count equals the tick
+count at every absorption, so the gaps on the eye's clock are the gaps in
+ticks. The control without emission gives gaps of exactly `k_e` and `z = 0`.
+With emission the gaps grow along the train (13, 13, 14, ..., 15 on the
+48-row), because the hop time rises while the train is absorbed; their mean
+over `k_e` minus one is `z`, the train's span at the eye over its span at
+launch is exactly `1 + z` in every run (the duration column), and the mean
+hop time of the rays' last hops over `k_e` agrees with `1 + z` within one
+tick per gap (`3.78` against `3.81` on the 96-row). Every hop's duration
+equals `ceil( (b + lambda t)/B )` at the tick it began, with `lambda`
+the emission per Node per tick: the law is the ceiling of the load over the
+budget, and nothing else.
+
+The six rows at one emission put the eye at `D = 9.5` to `89.5` links from the
+lamps: `z = 0.068, 0.216, 0.386, 0.773, 1.296, 2.807`. The stretch depends on
+the distance and on nothing else about the row; `ln(1+z)/D` rises from
+`0.0069` at `9.5` links to `0.0149` at `89.5` and approaches the slope of the
+hop schedule, `0.0158` per link (`lambda/B = 0.016`). The shortfall at short
+distance is the launch offset of the ceiling: the hop time at launch is
+`k_e = 8` while the load then stands at `7.02` budgets, so the continuum
+integral `D = int dt / k` runs from `7.5` rather than `8` and
+`ln(1+z) = alpha D - ln(k_e/(u_e + 1/2)) = alpha D - 0.065`, which
+gives `z = 0.09, 0.81` and `2.86` at `9.5`, `41.5` and `89.5` links against
+the measured `0.07, 0.77` and `2.81`.
+
+At `D = 41.5` the stretch follows the emission: `z = 0.284` at half the
+emission and `0.773` at the reference, with hop-schedule slopes `0.0073` and
+`0.0158` per link (the ratio `0.46` is the ceiling's rounding at a slower
+rise); at double the emission `z = 2.329`, with slope `0.0318` per link, twice the reference's `0.0158`. `alpha` is `lambda/B`, the
+emission per Node per tick over the budget, and no other parameter enters.
+
+The hop time at launch sets the resolution of `z`: a gap is a whole number of
+ticks, so `z` resolves in steps of `1/k_e` per gap. Launched at `k_e = 4, 8`
+and `16` (baselines of 3, 7 and 15 budgets) the 48-row gives `z = 0.659,
+0.773` and `0.830` at the same distance and emission; the differences are
+the launch offsets `ln(k_e/(u_e+1/2)) = 0.134, 0.065, 0.032` of the
+ceiling, not a change of the law, and they close as `k_e` grows. Launched at
+`k_e = 1` the stretch is a whole number: with the baseline at `0.9` budgets the load crosses one budget at tick 6 and two at tick 69, and the 48-row gives gaps of 2 and 3 ticks, `z = 1.818`, where the continuum with `u_e + 1/2 = 1.4` predicts `ln(1+z) = 0.656 + 0.34 = 1.0`, `z = 1.7`.
+
+### The hop time is a scale factor
+
+`1 + z = k_o / k_e` with `D = int dt / k` are the relations of a Friedmann
+universe with `a(t) ~ k(t)`: the lattice is static and nothing recedes, but
+for the Hubble diagram and for time dilation it cannot be told from expansion
+with the matching load history. A hop time growing as `t^n` gives the
+deceleration parameter `q0 = -(n - 1) / n`: constant emission (`n = 1`) is
+the coasting universe, emission growing with age (`n = 2`) accelerates with
+`q0 = -1/2`. What a distant source looks like needs one more reading, stated
+rather than derived: bodies arrive at a rate reduced by `1 + z` and a source's
+field dilutes as `1 / D^2` in three open dimensions, so the luminosity distance
+is `D sqrt(1 + z)` if each body keeps its amount (reading A) or `D (1 + z)` if
+the amount is read down by `1 + z` as a wave's frequency would be (reading B).
+
+### Against the Pantheon+ supernova sample
+
+Only the linear history was run on the lattice; the power laws below enter
+through `D = int dt / k` as the continuum family of the same rule, and an
+emission growing with age was not used because it couples the emitters'
+cycle count to the traffic through the Node's single cycle.
+`redshift_hubble.py` fits the shape of each reading, of flat LambdaCDM
+(`Omega_m = 0.334`) and of the Einstein-de Sitter universe to the 1,580
+Hubble-flow supernovae of the public Pantheon+ release (not calibrators,
+`z >= 0.01`, diagonal errors, which overstate every chi-square alike) with
+one free offset each, the absolute magnitude and the scale `alpha` being
+degenerate:
+
+| Shape | `q0` | chi-square | against LambdaCDM | model - data by bin (mag; `z` 0.01-0.1, 0.1-0.3, 0.3-0.6, 0.6-1.0, 1.0-2.3) |
+| --- | --- | --- | --- | --- |
+| linear load (`n = 1`), reading A | 1 | 2511.8 | +1817 | +0.22, 0.00, -0.22, -0.45, -0.93 |
+| linear load (`n = 1`), reading B (coasting) | 0 | 787.9 | +93 | +0.06, 0.00, -0.06, -0.07, -0.20 |
+| quadratic load (`n = 2`), reading A | 1/2 | 1356.7 | +662 | +0.14, 0.00, -0.14, -0.25, -0.55 |
+| quadratic load (`n = 2`), reading B | -1/2 | 756.4 | +62 | -0.03, -0.00, +0.02, +0.12, +0.18 |
+| power law `n = 1.4`, reading B (fitted exponent) | -0.29 | 699.3 | +4.5 | +0.01, -0.00, -0.01, +0.04, +0.01 |
+| best power law, reading A (`n = 5`) | -0.8 | 929.3 | +234 | +0.08, -0.00, -0.09, -0.13, -0.31 |
+| flat LambdaCDM, `Omega_m = 0.334` | -0.50 | 694.8 | 0 | -0.01, +0.01, 0.00, +0.03, -0.10 |
+| Einstein-de Sitter | 1/2 | 1356.7 | +662 | +0.14, 0.00, -0.14, -0.25, -0.55 |
+
+The reading in which only the arrival rate is redshifted (A) is excluded at
+every exponent. The two load histories the model supplies by itself, constant
+emission and emission growing with age, are disfavoured in reading B by 93
+and 62 units of chi-square, with residuals that grow with redshift; a power
+law with a fitted exponent, `n = 1.4` (`q0 = -0.29`), fits within 4.5, one
+parameter against LambdaCDM's one. That is the equivalence above at work: the
+diagram can be fitted, and fitting it says nothing until the exponent is
+derived. Time dilation: the law stretches durations by exactly `1 + z`, as
+supernova light curves do (`(1 + z)^1.07 +- 0.06`, Blondin et al. 2008), where
+tired light fails. Surface brightness: the Tolman exponent is 1 in reading A
+and 2 in reading B against 4 for expansion, and the measured range after
+evolution corrections (2.6 to 3.4, Lubin and Sandage 2001) is above the
+lattice's value; this is the test on which the lattice and expansion differ,
+and it is unfavourable. The temperature of the background does not apply: the
+model has no blackbody. The model does not remove dark energy; it relabels
+the acceleration as a load growing faster than linearly, which no rule of the
+model yet derives ([hypotheses](../../docs/HYPOTHESES.md)).
