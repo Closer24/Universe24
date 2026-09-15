@@ -19,51 +19,34 @@ the law, its kinematic correspondence to a scale factor, and the supernova test}
 \maketitle
 
 \begin{abstract}
-On a closed lattice whose computation load grows with age, and whose rule
-delays the transport of light but not local cycles, a signal that crosses $D$
-links arrives stretched: rays emitted one hop apart, $k_e$ ticks, reach an
-eye $k_o$ ticks apart on the eye's own clock, so $1 + z = k_o / k_e$, the
-ratio of the hop time at reception to the hop time at emission, and
-durations stretch by the same ratio. We measure this on the Universe24
-simulator (bounded integers, one Link per tick) with a train of twelve
-single-quantum rays crossing closed rows of 16 to 96 Nodes to an absorbing
-eye that counts its own cycles: the per-run ratio holds within a tick per
-gap, the eye's clock keeps the bare rate with rays waiting at it, the
-stretch grows with the distance as $1 + z = e^{\alpha D}$ with $\alpha$ read
-off the hop schedule, and $\alpha$ scales with the emission. One source
-emitting twelve rays at a fixed interval of its own clock, all crossing the
-same 47 links, gives the same law: $z = 1.07$, with the gaps at the eye over
-the interval at the source, $2.07$, against the ray-by-ray $k_o/k_e$ of
-$2.03$. The wave sector is measured too, and its status is stated: with the
-default rule, a phase that advances per link, the phase difference between
-rays is conserved along the path, so a phased-ray train's frequency ratio
-equals the inverse gap ratio over the span it is read on by construction
-($0.5832$ against $0.5833$ at $z = 0.77$), a check of the bookkeeping rather
-than an independent stretch; with the phase advancing per waiting interval
-as well, only the frequency's excess over the advance rate redshifts. A train of moving bodies, the first
-choice of light, is not usable: a Node starts no new cycle until its delayed
-departure has arrived, so bodies stall the clocks of the Nodes they wait at.
-We then show a kinematic correspondence: with $D = \int dt/k$ the hop time
-$k(t)$ plays the part of $a(t)$ in a flat Friedmann universe for the Hubble
-diagram and the time dilation, so those two tests are reproduced by a
-static lattice with the matching load history, and the question of dark
-energy becomes the question of what makes the load grow. The luminosity
-distance needs two further readings that are assumed, not measured here: a
-$1/D^2$ dilution, and that a quantum's energy follows its frequency
-(reading B). Against the Pantheon+ supernova sample (1580 Hubble-flow
-objects, one free offset, full statistical-plus-systematic covariance) the
-two histories the model supplies on its own, constant emission ($k \propto
-t$, coasting) and emission growing with age ($k \propto t^2$, $q_0 = -1/2$),
-are disfavoured by $\Delta\chi^2 = 106$ and $64$ against flat
-$\Lambda$CDM, and the best power law, $k \propto t^{1.4}$, is still
-disfavoured by $\Delta\chi^2 = 9$ for one fitted parameter; the reading in
-which only the arrival rate is redshifted fails at every exponent,
-including the $n \to \infty$ limit. The Tolman surface-brightness exponent
-separates the lattice from expansion, $(1+z)^{-2}$ against $(1+z)^{-4}$; the
-measured exponent lies above the lattice's, so the model is in tension
-there now, and we say what would relieve it. Nothing here removes dark
-energy: the acceleration is relabelled as a load history that the model
-does not yet derive.
+On a closed lattice whose computation load grows with age, a configured
+rule delays the transport of light while local cycles keep their bare
+rate. Rays emitted $k_e$ ticks apart then reach an eye $k_o$ ticks apart on
+the eye's own clock, $1 + z = k_o/k_e$, with durations stretched by the
+same ratio; the law follows from the rule in the continuum, and this paper
+measures its discrete realisation on the Universe24 simulator. A train of
+twelve rays across closed rows of 16 to 96 Nodes gives the ratio within a
+tick per gap and $1 + z = e^{\alpha D}$ with $\alpha$ read off the hop
+schedule; a single source emitting on its own clock gives the same law
+($z = 1.07$); a phased-ray train's frequency follows the
+arrival gaps by construction, so the wave sector is not an independent
+stretch. The asymmetry between transport and clocks is put in, not
+derived: no clock built from the model's own processes has been tested. With $D = \int dt/k$ the hop time
+plays the part of a flat Friedmann scale factor for the Hubble diagram and
+the time dilation; the luminosity distance adds a $1/D^2$ dilution and an
+energy that follows the frequency, both assumed. Against the Pantheon+
+Hubble-flow sample (1580 light curves, full covariance, one free offset)
+the two load histories the model supplies on its own are behind flat
+$\Lambda$CDM by $\Delta\chi^2 = 106$ and $64$, the best power law
+($k \propto t^{1.4}$) by $9$ with one fitted parameter each, and the
+reading in which only the arrival rate is redshifted by at least $81$ at
+every exponent, as preferences between models rather than goodness-of-fit
+failures. The Tolman surface-brightness exponent, $(1+z)^{-2}$ against
+$(1+z)^{-4}$, is where the lattice and expansion part; the published
+exponents lie above the lattice's, an indication against it pending a
+reduction of the data under the lattice's own distance relations. Nothing
+here removes dark energy: the acceleration becomes a load history not yet
+derived.
 \end{abstract}
 
 \section{Introduction}
@@ -76,7 +59,18 @@ supernova light curves \cite{blondin2008}, and the Tolman surface-brightness
 relation \cite{lubin2001}. Classic tired light fails the second and third.
 This paper reports a mechanism of a different kind, measured on a bounded
 integer lattice simulator, and puts it to the same three tests without
-softening them.
+softening them. The nearest continuum relatives are the cosmic-refraction
+models, in which a refractive index that varies along the line of sight
+alters the distance--redshift relations and has been fitted to supernova
+data \cite{chen2008}. What the lattice adds is not the continuum law,
+which those models contain, but its microscopic form: a discrete rule with
+integer hops whose corrections (a launch offset of the ceiling, a
+resolution of $1/k_e$ per gap) are measured; a load history that is a
+configured emission rather than a free function, so that the model's own
+histories can be tested and found wanting; the finding that moving bodies
+cannot serve as light under the rule; and the statement of which of the
+observables follow by construction. It does not add a derived clock, and
+says so.
 
 The mechanism is not a loss of energy along the path. It is a growth of the
 time a hop takes, everywhere and with age, while local cycles keep their bare
@@ -129,7 +123,10 @@ the rule, the law of the next section follows in the continuum at once
 add is the discrete implementation, how an eye reads it, and the size of
 the corrections. A clock made of the model's own moving parts, whose rate
 under load is measured rather than declared, is the step that would turn
-the rule into a mechanism, and it is not taken here.
+the rule into a mechanism, and it is not taken here. Its stakes are
+exact: if such a clock ran at $r(t)$ cycles per tick, the ratio it would
+read is $d\tau_o/d\tau_e = (r_o/r_e)(k_o/k_e)$, and a clock that slowed as
+$1/k$ would cancel the stretch entirely.
 
 The configuration is a closed row of $L$ Nodes (periodic in $x$, one Node
 across). Every Node holds a mass body that emits a constant amount $E$ of
@@ -230,10 +227,10 @@ gaps are 47 to 52 ticks, mean $49.6$, against 24 at the source: $z =
 $2.032$, a difference of one tick in a gap of fifty. The continuum law
 gives $\ln(1+z) = 0.0160 \times 47 = 0.750$, $z = 1.12$, and with the
 train's launch offset of $0.065$ (a launch at $k_e = 8$ with the load at
-$7.02$ budgets) $z = 0.98$; the measured $1.07$ lies between, within a tick
-per gap of either, as it should for launches spread over 264 ticks across
-five steps of the ceiling, whose offsets average smaller than the train's
-single one. Without emission the same source gives gaps of 24 and $z = 0$. The stretch is therefore not an artefact of the train's
+$7.02$ budgets) $z = 0.98$; the measured $1.07$ lies between, $1.2$ ticks
+below the first and $2.0$ ticks above the second in a gap of fifty, as it
+should for launches spread over 264 ticks across five steps of the
+ceiling, whose offsets average smaller than the train's single one. Without emission the same source gives gaps of 24 and $z = 0$. The stretch is therefore not an artefact of the train's
 geometry: a source with a clock, an interval and a distance is redshifted
 by the interval at the source over the interval at the eye, as the law
 states.
@@ -354,9 +351,10 @@ $(1+z)^{-2}$ (B), against $(1+z)^{-4}$ for expansion.
 
 \section{The supernova Hubble diagram}\label{sec:sn}
 
-The Pantheon+ release \cite{scolnic2022,brout2022} lists 1701 type Ia
-supernovae; we keep the 1580 Hubble-flow objects (not calibrators,
-$z \ge 0.01$) with their corrected apparent magnitudes, and fit each shape
+The Pantheon+ release \cite{scolnic2022,brout2022} lists 1701 light
+curves of 1550 type Ia supernovae; we keep the 1580 Hubble-flow light
+curves (not calibrators, $z \ge 0.01$) with their corrected apparent
+magnitudes, and fit each shape
 twice: with the diagonal errors, and with the full
 statistical-plus-systematic covariance of the release restricted to the
 kept objects. The diagonal fit is kept because the bins and residuals are
@@ -382,12 +380,17 @@ Flat $\Lambda$CDM, $\Omega_m = 0.334$ & $-0.50$ & 694.8 & $0$ & 1387.1 & $0$ & $
 Einstein--de Sitter & $1/2$ & 1356.7 & $+662$ & 2083.7 & $+697$ & $+0.14, 0.00, -0.14, -0.25, -0.55$\\
 \bottomrule
 \end{tabular}}
-\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. The quadratic load in reading A is the Einstein--de Sitter shape; the linear load in reading A is worse, and the family's $n \to \infty$ limit better, than Einstein--de Sitter, all far from the data; reading B with a fitted exponent is the closest to $\Lambda$CDM.}
+\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. The quadratic load in reading A is the Einstein--de Sitter shape; the linear load in reading A is worse, and the family's $n \to \infty$ limit better, than Einstein--de Sitter, all behind $\Lambda$CDM; reading B with a fitted exponent is the closest to $\Lambda$CDM.}
 \label{tab:sn}
 \end{table}
 
-Three things follow, and the full covariance changes none of them. The
-reading in which only the arrival rate is redshifted (A) is excluded at
+Three things follow, and the full covariance changes none of them. Every
+statement is a comparison between models, not a goodness-of-fit verdict:
+with 1579 degrees of freedom the covariance $\chi^2$ per degree of freedom
+is $0.88$ for $\Lambda$CDM, $0.88$ for the fitted power law and $0.93$
+for the reading-A limit, all acceptable on their own, and only the linear
+and quadratic loads in reading A ($2.08$ and $1.32$) fail outright. The
+reading in which only the arrival rate is redshifted (A) is behind at
 every exponent: its $\chi^2$ falls monotonically with $n$ across the whole
 grid and is still $\Delta\chi^2 = 114$ from $\Lambda$CDM at $n = 20$, and
 $81$ in the $n \to \infty$ limit of the family ($D \propto z$, $d_L =
@@ -426,18 +429,22 @@ $b = 0$ fails.
 
 \paragraph{Surface brightness.} The Tolman test measures the exponent $n$ in
 $\mathrm{SB} \propto (1+z)^{-n}$; expansion predicts $n = 4$. Lubin and
-Sandage \cite{lubin2001} measure $n = 2.59 \pm 0.17$ in $R$ and $3.37 \pm
+Sandage \cite{lubin2001} find $n = 2.59 \pm 0.17$ in $R$ and $3.37 \pm
 0.13$ in $I$ for early-type galaxies, before any correction for luminosity
-evolution, and read the shortfall from 4 as the evolution required under
-expansion; their analysis of the tired-light alternative uses that model's
-own angular-size relation. The lattice predicts $n = 1$ in reading A and
+evolution but with distances and angular sizes reduced under an assumed
+$q_0 = 1/2$ geometry, so the exponents are not model-independent; they
+read the shortfall from 4 as the evolution required under expansion, and
+their analysis of the tired-light alternative uses that model's own
+angular-size relation. The lattice predicts $n = 1$ in reading A and
 $n = 2$ in reading B with the angular size $1/D$, so the raw exponents lie
 above the lattice's values by 0.6 to 1.4, and an evolution correction of
 the opposite sign to the one expansion needs would be required to close
 the gap. That is the tension as it stands. A quantitative statement needs
 the same data reduced under the lattice's own angular-size and distance
-relations, which has not been done; this is the test on which the lattice
-and expansion differ, and we report it as unfavourable.
+relations, which has not been done; until it is, this is an indication
+against the lattice, not a quantitative Tolman test of it. It is the test
+on which the lattice and expansion differ, and we report the indication as
+unfavourable.
 
 \paragraph{The temperature of the background.} $T(z) = T_0(1+z)$ tests a
 blackbody spectrum's scaling. The lattice has no blackbody and so makes no
@@ -456,8 +463,9 @@ that produces it.
 \item Not the removal of dark energy. The lattice relabels the acceleration
 as a load growing faster than linearly; the unexplained quantity moves from
 $\Lambda$ to the emission law and is not smaller for the move.
-\item Not a passing of the Tolman test: the predicted exponent is below the
-raw measured exponents in both readings.
+\item Not a Tolman test of the model: the predicted exponent is below the
+published exponents in both readings, but those were reduced under an
+expanding geometry, and the model's own reduction has not been done.
 \item Not a measured luminosity distance: the $1/D^2$ dilution is carried
 over from open three-dimensional runs, and reading B takes a quantum's
 energy to follow its measured frequency; the closed row measures rates,
@@ -483,9 +491,11 @@ What would make this a physics result, in order: a clock built from the
 model's own moving parts whose rate under load is measured, so that the
 asymmetry between transport and clocks is derived rather than declared; a
 rule of the lattice that fixes the emission history, so that $n$ is
-derived rather than fitted; a frequency carried by something other than the
-arrival gaps, put through the same row; and the Tolman data reduced under
-the lattice's own angular-size relation.
+derived rather than fitted; an oscillating source and a detector with a
+physical response, both built from the model's rules, so that the
+frequency is carried by something other than the arrival gaps and read by
+something other than a counter; and the Tolman data reduced under the
+lattice's own angular-size relation.
 
 \section*{Reproducibility}
 The runs are produced by \texttt{redshift\_sweep.py} and the fits by
@@ -501,6 +511,7 @@ runs use no floating point.
 \bibitem{brout2022} D. Brout et al., Astrophys. J. 938, 110 (2022).
 \bibitem{blondin2008} S. Blondin et al., Astrophys. J. 682, 724 (2008).
 \bibitem{lubin2001} L. M. Lubin and A. Sandage, Astron. J. 122, 1084 (2001).
+\bibitem{chen2008} B. Chen and R. Kantowski, arXiv:0802.1728 (2008).
 \bibitem{paper1} A. Gonen, A finite-integer causal-lattice testbed: which resources reproduce interference, causal collapse and Bell correlations on one lattice (2026), arXiv preprint.
 \bibitem{zenodo} A. Gonen, Universe24: a discrete simulator of local physical laws (Reality Theory), Zenodo (2026), doi:10.5281/zenodo.22738746.
 \end{thebibliography}

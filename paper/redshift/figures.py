@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 
 
 def figure_law(sweep: dict, output: Path) -> None:
-    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    fig, ax = plt.subplots(figsize=(9.0, 3.8))
     runs = sweep["runs"]
     rows = [r for r in runs if r["label"].startswith("row") and r.get("z") is not None]
     ax.plot(
@@ -84,7 +84,8 @@ def figure_law(sweep: dict, output: Path) -> None:
     ax.set_xlabel("distance from the lamps to the eye, D (links)")
     ax.set_ylabel("ln(1 + z) on the eye's clock")
     ax.set_title("The stretch against the distance on closed rows")
-    ax.legend(fontsize=7, loc="lower right")
+    # The legend sits outside the axes so that no point is hidden.
+    ax.legend(fontsize=7, loc="upper left", bbox_to_anchor=(1.02, 1.0), borderaxespad=0)
     fig.tight_layout()
     fig.savefig(output / "redshift_law.pdf")
     plt.close(fig)
@@ -95,6 +96,7 @@ def figure_residuals(hubble: dict, output: Path) -> None:
     picks = (
         ("linear load (n = 1), rate and amount loss (B)", "linear load, reading B", "s--"),
         ("quadratic load (n = 2), rate and amount loss (B)", "quadratic load, reading B", "^--"),
+        ("power law (n = 1.4), rate and amount loss (B)", "power law n = 1.4, reading B (fitted)", "D-"),
         ("flat LambdaCDM, Omega_m 0.334", "flat LambdaCDM", "o-"),
         ("linear load (n = 1), rate loss only (A)", "linear load, reading A", "x:"),
     )
