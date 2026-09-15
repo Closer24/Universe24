@@ -1,7 +1,8 @@
 """Figures for the manuscript, drawn only from recorded summary files.
 
 Usage: python paper/figures.py --interference DIR --bell FILE --crossing FILE \
-    --bond-sequence FILE --bond-uniform FILE --bond-biased FILE --output paper/figures
+    --bond-sequence FILE --bond-uniform FILE --bond-biased FILE --bond-sweep FILE \
+    --output paper/figures
 Every input is a summary written by an experiment harness; nothing is computed
 from the engine here. Needs matplotlib (the `render` extra).
 """
@@ -26,28 +27,81 @@ def load(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def figure_bell(bell: dict, bond: dict, output: Path) -> None:
+def largest_lattice_level(sweep: dict) -> dict:
+    """The sweep level with the most lattice pairs per correlation."""
+    return max(
+        (lvl for lvl in sweep["levels"] if lvl["lattice"]), key=lambda lvl: lvl["pairs_per_correlation"]
+    )
+
+
+def figure_bell(bell: dict, sweep: dict, output: Path) -> None:
     labels = ["share", "lottery", "threshold", "plain", "bonded", "quantum owner"]
+    bonded = largest_lattice_level(sweep)
     values = [
         bell["share"]["S"]["value"],
         bell["lottery"]["S"]["value"],
         2.0,
         2.0,
-        bond["S"],
+        bonded["S_mean"],
         2.8,
     ]
+    # Statistical errors where a value is a count: the lottery's pairs and the bonded sweep.
+    lottery_pairs = bell["lottery"].get("pairs_per_setting")
+    errors = [0, 0, 0, 0, bonded["S_error_of_mean"], 0]
+    if lottery_pairs:
+        errors[1] = 2 * math.sqrt((1 - (values[1] / 4) ** 2) / lottery_pairs)
     colors = ["#4c72b0"] * 4 + ["#c44e52"] * 2
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    ax.bar(labels, values, color=colors)
+    ax.bar(labels, values, color=colors, yerr=errors, capsize=3, ecolor="black")
     ax.axhline(2, color="black", linestyle="--", linewidth=1)
     ax.axhline(2 * math.sqrt(2), color="gray", linestyle=":", linewidth=1)
     ax.text(5.4, 2.03, "local bound 2", ha="right", fontsize=8)
     ax.text(5.4, 2 * math.sqrt(2) + 0.03, "2 sqrt 2", ha="right", fontsize=8, color="gray")
     ax.set_ylabel("CHSH S")
     ax.set_ylim(0, 3.2)
-    ax.set_title("Bell's test five times on one lattice, same settings")
+    ax.set_title("Bell's test on every candidate, one lattice")
     fig.tight_layout()
     fig.savefig(output / "bell_candidates.pdf")
+    plt.close(fig)
+
+
+def figure_convergence(sweep: dict, output: Path) -> None:
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    for lattice, style, label in (
+        (True, "o-", "lattice runs, 4 replicas"),
+        (False, "s--", "registry alone, 4 replicas"),
+    ):
+        rows = [lvl for lvl in sweep["levels"] if lvl["lattice"] == lattice]
+        ax.errorbar(
+            [lvl["pairs_per_correlation"] for lvl in rows],
+            [lvl["S_mean"] for lvl in rows],
+            yerr=[lvl["sigma_S_predicted"] / math.sqrt(lvl["replicas"]) for lvl in rows],
+            fmt=style,
+            capsize=3,
+            label=label,
+        )
+    ax.axhline(sweep["expected_S"], color="black", linestyle=":", linewidth=1)
+    ax.axhline(2 * math.sqrt(2), color="gray", linestyle="-.", linewidth=1)
+    at = ax.get_yaxis_transform()
+    ax.text(
+        0.98,
+        sweep["expected_S"] - 0.06,
+        "registry expectation 724/256",
+        ha="right",
+        fontsize=8,
+        transform=at,
+    )
+    ax.text(
+        0.98, 2 * math.sqrt(2) + 0.03, "2 sqrt 2", ha="right", fontsize=8, color="gray", transform=at
+    )
+    ax.set_xscale("log")
+    ax.set_ylim(2.6, 3.05)
+    ax.set_xlabel("bonded pairs per correlation")
+    ax.set_ylabel("CHSH S (mean of replicas, binomial error)")
+    ax.set_title("The bonded value against the number of pairs")
+    ax.legend(fontsize=8, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(output / "bond_convergence.pdf")
     plt.close(fig)
 
 
@@ -182,12 +236,15 @@ def main() -> None:
     parser.add_argument("--bond-sequence", type=Path, required=True)
     parser.add_argument("--bond-uniform", type=Path, required=True)
     parser.add_argument("--bond-biased", type=Path, required=True)
+    parser.add_argument("--bond-sweep", type=Path, required=True, help="summary-bond-sweep.json")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     interference = load(args.interference)
     bond = load(args.bond_sequence)
-    figure_bell(load(args.bell), bond, args.output)
+    sweep = load(args.bond_sweep)
+    figure_bell(load(args.bell), sweep, args.output)
+    figure_convergence(sweep, args.output)
     figure_interference(interference, args.output)
     figure_null_notices(interference, args.output)
     figure_scale(interference, args.output)

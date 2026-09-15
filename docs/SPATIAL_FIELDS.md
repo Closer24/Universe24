@@ -578,7 +578,10 @@ of the same number so that the two ends agree with probability
 An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's
 second answer knows the first at once, at any distance; it moves no energy, no
 momentum and no message, and the [Bell probe](../examples/bell-chsh/README.md)
-measures each end's plus rate unmoved by the other end's setting.
+measures each end's plus rate unmoved by the other end's setting. That is
+no-signalling, not locality: the second answer reads the first end's setting,
+so the registry breaks parameter independence and is a nonlocal resource in
+Bell's sense.
 
 `"bond": {"seed": s, "stream": [n, ...]}` replaces the registry's own numbers
 by an external stream, one number per pair in the order pairs first ask, at

@@ -14,15 +14,21 @@ makes every uncertain outcome the value of one bounded integer. It follows,
 without a further assumption, that the sequence of those integers is the only
 place where information not already in the world's state can enter the world:
 everything else is fixed by the rules and the initial state. The model does
-not care where the sequence comes from. A configured seed, a file, or a source
+not fix where the sequence comes from. A configured seed, a file, or a source
 outside the world give the same physics as long as the numbers are used the
-same way.
+same way; how they are read is fixed, and for a bonded pair it is a reading by
+both ends, the parameter dependence that
+[postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+names.
 
 What can be tested: an emitter whose pairs draw their numbers from an external
 stream instead of the world's sequence. With a uniform stream the Bell value
-and the even plus rates must be unchanged; with a biased stream the other
-end's plus rate must begin to depend on the first end's setting, which is a
-signal faster than the causal speed, and the size of that signal is a
+and the even plus rates must be unchanged; with a stream biased in the coin
+half the other end's plus rate must begin to depend on the first end's
+setting, which is a signal faster than the causal speed; with a stream
+biased in the agreement half the marginals stay even while the correlation
+leaves the quantum value (the Popescu-Rohrlich box at `S = 4`), so
+no-signalling bounds the coin and not the correlation; the size of the signal is a
 measurement. The hypothesis is therefore sharp: outside influence enters only
 through the number, and is visible exactly when it is biased. Measured: the
 [Bell probe](../examples/bell-chsh/README.md) with `--source uniform` gives

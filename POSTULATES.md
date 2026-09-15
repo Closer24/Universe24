@@ -200,7 +200,14 @@ That answer carries no energy, no momentum and no message: each end alone sees
 an even coin whatever the other end does, which the Bell probe measures as
 plus rates that do not move with the other side's setting, not a consequence
 of the answer carrying no energy. It is the correlation Bell's test measures
-beyond the local bound, and nothing else. The registry keeps a bounded bank of
+beyond the local bound, and nothing else. In Bell's terms the registry is a
+deterministic, measurement-independent, parameter-dependent model: the end
+that answers second reads the first end's setting, which the
+[causal probe](examples/bell-chsh/README.md#which-assumption-of-bells-theorem-each-candidate-breaks)
+measures as an outcome that moves with the other end's setting at fixed
+hidden variable. It is a nonlocal resource, not a local explanation of the
+Bell value, and the unmoved plus rates are no-signalling, not locality. The
+registry keeps a bounded bank of
 open pairs, one identity per pair from its birth Node and tick, releases a
 pair at its second answer, and answers a repeated question the same way, so
 it is bounded and idempotent like every other owner. A world with no bonded
@@ -668,10 +675,20 @@ question of postulate 12 in another form.
 Three things follow from this postulate without a further assumption. The
 sequence is the only place where information not already in the world's
 state enters the world, because everything else is fixed by the rules and the
-initial state. The model is indifferent to where the sequence comes from: a
+initial state. The model does not fix the generator of the sequence: a
 seed, a file or a source outside the world give the same physics as long as
-the numbers are used the same way. And whatever supplies the numbers is bound
-by no-signalling: it may choose any single outcome without leaving a
-statistical trace, but a biased supply moves one end's plus rate with the
-other end's setting, which is a signal faster than the causal speed and is
-measured as such. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
+the numbers are used the same way. It does fix how a number is read, and that
+decides which of Bell's assumptions is at stake: a number chosen before the
+settings and read by one end only is a local hidden variable and keeps `S` at
+or below 2 (the lottery); a number chosen before the settings and read by
+both ends keeps measurement independence and breaks parameter independence
+(the registry); a number correlated with the settings would relax measurement
+independence, and no rule in the model does that. And the two halves of a bonded pair's number are bound
+differently: a supply biased in the coin half moves one end's plus rate
+with the other end's setting, a signal faster than the causal speed,
+measured as such; a supply biased in the agreement half moves no marginal
+and is not a signal, and it is not held to the quantum value either, since a
+fixed lower half gives the Popescu-Rohrlich box, `S = 4`, with even
+marginals. No-signalling bounds the coin, not the correlation; what bounds
+the correlation at the quantum value is the singlet law in the lower half,
+and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the tests.
