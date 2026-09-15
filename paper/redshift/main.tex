@@ -98,13 +98,13 @@ tests of any flat Friedmann model with the matching load history and cannot be
 told from expansion by them alone; the correspondence is kinematic because
 nothing dynamical (no Friedmann equation, no equation of state) is derived.
 Third, the data: the load histories the model supplies by itself do not fit
-the supernova diagram, a fitted power law comes within three standard
-deviations of $\Lambda$CDM, and the surface-brightness
+the supernova diagram, a fitted power law comes within $\Delta\chi^2 = 9$
+of $\Lambda$CDM with the same number of fitted parameters, and the surface-brightness
 exponent is where the lattice and expansion part, with the measured value on
 expansion's side. The conclusion is negative for the strong claim
 (no dark energy) and positive for a narrower one (a lattice mechanism whose one-parameter
-family comes within three standard deviations of the Hubble diagram, with
-a stated test on which it is behind).
+family comes within $\Delta\chi^2 = 9$ of $\Lambda$CDM on the Hubble
+diagram, with a stated test on which it is behind).
 
 \section{The lattice and the rule}\label{sec:rule}
 
@@ -271,7 +271,10 @@ difference between consecutive rays is conserved along the path and the
 frequency ratio is the inverse gap ratio over the span by construction:
 the train gives $\nu_e = -1.818$ steps per tick and $\nu_o = -1.060$, a
 ratio of $0.5832$ against $1/1.714 = 0.5833$; the single source gives
-$-0.667$ and $-0.323$, $0.484$ against $0.4835$. This is a check that the
+$-0.667$ and $-0.323$, $0.484$ against $0.4835$ (read at link 12, as an
+earlier draft did, the source frequency is $-0.56$, twelve links of stretch
+already included, and the ratio $0.575$ was then compared with the whole
+distance's $0.484$: a mismatch of spans, not of physics). This is a check that the
 phase bookkeeping and its wrap follow the gaps, not an independent
 measurement of the stretch, and we say so. It is also insensitive to the
 phase resolution and sensitive only to the tick: with 256 phase steps the
@@ -379,7 +382,7 @@ Flat $\Lambda$CDM, $\Omega_m = 0.334$ & $-0.50$ & 694.8 & $0$ & 1387.1 & $0$ & $
 Einstein--de Sitter & $1/2$ & 1356.7 & $+662$ & 2083.7 & $+697$ & $+0.14, 0.00, -0.14, -0.25, -0.55$\\
 \bottomrule
 \end{tabular}}
-\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. Reading A and the quadratic load in reading A are the Einstein--de Sitter shape or worse; reading B with a fitted exponent is close to $\Lambda$CDM.}
+\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. The quadratic load in reading A is the Einstein--de Sitter shape; the linear load in reading A is worse, and the family's $n \to \infty$ limit better, than Einstein--de Sitter, all far from the data; reading B with a fitted exponent is the closest to $\Lambda$CDM.}
 \label{tab:sn}
 \end{table}
 
@@ -393,13 +396,17 @@ histories the model supplies by itself, constant emission and emission
 growing with age, are disfavoured in reading B by $\Delta\chi^2 = 106$ and
 $64$, with residuals that grow with redshift; the quadratic history has the
 right $q_0$ and the wrong shape beyond $z \sim 0.5$. A power law with a
-fitted exponent fits best at $n = 1.40$ under both error models, with the
-interval $\Delta\chi^2 \le 1$ spanning $1.40$ to $1.45$ under the
-covariance ($q_0 = -0.28$), at $\Delta\chi^2 = 9.0$ from $\Lambda$CDM,
-one fitted parameter against one. A difference of $9$ for one parameter is
-a three-standard-deviation preference for $\Lambda$CDM, not a tie, and the
-sample size does not soften it: the fitted power law is the best this
-family does, and it is disfavoured. That is the correspondence of
+fitted exponent fits best at $n = 1.41$ under the covariance ($1.39$ with
+the diagonal errors), with the interval $\Delta\chi^2 \le 1$ spanning
+$1.35$ to $1.47$ under the covariance ($q_0 = -0.28$; the grid is refined
+to steps of $0.001$ around the minimum and the interval's ends
+interpolated), at $\Delta\chi^2 = 9.0$ from $\Lambda$CDM with one fitted
+parameter each. The two families are not nested, so no significance level
+follows from that difference by itself; with equal parameter counts it is
+also the difference in the Akaike information criterion, a relative
+likelihood of $e^{-4.5} \approx 0.01$ for the power law. $\Lambda$CDM is
+preferred, and the sample size does not soften the preference: the fitted
+power law is the best this family does, and it is behind. That is the correspondence of
 Section~\ref{sec:scale} at work: the diagram can be nearly fitted, and
 fitting it says nothing until the exponent is derived.
 

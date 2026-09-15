@@ -173,12 +173,36 @@ def exponent_scan(reading: str, sample, chi2_of, exponents) -> dict:
     """chi-square against the exponent n of k ~ t^n for one reading, with the best n and
     the interval in which chi-square lies within one of its minimum (one parameter)."""
     grid = [(n, chi2_of(shape(n, reading), sample)) for n in exponents]
-    n_best, chi2_best = min(grid, key=lambda row: row[1])
-    within = [n for n, c in grid if c <= chi2_best + 1]
+    n_coarse, _ = min(grid, key=lambda row: row[1])
+    # Refine around the coarse minimum in steps of 0.001 (a fifth of a percent of n), so
+    # the interval is set by the chi-square curve and not by the grid; the interval's ends
+    # are where chi-square crosses its minimum plus one, interpolated between fine points.
+    fine = [
+        (round(n_coarse + i * 0.001, 3), None)
+        for i in range(-100, 101)
+        if min(exponents) <= round(n_coarse + i * 0.001, 3) <= max(exponents)
+    ]
+    fine = [(n, chi2_of(shape(n, reading), sample)) for n, _ in fine]
+    n_best, chi2_best = min(fine, key=lambda row: row[1])
+    threshold = chi2_best + 1
+
+    def crossing(points):
+        for (n0, c0), (n1, c1) in zip(points, points[1:], strict=False):
+            if (c0 - threshold) * (c1 - threshold) <= 0 and c0 != c1:
+                return n0 + (threshold - c0) * (n1 - n0) / (c1 - c0)
+        return None
+
+    below = [row for row in fine if row[0] <= n_best]
+    above = [row for row in fine if row[0] >= n_best]
+    low = crossing(list(reversed(below)))
+    high = crossing(above)
     return {
-        "best_n": round(n_best, 2),
+        "best_n": round(n_best, 3),
         "chi2": round(chi2_best, 2),
-        "n_interval_delta_chi2_1": [round(min(within), 2), round(max(within), 2)],
+        "n_interval_delta_chi2_1": [
+            round(low, 3) if low is not None else None,
+            round(high, 3) if high is not None else None,
+        ],
         "chi2_by_n": {str(round(n, 2)): round(c, 1) for n, c in grid},
     }
 

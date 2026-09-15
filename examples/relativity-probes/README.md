@@ -732,8 +732,10 @@ crosses the same links, so the phase difference between rays is conserved
 and the frequency ratio is the inverse gap ratio over the span by
 construction: the train gives -1.818 steps per tick at the source, -1.060 at
 the eye, ratio 0.5832 against 0.5833; the single source -0.667 and -0.323,
-ratio 0.484 against 0.4835. This checks the phase bookkeeping and its wrap,
-not an independent stretch. It does not depend on the phase resolution
+ratio 0.484 against 0.4835 (read at link 12 the source frequency is -0.56
+with twelve links of stretch already in it, and the earlier ratio 0.575 was
+compared with the whole distance's 0.484: a mismatch of spans). This
+checks the phase bookkeeping and its wrap, not an independent stretch. It does not depend on the phase resolution
 (256 steps: 0.484 again) and converges with the tick resolution (launch hop
 16, a 48-tick interval at the source: 0.483 against 0.4826, `z = 1.072`
 against 1.068 at launch hop 8). `ray_phase_per_tick`: the phase difference
@@ -863,10 +865,15 @@ bounds every exponent beyond the grid. The two load histories the model
 supplies by itself, constant emission and emission growing with age, are
 disfavoured in reading B by 106 and 64 units of chi-square, with residuals
 that grow with redshift; a power law with a fitted exponent fits best at
-`n = 1.40` under both error models (the interval within one unit of
-chi-square spans 1.40 to 1.45 under the covariance, `q0 = -0.28`), 9.0
-above LambdaCDM for one fitted parameter against one, a three-standard-
-deviation preference for LambdaCDM that the sample size does not soften.
+`n = 1.41` under the covariance (1.39 with the diagonal errors; the grid is
+refined to steps of 0.001 around the minimum and the interval within one
+unit of chi-square, 1.35 to 1.47 under the covariance, interpolated;
+`q0 = -0.28`), 9.0 above LambdaCDM with one fitted parameter each. The two
+families are not nested, so no significance level follows from that
+difference alone; with equal parameter counts it is also the difference in
+the Akaike information criterion, a relative likelihood of about 0.01 for
+the power law. LambdaCDM is preferred and the sample size does not soften
+the preference.
 That is the correspondence above at work: the diagram can be nearly
 fitted, and fitting it says nothing until the exponent is derived. Time
 dilation: the law stretches durations by `1 + z` (the same integers as
