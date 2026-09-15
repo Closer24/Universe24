@@ -2636,6 +2636,6 @@ to the public Pantheon+ Hubble-flow sample.
 | Moving bodies as light (not used) | emitters of a 24-row completed 320 to 436 cycles in 700 ticks with the train present and 700 without |
 | `redshift_hubble.py`, 1,580 Hubble-flow supernovae, diagonal errors | linear load reading A / B: delta chi-square +1817 / +93 against flat LambdaCDM (Omega_m 0.334); quadratic load B: +62; fitted power law n = 1.4 (B): +4.5; best reading A (n = 5): +234 |
 | `tests/test_redshift_sweep.py` | six tests: the quick row's gaps, z, duration ratio and slope; the control; the row length guard; the deceleration parameters of the shapes; the fit recovering its own shape; the wave's frequency ratios |
-| Affected gate against `origin/main` | GATERESULT |
+| Affected gate against `origin/main` | 167 passed, 2 visual-only skipped, in 66 seconds; ruff lint and format passed (no source file changed) |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
