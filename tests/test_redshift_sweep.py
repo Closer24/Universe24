@@ -97,3 +97,18 @@ def test_the_waves_frequency_redshifts_with_the_rate_when_its_phase_advances_per
     # Without emission nothing shifts.
     still = SWEEP.measure("wave", 16, 0, 1000, 7000, 200, "link")
     assert still["frequency_ratio"] == 1.0 and still["z"] == 0.0
+
+
+def test_one_source_emitting_on_its_own_clock_reads_the_same_law():
+    # Twelve lamps on one Node, each emitting once, 24 ticks apart on that Node's clock
+    # (three launch hops at k_e = 8); every ray crosses the same 15 links.
+    run = SWEEP.measure("single", 16, 32, 1000, 7000, 600, None, True)
+    assert run["single_source"] and run["distance"] == 15 and run["hop_time_at_launch"] == 8
+    assert run["absorbed"] == 12 and run["eye_clock_equals_ticks"] and run["closure"]["light_conserved"]
+    # The gaps at the eye against the 24-tick interval at the source.
+    assert run["gaps_on_the_eye_clock"] == [36, 38, 36, 39, 37, 38, 37, 39, 34, 39, 37]
+    assert run["z"] == 0.553 and run["duration_ratio"] == 1.553
+    # Read ray by ray, each ray's last hop over the hop time in force when it left.
+    assert run["predicted_1_plus_z"] == 1.5051
+    # The two readings agree to about a tick in a gap of 24 (1.15 ticks here).
+    assert abs(run["predicted_1_plus_z"] - (1 + run["z"])) * 24 < 1.2

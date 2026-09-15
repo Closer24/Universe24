@@ -122,14 +122,19 @@ of a Friedmann universe with `a(t) ~ k(t)`, so a static lattice with the
 matching load history reproduces the Hubble diagram and the time dilation of
 any expanding model, and cannot be told from it by those two tests.
 
-That equivalence is the hypothesis's limit. Against the Pantheon+ supernova
-sample (1,580 Hubble-flow objects, diagonal errors, one free offset) the two
-load histories the model supplies on its own are disfavoured: constant
-emission (`k ~ t`, the coasting universe, `q0 = 0`) by `delta chi^2 = 93`
-against flat LambdaCDM and emission growing with age (`k ~ t^2`,
-`q0 = -1/2`) by 62, both with residuals that grow with redshift; a power law
-`k ~ t^1.4` fits within `delta chi^2 = 4.5`, and the reading in which only the
-arrival rate is redshifted fails at every exponent. The Tolman
+That correspondence is kinematic (no dynamics is derived) and is the
+hypothesis's limit. A single source emitting at a fixed interval of its own
+clock gives the same law as the train (`z = 1.068` at 47 links against the
+ray-by-ray `k_o / k_e` of 2.032). The luminosity distance rests on two
+assumptions the closed row does not measure: a `1 / D^2` dilution and that a
+quantum's energy follows its measured frequency. Against the Pantheon+
+supernova sample (1,580 Hubble-flow objects, full covariance, one free
+offset) the two load histories the model supplies on its own are
+disfavoured: constant emission (`k ~ t`, the coasting universe, `q0 = 0`) by
+`delta chi^2 = 106` against flat LambdaCDM and emission growing with age
+(`k ~ t^2`, `q0 = -1/2`) by 64, both with residuals that grow with redshift;
+a power law `k ~ t^1.4` fits within `delta chi^2 = 9`, and the reading in
+which only the arrival rate is redshifted fails at every exponent. The Tolman
 surface-brightness exponent is where the lattice and expansion differ,
 `(1 + z)^-2` against `(1 + z)^-4`, and the measured range (2.6 to 3.4 after
 evolution corrections) is above the lattice's value. The model does not

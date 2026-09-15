@@ -658,7 +658,7 @@ declared rule (a self-excluding load, a delay-aware gate clock).
 
 ```sh
 python examples/relativity-probes/redshift_sweep.py --output artifacts/redshift-sweep
-python examples/relativity-probes/redshift_hubble.py --pantheon Pantheon+SH0ES.dat --output artifacts/redshift-sweep --sweep artifacts/redshift-sweep/summary.json
+python examples/relativity-probes/redshift_hubble.py --pantheon Pantheon+SH0ES.dat --covariance Pantheon+SH0ES_STAT+SYS.cov --output artifacts/redshift-sweep --sweep artifacts/redshift-sweep/summary.json
 ```
 
 Probe 5 above shows the stretch beside one growing mass on an open row. The
@@ -717,6 +717,8 @@ property of the rule.
 | launch at k = 1 | 48, 16, 1000, 900 | 41.5 | 1 | 1.818 | 2.750 | 2.818 | 0.0250 | 0.0154 | 2 2 3 3 3 3 3 3 3 3 3 |
 | launch at k = 4 | 48, 16, 1000, 3000 | 41.5 | 4 | 0.659 | 1.646 | 1.659 | 0.0122 | 0.0150 | 6 6 6 6 7 7 7 7 7 7 7 |
 | launch at k = 16 | 48, 16, 1000, 15000 | 41.5 | 16 | 0.830 | 1.818 | 1.829 | 0.0146 | 0.0159 | 27 27 28 28 29 29 30 30 31 31 32 |
+| single source, row 48 | 48, 16, 1000, 7000 | 47.0 | 8 | 1.068 | 2.032 | 2.068 | 0.0155 | 0.0160 | 48 50 49 47 52 49 51 50 48 50 52 |
+| single source, no emission | 48, 0, 1000, 7000 | 47.0 | 7 | 0.000 | 1.000 | 1.000 | n/a | n/a | 24 24 24 24 24 24 24 24 24 24 24 |
 
 `--labels wave` runs the same row with the light field carrying a Kerengonen
 phase (64 steps, one step per link) and the lamps launching 16 steps apart,
@@ -732,13 +734,33 @@ counting intervals like a clock. Without emission the ratio is 1.000.
 What the table shows. In every run the twelve rays are absorbed, the twelve quanta are conserved, the
 field's total grows linearly with age, and the eye's cycle count equals the tick
 count at every absorption, so the gaps on the eye's clock are the gaps in
-ticks. The control without emission gives gaps of exactly `k_e` and `z = 0`.
+ticks. The control without emission gives gaps of `k_e` and `z = 0`.
 With emission the gaps grow along the train (13, 13, 14, ..., 15 on the
 48-row), because the hop time rises while the train is absorbed; their mean
 over `k_e` minus one is `z`, the train's span at the eye over its span at
-launch is exactly `1 + z` in every run (the duration column), and the mean
-hop time of the rays' last hops over `k_e` agrees with `1 + z` within one
-tick per gap (`3.78` against `3.81` on the 96-row). Every hop's duration
+launch is `1 + z` in every run (the duration column, the same integers read
+twice), and the mean hop time of the rays' last hops over `k_e` agrees with
+`1 + z` within one tick per gap (`3.78` against `3.81` on the 96-row): the
+law holds to the resolution of the integers.
+
+`--labels "single source"` removes the train's two conveniences, twelve
+lamps at twelve distances launched at one tick. One Node at `x = 0` holds
+the twelve lamps and emits every 24 ticks of its own clock (three launch
+hops at `k_e = 8`; three because the rule holds one wait register per Node,
+so rays closer in time than the hop time would leave together), every ray
+crosses the same 47 links, and the emission spans 264 ticks during which the
+launch hop rises from 8 to 12. The eye's gaps are 47 to 52 ticks, mean 49.6,
+against 24 at the source: `z = 1.068`, duration ratio `2.068`, against the
+ray-by-ray `k_o / k_e` of `2.032` (each ray's last hop over the hop time in
+force when it left), one tick in a gap of fifty. The continuum law gives
+`ln(1 + z) = 0.0160 x 47 = 0.750`, `z = 1.12`, and with the train's launch
+offset of 0.065 `z = 0.98`; the measured 1.07 lies between, within a tick
+per gap of either, as it should for launches spread over 264 ticks across
+five steps of the ceiling, whose offsets average smaller than the train's
+single one. Without emission the same source gives gaps of 24 and `z = 0`. Under the
+default phase rule the single source's frequency ratio is 0.575 against
+`1 / (1 + z) = 0.484`, the same direction with a coarser quantization (one
+phase step in 64 per gap of fifty ticks). Every hop's duration
 equals `ceil( (b + lambda t)/B )` at the tick it began, with `lambda`
 the emission per Node per tick: the law is the ceiling of the load over the
 budget, and nothing else.
@@ -777,11 +799,19 @@ for the Hubble diagram and for time dilation it cannot be told from expansion
 with the matching load history. A hop time growing as `t^n` gives the
 deceleration parameter `q0 = -(n - 1) / n`: constant emission (`n = 1`) is
 the coasting universe, emission growing with age (`n = 2`) accelerates with
-`q0 = -1/2`. What a distant source looks like needs one more reading, stated
-rather than derived: bodies arrive at a rate reduced by `1 + z` and a source's
-field dilutes as `1 / D^2` in three open dimensions, so the luminosity distance
-is `D sqrt(1 + z)` if each body keeps its amount (reading A) or `D (1 + z)` if
-the amount is read down by `1 + z` as a wave's frequency would be (reading B).
+`q0 = -1/2`. This is a kinematic correspondence: it covers the two observables that
+depend only on `D(z)` and the stretch of durations, and derives no dynamics
+(no Friedmann equation, no equation of state; the load history is put in by
+hand). What a distant source looks like needs two more readings, both
+assumed here rather than measured on the closed row: that a source's field
+dilutes as `1 / D^2` (the isotropy probe of open three-dimensional runs,
+carried over; the row is one dimensional and dilutes nothing), and how a
+quantum's amount is read. Bodies arrive at a rate reduced by `1 + z`, so the
+luminosity distance is `D sqrt(1 + z)` if each quantum keeps its amount
+(reading A) or `D (1 + z)` if its energy is read down by `1 + z` as well
+(reading B). The lattice measures that a phased ray's frequency falls by
+`1 + z` under the default rule; that a quantum's energy is its frequency is
+a relation the lattice does not contain, and reading B rests on it.
 
 ### Against the Pantheon+ supernova sample
 
@@ -792,35 +822,43 @@ cycle count to the traffic through the Node's single cycle.
 `redshift_hubble.py` fits the shape of each reading, of flat LambdaCDM
 (`Omega_m = 0.334`) and of the Einstein-de Sitter universe to the 1,580
 Hubble-flow supernovae of the public Pantheon+ release (not calibrators,
-`z >= 0.01`, diagonal errors, which overstate every chi-square alike) with
-one free offset each, the absolute magnitude and the scale `alpha` being
-degenerate:
+`z >= 0.01`) with one free offset each, the absolute magnitude and the scale
+`alpha` being degenerate, twice: with the diagonal errors (the bins and
+residuals are read from this fit) and, with `--covariance`, with the
+release's full statistical-plus-systematic covariance restricted to the kept
+objects (the delta chi-square quoted). `q0` is the deceleration parameter of
+the luminosity-distance shape, `1 - d''(0) / d'(0)`; for reading A it
+differs from the scale factor's `-(n - 1) / n` because the extra
+`sqrt(1 + z)` enters the shape (for `n = 5`: -0.8 for the scale factor,
++0.20 for the shape):
 
-| Shape | `q0` | chi-square | against LambdaCDM | model - data by bin (mag; `z` 0.01-0.1, 0.1-0.3, 0.3-0.6, 0.6-1.0, 1.0-2.3) |
-| --- | --- | --- | --- | --- |
-| linear load (`n = 1`), reading A | 1 | 2511.8 | +1817 | +0.22, 0.00, -0.22, -0.45, -0.93 |
-| linear load (`n = 1`), reading B (coasting) | 0 | 787.9 | +93 | +0.06, 0.00, -0.06, -0.07, -0.20 |
-| quadratic load (`n = 2`), reading A | 1/2 | 1356.7 | +662 | +0.14, 0.00, -0.14, -0.25, -0.55 |
-| quadratic load (`n = 2`), reading B | -1/2 | 756.4 | +62 | -0.03, -0.00, +0.02, +0.12, +0.18 |
-| power law `n = 1.4`, reading B (fitted exponent) | -0.29 | 699.3 | +4.5 | +0.01, -0.00, -0.01, +0.04, +0.01 |
-| best power law, reading A (`n = 5`) | -0.8 | 929.3 | +234 | +0.08, -0.00, -0.09, -0.13, -0.31 |
-| flat LambdaCDM, `Omega_m = 0.334` | -0.50 | 694.8 | 0 | -0.01, +0.01, 0.00, +0.03, -0.10 |
-| Einstein-de Sitter | 1/2 | 1356.7 | +662 | +0.14, 0.00, -0.14, -0.25, -0.55 |
+| Shape | `q0` | chi-square, diagonal | against LambdaCDM, diagonal | chi-square, covariance | against LambdaCDM, covariance | model - data by bin (mag; `z` 0.01-0.1, 0.1-0.3, 0.3-0.6, 0.6-1.0, 1.0-2.3) |
+| --- | --- | --- | --- | --- | --- | --- |
+| linear load (`n = 1`), reading A | 1 | 2511.8 | +1817 | 3278.5 | +1891 | +0.22, 0.00, -0.22, -0.45, -0.93 |
+| linear load (`n = 1`), reading B (coasting) | 0 | 787.9 | +93 | 1492.8 | +106 | +0.06, 0.00, -0.06, -0.07, -0.20 |
+| quadratic load (`n = 2`), reading A | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
+| quadratic load (`n = 2`), reading B | -1/2 | 756.4 | +62 | 1450.8 | +64 | -0.03, -0.00, +0.02, +0.12, +0.18 |
+| power law `n = 1.4`, reading B (fitted exponent) | -0.29 | 699.3 | +4.5 | 1396.1 | +9.0 | +0.01, -0.00, -0.01, +0.04, +0.01 |
+| best power law, reading A (`n = 5`) | +0.20 | 929.3 | +234 | 1639.3 | +252 | +0.08, -0.00, -0.09, -0.13, -0.31 |
+| flat LambdaCDM, `Omega_m = 0.334` | -0.50 | 694.8 | 0 | 1387.1 | 0 | -0.01, +0.01, 0.00, +0.03, -0.10 |
+| Einstein-de Sitter | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
 
-The reading in which only the arrival rate is redshifted (A) is excluded at
-every exponent. The two load histories the model supplies by itself, constant
-emission and emission growing with age, are disfavoured in reading B by 93
-and 62 units of chi-square, with residuals that grow with redshift; a power
-law with a fitted exponent, `n = 1.4` (`q0 = -0.29`), fits within 4.5, one
-parameter against LambdaCDM's one. That is the equivalence above at work: the
-diagram can be fitted, and fitting it says nothing until the exponent is
-derived. Time dilation: the law stretches durations by exactly `1 + z`, as
-supernova light curves do (`(1 + z)^1.07 +- 0.06`, Blondin et al. 2008), where
-tired light fails. Surface brightness: the Tolman exponent is 1 in reading A
-and 2 in reading B against 4 for expansion, and the measured range after
-evolution corrections (2.6 to 3.4, Lubin and Sandage 2001) is above the
-lattice's value; this is the test on which the lattice and expansion differ,
-and it is unfavourable. The temperature of the background does not apply: the
+The full covariance changes none of the conclusions. The reading in which
+only the arrival rate is redshifted (A) is excluded at every exponent. The
+two load histories the model supplies by itself, constant emission and
+emission growing with age, are disfavoured in reading B by 106 and 64 units
+of chi-square, with residuals that grow with redshift; a power law with a
+fitted exponent, `n = 1.4` (`q0 = -0.29`, the exponent chosen on the
+diagonal fit), fits within 9, one parameter against LambdaCDM's one. That is
+the correspondence above at work: the diagram can be fitted, and fitting it
+says nothing until the exponent is derived. Time dilation: the law stretches
+durations by `1 + z` (the same integers as `z`), as supernova light curves do
+(`(1 + z)^1.07 +- 0.06`, Blondin et al. 2008), where tired light fails.
+Surface brightness: the Tolman exponent is 1 in reading A and 2 in reading B
+against 4 for expansion, and the measured range after evolution corrections
+(2.6 to 3.4, Lubin and Sandage 2001) is above the lattice's value; this is
+the test on which the lattice and expansion differ, and the lattice is in
+tension with it now. The temperature of the background does not apply: the
 model has no blackbody. The model does not remove dark energy; it relabels
 the acceleration as a load growing faster than linearly, which no rule of the
 model yet derives ([hypotheses](../../docs/HYPOTHESES.md)).

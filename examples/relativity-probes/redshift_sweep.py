@@ -65,6 +65,9 @@ SWEEP = (
     ("wave, phase per link", 48, EMISSION, BUDGET, BASELINE, 1000, "link"),
     ("wave, phase per interval", 48, EMISSION, BUDGET, BASELINE, 1000, "interval"),
     ("wave, phase per link, no emission", 48, 0, BUDGET, BASELINE, 500, "link"),
+    ("single source, row 48", 48, EMISSION, BUDGET, BASELINE, 1600, None, True),
+    ("single source, wave, phase per link", 48, EMISSION, BUDGET, BASELINE, 1600, "link", True),
+    ("single source, no emission", 48, 0, BUDGET, BASELINE, 700, None, True),
 )
 QUICK = (
     ("row 16", 16, 32, BUDGET, BASELINE, 400),
@@ -80,10 +83,17 @@ def op(name: str, *args: object) -> dict:
 
 PHASE_STEPS = 64
 WAVE_STEP = 16  # phase steps between consecutive lamps: the emitted wave's phase per hop
+SINGLE_SPACING = 3  # a single source emits every three launch hops of its own clock
 
 
 def document(
-    length: int, emission: int, budget: int, baseline: int, ticks: int, wave: str | None = None
+    length: int,
+    emission: int,
+    budget: int,
+    baseline: int,
+    ticks: int,
+    wave: str | None = None,
+    single: bool = False,
 ) -> dict:
     """The closed row; with `wave` the light is a Kerengonen field whose rays carry a phase.
 
@@ -95,12 +105,20 @@ def document(
     """
     if length <= TRAIN:
         raise ValueError("the row must be longer than the train so the eye is ahead of it")
+    # A single source: twelve lamps at x = 0, each emitting once, the i-th on its own
+    # clock's tick i * SINGLE_SPACING * k_e, so the rays leave from one place at a fixed
+    # interval of the source's clock and all cross the same distance to the eye. The
+    # interval is three launch hops because the rule holds one wait register per Node:
+    # a ray arriving while another is held leaves with it, so rays closer in time than
+    # the hop time would bunch; three hops keeps them apart while k stays below 3 k_e.
+    launch_hop = -(-(baseline + emission + 1) // budget) if single else None
     raw = {
         "schema_version": 1,
         "model_id": "redshift-closed-row-ray-delay-v1",
         "boundary": "periodic",
         "shape": [length, 1, 1],
-        "slots_per_node": 4,
+        # A single source puts twelve lamps and the mass body on one Node.
+        "slots_per_node": 14 if single else 4,
         "link_ticks": 1,
         "normal_budget": budget,
         "ticks": ticks,
@@ -208,23 +226,41 @@ def document(
         + [{"position": [i, 0, 0], "type": "lamp", "values": {"train": TRAIN - i}} for i in range(TRAIN)]
         + [{"position": [length - 1, 0, 0], "type": "eye"}],
     }
-    if wave:
-        # One lamp type per lamp, each emitting at its own phase: emission phases are per rule.
+    if wave or single:
+        # One lamp type per lamp: emission phases and timings are per rule, not per record.
         lamp = next(k for k in raw["disturbance_types"] if k["name"] == "lamp")
         rule = next(r for r in raw["emissions"] if r["type"] == "lamp")
         raw["disturbance_types"] = [k for k in raw["disturbance_types"] if k["name"] != "lamp"] + [
-            {**lamp, "name": f"lamp_{i}", "defaults": {"light": 1, "train": TRAIN - i}}
+            {
+                **lamp,
+                "name": f"lamp_{i}",
+                "fields": ["light", "train", "clock"],
+                "defaults": {"light": 1, "train": TRAIN - i, "clock": 0},
+                "updates": [{"field": "clock", "expression": op("add", {"field": "clock"}, 1)}],
+            }
             for i in range(TRAIN)
         ]
         raw["emissions"] = [r for r in raw["emissions"] if r["type"] != "lamp"] + [
-            {**rule, "type": f"lamp_{i}", "kerengonen_phase": (i * WAVE_STEP) % PHASE_STEPS}
+            {
+                **rule,
+                "type": f"lamp_{i}",
+                **({"kerengonen_phase": (i * WAVE_STEP) % PHASE_STEPS} if wave else {}),
+                # A single source emits its i-th ray when its own clock reads i hops.
+                **(
+                    {
+                        "amount": op(
+                            "eq", {"field": "clock"}, (TRAIN - 1 - i) * SINGLE_SPACING * launch_hop
+                        )
+                    }
+                    if single
+                    else {}
+                ),
+            }
             for i in range(TRAIN)
         ]
-        raw["seeds"] = [
-            {**s, "type": f"lamp_{s['position'][0]}"} if s["type"] == "lamp" else s for s in raw["seeds"]
+        raw["seeds"] = [s for s in raw["seeds"] if s["type"] != "lamp"] + [
+            {"position": [0 if single else i, 0, 0], "type": f"lamp_{i}"} for i in range(TRAIN)
         ]
-        for s in raw["seeds"]:
-            s.pop("values", None) if s["type"].startswith("lamp_") else None
     return raw
 
 
@@ -272,6 +308,16 @@ def observe(raw: dict) -> dict:
     }
 
 
+def hop_time_at(schedule: list[tuple[int, int]], tick: int) -> int | None:
+    """The hop time in force at a tick: the duration of the last hop begun at or before it."""
+    current = None
+    for start, duration in schedule:
+        if start > tick:
+            break
+        current = duration
+    return current
+
+
 def frequency_at(seen: dict, x: int) -> float | None:
     """Phase steps per tick of the passing train at Node x: the wave's frequency there."""
     rows = sorted(
@@ -281,11 +327,13 @@ def frequency_at(seen: dict, x: int) -> float | None:
     )
     if len(rows) < 2:
         return None
-    rates = []
+    rates: list[float] = []
     for (t0, p0), (t1, p1) in zip(rows, rows[1:], strict=False):
+        if t1 == t0:
+            continue  # two rays resident together: no interval to read a rate over
         step = (p1 - p0 + PHASE_STEPS // 2) % PHASE_STEPS - PHASE_STEPS // 2
         rates.append(step / (t1 - t0))
-    return sum(rates) / len(rates)
+    return sum(rates) / len(rates) if rates else None
 
 
 def measure(
@@ -296,8 +344,9 @@ def measure(
     baseline: int,
     ticks: int,
     wave: str | None = None,
+    single: bool = False,
 ) -> dict:
-    raw = document(length, emission, budget, baseline, ticks, wave)
+    raw = document(length, emission, budget, baseline, ticks, wave, single)
     seen = observe(raw)
     # Every ray's hop schedule, (tick the hop began, its duration): the load is uniform, so
     # any ray's hop measures the hop time k in force at that tick.
@@ -328,10 +377,12 @@ def measure(
     absorbed = seen["absorptions"]
     gaps_ticks = [b[0] - a[0] for a, b in zip(absorbed, absorbed[1:], strict=False)]
     gaps_clock = [b[1] - a[1] for a, b in zip(absorbed, absorbed[1:], strict=False)]
-    # Lamp i sits at x = i and its ray crosses (length - 1 - i) links to the eye.
-    distance = sum(length - 1 - i for i in range(TRAIN)) / TRAIN
+    # Lamp i sits at x = i and its ray crosses (length - 1 - i) links to the eye; a
+    # single source sits at x = 0 and every ray crosses length - 1 links.
+    distance = (length - 1) if single else sum(length - 1 - i for i in range(TRAIN)) / TRAIN
     result: dict = {
         "label": label,
+        "single_source": single,
         "length": length,
         "emission": emission,
         "budget": budget,
@@ -367,13 +418,29 @@ def measure(
         )
     if len(absorbed) == TRAIN and k_launch:
         mean_gap = sum(gaps_clock) / len(gaps_clock)
-        z = mean_gap / k_launch - 1
+        # The train leaves one hop apart; a single source emits every SINGLE_SPACING
+        # launch hops of its own clock, an interval fixed by the configuration, so the
+        # control without emission (whose first hop is shorter) is read against it too.
+        emitted_gap = SINGLE_SPACING * -(-(baseline + emission + 1) // budget) if single else k_launch
+        z = mean_gap / emitted_gap - 1
         k_reception = sum(last_hops) / len(last_hops) if last_hops else None
+        if single:
+            # From one source the launch hop rises during the emission, so the law is read
+            # ray by ray: the last hop of each ray over the hop time in force when it left.
+            launches = sorted(tick for (train, x), tick in seen["first_seen"].items() if x == 1)
+            ratios = []
+            for t0, t1, hop0, hop1 in zip(
+                launches, launches[1:], last_hops, last_hops[1:], strict=False
+            ):
+                k_e0 = hop_time_at(schedule, t0) or k_launch
+                k_e1 = hop_time_at(schedule, t1) or k_launch
+                ratios.append(((hop1 + hop0) / 2) / ((k_e0 + k_e1) / 2))
+            k_reception = k_launch * sum(ratios) / len(ratios) if ratios else k_reception
         result.update(
             {
                 "z": round(z, 4),
                 "duration_ratio": round(
-                    (absorbed[-1][1] - absorbed[0][1]) / (k_launch * (TRAIN - 1)), 4
+                    (absorbed[-1][1] - absorbed[0][1]) / (emitted_gap * (TRAIN - 1)), 4
                 ),
                 "hop_time_at_reception": round(k_reception, 4) if k_reception else None,
                 "predicted_1_plus_z": round(k_reception / k_launch, 4) if k_reception else None,
