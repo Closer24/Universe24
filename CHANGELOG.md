@@ -5,6 +5,9 @@ Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
 ## 0.3.1 - 2026-09-15
 
+Concept DOI 10.5281/zenodo.22738746 (the version DOI is listed on the Zenodo
+record).
+
 ### Redshift from delay growth (second manuscript)
 
 - `redshift_sweep.py`: a train of twelve rays crosses closed rows of 16 to 96

@@ -400,13 +400,14 @@ Run `python -m tools.generic_vector_lab.run_demo` from this repository.
 ## License and citation
 
 Universe24 is released under the [MIT License](LICENSE), copyright Alon Gonen.
-Version 0.3.0 is archived on Zenodo under DOI
-[10.5281/zenodo.22749342](https://doi.org/10.5281/zenodo.22749342); the
-concept DOI [10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746)
-resolves to the latest version (see [CHANGELOG.md](CHANGELOG.md)).
+Every version is archived on Zenodo; the concept DOI
+[10.5281/zenodo.22738746](https://doi.org/10.5281/zenodo.22738746) resolves
+to the latest version, and each version's own DOI is listed on that record
+(0.3.0: [10.5281/zenodo.22749342](https://doi.org/10.5281/zenodo.22749342);
+see [CHANGELOG.md](CHANGELOG.md)).
 Cite the software using [CITATION.cff](CITATION.cff); GitHub renders it as a
 citation entry on the repository page. Reference form:
 
 > Gonen, A. (2026). Universe24: a discrete simulator of local physical laws
-> (Reality Theory) (Version 0.3.0) [Computer software]. Zenodo.
-> https://doi.org/10.5281/zenodo.22749342
+> (Reality Theory) (Version 0.3.1) [Computer software]. Zenodo.
+> https://doi.org/10.5281/zenodo.22738746
