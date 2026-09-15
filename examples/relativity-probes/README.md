@@ -858,10 +858,12 @@ limit is listed as well:
 | Einstein-de Sitter | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
 
 The full covariance changes none of the conclusions, and every conclusion
-is a comparison between models, not a goodness-of-fit verdict: with 1,579
-degrees of freedom the covariance chi-square per degree of freedom is 0.88
-for LambdaCDM, 0.88 for the fitted power law and 0.93 for the reading-A
-limit, all acceptable on their own; only the linear and quadratic loads in
+is a comparison between models, not a goodness-of-fit verdict: the
+covariance chi-square per degree of freedom is 0.88 for LambdaCDM and 0.88
+for the fitted power law (1,578 degrees of freedom: an offset and one shape
+parameter fitted to this sample each, `n` here and `Omega_m = 0.334` in the
+release's own fit) and 0.93 for the reading-A limit (1,579), all acceptable
+on their own; only the linear and quadratic loads in
 reading A (2.08 and 1.32) fail outright. The reading in which
 only the arrival rate is redshifted (A) is behind at every exponent: its
 chi-square falls monotonically across the grid and is still 114 above

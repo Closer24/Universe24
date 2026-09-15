@@ -91,9 +91,9 @@ Hubble diagram and the time dilation, so the lattice reproduces those two
 tests of any flat Friedmann model with the matching load history and cannot be
 told from expansion by them alone; the correspondence is kinematic because
 nothing dynamical (no Friedmann equation, no equation of state) is derived.
-Third, the data: the load histories the model supplies by itself do not fit
-the supernova diagram, a fitted power law comes within $\Delta\chi^2 = 9$
-of $\Lambda$CDM with the same number of fitted parameters, and the surface-brightness
+Third, the data: the load histories the model supplies by itself are well
+behind $\Lambda$CDM on the supernova diagram, a fitted power law comes
+within $\Delta\chi^2 = 9$ of it with the same number of fitted parameters, and the surface-brightness
 exponent is where the lattice and expansion part, with the measured value on
 expansion's side. The conclusion is negative for the strong claim
 (no dark energy) and positive for a narrower one (a lattice mechanism whose one-parameter
@@ -142,12 +142,14 @@ sit on one Node at $x = 0$ and each emits once, the $i$-th when that Node's
 own clock reads $3 i k_e$ ticks (three launch hops apart, because the rule
 holds one wait register per Node and rays closer in time than the hop time
 would leave together), so every ray crosses the same $L - 1$ links and the
-interval at the source is set by the source's clock rather than by the
-lamps' spacing. An eye at $x = L-1$ absorbs every ray that reaches it
+emission interval $\Delta t_e$ is set by the source's clock, $24$ ticks in
+every single-source run, rather than by the lamps' spacing; for the train
+$\Delta t_e = k_e$, one hop. An eye at $x = L-1$ absorbs every ray that reaches it
 (twelve quanta conserved into its inventory) and counts its own cycles: its
 clock. The rays leave one hop apart, $k_e$ ticks, and are absorbed $k_o$
-ticks apart, so the stretch the eye reads is (with the single source, the gap at the
-eye over the interval at the source, and $k_o/k_e$ read ray by ray)
+ticks apart, so the stretch the eye reads is $1 + z = \Delta t_o/\Delta
+t_e$, the gap at the eye over the emission interval, which for hops in
+force at emission and reception is (ray by ray for the single source)
 \begin{equation}
 1 + z = \frac{k_o}{k_e}, \qquad \text{and, for the whole train,}\qquad
 \frac{\text{duration at reception}}{\text{duration at emission}} = 1 + z,
@@ -197,7 +199,7 @@ single source & 48, 16, 1000, 7000 & 47.0 & 8 & 1.068 & 2.032 & 2.068 & 0.0155 &
 single source, control & 48, 0, 1000, 7000 & 47.0 & 7 & 0.000 & 1.000 & 1.000 & n/a & n/a\\
 \bottomrule
 \end{tabular}
-\caption{The closed-row runs. $D$ is the mean distance from the twelve lamps to the eye ($L - 1$ for the single source); $z$ is the mean gap between consecutive absorptions on the eye's clock divided by the interval at the source ($k_e$ for the train, $3 k_e = 24$ ticks for the single source), minus one; $k_o/k_e$ is the mean hop time in force while the train is absorbed over the hop time at launch (ray by ray for the single source, whose launch hop rises during the emission); duration is the train's span at the eye over its span at launch; $\alpha_{\rm meas} = \ln(1+z)/D$; $\alpha_{\rm sched}$ is the rate at which the hop time rose during the run, read off every ray's hops. In every run the eye's clock equals the tick count, the field's total grows linearly, and the twelve quanta are conserved.}
+\caption{The closed-row runs. $D$ is the mean distance from the twelve lamps to the eye ($L - 1$ for the single source); $k_e$ is the hop time at launch; $z$ is the mean gap between consecutive absorptions on the eye's clock divided by the emission interval $\Delta t_e$, minus one, where $\Delta t_e = k_e$ for the train and $24$ ticks for the single source (three launch hops of the emitting run, fixed by the configuration, so the control with $k_e = 7$ still emits every 24 ticks); $k_o/k_e$ is the mean hop time in force while the train is absorbed over the hop time at launch (ray by ray for the single source, whose launch hop rises during the emission); duration is the train's span at the eye over its span at launch; $\alpha_{\rm meas} = \ln(1+z)/D$; $\alpha_{\rm sched}$ is the rate at which the hop time rose during the run, read off every ray's hops. In every run the eye's clock equals the tick count, the field's total grows linearly, and the twelve quanta are conserved.}
 \label{tab:runs}
 \end{table}
 
@@ -380,15 +382,16 @@ Flat $\Lambda$CDM, $\Omega_m = 0.334$ & $-0.50$ & 694.8 & $0$ & 1387.1 & $0$ & $
 Einstein--de Sitter & $1/2$ & 1356.7 & $+662$ & 2083.7 & $+697$ & $+0.14, 0.00, -0.14, -0.25, -0.55$\\
 \bottomrule
 \end{tabular}}
-\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. The quadratic load in reading A is the Einstein--de Sitter shape; the linear load in reading A is worse, and the family's $n \to \infty$ limit better, than Einstein--de Sitter, all behind $\Lambda$CDM; reading B with a fitted exponent is the closest to $\Lambda$CDM.}
+\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, refined in steps of $0.001$ within $\pm 0.1$ of the coarse minimum, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. $\Omega_m = 0.334$ is the release's own flat-$\Lambda$CDM fit to this sample \cite{brout2022}, not refitted here, so the $\Lambda$CDM row and the fitted power law each carry one shape parameter fitted to the sample and one offset: 1578 degrees of freedom for both, 1579 for the shapes with no fitted parameter. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. The quadratic load in reading A is the Einstein--de Sitter shape; the linear load in reading A is worse, and the family's $n \to \infty$ limit better, than Einstein--de Sitter, all behind $\Lambda$CDM; reading B with a fitted exponent is the closest to $\Lambda$CDM.}
 \label{tab:sn}
 \end{table}
 
 Three things follow, and the full covariance changes none of them. Every
 statement is a comparison between models, not a goodness-of-fit verdict:
-with 1579 degrees of freedom the covariance $\chi^2$ per degree of freedom
-is $0.88$ for $\Lambda$CDM, $0.88$ for the fitted power law and $0.93$
-for the reading-A limit, all acceptable on their own, and only the linear
+the covariance $\chi^2$ per degree of freedom is $0.88$ for $\Lambda$CDM
+and $0.88$ for the fitted power law (1578 degrees of freedom, an offset and
+a shape parameter each) and $0.93$ for the reading-A limit (1579), all
+acceptable on their own, and only the linear
 and quadratic loads in reading A ($2.08$ and $1.32$) fail outright. The
 reading in which only the arrival rate is redshifted (A) is behind at
 every exponent: its $\chi^2$ falls monotonically with $n$ across the whole
@@ -403,10 +406,11 @@ fitted exponent fits best at $n = 1.41$ under the covariance ($1.39$ with
 the diagonal errors), with the interval $\Delta\chi^2 \le 1$ spanning
 $1.35$ to $1.47$ under the covariance ($q_0 = -0.28$; the grid is refined
 to steps of $0.001$ around the minimum and the interval's ends
-interpolated), at $\Delta\chi^2 = 9.0$ from $\Lambda$CDM with one fitted
-parameter each. The two families are not nested, so no significance level
-follows from that difference by itself; with equal parameter counts it is
-also the difference in the Akaike information criterion, a relative
+interpolated), at $\Delta\chi^2 = 9.0$ from $\Lambda$CDM with one shape parameter
+fitted to this sample each ($n$ here, $\Omega_m$ in the release). The two
+families are not nested, so no significance level follows from that
+difference by itself; with equal parameter counts it is also the
+difference in the Akaike information criterion, a relative
 likelihood of $e^{-4.5} \approx 0.01$ for the power law. $\Lambda$CDM is
 preferred, and the sample size does not soften the preference: the fitted
 power law is the best this family does, and it is behind. That is the correspondence of
@@ -487,15 +491,18 @@ at $E = 32$, measured), so the hop schedule and $E/B$ agree.
 
 \end{itemize}
 
-What would make this a physics result, in order: a clock built from the
-model's own moving parts whose rate under load is measured, so that the
-asymmetry between transport and clocks is derived rather than declared; a
-rule of the lattice that fixes the emission history, so that $n$ is
-derived rather than fitted; an oscillating source and a detector with a
-physical response, both built from the model's rules, so that the
-frequency is carried by something other than the arrival gaps and read by
-something other than a counter; and the Tolman data reduced under the
-lattice's own angular-size relation.
+What this paper establishes stands on its own: a configured rule, its
+law measured in the discrete case with its corrections, the mapping onto
+the standard observables, and the comparison with data. What would ground
+the cosmological reading of it, in order: a clock built from the model's
+own moving parts whose rate under load is measured, so that the asymmetry
+between transport and clocks is derived rather than declared; a rule of
+the lattice that fixes the emission history, so that $n$ is derived rather
+than fitted; an oscillating source and a detector with a physical
+response, both built from the model's rules, so that the frequency is
+carried by something other than the arrival gaps and read by something
+other than a counter; and the Tolman data reduced under the lattice's own
+angular-size relation.
 
 \section*{Reproducibility}
 The runs are produced by \texttt{redshift\_sweep.py} and the fits by

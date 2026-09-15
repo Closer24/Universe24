@@ -2722,3 +2722,19 @@ review of the second manuscript, read as a standalone paper.
 | Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 25 seconds; ruff lint and format passed (a first run reported four failures in `test_ray_integration_guards.py` whose assertion text was an older version of the file: stale pytest bytecode; the file passes directly and the gate passed after the caches were cleared) |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
+
+## Redshift: degrees of freedom, the emission interval, and two leftover sentences - 2026-09-15
+
+Base: `e5ec321` on `main` (after PR #131). Manuscript only. A seventh
+review, which judged the paper ready as a computational study after
+consistency fixes.
+
+| Check | Result |
+| --- | --- |
+| Degrees of freedom | the LambdaCDM row (Omega_m = 0.334, the release's own fit to this sample, not refitted) and the fitted power law each carry one shape parameter fitted to the sample and one offset: 1578 degrees of freedom for both, 1579 for the shapes with no fitted parameter; chi-square per degree of freedom unchanged at two decimals (0.88, 0.88, 0.93) |
+| Table 2 caption | states both grid stages (0.05, refined to 0.001 within 0.1 of the coarse minimum) and the provenance of Omega_m |
+| Emission interval | written Delta t_e: k_e for the train, 24 ticks for the single source in every run, so the control's k_e = 7 no longer reads as a 21-tick interval |
+| Wording | "do not fit" in the introduction became "well behind LambdaCDM"; the closing paragraph names what the paper establishes before what would ground its cosmological reading |
+| Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 26 seconds; ruff lint and format passed |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
