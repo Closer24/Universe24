@@ -303,16 +303,24 @@ class SpatialEngine:
                 for record in records
             ):
                 positions.add(position)
+        ordered = tuple(sorted(positions))
         if execution is not None and execution.parallel:
-            execution.finish_cycles(
-                tuple(
-                    self._at(position).plan_cycle(tick, residents.get(position), self._services)
-                    for position in sorted(positions)
+            try:
+                execution.finish_cycles(
+                    tuple(
+                        self._at(position).plan_cycle(tick, residents.get(position), self._services)
+                        for position in ordered
+                    )
                 )
-            )
+            finally:
+                for position in ordered:
+                    self.links.refresh(position)
         else:
-            for position in sorted(positions):
-                self._at(position).advance(tick, residents.get(position), self._services)
+            for position in ordered:
+                try:
+                    self._at(position).advance(tick, residents.get(position), self._services)
+                finally:
+                    self.links.refresh(position)
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving node exists outside; terminal stock escapes without exterior decay."""
@@ -361,7 +369,7 @@ class SpatialEngine:
 
     def deliver(self, tick: int, residents: Mapping[Address3, DisturbanceNode] | None = None) -> None:
         ready: dict[Address3, list[SpatialPacket]] = {}
-        for origin, packets in self.links.items():
+        for origin, packets in self.links.active_items():
             for port, packet in enumerate(packets):
                 if packet is not None and packet.arrival_tick == tick:
                     if packet.origin != origin or packet.port != port:
@@ -401,7 +409,10 @@ class SpatialEngine:
         """Deliver a closing clock notice only to the active local field owners."""
         if self.initial.node_execution:
             for position in sorted(self._active):
-                self.nodes[position].commit_ready(tick, residents.get(position), self._services)
+                try:
+                    self.nodes[position].commit_ready(tick, residents.get(position), self._services)
+                finally:
+                    self.links.refresh(position)
 
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]

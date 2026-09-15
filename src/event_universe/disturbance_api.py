@@ -112,6 +112,8 @@ class Simulation(DisturbanceEngine):
                 else None
             ),
             node_workers=node_workers,
+            reuse_carrier_plans=initial.focus and resolver is None,
+            reuse_spatial_plans=initial.focus and resolver is None and not bonded,
         )
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:

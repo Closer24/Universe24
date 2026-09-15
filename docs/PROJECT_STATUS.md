@@ -1,7 +1,12 @@
 # Project status and restart guide
 
-The [local Focus option](LOCAL_FOCUS.md) skips certified empty carrier Nodes,
-with the ordinary scheduler retained for event resolvers and shared field clocks.
+[Local Focus](LOCAL_FOCUS.md) defaults on: certified empty carrier Nodes sleep,
+and equal complete local planning inputs reuse immutable pure transition results.
+Host transport indexes occupied output banks in their original creation order.
+Event resolvers and mutable bond planners bypass plan reuse; event resolvers and
+shared field clocks retain the ordinary carrier scheduler. Model operation costs,
+local commit timing, events and physical owners are unchanged. Measured savings
+and the low-repetition case without a benefit are in [performance](PERFORMANCE.md).
 The integrated ray policies now validate retained rays and incoming claims,
 retain funded emissions during load delay, and prepare bounded immutable pace
 tables. Exact share capture and whole-ray threshold funding have regression

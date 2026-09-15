@@ -79,11 +79,21 @@ class DisturbanceEngine:
         node_workers: int = 1,
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
+        reuse_carrier_plans: bool = False,
+        reuse_spatial_plans: bool = False,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
         self.initial = initial
-        self._execution = NodeExecution(node_workers, planner, spatial_planner)
+        self._execution = NodeExecution(
+            node_workers,
+            planner,
+            spatial_planner,
+            reuse_carriers=reuse_carrier_plans,
+            reuse_fields=reuse_spatial_plans,
+        )
+        carrier_planner = self._execution.disturbance if reuse_carrier_plans else planner
+        field_planner = self._execution.spatial if reuse_spatial_plans else spatial_planner
         self._step_lock = Lock()
         if self._execution.parallel and resolver is not None:
             raise ValueError("parallel Node execution does not support an event program")
@@ -129,10 +139,10 @@ class DisturbanceEngine:
             )
         self._spatial = (
             None
-            if spatial_planner is None or not initial.spatial_fields
+            if field_planner is None or not initial.spatial_fields
             else SpatialEngine(
                 initial,
-                spatial_planner,
+                field_planner,
                 observer,
                 spatial_coupler,
                 spatial_decayer,
@@ -143,7 +153,7 @@ class DisturbanceEngine:
         )
         self._services = NodeServices(
             replace(initial, seeds=(), spatial_seeds=()),
-            planner,
+            carrier_planner,
             record_policy,
             NodeEvents(event_space, observer),
             NodeAccounting(self._work, self._source_totals),
@@ -346,6 +356,10 @@ class DisturbanceEngine:
             "focus_enabled": self._focus_enabled,
             "focus_fallback": self._focus_fallback if self.initial.focus else None,
             "carrier_phase_visits": self._carrier_phase_visits,
+            "carrier_transport": self._links.execution_report(),
+            "spatial_transport": None
+            if self._spatial is None
+            else self._spatial.links.execution_report(),
             "awake_carrier_nodes": len(self._awake_carriers)
             if self._focus_enabled
             else len(self._nodes),
@@ -396,9 +410,17 @@ class DisturbanceEngine:
     def _commit(self, position: Address3, node: DisturbanceNode) -> None:
         spatial = None if self._spatial is None else self._spatial.nodes.get(position)
         services = None if self._spatial is None else self._spatial._services
-        node.advance(
-            self.tick, self._services, window_closed=True, spatial=spatial, spatial_services=services
-        )
+        try:
+            node.advance(
+                self.tick, self._services, window_closed=True, spatial=spatial, spatial_services=services
+            )
+        finally:
+            self._refresh_output(position)
+
+    def _refresh_output(self, position: Address3) -> None:
+        self._links.refresh(position)
+        if self._spatial is not None:
+            self._spatial.links.refresh(position)
 
     _current_emission_state = staticmethod(DisturbanceNode._current_emission_state)
 
@@ -436,7 +458,7 @@ class DisturbanceEngine:
 
     def _deliver(self) -> None:
         ready: dict[Address3, list[tuple[Address3, int, Packet]]] = {}
-        for origin, packets in self._links.items():
+        for origin, packets in self._links.active_items():
             for slot, packet in enumerate(packets):
                 if packet is not None and packet.arrival_tick == self.tick:
                     if packet.origin != origin:
@@ -528,12 +550,20 @@ class DisturbanceEngine:
                             None if self._spatial is None else self._spatial._services,
                         )
                     )
-                self._execution.finish_cycles(tuple(cycles))
+                try:
+                    self._execution.finish_cycles(tuple(cycles))
+                finally:
+                    for position in ordered:
+                        self._refresh_output(position)
             else:
                 for position in ordered:
                     node = self._at(position)
-                    self._begin(position, node)
-                    self._commit(position, node)
+                    try:
+                        self._begin(position, node)
+                        self._commit(position, node)
+                    except Exception:
+                        self._refresh_output(position)
+                        raise
             self._sleep_carriers(ordered)
             if isinstance(self._resolver, CausalSourceResolver):
                 self._resolver.start_sources(

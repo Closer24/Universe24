@@ -87,6 +87,7 @@ def test_both_rays_carry_the_code_of_their_birth_node_and_tick():
     initial = parse_initial_state(raw)
     assert initial.emissions[0].bond_origin and initial.emissions[1].bond_origin
     world = Simulation(initial)
+    assert world.execution_report()["spatial_plan_reuse"]["capacity"] == 0
     world.step()
     bonds = {
         ray.bond for node in world.inventory_view().nodes for ray in (node.rays[0] if node.rays else ())

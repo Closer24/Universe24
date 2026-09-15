@@ -39,7 +39,9 @@ def assert_same_world(left, right):
 
 def compare(initial, ticks, *, workers=1):
     plain_events, focus_events = [], []
-    with Simulation(initial, observer=plain_events.append, node_workers=workers) as plain:
+    with Simulation(
+        replace(initial, focus=False), observer=plain_events.append, node_workers=workers
+    ) as plain:
         with Simulation(
             replace(initial, focus=True), observer=focus_events.append, node_workers=workers
         ) as focus:
@@ -147,9 +149,11 @@ def test_focus_requires_an_explicit_boolean(value):
         parse_initial_state(raw)
 
 
-def test_focus_defaults_to_false_in_both_input_interfaces():
+def test_focus_defaults_to_true_and_allows_explicit_opt_out():
     initial = parse_initial_state(moving_document())
-    assert initial.focus is False
+    assert initial.focus is True
+    assert replace(initial, focus=False).focus is False
+    assert parse_initial_state({**moving_document(), "focus": False}).focus is False
     with pytest.raises(ValueError, match="focus must be boolean"):
         replace(initial, focus=1)
 

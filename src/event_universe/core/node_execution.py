@@ -7,6 +7,7 @@ from typing import TypeVar
 
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
+from .plan_reuse import PlanReuse
 from .spatial_state import Claims, Rays, SpatialPlan, SpatialState
 
 SpatialPlanner = Callable[
@@ -125,6 +126,9 @@ class NodeExecution:
         workers: int,
         disturbance_planner: DisturbancePlanner,
         spatial_planner: SpatialPlanner | None,
+        *,
+        reuse_carriers: bool = False,
+        reuse_fields: bool = False,
     ) -> None:
         if type(workers) is not int or not 1 <= workers <= MAX_NODE_WORKERS:
             raise ValueError(f"node_workers must be an integer from 1 through {MAX_NODE_WORKERS}")
@@ -136,6 +140,51 @@ class NodeExecution:
         self._spatial_tasks = 0
         self._parallel_batches = 0
         self._largest_batch = 0
+        self._carrier_reuse = PlanReuse[DisturbancePlanningInput, LocalPlan](
+            4096 if reuse_carriers else 0
+        )
+        self._field_reuse = PlanReuse[SpatialPlanningInput, SpatialPlan](4096 if reuse_fields else 0)
+
+    def disturbance(
+        self,
+        records: tuple[DisturbanceRecord | None, ...],
+        residuals: tuple[int, ...],
+        received: int,
+        *,
+        port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0),
+    ) -> LocalPlan:
+        request = DisturbancePlanningInput(records, residuals, received, port_loads)
+        return self._carrier_reuse.one(request, lambda: self._evaluate_carriers((request,))[0])
+
+    def spatial(
+        self,
+        states: tuple[SpatialState, ...],
+        records: tuple[DisturbanceRecord | None, ...],
+        received: int,
+        node_cost: int = 0,
+        rays: tuple[Rays, ...] = (),
+        claims: tuple[Claims, ...] = (),
+        tick: int = 0,
+        ray_hold: int = 0,
+    ) -> SpatialPlan:
+        request = SpatialPlanningInput(
+            states, records, received, node_cost, rays, claims, tick, ray_hold
+        )
+        return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
+
+    def _evaluate_carriers(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:
+        if not self.parallel:
+            return _plan_disturbance_batch(self._disturbance_planner, items)
+        return self._submit_carriers(items)
+
+    def _evaluate_fields(self, items: tuple[SpatialPlanningInput, ...]) -> tuple[SpatialPlan, ...]:
+        if not items:
+            return ()
+        if self._spatial_planner is None:
+            raise RuntimeError("spatial planning requires a configured planner")
+        if not self.parallel:
+            return _plan_spatial_batch(self._spatial_planner, items)
+        return self._submit_fields(items)
 
     @property
     def parallel(self) -> bool:
@@ -167,7 +216,7 @@ class NodeExecution:
             start = end
         return tuple(chunks)
 
-    def plan_disturbances(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:
+    def _submit_carriers(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:
         if not self.parallel:
             raise RuntimeError("parallel submission requires more than one Node worker")
         if not items:
@@ -181,7 +230,7 @@ class NodeExecution:
         )
         return tuple(plan for future in futures for plan in future.result())
 
-    def plan_spatial(self, items: tuple[SpatialPlanningInput, ...]) -> tuple[SpatialPlan, ...]:
+    def _submit_fields(self, items: tuple[SpatialPlanningInput, ...]) -> tuple[SpatialPlan, ...]:
         if not self.parallel:
             raise RuntimeError("parallel submission requires more than one Node worker")
         if not items:
@@ -196,6 +245,12 @@ class NodeExecution:
             pool.submit(_plan_spatial_batch, self._spatial_planner, chunk) for chunk in chunks
         )
         return tuple(plan for future in futures for plan in future.result())
+
+    def plan_disturbances(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:
+        return self._carrier_reuse.resolve(items, self._evaluate_carriers)
+
+    def plan_spatial(self, items: tuple[SpatialPlanningInput, ...]) -> tuple[SpatialPlan, ...]:
+        return self._field_reuse.resolve(items, self._evaluate_fields)
 
     def finish_cycles(self, cycles: tuple[PlanningCycle, ...]) -> None:
         """Batch immutable requests, then resume local owners in deterministic order.
@@ -244,9 +299,13 @@ class NodeExecution:
             "spatial_node_tasks": self._spatial_tasks,
             "parallel_batches": self._parallel_batches,
             "largest_batch": self._largest_batch,
+            "carrier_plan_reuse": self._carrier_reuse.report(),
+            "spatial_plan_reuse": self._field_reuse.report(),
         }
 
     def close(self) -> None:
+        self._carrier_reuse.clear()
+        self._field_reuse.clear()
         if self._executor is not None:
             self._executor.shutdown(wait=True, cancel_futures=True)
             self._executor = None
