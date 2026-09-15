@@ -120,9 +120,6 @@ RESOURCE_CONSUMERS = {
         "tests/test_native_quantum_channels.py",
         "tests/test_quantum_classical_experiment.py",
     ),
-    "examples/small-space/experiments.py": ("tests/test_small_space_experiments.py",),
-    "examples/small-space/source-pulse.json": ("tests/test_small_space_experiments.py",),
-    "examples/small-space/source-response.json": ("tests/test_small_space_experiments.py",),
     "examples/known-entities/catalog.json": (
         "tests/test_catalog_contact.py",
         "tests/test_property_entity_profiles.py",
@@ -130,18 +127,15 @@ RESOURCE_CONSUMERS = {
         "tests/test_profile_validation.py",
         "tests/test_entity_compiler.py",
         "tests/test_physical_entities.py",
-        "tests/test_small_space_experiments.py",
         "tests/test_quantum_entities.py",
         "tests/test_native_quantum_channels.py",
     ),
     "examples/known-entities/representation-probes.json": (
         "tests/test_profile_validation.py",
         "tests/test_entity_compiler.py",
-        "tests/test_small_space_experiments.py",
         "tests/test_quantum_entities.py",
         "tests/test_native_quantum_channels.py",
     ),
-    "examples/known-entities/discrete-pair.json": ("tests/test_small_space_experiments.py",),
     "examples/quantum/contact.json": (
         "tests/test_native_event_runtime.py",
         "tests/test_quantum_contact_trial.py",
@@ -303,8 +297,6 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        if path.startswith("tools/generic_vector_lab/"):
-            tests.add("tests/test_generic_vector_lab.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
             tests.add("tests/test_configuration_validation.py")

@@ -98,3 +98,10 @@ concepts.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+## Retired experiment guides
+
+The [standalone vector lab](../tools/generic_vector_lab/README.md) and
+[small-space comparisons](../examples/small-space/README.md) now link to immutable
+historical packages. Their runtimes, private inputs and acceptance suites have
+been removed. See [retained test coverage](TEST_EXPECTATIONS.md#test-and-experiment-cleanup).

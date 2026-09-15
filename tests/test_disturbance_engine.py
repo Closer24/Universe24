@@ -108,16 +108,6 @@ def test_next_cycle_has_fresh_cost_without_carried_computation_debt():
     assert world.totals() == {"inventory": (2,)}
 
 
-def test_zero_state_still_activates_a_configured_local_coupling():
-    world = Simulation(parse_initial_state(exchange_document(1)))
-    world.step()
-    assert resident_values(world, (2, 2, 2)) == [
-        {"inventory": (-1,)},
-        {"inventory": (1,)},
-    ]
-    assert world.totals() == {"inventory": (0,)}
-
-
 def test_fractional_signed_exchange_is_mirrored_and_keeps_subunit_remainders():
     positive = Simulation(parse_initial_state(exchange_document(1, 4)))
     negative = Simulation(parse_initial_state(exchange_document(-1, 4)))
@@ -367,7 +357,7 @@ def test_observer_failure_cannot_split_one_local_arrival_ownership_commit():
     assert all(p is None for packets in world.links.values() for p in packets)
 
 
-def test_public_nodes_and_nested_records_cannot_mutate_physical_state():
+def test_zero_state_exchange_preserves_read_only_views_and_detached_snapshots():
     world = Simulation(parse_initial_state(exchange_document(1)))
     nodes = world.nodes
     node = nodes[(2, 2, 2)]
@@ -379,16 +369,11 @@ def test_public_nodes_and_nested_records_cannot_mutate_physical_state():
         node.records = (None,) * len(node.records)
     with pytest.raises((FrozenInstanceError, AttributeError)):
         node.records[0].values = ()
-    world.step()
-    assert unpack(node.records[0].values[0]) == (0,)
-    assert resident_values(world, (2, 2, 2))[0] == {"inventory": (-1,)}
-
-
-def test_diagnostic_snapshot_is_detached_from_engine_state():
-    world = Simulation(parse_initial_state(exchange_document(1)))
     snapshot = world.snapshot()
     snapshot["nodes"][0]["disturbances"][0]["values"]["inventory"] = (123,)
     snapshot["nodes"].clear()
     assert resident_values(world, (2, 2, 2)) == [{"inventory": (0,)}, {"inventory": (0,)}]
     world.step()
+    assert unpack(node.records[0].values[0]) == (0,)
+    assert resident_values(world, (2, 2, 2)) == [{"inventory": (-1,)}, {"inventory": (1,)}]
     assert world.totals() == {"inventory": (0,)}

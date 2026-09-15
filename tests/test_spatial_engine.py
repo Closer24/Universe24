@@ -154,17 +154,11 @@ def test_continuous_source_keeps_carried_strength_and_adds_only_declared_emissio
         assert world.source_totals() == {"strength": (0,), "radiation": (72 * interval,)}
         if not moving:
             assert value(world, ORIGIN) == (0,)
-
-
-def test_same_speed_source_and_own_field_can_coarrive_without_silent_exclusion():
-    world = Simulation(parse_initial_state(document(moving=True, source=True)))
-    world.step()
-    position = offset(ORIGIN, (1, 0, 0))
-    assert residents(world, position) == [{"strength": (72,), "heading": (1, 0, 0)}]
-    # Four forward octants deliver three units each at the same time as the carrier.
-    # Arrival order alone therefore cannot prove that the local self-field is zero.
-    assert value(world, position) == (12,)
-    assert world.spatial_values(position)["radiation"]["directions"][0] == (12,)
+        elif interval == 1:
+            # Four forward octants coarrive with the source, three units each.
+            # Timing alone cannot establish zero self-field, for either Link length.
+            assert value(world, position) == (12,)
+            assert world.spatial_values(position)["radiation"]["directions"][0] == (12,)
 
 
 def test_field_front_keeps_fixed_transit_while_the_source_waits_for_computation():
@@ -417,22 +411,6 @@ def test_departed_pulse_leaves_no_permanent_computation_load_at_a_visited_node()
     assert traces[1][2] == traces[0][2]
 
 
-def test_delivered_direction_samples_clear_when_the_pulse_leaves():
-    raw = document()
-    raw["spatial_fields"][0]["axis_weights"] = [1, 0, 0]
-    raw["spatial_seeds"] = [
-        {"position": list(ORIGIN), "field": "radiation", "populations": [3, 0, 0, 0, 0, 0, 0, 0]}
-    ]
-    world = Simulation(parse_initial_state(raw))
-    neighbor = offset(ORIGIN, (1, 0, 0))
-    world.step()
-    assert world.spatial_values(neighbor)["radiation"]["directions"] == ((3,), *((0,),) * 5)
-    world.step()
-    assert value(world, neighbor) == (0,)
-    assert world.spatial_values(neighbor)["radiation"]["directions"] == ((0,),) * 6
-    assert value(world, offset(ORIGIN, (2, 0, 0))) == (3,)
-
-
 def test_spatial_receiving_operation_price_contributes_to_the_next_local_cycle():
     costs = []
     for receive_price in (1, 9):
@@ -444,8 +422,12 @@ def test_spatial_receiving_operation_price_contributes_to_the_next_local_cycle()
         ]
         events = []
         world = Simulation(parse_initial_state(raw), observer=events.append)
+        neighbor = offset(ORIGIN, (1, 0, 0))
         world.step()
+        assert world.spatial_values(neighbor)["radiation"]["directions"] == ((3,), *((0,),) * 5)
         world.step()
+        assert value(world, neighbor) == (0,)
+        assert world.spatial_values(neighbor)["radiation"]["directions"] == ((0,),) * 6
         assert value(world, offset(ORIGIN, (2, 0, 0))) == (3,)
         costs.append(
             next(

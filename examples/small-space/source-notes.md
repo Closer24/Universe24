@@ -1,5 +1,8 @@
 # Stationary source and delivered response probes
 
+This historical source convention is retained for the charged-pair example.
+The original inputs are in the [retired package](README.md).
+
 These two schema 1 configurations use the existing generic field engine. They
 are candidates for a small-space audit, not established physical field models.
 The contracts are [spatial fields](../../docs/SPATIAL_FIELDS.md) and

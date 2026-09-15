@@ -125,13 +125,6 @@ def test_causal_charge_example_selects_its_field_contract_without_unrelated_worl
     assert not typed
 
 
-@pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
-def test_standalone_lab_changes_select_its_contract_suite(name):
-    tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})
-    assert "tests/test_generic_vector_lab.py" in tests
-    assert not typed
-
-
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
     sources = {
         "src/domain/math.py": "def calculate(): pass",
@@ -367,7 +360,6 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
     tests, _ = CHECK.select(["examples/known-entities/catalog.json"], {})
     assert "tests/test_quantum_entities.py" in tests
     assert "tests/test_native_quantum_channels.py" in tests
-    assert "tests/test_small_space_experiments.py" in tests
     assert "tests/test_entity_catalog.py" in tests
     assert "tests/test_entity_compiler.py" in tests
     assert "tests/test_physical_entities.py" in tests
@@ -376,7 +368,6 @@ def test_quantum_profile_and_experiment_resources_select_consumers():
         "tests/test_entity_compiler.py",
         "tests/test_quantum_entities.py",
         "tests/test_native_quantum_channels.py",
-        "tests/test_small_space_experiments.py",
     } <= set(tests)
     tests, _ = CHECK.select(["examples/quantum/partial_dephasing.json"], {})
     assert "tests/test_native_quantum_channels.py" in tests

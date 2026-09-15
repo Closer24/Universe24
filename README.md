@@ -149,8 +149,7 @@ limits of classical support, see [PHYSICAL_ENTITIES.md](docs/PHYSICAL_ENTITIES.m
 and [the entity catalog](examples/known-entities/catalog.json). Compile selected
 experiments using [the catalog and explicit profile guide](docs/ENTITY_CATALOG.md); generic
 two-record conversion is described in [local conversions](docs/LOCAL_CONVERSIONS.md).
-Compare selected behavior using the [small-space physics suite](examples/small-space/README.md),
-or probe the outward field from outside the event space with the
+Probe the outward field from outside the event space with the
 [inverse-square experiment](examples/inverse-square/README.md).
 The [local Maxwell experiment](examples/maxwell/README.md) tests a configured
 reflection/streaming vacuum limit and records its Gauss and integer-lifetime gaps.
@@ -390,12 +389,13 @@ world.add_particle(1, 18, 6, 6, px=-6, mass=2)
 `BalancedSimulation` and `CausalStreamSimulation` likewise select explicit
 research laws. See [migration](docs/MIGRATION.md) and their candidate contracts.
 
-## Standalone generic vector lab
+## Retired experiments
 
-The opt-in [vector lab](tools/generic_vector_lab/README.md) contains externally
-configured N-to-M node reactions, bounded rational vector arithmetic and exact
-conservation tests. It is an independent experiment, not the active simulator.
-Run `python -m tools.generic_vector_lab.run_demo` from this repository.
+The standalone [vector lab](tools/generic_vector_lab/README.md) and
+[small-space harness](examples/small-space/README.md) have been removed.
+Their guides link to the exact historical source for reproduction.
+Current engine and input-authoring coverage is described in
+[test expectations](docs/TEST_EXPECTATIONS.md#test-and-experiment-cleanup).
 
 ## License and citation
 

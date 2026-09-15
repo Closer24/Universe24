@@ -1,5 +1,28 @@
 # Test inputs and expected results
 
+## Test and experiment cleanup
+
+The active suite keeps integer bounds, six-Port locality, causal delay, inventory
+and momentum accounting, rejected configurations and current physical regression
+regimes. Redundant worlds are consolidated by exact input and shared tick prefix;
+assertions remain at their original observation points. No production law, input
+validation, default Focus setting or test-discovery filter is changed.
+
+| Removed execution | Retained evidence or explicit retirement |
+| --- | --- |
+| Two duplicate one-tick zero-state exchange worlds | `test_zero_state_exchange_preserves_read_only_views_and_detached_snapshots` checks both signed results, total inventory, immutable nested views, old-view stability and detached snapshots in one world |
+| Separate one-tick moving-source/self-field world | The existing moving-source cases check the same first-arrival payload and direction, now for both one- and two-tick Links |
+| Separate two-tick directional-sample world | The existing receive-price worlds check arrival samples, clearing after departure and the next position for both prices 1 and 9 |
+| 184 individual compilations comparing 46 profiles, two representations and old/new catalog formats | Obsolete legacy-output equality is no longer a gate. Whole-library preflight still checks all 46 classical and 46 quantum profiles; current schema boundaries, representative causal execution, metadata independence and CLI integration remain |
+| A second whole-library profile validation | Exact 46/46/46 counts now share the existing no-world/no-filesystem/immutability test; all malformed and unselected-profile cases remain |
+| Standalone vector lab, its input generator, nested 52-case suite and three selector cases | Retired independent prototype; active Node rules, integer arithmetic, local conversions, conservation and generic initialization keep their own tests. Its [historical guide](../tools/generic_vector_lab/README.md) links to the exact source |
+| 24-case small-space harness and three experiment acceptance cases | Retired configuration-specific research, including its restricted zero-total collision law. Shared finite-field/source bounds, spatial coupling, atomic collision and catalog compiler tests remain. This is not a claim of equivalent coverage for the retired candidate; [historical evidence](../examples/small-space/README.md) stays reproducible |
+
+Signed, low-rate, saturated, overflow, boundary, delayed and quantum ticket regimes
+remain distinct. The current Bell/CHSH, manuscript inputs, redshift experiments
+and engine implementations are retained. Removing research acceptance tests does
+not turn their unresolved physical results into established laws.
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the
@@ -448,16 +471,6 @@ divergence on initially empty neighboring nodes. The tests validate these
 mechanisms; the [experiment](../examples/maxwell/README.md) records physical
 agreement and failures separately. Frequency forecasts and the Gauss
 counterexample are specified in its independent derivation before engine runs.
-
-## Small-space physical comparisons
-
-See [the experiment evidence](../examples/small-space/README.md).
-`tests/test_small_space_experiments.py` checks finite reservoir depletion with
-zero injection, delayed-by-one-link source response and opposite vector stock,
-and a restricted unequal-mass momentum permutation. It also rejects a nonzero
-total-momentum pair and checks classical units using actual displacement.
-The experiment report separately exposes missing physical laws; an accounting
-pass must not be relabeled as physical acceptance.
 
 ## Physical entity catalog and elementary probes
 
@@ -991,19 +1004,6 @@ conversion/rotation, weighted inventory, rejection before commit, invalid schema
 pair totals larger than individual registers, and renamed fields in a larger
 world. These are classical-candidate and generic-contract checks, not proof of
 an emergent gravitational or universal energy law.
-
-## Standalone generic vector lab
-
-[The lab contract suite](../tools/generic_vector_lab/test_lab.py) checks exact
-rational vectors, energy/momentum/charge accounting, reaction rollback, binding,
-recoil and local quantum examples. [Node-rule tests](../tools/generic_vector_lab/test_node_rules.py)
-check six-way A/A/B/B/C/C composition, forbidden mixtures, configurable limits
-including a 17-input case, deterministic matching and property predicates.
-The six-node example has E=3, p=(0,0,0), q=0 before and after its configured
-cyclic vector map. These are mechanism checks, not real-particle validation.
-[The repository adapter](../tests/test_generic_vector_lab.py) runs all 52 lab
-cases; the check selector maps every lab source/configuration change to it.
-
 
 ## Selected deferred quantum event network
 

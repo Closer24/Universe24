@@ -132,7 +132,7 @@ updates remain elementary copy/clear operations. Limits remain 16 fields and
 `tests/test_entity_catalog.py` checks reference coverage, sourced physical
 properties and invalid metadata. `tests/test_entity_compiler.py` checks explicit
 profile selection, legacy compatibility, rejection cases and active representative
-worlds. Quantum and small-space consumers use the same separated profiles.
+worlds. Quantum consumers use the same separated profiles.
 Changing reference metadata must not change compiled laws or resulting physics.
 
 The separate [bounded local conversion](LOCAL_CONVERSIONS.md) interface supports

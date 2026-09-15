@@ -1,5 +1,9 @@
 # Project status and restart guide
 
+The standalone vector lab and small-space harness are retired. Their guides
+below preserve historical provenance; their scripts and tests are no longer
+part of the checkout. See [cleanup coverage](TEST_EXPECTATIONS.md#test-and-experiment-cleanup).
+
 The [local Focus option](LOCAL_FOCUS.md) skips certified empty carrier Nodes,
 with the ordinary scheduler retained for event resolvers and shared field clocks.
 The integrated ray policies now validate retained rays and incoming claims,
@@ -156,7 +160,7 @@ give two transverse modes with leading speed one half link per tick. Centered
 Gauss conservation, exact macro electromagnetic energy and indefinite integer
 mixing remain explicit blockers; this is not a complete electromagnetic law.
 
-The [small-space comparisons](../examples/small-space/README.md) record 24
+The retired [small-space comparisons](../examples/small-space/README.md) record 24
 9-cubed/15-cubed entity, source and response experiments. Local accounting and
 selected mechanisms pass; field/particle physical laws remain incomplete.
 Finite owned-reservoir transfer, a ray-speed parameter and a restricted
@@ -314,7 +318,7 @@ records are temporary, while their recorded conclusions remain in the repository
 | Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
 | Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
 | Formula-free state diagnostic | [node_contract.py](../src/event_universe/diagnostics/node_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |
-| Standalone vector laboratory | [laboratory guide](../tools/generic_vector_lab/README.md) | Separate research/reference process, not the active generic Simulation |
+| Retired vector laboratory | [historical guide](../tools/generic_vector_lab/README.md) | Removed prototype; immutable source remains in Git history |
 | Historical particle APIs | [particle_api.py](../src/event_universe/particle_api.py) | Explicit `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`, `CausalStreamSimulation` |
 | Application and output | [runner.py](../src/event_universe/runner.py), [ui.py](../src/event_universe/ui.py) | Headless runs by default; optional read-only recording and workspace playback |
 
@@ -392,15 +396,15 @@ acceptance. Maxwell dynamics, gravity, general physical creation/annihilation,
 relativity and universal energy conservation are not established merely by these
 interfaces or by successful software tests.
 
-The [small-space comparisons](../examples/small-space/README.md), integrated through
+The retired [small-space comparisons](../examples/small-space/README.md), integrated through
 PR #40, record 24 experiments in 9-cubed/15-cubed worlds. Finite reservoir transfer,
 a ray-speed parameter and a restricted zero-total-momentum unequal-mass candidate
 are explicit configuration solutions, not changed entity defaults or derived
 universal laws. Their limitations and revision-specific results remain in the
 experiment README.
 
-The audit reference now includes the standalone vector laboratory, shared bounded
-arithmetic, the local E/B pulse and formula-free node-state guard, and the
+The historical audit reference included the retired standalone vector laboratory.
+The active audit retains shared bounded arithmetic, the local E/B pulse and formula-free node-state guard, and the
 Highlights/recovery documentation. Their appearance in the checkout does not
 promote reference experiments into the active physical engine. The
 [Highlights coverage record](HIGHLIGHTS_IMPLEMENTATION.md) preserves its stated

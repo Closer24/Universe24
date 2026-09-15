@@ -20,11 +20,6 @@ def documents():
     )
 
 
-def test_all_profiles_validate_independently_without_world_capacity_failure(documents):
-    catalog, profiles = documents
-    assert validate_profiles(catalog, profiles) == {"profiles": 46, "classical": 46, "quantum": 46}
-
-
 @pytest.mark.parametrize("representation", ["classical", "quantum"])
 def test_invalid_unselected_profile_is_caught_with_context(documents, representation):
     catalog, profiles = documents
@@ -69,7 +64,7 @@ def test_validation_preserves_inputs_and_never_constructs_simulation_or_reads_fi
     monkeypatch.setattr(Simulation, "step", forbidden)
     for method in ("read_text", "read_bytes", "write_text", "write_bytes", "open"):
         monkeypatch.setattr(Path, method, forbidden)
-    assert validate_profiles(catalog, profiles)["profiles"] == 46
+    assert validate_profiles(catalog, profiles) == {"profiles": 46, "classical": 46, "quantum": 46}
     assert documents == before
 
 

@@ -139,19 +139,6 @@ def test_shared_field_conflicts_and_duplicate_spatial_ownership_are_rejected():
 
 
 @pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_external_profiles_preserve_all_46_legacy_compiled_outputs(representation):
-    data = physical_catalog()
-    experiments = profiles()
-    legacy = catalog()
-    assert len(experiments["profiles"]) == 46
-    for row in experiments["profiles"]:
-        identity = row["entity_id"]
-        assert compile_entities(
-            data, [identity], profiles=experiments, representation=representation
-        ) == (compile_entities(legacy, [identity], representation=representation))
-
-
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
 def test_v2_metadata_and_profile_order_cannot_select_or_modify_a_law(representation):
     data = physical_catalog()
     experiments = profiles()
