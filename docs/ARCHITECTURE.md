@@ -886,3 +886,17 @@ and pace tables prepared before any tick; no lazy pace cache grows across runs.
 New retained-ray and claim owners pass the same trusted pre-commit/receipt
 validation boundary as outgoing payloads. The global bond reference is excluded
 from ordinary initialization and planner composition.
+
+### Fresh accounting and payload representation
+
+`DisturbanceEngine.accounting_snapshot()` reads spatial inventory once, builds
+the spatial-only report, then adds actual carrier and transit owners to private
+work arrays for the combined report. It caches nothing between calls or ticks,
+including after partial failure. The runner retains all per-tick balance checks.
+With Focus active, occupied and pending carrier Nodes cannot sleep, so empty
+historical Nodes can be omitted from carrier inventory sums.
+
+Scalar and three-component `pack`/`unpack` paths avoid Python generator objects
+but call the same checked integer codec for every component in the same order.
+Wider configured layouts keep the generic path. No LocalRule, model cost,
+NodeState, packet, transit time or event ordering is changed by these shortcuts.

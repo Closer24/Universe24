@@ -3,6 +3,17 @@
 All notable changes to Universe24, the reference implementation of Reality
 Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
+## Unreleased
+
+- Enable local carrier Focus by default, with explicit opt-out and unchanged
+  automatic fallback for event resolvers and shared field computation clocks.
+- Reuse one fresh spatial inventory scan for each runner accounting check, and
+  skip certified empty carrier history in focused quantity measurements.
+- Avoid generator allocations for scalar and three-component payload codecs
+  while retaining every component bound check, order and integer result.
+- Add paired, reproducible runtime benchmarks with unchanged event traces,
+  physical reports and sampled HTML frames. See [performance](docs/PERFORMANCE.md).
+
 ## 0.3.1 - 2026-09-15
 
 Concept DOI 10.5281/zenodo.22738746 (the version DOI is listed on the Zenodo

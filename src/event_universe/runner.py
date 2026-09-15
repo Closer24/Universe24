@@ -132,7 +132,8 @@ def _execute_run(
             try:
                 for _ in range(count):
                     world.step()
-                    totals, sources = world.totals(), world.source_totals()
+                    totals, field_accounting = world.accounting_snapshot()
+                    sources = world.source_totals()
                     losses = world.dissipation_totals()
                     escaped = world.escaped_totals()
                     equal = all(
@@ -152,7 +153,7 @@ def _execute_run(
                         )
                         == tuple(a + b for a, b in zip(values, sources[name], strict=True))
                         for name, values in initial_totals.items()
-                    ) and all(item["balanced"] for item in world.spatial_accounting().values())
+                    ) and all(item["balanced"] for item in field_accounting.values())
                     accounting = accounting and balanced
                     if not balanced:
                         raise ValueError(

@@ -59,10 +59,20 @@ def decode(code: int) -> int:
 
 
 def pack(values: tuple[int, ...]) -> Payload:
+    # Avoid generator allocation for the two common fixed layouts. Every
+    # component still uses the same checked codec, in the same order.
+    if len(values) == 1:
+        return (encode(values[0]),)
+    if len(values) == 3:
+        return (encode(values[0]), encode(values[1]), encode(values[2]))
     return tuple(encode(v) for v in values)
 
 
 def unpack(values: Payload) -> tuple[int, ...]:
+    if len(values) == 1:
+        return (decode(values[0]),)
+    if len(values) == 3:
+        return (decode(values[0]), decode(values[1]), decode(values[2]))
     return tuple(decode(v) for v in values)
 
 
@@ -279,7 +289,7 @@ class InitialState:
     ray_delay: bool = False
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
-    focus: bool = False
+    focus: bool = True
 
     def __post_init__(self) -> None:
         if self.node_execution and self.spatial_computation_delay:

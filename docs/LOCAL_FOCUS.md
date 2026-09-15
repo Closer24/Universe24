@@ -1,7 +1,9 @@
 # Local Focus scheduling
 
-Set `"focus": true` in ordinary initialization JSON to skip certified empty
-carrier Nodes. The default is `false`; only actual booleans are accepted.
+Local Focus skips certified empty carrier Nodes by default. Omitted `focus`
+means `true` in JSON and in the typed initialization interface. Set
+`"focus": false` explicitly for the reference scheduler; only actual booleans
+are accepted. Unsupported compositions still fall back automatically.
 This host optimization is separate from `quantum/focus.py`, the existing
 Q-ORACLE option, physical LocalRules and configured interaction durations.
 

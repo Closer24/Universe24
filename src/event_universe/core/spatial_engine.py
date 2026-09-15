@@ -483,7 +483,10 @@ class SpatialEngine:
 
     def accounting(self) -> dict[str, dict[str, object]]:
         """Diagnose every spatial owner, including fields without a conservation flag."""
-        totals = self.totals()
+        return self.accounting_from_totals(self.totals())
+
+    def accounting_from_totals(self, totals: list[list[int]]) -> dict[str, dict[str, object]]:
+        """Build a read-only report from the caller's freshly measured spatial stock."""
         result = {}
         for definition in self.initial.spatial_fields:
             index = definition.field

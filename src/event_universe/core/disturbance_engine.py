@@ -577,7 +577,13 @@ class DisturbanceEngine:
             if self._spatial is None
             else self._spatial.totals()
         )
-        records = [r for node in self._nodes.values() for r in node.records if r is not None]
+        return self._record_totals(values)
+
+    def _record_totals(self, values: list[list[int]]) -> dict[str, tuple[int, ...]]:
+        # Focus never sleeps an occupied record or a pending cycle. The
+        # retained empty history therefore contributes nothing to this audit.
+        positions = self._awake_carriers if self._focus_enabled else self._nodes
+        records = [r for position in positions for r in self._nodes[position].records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
         for record in records:
             for i, components in enumerate(record.values):
@@ -592,6 +598,24 @@ class DisturbanceEngine:
             for i, field in enumerate(self.initial.fields)
             if field.conserved
         }
+
+    @_consistent_read
+    def accounting_snapshot(
+        self,
+    ) -> tuple[dict[str, tuple[int, ...]], dict[str, dict[str, object]]]:
+        """Read combined and spatial quantities from one fresh ownership scan.
+
+        Nothing is cached across calls, ticks or partial failures. Capture the
+        spatial-only report before adding carriers to the private work arrays.
+        """
+        spatial = self._spatial
+        values = (
+            [[0] * field.components for field in self.initial.fields]
+            if spatial is None
+            else spatial.totals()
+        )
+        fields = {} if spatial is None else spatial.accounting_from_totals(values)
+        return self._record_totals(values), fields
 
     @_consistent_read
     def source_totals(self) -> dict[str, tuple[int, ...]]:

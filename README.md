@@ -180,6 +180,10 @@ Both active and historical runners require a new or empty output directory.
 Generated output expires 24 hours after writing finishes; active writers remain
 protected. Original initialization files and templates are preserved. See
 [output retention](docs/RETENTION.md) for ownership and interrupted runs.
+Local carrier Focus is enabled by default. Set `"focus": false` in the
+initialization JSON for the reference scheduler. Event resolvers and shared
+field computation clocks automatically retain that scheduler; inspect
+`focus_enabled` and `focus_fallback` in `run.json`. See [Local Focus](docs/LOCAL_FOCUS.md).
 For CPU-parallel active-Node planning, pass `--node-workers N` with `N` from 2
 through 64. Each tick commits the isolated worker proposals in deterministic Node
 order. The default is one worker, and native event programs remain serial. The

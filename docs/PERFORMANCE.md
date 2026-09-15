@@ -1,5 +1,77 @@
 # Run performance
 
+## Current generic runner - 2026-09-15
+
+Measured on one Linux x86-64 host using Python 3.14.7, the same installed
+dependencies, one Node worker, and the existing recorded HTML generator.
+Five measured pairs followed one excluded warmup pair for each input, alternating
+which checkout ran first. Other project checks were paused during timing.
+Each sample used a fresh interpreter process. Timing starts after imports and
+includes input preparation, world construction, every physical tick, all balance
+checks, JSON event writing, recorded snapshots, final serialization and HTML
+export. Post-run equivalence hashing is excluded. `run.json`'s narrower
+`elapsed_seconds` and isolated step/export timings are also retained by the tool.
+
+Baseline commit: `4796cb256cbdbd830aa29cc3038fea98087de58b`.
+Baseline source fingerprint: `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`.
+Candidate source fingerprint: `ed0297a5b0673627d46fbdd081305fa628db0296c1142cd0c6a67ad3c35cfc73`.
+
+| Input | Ticks | Frame stride | Before, seconds | After, seconds | Time saved | Speedup |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Sparse moving carrier | 800 | 20 | 1.356004 | 0.570196 | 57.95% | 2.378x |
+| Outward spatial field | 20 | 2 | 3.270860 | 2.445681 | 25.23% | 1.337x |
+| Finite attenuating field | 40 | 4 | 0.195805 | 0.154935 | 20.87% | 1.264x |
+| Straight-ray field | 24 | 2 | 1.765977 | 1.399698 | 20.74% | 1.262x |
+| Shared field/carrier clock | 20 | 2 | 0.221196 | 0.182315 | 17.58% | 1.213x |
+| Recurrent quantum contact | 48 | 4 | 0.135798 | 0.132693 | 2.29% | 1.023x |
+
+Values are medians, not a cross-platform guarantee. The quantum case's
+2.29% median difference is small and the measured ranges overlap (baseline
+0.129726-0.140305 s, candidate 0.123030-0.134033 s); it does not demonstrate a
+stable quantum speedup. The other five sampled ranges do not overlap, but the
+measurements still do not establish a universal speedup for every input.
+
+All 72 runs completed with unchanged input, final-state, event-trace, physical
+metadata and sampled-frame hashes within each case. Frame counts, resolution,
+model operations and every physical tick were preserved. Ordinary per-tick
+quantity checks remained enabled. This is exact output agreement for these
+experiments, not a complete proof over all configurations.
+
+The sparse case's carrier phase visits fell from 962,000 to 2,400; its full
+run is not 400 times faster because transit scans, recording and other work
+remain. The shared-clock and quantum cases both correctly retained the ordinary
+scheduler. Focus is on by default where eligible, not forcibly enabled there.
+
+### Included changes
+
+- Default-on carrier Focus with explicit false opt-out and unchanged fallback.
+- One fresh spatial inventory traversal shared by each runner's combined and
+  spatial-only accounting checks, with no cache across mutations.
+- Focused carrier totals omit certified empty history.
+- Scalar/vector payload codecs avoid generator allocation while keeping all
+  integer checks and the original component evaluation order.
+
+This change does not introduce a delivery-time queue, change the parallel
+backend, reduce event logging, reduce physical resolution or change a LocalRule.
+Those require separately measured changes, not extrapolation from these results.
+
+### Reproduce
+
+Use the same project interpreter and dependencies for both worktrees:
+
+```bash
+git worktree add --detach ../Universe24-baseline 4796cb256cbdbd830aa29cc3038fea98087de58b
+python tools/benchmark_runtime.py --baseline ../Universe24-baseline --candidate . --output artifacts/runtime-comparison --repeats 5
+```
+
+The tool retains `benchmark.json`, raw `samples.json`, generated input snapshots
+and each run's HTML/events/state/timing files outside source commits. It verifies
+the actual imported source path and checks its fingerprint before and after
+each run. Do not compare changing source trees or run unrelated CPU-heavy jobs
+during a measurement. `--cases` selects a smaller experiment set.
+
+## Historical scalar/particle renderer
+
 These are historical scalar/particle renderer measurements. The optimization
 changes host diagnostics and export without changing that candidate's physical
 engine, scenario inputs, frame sampling or output resolution. It does not measure

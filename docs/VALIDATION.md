@@ -1,5 +1,35 @@
 # Validation evidence
 
+## Default Focus and measured host runtime - 2026-09-15
+
+Base: `4796cb256cbdbd830aa29cc3038fea98087de58b`. Runtime fingerprint:
+`ed0297a5b0673627d46fbdd081305fa628db0296c1142cd0c6a67ad3c35cfc73`.
+The changes enable default carrier Focus, share a fresh spatial accounting scan,
+omit certified empty carrier history from totals and specialize checked
+scalar/vector codecs. No LocalRule, physical tick, integer bound, event order,
+parallel backend or rendering sample policy changes.
+
+On Python 3.14.7, the five focused suites (`test_performance_contracts`,
+`test_local_focus`, `test_disturbance_engine`, `test_node_state_contract`,
+`test_architecture`) passed **163 tests**. Repository language, hygiene and
+navigation passed **28 tests** after the documentation changes. Ruff passed for
+all changed Python files. The affected strict type check passed **71 modules**.
+The affected gate selects 2,815 behavioral tests because shared payload and
+initialization interfaces changed; its final result and CI status must be read
+from the implementation PR, not inferred from these focused passes.
+
+[The paired runtime measurement](PERFORMANCE.md#current-generic-runner---2026-09-15)
+completed **72 recorded runs** over six inputs with exact input, final state,
+event trace, physical metadata and sampled-frame agreement. Five measured pairs
+per input followed an excluded warmup pair. Measured time reductions range from
+17.58% to 57.95% in the five classical/field cases. The recurrent quantum case's
+2.29% median change is within overlapping measured ranges; no stable quantum
+speedup is established. Both fallback profiles retain the original scheduler.
+
+The measurements use the existing HTML generator and retain its output; they
+are not evidence of an independent physical-law review or a universal runtime
+guarantee. No delivery queue, worker-pool change or compiled backend is included.
+
 ## Integrated ray ownership and local Focus - 2026-09-14
 
 Reviewed integration input: PR #116 at `b517590b4011f1e2ff9a53be7b61fe76b50f7b08`,

@@ -1,5 +1,26 @@
 # Test inputs and expected results
 
+## Default Focus and host runtime optimizations
+
+`test_local_focus.py` explicitly sets `focus=False` on the reference side, so
+changing the default cannot turn the comparison into two focused worlds. Both
+JSON and typed defaults are true; explicit false and unsupported-clock fallback
+remain tested. The existing every-tick state, inventory, event and cost checks
+remain intact.
+
+`test_performance_contracts.py` covers scalar, vector and wider payload layouts,
+invalid types/codes and both integer endpoints. Packing and unpacking retain
+component order and every bounds check. One fresh `accounting_snapshot()` must
+match the separately calculated public totals and spatial-only reports with
+exactly one spatial inventory traversal; later reads cannot mutate its result.
+Focused totals must not enumerate empty historical carrier Nodes.
+
+`tools/benchmark_runtime.py` compares immutable worktrees in fresh processes,
+including the existing HTML generator. It checks exact trace/final-state hashes,
+physical metadata and sampled frames, with a warmup and alternating paired runs.
+Timing is evidence on the measured host, not a CI threshold or proof about every
+world; sparse, outward, finite, ray, shared-clock and quantum inputs are distinct.
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the
