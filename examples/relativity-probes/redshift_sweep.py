@@ -68,6 +68,29 @@ SWEEP = (
     ("single source, row 48", 48, EMISSION, BUDGET, BASELINE, 1600, None, True),
     ("single source, wave, phase per link", 48, EMISSION, BUDGET, BASELINE, 1600, "link", True),
     ("single source, no emission", 48, 0, BUDGET, BASELINE, 700, None, True),
+    # Convergence of the wave reading: finer phase steps, and a finer tick resolution of
+    # the gaps (a launch hop of 16, so the source's interval is 48 ticks).
+    (
+        "single source, wave, phase per link, 256 steps",
+        48,
+        EMISSION,
+        BUDGET,
+        BASELINE,
+        1600,
+        "link",
+        True,
+        256,
+    ),
+    (
+        "single source, wave, phase per link, launch at k = 16",
+        48,
+        EMISSION,
+        BUDGET,
+        15000,
+        3400,
+        "link",
+        True,
+    ),
 )
 QUICK = (
     ("row 16", 16, 32, BUDGET, BASELINE, 400),
@@ -94,6 +117,7 @@ def document(
     ticks: int,
     wave: str | None = None,
     single: bool = False,
+    phase_steps: int = PHASE_STEPS,
 ) -> dict:
     """The closed row; with `wave` the light is a Kerengonen field whose rays carry a phase.
 
@@ -195,7 +219,7 @@ def document(
                 # Claims let every ray carry its lamp's train label, so rays never merge.
                 "claim": {"ticks": 4 * ticks, "slots": 4},
                 **(
-                    {"kerengonen": {"phase_steps": PHASE_STEPS, "phase_advance": 1, "capture": "share"}}
+                    {"kerengonen": {"phase_steps": phase_steps, "phase_advance": 1, "capture": "share"}}
                     if wave
                     else {}
                 ),
@@ -244,7 +268,8 @@ def document(
             {
                 **rule,
                 "type": f"lamp_{i}",
-                **({"kerengonen_phase": (i * WAVE_STEP) % PHASE_STEPS} if wave else {}),
+                # The lamps launch a quarter turn apart whatever the step count.
+                **({"kerengonen_phase": (i * (phase_steps // 4)) % phase_steps} if wave else {}),
                 # A single source emits its i-th ray when its own clock reads i hops.
                 **(
                     {
@@ -318,7 +343,7 @@ def hop_time_at(schedule: list[tuple[int, int]], tick: int) -> int | None:
     return current
 
 
-def frequency_at(seen: dict, x: int) -> float | None:
+def frequency_at(seen: dict, x: int, phase_steps: int = PHASE_STEPS) -> float | None:
     """Phase steps per tick of the passing train at Node x: the wave's frequency there."""
     rows = sorted(
         (seen["first_seen"][(train, x)], seen["phases"][(train, x)])
@@ -331,9 +356,21 @@ def frequency_at(seen: dict, x: int) -> float | None:
     for (t0, p0), (t1, p1) in zip(rows, rows[1:], strict=False):
         if t1 == t0:
             continue  # two rays resident together: no interval to read a rate over
-        step = (p1 - p0 + PHASE_STEPS // 2) % PHASE_STEPS - PHASE_STEPS // 2
+        step = (p1 - p0 + phase_steps // 2) % phase_steps - phase_steps // 2
         rates.append(step / (t1 - t0))
     return sum(rates) / len(rates) if rates else None
+
+
+def mean_gap_at(seen: dict, x: int) -> float | None:
+    """The mean interval between consecutive rays passing Node x, in ticks."""
+    ticks = sorted(
+        seen["first_seen"][(train, x)]
+        for train in range(1, TRAIN + 1)
+        if (train, x) in seen["first_seen"]
+    )
+    if len(ticks) < 2:
+        return None
+    return (ticks[-1] - ticks[0]) / (len(ticks) - 1)
 
 
 def measure(
@@ -345,8 +382,9 @@ def measure(
     ticks: int,
     wave: str | None = None,
     single: bool = False,
+    phase_steps: int = PHASE_STEPS,
 ) -> dict:
-    raw = document(length, emission, budget, baseline, ticks, wave, single)
+    raw = document(length, emission, budget, baseline, ticks, wave, single, phase_steps)
     seen = observe(raw)
     # Every ray's hop schedule, (tick the hop began, its duration): the load is uniform, so
     # any ray's hop measures the hop time k in force at that tick.
@@ -406,11 +444,21 @@ def measure(
         # The wave's frequency one link past the lamps and at the eye, and the ratio the
         # law predicts: the whole frequency redshifts when the phase advances per link,
         # only its excess over the advance rate when it advances per interval as well.
-        source = frequency_at(seen, TRAIN)
-        eye = frequency_at(seen, length - 1)
+        # The frequency is read one link past the lamps (past the last lamp of the train,
+        # past the single source's Node) and at the eye, and the law is applied over that
+        # same span: the gap ratio between those two Nodes, not the run's z, is what the
+        # wave's frequency ratio is compared with.
+        source_x = 1 if single else TRAIN
+        source = frequency_at(seen, source_x, phase_steps)
+        eye = frequency_at(seen, length - 1, phase_steps)
+        gap_source, gap_eye = mean_gap_at(seen, source_x), mean_gap_at(seen, length - 1)
+        span_stretch = gap_eye / gap_source if gap_source and gap_eye else None
         result.update(
             {
                 "wave": wave,
+                "phase_steps": phase_steps,
+                "frequency_read_at_links": [source_x, length - 1],
+                "gap_ratio_over_the_frequency_span": round(span_stretch, 4) if span_stretch else None,
                 "frequency_at_the_source": round(source, 4) if source is not None else None,
                 "frequency_at_the_eye": round(eye, 4) if eye is not None else None,
                 "frequency_ratio": round(eye / source, 4) if source and eye is not None else None,
@@ -447,11 +495,19 @@ def measure(
                 "alpha_measured": round(math.log(1 + z) / distance, 6) if z > 0 else None,
             }
         )
-        if wave and result.get("frequency_at_the_source"):
+        if wave and result.get("frequency_at_the_source") and span_stretch:
+            # Phase per link: the phase difference between rays is conserved along the path
+            # (every ray crosses the same links), so the frequency ratio is the inverse of
+            # the gap ratio over the span by construction; the measurement checks the phase
+            # bookkeeping and its wrap, not an independent stretch. Phase per interval: the
+            # advance rate a is added per tick, so only the excess over a follows the gaps.
             advance = 1
             source = result["frequency_at_the_source"]
             result["frequency_ratio_predicted"] = round(
-                1 / (1 + z) if wave == "link" else (advance + (source - advance) / (1 + z)) / source, 4
+                1 / span_stretch
+                if wave == "link"
+                else (advance + (source - advance) / span_stretch) / source,
+                4,
             )
     return result
 

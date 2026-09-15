@@ -147,6 +147,48 @@ def fit_with_covariance(shape, sample, covariance) -> dict:
     return {"offset": round(offset, 4), "chi2": round(float(r @ inverse @ r), 2)}
 
 
+def inverse_covariance(sample, covariance):
+    """The inverse of the full covariance, with the diagonal error where the matrix has none."""
+    import numpy as np
+
+    c = np.array(covariance)
+    for i, s in enumerate(sample):
+        c[i, i] = s[2] ** 2 if c[i, i] == 0 else c[i, i]
+    return np.linalg.inv(c)
+
+
+def chi2_with_inverse(shape, sample, inverse) -> float:
+    """One free offset against a precomputed inverse covariance."""
+    import numpy as np
+
+    m = np.array([s[1] for s in sample])
+    model = np.array([5 * math.log10(shape(s[0])) for s in sample])
+    ones = np.ones(len(sample))
+    offset = float(ones @ inverse @ (m - model) / (ones @ inverse @ ones))
+    r = model + offset - m
+    return float(r @ inverse @ r)
+
+
+def exponent_scan(reading: str, sample, chi2_of, exponents) -> dict:
+    """chi-square against the exponent n of k ~ t^n for one reading, with the best n and
+    the interval in which chi-square lies within one of its minimum (one parameter)."""
+    grid = [(n, chi2_of(shape(n, reading), sample)) for n in exponents]
+    n_best, chi2_best = min(grid, key=lambda row: row[1])
+    within = [n for n, c in grid if c <= chi2_best + 1]
+    return {
+        "best_n": round(n_best, 2),
+        "chi2": round(chi2_best, 2),
+        "n_interval_delta_chi2_1": [round(min(within), 2), round(max(within), 2)],
+        "chi2_by_n": {str(round(n, 2)): round(c, 1) for n, c in grid},
+    }
+
+
+def limit_shape(reading: str):
+    """The n -> infinity limit of the power-law family: D proportional to z."""
+    power = 0.5 if reading == "A" else 1.0
+    return lambda z: z * (1 + z) ** power
+
+
 def fit(shape, sample: list[tuple[float, float, float]]) -> dict:
     """One free offset (absolute magnitude and scale together), weighted least squares."""
     model = [5 * math.log10(shape(z)) for z, _, _ in sample]
@@ -210,39 +252,51 @@ def main() -> None:
             row["full_covariance"]["delta_chi2_against_LambdaCDM"] = round(
                 row["full_covariance"]["chi2"] - full_reference, 2
             )
-    # The exponent of the load's growth as a free parameter, each reading: the best n.
+    # The exponent of the load's growth as a free parameter, each reading: the best n on
+    # a grid from 1 to 20 in steps of 0.05, with the diagonal errors and, when given, with
+    # the full covariance (its own best n, not the diagonal one re-evaluated), and the
+    # n -> infinity limit of the family, so that a failure at every exponent is shown to
+    # hold beyond the grid.
     best = {}
+    exponents = [round(1 + i * 0.05, 2) for i in range(0, 381)]
+    inverse = inverse_covariance(sample, covariance) if covariance is not None else None
     for reading in ("A", "B"):
-        grid = [
-            (round(1 + i * 0.05, 2), fit(shape(1 + i * 0.05, reading), sample)["chi2"])
-            for i in range(0, 81)
-        ]
-        n, chi2 = min(grid, key=lambda row: row[1])
-        full_best = (
-            fit_with_covariance(shape(n, reading), sample, covariance)
-            if covariance is not None
-            else None
-        )
-        best[f"reading {reading}"] = {
-            **(
-                {
-                    "full_covariance_chi2": full_best["chi2"],
-                    "full_covariance_delta_chi2_against_LambdaCDM": round(
-                        full_best["chi2"] - full_reference, 2
-                    ),
-                }
-                if full_best
-                else {}
-            ),
+        diagonal = exponent_scan(reading, sample, lambda shp, smp: fit(shp, smp)["chi2"], exponents)
+        n = diagonal["best_n"]
+        row = {
+            "diagonal": {
+                **diagonal,
+                "delta_chi2_against_LambdaCDM": round(diagonal["chi2"] - reference, 2),
+                "limit_n_to_infinity_chi2": round(fit(limit_shape(reading), sample)["chi2"], 2),
+                "chi2_by_n": {k: v for k, v in diagonal["chi2_by_n"].items() if float(k) % 1 == 0},
+            },
+            # For the manuscript's table, at the diagonal best n:
             "best_n": n,
-            "chi2": round(chi2, 2),
-            "delta_chi2_against_LambdaCDM": round(chi2 - reference, 2),
+            "chi2": diagonal["chi2"],
+            "delta_chi2_against_LambdaCDM": round(diagonal["chi2"] - reference, 2),
             # The deceleration parameter of the luminosity-distance shape itself, which in
             # reading A differs from the scale factor's -(n - 1) / n.
             "deceleration_q0": round(deceleration_numeric(shape(n, reading)), 3),
             "scale_factor_q0": round(-(n - 1) / n, 3),
-            "chi2_by_n": {str(k): round(v, 1) for k, v in grid[::10]},
         }
+        if inverse is not None:
+            full = exponent_scan(
+                reading, sample, lambda shp, smp: chi2_with_inverse(shp, smp, inverse), exponents
+            )
+            row["full_covariance"] = {
+                **full,
+                "delta_chi2_against_LambdaCDM": round(full["chi2"] - full_reference, 2),
+                "limit_n_to_infinity_chi2": round(
+                    chi2_with_inverse(limit_shape(reading), sample, inverse), 2
+                ),
+                "deceleration_q0": round(deceleration_numeric(shape(full["best_n"], reading)), 3),
+                "chi2_by_n": {k: v for k, v in full["chi2_by_n"].items() if float(k) % 1 == 0},
+            }
+            row["full_covariance_chi2"] = full["chi2"]
+            row["full_covariance_delta_chi2_against_LambdaCDM"] = row["full_covariance"][
+                "delta_chi2_against_LambdaCDM"
+            ]
+        best[f"reading {reading}"] = row
     alpha = None
     if args.sweep:
         runs = json.loads(args.sweep.read_text(encoding="utf-8"))["runs"]
@@ -258,7 +312,7 @@ def main() -> None:
         "tests": {
             "time_dilation": "durations stretch by 1 + z with the spacing (sweep: duration ratio equals 1 + z); consistent with supernova light-curve dilation",
             "tolman_surface_brightness_exponent": {"reading A": 1, "reading B": 2, "expansion": 4},
-            "cmb_temperature_scaling": "not applicable: the model has no blackbody spectrum",
+            "cmb_temperature_scaling": "no prediction yet: the model has no blackbody spectrum, so it does not meet this test",
         },
     }
     (args.output / "hubble.json").write_text(json.dumps(report, indent=2) + "\n")
