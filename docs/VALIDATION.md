@@ -2639,3 +2639,26 @@ to the public Pantheon+ Hubble-flow sample.
 | Affected gate against `origin/main` | 167 passed, 2 visual-only skipped, in 66 seconds; ruff lint and format passed (no source file changed) |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
+
+## Redshift: one source, the full covariance and the shape's q0 - 2026-09-15
+
+Base: `6ac2eff` on `claude/hopeful-bardeen-qgwlo6` (after PR #125). No engine change.
+Three additions to the redshift probes after a review of the second
+manuscript: a single-source mode of `redshift_sweep.py` (twelve lamps on one
+Node, each emitting once at a fixed interval of that Node's clock, all rays
+crossing the same distance), the full statistical-plus-systematic covariance
+of the Pantheon+ release in `redshift_hubble.py` (`--covariance`), and the
+deceleration parameter reported for the luminosity-distance shape rather
+than for the scale factor.
+
+| Check | Result |
+| --- | --- |
+| Single source, row 48, emission 16, budget 1000, baseline 7000, 1600 ticks | one Node emits every 24 ticks of its own clock (three launch hops at k_e = 8); D = 47; gaps at the eye 48, 50, 49, 47, 52, 49, 51, 50, 48, 50, 52 against 24 at the source; z = 1.0682, duration ratio 2.0682, ray-by-ray k_o / k_e = 2.0321; alpha measured 0.0155, from the hop schedule 0.0160; eye clock = tick count; twelve quanta conserved; field linear in age |
+| Single source, wave, phase per link | frequency -0.5614 steps per tick at the source, -0.3227 at the eye, ratio 0.5747 against 1 / (1 + z) = 0.4835 |
+| Single source, no emission, 700 ticks | gaps of 24 and z = 0.000, the interval at the source read against the configured launch hop (a first fix read it against the measured first hop, 7, and gave z = 0.143) |
+| `redshift_hubble.py --covariance`, 1,580 objects | delta chi-square against flat LambdaCDM: linear load A / B +1891 / +106; quadratic load A / B +697 / +64; fitted power law n = 1.4 (B) +9.0; best reading A (n = 5) +252; LambdaCDM chi-square 1387.1 on 1,580 objects |
+| Deceleration parameter of the shape | 1 - d''(0) / d'(0) by finite differences: reading A n = 5 gives +0.203 where the scale factor's -(n - 1) / n is -0.8; the manuscript's table carried the scale-factor value and is corrected |
+| `tests/test_redshift_sweep.py` | seven tests, the single-source row added: on a 16-row at emission 32 the gaps are 36, 38, 36, 39, 37, 38, 37, 39, 34, 39, 37 against 24 at the source, z = 0.553, duration ratio 1.553, ray-by-ray k_o / k_e 1.5051, the two within 1.2 ticks per gap |
+| Full gate against `origin/main` | 3,211 passed, 32 skipped, 0 failed in 28 minutes (the changelog entry widened the selection to the whole suite); ruff lint and format passed; the package built |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.

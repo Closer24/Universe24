@@ -70,6 +70,17 @@ def figure_law(sweep: dict, output: Path) -> None:
                 color="black",
                 label=f"{label} (row 48)",
             )
+    single = next(
+        (r for r in runs if r["label"] == "single source, row 48" and r.get("z") is not None), None
+    )
+    if single:
+        ax.plot(
+            [single["distance"]],
+            [math.log(1 + single["z"])],
+            "D",
+            color="tab:red",
+            label="one source, twelve rays 24 ticks apart on its clock (row 48)",
+        )
     ax.set_xlabel("distance from the lamps to the eye, D (links)")
     ax.set_ylabel("ln(1 + z) on the eye's clock")
     ax.set_title("The stretch against the distance on closed rows")
