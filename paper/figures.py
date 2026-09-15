@@ -59,7 +59,7 @@ def figure_bell(bell: dict, sweep: dict, output: Path) -> None:
     ax.text(5.4, 2 * math.sqrt(2) + 0.03, "2 sqrt 2", ha="right", fontsize=8, color="gray")
     ax.set_ylabel("CHSH S")
     ax.set_ylim(0, 3.2)
-    ax.set_title("Bell's test five times on one lattice")
+    ax.set_title("Bell's test on every candidate, one lattice")
     fig.tight_layout()
     fig.savefig(output / "bell_candidates.pdf")
     plt.close(fig)
