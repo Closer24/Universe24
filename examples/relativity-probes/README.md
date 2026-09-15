@@ -721,15 +721,26 @@ property of the rule.
 | single source, no emission | 48, 0, 1000, 7000 | 47.0 | 7 | 0.000 | 1.000 | 1.000 | n/a | n/a | 24 24 24 24 24 24 24 24 24 24 24 |
 
 `--labels wave` runs the same row with the light field carrying a Kerengonen
-phase (64 steps, one step per link) and the lamps launching 16 steps apart,
-so the train is a wave; the frequency is the phase difference between
-consecutive rays over their time apart, one link past the lamps and at the
-eye. Phase per link (the default): frequency -1.82 steps per tick at the
-source, -1.06 at the eye, ratio 0.583 against `1 / (1 + z) = 0.564` at
-`z = 0.773`: the frequency redshifts with the rate. `ray_phase_per_tick`:
-ratio 0.140 against the law's `(a + (nu_e - a) / (1 + z)) / nu_e = 0.100`
-with `a = 1`: only the excess over the advance rate redshifts, the advance
-counting intervals like a clock. Without emission the ratio is 1.000.
+phase (64 steps, one step per link) and the lamps launching a quarter turn
+apart, so the train is a wave; the frequency is the phase difference between
+consecutive rays over their time apart, one link past the lamps (link 12 for
+the train, link 1 for the single source) and at the eye, and the law is
+applied over that same span: the gap ratio between the two reading points
+(1.714 for the train on the 48-row, against the run's `1 + z = 1.773`;
+2.068 for the single source). Phase per link (the default): every ray
+crosses the same links, so the phase difference between rays is conserved
+and the frequency ratio is the inverse gap ratio over the span by
+construction: the train gives -1.818 steps per tick at the source, -1.060 at
+the eye, ratio 0.5832 against 0.5833; the single source -0.667 and -0.323,
+ratio 0.484 against 0.4835. This checks the phase bookkeeping and its wrap,
+not an independent stretch. It does not depend on the phase resolution
+(256 steps: 0.484 again) and converges with the tick resolution (launch hop
+16, a 48-tick interval at the source: 0.483 against 0.4826, `z = 1.072`
+against 1.068 at launch hop 8). `ray_phase_per_tick`: the phase difference
+is not conserved, and the train's ratio is 0.1396 against the law's
+`(a + (nu_e - a) / 1.714) / nu_e = 0.1398` with `a = 1`: only the excess
+over the advance rate redshifts, the advance counting intervals like a
+clock. Without emission the ratio is 1.000.
 
 What the table shows. In every run the twelve rays are absorbed, the twelve quanta are conserved, the
 field's total grows linearly with age, and the eye's cycle count equals the tick
@@ -757,10 +768,7 @@ force when it left), one tick in a gap of fifty. The continuum law gives
 offset of 0.065 `z = 0.98`; the measured 1.07 lies between, within a tick
 per gap of either, as it should for launches spread over 264 ticks across
 five steps of the ceiling, whose offsets average smaller than the train's
-single one. Without emission the same source gives gaps of 24 and `z = 0`. Under the
-default phase rule the single source's frequency ratio is 0.575 against
-`1 / (1 + z) = 0.484`, the same direction with a coarser quantization (one
-phase step in 64 per gap of fifty ticks). Every hop's duration
+single one. Without emission the same source gives gaps of 24 and `z = 0`. Every hop's duration
 equals `ceil( (b + lambda t)/B )` at the tick it began, with `lambda`
 the emission per Node per tick: the law is the ceiling of the load over the
 budget, and nothing else.
@@ -829,8 +837,11 @@ release's full statistical-plus-systematic covariance restricted to the kept
 objects (the delta chi-square quoted). `q0` is the deceleration parameter of
 the luminosity-distance shape, `1 - d''(0) / d'(0)`; for reading A it
 differs from the scale factor's `-(n - 1) / n` because the extra
-`sqrt(1 + z)` enters the shape (for `n = 5`: -0.8 for the scale factor,
-+0.20 for the shape):
+`sqrt(1 + z)` enters the shape (at `n = 20`: -0.95 for the scale factor,
++0.05 for the shape). The fitted exponent is the minimum on a grid
+`1 <= n <= 20` in steps of 0.05, found separately for each error model;
+reading A improves monotonically to the grid's edge, so its `n -> infinity`
+limit is listed as well:
 
 | Shape | `q0` | chi-square, diagonal | against LambdaCDM, diagonal | chi-square, covariance | against LambdaCDM, covariance | model - data by bin (mag; `z` 0.01-0.1, 0.1-0.3, 0.3-0.6, 0.6-1.0, 1.0-2.3) |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -838,27 +849,39 @@ differs from the scale factor's `-(n - 1) / n` because the extra
 | linear load (`n = 1`), reading B (coasting) | 0 | 787.9 | +93 | 1492.8 | +106 | +0.06, 0.00, -0.06, -0.07, -0.20 |
 | quadratic load (`n = 2`), reading A | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
 | quadratic load (`n = 2`), reading B | -1/2 | 756.4 | +62 | 1450.8 | +64 | -0.03, -0.00, +0.02, +0.12, +0.18 |
-| power law `n = 1.4`, reading B (fitted exponent) | -0.29 | 699.3 | +4.5 | 1396.1 | +9.0 | +0.01, -0.00, -0.01, +0.04, +0.01 |
-| best power law, reading A (`n = 5`) | +0.20 | 929.3 | +234 | 1639.3 | +252 | +0.08, -0.00, -0.09, -0.13, -0.31 |
+| power law `n = 1.4`, reading B (fitted exponent) | -0.28 | 699.3 | +4.5 | 1396.1 | +9.0 | +0.01, -0.00, -0.01, +0.04, +0.01 |
+| best power law, reading A (`n = 20`, the grid's edge) | +0.05 | 797.1 | +102 | 1501.4 | +114 | |
+| reading A, `n -> infinity` (`D ~ z`) | 0 | 765.6 | +71 | 1468.5 | +81 | |
 | flat LambdaCDM, `Omega_m = 0.334` | -0.50 | 694.8 | 0 | 1387.1 | 0 | -0.01, +0.01, 0.00, +0.03, -0.10 |
 | Einstein-de Sitter | 1/2 | 1356.7 | +662 | 2083.7 | +697 | +0.14, 0.00, -0.14, -0.25, -0.55 |
 
 The full covariance changes none of the conclusions. The reading in which
-only the arrival rate is redshifted (A) is excluded at every exponent. The
-two load histories the model supplies by itself, constant emission and
-emission growing with age, are disfavoured in reading B by 106 and 64 units
-of chi-square, with residuals that grow with redshift; a power law with a
-fitted exponent, `n = 1.4` (`q0 = -0.29`, the exponent chosen on the
-diagonal fit), fits within 9, one parameter against LambdaCDM's one. That is
-the correspondence above at work: the diagram can be fitted, and fitting it
-says nothing until the exponent is derived. Time dilation: the law stretches
-durations by `1 + z` (the same integers as `z`), as supernova light curves do
-(`(1 + z)^1.07 +- 0.06`, Blondin et al. 2008), where tired light fails.
-Surface brightness: the Tolman exponent is 1 in reading A and 2 in reading B
-against 4 for expansion, and the measured range after evolution corrections
-(2.6 to 3.4, Lubin and Sandage 2001) is above the lattice's value; this is
-the test on which the lattice and expansion differ, and the lattice is in
-tension with it now. The temperature of the background does not apply: the
+only the arrival rate is redshifted (A) is excluded at every exponent: its
+chi-square falls monotonically across the grid and is still 114 above
+LambdaCDM at `n = 20` and 81 above it in the `n -> infinity` limit, which
+bounds every exponent beyond the grid. The two load histories the model
+supplies by itself, constant emission and emission growing with age, are
+disfavoured in reading B by 106 and 64 units of chi-square, with residuals
+that grow with redshift; a power law with a fitted exponent fits best at
+`n = 1.40` under both error models (the interval within one unit of
+chi-square spans 1.40 to 1.45 under the covariance, `q0 = -0.28`), 9.0
+above LambdaCDM for one fitted parameter against one, a three-standard-
+deviation preference for LambdaCDM that the sample size does not soften.
+That is the correspondence above at work: the diagram can be nearly
+fitted, and fitting it says nothing until the exponent is derived. Time
+dilation: the law stretches durations by `1 + z` (the same integers as
+`z`), as supernova spectra age (`(1 + z)^-b`, `b = 0.97 +- 0.10`, Blondin et
+al. 2008), where tired light fails. Surface brightness: the Tolman exponent
+is 1 in reading A and 2 in reading B against 4 for expansion; Lubin and
+Sandage (2001) measure 2.59 +- 0.17 in R and 3.37 +- 0.13 in I before any
+luminosity-evolution correction and read the shortfall from 4 as the
+evolution expansion requires, so the raw exponents lie above the lattice's
+by 0.6 to 1.4 and an evolution of the opposite sign would be needed to
+close the gap; a quantitative statement needs the data reduced under the
+lattice's own angular-size relation, not done here. This is the test on
+which the lattice and expansion differ, and the lattice is in tension with
+it now. The temperature of the background: the model has no blackbody and
+so makes no prediction yet, a gap rather than an exemption. The temperature of the background does not apply: the
 model has no blackbody. The model does not remove dark energy; it relabels
 the acceleration as a load growing faster than linearly, which no rule of the
 model yet derives ([hypotheses](../../docs/HYPOTHESES.md)).

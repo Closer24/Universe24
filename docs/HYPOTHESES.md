@@ -133,16 +133,23 @@ offset) the two load histories the model supplies on its own are
 disfavoured: constant emission (`k ~ t`, the coasting universe, `q0 = 0`) by
 `delta chi^2 = 106` against flat LambdaCDM and emission growing with age
 (`k ~ t^2`, `q0 = -1/2`) by 64, both with residuals that grow with redshift;
-a power law `k ~ t^1.4` fits within `delta chi^2 = 9`, and the reading in
-which only the arrival rate is redshifted fails at every exponent. The Tolman
-surface-brightness exponent is where the lattice and expansion differ,
-`(1 + z)^-2` against `(1 + z)^-4`, and the measured range (2.6 to 3.4 after
-evolution corrections) is above the lattice's value. The model does not
+the best power law, `k ~ t^1.4`, is still disfavoured by `delta chi^2 = 9`
+for one fitted parameter (three standard deviations), and the reading in
+which only the arrival rate is redshifted fails at every exponent, its
+`n -> infinity` limit included. The Tolman surface-brightness exponent is
+where the lattice and expansion differ, `(1 + z)^-2` against `(1 + z)^-4`,
+and the raw measured exponents (2.59 and 3.37 in R and I, Lubin and Sandage
+2001, before any luminosity-evolution correction) lie above the lattice's
+value. The wave's frequency follows the arrival gaps under the default
+phase rule by construction, so it is not an independent measurement of the
+stretch; the rule that clocks keep the bare rate under load is configured,
+not derived from a clock built of the model's own parts. The model does not
 remove dark energy: it relabels the acceleration as a load growing faster
 than linearly, which no rule of the model yet derives. What would make it a
-result: a rule that fixes the emission history, so that the exponent is
-derived rather than fitted, and a surface-brightness exponent the same rule
-predicts.
+result: a clock built from the model's own moving parts whose rate under
+load is measured; a rule that fixes the emission history, so that the
+exponent is derived rather than fitted; and a surface-brightness exponent
+the same rule predicts.
 
 ## 8. Everything that moves is a ray; records only hold
 

@@ -2662,3 +2662,27 @@ than for the scale factor.
 | Full gate against `origin/main` | 3,211 passed, 32 skipped, 0 failed in 28 minutes (the changelog entry widened the selection to the whole suite); ruff lint and format passed; the package built |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
+
+## Redshift: the wave read over its own span, the exponent under the covariance, and the sources - 2026-09-15
+
+Base: `3874c06` on `main` (after PR #127). No engine change. A fourth
+review of the second manuscript: the 19 percent gap between the single
+source's frequency ratio and its prediction was a measurement-point
+mismatch (the frequency was read twelve links along the path, the
+prediction taken over the whole distance); the exponent scan now runs under
+the full covariance as well; two citations were misquoted.
+
+| Check | Result |
+| --- | --- |
+| Wave, train, phase per link, read from link 12 to the eye (span gap ratio 1.7143) | frequency -1.8182 steps per tick at the source, -1.0604 at the eye, ratio 0.5832 against 1 / 1.7143 = 0.5833: by construction, the phase difference between rays being conserved along the path |
+| Wave, train, phase per interval | ratio 0.1396 against (1 + (nu_e - 1) / 1.7143) / nu_e = 0.1398 |
+| Wave, train, no emission | ratio 1.000 |
+| Single source, wave, phase per link, read from link 1 (span gap ratio 2.0682) | -0.6667 and -0.3227, ratio 0.484 against 0.4835 (the earlier 0.5747 read the source at link 12) |
+| Single source, wave, 256 phase steps | -2.6667 and -1.2906, ratio 0.484 against 0.4835: independent of the phase resolution |
+| Single source, wave, launch hop 16 (48-tick interval at the source), 3400 ticks | z = 1.072 (1.068 at launch hop 8), ratio 0.483 against 0.4826: converging with the tick resolution |
+| `redshift_hubble.py --covariance`, exponent scan 1 to 20 in steps of 0.05 under each error model | reading B: best n = 1.40 under both, interval within one unit of chi-square 1.40 to 1.45 under the covariance, delta chi-square +9.0 against LambdaCDM; reading A: chi-square falls monotonically to the grid's edge (n = 20: +114) and its n -> infinity limit (D ~ z) gives +81 |
+| Citations | Blondin et al. 2008: (1 + z)^-b with b = 0.97 +- 0.10 for the whole sample (the manuscript had 1.07 +- 0.06); Lubin and Sandage 2001: n = 2.59 +- 0.17 (R) and 3.37 +- 0.13 (I) before the luminosity-evolution correction (the manuscript had called them corrected values) |
+| `tests/test_redshift_sweep.py` | seven tests; the wave test now checks the reading span, the span gap ratio and the single source's ratio |
+| Affected gate against `origin/main` | 168 passed, 2 visual-only skipped in 103 seconds; ruff lint and format passed |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.

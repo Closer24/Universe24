@@ -34,11 +34,13 @@ off the hop schedule, and $\alpha$ scales with the emission. One source
 emitting twelve rays at a fixed interval of its own clock, all crossing the
 same 47 links, gives the same law: $z = 1.07$, with the gaps at the eye over
 the interval at the source, $2.07$, against the ray-by-ray $k_o/k_e$ of
-$2.03$. The wave sector is measured too: with the default rule, a phase
-that advances per link, the frequency of a phased-ray train redshifts with
-the rate, $\nu_o/\nu_e = 0.58$ at $z = 0.77$ against $1/(1+z) = 0.56$; with
-the phase advancing per waiting interval as well, only the frequency's
-excess over the advance rate redshifts. A train of moving bodies, the first
+$2.03$. The wave sector is measured too, and its status is stated: with the
+default rule, a phase that advances per link, the phase difference between
+rays is conserved along the path, so a phased-ray train's frequency ratio
+equals the inverse gap ratio over the span it is read on by construction
+($0.5832$ against $0.5833$ at $z = 0.77$), a check of the bookkeeping rather
+than an independent stretch; with the phase advancing per waiting interval
+as well, only the frequency's excess over the advance rate redshifts. A train of moving bodies, the first
 choice of light, is not usable: a Node starts no new cycle until its delayed
 departure has arrived, so bodies stall the clocks of the Nodes they wait at.
 We then show a kinematic correspondence: with $D = \int dt/k$ the hop time
@@ -53,9 +55,10 @@ objects, one free offset, full statistical-plus-systematic covariance) the
 two histories the model supplies on its own, constant emission ($k \propto
 t$, coasting) and emission growing with age ($k \propto t^2$, $q_0 = -1/2$),
 are disfavoured by $\Delta\chi^2 = 106$ and $64$ against flat
-$\Lambda$CDM, while a power law $k \propto t^{1.4}$ fits within
-$\Delta\chi^2 = 9$; the reading in which only the arrival rate is
-redshifted fails at every exponent. The Tolman surface-brightness exponent
+$\Lambda$CDM, and the best power law, $k \propto t^{1.4}$, is still
+disfavoured by $\Delta\chi^2 = 9$ for one fitted parameter; the reading in
+which only the arrival rate is redshifted fails at every exponent,
+including the $n \to \infty$ limit. The Tolman surface-brightness exponent
 separates the lattice from expansion, $(1+z)^{-2}$ against $(1+z)^{-4}$; the
 measured exponent lies above the lattice's, so the model is in tension
 there now, and we say what would relieve it. Nothing here removes dark
@@ -86,14 +89,17 @@ standard language, and tested against data.
 
 Three things are established. First, the law on the lattice: $1 + z = k_o /
 k_e$ within a tick per gap, for a train and for a single source, with time
-dilation by the same factor, and its continuum form for each load history.
+dilation by the same factor, and its continuum form for each load history;
+the law is the expected consequence of the rule, and the runs test its
+discrete realisation and its reading, not its existence.
 Second, a kinematic correspondence: the hop time is a scale factor for the
 Hubble diagram and the time dilation, so the lattice reproduces those two
 tests of any Friedmann model with the matching load history and cannot be
 told from expansion by them alone; the correspondence is kinematic because
 nothing dynamical (no Friedmann equation, no equation of state) is derived.
 Third, the data: the load histories the model supplies by itself do not fit
-the supernova diagram, a fitted power law does, and the surface-brightness
+the supernova diagram, a fitted power law comes within three standard
+deviations of $\Lambda$CDM, and the surface-brightness
 exponent is where the lattice and expansion part, with the measured value on
 expansion's side. The conclusion is negative for the strong claim
 (no dark energy) and positive for a narrower one (a lattice mechanism that
@@ -113,7 +119,16 @@ moving records, and local updates commit after the bare cycle time: a held
 record's clock does not slow. With ray delay (\texttt{ray\_delay}) a ray of
 a straight-ray field resident at a Node waits $\lceil C/B \rceil - 1$ extra
 field cycles before it is forwarded, so a hop takes $k$ ticks; a waiting ray
-stalls no record. Transport slows with the load, clocks do not.
+stalls no record. Transport slows with the load, clocks do not. That
+asymmetry is the whole hypothesis, and it is put in as a rule: the
+simulator has no clock built from its own processes whose rate could be
+derived, only cycle counters that the rule keeps at the bare rate. Given
+the rule, the law of the next section follows in the continuum at once
+($D = \int dt/k$ gives $dt_o/dt_e = k_o/k_e$ at fixed $D$); what the runs
+add is the discrete implementation, how an eye reads it, and the size of
+the corrections. A clock made of the model's own moving parts, whose rate
+under load is measured rather than declared, is the step that would turn
+the rule into a mechanism, and it is not taken here.
 
 The configuration is a closed row of $L$ Nodes (periodic in $x$, one Node
 across). Every Node holds a mass body that emits a constant amount $E$ of
@@ -241,22 +256,39 @@ rise); at double the emission $z = 2.329$, with slope $0.0318$ per link, twice t
 emission per Node per tick over the budget, and no other parameter enters.
 
 \paragraph{The wave.} With the light field carrying a Kerengonen phase
-(64 steps, advance one step per link) and the twelve lamps launching 16
-steps apart, the train is a wave whose frequency is read as the phase
+(64 steps, advance one step per link) and the lamps launching a quarter
+turn apart, the train is a wave whose frequency is read as the phase
 difference between consecutive rays over their time apart, one link past
-the lamps and at the eye. With the default rule, phase per link, the 48-row
-gives $\nu_e = -1.82$ steps per tick at the source and $\nu_o = -1.06$ at
-the eye, a ratio of $0.583$ against $1/(1+z) = 0.564$ at $z = 0.773$: the
-frequency redshifts with the rate, within the quantization of the gaps.
-With \texttt{ray\_phase\_per\_tick}, the phase advancing on every waiting
-interval as well, the frequency is $-0.94$ at the source and $-0.13$ at the eye against the law's $a + (\nu_e - a)/(1+z) = -0.09$ with $a = 1$, a difference of $0.04$ steps per tick, below one phase step per gap: only the frequency's excess over the advance rate redshifts, because the advance itself counts intervals like a clock. Without emission the ratio is $1.000$ in both rules.
-The single source under the default rule gives $\nu_e = -0.56$ and $\nu_o
-= -0.32$, a ratio of $0.575$ against $1/(1+z) = 0.484$ at $z = 1.07$, the
-same direction with a coarser quantization (a phase step of $1/64$ per gap
-of fifty ticks). So the frequency half of reading B in
-Section~\ref{sec:scale}, that the frequency falls by $1 + z$, is the
-measured consequence of the default rule; the step from a frequency to an
-energy is not measured here, and the other rule gives neither reading.
+the lamps (past the last lamp of the train, past the single source's Node)
+and at the eye. What the law predicts for that reading must be applied
+over the same span: the ratio of the mean gap at the eye to the mean gap
+at the first reading point, which for the train (read from link 12) is
+$1.714$ on the 48-row rather than the run's $1 + z = 1.773$, and for the
+single source (read from link 1) is the whole $2.068$. With the default
+rule, phase per link, every ray crosses the same links, so the phase
+difference between consecutive rays is conserved along the path and the
+frequency ratio is the inverse gap ratio over the span by construction:
+the train gives $\nu_e = -1.818$ steps per tick and $\nu_o = -1.060$, a
+ratio of $0.5832$ against $1/1.714 = 0.5833$; the single source gives
+$-0.667$ and $-0.323$, $0.484$ against $0.4835$. This is a check that the
+phase bookkeeping and its wrap follow the gaps, not an independent
+measurement of the stretch, and we say so. It is also insensitive to the
+phase resolution and sensitive only to the tick: with 256 phase steps the
+single source's ratio is again $0.484$, and launched at $k_e = 16$ (an
+interval of 48 ticks at the source) it is $0.483$ against $0.4826$ at $z =
+1.072$, where $k_e = 8$ gave $z = 1.068$. With
+\texttt{ray\_phase\_per\_tick}, the phase advancing on every waiting
+interval as well, the phase difference is not conserved and the reading
+carries information the gaps do not: the train's frequency is $-0.939$ at
+the source and $-0.131$ at the eye, a ratio of $0.1396$ against $(a +
+(\nu_e - a)/1.714)/\nu_e = 0.1398$ with $a = 1$: only the frequency's
+excess over the advance rate redshifts, because the advance itself counts
+intervals like a clock. Without emission the ratio is $1.000$ in both
+rules. So the frequency half of reading B in Section~\ref{sec:scale},
+that a frequency carried by the arrival gaps falls by $1 + z$, holds under
+the default rule by construction; a frequency carried by anything else is
+not measured here, the step from a frequency to an energy is not measured
+here, and the other rule gives neither reading.
 
 \paragraph{Resolution.} The hop time at launch sets the resolution of $z$: a gap is a whole number of
 ticks, so $z$ resolves in steps of $1/k_e$ per gap. Launched at $k_e = 4, 8$
@@ -277,13 +309,15 @@ Equations \eqref{eq:law} and \eqref{eq:distance} are the relations of a
 Friedmann universe with $a(t) \propto k(t)$ and comoving distance $D$: light
 emitted at $t_e$ and received at $t_o$ has $1 + z = a(t_o)/a(t_e)$ and
 $D = \int dt / a$, and durations dilate by $1 + z$. The lattice is static and
-nothing recedes, but for these two observables it cannot be told from
-expansion with the matching history. Which history the load supplies decides
+nothing recedes, but for these two observables it cannot be told from a
+spatially flat expanding model with the matching history (the flat case
+throughout: the lattice has no curvature term, and the luminosity distance
+below is the flat form). Which history the load supplies decides
 the low-redshift deceleration parameter: $k \propto t^n$ gives $q_0 = -(n-1)/n$,
 so constant emission ($n = 1$) is the coasting universe and emission growing
 with age ($n = 2$) accelerates with $q_0 = -1/2$, the value of flat
-$\Lambda$CDM with $\Omega_m = 1/3$. The correspondence is exact: any
-$a(t)$, $\Lambda$CDM included, is reproduced by $k(t) \propto a(t)$. Only
+$\Lambda$CDM with $\Omega_m = 1/3$. The correspondence is exact for these two observables: any $a(t)$ of a
+flat model, $\Lambda$CDM included, is reproduced by $k(t) \propto a(t)$. Only
 the linear history was run on the lattice; the others enter through
 \eqref{eq:distance} as the continuum family of the same rule. This is a
 kinematic correspondence and its limit at once: it covers the two
@@ -292,7 +326,9 @@ derives no dynamics (there is no Friedmann equation here and no equation of
 state, only a load history put in by hand), and so the Hubble diagram and
 the time dilation cannot decide between a growing load and an expanding
 metric, while a lattice that fits them has explained nothing until it
-derives its load history.
+derives its load history. Every statement about the Hubble diagram below
+is conditional in the same way: it holds in the continuum limit of the
+rule, for a flat geometry, and under the two readings that follow.
 
 What a distant source looks like needs two more readings, both assumed
 here rather than measured on the closed row. First, that the field of a
@@ -334,29 +370,36 @@ Linear load, reading A & $1$ & 2511.8 & $+1817$ & 3278.5 & $+1891$ & $+0.22, 0.0
 Linear load, reading B (coasting) & $0$ & 787.9 & $+93$ & 1492.8 & $+106$ & $+0.06, 0.00, -0.06, -0.07, -0.20$\\
 Quadratic load, reading A & $1/2$ & 1356.7 & $+662$ & 2083.7 & $+697$ & $+0.14, 0.00, -0.14, -0.25, -0.55$\\
 Quadratic load, reading B & $-1/2$ & 756.4 & $+62$ & 1450.8 & $+64$ & $-0.03, -0.00, +0.02, +0.12, +0.18$\\
-Power law $k \propto t^{1.4}$, reading B (fitted $n$) & $-0.29$ & 699.3 & $+4.5$ & 1396.1 & $+9.0$ & $+0.01, -0.00, -0.01, +0.04, +0.01$\\
-Best power law, reading A ($n = 5$) & $+0.20$ & 929.3 & $+234$ & 1639.3 & $+252$ & $+0.08, -0.00, -0.09, -0.13, -0.31$\\
+Power law $k \propto t^{1.4}$, reading B (fitted $n$) & $-0.28$ & 699.3 & $+4.5$ & 1396.1 & $+9.0$ & $+0.01, -0.00, -0.01, +0.04, +0.01$\\
+Best power law, reading A ($n = 20$, the grid's edge) & $+0.05$ & 797.1 & $+102$ & 1501.4 & $+114$ & --\\
+Reading A, $n \to \infty$ ($D \propto z$) & $0$ & 765.6 & $+71$ & 1468.5 & $+81$ & --\\
 Flat $\Lambda$CDM, $\Omega_m = 0.334$ & $-0.50$ & 694.8 & $0$ & 1387.1 & $0$ & $-0.01, +0.01, 0.00, +0.03, -0.10$\\
 Einstein--de Sitter & $1/2$ & 1356.7 & $+662$ & 2083.7 & $+697$ & $+0.14, 0.00, -0.14, -0.25, -0.55$\\
 \bottomrule
 \end{tabular}}
-\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (for $n = 5$ the scale factor's $q_0$ is $-0.8$ and the shape's is $+0.20$). Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. Reading A and the quadratic load in reading A are the Einstein--de Sitter shape or worse; reading B with a fitted exponent is close to $\Lambda$CDM.}
+\caption{Fits to the Pantheon+ Hubble-flow sample with one free offset each, with the diagonal errors (diag) and with the full statistical-plus-systematic covariance (cov); $q_0$ is the low-redshift deceleration parameter of the luminosity-distance shape, $1 - d''(0)/d'(0)$, which for reading A differs from that of the scale factor $k \propto t^n$ because the extra $\sqrt{1+z}$ enters the shape (at $n = 20$ the scale factor's $q_0$ is $-0.95$ and the shape's $+0.05$). The fitted exponent is the minimum of $\chi^2$ on a grid $1 \le n \le 20$ in steps of $0.05$, found separately for each error model; reading A improves monotonically to the grid's edge, so its $n \to \infty$ limit is listed as well. Bins $z = 0.01$--$0.1$, $0.1$--$0.3$, $0.3$--$0.6$, $0.6$--$1.0$, $1.0$--$2.3$ with 620, 466, 365, 104 and 25 objects, whose errors of the mean are 0.008, 0.009, 0.010, 0.024 and 0.062 mag, from the diagonal fit. Reading A and the quadratic load in reading A are the Einstein--de Sitter shape or worse; reading B with a fitted exponent is close to $\Lambda$CDM.}
 \label{tab:sn}
 \end{table}
 
 Three things follow, and the full covariance changes none of them. The
 reading in which only the arrival rate is redshifted (A) is excluded at
-every exponent: its best power law is $\Delta\chi^2 = 252$ from
-$\Lambda$CDM. The two load histories the model supplies by itself, constant
-emission and emission growing with age, are disfavoured in reading B by
-$\Delta\chi^2 = 106$ and $64$, with residuals that grow with redshift; the
-quadratic history has the right $q_0$ and the wrong shape beyond $z \sim
-0.5$. A power law with a fitted exponent, $n = 1.4$ ($q_0 = -0.29$), fits
-within $\Delta\chi^2 = 9$ on 1580 objects, one parameter against
-$\Lambda$CDM's one (the exponent is chosen on the diagonal fit and the
-covariance $\chi^2$ evaluated at it). That is the correspondence of
-Section~\ref{sec:scale} at work: the diagram can be fitted, and fitting it
-says nothing until the exponent is derived.
+every exponent: its $\chi^2$ falls monotonically with $n$ across the whole
+grid and is still $\Delta\chi^2 = 114$ from $\Lambda$CDM at $n = 20$, and
+$81$ in the $n \to \infty$ limit of the family ($D \propto z$, $d_L =
+z\sqrt{1+z}$), which bounds every exponent beyond the grid. The two load
+histories the model supplies by itself, constant emission and emission
+growing with age, are disfavoured in reading B by $\Delta\chi^2 = 106$ and
+$64$, with residuals that grow with redshift; the quadratic history has the
+right $q_0$ and the wrong shape beyond $z \sim 0.5$. A power law with a
+fitted exponent fits best at $n = 1.40$ under both error models, with the
+interval $\Delta\chi^2 \le 1$ spanning $1.40$ to $1.45$ under the
+covariance ($q_0 = -0.28$), at $\Delta\chi^2 = 9.0$ from $\Lambda$CDM,
+one fitted parameter against one. A difference of $9$ for one parameter is
+a three-standard-deviation preference for $\Lambda$CDM, not a tie, and the
+sample size does not soften it: the fitted power law is the best this
+family does, and it is disfavoured. That is the correspondence of
+Section~\ref{sec:scale} at work: the diagram can be nearly fitted, and
+fitting it says nothing until the exponent is derived.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.85\linewidth]{figures/hubble_residuals.pdf}
@@ -367,23 +410,30 @@ says nothing until the exponent is derived.
 
 \paragraph{Time dilation.} The law stretches durations by $1 + z$
 (Table~\ref{tab:runs}, duration ratio, the same integers as $z$), because
-every part of a signal waits the same hops. Supernova light curves dilate by $(1+z)^{1.07 \pm 0.06}$
-\cite{blondin2008}; the lattice passes where tired light fails.
+every part of a signal waits the same hops. Supernova spectra age as
+$(1+z)^{-b}$ with $b = 0.97 \pm 0.10$ over the whole sample of Blondin et
+al.\ \cite{blondin2008}; the lattice's $b = 1$ passes where tired light's
+$b = 0$ fails.
 
 \paragraph{Surface brightness.} The Tolman test measures the exponent $n$ in
-$\mathrm{SB} \propto (1+z)^{-n}$; expansion predicts $n = 4$, and Lubin and
-Sandage \cite{lubin2001} find $n = 2.6$ to $3.4$ after correcting for
-luminosity evolution, consistent with 4 and rejecting the tired-light $n = 1$.
-The lattice predicts $n = 1$ in reading A and $n = 2$ in reading B, both
-below the measured range: the lattice is in tension with this test now, not
-awaiting it, and stays so unless the evolution correction absorbs a further
-factor $(1+z)^{-1}$ or so, which is a claim about galaxies rather than about
-the lattice. This is the test on which the lattice and expansion differ,
-and we report it as unfavourable.
+$\mathrm{SB} \propto (1+z)^{-n}$; expansion predicts $n = 4$. Lubin and
+Sandage \cite{lubin2001} measure $n = 2.59 \pm 0.17$ in $R$ and $3.37 \pm
+0.13$ in $I$ for early-type galaxies, before any correction for luminosity
+evolution, and read the shortfall from 4 as the evolution required under
+expansion; their analysis of the tired-light alternative uses that model's
+own angular-size relation. The lattice predicts $n = 1$ in reading A and
+$n = 2$ in reading B with the angular size $1/D$, so the raw exponents lie
+above the lattice's values by 0.6 to 1.4, and an evolution correction of
+the opposite sign to the one expansion needs would be required to close
+the gap. That is the tension as it stands. A quantitative statement needs
+the same data reduced under the lattice's own angular-size and distance
+relations, which has not been done; this is the test on which the lattice
+and expansion differ, and we report it as unfavourable.
 
 \paragraph{The temperature of the background.} $T(z) = T_0(1+z)$ tests a
-blackbody spectrum's scaling; the lattice has no blackbody and the test
-does not apply.
+blackbody spectrum's scaling. The lattice has no blackbody and so makes no
+prediction for this test yet; that is a gap in the model, not an exemption
+from the test, and a cosmology built on this rule would have to meet it.
 
 \section{What is not claimed}
 
@@ -403,9 +453,15 @@ measured range in both readings.
 over from open three-dimensional runs, and reading B takes a quantum's
 energy to follow its measured frequency; the closed row measures rates,
 durations and frequencies, not energies.
-\item The wave sector is measured for a phased-ray train under both phase
-rules, not for the causal source candidate's envelope, whose redshift is
-not measured here.
+\item Not an independent frequency measurement. Under the default phase
+rule the frequency ratio equals the inverse gap ratio by construction, so
+the wave runs check the phase bookkeeping; the redshift of a frequency
+that is not tied to the arrival gaps (the causal source candidate's
+envelope, or a phase advanced by the emitter's own clock) is not measured
+here.
+\item Not a derived clock. The rule that local cycles keep the bare rate
+under load is configured, not obtained from a clock built of the model's
+own processes.
 \item Not a continuum result: every table is a finite row at a finite age;
 the lattice quantizes the stretch in whole ticks, so $z$ resolves in steps of
 $1/k_e$ per gap and every ``holds'' in this paper means within that
@@ -414,9 +470,13 @@ at $E = 32$, measured), so the hop schedule and $E/B$ agree.
 
 \end{itemize}
 
-What would make this a physics result: a rule of the lattice that fixes the
-emission history, so that $n$ is derived rather than fitted; a measured
-surface-brightness exponent that the same rule predicts; and the causal source candidate's envelope put through the same row.
+What would make this a physics result, in order: a clock built from the
+model's own moving parts whose rate under load is measured, so that the
+asymmetry between transport and clocks is derived rather than declared; a
+rule of the lattice that fixes the emission history, so that $n$ is
+derived rather than fitted; a frequency carried by something other than the
+arrival gaps, put through the same row; and the Tolman data reduced under
+the lattice's own angular-size relation.
 
 \section*{Reproducibility}
 The runs are produced by \texttt{redshift\_sweep.py} and the fits by

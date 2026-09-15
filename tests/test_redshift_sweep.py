@@ -85,15 +85,25 @@ def test_the_fit_recovers_its_own_shape_and_separates_the_others(tmp_path):
 
 
 def test_the_waves_frequency_redshifts_with_the_rate_when_its_phase_advances_per_link():
-    # Phase per link: the whole frequency follows the stretch, 1 / (1 + z) in expectation.
+    # Phase per link: the phase difference between rays is conserved along the path, so the
+    # frequency ratio is the inverse of the gap ratio over the span it is read on (one link
+    # past the last lamp to the eye), by construction; the run checks the bookkeeping.
     link = SWEEP.measure("wave", 16, 32, 1000, 7000, 400, "link")
     assert link["wave"] == "link" and link["absorbed"] == 12 and link["z"] == 0.2159
+    assert link["frequency_read_at_links"] == [12, 15]
     assert link["frequency_at_the_source"] == -1.697 and link["frequency_at_the_eye"] == -1.5575
-    assert link["frequency_ratio"] == 0.9178 and link["frequency_ratio_predicted"] == 0.8224
+    assert link["gap_ratio_over_the_frequency_span"] == 1.0918
+    assert link["frequency_ratio"] == 0.9178 and link["frequency_ratio_predicted"] == 0.9159
     # Phase per interval as well: only the excess over the advance rate follows the stretch.
     interval = SWEEP.measure("wave", 16, 32, 1000, 7000, 400, "interval")
-    assert interval["frequency_ratio"] == 0.8164 and interval["frequency_ratio_predicted"] == 0.6032
+    assert interval["frequency_ratio"] == 0.8164 and interval["frequency_ratio_predicted"] == 0.8121
     assert interval["frequency_ratio"] < link["frequency_ratio"] < 1
+    # The single source's frequency is read one link past its Node, so the span is the
+    # whole distance and the ratio is 1 / (1 + z) within the tick quantization.
+    single = SWEEP.measure("single", 16, 32, 1000, 7000, 600, "link", True)
+    assert single["frequency_read_at_links"] == [1, 15] and single["z"] == 0.553
+    assert single["frequency_at_the_source"] == -0.6667 and single["frequency_at_the_eye"] == -0.43
+    assert single["frequency_ratio"] == 0.645 and single["frequency_ratio_predicted"] == 0.6439
     # Without emission nothing shifts.
     still = SWEEP.measure("wave", 16, 0, 1000, 7000, 200, "link")
     assert still["frequency_ratio"] == 1.0 and still["z"] == 0.0

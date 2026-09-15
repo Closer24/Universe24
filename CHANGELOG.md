@@ -14,15 +14,19 @@ record).
   Nodes under `ray_delay` to an absorbing eye that counts its own cycles;
   `1 + z = k_o / k_e` on the eye's clock, durations stretch by the same
   ratio, `z` from 0.07 to 2.81 with the distance, the slope scaling with the
-  emission; the wave's frequency redshifts with the rate under the default
-  phase rule; a single source emitting at a fixed interval of its own clock
-  (`--labels "single source"`) gives the same law. Moving bodies stall the
+  emission; the wave's frequency follows the gaps under the default phase
+  rule by construction (the phase difference between rays is conserved along
+  the path), read over the span it is measured on and converging with the
+  tick resolution; a single source emitting at a fixed interval of its own
+  clock (`--labels "single source"`) gives the same law. Moving bodies stall the
   clocks of the Nodes they wait at and are
   not used ([report](examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)).
 - `redshift_hubble.py`: the law's shapes against the Pantheon+ Hubble-flow
   sample, with the diagonal errors and (`--covariance`) the release's full
-  covariance; the model's own load histories are disfavoured, a fitted power
-  law is not; the Tolman exponent is the discriminating test and the lattice
+  covariance, the exponent fitted under each error model with its interval
+  and the reading-A family bounded by its `n -> infinity` limit; the model's
+  own load histories are disfavoured, the best power law by three standard
+  deviations; the Tolman exponent is the discriminating test and the lattice
   is in tension with it. Manuscript in `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
 
 
