@@ -3,7 +3,22 @@
 All notable changes to Universe24, the reference implementation of Reality
 Theory (Universe24). Versions are tags on `main`; each is archived on Zenodo.
 
-## 0.3.1 - 2026-09-14
+## 0.3.1 - 2026-09-15
+
+### Redshift from delay growth (second manuscript)
+
+- `redshift_sweep.py`: a train of twelve rays crosses closed rows of 16 to 96
+  Nodes under `ray_delay` to an absorbing eye that counts its own cycles;
+  `1 + z = k_o / k_e` on the eye's clock, durations stretch by the same
+  ratio, `z` from 0.07 to 2.81 with the distance, the slope scaling with the
+  emission; the wave's frequency redshifts with the rate under the default
+  phase rule. Moving bodies stall the clocks of the Nodes they wait at and are
+  not used ([report](examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)).
+- `redshift_hubble.py`: the law's shapes against the Pantheon+ Hubble-flow
+  sample; the model's own load histories are disfavoured, a fitted power law
+  is not; the Tolman exponent is the discriminating test. Manuscript in
+  `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
+
 
 A review pass on the paper's Bell narrative. No engine change; the Bell probe
 gains two modes and the framework's claims are narrowed to what is measured.

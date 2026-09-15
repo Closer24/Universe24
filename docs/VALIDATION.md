@@ -2618,3 +2618,24 @@ lives in the registry's law and the lattice adds transport. The 2.889 of the
 first run was sampling spread on correlated samples. In Bell's terms the
 bonded pair is deterministic, measurement-independent and
 parameter-dependent; its unmoved plus rates are no-signalling, not locality.
+
+## Redshift from delay growth on a closed row, read by a local clock - 2026-09-15
+
+Base: `25ca82f` on `main` (after PR #124). No engine change.
+`examples/relativity-probes/redshift_sweep.py` runs a train of twelve rays
+under `ray_delay` and `delay_direction: "along"` across closed rows to an
+absorbing eye with its own clock; `redshift_hubble.py` fits the law's shapes
+to the public Pantheon+ Hubble-flow sample.
+
+| Check | Result |
+| --- | --- |
+| Rows 16 to 96 at emission 16, budget 1000, baseline 7000 | row 16: z = 0.0682; row 24: z = 0.2159; row 32: z = 0.3864; row 48: z = 0.7727; row 64: z = 1.2955; row 96: z = 2.8068; duration ratio = 1 + z in every run; eye clock = tick count; twelve quanta conserved; field linear in age; hop-schedule slope 0.0116 to 0.0159 per link against `E / B = 0.016` |
+| Emission 8, 16, 32 at row 48 | z = 0.284, 0.773, 2.329; slopes 0.0073, 0.0158, 0.0318 |
+| Launch hop 1, 4, 8, 16 at row 48 | z = 1.818, 0.659, 0.773, 0.830 (the launch offsets of the ceiling) |
+| Wave, phase per link / per interval / no emission | frequency ratio 0.583 (law 0.564) / -0.13 against -0.09 steps per tick / 1.000 |
+| Moving bodies as light (not used) | emitters of a 24-row completed 320 to 436 cycles in 700 ticks with the train present and 700 without |
+| `redshift_hubble.py`, 1,580 Hubble-flow supernovae, diagonal errors | linear load reading A / B: delta chi-square +1817 / +93 against flat LambdaCDM (Omega_m 0.334); quadratic load B: +62; fitted power law n = 1.4 (B): +4.5; best reading A (n = 5): +234 |
+| `tests/test_redshift_sweep.py` | six tests: the quick row's gaps, z, duration ratio and slope; the control; the row length guard; the deceleration parameters of the shapes; the fit recovering its own shape; the wave's frequency ratios |
+| Affected gate against `origin/main` | 167 passed, 2 visual-only skipped, in 66 seconds; ruff lint and format passed (no source file changed) |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.

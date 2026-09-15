@@ -107,19 +107,48 @@ the other route: gathering a gravity train focuses quanta, not a force law.
 
 ## 7. Redshift without recession, and no dark energy
 
-The same probes measure a redshift that needs no expansion: on a closed
-lattice the growing computation load makes all light slower with age, so a
-signal that has traveled `D` links arrives stretched by a delay growth per
-hop, in whole steps, with no recession and no repulsive term. Expansion, where
-it is configured, is only an initial condition and nothing in the model
-accelerates it; a closed universe is bound by its size and its field never
-leaves. The hypothesis is that the distance-redshift relation is this delay
-growth, so that dark energy, which stands in for an accelerating relation,
-is not needed. What is measured is a quantized, distance-proportional
-stretch on small closed lattices; what is open is whether the way the field
-fills space over time can match an observed Hubble relation, which the
-configuration sets. The same size sweep applies: the stretch per hop against
-lattice size and age, the trend stated, and the lattice size a match would
-take stated where the sweep runs out. The model does not prove that dark energy does not exist;
-it offers a relation that does without it, and a run against the observed
-relation is the test.
+The [closed-row sweep](../examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)
+measures the law: on a closed row whose computation load grows with age, and
+whose rules delay rays but not local cycles, rays emitted one hop apart are
+absorbed `k_o / k_e` hops apart on the eye's own clock, so
+`1 + z = k_o / k_e`, the ratio of the hop time at reception to the hop time
+at launch, with durations stretched by the same ratio; the stretch grows with
+the distance as `1 + z = exp(alpha D)` for a load linear in age, with `alpha`
+read off the hop schedule and scaling with the emission. A train of moving
+bodies is not usable as light: a Node starts no new cycle until its delayed
+departure has arrived, so bodies stall the clocks of the Nodes they wait at.
+The hop time is a scale factor: with `D = int dt / k` these are the relations
+of a Friedmann universe with `a(t) ~ k(t)`, so a static lattice with the
+matching load history reproduces the Hubble diagram and the time dilation of
+any expanding model, and cannot be told from it by those two tests.
+
+That equivalence is the hypothesis's limit. Against the Pantheon+ supernova
+sample (1,580 Hubble-flow objects, diagonal errors, one free offset) the two
+load histories the model supplies on its own are disfavoured: constant
+emission (`k ~ t`, the coasting universe, `q0 = 0`) by `delta chi^2 = 93`
+against flat LambdaCDM and emission growing with age (`k ~ t^2`,
+`q0 = -1/2`) by 62, both with residuals that grow with redshift; a power law
+`k ~ t^1.4` fits within `delta chi^2 = 4.5`, and the reading in which only the
+arrival rate is redshifted fails at every exponent. The Tolman
+surface-brightness exponent is where the lattice and expansion differ,
+`(1 + z)^-2` against `(1 + z)^-4`, and the measured range (2.6 to 3.4 after
+evolution corrections) is above the lattice's value. The model does not
+remove dark energy: it relabels the acceleration as a load growing faster
+than linearly, which no rule of the model yet derives. What would make it a
+result: a rule that fixes the emission history, so that the exponent is
+derived rather than fitted, and a surface-brightness exponent the same rule
+predicts.
+
+## 8. Everything that moves is a ray; records only hold
+
+A Node starts no new cycle until its delayed departure has arrived, so a
+moving record that waits under a computation load stalls the clock of every
+Node it waits at (the emitters of a 24-row completed 320 to 436 cycles in 700
+ticks with a train of bodies present and 700 without it), while a waiting ray
+stalls no record. The hypothesis is that every moving disturbance is a ray and
+records only hold, read and emit; a ray at rest would then be a particle,
+which needs a binding rule the engine does not yet have (two counter-heading
+rays that reflect each other, with the phase advancing per interval as the
+particle's clock). What can be tested first: convert one moving-body probe
+(the orbits) to rays and compare; then the bound pair's phase rate against
+its speed, the model's own time dilation.
