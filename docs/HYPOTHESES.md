@@ -133,8 +133,10 @@ offset) the two load histories the model supplies on its own are
 disfavoured: constant emission (`k ~ t`, the coasting universe, `q0 = 0`) by
 `delta chi^2 = 106` against flat LambdaCDM and emission growing with age
 (`k ~ t^2`, `q0 = -1/2`) by 64, both with residuals that grow with redshift;
-the best power law, `k ~ t^1.4`, is still disfavoured by `delta chi^2 = 9`
-for one fitted parameter (three standard deviations), and the reading in
+the best power law, `k ~ t^1.4`, is still behind by `delta chi^2 = 9` with
+one fitted parameter each (the families are not nested, so no significance
+level follows; as an information criterion, a relative likelihood of about
+0.01), and the reading in
 which only the arrival rate is redshifted fails at every exponent, its
 `n -> infinity` limit included. The Tolman surface-brightness exponent is
 where the lattice and expansion differ, `(1 + z)^-2` against `(1 + z)^-4`,

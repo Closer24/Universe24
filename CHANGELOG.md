@@ -24,10 +24,11 @@ record).
 - `redshift_hubble.py`: the law's shapes against the Pantheon+ Hubble-flow
   sample, with the diagonal errors and (`--covariance`) the release's full
   covariance, the exponent fitted under each error model with its interval
-  and the reading-A family bounded by its `n -> infinity` limit; the model's
-  own load histories are disfavoured, the best power law by three standard
-  deviations; the Tolman exponent is the discriminating test and the lattice
-  is in tension with it. Manuscript in `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
+  (refined in steps of 0.001 around the minimum) and the reading-A family
+  bounded by its `n -> infinity` limit; the model's own load histories are
+  disfavoured, and the best power law is behind LambdaCDM by nine units of
+  chi-square with one fitted parameter each; the Tolman exponent is the
+  discriminating test and the lattice is in tension with it. Manuscript in `paper/redshift/` ([hypotheses](docs/HYPOTHESES.md)).
 
 
 A review pass on the paper's Bell narrative. No engine change; the Bell probe

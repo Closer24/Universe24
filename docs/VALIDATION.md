@@ -2686,3 +2686,20 @@ the full covariance as well; two citations were misquoted.
 | Affected gate against `origin/main` | 168 passed, 2 visual-only skipped in 103 seconds; ruff lint and format passed |
 
 Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
+
+## Redshift: the exponent's interval refined, and the comparison of non-nested families - 2026-09-15
+
+Base: `42cbd76` on `main` (after PR #129). No engine change. A fifth review
+of the second manuscript: the interval within one unit of chi-square had
+the width of one grid step, and the "three standard deviations" drawn from
+delta chi-square = 9 does not follow for two families that are not nested.
+
+| Check | Result |
+| --- | --- |
+| `redshift_hubble.py --covariance`, exponent refined in steps of 0.001 around the coarse minimum, interval ends interpolated | reading B: best n = 1.405 under the covariance (1.386 with the diagonal errors), interval within one unit of chi-square 1.35 to 1.465 (diagonal 1.335 to 1.448), delta chi-square +9.0 against LambdaCDM unchanged; reading A: monotonic to the grid's edge at n = 20, no interval |
+| Wording | delta chi-square = 9 with one fitted parameter each is reported as a preference for LambdaCDM with no significance level attached (non-nested families); with equal parameter counts it is the Akaike difference, a relative likelihood of about 0.01 |
+| Table 2 caption | the reading-A family's n -> infinity limit (chi-square 1468.5 under the covariance) is better than Einstein-de Sitter (2083.7); the caption no longer says "Einstein-de Sitter or worse" for all of reading A |
+| Traceability | the single source's earlier source frequency, -0.56 read at link 12, is stated beside the corrected -0.667 read at link 1 |
+| Affected gate against `origin/main` | 161 passed, 2 visual-only skipped in 26 seconds; ruff lint and format passed |
+
+Runtime source SHA-256 `c70c279be058f8730358a9110a9a51a1c201e91f5f0d884641cbfc3ef263fb14`, Python 3.14.0rc2, headless.
