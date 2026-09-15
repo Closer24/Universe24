@@ -25,3 +25,10 @@ growth; its two figures come from `redshift/figures.py` with the sweep
 summary and the Hubble fit written by `examples/relativity-probes/redshift_sweep.py`
 and `redshift_hubble.py` (the latter needs the public Pantheon+ table,
 `Pantheon+SH0ES.dat`, which is not in the repository).
+
+`arxiv_metadata.md` holds the titles, abstracts (within arXiv's 1920
+characters) and category choices for both manuscripts, and
+`release_notes_0.3.1.md` the notes for the matching GitHub release; both
+are kept here so that a submission can be rebuilt from the repository
+alone. The packages to upload are `main.tex` with `figures/` and
+`redshift/main.tex` with `redshift/figures/`.

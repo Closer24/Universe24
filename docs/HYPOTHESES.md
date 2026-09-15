@@ -166,3 +166,60 @@ rays that reflect each other, with the phase advancing per interval as the
 particle's clock). What can be tested first: convert one moving-body probe
 (the orbits) to rays and compare; then the bound pair's phase rate against
 its speed, the model's own time dilation.
+
+### The third manuscript: a clock built from the rules
+
+Every review of the redshift manuscript returned to one gap: the eye is a
+counter the rule keeps at the bare rate, and no clock built from the
+model's own processes has been tested. The stakes are exact: a clock
+running at `r(t)` cycles per tick reads `(r_o / r_e)(k_o / k_e)`, and one
+that slowed as `1 / k` would cancel the stretch. The third manuscript is
+that experiment, and it needs one engine change, an opt-in binding rule
+for the bound ray above.
+
+What is measured, in order, each step a result on its own:
+
+1. **The clock's rate under load.** A bound pair at a Node whose load
+   grows, its phase advancing per interval, read as ticks per cycle
+   against the hop time `k`. Three outcomes: `r` constant (the redshift
+   manuscript's rule is derived and the stretch stands), `r ~ 1 / k` (the
+   stretch cancels and the redshift stays a demonstration), or between
+   (the stretch stands with another coefficient and the law changes).
+2. **An oscillating source.** The bound pair emits a ray each cycle: a
+   frequency carried by a physical process, not by an emission schedule.
+3. **A detector with a response.** A bound pair at the eye whose capture
+   depends on the relative phase; the redshift read as a change in the
+   capture rate, not as a count of ticks.
+4. **The model's own time dilation.** A bound pair in motion (both rays
+   sharing a velocity component): its phase rate against its speed. A
+   Lorentz factor would be a derivation; anything else says what the model
+   is not.
+
+The first thing to check, before any of these, is whether the pair stays
+bound at all under the one-wait-register rule and under load; that is a
+day's run and decides whether there is a manuscript.
+
+## 9. A candidate law, stated so that it can fail
+
+Not yet a law: nothing here is derived from a principle, and its one
+discriminating prediction is against it for now. Stated in three lines so
+that the third manuscript can promote or retire it:
+
+1. **The Hubble rate is the growth rate of the transport delay.**
+   `H(t) = (1 / k) dk / dt`; for a linear load `H = lambda / (B k)`, the
+   emission per Node per tick over the budget, over the hop time in force.
+   A cosmological number tied to a local microscopic one.
+2. **The acceleration is the exponent of the load's growth.**
+   `q0 = -(n - 1) / n` for `k ~ t^n`; dark energy is `n > 1`, an emission
+   growing with age. The fitted `n = 1.4` is a fit, not a derivation.
+3. **Clocks are not slowed by the load; transport is.** The asymmetry on
+   which the other two lines rest, a configured rule until step 1 above
+   measures it.
+
+What separates the candidate from expansion, and so lets it fail: a
+Tolman exponent of 2 against 4 (the published exponents, reduced under an
+expanding geometry, lie above 2); no mechanism for a background
+temperature scaling as `1 + z`; and a stretch quantized in steps of
+`1 / k_e` per gap, unobservable at any real scale. Line 3 is what the
+third manuscript can turn into a result; line 1 then becomes a law with a
+number, `H_0` from `lambda / B`.
