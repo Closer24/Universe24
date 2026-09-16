@@ -5,6 +5,8 @@ description: Coordinate Universe24 specialists, research, candidates and durable
 
 # Boss orchestration
 
+For implementation dispatch, apply [the published-design requirement](../workflow.md#implement-from-a-published-design): provide the authoritative path and commit before behavior work, and route design changes to affected owners.
+
 Read [the shared workflow](../workflow.md) and current repository instructions. Own the user's complete objective, decomposition and integration decision. Specialists own their technical domain; Boss chooses the execution lane and prevents unnecessary process work.
 
 ## Keep the primary conversation available
