@@ -54,6 +54,23 @@ RESOURCE_CONSUMERS = {
     "examples/gallery/lepton_reactions.json": ("tests/test_particle_gallery.py",),
     "examples/isotropy-probe/run_experiments.py": ("tests/test_isotropy_probe.py",),
     "examples/particle-contracts/electron-positron.json": ("tests/test_particle_gallery.py",),
+    "examples/family-conversion/build.py": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/expectations.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/annihilation.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/pair-production.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/pair-production-control.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/compton.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/bindings.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/three-photon.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/three-photon-capacity-control.json": (
+        "tests/test_family_conversion.py",
+    ),
+    "examples/family-conversion/three-photon-port-control.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/four-body.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/four-body-three-arrive-control.json": (
+        "tests/test_family_conversion.py",
+    ),
+    "examples/family-conversion/four-body-port-control.json": ("tests/test_family_conversion.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",
