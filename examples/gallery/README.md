@@ -81,6 +81,15 @@ engine does not enforce a mass shell: the 0.7 MeV beta electron and the
 Product directions are configured by the rule, not derived from a matrix
 element; the two-body kinematics are the model's own hypothesis.
 
+The recorded summary now includes `charged_lepton_mass_shell`, a passive screen
+of resident, held-output and in-flight charged leptons in saved frames. It
+requires `E > 0` and reports the beta electron's zero `E^2 - |p|^2` as `failed`,
+independently of balanced accounting. A positive shell value is only a necessary condition and is
+reported `not_established`, never a validated species mass. Missing samples also
+remain `not_established`. No masses, tolerances or corrected physical products
+are silently invented. The remaining weak and bound-electron work has explicit
+[acceptance requirements and owners](../../docs/NUCLEAR_ELECTRON_ACCEPTANCE.md).
+
 ## What the gallery does not show
 
 The backscatter is a configured elastic rule, not a derived interaction. The

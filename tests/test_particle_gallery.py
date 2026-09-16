@@ -116,8 +116,70 @@ def test_reactions_record_annihilation_muon_chain_and_beta_decay(tmp_path):
     assert sorted(r[1] for r in beta["final_records"]) == ["electron", "electron_antineutrino", "proton"]
     assert beta["final_totals"] == beta["initial_totals"]
     assert beta["final_totals"]["baryon"] == [1] and beta["final_totals"]["charge"] == [0]
+    shell = beta["charged_lepton_mass_shell"]
+    assert shell["status"] == "failed"
+    electrons = [row for row in shell["failures"] if row["type"] == "electron"]
+    assert electrons and all(row["energy_squared_minus_momentum_squared"] == 0 for row in electrons)
     w_frame = results["beta_decay"]["frames"][5]
     assert any(d["type"] == "w_minus" for node in w_frame["nodes"] for d in node["disturbances"])
+
+
+@pytest.mark.parametrize("owner", ["node", "held_output", "link"])
+def test_shell_screen_reports_massless_electron_at_each_owner_without_mutation(owner):
+    record = {"type": "electron", "values": {"energy": [7], "momentum": [7, 0, 0]}}
+    frame = {"tick": 3, "nodes": [], "transfers": []}
+    if owner == "link":
+        frame["transfers"] = [{**record, "origin": [2, 2, 2]}]
+    else:
+        bank = "disturbances" if owner == "node" else "held_outputs"
+        frame["nodes"] = [{"position": [2, 2, 2], bank: [record]}]
+    before = json.dumps(frame, sort_keys=True)
+    audit = GALLERY.charged_lepton_shell_screen([frame])
+    assert audit["sample_count"] == 1 and audit["status"] == "failed"
+    assert audit["failures"][0]["owner"] == owner
+    assert audit["failures"][0]["energy_squared_minus_momentum_squared"] == 0
+    assert json.dumps(frame, sort_keys=True) == before
+
+
+def test_positive_shell_is_not_reported_as_a_validated_species_mass():
+    frame = {
+        "tick": 0,
+        "nodes": [
+            {
+                "position": [1, 1, 1],
+                "disturbances": [
+                    {"type": "electron", "values": {"energy": [13], "momentum": [12, 0, 0]}}
+                ],
+            }
+        ],
+    }
+    audit = GALLERY.charged_lepton_shell_screen([frame])
+    assert audit["sample_count"] == 1 and audit["status"] == "not_established"
+    assert audit["failures"] == []
+    assert GALLERY.charged_lepton_shell_screen([])["status"] == "not_established"
+
+
+@pytest.mark.parametrize(
+    "energy,momentum,expected_shell",
+    [(-13, [12, 0, 0], 25), (0, [0, 0, 0], 0), (3, [2, 3, 6], -40)],
+)
+def test_massive_screen_rejects_negative_energy_zero_energy_and_spacelike_products(
+    energy, momentum, expected_shell
+):
+    frame = {
+        "tick": 0,
+        "nodes": [
+            {
+                "position": [1, 1, 1],
+                "disturbances": [
+                    {"type": "electron", "values": {"energy": [energy], "momentum": momentum}}
+                ],
+            }
+        ],
+    }
+    audit = GALLERY.charged_lepton_shell_screen([frame])
+    assert audit["status"] == "failed" and audit["sample_count"] == 1
+    assert audit["failures"][0]["energy_squared_minus_momentum_squared"] == expected_shell
 
 
 @pytest.mark.visualization

@@ -35,6 +35,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Coupled excitation probe](COUPLED_EXCITATIONS.md) | Unit-state exchange between a held internal excitation and a traveling field, with local capture and release |
 | [Directional-wave candidate](DIRECTIONAL_WAVE.md) | Six transverse modes and configured conservative polarization encounters |
 | [Physical entities](PHYSICAL_ENTITIES.md) | Inventory, representation coverage and unestablished physical behavior |
+| [Nuclear and electron acceptance](NUCLEAR_ELECTRON_ACCEPTANCE.md) | Strong residence/emission, weak mass-shell/lifetime and electron localization/frequency contracts and responsible roles |
 
 ## Explicit quantum experiments
 

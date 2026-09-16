@@ -18,6 +18,15 @@ amount is `-(charge x flux)`. The delivered flux points away from the emitter,
 so like charges push apart and unlike charges pull together. A body moves along
 its momentum at `min(1, |p| / (16 x mass))` hops per tick.
 
+The current `signed-ray-charge-interaction-probe-v2` selects balanced Port
+routing, with `|p|` meaning the sum of absolute components in this configured
+rate. A free direction (-400,800,0) first uses +Y, -X, +Y, instead of the long
+initial -X block selected by v1's cyclic routing. This fixes the short-run
+radial artifact in the electron proxy without changing the generic cyclic API.
+The dated tables below remain historical v1 evidence. No bound atom, phase law
+or physical frequency is supplied by this transport correction; see
+[nuclear/electron acceptance](../../docs/NUCLEAR_ELECTRON_ACCEPTANCE.md).
+
 A moving body reaches the next Node together with the rays it emitted one tick
 earlier, and without any exclusion it pushed itself forward regardless of the
 other body's sign. The field is shared by all charges and uses the local

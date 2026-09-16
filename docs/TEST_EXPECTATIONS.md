@@ -1,5 +1,20 @@
 # Test inputs and expected results
 
+## Nuclear and electron audit corrections
+
+`test_particle_interactions.py` checks the v2 proxy's free oblique transport:
+momentum (-400,800,0), mass 75 and the configured speed scale 16 dispatch through
++Y, -X, +Y, with unchanged momentum and one-tick Links.
+The existing neutral/axis/self-exclusion controls cover baseline and edge cases.
+This fixes a routing artifact and does not establish electron binding.
+
+`test_particle_gallery.py` reports the beta electron's zero massive shell as a
+failed physical condition even though configured inventory accounting balances.
+The passive screen covers resident, held-output and in-flight owners without
+mutating frames. Positive shell and absent samples remain `not_established`;
+neither is a calibrated species-mass pass. Missing strong/weak and bound-electron
+operators follow [their acceptance contract](NUCLEAR_ELECTRON_ACCEPTANCE.md).
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the

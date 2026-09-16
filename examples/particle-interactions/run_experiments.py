@@ -66,9 +66,10 @@ def mirrored_headings(count: int, scale: int) -> list[list[int]]:
 
 
 def charged_transport() -> dict:
-    """Move along the momentum at min(1, |p| / (SPEED_SCALE * mass)) hops per tick."""
+    """Balance momentum directions at min(1, |p|_1 / (SPEED_SCALE * mass)) hops per tick."""
     return {
         "mode": "move",
+        "routing": "balanced",
         "direction_field": "momentum",
         "rate": {
             "op": "min",
@@ -92,7 +93,7 @@ def charged_document(bodies: list[dict], ticks: int, shared_field: bool = True) 
     """
     raw = {
         "schema_version": 1,
-        "model_id": "signed-ray-charge-interaction-probe-v1",
+        "model_id": "signed-ray-charge-interaction-probe-v2",
         "shape": [SIZE, SIZE, SIZE],
         "boundary": "open",
         "slots_per_node": 4,

@@ -1,7 +1,10 @@
 """Particle interaction probes with deterministic axis rays: signs, recoil and emission."""
 
 import importlib.util
+import json
 from pathlib import Path
+
+from event_universe.runner import run_initialization
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -118,3 +121,23 @@ def test_like_charges_repel_through_one_shared_field_with_self_exclusion():
     left, right = positions(history, "left"), positions(history, "right")
     assert min(r[1] - l_[1] for l_, r in zip(left, right, strict=True)) > 0
     assert left[-1][2] < 0 < right[-1][2] and left[-1][2] + right[-1][2] == 0
+
+
+def test_oblique_transport_uses_tangential_momentum_before_radial_weight_is_exhausted(tmp_path):
+    # Independent 1:2 lane quota: Y, X, Y. A cyclic weight block gives X, X, X
+    # for the unnormalized (400, 800) data and hides tangential motion entirely.
+    body = [
+        {"name": "probe", "mass": 75, "charge": 0, "momentum": [-400, 800, 0], "position": [0, 0, 0]}
+    ]
+    raw = axis_document(body, 6)
+    path = tmp_path / "oblique.json"
+    path.write_text(json.dumps(raw), encoding="utf-8")
+    output = tmp_path / "oblique"
+    run_initialization(path, output)
+    events = [json.loads(line) for line in (output / "events.jsonl").read_text().splitlines()]
+    sent = [event for event in events if event["event"] == "sent"]
+    assert [event["port"] for event in sent[:3]] == [2, 1, 2]
+    assert all(event["values"]["momentum"] == [-400, 800, 0] for event in sent)
+    assert all(event["arrival_tick"] == event["tick"] + 1 for event in sent)
+    report = json.loads((output / "run.json").read_text())
+    assert report["status"] == "completed" and report["accounting_balanced_at_every_completed_tick"]

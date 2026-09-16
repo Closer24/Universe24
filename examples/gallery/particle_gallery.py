@@ -70,7 +70,7 @@ REACTION_SCENARIOS = {
         ],
     },
     "beta_decay": {
-        "title": "Neutron beta decay through a one-tick W boson",
+        "title": "Configured beta conversion through a one-tick intermediate record",
         "ticks": 11,
         "seeds": [
             {"position": [3, 7, 1], "type": "neutron"},
@@ -296,6 +296,49 @@ def reaction_events(
     return events
 
 
+def charged_lepton_shell_screen(frames: list[dict[str, Any]]) -> dict[str, Any]:
+    """Screen saved owners for a necessary massive-particle condition, without changing a law.
+
+    The gallery uses E in 0.1 MeV and p in 0.1 MeV/c. A positive E and
+    E**2-|p|**2 > 0 are necessary, not sufficient: this is not a calibrated
+    species mass-shell test. Only sampled frames are audited, not hidden events.
+    """
+    samples = []
+    failures = []
+    for frame in frames:
+        owners = [
+            (ownership, node["position"], record)
+            for node in frame["nodes"]
+            for ownership, bank in (("node", "disturbances"), ("held_output", "held_outputs"))
+            for record in node.get(bank, [])
+        ] + [("link", record["origin"], record) for record in frame.get("transfers", [])]
+        for ownership, position, record in owners:
+            if record["type"] not in {"electron", "positron", "muon", "antimuon"}:
+                continue
+            energy = record["values"]["energy"][0]
+            momentum_vector = record["values"]["momentum"]
+            shell = energy * energy - sum(component * component for component in momentum_vector)
+            sample = {
+                "tick": frame["tick"],
+                "owner": ownership,
+                "position": list(position),
+                "type": record["type"],
+                "energy": energy,
+                "momentum": momentum_vector,
+                "energy_squared_minus_momentum_squared": shell,
+            }
+            samples.append(sample)
+            if energy <= 0 or shell <= 0:
+                failures.append(sample)
+    return {
+        "scope": "Necessary positive-energy timelike screen at saved frames; no species mass or error tolerance is validated.",
+        "squared_units": "0.01 MeV^2",
+        "sample_count": len(samples),
+        "status": "failed" if failures else "not_established",
+        "failures": failures,
+    }
+
+
 def reaction_summary(case_dir: Path, frames: list[dict[str, Any]]) -> dict[str, Any]:
     initialization = json.loads((case_dir / "initialization.json").read_text(encoding="utf-8"))
     report = json.loads((case_dir / "run.json").read_text(encoding="utf-8"))
@@ -311,6 +354,7 @@ def reaction_summary(case_dir: Path, frames: list[dict[str, Any]]) -> dict[str, 
         "final_totals": report["final_totals"],
         "escaped_totals": report["escaped_totals"],
         "accounting_balanced": report["accounting_balanced_at_every_completed_tick"],
+        "charged_lepton_mass_shell": charged_lepton_shell_screen(frames),
     }
 
 
