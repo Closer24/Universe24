@@ -9,6 +9,13 @@ Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
 result are different claims. Revision-specific results are not a live status feed.
 
+## Geometry design notes
+
+[Relational register geometry](RELATIONAL_REGISTER_GEOMETRY.md) records the
+identical one-way Register proposal, step-count distance, required 3D connectivity
+and the origin of the 36 ordered cubic routes. This is a design note, not an
+implemented topology change or a minimum-register proof.
+
 ## Active implementation contracts
 
 | Document | Responsibility |
@@ -58,7 +65,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Two-arm interference experiment](../examples/quantum/causal_interference.md) | Phase-dependent capture weights, classical emission carrying the interference term, which-path decoherence and the measured retarded-source gap |
 | [Crossing null notices](../examples/quantum/crossing_nulls.md) | Two nulls before either notice arrives: the stale product, the local correction by the later Node and the exact conditional scale after Link transit |
 | [Two-wing Bell test](../examples/quantum/bell_chsh.md) | CHSH 14/5 from two separated lattice wings on the canonical runner, seeded coincidence counts, no-signalling marginals and a dephased control at 6/5 |
-| [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact, catalog electron/positron contact fields, and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges and masses |
+| [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact, catalog electron/positron contact fields, and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges, masses, rendered from recorded runs with names, charges, masses, rendered from recorded runs with names, charges and masses |
 | [Isotropy probe](../examples/isotropy-probe/README.md) | Directional ratio of the outward and straight-ray fields against the isotropic expectation: exact path counts, counting spread and the heading cost of isotropy |
 | [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md) | CHSH on the classical Kerengonen candidate: 1.40 exact against the quantum owner's 14/5 at the same settings, plain field at the bound of 2 |
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
