@@ -140,7 +140,7 @@ separate carriers and their different directions.
 | `fields` | Between 1 and 16 unique field definitions |
 | `disturbance_types` | Between 1 and 16 unique disturbance definitions |
 | `couplings` | Optional list, at most 32 local exchange rules |
-| `interactions` | Optional list, at most 32 atomic pair transactions |
+| `interactions` | Optional list, at most 32 atomic pair transactions; an entry with `participants` and `outputs` is an [N-to-M family conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) |
 | `seeds` | Positions, disturbance type names and optional value overrides |
 | `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`; version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
