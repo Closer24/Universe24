@@ -1,0 +1,48 @@
+{
+  "design_id": "mass-phase-delay-separation-draft",
+  "status": "non_executable_design",
+  "representation": {
+    "reference_mass": {
+      "catalog_path": "examples/known-entities/catalog.json",
+      "entity_id": "electron",
+      "property_path": "physical_properties.mass",
+      "preserve": [
+        "value_decimal",
+        "unit",
+        "uncertainty_decimal",
+        "uncertainty_kind",
+        "context",
+        "sources"
+      ]
+    },
+    "integer_encoding": {
+      "mass_unit": {
+        "kind": "chosen_reference_unit",
+        "reference": "representation.reference_mass",
+        "meaning": "One unit equals the selected published central mass value; its experimental uncertainty remains reference metadata."
+      },
+      "mass_units": 1,
+      "representation_error_against_selected_central_value": 0,
+      "stored_code_mapping": null,
+      "maximum_mass_units": null,
+      "nonexact_encoding": "reject_until_bounded_remainder_owner_and_scale_are_defined",
+      "universal_mass_quantum_claim": false
+    }
+  },
+  "phase_reference": {
+    "status": "physical_reference_not_runtime_rule",
+    "rest_phase_rate_magnitude": "m*c^2/hbar",
+    "full_phase_period": "h/(m*c^2)",
+    "proper_time_mapping": null,
+    "phase_operator_profile": null
+  },
+  "delay_hypothesis": {
+    "status": "not_selected",
+    "policy_id": null,
+    "delay_kind": null,
+    "causal_input_properties": null,
+    "parameters": null,
+    "massless_behavior": null,
+    "count_includes_link_transit": null
+  }
+}
