@@ -1,0 +1,308 @@
+{
+ "schema_version": 1,
+ "model_id": "rays-panel-bonded-pair-v1",
+ "boundary": "open",
+ "shape": [
+  15,
+  9,
+  3
+ ],
+ "slots_per_node": 2,
+ "link_ticks": 1,
+ "normal_budget": 100000,
+ "ticks": 12,
+ "operation_costs": {
+  "receive": 1,
+  "read": 1,
+  "evaluate": 1,
+  "update": 1,
+  "couple": 1,
+  "route": 1,
+  "split": 1,
+  "send": 1,
+  "commit": 1
+ },
+ "fields": [
+  {
+   "name": "quanta",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "momentum",
+   "components": 3,
+   "units": "quantum times heading",
+   "signed": true,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "setting",
+   "components": 1,
+   "units": "phase step",
+   "signed": false,
+   "conserved": false,
+   "extensive": false
+  }
+ ],
+ "disturbance_types": [
+  {
+   "name": "source_alice",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 4,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "source_bob",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 4,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "plus_alice",
+   "fields": [
+    "quanta",
+    "momentum",
+    "setting"
+   ],
+   "defaults": {
+    "quanta": 0,
+    "momentum": [
+     0,
+     0,
+     0
+    ],
+    "setting": 0
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "minus_alice",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 0,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "plus_bob",
+   "fields": [
+    "quanta",
+    "momentum",
+    "setting"
+   ],
+   "defaults": {
+    "quanta": 0,
+    "momentum": [
+     0,
+     0,
+     0
+    ],
+    "setting": 8
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "minus_bob",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 0,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  }
+ ],
+ "spatial_fields": [
+  {
+   "field": "quanta",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 8,
+   "kerengonen": {
+    "phase_steps": 64,
+    "phase_advance": 0,
+    "capture": "share"
+   },
+   "bond": {
+    "seed": 3
+   }
+  }
+ ],
+ "emissions": [
+  {
+   "type": "source_alice",
+   "field": "quanta",
+   "amount": 1,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum",
+   "kerengonen_phase": 0,
+   "heading": [
+    -1,
+    0,
+    0
+   ],
+   "bond_field": "origin"
+  },
+  {
+   "type": "source_bob",
+   "field": "quanta",
+   "amount": 1,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum",
+   "kerengonen_phase": 32,
+   "heading": [
+    1,
+    0,
+    0
+   ],
+   "bond_field": "origin"
+  }
+ ],
+ "spatial_couplings": [
+  {
+   "name": "plus_alice_absorbs",
+   "type": "plus_alice",
+   "field": "quanta",
+   "mode": "absorb",
+   "momentum_field": "momentum",
+   "bond_setting": "setting"
+  },
+  {
+   "name": "minus_alice_absorbs",
+   "type": "minus_alice",
+   "field": "quanta",
+   "mode": "absorb",
+   "momentum_field": "momentum"
+  },
+  {
+   "name": "plus_bob_absorbs",
+   "type": "plus_bob",
+   "field": "quanta",
+   "mode": "absorb",
+   "momentum_field": "momentum",
+   "bond_setting": "setting"
+  },
+  {
+   "name": "minus_bob_absorbs",
+   "type": "minus_bob",
+   "field": "quanta",
+   "mode": "absorb",
+   "momentum_field": "momentum"
+  }
+ ],
+ "seeds": [
+  {
+   "position": [
+    7,
+    4,
+    1
+   ],
+   "type": "source_alice"
+  },
+  {
+   "position": [
+    7,
+    4,
+    1
+   ],
+   "type": "source_bob"
+  },
+  {
+   "position": [
+    4,
+    4,
+    1
+   ],
+   "type": "plus_alice"
+  },
+  {
+   "position": [
+    3,
+    4,
+    1
+   ],
+   "type": "minus_alice"
+  },
+  {
+   "position": [
+    10,
+    4,
+    1
+   ],
+   "type": "plus_bob"
+  },
+  {
+   "position": [
+    11,
+    4,
+    1
+   ],
+   "type": "minus_bob"
+  }
+ ]
+}

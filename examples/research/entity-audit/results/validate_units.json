@@ -1,0 +1,21 @@
+{
+  "report_version": 1,
+  "valid": false,
+  "results": [
+    {
+      "path": "examples/known-entities/physical-units.json",
+      "kind": "auto",
+      "valid": false,
+      "summary": {},
+      "issues": [
+        {
+          "code": "unsupported_kind",
+          "document": "input",
+          "message": "unsupported or ambiguous configuration: expected exactly one of schema_version, catalog_version or profile_version; observer files require --kind observer",
+          "line": null,
+          "column": null
+        }
+      ]
+    }
+  ]
+}

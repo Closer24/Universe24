@@ -1,0 +1,18 @@
+{
+  "experiment": "E4 the clock's rate under load (third manuscript step 1) with a light clock built from the model's rays and mirrors",
+  "written_before_running": true,
+  "standard_theory": {"statement": "in GR a local clock's proper rate is unaffected by a homogeneous, time-dependent background that also delays light: redshift is a(t_o)/a(t_e) and clocks at rest read proper time; there is no 'transport delayed, clocks not' asymmetry, both are the metric."},
+  "model_prediction_derived_from_documents": {
+    "line_3_of_HYPOTHESES_9": "clocks are not slowed by the load; transport is (configured, delay_direction: along keeps hold records at the bare rate)",
+    "third_manuscript_outcomes": {"r_constant": "the redshift stands", "r_proportional_to_1_over_k": "the stretch cancels: a light-clock eye reads z = 0", "between": "the law changes coefficient"},
+    "what_is_built": "no binding rule exists for a bound ray pair (HYPOTHESES 8), so the clock is a ray bouncing between two hold mirror records (kerengonen-mirror configuration, legal, absorb + re-emit along the mirrored heading) 4 links apart along the y axis of a [48,5,1] periodic lattice whose load grows uniformly (mass bodies at every Node, emission 16/tick, budget 1000, baseline 7000, ray_delay, along). An identical light clock sits at the eye. The emitter's mirror fires one 'signal' quantum down x every time it catches its clock ray: an oscillating source (step 2). The eye absorbs signals and also runs a bare-rate counter (the paper's clock).",
+    "prediction_from_the_rules": "the ray waits k-1 intervals at each of the 4 Nodes it crosses per leg and the mirrors take one bare cycle each, so period P = 2 x 4 x k + 2 = 8k + 2: the light clock slows as 1/k up to the mirror overhead; the counter does not. Then the eye's counter reads 1 + z = k_o/k_e and the eye's light clock reads 1 + z' = (8 k_e + 2)(k_o/k_e) / (8 k_o + 2) = 1 + (2 k_o/k_e - 2)/(8 k_o + 2), i.e. nearly zero.",
+    "expected_numbers": "slope of log P vs log k = 1.0 +/- 0.1 over k = 8..40; counter z about 1-2 at 47 links late in the run; light-clock z' below 0.15"
+  },
+  "controls": ["zero emission: both clocks give z = 0 and P constant", "default (isotropic) delay direction: the counter also slows, both give z near 0"],
+  "pass_fail": {
+    "code_pass": "signals conserved, clock rays never lost (one ray per clock resident at all times), eye counter = ticks under along",
+    "model_candidate_falsified_if": "the light clock's log-log slope vs k is within 2 sigma of 1: then a clock made from the model's own moving parts slows as 1/k and, by the paper's own formula, the stretch cancels for any observer whose clock is a light clock; line 3 would then hold only for counters, which are not built from the rules",
+    "verdict_rule": "slope near 0 keeps the candidate; slope near 1 retires it unless a bound-pair clock (not buildable) behaves differently"
+  }
+}

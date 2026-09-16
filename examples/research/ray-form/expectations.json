@@ -1,0 +1,13 @@
+{
+  "fixed_before_runs": "2026-09-16, before any run of exploration-ray/bound_pair_proxy.py",
+  "status": "PROXY: the engine has no two-ray mutual reflection rule; reflection passes through a mirror RECORD (transport hold). The pair is bound by a configured rule, not an emergent one.",
+  "constants": {"phase_steps": 64, "advance": 4, "parcel_quanta": 8, "budget": 1000, "ticks": 600},
+  "E1_bound": "Every run with mirrors: max x-separation of the two 8-quanta parcels (resident ray or mirror stock) <= d at every observation (d=1 adjacent, d=2 cavity); quanta in records + in flight + escaped == 16 at the end.",
+  "E2_adjacent_all_loads": "ticks per cycle = P/a = 16.0 (+-2%) for every load and both ray_phase_per_tick settings, because every Node holds an absorber and the mirror record commits on the bare carrier clock under delay_direction=along: r(k) reads 'constant' but trivially (no Node without an absorber). Not evidence about the hypothesis.",
+  "E3_cavity_ppt_false": "ticks per cycle T(k) = 16*(k+2)/3: k=1 -> 16.0, k=2 -> 21.33, k=4 -> 32.0, k=8 -> 53.33 (+-3%); classification 'between' (r proportional to 3/(k+2), tends to 1/k for large k). The +2 is the mirror turnaround (1 tick, bare clock) plus the second link per half-cycle.",
+  "E4_cavity_ppt_true": "ticks per cycle = 16.0 (+-2%) at every k; classification 'constant', because ray_phase_per_tick advances the held ray's phase each waiting interval by configuration.",
+  "E5_negative_control": "No mirrors, open row: separation grows by 2 links per tick at zero load and by 2 links per k ticks at k=4 (measured from consecutive observations where both parcels are resident); both parcels escape; escaped quanta == 16.",
+  "E6_isotropic_delay_failure": "cavity, k=4 load, computation_field set with NO delay_direction: the run must fail with an explicit error (funded emission/absorption reject a delayed carrier plan), not run silently.",
+  "E7_growing_load": "cavity, baseline 7000, emission 16 per Node per tick, budget 1000 (redshift_sweep profile): k(t) = max(1, ceil((7000+16t)/1000)) rises 7 -> 15 over 500 ticks; per-cycle ticks-per-cycle tracks 16*(k+2)/3 within one k step for ppt=false and stays 16 for ppt=true.",
+  "classification_rule": "At fixed k: ratio R(k) = T(k)/T(1). 'constant' if |R-1| <= 0.05 for all k; '~1/k' if |R/k - 1| <= 0.05 for all k >= 2; else 'between'."
+}

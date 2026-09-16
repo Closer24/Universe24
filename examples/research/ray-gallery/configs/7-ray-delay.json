@@ -1,0 +1,194 @@
+{
+ "schema_version": 1,
+ "model_id": "rays-panel-ray-delay-v1",
+ "boundary": "open",
+ "shape": [
+  15,
+  9,
+  3
+ ],
+ "slots_per_node": 2,
+ "link_ticks": 1,
+ "normal_budget": 1000,
+ "ticks": 44,
+ "operation_costs": {
+  "receive": 1,
+  "read": 1,
+  "evaluate": 1,
+  "update": 1,
+  "couple": 1,
+  "route": 1,
+  "split": 1,
+  "send": 1,
+  "commit": 1
+ },
+ "computation_field": "computation",
+ "delay_direction": "along",
+ "ray_delay": true,
+ "ray_phase_per_tick": false,
+ "fields": [
+  {
+   "name": "quanta",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "momentum",
+   "components": 3,
+   "units": "quantum times heading",
+   "signed": true,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "mass",
+   "components": 1,
+   "units": "unit",
+   "signed": false,
+   "conserved": true
+  },
+  {
+   "name": "computation",
+   "components": 1,
+   "units": "load unit",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  }
+ ],
+ "disturbance_types": [
+  {
+   "name": "lamp",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 128,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "screen",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 0,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "mass body",
+   "fields": [
+    "mass"
+   ],
+   "defaults": {
+    "mass": 1
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  }
+ ],
+ "spatial_fields": [
+  {
+   "field": "quanta",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 64,
+   "kerengonen": {
+    "phase_steps": 8,
+    "phase_advance": 1
+   }
+  },
+  {
+   "field": "computation",
+   "baseline": 0,
+   "transport": "outward",
+   "axis_weights": [
+    1,
+    1,
+    0
+   ]
+  }
+ ],
+ "emissions": [
+  {
+   "type": "lamp",
+   "field": "quanta",
+   "amount": 16,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum"
+  },
+  {
+   "type": "mass body",
+   "field": "computation",
+   "amount": 28000,
+   "denominator": 1,
+   "source": true
+  }
+ ],
+ "spatial_couplings": [
+  {
+   "name": "screen_absorbs",
+   "type": "screen",
+   "field": "quanta",
+   "mode": "absorb",
+   "momentum_field": "momentum"
+  }
+ ],
+ "seeds": [
+  {
+   "position": [
+    2,
+    4,
+    1
+   ],
+   "type": "lamp"
+  },
+  {
+   "position": [
+    12,
+    4,
+    1
+   ],
+   "type": "screen"
+  },
+  {
+   "position": [
+    7,
+    6,
+    1
+   ],
+   "type": "mass body"
+  }
+ ]
+}

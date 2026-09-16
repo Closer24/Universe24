@@ -1,0 +1,53 @@
+compton_scattering                            Q  -3->-3  B    0->0    L  1->1
+electron_positron_scattering                  Q   0->0   B    0->0    L  0->0
+electron_electron_scattering                  Q  -6->-6  B    0->0    L  2->2
+electron_proton_bremsstrahlung                Q   0->0   B    1->1    L  1->1
+two_photon_pair_creation                      Q   0->0   B    0->0    L  0->0
+electron_positron_two_photon_annihilation     Q   0->0   B    0->0    L  0->0
+muon_pair_production                          Q   0->0   B    0->0    L  0->0
+muon_decay                                    Q  -3->-3  B    0->0    L  1->1
+antimuon_decay                                Q   3->3   B    0->0    L -1->-1
+tau_leptonic_decay                            Q  -3->-3  B    0->0    L  1->1
+antitau_leptonic_decay                        Q   3->3   B    0->0    L -1->-1
+free_neutron_beta_decay                       Q   0->0   B    1->1    L  0->0
+free_antineutron_beta_decay                   Q   0->0   B   -1->-1   L  0->0
+top_bottom_decay                              Q   2->2   B  1/3->1/3  L  0->0
+antitop_antibottom_decay                      Q  -2->-2  B -1/3->-1/3 L  0->0
+w_plus_leptonic_decay                         Q   3->3   B    0->0    L  0->0
+w_minus_leptonic_decay                        Q  -3->-3  B    0->0    L  0->0
+w_plus_hadronic_sector                        Q   3->3   B    0->0    L  0->0
+w_minus_hadronic_sector                       Q  -3->-3  B    0->0    L  0->0
+z_electron_pair_decay                         Q   0->0   B    0->0    L  0->0
+z_neutrino_sector_decay                       Q   0->0   B    0->0    L  0->0
+z_bottom_pair_decay                           Q   0->0   B    0->0    L  0->0
+higgs_bottom_pair_decay                       Q   0->0   B    0->0    L  0->0
+higgs_tau_pair_decay                          Q   0->0   B    0->0    L  0->0
+higgs_two_photon_decay                        Q   0->0   B    0->0    L  0->0
+higgs_gluon_sector_decay                      Q   0->0   B    0->0    L  0->0
+neutrino_electron_scattering                  Q  -3->-3  B    0->0    L  2->2
+inverse_beta_scattering                       Q   3->3   B    1->1    L -1->-1
+neutrino_flavor_conversion                    Q   0->0   B    0->0    L  1->1
+quark_gluon_scattering                        Q   2->2   B  1/3->1/3  L  0->0
+gluon_gluon_scattering                        Q   0->0   B    0->0    L  0->0
+charged_weak_boson_two_photon_scattering      Q   0->0   B    0->0    L  0->0
+higgs_higgs_scattering                        Q   0->0   B    0->0    L  0->0
+
+reciprocity, conjugate charge and equal spin OK for 35 records
+proton particle-contracts mass 1836153 catalog-derived ratio*1000 = 1836152.67 diff 0.326568763682719021358
+neutron particle-contracts mass 1838684 catalog-derived ratio*1000 = 1838683.66 diff 0.338064279245066251743
+muon particle-contracts mass 206768 catalog-derived ratio*1000 = 206768.28 diff -0.2827084671796902080641
+alpha in particle-contracts: {'mass': 7294300, 'charge': 2} ; alpha in catalog: False ; helium nucleus record in catalog: False
+electron     catalog 0.51099895069 MeV/c2 -> keV 510.99895069000 -> encoded 511 loss -0.00104931000 keV; catalog uncertainty 0.00000000016 MeV/c2
+proton       catalog 938.27208943 MeV/c2 -> keV 938272.08943000 -> encoded 938272 loss 0.08943000 keV; catalog uncertainty 0.00000029 MeV/c2
+neutron      catalog 939.5654219 MeV/c2 -> keV 939565.4219000 -> encoded 939565 loss 0.4219000 keV; catalog uncertainty 0.0000005 MeV/c2
+muon         catalog 105.6583755 MeV/c2 -> keV 105658.3755000 -> encoded 105658 loss 0.3755000 keV; catalog uncertainty 0.0000023 MeV/c2
+tau          catalog 1776.93 MeV/c2 -> keV 1776930.00 -> encoded 1776930 loss 0.00 keV; catalog uncertainty 0.09 MeV/c2
+up_quark     catalog 2.16 MeV/c2 -> keV 2160.00 -> encoded 2160 loss 0.00 keV; catalog uncertainty 0.07 MeV/c2
+top_quark    catalog 172.60 GeV/c2 -> keV 172600000.00 -> encoded 172600000 loss 0.00 keV; catalog uncertainty 0.27 GeV/c2
+higgs_boson  catalog 125.13 GeV/c2 -> keV 125130000.00 -> encoded 125130000 loss 0.00 keV; catalog uncertainty 0.11 GeV/c2
+
+magnetic_moment {'ABSENT': 29, 'measured': 3, 'reference': 3}
+   absent: ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'muon', 'antimuon', 'tau', 'antitau', 'electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'photon', 'gluon_multiplet', 'w_plus', 'w_minus', 'z_boson', 'higgs_boson', 'graviton']
+lifetime {'not_applicable': 6, 'reference': 12, 'not_supplied': 4, 'unknown': 9, 'measured': 3, 'established': 1}
+decay_width {'ABSENT': 29, 'measured': 4, 'reference': 2}
+mass {'measured': 14, 'reference': 12, 'not_applicable': 6, 'theoretical': 2, 'hypothetical': 1}
