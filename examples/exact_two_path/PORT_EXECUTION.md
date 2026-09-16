@@ -78,3 +78,11 @@ Node visits. Its dispatch overhead outweighed the work saved. This is useful
 negative performance evidence, not a measurement of the unimplemented 24-Register
 kernel. All six runs produced canonical HTML with 13 actual frames; embedded
 recordings were checked. Browser interaction and visual layout were not verified.
+
+A subsequent import-boundary correction loads countdown diagnostics only when
+the explicit Port profile requests them. The corrected source fingerprint is
+`7546150cdf16dbe6c155524fd72b8d6eccb5c42f4337b3572e9f36e2dce2257f`.
+The ordinary runner import check and 86 focused application/architecture/candidate
+tests pass. One fresh paired replay on this source preserves every canonical
+tick/event hash and produces both HTML recordings. The three-pair timing table
+above remains evidence for its identified earlier source, not a new timing claim.

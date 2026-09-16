@@ -7,7 +7,6 @@ from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import Address3, InitialState, NodeView
 from event_universe.core.port_execution import PortExecution
-from event_universe.diagnostics.deadline_state import projected_nodes, projected_snapshot
 from event_universe.fields.bonds import BondRegistry
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.node_conservation import LocalBalanceGuard
@@ -159,12 +158,16 @@ class Simulation(DisturbanceEngine):
     def nodes(self) -> Mapping[Address3, NodeView]:
         nodes = super().nodes
         if self._port_execution is not None and self.initial.node_execution:
+            from event_universe.diagnostics.deadline_state import projected_nodes
+
             return projected_nodes(nodes, self.tick)
         return nodes
 
     def snapshot(self) -> dict[str, object]:
         snapshot = super().snapshot()
         if self._port_execution is not None and self.initial.node_execution:
+            from event_universe.diagnostics.deadline_state import projected_snapshot
+
             return projected_snapshot(snapshot, self.tick)
         return snapshot
 
