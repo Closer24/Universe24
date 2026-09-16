@@ -223,6 +223,12 @@ def test_runpy_acceptance_tool_retains_application_consumer():
     assert "tests/test_collisions.py" not in tests
 
 
+@pytest.mark.parametrize("resource", ["initialization.json", "run.py"])
+def test_exact_wave_configuration_retains_physical_and_scheduler_acceptance(resource):
+    tests, _ = CHECK.select([f"examples/exact_two_path/{resource}"], {})
+    assert {"tests/test_exact_two_path.py", "tests/test_port_schedule.py"} <= set(tests)
+
+
 @pytest.mark.parametrize(
     "filename", ["law.json", "definition.json", "experiments.json", "prepare.py", "observe.py"]
 )

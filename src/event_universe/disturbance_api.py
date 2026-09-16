@@ -1,10 +1,13 @@
 """Public assembly of the generic disturbance simulator."""
 
-from typing import TYPE_CHECKING
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Literal
 
 from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
-from event_universe.core.disturbance_state import InitialState
+from event_universe.core.disturbance_state import Address3, InitialState, NodeView
+from event_universe.core.port_execution import PortExecution
+from event_universe.diagnostics.deadline_state import projected_nodes, projected_snapshot
 from event_universe.fields.bonds import BondRegistry
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.node_conservation import LocalBalanceGuard
@@ -27,7 +30,20 @@ class Simulation(DisturbanceEngine):
         *,
         observer: EventSink | None = None,
         node_workers: int = 1,
+        execution_strategy: Literal["node", "port"] = "node",
     ) -> None:
+        if execution_strategy not in ("node", "port"):
+            raise ValueError("execution strategy must be node or port")
+        if execution_strategy == "port" and (
+            node_workers != 1
+            or initial.spatial_fields
+            or initial.event_program is not None
+            or any(kind.transport.mode == "split" for kind in initial.disturbances)
+        ):
+            raise ValueError(
+                "Port execution supports serial whole-record carriers without spatial fields, "
+                "or native events"
+            )
         if type(node_workers) is int and node_workers > 1 and initial.event_program is not None:
             raise ValueError("parallel Node execution does not support an event program")
         event_space, resolver = None, None
@@ -125,6 +141,32 @@ class Simulation(DisturbanceEngine):
             self._observer = self._observe_conservation
             if self._spatial is not None:
                 self._spatial.observer = self._observe_conservation
+        self._port_execution = PortExecution(self) if execution_strategy == "port" else None
+
+    def _step(self) -> None:
+        if self._port_execution is None:
+            super()._step()
+        else:
+            self._port_execution.step()
+
+    def execution_report(self) -> dict[str, object]:
+        report = super().execution_report()
+        if self._port_execution is not None:
+            report["port_schedule"] = self._port_execution.report()
+        return report
+
+    @property
+    def nodes(self) -> Mapping[Address3, NodeView]:
+        nodes = super().nodes
+        if self._port_execution is not None and self.initial.node_execution:
+            return projected_nodes(nodes, self.tick)
+        return nodes
+
+    def snapshot(self) -> dict[str, object]:
+        snapshot = super().snapshot()
+        if self._port_execution is not None and self.initial.node_execution:
+            return projected_snapshot(snapshot, self.tick)
+        return snapshot
 
     def _observe_conservation(self, event: dict[str, object]) -> None:
         assert self._audit is not None

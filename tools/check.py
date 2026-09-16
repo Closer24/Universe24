@@ -11,6 +11,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/exact_two_path/initialization.json": (
+        "tests/test_exact_two_path.py",
+        "tests/test_port_schedule.py",
+    ),
+    "examples/exact_two_path/run.py": (
+        "tests/test_exact_two_path.py",
+        "tests/test_port_schedule.py",
+    ),
+    "examples/exact_two_path/compare.py": ("tests/test_port_schedule.py",),
     "examples/quantum/spatial_momentum.py": (
         "tests/test_spatial_momentum.py",
         "tests/test_position_moment_response.py",

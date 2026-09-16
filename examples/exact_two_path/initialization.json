@@ -1,0 +1,972 @@
+{
+  "schema_version": 1,
+  "model_id": "exact-finite-two-path-v1",
+  "shape": [
+    6,
+    6,
+    6
+  ],
+  "boundary": "periodic",
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 12,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 100000
+  },
+  "fields": [
+    {
+      "name": "amplitude",
+      "components": 3,
+      "units": "complex amplitude numerator; third component zero",
+      "signed": true,
+      "conserved": false,
+      "extensive": false,
+      "scale": 25
+    },
+    {
+      "name": "stage",
+      "components": 1,
+      "units": "completed finite route stage",
+      "signed": false,
+      "conserved": false,
+      "extensive": false,
+      "scale": 1
+    },
+    {
+      "name": "heading",
+      "components": 3,
+      "units": "current neighbor direction",
+      "signed": true,
+      "conserved": false,
+      "extensive": false,
+      "scale": 1
+    },
+    {
+      "name": "first_leg",
+      "components": 3,
+      "units": "first configured two-hop direction",
+      "signed": true,
+      "conserved": false,
+      "extensive": false,
+      "scale": 1
+    },
+    {
+      "name": "second_leg",
+      "components": 3,
+      "units": "second configured two-hop direction",
+      "signed": true,
+      "conserved": false,
+      "extensive": false,
+      "scale": 1
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "mode_a",
+      "fields": [
+        "amplitude",
+        "stage",
+        "heading",
+        "first_leg",
+        "second_leg"
+      ],
+      "defaults": {
+        "stage": 0
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "heading"
+      },
+      "updates": [
+        {
+          "field": "stage",
+          "expression": {
+            "op": "min",
+            "args": [
+              6,
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "stage"
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "field": "heading",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          1,
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "field": "stage"
+                              },
+                              2
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "field": "first_leg"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "field": "stage"
+                              },
+                              2
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              1,
+                              {
+                                "op": "gt",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  4
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "field": "second_leg"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "abs",
+                            "args": [
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  5
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "field": "amplitude",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "sub",
+                        "args": [
+                          1,
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "op": "abs",
+                                "args": [
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      {
+                                        "field": "stage"
+                                      },
+                                      2
+                                    ]
+                                  }
+                                ]
+                              },
+                              0
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "field": "amplitude"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "abs",
+                            "args": [
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  2
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "transform",
+                    "args": [
+                      {
+                        "field": "amplitude"
+                      }
+                    ],
+                    "matrix": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        0,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mode_b",
+      "fields": [
+        "amplitude",
+        "stage",
+        "heading",
+        "first_leg",
+        "second_leg"
+      ],
+      "defaults": {
+        "stage": 0
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "heading"
+      },
+      "updates": [
+        {
+          "field": "stage",
+          "expression": {
+            "op": "min",
+            "args": [
+              6,
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "field": "stage"
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "field": "heading",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          1,
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "field": "stage"
+                              },
+                              2
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "field": "first_leg"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      {
+                        "op": "mul",
+                        "args": [
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "field": "stage"
+                              },
+                              2
+                            ]
+                          },
+                          {
+                            "op": "sub",
+                            "args": [
+                              1,
+                              {
+                                "op": "gt",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  4
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "field": "second_leg"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "abs",
+                            "args": [
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  5
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  [
+                    0,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "field": "amplitude",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "sub",
+                        "args": [
+                          1,
+                          {
+                            "op": "gt",
+                            "args": [
+                              {
+                                "op": "abs",
+                                "args": [
+                                  {
+                                    "op": "sub",
+                                    "args": [
+                                      {
+                                        "field": "stage"
+                                      },
+                                      2
+                                    ]
+                                  }
+                                ]
+                              },
+                              0
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "field": "amplitude"
+                  }
+                ]
+              },
+              {
+                "op": "mul",
+                "args": [
+                  {
+                    "op": "sub",
+                    "args": [
+                      1,
+                      {
+                        "op": "gt",
+                        "args": [
+                          {
+                            "op": "abs",
+                            "args": [
+                              {
+                                "op": "sub",
+                                "args": [
+                                  {
+                                    "field": "stage"
+                                  },
+                                  2
+                                ]
+                              }
+                            ]
+                          },
+                          0
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "op": "transform",
+                    "args": [
+                      {
+                        "field": "amplitude"
+                      }
+                    ],
+                    "matrix": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        0,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "name": "split",
+      "left_type": "mode_a",
+      "right_type": "mode_b",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              1,
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "stage",
+                            "side": "left"
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "sub",
+            "args": [
+              1,
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "stage",
+                            "side": "right"
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "amplitude",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      3,
+                      {
+                        "field": "amplitude",
+                        "side": "left"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      -4,
+                      {
+                        "field": "amplitude",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              5
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "amplitude",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      4,
+                      {
+                        "field": "amplitude",
+                        "side": "left"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      3,
+                      {
+                        "field": "amplitude",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              5
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "pair_amplitude_norm",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "amplitude",
+                    "side": "left"
+                  },
+                  {
+                    "field": "amplitude",
+                    "side": "left"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "amplitude",
+                    "side": "right"
+                  },
+                  {
+                    "field": "amplitude",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "recombine",
+      "left_type": "mode_a",
+      "right_type": "mode_b",
+      "when": {
+        "op": "mul",
+        "args": [
+          {
+            "op": "sub",
+            "args": [
+              1,
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "stage",
+                            "side": "left"
+                          },
+                          5
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "op": "sub",
+            "args": [
+              1,
+              {
+                "op": "gt",
+                "args": [
+                  {
+                    "op": "abs",
+                    "args": [
+                      {
+                        "op": "sub",
+                        "args": [
+                          {
+                            "field": "stage",
+                            "side": "right"
+                          },
+                          5
+                        ]
+                      }
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "assignments": [
+        {
+          "side": "left",
+          "field": "amplitude",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      3,
+                      {
+                        "field": "amplitude",
+                        "side": "left"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      4,
+                      {
+                        "field": "amplitude",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              5
+            ]
+          }
+        },
+        {
+          "side": "right",
+          "field": "amplitude",
+          "expression": {
+            "op": "exact_div",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  {
+                    "op": "mul",
+                    "args": [
+                      -4,
+                      {
+                        "field": "amplitude",
+                        "side": "left"
+                      }
+                    ]
+                  },
+                  {
+                    "op": "mul",
+                    "args": [
+                      3,
+                      {
+                        "field": "amplitude",
+                        "side": "right"
+                      }
+                    ]
+                  }
+                ]
+              },
+              5
+            ]
+          }
+        }
+      ],
+      "invariants": [
+        {
+          "name": "pair_amplitude_norm",
+          "expression": {
+            "op": "add",
+            "args": [
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "amplitude",
+                    "side": "left"
+                  },
+                  {
+                    "field": "amplitude",
+                    "side": "left"
+                  }
+                ]
+              },
+              {
+                "op": "dot",
+                "args": [
+                  {
+                    "field": "amplitude",
+                    "side": "right"
+                  },
+                  {
+                    "field": "amplitude",
+                    "side": "right"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "seeds": [
+    {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "type": "mode_a",
+      "values": {
+        "amplitude": [
+          25,
+          0,
+          0
+        ],
+        "first_leg": [
+          1,
+          0,
+          0
+        ],
+        "second_leg": [
+          0,
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "type": "mode_b",
+      "values": {
+        "amplitude": [
+          0,
+          0,
+          0
+        ],
+        "first_leg": [
+          0,
+          1,
+          0
+        ],
+        "second_leg": [
+          1,
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}
