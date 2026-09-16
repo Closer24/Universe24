@@ -1,5 +1,50 @@
 # Architecture and change boundaries
 
+## System layers: Nodes, mathematics and physical entities
+
+The architecture separates where state lives, how it changes and what a
+configured state represents. A physical entity is not a special kind of Node:
+an electron or a field is represented by explicitly configured properties and
+rules on the same generic Node/Link machinery.
+
+| Layer | Responsibility | Canonical owner |
+| --- | --- | --- |
+| Nodes and transport | A Node owns bounded local NodeState, resident values, Ports and pending timing/ownership metadata. Links own values in transit. | [Terminology](TERMINOLOGY.md), [Node execution](NODE_VECTOR_PROCESSOR.md) |
+| Generic mathematics | Reusable bounded integer scalar/vector operators evaluate local inputs and propose changes. Supported operations are implemented once in code; validated JSON selects their compositions. | [Local integer operation contract](#local-integer-operation-contract), [disturbance expressions](DISTURBANCES.md#local-updates-and-expressions) |
+| Physical entity definitions | External JSON describes particles, fields and other entities through identities, sourced physical properties, numerical values, units and evidence status. These are data, not species-specific engine branches. | [catalog.json](../examples/known-entities/catalog.json), [entity catalog contract](ENTITY_CATALOG.md) |
+| Representation and preparation | Explicit JSON profiles bind selected entities to supported fields, initial values and configured rules. Optional reference-unit authoring encodes selected physical values into bounded integer components before initialization. | [representation-probes.json](../examples/known-entities/representation-probes.json), [reference units](REFERENCE_UNITS.md), [initialization validation](CONFIGURATION_VALIDATION.md) |
+
+Physical numbers and names belong in external data, not hardcoded electron,
+proton or field-specific logic. Shared constants and unit definitions live in
+[physical-units.json](../examples/known-entities/physical-units.json). A catalog
+measurement retains its unit, source, uncertainty and context when supplied;
+unknown properties are not silently assigned zero. The runtime receives the
+explicitly prepared integer values and declared scales, not decimal measurement
+objects or a live catalog lookup.
+
+The preparation boundary is explicit: choose an entity and its supplied profile;
+when physical calibration is wanted, encode selected catalog values with the
+reference-unit authoring tool into matching field initialization values; validate
+the resulting initialization; then execute generic LocalRules on Nodes.
+Calibration and encoding-error reports remain host-side evidence. The profile
+compiler does not automatically turn a measured mass, spin or listed interaction
+into a law. Merely editing reference metadata must not silently change runtime
+equations. A new unsupported operation requires an explicitly reviewed generic
+implementation, not executable code hidden in JSON.
+
+The default field schema supports Scalars and three-component Vectors, with a
+constant 3-by-3 integer matrix transform. The opt-in Node execution profile also
+admits bounded 1..32-component properties with its declared operations and
+composition limits; this is not arbitrary tensor support. The physical-quantity
+encoder currently prepares only scalar/three-component values. The linked
+contracts own the detailed dimensions, bounds and rejection rules.
+
+This separation is implemented for the supported configuration paths; complete
+physical species dynamics and emergence remain separate research goals. A JSON
+entry named electron or electromagnetic field does not establish electron
+dynamics or Maxwell's equations. Keep the [physical support inventory](PHYSICAL_ENTITIES.md)
+and each experiment's assumptions distinct from the generic mechanism.
+
 [Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
 pending completion and publication in `core/disturbance_node.py` and
 `core/spatial_node.py`. Shared services contain seed-free immutable definitions,
