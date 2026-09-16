@@ -32,6 +32,13 @@ This internal graph is symmetric under proper signed-axis rotations; it does
 not establish continuous isotropy or relativity. External spatial degree remains
 six. Any future topology change needs explicit user approval.
 
+A Node is a conceptual spatial grouping for describing vector directions. The
+grouping itself adds no physical transition, shared state access, delay or
+independent Node dynamics. Direction labels and their representation do not by
+themselves select a scattering or routing law: actual causal Register transfers
+and explicitly configured operations define evolution. The six Ports and 24
+private one-input/one-output Registers remain the adopted structure.
+
 This supersedes the earlier one-Register-per-Port definition. Existing six-Port
 banks/readiness adapters retain their implementation meaning and are not evidence
 of the revised 24-Register runtime. No runtime is changed by this definition.
