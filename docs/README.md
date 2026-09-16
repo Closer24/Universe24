@@ -101,3 +101,5 @@ and [contribution procedure](../CONTRIBUTING.md) retain their authority. This in
 routes readers; it does not duplicate their technical rules.
 
 - [Mass computation clock candidate](MASS_COMPUTATION_CLOCK_CANDIDATE.md): bounded stationary-source experiments with six output clocks.
+- [Local nucleus and electron architecture](LOCAL_NUCLEUS_ELECTRON_ARCHITECTURE.md): independent builders, bounded displacement transport and integrated evidence contracts.
+- [Proton, neutron and electron numerical pilot](PROTON_NEUTRON_ELECTRON_CANDIDATE.md): prospective contact binding, causal field calibration and measured circulation acceptance.
