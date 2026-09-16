@@ -52,8 +52,9 @@ or physically emits again; a distinct contact may create a new event, but only a
 may authorize and own a draw. Ordinary evolution is deterministic. Released
 BondRegistry pair-key reuse is a bounded profile-lifecycle gap, not permission
 to redraw a completed event. Immutable origin/history persistence already exists;
-the local lookup/stop/retention rule for a moving event's return notice remains
-separate and incomplete. An event ID alone is not a local routing algorithm.
+the bounded lookup/stop/retention encoding for a moving event's return notice
+remains engineering work. The agreed no-miss and once-only requirements must
+be implemented and tested; an event ID alone is not a routing algorithm.
 
 The central section 1 owns the cabinet/channel resource target, moving-event
 identity and directional displacement requirement. Section 5 owns its acceptance.
@@ -65,6 +66,20 @@ hypothesis and distinct weak operations; [physical support](PHYSICAL_ENTITIES.md
 records the existing profile limits. Its directional timing and marker contract
 distinguishes used faces, event identity and family transitions. Six markers
 alone do not establish a bounded return protocol.
+
+The latest central closure fixes one bounded local update per tick, fixed
+neighbor transit H separate from six output delays, no input clock, and the
+no-capacity-wait displacement/overlap requirements. Family definitions own
+energy/momentum readouts and coupling contracts; the engine performs generic
+validation over complete owners. These responsibilities are agreed, while
+encoding, atomic resolution and evidence remain implementation work. Numerical
+family profiles remain separately scoped.
+
+Preserve existing free-ray self-field exclusion before response. The named
+stationary held-source candidate may sample fresh local emission with
+nonemitting probes; it does not admit delayed moving-emitter self-response.
+The numerical candidate is separately reviewed on its design branch, not
+copied into this authority map.
 
 ## Acceptance for documentation changes
 

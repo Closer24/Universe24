@@ -183,3 +183,12 @@ mapping, emission funding and pending/completion timing, conservation readouts,
 release and finite bounds. Only Detector encounters may sample; strong/weak
 operations themselves remain deterministic. Prospective acceptance is owned by
 central section 5; no binding or unified-profile validation is claimed here.
+
+The separately reviewed stationary held-mass-source output-clock candidate
+addresses a finite engineering profile, not the entire strong/weak composition.
+It preserves the existing free-ray self-field exclusion: held-source sampling
+of fresh local emission is not permission for moving-emitter self-response.
+Nonemitting probes are admitted; newly output-delayed moving emitters require
+explicit rejection until a compatible exclusion contract passes its tests.
+The central model owns this scope; numerical candidate laws stay in their
+separate design document and are not duplicated in this support inventory.

@@ -339,17 +339,18 @@ encounter for the event pair even if both endpoints detect the overlap. That
 causal once-only protocol, including replay and delayed acknowledgements, remains
 to be specified rather than supplied by a global registry for ordinary events.
 
-Before a developer can implement the displacement/encounter rule, specify the
-local path-direction representation, simultaneous push/reservation and Link
-crossing semantics, exact encounter/update rule, and behavior at the origin or
-a periodic path. Do not invent these choices through host iteration order.
+The bounded per-tick displacement and no-miss/once-only requirements are agreed.
+Engineering review must choose the bounded local representation, synchronous
+push/reservation and Link-crossing resolution, atomic encounter commit and
+origin/periodic-path handling that satisfy them. Do not let host iteration
+order invent those semantics or report the agreed requirements as undecided.
 Finite identifiers must not alias continuing events; no expiration/reuse policy
 is supplied here. Bounded local state cannot be assumed to retain unlimited new
 event identities or path histories. Quantum action is already defined and is
 not part of these missing transport decisions.
 
 Required independent acceptance cases, with expected tick-by-tick traces fixed
-after those semantics are defined:
+against the concrete engineering resolution:
 
 - **Push chain:** occupied adjacent channels receive slot demands; complete
   variables move UP with one owner each, no dropped properties, no capacity
@@ -447,7 +448,8 @@ The central model section 3 owns the six independent output clocks driven by
 local computation fields; there is no input clock. Earlier shared-clock or
 single-wait candidate fixtures in this annex are scoped arithmetic examples,
 not an adopted replacement. Each split output needs its own face readiness and
-separate causal Link transit. The same section owns used-face markers and
+separate fixed neighbor Link transit H. One bounded local update occurs per
+tick. The same section owns used-face markers and
 separate identity/family-transition metadata; no complete routing algorithm is
 implied by a six-bit mask.
 
@@ -457,3 +459,11 @@ for current composition gaps. No ordinary operation samples. Acceptance must
 include zero random tickets for all non-Detector actions, deterministic replay,
 independent six-face timing and no added input delay. These are target tests,
 not evidence of runtime support.
+
+The central closure assigns energy/momentum readouts and coupling conservation
+contracts to family definitions; generic complete-owner validation does not put
+physical formulas into engine scheduling or NodeState. Existing free-ray
+self-exclusion remains active. The separate stationary held-mass-source
+candidate supports fresh local emission sampling and nonemitting probes only;
+newly output-delayed moving emitters remain unsupported until their exclusion
+composition is defined and tested. No candidate numerical law is copied here.
