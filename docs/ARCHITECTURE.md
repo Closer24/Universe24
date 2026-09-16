@@ -205,6 +205,49 @@ Rest mass does not automatically select gravity or a Node-delay policy; keep
 [mass representation, rest phase and delay](REFERENCE_UNITS.md#mass-encoding-rest-phase-and-node-delay)
 distinct. No species-specific branch or additional coupling is implemented here.
 
+#### Physical checks for composed couplings
+
+Check dimensions and the symmetry transformations of the selected regime.
+Electric field and velocity are polar vectors; magnetic field and spin are axial
+vectors. The charge-force terms and magnetic-moment energy therefore have
+different tensor roles. A shared magnetic field can affect orbital motion and
+spin magnetic moment; property identity is not operator identity. The spin
+reference is [Feynman III, section 10-6](https://www.feynmanlectures.caltech.edu/III_10.html).
+
+Composition must retain physical cross terms and event ordering. In the
+nonrelativistic charged-particle reference, `H = (p-qA)^2/(2m) + q*phi`;
+splitting A into contributions creates cross terms. Independent update matrices
+cannot simply be summed and presumed unitary, and noncommuting sequential pulses
+depend on order. Gauge-dependent potential components do not gain independent
+observable meaning from JSON names. See
+[Feynman III, section 21-1](https://www.feynmanlectures.caltech.edu/III_21.html).
+These reference expressions do not authorize adding those laws to the Engine.
+
+Conservation must identify matter, field and apparatus owners, or explicitly
+declare an external drive. General-relativistic gravity involves stress-energy
+and spacetime geometry, not only a rest-mass Scalar; do not infer a universal
+global scalar-energy ledger from a generic schema. See
+[Tong's general-relativity introduction](https://davidtong.org/pdfs/teaching/general-relativity/gr1.pdf).
+Mass quantization and mass-dependent Node latency remain separate unchosen laws.
+
+#### Prospective finite spin-pulse check
+
+A proposed bounded example uses one unentangled spin-1/2 Bloch vector r with
+`rho = (I + r dot sigma)/2` and two sequential external magnetic pulses sharing
+one gyromagnetic-ratio property. From `r=(0,0,1)`, an x-axis quarter turn followed
+by a z-axis quarter turn gives `(1,0,0)`; reverse order gives `(0,-1,0)`.
+Signed permutation matrices implement these rotations exactly and preserve
+squared norm one; inverse pulses restore the initial vector. These are proposed
+independent expected results, not simulator validation evidence.
+
+The pulse rotations are configured reference operations, not emergent spin
+dynamics. They are sequential local events within one electromagnetic interaction,
+not arbitrary simultaneous field summation. This example does not close spin
+measurement, electromagnetic source dynamics, apparatus energy/momentum or full
+electron physics. Physical context:
+[Feynman III, sections 10-6 and 10-7](https://www.feynmanlectures.caltech.edu/III_10.html).
+It does not expand currently authorized implementation or experiment scope.
+
 ### Stored codes and mathematical values
 
 The approved Node storage domain is bounded nonnegative integers, including
