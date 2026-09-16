@@ -12,7 +12,9 @@ The latest action-bit decision supersedes both the earlier reflect/absorb model
 and the earlier zero-draw PASS encounter. The Detector samples an **action bit**
 to select PASS or GENERATE_RETURN. PASS does not sample the forwarded **content**
 again; it can still follow an action draw. No 50/50 probability is implied.
-Any 0/1 operation labels are encoding conventions, not physical outcome values.
+The user-defined mapping is **1 = PASS**, **0 = RETURN/CANCEL** (the
+GENERATE_RETURN operation below). These action labels are not physical payload
+values; their distribution remains OPEN.
 
 Every Detector has the same capabilities and rules. Identity does not establish
 an Alice/Bob priority. Other paths remain present; no Detector event restores an
@@ -45,7 +47,7 @@ and distribution definitions are separate from evolving state.
 | SPACE | PASS | Forward exactly the received semantic signal; no content sample | Record transmission if enabled |
 | SPACE | GENERATE_RETURN | Generate a fresh value with DETECTOR provenance and emit through the incoming Port | Record generation; do not adopt the original incoming value |
 | DETECTOR | PASS | Forward exactly the received signal and generation provenance; no content sample | Adopt that generated value under LOCK without resampling it |
-| DETECTOR | GENERATE_RETURN | OPEN: admission after receiving or locking a generated value | Repeat-generation and exchange policy must be defined |
+| DETECTOR | GENERATE_RETURN | On the described initial encounter, reject the incoming payload and return using the receiving Detector's own values | Do not adopt the incoming value; repeat/previously locked cases remain OPEN |
 
 Action sampling is external Detector logic, not an ordinary Node/Register rule.
 The action-bit distribution, dependence on causally available input/settings and
@@ -69,6 +71,24 @@ LOCK means adopting a received Detector-generated value without content
 resampling. It does not establish permanent shutdown, absorption, global wave
 resolution or definiteness of every observable. Duration, setting conversion,
 replacement, repeat encounters and simultaneous conflicts remain OPEN.
+
+### Alice/Bob example
+
+Alice's previously generated signal reaches Bob through intermediate Nodes.
+If Bob samples 1, he adopts and forwards Alice's payload without resampling that
+content. If Bob samples 0, he does not adopt Alice's payload: he uses his own
+values and returns a cancellation along the traversed branch toward the relevant
+changed-interaction Node, and toward Alice if the endpoint rule requires it.
+The exact return payload/phase law and whether its values require a new draw
+remain OPEN; the action bit alone does not provide them.
+
+Alice learns of cancellation only when a causal notice reaches her. On a unique
+simple path, if each Node completes its local cancellation before forwarding the
+notice, arrival establishes that the intervening Nodes have processed that
+branch. It does not establish cancellation of side branches or already emitted
+in-flight packets. Preserve the original and returned event records; cancellation
+changes the branch's continuing validity, not its past events. Termination at the
+prior interaction versus onward propagation to Alice remains OPEN.
 
 ## Spatial return and time
 
