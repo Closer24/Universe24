@@ -437,12 +437,13 @@ failure behavior and model costs before claiming an equivalent host optimization
 
 The Node/Register architecture above is already binding. Its specification was
 not replaced by the property-transport or finite-wave examples; the missing work
-is the actual computational Register and due-endpoint runtime. Configuration
-benchmarks exercise existing mechanisms and cannot establish this implementation.
+was the actual computational Register and due-endpoint runtime. The private
+identity candidate below now has separately scoped source/evidence. Configuration
+benchmarks alone cannot establish the general implementation.
 
 | Planned component | Owned responsibility and boundary |
 | --- | --- |
-| Shared Register contract | One writer defines the proposed `core/register_contracts.py` interface: bounded private Register state, single-channel delivery, per-slot ownership/readiness and metadata-only reservations. This path is planned, not an existing implementation claim. |
+| Shared Register contract | One writer owns the private state/input/output and channel contract. The identity candidate uses `core/private_register.py` and `core/private_transport.py`; the earlier `core/register_contracts.py` path was a proposal, not its implementation identity. |
 | Node-local execution | Each initial Node has six external Ports and 24 directed internal Registers, each with exactly one input and one output, using the same generic rules. The Node only groups their private states; each update reads only its own state and actually received input. Cross-Register physical information requires causal channel transfer. Do not invoke the full Node planner once per Register or duplicate inventory. |
 | External due scheduler and transport | Index active/due internal Register work separately from external Port delivery and timers, keep current/next-or-later work separate and route only at declared Link arrival times. Topology and periodic endpoint mapping remain external; local rules receive no global reads. |
 | Simulation integration | Adapt the selected profile through the existing Simulation owner, with explicit support checks and unchanged accounting, failures and causal timing. Do not substitute fixture configuration for this adapter. |
@@ -456,18 +457,80 @@ incremental supported scope, not a permanent narrowing of the general design.
 The shared contract is settled before dependent concurrent writes; implementation
 owners use isolated files/branches and one writer per shared interface.
 
-A proposed transport-only fixture uses identity payload transfer on an explicitly
+The scoped transport-only candidate uses identity payload transfer on an explicitly
 selected rotation-equivariant four-hop route through private Registers. Zero local
 wait and one Link unit per model tick define this fixture's speed, with SI
 calibration unset; seed processing at tick zero delivers at tick one. It is a
-prospective ownership/transport/scheduling comparison, not universal wiring, wave
-mixing, straight/return closure, a mass law or completed implementation evidence.
+ownership/transport/scheduling comparison, not universal wiring, wave mixing,
+straight/return closure, a mass law or proof of the complete architecture.
 
 Completion requires actual source and focused tests for Register ownership,
 due-only dispatch, dormant wakeup/internal timers, causal ordering, private access,
 bounded pending state and explicit unsupported-mode rejection, with independent
-review. Until that evidence exists, this map remains planned implementation work,
-not a completed runtime or a speedup claim.
+review. Identity-only evidence below does not close the general interaction,
+timer or profile-integration requirements.
+
+### Private identity-transfer implementation contract
+
+This is the written implementation boundary for the currently selected engineering
+slice. Cite the revision of this section in the implementation handoff and PR.
+The universal private interface and the fixture configuration are separate:
+
+| Contract field | Selected scope |
+| --- | --- |
+| Unit interface | UNIDIRECTIONAL Register: one input channel, private own state, one output channel. Reverse flow requires a separately directed Register/channel; packaging never grants peer-state access. |
+| Count/topology | Six external Ports and 24 directed orthogonal Registers per Node. Counts of 18, 30 or 36 discussed elsewhere do not change this selection. |
+| Fixture wiring | Explicit periodic 6 by 6 by 6 input, with supplied bijection `T(n,p,q) = (n+q, -q, p)`, coordinates wrapped periodically, `p` orthogonal to `q`. This four-transfer square is an engineering fixture, not a universal scattering/ray law. |
+| Local law | `F(s, absent, identity) = (s, absent)`; `F(s, received, identity) = (s, received)`. Preserve private state and payload exactly. No mixing, copying, arithmetic on payload values or additional law. |
+| Physical inputs | Only immutable own state, one actually received datum or absence, and the immutable identity-law definition. No Node/world reference, address, clock, peer state, callback or shared snapshot enters F. |
+| Ownership/capacity | One input owner and one outgoing-channel slot per Register. Transfer ownership input -> channel -> recipient input once; immutable object reuse is not a second owner. Host due queues contain handles, not copied physical stock. |
+| Fixture time | Local wait zero; each configured Link spans one lattice unit and takes one model tick. Processing at tick t emits for t+1; receipt and a later emission can occur in the same tick, but the latter arrives no earlier than t+1. SI calibration remains unset. |
+| Private memory/encoding | Fixed bounded state, initially empty in the fixture. Payload components use the existing explicit positive signed-integer encoding and component bounds, unchanged by identity transfer. Present encoded zero is input; absence alone is idle. This profile does not implement a new universal encoding policy. |
+
+**Activation and ordering.** Preflight the complete due receipt/input cohort and
+output capacity before consuming its owners. Receive due channels, process the
+selected actual inputs, then publish future-due channels; no output re-enters the
+current delivery cohort. Dense Node-batch selection checks every Register key.
+Sparse selection visits only actual input/due handles. Both apply the same F to
+nonempty inputs; dense checks are not extra physical transitions. Skipping F on
+absence is valid because this identity law preserves state and has no autonomous
+evolution, local wait or internal timer. Future rules with those features require
+an explicit wakeup/no-op contract before sparse execution can omit work.
+
+**Bounds and errors.** Use the admitted code/component bounds and bounded tick
+arithmetic; reject unsupported rules, timing, keys and wiring before execution.
+Duplicate input admission, colliding receipt or occupied output capacity fails
+before the affected receipt/transfer consumes existing owners. Tick overflow fails
+before that cohort mutates. Do not overwrite, drop, clamp, silently serialize or
+choose a different physical result. Identity performs no division and creates no
+remainders; this does not exempt future arithmetic from explicit remainder owners.
+Diagnostic validation may reject but cannot repair physical state.
+
+**Acceptance.** Compare dense and sparse using identical input, graph, identity
+law and tick convention. Require exact per-tick private states, input/channel
+owners, payloads, destinations, due ticks, ordered events and structured physical records/projections; host
+counters, timing measurements and other execution metadata may differ.
+The snapshot labeled t is before tick-t receipts are processed. Include independent
+four-hop expected endpoints, empty input, present encoded zero, invalid wiring,
+capacity rejection and bounded-clock failure. Host visit counts and queue layouts
+need not match. Only after parity and independent expectations pass, compare
+stepping fairly with setup/recording/rendering separately accounted; retain the
+reference and report workload-specific results, not a universal speedup.
+
+**Implementation evidence and exclusions.** The
+[private transport implementation and recorded evidence](https://github.com/Closer24/Universe24/blob/9a64c242650ccc1de4514760cb54bff8360aa909/examples/private_transport/README.md)
+identify the current candidate and its limitations. That source uses
+`core/private_register.py`, `private_transport.py`, `private_reference.py` and
+`private_worklist.py`; the earlier proposed `register_contracts.py` path is not
+their implementation identity. Evidence must retain its tested source and scope.
+The loader's more general one-Link bijection and bounded-shape checks do not
+certify arbitrary template graphs as this square-loop fixture. The current review
+identified bounded-clock failure as a focused acceptance-test gap despite the
+preflight guard; prior passing test counts must not be cited as covering it.
+General physical coupling, fanout/mixing, detector-return routing, full-duplex
+reverse-flow execution, mass/delay laws and general straight passage remain
+unselected or unverified here. Developers must return missing decisions to the
+design owner rather than add them to this identity-only slice.
 
 ### Dual-execution acceptance and measured selection
 
