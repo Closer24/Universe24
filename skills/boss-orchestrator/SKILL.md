@@ -19,9 +19,13 @@ Short explanations, brief read-only checks and coordination stay with Boss.
 - Dispatch an already-authorized task without asking again merely to delegate it.
   Apply the current user/project scope and chosen execution lane to the handoff;
   delegation adds no authority to edit, publish, contact people or merge.
-- Assign one bounded owner and acceptance target; add parallel owners only for
-  genuinely independent work. Preserve one writer per shared interface and do
-  not create idle agents. Do not duplicate the specialist's long work on Boss.
+- Assign a bounded owner and acceptance target to each independent work item.
+  When implementation has two independent parts, assign two developers and run
+  them in parallel; do not funnel both through one developer. Choose the number
+  of owners from actual independent work, not a fixed headcount. Use isolated
+  branches/worktrees and explicit owned files. Preserve one writer per shared
+  interface; have the architect resolve genuine dependencies before concurrent
+  writes. Do not create idle agents or duplicate specialist work on Boss.
 - Tell the user what was dispatched. Continue the conversation while the
   specialist works when the runtime permits, and route changed requirements,
   cancellations or new constraints to that owner at safe interruption boundaries.
