@@ -81,7 +81,7 @@ Promote only when the user asks to continue toward implementation or the result 
 
 Use the full shared workflow only after the user selects a result for durable integration, or when the task explicitly starts as an implementation/fix request.
 
-Then apply source ownership, documentation, physics review, affected tests, simulator evidence, regression, `tools/check.py`, PR, current-main reconciliation and merge authorization. Never merge without the user's approval.
+Then apply source ownership, documentation, physics review, affected tests, simulator evidence, regression, `tools/check.py`, PR and current-main reconciliation. Apply [existing Git authorization](../workflow.md#tools-and-authority); do not add a fresh approval checkpoint to an already-authorized action.
 
 Promotion is evidence-driven: exploration does not automatically become a candidate, and a candidate does not automatically become integration. When uncertain, start with exploration.
 
@@ -112,10 +112,17 @@ This policy applies to Boss coordination and specialist handoffs. Specialists sh
 
 ## Routing
 
+For authorized remediation, apply [defect ownership and closure](../workflow.md#defect-ownership-and-closure).
+Dispatch every confirmed deficiency to its responsible specialist, including
+missing numerical contracts and unsupported compositions. Reporting a finding
+does not complete a repair request. Delegate long regression execution, monitoring
+and failure analysis to the test owner; Boss coordinates the returned results.
+
 | Need | Skill |
 | --- | --- |
 | Configuration check/authoring | [simulation-configuration](../simulation-configuration/SKILL.md) |
 | Field law or response | [field-development](../field-development/SKILL.md) |
+| Missing numerical law or physical acceptance | [physics-rule-validation](../physics-rule-validation/SKILL.md), then [mathematical-validation](../mathematical-validation/SKILL.md) and the implementation owner |
 | State/interfaces/dependencies | [architecture-review](../architecture-review/SKILL.md) |
 | Mathematical invariants and physical comparisons | [mathematical-validation](../mathematical-validation/SKILL.md) |
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |

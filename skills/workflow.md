@@ -146,6 +146,32 @@ continue without asking for the same permission again. Otherwise, return the
 finding for a separate implementation request rather than modifying code during
 configuration work.
 
+## Defect ownership and closure
+
+When the user authorizes remediation, every confirmed defect, capability gap or
+unmet acceptance target needs an active owner and a durable Issue/PR handoff.
+Attach related findings to the existing objective; use a separate Issue only for
+an independently completable objective. Keep the temporary defect list out of Skills.
+
+- Record the violated contract, affected model and source revision, reproduction,
+  expected versus actual result, responsible role, dependencies and closure check.
+- Route software defects to the component developer; configuration defects to
+  configuration authoring; missing numerical laws to physics and mathematics;
+  incompatible interfaces or ownership to architecture; display defects to the
+  visualization owner; and long checks plus failure analysis to the test owner.
+  Each implementation has one writer and an independent reviewer when required.
+- A missing law is an open design task. The design owner specifies the unresolved
+  operator, parameters, invariants and falsifiable acceptance before handing the
+  published contract to a developer. Do not invent a physical law or substitute a
+  different model to close a finding. Resolve routine implementation choices
+  within existing authorization without repeatedly asking the user.
+- The owner returns the correction and evidence, or a concrete blocker with the
+  next responsible owner. Boss routes blockers onward; a report, task assignment,
+  passing unrelated test or published branch is not a completed repair.
+- Reproduce the original failure on the corrected source, check affected
+  regressions and required review, and record the verified revision before
+  closure. Preserve negative results and remaining physical limitations.
+
 ## Inputs and handoff
 
 Give each owner a bounded task with the repository, base commit, candidate/model,
@@ -236,6 +262,14 @@ preserve all canonical frames and physical failure evidence, and verify worker
 cleanup plus the final replay handoff. Disclose unverified browser behavior.
 
 ## Tools and authority
+
+The user has given standing authorization to publish requested Universe24 work
+to Git: commit, push and open or update its PRs without another confirmation.
+This also covers the requested project Skill updates and remediation handoffs.
+Use existing authorization for a merge when it covers that change; do not require
+a repeated approval merely because a Skill mentions approval. Keep scope and
+required review/CI gates intact. This is not permission for unrelated changes,
+force pushes, destructive repository operations or messages to other people.
 
 Use the available local Git/Python tools and discover the connected GitHub tools
 when needed. Read access does not imply merge authority. Use existing user

@@ -5,6 +5,13 @@ description: Run and maintain the minimum sufficient Universe24 test suite, diag
 
 # Necessary tests
 
+Own delegated long checks through completion: run, monitor, inspect failures and
+return evidence for the actual source revision. Route each failure under
+[defect ownership and closure](../workflow.md#defect-ownership-and-closure) to
+its component owner with a reproduction, then verify the correction. Reuse
+completed evidence when its relevant source and inputs match; do not repeatedly
+run an unchanged long suite or send Boss a sequence of waiting messages.
+
 Apply [the published-design requirement](../workflow.md#implement-from-a-published-design): cite the design revision and derive independent acceptance cases from its contract. A mismatch is evidence to report, not permission to rewrite behavior or expectations.
 
 Read [the shared workflow](../workflow.md) and

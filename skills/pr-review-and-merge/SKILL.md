@@ -11,6 +11,11 @@ Input is the PR, current head/base, user authorization
 and specialist handoffs; output is an evidence-backed merge, closure or blocker.
 Use local Git and the available connected GitHub tools.
 
+Apply [standing Git publication authorization](../workflow.md#tools-and-authority).
+Publish requested corrections and Skill updates without a new approval prompt.
+Verify merge scope and required gates using existing authorization; do not treat
+publication or green software checks as closure of unresolved physical findings.
+
 Check that the PR identifies affected contracts, providers, consumers, tests and
 documentation. Reconcile those changes as one unit. Refresh the restart snapshot
 when integration changes a fact it records, without copying the entire PR history.
