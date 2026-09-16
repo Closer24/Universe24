@@ -36,8 +36,9 @@ Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the activ
 simulator, documentation, tests and diagnostics.
 
 The logical unit at a physical location is a **Node**. In the target architecture,
-one generic computational **Register** serves each Port inside that Node; the
-initial six-port cube has six Registers. Registers use identical generic logic
+the six external Ports define 24 directed internal computational **Registers**:
+one for each ordered pair of orthogonal Ports. Each Register has one input and
+one output; it is not a Port or a physical Link. Registers use identical generic logic
 with data-selected state, direction and delay. This is not yet a Register-level
 runtime scheduler; follow the implementation boundary in the terminology contract.
 A Node's complete local information is its
