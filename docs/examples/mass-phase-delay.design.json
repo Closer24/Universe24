@@ -44,5 +44,18 @@
     "parameters": null,
     "massless_behavior": null,
     "count_includes_link_transit": null
+  },
+  "computational_topology": {
+    "status": "selected_design_not_runtime_migration",
+    "external_ports_per_node": 6,
+    "private_registers_per_node": 36,
+    "route_classes": {
+      "orthogonal": 24,
+      "straight": 6,
+      "return": 6
+    },
+    "register_interface": "identical_private_one_input_one_output",
+    "node_role": "grouping_only_no_independent_physical_transition",
+    "contract": "docs/ARCHITECTURE.md#register-level-execution-target"
   }
 }

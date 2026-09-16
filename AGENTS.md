@@ -36,8 +36,10 @@ Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the activ
 simulator, documentation, tests and diagnostics.
 
 The logical unit at a physical location is a **Node**. In the target architecture,
-the six external Ports define 24 directed internal computational **Registers**:
-one for each ordered pair of orthogonal Ports. Each Register has one input and
+the six external Ports define 36 directed internal computational **Registers**:
+one for every ordered entrance/exit Port pair (24 orthogonal, six straight and
+six return). This is the user-selected temporary uniform baseline; the old
+24-Register fixture remains historical evidence only. Each Register has one input and
 one output; it is not a Port or a physical Link. Registers use identical generic logic
 with data-selected state, direction and delay. Each reads only its own state and
 actually received single-channel input, never another Register's state, including

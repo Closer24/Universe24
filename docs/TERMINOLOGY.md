@@ -11,9 +11,9 @@ contracts describe implementation; gaps do not relax the binding design.
 
 | Term | Definition |
 | --- | --- |
-| Node | One logical unit at a physical location in Event Space. It groups the 24 private Registers defined below; it is a container, not an independent physical computation unit. |
+| Node | One logical unit at a physical location in Event Space. It groups the 36 private Registers defined below; it is a container, not an independent physical computation unit. |
 | NodeState | The aggregate description of the bounded private states and metadata of one Node's Registers; grouping does not grant shared physical read access. It is not a second physical object or a copy per Register. |
-| Register | A directed internal computational transition between orthogonal Ports, with exactly one input channel and exactly one output channel. Each Register reads only its own state and its actually received single-channel input. All execute the same generic local logic; state, input, direction and delay are data. |
+| Register | A directed internal computational transition for one ordered entrance/exit Port pair, with exactly one input channel and exactly one output channel. Each Register reads only its own state and its actually received single-channel input. All execute the same generic local logic; state, input, direction and delay are data. |
 | Scalar | A one-component value. |
 | Vector | A three-component spatial value; wider bounded property arrays in the opt-in Node profile have their own explicit shape contract. |
 | Port | One of the six external directional connection endpoints; a Port is not a Register. |
@@ -21,13 +21,16 @@ contracts describe implementation; gaps do not relax the binding design.
 | Event | A local state transition or a completed Link transfer. Computational substeps do not create new physical locations. |
 | LocalRule | Configured generic logic operating only on one Register's private state and actually received input; no peer-state read, including within the same Node. |
 
-The revised six-Port model contains **24 directed Registers in one Node**:
+The user-selected working baseline is **36 directed Registers in one Node**.
+This temporary uniform baseline supersedes the earlier 24-Register selection:
 
 `P = {+X, -X, +Y, -Y, +Z, -Z}`
-`R = {(p,q) in P x P : axis(p) != axis(q)}`
+`R = P x P`
 
-Each Port connects internally to the four orthogonal Ports: 12 unoriented pairs
-or 24 directed one-input/one-output units. Four Nodes contain 96 Registers.
+Every entrance has six possible exit Registers: 24 orthogonal turns, six straight
+routes (exit opposite the entrance face), and six returns (exit equals the entrance
+face). Four Nodes contain 144 Registers. These are identical private units;
+route labels select wiring, not different intrinsic update rules.
 This internal graph is symmetric under proper signed-axis rotations; it does
 not establish continuous isotropy or relativity. External spatial degree remains
 six. Any future topology change needs explicit user approval.
@@ -36,12 +39,12 @@ A Node is a conceptual spatial grouping for describing vector directions. The
 grouping itself adds no physical transition, shared state access, delay or
 independent Node dynamics. Direction labels and their representation do not by
 themselves select a scattering or routing law: actual causal Register transfers
-and explicitly configured operations define evolution. The six Ports and 24
+and explicitly configured operations define evolution. The six Ports and 36
 private one-input/one-output Registers remain the adopted structure.
 
 This supersedes the earlier one-Register-per-Port definition. Existing six-Port
 banks/readiness adapters retain their implementation meaning and are not evidence
-of the revised 24-Register runtime. No runtime is changed by this definition.
+of the selected 36-Register runtime. No runtime is changed by this definition.
 
 ## Directed channels and bidirectional packaging
 
@@ -52,11 +55,10 @@ not zero-time delivery or a same-tick relay through successive Links.
 A connection carrying both directions simultaneously has two directed channels.
 They may share a package, but retain separate information, ownership and timing;
 packaging grants no peer-state read. Each computational Register still has exactly
-one input and one output. Pairing reciprocal units in the adopted orthogonal graph
-gives 12 bidirectional connections containing 24 directed Registers, not 18.
-All distinct face pairs would instead give 15 bidirectional/30 directed units;
-that is a different, unadopted graph. Self-return channels require explicit
-semantics and cannot be counted by blindly halving a directed total.
+one input and one output. The 30 distinct-face directed routes form 15 reciprocal
+pairs; the six same-face return routes complete the selected total of 36.
+A return exits toward the incoming neighbor; it is not a zero-time self-Link.
+Do not obtain a channel count by blindly halving the total.
 
 This clarifies the interface, not the scattering law or implemented reverse-channel
 support. Actual support needs source and execution evidence; do not infer it from
@@ -108,10 +110,11 @@ that protocol and its atomic publication/timing remain OPEN. Earlier permission
 for a shared Node-wide physical snapshot is superseded. NodeState is a grouping
 and diagnostic view, not an input capability for a Register.
 
-Straight passage exits the opposite face on the same axis; return exits the
-entry face. Neither is a direct edge of the orthogonal internal graph. Their
-realization through private Register channel transfers remains OPEN: do not ban either behavior,
-choose an intermediate axis, or invent microstep ticks or extra physical Links.
+Straight passage and return are direct route classes in the 36-pair baseline.
+The supplied cubic36 candidate wiring is documented at the exact source in
+[architecture](ARCHITECTURE.md#register-level-execution-target); the old 24-pair
+fixture did not provide those direct routes. A route class does not itself select
+a universal scattering law, split/merge protocol or physical delay.
 
 ## No second physical-location noun
 
@@ -140,3 +143,9 @@ state-layout counts. The current Node-owned execution path remains documented in
 [NODE_VECTOR_PROCESSOR.md](NODE_VECTOR_PROCESSOR.md); current active-set behavior
 remains in [LOCAL_FOCUS.md](LOCAL_FOCUS.md). Any runtime migration must update its
 consumers and test ownership, timing, errors and event equivalence explicitly.
+
+The former 24-Register orthogonal fixture and its measured timings remain historical
+comparison evidence, not the selected topology or a 36-Register benchmark. The
+[Register and Node acceptance requirements](ARCHITECTURE.md#register-and-node-acceptance)
+apply to migration. This terminology edit does not merge the cubic36 candidate or
+migrate every entity and coupling.

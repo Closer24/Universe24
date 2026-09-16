@@ -1,6 +1,6 @@
 # Generic integer Node processor
 
-This is the current Node-owned execution contract, not the revised 24-directed-Register
+This is the current Node-owned execution contract, not the selected 36-directed-Register
 scheduler for six external Ports. Existing six-Port readiness/bank behavior is
 not evidence of this internal computational graph or the private Register kernel.
 The whole-Node frozen-snapshot evaluator described below is an existing profile;

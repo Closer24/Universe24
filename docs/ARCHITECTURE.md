@@ -7,12 +7,15 @@ Agents must not replace its private Register laws with a whole-Node mixer, lossy
 topology/ownership model without explicit user approval. Implementation gaps
 below are unresolved work, not optional exemptions or permission to change the
 design. Documentation approval does not itself implement a runtime change.
+The user-selected temporary uniform baseline is six external Ports and 36 private
+Registers per Node. It supersedes the previous 24-Register selection for active
+work; historical fixtures and their measurements retain their original scope.
 
 | Stage | Responsibility and boundary |
 | --- | --- |
 | Experiment authoring | Select external JSON entity catalogs and representation profiles; physical names, properties and numbers are data, while generic operators have one reusable code owner. |
 | Preparation and validation | Resolve declared references, units, shapes, bounds and supported compositions into explicit integer initialization. Reject unsupported or inexact preparation under the lossless contract; no implicit physical law or hidden runtime catalog lookup. |
-| Logical world | Nodes form the selected periodic 3D layout. Each Node groups six external Ports and 24 private directed internal one-input/one-output Registers between orthogonal Ports; it performs no independent physical computation. |
+| Logical world | Nodes form the selected periodic 3D layout. Each Node groups six external Ports and 36 private directed internal one-input/one-output Registers, one per ordered entrance/exit Port pair; it performs no independent physical computation. |
 | Local execution | Every Register uses identical generic rules over its own bounded state and actually received single-channel input; no direct peer-state read, even within its Node. |
 | External scheduling and transport | Host infrastructure maps endpoints and schedules only active/due Register work. Current/future work sets preserve next-tick-or-later delivery and declared delays. |
 | Structured output and Recorder | Record committed events, results and snapshots through read-only interfaces; no physical update or global repair comes from output production. |
@@ -320,7 +323,7 @@ rules on the same generic Node/Link machinery.
 | Layer | Responsibility | Canonical owner |
 | --- | --- | --- |
 | Nodes and transport | A Node owns bounded local NodeState, resident values, Ports and pending timing/ownership metadata. Links own values in transit. | [Terminology](TERMINOLOGY.md), [Node execution](NODE_VECTOR_PROCESSOR.md) |
-| Computational Registers (target) | 24 directed internal units between orthogonal pairs of the six Ports, each with exactly one input and one output within one NodeState; identical logic, data-selected state/direction/delay. | [Register-level execution](#register-level-execution-target) |
+| Computational Registers (target) | 36 directed internal units, one per ordered entrance/exit pair of the six Ports, each with exactly one input and one output within one NodeState; identical logic, data-selected state/direction/delay. | [Register-level execution](#register-level-execution-target) |
 | Generic mathematics | Reusable bounded integer scalar/vector operators evaluate local inputs and propose changes. Supported operations are implemented once in code; validated JSON selects their compositions. | [Local integer operation contract](#local-integer-operation-contract), [disturbance expressions](DISTURBANCES.md#local-updates-and-expressions) |
 | Physical entity definitions | External JSON describes particles, fields and other entities through identities, sourced physical properties, numerical values, units and evidence status. These are data, not species-specific engine branches. | [catalog.json](../examples/known-entities/catalog.json), [entity catalog contract](ENTITY_CATALOG.md) |
 | Representation and preparation | Explicit JSON profiles bind selected entities to supported fields, initial values and configured rules. Optional reference-unit authoring encodes selected physical values into bounded integer components before initialization. | [representation-probes.json](../examples/known-entities/representation-probes.json), [reference units](REFERENCE_UNITS.md), [initialization validation](CONFIGURATION_VALIDATION.md) |
@@ -360,8 +363,8 @@ and each experiment's assumptions distinct from the generic mechanism.
 ## Register-level execution target
 
 Use [canonical terminology](TERMINOLOGY.md) for the logical Node, six external
-Ports and 24 directed internal computational Registers. Each ordered orthogonal
-Port pair defines one Register; 12 unoriented pairs give 24 directed units.
+Ports and 36 directed internal computational Registers. Every ordered entrance/exit
+Port pair defines one Register: 24 orthogonal, six straight and six return routes.
 Every Register has exactly one input channel and exactly one output channel,
 using the same generic rule machinery with different local data. These are subunits of
 one Node, not new physical Nodes or an extra lattice. The Node is a container and
@@ -406,12 +409,15 @@ Strict one-to-one updates alone do not establish an arbitrary mixer, and packagi
 peer state as one input cannot bypass the access rule.
 
 Straight passage (opposite face on the entry axis) and return (the entry face)
-are not direct edges of the orthogonal internal graph. Their private-channel
-mapping remains OPEN; do not prohibit them, select an intermediate axis or infer
-microstep time/extra spatial Links. The graph's proper signed-axis symmetry is
-not a proof of continuous isotropy. Existing six-Port banks/readiness adapters
-are not evidence of 24-Register execution. This revised definition supersedes
-the earlier six-Register decomposition without changing external spatial degree.
+are direct route classes in the selected 36-pair graph. The cubic36 candidate
+supplies an explicit one-Link permutation including these routes; see the
+[inspected contact implementation contract](https://github.com/Closer24/Universe24/blob/eee75f5e748ff073c3801e9f87e7868e67b05e82/docs/PRIVATE_REGISTER_CONTACTS.md).
+This supplied wiring does not select a universal scattering or splitting law.
+No intermediate axis, microstep delay or extra physical Link is inferred.
+The graph's signed-axis symmetry is not a proof of continuous isotropy, relativity
+or three-dimensional accessibility of fixed uncoupled routes. Existing six-Port
+banks/readiness adapters are not evidence of private 36-Register execution.
+External spatial degree remains six.
 
 Register delay and Link propagation remain distinct. c is propagation speed,
 not a time unit; physical calibration remains explicit and unselected where
@@ -423,13 +429,20 @@ Register-local pending values and future-event slots need fixed capacities.
 Host queues/indexes are separately accounted; cancelled or rescheduled entries
 must not create an unbounded retained history.
 
-**Implementation status:** current `core/node_services.py:port_count` returns six.
+**Implementation boundary:** the existing whole-Node profile's
+`core/node_services.py:port_count` returns six.
 The [Focus scheduler](LOCAL_FOCUS.md) skips certified empty Nodes, but occupied
 and pending carrier Nodes remain awake; transport indexes occupied banks rather
 than maintaining the required due-Register scheduler. Existing Node-owned
 planning/commit and parallel-worker interfaces remain unchanged. Configurable
-port count, explicit directed internal computational Registers and due-only Register
-execution are binding design requirements, not completed features or measured speedups.
+port count and complete migration of all supported physical profiles to private
+Register execution remain requirements. The unmerged
+[PR 144 cubic36 candidate](https://github.com/Closer24/Universe24/pull/144), at
+`eee75f5e748ff073c3801e9f87e7868e67b05e82`, separately implements supplied 36-route
+transport and terminal contacts through the shared-pair quantum owner. It does not
+migrate all entities/couplings or establish a generic private split/merge protocol.
+The older PR 141 fixture implements 24 orthogonal routes and retains that exact
+historical scope; its timings must not be relabeled as cubic36 results.
 Any implementation must demonstrate equal state, ownership, timing, event order,
 failure behavior and model costs before claiming an equivalent host optimization.
 
@@ -444,11 +457,11 @@ benchmarks alone cannot establish the general implementation.
 | Planned component | Owned responsibility and boundary |
 | --- | --- |
 | Shared Register contract | One writer owns the private state/input/output and channel contract. The identity candidate uses `core/private_register.py` and `core/private_transport.py`; the earlier `core/register_contracts.py` path was a proposal, not its implementation identity. |
-| Node-local execution | Each initial Node has six external Ports and 24 directed internal Registers, each with exactly one input and one output, using the same generic rules. The Node only groups their private states; each update reads only its own state and actually received input. Cross-Register physical information requires causal channel transfer. Do not invoke the full Node planner once per Register or duplicate inventory. |
+| Node-local execution | Each initial Node has six external Ports and 36 directed internal Registers, each with exactly one input and one output, using the same generic rules. The Node only groups their private states; each update reads only its own state and actually received input. Cross-Register physical information requires causal channel transfer. Do not invoke the full Node planner once per Register or duplicate inventory. |
 | External due scheduler and transport | Index active/due internal Register work separately from external Port delivery and timers, keep current/next-or-later work separate and route only at declared Link arrival times. Topology and periodic endpoint mapping remain external; local rules receive no global reads. |
 | Simulation integration | Adapt the selected profile through the existing Simulation owner, with explicit support checks and unchanged accounting, failures and causal timing. Do not substitute fixture configuration for this adapter. |
 
-The first proposed executable slice is exact whole-record private Register movement.
+The first executable comparison slice is exact whole-record private Register movement.
 Message-based interactions need a separately closed bounded causal protocol; the
 earlier proposed whole-Node joint snapshot is not an admitted substitute.
 Unsupported spatial-ray or native-quantum composition
@@ -457,7 +470,7 @@ incremental supported scope, not a permanent narrowing of the general design.
 The shared contract is settled before dependent concurrent writes; implementation
 owners use isolated files/branches and one writer per shared interface.
 
-The scoped transport-only candidate uses identity payload transfer on an explicitly
+The historical 24-Register transport-only candidate uses identity payload transfer on an explicitly
 selected rotation-equivariant four-hop route through private Registers. Zero local
 wait and one Link unit per model tick define this fixture's speed, with SI
 calibration unset; seed processing at tick zero delivers at tick one. It is a
@@ -472,14 +485,16 @@ timer or profile-integration requirements.
 
 ### Private identity-transfer implementation contract
 
-This is the written implementation boundary for the currently selected engineering
-slice. Cite the revision of this section in the implementation handoff and PR.
-The universal private interface and the fixture configuration are separate:
+This section preserves the historical 24-Register identity fixture and its exact
+comparison boundary. It is not the current topology selection, which is 36.
+Do not relabel its wiring, counts, acceptance evidence or performance as cubic36.
+Cite the revision in implementation handoffs; the universal private interface
+and this historical fixture configuration are separate:
 
 | Contract field | Selected scope |
 | --- | --- |
 | Unit interface | UNIDIRECTIONAL Register: one input channel, private own state, one output channel. Reverse flow requires a separately directed Register/channel; packaging never grants peer-state access. |
-| Count/topology | Six external Ports and 24 directed orthogonal Registers per Node. Counts of 18, 30 or 36 discussed elsewhere do not change this selection. |
+| Count/topology | Six external Ports and 24 directed orthogonal Registers per Node. Historical fixture only; the active baseline above is 36. |
 | Fixture wiring | Explicit periodic 6 by 6 by 6 input, with supplied bijection `T(n,p,q) = (n+q, -q, p)`, coordinates wrapped periodically, `p` orthogonal to `q`. This four-transfer square is an engineering fixture, not a universal scattering/ray law. |
 | Local law | `F(s, absent, identity) = (s, absent)`; `F(s, received, identity) = (s, received)`. Preserve private state and payload exactly. No mixing, copying, arithmetic on payload values or additional law. |
 | Physical inputs | Only immutable own state, one actually received datum or absence, and the immutable identity-law definition. No Node/world reference, address, clock, peer state, callback or shared snapshot enters F. |
@@ -519,7 +534,7 @@ reference and report workload-specific results, not a universal speedup.
 
 **Implementation evidence and exclusions.** The
 [private transport implementation and recorded evidence](https://github.com/Closer24/Universe24/blob/9a64c242650ccc1de4514760cb54bff8360aa909/examples/private_transport/README.md)
-identify the current candidate and its limitations. That source uses
+identify the historical 24-Register candidate and its limitations. That source uses
 `core/private_register.py`, `private_transport.py`, `private_reference.py` and
 `private_worklist.py`; the earlier proposed `register_contracts.py` path is not
 their implementation identity. Evidence must retain its tested source and scope.
@@ -530,11 +545,31 @@ reverse-flow execution, mass/delay laws and general straight passage remain
 unselected or unverified here. Developers must return missing decisions to the
 design owner rather than add them to this identity-only slice.
 
+### Register and Node acceptance
+
+These are acceptance requirements, not claims of completed tests. Each documented
+feature must state its input, expected result and boundary case for the affected
+Register and Node; link actual evidence to the tested revision.
+
+| Scope | Required acceptance |
+| --- | --- |
+| Register | The identical executor accepts only bounded private state, one actual input or absence and immutable configured generic law data. Present encoded zero is not absence. Input ownership is transferred or retained once; no peer state, world, clock or hidden physical callback is available to the local rule. Test empty input, simultaneous independently owned deliveries, capacity rejection and bounded-clock failure without partial mutation. |
+| Node | Enumerate exactly 36 unique ordered entrance/exit keys over six Ports: 24 orthogonal, six straight and six return. Validate private ownership and all supplied one-Link routes, including periodic boundaries and independent straight/return endpoints. A Node adds no mixer, physical update or delay. Six distinct neighbors require periodic extents of at least three in the candidate. |
+| Execution parity | Compare the same 36-Register input and laws under dense Node-batch and due-Register selection after every tick: state, owners, destinations, due times, ordered events, failures and declared model costs. Include delayed/dormant behavior only where the selected profile supports it, and reject unsupported combinations explicitly. |
+| Physical-law ownership | Engine and Register implementations contain no species-specific or independently embedded physics formulas. Generic validated operations have one owner; initialization selects immutable laws and parameters. Payloads carry values and ownership data, never executable formulas. Audit engine/Register dependencies and actual input provenance; passing static checks alone does not prove locality. |
+| Evidence | Record source, workload, inputs and limits before reporting parity or speed. Keep whole-Node/six-Port adapter, historical private24 and true private36 results separate. Shared-pair Bell evidence must identify the quantum owner; it is not evidence for local-only Bell correlations or migration of every physical entity. |
+
+The [local integer operation contract](#local-integer-operation-contract) owns
+numeric and generic-law constraints. General splitting, interaction laws and
+relational 3D accessibility require their own explicit causal protocol and
+independent tests; adding 12 route Registers does not establish them.
+
 ### Dual-execution acceptance and measured selection
 
 The user requires two parallel execution implementations: a conventional
 Node-batch reference and a Register worklist implementation per model clock.
-The Node-batch reference evaluates the SAME 24 private Register updates and laws
+For the selected baseline, the Node-batch reference evaluates the SAME 36 private
+Register updates and laws
 per clock; the sparse strategy evaluates only due units. Both use the same graph,
 channel inputs and causal timing. The old whole-Node snapshot evaluator is not this
 reference and cannot establish equivalence to private Register laws.
@@ -563,7 +598,7 @@ causal behavior or the configured Port/Register count.
 
 The following describes existing whole-Node profiles, including frozen participant
 snapshots. It is historical/current implementation evidence, not compliance with
-the revised private 24-Register kernel. Existing six-Port readiness adapters and
+the selected private 36-Register kernel. Existing six-Port readiness adapters and
 configured pair-matrix benchmarks do not establish that kernel. Reconciliation
 requires actual source and tests; do not relabel the old evaluator as the private
 Node-batch reference or infer a closed interaction protocol from these examples.
