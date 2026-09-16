@@ -80,6 +80,15 @@ architecture rule; it does not change physical laws or the language of conversat
 with the user. The user's explicit request replaces the previous Hebrew-documentation
 preference.
 
+Use Hebrew for conversation with the user unless he explicitly requests another
+language. A message written in another language alone is not a request to switch.
+The English authoring rule covers all project documents, documentation, code,
+comments and artifacts, including external Google Docs, not only repository files.
+Preserve formulas, technical identifiers and necessary verbatim source quotations;
+write the surrounding explanation in English. This instruction update does not
+authorize bulk translation of existing files or Google Docs; edit only the
+content authorized by the current task.
+
 Before submitting a change, translate any non-English prose it introduces and run
 `tests/test_repository_language.py`. The script check catches the legacy Hebrew
 text and several other non-Latin scripts; it does not prove that Latin-script prose
