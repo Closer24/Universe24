@@ -5,6 +5,15 @@ description: Implement or repair Universe24 local field transport and response c
 
 # Field development
 
+For a directional response claim, trace the field's vector or Port channels from
+transport through sampling, response and actual outgoing motion. A scalar delay
+test does not validate steering. If an adapter drops required direction or rejects
+the required composition, route that finding under
+[defect ownership and closure](../workflow.md#defect-ownership-and-closure).
+Preserve the current model identity until the numerical replacement is specified.
+
+Before behavior edits, apply [the published-design requirement](../workflow.md#implement-from-a-published-design). Implement the cited design revision; return missing laws or interface decisions to its owner before adding behavior.
+
 Read [the shared workflow](../workflow.md), [field interfaces](../../docs/SCALAR_FIELDS.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 

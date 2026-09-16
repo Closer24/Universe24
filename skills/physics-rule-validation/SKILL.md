@@ -18,6 +18,15 @@ counterexample test. Review does not grant permission to change a physical law.
 An undefined or contradictory contract, or missing evidence for the exact source,
 means incomplete or blocked; do not fill the gap with an assumed pass.
 
+## Empirical targets and observable mapping
+
+For physics comparisons, follow the shared
+[physics comparison method](../workflow.md#physics-comparison-method).
+Own the primary physical reference, its regime and uncertainty, and the mapping
+from measured Detector observables to the board. Coordinate invariant/bound proofs
+with the [mathematician](../mathematical-validation/SKILL.md); keep supplied
+reference laws, analytic checks and empirical agreement distinct.
+
 ## Always start from event spacetime
 
 Ground every physical review in the modeled space of events and causal time:

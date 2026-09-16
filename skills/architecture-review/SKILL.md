@@ -5,6 +5,8 @@ description: Review Universe24 state schemas, component ownership, interface com
 
 # Architecture review
 
+Apply [the published-design requirement](../workflow.md#implement-from-a-published-design). Own contract reconciliation and publish resolved revisions before dependent behavior changes; review the implementation against its cited design.
+
 Read [the shared workflow](../workflow.md) and the current
 [architecture](../../docs/ARCHITECTURE.md). Input is a commit/diff, candidate
 contract and dependent changes; output is a scoped compatibility verdict with

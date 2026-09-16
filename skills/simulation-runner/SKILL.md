@@ -21,6 +21,13 @@ dependencies or create HTML/GIF unless visualization is explicitly requested.
 Use the existing Python runner and optional renderer; an API-only candidate must
 retain its actual identity in recorded evidence.
 
+For authorized physics comparisons, apply the shared
+[physics comparison method](../workflow.md#physics-comparison-method).
+Its standing HTML requirement counts as an explicit visualization request for
+those research runs; ordinary automated tests remain headless. Execute the fixed
+observable/expectation plan without retuning and retain quantitative discrepancies
+alongside the inspected HTML. A visual match is not physical acceptance.
+
 For primary runs, require the explicit initialization file and read its field,
 disturbance, transport, coupling and cost definitions; see
 [DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select a
