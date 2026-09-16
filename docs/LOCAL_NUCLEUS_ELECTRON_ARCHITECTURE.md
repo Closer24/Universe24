@@ -137,8 +137,14 @@ denominator one. A zero direction stays; a signed unit axis dispatches exactly
 one whole record through that Port. Its adjacent arrival is dispatch tick plus
 one. Do not apply the old speed gate again, multiply the momentum by an extra
 tick, or insert a hidden input wait. Carry the already updated remainder with the
-record on the Link. The next increment occurs at the next local tick after
-arrival, not in an additional callback at departure.
+record on the Link. A departure in the cycle labeled `t` arrives when that step
+closes at `t+1`; it is eligible for the ordinary local cycle labeled `t+1` at the
+next step. There is no extra post-arrival wait and no additional drift callback
+at departure or delivery. Thus an admitted, isolated, zero-wait electron has one
+active drift update per world tick. Verify this from the trace rather than
+assuming that preparation, an unexpected budget delay or another interaction
+cannot skip an update. Report world-tick periods and active-cycle periods
+separately; the numerical continuum comparison uses world ticks.
 
 For an explicitly prepared electron, `active` is zero until the declared local
 launch age and one afterward. Both the field response and drift read the same
@@ -176,7 +182,8 @@ data to it. No parallel engine or new plug-in registry is needed.
 | Strong-interaction developer | `strong_configuration.py`: `build_strong_document(*, parameters: dict[str, int], shape: tuple[int, int, int], ticks: int) -> dict[str, object]`; produces a valid standalone neutron/proton initialization |
 | Electron developer | `electron_configuration.py`: `add_electron(document: dict[str, object], *, parameters: dict[str, int]) -> dict[str, object]`; returns a deep-copy extension adding electron/EM definitions, preserving all strong rules and seeds |
 | Strong/integration owner | `joint_configuration.py`, `measurements.py`, `run_experiments.py` and `render_gif.py`; composes builders, executes preregistered cases and reads the resulting evidence |
-| Physics and independent tests | The numerical profile and independent expected values/controls; these are not copied implementations of either builder |
+| Independent acceptance owner | `acceptance.py` and `tests/test_local_nucleus_electron_acceptance.py`; read-only scoring and independent synthetic fixtures; no competing writer |
+| Physics reviewer | The numerical profile and independent expected values/controls; these are not copied implementations of either builder |
 
 The electron builder rejects incompatible shared field definitions instead of
 overwriting them. It may read the nucleus's published source/binding properties
@@ -185,6 +192,36 @@ inject a force using the nuclear coordinates. The builders must agree on the
 full field-count budget before adding helper state. Any needed core/schema change
 returns to the architecture owner with a minimal failing fixture and precise
 extension contract before two developers touch the same interface.
+
+## Recorded evidence interface
+
+Every measured world uses the canonical runner with visualization enabled and
+`frame_stride=1`. It writes `initialization.json`, `events.jsonl`, `state.json`,
+`run.json` and `run.html`; it does not write a `states.jsonl` file. The HTML's
+`script` element with `id="recording"` and `type="application/json"` contains an
+object with `frames`, `metadata` and optional `observation`. These frames are
+copied engine snapshots, beginning at tick zero and then after each completed
+step. Extract this JSON without executing the page or evolving missing frames.
+
+The integration owner's `measurements.py` exports
+`load_run(run_dir: Path) -> dict[str, object]`, returning the keys
+`initialization`, `metadata`, `events`, `frames` and `final_state`. They contain,
+respectively, the decoded initialization, `run.json`, decoded event lines,
+recording frames and `state.json`. Independent acceptance may parse the same raw
+sources itself. A valid complete recording has contiguous ticks, matching HTML
+and run metadata, and a final frame equal to the final state. A failed run may
+include an additional final frame at the same tick; preserve and label it rather
+than manufacturing a successful prefix or deduplicating away changed state.
+
+A frame's `nodes` expose `position` and `disturbances`, each with `type` and
+`values`; values map field names to scalar/vector component lists. `transfers`
+expose `origin`, `target`, `port`, `arrival_tick`, `type` and `values`. Preserve
+these ownership distinctions. Two bound constituents share one exact Node
+position; visual glyph offsets never become separate physical coordinates.
+Use event dispatch ticks and actual arrival records to count Link displacement.
+Do not count a transfer as simultaneous occupancy of both endpoints. Saved run
+metadata retains the source and initialization hashes and the model identity;
+derived acceptance and GIF metadata must cite those inputs.
 
 ## Required integrated evidence
 
