@@ -103,6 +103,12 @@ It does not enable composition with that six-output-clock profile,
 shared computation delays, Node execution, claims or bonded-ray sampling.
 Unsupported compositions fail initialization. A later extension must specify
 the additional phase intervals and complete-owner readiness explicitly.
+For this first interface, `ray_interactions` requires `detector-only-v1` and
+rejects claim, bond and lottery owners anywhere in the shared spatial law,
+including fields not selected as ray participants. An unselected historical
+sampler cannot supply an implicit exception to the zero-draw contract or add
+mutable registry effects outside the complete proposal. Historical experiments
+remain available separately without this new composition.
 
 ## Numerical fixture and independent expectations
 
