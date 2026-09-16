@@ -81,6 +81,45 @@ invariant needs a defined quantity, its complete owners and applicable
 transitions. The mathematical argument and independent tests must address those
 definitions, not merely the operation's name.
 
+### Physical goals and staged acceptance
+
+The central research goals are a natural nucleus representation from simple
+generic rules, an electron around a nucleus, and a photon representation.
+They are unverified goals, not completed species dynamics. The Engine must not
+recognize species names or execute electron/nucleus/photon-specific branches.
+Physical representation JSON selects properties, preparation and supported
+generic local Node actions; shared operators implement those actions once.
+Do not insert a known equation and then report its configured consequences as
+emergence. The [physical support inventory](PHYSICAL_ENTITIES.md) and
+[entity catalog](ENTITY_CATALOG.md) remain the sources for present limitations.
+
+| Goal | Required distinction and evidence |
+| --- | --- |
+| Nucleus | A prescribed charged source is a useful control, not an emergent nucleus. Charge alone does not establish nuclear structure, binding or stability; constituent state and the responsible interactions must be specified and tested. |
+| Electron around a nucleus | Decide whether the experiment asks for a quantum bound state or a classical orbit proxy. A circulating marker is not atomic-state or stability evidence; observables and comparison targets must match the chosen meaning. |
+| Photon | Distinguish a classical field pulse/ray proxy from coherent quantum propagation and single-quantum detection. A moving packet or an isolated click does not establish all photon properties or matter coupling. |
+
+The computational experimental physicist owns prospective independent expected
+results, numerical tolerances, negative controls and applicable classical/quantum
+references, including comparisons of Detector outputs. Expectations must not be
+adjusted to make a run pass. Supplied laws, derived consequences and genuinely
+emergent behavior must be labeled separately from software correctness.
+
+A staged acceptance proposal, requiring explicit scope before any execution:
+
+| Stage | Proposed acceptance focus |
+| --- | --- |
+| Small controlled tests | Independently specified local transport, timing, ownership, remainder retention and interactions; include a no-interaction/absent-coupling control and compare structured outcomes, not only rendered motion. |
+| Bound source or nucleus | First distinguish a prescribed source benchmark from a dynamically bound composite; define constituents, binding/stability observables, perturbations, observation duration and tolerances before claiming a nucleus. |
+| Atomic and photon Detector evidence | Define electron-state meaning, source/field preparation, Detector coupling/time mapping and target outcomes; compare suitable classical/quantum references and negative controls, without inferring agreement from a visual orbit or pulse. |
+
+To start a bounded implementation or experiment, select one stage and specify its
+initial state, admitted generic rule set, exact representation and timing, output
+observable, independent expectation and pass/fail tolerance. Do not invent
+interactions, masses, numerical scales or a Detector transition to fill these
+gaps. Resolving one stage does not certify the others. This draft proposes
+acceptance structure only; it authorizes no new runs, implementation or merge.
+
 ### Open contracts before implementation closure
 
 The binding principles above are agreed; the architecture is not yet a closed
