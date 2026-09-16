@@ -39,11 +39,14 @@ def stage_outputs[PacketType: Packet | SpatialPacket](
     tick: int,
     delays: tuple[int, ...],
     link_ticks: int,
+    *,
+    port_indexed: bool = False,
 ) -> tuple[tuple[OutputHold[PacketType] | None, ...], tuple[PacketType | None, ...]]:
     """Prepare a bounded ownership transfer without changing any owner.
 
     The caller supplies delays selected by its generic local operation. Capacity
     conflicts reject the complete proposal; they never create a waiting policy.
+    Spatial banks are indexed by Port; carrier banks use compact record slots.
     """
     if len(delays) != 6 or any(bounded(delay) < 0 for delay in delays):
         raise ValueError("output delays require six nonnegative integer counts")
@@ -61,13 +64,21 @@ def stage_outputs[PacketType: Packet | SpatialPacket](
         ready = bounded(tick + delays[packet.port])
         packet = replace(packet, arrival_tick=bounded(ready + link_ticks))
         if ready == tick:
-            slot = next((i for i, value in enumerate(outgoing) if value is None), None)
-            if slot is None:
+            slot = (
+                packet.port
+                if port_indexed
+                else next((i for i, value in enumerate(outgoing) if value is None), None)
+            )
+            if slot is None or outgoing[slot] is not None:
                 raise ValueError("output Link bank capacity collision")
             outgoing[slot] = packet
         else:
-            slot = next((i for i, value in enumerate(staged) if value is None), None)
-            if slot is None:
+            slot = (
+                packet.port
+                if port_indexed
+                else next((i for i, value in enumerate(staged) if value is None), None)
+            )
+            if slot is None or staged[slot] is not None:
                 raise ValueError("output hold bank capacity collision")
             staged[slot] = OutputHold(tick, ready, packet)
     return tuple(staged), tuple(outgoing)
@@ -77,6 +88,8 @@ def release_outputs[PacketType: Packet | SpatialPacket](
     held: tuple[OutputHold[PacketType] | None, ...],
     links: tuple[PacketType | None, ...],
     tick: int,
+    *,
+    port_indexed: bool = False,
 ) -> tuple[tuple[OutputHold[PacketType] | None, ...], tuple[PacketType | None, ...]]:
     """Release ready local owners to Links without changing their frozen time."""
     remaining, outgoing = list(held), list(links)
@@ -87,8 +100,12 @@ def release_outputs[PacketType: Packet | SpatialPacket](
             raise ValueError("output release tick was skipped")
         if any(packet is not None and packet.port == entry.packet.port for packet in outgoing):
             raise ValueError("output release collides with an occupied Link")
-        slot = next((i for i, packet in enumerate(outgoing) if packet is None), None)
-        if slot is None:
+        slot = (
+            entry.packet.port
+            if port_indexed
+            else next((i for i, packet in enumerate(outgoing) if packet is None), None)
+        )
+        if slot is None or outgoing[slot] is not None:
             raise ValueError("output Link bank capacity collision")
         outgoing[slot], remaining[index] = entry.packet, None
     return tuple(remaining), tuple(outgoing)

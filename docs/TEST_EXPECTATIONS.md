@@ -1232,6 +1232,13 @@ Existing ray merge and integration guard suites retain their old self-exclusion
 expectations. Formula-free NodeState audits traverse both typed OutputHold payloads
 and all OutputClock integer fields; neither is an opaque diagnostic exemption.
 
+`tests/test_output_clock_ports.py` checks each signed axis, a sparse +Y/-Y pair,
+and all six spatial outputs with zero and positive wait. Packets must arrive at
+their actual first and second neighbors at the declared ticks, retain a fixed
+one-tick Link transit, and preserve the funded token inventory. Spatial Link
+banks remain Port-indexed during preparation and release; compact carrier banks
+retain their separate slot contract.
+
 The selected input adds `output_clock: {"gain": 1}` alongside the existing
 `computation_field` reference. A stationary funded source uses emission
 `whole_pulse: true`, `interval: 8`, `first_tick: 0`, and an amount expression over

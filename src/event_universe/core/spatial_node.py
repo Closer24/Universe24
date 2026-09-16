@@ -252,7 +252,7 @@ class SpatialNode(SpatialNodeState):
         return identity
 
     def release_output(self, tick: int, services: SpatialServices) -> None:
-        held, links = release_outputs(self.held_outputs, self.output.packets, tick)
+        held, links = release_outputs(self.held_outputs, self.output.packets, tick, port_indexed=True)
         released = tuple(
             entry for entry in self.held_outputs if entry is not None and entry.release_tick == tick
         )
@@ -566,6 +566,7 @@ class SpatialNode(SpatialNodeState):
                 tick,
                 delays,
                 services.initial.link_ticks,
+                port_indexed=True,
             )
         # All physical calculations and validation precede the local commit.
         if services.balance_guard is not None:
