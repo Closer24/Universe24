@@ -10,6 +10,7 @@ rules on the same generic Node/Link machinery.
 | Layer | Responsibility | Canonical owner |
 | --- | --- | --- |
 | Nodes and transport | A Node owns bounded local NodeState, resident values, Ports and pending timing/ownership metadata. Links own values in transit. | [Terminology](TERMINOLOGY.md), [Node execution](NODE_VECTOR_PROCESSOR.md) |
+| Computational Registers (target) | One generic input/output unit per Port within the same NodeState; identical logic, data-selected state/direction/delay. | [Register-level execution](#register-level-execution-target) |
 | Generic mathematics | Reusable bounded integer scalar/vector operators evaluate local inputs and propose changes. Supported operations are implemented once in code; validated JSON selects their compositions. | [Local integer operation contract](#local-integer-operation-contract), [disturbance expressions](DISTURBANCES.md#local-updates-and-expressions) |
 | Physical entity definitions | External JSON describes particles, fields and other entities through identities, sourced physical properties, numerical values, units and evidence status. These are data, not species-specific engine branches. | [catalog.json](../examples/known-entities/catalog.json), [entity catalog contract](ENTITY_CATALOG.md) |
 | Representation and preparation | Explicit JSON profiles bind selected entities to supported fields, initial values and configured rules. Optional reference-unit authoring encodes selected physical values into bounded integer components before initialization. | [representation-probes.json](../examples/known-entities/representation-probes.json), [reference units](REFERENCE_UNITS.md), [initialization validation](CONFIGURATION_VALIDATION.md) |
@@ -39,11 +40,66 @@ composition limits; this is not arbitrary tensor support. The physical-quantity
 encoder currently prepares only scalar/three-component values. The linked
 contracts own the detailed dimensions, bounds and rejection rules.
 
-This separation is implemented for the supported configuration paths; complete
+The existing entity/configuration separation is implemented for its supported
+paths; the Register execution target below is not. Complete
 physical species dynamics and emergence remain separate research goals. A JSON
 entry named electron or electromagnetic field does not establish electron
 dynamics or Maxwell's equations. Keep the [physical support inventory](PHYSICAL_ENTITIES.md)
 and each experiment's assumptions distinct from the generic mechanism.
+
+## Register-level execution target
+
+Use [canonical terminology](TERMINOLOGY.md) for the logical Node and its per-Port
+computational Registers. The intended initial cube has six Registers, each using
+the same generic rule machinery with different local data. These are subunits of
+one Node, not new physical Nodes or an extra lattice. NodeState remains the single
+bounded local ownership boundary; a Register's state is a part of it, not a full
+replica. Immutable generic rule definitions can be shared.
+
+An external host scheduler should index active or due work by `(node, port)`.
+Changed output schedules delivery to the affected destination Register at the
+declared Link arrival time; changed local state wakes dependent local Registers.
+Only declared dependencies should expand that work set, rather than a blanket
+scan of every Register or Node. A timer expiry, autonomous emission, internal
+phase evolution or other configured rule can also require work without a new
+input. Skipping an interval requires an exact no-change or closed-form transition
+contract; "no packet arrived" alone is not sufficient.
+
+At each logical tick, process only the current scheduled active/due Register
+operations. Keep current and future work sets distinct: a newly routed output
+becomes eligible on the next tick or later according to the declared delay,
+never through an accidental same-tick cascade caused by iteration order.
+Register commits collectively evolve the owning NodeState in the 3D event-space
+layout. Same-time joint operations still use the coordinated commit boundary.
+
+The same generic executor applies to every Register. Port-specific state,
+orientation, parameters and delay select data, not separate hardcoded port logic.
+A rule that reads or writes several Registers must use one coherent local input
+snapshot, reserve its required owners and publish an atomic joint result under
+the Node's coordination. Same-time arrivals, rule order and pending ownership
+must remain explicit; independent scheduling cannot expose a half-committed
+interaction or silently serialize away another input.
+
+Register delay and Link propagation remain distinct. Preserve the chosen C/h
+timing and all externally visible arrival/commit times; splitting host work does
+not charge another physical delay or introduce instantaneous remote reads.
+Current timing profiles remain separately defined in
+[Node execution](NODE_VECTOR_PROCESSOR.md) and [disturbances](DISTURBANCES.md).
+Register-local pending values and future-event slots need fixed capacities.
+Host queues/indexes are separately accounted; cancelled or rescheduled entries
+must not create an unbounded retained history.
+
+**Implementation status:** current `core/node_services.py:port_count` returns six.
+The [Focus scheduler](LOCAL_FOCUS.md) skips certified empty Nodes, but occupied
+and pending carrier Nodes remain awake; transport indexes occupied banks rather
+than maintaining this proposed due-Register scheduler. Existing Node-owned
+planning/commit and parallel-worker interfaces remain unchanged. Configurable
+port count, explicit per-Port computational Registers and due-only Register
+execution are design targets, not completed features or measured speedups.
+Any implementation must demonstrate equal state, ownership, timing, event order,
+failure behavior and model costs before claiming an equivalent host optimization.
+
+## Current Node execution ownership
 
 [Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
 pending completion and publication in `core/disturbance_node.py` and
