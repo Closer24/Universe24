@@ -1,5 +1,11 @@
 # Electron and frozen-source implementation
 
+This is a retained research comparison. The subsequently clarified target is a
+nucleus made of trapped rays under the existing generic coupling. This contact
+binding candidate does not implement that target, even if its own arithmetic
+and control tests pass. Its drift and trace components may be reused only under
+a compatible, separately reviewed composition.
+
 `electron_configuration.add_electron(document, parameters=...)` deep-copies the
 strong initialization. Required integer parameters are `force_numerator` and
 `force_denominator`, obtained from the independent static calibration. An
