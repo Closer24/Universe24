@@ -1,7 +1,19 @@
 # Contact-bound nucleus and circulating electron: numerical pilot v1
 
-Status: **prospective, untested candidate**. This design precedes behavior
-implementation. Base: local `c10af8ff92d4f9db2d8562bbffb2b2974188999b`, published
+Status: **historical effective comparison; not the adopted trapped-ray target**.
+The user's subsequent 2026-09-16 clarification requires structures made of
+trapped rays using the same generic coupling. The contact-gap and lifecycle
+assignments below are a separately introduced effective binding model; passing
+their energy and movement controls does not establish that required mechanism.
+Preserve this preregistered design and its actual results as comparison evidence,
+without adopting it as the proton/neutron nucleus or closing the strong-binding
+or electron targets. A replacement needs the identified common coupling over
+actual owned rays, explicit retention/release and conserved readouts before its
+behavior is implemented. The ambiguous comparison word in the user's message
+does not authorize inferring a particular earlier experiment or interaction.
+
+Original preregistration: this design preceded behavior implementation.
+Base: local `c10af8ff92d4f9db2d8562bbffb2b2974188999b`, published
 as `8d74f809a168c3f46653373e79ed14062789ad9f`. Model identity:
 `contact-bound-ray-electron-pilot-v1`. The user authorized this new hypothesis;
 it is not a claim that the following operators were already implied by the
