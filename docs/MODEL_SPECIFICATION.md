@@ -10,7 +10,7 @@ not a second set of laws. Latest explicit user decisions take precedence.
 | --- | --- |
 | 1. Node state and ray form | NodeState, complete event properties/identity, six-neighbor topology, fixed local channel/resource limits, foundational postulates and representation |
 | 2. Generic operations at the Node | Local participant snapshots, operation/engine/data separation, transactions, symmetry and exact arithmetic requirements |
-| 3. Couplings, fields and timing | Ray-form field transport, funded exchange/emission, computation-field delay, mass/phase/time distinctions and physical-sector reference examples |
+| 3. Couplings, fields and timing | Ray-form field transport, funded exchange/emission, six independent computation-field output delays (no input clock), mass/phase/time distinctions and physical-sector reference examples |
 | 4. Defined quantum action and Detector | Existing event-space quantum action, committed-event no-redraw/no-re-emission, named pair/general profiles, external Detector exchange and causal history/return boundaries |
 | 5. Acceptance and open decisions | Node/Link input-output-failure cases, directional displacement/contact checks, explicit candidate choices, integration gaps and developer handoff |
 
@@ -48,7 +48,8 @@ quantum algebra registers and BondRegistry retain their separate meanings.
   never infer it from documentation or a displayed animation.
 
 The shared quantum action is already defined. Same-event replay never draws
-or physically emits again; a distinct contact may create a new event. Released
+or physically emits again; a distinct contact may create a new event, but only an actual external Detector
+may authorize and own a draw. Ordinary evolution is deterministic. Released
 BondRegistry pair-key reuse is a bounded profile-lifecycle gap, not permission
 to redraw a completed event. Immutable origin/history persistence already exists;
 the local lookup/stop/retention rule for a moving event's return notice remains
@@ -58,6 +59,12 @@ The central section 1 owns the cabinet/channel resource target, moving-event
 identity and directional displacement requirement. Section 5 owns its acceptance.
 Refer there instead of copying another version of the storage/work or routing
 contract into implementation summaries.
+
+The central section 3 owns the strong-residence/computation-field research
+hypothesis and distinct weak operations; [physical support](PHYSICAL_ENTITIES.md)
+records the existing profile limits. Its directional timing and marker contract
+distinguishes used faces, event identity and family transitions. Six markers
+alone do not establish a bounded return protocol.
 
 ## Acceptance for documentation changes
 

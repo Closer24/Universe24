@@ -1,5 +1,13 @@
 # Selected quantum method: deferred event network
 
+Current-target qualification: the [central model](MODEL_SPECIFICATION.md),
+section 4, permits draws only at an actual external Detector encounter, owned
+by that Detector. This page documents existing event-state APIs, not proof of
+Detector authorization. Native generic-contact and recurrent-contact resolvers
+can sample without that gate; those profiles require integration before
+claiming compliance. Deterministic prepare/state algebra remains usable. A
+new event alone grants no sampling permission, and replay never redraws.
+
 The [register/channel extension](QUANTUM_ENTITIES.md) adds explicit native v2
 inputs, finite multilevel registers, density states and grouped outcomes to this
 same owner. The binary pure-state contract below describes the original v1 subset;

@@ -155,3 +155,31 @@ long-wavelength evidence; no dimension-dependent repair is permitted.
 The necessary automated checks are in `tests/test_physical_entities.py`.
 Status fields distinguish representation, configured dynamics and emergence.
 No new catalog entry is marked as a completed derivation of a physical field.
+
+## Node interaction target versus current support
+
+The [central model specification](MODEL_SPECIFICATION.md), section 3, owns
+strong/weak Node operations, the strong-residence/computation-field hypothesis
+and six independent output clocks with no input delay. This page records
+support; it does not define another delay or binding law.
+
+The catalog's `strong_color_interactions`, `strong_binding`,
+`weak_charged_current` and `weak_neutral_current` are `descriptive_only`.
+`strong_binding` labels hadron formation/binding, not automatically the proposed
+long co-residence of nucleon representations. A catalog entry is not an
+implemented interaction operator.
+
+[Computational response](COMPUTATIONAL_RESPONSE.md) exposes last completed-cycle
+`committed_cost` for emission; pending work is excluded and the scalar is not
+an energy stock. [Spatial computation delay](SPATIAL_COMPUTATION_DELAY.md)
+describes a shared-clock profile, incompatible with `node_execution: true`,
+whose emission occurs once per completion. Initialization also rejects Node
+execution combined with the legacy emissions/couplings composition. These
+partial profiles do not implement the adopted six-output/no-input timing or
+the combined strong interaction, long residence and computation-ray emission.
+
+Before implementing that composition, specify exact operators, field-to-delay
+mapping, emission funding and pending/completion timing, conservation readouts,
+release and finite bounds. Only Detector encounters may sample; strong/weak
+operations themselves remain deterministic. Prospective acceptance is owned by
+central section 5; no binding or unified-profile validation is claimed here.

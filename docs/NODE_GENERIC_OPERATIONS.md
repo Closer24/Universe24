@@ -246,12 +246,13 @@ The quantum action is already defined; this section does not request a new
 quantum law. Preserve [postulate 14](../POSTULATES.md),
 the [event contract](QUANTUM_EVENTS.md) and
 [bonded rays](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1): coherent local
-operations do not draw; a declared measurement prepares its complete outcomes
+operations do not draw; only an actual external Detector encounter may authorize
+and own sampling. A declared instrument can prepare its complete outcomes
 and commits the selected conditional state; repeated event commits return the
 original immutable result; subsequent physical events move forward in time.
 No redraw means the same decision event is not sampled twice and its physical
-outputs are not emitted twice. A new contact can
-create a new decision for a continuing ray; there is no blanket one-draw limit
+outputs are not emitted twice. A new contact may create a new event for a
+continuing ray, but event creation alone grants no sampling permission; there is no blanket one-draw limit
 for the entire life of a ray or an arbitrarily evolving entangled group.
 The accepted pair profile uses one shared number per pair. These are distinct
 named profiles, not permission to replace one profile with another.
@@ -269,7 +270,8 @@ Reuse the named event-spacetime quantum owner; do not copy a joint density into
 ordinary Node fields. A Node contributes only arrived support, local settings
 and declared local actions. A quantum instrument supplies a complete bounded
 outcome set and state updates. Preflight every branch and local capacity before
-sampling. A terminal transaction retains a bounded idempotence key; replay
+Detector-owned sampling. Existing generic-contact resolvers without an actual
+Detector trigger do not satisfy this rule. A terminal transaction retains a bounded idempotence key; replay
 returns its existing result. Failed preparation draws nothing; publication
 failure must retain the reserved ticket/result and must not redraw on retry.
 The provider needs a prepare/commit contract; a nontransactional random callback
@@ -438,3 +440,20 @@ Every changed specification must retain acceptance at these levels:
    consequences and independently reproduced phenomena. No claim that all
    physics, a nucleus, an atom, a photon or a local explanation of Bell has been
    established follows from passing these software-contract checks.
+
+## Latest target constraints and profile audit
+
+The central model section 3 owns the six independent output clocks driven by
+local computation fields; there is no input clock. Earlier shared-clock or
+single-wait candidate fixtures in this annex are scoped arithmetic examples,
+not an adopted replacement. Each split output needs its own face readiness and
+separate causal Link transit. The same section owns used-face markers and
+separate identity/family-transition metadata; no complete routing algorithm is
+implied by a six-bit mask.
+
+Strong/weak operation definitions and the long-residence/computation-field
+hypothesis remain in central section 3; see [physical support](PHYSICAL_ENTITIES.md)
+for current composition gaps. No ordinary operation samples. Acceptance must
+include zero random tickets for all non-Detector actions, deterministic replay,
+independent six-face timing and no added input delay. These are target tests,
+not evidence of runtime support.
