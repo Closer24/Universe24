@@ -7,6 +7,13 @@ define the intended decomposition. Storage-register counts and quantum registers
 in existing contracts do not count these computational Registers. No runtime
 behavior or timing changes through the terminology update.
 
+The [canonical timing clarification](REFERENCE_UNITS.md#minimum-model-time-and-output-delay)
+distinguishes the accepted Register timing design from this existing profile's
+explicit additional-wait convention. Its local symbol h is not Planck's constant.
+The [approved storage domain](ARCHITECTURE.md#stored-codes-and-mathematical-values)
+is likewise a target representation decision, not a change to this profile's
+current signed values or remaining counters.
+
 This implements the bounded local execution part of [task 82](https://github.com/Closer24/Universe24/issues/82).
 The configuration opts in with `node_execution: true`. Existing configurations
 retain their existing timing. It is one execution path in the active engine,
