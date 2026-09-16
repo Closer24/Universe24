@@ -38,6 +38,10 @@ result are different claims. Revision-specific results are not a live status fee
 
 ## Explicit quantum experiments
 
+The [private36 contact contract](PRIVATE_REGISTER_CONTACTS.md) and
+[two-detector example](../examples/private_bell/README.md) integrate terminal
+private Register capture with the declared one-number shared quantum owner.
+
 The [catalog contact example](../examples/catalog-contact/README.md) connects
 established particle references to the existing causal source/contact mechanism.
 

@@ -1165,6 +1165,20 @@ field clocks, independent localize/dissipate fields, and deposit overflow that
 preserves all receiver state and leaves the original packet on its Link. These
 are component-inventory and atomicity checks, not physical energy proofs.
 
+## Private36 terminal contacts
+
+The [private36 contact candidate](PRIVATE_REGISTER_CONTACTS.md) is checked by
+`test_private36_transport.py` and `test_private_bell.py`. All 36 routes keep one
+owner and one-tick neighbor transit, including straight and return paths. Dense
+and sparse execution agree at every tick, including complete quantum state.
+The detector fixture keeps exactly two original tokens, captures both at tick 3,
+and leaves no traveling copy. Unequal arrival times preserve the first cached
+answer until the second arrives. Equal settings imply opposite answers, exactly
+one number per pair, and no redraw on completed replay. Stream exhaustion,
+malformed second requests and clock bounds preserve the complete pre-step state.
+The independent constant local detector control has CHSH 2 without a registry.
+The existing 24-register fixture remains a regression consumer.
+
 ## Reference unit authoring
 
 `tests/test_reference_units.py` independently checks SI dimensions and exact defining

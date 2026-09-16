@@ -13,47 +13,10 @@ from time import perf_counter
 from prepare import prepare
 
 import event_universe
-from event_universe.core.disturbance_state import decode
 from event_universe.core.private_worklist import PrivateSimulation
 from event_universe.diagnostics.disturbance_render import render_disturbances
+from event_universe.diagnostics.private_render import frame
 from event_universe.runner import source_fingerprint
-
-
-def frame(world: PrivateSimulation) -> dict:
-    """Project actual owners into existing passive playback; never feed the law."""
-    nodes = []
-    for key, datum in sorted(world.transport.inputs.items()):
-        nodes.append(
-            {
-                "position": key.node,
-                "waiting_until": None,
-                "disturbances": [
-                    {
-                        "type": "opaque_token",
-                        "values": {"components": [decode(code) for code in datum.codes]},
-                        "register": [key.from_port, key.to_port],
-                    }
-                ],
-            }
-        )
-    transfers = []
-    for source, packet in sorted(world.transport.channels.items()):
-        offset = world.wiring.channels[source].offset
-        axis = next(axis for axis, value in enumerate(offset) if value)
-        positive = offset[axis] == 1
-        transfers.append(
-            {
-                "origin": source.node,
-                "target": packet.target.node,
-                "port": 2 * axis + (0 if positive else 1),
-                "arrival_tick": packet.due_tick,
-                "type": "opaque_token",
-                "values": {"components": [decode(code) for code in packet.datum.codes]},
-                "source_register": [source.from_port, source.to_port],
-                "target_register": [packet.target.from_port, packet.target.to_port],
-            }
-        )
-    return {"tick": world.tick, "boundary": "periodic", "nodes": nodes, "transfers": transfers}
 
 
 def measure(document: dict, strategy: str, output: Path, *, memory: bool = False) -> dict:

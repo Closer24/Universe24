@@ -850,6 +850,13 @@ bridge contract. The active source-of-truth boundaries above remain unchanged.
 
 ## Shared native event extension
 
+The [private36 candidate](PRIVATE_REGISTER_CONTACTS.md) retains the same dependency
+direction: core accepts immutable prepared contacts through a protocol; only
+`integration/private_contacts.py` holds the existing shared pair registry. Its
+pure local request function receives private state, actual input and immutable
+detector settings. The passive `diagnostics/private_render.py` projection serves
+both the old private24 transport example and the private36 terminal experiment.
+
 The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
 ledger and local resolver protocol under core. The integration owner composes
 quantum payloads, initialization-selected instruments and classical control codes.

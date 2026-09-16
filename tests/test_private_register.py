@@ -8,6 +8,7 @@ import pytest
 from event_universe.core.disturbance_state import MAX_VALUE, encode, pack
 from event_universe.core.private_reference import DenseSelector
 from event_universe.core.private_register import (
+    CUBIC_PORT_PAIRS,
     PRIVATE_PORT_PAIRS,
     IdentityLaw,
     PrivateKey,
@@ -86,8 +87,28 @@ def test_twenty_four_directed_pairs_have_all_cube_symmetries():
             assert {(relabel[p], relabel[q]) for p, q in pairs} == pairs
     for source in range(6):
         for target in (source, source ^ 1):
-            with pytest.raises(ValueError, match="orthogonal"):
-                PrivateKey((0, 0, 0), source, target)
+            assert PrivateKey((0, 0, 0), source, target).from_port == source
+            with pytest.raises(ValueError, match="configured Port pairs"):
+                PrivateNode().unit(source, target)
+
+
+def test_explicit_cubic_node_has_all_thirty_six_independent_registers():
+    node = PrivateNode(pairs=CUBIC_PORT_PAIRS)
+    assert len(node.units) == len({id(unit) for unit in node.units}) == 36
+    for source in range(6):
+        assert sum(pair[0] == source for pair in node.pairs) == 6
+        for target in range(6):
+            assert node.unit(source, target).state == PrivateState()
+    with pytest.raises(ValueError, match="six external Ports"):
+        PrivateKey((0, 0, 0), 6, 0)
+    with pytest.raises(ValueError, match="six external Ports"):
+        PrivateKey((0, 0, 0), True, 0)
+
+
+@pytest.mark.parametrize("pairs", [[], (), ((0, 2), (0, 2)), ((0, 6),), ([0, 2],)])
+def test_node_pair_profile_rejects_mutable_duplicate_or_invalid_pairs(pairs):
+    with pytest.raises(ValueError):
+        PrivateNode(pairs=pairs)
 
 
 def test_dense_reference_visits_all_units_but_selects_only_actual_due_inputs():

@@ -98,9 +98,11 @@ def test_capacity_rejection_preserves_existing_owner_and_tick():
     destination = next(iter(simulation.transport.channels.values())).target
     simulation.transport.admit(destination, RegisterDatum((5,)))
     before_collision = simulation.canonical_state()
+    before_work = simulation.work_report()
     with pytest.raises(ValueError, match="capacity one"):
         simulation.step()
     assert simulation.canonical_state() == before_collision
+    assert simulation.work_report() == before_work
 
 
 @pytest.mark.parametrize("strategy", ["dense", "sparse"])
@@ -114,9 +116,11 @@ def test_clock_overflow_rejects_before_due_receipt_or_owner_mutation(strategy):
     assert packet.due_tick == MAX_VALUE and packet.datum.codes == (1,)
     simulation.transport.admit(PrivateKey((3, 3, 3), 0, 2), RegisterDatum((3,)))
     before = simulation.canonical_state()
+    before_work = simulation.work_report()
     with pytest.raises(ValueError, match="integer bound"):
         simulation.step()
     assert simulation.canonical_state() == before
+    assert simulation.work_report() == before_work
 
 
 @pytest.mark.parametrize("defect", ["duplicate", "noncausal", "diagonal", "unknown", "wait"])

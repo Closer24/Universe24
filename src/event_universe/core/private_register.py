@@ -14,13 +14,26 @@ from .disturbance_state import MAX_COMPONENTS, Address3, bounded, decode
 PRIVATE_PORT_PAIRS: tuple[tuple[int, int], ...] = tuple(
     (source, target) for source in range(6) for target in range(6) if source // 2 != target // 2
 )
+CUBIC_PORT_PAIRS: tuple[tuple[int, int], ...] = tuple(
+    (source, target) for source in range(6) for target in range(6)
+)
 
 
 def _pair(source: int, target: int) -> None:
     if any(type(port) is not int or not 0 <= port < 6 for port in (source, target)):
         raise ValueError("a private Register requires two of the six external Ports")
-    if source // 2 == target // 2:
-        raise ValueError("a private Register connects two orthogonal Ports")
+
+
+def validate_private_pairs(pairs: tuple[tuple[int, int], ...]) -> None:
+    """Validate a fixed immutable set of distinct configured Register endpoints."""
+    if type(pairs) is not tuple or not 1 <= len(pairs) <= 36:
+        raise ValueError("private Port pairs require a bounded immutable tuple")
+    for pair in pairs:
+        if type(pair) is not tuple or len(pair) != 2:
+            raise ValueError("a private Port pair requires two Port indices")
+        _pair(*pair)
+    if len(set(pairs)) != len(pairs):
+        raise ValueError("configured private Port pairs must be distinct")
 
 
 def _codes(codes: tuple[int, ...], *, empty: bool) -> None:
@@ -134,17 +147,24 @@ class PrivateUnit:
 
 
 class PrivateNode:
-    """A container of exactly 24 private units; it has no physical mixer."""
+    """A container of configured private units; it has no physical mixer."""
 
-    __slots__ = ("units",)
+    __slots__ = ("pairs", "units")
 
-    def __init__(self, law: IdentityLaw | None = None) -> None:
+    def __init__(
+        self,
+        law: IdentityLaw | None = None,
+        *,
+        pairs: tuple[tuple[int, int], ...] = PRIVATE_PORT_PAIRS,
+    ) -> None:
+        validate_private_pairs(pairs)
+        self.pairs = pairs
         configured = IdentityLaw() if law is None else law
-        self.units: tuple[PrivateUnit, ...] = tuple(
-            PrivateUnit(law=configured) for _ in PRIVATE_PORT_PAIRS
-        )
+        self.units: tuple[PrivateUnit, ...] = tuple(PrivateUnit(law=configured) for _ in pairs)
 
     def unit(self, from_port: int, to_port: int) -> PrivateUnit:
         """Resolve a configured host endpoint without exposing it to the law."""
         _pair(from_port, to_port)
-        return self.units[PRIVATE_PORT_PAIRS.index((from_port, to_port))]
+        if (from_port, to_port) not in self.pairs:
+            raise ValueError("private Register is not in the configured Port pairs")
+        return self.units[self.pairs.index((from_port, to_port))]

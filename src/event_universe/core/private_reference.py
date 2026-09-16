@@ -3,11 +3,11 @@
 from collections.abc import Collection, Iterable
 
 from .disturbance_state import Address3
-from .private_register import PRIVATE_PORT_PAIRS, PrivateKey
+from .private_register import PRIVATE_PORT_PAIRS, PrivateKey, validate_private_pairs
 
 
 class DenseSelector:
-    """Visit all 24 units of every configured Node on every model tick.
+    """Visit all units of every configured Node on every model tick.
 
     The due input set is frozen before selection. Checking an absent input is a
     certified identity no-op, so it need not invoke the physical kernel. Selected
@@ -15,14 +15,18 @@ class DenseSelector:
     Checks count host work and never change private physical state or model time.
     """
 
-    def __init__(self, node_addresses: Iterable[Address3]) -> None:
+    def __init__(
+        self,
+        node_addresses: Iterable[Address3],
+        *,
+        pairs: tuple[tuple[int, int], ...] = PRIVATE_PORT_PAIRS,
+    ) -> None:
+        validate_private_pairs(pairs)
         addresses = tuple(node_addresses)
         if len(set(addresses)) != len(addresses):
             raise ValueError("dense reference Node addresses must be unique")
         self.keys = tuple(
-            PrivateKey(node, source, target)
-            for node in sorted(addresses)
-            for source, target in PRIVATE_PORT_PAIRS
+            PrivateKey(node, source, target) for node in sorted(addresses) for source, target in pairs
         )
         self._known = frozenset(self.keys)
         self.checks = 0
