@@ -2,7 +2,11 @@
 
 This is the current Node-owned execution contract, not the revised 24-directed-Register
 scheduler for six external Ports. Existing six-Port readiness/bank behavior is
-not evidence of this internal computational graph. The [canonical Node/Register distinction](TERMINOLOGY.md) and
+not evidence of this internal computational graph or the private Register kernel.
+The whole-Node frozen-snapshot evaluator described below is an existing profile;
+it is not the binding target, where each Register reads only its own state and
+actually received single-channel input. The Node-batch comparison reference must
+batch those same private updates, not reuse this evaluator as an equivalent law. The [canonical Node/Register distinction](TERMINOLOGY.md) and
 [Register execution target](ARCHITECTURE.md#register-level-execution-target)
 define the intended decomposition. Storage-register counts and quantum registers
 in existing contracts do not count these computational Registers. No runtime
