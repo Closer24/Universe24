@@ -524,9 +524,7 @@ identify the current candidate and its limitations. That source uses
 `private_worklist.py`; the earlier proposed `register_contracts.py` path is not
 their implementation identity. Evidence must retain its tested source and scope.
 The loader's more general one-Link bijection and bounded-shape checks do not
-certify arbitrary template graphs as this square-loop fixture. The current review
-identified bounded-clock failure as a focused acceptance-test gap despite the
-preflight guard; prior passing test counts must not be cited as covering it.
+certify arbitrary template graphs as this square-loop fixture.
 General physical coupling, fanout/mixing, detector-return routing, full-duplex
 reverse-flow execution, mass/delay laws and general straight passage remain
 unselected or unverified here. Developers must return missing decisions to the
