@@ -1,0 +1,276 @@
+{
+  "report_version": 1,
+  "valid": true,
+  "results": [
+    {
+      "path": "examples/known-entities/discrete-pair.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "restricted-classical-conjugate-pair-v1",
+        "shape": [
+          9,
+          9,
+          9
+        ],
+        "ticks": 16,
+        "fields": 3,
+        "types": 2,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/known-entities/field-channel.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "transverse-two-vector-port-probe-v1",
+        "shape": [
+          9,
+          9,
+          9
+        ],
+        "ticks": 6,
+        "fields": 2,
+        "types": 1,
+        "seeds": 0
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/known-entities/conversion.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "generic-two-record-conversion-probe-v1",
+        "shape": [
+          9,
+          9,
+          9
+        ],
+        "ticks": 6,
+        "fields": 2,
+        "types": 4,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/known-entities/three-masses-low-budget.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "three-carrier-finite-computation-v1",
+        "shape": [
+          65,
+          65,
+          65
+        ],
+        "ticks": 120,
+        "fields": 4,
+        "types": 1,
+        "seeds": 3
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/known-entities/boundary-open.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "six-boundary-carriers",
+        "shape": [
+          5,
+          6,
+          7
+        ],
+        "ticks": 3,
+        "fields": 2,
+        "types": 6,
+        "seeds": 6
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/known-entities/boundary-periodic.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "six-boundary-carriers",
+        "shape": [
+          5,
+          6,
+          7
+        ],
+        "ticks": 14,
+        "fields": 2,
+        "types": 6,
+        "seeds": 6
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/three_mass_finite.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "three-carrier-finite-computation-v1",
+        "shape": [
+          65,
+          65,
+          65
+        ],
+        "ticks": 100,
+        "fields": 4,
+        "types": 1,
+        "seeds": 3
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/04-unequal-mass-collision.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "configured-unequal-mass-elastic-head-on-v1",
+        "shape": [
+          15,
+          15,
+          15
+        ],
+        "ticks": 360,
+        "fields": 2,
+        "types": 2,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/electron-positron.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "bounded-rational-elastic-electron-positron-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 180,
+        "fields": 5,
+        "types": 2,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/electron-proton.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "bounded-rational-elastic-electron-proton-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 180,
+        "fields": 5,
+        "types": 2,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/proton-neutron.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "bounded-rational-elastic-proton-neutron-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 180,
+        "fields": 5,
+        "types": 2,
+        "seeds": 2
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/massless-axis.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "configured-massless-half-speed-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 180,
+        "fields": 6,
+        "types": 1,
+        "seeds": 1
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/massless-oblique.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "configured-massless-half-speed-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 180,
+        "fields": 6,
+        "types": 1,
+        "seeds": 1
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/particle-contracts/energy-reservoir.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "configured-local-kinetic-reservoir-v1",
+        "shape": [
+          17,
+          17,
+          17
+        ],
+        "ticks": 12,
+        "fields": 7,
+        "types": 1,
+        "seeds": 1
+      },
+      "issues": []
+    },
+    {
+      "path": "examples/quantum/causal_charge.json",
+      "kind": "initialization",
+      "valid": true,
+      "summary": {
+        "model": "causal-charge-contact-example-v1",
+        "shape": [
+          7,
+          3,
+          3
+        ],
+        "ticks": 10,
+        "fields": 4,
+        "types": 3,
+        "seeds": 3
+      },
+      "issues": []
+    }
+  ]
+}

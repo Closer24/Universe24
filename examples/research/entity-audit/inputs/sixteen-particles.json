@@ -1,0 +1,699 @@
+{
+  "schema_version": 1,
+  "model_id": "catalog-representation-probes-v1",
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "boundary": "open",
+  "slots_per_node": 16,
+  "link_ticks": 1,
+  "normal_budget": 1000000,
+  "ticks": 4,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "seeds": [
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "up_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antiup_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "down_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antidown_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "charm_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "anticharm_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "strange_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antistrange_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "top_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antitop_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "bottom_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antibottom_quark representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "electron representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "positron representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "muon representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": -3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "position": [
+        2,
+        4,
+        4
+      ],
+      "type": "antimuon representation probe",
+      "values": {
+        "inventory": 1,
+        "charge": 3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "spatial_fields": [],
+  "spatial_seeds": [],
+  "field_groups": [],
+  "field_rules": [],
+  "fields": [
+    {
+      "name": "inventory",
+      "components": 1,
+      "units": "abstract carrier unit",
+      "signed": false,
+      "conserved": true,
+      "scale": 1
+    },
+    {
+      "name": "charge",
+      "components": 1,
+      "units": "elementary charge",
+      "signed": true,
+      "conserved": true,
+      "scale": 3
+    },
+    {
+      "name": "momentum",
+      "components": 3,
+      "units": "candidate register unit",
+      "signed": true,
+      "conserved": true,
+      "scale": 1
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "up_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antiup_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "down_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antidown_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "charm_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "anticharm_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "strange_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antistrange_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "top_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antitop_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -2,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "bottom_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antibottom_quark representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 1,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "electron representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "positron representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "muon representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": -3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    },
+    {
+      "name": "antimuon representation probe",
+      "fields": [
+        "inventory",
+        "charge",
+        "momentum"
+      ],
+      "defaults": {
+        "inventory": 1,
+        "charge": 3,
+        "momentum": [
+          1,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "move",
+        "direction_field": "momentum",
+        "rate": 1,
+        "rate_denominator": 2
+      }
+    }
+  ]
+}

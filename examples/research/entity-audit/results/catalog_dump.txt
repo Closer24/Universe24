@@ -1,0 +1,623 @@
+
+== up_quark Up quark quark anti= antiup_quark Q/3= 2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 2.16 MeV/c2 | +-0.07 | src=pdg_quark_table
+    lifetime :: not_applicable | src=pdg_qcd,pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    flavor :: established | up | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== antiup_quark Antiup quark antiquark anti= up_quark Q/3= -2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:up_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:up_quark | src=cern_antimatter,pdg_qcd,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    flavor :: established | up | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== down_quark Down quark quark anti= antidown_quark Q/3= -1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 4.70 MeV/c2 | +-0.07 | src=pdg_quark_table
+    lifetime :: not_applicable | src=pdg_qcd,pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    flavor :: established | down | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== antidown_quark Antidown quark antiquark anti= down_quark Q/3= 1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:down_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:down_quark | src=cern_antimatter,pdg_qcd,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    flavor :: established | down | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== charm_quark Charm quark quark anti= anticharm_quark Q/3= 2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 1.2729 GeV/c2 | +-0.0045 | src=pdg_quark_table
+    lifetime :: not_applicable | src=pdg_qcd,pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    flavor :: established | charm | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== anticharm_quark Anticharm quark antiquark anti= charm_quark Q/3= -2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:charm_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:charm_quark | src=cern_antimatter,pdg_qcd,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    flavor :: established | charm | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== strange_quark Strange quark quark anti= antistrange_quark Q/3= -1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 92.9 MeV/c2 | +-0.7 | src=pdg_quark_table
+    lifetime :: not_applicable | src=pdg_qcd,pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    flavor :: established | strange | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== antistrange_quark Antistrange quark antiquark anti= strange_quark Q/3= 1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:strange_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:strange_quark | src=cern_antimatter,pdg_qcd,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    flavor :: established | strange | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== top_quark Top quark quark anti= antitop_quark Q/3= 2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 172.60 GeV/c2 | +-0.27 | src=pdg_quark_table
+    lifetime :: not_supplied | src=pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    flavor :: established | top | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+    decay_width :: measured | 1.42 GeV | +0.19/-0.15 | src=pdg_quark_table
+
+== antitop_quark Antitop quark antiquark anti= top_quark Q/3= -2 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:top_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:top_quark | src=cern_antimatter,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    flavor :: established | top | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+    decay_width :: reference | ref:top_quark | src=cern_antimatter,pdg_quark_table
+
+== bottom_quark Bottom quark quark anti= antibottom_quark Q/3= -1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | fundamental color triplet | src=pdg_qcd
+    mass :: measured | 4.186 GeV/c2 | +-0.006 | src=pdg_quark_table
+    lifetime :: not_applicable | src=pdg_qcd,pdg_quark_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    flavor :: established | bottom | src=pdg_quark_table
+    baryon_number :: established | 1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== antibottom_quark Antibottom quark antiquark anti= bottom_quark Q/3= 1 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_quark_table
+    spin :: established | meta:twice_spin | src=pdg_quark_table
+    statistics :: established | fermion | src=tong_qft,pdg_quark_table
+    color_representation :: established | antifundamental color antitriplet | src=pdg_qcd
+    mass :: reference | ref:bottom_quark | src=cern_antimatter,pdg_quark_table
+    lifetime :: reference | ref:bottom_quark | src=cern_antimatter,pdg_qcd,pdg_quark_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    flavor :: established | bottom | src=pdg_quark_table
+    baryon_number :: established | -1 | src=pdg_electroweak
+    confinement :: established | No isolated colored asymptotic particles. | src=pdg_qcd
+
+== electron Electron charged_lepton anti= positron Q/3= -3 2s= 1 established classical_attributes_available restricted_classical_proxy_only
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 0.51099895069 MeV/c2 | +-0.00000000016 | src=pdg_lepton_table
+    lifetime :: unknown | No decay has been observed. | src=pdg_lepton_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_lepton_table
+    magnetic_moment :: measured | -1.00115965218046 bohr_magneton | +-0.00000000000018 | src=nist_codata_2022
+
+== positron Positron charged_antilepton anti= electron Q/3= 3 2s= 1 established classical_attributes_available restricted_classical_proxy_only
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:electron | src=cern_antimatter,pdg_lepton_table
+    lifetime :: reference | ref:electron | src=cern_antimatter,pdg_lepton_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 1 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_lepton_table
+    magnetic_moment :: reference | ref:electron*-1 | src=nist_codata_2022,cern_antimatter
+
+== muon Muon charged_lepton anti= antimuon Q/3= -3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 105.6583755 MeV/c2 | +-0.0000023 | src=pdg_lepton_table
+    lifetime :: measured | 0.0000021969811 s | +-0.0000000000022 | src=pdg_lepton_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_lepton_table
+
+== antimuon Antimuon charged_antilepton anti= muon Q/3= 3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:muon | src=cern_antimatter,pdg_lepton_table
+    lifetime :: reference | ref:muon | src=cern_antimatter,pdg_lepton_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 2 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_lepton_table
+
+== tau Tau charged_lepton anti= antitau Q/3= -3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 1776.93 MeV/c2 | +-0.09 | src=pdg_lepton_table
+    lifetime :: measured | 0.0000000000002903 s | +-0.0000000000000005 | src=pdg_lepton_table
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_lepton_table
+
+== antitau Antitau charged_antilepton anti= tau Q/3= 3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:tau | src=cern_antimatter,pdg_lepton_table
+    lifetime :: reference | ref:tau | src=cern_antimatter,pdg_lepton_table
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak
+    generation :: established | 3 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_lepton_table
+
+== electron_neutrino Electron neutrino neutrino_flavor_state anti= electron_antineutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 1 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== electron_antineutrino Electron antineutrino antineutrino_flavor_state anti= electron_neutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 1 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== muon_neutrino Muon neutrino neutrino_flavor_state anti= muon_antineutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 2 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== muon_antineutrino Muon antineutrino antineutrino_flavor_state anti= muon_neutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 2 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== tau_neutrino Tau neutrino neutrino_flavor_state anti= tau_antineutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Active left-chiral components form weak doublets; right-chir | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 3 | src=cern_standard_model
+    lepton_sector :: established | lepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== tau_antineutrino Tau antineutrino antineutrino_flavor_state anti= tau_neutrino Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_lepton_table
+    spin :: established | meta:twice_spin | src=pdg_lepton_table
+    statistics :: established | fermion | src=tong_qft,pdg_lepton_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: unknown | src=pdg_neutrinos
+    weak_representation :: established | Conjugate chiral representations of the corresponding matter | src=pdg_electroweak,pdg_neutrinos
+    generation :: established | 3 | src=cern_standard_model
+    lepton_sector :: established | antilepton interaction sector | src=pdg_neutrinos
+    mass_nature :: unknown | Dirac or Majorana nature and absolute mass spectrum remain u | src=pdg_neutrinos
+
+== photon Photon gauge_boson anti= photon Q/3= 0 2s= 2 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: theoretical | 0 eV/c2 | src=pdg_boson_table
+    lifetime :: established | Stable in the Standard Model; no observed decay. | src=pdg_boson_table
+    polarization :: established | ['positive helicity', 'negative helicity'] | src=tong_qft
+    mass_upper_limit :: upper_limit | src=pdg_boson_table
+
+== gluon_multiplet Gluon multiplet gauge_boson_multiplet anti= gluon_multiplet Q/3= 0 2s= 2 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | adjoint color octet | src=pdg_qcd
+    mass :: theoretical | 0 eV/c2 | src=pdg_boson_table
+    lifetime :: not_applicable | No separately measured isolated lifetime. | src=pdg_boson_table
+    polarization :: established | ['positive helicity', 'negative helicity'] | src=tong_qft
+
+== w_plus W+ boson gauge_boson anti= w_minus Q/3= 3 2s= 2 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 80.3625 GeV/c2 | +-0.0077 | src=pdg_boson_table
+    lifetime :: not_supplied | src=pdg_boson_table
+    polarization :: established | ['two transverse polarizations', 'one longitudinal polarizat | src=pdg_electroweak
+    decay_width :: measured | 2.14 GeV | +-0.05 | src=pdg_boson_table
+
+== w_minus W- boson gauge_boson anti= w_plus Q/3= -3 2s= 2 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:w_plus | src=cern_antimatter,pdg_boson_table
+    lifetime :: reference | ref:w_plus | src=cern_antimatter,pdg_boson_table
+    polarization :: established | ['two transverse polarizations', 'one longitudinal polarizat | src=pdg_electroweak
+    decay_width :: reference | ref:w_plus | src=cern_antimatter,pdg_boson_table
+
+== z_boson Z boson gauge_boson anti= z_boson Q/3= 0 2s= 2 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 91.1879 GeV/c2 | +-0.0020 | src=pdg_boson_table
+    lifetime :: not_supplied | src=pdg_boson_table
+    polarization :: established | ['two transverse polarizations', 'one longitudinal polarizat | src=pdg_electroweak
+    decay_width :: measured | 2.4955 GeV | +-0.0023 | src=pdg_boson_table
+
+== higgs_boson Higgs boson scalar_boson anti= higgs_boson Q/3= 0 2s= 0 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_boson_table
+    spin :: established | meta:twice_spin | src=pdg_boson_table
+    statistics :: established | boson | src=tong_qft,pdg_boson_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 125.13 GeV/c2 | +-0.11 | src=pdg_boson_table
+    lifetime :: not_supplied | src=pdg_boson_table
+    polarization :: established | One scalar spin state. | src=pdg_higgs
+    decay_width :: measured | 3.0 MeV | +1.5/-0.7 | src=pdg_boson_table
+
+== proton Proton composite_baryon anti= antiproton Q/3= 3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_baryon_table
+    spin :: established | meta:twice_spin | src=pdg_baryon_table
+    statistics :: established | fermion | src=tong_qft,pdg_baryon_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 938.27208943 MeV/c2 | +-0.00000029 | src=pdg_baryon_table
+    lifetime :: unknown | No decay has been observed. | src=pdg_baryon_table
+    composition :: established | src=pdg_baryon_table,pdg_qcd
+    baryon_number :: established | 1 | src=pdg_baryon_table
+    magnetic_moment :: measured | 2.7928473446 nuclear_magneton | +-0.0000000008 | src=pdg_baryon_table
+
+== antiproton Antiproton composite_antibaryon anti= proton Q/3= -3 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_baryon_table
+    spin :: established | meta:twice_spin | src=pdg_baryon_table
+    statistics :: established | fermion | src=tong_qft,pdg_baryon_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:proton | src=cern_antimatter,pdg_baryon_table
+    lifetime :: reference | ref:proton | src=cern_antimatter,pdg_baryon_table
+    composition :: established | src=pdg_baryon_table,pdg_qcd
+    baryon_number :: established | -1 | src=pdg_baryon_table
+    magnetic_moment :: reference | ref:proton*-1 | src=pdg_baryon_table,cern_antimatter
+
+== neutron Neutron composite_baryon anti= antineutron Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_baryon_table
+    spin :: established | meta:twice_spin | src=pdg_baryon_table
+    statistics :: established | fermion | src=tong_qft,pdg_baryon_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: measured | 939.5654219 MeV/c2 | +-0.0000005 | src=pdg_baryon_table
+    lifetime :: measured | 878.3 s | +-0.4 | src=pdg_baryon_table
+    composition :: established | src=pdg_baryon_table,pdg_qcd
+    baryon_number :: established | 1 | src=pdg_baryon_table
+    magnetic_moment :: measured | -1.9130428 nuclear_magneton | +-0.0000005 | src=pdg_baryon_table
+
+== antineutron Antineutron composite_antibaryon anti= neutron Q/3= 0 2s= 1 established catalog_only not_implemented_as_physical_law
+    electric_charge :: established | meta:electric_charge_thirds | src=pdg_baryon_table
+    spin :: established | meta:twice_spin | src=pdg_baryon_table
+    statistics :: established | fermion | src=tong_qft,pdg_baryon_table
+    color_representation :: established | color singlet | src=pdg_qcd
+    mass :: reference | ref:neutron | src=cern_antimatter,pdg_baryon_table
+    lifetime :: reference | ref:neutron | src=cern_antimatter,pdg_baryon_table
+    composition :: established | src=pdg_baryon_table,pdg_qcd
+    baryon_number :: established | -1 | src=pdg_baryon_table
+    magnetic_moment :: reference | ref:neutron*-1 | src=pdg_baryon_table,cern_antimatter
+
+== graviton Hypothetical graviton hypothetical_gauge_quantum anti= graviton Q/3= 0 2s= 4 hypothetical catalog_only not_implemented_as_physical_law
+    electric_charge :: hypothetical | meta:electric_charge_thirds | src=tong_gr,cern_standard_model,pdg_boson_table
+    spin :: hypothetical | meta:twice_spin | src=tong_gr,cern_standard_model,pdg_boson_table
+    statistics :: hypothetical | boson | src=tong_gr,cern_standard_model,pdg_boson_table
+    color_representation :: hypothetical | color singlet | src=tong_gr,cern_standard_model,pdg_boson_table
+    mass :: hypothetical | Massless in the usual linearized quantum-gravity candidate. | src=tong_gr,pdg_boson_table
+    lifetime :: unknown | src=tong_gr
+    polarization :: hypothetical | Two helicities in the usual massless spin-two candidate. | src=tong_gr
+
+
+######## FIELDS
+
+== electromagnetic_field Electromagnetic field established component_storage_available not_implemented_as_physical_law not_established exc= ['photon']
+    classification :: established | fundamental gauge field | src=tong_em,pdg_electroweak
+    physical_context :: established | Observer-dependent electric and magnetic components; broken  | src=tong_em,pdg_electroweak
+    mass :: not_applicable | src=tong_em,pdg_electroweak
+    lifetime :: not_applicable | src=tong_em,pdg_electroweak
+
+== strong_field Strong gauge field established catalog_only not_implemented_as_physical_law not_established exc= ['gluon_multiplet']
+    classification :: established | fundamental gauge field | src=pdg_qcd
+    physical_context :: established | Non-Abelian SU(3) color symmetry with eight generators. | src=pdg_qcd
+    mass :: not_applicable | src=pdg_qcd
+    lifetime :: not_applicable | src=pdg_qcd
+
+== weak_field Weak sector of the electroweak field established catalog_only not_implemented_as_physical_law not_established exc= ['w_plus', 'w_minus', 'z_boson']
+    classification :: established | fundamental gauge sector | src=pdg_electroweak
+    physical_context :: established | Weak isospin and hypercharge describe electroweak symmetry;  | src=pdg_electroweak
+    mass :: not_applicable | src=pdg_electroweak
+    lifetime :: not_applicable | src=pdg_electroweak
+
+== higgs_field Higgs field established catalog_only not_implemented_as_physical_law not_established exc= ['higgs_boson']
+    classification :: established | fundamental scalar field | src=pdg_higgs
+    physical_context :: established | Complex electroweak doublet; one physical neutral scalar in  | src=pdg_higgs
+    mass :: not_applicable | src=pdg_higgs
+    lifetime :: not_applicable | src=pdg_higgs
+
+== quark_fields Quark flavor fields established catalog_only not_implemented_as_physical_law not_established exc= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark']
+    classification :: established | fundamental matter fields | src=pdg_qcd,pdg_electroweak
+    physical_context :: established | Six spinor flavors with color, chirality and antiparticle se | src=pdg_qcd,pdg_electroweak
+    mass :: not_applicable | src=pdg_qcd,pdg_electroweak
+    lifetime :: not_applicable | src=pdg_qcd,pdg_electroweak
+
+== charged_lepton_fields Charged lepton flavor fields established catalog_only not_implemented_as_physical_law not_established exc= ['electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau']
+    classification :: established | fundamental matter fields | src=pdg_electroweak
+    physical_context :: established | Three spinor flavors with distinct chiral weak representatio | src=pdg_electroweak
+    mass :: not_applicable | src=pdg_electroweak
+    lifetime :: not_applicable | src=pdg_electroweak
+
+== neutrino_fields Neutrino flavor and mass fields established_with_unresolved_mass_nature catalog_only not_implemented_as_physical_law not_established exc= ['electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino']
+    classification :: established | fundamental matter sectors | src=pdg_neutrinos
+    physical_context :: established | Active flavor states mix mass states; mass nature and absolu | src=pdg_neutrinos
+    mass :: not_applicable | src=pdg_neutrinos
+    lifetime :: not_applicable | src=pdg_neutrinos
+
+== gravity_metric Classical spacetime metric established_classical_description catalog_only not_implemented_as_physical_law not_established exc= ['graviton']
+    classification :: established | classical geometric field | src=tong_gr,ligo_waves
+    physical_context :: established | Symmetric spacetime metric; storage alone does not enforce v | src=tong_gr,ligo_waves
+    mass :: not_applicable | src=tong_gr,ligo_waves
+    lifetime :: not_applicable | src=tong_gr,ligo_waves
+
+== computational_field Computational Field project_hypothesis component_storage_available not_implemented_as_physical_law not_established exc= []
+    classification :: project_hypothesis | project hypothesis | src=project_postulates
+    physical_context :: project_hypothesis | Proposed computation influence without established physical  | src=project_postulates
+    mass :: unknown | src=project_postulates
+    lifetime :: not_applicable | src=project_postulates
+
+== dark_matter Dark matter category inferred_component_unknown_identity catalog_only not_implemented_as_physical_law not_established exc= []
+    classification :: observationally_inferred | inferred category | src=cern_dark_sector
+    physical_context :: observationally_inferred | Gravitationally inferred matter without confirmed microscopi | src=cern_dark_sector
+    mass :: unknown | src=cern_dark_sector
+    lifetime :: not_applicable | src=cern_dark_sector
+
+== dark_energy Dark energy category inferred_component_unknown_identity catalog_only not_implemented_as_physical_law not_established exc= []
+    classification :: observationally_inferred | inferred category | src=cern_dark_sector,tong_gr
+    physical_context :: observationally_inferred | Accelerated expansion category; a cosmological constant is o | src=cern_dark_sector,tong_gr
+    mass :: unknown | src=cern_dark_sector,tong_gr
+    lifetime :: not_applicable | src=cern_dark_sector,tong_gr
+
+
+######## DISTURBANCE FAMILIES
+
+== mesons Mesons established fields= ['quark_fields', 'strong_field'] src= ['pdg_meson_table', 'pdg_qcd']
+    classification :: established | Color-singlet mesons, including pion, kaon and heavy-meson f | src=pdg_meson_table,pdg_qcd
+    mass :: context_dependent | src=pdg_meson_table,pdg_qcd
+    lifetime :: context_dependent | src=pdg_meson_table,pdg_qcd
+    composition :: context_dependent | Ordinary valence quark-antiquark descriptions omit mixing, g | src=pdg_meson_table,pdg_qcd
+
+== baryons_and_resonances Baryons and resonances established fields= ['quark_fields', 'strong_field'] src= ['pdg_baryon_table', 'pdg_qcd']
+    classification :: established | Nucleons, strange and heavy baryons and excited resonances,  | src=pdg_baryon_table,pdg_qcd
+    mass :: context_dependent | src=pdg_baryon_table,pdg_qcd
+    lifetime :: context_dependent | src=pdg_baryon_table,pdg_qcd
+
+== exotic_hadrons Exotic hadrons established fields= ['quark_fields', 'strong_field'] src= ['pdg_meson_table', 'pdg_baryon_table']
+    classification :: established | Observed exotic resonances and candidate multiquark structur | src=pdg_meson_table,pdg_baryon_table
+    mass :: context_dependent | src=pdg_meson_table,pdg_baryon_table
+    lifetime :: context_dependent | src=pdg_meson_table,pdg_baryon_table
+    internal_structure :: unknown | Observation does not uniquely establish compact multiquark,  | src=pdg_meson_table,pdg_baryon_table
+
+== nuclei_and_isotopes Nuclei, isotopes and isomers established fields= ['quark_fields', 'strong_field', 'electromagnetic_field', 'weak_field'] src= ['iaea_nuclides']
+    classification :: established | Nuclear states distinguished by proton number, neutron numbe | src=iaea_nuclides
+    mass :: context_dependent | src=iaea_nuclides
+    lifetime :: context_dependent | src=iaea_nuclides
+    state_identifiers :: established | ['proton number', 'neutron number', 'excitation', 'spin and  | src=iaea_nuclides
+    decay_types :: context_dependent | ['alpha emission', 'beta decay', 'electron capture', 'gamma  | src=iaea_nuclides
+
+== atoms_and_ions Atoms and ions established fields= ['quark_fields', 'strong_field', 'charged_lepton_fields', 'electromagnetic_field'] src= ['nist_atoms']
+    classification :: established | Nuclei with bound electrons in identified charge and excitat | src=nist_atoms
+    mass :: context_dependent | src=nist_atoms
+    lifetime :: context_dependent | src=nist_atoms
+    state_identifiers :: established | ['isotope', 'charge state', 'electronic configuration', 'ang | src=nist_atoms
+
+== molecules Molecules and molecular ions established fields= ['quark_fields', 'strong_field', 'charged_lepton_fields', 'electromagnetic_field'] src= ['nist_molecules']
+    classification :: established | Bound atomic systems with electronic, vibrational and rotati | src=nist_molecules
+    mass :: context_dependent | src=nist_molecules
+    lifetime :: context_dependent | src=nist_molecules
+    state_identifiers :: context_dependent | ['composition', 'charge', 'isotopes', 'electronic state', 'v | src=nist_molecules
+
+== antimatter_composites Antimatter composites established fields= ['quark_fields', 'strong_field', 'charged_lepton_fields', 'electromagnetic_field'] src= ['cern_antimatter']
+    classification :: established | Antinuclei and antiatoms, including antihydrogen. | src=cern_antimatter
+    mass :: context_dependent | src=cern_antimatter
+    lifetime :: context_dependent | src=cern_antimatter
+    mass_sign :: established | Positive mass; corresponding conjugate systems share the usu | src=cern_antimatter
+
+== bulk_matter Bulk matter established fields= ['quark_fields', 'strong_field', 'charged_lepton_fields', 'electromagnetic_field'] src= ['tong_solid_state']
+    classification :: established | Solids, liquids and gases with collective density, flow, str | src=tong_solid_state
+    mass :: context_dependent | src=tong_solid_state
+    lifetime :: context_dependent | src=tong_solid_state
+    effective_state :: context_dependent | ['density', 'flow', 'stress', 'temperature', 'composition',  | src=tong_solid_state
+
+== acoustic_and_elastic_waves Acoustic and elastic waves established fields= ['charged_lepton_fields', 'electromagnetic_field'] src= ['nist_collective_modes', 'tong_solid_state']
+    classification :: established | Collective displacement and pressure disturbances. | src=nist_collective_modes,tong_solid_state
+    mass :: context_dependent | src=nist_collective_modes,tong_solid_state
+    lifetime :: context_dependent | src=nist_collective_modes,tong_solid_state
+    propagation :: context_dependent | Speed, polarization and damping depend on the medium. | src=tong_solid_state
+
+== plasma_waves Plasma waves established fields= ['charged_lepton_fields', 'electromagnetic_field'] src= ['pppl_plasma']
+    classification :: established | Collective electron and ion response, including electrostati | src=pppl_plasma
+    mass :: context_dependent | src=pppl_plasma
+    lifetime :: context_dependent | src=pppl_plasma
+    medium :: established | An ionized charged medium and its electromagnetic environmen | src=pppl_plasma
+
+== condensed_matter_quasiparticles Condensed-matter quasiparticles established fields= ['charged_lepton_fields', 'electromagnetic_field'] src= ['nist_collective_modes', 'tong_solid_state']
+    classification :: established | Material-dependent excitations, including phonons and magnon | src=nist_collective_modes,tong_solid_state
+    mass :: context_dependent | src=nist_collective_modes,tong_solid_state
+    lifetime :: context_dependent | src=nist_collective_modes,tong_solid_state
+    statistics :: context_dependent | Statistics and modes depend on the excitation and phase. | src=tong_solid_state
+
+== coherent_condensates Coherent many-body states established fields= ['charged_lepton_fields', 'electromagnetic_field'] src= ['doe_superconductivity', 'tong_solid_state']
+    classification :: established | Collective coherent states, including superconducting paired | src=doe_superconductivity,tong_solid_state
+    mass :: context_dependent | src=doe_superconductivity,tong_solid_state
+    lifetime :: context_dependent | src=doe_superconductivity,tong_solid_state
+    microscopic_mechanism :: context_dependent | Pairing depends on the material; conventional phonon mechani | src=doe_superconductivity
+
+== gravitational_waves Gravitational waves established fields= ['gravity_metric'] src= ['ligo_waves']
+    classification :: established | Observed propagating spacetime disturbances. | src=ligo_waves
+    mass :: context_dependent | src=ligo_waves
+    lifetime :: context_dependent | src=ligo_waves
+    particle_interpretation :: not_applicable | A classical-wave observation does not detect individual grav | src=ligo_waves,cern_standard_model
+    polarization :: theoretical | Two tensor polarizations in general relativity. | src=tong_gr
+
+== compact_gravitating_bodies Compact gravitating bodies established fields= ['gravity_metric'] src= ['ligo_waves', 'tong_gr']
+    classification :: established | Stars, neutron stars and black holes as composite or geometr | src=ligo_waves,tong_gr
+    mass :: context_dependent | src=ligo_waves,tong_gr
+    lifetime :: context_dependent | src=ligo_waves,tong_gr
+    state_identifiers :: context_dependent | ['mass', 'angular momentum', 'composition where applicable', | src=ligo_waves,tong_gr
+
+
+######## INTERACTIONS
+== electromagnetic_scattering established descriptive_only parts= ['electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'w_plus', 'w_minus', 'proton', 'antiproton', 'neutron', 'antineutron', 'photon', 'electromagnetic_field', 'atoms_and_ions', 'molecules', 'bulk_matter', 'weak_field', 'quark_fields', 'charged_lepton_fields'] med= ['photon']
+== electromagnetic_radiation established descriptive_only parts= ['electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'w_plus', 'w_minus', 'proton', 'antiproton', 'neutron', 'antineutron', 'photon', 'electromagnetic_field', 'atoms_and_ions', 'molecules', 'nuclei_and_isotopes', 'weak_field', 'quark_fields', 'charged_lepton_fields'] med= ['photon']
+== pair_creation_annihilation established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'proton', 'antiproton', 'neutron', 'antineutron', 'photon', 'gluon_multiplet', 'w_plus', 'w_minus', 'z_boson', 'higgs_boson', 'antimatter_composites', 'electromagnetic_field', 'strong_field', 'weak_field', 'higgs_field', 'quark_fields', 'charged_lepton_fields', 'neutrino_fields'] med= ['photon', 'gluon_multiplet', 'z_boson', 'w_plus', 'w_minus']
+== strong_color_interactions established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'gluon_multiplet', 'strong_field', 'proton', 'antiproton', 'neutron', 'antineutron', 'mesons', 'baryons_and_resonances', 'exotic_hadrons', 'quark_fields'] med= ['gluon_multiplet']
+== strong_binding established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'gluon_multiplet', 'strong_field', 'proton', 'antiproton', 'neutron', 'antineutron', 'mesons', 'baryons_and_resonances', 'exotic_hadrons', 'quark_fields'] med= ['gluon_multiplet']
+== weak_charged_current established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'proton', 'antiproton', 'neutron', 'antineutron', 'w_plus', 'w_minus', 'weak_field', 'mesons', 'baryons_and_resonances', 'nuclei_and_isotopes', 'quark_fields', 'charged_lepton_fields', 'neutrino_fields'] med= ['w_plus', 'w_minus']
+== weak_neutral_current established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'proton', 'antiproton', 'neutron', 'antineutron', 'z_boson', 'weak_field', 'nuclei_and_isotopes', 'quark_fields', 'charged_lepton_fields', 'neutrino_fields'] med= ['z_boson']
+== electroweak_gauge_interactions established descriptive_only parts= ['w_plus', 'w_minus', 'z_boson', 'photon', 'weak_field', 'electromagnetic_field'] med= ['w_plus', 'w_minus', 'z_boson', 'photon']
+== higgs_couplings established descriptive_only parts= ['up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'w_plus', 'w_minus', 'z_boson', 'photon', 'gluon_multiplet', 'higgs_boson', 'higgs_field', 'electromagnetic_field', 'strong_field', 'weak_field', 'quark_fields', 'charged_lepton_fields'] med= ['higgs_boson']
+== higgs_self_interaction theoretical descriptive_only parts= ['higgs_boson', 'higgs_field'] med= ['higgs_boson']
+== neutrino_flavor_mixing established descriptive_only parts= ['electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'neutrino_fields'] med= []
+== gravitational_interaction established descriptive_only parts= ['electromagnetic_field', 'strong_field', 'weak_field', 'higgs_field', 'quark_fields', 'charged_lepton_fields', 'neutrino_fields', 'gravity_metric', 'dark_matter', 'dark_energy', 'up_quark', 'antiup_quark', 'down_quark', 'antidown_quark', 'charm_quark', 'anticharm_quark', 'strange_quark', 'antistrange_quark', 'top_quark', 'antitop_quark', 'bottom_quark', 'antibottom_quark', 'electron', 'positron', 'muon', 'antimuon', 'tau', 'antitau', 'electron_neutrino', 'electron_antineutrino', 'muon_neutrino', 'muon_antineutrino', 'tau_neutrino', 'tau_antineutrino', 'photon', 'gluon_multiplet', 'w_plus', 'w_minus', 'z_boson', 'higgs_boson', 'proton', 'antiproton', 'neutron', 'antineutron', 'mesons', 'baryons_and_resonances', 'exotic_hadrons', 'nuclei_and_isotopes', 'atoms_and_ions', 'molecules', 'antimatter_composites', 'bulk_matter', 'acoustic_and_elastic_waves', 'plasma_waves', 'condensed_matter_quasiparticles', 'coherent_condensates', 'gravitational_waves', 'compact_gravitating_bodies'] med= []
+== nuclear_reactions established descriptive_only parts= ['proton', 'antiproton', 'neutron', 'antineutron', 'nuclei_and_isotopes', 'photon', 'electron', 'positron', 'electron_neutrino', 'electron_antineutrino', 'mesons', 'electromagnetic_field', 'charged_lepton_fields', 'neutrino_fields'] med= []
+== atomic_molecular_transitions established descriptive_only parts= ['atoms_and_ions', 'molecules', 'antimatter_composites', 'electron', 'positron', 'photon', 'electromagnetic_field', 'charged_lepton_fields'] med= ['photon']
+== collective_medium_interactions established descriptive_only parts= ['bulk_matter', 'acoustic_and_elastic_waves', 'plasma_waves', 'condensed_matter_quasiparticles', 'coherent_condensates', 'electron', 'photon', 'electromagnetic_field', 'charged_lepton_fields'] med= []
+== computational_hypothesis project_hypothesis descriptive_only parts= ['computational_field', 'gravity_metric'] med= []
+== quantum_gravity_hypothesis hypothetical descriptive_only parts= ['graviton', 'gravity_metric'] med= ['graviton']
+
+
+######## CHANNELS
+== compton_scattering electromagnetic_scattering ['electron', 'photon'] -> ['electron', 'photon'] established
+== electron_positron_scattering electromagnetic_scattering ['electron', 'positron'] -> ['electron', 'positron'] established
+== electron_electron_scattering electromagnetic_scattering ['electron', 'electron'] -> ['electron', 'electron'] established
+== electron_proton_bremsstrahlung electromagnetic_radiation ['electron', 'proton'] -> ['electron', 'proton', 'photon'] established
+== two_photon_pair_creation pair_creation_annihilation ['photon', 'photon'] -> ['electron', 'positron'] established
+== electron_positron_two_photon_annihilation pair_creation_annihilation ['electron', 'positron'] -> ['photon', 'photon'] established
+== muon_pair_production pair_creation_annihilation ['electron', 'positron'] -> ['muon', 'antimuon'] established
+== muon_decay weak_charged_current ['muon'] -> ['electron', 'electron_antineutrino', 'muon_neutrino'] established
+== antimuon_decay weak_charged_current ['antimuon'] -> ['positron', 'electron_neutrino', 'muon_antineutrino'] established
+== tau_leptonic_decay weak_charged_current ['tau'] -> ['muon', 'muon_antineutrino', 'tau_neutrino'] established
+== antitau_leptonic_decay weak_charged_current ['antitau'] -> ['antimuon', 'muon_neutrino', 'tau_antineutrino'] established
+== free_neutron_beta_decay weak_charged_current ['neutron'] -> ['proton', 'electron', 'electron_antineutrino'] established
+== free_antineutron_beta_decay weak_charged_current ['antineutron'] -> ['antiproton', 'positron', 'electron_neutrino'] theoretical
+== top_bottom_decay weak_charged_current ['top_quark'] -> ['w_plus', 'bottom_quark'] established
+== antitop_antibottom_decay weak_charged_current ['antitop_quark'] -> ['w_minus', 'antibottom_quark'] established
+== w_plus_leptonic_decay weak_charged_current ['w_plus'] -> ['positron', 'electron_neutrino'] established
+== w_minus_leptonic_decay weak_charged_current ['w_minus'] -> ['electron', 'electron_antineutrino'] established
+== w_plus_hadronic_sector weak_charged_current ['w_plus'] -> ['up_quark', 'antidown_quark'] established
+== w_minus_hadronic_sector weak_charged_current ['w_minus'] -> ['antiup_quark', 'down_quark'] established
+== z_electron_pair_decay weak_neutral_current ['z_boson'] -> ['electron', 'positron'] established
+== z_neutrino_sector_decay weak_neutral_current ['z_boson'] -> ['electron_neutrino', 'electron_antineutrino'] established
+== z_bottom_pair_decay weak_neutral_current ['z_boson'] -> ['bottom_quark', 'antibottom_quark'] established
+== higgs_bottom_pair_decay higgs_couplings ['higgs_boson'] -> ['bottom_quark', 'antibottom_quark'] established
+== higgs_tau_pair_decay higgs_couplings ['higgs_boson'] -> ['tau', 'antitau'] established
+== higgs_two_photon_decay higgs_couplings ['higgs_boson'] -> ['photon', 'photon'] established
+== higgs_gluon_sector_decay higgs_couplings ['higgs_boson'] -> ['gluon_multiplet', 'gluon_multiplet'] theoretical
+== neutrino_electron_scattering weak_neutral_current ['muon_neutrino', 'electron'] -> ['muon_neutrino', 'electron'] established
+== inverse_beta_scattering weak_charged_current ['electron_antineutrino', 'proton'] -> ['positron', 'neutron'] established
+== neutrino_flavor_conversion neutrino_flavor_mixing ['electron_neutrino'] -> ['muon_neutrino'] established
+== quark_gluon_scattering strong_color_interactions ['up_quark', 'gluon_multiplet'] -> ['up_quark', 'gluon_multiplet'] established
+== gluon_gluon_scattering strong_color_interactions ['gluon_multiplet', 'gluon_multiplet'] -> ['gluon_multiplet', 'gluon_multiplet'] established
+== charged_weak_boson_two_photon_scattering electroweak_gauge_interactions ['w_plus', 'w_minus'] -> ['photon', 'photon'] theoretical
+== higgs_higgs_scattering higgs_self_interaction ['higgs_boson', 'higgs_boson'] -> ['higgs_boson', 'higgs_boson'] theoretical
