@@ -100,3 +100,4 @@ and [contribution procedure](../CONTRIBUTING.md) retain their authority. This in
 routes readers; it does not duplicate their technical rules.
 
 - [Mass computation clock candidate](MASS_COMPUTATION_CLOCK_CANDIDATE.md): bounded stationary-source experiments with six output clocks.
+- [Directional output response](DIRECTIONAL_OUTPUT_RESPONSE.md): unresolved directional-clock/steering composition, numerical alternatives and delayed moving-emitter self-exclusion requirements.

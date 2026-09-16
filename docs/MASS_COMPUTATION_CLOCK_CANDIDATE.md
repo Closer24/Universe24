@@ -23,6 +23,11 @@ claim to solve that unsupported composition or accelerated/returning self-fields
 It introduces no momentum kick or force. Source stationarity is explicit model
 configuration, never a wait caused by insufficient capacity.
 
+The [directional-response design](DIRECTIONAL_OUTPUT_RESPONSE.md) records why
+this scalar timing profile does not test the intended directional bending
+mechanism, the unselected numerical alternatives and the required bounded
+moving-emitter self-exclusion contract. It does not change the frozen law below.
+
 ## Exact frozen candidate law
 
 All values and intermediates are bounded integers. Inputs belong to the current
