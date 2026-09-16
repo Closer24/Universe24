@@ -24,6 +24,12 @@ never edit it to make a test pass.
 Generated artifacts, distributions and backups are outputs or history.
 One repository does not require one runtime process or a new package hierarchy.
 
+The [binding system architecture](docs/ARCHITECTURE.md#binding-system-architecture)
+controls the whole project, including Register scheduling, selected periodic
+spatial topology, coordinate-free local rules and lossless remainder ownership.
+Agents must not change these decisions without explicit user approval. Existing
+implementation gaps must be reported, not treated as optional design choices.
+
 ## Canonical simulation terminology
 
 Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the active
