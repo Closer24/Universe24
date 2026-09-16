@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "model_id": "native-quantum-contact-v1",
+  "sampling_profile": "historical-autonomous-v1",
   "shape": [
     13,
     5,

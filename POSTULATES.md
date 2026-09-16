@@ -25,6 +25,12 @@ Distinguish three categories:
 
 ## Active initialization-defined model
 
+The canonical [Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md)
+allows draws only at an actual external Detector encounter. Ordinary evolution
+is deterministic. Earlier autonomous lottery, bond and contact descriptions
+below apply only to the explicitly selected `historical-autonomous-v1` research
+profile; they do not establish canonical Detector compliance.
+
 The opt-in [bounded rational candidate](docs/RATIONAL_PARTICLES.md) preserves
 finite integer state while representing fractional quantities in explicitly
 configured whole/remainder/denominator fields. Its larger finite intermediate
@@ -645,7 +651,7 @@ source bank. Existing field stock follows its configured transport and decay.
 This is a finite configured hypothesis, preserving the older profiles and their
 limits; it does not derive the matrices or establish physical energy closure.
 
-## 22. The lottery is the reality: one integer per interaction
+## 22. Historical autonomous sampling candidates
 
 Every interaction whose outcome is not certain consumes exactly one bounded
 integer from a configured sequence, and nothing else decides it: the record's

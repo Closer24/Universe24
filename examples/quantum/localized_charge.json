@@ -1,6 +1,7 @@
 {
   "schema_version": 2,
   "model_id": "localized-charge-contact-example-v1",
+  "sampling_profile": "historical-autonomous-v1",
   "shape": [7, 3, 3], "boundary": "open",
   "slots_per_node": 3, "link_ticks": 1, "normal_budget": 10000, "ticks": 8,
   "operation_costs": {

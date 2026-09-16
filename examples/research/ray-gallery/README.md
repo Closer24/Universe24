@@ -1,5 +1,13 @@
 # Ray gallery: one recorded run per ray kind
 
+The bonded-pair and lottery panels explicitly select
+`historical-autonomous-v1` under the
+[sampling admission contract](../../../docs/DETECTOR_SAMPLING.md).
+Their autonomous draws are historical research, not canonical external Detector
+behavior. The other six panels retain the default deterministic profile. New
+runner metadata records the selected profile; the dated results below retain
+their original source and scope.
+
 Exploration evidence of 2026-09-16 at commit `e5b5911`, source fingerprint
 `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`
 (Python 3.14.0rc2, matplotlib 3.11.2). The purpose is a picture, not a

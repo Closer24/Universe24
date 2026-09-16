@@ -1,6 +1,7 @@
 {
   "schema_version": 2,
   "model_id": "many-causal-contact-experiment-v1",
+  "sampling_profile": "historical-autonomous-v1",
   "shape": [
     11,
     11,

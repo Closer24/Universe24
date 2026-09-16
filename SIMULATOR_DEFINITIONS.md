@@ -2,6 +2,14 @@
 
 ## Active generic disturbance model
 
+Initialization defaults to `sampling_profile: "detector-only-v1"` under the
+[Detector-owned sampling contract](docs/DETECTOR_SAMPLING.md). Unbound ray
+lotteries, bonded rays and native instrument/contact bindings fail admission.
+Earlier autonomous sampling requires the explicit `historical-autonomous-v1`
+research profile, recorded in preflight/run metadata. Deterministic ordinary
+and coherent evolution remain available. This admission boundary does not
+implement PASS/RETURN or remove the output-clock composition restrictions.
+
 The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the
 active engine with indexed bounded interactions, 1..32-component properties,
 explicit aggregation and pre-commit conserved readouts. In this profile one hop

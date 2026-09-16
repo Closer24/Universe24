@@ -65,6 +65,7 @@ def output_argument(parser: argparse.ArgumentParser) -> None:
 
 def stamp() -> dict:
     return {
+        "sampling_profile": "historical-autonomous-v1",
         "source_sha256": source_fingerprint(),
         "python": sys.version,
         "repository_root": str(ROOT),
@@ -219,6 +220,7 @@ def bonded_world(
     return {
         "schema_version": 1,
         "model_id": "bell-chsh-ray-probe-v1-exploration",
+        "sampling_profile": "historical-autonomous-v1",
         "shape": [width, depth, 3],
         "boundary": "open",
         "slots_per_node": 4 if second_pair is not None else 2,

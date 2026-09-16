@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
 from .event_links import EventCursor, EventReferences
+from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 
 if TYPE_CHECKING:
     from .conservation_state import ConservationDefinition
@@ -279,6 +280,7 @@ class InitialState:
     field_groups: tuple[FieldGroupDefinition, ...] = ()
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
+    ray_interactions: tuple[InteractionDefinition, ...] = ()
     event_program: str | None = None
     conservation: ConservationDefinition | None = None
     node_execution: bool = False
@@ -298,8 +300,13 @@ class InitialState:
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
+    sampling_profile: str = DETECTOR_ONLY
 
     def __post_init__(self) -> None:
+        from .spatial_state import validate_ray_coupling
+
+        validate_spatial_sampling(self.sampling_profile, self.spatial_fields)
+        validate_ray_coupling(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

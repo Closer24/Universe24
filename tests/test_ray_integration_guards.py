@@ -35,6 +35,7 @@ def _law(initial):
         initial.emissions,
         initial.operation_costs,
         absorptions=tuple(rule for rule in initial.spatial_couplings if rule.mode == "absorb"),
+        sampling_profile=initial.sampling_profile,
     )
 
 
@@ -237,6 +238,7 @@ def test_delayed_funded_owner_is_rejected_before_a_stale_plan_can_commit(moving)
 
 def test_each_absorption_field_uses_its_own_configured_ticket_seed():
     raw = absorbing_document(headings=[[1, 0, 0]], rays_per_tick=1, absorber_position=[1, 0, 0])
+    raw["sampling_profile"] = "historical-autonomous-v1"
     del raw["conservation"]
     raw["fields"].append({**raw["fields"][0], "name": "other_quanta"})
     absorber = raw["disturbance_types"][1]
@@ -276,6 +278,7 @@ def test_negative_lottery_capture_takes_a_whole_funded_ray_or_nothing(stock, rem
         signed=True,
         ticks=4,
     )
+    raw["sampling_profile"] = "historical-autonomous-v1"
     raw["spatial_fields"][0]["kerengonen"] = {
         "phase_steps": 4,
         "phase_advance": 1,

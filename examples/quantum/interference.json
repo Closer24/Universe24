@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "model_id": "quantum-interference-native-contact-v2",
+  "sampling_profile": "historical-autonomous-v1",
   "shape": [
     13,
     5,

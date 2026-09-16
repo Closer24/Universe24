@@ -22,11 +22,14 @@ from event_universe.core.integer import checked_work, dot_product, signed_divrem
 from event_universe.core.spatial_state import (
     EmissionDefinition,
     FieldInteractionGuard,
+    Rays,
     SpatialCouplingDefinition,
     SpatialCouplingResult,
     SpatialFieldDefinition,
     SpatialState,
     advance_ray,
+    ray_momentum,
+    validate_rays,
     zero_spatial_state,
 )
 
@@ -67,16 +70,27 @@ def sample_fluxes(
     definitions: tuple[SpatialFieldDefinition, ...],
     fields: tuple[FieldDefinition, ...],
     meter: CostMeter | None = None,
+    *,
+    rays: tuple[Rays, ...] = (),
 ) -> Values:
-    """Project scalar delivered channels into a signed three-component travel vector."""
+    """Read the selected local direction projection without creating inventory."""
     if len(states) != len(definitions):
         raise ValueError("spatial flux state count differs from its definitions")
     result = [pack((0, 0, 0)) for _ in fields]
-    for state, definition in zip(states, definitions, strict=True):
+    for index, (state, definition) in enumerate(zip(states, definitions, strict=True)):
         field = fields[definition.field]
         if field.components != 1:
             continue
         state.validate(1)
+        if definition.flux_projection == "carried_heading":
+            if len(rays) != len(definitions):
+                raise ValueError("carried-heading ray sample count differs from its definitions")
+            validate_rays(rays[index], definition, field)
+            result[definition.field] = pack(ray_momentum(rays[index], definition))
+            if meter is not None:
+                meter.charge("read", 6 + 4 * definition.ray_slots)
+                meter.charge("update", 3 + 6 * definition.ray_slots)
+            continue
         for payload in state.delivered:
             field.validate(payload)
         delivered = tuple(unpack(payload)[0] for payload in state.delivered)
@@ -265,16 +279,24 @@ class SpatialCouplingLaw:
                 continue
             rays, _ = emit_rays(amount, cursor, definition, meter, phase, advance, rule.heading)
             own = 0
+            own_rays = []
             for ray in rays:
                 first_port, _ = advance_ray(ray, definition.headings[ray.heading])
                 meter.charge("evaluate")
                 if first_port == port:
                     own = checked_work(own + ray.amount)
-            if not own:
+                    own_rays.append(ray)
+            if not own_rays or (not own and definition.flux_projection == "ports"):
                 continue
-            axis, sign = port // 2, (1 if port % 2 == 0 else -1)
             flux = list(unpack(flux_list[definition.field]))
-            flux[axis] = checked_work(flux[axis] - sign * own)
+            if definition.flux_projection == "carried_heading":
+                own_heading = ray_momentum(tuple(own_rays), definition)
+                flux = list(subtract_components(tuple(flux), own_heading))
+                meter.charge("read", 4 * len(own_rays))
+                meter.charge("update", 6 * len(own_rays) + 2)
+            else:
+                axis, sign = port // 2, (1 if port % 2 == 0 else -1)
+                flux[axis] = checked_work(flux[axis] - sign * own)
             flux_list[definition.field] = pack(tuple(flux))
             value = list(unpack(sample_list[definition.field]))
             value[0] = checked_work(value[0] - own)
@@ -286,8 +308,8 @@ class SpatialCouplingLaw:
     def sample(self, states: tuple[SpatialState, ...]) -> Values:
         return sample_values(states, self.spatial_definitions, self.fields)
 
-    def sample_fluxes(self, states: tuple[SpatialState, ...]) -> Values:
-        return sample_fluxes(states, self.spatial_definitions, self.fields)
+    def sample_fluxes(self, states: tuple[SpatialState, ...], rays: tuple[Rays, ...] = ()) -> Values:
+        return sample_fluxes(states, self.spatial_definitions, self.fields, rays=rays)
 
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]:
         raise ValueError("port-aware interactions require a configured joint law")
@@ -412,6 +434,9 @@ class SpatialCouplingLaw:
             components = self.fields[spatial_definition.field].components
             meter.charge("read", 9 + (6 if components == 1 else 0))
             meter.charge("update", 8 * components + (3 if components == 1 else 0))
+            if spatial_definition.flux_projection == "carried_heading":
+                meter.charge("read", 4 * spatial_definition.ray_slots)
+                meter.charge("update", 6 * spatial_definition.ray_slots)
         updated = list(records)
         reaction = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):

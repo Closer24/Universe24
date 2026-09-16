@@ -45,6 +45,7 @@ class Simulation(DisturbanceEngine):
             initial.emissions,
             initial.operation_costs,
             initial.field_rules,
+            ray_interactions=initial.ray_interactions,
             absorptions=tuple(rule for rule in initial.spatial_couplings if rule.mode == "absorb"),
             allocation_phase=initial.allocation_phase,
             computation_field=initial.computation_field,
@@ -52,6 +53,7 @@ class Simulation(DisturbanceEngine):
             bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps, bonded[0].bond_stream)
             if bonded
             else None,
+            sampling_profile=initial.sampling_profile,
         )
         super().__init__(
             initial,

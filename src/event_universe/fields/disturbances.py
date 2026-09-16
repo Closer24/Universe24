@@ -197,6 +197,50 @@ def _with_value(record: DisturbanceRecord, index: int, value: Payload) -> Distur
     return replace(record, values=tuple(values))
 
 
+def interact_values(
+    rule: InteractionDefinition,
+    before: tuple[Values, ...],
+    fields: tuple[FieldDefinition, ...],
+    meter: CostMeter,
+    costs: OperationCosts,
+) -> tuple[Values, ...]:
+    """Apply the same frozen indexed operation to any admitted complete owner view."""
+    if rule.outputs or rule.output_types is not None:
+        raise ValueError("indexed value updates do not support family conversion outputs")
+    if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+        return before
+    meter.advance(rule.k)
+    meter.charge("couple")
+    candidate = [list(values) for values in before]
+    for assignment in rule.assignments:
+        value = evaluate(assignment.expression, (), (), meter, participants=before)
+        candidate[assignment.side][assignment.field] = pack(value)
+        meter.charge("update")
+    after = tuple(tuple(values) for values in candidate)
+    for values in after:
+        for field, value in zip(fields, values, strict=True):
+            field.validate(value)
+    for index, field in enumerate(fields):
+        if field.conserved:
+            old = tuple(
+                checked_sum(unpack(values[index])[c] for values in before)
+                for c in range(field.components)
+            )
+            new = tuple(
+                checked_sum(unpack(values[index])[c] for values in after)
+                for c in range(field.components)
+            )
+            if old != new:
+                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
+    checks = ValidationMeter(costs)
+    for invariant in rule.invariants:
+        if evaluate(invariant.expression, (), (), checks, participants=before) != evaluate(
+            invariant.expression, (), (), checks, participants=after
+        ):
+            raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
+    return after
+
+
 @dataclass(frozen=True, slots=True)
 class DisturbanceLaw:
     """Pure local proposal: immutable definitions, fixed records and carried phases."""
@@ -213,34 +257,15 @@ class DisturbanceLaw:
     ) -> tuple[DisturbanceRecord, ...]:
         """Apply simultaneous assignments against one frozen indexed input group."""
         before = tuple(record.values for record in records)
-        if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+        after = interact_values(rule, before, self.fields, meter, self.operation_costs)
+        if after is before:
             return records
-        meter.advance(rule.k)
-        meter.charge("couple")
-        candidate = list(records)
-        for assignment in rule.assignments:
-            value = evaluate(assignment.expression, (), (), meter, participants=before)
-            candidate[assignment.side] = _with_value(
-                candidate[assignment.side], assignment.field, pack(value)
-            )
-            meter.charge("update")
+        candidate = tuple(
+            replace(record, values=values) for record, values in zip(records, after, strict=True)
+        )
         for record in candidate:
             self._validate(record, meter)
-        originals, outputs = (
-            _sum_records(records, self.fields),
-            _sum_records(tuple(candidate), self.fields),
-        )
-        for index, field in enumerate(self.fields):
-            if field.conserved and originals[index] != outputs[index]:
-                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
-        checks = ValidationMeter(self.operation_costs)
-        after = tuple(record.values for record in candidate)
-        for invariant in rule.invariants:
-            if evaluate(invariant.expression, (), (), checks, participants=before) != evaluate(
-                invariant.expression, (), (), checks, participants=after
-            ):
-                raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
-        return tuple(candidate)
+        return candidate
 
     def _interact(
         self,

@@ -1,5 +1,40 @@
 # Test inputs and expected results
 
+## Complete-ray direction projection
+
+`test_ray_heading_flux.py` distinguishes the optional carried-heading readout
+from the default last-hop projection: amount three with heading `(2,1,0)` arriving
+through +X reads `(6,3,0)` versus `(3,0,0)`. The actual receiver cannot respond
+before causal delivery, and its configured response has an equal opposite field
+reaction. Opposite headings cancel; signed amounts reverse the projection; empty
+resident rays and an immutable baseline contribute no heading. Supported local
+self-exclusion removes the full own-ray vector while retaining external input.
+Missing owners, excessive capacity, invalid selection and overflow reject; a
+receiving ray and carrier remain unchanged on overflow. The explicit projection
+adds ten unit-cost operations per declared ray slot. These checks establish
+direction access, not an electron orbit or a physical force law.
+
+## Native complete-ray coupling
+
+`test_native_ray_coupling.py` uses the canonical
+[finite residence input](../examples/generic-ray-coupling/finite-residence.json).
+Two funded axial rays of amount five arrive with phase zero at tick one; after
+the next two intervals both are resident with `(phase, delay)` equal to `(1,1)`
+then `(2,0)`. Tick four places them at opposite adjacent Nodes with phase three.
+Energy ten and total momentum zero remain owned across emission and residence.
+Absent coupling, wrong phase, unequal amounts and a missing partner escape
+immediately. Declared momentum failure in a later local group publishes no
+partial replacements. Duplicate heading entries preserve the original index
+and DDA when the semantic vector is unchanged. Delay participates in ray merge
+identity, integer bounds and selection; unsupported clock/sampling domains fail
+for JSON and typed callers. Label renaming preserves observed motion and cost.
+The unchanged carrier false-guard path returns its original records. These
+checks establish the interface and finite residence only, not nuclear binding.
+Native JSON and typed entry points also reject N-to-M carrier `outputs`; the
+shared same-owner evaluator rejects either conversion form before charging or
+changing values. The separate family-conversion suite retains its one-to-six,
+six-to-one, conservation, capacity, Port and delayed-owner coverage.
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the
@@ -1283,3 +1318,14 @@ order, and confirms that validation decodes no component.
 payloads reuse host evaluations with identical results, that changed values,
 bundles or quantities miss the bounded cache while bookkeeping outside the
 values hits it, and that failed readouts are requested again and never retained.
+
+## Detector-owned sampling admission
+
+[Detector sampling tests](../tests/test_detector_sampling_contract.py) reject the
+previous unbound lottery and native instrument/contact fixtures under the default
+[Detector-only contract](DETECTOR_SAMPLING.md), including direct owner construction
+and renamed-observer counterexamples. Coherent preparation remains zero-draw.
+The explicitly historical seed-7 fixture retains 18 tickets and five absorbed
+quanta, complete accounting and its marked run metadata; it does not become
+canonical Detector acceptance. Full PASS/RETURN and output-clock composition
+remain blocked by the contract's owner/acceptance table.

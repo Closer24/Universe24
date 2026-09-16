@@ -7,6 +7,7 @@ from event_universe.core.disturbance_state import (
     CostMeter,
     DisturbanceRecord,
     FieldDefinition,
+    InteractionDefinition,
     OperationCosts,
     Values,
     bounded,
@@ -14,6 +15,11 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work, reduced_ratio
+from event_universe.core.sampling_contract import (
+    DETECTOR_ONLY,
+    require_historical_sampling,
+    validate_spatial_sampling,
+)
 from event_universe.core.spatial_state import (
     BOND_ORIGIN_MARK,
     TICKET_MODULUS,
@@ -40,12 +46,15 @@ from event_universe.core.spatial_state import (
     ray_stock,
     ticket_draw,
     validate_claims,
+    validate_ray_coupling_scope,
+    validate_ray_participants,
     validate_rays,
 )
 
 from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
+from .ray_interactions import apply_ray_interactions
 from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
@@ -75,6 +84,26 @@ class SpatialLaw:
     # The one shared object: the bond registry, the declared exception to the
     # causal bound. None when no field is bonded.
     bonds: BondRegistry | None = None
+    ray_interactions: tuple[InteractionDefinition, ...] = ()
+    sampling_profile: str = DETECTOR_ONLY
+
+    def __post_init__(self) -> None:
+        validate_spatial_sampling(self.sampling_profile, self.definitions)
+        if self.ray_interactions:
+            validate_ray_coupling_scope(self.definitions, self.sampling_profile)
+            selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
+            if (
+                self.field_rules
+                or self.least_delay_direction is not None
+                or any(
+                    rule.field == self.definitions[index].field
+                    for index in selected
+                    for rule in self.absorptions
+                )
+            ):
+                raise ValueError("ray interactions do not support another coupled field program")
+        if self.bonds is not None or any(rule.bond_setting is not None for rule in self.absorptions):
+            require_historical_sampling(self.sampling_profile, "ordinary bond registry binding")
 
     def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
         """Complete keys of the record's own rays that arrived here with it."""
@@ -484,6 +513,8 @@ class SpatialLaw:
     ) -> SpatialPlan:
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
+        if self.ray_interactions and ray_hold:
+            raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
@@ -505,6 +536,18 @@ class SpatialLaw:
         ]
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
         meter = CostMeter(self.costs)
+        if self.ray_interactions:
+            resident_rays = [
+                list(bundle)
+                for bundle in apply_ray_interactions(
+                    tuple(tuple(bundle) for bundle in resident_rays),
+                    self.definitions,
+                    self.fields,
+                    self.ray_interactions,
+                    meter,
+                    self.costs,
+                )
+            ]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
         received_components = sum(self.fields[d.field].components for d in self.definitions)

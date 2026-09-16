@@ -20,6 +20,7 @@ POSITION = [[[1, 0], [0, 0]], [[0, 0], [0, 1]]]
 def configuration(r=3, t=4, n=5):
     data = json.loads(BASE.read_text())
     data["model_id"] = "native-quantum-contact-v1"
+    data["sampling_profile"] = "historical-autonomous-v1"
     data["event_program"] = {
         "model": "local-quantum-events-v1",
         "capacity": 10000,

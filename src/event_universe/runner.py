@@ -178,6 +178,7 @@ def _execute_run(
         "initialization_sha256": hashlib.sha256(source).hexdigest(),
         "model": initial.model_id,
         "schema_version": initial.schema_version,
+        "sampling_profile": initial.sampling_profile,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

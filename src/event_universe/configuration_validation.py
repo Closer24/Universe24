@@ -124,6 +124,7 @@ def _initial_summary(prepared: PreparedInitialization) -> dict[str, object]:
     initial = prepared.initial
     return {
         "model": initial.model_id,
+        "sampling_profile": initial.sampling_profile,
         "shape": initial.shape,
         "ticks": initial.ticks,
         "fields": len(initial.fields),

@@ -236,6 +236,7 @@ def bonded_pair(
     pairs: int = 4,
 ) -> dict:
     raw = _base("rays-panel-bonded-pair-v1", ticks)
+    raw["sampling_profile"] = "historical-autonomous-v1"
     steps = 64
     detector = ["quanta", "momentum", "setting"]
     raw.update(
@@ -590,6 +591,7 @@ def lottery_detector(
     quanta: int = 8,
 ) -> dict:
     raw = _base("rays-panel-lottery-detector-v1", ticks)
+    raw["sampling_profile"] = "historical-autonomous-v1"
     steps = 64
     raw.update(
         fields=[QUANTA, MOMENTUM],

@@ -1,6 +1,7 @@
 {
  "schema_version": 1,
  "model_id": "rays-panel-bonded-pair-v1",
+ "sampling_profile": "historical-autonomous-v1",
  "boundary": "open",
  "shape": [
   15,

@@ -82,7 +82,7 @@ SpatialFieldGuard = Callable[[tuple[SpatialState, ...], SpatialPlan], None]
 class SpatialCoupler(Protocol):
     def sample(self, states: tuple[SpatialState, ...]) -> Values: ...
 
-    def sample_fluxes(self, states: tuple[SpatialState, ...]) -> Values: ...
+    def sample_fluxes(self, states: tuple[SpatialState, ...], rays: tuple[Rays, ...] = ()) -> Values: ...
 
     def sample_ports(self, states: tuple[SpatialState, ...]) -> tuple[Values, ...]: ...
 
@@ -314,7 +314,7 @@ class SpatialNode(SpatialNodeState):
         ):
             # Freeze only locally delivered input, before fresh source injection.
             sample_values = services.coupler.sample(self._sampled_states(services))
-            sample_fluxes = services.coupler.sample_fluxes(self.states)
+            sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
             sample_cause = self.cause_id
             if services.initial.arrival_port_blind:
                 self.sample_delivered = tuple(state.delivered for state in self.states)
@@ -685,7 +685,7 @@ class SpatialNode(SpatialNodeState):
                 raise ValueError("pending field inputs are reserved by their local interaction")
             if self.last_begin_tick != tick or self.completed_tick == tick:
                 self.sample_values = services.coupler.sample(self.states)
-                self.sample_fluxes = services.coupler.sample_fluxes(self.states)
+                self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
                 self.sample_ports = services.coupler.sample_ports(self.states)
                 self.sample_received_masks = services.coupler.sample_received_masks(self.states)
                 self.sample_cause_id = self.cause_id
@@ -770,7 +770,7 @@ class SpatialNode(SpatialNodeState):
         return services.coupler(
             records,
             services.coupler.sample(states),
-            services.coupler.sample_fluxes(states),
+            services.coupler.sample_fluxes(states, self.rays),
             services.coupler.sample_ports(states) if services.initial.spatial_interactions else (),
         )
 
@@ -989,7 +989,7 @@ class SpatialNode(SpatialNodeState):
         """Freeze coupled samples after this interval's field phase has delivered."""
         assert services.coupler is not None
         self.sample_values = services.coupler.sample(self._sampled_states(services))
-        self.sample_fluxes = services.coupler.sample_fluxes(self.states)
+        self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
         if services.initial.spatial_interactions:
             self.sample_ports = services.coupler.sample_ports(self.states)
             self.sample_received_masks = services.coupler.sample_received_masks(self.states)

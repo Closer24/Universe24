@@ -90,6 +90,14 @@ def forward_rays(
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
+        if ray.interaction_delay:
+            if bounded(ray.interaction_delay) < 0:
+                raise ValueError("ray interaction delay must be nonnegative")
+            step = ray.advance if ray.advance >= 0 else definition.phase_advance
+            phase = (ray.phase + step) % definition.phase_steps if definition.phase_steps else ray.phase
+            kept.append(replace(ray, interaction_delay=ray.interaction_delay - 1, phase=phase))
+            meter.charge("update", 2)
+            continue
         numerator, denominator = heading_pace(definition, ray.heading)
         wait = checked_work(ray.wait + numerator)
         if wait < denominator:

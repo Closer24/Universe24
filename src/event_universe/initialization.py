@@ -51,6 +51,7 @@ from .core.spatial_state import (
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    RAY_PROPERTIES,
     TICKET_MODULUS,
     DecayDefinition,
     EmissionDefinition,
@@ -61,6 +62,7 @@ from .core.spatial_state import (
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
     SpatialSeed,
+    ray_participant_definitions,
     validate_heading,
 )
 from .json_documents import parse_json_document as parse_json_document
@@ -986,6 +988,7 @@ def _spatial_fields(
                 "pace",
                 "claim",
                 "bond",
+                "flux_projection",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -1012,7 +1015,9 @@ def _spatial_fields(
         claim_ticks, claim_slots = 0, 0
         bond_seed = -1
         bond_stream: tuple[int, ...] = ()
+        flux_projection = "ports"
         if transport == "ray":
+            flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
@@ -1088,11 +1093,12 @@ def _spatial_fields(
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
         elif (
-            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "claim", "bond"}
+            ray_keys
+            | {"self_exclusion", "kerengonen", "metric", "pace", "claim", "bond", "flux_projection"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "claim and bond require ray transport"
+                "claim, bond and flux_projection require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1132,6 +1138,7 @@ def _spatial_fields(
                 claim_slots=claim_slots,
                 bond_seed=bond_seed,
                 bond_stream=bond_stream,
+                flux_projection=flux_projection,
             )
         )
     return tuple(result)
@@ -1753,6 +1760,28 @@ def _spatial_interactions(
     return tuple(result)
 
 
+def _ray_interactions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+) -> tuple[InteractionDefinition, ...]:
+    """Compile the existing indexed syntax against structural complete-ray views."""
+    definitions = ray_participant_definitions(fields, spatial)
+    required = {"name", "participants", "assignments", "invariants"}
+    rules: list[InteractionDefinition] = []
+    for raw in _array(value, "ray_interactions", MAX_RULES):
+        obj = _object(raw, "ray interaction", required | {"when"}, required)
+        rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+        if len(rule.participants) > 6:
+            raise ValueError("ray interactions admit at most six participants")
+        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
+            raise ValueError("ray interaction amount and advance are read-only")
+        if any(existing.name == rule.name for existing in rules):
+            raise ValueError("duplicate ray interaction name")
+        rules.append(rule)
+    return tuple(rules)
+
+
 def parse_initial_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
@@ -1783,6 +1812,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_groups",
             "field_rules",
             "spatial_interactions",
+            "ray_interactions",
             "event_program",
             "observer",
             "conservation",
@@ -1798,6 +1828,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_delay",
             "focus",
             "ray_phase_per_tick",
+            "sampling_profile",
         },
         required,
     )
@@ -1822,6 +1853,7 @@ def parse_initial_state(document: object) -> InitialState:
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
+        sampling_profile=_text(obj.get("sampling_profile", "detector-only-v1"), "sampling_profile"),
         shape=shape,
         slots_per_node=capacity,
         link_ticks=_integer(obj["link_ticks"], "link_ticks", 1),
@@ -1856,6 +1888,7 @@ def parse_initial_state(document: object) -> InitialState:
             spatial,
             node_execution=node_execution,
         ),
+        ray_interactions=_ray_interactions(obj.get("ray_interactions", []), fields, spatial),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
         node_execution=node_execution,
         spatial_computation_delay=_boolean(

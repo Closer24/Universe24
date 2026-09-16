@@ -1,5 +1,11 @@
 # Bell and postulate 22: four experiments on the bonded pair
 
+Current builders and new result stamps explicitly select
+`historical-autonomous-v1` under the
+[sampling admission contract](../../../docs/DETECTOR_SAMPLING.md).
+These bonded-registry experiments do not implement canonical external Detector
+ownership. The dated results below remain unchanged historical evidence.
+
 Exploration evidence of 2026-09-16 at commit `e5b5911`, source fingerprint
 `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`
 (Python 3.14.0rc2, headless). Nothing here changes the engine; every world is a
@@ -12,7 +18,7 @@ wrapper around one registry instance owned by one `Simulation` object.
 
 The question, in the words of
 [hypothesis 1](../../../docs/HYPOTHESES.md#1-the-lottery-is-the-only-door-for-outside-information)
-and [postulate 22](../../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction):
+and [historical postulate 22](../../../POSTULATES.md#22-historical-autonomous-sampling-candidates):
 if every uncertain outcome is the value of one bounded integer read by both
 ends of a bonded pair, then (E1) the integer's influence must stay inside the
 light cone of the asking ends, (E2) the outcome must not depend on which end
