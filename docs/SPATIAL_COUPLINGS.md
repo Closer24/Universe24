@@ -30,6 +30,16 @@ its six delivered channels: `(F+X-F-X, F+Y-F-Y, F+Z-F-Z)`. It is a signed travel
 projection, not new inventory. Vector field flux would require a separate tensor
 contract and is rejected. Baselines have no incoming directional flux.
 
+A scalar ray field may explicitly choose `"flux_projection": "carried_heading"`
+under the [complete-ray readout contract](SHARED_RAY_COUPLING.md#optional-carried-heading-field-readout).
+Then `flux` reads the amount-weighted headings of complete resident rays before
+fresh emission, including retained rays on each admitted sampling cycle. It is
+a directional readout, not a physical massless-momentum convention. The default
+`"ports"` remains the six-channel projection above. The new option adds a fixed
+tariff of four reads and six updates per declared ray slot. Supported one-Link
+self-exclusion subtracts the same heading projection; its existing composition
+restrictions remain in force.
+
 Samples are captured before this interval's fresh emission and forwarding.
 The carrier therefore does not read its own newly created local source as an
 additional field value. Previously delivered self contributions are not removed

@@ -161,11 +161,17 @@ class SpatialFieldDefinition:
     # in the order pairs first ask, in place of the registry's own sequence. Empty
     # for the world's sequence; at most MAX_BOND_STREAM numbers.
     bond_stream: tuple[int, ...] = ()
+    # Scalar response readout: last-hop Port channels or complete resident ray headings.
+    flux_projection: str = "ports"
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
 
     def __post_init__(self) -> None:
+        if self.flux_projection not in ("ports", "carried_heading"):
+            raise ValueError("flux_projection must be ports or carried_heading")
+        if self.flux_projection == "carried_heading" and not self.rays:
+            raise ValueError("carried_heading flux_projection requires ray transport")
         if self.bond_stream:
             if not self.bonded:
                 raise ValueError("a bond stream requires a bonded field")

@@ -904,6 +904,7 @@ def _spatial_fields(
                 "pace",
                 "claim",
                 "bond",
+                "flux_projection",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -930,7 +931,9 @@ def _spatial_fields(
         claim_ticks, claim_slots = 0, 0
         bond_seed = -1
         bond_stream: tuple[int, ...] = ()
+        flux_projection = "ports"
         if transport == "ray":
+            flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
@@ -1006,11 +1009,12 @@ def _spatial_fields(
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
         elif (
-            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "claim", "bond"}
+            ray_keys
+            | {"self_exclusion", "kerengonen", "metric", "pace", "claim", "bond", "flux_projection"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "claim and bond require ray transport"
+                "claim, bond and flux_projection require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1050,6 +1054,7 @@ def _spatial_fields(
                 claim_slots=claim_slots,
                 bond_seed=bond_seed,
                 bond_stream=bond_stream,
+                flux_projection=flux_projection,
             )
         )
     return tuple(result)

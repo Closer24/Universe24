@@ -1,5 +1,19 @@
 # Test inputs and expected results
 
+## Complete-ray direction projection
+
+`test_ray_heading_flux.py` distinguishes the optional carried-heading readout
+from the default last-hop projection: amount three with heading `(2,1,0)` arriving
+through +X reads `(6,3,0)` versus `(3,0,0)`. The actual receiver cannot respond
+before causal delivery, and its configured response has an equal opposite field
+reaction. Opposite headings cancel; signed amounts reverse the projection; empty
+resident rays and an immutable baseline contribute no heading. Supported local
+self-exclusion removes the full own-ray vector while retaining external input.
+Missing owners, excessive capacity, invalid selection and overflow reject; a
+receiving ray and carrier remain unchanged on overflow. The explicit projection
+adds ten unit-cost operations per declared ray slot. These checks establish
+direction access, not an electron orbit or a physical force law.
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the
