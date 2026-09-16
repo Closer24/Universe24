@@ -195,23 +195,52 @@ extension contract before two developers touch the same interface.
 
 ## Recorded evidence interface
 
-Every measured world uses the canonical runner with visualization enabled and
-`frame_stride=1`. It writes `initialization.json`, `events.jsonl`, `state.json`,
-`run.json` and `run.html`; it does not write a `states.jsonl` file. The HTML's
-`script` element with `id="recording"` and `type="application/json"` contains an
-object with `frames`, `metadata` and optional `observation`. These frames are
-copied engine snapshots, beginning at tick zero and then after each completed
-step. Extract this JSON without executing the page or evolving missing frames.
+Every measured world uses the canonical runner with visualization enabled. It
+writes `initialization.json`, `events.jsonl`, `state.json`, `run.json` and
+`run.html`. The following diagnostic extension adds a compact raw sidecar for
+independent physics scoring without retaining a full field map every tick.
+This supersedes the initial HTML-only extraction interface; it changes no
+physical update, scheduler, law or existing default behavior.
+
+- `Simulation.snapshot(*, include_spatial: bool = True)` returns the existing
+  exact snapshot. False omits only the spatial map/packet expansion. It retains
+  every carrier Node, held output, Link record, owned value and bookkeeping
+  field, plus tick, boundary and escaped totals. Missing spatial detail means
+  unavailable, never measured zero.
+- `run_initialization` adds `frame_content="all" | "carriers"`, default `"all"`,
+  and `state_trace=None | "all" | "carriers"`, default `None`. These select only
+  recorded content. Reject invalid values before a run. Ordinary callers and
+  the full final `state.json` remain unchanged.
+- When enabled, `states.jsonl` streams a direct snapshot object at tick zero and
+  after every completed step, independently of HTML `frame_stride`. Each line
+  also has `accounting`, containing exact `totals`, `source_totals`,
+  `dissipation_totals`, `escaped_totals` and `spatial_accounting` from the same
+  world at that tick. Reuse already computed accounting where possible. Never
+  rerun a world to manufacture a different trace format.
+- `run.json` identifies the sidecar content, stride one, row count, source and
+  initialization hashes. A failure preserves its complete recorded prefix and
+  the separately labeled final failed state; it must not invent a successful
+  completion or an unrecorded intermediate state.
+
+For the long combined runs, select carrier-complete raw sidecars and carrier
+HTML frames. Source-field validation reads actual field receipt events and
+accounting; where a detailed field map is needed, its separately preregistered
+run records that detail explicitly. The HTML's `script` element with
+`id="recording"` and `type="application/json"` contains copied snapshot data in
+`frames`, with `metadata` and optional `observation`. That exact unrounded JSON
+may cross-check the raw sidecar where ticks overlap. Rendered images, glyph
+coordinates, interpolated paths or downsampled display frames never determine
+physical pass/fail. The GIF is a downstream view of already recorded evidence.
 
 The integration owner's `measurements.py` exports
 `load_run(run_dir: Path) -> dict[str, object]`, returning the keys
 `initialization`, `metadata`, `events`, `frames` and `final_state`. They contain,
-respectively, the decoded initialization, `run.json`, decoded event lines,
-recording frames and `state.json`. Independent acceptance may parse the same raw
-sources itself. A valid complete recording has contiguous ticks, matching HTML
-and run metadata, and a final frame equal to the final state. A failed run may
-include an additional final frame at the same tick; preserve and label it rather
-than manufacturing a successful prefix or deduplicating away changed state.
+respectively, the decoded initialization, `run.json`, decoded event lines, raw
+sidecar records and `state.json`. Independent acceptance may parse the same raw
+sources itself and should stream long traces. A valid complete raw recording
+has contiguous ticks and a final recorded projection equal to that projection
+of the final state, excluding the added accounting wrapper. Any display sampling
+is explicit metadata and does not relax raw trace completeness.
 
 A frame's `nodes` expose `position` and `disturbances`, each with `type` and
 `values`; values map field names to scalar/vector component lists. `transfers`
