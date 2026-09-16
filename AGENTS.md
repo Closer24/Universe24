@@ -25,7 +25,7 @@ Generated artifacts, distributions and backups are outputs or history.
 One repository does not require one runtime process or a new package hierarchy.
 
 The [binding system architecture](docs/ARCHITECTURE.md#binding-system-architecture)
-controls the whole project, including Register scheduling, selected periodic
+controls the whole project, including Node scheduling, selected periodic
 spatial topology, coordinate-free local rules and lossless remainder ownership.
 Agents must not change these decisions without explicit user approval. Existing
 implementation gaps must be reported, not treated as optional design choices.
@@ -35,19 +35,13 @@ implementation gaps must be reported, not treated as optional design choices.
 Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the active
 simulator, documentation, tests and diagnostics.
 
-The logical unit at a physical location is a **Node**. In the target architecture,
-the six external Ports define 36 directed internal computational **Registers**:
-one for every ordered entrance/exit Port pair (24 orthogonal, six straight and
-six return). This is the user-selected temporary uniform baseline; the old
-24-Register fixture remains historical evidence only. Each Register has one input and
-one output; it is not a Port or a physical Link. Registers use identical generic logic
-with data-selected state, direction and delay. Each reads only its own state and
-actually received single-channel input, never another Register's state, including
-inside the same Node. A Node groups its Registers; scheduling/reservation metadata
-does not authorize independent physical mixing or aggregate physical inputs.
-Follow the implementation boundary in the terminology contract.
-A Node's aggregate description of private Register states is its
-**NodeState**, not shared physical read access. NodeState contains configured Scalars and Vectors plus only the
+The physical location and unit of local state and interaction is a **Node**.
+Its complete bounded local information is **NodeState**. Local operations may use
+its resident values and causally arrived inputs together, never another Node's live
+state. Six directional **Ports** connect neighboring Nodes through **Links**.
+There is no fixed internal register decomposition or count. Generic operations
+belong in their separate layer; the engine schedules and validates, and NodeState
+stores data, not physical formulas. NodeState contains Scalars and Vectors plus the
 minimal ownership, Port and timing metadata required for local transport. Input
 and output are roles of Scalars/Vectors, not additional physical value types.
 Nodes are connected by **Links** through directional **Ports**; local changes are

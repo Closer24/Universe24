@@ -49,7 +49,7 @@ and distribution definitions are separate from evolving state.
 | DETECTOR | PASS | Forward exactly the received signal and generation provenance; no content sample | Adopt that generated value under LOCK without resampling it |
 | DETECTOR | GENERATE_RETURN | On the described initial encounter, reject the incoming payload and return using the receiving Detector's own values | Do not adopt the incoming value; repeat/previously locked cases remain OPEN |
 
-Action sampling is external Detector logic, not an ordinary Node/Register rule.
+Action sampling is external Detector logic, not an ordinary Node-local rule.
 The action-bit distribution, dependence on causally available input/settings and
 lock-dependent eligibility remain OPEN. Do not use a deterministic selector as
 the accepted replacement for the user's action-bit decision.

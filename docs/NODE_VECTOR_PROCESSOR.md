@@ -1,19 +1,14 @@
 # Generic integer Node processor
 
-This is the current Node-owned execution contract, not the selected 36-directed-Register
-scheduler for six external Ports. Existing six-Port readiness/bank behavior is
-not evidence of this internal computational graph or the private Register kernel.
-The whole-Node frozen-snapshot evaluator described below is an existing profile;
-it is not the binding target, where each Register reads only its own state and
-actually received single-channel input. The Node-batch comparison reference must
-batch those same private updates, not reuse this evaluator as an equivalent law. The [canonical Node/Register distinction](TERMINOLOGY.md) and
-[Register execution target](ARCHITECTURE.md#register-level-execution-target)
-define the intended decomposition. Storage-register counts and quantum registers
-in existing contracts do not count these computational Registers. No runtime
-behavior or timing changes through the terminology update.
+This is the active Node-owned execution contract. The Node is the local state and
+interaction unit; no private-register decomposition or count is required. A frozen
+Node-local snapshot may combine admitted resident values and arrived inputs.
+Generic operations remain separate from scheduling and formula-free NodeState.
+See [canonical terminology](TERMINOLOGY.md) and
+[Node execution architecture](ARCHITECTURE.md#node-level-execution).
 
 The [canonical timing clarification](REFERENCE_UNITS.md#minimum-model-time-and-output-delay)
-distinguishes the accepted Register timing design from this existing profile's
+distinguishes the proposed general Node timing convention from this existing profile's
 explicit additional-wait convention. Its local symbol h is not Planck's constant.
 The [approved storage domain](ARCHITECTURE.md#stored-codes-and-mathematical-values)
 is likewise a target representation decision, not a change to this profile's

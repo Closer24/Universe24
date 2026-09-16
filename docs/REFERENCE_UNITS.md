@@ -19,7 +19,7 @@ unit conversion inside the engine or a new physical law.
 
 Use `delta_t_min` (Delta t_min) for the minimum model time interval; no SI value
 is assigned. Physical h and hbar are action constants, not time intervals.
-In the accepted Register design, the locally received computation field sets
+In the Node design, the locally received computation field sets
 each output delay through a defined local rule in integer multiples of this
 interval, not through host load or an inferred hbar/energy law.
 
