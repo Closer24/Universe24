@@ -35,6 +35,20 @@ def test_ray_candidate_resources_select_their_direct_consumers(name, consumer):
     assert "tests/test_collisions.py" not in selected
 
 
+@pytest.mark.parametrize(
+    "path",
+    [
+        "examples/research/ray-gallery/worlds.py",
+        "examples/research/ray-gallery/configs/4-bonded-pair.json",
+        "examples/research/ray-gallery/configs/8-lottery-detector.json",
+        "examples/research/bell-postulate-22/common.py",
+    ],
+)
+def test_historical_research_resources_select_sampling_admission(path):
+    selected, _ = CHECK.select([path], {})
+    assert "tests/test_research_sampling_admission.py" in selected
+
+
 @pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
 def test_contact_composition_resources_select_their_preflight_regressions(name):
     selected, _ = CHECK.select(["examples/quantum/" + name], {})

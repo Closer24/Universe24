@@ -1,0 +1,23 @@
+{
+  "cases": 48,
+  "variants_checked": 96,
+  "changed_ends": {
+    "alice_only": 16,
+    "bob_only": 32,
+    "both": 48,
+    "none": 0
+  },
+  "strict_violations": [],
+  "slack_histogram_(distance_minus_radius,_<=0_means_inside)": {
+    "-8": 32,
+    "-7": 224,
+    "-6": 784,
+    "-5": 2032,
+    "-4": 4080,
+    "-3": 6144,
+    "-2": 7536,
+    "-1": 8352,
+    "0": 8640
+  },
+  "pass": true
+}

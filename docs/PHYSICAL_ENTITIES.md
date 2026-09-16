@@ -99,12 +99,27 @@ products must carry the full applicable energy, momentum and charges. Rest mass
 is conserved in the restricted mechanical examples, not a universal invariant
 for matter/radiation reactions.
 
+The [family-conversion candidates](../examples/family-conversion/README.md)
+demonstrate what that interface can carry: electron-positron annihilation into
+two photons, two-photon pair production with an explicit 1022 keV threshold and
+a below-threshold crossing control, and a Compton-like exchange whose energy
+fraction follows an integer formula, all in catalog keV units with exact energy,
+momentum and charge accounting up to 10 GeV on a 48-cubed board. What is
+demonstrated is the accounting and the energy dependence of supplied discrete
+rules on the generic [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion),
+including a 2 -> 3 three-photon channel; the kinematics, thresholds, transport
+pace and lattice angles are supplied data, and no cross section, mass shell,
+spin or rate is derived. Nuclei, bound states and binding energies are not
+represented, so field-mediated pair production and atomic Compton targets stay
+outside these probes.
+
 ## New executable probes
 
 | Input | Elementary operation | What its result can establish |
 | --- | --- | --- |
 | [discrete-pair.json](../examples/known-entities/discrete-pair.json) | Two equal-mass classical charged proxies exchange their momentum vectors at a selected head-on contact | Positive masses and opposite charges persist; the vectors reverse for the symmetric input while their total and squared-norm sum remain unchanged |
 | [field-channel.json](../examples/known-entities/field-channel.json) | A node moves two transverse vector payloads into one chosen outgoing port, retaining zero | Each payload has one owner and arrives only after the full link time; two-component representation works without a neighboring-state read |
+| [family-conversion](../examples/family-conversion/README.md) | N-to-M conversions declared between catalog electron, positron and photon families (values from the catalog through the authoring adapter) replace two records by two or three according to their energies, with a `when` threshold and summed invariants | The smallest change that closes the entity audit's gap: threshold conversion with `when` on energy plus invariants behaves as declared with exact totals. Still excluded: no nucleus or bound state, no binding energy, no field-mediated 1 -> 2 pair production; the rules remain supplied kinematics |
 
 The pair is a restricted non-annihilating classical model, not an electron/positron
 scattering prediction. Its fixed approach direction and equal masses are explicit

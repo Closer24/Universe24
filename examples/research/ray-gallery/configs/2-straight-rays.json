@@ -1,0 +1,192 @@
+{
+ "schema_version": 1,
+ "model_id": "rays-panel-straight-rays-v1",
+ "boundary": "open",
+ "shape": [
+  15,
+  9,
+  3
+ ],
+ "slots_per_node": 2,
+ "link_ticks": 1,
+ "normal_budget": 100000,
+ "ticks": 22,
+ "operation_costs": {
+  "receive": 1,
+  "read": 1,
+  "evaluate": 1,
+  "update": 1,
+  "couple": 1,
+  "route": 1,
+  "split": 1,
+  "send": 1,
+  "commit": 1
+ },
+ "fields": [
+  {
+   "name": "quanta",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "momentum",
+   "components": 3,
+   "units": "quantum times heading",
+   "signed": true,
+   "conserved": true,
+   "extensive": true
+  }
+ ],
+ "disturbance_types": [
+  {
+   "name": "lamp_x",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 48,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "lamp_y",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 48,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "lamp_diag",
+   "fields": [
+    "quanta",
+    "momentum"
+   ],
+   "defaults": {
+    "quanta": 48,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  }
+ ],
+ "spatial_fields": [
+  {
+   "field": "quanta",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 16
+  }
+ ],
+ "emissions": [
+  {
+   "type": "lamp_x",
+   "field": "quanta",
+   "amount": 8,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum",
+   "heading": [
+    1,
+    0,
+    0
+   ]
+  },
+  {
+   "type": "lamp_y",
+   "field": "quanta",
+   "amount": 8,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum",
+   "heading": [
+    0,
+    1,
+    0
+   ]
+  },
+  {
+   "type": "lamp_diag",
+   "field": "quanta",
+   "amount": 8,
+   "denominator": 1,
+   "source": false,
+   "recoil_field": "momentum",
+   "heading": [
+    2,
+    1,
+    0
+   ]
+  }
+ ],
+ "seeds": [
+  {
+   "position": [
+    0,
+    4,
+    1
+   ],
+   "type": "lamp_x"
+  },
+  {
+   "position": [
+    7,
+    0,
+    1
+   ],
+   "type": "lamp_y"
+  },
+  {
+   "position": [
+    0,
+    0,
+    1
+   ],
+   "type": "lamp_diag"
+  }
+ ]
+}

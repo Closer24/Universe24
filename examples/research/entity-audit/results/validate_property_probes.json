@@ -1,0 +1,17 @@
+{
+  "report_version": 1,
+  "valid": true,
+  "results": [
+    {
+      "path": "examples/known-entities/property-coupling-probes.json",
+      "kind": "profiles",
+      "valid": true,
+      "summary": {
+        "profiles": 3,
+        "classical": 3,
+        "quantum": 0
+      },
+      "issues": []
+    }
+  ]
+}

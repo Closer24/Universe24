@@ -17,6 +17,14 @@ RESOURCE_CONSUMERS = {
     "examples/generic-ray-coupling/render_gif.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/run_experiments.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
+    "examples/research/ray-gallery/worlds.py": ("tests/test_research_sampling_admission.py",),
+    "examples/research/ray-gallery/configs/4-bonded-pair.json": (
+        "tests/test_research_sampling_admission.py",
+    ),
+    "examples/research/ray-gallery/configs/8-lottery-detector.json": (
+        "tests/test_research_sampling_admission.py",
+    ),
+    "examples/research/bell-postulate-22/common.py": ("tests/test_research_sampling_admission.py",),
     "examples/quantum/spatial_momentum.py": (
         "tests/test_spatial_momentum.py",
         "tests/test_position_moment_response.py",
@@ -60,6 +68,23 @@ RESOURCE_CONSUMERS = {
     "examples/gallery/lepton_reactions.json": ("tests/test_particle_gallery.py",),
     "examples/isotropy-probe/run_experiments.py": ("tests/test_isotropy_probe.py",),
     "examples/particle-contracts/electron-positron.json": ("tests/test_particle_gallery.py",),
+    "examples/family-conversion/build.py": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/expectations.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/annihilation.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/pair-production.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/pair-production-control.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/compton.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/bindings.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/three-photon.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/three-photon-capacity-control.json": (
+        "tests/test_family_conversion.py",
+    ),
+    "examples/family-conversion/three-photon-port-control.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/four-body.json": ("tests/test_family_conversion.py",),
+    "examples/family-conversion/four-body-three-arrive-control.json": (
+        "tests/test_family_conversion.py",
+    ),
+    "examples/family-conversion/four-body-port-control.json": ("tests/test_family_conversion.py",),
     "examples/quantum/causal_charge.json": (
         "tests/test_causal_contact_fields.py",
         "tests/test_catalog_contact.py",

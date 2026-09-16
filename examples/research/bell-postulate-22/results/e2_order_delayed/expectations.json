@@ -1,0 +1,17 @@
+{
+  "experiment": "E2 who asks first, and delayed choice",
+  "fixed_before_running": true,
+  "a_setup": "Alice's plus detector at 3 links and Bob's at 5 (Alice asks first), and the mirror (Bob at 3, Alice at 5, Bob asks first). 1024 fresh registry seeds per setting pair, four setting pairs, lattice outcomes; ask order verified from the registry log.",
+  "a_prediction": "S = 2.828 within its standard error in both orderings; each of the four E and both plus rates equal between orderings within 3 combined standard errors; Alice asks first in 100% of pairs in the first world and Bob in 100% in the mirror.",
+  "a_pass": "|S - 2.828125| <= 3 sigma_S in both orderings and every E and rate difference between orderings <= 3 combined sigma",
+  "b_setup": "Delayed choice. Legal API: no in-world rule can rewrite a detector record's setting on a ray field (field_rules/spatial_interactions are rejected for ray transport), so (i) two worlds differing only in Alice's setting with identical seed and pair number are compared, and (ii) a flagged private-state variant replaces the frozen record in world._nodes between steps: every world is built with Alice at a=0 and Bob at b=8 and the intended settings are written after tick 2 (after emission, before arrival at tick 3) or after tick 3 (the last state before the asking step).",
+  "b_prediction": "Outcomes depend only on the setting present at the asking tick: the delayed world's outcomes equal, pair by pair, those of the world built with the final settings from the start; CHSH from delayed settings gives S = 2.828 within 3 sigma; changing the setting after the ask (after tick 4) changes nothing.",
+  "b_pass": "pairwise identity 100% and |S - 2.828125| <= 3 sigma_S",
+  "sample_size": "1024 pairs per correlation, lattice",
+  "highlights_sections": [
+    "3.19 measurement is an interaction: the result arises from the state that reached the detector, so the setting present at the ask decides",
+    "5.4 only an actual Detector encounter generates a draw (whichever end asks first)",
+    "3.20 a later change of setting cannot rewrite a recorded outcome"
+  ],
+  "note": "Highlights section references added after the predictions were fixed; no prediction changed."
+}

@@ -1,0 +1,492 @@
+{
+  "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
+  "python": "3.14.0rc2 (main, Sep  2 2025, 14:20:56) [Clang 20.1.4 ]",
+  "worktree": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/wt-quantum",
+  "worlds_per_case": 1024,
+  "modulus": 1073741789,
+  "birth_code_collision_analysis": "origin_bond = (index * 1048573 + tick) mod 1073741789 + 1 with index the Node's row-major address. The modulus is prime and 1048573 is coprime to it, so two different Nodes collide only when their ticks differ by 1048573 x (index difference) modulo the modulus, i.e. at least 1,048,573 ticks apart for neighbouring addresses; unreachable in these runs. The only reachable collision is the same Node and the same tick, which is the case measured.",
+  "a": {
+    "collision_same_node_same_tick": {
+      "source_pair_2": [
+        6,
+        4,
+        1
+      ],
+      "bond_codes": {
+        "pair_1": 183500276,
+        "pair_2": 183500276
+      },
+      "E(A1,B1)": {
+        "pairs": 1024,
+        "E": -1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49707,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": -0.70703,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "E(A2,B2)": {
+        "pairs": 1024,
+        "E": -1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.49707,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50293,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": -0.70703,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "E(A1,A2)": {
+        "pairs": 1024,
+        "E": -1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49707,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "E(B1,B2)": {
+        "pairs": 1024,
+        "E": -1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.49707,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50293,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "E(A1,B2)": {
+        "pairs": 1024,
+        "E": 1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50293,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "E(A2,B1)": {
+        "pairs": 1024,
+        "E": 1.0,
+        "sigma_E": 0.0,
+        "alice_plus_rate": 0.49707,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49707,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": null,
+        "within_3_sigma": false
+      },
+      "numbers_consumed_histogram": {
+        "2": 1024
+      },
+      "questions_histogram": {
+        "4": 1024
+      },
+      "distinct_bonds_asked": {
+        "1": 1024
+      },
+      "distinct_number_values": {
+        "1": 1024
+      },
+      "closed": true,
+      "example_log": [
+        [
+          3,
+          183500276,
+          0,
+          -1,
+          1
+        ],
+        [
+          3,
+          183500276,
+          0,
+          1,
+          0
+        ],
+        [
+          3,
+          183500276,
+          8,
+          -1,
+          1
+        ],
+        [
+          3,
+          183500276,
+          8,
+          1,
+          0
+        ]
+      ],
+      "theory_pass": false
+    },
+    "control_neighbour_node": {
+      "source_pair_2": [
+        7,
+        4,
+        1
+      ],
+      "bond_codes": {
+        "pair_1": 183500276,
+        "pair_2": 211811747
+      },
+      "E(A1,B1)": {
+        "pairs": 1024,
+        "E": -0.72266,
+        "sigma_E": 0.0216,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49902,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": -0.70703,
+        "z": -0.724,
+        "within_3_sigma": true
+      },
+      "E(A2,B2)": {
+        "pairs": 1024,
+        "E": -0.70703,
+        "sigma_E": 0.0221,
+        "alice_plus_rate": 0.49805,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50781,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": -0.70703,
+        "z": 0.0,
+        "within_3_sigma": true
+      },
+      "E(A1,A2)": {
+        "pairs": 1024,
+        "E": -0.0293,
+        "sigma_E": 0.03124,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49805,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": -0.938,
+        "within_3_sigma": true
+      },
+      "E(B1,B2)": {
+        "pairs": 1024,
+        "E": -0.0293,
+        "sigma_E": 0.03124,
+        "alice_plus_rate": 0.49902,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50781,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": -0.938,
+        "within_3_sigma": true
+      },
+      "E(A1,B2)": {
+        "pairs": 1024,
+        "E": 0.00977,
+        "sigma_E": 0.03125,
+        "alice_plus_rate": 0.50293,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.50781,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": 0.313,
+        "within_3_sigma": true
+      },
+      "E(A2,B1)": {
+        "pairs": 1024,
+        "E": 0.05664,
+        "sigma_E": 0.0312,
+        "alice_plus_rate": 0.49805,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49902,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": 0.0,
+        "z": 1.815,
+        "within_3_sigma": true
+      },
+      "numbers_consumed_histogram": {
+        "2": 1024
+      },
+      "questions_histogram": {
+        "4": 1024
+      },
+      "distinct_bonds_asked": {
+        "2": 1024
+      },
+      "distinct_number_values": {
+        "2": 1024
+      },
+      "closed": true,
+      "example_log": [
+        [
+          3,
+          183500276,
+          0,
+          -1,
+          1
+        ],
+        [
+          3,
+          211811747,
+          0,
+          1,
+          1
+        ],
+        [
+          3,
+          211811747,
+          8,
+          -1,
+          0
+        ],
+        [
+          3,
+          183500276,
+          8,
+          1,
+          0
+        ]
+      ],
+      "theory_pass": true
+    }
+  },
+  "b": {
+    "same_end_same_setting": {
+      "replay_setting": 0,
+      "worlds": 1024,
+      "alice_first_answer_minus": 503,
+      "worlds_with_three_questions": 503,
+      "replay_answer_equals_first_and_drew_nothing": 503,
+      "numbers_histogram": {
+        "1": 1024
+      },
+      "questions_histogram": {
+        "2": 521,
+        "3": 503
+      },
+      "released_histogram": {
+        "1": 1024
+      },
+      "open_at_end_histogram": {
+        "0": 1024
+      },
+      "E(alice_first_answer, bob)": {
+        "pairs": 1024,
+        "E": -0.67578,
+        "sigma_E": 0.02303,
+        "alice_plus_rate": 0.50879,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.49707,
+        "sigma_bob_rate": 0.01562,
+        "expected_E": -0.70703,
+        "z": 1.357,
+        "within_3_sigma": true
+      },
+      "closed": true,
+      "example_logs": [
+        [
+          [
+            3,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            -1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            0,
+            1,
+            -1,
+            1
+          ],
+          [
+            4,
+            0,
+            1,
+            -1,
+            0
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            -1,
+            0
+          ]
+        ]
+      ],
+      "pass": true
+    },
+    "second_detector_other_setting_16": {
+      "replay_setting": 16,
+      "worlds": 1024,
+      "alice_first_answer_minus": 503,
+      "worlds_with_three_questions": 503,
+      "replay_answer_equals_first_and_drew_nothing": 261,
+      "numbers_histogram": {
+        "1": 521,
+        "2": 503
+      },
+      "questions_histogram": {
+        "2": 521,
+        "3": 503
+      },
+      "released_histogram": {
+        "1": 1024
+      },
+      "open_at_end_histogram": {
+        "0": 521,
+        "1": 503
+      },
+      "E(alice_first_answer, bob)": {
+        "pairs": 1024,
+        "E": 0.15039,
+        "sigma_E": 0.03089,
+        "alice_plus_rate": 0.50879,
+        "sigma_alice_rate": 0.01562,
+        "bob_plus_rate": 0.08398,
+        "sigma_bob_rate": 0.00867,
+        "expected_E": -0.70703,
+        "z": 27.757,
+        "within_3_sigma": false
+      },
+      "closed": true,
+      "example_logs": [
+        [
+          [
+            3,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            -1,
+            0
+          ]
+        ],
+        [
+          [
+            3,
+            0,
+            1,
+            -1,
+            1
+          ],
+          [
+            4,
+            16,
+            1,
+            1,
+            0
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            3,
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            5,
+            8,
+            1038498896,
+            -1,
+            0
+          ]
+        ]
+      ]
+    },
+    "registry_api_repeat": {
+      "first": -1,
+      "repeats": [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1
+      ],
+      "numbers_after_11_questions": 1,
+      "questions": 11,
+      "pass": true
+    }
+  },
+  "c": {
+    "worlds": 1024,
+    "alice_plus_rate_bob_absent": 0.49609,
+    "sigma": 0.01562,
+    "z_from_half": -0.25,
+    "alice_identical_between_bob_setting_8_and_24": 1024,
+    "alice_identical_to_full_world_same_seed": 1024,
+    "bob_outcome_none_every_world": true,
+    "escaped_quanta_histogram": {
+      "1": 1024
+    },
+    "numbers_histogram": {
+      "1": 1024
+    },
+    "questions_histogram": {
+      "1": 1024
+    },
+    "open_at_end_histogram": {
+      "1": 1024
+    },
+    "closed": true,
+    "full_world_alice_plus_rate": 0.49609,
+    "pass": true
+  },
+  "runtime_seconds": 807.0
+}

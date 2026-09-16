@@ -1,0 +1,16 @@
+{
+  "experiment": "E1 Tolman surface-brightness exponent n in SB ~ (1+z)^-n",
+  "written_before_running": true,
+  "standard_theory": {"n": 4, "source": "Tolman 1930; FRW: rate (1+z)^-1, energy (1+z)^-1, angular size via D_A = D/(1+z) gives (1+z)^-2 more"},
+  "model_prediction_derived_from_documents": {
+    "n_reading_B": 2, "n_reading_A": 1,
+    "derivation": "HYPOTHESES 7/9 and paper sec.4: rate falls by 1+z (measured), phase rate falls by 1+z under the default per-link phase rule (measured, by construction), static lattice so angular size is s/D with no (1+z) factor, dilution 1/D^2 from open-3D ray runs. n = a + b where a = rate exponent, b = energy(phase-rate) exponent, geometric terms cancel.",
+    "lattice_measurement_plan": "a and b fitted from loaded closed rows at D = 17.5, 41.5, 89.5 (z from 0.2 to 2.8), 12 rays each; dilution exponent and angular-size exponent vs D fitted in an open 3D box with and without a static uniform load (control that ray delay does not change geometry); zero-emission control must give a = b = 0."
+  },
+  "observation": {"n_R": "2.59 +/- 0.17", "n_I": "3.37 +/- 0.13", "source": "Lubin & Sandage 2001, AJ 122, 1084, raw exponents before luminosity-evolution correction, reduced under q0 = 1/2 expanding geometry", "note": "later work (e.g. Sandage 2010 review) keeps 2.5-3.5 range; all reductions assume expanding geometry; values not re-reduced under a static-lattice metric (unverified for the lattice)"},
+  "pass_fail": {
+    "code_pass": "all rays absorbed, quanta conserved, eye clock = ticks, zero-load control gives a = b = 0 and count dilution exponent -2 +/- 0.3 with and without load",
+    "model_candidate_falsified_if": "the lattice-derived n differs from 2 by more than its fit error under reading B (then the paper's stated prediction is not what the engine does), OR the load changes the geometric exponents (dilution or angle) by more than their fit errors",
+    "verdict_rule": "compare lattice n to 4 and to the 2.59-3.37 band; if lattice n < 2.59 - 2 sigma the data favour theory over the candidate; note that the data reduction assumes expansion"
+  }
+}

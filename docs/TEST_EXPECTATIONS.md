@@ -30,6 +30,10 @@ identity, integer bounds and selection; unsupported clock/sampling domains fail
 for JSON and typed callers. Label renaming preserves observed motion and cost.
 The unchanged carrier false-guard path returns its original records. These
 checks establish the interface and finite residence only, not nuclear binding.
+Native JSON and typed entry points also reject N-to-M carrier `outputs`; the
+shared same-owner evaluator rejects either conversion form before charging or
+changing values. The separate family-conversion suite retains its one-to-six,
+six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
 ## Spatial momentum and position output
 
@@ -1115,6 +1119,54 @@ from physical-law acceptance; do not multiply identical runs across labels.
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress.
 Existing shared engine tests remain necessary consumers of the changed schema.
+
+`tests/test_family_conversion.py` covers the
+[energy-dependent family-conversion candidates](../examples/family-conversion/README.md)
+with expectations written before the first run. Annihilation of an on-shell
+electron (1825, +1752) and positron (1825, -1752) meeting at tick 6 gives two
+1825 keV photons along +/-X that escape at tick 15; asymmetric inputs
+(1825, +1752) + (511, 0) give photons (2044, +2044) and (292, -292), and the odd
+case (1825, +1752) + (512, 0) gives (2044, +2044) and (293, -292) with the
+indivisible keV owned by photon b; transverse momenta block the rule. Pair
+production converts 511 + 511 into a resting pair and rejects 511 + 510; 49 + 5329
+(product exactly 511^2) gives an on-shell pair (2689, -2640) each, 48 + 5329 does
+not convert although its total exceeds 1022; the 500 + 500 control crosses and
+escapes at tick 15 with only photon records ever present. Compton with a 511 keV
+photon on a resting electron gives 255 keV along +Y and a 767 keV electron with
+momentum (511, -255, 0); the fraction follows the integer formula at 100, 511,
+1022, 10,000,000 and `MAX_VALUE - 1` keV, the electron owns the remainder, a
+moving electron crossing a photon strands nothing at any Node, and a stream of
+three photons past a resting electron scatters once and forwards the rest.
+Bound cases: annihilation and pair production at exactly `MAX_VALUE` per record,
+`MAX_VALUE + 1` rejected at initialization, and the Compton proposal at a
+`MAX_VALUE` photon rejected with an unchanged snapshot. Sixteen pairs on a
+48-cubed board convert at tick 21 with energies up to 10 GeV and exact totals.
+The 2 -> 3 three-photon rule turns (1825, +1752) + (511, 0) into photons
+(1752, +X), (292, +Y) and (292, -Y) on three distinct Ports at tick 6, gives the
+transverse photon the odd keV for a 512 keV positron, and does not fire at zero
+net momentum; its capacity control (two slots) and Port control (the collinear variant
+sending two products on +X) fail before commit with unchanged snapshots,
+while a spectator photon leaving on a product's Port completes the cycle. The 4 -> 4 joint rule pools four rays arriving through four Ports at tick 6,
+(1825, +1752), (1825, -1752), (300, +Y), (300, -Y), into photons 1062 along
++/-X and 1063 along +/-Y; an odd pooled energy gives the +X photon the unit;
+unequal or collinear photons leave the rule silent; three of four rays let the
+declared 2 -> 2 annihilation act instead; the collinear variant with two products
+per Port fails the cycle before commit with four unchanged residents while a
+catalog muon spectator leaving on -X beside a product keeps ordinary transport; sixteen
+quadruples on a 48-cubed board convert at tick 21 into 64 photons.
+Generic arity cases on the stock probe world: 1 -> 6 sends one record
+per Port, 6 -> 1 consumes five slots, seven or zero roles or outputs are
+rejected, two products on one Port, missing free slots, a broken readout
+invariant and a conserved-field mismatch each leave every owner unchanged with
+no pending plan, property-selected inputs convert, and a slow conversion locks
+the free slots its extra outputs need against arrivals, and the same conversion
+under `node_execution` with `k` 2 fires at `ready_tick` 2 while a missing `k`
+is rejected. `bindings.json` must
+equal the builder's catalog derivation: rest energy 511 keV encoded to the
+nearest keV/c2, charges -3/+3/0 in thirds, and each rule's interaction family
+and representative channel matching its participants and outputs.
+Totals plus escaped quantity equal the initial totals at every tick and the local
+audit passes in every run; these are accounting results for supplied laws.
 
 
 ## Repository consistency and canonical references

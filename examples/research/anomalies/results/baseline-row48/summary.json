@@ -1,0 +1,391 @@
+{
+  "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
+  "probe_sha256": "1254aaee0b14fb7d3e9152d9ba8a51262389cafc3de99fbca1736fc310dadcd1",
+  "measurement_scope": "read-only inventory audit",
+  "train": 12,
+  "runs": [
+    {
+      "label": "row 48",
+      "single_source": false,
+      "length": 48,
+      "emission": 16,
+      "budget": 1000,
+      "baseline": 7000,
+      "ticks": 1000,
+      "distance": 41.5,
+      "hop_time_at_launch": 8,
+      "alpha_from_schedule": 0.015767,
+      "last_hops_into_the_eye": [
+        13,
+        13,
+        13,
+        14,
+        14,
+        14,
+        14,
+        14,
+        15,
+        15,
+        15,
+        15
+      ],
+      "hop_times_of_the_leading_ray": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        12,
+        12,
+        12,
+        12,
+        12,
+        13,
+        13,
+        13
+      ],
+      "absorbed": 12,
+      "first_absorption_tick": 354,
+      "gaps_on_the_eye_clock": [
+        13,
+        13,
+        14,
+        14,
+        14,
+        14,
+        14,
+        15,
+        15,
+        15,
+        15
+      ],
+      "gaps_in_ticks": [
+        13,
+        13,
+        14,
+        14,
+        14,
+        14,
+        14,
+        15,
+        15,
+        15,
+        15
+      ],
+      "eye_clock_equals_ticks": true,
+      "closure": {
+        "computation_checkpoints": [
+          [
+            250,
+            528000
+          ],
+          [
+            500,
+            720000
+          ],
+          [
+            750,
+            912000
+          ],
+          [
+            1000,
+            1104000
+          ]
+        ],
+        "increments": [
+          192000,
+          192000,
+          192000
+        ],
+        "linear_in_age": true,
+        "light_conserved": true
+      },
+      "z": 0.7727,
+      "duration_ratio": 1.7727,
+      "hop_time_at_reception": 14.0833,
+      "predicted_1_plus_z": 1.7604,
+      "alpha_measured": 0.013796
+    },
+    {
+      "label": "control, no emission",
+      "single_source": false,
+      "length": 48,
+      "emission": 0,
+      "budget": 1000,
+      "baseline": 7000,
+      "ticks": 500,
+      "distance": 41.5,
+      "hop_time_at_launch": 7,
+      "alpha_from_schedule": null,
+      "last_hops_into_the_eye": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "hop_times_of_the_leading_ray": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "absorbed": 12,
+      "first_absorption_tick": 247,
+      "gaps_on_the_eye_clock": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "gaps_in_ticks": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "eye_clock_equals_ticks": true,
+      "closure": {
+        "computation_checkpoints": [
+          [
+            125,
+            336000
+          ],
+          [
+            250,
+            336000
+          ],
+          [
+            375,
+            336000
+          ],
+          [
+            500,
+            336000
+          ]
+        ],
+        "increments": [
+          0,
+          0,
+          0
+        ],
+        "linear_in_age": true,
+        "light_conserved": true
+      },
+      "z": 0.0,
+      "duration_ratio": 1.0,
+      "hop_time_at_reception": 7.0,
+      "predicted_1_plus_z": 1.0,
+      "alpha_measured": null
+    },
+    {
+      "label": "single source, row 48",
+      "single_source": true,
+      "length": 48,
+      "emission": 16,
+      "budget": 1000,
+      "baseline": 7000,
+      "ticks": 1600,
+      "distance": 47,
+      "hop_time_at_launch": 8,
+      "alpha_from_schedule": 0.015965,
+      "last_hops_into_the_eye": [
+        15,
+        16,
+        17,
+        18,
+        18,
+        19,
+        20,
+        21,
+        22,
+        22,
+        23,
+        24
+      ],
+      "hop_times_of_the_leading_ray": [
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        10,
+        10,
+        10,
+        10,
+        10,
+        10,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        12,
+        12,
+        12,
+        12,
+        12,
+        13,
+        13,
+        13,
+        13,
+        13,
+        14,
+        14,
+        14,
+        14,
+        14,
+        15,
+        15,
+        15,
+        15
+      ],
+      "absorbed": 12,
+      "first_absorption_tick": 510,
+      "gaps_on_the_eye_clock": [
+        48,
+        50,
+        49,
+        47,
+        52,
+        49,
+        51,
+        50,
+        48,
+        50,
+        52
+      ],
+      "gaps_in_ticks": [
+        48,
+        50,
+        49,
+        47,
+        52,
+        49,
+        51,
+        50,
+        48,
+        50,
+        52
+      ],
+      "eye_clock_equals_ticks": true,
+      "closure": {
+        "computation_checkpoints": [
+          [
+            400,
+            643200
+          ],
+          [
+            800,
+            950400
+          ],
+          [
+            1200,
+            1257600
+          ],
+          [
+            1600,
+            1564800
+          ]
+        ],
+        "increments": [
+          307200,
+          307200,
+          307200
+        ],
+        "linear_in_age": true,
+        "light_conserved": true
+      },
+      "z": 1.0682,
+      "duration_ratio": 2.0682,
+      "hop_time_at_reception": 16.2571,
+      "predicted_1_plus_z": 2.0321,
+      "alpha_measured": 0.015461
+    }
+  ]
+}

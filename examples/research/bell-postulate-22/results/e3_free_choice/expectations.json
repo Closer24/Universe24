@@ -1,0 +1,14 @@
+{
+  "experiment": "E3 free choice from inside the world",
+  "fixed_before_running": true,
+  "setup": "Each pair's two settings chosen by a ticket from the world's own generator family (next_ticket / ticket_draw with the registry seed family): variant 'salted' uses ticket_draw(next_ticket(seed, k)) for k = 0 (Alice) and 1 (Bob) as capture_salt would; variant 'bond' uses the registry's own two-step number generator with salts bond+1 and bond+2; variant 'state' uses the raw affine state next_ticket(seed, k) without the square. Control: random.Random(seed ^ 0xABCDEF). Lattice: 4096 pairs per variant (about 1024 per setting pair). Registry alone: 65536 pairs per variant with one seed and consecutive birth codes.",
+  "prediction": "Measurement independence holds because no rule reads the settings when the number is drawn: S = 2.828 within 3 sigma, plus rates 0.5 within 3 sigma, and the chi-square between the number's coin half (and its agreement half, in 4 quantile buckets) and the setting pair (a, b) is not significant (p > 0.01) for every variant, including the control.",
+  "pass": "|S - 2.828125| <= 3 sigma_S and p > 0.01 for every dependence test",
+  "fail": "S deviates by more than 3 sigma or any number/setting dependence has p <= 0.01 (with 4096 lattice pairs); a failure in a generator variant that the control does not show is a correlation of the world's sequence with settings drawn from it, which relaxes measurement independence for that choice mechanism",
+  "highlights_sections": [
+    "3.19 measurement is an interaction (settings chosen inside the world are ordinary local state)",
+    "5.4 ordinary evolution is deterministic and grants no sampling authority: the settings' generator must not share the draw",
+    "3.18 no hidden nonlocal physics"
+  ],
+  "note": "Highlights section references added after the predictions were fixed; no prediction changed."
+}

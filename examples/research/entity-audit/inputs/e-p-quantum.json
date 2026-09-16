@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "model_id": "catalog-finite-quantum-modes-v1",
+  "shape": [
+    9,
+    9,
+    9
+  ],
+  "boundary": "open",
+  "slots_per_node": 1,
+  "link_ticks": 1,
+  "normal_budget": 10000,
+  "ticks": 8,
+  "operation_costs": {
+    "receive": 1,
+    "read": 1,
+    "evaluate": 1,
+    "update": 1,
+    "couple": 1,
+    "route": 1,
+    "split": 1,
+    "send": 1,
+    "commit": 1
+  },
+  "fields": [
+    {
+      "name": "record",
+      "components": 1,
+      "units": "unobserved placeholder",
+      "signed": false,
+      "conserved": false,
+      "extensive": false
+    }
+  ],
+  "disturbance_types": [
+    {
+      "name": "unoccupied recorder",
+      "fields": [
+        "record"
+      ],
+      "transport": {
+        "mode": "hold"
+      }
+    }
+  ],
+  "seeds": [],
+  "event_program": {
+    "model": "local-quantum-events-v2",
+    "capacity": 10000,
+    "addresses": [
+      [
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        4,
+        4
+      ]
+    ],
+    "dimensions": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "initial_levels": [
+      1,
+      0,
+      1,
+      0
+    ],
+    "register_names": [
+      "electron:spin-up",
+      "electron:spin-down",
+      "proton:spin-up",
+      "proton:spin-down"
+    ],
+    "layers": [],
+    "bindings": []
+  }
+}

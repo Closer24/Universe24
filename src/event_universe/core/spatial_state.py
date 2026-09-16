@@ -133,7 +133,12 @@ def validate_ray_participants(
         raise ValueError("ray interaction rules exceed their fixed capacity")
     selected: set[int] = set()
     for rule in rules:
-        if not 2 <= len(rule.participants) <= 6 or rule.k or rule.output_types is not None:
+        if (
+            not 2 <= len(rule.participants) <= 6
+            or rule.k
+            or rule.output_types is not None
+            or rule.outputs
+        ):
             raise ValueError("ray interactions require two to six indexed roles without k or conversion")
         for role in rule.participants:
             if not role or any(

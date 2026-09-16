@@ -15,7 +15,7 @@ from event_universe.core.disturbance_state import (
     pack,
 )
 from event_universe.core.spatial_state import Ray, SpatialCouplingDefinition, merge_rays, validate_rays
-from event_universe.fields.disturbances import DisturbanceLaw
+from event_universe.fields.disturbances import DisturbanceLaw, interact_values
 from event_universe.fields.ray_interactions import apply_ray_interactions
 from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import parse_initial_state
@@ -287,3 +287,43 @@ def test_existing_carrier_false_guard_remains_the_original_noop():
     meter = CostMeter(initial.operation_costs)
     assert law._interact_group(rule, records, meter) is records
     assert meter.total == 1 and meter.interaction_ticks == 0
+
+
+def test_native_ray_json_does_not_admit_carrier_conversion_outputs():
+    doc = document()
+    doc["ray_interactions"][0]["outputs"] = [{"type": "wave"}]
+    with pytest.raises(ValueError, match="unknown keys: outputs"):
+        parse_initial_state(doc)
+
+
+@pytest.mark.parametrize("entry", ["initial_state", "local_law", "local_apply"])
+def test_native_ray_typed_entries_reject_new_n_to_m_output_metadata(entry):
+    initial = parse_initial_state(document())
+    rule = replace(initial.ray_interactions[0], outputs=(0,))
+    rays = (Ray(0, (0, 0, 0), 5), Ray(1, (0, 0, 0), 5))
+    with pytest.raises(ValueError, match="without k or conversion"):
+        if entry == "initial_state":
+            replace(initial, ray_interactions=(rule,))
+        elif entry == "local_law":
+            SpatialLaw(
+                initial.fields,
+                initial.spatial_fields,
+                initial.emissions,
+                initial.operation_costs,
+                ray_interactions=(rule,),
+            )
+        else:
+            apply(initial, rays, (rule,))
+    assert all(ray.interaction_delay == 0 for ray in rays)
+
+
+@pytest.mark.parametrize("conversion", [{"outputs": (0,)}, {"output_types": (0, 0)}])
+def test_shared_same_owner_evaluator_rejects_conversion_before_work(conversion):
+    initial = parse_initial_state(document())
+    rule = replace(initial.ray_interactions[0], **conversion)
+    before = ((pack((5,)), pack((0, 0, 0))),) * 2
+    meter = CostMeter(initial.operation_costs)
+    with pytest.raises(ValueError, match="family conversion outputs"):
+        interact_values(rule, before, initial.fields, meter, initial.operation_costs)
+    assert meter.total == 0 and meter.interaction_ticks == 0
+    assert before == ((pack((5,)), pack((0, 0, 0))),) * 2

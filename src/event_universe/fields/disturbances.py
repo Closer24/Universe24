@@ -205,6 +205,8 @@ def interact_values(
     costs: OperationCosts,
 ) -> tuple[Values, ...]:
     """Apply the same frozen indexed operation to any admitted complete owner view."""
+    if rule.outputs or rule.output_types is not None:
+        raise ValueError("indexed value updates do not support family conversion outputs")
     if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
         return before
     meter.advance(rule.k)
@@ -290,27 +292,7 @@ class DisturbanceLaw:
             )
         if rule.output_types is not None:
             for side, original in enumerate((left, right)):
-                # A different routing law cannot inherit or silently erase fractional progress.
-                carried = (
-                    *original.phase_codes,
-                    *original.emission_remainders,
-                    *original.emission_phases,
-                    *original.exchange_remainders,
-                    *original.spatial_remainders,
-                    *original.emission_remaining,
-                    *original.spatial_remaining,
-                )
-                if (
-                    original.route_phase_code != 1
-                    or original.rate_remainder_code != 1
-                    or original.rate_credit_denominator != 1
-                    or any(code != 1 for code in original.route_count_codes)
-                    or any(code != 1 for code in original.route_weight_codes)
-                    or any(code != 1 for payload in carried for code in payload)
-                ):
-                    raise ValueError("conversion requires zero carried routing and allowance state")
-                if not 1 <= original.channel_code <= 7:
-                    raise ValueError("conversion channel must identify the seed or a neighbor port")
+                self._require_convertible(original)
                 meter.charge("update")
                 zero = tuple((1,) * field.components for field in self.fields)
                 # Whole-record channel tags record arrival provenance, not fractional stock.
@@ -332,6 +314,87 @@ class DisturbanceLaw:
             if evaluate(invariant.expression, first.values, second.values, checks) != expected:
                 raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
         return first, second
+
+    @staticmethod
+    def _require_convertible(original: DisturbanceRecord) -> None:
+        """A different routing law cannot inherit or silently erase fractional progress."""
+        carried = (
+            *original.phase_codes,
+            *original.emission_remainders,
+            *original.emission_phases,
+            *original.exchange_remainders,
+            *original.spatial_remainders,
+            *original.emission_remaining,
+            *original.spatial_remaining,
+        )
+        if (
+            original.route_phase_code != 1
+            or original.rate_remainder_code != 1
+            or original.rate_credit_denominator != 1
+            or any(code != 1 for code in original.route_count_codes)
+            or any(code != 1 for code in original.route_weight_codes)
+            or any(code != 1 for payload in carried for code in payload)
+        ):
+            raise ValueError("conversion requires zero carried routing and allowance state")
+        if not 1 <= original.channel_code <= 7:
+            raise ValueError("conversion channel must identify the seed or a neighbor port")
+
+    def _convert_group(
+        self, rule: InteractionDefinition, records: tuple[DisturbanceRecord, ...], meter: CostMeter
+    ) -> tuple[DisturbanceRecord, ...] | None:
+        """Replace N frozen inputs by M declared output families, or None when the guard is false.
+
+        Every output payload is built from the same frozen inputs. Conserved fields
+        and every per-record readout invariant are compared as sums over all inputs
+        against sums over all outputs before anything is returned.
+        """
+        before = tuple(record.values for record in records)
+        if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+            return None
+        meter.advance(rule.k)
+        meter.charge("couple")
+        for original in records:
+            self._require_convertible(original)
+        zero_phases = tuple((1,) * field.components for field in self.fields)
+        zero_values = tuple(pack((0,) * field.components) for field in self.fields)
+        candidates = [
+            DisturbanceRecord(
+                kind,
+                zero_values,
+                zero_phases,
+                # Outputs that reuse an input slot keep its arrival provenance; new ones are local.
+                channel_code=records[index].channel_code if index < len(records) else 1,
+            )
+            for index, kind in enumerate(rule.outputs)
+        ]
+        for assignment in rule.assignments:
+            value = evaluate(assignment.expression, (), (), meter, participants=before)
+            candidates[assignment.side] = _with_value(
+                candidates[assignment.side], assignment.field, pack(value)
+            )
+            meter.charge("update")
+        for candidate in candidates:
+            meter.charge("update")
+            self._validate(candidate, meter)
+        inputs, outputs = (
+            _sum_records(records, self.fields),
+            _sum_records(tuple(candidates), self.fields),
+        )
+        for index, field in enumerate(self.fields):
+            if field.conserved and inputs[index] != outputs[index]:
+                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
+        checks = ValidationMeter(self.operation_costs)
+        for invariant in rule.invariants:
+            sums = []
+            for group in (records, tuple(candidates)):
+                readouts = [evaluate(invariant.expression, r.values, r.values, checks) for r in group]
+                width = len(readouts[0])
+                if any(len(readout) != width for readout in readouts):
+                    raise ValueError(f"invariant {invariant.name} readout shape differs across records")
+                sums.append(tuple(checked_sum(readout[c] for readout in readouts) for c in range(width)))
+            if sums[0] != sums[1]:
+                raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
+        return tuple(candidates)
 
     def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
         definition = self.definitions[record.type_index]
@@ -569,15 +632,36 @@ class DisturbanceLaw:
                     updated[left_slot], updated[right_slot] = left, right
 
         # Multi-field transactions follow exchanges and precede all routing.
+        consumed: set[int] = set()
+        products: set[int] = set()
         for interaction in self.interactions:
             if interaction.participants:
                 for group in participant_groups(interaction, tuple(updated)):
                     records_in_group = tuple(updated[slot] for slot in group)
                     assert all(record is not None for record in records_in_group)
                     participants = tuple(record for record in records_in_group if record is not None)
-                    outputs = self._interact_group(interaction, participants, meter)
-                    for slot, output in zip(group, outputs, strict=True):
+                    if not interaction.outputs:
+                        outputs = self._interact_group(interaction, participants, meter)
+                        for slot, output in zip(group, outputs, strict=True):
+                            updated[slot] = output
+                        continue
+                    converted = self._convert_group(interaction, participants, meter)
+                    if converted is None:
+                        continue
+                    for slot, output in zip(group, converted, strict=False):
                         updated[slot] = output
+                        products.add(slot)
+                    for slot in group[len(converted) :]:
+                        updated[slot] = None
+                        consumed.add(slot)
+                        products.discard(slot)
+                    for output in converted[len(group) :]:
+                        free = next((s for s in range(slots) if updated[s] is None), None)
+                        if free is None:
+                            raise ValueError("conversion outputs exceed the free resident slots")
+                        updated[free] = output
+                        consumed.discard(free)
+                        products.add(free)
                 continue
             for left_slot in range(slots):
                 for right_slot in range(slots):
@@ -601,12 +685,19 @@ class DisturbanceLaw:
         departures: list[Departure] = []
         for slot, record in enumerate(updated):
             if record is None:
+                if slot in consumed:
+                    replacements.append((slot, None))
                 continue
             retained, outgoing = self._route(record, meter, port_loads)
             replacements.append((slot, retained))
             departures.extend(Departure(item.port, item.record, slot) for item in outgoing)
             if self.definitions[record.type_index].cost_field is not None:
                 meter.charge("update")
+        # Products of this cycle's conversions leave on distinct Ports; other records
+        # keep the ordinary transport, which admits several packets per Port.
+        product_ports = [item.port for item in departures if item.origin_slot in products]
+        if len(set(product_ports)) != len(product_ports):
+            raise ValueError("conversion departures must use distinct Ports")
         meter.charge("commit")
         # Subquantum exchange belongs to the current local pair, not to a later
         # occupant of its slot. It is rounding state, never conserved inventory.

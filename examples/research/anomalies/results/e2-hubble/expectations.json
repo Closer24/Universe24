@@ -1,0 +1,17 @@
+{
+  "experiment": "E2 redshift-distance relation: effective H, q0, and the early/late H0 discrepancy in the model's terms",
+  "written_before_running": true,
+  "standard_theory": {"H0_early": "67.4 +/- 0.5 km/s/Mpc (Planck 2018, A&A 641, A6, 2020)", "H0_late": "73.0 +/- 1.0 km/s/Mpc (SH0ES, Riess et al. 2022, ApJL 934, L7)", "q0_LCDM": -0.55, "Omega_m": 0.315, "tension": "about 5 sigma, 8-9 percent"},
+  "model_prediction_derived_from_documents": {
+    "law": "H(t) = (1/k) dk/dt; k ~ t^n gives q0 = -(n-1)/n; linear load n = 1 (q0 = 0), quadratic load n = 2 (q0 = -1/2); paper's fitted n = 1.4 gives q0 = -0.29",
+    "lattice_plan": "closed rows L = 16..96 with (i) constant emission (k linear in age) and (ii) emission proportional to the emitter's own cycle count (k quadratic in age). Measure z(D) from the eye's counter; fit the FRW-correspondence family D = A[(1+z)^((n-1)/n) - 1] (n = 1: A ln(1+z)) with a launch-offset nuisance to extract n and q0 = -(n-1)/n with errors; read H_eff(t) = (1/k) dk/dt from the hop schedule and its sign of change with age.",
+    "expected": "linear: n = 1.0 +/- 0.2, q0 = 0; quadratic: n = 2.0 +/- 0.3, q0 = -0.5; H_eff decreasing with age in both (H ~ n/t): late-time H smaller than early-time H",
+    "hubble_tension_reading": "the model is a flat-FRW mimic, so it cannot by itself make a single H0 read differently early and late; the only lattice-derived effect is the q0 bias on a ladder analysed with LCDM's q0 = -0.55 when the true q0 is the model's; predicted bias at z = 0.02-0.15 is below 1 percent for q0 = -0.29 and about +1.5 percent at q0 = 0 (too small, sign: fitted local H0 higher than true). The model has no early-universe observable (no CMB, no BAO), so the early value has no counterpart."
+  },
+  "observation_note": "no absolute calibration on the lattice: only the sign and shape of H(t) and q0 are results",
+  "pass_fail": {
+    "code_pass": "12 rays absorbed per run, quanta conserved, eye clock = ticks, field total grows linearly (i) or quadratically (ii) with age, zero-emission control z = 0",
+    "model_candidate_falsified_if": "the fitted n for the quadratic load is not within 2 sigma of 2 or the linear load not within 2 sigma of 1 (the FRW correspondence claimed in the paper would then not hold on the lattice), or H_eff increases with age",
+    "verdict_rule": "if the lattice gives q0 in {0, -0.5} for its own two histories and the tension needs a differential > 5 percent between epochs, the lattice is undecidable on the tension itself; record the bias magnitude and sign"
+  }
+}

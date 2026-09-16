@@ -1,0 +1,323 @@
+{
+  "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
+  "python": "3.14.0rc2 (main, Sep  2 2025, 14:20:56) [Clang 20.1.4 ]",
+  "worktree": "/tmp/claude-0/-home-user-Universe24/0b03033a-a270-572b-b3b6-f528960b6109/scratchpad/wt-quantum",
+  "E1": {
+    "cases": 48,
+    "variants_per_case": [
+      "control_same_number",
+      "coin_flip",
+      "agreement_flip"
+    ],
+    "all_pass": true,
+    "strict_pass": true,
+    "changed_ends": {
+      "alice_only": 16,
+      "bob_only": 32,
+      "both": 48,
+      "none": 0
+    },
+    "first_differing_tick_histogram": {
+      "control_same_number:None": 48,
+      "coin_flip:4": 48,
+      "agreement_flip:4": 16,
+      "agreement_flip:6": 32
+    },
+    "runtime_seconds": 18.7
+  },
+  "E2": {
+    "a": {
+      "alice_first": {
+        "S": 2.86329,
+        "sigma_S": 0.04362,
+        "z": 0.806,
+        "first_askers": {
+          "alice": 4096
+        }
+      },
+      "bob_first": {
+        "S": 2.86329,
+        "sigma_S": 0.04362,
+        "z": 0.806,
+        "first_askers": {
+          "bob": 4096
+        }
+      },
+      "symmetric": {
+        "S": 2.86329,
+        "sigma_S": 0.04362,
+        "z": 0.806,
+        "first_askers": {
+          "same_tick": 4096
+        }
+      }
+    },
+    "a_pairwise_same_product": {
+      "a,b": 1024,
+      "a,b2": 1024,
+      "a2,b": 1024,
+      "a2,b2": 1024
+    },
+    "a_rate_comparisons_beyond_3_sigma": [
+      [
+        "a2,b",
+        "alice_plus_rate",
+        -3.591
+      ],
+      [
+        "a2,b",
+        "bob_plus_rate",
+        3.591
+      ]
+    ],
+    "a_prefixed_criterion_pass": false,
+    "a_registry_long_run_second_asker_rate": {
+      "a,b": 0.50043,
+      "a,b2": 0.49859,
+      "a2,b": 0.50043,
+      "a2,b2": 0.50043
+    },
+    "b_api_gap": "field_rules and spatial_interactions are rejected for ray transport (initialization.py: 'ray transport does not support field rules or spatial interactions'); DisturbanceRecord is a frozen dataclass; no public method rewrites a record value between steps.",
+    "b_variants": {
+      "settings_written_after_tick_2": {
+        "S": 2.86329,
+        "sigma_S": 0.04362,
+        "final_identical": "4096 of 4096",
+        "initial_identical": "3349 of 4096"
+      },
+      "settings_written_after_tick_3": {
+        "S": 2.86329,
+        "sigma_S": 0.04362,
+        "final_identical": "4096 of 4096",
+        "initial_identical": "3349 of 4096"
+      },
+      "settings_written_after_tick_4": {
+        "S": 1.40431,
+        "sigma_S": 0.0439,
+        "final_identical": "3349 of 4096",
+        "initial_identical": "4096 of 4096"
+      }
+    },
+    "b_legal_same_seed_table": {
+      "pairs": 256,
+      "alice_moves_with_own_setting": 0,
+      "bob_moves_with_alice_setting": 178,
+      "alice_moves_with_bob_setting": 0
+    },
+    "runtime_seconds": 1578.5
+  },
+  "E3": {
+    "lattice": {
+      "control_python_random": {
+        "S": 2.80981,
+        "sigma_S": 0.0445,
+        "z": -0.412,
+        "coin_p": 0.34645096400212916,
+        "rest_p": 0.08281503424372554,
+        "pass": true
+      },
+      "salted": {
+        "S": 2.84187,
+        "sigma_S": 0.04787,
+        "z": 0.287,
+        "coin_p": 0.48148232865552043,
+        "rest_p": 0.8751353774134688,
+        "pass": true
+      },
+      "bond": {
+        "S": 2.81926,
+        "sigma_S": 0.04436,
+        "z": -0.2,
+        "coin_p": 0.7204634193854067,
+        "rest_p": 0.17477348724378025,
+        "pass": true
+      },
+      "state": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.7310318089182606,
+        "rest_p": 0.5800135530638897,
+        "pass": false
+      },
+      "state_hi": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.8412189707988927,
+        "rest_p": 0.029620597943328268,
+        "pass": false
+      },
+      "state_hi_far": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.8412189707988927,
+        "rest_p": 0.029620597943328268,
+        "pass": false
+      }
+    },
+    "registry": {
+      "control_python_random_seed_11": {
+        "S": 2.81609,
+        "sigma_S": 0.0111,
+        "z": -1.085,
+        "coin_p": 0.49051584469295184,
+        "rest_p": 0.7395416288715442,
+        "pass": true
+      },
+      "control_python_random_seed_12345": {
+        "S": 2.84326,
+        "sigma_S": 0.01099,
+        "z": 1.378,
+        "coin_p": 0.6862712122155583,
+        "rest_p": 0.2942168151907152,
+        "pass": true
+      },
+      "salted_seed_11": {
+        "S": 2.81658,
+        "sigma_S": 0.0111,
+        "z": -1.041,
+        "coin_p": 0.6789939605164292,
+        "rest_p": 0.0020067960761281094,
+        "pass": false
+      },
+      "salted_seed_12345": {
+        "S": 2.8122,
+        "sigma_S": 0.01111,
+        "z": -1.433,
+        "coin_p": 0.37837263381941255,
+        "rest_p": 0.17330790920231517,
+        "pass": true
+      },
+      "bond_seed_11": {
+        "S": 2.83529,
+        "sigma_S": 0.01103,
+        "z": 0.65,
+        "coin_p": 0.3729349107875245,
+        "rest_p": 0.30033786801020224,
+        "pass": true
+      },
+      "bond_seed_12345": {
+        "S": 2.83177,
+        "sigma_S": 0.01104,
+        "z": 0.33,
+        "coin_p": 0.9584386814367458,
+        "rest_p": 0.8507480954929134,
+        "pass": true
+      },
+      "state_seed_11": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.21998461183473317,
+        "rest_p": 0.06689647074004491,
+        "pass": false
+      },
+      "state_seed_12345": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.32879132302013503,
+        "rest_p": 0.15968188900823602,
+        "pass": false
+      },
+      "state_hi_seed_11": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.6735399134561937,
+        "rest_p": 0.7848652101702049,
+        "pass": false
+      },
+      "state_hi_seed_12345": {
+        "S": null,
+        "sigma_S": null,
+        "z": null,
+        "coin_p": 0.2988800031829839,
+        "rest_p": 0.9028125244703082,
+        "pass": false
+      },
+      "state_hi_far_seed_11": {
+        "S": 2.82478,
+        "sigma_S": 0.01168,
+        "z": -0.286,
+        "coin_p": 0.6502920050003054,
+        "rest_p": 0.6377698851528151,
+        "pass": true
+      },
+      "state_hi_far_seed_12345": {
+        "S": 2.82379,
+        "sigma_S": 0.0119,
+        "z": -0.364,
+        "coin_p": 0.6473284402940456,
+        "rest_p": 0.953294328143144,
+        "pass": true
+      }
+    },
+    "all_pass": false,
+    "runtime_seconds": 6.4
+  },
+  "E4": {
+    "a": {
+      "collision_same_node_same_tick": {
+        "theory_pass": false,
+        "E(A1,B1)": -1.0,
+        "E(A1,A2)": -1.0,
+        "E(A1,B2)": 1.0,
+        "numbers": {
+          "2": 1024
+        },
+        "distinct_values": {
+          "1": 1024
+        }
+      },
+      "control_neighbour_node": {
+        "theory_pass": true,
+        "E(A1,B1)": -0.72266,
+        "E(A1,A2)": -0.0293,
+        "E(A1,B2)": 0.00977,
+        "numbers": {
+          "2": 1024
+        },
+        "distinct_values": {
+          "2": 1024
+        }
+      }
+    },
+    "b": {
+      "same_end_same_setting": {
+        "worlds_with_three_questions": 503,
+        "replay_answer_equals_first_and_drew_nothing": 503,
+        "numbers_histogram": {
+          "1": 1024
+        },
+        "pass": true
+      },
+      "second_detector_other_setting_16": {
+        "worlds_with_three_questions": 503,
+        "replay_answer_equals_first_and_drew_nothing": 261,
+        "numbers_histogram": {
+          "1": 521,
+          "2": 503
+        }
+      },
+      "registry_api_repeat": {
+        "pass": true
+      }
+    },
+    "c": {
+      "pass": true,
+      "alice_plus_rate_bob_absent": 0.49609,
+      "sigma": 0.01562,
+      "alice_identical_to_full_world_same_seed": 1024,
+      "numbers_histogram": {
+        "1": 1024
+      },
+      "open_at_end_histogram": {
+        "1": 1024
+      }
+    },
+    "runtime_seconds": 807.0
+  }
+}
