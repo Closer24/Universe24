@@ -42,6 +42,50 @@ evidence that it is correct; do not object merely to appear critical either.
   automatically require extended research. Critical review does not authorize
   new experiments, edits, scope expansion or bypassing approval requirements.
 
+## Physics comparison method
+
+Use this method for an authorized investigation of how the discrete model matches
+known physics. Start from a primary experimental result or a clearly labeled
+analytic reference, with its regime, units, uncertainty and source. Free
+propagation, configured interference and conservation can be analytic or
+engineering checks; they are empirical comparisons only when compared with
+sourced experimental data.
+
+1. Define the measured Detector observable and causal readout before running.
+   An internal state, audit quantity or rendered marker is not automatically
+   that observable. Record the mapping from the reference experiment to chosen
+   generic local laws, integer encoding, physical scales, preparation and initial/
+   boundary conditions; distinguish supplied laws from predicted consequences.
+2. Fix independent expected results, uncertainty/error metric, controls and
+   acceptance conditions in advance. Identify calibrated parameters and their
+   calibration data, then freeze them when testing other conditions. Do not
+   retune against the validation result or redefine acceptance after a failure.
+3. The physicist owns empirical targets, applicable regime and observable mapping.
+   The mathematician derives invariants, integer/remainder bounds and validity
+   domains, and checks proposed macroscopic or continuum inferences. The
+   computational experimental physicist executes reproducible comparisons through
+   the runner and reports actual data, errors and limits. Each role may reject
+   a hypothesis; no role's approval replaces the others' evidence.
+4. Separate exact mathematical preservation, code verification, agreement with
+   an analytic physics benchmark and agreement with experiment. Report source/
+   configuration identity, quantitative discrepancy, uncertainty and failure
+   cases. Preserve contrary evidence and omitted interactions. Several matching
+   cases do not prove the theory; discreteness alone supplies no prediction.
+5. Assess finite-size, boundary, lattice-direction and encoding effects relevant
+   to the claim. Sensitivity/convergence controls must represent the same physical
+   case with fixed hypotheses. Do not assume that shrinking a fundamental lattice
+   or tick is a harmless numerical refinement; it may change the physical model.
+   Input representation error is distinct from forbidden loss of core remainders.
+6. For these user-requested research comparisons, produce and inspect the
+   standalone HTML alongside quantitative records under the user's standing
+   output requirement; label the visual projection and do not use appearance as
+   acceptance evidence. Automated tests remain headless. Record unavailable
+   output honestly rather than claiming visual inspection.
+
+Keep the comparison bounded to the authorized question. This method defines how
+to investigate, not permission for a new sweep, implementation or changed law.
+Use the current execution lane and retain declared ownership and causal limits.
+
 ## Configuration tasks and implementation scope
 
 Checking a configuration uses the existing simulator and validator. It does not
