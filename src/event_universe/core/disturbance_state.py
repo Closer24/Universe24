@@ -29,6 +29,10 @@ MAX_FIELDS = 16
 MAX_TYPES = 16
 MAX_SLOTS = 32
 MAX_RULES = 32
+# A declared bound of the N-to-M conversion contract: six input roles, six output
+# families and one product departure per Port. The engine's transport itself
+# admits several packets per Port; the bound is design, not a transport limit.
+MAX_CONVERSION_ARITY = 6
 MAX_EXPRESSION_NODES = 64
 MAX_COMPONENTS = 32
 AGGREGATIONS = frozenset(
@@ -166,6 +170,8 @@ class InteractionDefinition:
     right_types: tuple[int, ...] = ()
     k: int = 0
     participants: tuple[tuple[int, ...], ...] = ()
+    # Declared output families of an N-to-M conversion, in output index order.
+    outputs: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
