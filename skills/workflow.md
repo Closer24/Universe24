@@ -86,6 +86,33 @@ Keep the comparison bounded to the authorized question. This method defines how
 to investigate, not permission for a new sweep, implementation or changed law.
 Use the current execution lane and retain declared ownership and causal limits.
 
+## Implement from a published design
+
+Before implementing or changing behavior, read the authoritative written design
+for that scope and cite its exact repository path and commit in the assignment,
+implementation handoff and PR. Chat context alone is not an implementation spec.
+The design must state ownership, input/output and private-state boundaries,
+allowed rules, routing/timing, activation/no-op conditions, bounded arithmetic and
+errors, and independent acceptance criteria. Keep topology/counts explicit and
+separate from channel packaging. Use the responsible architecture document to
+find the bounded implementation contract; do not copy physical laws into Skills.
+
+Developers implement only agreed behavior and interfaces in that design. Route
+missing decisions or contradictions to the architect/design owner before adding
+behavior; the owner records the resolution in the authoritative document and
+sends its revision to affected developers before they continue. Do not fill gaps
+with a familiar physics law, old evaluator or convenient routing default. Routine
+implementation choices already covered by the design and user authorization
+continue without repeated permission. This workflow neither expands scope nor
+authorizes a new law, experiment or merge.
+
+Boss supplies the written revision when dispatching work. Architecture owns
+contract reconciliation; developers map their changes to it; test owners retain
+independent expected results and report deviations rather than changing the
+contract to fit code. On a design revision, assess affected work/evidence and
+update the handoff before further behavior changes. Preserve historical results
+with their original scope instead of relabeling them as the revised design.
+
 ## Configuration tasks and implementation scope
 
 Checking a configuration uses the existing simulator and validator. It does not
