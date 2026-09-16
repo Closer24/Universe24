@@ -7,6 +7,7 @@ from event_universe.core.disturbance_state import (
     CostMeter,
     DisturbanceRecord,
     FieldDefinition,
+    InteractionDefinition,
     OperationCosts,
     Values,
     bounded,
@@ -51,6 +52,7 @@ from event_universe.core.spatial_state import (
 from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
+from .ray_interactions import apply_ray_interactions
 from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
@@ -80,6 +82,7 @@ class SpatialLaw:
     # The one shared object: the bond registry, the declared exception to the
     # causal bound. None when no field is bonded.
     bonds: BondRegistry | None = None
+    ray_interactions: tuple[InteractionDefinition, ...] = ()
     sampling_profile: str = DETECTOR_ONLY
 
     def __post_init__(self) -> None:
@@ -516,6 +519,18 @@ class SpatialLaw:
         ]
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
         meter = CostMeter(self.costs)
+        if self.ray_interactions:
+            resident_rays = [
+                list(bundle)
+                for bundle in apply_ray_interactions(
+                    tuple(tuple(bundle) for bundle in resident_rays),
+                    self.definitions,
+                    self.fields,
+                    self.ray_interactions,
+                    meter,
+                    self.costs,
+                )
+            ]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
         received_components = sum(self.fields[d.field].components for d in self.definitions)

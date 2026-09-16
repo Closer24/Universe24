@@ -14,6 +14,23 @@ receiving ray and carrier remain unchanged on overflow. The explicit projection
 adds ten unit-cost operations per declared ray slot. These checks establish
 direction access, not an electron orbit or a physical force law.
 
+## Native complete-ray coupling
+
+`test_native_ray_coupling.py` uses the canonical
+[finite residence input](../examples/generic-ray-coupling/finite-residence.json).
+Two funded axial rays of amount five arrive with phase zero at tick one; after
+the next two intervals both are resident with `(phase, delay)` equal to `(1,1)`
+then `(2,0)`. Tick four places them at opposite adjacent Nodes with phase three.
+Energy ten and total momentum zero remain owned across emission and residence.
+Absent coupling, wrong phase, unequal amounts and a missing partner escape
+immediately. Declared momentum failure in a later local group publishes no
+partial replacements. Duplicate heading entries preserve the original index
+and DDA when the semantic vector is unchanged. Delay participates in ray merge
+identity, integer bounds and selection; unsupported clock/sampling domains fail
+for JSON and typed callers. Label renaming preserves observed motion and cost.
+The unchanged carrier false-guard path returns its original records. These
+checks establish the interface and finite residence only, not nuclear binding.
+
 ## Spatial momentum and position output
 
 `test_spatial_momentum.py` verifies the

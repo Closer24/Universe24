@@ -442,7 +442,7 @@ class SpatialEngine:
             for component, value in enumerate(self.localized[definition.field]):
                 result[definition.field][component] += value
             if definition.rays:
-                # Rays never rest at an idle Node: they leave on every cycle.
+                # Resident rays keep a Node active, including finite local residence.
                 for position in self._active:
                     node = self.nodes[position]
                     if node.rays:

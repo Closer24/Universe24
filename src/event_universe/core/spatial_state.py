@@ -6,21 +6,29 @@ from functools import lru_cache
 
 from .disturbance_state import (
     MAX_COMPONENTS,
+    MAX_RULES,
+    MAX_SLOTS,
     Address3,
     Assignment,
     CostMeter,
+    DisturbanceDefinition,
     DisturbanceRecord,
     Expression,
     FieldDefinition,
+    InitialState,
+    InteractionDefinition,
     Invariant,
     Payload,
+    TransportDefinition,
     Values,
     any_negative,
     bounded,
     pack,
+    unpack,
     validate_codes,
 )
 from .integer import checked_work, reduced_ratio
+from .sampling_contract import DETECTOR_ONLY
 
 SpatialPopulations = tuple[Payload, ...]
 SpatialOutgoing = tuple[SpatialPopulations, ...]
@@ -83,9 +91,109 @@ class Ray:
     # Bonded pairs only: the bond this ray shares with the ray emitted with it,
     # zero for an unbonded ray.
     bond: int = 0
+    # Generic local coupling residence; independent of the pacing remainder.
+    interaction_delay: int = 0
 
 
 Rays = tuple[Ray, ...]
+
+# Structural non-owning projections used by the ordinary indexed evaluator.
+RAY_PROPERTIES = (
+    FieldDefinition("amount", 1, "ray amount", False, True),
+    FieldDefinition("heading", 3, "integer direction", True, False),
+    FieldDefinition("phase", 1, "phase step", False, False),
+    FieldDefinition("advance", 1, "phase step per interval", True, False),
+    FieldDefinition("delay", 1, "local interval", False, False),
+)
+
+
+def ray_participant_definitions(
+    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> tuple[DisturbanceDefinition, ...]:
+    """Describe non-owning ray views; no additional physical records are created."""
+    defaults = tuple(pack((0,) * field.components) for field in RAY_PROPERTIES)
+    return tuple(
+        DisturbanceDefinition(
+            fields[definition.field].name,
+            tuple(range(len(RAY_PROPERTIES))) if definition.rays else (),
+            defaults,
+            TransportDefinition("hold"),
+        )
+        for definition in definitions
+    )
+
+
+def validate_ray_participants(
+    definitions: tuple[SpatialFieldDefinition, ...],
+    fields: tuple[FieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> frozenset[int]:
+    """Enforce the same native participant limits for parsed and direct callers."""
+    if type(rules) is not tuple or len(rules) > MAX_RULES:
+        raise ValueError("ray interaction rules exceed their fixed capacity")
+    selected: set[int] = set()
+    for rule in rules:
+        if not 2 <= len(rule.participants) <= 6 or rule.k or rule.output_types is not None:
+            raise ValueError("ray interactions require two to six indexed roles without k or conversion")
+        for role in rule.participants:
+            if not role or any(
+                type(index) is not int or not 0 <= index < len(definitions) for index in role
+            ):
+                raise ValueError("ray participant role refers to an unavailable spatial field")
+            selected.update(role)
+        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
+            raise ValueError("ray interaction amount and advance are read-only")
+    if sum(definitions[index].ray_slots for index in selected) > MAX_SLOTS:
+        raise ValueError("ray interactions require at most 32 selected ray slots")
+    for index in selected:
+        definition = definitions[index]
+        field = fields[definition.field]
+        if (
+            not definition.rays
+            or field.signed
+            or not field.conserved
+            or any(unpack(definition.baseline))
+            or definition.euclidean
+            or definition.pace_numerator != definition.pace_denominator
+            or definition.claims
+            or definition.bonded
+            or definition.self_exclusion
+            or definition.decay is not None
+            or any(sum(abs(component) for component in heading) != 1 for heading in definition.headings)
+        ):
+            raise ValueError("ray coupling requires positive unit-axial unpaced ray fields")
+    return frozenset(selected)
+
+
+def validate_ray_coupling(initial: InitialState) -> None:
+    if not initial.ray_interactions:
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.event_program is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+        or initial.sampling_profile != DETECTOR_ONLY
+        or any(definition.claims or definition.bonded for definition in initial.spatial_fields)
+    ):
+        raise ValueError("ray interactions require the default fixed H=1 spatial clock")
+    selected = validate_ray_participants(
+        initial.spatial_fields, initial.fields, initial.ray_interactions
+    )
+    if any(
+        rule.field == initial.spatial_fields[index].field
+        for index in selected
+        for rule in initial.spatial_couplings
+    ):
+        raise ValueError("ray interactions do not support coupled responses or absorption")
 
 
 @dataclass(frozen=True, slots=True)
@@ -526,6 +634,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("ray bond must be a nonnegative bounded integer")
         if ray.bond and not definition.bonded:
             raise ValueError("a bonded ray requires a bonded field")
+        if bounded(ray.interaction_delay) < 0:
+            raise ValueError("ray interaction delay must be nonnegative")
 
 
 def validate_claims(claims: Claims, definition: SpatialFieldDefinition) -> None:
@@ -577,7 +687,7 @@ def advance_ray(
 
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase and wave phase: one line, so exact."""
-    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int, int], int] = {}
+    combined: dict[tuple[int, tuple[int, int, int], int, int, int, int, int, int, int], int] = {}
     for ray in rays:
         key = (
             ray.heading,
@@ -588,11 +698,12 @@ def merge_rays(rays: Rays) -> Rays:
             ray.train,
             ray.homing,
             ray.bond,
+            ray.interaction_delay,
         )
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
-        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing, bond)
-        for (heading, accumulators, phase, advance, wait, train, homing, bond), amount in sorted(
+        Ray(heading, accumulators, bounded(amount), phase, advance, wait, train, homing, bond, delay)
+        for (heading, accumulators, phase, advance, wait, train, homing, bond, delay), amount in sorted(
             combined.items()
         )
         if amount

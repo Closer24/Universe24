@@ -50,6 +50,7 @@ from .core.spatial_state import (
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    RAY_PROPERTIES,
     TICKET_MODULUS,
     DecayDefinition,
     EmissionDefinition,
@@ -60,6 +61,7 @@ from .core.spatial_state import (
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
     SpatialSeed,
+    ray_participant_definitions,
     validate_heading,
 )
 from .json_documents import parse_json_document as parse_json_document
@@ -1676,6 +1678,28 @@ def _spatial_interactions(
     return tuple(result)
 
 
+def _ray_interactions(
+    value: object,
+    fields: tuple[FieldDefinition, ...],
+    spatial: tuple[SpatialFieldDefinition, ...],
+) -> tuple[InteractionDefinition, ...]:
+    """Compile the existing indexed syntax against structural complete-ray views."""
+    definitions = ray_participant_definitions(fields, spatial)
+    required = {"name", "participants", "assignments", "invariants"}
+    rules: list[InteractionDefinition] = []
+    for raw in _array(value, "ray_interactions", MAX_RULES):
+        obj = _object(raw, "ray interaction", required | {"when"}, required)
+        rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+        if len(rule.participants) > 6:
+            raise ValueError("ray interactions admit at most six participants")
+        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
+            raise ValueError("ray interaction amount and advance are read-only")
+        if any(existing.name == rule.name for existing in rules):
+            raise ValueError("duplicate ray interaction name")
+        rules.append(rule)
+    return tuple(rules)
+
+
 def parse_initial_state(document: object) -> InitialState:
     """Reject malformed, ambiguous or unbounded initialization data before a run."""
     required = {
@@ -1706,6 +1730,7 @@ def parse_initial_state(document: object) -> InitialState:
             "field_groups",
             "field_rules",
             "spatial_interactions",
+            "ray_interactions",
             "event_program",
             "observer",
             "conservation",
@@ -1781,6 +1806,7 @@ def parse_initial_state(document: object) -> InitialState:
             spatial,
             node_execution=node_execution,
         ),
+        ray_interactions=_ray_interactions(obj.get("ray_interactions", []), fields, spatial),
         event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
         node_execution=node_execution,
         spatial_computation_delay=_boolean(
