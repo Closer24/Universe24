@@ -60,6 +60,11 @@ but its coupling and time interpretation remain to be specified; this document
 does not invent a new transition. Recording cadence and display frame rate are
 not physical detector time. Preserve exact outputs independently of rendering.
 
+The [Detector exchange draft](DETECTOR_EXCHANGE.md) owns the latest external
+Detector action-bit, PASS, fresh-return and causal branch-cancellation definition.
+Its explicit open decisions are not supplied by the existing observation profiles;
+this definition is not an implementation or run authorization.
+
 ### Architecture responsibilities
 
 These are review and delivery responsibilities, not a requirement for a fixed number of
