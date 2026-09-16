@@ -113,6 +113,68 @@ def test_independent_spatial_packets_are_measured_before_combining():
         policy.check(before, after, "field receipt")
 
 
+def counted_evaluations(monkeypatch):
+    evaluations = []
+    original = LocalBalanceGuard._evaluate
+
+    def counting(self, expression, values, size):
+        evaluations.append(values)
+        return original(self, expression, values, size)
+
+    monkeypatch.setattr(LocalBalanceGuard, "_evaluate", counting)
+    return evaluations
+
+
+def test_repeated_readouts_reuse_host_evaluations_with_identical_results(monkeypatch):
+    evaluations = counted_evaluations(monkeypatch)
+    policy = guard(spatial=True)
+    inventory = LocalInventory(
+        records=(record(3, (1, 0, 0)), None, record(3, (1, 0, 0))),
+        spatial=bundle(4, (-1, 1, 0)),
+        spatial_packets=(bundle(4, (-1, 1, 0)),),
+    )
+    first = policy.measure(inventory)
+    assert first == ((14,), (0, 2, 0))
+    # Two quantities over one distinct record and one distinct bundle: four evaluations.
+    assert len(evaluations) == 4
+    assert policy.measure(inventory) == first
+    assert policy.measure(replace(inventory, spatial_packets=())) == ((10,), (1, 1, 0))
+    assert len(evaluations) == 4
+    assert policy._record_readouts.report()["entries"] == 2
+    assert policy._spatial_readouts.report()["entries"] == 2
+
+
+def test_changed_payloads_miss_the_readout_cache(monkeypatch):
+    evaluations = counted_evaluations(monkeypatch)
+    policy = guard(spatial=True)
+    policy.measure(LocalInventory(records=(record(3),), spatial=bundle(4)))
+    assert len(evaluations) == 4
+    policy.measure(LocalInventory(records=(record(3, (0, 0, 1)),), spatial=bundle(4)))
+    assert len(evaluations) == 6
+    policy.measure(LocalInventory(records=(record(3),), spatial=bundle(4, (0, 1, 0))))
+    assert len(evaluations) == 8
+    other = DisturbanceRecord(0, (pack((3,)), pack((0, 0, 0))), ((1,), (1, 1, 1)), channel_code=2)
+    # Bookkeeping outside the values does not change a readout: the payload key hits.
+    assert policy.measure(LocalInventory(records=(other,))) == ((3,), (0, 0, 0))
+    assert len(evaluations) == 8
+
+
+def test_failed_readouts_are_not_cached(monkeypatch):
+    evaluations = counted_evaluations(monkeypatch)
+    policy = guard(spatial=True)
+    uncovered = DisturbanceRecord(1, (pack((3,)), pack((0, 0, 0))), ((1,), (1, 1, 1)))
+    for _ in range(2):
+        with pytest.raises(ValueError, match="exactly once"):
+            policy.measure(LocalInventory(records=(uncovered,)))
+        with pytest.raises(ValueError, match="incompatible layout"):
+            policy.measure(LocalInventory(spatial=(bundle(1)[0],)))
+    report = policy._record_readouts.report()
+    assert (report["requests"], report["evaluations"], report["entries"]) == (2, 2, 0)
+    report = policy._spatial_readouts.report()
+    assert (report["requests"], report["evaluations"], report["entries"]) == (2, 2, 0)
+    assert evaluations == []
+
+
 def test_momentum_failure_is_not_hidden_by_energy_balance():
     with pytest.raises(ValueError, match="second"):
         guard().check(
