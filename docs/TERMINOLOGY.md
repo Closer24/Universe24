@@ -11,15 +11,15 @@ contracts describe implementation; gaps do not relax the binding design.
 
 | Term | Definition |
 | --- | --- |
-| Node | One logical unit at a physical location in Event Space. It owns one bounded NodeState and contains the directed internal Registers defined below. |
-| NodeState | All local information owned by one Node, including the bounded values and metadata of its Registers. It is not a second physical object or a copy per Register. |
-| Register | A directed internal computational transition between orthogonal Ports, with exactly one input channel and exactly one output channel. All Registers execute the same generic local logic; input, state, direction, configured rules and delay are data. |
+| Node | One logical unit at a physical location in Event Space. It groups the 24 private Registers defined below; it is a container, not an independent physical computation unit. |
+| NodeState | The aggregate description of the bounded private states and metadata of one Node's Registers; grouping does not grant shared physical read access. It is not a second physical object or a copy per Register. |
+| Register | A directed internal computational transition between orthogonal Ports, with exactly one input channel and exactly one output channel. Each Register reads only its own state and its actually received single-channel input. All execute the same generic local logic; state, input, direction and delay are data. |
 | Scalar | A one-component value. |
 | Vector | A three-component spatial value; wider bounded property arrays in the opt-in Node profile have their own explicit shape contract. |
 | Port | One of the six external directional connection endpoints; a Port is not a Register. |
 | Link | The causal connection between neighboring Nodes. It owns a transferred value during transit. |
 | Event | A local state transition or a completed Link transfer. Computational substeps do not create new physical locations. |
-| LocalRule | Configured generic logic operating on owned local state and already-delivered inputs; joint dependencies retain Node-level coordination and atomicity. |
+| LocalRule | Configured generic logic operating only on one Register's private state and actually received input; no peer-state read, including within the same Node. |
 
 The revised six-Port model contains **24 directed Registers in one Node**:
 
@@ -40,7 +40,7 @@ of the revised 24-Register runtime. No runtime is changed by this definition.
 
 | Owner | Contents or role |
 | --- | --- |
-| Node | One logical identity, one NodeState, its Registers and joint-operation coordination |
+| Node | Logical identity and grouping of private Registers; scheduling/reservation metadata is not an independent physical mixer |
 | Register at (node, from_port, to_port) | Bounded state/ownership for one directed internal transition and its local delay within that NodeState |
 | Link | Values dispatched by a Register and not yet delivered to the next Node |
 | External scheduler | Host scheduling indexes and due-work entries; no additional physical state or hidden law |
@@ -49,31 +49,42 @@ Input and output are roles, not additional physical value types. Values remain
 Scalars or Vectors while resident, received, waiting, outgoing or in transit.
 A Register is a computational unit, not a synonym for a Scalar, Vector or Node.
 
-A Node may receive several inputs at the same simulated time. Keep the distinct
-arrivals available to joint rules. Splitting work across Registers must not
-duplicate owned stock, discard another Port's input or expose half a joint commit.
+Several inputs may arrive at a Node at the same simulated time, but each remains
+an independently owned channel delivery. A Register cannot read another Register's
+state or arrivals. Any physical information between Registers must arrive through
+an actual causal channel transfer, even inside one Node. Bounded declared memory
+of its own received inputs is allowed; hidden peer-state access is not.
 The scheduling and dependency contract is owned by
 [Register-level execution](ARCHITECTURE.md#register-level-execution-target).
 
-In the design discussion, C denotes the Link propagation clock and h the local
-Register/Node delay. They are distinct model quantities, not an automatic SI
-calibration; h is not Planck's constant. The exact mapping to current
+In the design discussion, c denotes propagation speed, not a time unit. Local
+Register delay and Link transit time are distinct; their physical calibration is
+not selected merely by naming c. Use delta_t_min for the minimum model interval;
+legacy local h notation is not Planck's constant. The exact mapping to current
 `link_ticks`, k and cost-budget profiles remains explicit in their contracts.
 A waiting value is still Node-owned; Link transit starts only after dispatch.
 Computational decomposition alone adds no physical hop or elapsed model time.
 
 Host transport addresses `(node_id, port_id)`; due computational work addresses
 `(node_id, register_id)` or `(node_id, from_port, to_port)`. A delivered Port
-input does not select a unique Register until the local operation resolves its
-bounded dependencies. Splitting/merging uses one Node-owned atomic transaction
-over participating Registers, with a common snapshot, reservations and explicit
-allocation/transfer of owned values. A channel can carry a bounded vector payload;
-packaging independent arrivals together does not make them one input. No individual
-Register exposes a multi-input/multi-output transition or copies inventory.
+input requires an explicit bounded delivery mapping into the internal graph.
+The binding transition is
+`F(own_state, actually_received_input, immutable_law) -> (new_own_state, one_output)`.
+A channel can carry a bounded vector payload; packaging independent arrivals
+together does not make them one input. No Register exposes a multi-input/multi-output
+transition, reads peer state or copies inventory.
+
+A Node coordinator may schedule work and reserve handles, timing or capacity.
+It cannot read or supply another Register's physical state, synthesize aggregate
+physical input, or independently mix values. Split/merge and other interactions
+require a bounded causal message protocol preserving ownership and remainders;
+that protocol and its atomic publication/timing remain OPEN. Earlier permission
+for a shared Node-wide physical snapshot is superseded. NodeState is a grouping
+and diagnostic view, not an input capability for a Register.
 
 Straight passage exits the opposite face on the same axis; return exits the
 entry face. Neither is a direct edge of the orthogonal internal graph. Their
-realization through a Node operation remains OPEN: do not ban either behavior,
+realization through private Register channel transfers remains OPEN: do not ban either behavior,
 choose an intermediate axis, or invent microstep ticks or extra physical Links.
 
 ## No second physical-location noun
