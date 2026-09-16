@@ -1,7 +1,8 @@
 # Generic integer Node processor
 
-This is the current Node-owned execution contract, not the proposed per-Port
-Register scheduler. The [canonical Node/Register distinction](TERMINOLOGY.md) and
+This is the current Node-owned execution contract, not the revised 24-directed-Register
+scheduler for six external Ports. Existing six-Port readiness/bank behavior is
+not evidence of this internal computational graph. The [canonical Node/Register distinction](TERMINOLOGY.md) and
 [Register execution target](ARCHITECTURE.md#register-level-execution-target)
 define the intended decomposition. Storage-register counts and quantum registers
 in existing contracts do not count these computational Registers. No runtime
