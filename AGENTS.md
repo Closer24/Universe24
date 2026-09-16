@@ -39,10 +39,13 @@ The logical unit at a physical location is a **Node**. In the target architectur
 the six external Ports define 24 directed internal computational **Registers**:
 one for each ordered pair of orthogonal Ports. Each Register has one input and
 one output; it is not a Port or a physical Link. Registers use identical generic logic
-with data-selected state, direction and delay. This is not yet a Register-level
-runtime scheduler; follow the implementation boundary in the terminology contract.
-A Node's complete local information is its
-**NodeState**. NodeState contains configured Scalars and Vectors plus only the
+with data-selected state, direction and delay. Each reads only its own state and
+actually received single-channel input, never another Register's state, including
+inside the same Node. A Node groups its Registers; scheduling/reservation metadata
+does not authorize independent physical mixing or aggregate physical inputs.
+Follow the implementation boundary in the terminology contract.
+A Node's aggregate description of private Register states is its
+**NodeState**, not shared physical read access. NodeState contains configured Scalars and Vectors plus only the
 minimal ownership, Port and timing metadata required for local transport. Input
 and output are roles of Scalars/Vectors, not additional physical value types.
 Nodes are connected by **Links** through directional **Ports**; local changes are
