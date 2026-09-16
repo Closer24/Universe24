@@ -137,14 +137,48 @@ owners. Before and after the encounter, `E = 10` and `P = (0,0,0)`. Thus
 the rest-energy readout of two opposing axial rays; it does not prove that the
 pair remains localized or has inertial mass ten under a boost.
 
-The coupling must enforce its complete-owner readouts rather than assuming
-that a heading swap conserves momentum for arbitrary amounts. For example,
+The fixture must declare these complete-owner readouts as ordinary generic
+invariant expressions. The shared evaluator enforces the declared expressions;
+the native-ray adapter must not hardcode physical energy or momentum formulas,
+infer them from particle labels, or dispatch them by `model_id`. Positive axial
+admission is the stated implementation limit, not a universal family energy law.
+Amount remains structurally read-only in this interface. For two participants,
+the required fixture invariants are:
+
+```json
+[
+  {
+    "name": "fixture_energy",
+    "expression": {"op": "add", "args": [
+      {"field": "amount", "participant": 0},
+      {"field": "amount", "participant": 1}
+    ]}
+  },
+  {
+    "name": "fixture_momentum",
+    "expression": {"op": "add", "args": [
+      {"op": "mul", "args": [
+        {"field": "amount", "participant": 0},
+        {"field": "heading", "participant": 0}
+      ]},
+      {"op": "mul", "args": [
+        {"field": "amount", "participant": 1},
+        {"field": "heading", "participant": 1}
+      ]}
+    ]}
+  }
+]
+```
+
+A heading swap does not conserve momentum for arbitrary amounts. For example,
 amounts five and three along opposite headings have `P_x = 2`; swapping only
 their headings would give `P_x = -2` and must not commit. The fixture's equal-
-amount guard avoids this case, while the generic invariant protects against an
-incorrectly configured assignment. Amount changes also require exact inventory
-and declared energy/momentum closure. Negative values are not positive-energy
-rays in this fixture.
+amount guard avoids this case, while the configured generic invariant rejects
+an incorrect assignment. A different configuration without these declared
+readouts has no certification for this candidate's energy/momentum claims.
+Extending the interface to amount changes would require exact inventory and
+declared energy/momentum closure. Negative values are not positive-energy rays
+in this fixture.
 
 Independent acceptance is fixed before execution:
 
