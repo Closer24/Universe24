@@ -43,6 +43,25 @@ This supersedes the earlier one-Register-per-Port definition. Existing six-Port
 banks/readiness adapters retain their implementation meaning and are not evidence
 of the revised 24-Register runtime. No runtime is changed by this definition.
 
+## Directed channels and bidirectional packaging
+
+A Register may receive and emit in the same logical tick, subject to its declared
+readiness and causal transit times. This permits concurrent input/output work,
+not zero-time delivery or a same-tick relay through successive Links.
+
+A connection carrying both directions simultaneously has two directed channels.
+They may share a package, but retain separate information, ownership and timing;
+packaging grants no peer-state read. Each computational Register still has exactly
+one input and one output. Pairing reciprocal units in the adopted orthogonal graph
+gives 12 bidirectional connections containing 24 directed Registers, not 18.
+All distinct face pairs would instead give 15 bidirectional/30 directed units;
+that is a different, unadopted graph. Self-return channels require explicit
+semantics and cannot be counted by blindly halving a directed total.
+
+This clarifies the interface, not the scattering law or implemented reverse-channel
+support. Actual support needs source and execution evidence; do not infer it from
+connection packaging or prior six-Port adapter tests.
+
 ## Node, Register and value ownership
 
 | Owner | Contents or role |
