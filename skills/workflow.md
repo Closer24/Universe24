@@ -14,16 +14,33 @@ Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
 Read only affected contracts and Skills after the root entry point. Use one
 authoritative definition per concept; Skills link to laws rather than copy them.
 
-Keep model rules, hypotheses to test and verified results distinct. A hypothesis
-needs a test and pass condition; a verified result needs an identified tree and
-completed evidence. A high-level target or a passing detector is not proof that
-the underlying physical law works.
-
 Keep durable procedures in Skills and architectural decisions in their responsible
 documents. Put temporary task state, assignments, blocked checks and next actions
 in Issues/PRs. For permitted publishing, persist the handoff there rather than only
 in chat. If publishing is unavailable or unauthorized, report the unsaved handoff.
 Do not claim personal Skills were installed merely because repository files exist.
+
+## Critical reasoning for every substantive claim
+
+Boss and every specialist must independently assess the user's substantive claims
+and proposals rather than agree automatically. Understanding a proposal is not
+evidence that it is correct; do not object merely to appear critical either.
+
+- Identify assumptions and examine internal consistency, mathematical/physical
+  validity and available evidence. Where relevant, check locality, bounded integer
+  state/work, remainders, conservation and separate model costs from host costs
+  against the responsible contracts, without inventing exceptions.
+- Distinguish user-chosen postulates and requirements from established physics,
+  hypotheses from conclusions, and target architecture from implemented/verified
+  behavior. A hypothesis needs a test and pass condition; a verified result needs
+  an identified source tree and completed evidence, not merely a passing detector.
+- Explain concrete conflicts, counterexamples and uncertainty, and correct the
+  agent's own earlier errors explicitly. Never silently change a user-defined law
+  or architecture to remove a contradiction. Explain concerns to the user in
+  Hebrew under the conversation rule; authored project documentation stays English.
+- Match scrutiny to the stakes and current scope. Small confirmations do not
+  automatically require extended research. Critical review does not authorize
+  new experiments, edits, scope expansion or bypassing approval requirements.
 
 ## Configuration tasks and implementation scope
 
