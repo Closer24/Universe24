@@ -436,11 +436,9 @@ class DisturbanceEngine:
         node.accept_emission(records)
 
     def _escape(self, origin: Address3, slot: int, packet: Packet) -> None:
-        """Complete one terminal link; unused allowances are not physical stock."""
+        """Complete one already validated terminal link; unused allowances are not stock."""
         if self.event_space is not None:
             self.event_space.require_room(1)
-        for field, payload in zip(self.initial.fields, packet.record.values, strict=True):
-            field.validate(payload)
         values = self.record_values(packet.record)
         for index, payload in enumerate(packet.record.values):
             for component, value in enumerate(unpack(payload)):
@@ -464,11 +462,13 @@ class DisturbanceEngine:
                 if packet is not None and packet.arrival_tick == self.tick:
                     if packet.origin != origin:
                         raise ValueError("carrier packet origin differs from its link owner")
-                    validate_record(self.initial, packet.record)
                     target = self.neighbor(origin, packet.port)
                     if target is None:
+                        # The world boundary is the only receiver of an escaping record.
+                        validate_record(self.initial, packet.record)
                         self._escape(origin, slot, packet)
                     else:
+                        # The receiving Node validates each delivered record once.
                         ready.setdefault(target, []).append((origin, slot, packet))
         for position, deliveries in sorted(ready.items()):
             if self.event_space is not None:

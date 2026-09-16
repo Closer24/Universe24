@@ -91,15 +91,26 @@ def validate_records(
     records: tuple[DisturbanceRecord | None, ...],
     capacity: int,
     trusted: tuple[DisturbanceRecord | None, ...] = (),
+    verified: tuple[DisturbanceRecord, ...] = (),
 ) -> None:
+    """Validate each record once per boundary crossing.
+
+    ``trusted`` holds the current slot contents: an unchanged slot needs no
+    second pass. ``verified`` holds immutable record objects the caller already
+    validated during this same crossing, such as delivered packets that a record
+    policy places into free slots. Object identity certifies them; an equal but
+    distinct record, including a merged one, is still validated.
+    """
     _tuple(records, initial.slots_per_node, capacity)
     if records is trusted:
         return
+    verified_ids = {id(record) for record in verified}
     for slot, record in enumerate(records):
-        if slot < len(trusted) and record is trusted[slot]:
+        if record is None or (slot < len(trusted) and record is trusted[slot]):
             continue
-        if record is not None:
-            validate_record(initial, record)
+        if id(record) in verified_ids:
+            continue
+        validate_record(initial, record)
 
 
 def validate_local_plan(

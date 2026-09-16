@@ -20,10 +20,10 @@ from tests.test_node_rule_contract import indexed_document, node_profile
 from tests.test_spatial_interactions import exchange
 
 
-def local_fixture(*, policy_type=RecordOperations, budget=10000, travel=1):
+def local_fixture(*, policy_type=RecordOperations, budget=10000, travel=1, mode="move"):
     initial = parse_initial_state(
         document(
-            [kind("parcel", mode="move", weights=[1, 0, 0, 0, 0, 0])],
+            [kind("parcel", mode=mode, weights=[1, 0, 0, 0, 0, 0])],
             [((0, 0, 0), "parcel")],
             capacity=2,
             budget=budget,
@@ -110,6 +110,98 @@ def test_rejected_pending_slot_rewrite_keeps_the_entire_arrival_batch_uncommitte
     with pytest.raises(ValueError, match="pending local slot"):
         node.receive((Packet(3, (0, 0, 0), 0, incoming),), 3, services)
     assert node == before
+
+
+@pytest.mark.parametrize(
+    "fault, message",
+    [
+        ({"type_index": 3}, "index exceeds local capacity"),
+        ({"values": ((0,),)}, "invalid positive integer component code"),
+        ({"values": ([1],)}, "requires an immutable tuple"),
+    ],
+)
+def test_isolated_node_rejects_a_malformed_delivered_record_at_its_boundary(fault, message):
+    node, services, record = local_fixture()
+    before = replace(node)
+    with pytest.raises(ValueError, match=message):
+        node.receive((Packet(3, (0, 0, 0), 0, replace(record, **fault)),), 3, services)
+    assert node == before
+    assert not any(node.output.packets)
+
+
+def test_policy_output_that_is_not_a_delivered_record_is_still_validated():
+    class SmugglingPolicy(RecordOperations):
+        def receive(self, resident, arrivals, locked):
+            return (replace(arrivals[0], type_index=3), resident[1])
+
+    node, services, record = local_fixture(policy_type=SmugglingPolicy)
+    before = replace(node)
+    with pytest.raises(ValueError, match="index exceeds local capacity"):
+        node.receive((Packet(3, (0, 0, 0), 0, record),), 3, services)
+    assert node == before
+
+
+def counted_record_validation(monkeypatch):
+    """Count boundary validations by record identity across every importing module."""
+    from event_universe.core import disturbance_engine, disturbance_node, node_boundary
+
+    validated = []
+    original = node_boundary.validate_record
+
+    def counting(initial, record):
+        validated.append(record)
+        original(initial, record)
+
+    for module in (node_boundary, disturbance_node, disturbance_engine):
+        monkeypatch.setattr(module, "validate_record", counting)
+    return validated
+
+
+def test_each_delivered_record_is_validated_exactly_once_per_receipt(monkeypatch):
+    validated = counted_record_validation(monkeypatch)
+    node, services, record = local_fixture()
+    second = replace(record, values=(pack((2,)),))
+    packets = (Packet(3, (0, 0, 0), 0, record), Packet(3, (2, 0, 0), 1, second))
+    node.receive(packets, 3, services)
+    assert node.records == (record, second)
+    assert [id(item) for item in validated] == [id(record), id(second)]
+    # A merged record is a new object: it is validated once more than its inputs.
+    validated.clear()
+    split_node, split_services, split_record = local_fixture(mode="split")
+    split_node.records = (split_record, None)
+    incoming = replace(split_record, values=(pack((2,)),))
+    split_node.receive((Packet(3, (0, 0, 0), 0, incoming),), 3, split_services)
+    assert unpack(split_node.records[0].values[0]) == (3,)
+    assert len(validated) == 2 and validated[0] is incoming and validated[1] is split_node.records[0]
+
+
+def test_transport_validates_each_delivered_record_once_at_the_receiving_node(monkeypatch):
+    validated = counted_record_validation(monkeypatch)
+    world = Simulation(
+        parse_initial_state(
+            document(
+                [kind("parcel", mode="move", weights=[1, 0, 0, 0, 0, 0])],
+                [((0, 0, 0), "parcel")],
+                capacity=2,
+            )
+        )
+    )
+    record = world.nodes[(0, 0, 0)].records[0]
+    world._nodes[(0, 0, 0)].records = (None, None)
+    packet = Packet(1, (0, 0, 0), 0, record)
+    world._links[(0, 0, 0)] = (packet,) + (None,) * 11
+    world.tick = 1
+    validated.clear()
+    world._deliver()
+    assert world._nodes[(1, 0, 0)].records[0] is record
+    assert world._links[(0, 0, 0)][0] is None
+    assert len(validated) == 1 and validated[0] is record
+    malformed = Packet(1, (1, 0, 0), 0, replace(record, type_index=3))
+    world._links[(1, 0, 0)] = (malformed,) + (None,) * 11
+    with pytest.raises(ValueError, match="index exceeds local capacity"):
+        world._deliver()
+    assert world._nodes[(2, 0, 0)].records == (None, None)
+    assert world._links[(1, 0, 0)][0] is malformed
 
 
 def test_spatial_zero_receipt_mask_is_consumed_by_one_local_input_window():
