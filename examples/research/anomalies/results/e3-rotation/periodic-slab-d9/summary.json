@@ -1,0 +1,1101 @@
+{
+  "source_sha256": "4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36",
+  "box": "periodic-slab",
+  "shape": [
+    201,
+    201,
+    9
+  ],
+  "boundary": "periodic",
+  "depth": 9,
+  "headings": 4096,
+  "rays_per_tick": 64,
+  "sweep_ticks": 64,
+  "warm_ticks": 90,
+  "window": [
+    91,
+    154
+  ],
+  "no_ray_laps_in_window": true,
+  "momentum_closed": true,
+  "momentum_total": [
+    0,
+    0,
+    0
+  ],
+  "all_pulls_toward_source": true,
+  "table": [
+    {
+      "kind": "axis",
+      "r": 3.0,
+      "n_directions": 4,
+      "pull_mean": 2.4688,
+      "pull_se": 0.0786,
+      "pulls": [
+        2.5,
+        2.625,
+        2.5,
+        2.25
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 4.0,
+      "n_directions": 4,
+      "pull_mean": 1.3125,
+      "pull_se": 0.0807,
+      "pulls": [
+        1.375,
+        1.5,
+        1.25,
+        1.125
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 6.0,
+      "n_directions": 4,
+      "pull_mean": 0.5469,
+      "pull_se": 0.0534,
+      "pulls": [
+        0.5625,
+        0.4375,
+        0.6875,
+        0.5
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 8.0,
+      "n_directions": 4,
+      "pull_mean": 0.6562,
+      "pull_se": 0.0312,
+      "pulls": [
+        0.6875,
+        0.6875,
+        0.5625,
+        0.6875
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 12.0,
+      "n_directions": 4,
+      "pull_mean": 0.3438,
+      "pull_se": 0.0541,
+      "pulls": [
+        0.3125,
+        0.3125,
+        0.25,
+        0.5
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 16.0,
+      "n_directions": 4,
+      "pull_mean": 0.2969,
+      "pull_se": 0.0534,
+      "pulls": [
+        0.25,
+        0.1875,
+        0.4375,
+        0.3125
+      ]
+    },
+    {
+      "kind": "axis",
+      "r": 24.0,
+      "n_directions": 4,
+      "pull_mean": 0.2656,
+      "pull_se": 0.0469,
+      "pulls": [
+        0.1875,
+        0.375,
+        0.1875,
+        0.3125
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 2.828,
+      "n_directions": 4,
+      "pull_mean": 2.7732,
+      "pull_se": 0.049,
+      "pulls": [
+        2.74,
+        2.6517,
+        2.8726,
+        2.8284
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 4.243,
+      "n_directions": 4,
+      "pull_mean": 1.4032,
+      "pull_se": 0.049,
+      "pulls": [
+        1.5026,
+        1.4584,
+        1.2816,
+        1.37
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 5.657,
+      "n_directions": 4,
+      "pull_mean": 0.906,
+      "pull_se": 0.0585,
+      "pulls": [
+        0.7513,
+        0.9723,
+        0.8839,
+        1.0165
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 8.485,
+      "n_directions": 4,
+      "pull_mean": 0.5524,
+      "pull_se": 0.0221,
+      "pulls": [
+        0.5303,
+        0.5303,
+        0.6187,
+        0.5303
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 11.314,
+      "n_directions": 4,
+      "pull_mean": 0.2983,
+      "pull_se": 0.0455,
+      "pulls": [
+        0.3536,
+        0.221,
+        0.3977,
+        0.221
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 16.971,
+      "n_directions": 4,
+      "pull_mean": 0.1547,
+      "pull_se": 0.0221,
+      "pulls": [
+        0.1326,
+        0.1326,
+        0.221,
+        0.1326
+      ]
+    },
+    {
+      "kind": "diagonal",
+      "r": 24.042,
+      "n_directions": 4,
+      "pull_mean": 0.1436,
+      "pull_se": 0.0212,
+      "pulls": [
+        0.1768,
+        0.0884,
+        0.1768,
+        0.1326
+      ]
+    }
+  ],
+  "fits": {
+    "axis_all": {
+      "p": -1.044,
+      "se": 0.159,
+      "n": 7,
+      "r_range": [
+        3.0,
+        24.0
+      ]
+    },
+    "diagonal_all": {
+      "p": -1.455,
+      "se": 0.084,
+      "n": 7,
+      "r_range": [
+        2.83,
+        24.04
+      ]
+    },
+    "pooled_r_ge_4": {
+      "p": -1.134,
+      "se": 0.13,
+      "n": 12,
+      "r_range": [
+        4.0,
+        24.04
+      ]
+    },
+    "pooled_r_lt_depth": {
+      "p": -1.47,
+      "se": 0.187,
+      "n": 8,
+      "r_range": [
+        2.83,
+        8.48
+      ]
+    },
+    "pooled_r_gt_depth": {
+      "p": -0.702,
+      "se": 0.451,
+      "n": 6,
+      "r_range": [
+        11.31,
+        24.04
+      ]
+    }
+  },
+  "rows": [
+    {
+      "position": [
+        103,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 3.0,
+      "momentum_gained": [
+        -160,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 2.5
+    },
+    {
+      "position": [
+        97,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 3.0,
+      "momentum_gained": [
+        168,
+        0,
+        -4
+      ],
+      "pull_per_tick_toward_source": 2.625
+    },
+    {
+      "position": [
+        100,
+        103,
+        4
+      ],
+      "kind": "axis",
+      "r": 3.0,
+      "momentum_gained": [
+        0,
+        -160,
+        8
+      ],
+      "pull_per_tick_toward_source": 2.5
+    },
+    {
+      "position": [
+        100,
+        97,
+        4
+      ],
+      "kind": "axis",
+      "r": 3.0,
+      "momentum_gained": [
+        0,
+        144,
+        0
+      ],
+      "pull_per_tick_toward_source": 2.25
+    },
+    {
+      "position": [
+        104,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 4.0,
+      "momentum_gained": [
+        -88,
+        0,
+        -16
+      ],
+      "pull_per_tick_toward_source": 1.375
+    },
+    {
+      "position": [
+        96,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 4.0,
+      "momentum_gained": [
+        96,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 1.5
+    },
+    {
+      "position": [
+        100,
+        104,
+        4
+      ],
+      "kind": "axis",
+      "r": 4.0,
+      "momentum_gained": [
+        0,
+        -80,
+        -16
+      ],
+      "pull_per_tick_toward_source": 1.25
+    },
+    {
+      "position": [
+        100,
+        96,
+        4
+      ],
+      "kind": "axis",
+      "r": 4.0,
+      "momentum_gained": [
+        0,
+        72,
+        -4
+      ],
+      "pull_per_tick_toward_source": 1.125
+    },
+    {
+      "position": [
+        106,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 6.0,
+      "momentum_gained": [
+        -36,
+        0,
+        -12
+      ],
+      "pull_per_tick_toward_source": 0.5625
+    },
+    {
+      "position": [
+        94,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 6.0,
+      "momentum_gained": [
+        28,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.4375
+    },
+    {
+      "position": [
+        100,
+        106,
+        4
+      ],
+      "kind": "axis",
+      "r": 6.0,
+      "momentum_gained": [
+        0,
+        -44,
+        -12
+      ],
+      "pull_per_tick_toward_source": 0.6875
+    },
+    {
+      "position": [
+        100,
+        94,
+        4
+      ],
+      "kind": "axis",
+      "r": 6.0,
+      "momentum_gained": [
+        0,
+        32,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.5
+    },
+    {
+      "position": [
+        108,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 8.0,
+      "momentum_gained": [
+        -44,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.6875
+    },
+    {
+      "position": [
+        92,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 8.0,
+      "momentum_gained": [
+        44,
+        0,
+        -8
+      ],
+      "pull_per_tick_toward_source": 0.6875
+    },
+    {
+      "position": [
+        100,
+        108,
+        4
+      ],
+      "kind": "axis",
+      "r": 8.0,
+      "momentum_gained": [
+        0,
+        -36,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.5625
+    },
+    {
+      "position": [
+        100,
+        92,
+        4
+      ],
+      "kind": "axis",
+      "r": 8.0,
+      "momentum_gained": [
+        0,
+        44,
+        -8
+      ],
+      "pull_per_tick_toward_source": 0.6875
+    },
+    {
+      "position": [
+        112,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 12.0,
+      "momentum_gained": [
+        -20,
+        0,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.3125
+    },
+    {
+      "position": [
+        88,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 12.0,
+      "momentum_gained": [
+        20,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.3125
+    },
+    {
+      "position": [
+        100,
+        112,
+        4
+      ],
+      "kind": "axis",
+      "r": 12.0,
+      "momentum_gained": [
+        0,
+        -16,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.25
+    },
+    {
+      "position": [
+        100,
+        88,
+        4
+      ],
+      "kind": "axis",
+      "r": 12.0,
+      "momentum_gained": [
+        0,
+        32,
+        -12
+      ],
+      "pull_per_tick_toward_source": 0.5
+    },
+    {
+      "position": [
+        116,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 16.0,
+      "momentum_gained": [
+        -16,
+        0,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.25
+    },
+    {
+      "position": [
+        84,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 16.0,
+      "momentum_gained": [
+        12,
+        0,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.1875
+    },
+    {
+      "position": [
+        100,
+        116,
+        4
+      ],
+      "kind": "axis",
+      "r": 16.0,
+      "momentum_gained": [
+        0,
+        -28,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.4375
+    },
+    {
+      "position": [
+        100,
+        84,
+        4
+      ],
+      "kind": "axis",
+      "r": 16.0,
+      "momentum_gained": [
+        0,
+        20,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.3125
+    },
+    {
+      "position": [
+        124,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 24.0,
+      "momentum_gained": [
+        -12,
+        0,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.1875
+    },
+    {
+      "position": [
+        76,
+        100,
+        4
+      ],
+      "kind": "axis",
+      "r": 24.0,
+      "momentum_gained": [
+        24,
+        0,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.375
+    },
+    {
+      "position": [
+        100,
+        124,
+        4
+      ],
+      "kind": "axis",
+      "r": 24.0,
+      "momentum_gained": [
+        0,
+        -12,
+        -8
+      ],
+      "pull_per_tick_toward_source": 0.1875
+    },
+    {
+      "position": [
+        100,
+        76,
+        4
+      ],
+      "kind": "axis",
+      "r": 24.0,
+      "momentum_gained": [
+        0,
+        20,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.3125
+    },
+    {
+      "position": [
+        102,
+        102,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 2.828,
+      "momentum_gained": [
+        -112,
+        -136,
+        4
+      ],
+      "pull_per_tick_toward_source": 2.74
+    },
+    {
+      "position": [
+        102,
+        98,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 2.828,
+      "momentum_gained": [
+        -100,
+        140,
+        -12
+      ],
+      "pull_per_tick_toward_source": 2.6517
+    },
+    {
+      "position": [
+        98,
+        102,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 2.828,
+      "momentum_gained": [
+        128,
+        -132,
+        12
+      ],
+      "pull_per_tick_toward_source": 2.8726
+    },
+    {
+      "position": [
+        98,
+        98,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 2.828,
+      "momentum_gained": [
+        120,
+        136,
+        -12
+      ],
+      "pull_per_tick_toward_source": 2.8284
+    },
+    {
+      "position": [
+        103,
+        103,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 4.243,
+      "momentum_gained": [
+        -52,
+        -84,
+        -4
+      ],
+      "pull_per_tick_toward_source": 1.5026
+    },
+    {
+      "position": [
+        103,
+        97,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 4.243,
+      "momentum_gained": [
+        -56,
+        76,
+        -4
+      ],
+      "pull_per_tick_toward_source": 1.4584
+    },
+    {
+      "position": [
+        97,
+        103,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 4.243,
+      "momentum_gained": [
+        48,
+        -68,
+        8
+      ],
+      "pull_per_tick_toward_source": 1.2816
+    },
+    {
+      "position": [
+        97,
+        97,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 4.243,
+      "momentum_gained": [
+        56,
+        68,
+        -16
+      ],
+      "pull_per_tick_toward_source": 1.37
+    },
+    {
+      "position": [
+        104,
+        104,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 5.657,
+      "momentum_gained": [
+        -28,
+        -40,
+        -12
+      ],
+      "pull_per_tick_toward_source": 0.7513
+    },
+    {
+      "position": [
+        104,
+        96,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 5.657,
+      "momentum_gained": [
+        -40,
+        48,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.9723
+    },
+    {
+      "position": [
+        96,
+        104,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 5.657,
+      "momentum_gained": [
+        36,
+        -44,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.8839
+    },
+    {
+      "position": [
+        96,
+        96,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 5.657,
+      "momentum_gained": [
+        40,
+        52,
+        -20
+      ],
+      "pull_per_tick_toward_source": 1.0165
+    },
+    {
+      "position": [
+        106,
+        106,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 8.485,
+      "momentum_gained": [
+        -12,
+        -36,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.5303
+    },
+    {
+      "position": [
+        106,
+        94,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 8.485,
+      "momentum_gained": [
+        -12,
+        36,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.5303
+    },
+    {
+      "position": [
+        94,
+        106,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 8.485,
+      "momentum_gained": [
+        12,
+        -44,
+        4
+      ],
+      "pull_per_tick_toward_source": 0.6187
+    },
+    {
+      "position": [
+        94,
+        94,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 8.485,
+      "momentum_gained": [
+        8,
+        40,
+        -8
+      ],
+      "pull_per_tick_toward_source": 0.5303
+    },
+    {
+      "position": [
+        108,
+        108,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 11.314,
+      "momentum_gained": [
+        -12,
+        -20,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.3536
+    },
+    {
+      "position": [
+        108,
+        92,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 11.314,
+      "momentum_gained": [
+        -8,
+        12,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.221
+    },
+    {
+      "position": [
+        92,
+        108,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 11.314,
+      "momentum_gained": [
+        16,
+        -20,
+        4
+      ],
+      "pull_per_tick_toward_source": 0.3977
+    },
+    {
+      "position": [
+        92,
+        92,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 11.314,
+      "momentum_gained": [
+        8,
+        12,
+        -16
+      ],
+      "pull_per_tick_toward_source": 0.221
+    },
+    {
+      "position": [
+        112,
+        112,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 16.971,
+      "momentum_gained": [
+        0,
+        -12,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.1326
+    },
+    {
+      "position": [
+        112,
+        88,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 16.971,
+      "momentum_gained": [
+        0,
+        12,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.1326
+    },
+    {
+      "position": [
+        88,
+        112,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 16.971,
+      "momentum_gained": [
+        0,
+        -20,
+        4
+      ],
+      "pull_per_tick_toward_source": 0.221
+    },
+    {
+      "position": [
+        88,
+        88,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 16.971,
+      "momentum_gained": [
+        0,
+        12,
+        -8
+      ],
+      "pull_per_tick_toward_source": 0.1326
+    },
+    {
+      "position": [
+        117,
+        117,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 24.042,
+      "momentum_gained": [
+        0,
+        -16,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.1768
+    },
+    {
+      "position": [
+        117,
+        83,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 24.042,
+      "momentum_gained": [
+        0,
+        8,
+        4
+      ],
+      "pull_per_tick_toward_source": 0.0884
+    },
+    {
+      "position": [
+        83,
+        117,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 24.042,
+      "momentum_gained": [
+        0,
+        -16,
+        0
+      ],
+      "pull_per_tick_toward_source": 0.1768
+    },
+    {
+      "position": [
+        83,
+        83,
+        4
+      ],
+      "kind": "diagonal",
+      "r": 24.042,
+      "momentum_gained": [
+        0,
+        12,
+        -4
+      ],
+      "pull_per_tick_toward_source": 0.1326
+    }
+  ],
+  "host_seconds": 573.0
+}
