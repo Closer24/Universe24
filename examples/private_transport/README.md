@@ -1,5 +1,12 @@
 # Private Register identity transport
 
+The governing written plan is
+[the private identity-transfer implementation contract at revision 3f5a9ac](https://github.com/Closer24/Universe24/blob/3f5a9ac96a8ecdbe02e745cbd79d409b29734d1b/docs/ARCHITECTURE.md#private-identity-transfer-implementation-contract).
+This implementation was reconciled against that published revision before the
+bounded-clock acceptance test was added. The test checks both strategies at the
+last valid tick, then verifies overflow leaves the due channel owner, private
+state, event history and clock unchanged. No production behavior was changed.
+
 This explicit engineering profile executes 24 independent private Registers in
 each of 216 Nodes. A Node is only a spatial grouping and container. Every Register
 has one input channel, one output channel and its own fixed private state. The

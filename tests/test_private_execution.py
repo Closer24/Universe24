@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from event_universe.core.disturbance_state import MAX_VALUE
 from event_universe.core.private_register import PrivateKey, RegisterDatum
 from event_universe.core.private_worklist import PrivateSimulation
 
@@ -100,6 +101,22 @@ def test_capacity_rejection_preserves_existing_owner_and_tick():
     with pytest.raises(ValueError, match="capacity one"):
         simulation.step()
     assert simulation.canonical_state() == before_collision
+
+
+@pytest.mark.parametrize("strategy", ["dense", "sparse"])
+def test_clock_overflow_rejects_before_due_receipt_or_owner_mutation(strategy):
+    simulation = world(strategy)
+    simulation.tick = MAX_VALUE - 1
+    simulation.step()
+    assert simulation.tick == MAX_VALUE
+    assert not simulation.transport.inputs
+    packet = next(iter(simulation.transport.channels.values()))
+    assert packet.due_tick == MAX_VALUE and packet.datum.codes == (1,)
+    simulation.transport.admit(PrivateKey((3, 3, 3), 0, 2), RegisterDatum((3,)))
+    before = simulation.canonical_state()
+    with pytest.raises(ValueError, match="integer bound"):
+        simulation.step()
+    assert simulation.canonical_state() == before
 
 
 @pytest.mark.parametrize("defect", ["duplicate", "noncausal", "diagonal", "unknown", "wait"])
