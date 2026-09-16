@@ -92,6 +92,9 @@ def document(
     raw = {
         "schema_version": 1,
         "model_id": "bell-chsh-ray-probe-v1",
+        "sampling_profile": "historical-autonomous-v1"
+        if capture in ("lottery", "bond")
+        else "detector-only-v1",
         "shape": [WIDTH, 3, 3],
         "boundary": "open",
         "slots_per_node": 2,

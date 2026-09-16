@@ -1249,3 +1249,14 @@ other clocks, native event programs, physical field E/P readouts, decay,
 absorption and unsupported interactions. Existing profiles remain unchanged.
 This is a bounded output-hold candidate, not a completed no-wait push protocol,
 physical gravitational calibration, or universal field energy/momentum model.
+
+## Detector-owned sampling admission
+
+[Detector sampling tests](../tests/test_detector_sampling_contract.py) reject the
+previous unbound lottery and native instrument/contact fixtures under the default
+[Detector-only contract](DETECTOR_SAMPLING.md), including direct owner construction
+and renamed-observer counterexamples. Coherent preparation remains zero-draw.
+The explicitly historical seed-7 fixture retains 18 tickets and five absorbed
+quanta, complete accounting and its marked run metadata; it does not become
+canonical Detector acceptance. Full PASS/RETURN and output-clock composition
+remain blocked by the contract's owner/acceptance table.

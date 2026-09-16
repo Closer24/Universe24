@@ -895,3 +895,12 @@ and pace tables prepared before any tick; no lazy pace cache grows across runs.
 New retained-ray and claim owners pass the same trusted pre-commit/receipt
 validation boundary as outgoing payloads. The global bond reference is excluded
 from ordinary initialization and planner composition.
+
+## Sampling admission ownership
+
+`core/sampling_contract.py` owns immutable profile validation under the
+[Detector-owned sampling contract](DETECTOR_SAMPLING.md). Generic field laws may
+read these bounded configuration guards, which do not read world state, schedule
+events or implement probability laws. Initialization and native adapters enforce
+the same admission boundary. Historical mathematical samplers remain separately
+scoped and are not Detector implementations.

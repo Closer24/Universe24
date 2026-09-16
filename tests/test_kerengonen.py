@@ -309,6 +309,7 @@ def test_double_slit_probe_composes_and_closes():
 
 def lottery_document(steps, advance, absorber, seed=7, phase_b=0):
     raw = two_lamps(steps, advance, absorber=absorber, phase_b=phase_b, ticks=12)
+    raw["sampling_profile"] = "historical-autonomous-v1"
     raw["spatial_fields"][0]["kerengonen"].update({"capture": "lottery", "capture_seed": seed})
     for rule in raw["emissions"]:
         rule["amount"] = 2  # one quantum per ray, each way

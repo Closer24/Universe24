@@ -9,7 +9,7 @@ only with a measured result and a fingerprint.
 
 ## 1. The lottery is the only door for outside information
 
-[Postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+[Postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates)
 makes every uncertain outcome the value of one bounded integer. It follows,
 without a further assumption, that the sequence of those integers is the only
 place where information not already in the world's state can enter the world:
@@ -18,7 +18,7 @@ not fix where the sequence comes from. A configured seed, a file, or a source
 outside the world give the same physics as long as the numbers are used the
 same way; how they are read is fixed, and for a bonded pair it is a reading by
 both ends, the parameter dependence that
-[postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+[postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates)
 names.
 
 What can be tested: an emitter whose pairs draw their numbers from an external

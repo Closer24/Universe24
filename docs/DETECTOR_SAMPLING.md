@@ -29,6 +29,11 @@ No model ID, entity label or observation callback changes admission.
 
 Validate both the parsed immutable initial state and the responsible local law
 or native resolver. Direct typed construction must not bypass the same boundary.
+Bare `BondRegistry` and event-network sampling routines remain explicitly
+historical/mathematical primitives outside the canonical physical adapters. Their
+standalone calls do not establish a Detector or canonical acceptance. The gates
+cover `InitialState`, `SpatialLaw` (including an injected bond registry), native
+program admission, resolver construction and resolver ticket consumption.
 A native program containing only coherent or unobserved evolution remains
 admissible. Any instrument/contact binding is rejected in the canonical profile,
 including a binding that happens to have a certain outcome: the current adapter

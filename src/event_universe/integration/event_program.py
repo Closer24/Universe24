@@ -9,6 +9,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from event_universe.core.disturbance_state import Address3, InitialState
+from event_universe.core.sampling_contract import require_historical_sampling
 from event_universe.initialization import _address, _array, _index, _integer, _object, _text
 from event_universe.quantum import Amplitude, EventNetworkConfig, LocalInstrument, LocalUnitary
 from event_universe.quantum.event_network import Instrument, LocalOperation
@@ -94,6 +95,18 @@ def _require_initial_capacity(initial: InitialState, capacity: int, quantum_sour
 
 
 def parse_event_program(initial: InitialState) -> Program:
+    program = _parse_event_program(initial)
+    validate_program_sampling(initial, program)
+    return program
+
+
+def validate_program_sampling(initial: InitialState, program: Program) -> None:
+    """Coherent preparation is allowed; autonomous instrument bindings are not."""
+    if program.bindings or program.wave_interactions or program.contacts is not None:
+        require_historical_sampling(initial.sampling_profile, "ordinary quantum instrument sampling")
+
+
+def _parse_event_program(initial: InitialState) -> Program:
     if initial.event_program is None or len(initial.event_program) > 1_000_000:
         raise ValueError("bounded event program required")
     if initial.conservation is not None:

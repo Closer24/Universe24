@@ -240,6 +240,7 @@ def landing_document(
     headings = MATTER_WAVE.cone_headings(MATTER_WAVE.HEADINGS, MATTER_WAVE.HEADING_SCALE)
     raw = MATTER_WAVE.document(MOMENTUM, headings, ticks=ticks, phased=phased)
     raw["model_id"] = "claim-gather-double-slit-landing-probe-v1"
+    raw["sampling_profile"] = "historical-autonomous-v1"
     field = raw["spatial_fields"][0]
     field["metric"] = "euclidean"
     field["pace"] = list(LANDING_PACE)
