@@ -1,0 +1,881 @@
+{
+  "written_before_running": true,
+  "units": {
+    "energy": "keV",
+    "momentum": "keV/c, one integer unit per keV/c, so a photon has energy == |momentum|",
+    "charge": "one third of positive elementary charge",
+    "rest_energy": 511,
+    "pair_threshold": 1022
+  },
+  "tick_convention": "A record seeded at x0 moving one Link per tick is resident at x0 + t after tick t. Records that become co-resident at tick T interact in the local cycle of tick T; converted moving outputs appear as `sent` events at tick T with arrival_tick T + 1. A record sent from the last Node of an open axis at tick T is recorded as `escaped` at tick T + 1.",
+  "fixtures": {
+    "annihilation": {
+      "model_id": "family-conversion-annihilation-v1",
+      "inputs": {
+        "electron": {
+          "position": [
+            2,
+            3,
+            3
+          ],
+          "energy": 1825,
+          "momentum": [
+            1752,
+            0,
+            0
+          ],
+          "charge": -3
+        },
+        "positron": {
+          "position": [
+            14,
+            3,
+            3
+          ],
+          "energy": 1825,
+          "momentum": [
+            -1752,
+            0,
+            0
+          ],
+          "charge": 3
+        },
+        "note": "1825^2 - 1752^2 = 511^2: both inputs exactly on shell; kinetic energy 1314 keV each"
+      },
+      "conversion_tick": 6,
+      "conversion_position": [
+        8,
+        3,
+        3
+      ],
+      "outputs": [
+        {
+          "type": "photon",
+          "energy": 1825,
+          "momentum": [
+            1825,
+            0,
+            0
+          ],
+          "charge": 0,
+          "port": 0
+        },
+        {
+          "type": "photon",
+          "energy": 1825,
+          "momentum": [
+            -1825,
+            0,
+            0
+          ],
+          "charge": 0,
+          "port": 1
+        }
+      ],
+      "totals_every_tick_until_escape": {
+        "energy": [
+          3650
+        ],
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": [
+          0
+        ]
+      },
+      "escape_ticks": [
+        15,
+        15
+      ],
+      "final": {
+        "totals": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            3650
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        }
+      },
+      "no_extra_delay": "the conversion cycle at tick 6 has ready_tick == 6 (rational tariff below normal_budget)"
+    },
+    "pair-production": {
+      "model_id": "family-conversion-pair-production-v1",
+      "inputs": {
+        "photon_a": {
+          "position": [
+            2,
+            3,
+            3
+          ],
+          "energy": 511,
+          "momentum": [
+            511,
+            0,
+            0
+          ]
+        },
+        "photon_b": {
+          "position": [
+            14,
+            3,
+            3
+          ],
+          "energy": 511,
+          "momentum": [
+            -511,
+            0,
+            0
+          ]
+        },
+        "note": "total 1022 keV, exactly the threshold; product 511*511 equals 511^2"
+      },
+      "conversion_tick": 6,
+      "conversion_position": [
+        8,
+        3,
+        3
+      ],
+      "outputs": [
+        {
+          "type": "electron",
+          "energy": 511,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": -3
+        },
+        {
+          "type": "positron",
+          "energy": 511,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": 3
+        }
+      ],
+      "outputs_stay_resident_at": [
+        8,
+        3,
+        3
+      ],
+      "sent_events_total": 12,
+      "totals_every_tick": {
+        "energy": [
+          1022
+        ],
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": [
+          0
+        ]
+      },
+      "final": {
+        "totals": {
+          "energy": [
+            1022
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        }
+      }
+    },
+    "pair-production-control": {
+      "model_id": "family-conversion-pair-production-v1",
+      "inputs": {
+        "photon_a": {
+          "position": [
+            2,
+            3,
+            3
+          ],
+          "energy": 500,
+          "momentum": [
+            500,
+            0,
+            0
+          ]
+        },
+        "photon_b": {
+          "position": [
+            14,
+            3,
+            3
+          ],
+          "energy": 500,
+          "momentum": [
+            -500,
+            0,
+            0
+          ]
+        },
+        "note": "total 1000 keV, below the 1022 threshold"
+      },
+      "crossing_tick": 6,
+      "conversion": "none: only photon records ever exist",
+      "sent_events_total": 30,
+      "escape_ticks": [
+        15,
+        15
+      ],
+      "totals_every_tick_until_escape": {
+        "energy": [
+          1000
+        ],
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": [
+          0
+        ]
+      },
+      "final": {
+        "totals": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            1000
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        }
+      }
+    },
+    "compton": {
+      "model_id": "family-conversion-compton-v1",
+      "inputs": {
+        "photon": {
+          "position": [
+            2,
+            3,
+            3
+          ],
+          "energy": 511,
+          "momentum": [
+            511,
+            0,
+            0
+          ]
+        },
+        "electron": {
+          "position": [
+            8,
+            3,
+            3
+          ],
+          "energy": 511,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": -3
+        }
+      },
+      "rule": "E' = floor(E * m / (m + E * (1 - cos theta))), cos theta = 0 (transverse lattice row), m = 511 read as the resting target's energy; 511 * 511 / 1022 = 255.5 -> 255; the 0.5 keV remainder stays with the electron",
+      "interaction_tick": 6,
+      "interaction_position": [
+        8,
+        3,
+        3
+      ],
+      "outputs": [
+        {
+          "type": "photon",
+          "energy": 255,
+          "momentum": [
+            0,
+            255,
+            0
+          ],
+          "charge": 0,
+          "port": 2
+        },
+        {
+          "type": "electron",
+          "energy": 767,
+          "momentum": [
+            511,
+            -255,
+            0
+          ],
+          "charge": -3
+        }
+      ],
+      "photon_escape_tick": 10,
+      "electron_escaped_by_tick": 24,
+      "totals_every_tick_until_escape": {
+        "energy": [
+          1022
+        ],
+        "momentum": [
+          511,
+          0,
+          0
+        ],
+        "charge": [
+          -3
+        ]
+      },
+      "final": {
+        "totals": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            1022
+          ],
+          "momentum": [
+            511,
+            0,
+            0
+          ],
+          "charge": [
+            -3
+          ]
+        }
+      },
+      "energy_dependence_at_cos_0": {
+        "100": 83,
+        "511": 255,
+        "1022": 340,
+        "10000000": 510
+      }
+    },
+    "three-photon": {
+      "model_id": "family-conversion-three-photon-v1",
+      "inputs": {
+        "electron": {
+          "position": [
+            2,
+            3,
+            3
+          ],
+          "energy": 1825,
+          "momentum": [
+            1752,
+            0,
+            0
+          ],
+          "charge": -3
+        },
+        "positron": {
+          "position": [
+            8,
+            3,
+            3
+          ],
+          "energy": 511,
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": 3
+        },
+        "note": "total energy 2336, net momentum (1752, 0, 0); E - |P| = 584 is even, no odd unit"
+      },
+      "conversion_tick": 6,
+      "conversion_position": [
+        8,
+        3,
+        3
+      ],
+      "outputs": [
+        {
+          "type": "photon",
+          "energy": 1752,
+          "momentum": [
+            1752,
+            0,
+            0
+          ],
+          "charge": 0,
+          "port": 0
+        },
+        {
+          "type": "photon",
+          "energy": 292,
+          "momentum": [
+            0,
+            292,
+            0
+          ],
+          "charge": 0,
+          "port": 2
+        },
+        {
+          "type": "photon",
+          "energy": 292,
+          "momentum": [
+            0,
+            -292,
+            0
+          ],
+          "charge": 0,
+          "port": 3
+        }
+      ],
+      "escape_ticks": {
+        "transverse pair": [
+          10,
+          10
+        ],
+        "forward photon": 15
+      },
+      "totals_every_tick_until_escape": {
+        "energy": [
+          2336
+        ],
+        "momentum": [
+          1752,
+          0,
+          0
+        ],
+        "charge": [
+          0
+        ]
+      },
+      "final": {
+        "totals": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            2336
+          ],
+          "momentum": [
+            1752,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        }
+      }
+    },
+    "three-photon-capacity-control": {
+      "model_id": "family-conversion-three-photon-v1",
+      "inputs": "as three-photon with slots_per_node 2",
+      "expected": "run status failed at the tick-6 cycle with error 'conversion outputs exceed the free resident slots'; nothing committed: the electron (1825, +1752) and positron (511, 0) remain resident at (8, 3, 3) with unchanged values and no pending plan"
+    },
+    "three-photon-port-control": {
+      "model_id": "family-conversion-three-photon-collinear-v1",
+      "inputs": "as three-photon under the collinear variant: forward pair E_f = floor((2336 + 1752) / 2) = 2044 split 1022 + 1022 on +X, backward photon 292 on -X",
+      "expected": "run status failed at the tick-6 cycle with error 'conversion departures must use distinct Ports'; nothing committed: electron (1825, +1752) and positron (511, 0) remain resident at (8, 3, 3), no pending plan"
+    },
+    "four-body": {
+      "model_id": "family-conversion-four-body-v1",
+      "inputs": {
+        "electron": {
+          "position": [
+            2,
+            6,
+            3
+          ],
+          "energy": 1825,
+          "momentum": [
+            1752,
+            0,
+            0
+          ],
+          "charge": -3,
+          "arrives_through_port": "-X side"
+        },
+        "positron": {
+          "position": [
+            14,
+            6,
+            3
+          ],
+          "energy": 1825,
+          "momentum": [
+            -1752,
+            0,
+            0
+          ],
+          "charge": 3,
+          "arrives_through_port": "+X side"
+        },
+        "photon_up": {
+          "position": [
+            8,
+            0,
+            3
+          ],
+          "energy": 300,
+          "momentum": [
+            0,
+            300,
+            0
+          ],
+          "arrives_through_port": "-Y side"
+        },
+        "photon_down": {
+          "position": [
+            8,
+            12,
+            3
+          ],
+          "energy": 300,
+          "momentum": [
+            0,
+            -300,
+            0
+          ],
+          "arrives_through_port": "+Y side"
+        },
+        "note": "Q = 3650 + 600 = 4250, P = 0, charge 0; H = 2125, E_x = 1062, E_y = 1063, odd unit 0"
+      },
+      "conversion_tick": 6,
+      "conversion_position": [
+        8,
+        6,
+        3
+      ],
+      "outputs": [
+        {
+          "type": "photon",
+          "energy": 1062,
+          "momentum": [
+            1062,
+            0,
+            0
+          ],
+          "charge": 0,
+          "port": 0
+        },
+        {
+          "type": "photon",
+          "energy": 1062,
+          "momentum": [
+            -1062,
+            0,
+            0
+          ],
+          "charge": 0,
+          "port": 1
+        },
+        {
+          "type": "photon",
+          "energy": 1063,
+          "momentum": [
+            0,
+            1063,
+            0
+          ],
+          "charge": 0,
+          "port": 2
+        },
+        {
+          "type": "photon",
+          "energy": 1063,
+          "momentum": [
+            0,
+            -1063,
+            0
+          ],
+          "charge": 0,
+          "port": 3
+        }
+      ],
+      "escape_ticks": {
+        "y photons": [
+          13,
+          13
+        ],
+        "x photons": [
+          15,
+          15
+        ]
+      },
+      "totals_every_tick_until_escape": {
+        "energy": [
+          4250
+        ],
+        "momentum": [
+          0,
+          0,
+          0
+        ],
+        "charge": [
+          0
+        ]
+      },
+      "final": {
+        "totals": {
+          "energy": [
+            0
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        },
+        "escaped": {
+          "energy": [
+            4250
+          ],
+          "momentum": [
+            0,
+            0,
+            0
+          ],
+          "charge": [
+            0
+          ]
+        }
+      },
+      "not_decomposable": "each output energy is a function of the sum of all four input energies"
+    },
+    "four-body-three-arrive-control": {
+      "model_id": "family-conversion-four-body-v1",
+      "inputs": "as four-body without the -Y photon",
+      "expected": "at tick 6 the 4 -> 4 rule has no fourth role and does not fire; the declared 2 -> 2 annihilation converts the pair into photons 1825 (+X, port 0) and 1825 (-X, port 1) while the +Y photon (300) continues on port 2; escapes: +Y photon at tick 13, the two X photons at tick 15; totals 3950 / (0, 300, 0) / 0 throughout, then escaped"
+    },
+    "four-body-port-control": {
+      "model_id": "family-conversion-four-body-collinear-v1",
+      "inputs": "as four-body under the collinear variant: 1062 and 1063 on +X, 1062 and 1063 on -X",
+      "expected": "run status failed at the tick-6 cycle with error 'conversion departures must use distinct Ports'; nothing committed: the four records remain resident at (8, 6, 3), unchanged"
+    }
+  },
+  "edge_cases": {
+    "annihilation": [
+      {
+        "inputs": "e- (1825, +1752) + e+ (511, 0)",
+        "outputs": "photon (2044, +2044), photon (292, -292)"
+      },
+      {
+        "inputs": "e- (1825, +1752) + e+ (512, 0): E + P odd",
+        "outputs": "photon (2044, +2044), photon (293, -292): photon b owns the odd keV as energy above |p|"
+      },
+      {
+        "inputs": "e- (1825, -1752) + e+ (512, 0): mirrored odd",
+        "outputs": "photon (2044, -2044), photon (293, +292)"
+      },
+      {
+        "inputs": "both at rest (511, 0)",
+        "outputs": "photon (511, +511), photon (511, -511): +X is the declared axis when both are at rest"
+      },
+      {
+        "inputs": "e- (1825, (1752,0,0)) + e+ (1825, (0,-1752,0))",
+        "outputs": "no conversion: momenta not on one axis"
+      },
+      {
+        "inputs": "e- and e+ with energy 1073741823 (MAX_VALUE), momenta +/-1073741822",
+        "outputs": "photons 1073741823 each; energy 1073741824 is rejected at initialization"
+      }
+    ],
+    "pair_production": [
+      {
+        "inputs": "511 + 511 head-on",
+        "outputs": "e- (511, 0), e+ (511, 0)"
+      },
+      {
+        "inputs": "511 + 510 head-on (total 1021)",
+        "outputs": "no conversion"
+      },
+      {
+        "inputs": "49 (+x) + 5329 (-x): product exactly 511^2, total 5378",
+        "outputs": "kinematics would give e- (2689, -2640), e+ (2689, -2640), both exactly on shell, but both leave on -X in one tick: rejected before commit by the one-departure-per-Port rule (declared limit of the contract; nothing changes)"
+      },
+      {
+        "inputs": "48 (+x) + 5329 (-x): total 5377 >= 1022 but product below 511^2",
+        "outputs": "no conversion"
+      },
+      {
+        "inputs": "600 + 600 head-on",
+        "outputs": "e- (600, 0), e+ (600, 0): excess above threshold stored as lepton energy at rest"
+      },
+      {
+        "inputs": "600 + 600 both along +x",
+        "outputs": "no conversion: not head-on"
+      }
+    ],
+    "compton": [
+      {
+        "inputs": "photon 511 on a moving electron",
+        "outputs": "no interaction; nothing stranded; photon exits"
+      },
+      {
+        "inputs": "photon 0-energy",
+        "outputs": "guard blocks (E > 0 required)"
+      }
+    ],
+    "three_photon": [
+      {
+        "inputs": "e- (1825, +1752) + e+ (511, 0)",
+        "outputs": "photons (1752, +1752 x), (292, +292 y), (292, -292 y)"
+      },
+      {
+        "inputs": "e- (1825, +1752) + e+ (512, 0): E - |P| = 585 odd",
+        "outputs": "photons (1752, +1752 x), (293, +292 y), (292, -292 y): the transverse photon a owns the odd keV"
+      },
+      {
+        "inputs": "e- (1825, +1752) + e+ (1825, -1752): P = 0",
+        "outputs": "no conversion (guard |P| > 0)"
+      },
+      {
+        "inputs": "e- (700, (0, 0, 400)) + e+ (511, 0): axis z",
+        "outputs": "photons (400, +400 z), (405 or 406 split: E - |P| = 811 -> 406 and 405 along +x / -x)"
+      }
+    ],
+    "generic_arity": [
+      {
+        "inputs": "1 -> 6: one record of stock 12 into six records of stock 2, one per Port",
+        "outputs": "six departures on Ports 0..5; totals unchanged"
+      },
+      {
+        "inputs": "6 -> 1: six records of stock 1..6 into one record",
+        "outputs": "one record of stock 21 leaves; five slots consumed"
+      },
+      {
+        "inputs": "7 participants or 7 outputs, 0 participants or 0 outputs",
+        "outputs": "rejected at initialization"
+      },
+      {
+        "inputs": "1 -> 6 into a Node with 4 slots",
+        "outputs": "rejected before commit: free resident slots; snapshot unchanged, no pending plan"
+      },
+      {
+        "inputs": "declared readout invariant broken by the outputs",
+        "outputs": "rejected before commit; snapshot unchanged"
+      },
+      {
+        "inputs": "1 -> 6 with two products on the same Port",
+        "outputs": "rejected before commit: distinct product Ports"
+      },
+      {
+        "inputs": "1 -> 2 under node_execution with k = 2",
+        "outputs": "pending with ready_tick 2, products sent at tick 2; a missing k is rejected at initialization"
+      }
+    ],
+    "four_body": [
+      {
+        "inputs": "e- energy 1826 (off-shell input) with the same momenta: Q = 4251 odd",
+        "outputs": "photon a (+X) 1063 with |p| 1062 owns the odd unit; others 1062, 1063, 1063"
+      },
+      {
+        "inputs": "photons of unequal energy 300 and 301 (P != 0)",
+        "outputs": "the joint rule is silent; the declared 2 -> 2 fallback annihilates the pair into photons 1825 along +X and -X while the two Y photons continue unchanged"
+      },
+      {
+        "inputs": "photons along X like the leptons (dot != 0)",
+        "outputs": "the joint rule is silent; the declared 2 -> 2 fallback annihilates the pair into photons 1825 along +X and -X while the two X photons continue on the same Ports: spectators beside products keep ordinary transport"
+      }
+    ],
+    "spectators": [
+      {
+        "inputs": "three-photon with a spectator photon (100, +Y) arriving at tick 6",
+        "outputs": "completes: products 1752 (+X), 292 (+Y), 292 (-Y) and the spectator on +Y in the same cycle; escaped 2436 / (1752, 100, 0) / 0"
+      },
+      {
+        "inputs": "four-body with a catalog muon (105658, -100 X) arriving with the positron",
+        "outputs": "completes: four products on Ports 0..3 and the muon on Port 1 beside a product"
+      }
+    ]
+  },
+  "scale": {
+    "board": [
+      48,
+      48,
+      48
+    ],
+    "pairs": 16,
+    "largest_energy_keV": 10000000,
+    "expected": "every pair meets at x = 23 at tick 21 (seeds at x = 2 and x = 44); all accounting flags true; per-record values stay below MAX_VALUE = 1073741823; the first thing that breaks beyond the bound is a seed or output component above 1073741823 keV, rejected explicitly",
+    "four_body": "48^3 with 16 quadruples on distinct z lines at y = 24: leptons from x = 2 and x = 44, photons from y = 3 and y = 45; all four rays of every quadruple reach (23, 24, z) at tick 21; 64 photons leave on four Ports each; totals exact"
+  },
+  "contract": "family-conversion-n-to-m-v1: every rule declares participants (N inputs, 1..6) and outputs (M output families, 1..6); all outputs are assigned from one frozen snapshot; conserved fields and per-record readout invariants are summed over all N inputs and all M outputs before one commit; outputs beyond N take free slots or the rule fails before commit; every product of a conversion leaves on a distinct Port or the rule fails before commit; non-participant records keep ordinary transport (several packets per Port)",
+  "catalog_bindings": "bindings.json records the catalog entity ids (electron, positron, photon), the encoded charge (thirds) and rest energy (keV/c2 to the nearest unit, c = 1) and the interaction family of each rule: pair_creation_annihilation for annihilation, pair production and the three-photon candidate; electromagnetic_scattering (compton_scattering) for the Compton-like exchange"
+}
