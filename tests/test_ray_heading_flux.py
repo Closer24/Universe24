@@ -1,6 +1,8 @@
 """Independent carried-heading sampling, causal response and self-exclusion checks."""
 
+import json
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 
@@ -20,69 +22,10 @@ from event_universe.initialization import parse_initial_state
 
 
 def document(projection="carried_heading"):
-    return {
-        "schema_version": 1,
-        "model_id": "carried-heading-sampling-check-v1",
-        "shape": [9, 9, 9],
-        "boundary": "open",
-        "slots_per_node": 2,
-        "link_ticks": 1,
-        "normal_budget": 100000,
-        "ticks": 3,
-        "operation_costs": {name: 1 for name in OPERATIONS},
-        "fields": [
-            {"name": "radiation", "components": 1, "units": "ray", "signed": True, "conserved": True},
-            {
-                "name": "momentum",
-                "components": 3,
-                "units": "response",
-                "signed": True,
-                "conserved": True,
-            },
-        ],
-        "disturbance_types": [
-            {
-                "name": "source",
-                "fields": ["radiation"],
-                "defaults": {"radiation": 0},
-                "transport": {"mode": "hold"},
-            },
-            {
-                "name": "receiver",
-                "fields": ["momentum"],
-                "defaults": {"momentum": [0, 0, 0]},
-                "transport": {"mode": "hold"},
-            },
-        ],
-        "spatial_fields": [
-            {
-                "field": "radiation",
-                "transport": "ray",
-                "headings": [[2, 1, 0]],
-                "rays_per_tick": 1,
-                "ray_slots": 4,
-                "flux_projection": projection,
-            },
-            {"field": "momentum", "transport": "local"},
-        ],
-        "emissions": [
-            {"type": "source", "field": "radiation", "amount": 3, "denominator": 1, "source": True}
-        ],
-        "spatial_couplings": [
-            {
-                "name": "signed_response",
-                "type": "receiver",
-                "field": "momentum",
-                "mode": "exchange",
-                "amount": {"op": "neg", "args": [{"flux": "radiation"}]},
-                "denominator": 1,
-            }
-        ],
-        "seeds": [
-            {"position": [4, 4, 4], "type": "source"},
-            {"position": [5, 4, 4], "type": "receiver"},
-        ],
-    }
+    fixture = Path(__file__).resolve().parents[1] / "examples/generic-ray-coupling/field-sampling.json"
+    raw = json.loads(fixture.read_text(encoding="utf-8"))
+    raw["spatial_fields"][0]["flux_projection"] = projection
+    return raw
 
 
 def projection_input(projection="carried_heading"):
