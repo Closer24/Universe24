@@ -1,5 +1,14 @@
 # Documentation index
 
+## Central model and authority
+
+Start with [central model specification and ownership](MODEL_SPECIFICATION.md).
+It links the existing Google model's five sections and separate evidence tab.
+Highlights is a summary; the repository pages below own narrow executable-profile,
+reference-data or evidence scopes. [Node operation candidates](NODE_GENERIC_OPERATIONS.md)
+provide a reviewable mathematical/acceptance annex, not a second model definition.
+
+
 The [spatial momentum and position-output experiment](../examples/quantum/position_moment_response.md)
 distinguishes evolved wave readouts, locally derived capture moments and missing
 gate/measurement energy closure.
@@ -11,9 +20,9 @@ result are different claims. Revision-specific results are not a live status fee
 
 ## Definition drafts
 
-- [Detector exchange](DETECTOR_EXCHANGE.md): external action-bit selection,
-  PASS/content preservation, fresh return and causal branch cancellation;
-  open decisions remain, with no implementation or run authorization.
+- [Detector exchange implementation index](DETECTOR_EXCHANGE.md): links the
+  central section 4 definition, records supported-profile limits and separates
+  retained event history from unresolved local return routing.
 
 ## Active implementation contracts
 
@@ -104,3 +113,4 @@ concepts.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+

@@ -1,5 +1,10 @@
 # Event Universe — active modular 3D integer simulator
 
+Scope: current executable configuration/profile behavior. Adopted model definitions
+live in the [central specification](docs/MODEL_SPECIFICATION.md); this page is not
+a parallel source of new physical laws. Preserve explicit profile differences
+and report target-model integration gaps instead of silently changing behavior.
+
 ## Active generic disturbance model
 
 The opt-in [integer Node contract](docs/NODE_VECTOR_PROCESSOR.md) extends the

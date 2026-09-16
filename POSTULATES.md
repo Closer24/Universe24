@@ -1,8 +1,10 @@
 # Simulator postulates in plain language
 
-This document explains the ideas underlying the simulator without programming
-details. Consult it before any change. A change contradicting a binding principle
-requires an explicit decision to change the model.
+The [central model specification](docs/MODEL_SPECIFICATION.md) is the single owner
+of adopted model definitions. This document preserves explanations and the
+contracts of named implemented/historical profiles, including Q-ORACLE-1.
+Consult those exact profiles before changing code; their limitations do not
+reopen the model's already-defined actions. Explicit user decisions prevail.
 
 The user-authorized [Node execution profile](docs/NODE_VECTOR_PROCESSOR.md)
 declares h as one adjacent-node transit step and each interaction's k as an

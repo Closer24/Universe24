@@ -1,5 +1,10 @@
 # Architecture and change boundaries
 
+Model definitions have one owner: the [central specification](MODEL_SPECIFICATION.md).
+This document owns module boundaries, dependency requirements and implementation
+review/gap notes. Its short model summaries do not create a second physics spec.
+The candidate operation annex supplies scoped fixtures, not universal defaults.
+
 ## Binding system architecture
 
 The user-selected architecture works at the Node only. A Node owns bounded
@@ -254,45 +259,20 @@ It does not expand currently authorized implementation or experiment scope.
 
 ### Stored codes and mathematical values
 
-The approved Node storage domain is bounded nonnegative integers, including
-zero. This describes stored codes, not a prohibition on signed mathematical
-values. A proposed generic signed encoding is `0 -> 0`, `+1 -> 1`, `-1 -> 2`,
-`+2 -> 3`, `-2 -> 4`. Exact generic arithmetic must operate on the represented
-values and return valid bounded codes; adding codes as values is incorrect.
-Do not silently replace an existing valid encoding with this example.
-
-Whether intermediate working values must also be nonnegative remains open;
-bounded integer intermediates are required regardless. Overflow or a value
-without an admitted representation rejects the operation before its mutation.
-All remainders retain the explicit ownership and lifecycle defined below.
-
-This is a binding storage-domain decision, not an implemented conversion.
-Existing signed payload contracts and any positive-only code mapping retain
-their documented runtime behavior pending explicit adaptation and verification.
-The [canonical timing clarification](REFERENCE_UNITS.md#minimum-model-time-and-output-delay)
-separately defines model time, output waiting and the unresolved transit-count
-convention; permitting the number zero does not permit zero-time Link transit.
+The central specification section 1 owns the target stored-code/integer model.
+The [candidate annex](NODE_GENERIC_OPERATIONS.md) selects an explicit encoding
+only for its named candidate. Existing signed payload/profile encodings remain
+implementation facts until an authorized adapter is tested. Do not silently
+change runtime representation while editing documentation.
 
 ### Lossless remainder ownership
 
-No remainder may be lost in physical arithmetic, evolving state or transport.
-Represent each nonexact division with a bounded quotient and remainder whose
-owner, denominator/scale, update and transfer lifecycle are explicit. Retain the
-full represented value when waiting, moving, merging, splitting or replacing
-an owner. A remainder may become zero through exact consumption or transfer,
-never because its slot departs, a budget expires or a storage slot is reused.
-Quotient-only truncation, rounding, clipping and dropping fractional information
-are not permitted ways to fit a value. Exact-division operations still reject
-nonexact results; overflow or lack of bounded representation must raise an
-explicit error rather than silently lose information.
-
-This requirement also applies at the boundary that prepares physical initial
-state: measured uncertainty may remain reference metadata, but an encoding-error
-report outside that state does not retain a missing arithmetic remainder inside
-the simulation. Choose an exact supported encoding or report the representation
-gap. Display rounding and host-only reporting do not alter state and remain
-separate. Retaining arithmetic remainders does not prove all operations reversible,
-unitarity, physical energy conservation or correctness of a selected law.
+The central specification sections 1-3 own the no-loss requirement, including
+preparation, transport, split/merge and source retirement. This section owns the
+audit of current profiles against that requirement, not another definition.
+An external encoding-error report is not a retained physical remainder; host
+display rounding remains separate. Exact arithmetic alone proves neither
+physical energy conservation nor reversibility.
 
 The following existing behaviors require reconciliation; this documentation
 change preserves their historical/current descriptions, not compliance:
@@ -387,23 +367,17 @@ storage slots and BondRegistry retain their separate meanings.
 
 ### Node and Link acceptance
 
-Every behavioral specification must end with inputs, expected results and failure
-conditions for its Node and affected Links. These are prospective requirements,
-not a claim that tests were run by this documentation change.
+The central specification section 5 owns the model acceptance cases. The
+[candidate annex](NODE_GENERIC_OPERATIONS.md#final-acceptance-operator-node-and-composed-board)
+adds candidate-specific fixtures. Reuse those inputs and independent expected
+outcomes; do not copy full tests into several specifications.
 
-| Scope | Inputs and expected result | Failure conditions |
-| --- | --- | --- |
-| Link timing and ownership | A labeled payload arrives at tick 4, becomes ready at tick 6 and uses a one-tick identity Link. Dispatch once at 6, arrive unchanged at 7; ownership is Node -> Link -> Node. Include empty input and encoded zero. | Early arrival, missing/duplicate owner, altered payload, skipped neighbor or same-tick multi-Link relay. |
-| Locality and operations | Hold NodeState, arrived inputs and law parameters fixed while varying inaccessible remote state or entity labels. Local outcome and time are unchanged. A configured local interaction may use several arrived/resident participants together. | Remote live-state reads, species-name physical dispatch, formula-bearing NodeState or physics embedded in engine scheduling. |
-| Six neighbors | Send distinct labels through each of six Ports in an interior or declared periodic fixture with six distinct neighbors. Each arrives once at its mapped neighbor and declared time. | Missing/duplicate adjacency, wrong target, artificial extra hop or an internal register-count requirement. |
-| Atomicity and bounds | Test simultaneous arrivals under an explicit interaction, capacity rejection, exact-result overflow and injected pre-commit failure. Rejection preserves all owners, inputs, remainders and pending transfers. | Partial publication, silent loss/rounding, consumed input on rejection or an undefined fallback. |
-| Execution parity | Compare the same Node laws, initial data, timing and number stream under dense traversal and active/due scheduling after every tick, including delays and rejected steps. | Any physical state, output, event, ownership, failure or model-time mismatch. Host queue layouts may differ. |
-
-Reuse the independent cases in [Node execution](NODE_VECTOR_PROCESSOR.md) and
-[test expectations](TEST_EXPECTATIONS.md). Source review verifies the separation
-of engine scheduling, Node data and generic operations. Record source and limits
-for every result. Shared-resource Bell evidence must identify that resource; it
-does not establish local-only Bell correlations or complete species dynamics.
+Implementation review here checks dependencies: scheduler versus generic
+operation owner, formula-free NodeState, bounded local input provenance and
+atomic publication. Named [Node execution](NODE_VECTOR_PROCESSOR.md) and
+[test expectations](TEST_EXPECTATIONS.md) retain executable-profile details.
+Shared-resource Bell evidence must identify that resource; it cannot certify
+local-only correlations or every species profile.
 
 ### Dual-execution acceptance and measured selection
 

@@ -1,5 +1,10 @@
 # Generic integer Node processor
 
+This page owns the current executable Node profile and its exact support limits.
+The [central model specification](MODEL_SPECIFICATION.md) owns model meaning;
+[Node operation candidates](NODE_GENERIC_OPERATIONS.md) are a separately named
+implementation/acceptance annex. Do not equate candidate readiness with support.
+
 This is the active Node-owned execution contract. The Node is the local state and
 interaction unit; no private-register decomposition or count is required. A frozen
 Node-local snapshot may combine admitted resident values and arrived inputs.

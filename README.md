@@ -1,5 +1,8 @@
 # Universe24 — a three-dimensional event simulator
 
+Model definitions: [central specification and document ownership](docs/MODEL_SPECIFICATION.md).
+Start there for the adopted model; the pages below own named implementation profiles.
+
 Universe24 implements **Reality Theory (Universe24)**: one discrete world of
 Nodes and Links, bounded integer arithmetic, local rules, and a finite quantum
 owner coupled to the classical lattice by local contacts. The name of the

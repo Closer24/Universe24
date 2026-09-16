@@ -17,69 +17,19 @@ unit conversion inside the engine or a new physical law.
 
 ### Minimum model time and output delay
 
-Use `delta_t_min` (Delta t_min) for the minimum model time interval; no SI value
-is assigned. Physical h and hbar are action constants, not time intervals.
-In the Node design, the locally received computation field sets
-each output delay through a defined local rule in integer multiples of this
-interval, not through host load or an inferred hbar/energy law.
-
-For additional waiting before dispatch, define
-`tau_wait(n,p) = k_wait(n,p) * delta_t_min`, with a nonnegative integer count.
-Waiting and Link transit are distinct. **Open convention:** does a generic `k`
-already include transit? Only if transit is one tick and `k` counts additional
-waiting is total elapsed time `(k + 1) * delta_t_min`. Do not add one
-unconditionally or count transit twice. Zero waiting never permits same-tick
-Link traversal; preserve current/future queues and causal readiness.
-
-Speed `c` has dimensions length/time. A calibrated Link speed needs its length
-and transit duration; neither a numerical tick scale nor a new physical law
-is inferred here. This is the canonical timing clarification for the target
-design; existing executable profile timing below remains unchanged.
+The [central model specification](MODEL_SPECIFICATION.md), section 3, owns the
+minimum-time, waiting/transit and computation-field definitions. This document
+owns actual unit-registry and authoring behavior. Profile-specific timing below
+is an implementation fact, not a resolution of an open universal delay law.
 
 ### Mass encoding, rest phase and Node delay
 
-These are three distinct quantities. The approved documentation separation does
-not choose a mass-dependent latency law or establish universal mass quantization.
-
-| Quantity | Meaning and required record |
-| --- | --- |
-| Reference rest mass | Published value, unit, experimental uncertainty, context and source; preserve them independently of encoding |
-| Encoded mass | `m_encoded = N * mass_unit`, with bounded nonnegative integer N, chosen unit, explicit storage bounds and representation error against the selected reference central value |
-| Rest phase | A physical phase reference, separate from local transaction completion or transport retention |
-| Node delay | `tau_node = k * delta_t_min`, with bounded nonnegative k and a specified local policy; its functional form remains OPEN |
-
-For a definite rest energy, the standard phase rate magnitude is
-`omega_0 = m*c^2/hbar`; its full phase period is `T_0 = h/(m*c^2)`.
-Increasing mass increases this rate and shortens the period; neither expression
-defines processing latency. Motion also depends on momentum, not mass alone.
-A completed Node-cycle count is not an established proper-time mapping.
-See [Feynman III, sections 7-1 and 7-2](https://www.feynmanlectures.caltech.edu/III_07.html).
-These are physical comparison relations, not implemented phase operators.
-
-Writing `m = N * mass_unit` selects a bounded numerical representation. It does
-not assert that all physical masses are exact integer multiples of one universal
-mass quantum. Measurement uncertainty, representation error and model error are
-different records. Changing the chosen mass unit must not change claimed physical
-behavior; convert parameters consistently or reject an unsupported conversion.
-Nonexact encoding requires an explicit bounded remainder/scale owner or rejection,
-not an unreported rounding step under the target lossless contract.
-
-The [mass/phase/delay JSON design](examples/mass-phase-delay.design.json) is a
-non-executable proposal: every key is prospective, not an implemented catalog or
-initialization schema. It references the existing electron mass record without
-copying its numerical value. Choosing that central value as one unit makes N=1
-and representation error zero by definition; its experimental uncertainty is
-still retained. This example does not establish a shared exact unit for all
-other masses. Null storage bounds, code mapping, phase mapping and delay fields
-are unresolved decisions, not runtime defaults.
-
-The delay's functional form, massless behavior and whether it represents holding
-transport output or completing a joint transaction remain OPEN. The existing
-k/Link-transit ambiguity above is unchanged. No illustrative linear mass-delay
-formula is selected here. Delay changes must preserve causal arrivals, complete
-joint ownership, exact arithmetic and all remainders. This proposal neither
-changes current profiles nor blocks independent property-transport or finite
-wave benchmarks whose own contracts are already specified.
+These definitions and their physical reference are consolidated in central
+section 3. The [mass/phase/delay JSON](examples/mass-phase-delay.design.json)
+remains a non-executable representation proposal, not a runtime schema. Its
+unresolved bounds and mappings are not defaults; reference measurement
+uncertainty is not removed by choosing a convenient unit. Runtime authoring
+limits and supported conversions are documented below.
 
 ### Existing profiles and physical constants
 

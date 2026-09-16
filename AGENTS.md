@@ -1,5 +1,11 @@
 # Instructions for every project contributor
 
+For model meaning, use the [central specification and authority map](docs/MODEL_SPECIFICATION.md).
+The central Google specification owns adopted laws; Highlights is a summary.
+Repository contracts own named APIs/profiles and implementation checks. A gap in
+one profile does not reopen an already-defined quantum action. Only developers
+write runtime code and tests; documentation changes must not silently select physics.
+
 These instructions apply to the entire monorepo. Start here from the current
 checkout; do not rely on a previous conversation.
 
