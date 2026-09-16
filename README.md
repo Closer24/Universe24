@@ -46,8 +46,9 @@ generic disturbance schema.
 
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
 is the high-level project specification. Open it using a Google account with
-document access. Repository access does not grant Google Docs access, and a clone
-contains this link rather than a copy of the live document.
+document access. Repository access does not grant Google Docs access. A dated
+verbatim snapshot is kept in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) for
+offline reading; the live document remains authoritative when they differ.
 
 The document contains goals as well as requirements. Keep proposed behavior,
 implemented contracts and tested results distinct. Consult
