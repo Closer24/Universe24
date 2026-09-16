@@ -1,71 +1,80 @@
 # Canonical simulation terminology
 
-Universe24 uses one canonical vocabulary for the active simulator. These names describe the model, documentation, identifiers, diagnostics and configuration concepts.
+Universe24 uses the following vocabulary for its intended architecture.
+The Node/Register distinction is a design definition, not a claim that the
+Register-level scheduler is already implemented. Existing execution contracts
+remain in force until an explicit implementation change is validated.
 
 ## Core terms
 
-- **Node** — one local location in Event Space. A Node is the basic physical location of the simulator.
-- **NodeState** — all local information currently owned by one Node. NodeState is not a second physical object; it is the state of the Node.
-- **Scalar** — a one-component local value.
-- **Vector** — a three-component local value.
-- **Port** — one local directional connection endpoint of a Node.
-- **Link** — the causal connection between neighboring Nodes. A Link owns a transferred value while it is in transit.
-- **Event** — a local state transition at a Node or a completed transfer on a Link.
-- **LocalRule** — configured local logic that reads only the NodeState and values that have already arrived through Links, then proposes the next local state and outgoing transfers.
+| Term | Definition |
+| --- | --- |
+| Node | One logical unit at a physical location in Event Space. It owns one bounded NodeState and contains one Register per Port. |
+| NodeState | All local information owned by one Node, including the bounded values and metadata of its Registers. It is not a second physical object or a copy per Register. |
+| Register | A generic computational input/output unit inside a Node, associated with exactly one Port. All Registers execute the same generic local logic; input, state, direction, configured rules and delay are data. |
+| Scalar | A one-component value. |
+| Vector | A three-component spatial value; wider bounded property arrays in the opt-in Node profile have their own explicit shape contract. |
+| Port | A directional connection endpoint, served by its associated Register. |
+| Link | The causal connection between neighboring Nodes. It owns a transferred value during transit. |
+| Event | A local state transition or a completed Link transfer. Computational substeps do not create new physical locations. |
+| LocalRule | Configured generic logic operating on owned local state and already-delivered inputs; joint dependencies retain Node-level coordination and atomicity. |
 
-## Values do not become new physical kinds when they move
+The initial six-port cube therefore contains **six Registers in one Node**,
+not six new physical Nodes. Port count is intended to be a bounded topology
+configuration, not part of the universal definition of Node or Register.
+The current code still fixes the degree to six; configurable topology and
+Register-level scheduling are not implemented by this terminology update.
 
-Input and output are roles, not value types. Values remain Scalars or Vectors throughout their lifetime.
+## Node, Register and value ownership
 
-A Scalar or Vector can have local transport metadata such as:
+| Owner | Contents or role |
+| --- | --- |
+| Node | One logical identity, one NodeState, its Registers and joint-operation coordination |
+| Register at (node, port) | Bounded input/output state, direction and local delay metadata within that NodeState |
+| Link | Values dispatched by a Register and not yet delivered to the next Node |
+| External scheduler | Host scheduling indexes and due-work entries; no additional physical state or hidden law |
 
-- `resident` — owned by the Node;
-- `incoming` — completed a Link transfer and is available to the Node's local rules;
-- `waiting` — reserved at the Node until its configured directional delay expires;
-- `outgoing` — reserved for a Port and ready for Link dispatch;
-- `in_transit` — owned by a Link until arrival.
+Input and output are roles, not additional physical value types. Values remain
+Scalars or Vectors while resident, received, waiting, outgoing or in transit.
+A Register is a computational unit, not a synonym for a Scalar, Vector or Node.
 
-Direction, Port, ownership and timing metadata do not change a Scalar into a different kind of physical quantity.
+A Node may receive several inputs at the same simulated time. Keep the distinct
+arrivals available to joint rules. Splitting work across Registers must not
+duplicate owned stock, discard another Port's input or expose half a joint commit.
+The scheduling and dependency contract is owned by
+[Register-level execution](ARCHITECTURE.md#register-level-execution-target).
 
-## Node model
-
-Conceptually:
-
-```text
-Node
-  NodeState
-    Scalars
-    Vectors
-    ownership / port / timing metadata
-  LocalRules
-  Ports -> Links -> neighboring Nodes
-```
-
-A Node may receive values from several neighboring Nodes on the same tick. Those arrivals are one local Event set. The configured LocalRules determine whether and how they interact. The engine must not silently compress distinct simultaneous arrivals before the selected local interaction has access to them.
-
-Directional delay belongs to a Node's outgoing scheduling. It is an integer multiple of `link_ticks`. A waiting value remains owned by its Node until dispatch. Link transit begins only after dispatch and always takes the configured fixed Link time.
+In the design discussion, C denotes the Link propagation clock and h the local
+Register/Node delay. They are distinct model quantities, not an automatic SI
+calibration; h is not Planck's constant. The exact mapping to current
+`link_ticks`, k and cost-budget profiles remains explicit in their contracts.
+A waiting value is still Node-owned; Link transit starts only after dispatch.
+Computational decomposition alone adds no physical hop or elapsed model time.
 
 ## No second physical-location noun
 
-Node is the only active physical-location noun. `Site` is not a synonym for Node.
+Node is the only active physical-location noun. Register is an internal
+computational unit, not another physical location; `Site` is not a synonym.
 
-- Active code, documentation, tests and diagnostics use `Node` or `NodeState` for a simulation location or its local state.
-- `Site` may appear only when it is part of an external standard name or when it denotes a distinct non-physical mathematical/register concept. In quantum code, prefer `register` or `register_index` when that is the actual meaning.
-- External protocol, package and API identifiers are preserved verbatim when renaming them would change their defined identity.
-- Retired pre-migration location identifiers are not retained as active API aliases.
-- Historical evidence may preserve old literal names when changing them would falsify the recorded source; such evidence does not define the active vocabulary.
+- Use `node` / `nodes` for locations and `NodeState` for their state.
+- Use Register or `port_register` for the intended per-Port computational unit;
+  use `port`, `link` and `event` for their distinct responsibilities.
+- Existing quantum algebra registers are separate mathematical subsystems.
+  Retain their technical identifiers and qualify them as quantum registers when
+  ambiguity exists. They are not automatically per-Port Registers.
+- Registry and `BondRegistry` mean a registry, not a Register or Node. Do not
+  rename them by text substitution.
+- External API identifiers and historical evidence retain their exact meaning.
+  Existing references to storage registers or counted integer slots are not a
+  count of the new computational Registers.
+- Do not introduce `site`, `input state` or `output state` as physical-location
+  synonyms.
 
-## Naming rule
+## Implementation boundary
 
-When adding or renaming active implementation symbols:
-
-- use `node` / `nodes` for positions and position-indexed state;
-- use `NodeState` for the local state record;
-- use `port` for a directional endpoint;
-- use `link` for in-transit ownership;
-- use `event` for a local transition;
-- use `scalar` / `vector` for physical value shape;
-- use `register` / `register_index` for a quantum algebra register when it is not a physical-location name;
-- do not introduce `site`, `input state`, or `output state` as alternative physical nouns.
-
-The active API and configuration use the canonical Node vocabulary directly. Breaking migrations are explicit and must update all active consumers rather than preserving a parallel physical vocabulary.
+This definition supersedes the earlier use of Register as another name for Node.
+It does not rename runtime classes, JSON keys, quantum registers or existing
+state-layout counts. The current Node-owned execution path remains documented in
+[NODE_VECTOR_PROCESSOR.md](NODE_VECTOR_PROCESSOR.md); current active-set behavior
+remains in [LOCAL_FOCUS.md](LOCAL_FOCUS.md). Any runtime migration must update its
+consumers and test ownership, timing, errors and event equivalence explicitly.
