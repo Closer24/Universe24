@@ -1,5 +1,10 @@
 # Local nucleus and electron candidate: component interfaces
 
+Updated scope: the user subsequently required trapped rays under the same
+generic coupling. The contact-gap builder described here is a comparison
+fixture, not that target. Its movement and diagnostic interfaces remain reusable;
+see [the corrected target](TRAPPED_RAY_NUCLEUS_RECONCILIATION.md).
+
 ## Authority and scope
 
 This is the engineering contract for a named deterministic candidate containing
