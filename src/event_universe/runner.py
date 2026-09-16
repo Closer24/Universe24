@@ -142,7 +142,12 @@ def _execute_run(
         with Simulation(initial, observer=record, node_workers=node_workers) as world:
             initial_totals = world.totals()
 
-            def record_state(totals, sources, losses, escaped) -> None:
+            def record_state(
+                totals: dict[str, tuple[int, ...]],
+                sources: dict[str, tuple[int, ...]],
+                losses: dict[str, tuple[int, ...]],
+                escaped: dict[str, tuple[int, ...]],
+            ) -> None:
                 nonlocal trace_rows
                 if trace is None:
                     return

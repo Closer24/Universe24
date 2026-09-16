@@ -11,6 +11,7 @@ import pytest
 
 from event_universe.core.disturbance_state import pack, unpack
 from event_universe.fields.disturbances import DisturbanceLaw
+from event_universe.fields.spatial_coupling import SpatialCouplingLaw
 from event_universe.initialization import parse_initial_state
 from event_universe.runner import run_initialization
 
@@ -147,6 +148,27 @@ def test_source_table_and_passive_face_projection():
     ) == (5, 3, -4)
     initial = parse_initial_state(calibration.calibration_document())
     assert not initial.spatial_couplings and initial.ticks == 84
+
+
+@pytest.mark.parametrize(("age", "arrived", "expected"), [(63, 1, 0), (64, 0, 0), (64, 1, -128)])
+def test_electron_response_requires_release_and_arrival_and_has_opposite_owner(age, arrived, expected):
+    initial = parse_initial_state(
+        configured(mass=512, speed_scale=16, px=0, py=2048, launch_age=64, force_numerator=128)
+    )
+    law = SpatialCouplingLaw(
+        initial.fields, initial.spatial_couplings, initial.operation_costs, initial.spatial_fields
+    )
+    names = {item.name: index for index, item in enumerate(initial.fields)}
+    record = initial.seeds[-1].record
+    values = list(record.values)
+    values[names["age"]] = pack((age,))
+    record = replace(record, values=tuple(values))
+    sample = tuple(pack((0,) * item.components) for item in initial.fields)
+    flux = [pack((0, 0, 0)) for item in initial.fields]
+    flux[names["charge_field"]] = pack((arrived, 0, 0))
+    result = law((record,), sample, tuple(flux))
+    assert unpack(result.records[0].values[names["momentum"]]) == (expected, 2048, 0)
+    assert result.reaction[names["momentum"]] == (-expected, 0, 0)
 
 
 def test_free_world_has_actual_canonical_artifact(tmp_path):

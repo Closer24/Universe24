@@ -165,6 +165,7 @@ def analyze(run: Path) -> dict[str, object]:
         and repeated
         and symmetry
         and delayed == 0
+        and result["accounting_pass"]
         and all(
             control["radial_pass"] and control["tangential_pass"] for control in radial_controls.values()
         )
