@@ -83,6 +83,7 @@ def run_document(document, output):
                 "source_totals": world.source_totals(),
                 "dissipation_totals": world.dissipation_totals(),
                 "spatial_accounting": world.spatial_accounting(),
+                "local_conservation": world.conservation_report(),
                 "computation": world.computation_report(),
                 "execution": world.execution_report(),
                 "elapsed_seconds": time.perf_counter() - started,

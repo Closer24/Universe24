@@ -46,6 +46,8 @@ from event_universe.core.spatial_state import (
     ray_stock,
     ticket_draw,
     validate_claims,
+    validate_ray_coupling_scope,
+    validate_ray_participants,
     validate_rays,
 )
 
@@ -87,6 +89,19 @@ class SpatialLaw:
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
+        if self.ray_interactions:
+            validate_ray_coupling_scope(self.definitions, self.sampling_profile)
+            selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
+            if (
+                self.field_rules
+                or self.least_delay_direction is not None
+                or any(
+                    rule.field == self.definitions[index].field
+                    for index in selected
+                    for rule in self.absorptions
+                )
+            ):
+                raise ValueError("ray interactions do not support another coupled field program")
         if self.bonds is not None or any(rule.bond_setting is not None for rule in self.absorptions):
             require_historical_sampling(self.sampling_profile, "ordinary bond registry binding")
 
@@ -498,6 +513,8 @@ class SpatialLaw:
     ) -> SpatialPlan:
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
+        if self.ray_interactions and ray_hold:
+            raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)

@@ -165,6 +165,16 @@ def validate_ray_participants(
     return frozenset(selected)
 
 
+def validate_ray_coupling_scope(
+    definitions: tuple[SpatialFieldDefinition, ...], sampling_profile: str
+) -> None:
+    if sampling_profile != DETECTOR_ONLY or any(
+        definition.claims or definition.bonded or definition.capture == "lottery"
+        for definition in definitions
+    ):
+        raise ValueError("ray interactions require Detector-only fields without claims or bonds")
+
+
 def validate_ray_coupling(initial: InitialState) -> None:
     if not initial.ray_interactions:
         return
@@ -181,10 +191,9 @@ def validate_ray_coupling(initial: InitialState) -> None:
         or initial.event_program is not None
         or initial.field_rules
         or initial.spatial_interactions
-        or initial.sampling_profile != DETECTOR_ONLY
-        or any(definition.claims or definition.bonded for definition in initial.spatial_fields)
     ):
         raise ValueError("ray interactions require the default fixed H=1 spatial clock")
+    validate_ray_coupling_scope(initial.spatial_fields, initial.sampling_profile)
     selected = validate_ray_participants(
         initial.spatial_fields, initial.fields, initial.ray_interactions
     )

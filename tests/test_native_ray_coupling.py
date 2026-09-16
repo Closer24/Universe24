@@ -14,9 +14,10 @@ from event_universe.core.disturbance_state import (
     Invariant,
     pack,
 )
-from event_universe.core.spatial_state import Ray, merge_rays, validate_rays
+from event_universe.core.spatial_state import Ray, SpatialCouplingDefinition, merge_rays, validate_rays
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.ray_interactions import apply_ray_interactions
+from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import parse_initial_state
 
 FIXTURE = Path(__file__).resolve().parents[1] / "examples/generic-ray-coupling/finite-residence.json"
@@ -173,13 +174,13 @@ def test_unchanged_vector_preserves_duplicate_heading_index_and_dda():
 def test_new_ray_candidate_rejects_historical_sampling_opt_in():
     doc = document()
     doc["sampling_profile"] = "historical-autonomous-v1"
-    with pytest.raises(ValueError, match="fixed H=1"):
+    with pytest.raises(ValueError, match="Detector-only"):
         parse_initial_state(doc)
 
 
 def test_unselected_claim_field_is_rejected_by_native_ray_profile():
     initial = parse_initial_state(document())
-    with pytest.raises(ValueError, match="fixed H=1"):
+    with pytest.raises(ValueError, match="Detector-only"):
         replace(
             initial,
             spatial_fields=(
@@ -187,6 +188,29 @@ def test_unselected_claim_field_is_rejected_by_native_ray_profile():
                 replace(initial.spatial_fields[0], claim_ticks=3, claim_slots=2),
             ),
         )
+
+
+@pytest.mark.parametrize("unsupported", ["historical", "claim", "second_clock", "absorb", "routing"])
+def test_direct_spatial_law_keeps_native_coupling_admission(unsupported):
+    initial = parse_initial_state(document())
+    options = {"ray_interactions": initial.ray_interactions}
+    definitions = initial.spatial_fields
+    if unsupported == "historical":
+        options["sampling_profile"] = "historical-autonomous-v1"
+    elif unsupported == "claim":
+        definitions = (*definitions, replace(definitions[0], claim_ticks=3))
+    elif unsupported == "absorb":
+        options["absorptions"] = (
+            SpatialCouplingDefinition("capture", 0, 0, "absorb", Expression("literal", literal=(1,))),
+        )
+    elif unsupported == "routing":
+        options["least_delay_direction"] = "along"
+    with pytest.raises(ValueError, match="ray interactions"):
+        law = SpatialLaw(
+            initial.fields, definitions, initial.emissions, initial.operation_costs, **options
+        )
+        if unsupported == "second_clock":
+            law((), (), ray_hold=1)
 
 
 @pytest.mark.parametrize(
