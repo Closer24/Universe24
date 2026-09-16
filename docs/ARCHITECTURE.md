@@ -182,6 +182,29 @@ merely by naming it in JSON. Current shape limits remain in the
 and transformation semantics must be explicit; notation alone is not evidence
 of a physical law.
 
+### Properties and field participation
+
+The schema must permit many-to-many participation: one owned property can enter
+several configured local coupling operators, and a field can couple through
+several properties. This structural requirement is intended to represent nature,
+not to declare every schema-expressible combination physically valid. A property
+is data; a coupling operator is a separately justified transformation using it.
+
+Each admitted operator needs its physical regime/source, units, causally arrived
+inputs, joint updates/backreaction, conserved readouts, ordering and bounded exact
+arithmetic. Shared quantities retain one owner; overlapping updates require a
+generic local joint transaction preserving declared totals and every remainder.
+A property-to-field link alone cannot choose an interaction law.
+
+For example, electric and magnetic components belong to one electromagnetic
+field, and charge enters both force terms; this is not evidence for two unrelated
+fundamental forces. See [Feynman II, section 1-1](https://www.feynmanlectures.caltech.edu/II_01.html).
+This reference does not adopt a new force law in the Engine. Actual supported
+couplings still require physical review and implementation reconciliation.
+Rest mass does not automatically select gravity or a Node-delay policy; keep
+[mass representation, rest phase and delay](REFERENCE_UNITS.md#mass-encoding-rest-phase-and-node-delay)
+distinct. No species-specific branch or additional coupling is implemented here.
+
 ### Stored codes and mathematical values
 
 The approved Node storage domain is bounded nonnegative integers, including
