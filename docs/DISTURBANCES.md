@@ -1,5 +1,10 @@
 # Initialization-defined disturbances
 
+The project-wide [lossless remainder requirement](ARCHITECTURE.md#lossless-remainder-ownership)
+is binding for the intended model. The existing behaviors documented below are
+not automatically compliant: preserve their evidence and report the mapped gaps,
+without silently changing runtime semantics through documentation.
+
 Emission expressions may read `{"node": "committed_cost"}` from the colocated
 Node's last completed carrier cycle, including local field processing. See
 [computational response](COMPUTATIONAL_RESPONSE.md) for ownership, timing,
