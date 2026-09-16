@@ -83,6 +83,7 @@ concepts.
 
 | Document | Responsibility |
 | --- | --- |
+| [Highlights snapshot](HIGHLIGHTS.md) | Dated verbatim copy of the Universe 24 Highlights specification; the live Google Doc stays authoritative |
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | Dated implementation inventory and specification coverage, not a live status feed |
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |
