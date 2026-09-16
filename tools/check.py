@@ -11,6 +11,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/generic-ray-coupling/finite-residence.json": ("tests/test_native_ray_coupling.py",),
+    "examples/generic-ray-coupling/field-sampling.json": ("tests/test_ray_heading_flux.py",),
+    "examples/generic-ray-coupling/evidence.py": ("tests/test_ray_coupling_evidence.py",),
+    "examples/generic-ray-coupling/render_gif.py": ("tests/test_ray_coupling_evidence.py",),
+    "examples/generic-ray-coupling/run_experiments.py": ("tests/test_ray_coupling_evidence.py",),
+    "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/quantum/spatial_momentum.py": (
         "tests/test_spatial_momentum.py",
         "tests/test_position_moment_response.py",
