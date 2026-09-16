@@ -11,6 +11,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/private_transport/input.json": ("tests/test_private_execution.py",),
+    "examples/private_transport/prepare.py": ("tests/test_private_execution.py",),
+    "examples/private_transport/compare.py": ("tests/test_private_execution.py",),
     "examples/quantum/spatial_momentum.py": (
         "tests/test_spatial_momentum.py",
         "tests/test_position_moment_response.py",

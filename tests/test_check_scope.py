@@ -18,6 +18,12 @@ CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
 
 
+@pytest.mark.parametrize("name", ["input.json", "prepare.py", "compare.py"])
+def test_private_transport_dynamic_consumers(name):
+    selected, _ = CHECK.select(["examples/private_transport/" + name], {})
+    assert "tests/test_private_execution.py" in selected
+
+
 @pytest.mark.parametrize("name", ["causal_charge.json", "repeated_contacts.json"])
 def test_contact_composition_resources_select_their_preflight_regressions(name):
     selected, _ = CHECK.select(["examples/quantum/" + name], {})
