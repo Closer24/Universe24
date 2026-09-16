@@ -29,7 +29,12 @@ One repository does not require one runtime process or a new package hierarchy.
 Use [Canonical simulation terminology](docs/TERMINOLOGY.md) throughout the active
 simulator, documentation, tests and diagnostics.
 
-The physical location is a **Node**. Its complete local information is its
+The logical unit at a physical location is a **Node**. In the target architecture,
+one generic computational **Register** serves each Port inside that Node; the
+initial six-port cube has six Registers. Registers use identical generic logic
+with data-selected state, direction and delay. This is not yet a Register-level
+runtime scheduler; follow the implementation boundary in the terminology contract.
+A Node's complete local information is its
 **NodeState**. NodeState contains configured Scalars and Vectors plus only the
 minimal ownership, Port and timing metadata required for local transport. Input
 and output are roles of Scalars/Vectors, not additional physical value types.
