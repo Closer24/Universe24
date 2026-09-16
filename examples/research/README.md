@@ -1,6 +1,6 @@
 # Research explorations of 2026-09-16
 
-Five exploration studies run on 2026-09-16 against commit `e5b5911` (merge of
+Six exploration studies run on 2026-09-16 against commit `e5b5911` (merge of
 PR #135) of this repository. Every study here is **exploration evidence**: a
 read-only audit of what the engine does under a supplied configuration. None of
 it is integrated behavior, none of it changes an engine rule, and none of it is
@@ -27,7 +27,7 @@ limits and what is **not** established. Run directories, HTML views, GIFs,
 event traces and state dumps are not committed; every README says how to
 regenerate them.
 
-## The five studies
+## The six studies
 
 | study | one paragraph |
 | --- | --- |
@@ -35,6 +35,7 @@ regenerate them.
 | [Anomalies](anomalies/README.md) | Four lattice measurements against published anomalies: the Tolman surface-brightness exponent of the closed loaded row (n = 2.0013 +/- 0.0008 under the per-link phase rule, against 2.59 +/- 0.17 and 3.37 +/- 0.13 in the raw data and 4 for expansion); the force-law exponent of a 1/r^2 ray source (-0.97 +/- 0.10 in a closed period-3 slab, -2.04 +/- 0.12 in an open cube, -1.47 +/- 0.19 inside and -0.70 +/- 0.45 outside the period in a period-9 slab); the redshift-distance relation of the linear and quadratic loads (H falls with age; q = 0 for the linear load and -0.55 to -0.61 for the quadratic load read from the hop schedule); and a light clock built from the model's rays and mirrors, whose period grows as about 6k + 4 with the hop time k and which reads z = 0.022 +/- 0.022 where the bare counter reads 0.608 +/- 0.042. The muon g-2 and the neutron lifetime have no representation at this revision. |
 | [Ray form](ray-form/README.md) | An inventory of which engine forms are rays and which are not, the finding that a bound pair of counter-heading rays cannot be built from rays alone, and a proxy cavity of two mirror records with one Kerengonen ray bouncing each way: bound for 600 ticks in all 22 mirror runs, ticks per cycle 16(k + 2)/3 under a load k without `ray_phase_per_tick` and 16.0 with it, separation growing 2 links per tick in the no-mirror control. A candidate rule `bound-ray-pair-v1` is stated, not implemented. |
 | [Entity audit](entity-audit/README.md) | A read-only audit of the entity catalog and its consumers: 35 particles, 11 fields, 14 disturbance families, 17 interaction families and 33 channels; all validators pass; 287 tests pass; every channel balances charge, baryon number and lepton sector; 56 headless runs complete with balanced accounting, each a labeled configuration probe rather than a physical law; all 17 interaction families are `descriptive_only`; no nucleus, atom or meson record exists. |
+| [Ray gallery](ray-gallery/README.md) | One recorded run per ray form the engine propagates at this revision, eight small 15 x 9 x 3 worlds drawn as one animated panel each: outward octant field, straight directed rays, Kerengonen phased rays at a screen, bonded rays with registry answers, claim and gather, mirror reflection through a record, ray delay under a computation field, and lottery capture at a detector. Each run is replayed in-process and verified against the runner's own frames (0 mismatches over 226 frames) before anything is drawn. The animation is a faithful drawing of recorded state, not evidence of physics. |
 | [Electron-photon scatter](electron-photon-scatter/README.md) | A catalog-bound electron (charge -3 thirds, mass 511 keV/c^2) meeting six pulses of directional quanta under the declared radiation-scattering coupling, recorded and rendered: 60 quanta and total momentum (60, 0, 0) exact at every tick, six scatters of 2 quanta, two held quanta left at the old Node when the electron hops (a two-phase hold/scatter defect), and a configured outward halo that never decays because schema 1 dilutes only by redistribution. |
 
 ## Running the studies

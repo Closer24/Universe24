@@ -220,7 +220,11 @@ load tried (k = 1 to 8 and the growing profile), with 16 (k + 2) / 3 ticks per
 phase cycle without `ray_phase_per_tick` and 16.0 with it, against 2 links
 per tick of separation in the no-mirror control; the isotropic delay refuses
 the configuration explicitly. The first check of the third manuscript below
-is therefore answered for a mirror cavity, not for a pair of rays.
+is therefore answered for a mirror cavity, not for a pair of rays. The
+[ray gallery](../examples/research/ray-gallery/README.md) draws one recorded
+run of each of the eight ray forms (replay verified against the runner's
+frames, 0 mismatches over 226 frames) with every record labelled as a record;
+it is a drawing of recorded state, not evidence.
 
 ### The third manuscript: a clock built from the rules
 
