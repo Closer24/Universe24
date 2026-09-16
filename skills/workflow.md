@@ -198,6 +198,37 @@ An unchanged tree can reuse its verified results; record that equality. Differen
 conversations do not synchronize automatically. Read current GitHub state before
 integrating their work, and never overwrite unrelated edits.
 
+## Publish corrections and share revisions
+
+For requested maintained changes, each specialist owns Git publication as part
+of the assignment. Promptly commit coherent corrections on the isolated task
+branch and push or update the linked PR under the standing authorization. Keep
+the PR draft while required validation or review is incomplete, and state what
+remains. Publication shares work; it does not waive merge gates. This procedure
+does not promote a research-only experiment into maintained code.
+
+- If the specialist cannot publish, explicitly hand the exact local commit,
+  owned files, base, dependencies and validation state to a named Git publishing
+  owner. Boss assigns that owner and follows through; a local commit or an
+  unaccepted handoff is not published work.
+- The publishing owner reads back the remote branch head and changed content.
+  Boss records the canonical Issue/PR, branch and verified remote SHA with the
+  dependencies and review state, and notifies affected active agents whenever
+  a correction or revised dependency is published or merged.
+- Receiving agents fetch and inspect the stated revision in their own worktrees,
+  preserve dirty work, and reconcile relevant changes before continuing dependent
+  implementation or reusing evidence. Report the revision incorporated or a
+  concrete conflict to Boss. Do not reset another owner's worktree or assume a
+  pushed branch is already integrated into main.
+- After required gates pass, the merge owner uses the PR workflow and verifies
+  the resulting main revision. No direct-main bypass or force push is allowed.
+  If publication fails, retain the local work and report the blocked owner and
+  action rather than claiming the correction is shared.
+
+A push does not update existing worktrees. Agent handoff messages reach the
+available active team; repository records support later sessions. Do not promise
+cross-chat notifications, automatic checkout updates or a background service.
+
 ## Checks proportional to the change
 
 Select the project interpreter from [.python-version](../.python-version) and

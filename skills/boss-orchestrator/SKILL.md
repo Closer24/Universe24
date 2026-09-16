@@ -110,6 +110,12 @@ Rules:
 
 This policy applies to Boss coordination and specialist handoffs. Specialists should return findings to the owning Issue rather than creating parallel Issues unless Boss assigned them an independent objective.
 
+For maintained corrections, enforce [publication and revision sharing](../workflow.md#publish-corrections-and-share-revisions).
+Include Git publication ownership in each assignment, name a publishing owner
+when needed, and record verified remote revisions in the owning Issue/PR. Notify
+affected active agents and reconcile their dependencies before continuing work
+that relies on the correction; do not leave completed fixes only in local branches.
+
 ## Routing
 
 For authorized remediation, apply [defect ownership and closure](../workflow.md#defect-ownership-and-closure).
