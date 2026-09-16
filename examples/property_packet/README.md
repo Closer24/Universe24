@@ -53,8 +53,9 @@ for 18 ticks; every frame retained the declared inventory, charge and vector sum
 This does not establish an electron, phase evolution, an electromagnetic field,
 physical energy, or empirical agreement. The separate experimental Port scheduler
 currently rejects spatial-field inputs, so this reservoir case runs through the
-ordinary Node scheduler. A passing configuration is not evidence that the
-24-Register computation layer or a physical interaction has been completed.
+ordinary Node scheduler. A passing configuration does not establish a new physical interaction law.
+The Node is the active state and interaction unit; no private-register migration
+is required.
 
 Contracts: [whole-record transport](../../docs/DISTURBANCES.md),
 [joint local transactions](../../docs/LOCAL_FIELD_RULES.md), and
