@@ -115,6 +115,7 @@ This policy applies to Boss coordination and specialist handoffs. Specialists sh
 | Configuration check/authoring | [simulation-configuration](../simulation-configuration/SKILL.md) |
 | Field law or response | [field-development](../field-development/SKILL.md) |
 | State/interfaces/dependencies | [architecture-review](../architecture-review/SKILL.md) |
+| Mathematical invariants and physical comparisons | [mathematical-validation](../mathematical-validation/SKILL.md) |
 | Physical-engine validation | [physics-rule-validation](../physics-rule-validation/SKILL.md) |
 | Focused tests | [test-runner](../test-runner/SKILL.md) |
 | Reproducible execution | [simulation-runner](../simulation-runner/SKILL.md) |
