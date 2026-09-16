@@ -723,10 +723,12 @@ class DisturbanceEngine:
         return {"bookkeeping": extra} if extra else {}
 
     @_consistent_read
-    def snapshot(self) -> dict[str, object]:
+    def snapshot(self, *, include_spatial: bool = True) -> dict[str, object]:
         """Plain data for headless reports or an explicitly requested renderer."""
+        if type(include_spatial) is not bool:
+            raise ValueError("include_spatial must be boolean")
         return {
-            **({} if self._spatial is None else self._spatial.snapshot()),
+            **({} if self._spatial is None or not include_spatial else self._spatial.snapshot()),
             "tick": self.tick,
             "boundary": self.initial.boundary,
             "escaped_totals": self.escaped_totals(),

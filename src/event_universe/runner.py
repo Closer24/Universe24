@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import time
+from contextlib import nullcontext
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -39,6 +40,8 @@ def run_initialization(
     ticks: int | None = None,
     visualize: bool = False,
     frame_stride: int = 1,
+    frame_content: str = "all",
+    state_trace: str | None = None,
     observer: Path | None = None,
     node_workers: int = 1,
 ) -> Path:
@@ -58,6 +61,8 @@ def run_initialization(
     count = initial.ticks if ticks is None else ticks
     if type(count) is not int or count < 0 or type(frame_stride) is not int or frame_stride < 1:
         raise ValueError("ticks must be nonnegative and frame_stride positive")
+    if frame_content not in ("all", "carriers") or state_trace not in (None, "all", "carriers"):
+        raise ValueError("frame_content and state_trace must select all or carriers")
     validate_output_path(output)
     if initialization.resolve().is_relative_to(output.resolve()):
         raise ValueError("the original initialization must be outside the output directory")
@@ -76,6 +81,8 @@ def run_initialization(
             count,
             visualize,
             frame_stride,
+            frame_content,
+            state_trace,
             observer_definition,
             node_workers,
         )
@@ -89,6 +96,8 @@ def _execute_run(
     count: int,
     visualize: bool,
     frame_stride: int,
+    frame_content: str,
+    state_trace: str | None,
     observer_definition: ObserverDefinition | None,
     node_workers: int,
 ) -> Path:
@@ -115,7 +124,15 @@ def _execute_run(
     accounting = True
     completed = 0
     started = time.perf_counter()
-    with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
+    trace_rows = 0
+    with (
+        (output / "events.jsonl").open("w", encoding="utf-8") as stream,
+        (
+            (output / "states.jsonl").open("w", encoding="utf-8")
+            if state_trace is not None
+            else nullcontext()
+        ) as trace,
+    ):
 
         def record(event: dict[str, object]) -> None:
             stream.write(json.dumps(event) + "\n")
@@ -124,8 +141,27 @@ def _execute_run(
 
         with Simulation(initial, observer=record, node_workers=node_workers) as world:
             initial_totals = world.totals()
+
+            def record_state(totals, sources, losses, escaped) -> None:
+                nonlocal trace_rows
+                if trace is None:
+                    return
+                snapshot = world.snapshot(include_spatial=state_trace == "all")
+                snapshot["accounting"] = {
+                    "totals": totals,
+                    "source_totals": sources,
+                    "dissipation_totals": losses,
+                    "escaped_totals": escaped,
+                    "spatial_accounting": world.spatial_accounting(),
+                }
+                trace.write(json.dumps(snapshot) + "\n")
+                trace_rows += 1
+
+            record_state(
+                initial_totals, world.source_totals(), world.dissipation_totals(), world.escaped_totals()
+            )
             if visualize:
-                frames.append(world.snapshot())
+                frames.append(world.snapshot(include_spatial=frame_content == "all"))
             if probe is not None:
                 probe.capture(world.tick)
             sampled_tick = world.tick
@@ -159,8 +195,9 @@ def _execute_run(
                             "declared quantity conservation, dissipation or escape accounting failed"
                         )
                     completed += 1
+                    record_state(totals, sources, losses, escaped)
                     if visualize and world.tick % frame_stride == 0:
-                        frames.append(world.snapshot())
+                        frames.append(world.snapshot(include_spatial=frame_content == "all"))
                     if world.tick % frame_stride == 0:
                         sampled_tick = world.tick
                         if probe is not None:
@@ -169,7 +206,7 @@ def _execute_run(
                 failure = error
             final = world.snapshot()
             if visualize and (frames[-1]["tick"] != world.tick or failure is not None):
-                frames.append(final)
+                frames.append(final if frame_content == "all" else world.snapshot(include_spatial=False))
             if probe is not None and (sampled_tick != world.tick or failure is not None):
                 probe.capture(world.tick)
     metadata: dict[str, object] = {
@@ -186,6 +223,7 @@ def _execute_run(
         "completed_ticks": completed,
         "tick": world.tick,
         "display": "disturbances" if visualize else "none",
+        "frame_content": frame_content if visualize else None,
         "initial_totals": initial_totals,
         "final_totals": world.totals(),
         "local_conservation": world.conservation_report(),
@@ -202,6 +240,17 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
+    if state_trace is not None:
+        metadata["state_trace"] = {
+            "path": "states.jsonl",
+            "content": state_trace,
+            "stride": 1,
+            "rows": trace_rows,
+            "source_sha256": fingerprint,
+            "initialization_sha256": hashlib.sha256(source).hexdigest(),
+            "requested_ticks": count,
+            "completed_ticks": completed,
+        }
     if world.event_space is not None:
         from dataclasses import asdict
 
@@ -357,6 +406,8 @@ def main() -> None:
     parser.add_argument("--ticks", type=int, help="Override only the requested run duration")
     parser.add_argument("--visualize", action="store_true", help="Create an interactive HTML view")
     parser.add_argument("--frame-stride", type=int, default=1)
+    parser.add_argument("--frame-content", choices=("all", "carriers"), default="all")
+    parser.add_argument("--state-trace", choices=("all", "carriers"), help="Save every completed state")
     parser.add_argument("--observer", type=Path, help="Local reception probe placement JSON")
     parser.add_argument(
         "--node-workers",
@@ -372,6 +423,8 @@ def main() -> None:
             ticks=args.ticks,
             visualize=args.visualize,
             frame_stride=args.frame_stride,
+            frame_content=args.frame_content,
+            state_trace=args.state_trace,
             observer=args.observer,
             node_workers=args.node_workers,
         )
