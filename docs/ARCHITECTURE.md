@@ -1,5 +1,102 @@
 # Architecture and change boundaries
 
+## Binding system architecture
+
+The following project-wide design is user-approved and binding for new work.
+Agents must not replace it with whole-Node scanning, lossy arithmetic or another
+topology/ownership model without explicit user approval. Implementation gaps
+below are unresolved work, not optional exemptions or permission to change the
+design. Documentation approval does not itself implement a runtime change.
+
+| Stage | Responsibility and boundary |
+| --- | --- |
+| Experiment authoring | Select external JSON entity catalogs and representation profiles; physical names, properties and numbers are data, while generic operators have one reusable code owner. |
+| Preparation and validation | Resolve declared references, units, shapes, bounds and supported compositions into explicit integer initialization. Reject unsupported or inexact preparation under the lossless contract; no implicit physical law or hidden runtime catalog lookup. |
+| Logical world | Nodes form the selected periodic 3D layout. Each Node owns one bounded NodeState and initially six computational Registers, one per Port. |
+| Local execution | Every Register uses identical generic rules over bounded local inputs/state; joint dependencies use a coordinated Node-owned atomic commit. |
+| External scheduling and transport | Host infrastructure maps endpoints and schedules only active/due Register work. Current/future work sets preserve next-tick-or-later delivery and declared delays. |
+| Observation and output | Diagnostics, traces and visualization read committed state; they never repair values, select a physical update or feed host-wide measurements back into local rules. |
+
+Several catalogs/profile sets may be selected explicitly for an experiment.
+This is an authoring composition requirement, not a claim that the current CLI
+accepts arbitrary lists or merges them automatically: existing compilers require
+their explicit catalog/profile inputs. Identity collisions, incompatible units,
+missing references and combined capacity must be resolved and validated before
+initialization; file order cannot silently replace a physical definition.
+The [entity contract](ENTITY_CATALOG.md) and
+[preflight contract](CONFIGURATION_VALIDATION.md) retain their current API limits.
+
+### Spatial topology and endpoint routing
+
+The selected world is spatially periodic: opposite boundaries are connected.
+Open boundaries are a supported alternative experiment configuration, not this
+selection. Spatial periodicity does not make time cyclic and does not assert a
+spherical geometry. The initial topology uses six Ports per Node; configurable
+bounded degree is a design requirement while the implementation still fixes six.
+
+The transport/scheduler infrastructure owns the mapping
+`(node_id, port_id) -> (neighbor_node_id, receiving_port_id)`.
+IDs are routing handles, not physical inputs to Register logic. A Register
+receives only its local values, local timing and already-delivered inputs; it
+must not inspect global coordinates, the world or an "edge" condition. A periodic
+boundary transfer has the same local rules and Link delay as any other adjacency,
+with no extra physical jump. This is the binding dependency boundary, not a claim
+that existing host-facing Node classes contain no position metadata.
+
+### Mathematical schema and operation meaning
+
+Sets define allowed values, components, participants and domains; vectors define
+structured quantities with explicit bases, shapes and scales. A declared group
+defines its elements, composition, identity and inverses only where that structure
+actually applies. Vector addition, group composition and Port/Link connectivity
+are distinct operations/relations and must not share an ambiguous generic symbol.
+Not every matrix or LocalRule is invertible, unitary or a group action.
+
+Definitions select supported generic operators and validated compositions.
+They do not create arbitrary tensor support, new topology or a new operator
+merely by naming it in JSON. Current shape limits remain in the
+[local integer contract](#integers-vectors-and-tensors). State, representation
+and transformation semantics must be explicit; notation alone is not evidence
+of a physical law.
+
+### Lossless remainder ownership
+
+No remainder may be lost in physical arithmetic, evolving state or transport.
+Represent each nonexact division with a bounded quotient and remainder whose
+owner, denominator/scale, update and transfer lifecycle are explicit. Retain the
+full represented value when waiting, moving, merging, splitting or replacing
+an owner. A remainder may become zero through exact consumption or transfer,
+never because its slot departs, a budget expires or a storage slot is reused.
+Quotient-only truncation, rounding, clipping and dropping fractional information
+are not permitted ways to fit a value. Exact-division operations still reject
+nonexact results; overflow or lack of bounded representation must raise an
+explicit error rather than silently lose information.
+
+This requirement also applies at the boundary that prepares physical initial
+state: measured uncertainty may remain reference metadata, but an encoding-error
+report outside that state does not retain a missing arithmetic remainder inside
+the simulation. Choose an exact supported encoding or report the representation
+gap. Display rounding and host-only reporting do not alter state and remain
+separate. Retaining arithmetic remainders does not prove all operations reversible,
+unitarity, physical energy conservation or correctness of a selected law.
+
+The following existing behaviors require reconciliation; this documentation
+change preserves their historical/current descriptions, not compliance:
+
+| Existing documented behavior | Relation to the binding requirement |
+| --- | --- |
+| [Pair exchange](DISTURBANCES.md#paired-exchange-couplings) resets its pair-owned remainder when a participant departs | Nonzero reset is a no-loss gap; a replacement owner/transfer is required, not a silent reset. |
+| [Finite field emission](SPATIAL_FIELDS.md) clears an exhausted component's fraction and discards unfulfilled demand | Fraction clearing needs lossless ownership; unfulfilled external demand is separately modeled and must not be confused with already-owned stock. |
+| [Dissipative decay](SPATIAL_FIELDS.md#finite-completed-link-decay) retains no decay remainder | This explicit historical loss law is not a compliant no-loss implementation merely because a diagnostic ledger records the loss. |
+| [Localizing residue](SPATIAL_FIELDS.md#localizing-residue) deposits integer stock after quantized transport | Preserving inventory alone does not preserve the exact fractional propagated value; the fractional representation still needs review. |
+| [Reference-unit encoding](REFERENCE_UNITS.md) permits explicit `max_error` rounding | Remains a host approximation tool, not permission for lossy initialization of the binding model; exact encoding is required there. |
+| Historical scalar clipping and configured quantization | These retain their named historical behavior; they cannot be promoted as compliant generic arithmetic without a lossless representation and audit. |
+
+This is a scoped documentation audit, not proof that every physical path has
+been checked. Runtime code, tests and old evidence are unchanged. Do not weaken
+a failing test or relabel one of these gaps as solved; any correction needs its
+own authorized implementation and validation.
+
 ## System layers: Nodes, mathematics and physical entities
 
 The architecture separates where state lives, how it changes and what a
@@ -56,10 +153,10 @@ one Node, not new physical Nodes or an extra lattice. NodeState remains the sing
 bounded local ownership boundary; a Register's state is a part of it, not a full
 replica. Immutable generic rule definitions can be shared.
 
-An external host scheduler should index active or due work by `(node, port)`.
+An external host scheduler must index active or due work by `(node, port)`.
 Changed output schedules delivery to the affected destination Register at the
 declared Link arrival time; changed local state wakes dependent local Registers.
-Only declared dependencies should expand that work set, rather than a blanket
+Only declared dependencies may expand that work set, rather than a blanket
 scan of every Register or Node. A timer expiry, autonomous emission, internal
 phase evolution or other configured rule can also require work without a new
 input. Skipping an interval requires an exact no-change or closed-form transition
@@ -92,10 +189,10 @@ must not create an unbounded retained history.
 **Implementation status:** current `core/node_services.py:port_count` returns six.
 The [Focus scheduler](LOCAL_FOCUS.md) skips certified empty Nodes, but occupied
 and pending carrier Nodes remain awake; transport indexes occupied banks rather
-than maintaining this proposed due-Register scheduler. Existing Node-owned
+than maintaining the required due-Register scheduler. Existing Node-owned
 planning/commit and parallel-worker interfaces remain unchanged. Configurable
 port count, explicit per-Port computational Registers and due-only Register
-execution are design targets, not completed features or measured speedups.
+execution are binding design requirements, not completed features or measured speedups.
 Any implementation must demonstrate equal state, ownership, timing, event order,
 failure behavior and model costs before claiming an equivalent host optimization.
 
@@ -210,8 +307,9 @@ denominators. Exact-division operators must reject a zero divisor or a nonexact
 result. A rule that permits division with remainder must declare the existing
 bounded remainder owner, update and lifetime; do not silently discard a remainder,
 round through floating point, wrap overflow or clamp a failed calculation.
-Keep documented integer split/quantization policies explicit and test their
-accounting. Arithmetic failure must not leave a partially committed transaction.
+The binding [lossless remainder requirement](#lossless-remainder-ownership)
+supersedes permission to discard fractions in older split/quantization policies;
+retain their documented behavior as an implementation gap until corrected. Arithmetic failure must not leave a partially committed transaction.
 
 The active field schema currently supports scalars and three-component vectors.
 Its constant 3-by-3 integer matrix transform is not general tensor-valued state.
