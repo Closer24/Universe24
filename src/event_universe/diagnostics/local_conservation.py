@@ -146,6 +146,10 @@ class LocalConservationAudit:
             for record in node.records:
                 if record is not None:
                     amount = _add(amount, self._carrier(record))
+            for packet in node.held_carriers:
+                amount = _add(amount, self._carrier(packet.record))
+            for field_packet in node.held_spatial:
+                amount = _add(amount, self._spatial(field_packet.fields, field_packet.rays))
             nodes[node.position] = amount
         packets = {
             (packet.kind, packet.origin, packet.slot, packet.arrival_tick): (

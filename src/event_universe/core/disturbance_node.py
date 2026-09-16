@@ -23,6 +23,7 @@ from .node_conservation import LocalInventory
 from .node_execution import DisturbancePlanningInput, PlanningCycle, PlanningResult, finish_local_cycle
 from .node_ports import PortBank
 from .node_services import NodeServices, cycle_timing, port_count
+from .output_holds import OutputHold, release_outputs, stage_outputs
 from .spatial_state import SpatialPacket, SpatialState, zero_spatial_state
 from .topology import neighbor_address
 
@@ -46,6 +47,28 @@ class DisturbanceNode(DisturbanceNodeState):
     arrival_mask: tuple[int, ...] = ()
     delay_counts: tuple[int, ...] = ()
     committed_cost: int = 0
+    held_outputs: tuple[OutputHold[Packet] | None, ...] = ()
+
+    def release_output(self, tick: int, services: NodeServices) -> None:
+        held, links = release_outputs(
+            self.held_outputs or (None,) * len(self.output.packets), self.output.packets, tick
+        )
+        released = tuple(
+            entry for entry in self.held_outputs if entry is not None and entry.release_tick == tick
+        )
+        services.events.require_room(len(released))
+        self.held_outputs = held
+        self.output.publish(links)
+        for entry in released:
+            self.notify(
+                "sent",
+                tick,
+                services,
+                port=entry.packet.port,
+                arrival_tick=entry.packet.arrival_tick,
+                disturbance=services.initial.disturbances[entry.packet.record.type_index].name,
+                values=record_values(services.initial, entry.packet.record),
+            )
 
     def can_sleep(self, services: NodeServices) -> bool:
         """Certify a no-op carrier visit from this Node's own bounded state.
@@ -58,6 +81,7 @@ class DisturbanceNode(DisturbanceNodeState):
             services.resolver is None
             and not services.initial.spatial_computation_delay
             and self.pending is None
+            and not any(self.held_outputs)
             and all(record is None for record in self.records)
             and not (services.initial.node_execution and any(self.delay_counts))
             and not services.record_policy.has_work(self.records)
@@ -324,7 +348,7 @@ class DisturbanceNode(DisturbanceNodeState):
             )
             plan = services.record_policy.report_cost(plan)
         validate_local_plan(services.initial, plan, len(self.coupling_remainders), self.records)
-        if services.initial.node_execution:
+        if services.initial.node_execution or services.initial.output_clock_gain is not None:
             extra = plan.interaction_ticks
             duration = bounded(extra + services.initial.link_ticks)
         else:
@@ -333,6 +357,7 @@ class DisturbanceNode(DisturbanceNodeState):
             )
         if (
             extra
+            and services.initial.output_clock_gain is None
             and spatial_services is not None
             and any(
                 self._ray_owned_fields(record, spatial_services.initial)
@@ -545,12 +570,15 @@ class DisturbanceNode(DisturbanceNodeState):
             services.events.require_room(
                 1
                 + int(bool(pending.plan.spatial_reaction))
-                + len(pending.plan.departures)
+                + (2 if services.initial.output_clock_gain is not None else 1)
+                * len(pending.plan.departures)
                 + int(field_plan is not None)
                 + sum(p is not None for p in field_packets)
             )
         old_links = self.output.packets
-        if any(packet is not None for packet in old_links):
+        if services.initial.output_clock_gain is None and any(
+            packet is not None for packet in old_links
+        ):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
         source_records = list(self.records)
         if field_plan is not None:
@@ -560,6 +588,22 @@ class DisturbanceNode(DisturbanceNodeState):
         records = list(source_records)
         for slot, record in pending.plan.replacements:
             records[slot] = self._current_emission_state(record, source_records[slot])
+            if (
+                services.initial.output_clock_gain is not None
+                and records[slot] is not None
+                and source_records[slot] is not None
+            ):
+                current = source_records[slot]
+                updated = records[slot]
+                assert current is not None and updated is not None
+                independently_owned = self._ray_owned_fields(current, services.initial)
+                records[slot] = replace(
+                    updated,
+                    values=tuple(
+                        current.values[index] if index in independently_owned else value
+                        for index, value in enumerate(updated.values)
+                    ),
+                )
         records = [self._staying(record) for record in records]
         alternatives: list[tuple[DisturbanceRecord | None, ...]] = []
         resolver = services.resolver
@@ -607,6 +651,24 @@ class DisturbanceNode(DisturbanceNodeState):
                 departure.port,
                 self._departing(record),
             )
+        held_outputs = self.held_outputs
+        clock = None
+        prepared_links = tuple(links)
+        if services.initial.output_clock_gain is not None:
+            delays: tuple[int, ...] = (0,) * 6
+            if spatial is not None:
+                clock = spatial.output_clock.reserve(tick, tuple(p.port for p in links if p is not None))
+                if clock.sample_tick == tick:
+                    delays = clock.delays
+            held_outputs, staged_links = stage_outputs(
+                self.held_outputs or (None,) * len(old_links),
+                old_links,
+                prepared_links,
+                tick,
+                delays,
+                services.initial.link_ticks,
+            )
+            links = list(staged_links)
         if spatial is not None and spatial_services is not None and field_plan is None:
             spatial.validate_guards(
                 spatial_services, pending.plan.spatial_reaction, pending.plan.spatial_guards
@@ -666,6 +728,10 @@ class DisturbanceNode(DisturbanceNodeState):
             resolution_cause = (event_id,)
         # All proposal validation has succeeded; commit coupled records together.
         self.records = tuple(records)
+        if services.initial.output_clock_gain is not None:
+            self.held_outputs = held_outputs
+            if spatial is not None and clock is not None:
+                spatial.output_clock = clock
         self.committed_cost = pending.plan.cost
         self.coupling_remainders = pending.plan.coupling_remainders
         self.available_tick = pending.next_tick
@@ -768,6 +834,36 @@ class DisturbanceNode(DisturbanceNodeState):
                     )
                     linked_fields[index] = replace(field_packet, cause_id=cause)
             spatial.output.publish(tuple(linked_fields))
+        if services.initial.output_clock_gain is not None:
+            for packet in prepared_links:
+                if packet is not None:
+                    delay = (
+                        0 if clock is None or clock.sample_tick != tick else clock.delays[packet.port]
+                    )
+                    self.notify(
+                        "output_prepared",
+                        tick,
+                        services,
+                        notifications=notifications,
+                        port=packet.port,
+                        release_tick=bounded(tick + delay),
+                        sample=0 if clock is None or clock.sample_tick != tick else clock.sample,
+                        clock="carrier",
+                    )
+                    if delay == 0:
+                        self.notify(
+                            "sent",
+                            tick,
+                            services,
+                            notifications=notifications,
+                            port=packet.port,
+                            arrival_tick=packet.arrival_tick,
+                            disturbance=services.initial.disturbances[packet.record.type_index].name,
+                            values=record_values(services.initial, packet.record),
+                        )
+            for message in notifications:
+                services.events.publish(message)
+            return
         for index, departure in enumerate(pending.plan.departures):
             cause = self.notify(
                 "sent",

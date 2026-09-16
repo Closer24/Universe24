@@ -522,6 +522,8 @@ class SpatialLaw:
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
+            if tick < rule.first_tick or (tick - rule.first_tick) % rule.interval:
+                continue
             for slot, record in enumerate(updated_records):
                 if record is None or not matches_type(rule, record.type_index):
                     continue
@@ -531,6 +533,10 @@ class SpatialLaw:
                 proposed = evaluate(
                     rule.amount, record.values, record.values, meter, node_cost=node_cost
                 )
+                if rule.whole_pulse:
+                    stock = unpack(record.values[definition.field])[0]
+                    if proposed[0] <= 0 or proposed[0] > stock:
+                        continue
                 clocks = list(record.dissolve_clocks)
                 if rule.dissolve_over:
                     # A particle paying itself out: count this record's cycles, remember

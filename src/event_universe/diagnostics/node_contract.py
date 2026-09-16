@@ -15,6 +15,7 @@ from event_universe.core.disturbance_state import (
 )
 from event_universe.core.event_links import EventCursor, EventReferences
 from event_universe.core.node_ports import PortBank
+from event_universe.core.output_holds import OutputClock, OutputHold
 from event_universe.core.source_emission import EnvelopeEmissionState, PendingEnvelopeEmission
 from event_universe.core.source_emission_node import EmittingEnvelopeNode
 from event_universe.core.source_envelope_node import (
@@ -50,6 +51,8 @@ STATE_RECORDS = (
     DisturbanceNode,
     SpatialNode,
     PortBank,
+    OutputClock,
+    OutputHold,
     PendingSpatialCycle,
     NodeView,
     DisturbanceNodeState,

@@ -299,6 +299,9 @@ class EmissionDefinition:
     # travels with the ray until its next interaction.
     bond_field: int | None = None
     bond_origin: bool = False
+    interval: int = 1
+    first_tick: int = 0
+    whole_pulse: bool = False
 
 
 @dataclass(frozen=True, slots=True)

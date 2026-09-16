@@ -1217,3 +1217,28 @@ mapping entries and continued stepping without scans of inactive bank history.
 The existing Focus, field, delay, boundary, parallel and formula-free state tests
 remain consumers of this host-only optimization. Timing is measured outside CI
 assertions with identical inputs; no speed threshold replaces physical equality.
+
+## Node output clock candidate
+
+`tests/test_output_clocks.py` checks the pre-published
+[MASS_COMPUTATION_CLOCK_CANDIDATE.md](MASS_COMPUTATION_CLOCK_CANDIDATE.md)
+profile: source masses 1/2/3, zero and doubled clock coupling, exact adjacent
+arrival ticks, retained insufficient reserves, transient samples, periodic funded
+pulses and atomic occupied-face rejection. A real k=20 pending material proposal
+must not restore the independently depleted source reserve at commit. A pending
+probe completing on the same tick as a field receipt must see that receipt.
+Insufficient causal event capacity must reject before carrier ownership changes.
+Existing ray merge and integration guard suites retain their old self-exclusion
+expectations. Formula-free NodeState audits traverse both typed OutputHold payloads
+and all OutputClock integer fields; neither is an opaque diagnostic exemption.
+
+The selected input adds `output_clock: {"gain": 1}` alongside the existing
+`computation_field` reference. A stationary funded source uses emission
+`whole_pulse: true`, `interval: 8`, `first_tick: 0`, and an amount expression over
+its configured mass property. The source owns its computation-token reserve;
+mass is not consumed. The generic output operator is outside engine/state.
+The profile rejects moving emitters, self-excluding delayed compositions,
+other clocks, native event programs, physical field E/P readouts, decay,
+absorption and unsupported interactions. Existing profiles remain unchanged.
+This is a bounded output-hold candidate, not a completed no-wait push protocol,
+physical gravitational calibration, or universal field energy/momentum model.

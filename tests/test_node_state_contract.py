@@ -12,6 +12,7 @@ import pytest
 from event_universe import Simulation
 from event_universe.core import (
     disturbance_state,
+    output_holds,
     source_emission,
     source_emission_node,
     source_envelope_node,
@@ -77,6 +78,7 @@ def test_field_rule_guard_is_recursively_audited_instead_of_hiding_nested_laws()
 def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
     namespace = (
         vars(disturbance_state)
+        | vars(output_holds)
         | vars(spatial_state)
         | vars(source_envelope_state)
         | vars(source_envelope_node)
@@ -91,7 +93,9 @@ def test_declared_state_fields_cannot_hide_optional_laws_in_unexercised_slots():
         if isinstance(annotation, TypeVar):
             inspect(annotation.__bound__)
             return
-        assert get_origin(annotation) in (tuple, UnionType, Union, PortBank), annotation
+        assert get_origin(annotation) in (tuple, UnionType, Union, PortBank, output_holds.OutputHold), (
+            annotation
+        )
         for argument in get_args(annotation):
             inspect(argument)
 

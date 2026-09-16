@@ -36,6 +36,7 @@ from .node_execution import (
 )
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
+from .output_holds import OutputClock, OutputHold, release_outputs, stage_outputs
 from .spatial_state import (
     BOND_ORIGIN_MARK,
     Claim,
@@ -159,6 +160,7 @@ class SpatialServices:
     balance_guard: NodeConservationGuard | None = None
     field_guard: SpatialFieldGuard | None = None
     node_merge_cost: int = 0
+    output_clock: Callable[[SpatialPlan], tuple[int, tuple[int, ...]]] | None = None
 
     def __post_init__(self) -> None:
         if self.initial.node_execution and (
@@ -220,6 +222,8 @@ class SpatialNode(SpatialNodeState):
     delay_counts: tuple[int, ...] = ()
     pending: PendingSpatialCycle | None = None
     completed_tick: int = -1
+    held_outputs: tuple[OutputHold[SpatialPacket] | None, ...] = (None,) * 6
+    output_clock: OutputClock = field(default_factory=OutputClock)
 
     def _event(
         self,
@@ -246,6 +250,24 @@ class SpatialNode(SpatialNodeState):
         else:
             notifications.append(message)
         return identity
+
+    def release_output(self, tick: int, services: SpatialServices) -> None:
+        held, links = release_outputs(self.held_outputs, self.output.packets, tick)
+        released = tuple(
+            entry for entry in self.held_outputs if entry is not None and entry.release_tick == tick
+        )
+        services.events.require_room(len(released))
+        self.held_outputs = held
+        self.output.publish(links)
+        for entry in released:
+            self._event(
+                "spatial_sent",
+                tick,
+                services,
+                causes=(entry.packet.cause_id,),
+                port=entry.packet.port,
+                arrival_tick=entry.packet.arrival_tick,
+            )
 
     def catch_up_idle(self, tick: int) -> None:
         self.last_begin_tick = tick
@@ -291,7 +313,9 @@ class SpatialNode(SpatialNodeState):
         coupled_types = selected_type_set(
             services.initial.spatial_couplings, services.initial.spatial_interactions
         )
-        if any(packet is not None for packet in self.output.packets):
+        if services.initial.output_clock_gain is None and any(
+            packet is not None for packet in self.output.packets
+        ):
             raise ValueError("outgoing spatial links are occupied")
         records = () if carrier is None else carrier.records
         if services.initial.computation_field is not None:
@@ -368,7 +392,7 @@ class SpatialNode(SpatialNodeState):
             self.sample_cause_id = sample_cause
             self.sample_received_masks = sample_received_masks
             self.last_begin_tick = tick
-            services.activity.mark(self.position, False)
+            services.activity.mark(self.position, any(self.held_outputs))
             return
         # This is the previous completed colocated carrier cycle, never pending
         # work or a register carried here from another Node.
@@ -528,6 +552,21 @@ class SpatialNode(SpatialNodeState):
                     phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
                     claims=port_claims if any(port_claims) else (),
                 )
+        clock = self.output_clock
+        held_outputs = self.held_outputs
+        clock_links = self.output.packets
+        if services.output_clock is not None:
+            sample, delays = services.output_clock(plan)
+            clock = replace(clock, sample_tick=tick, sample=sample, delays=delays)
+            clock = clock.reserve(tick, tuple(packet.port for packet in packets if packet is not None))
+            held_outputs, clock_links = stage_outputs(
+                self.held_outputs,
+                self.output.packets,
+                tuple(packets),
+                tick,
+                delays,
+                services.initial.link_ticks,
+            )
         # All physical calculations and validation precede the local commit.
         if services.balance_guard is not None:
             services.balance_guard.check(
@@ -542,7 +581,9 @@ class SpatialNode(SpatialNodeState):
                 "spatial interaction commit",
             )
         if services.events.enabled:
-            services.events.require_room(1 + sum(p is not None for p in packets))
+            services.events.require_room(
+                1 + (2 if services.output_clock is not None else 1) * sum(p is not None for p in packets)
+            )
         carrier_cause = None if carrier is None else carrier.cause_id
         if carrier is None:
             if plan.emission_records:
@@ -553,6 +594,8 @@ class SpatialNode(SpatialNodeState):
                 initial=services.initial,
             )
         self.states = plan.states
+        if services.output_clock is not None:
+            self.output_clock, self.held_outputs = clock, held_outputs
         if self.rays:
             # Every resident ray that was due left along its own line; on a
             # Euclidean pace the rays not yet due stay.
@@ -573,7 +616,7 @@ class SpatialNode(SpatialNodeState):
             self.completed_tick = tick
             self.delay_counts = (0,) * port_count(services.initial)
         self.last_begin_tick = tick
-        self.output.publish(tuple(packets))
+        self.output.publish(clock_links if services.output_clock is not None else tuple(packets))
         # One following phase clears the reported cost before becoming idle.
         services.activity.mark(self.position, True)
         services.accounting.record_sources(plan.source_delta)
@@ -608,6 +651,40 @@ class SpatialNode(SpatialNodeState):
         self.cause_id = self.cost_cause_id = cause
         if cause is not None and carrier is not None and plan.emission_records != records:
             carrier.cause_id = cause
+        if services.output_clock is not None:
+            for packet in packets:
+                if packet is not None:
+                    delay = clock.delays[packet.port]
+                    self._event(
+                        "output_prepared",
+                        tick,
+                        services,
+                        causes=(cause,),
+                        notifications=notifications,
+                        port=packet.port,
+                        release_tick=bounded(tick + delay),
+                        sample=clock.sample,
+                        clock="spatial",
+                    )
+                    if delay == 0:
+                        self._event(
+                            "spatial_sent",
+                            tick,
+                            services,
+                            causes=(cause,),
+                            notifications=notifications,
+                            port=packet.port,
+                            arrival_tick=bounded(tick + services.initial.link_ticks),
+                        )
+            self.held_outputs = tuple(
+                replace(entry, packet=replace(entry.packet, cause_id=cause))
+                if entry is not None and entry.prepared_tick == tick
+                else entry
+                for entry in self.held_outputs
+            )
+            for message in notifications:
+                services.events.publish(message)
+            return
         for index, packet in enumerate(packets):
             if packet is not None:
                 sent = self._event(

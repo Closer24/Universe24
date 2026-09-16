@@ -98,3 +98,5 @@ concepts.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+- [Mass computation clock candidate](MASS_COMPUTATION_CLOCK_CANDIDATE.md): bounded stationary-source experiments with six output clocks.

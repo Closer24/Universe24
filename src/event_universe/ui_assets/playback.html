@@ -16,7 +16,7 @@
 </div><p id="grid-info"></p>
 <label id="field-control">Spatial field <select id="field"><option value="">All spatial fields</option></select></label><p id="field-info"></p>
 <div id="world-timeline"><div id="playback-timeline"><label for="seek">Timeline <b id="tick"></b></label><input id="seek" aria-label="Recorded frame" type="range" min="0" step="1" value="0"></div></div>
-<p id="world-description">Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are node-owned disturbances; rings are disturbance transfers. Squares are node fields; diamonds are field transfers. Field arrows show vector components in the selected projection, scaled separately for each field across the recording. Exact values appear below. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
+<p id="world-description">Each dot is one lattice node. Equal axis scale. Drag when zoomed. Filled circles are node-owned disturbances; rings are disturbance transfers. Squares are node fields; diamonds are field transfers. Dashed shapes are outputs still held at their owning node, with their release tick. Field arrows show vector components in the selected projection, scaled separately for each field across the recording. Exact values appear below. The recording's boundary setting controls wrap or exit. No invented motion between samples.</p>
 <details id="world-details" open><summary>Disturbances, spatial field values and recording details</summary><p id="sampling"></p><div class="facts"><table><thead><tr><th>Type / spatial field</th><th>Position</th><th>Values</th><th>Ownership</th></tr></thead><tbody id="records"></tbody></table></div></details>
 <script id="recording" type="application/json">__RECORDING__</script><script>
 "use strict";
@@ -30,7 +30,7 @@ seek.max=String(frames.length-1);seek.disabled=frames.length<2;$('#play').disabl
 $('#view-control').hidden=!observation;$('#perspective').value=observerMode?'observer':'world';
 function initializeWorldView(){
 if(worldInitialized)return;
-types=[...new Set(frames.flatMap(f=>[...f.nodes.flatMap(c=>c.disturbances.map(d=>d.type)),...f.transfers.map(d=>d.type)]))];
+types=[...new Set(frames.flatMap(f=>[...f.nodes.flatMap(c=>[...c.disturbances,...(c.held_outputs||[])].map(d=>d.type)),...f.transfers.map(d=>d.type)]))];
 fieldNames=[...new Set(frames.flatMap(f=>[...Object.keys(f.spatial_baselines||{}),...(f.spatial_fields||[]).flatMap(c=>Object.keys(c.fields)),...(f.spatial_transfers||[]).flatMap(t=>Object.keys(t.fields))]))];
 fieldScales=new Map(fieldNames.map(name=>[name,1]));
 shape=metadata.shape||[1,1,1].map((_,i)=>Math.max(1,...frames.flatMap(f=>[...f.nodes,...(f.spatial_fields||[])].map(c=>c.position[i]+1))));
@@ -52,7 +52,8 @@ $('#status').textContent=observerMode?(metadata.status==='failed'?'Partial probe
 $('#previous').textContent=observerMode?'← Sample':'← Tick';$('#next').textContent=observerMode?'Sample →':'Tick →';
 }
 function setPlaying(value){playing=value;lastTime=null;$('#play').textContent=value?'Pause':index===frames.length-1?'Replay':'Play';}
-function visibleRecords(f){const records=f.nodes.flatMap(c=>c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Node':'Waiting node'})));
+function heldOwner(output){return `Node output ${ports[output.port]}; prepared ${output.prepared_tick}; releases ${output.release_tick}; then arrives ${output.arrival_tick}`;}
+function visibleRecords(f){const records=f.nodes.flatMap(c=>[...c.disturbances.map(d=>({...d,position:c.position,owner:c.waiting_until===null?'Node':'Waiting node'})),...(c.held_outputs||[]).map(d=>({...d,position:c.position,held:true,owner:heldOwner(d)}))]);
 for(const t of f.transfers)records.push(transferView(t,f));return records;}
 function visibleEventSupport(f){return f.event_support||[];}
 function transferView(t,f){
@@ -62,9 +63,12 @@ const owner=t.target===null?`Exit through ${['+X','-X','+Y','-Y','+Z','-Z'][t.po
 return {...t,position:p,owner,transfer:true};}
 function visibleSpatialFields(f){
 const records=(f.spatial_fields||[]).flatMap(c=>Object.entries(c.fields).map(([name,field])=>({name,position:c.position,value:field.value,baseline:field.baseline,owner:'Node field; value includes baseline'})));
+for(const node of f.spatial_fields||[])for(const held of node.held_outputs||[])for(const [name,field] of Object.entries(held.fields||{})){
+const value=field.value.map((v,i)=>v+(i===0?(field.ray_units||0):0));
+if(value.some(v=>v!==0))records.push({...held,name,position:node.position,value,baseline:null,held:true,owner:'Field '+heldOwner(held)});}
 for(const t of f.spatial_transfers||[])for(const [name,populations] of Object.entries(t.fields)){
-if(!populations.some(payload=>payload.some(value=>value!==0)))continue;
-const value=populations[0].map((_,component)=>populations.reduce((total,payload)=>total+payload[component],0));
+const value=t.values?.[name]||populations[0].map((_,component)=>populations.reduce((total,payload)=>total+payload[component],0));
+if(!value.some(component=>component!==0))continue;
 const view=transferView(t,f);records.push({...view,name,value,baseline:null,owner:'Field '+view.owner});}
 return records;}
 let pan=[0,0],drag=null;
@@ -119,6 +123,8 @@ function draw(){
   $('#previous').disabled=index===0;$('#next').disabled=index===frames.length-1;
   $('#grid-info').textContent=(dense?'Zoom in to resolve individual lattice nodes.':'Unit nodes: '+'XYZ'[axes[0]]+' '+x0+'–'+x1+', '+'XYZ'[axes[1]]+' '+y0+'–'+y1+'. Neighbor transit: '+(metadata.link_ticks||1)+' tick(s).')+' Projection includes every '+'XYZ'[[0,1,2].find(axis=>!axes.includes(axis))]+' layer.';
   const body=$('#records');body.replaceChildren();
+  for(const node of f.spatial_fields||[]){const clock=node.output_clock;if(!clock)continue;
+    const row=document.createElement('tr');for(const value of ['Output clocks',node.position.join(', '),ports.map((port,i)=>port+': '+clock.ready[i]).join('; '),'Last sample '+clock.sample+' at tick '+clock.sample_tick+'; ready ticks, not extra inventory']){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}body.append(row);}
   for(const support of visibleEventSupport(f)){
     const [x,y]=project(support.position),size=Math.max(5,Math.min(10,unit*.35));
     ctx.save();ctx.strokeStyle='#b6a0ff';ctx.lineWidth=1.5;ctx.setLineDash([2,3]);
@@ -130,19 +136,20 @@ function draw(){
   $('#field-info').textContent='Uniform baselines across the domain: '+JSON.stringify(f.spatial_baselines||{})+'. Node values already include these baselines; received samples are not additional inventory.';
   for(const r of spatial){
     const [x,y]=project(r.position),color=palette[(types.length+fieldNames.indexOf(r.name))%palette.length],size=Math.max(3,Math.min(6,unit*.25));
-    ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;ctx.beginPath();
+    ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;ctx.setLineDash(r.held?[3,2]:[]);ctx.beginPath();
     if(r.transfer){ctx.moveTo(x,y-size);ctx.lineTo(x+size,y);ctx.lineTo(x,y+size);ctx.lineTo(x-size,y);ctx.closePath();}else ctx.rect(x-size,y-size,2*size,2*size);
     ctx.stroke();
     if(r.value.length===3){const factor=Math.min(34,unit*.8)/(fieldScales.get(r.name)||1),dx=r.value[axes[0]]*factor,dy=-r.value[axes[1]]*factor,length=Math.hypot(dx,dy);
       if(length>0){const ex=x+dx,ey=y+dy,ux=dx/length,uy=dy/length;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(ex,ey);ctx.moveTo(ex-ux*6-uy*3,ey-uy*6+ux*3);ctx.lineTo(ex,ey);ctx.lineTo(ex-ux*6+uy*3,ey-uy*6-ux*3);ctx.stroke();}}
-    ctx.font='11px system-ui';ctx.fillText(r.name+': '+r.value.join(', '),x+size+4,y-size-4-fieldNames.indexOf(r.name)*13);
+    ctx.font='11px system-ui';ctx.fillText(r.name+': '+r.value.join(', ')+(r.held?' · releases '+r.release_tick:''),x+size+4,y-size-4-fieldNames.indexOf(r.name)*13);ctx.setLineDash([]);
     const row=document.createElement('tr');for(const text of ['Field: '+r.name,r.position.map(v=>Number.isInteger(v)?v:v.toFixed(2)).join(', '),JSON.stringify(r.value),r.owner]){const node=document.createElement('td');node.textContent=text;row.append(node);}body.append(row);
   }
   for(const r of records){
     const [x,y]=project(r.position),key=x+','+y,n=seen.get(key)||0;seen.set(key,n+1);
     const color=palette[Math.max(0,types.indexOf(r.type))%palette.length];ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=2;
     if(r.transfer){const from=project(r.origin),target=[...r.origin];target[Math.floor(r.port/2)]+=r.port%2===0?1:-1;ctx.beginPath();ctx.moveTo(...from);ctx.lineTo(...project(target));ctx.stroke();}
-    ctx.beginPath();ctx.arc(x,y,Math.max(2,Math.min(7,unit*.35))+n*3,0,Math.PI*2);if(!r.transfer&&!n)ctx.fill();ctx.stroke();
+    ctx.setLineDash(r.held?[3,2]:[]);ctx.beginPath();ctx.arc(x,y,Math.max(2,Math.min(7,unit*.35))+n*3,0,Math.PI*2);if(!r.transfer&&!n)ctx.fill();ctx.stroke();ctx.setLineDash([]);
+    if(r.held){ctx.font='11px system-ui';ctx.fillText('Hold '+ports[r.port]+' → '+r.release_tick,x+14,y+15+n*12);}
     const row=document.createElement('tr');for(const text of [r.type,r.position.map(v=>Number.isInteger(v)?v:v.toFixed(2)).join(', '),JSON.stringify(r.values),r.owner]){const node=document.createElement('td');node.textContent=text;row.append(node);}body.append(row);
   }
   ctx.restore();ctx.fillStyle='#9dbcaa';ctx.font='12px system-ui';ctx.fillText('XYZ'[axes[0]]+' · lattice nodes',pad,h-8);ctx.fillText('XYZ'[axes[1]]+' · lattice nodes',pad,18);

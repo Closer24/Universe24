@@ -295,6 +295,20 @@ def _execute_run(
             ),
             least_delay_routing=initial.least_delay_routing,
         )
+    if initial.output_clock_gain is not None:
+        metadata.update(
+            local_delay="six-output-transient-clock-v1",
+            output_clock_gain=initial.output_clock_gain,
+            output_clock_scope="stationary-funded-sources-and-nonemitting-probes",
+            input_clock_delay=False,
+            link_transit_ticks=initial.link_ticks,
+            emission_interval_ticks=None,
+            emission_schedules=[
+                {"interval": rule.interval, "first_tick": rule.first_tick} for rule in initial.emissions
+            ],
+            spatial_sampling="actual-current-receipts-and-fresh-local-emissions",
+            output_ownership="node-held-until-release-then-fixed-link-transit",
+        )
     if initial.ray_delay:
         metadata.update(
             ray_delay=True,

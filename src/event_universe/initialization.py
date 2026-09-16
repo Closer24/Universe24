@@ -1083,6 +1083,9 @@ def _emissions(
                 "train_field",
                 "heading",
                 "bond_field",
+                "interval",
+                "first_tick",
+                "whole_pulse",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
@@ -1090,6 +1093,10 @@ def _emissions(
         if "amount" not in obj and "dissolve" not in obj:
             raise ValueError("emission requires an amount unless it dissolves")
         source = _boolean(obj["source"], "emission.source")
+        if _boolean(obj.get("whole_pulse", False), "emission.whole_pulse") and (
+            source or obj.get("denominator", 1) != 1
+        ):
+            raise ValueError("whole_pulse requires funded emission with denominator 1")
         kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
         kind = kinds[0]
         index = _index(obj["field"], names, "emission.field")
@@ -1251,6 +1258,9 @@ def _emissions(
                 fixed_heading,
                 bond_field,
                 bond_origin,
+                _integer(obj.get("interval", 1), "emission.interval", 1),
+                _integer(obj.get("first_tick", 0), "emission.first_tick", 0),
+                _boolean(obj.get("whole_pulse", False), "emission.whole_pulse"),
             )
         )
     return tuple(result)
@@ -1711,6 +1721,7 @@ def parse_initial_state(document: object) -> InitialState:
             "arrival_port_blind",
             "allocation_phase",
             "computation_field",
+            "output_clock",
             "delay_direction",
             "least_delay_routing",
             "ray_delay",
@@ -1786,6 +1797,15 @@ def parse_initial_state(document: object) -> InitialState:
             None
             if "computation_field" not in obj
             else _index(obj["computation_field"], _names(fields), "computation_field")
+        ),
+        output_clock_gain=(
+            None
+            if "output_clock" not in obj
+            else _integer(
+                _object(obj["output_clock"], "output_clock", {"gain"}, {"gain"})["gain"],
+                "output_clock.gain",
+                0,
+            )
         ),
         delay_direction=(
             None if "delay_direction" not in obj else _text(obj["delay_direction"], "delay_direction")
@@ -1883,6 +1903,10 @@ def parse_initial_state(document: object) -> InitialState:
         initial = replace(
             initial, conservation_contract=parse_node_conservation(obj["conservation_contract"], initial)
         )
+    if initial.output_clock_gain is not None:
+        from .fields.output_clock import validate_output_clock
+
+        validate_output_clock(initial)
     return initial
 
 

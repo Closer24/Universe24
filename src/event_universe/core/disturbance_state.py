@@ -272,6 +272,7 @@ class InitialState:
     allocation_phase: str = "straight"
     computation_field: int | None = None
     delay_direction: str | None = None
+    output_clock_gain: int | None = None
     least_delay_routing: bool = False
     # Rays resident at a Node wait the extra intervals its computation load alone
     # would add to a cycle (default clock); with ray_phase_per_tick a Kerengonen

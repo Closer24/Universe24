@@ -37,6 +37,7 @@ from .spatial_engine import (
     SpatialPlanner,
 )
 from .spatial_node import SpatialNode
+from .spatial_state import SpatialPlan
 from .topology import neighbor_address
 
 
@@ -81,6 +82,7 @@ class DisturbanceEngine:
         field_guard: SpatialFieldGuard | None = None,
         reuse_carrier_plans: bool = False,
         reuse_spatial_plans: bool = False,
+        output_clock: Callable[[SpatialPlan], tuple[int, tuple[int, ...]]] | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
@@ -150,6 +152,7 @@ class DisturbanceEngine:
                 balance_guard=balance_guard,
                 field_guard=field_guard,
                 execution_planner=field_planner,
+                output_clock=output_clock,
             )
         )
         self._services = NodeServices(
@@ -237,6 +240,12 @@ class DisturbanceEngine:
                 ()
                 if spatial is None or position not in spatial.nodes
                 else spatial.nodes[position].claims,
+                ()
+                if position not in self._nodes
+                else tuple(e.packet for e in self._nodes[position].held_outputs if e is not None),
+                ()
+                if spatial is None or position not in spatial.nodes
+                else tuple(e.packet for e in spatial.nodes[position].held_outputs if e is not None),
             )
             for position in sorted(positions)
         )
@@ -523,6 +532,10 @@ class DisturbanceEngine:
                         notifications = self._spatial.commit_source(position, self.tick, proposal)
                         self._resolver.commit_source(position, self.tick)
                         self._spatial._notify(notifications)
+            if self.initial.output_clock_gain is not None:
+                for position, node in self._nodes.items():
+                    node.release_output(self.tick, self._services)
+                    self._links.refresh(position)
             if self._spatial is not None and not self.initial.spatial_computation_delay:
                 self._spatial.begin(
                     self.tick,
@@ -586,7 +599,8 @@ class DisturbanceEngine:
             closing = tuple(sorted(self._awake_carriers if self._focus_enabled else self._nodes))
             self._carrier_phase_visits += len(closing)
             for position in closing:
-                self._commit(position, self._nodes[position])
+                if self.initial.output_clock_gain is None:
+                    self._commit(position, self._nodes[position])
             self._sleep_carriers(closing)
             if self._resolver is not None:
                 self._resolver.advance(self.tick)
@@ -610,6 +624,9 @@ class DisturbanceEngine:
         )
         records = [r for node in self._nodes.values() for r in node.records if r is not None]
         records.extend(p.record for packets in self._links.values() for p in packets if p is not None)
+        records.extend(
+            e.packet.record for node in self._nodes.values() for e in node.held_outputs if e is not None
+        )
         for record in records:
             for i, components in enumerate(record.values):
                 for c, code in enumerate(components):
@@ -722,6 +739,18 @@ class DisturbanceEngine:
                     "delay_counts": node.delay_counts,
                     "available_tick": node.available_tick,
                     "waiting_until": None if node.pending is None else node.pending.ready_tick,
+                    "held_outputs": [
+                        {
+                            "port": entry.packet.port,
+                            "prepared_tick": entry.prepared_tick,
+                            "release_tick": entry.release_tick,
+                            "arrival_tick": entry.packet.arrival_tick,
+                            "type": self.initial.disturbances[entry.packet.record.type_index].name,
+                            "values": self.record_values(entry.packet.record),
+                        }
+                        for entry in node.held_outputs
+                        if entry is not None
+                    ],
                     "disturbances": [
                         {
                             "type": self.initial.disturbances[r.type_index].name,

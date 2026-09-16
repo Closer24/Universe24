@@ -1,5 +1,6 @@
 """Public assembly of the generic disturbance simulator."""
 
+from functools import partial
 from typing import TYPE_CHECKING
 
 from event_universe.core.coupling_selectors import selected_type_set
@@ -8,6 +9,7 @@ from event_universe.core.disturbance_state import InitialState
 from event_universe.fields.bonds import BondRegistry
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.node_conservation import LocalBalanceGuard
+from event_universe.fields.output_clock import sample_output_clock
 from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_coupling import SpatialCouplingLaw
 from event_universe.fields.spatial_decay import SpatialDecayLaw
@@ -112,6 +114,9 @@ class Simulation(DisturbanceEngine):
                 else None
             ),
             node_workers=node_workers,
+            output_clock=partial(sample_output_clock, initial)
+            if initial.output_clock_gain is not None
+            else None,
             reuse_carrier_plans=initial.focus and resolver is None,
             reuse_spatial_plans=initial.focus and resolver is None and not bonded,
         )

@@ -1,0 +1,30 @@
+{
+  "model_id": "mass-clock-ray-v1",
+  "contract": "docs/MASS_COMPUTATION_CLOCK_CANDIDATE.md",
+  "design_commit": "d1fa20d009171ffe90f1b3e0d6268c0c93816646",
+  "evidence_kind": "world_event_audit_of_configured_candidate",
+  "h": 1,
+  "emission_interval": 8,
+  "first_emission_tick": 0,
+  "cases": {
+    "M1": {"mass": 1, "coupling": 1, "reserve": 1, "source_departures": [1], "first_two_arrivals": [2, 4], "emitted_tokens": 1},
+    "M2": {"mass": 2, "coupling": 1, "reserve": 2, "source_departures": [2], "first_two_arrivals": [3, 6], "emitted_tokens": 2},
+    "M3": {"mass": 3, "coupling": 1, "reserve": 3, "source_departures": [3], "first_two_arrivals": [4, 8], "emitted_tokens": 3},
+    "Z1": {"mass": 2, "coupling": 0, "reserve": 2, "source_departures": [0], "first_two_arrivals": [1, 2], "emitted_tokens": 2},
+    "Z2": {"mass": 0, "coupling": 1, "reserve": 3, "source_departures": [], "first_two_arrivals": [], "emitted_tokens": 0, "unspent_reserve": 3},
+    "G2": {"mass": 1, "coupling": 2, "reserve": 1, "source_departures": [2], "first_two_arrivals": [3, 6], "emitted_tokens": 1},
+    "C1": {"mass": 1, "coupling": 1, "reserve": 1, "probe_ready_tick": 2, "probe_departure_tick": 3, "probe_arrival_tick": 4},
+    "C2": {"mass": 1, "coupling": 1, "reserve": 1, "probe_ready_tick": 1, "probe_departure_tick": 1, "probe_arrival_tick": 2},
+    "P6": {"mass": 2, "coupling": 1, "reserve": 2, "probe_ready_tick": 0, "probe_departure_ticks": [2, 2, 2, 2, 2, 2], "probe_arrival_ticks": [3, 3, 3, 3, 3, 3]},
+    "P2": {"mass": 2, "coupling": 1, "reserve": 2, "probe_ready_ticks": [0, 1], "probe_departure_ticks": [2, 1], "probe_arrival_ticks": [3, 2]},
+    "L1": {"mass": 1, "coupling": 1, "reserve": 3, "emission_ticks": [0, 8, 16], "source_departures": [1, 9, 17], "reserves_after_emission": [2, 1, 0], "emitted_tokens": 3}
+  },
+  "required_each_run": {
+    "random_draws": 0,
+    "fixed_link_transit": true,
+    "token_accounting": true,
+    "source_mass_unchanged": true,
+    "existing_html_renderer": true,
+    "physical_gravity_agreement_claimed": false
+  }
+}

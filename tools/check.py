@@ -11,6 +11,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
 RESOURCE_CONSUMERS = {
+    "examples/mass_computation/observe.py": ("tests/test_mass_computation_experiments.py",),
+    "examples/mass_computation/configuration.py": ("tests/test_mass_computation_experiments.py",),
+    "examples/mass_computation/expectations.json": ("tests/test_mass_computation_experiments.py",),
+    "examples/mass_computation/run_experiments.py": ("tests/test_mass_computation_experiments.py",),
     "examples/quantum/spatial_momentum.py": (
         "tests/test_spatial_momentum.py",
         "tests/test_position_moment_response.py",

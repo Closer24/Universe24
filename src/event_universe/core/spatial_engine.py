@@ -1,6 +1,6 @@
 """Fixed-clock ownership for configured spatial fields, separate from carriers."""
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
@@ -149,6 +149,7 @@ class SpatialEngine:
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
         execution_planner: SpatialPlanner | None = None,
+        output_clock: Callable[[SpatialPlan], tuple[int, tuple[int, ...]]] | None = None,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
@@ -190,6 +191,7 @@ class SpatialEngine:
             balance_guard,
             field_guard,
             meter.total,
+            output_clock,
         )
         for seed in initial.spatial_seeds:
             node = self._at(seed.position)
@@ -305,6 +307,10 @@ class SpatialEngine:
             ):
                 positions.add(position)
         ordered = tuple(sorted(positions))
+        if self.initial.output_clock_gain is not None:
+            for position in ordered:
+                self._at(position).release_output(tick, self._services)
+                self.links.refresh(position)
         if execution is not None and execution.parallel:
             try:
                 execution.finish_cycles(
@@ -415,6 +421,13 @@ class SpatialEngine:
                 finally:
                     self.links.refresh(position)
 
+    def owned_outputs(self) -> Iterator[tuple[SpatialPacket | None, ...]]:
+        """Host inventory includes local holds and actual transit exactly once."""
+        yield from self.links.values()
+        for position in self._active:
+            node = self.nodes[position]
+            yield tuple(entry.packet for entry in node.held_outputs if entry is not None)
+
     def totals(self) -> list[list[int]]:
         result = [[0] * field.components for field in self.initial.fields]
         volume = self.initial.shape[0] * self.initial.shape[1] * self.initial.shape[2]
@@ -429,7 +442,7 @@ class SpatialEngine:
             )
             inventories.extend(
                 packet.fields[index]
-                for packets in self.links.values()
+                for packets in self.owned_outputs()
                 for packet in packets
                 if packet is not None
             )
@@ -450,7 +463,7 @@ class SpatialEngine:
                         if definition.momentum_field is not None:
                             for axis, value in enumerate(ray_momentum(node.rays[index], definition)):
                                 result[definition.momentum_field][axis] += value
-                for packets in self.links.values():
+                for packets in self.owned_outputs():
                     for packet in packets:
                         if packet is not None and packet.rays:
                             result[definition.field][0] += ray_stock(packet.rays[index])
@@ -528,6 +541,18 @@ class SpatialEngine:
             }
         return result
 
+    def _packet_values(self, packet: SpatialPacket) -> dict[str, tuple[int, ...]]:
+        result = {}
+        for index, definition in enumerate(self.initial.spatial_fields):
+            values = [
+                sum(unpack(payload)[component] for payload in packet.fields[index])
+                for component in range(self.initial.fields[definition.field].components)
+            ]
+            if packet.rays and definition.rays:
+                values[0] += ray_stock(packet.rays[index])
+            result[self.initial.fields[definition.field].name] = tuple(values)
+        return result
+
     def snapshot(self) -> dict[str, object]:
         return {
             "spatial_fields": [
@@ -538,6 +563,42 @@ class SpatialEngine:
                     "arrival_mask": node.arrival_mask,
                     "delay_counts": node.delay_counts,
                     "waiting_until": None if node.pending is None else node.pending.ready_tick,
+                    "output_clock": {
+                        "sample_tick": node.output_clock.sample_tick,
+                        "sample": node.output_clock.sample,
+                        "delays": node.output_clock.delays,
+                        "starts": node.output_clock.starts,
+                        "ready": node.output_clock.ready,
+                    },
+                    "held_outputs": [
+                        {
+                            "port": entry.packet.port,
+                            "prepared_tick": entry.prepared_tick,
+                            "release_tick": entry.release_tick,
+                            "arrival_tick": entry.packet.arrival_tick,
+                            "rays": sum(len(r) for r in entry.packet.rays),
+                            "values": self._packet_values(entry.packet),
+                            "fields": {
+                                self.initial.fields[definition.field].name: {
+                                    "value": tuple(
+                                        sum(
+                                            unpack(payload)[component]
+                                            for payload in entry.packet.fields[index]
+                                        )
+                                        for component in range(
+                                            self.initial.fields[definition.field].components
+                                        )
+                                    ),
+                                    "ray_units": ray_stock(entry.packet.rays[index])
+                                    if entry.packet.rays
+                                    else 0,
+                                }
+                                for index, definition in enumerate(self.initial.spatial_fields)
+                            },
+                        }
+                        for entry in node.held_outputs
+                        if entry is not None
+                    ],
                 }
                 for position, node in sorted(self.nodes.items())
             ],
@@ -556,6 +617,7 @@ class SpatialEngine:
                         for i, d in enumerate(self.initial.spatial_fields)
                     },
                     "rays": sum(len(r) for r in p.rays),
+                    "values": self._packet_values(p),
                 }
                 for packets in self.links.values()
                 for p in packets
