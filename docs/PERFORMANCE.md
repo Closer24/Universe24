@@ -81,7 +81,11 @@ Three host-only changes follow, each with identical physical outputs:
 - `LocalBalanceGuard` keeps two bounded caches (4096 entries each, least
   recently used eviction) of successful readouts keyed by quantity index and
   the immutable record values or spatial bundle. Failures are never retained;
-  the discarded validation meter charges nothing observable.
+  the discarded validation meter charges nothing observable. The caches are
+  bounded at 2 x 4096 entries, belong to one guard instance (a derived guard
+  starts empty), assume the boundary validation that precedes every readout,
+  and are deliberately absent from `execution_report()` so that execution
+  reports stay identical to the baseline.
 
 | Input | Ticks | Baseline median | Optimized median | Elapsed time change |
 | --- | ---: | ---: | ---: | ---: |
@@ -111,7 +115,7 @@ After the first change:
 after the second:
 `fa966dd12f3527be137217fe5de0a55c9a9f0730bbd5706f83a1762653d005b2`;
 optimized source fingerprint:
-`749d0d211c2a6106d25069359bf2bc7bda3934585ada2d8959e1228d8ab08dc9`.
+`39a611ddd1df3f549566a233417c3cb2c28cb953fc52cd388b96f5cbde04a516`.
 The fingerprint covers active Python source, not generated outputs or this text.
 
 `validate_field_guards` in `fields/local_field_rules.py` still decodes its

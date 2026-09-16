@@ -95,6 +95,13 @@ class LocalBalanceGuard:
     equal payloads reuse a bounded host cache of earlier successful readouts.
     Validation belongs to the first evaluation; failures are never retained.
     The cache shares host work only, never a physical update or modeled cost.
+
+    Payloads reaching this guard have already passed Node boundary validation;
+    key equality is Python equality, so an equal-valued float or bool code hits
+    the cache instead of repeating the guard's own field validation. The two
+    caches hold at most 4096 entries each, belong to one guard instance (a
+    derived guard starts empty) and are deliberately absent from
+    ``execution_report()`` so that execution reports stay identical.
     """
 
     fields: tuple[FieldDefinition, ...]
@@ -103,10 +110,10 @@ class LocalBalanceGuard:
     definition: NodeConservationDefinition
     degree: int = 6
     _record_readouts: ReadoutReuse[RecordKey] = dataclass_field(
-        default_factory=ReadoutReuse, compare=False, repr=False
+        default_factory=ReadoutReuse, init=False, compare=False, repr=False
     )
     _spatial_readouts: ReadoutReuse[SpatialKey] = dataclass_field(
-        default_factory=ReadoutReuse, compare=False, repr=False
+        default_factory=ReadoutReuse, init=False, compare=False, repr=False
     )
 
     def _evaluate(self, expression: Expression, values: Values, size: int) -> Readout:

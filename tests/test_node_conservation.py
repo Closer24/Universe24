@@ -173,6 +173,13 @@ def test_failed_readouts_are_not_cached(monkeypatch):
     report = policy._spatial_readouts.report()
     assert (report["requests"], report["evaluations"], report["entries"]) == (2, 2, 0)
     assert evaluations == []
+    # Key equality is Python equality: an equal-valued float or bool code is a hit,
+    # not a repeated field validation; every call site validated at its boundary.
+    assert policy.measure(LocalInventory(records=(record(3),))) == ((3,), (0, 0, 0))
+    lookalike = DisturbanceRecord(0, ((7.0,), (True, 1, 1)), ((1,), (1, 1, 1)))
+    assert policy.measure(LocalInventory(records=(lookalike,))) == ((3,), (0, 0, 0))
+    report = policy._record_readouts.report()
+    assert (report["requests"], report["evaluations"], report["hits"]) == (6, 4, 2)
 
 
 def test_momentum_failure_is_not_hidden_by_energy_balance():
@@ -208,6 +215,11 @@ def test_guard_does_not_charge_model_work_or_depend_on_tariffs():
     state = LocalInventory(records=(record(2, (1, 2, 3)),))
     assert policy.measure(state) == other.measure(state)
     policy.check(state, state, "identity")
+    # A derived guard starts with its own empty caches and evaluates for itself.
+    assert other._record_readouts is not policy._record_readouts
+    assert other._spatial_readouts is not policy._spatial_readouts
+    assert other._record_readouts.report()["evaluations"] >= 1
+    assert policy._record_readouts.report()["evaluations"] >= 1
 
 
 def test_local_capacity_is_bounded():
