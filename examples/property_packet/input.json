@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "model_id": "whole-property-packet-local-reservoir-v1",
+  "node_execution": true,
+  "shape": [6, 6, 6],
+  "boundary": "periodic",
+  "slots_per_node": 2,
+  "link_ticks": 1,
+  "normal_budget": 100000,
+  "ticks": 18,
+  "operation_costs": {
+    "receive": 1, "read": 1, "evaluate": 1, "update": 1, "couple": 1,
+    "route": 1, "split": 1, "send": 1, "commit": 1
+  },
+  "fields": [
+    {"name": "inventory", "components": 1, "units": "count", "signed": false, "conserved": true, "aggregation": "sum"},
+    {"name": "charge", "components": 1, "units": "configured charge unit", "signed": true, "conserved": true, "aggregation": "sum"},
+    {"name": "energy_ledger", "components": 1, "units": "configured ledger unit", "signed": false, "conserved": true, "aggregation": "sum"},
+    {"name": "momentum", "components": 3, "units": "configured vector unit", "signed": true, "conserved": true, "aggregation": "vector_sum"},
+    {"name": "heading", "components": 3, "units": "routing weight", "signed": true, "conserved": false, "extensive": false, "aggregation": "keep_equal"},
+    {"name": "phase", "components": 1, "units": "phase code", "signed": false, "conserved": false, "extensive": false, "aggregation": "phase_bins"},
+    {"name": "responsive", "components": 1, "units": "participation code", "signed": false, "conserved": false, "extensive": false, "aggregation": "keep_equal"}
+  ],
+  "disturbance_types": [{
+    "name": "parcel",
+    "fields": ["inventory", "charge", "energy_ledger", "momentum", "heading", "phase", "responsive"],
+    "defaults": {"inventory": 1, "charge": -1, "energy_ledger": 2, "momentum": [1, 0, 0], "heading": [1, 0, 0], "phase": 3, "responsive": 1},
+    "transport": {"mode": "move", "direction_field": "heading"}
+  }],
+  "seeds": [{"position": [0, 2, 2], "type": "parcel"}],
+  "spatial_fields": [
+    {"field": "energy_ledger", "baseline": 0, "transport": "local"},
+    {"field": "momentum", "baseline": [0, 0, 0], "transport": "local"}
+  ],
+  "spatial_seeds": [
+    {"position": [2, 2, 2], "field": "energy_ledger", "populations": [5, 0, 0, 0, 0, 0, 0, 0]}
+  ],
+  "spatial_interactions": [{
+    "name": "bounded_local_exchange",
+    "requires": ["inventory", "energy_ledger", "momentum", "responsive"],
+    "k": 1,
+    "when": {"op": "mul", "args": [
+      {"op": "gt", "args": [{"field": "energy_ledger", "side": "right"}, 0]},
+      {"op": "gt", "args": [3, {"field": "energy_ledger"}]}
+    ]},
+    "assignments": [
+      {"side": "left", "field": "energy_ledger", "expression": {"op": "add", "args": [{"field": "energy_ledger"}, 1]}},
+      {"side": "right", "field": "energy_ledger", "expression": {"op": "sub", "args": [{"field": "energy_ledger", "side": "right"}, 1]}},
+      {"side": "left", "field": "momentum", "expression": {"op": "add", "args": [{"field": "momentum"}, [0, 2, 0]]}},
+      {"side": "right", "field": "momentum", "expression": {"op": "sub", "args": [{"field": "momentum", "side": "right"}, [0, 2, 0]]}}
+    ],
+    "invariants": [
+      {"name": "local_ledger_sum", "expression": {"op": "add", "args": [{"field": "energy_ledger"}, {"field": "energy_ledger", "side": "right"}]}},
+      {"name": "local_vector_sum", "expression": {"op": "add", "args": [{"field": "momentum"}, {"field": "momentum", "side": "right"}]}}
+    ]
+  }],
+  "conservation_contract": {
+    "name": "declared ownership ledger",
+    "quantities": [
+      {"name": "inventory", "components": 1, "units": "count", "carriers": [{"requires": ["inventory"], "value": {"field": "inventory"}}], "spatial": 0},
+      {"name": "charge", "components": 1, "units": "configured charge unit", "carriers": [{"requires": ["charge"], "value": {"field": "charge"}}], "spatial": 0},
+      {"name": "energy_ledger", "components": 1, "units": "configured ledger unit", "carriers": [{"requires": ["energy_ledger"], "value": {"field": "energy_ledger"}}], "spatial": {"field": "energy_ledger", "side": "right"}},
+      {"name": "momentum", "components": 3, "units": "configured vector unit", "carriers": [{"requires": ["momentum"], "value": {"field": "momentum"}}], "spatial": {"field": "momentum", "side": "right"}}
+    ]
+  }
+}
