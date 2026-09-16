@@ -100,3 +100,5 @@ and [contribution procedure](../CONTRIBUTING.md) retain their authority. This in
 routes readers; it does not duplicate their technical rules.
 
 - [Mass computation clock candidate](MASS_COMPUTATION_CLOCK_CANDIDATE.md): bounded stationary-source experiments with six output clocks.
+
+- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, explicit historical research profiles and external exchange blockers.
