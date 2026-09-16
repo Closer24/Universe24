@@ -12,7 +12,7 @@ design. Documentation approval does not itself implement a runtime change.
 | --- | --- |
 | Experiment authoring | Select external JSON entity catalogs and representation profiles; physical names, properties and numbers are data, while generic operators have one reusable code owner. |
 | Preparation and validation | Resolve declared references, units, shapes, bounds and supported compositions into explicit integer initialization. Reject unsupported or inexact preparation under the lossless contract; no implicit physical law or hidden runtime catalog lookup. |
-| Logical world | Nodes form the selected periodic 3D layout. Each Node owns one bounded NodeState and initially six computational Registers, one per Port. |
+| Logical world | Nodes form the selected periodic 3D layout. Each Node owns one bounded NodeState and six external Ports and 24 directed internal one-input/one-output Registers between orthogonal Ports. |
 | Local execution | Every Register uses identical generic rules over bounded local inputs/state; joint dependencies use a coordinated Node-owned atomic commit. |
 | External scheduling and transport | Host infrastructure maps endpoints and schedules only active/due Register work. Current/future work sets preserve next-tick-or-later delivery and declared delays. |
 | Structured output and Recorder | Record committed events, results and snapshots through read-only interfaces; no physical update or global repair comes from output production. |
@@ -317,7 +317,7 @@ rules on the same generic Node/Link machinery.
 | Layer | Responsibility | Canonical owner |
 | --- | --- | --- |
 | Nodes and transport | A Node owns bounded local NodeState, resident values, Ports and pending timing/ownership metadata. Links own values in transit. | [Terminology](TERMINOLOGY.md), [Node execution](NODE_VECTOR_PROCESSOR.md) |
-| Computational Registers (target) | One generic input/output unit per Port within the same NodeState; identical logic, data-selected state/direction/delay. | [Register-level execution](#register-level-execution-target) |
+| Computational Registers (target) | 24 directed internal units between the six orthogonal Port pairs, each with exactly one input and one output within one NodeState; identical logic, data-selected state/direction/delay. | [Register-level execution](#register-level-execution-target) |
 | Generic mathematics | Reusable bounded integer scalar/vector operators evaluate local inputs and propose changes. Supported operations are implemented once in code; validated JSON selects their compositions. | [Local integer operation contract](#local-integer-operation-contract), [disturbance expressions](DISTURBANCES.md#local-updates-and-expressions) |
 | Physical entity definitions | External JSON describes particles, fields and other entities through identities, sourced physical properties, numerical values, units and evidence status. These are data, not species-specific engine branches. | [catalog.json](../examples/known-entities/catalog.json), [entity catalog contract](ENTITY_CATALOG.md) |
 | Representation and preparation | Explicit JSON profiles bind selected entities to supported fields, initial values and configured rules. Optional reference-unit authoring encodes selected physical values into bounded integer components before initialization. | [representation-probes.json](../examples/known-entities/representation-probes.json), [reference units](REFERENCE_UNITS.md), [initialization validation](CONFIGURATION_VALIDATION.md) |
@@ -356,16 +356,19 @@ and each experiment's assumptions distinct from the generic mechanism.
 
 ## Register-level execution target
 
-Use [canonical terminology](TERMINOLOGY.md) for the logical Node and its per-Port
-computational Registers. The intended initial cube has six Registers, each using
-the same generic rule machinery with different local data. These are subunits of
+Use [canonical terminology](TERMINOLOGY.md) for the logical Node, six external
+Ports and 24 directed internal computational Registers. Each ordered orthogonal
+Port pair defines one Register; 12 unoriented pairs give 24 directed units.
+Every Register has exactly one input channel and exactly one output channel,
+using the same generic rule machinery with different local data. These are subunits of
 one Node, not new physical Nodes or an extra lattice. NodeState remains the single
 bounded local ownership boundary; a Register's state is a part of it, not a full
 replica. Immutable generic rule definitions can be shared.
 
-An external host scheduler must index active or due work by `(node, port)`.
-Changed output schedules delivery to the affected destination Register at the
-declared Link arrival time; changed local state wakes dependent local Registers.
+The host transport address `(node, port)` is distinct from active/due work at
+`(node, register_id)` or `(node, from_port, to_port)`. A completed Link transfer
+arrives at a destination Port; the declared local operation resolves which
+internal Registers become due. Changed local state wakes its bounded dependencies.
 Only declared dependencies may expand that work set, rather than a blanket
 scan of every Register or Node. A timer expiry, autonomous emission, internal
 phase evolution or other configured rule can also require work without a new
@@ -379,13 +382,29 @@ never through an accidental same-tick cascade caused by iteration order.
 Register commits collectively evolve the owning NodeState in the 3D event-space
 layout. Same-time joint operations still use the coordinated commit boundary.
 
-The same generic executor applies to every Register. Port-specific state,
+The same generic executor applies to every Register. Directed-transition state,
 orientation, parameters and delay select data, not separate hardcoded port logic.
 A rule that reads or writes several Registers must use one coherent local input
 snapshot, reserve its required owners and publish an atomic joint result under
 the Node's coordination. Same-time arrivals, rule order and pending ownership
 must remain explicit; independent scheduling cannot expose a half-committed
 interaction or silently serialize away another input.
+
+A bounded vector-valued payload may occupy one channel, but bundling independently
+arriving channels does not turn them into one input. No individual Register may
+expose a multi-input/multi-output transition. A split/merge is a separate bounded
+Node-level transaction coordinating several one-input/one-output Registers;
+it must specify allocation/transfer of owned values through a common snapshot,
+reservations and atomic publication. Strict independent one-to-one transformations
+alone do not establish an arbitrary mixer.
+
+Straight passage (opposite face on the entry axis) and return (the entry face)
+are not direct edges of the orthogonal internal graph. Their Node-operation
+mapping remains OPEN; do not prohibit them, select an intermediate axis or infer
+microstep time/extra spatial Links. The graph's proper signed-axis symmetry is
+not a proof of continuous isotropy. Existing six-Port banks/readiness adapters
+are not evidence of 24-Register execution. This revised definition supersedes
+the earlier six-Register decomposition without changing external spatial degree.
 
 Register delay and Link propagation remain distinct. Preserve the chosen C/h
 timing and all externally visible arrival/commit times; splitting host work does
@@ -401,7 +420,7 @@ The [Focus scheduler](LOCAL_FOCUS.md) skips certified empty Nodes, but occupied
 and pending carrier Nodes remain awake; transport indexes occupied banks rather
 than maintaining the required due-Register scheduler. Existing Node-owned
 planning/commit and parallel-worker interfaces remain unchanged. Configurable
-port count, explicit per-Port computational Registers and due-only Register
+port count, explicit directed internal computational Registers and due-only Register
 execution are binding design requirements, not completed features or measured speedups.
 Any implementation must demonstrate equal state, ownership, timing, event order,
 failure behavior and model costs before claiming an equivalent host optimization.
@@ -416,8 +435,8 @@ benchmarks exercise existing mechanisms and cannot establish this implementation
 | Planned component | Owned responsibility and boundary |
 | --- | --- |
 | Shared Register contract | One writer defines the proposed `core/register_contracts.py` interface: bounded Node-local Register state, per-slot ownership/readiness and coherent joint reservation/commit. This path is planned, not an existing implementation claim. |
-| Node-local execution | Each initial Node contains six per-Port computational Registers using the same generic rules. Their state is part of one NodeState; joint operations take one coherent snapshot and commit all affected owners atomically. Do not invoke the full Node planner six times or duplicate inventory. |
-| External due scheduler and transport | Index active/due endpoints and timers, keep current/next-or-later work separate and route only at declared Link arrival times. Topology and periodic endpoint mapping remain external; local rules receive no global reads. |
+| Node-local execution | Each initial Node has six external Ports and 24 directed internal Registers, each with exactly one input and one output, using the same generic rules. Their state is part of one NodeState; joint operations take one coherent snapshot and commit all affected owners atomically. Do not invoke the full Node planner once per Register or duplicate inventory. |
+| External due scheduler and transport | Index active/due internal Register work separately from external Port delivery and timers, keep current/next-or-later work separate and route only at declared Link arrival times. Topology and periodic endpoint mapping remain external; local rules receive no global reads. |
 | Simulation integration | Adapt the selected profile through the existing Simulation owner, with explicit support checks and unchanged accounting, failures and causal timing. Do not substitute fixture configuration for this adapter. |
 
 The first proposed executable slice is exact whole-record movement plus local
