@@ -15,7 +15,8 @@ design. Documentation approval does not itself implement a runtime change.
 | Logical world | Nodes form the selected periodic 3D layout. Each Node owns one bounded NodeState and initially six computational Registers, one per Port. |
 | Local execution | Every Register uses identical generic rules over bounded local inputs/state; joint dependencies use a coordinated Node-owned atomic commit. |
 | External scheduling and transport | Host infrastructure maps endpoints and schedules only active/due Register work. Current/future work sets preserve next-tick-or-later delivery and declared delays. |
-| Observation and output | Diagnostics, traces and visualization read committed state; they never repair values, select a physical update or feed host-wide measurements back into local rules. |
+| Structured output and Recorder | Record committed events, results and snapshots through read-only interfaces; no physical update or global repair comes from output production. |
+| Renderer | Present structured output separately from the Engine and Recorder; display controls do not change physical state. |
 
 Several catalogs/profile sets may be selected explicitly for an experiment.
 This is an authoring composition requirement, not a claim that the current CLI
@@ -25,6 +26,84 @@ missing references and combined capacity must be resolved and validated before
 initialization; file order cannot silently replace a physical definition.
 The [entity contract](ENTITY_CATALOG.md) and
 [preflight contract](CONFIGURATION_VALIDATION.md) retain their current API limits.
+
+### Input, Engine, Output and Renderer
+
+These are distinct responsibilities with explicit data interfaces, not a
+requirement for separate processes or a new package hierarchy.
+
+| Boundary | Contract and current owner |
+| --- | --- |
+| Input | Author JSON, validate explicit catalog/profile dependencies and prepare initialization. [Configuration validation](CONFIGURATION_VALIDATION.md) is the semantic entry point, not a runtime law or renderer. |
+| Engine | Apply configured generic physical transitions to bounded owned state. Node/Register locality, timing, capacities and atomicity are enforced here; host scheduling delivers only causally due inputs. |
+| Output | Produce structured committed events, results, state snapshots and execution metadata through explicit read-only interfaces. [Run outputs](DISTURBANCES.md#run-and-initialize) document existing files; output is not a rendered picture. |
+| Renderer | Present structured Output as an image, animation, HTML or other view. It is separate from the Engine and output producer/Recorder; presentation, replay speed and camera choices never feed physical state. |
+
+Locality is an input-provenance and ownership contract, not something proved by
+putting components in different classes. Trace every physical input to bounded
+local state or a completed causal delivery. Register logic has no remote-world
+read; the scheduler cannot supply a global correction as if it were local data.
+Observers may reject a run for diagnostics but cannot repair the physical state.
+
+#### Detector, Recorder and Renderer
+
+| Role | Meaning and unresolved boundary |
+| --- | --- |
+| Detector | A physical/model observation mechanism with specified coupling, observable and model-time mapping. Its response and any state-changing interaction require explicit rules; a displayed signal does not define those rules. |
+| Recorder | A diagnostic output producer that records committed events or read-only snapshots in structured form. It does not perform a physical detection or choose an outcome merely by saving data. |
+| Renderer | A presenter of those records; it can show a Detector's recorded output but is neither the Detector nor the Recorder. |
+
+The existing [local reception observer](LOCAL_OBSERVER.md) is a passive recorder
+of actual arrivals, not an implemented human/material Detector response or a
+proper-time derivation. A Detector can be modeled through an explicit interface,
+but its coupling and time interpretation remain to be specified; this document
+does not invent a new transition. Recording cadence and display frame rate are
+not physical detector time. Preserve exact outputs independently of rendering.
+
+### Architecture responsibilities
+
+These are review and delivery responsibilities, not a requirement for a fixed number of
+always-running agents or independent implementations.
+
+| Responsibility | Required contribution |
+| --- | --- |
+| Theoretical physicist | Specify physical meanings of state, couplings, Detector observables and predictions with the mathematician; label assumptions and unestablished claims. |
+| Computational experimental physicist | Design simulation experiments with independent predictions, tolerances and controls fixed before running; compare behavior with relevant classical/quantum theory and measured evidence, without fitting expectations afterward. This is not a physical laboratory role. |
+| Mathematician | Specify state/vector spaces, applicable groups, operators, invariants and exact bounded integer encoding, including remainder ownership; establish preservation where possible and state proof limits. |
+| Architect | Translate the agreed Node/Port contract into Register decomposition and interfaces while preserving locality, ownership, timing and joint atomicity. |
+| Developer | Implement the authorized shared operators, schemas and configuration adapters; do not invent physical assumptions or hide species-specific formulas in scheduling. |
+| Independent tester/reviewer | Check requirements against independent expectations, boundary/failure cases and identified source; separate software acceptance from physical validity. |
+| Documentation | Keep authoritative definitions and implementation gaps synchronized in their responsible documents; distinguish proposal, agreement, implementation and tested result. |
+| Boss | Converse with the user, clarify decisions, route bounded work and report results/blockers; preserve user approval boundaries. |
+
+Vector/group notation alone does not prove energy conservation. Each claimed
+invariant needs a defined quantity, its complete owners and applicable
+transitions. The mathematical argument and independent tests must address those
+definitions, not merely the operation's name.
+
+### Open contracts before implementation closure
+
+The binding principles above are agreed; the architecture is not yet a closed
+implementation specification. Resolve the following contracts without silently
+choosing physics or treating existing code as the final design.
+
+| Contract to close | Required decision or evidence | Responsible reference |
+| --- | --- | --- |
+| NodeState and per-Port ownership | Exact fields, encodings, bounds, fixed capacities and Register-owned parts of the single NodeState; no duplicate stock | [Terminology](TERMINOLOGY.md), [stored codes](#stored-codes-and-mathematical-values) |
+| Generic transition | Exact local inputs, outputs, participant selection, shared reads/writes, guards, failure behavior and atomic publication | [Node execution](NODE_VECTOR_PROCESSOR.md), [local integer operations](#local-integer-operation-contract) |
+| Due-work scheduling | Readiness rules, current/next queue order, same-time arrivals, internal events, bounded rescheduling and proof of skipped no-op intervals | [Register target](#register-level-execution-target) |
+| Units, timing and arithmetic | Scales, all remainder lifecycles, overflow rejection and whether intermediates must be nonnegative; whether k includes transit remains OPEN | [Reference units and timing](REFERENCE_UNITS.md#minimum-model-time-and-output-delay), [lossless ownership](#lossless-remainder-ownership) |
+| Invariants and acceptance | Concrete quantities and owners, preservation arguments and independent experiment/Detector expectations; not assumed from vector syntax | [Test expectations](TEST_EXPECTATIONS.md), [physical support](PHYSICAL_ENTITIES.md) |
+| Detector | Explicit coupling, observable, response and time mapping; keep physical observation distinct from diagnostic recording | [Observation boundaries](#detector-recorder-and-renderer), [local observer](LOCAL_OBSERVER.md) |
+| Catalog/profile mapping | Exact reference-to-initial-state mapping and configured dynamic laws; compatible multi-catalog/profile selection and conflict handling | [Entity catalog](ENTITY_CATALOG.md), [configuration validation](CONFIGURATION_VALIDATION.md) |
+| Input/Output/Renderer interfaces | Versioned initialization and structured-output formats, errors, record ordering/completeness and read-only rendering contract | [Input/output boundary](#input-engine-output-and-renderer), [run outputs](DISTURBANCES.md#run-and-initialize) |
+| Implementation reconciliation | Identify unchanged code, required migrations and tests for fixed-six topology, Register scheduler, encoding and each listed no-loss gap | [Current execution](#current-node-execution-ownership), [lossless gap audit](#lossless-remainder-ownership) |
+
+Nonnegative integer waiting can span zero, one or many ticks; zero waiting is not
+same-tick Link traversal. Do not settle the open k/transit convention with an
+unconditional additional tick. Small implementation tasks can begin once their
+own interface and acceptance contract are closed; that is not approval to claim
+the entire architecture complete or to change another unresolved contract.
 
 ### Spatial topology and endpoint routing
 
