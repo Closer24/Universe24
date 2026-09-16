@@ -59,6 +59,27 @@ merely by naming it in JSON. Current shape limits remain in the
 and transformation semantics must be explicit; notation alone is not evidence
 of a physical law.
 
+### Stored codes and mathematical values
+
+The approved Node storage domain is bounded nonnegative integers, including
+zero. This describes stored codes, not a prohibition on signed mathematical
+values. A proposed generic signed encoding is `0 -> 0`, `+1 -> 1`, `-1 -> 2`,
+`+2 -> 3`, `-2 -> 4`. Exact generic arithmetic must operate on the represented
+values and return valid bounded codes; adding codes as values is incorrect.
+Do not silently replace an existing valid encoding with this example.
+
+Whether intermediate working values must also be nonnegative remains open;
+bounded integer intermediates are required regardless. Overflow or a value
+without an admitted representation rejects the operation before its mutation.
+All remainders retain the explicit ownership and lifecycle defined below.
+
+This is a binding storage-domain decision, not an implemented conversion.
+Existing signed payload contracts and any positive-only code mapping retain
+their documented runtime behavior pending explicit adaptation and verification.
+The [canonical timing clarification](REFERENCE_UNITS.md#minimum-model-time-and-output-delay)
+separately defines model time, output waiting and the unresolved transit-count
+convention; permitting the number zero does not permit zero-time Link transit.
+
 ### Lossless remainder ownership
 
 No remainder may be lost in physical arithmetic, evolving state or transport.
