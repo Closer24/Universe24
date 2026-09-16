@@ -19,9 +19,9 @@ local slots and declared rule order. When both role orientations fit the same
 pair, existing slot order selects one transaction.
 
 Existing exact-type configurations remain supported. Property selection does not
-relax transport, ownership, capacity or arithmetic restrictions. Property-selected
-conversion is unsupported; explicit two-to-two conversion remains separately
-scoped. Matching properties alone establish neither physical unit compatibility
+relax transport, ownership, capacity or arithmetic restrictions. The two-to-two `output_types` conversion keeps exact type selectors;
+property-selected inputs are admitted by the [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion),
+whose outputs are always explicit families. Matching properties alone establish neither physical unit compatibility
 nor an experimentally valid law.
 
 ## Entity configuration
