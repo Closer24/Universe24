@@ -15,9 +15,10 @@ from .disturbance_state import (
     Invariant,
     Payload,
     Values,
+    any_negative,
     bounded,
     pack,
-    unpack,
+    validate_codes,
 )
 from .integer import checked_work, reduced_ratio
 
@@ -374,8 +375,8 @@ class SpatialState:
             for value in values:
                 if len(value) != components:
                     raise ValueError("spatial state component count differs from the field")
-                unpack(value)
-        if any(value < 0 for payload in self.allocation_phases for value in unpack(payload)):
+                validate_codes(value)
+        if any(any_negative(payload) for payload in self.allocation_phases):
             raise ValueError("spatial allocation phases must be nonnegative")
 
 
