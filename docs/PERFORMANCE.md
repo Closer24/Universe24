@@ -57,6 +57,72 @@ control. Run each comparison at least three times. Inputs, events, result JSON
 and canonical HTML are written together; generated outputs stay outside commits.
 See [Local Focus](LOCAL_FOCUS.md) for eligibility, bounds and supercell limits.
 
+## Active engine: one validation per crossing and undecoded checks
+
+Measured on Linux with Python 3.14.0rc2 on 2026-09-16 with the same
+`tools/benchmark_focus.py` inputs. Baseline: `e5b5911` (merged Focus default).
+Profiling that baseline showed `node_boundary.validate_record` at about half
+of the repeated-carrier step time, with each delivered record validated by the
+transport loop, by `DisturbanceNode.receive` and again by `validate_records`
+over the record policy's output. In the two-field input, `decode` and `unpack`
+took more than half of the step time, reached from conservation readouts,
+field guard validation and spatial-state validation.
+
+Three host-only changes follow, each with identical physical outputs:
+
+- A delivered record is validated once, by the receiving Node. `receive`
+  passes its validated arrivals to `validate_records` as verified objects, so
+  only new records such as merges are checked again; transport validates only
+  records escaping through an open boundary. Malformed records raise the same
+  errors at the same boundary.
+- `FieldDefinition.validate` and `SpatialState.validate` inspect codes without
+  decoding: a valid code is an integer in `1..2*MAX_VALUE+1` and an even code
+  is exactly a negative value. Messages and their order are unchanged.
+- `LocalBalanceGuard` keeps two bounded caches (4096 entries each, least
+  recently used eviction) of successful readouts keyed by quantity index and
+  the immutable record values or spatial bundle. Failures are never retained;
+  the discarded validation meter charges nothing observable. The caches are
+  bounded at 2 x 4096 entries, belong to one guard instance (a derived guard
+  starts empty), assume the boundary validation that precedes every readout,
+  and are deliberately absent from `execution_report()` so that execution
+  reports stay identical to the baseline.
+
+| Input | Ticks | Baseline median | Optimized median | Elapsed time change |
+| --- | ---: | ---: | ---: | ---: |
+| One moving carrier leaving an empty trail | 240 | 0.0478 s | 0.0362 s | 24.1% shorter |
+| 32 repeated moving carriers, periodic domain | 120 | 0.4590 s | 0.3755 s | 18.2% shorter |
+| 16 repeated local two-field configurations | 48 | 2.3308 s | 0.9181 s | 60.6% shorter |
+| Existing finite-field example | 16 | 0.1028 s | 0.0977 s | 4.9% shorter |
+
+Each value is the median of three fresh processes per stage; the same
+timer as the earlier table is used. Intermediate stages measured 18.3%
+(repeated) after the first change and 25.7% (two-field) after the second; the
+readout cache contributes most of the two-field gain, while the small
+carrier-only inputs vary by a few milliseconds between stages. These are
+small input-specific measurements on a shared host, not speed guarantees.
+
+Across all 48 measured runs (baseline plus three stages, four inputs, three
+runs each), `state_sha256`, `events_sha256`, the computation report, final
+totals, spatial accounting and the execution report matched the baseline
+exactly within each input. Modeled operation cost and world time are
+unchanged; only host work was removed. HTML export ran through the existing
+generator without visual inspection.
+
+Baseline source fingerprint:
+`4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`.
+After the first change:
+`1ebe5f5f00f8a87003e97d9d1bc8a3eb12f5a334b4ec24305d28f4a71b3e9bb5`;
+after the second:
+`fa966dd12f3527be137217fe5de0a55c9a9f0730bbd5706f83a1762653d005b2`;
+optimized source fingerprint:
+`39a611ddd1df3f549566a233417c3cb2c28cb953fc52cd388b96f5cbde04a516`.
+The fingerprint covers active Python source, not generated outputs or this text.
+
+`validate_field_guards` in `fields/local_field_rules.py` still decodes its
+stock and outgoing payloads on every commit; reusing its result would need a
+cache keyed by the complete spatial state and plan, threaded through the
+spatial Node services, and was left for a separate change.
+
 ## Historical renderer measurements
 
 These are historical scalar/particle renderer measurements. The optimization

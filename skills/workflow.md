@@ -14,16 +14,104 @@ Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
 Read only affected contracts and Skills after the root entry point. Use one
 authoritative definition per concept; Skills link to laws rather than copy them.
 
-Keep model rules, hypotheses to test and verified results distinct. A hypothesis
-needs a test and pass condition; a verified result needs an identified tree and
-completed evidence. A high-level target or a passing detector is not proof that
-the underlying physical law works.
-
 Keep durable procedures in Skills and architectural decisions in their responsible
 documents. Put temporary task state, assignments, blocked checks and next actions
 in Issues/PRs. For permitted publishing, persist the handoff there rather than only
 in chat. If publishing is unavailable or unauthorized, report the unsaved handoff.
 Do not claim personal Skills were installed merely because repository files exist.
+
+## Critical reasoning for every substantive claim
+
+Boss and every specialist must independently assess the user's substantive claims
+and proposals rather than agree automatically. Understanding a proposal is not
+evidence that it is correct; do not object merely to appear critical either.
+
+- Identify assumptions and examine internal consistency, mathematical/physical
+  validity and available evidence. Where relevant, check locality, bounded integer
+  state/work, remainders, conservation and separate model costs from host costs
+  against the responsible contracts, without inventing exceptions.
+- Distinguish user-chosen postulates and requirements from established physics,
+  hypotheses from conclusions, and target architecture from implemented/verified
+  behavior. A hypothesis needs a test and pass condition; a verified result needs
+  an identified source tree and completed evidence, not merely a passing detector.
+- Explain concrete conflicts, counterexamples and uncertainty, and correct the
+  agent's own earlier errors explicitly. Never silently change a user-defined law
+  or architecture to remove a contradiction. Explain concerns to the user in
+  Hebrew under the conversation rule; authored project documentation stays English.
+- Match scrutiny to the stakes and current scope. Small confirmations do not
+  automatically require extended research. Critical review does not authorize
+  new experiments, edits, scope expansion or bypassing approval requirements.
+
+## Physics comparison method
+
+Use this method for an authorized investigation of how the discrete model matches
+known physics. Start from a primary experimental result or a clearly labeled
+analytic reference, with its regime, units, uncertainty and source. Free
+propagation, configured interference and conservation can be analytic or
+engineering checks; they are empirical comparisons only when compared with
+sourced experimental data.
+
+1. Define the measured Detector observable and causal readout before running.
+   An internal state, audit quantity or rendered marker is not automatically
+   that observable. Record the mapping from the reference experiment to chosen
+   generic local laws, integer encoding, physical scales, preparation and initial/
+   boundary conditions; distinguish supplied laws from predicted consequences.
+2. Fix independent expected results, uncertainty/error metric, controls and
+   acceptance conditions in advance. Identify calibrated parameters and their
+   calibration data, then freeze them when testing other conditions. Do not
+   retune against the validation result or redefine acceptance after a failure.
+3. The physicist owns empirical targets, applicable regime and observable mapping.
+   The mathematician derives invariants, integer/remainder bounds and validity
+   domains, and checks proposed macroscopic or continuum inferences. The
+   computational experimental physicist executes reproducible comparisons through
+   the runner and reports actual data, errors and limits. Each role may reject
+   a hypothesis; no role's approval replaces the others' evidence.
+4. Separate exact mathematical preservation, code verification, agreement with
+   an analytic physics benchmark and agreement with experiment. Report source/
+   configuration identity, quantitative discrepancy, uncertainty and failure
+   cases. Preserve contrary evidence and omitted interactions. Several matching
+   cases do not prove the theory; discreteness alone supplies no prediction.
+5. Assess finite-size, boundary, lattice-direction and encoding effects relevant
+   to the claim. Sensitivity/convergence controls must represent the same physical
+   case with fixed hypotheses. Do not assume that shrinking a fundamental lattice
+   or tick is a harmless numerical refinement; it may change the physical model.
+   Input representation error is distinct from forbidden loss of core remainders.
+6. For these user-requested research comparisons, produce and inspect the
+   standalone HTML alongside quantitative records under the user's standing
+   output requirement; label the visual projection and do not use appearance as
+   acceptance evidence. Automated tests remain headless. Record unavailable
+   output honestly rather than claiming visual inspection.
+
+Keep the comparison bounded to the authorized question. This method defines how
+to investigate, not permission for a new sweep, implementation or changed law.
+Use the current execution lane and retain declared ownership and causal limits.
+
+## Implement from a published design
+
+Before implementing or changing behavior, read the authoritative written design
+for that scope and cite its exact repository path and commit in the assignment,
+implementation handoff and PR. Chat context alone is not an implementation spec.
+The design must state ownership, input/output and private-state boundaries,
+allowed rules, routing/timing, activation/no-op conditions, bounded arithmetic and
+errors, and independent acceptance criteria. Keep topology/counts explicit and
+separate from channel packaging. Use the responsible architecture document to
+find the bounded implementation contract; do not copy physical laws into Skills.
+
+Developers implement only agreed behavior and interfaces in that design. Route
+missing decisions or contradictions to the architect/design owner before adding
+behavior; the owner records the resolution in the authoritative document and
+sends its revision to affected developers before they continue. Do not fill gaps
+with a familiar physics law, old evaluator or convenient routing default. Routine
+implementation choices already covered by the design and user authorization
+continue without repeated permission. This workflow neither expands scope nor
+authorizes a new law, experiment or merge.
+
+Boss supplies the written revision when dispatching work. Architecture owns
+contract reconciliation; developers map their changes to it; test owners retain
+independent expected results and report deviations rather than changing the
+contract to fit code. On a design revision, assess affected work/evidence and
+update the handoff before further behavior changes. Preserve historical results
+with their original scope instead of relabeling them as the revised design.
 
 ## Configuration tasks and implementation scope
 
@@ -58,6 +146,32 @@ continue without asking for the same permission again. Otherwise, return the
 finding for a separate implementation request rather than modifying code during
 configuration work.
 
+## Defect ownership and closure
+
+When the user authorizes remediation, every confirmed defect, capability gap or
+unmet acceptance target needs an active owner and a durable Issue/PR handoff.
+Attach related findings to the existing objective; use a separate Issue only for
+an independently completable objective. Keep the temporary defect list out of Skills.
+
+- Record the violated contract, affected model and source revision, reproduction,
+  expected versus actual result, responsible role, dependencies and closure check.
+- Route software defects to the component developer; configuration defects to
+  configuration authoring; missing numerical laws to physics and mathematics;
+  incompatible interfaces or ownership to architecture; display defects to the
+  visualization owner; and long checks plus failure analysis to the test owner.
+  Each implementation has one writer and an independent reviewer when required.
+- A missing law is an open design task. The design owner specifies the unresolved
+  operator, parameters, invariants and falsifiable acceptance before handing the
+  published contract to a developer. Do not invent a physical law or substitute a
+  different model to close a finding. Resolve routine implementation choices
+  within existing authorization without repeatedly asking the user.
+- The owner returns the correction and evidence, or a concrete blocker with the
+  next responsible owner. Boss routes blockers onward; a report, task assignment,
+  passing unrelated test or published branch is not a completed repair.
+- Reproduce the original failure on the corrected source, check affected
+  regressions and required review, and record the verified revision before
+  closure. Preserve negative results and remaining physical limitations.
+
 ## Inputs and handoff
 
 Give each owner a bounded task with the repository, base commit, candidate/model,
@@ -83,6 +197,37 @@ Do not reuse a pass after its relevant inputs change without assessing the diff.
 An unchanged tree can reuse its verified results; record that equality. Different
 conversations do not synchronize automatically. Read current GitHub state before
 integrating their work, and never overwrite unrelated edits.
+
+## Publish corrections and share revisions
+
+For requested maintained changes, each specialist owns Git publication as part
+of the assignment. Promptly commit coherent corrections on the isolated task
+branch and push or update the linked PR under the standing authorization. Keep
+the PR draft while required validation or review is incomplete, and state what
+remains. Publication shares work; it does not waive merge gates. This procedure
+does not promote a research-only experiment into maintained code.
+
+- If the specialist cannot publish, explicitly hand the exact local commit,
+  owned files, base, dependencies and validation state to a named Git publishing
+  owner. Boss assigns that owner and follows through; a local commit or an
+  unaccepted handoff is not published work.
+- The publishing owner reads back the remote branch head and changed content.
+  Boss records the canonical Issue/PR, branch and verified remote SHA with the
+  dependencies and review state, and notifies affected active agents whenever
+  a correction or revised dependency is published or merged.
+- Receiving agents fetch and inspect the stated revision in their own worktrees,
+  preserve dirty work, and reconcile relevant changes before continuing dependent
+  implementation or reusing evidence. Report the revision incorporated or a
+  concrete conflict to Boss. Do not reset another owner's worktree or assume a
+  pushed branch is already integrated into main.
+- After required gates pass, the merge owner uses the PR workflow and verifies
+  the resulting main revision. No direct-main bypass or force push is allowed.
+  If publication fails, retain the local work and report the blocked owner and
+  action rather than claiming the correction is shared.
+
+A push does not update existing worktrees. Agent handoff messages reach the
+available active team; repository records support later sessions. Do not promise
+cross-chat notifications, automatic checkout updates or a background service.
 
 ## Checks proportional to the change
 
@@ -148,6 +293,14 @@ preserve all canonical frames and physical failure evidence, and verify worker
 cleanup plus the final replay handoff. Disclose unverified browser behavior.
 
 ## Tools and authority
+
+The user has given standing authorization to publish requested Universe24 work
+to Git: commit, push and open or update its PRs without another confirmation.
+This also covers the requested project Skill updates and remediation handoffs.
+Use existing authorization for a merge when it covers that change; do not require
+a repeated approval merely because a Skill mentions approval. Keep scope and
+required review/CI gates intact. This is not permission for unrelated changes,
+force pushes, destructive repository operations or messages to other people.
 
 Use the available local Git/Python tools and discover the connected GitHub tools
 when needed. Read access does not imply merge authority. Use existing user

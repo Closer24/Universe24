@@ -152,12 +152,13 @@ class DisturbanceNode(DisturbanceNodeState):
                 for slot, record in enumerate(self.pending.spatial_plan.emission_records)
                 if record is not None
             )
-        records = services.record_policy.receive(
-            self.records, tuple(packet.record for packet in packets), locked
-        )
+        arrivals = tuple(packet.record for packet in packets)
+        records = services.record_policy.receive(self.records, arrivals, locked)
         if len(records) != len(self.records):
             raise ValueError("record policy cannot change local capacity")
-        validate_records(initial, records, len(self.records), self.records)
+        # Every arrival was validated above; a policy may place that same immutable
+        # object into a free slot. Any other new record, such as a merge, is checked.
+        validate_records(initial, records, len(self.records), self.records, arrivals)
         if any(records[slot] != self.records[slot] for slot in locked):
             raise ValueError("record policy cannot change a pending local slot")
         if initial.arrival_port_blind:
@@ -171,11 +172,7 @@ class DisturbanceNode(DisturbanceNodeState):
         if services.balance_guard is not None:
             fields = () if spatial is None else tuple(state.populations for state in spatial.states)
             services.balance_guard.check(
-                LocalInventory(
-                    records=self.records,
-                    spatial=fields,
-                    carrier_packets=tuple(p.record for p in packets),
-                ),
+                LocalInventory(records=self.records, spatial=fields, carrier_packets=arrivals),
                 LocalInventory(records=records, spatial=fields),
                 "carrier receipt",
             )
