@@ -456,8 +456,7 @@ conventional reference and the independent expectations. No automatic assumption
 that Register scheduling is faster, universal speed claim or unmeasured selection
 is allowed. Keeping this reference and measurement-based host choice is explicitly
 authorized; it does not change Node/Register physical ownership, locality or
-causal behavior. The initial six-Register topology remains unchanged pending
-explicit resolution of the later four-Register wording.
+causal behavior or the configured Port/Register count.
 
 ## Current Node execution ownership
 
