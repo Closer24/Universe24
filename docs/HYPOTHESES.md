@@ -37,6 +37,21 @@ S = 2.7792 while Bob's plus rate moves by 0.6866 with Alice's
 setting. The derivation holds in the model; whether any real source is outside
 the world in this sense stays a hypothesis.
 
+**Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
+[Bell and postulate 22 study](../examples/research/bell-postulate-22/README.md)
+finds that replacing one pair's registry number alters no Node outside the
+forward cone of the end whose answer changed (144 world pairs, 0 violations,
+the front exactly on the cone edge), that the product of the two outcomes is
+the same whichever end asks first (4,096 of 4,096 pairs) and depends only on
+the setting present at the asking tick, that settings drawn from the world's
+own generator show no dependence on the pair's number (pooled p = 0.44 over
+2^20 registry pairs; the raw affine ticket state is a degenerate chooser), and
+that two pairs born at one Node and tick share one bond, an implementation
+limit of `origin_bond`. One rate cell at z = 3.59 and one seed at p = 0.002
+are recorded as pre-fixed failures and traced to block fluctuations of
+consecutive seeds. The README carries the pass/fail lines; what they decide
+about this hypothesis is not decided here.
+
 ## 2. Living and inanimate as two kinds of number source
 
 The framework can express one distinction between a living thing and an
@@ -105,6 +120,17 @@ lattice is needed, and that number belongs in the report.
 The [gathered gravity probe](../examples/gathered-gravity/README.md) closes
 the other route: gathering a gravity train focuses quanta, not a force law.
 
+**Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
+[anomalies study](../examples/research/anomalies/README.md#e3-the-force-law-exponent-with-a-short-closed-dimension)
+ran the open three-dimensional control named above with the identical
+metric. Pooled over 12 radii (r = 4 to 24, four directions each), the pull on
+a held body falls as r^p with p = -0.97 +/- 0.10 in the closed period-3 slab,
+-2.04 +/- 0.12 in the open cube, and the same -2.04 +/- 0.12 in an open slab of
+depth 3; in the period-9 slab p = -1.47 +/- 0.19 inside the period (8 radii)
+and -0.70 +/- 0.45 outside it (6 radii). The lattice's transition is set by a
+length; whether that is what nature's rotation curves show is not decided
+here.
+
 ## 7. Redshift without recession, and no dark energy
 
 The [closed-row sweep](../examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)
@@ -153,6 +179,22 @@ load is measured; a rule that fixes the emission history, so that the
 exponent is derived rather than fitted; and a surface-brightness exponent
 the same rule predicts.
 
+**Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
+[anomalies study](../examples/research/anomalies/README.md) reads the
+lattice's Tolman exponent as n = 2.0013 +/- 0.0008 under the per-link phase
+rule (three loaded rows, stretch 1.18 to 3.68; dilution and angular size
+identical with and without load), against 2.59 +/- 0.17 and 3.37 +/- 0.13 in
+the raw data and 4 for expansion; finds H falling with age in both load
+histories, with q = 0 for the linear load (FRW-family fit n = 1.00, interval
+0.84 to 1.23) and -0.55 to -0.61 for the quadratic load read from the hop
+schedule (its family fit has no degrees of freedom); and measures the first
+item above with a mirror cavity in place of the bound pair: a light clock
+built from the model's rays and mirrors has a period close to 6k + 4 in the
+hop time k (log-log slope 0.956 +/- 0.006 over 28 periods, k = 4 to 62) and
+reads z = 0.022 +/- 0.022 where the bare counter reads 0.608 +/- 0.042.
+Which of the three outcomes named in section 8 this is, is left to the
+owner; the README lists the pre-fixed conditions and their outcomes.
+
 ## 8. Everything that moves is a ray; records only hold
 
 A Node starts no new cycle until its delayed departure has arrived, so a
@@ -166,6 +208,19 @@ rays that reflect each other, with the phase advancing per interval as the
 particle's clock). What can be tested first: convert one moving-body probe
 (the orbits) to rays and compare; then the bound pair's phase rate against
 its speed, the model's own time dilation.
+
+**Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
+[ray-form study](../examples/research/ray-form/README.md) inventories the
+engine's forms (outward and ray fields are ray-form; carrier records, local
+fields, localized residue, claims, source envelopes, the quantum owner and the
+bond registry are not) and finds that a bound ray pair cannot be built from
+rays alone. A proxy cavity of two mirror records with one Kerengonen ray
+bouncing each way stays bound for 600 ticks in all 22 mirror runs under every
+load tried (k = 1 to 8 and the growing profile), with 16 (k + 2) / 3 ticks per
+phase cycle without `ray_phase_per_tick` and 16.0 with it, against 2 links
+per tick of separation in the no-mirror control; the isotropic delay refuses
+the configuration explicitly. The first check of the third manuscript below
+is therefore answered for a mirror cavity, not for a pair of rays.
 
 ### The third manuscript: a clock built from the rules
 
@@ -198,6 +253,24 @@ What is measured, in order, each step a result on its own:
 The first thing to check, before any of these, is whether the pair stays
 bound at all under the one-wait-register rule and under load; that is a
 day's run and decides whether there is a manuscript.
+
+### Candidate rule `bound-ray-pair-v1` (a candidate, not implemented)
+
+Stated on 2026-09-16 from the ray-form study, for the owner to accept, change
+or retire; no engine code implements it and no run has measured it.
+
+Statement: two counter-heading rays of equal amount arriving through opposite
+Ports of one Node in one interval are retained at that Node with their
+headings exchanged; the retained pair's phase advances once per interval;
+nothing crosses a Link while the pair is bound; an absorber at the Node takes
+the pair as it takes any ray; an unequal pair forwards as ordinary rays.
+
+Open questions: how the rule composes with the same-heading merge and with
+`ray_delay` when the two arrivals are staggered by a wait; whether the
+exchanged headings keep the recoil accounting exact; how a bound pair moves
+(both rays sharing a velocity component, step 4 above); and whether its phase
+rate under load is the mirror cavity's `16 (k + 2) / 3`, the constant 16, or
+neither, which is step 1 above measured on a pair instead of a cavity.
 
 ## 9. A candidate law, stated so that it can fail
 
