@@ -1,0 +1,84 @@
+{
+  "derived_from": "examples/radiation-scattering/build.py",
+  "catalog": "examples/known-entities/catalog.json",
+  "units": "examples/known-entities/physical-units.json",
+  "entity": "electron",
+  "charge_encoding": {
+    "value": -3,
+    "source_unit": "one third of positive elementary charge",
+    "field_unit": "charge_third",
+    "scale": 1,
+    "quantum_si_ratio": [
+      267029439,
+      5000000000000000000000000000
+    ],
+    "errors_source_units": [
+      "0"
+    ],
+    "rounding": "exact",
+    "measured_scale_dependencies": [],
+    "experimental_uncertainty_propagated": false
+  },
+  "mass_encoding": {
+    "value": 511,
+    "source_unit": "MeV/c2",
+    "field_unit": "keV/c2",
+    "scale": 1,
+    "quantum_si_ratio": [
+      801088317,
+      449377589368408820000000000000000000000000
+    ],
+    "errors_source_units": [
+      "104931/100000000000"
+    ],
+    "rounding": "nearest_ties_away_from_zero",
+    "measured_scale_dependencies": [],
+    "experimental_uncertainty_propagated": false
+  },
+  "mass_reference": {
+    "status": "measured",
+    "sources": [
+      "pdg_lepton_table"
+    ],
+    "value_decimal": "0.51099895069",
+    "unit": "MeV/c2",
+    "context": "Rest mass in selected PDG table.",
+    "precision": "Published precision; no simulator conversion.",
+    "uncertainty_decimal": "0.00000000016",
+    "uncertainty_kind": "symmetric reported uncertainty"
+  },
+  "charge_reference": {
+    "status": "established",
+    "sources": [
+      "pdg_lepton_table"
+    ],
+    "metadata_key": "electric_charge_thirds",
+    "unit": "one third of positive elementary charge",
+    "value_decimal": "-3"
+  },
+  "supplied_rules": [
+    "presence marker = exact_div(charge*charge, 9) per field interval (e^2); supplied, cleared each interval",
+    "hold fraction min(rad_px, presence*2): supplied selection rule, not a cross section",
+    "scatter_held_quanta: held quanta become rad_mx, carrier gains 2*held along +X: supplied assignment",
+    "electric_signal halo: outward emission charge*72 = -216 per interval (schema 1: conservative outward, no attenuation law); a configured field, not a Coulomb law",
+    "six pulses of 10 quanta pre-seeded at x=1..6 travelling +X: the configured 'photon' stream (radiation-quantum family: integer quanta, 1 momentum unit each, no charge, no mass, no energy register)",
+    "electron transport: move along its own momentum at sum|p|/48 hops per interval: supplied transport rule, not derived kinematics",
+    "family selection: emissions requires ['charge']; joint transaction requires ['charge','momentum'] (docs/PROPERTY_COUPLINGS.md), no type-name dispatch"
+  ],
+  "exact_consequences": [
+    "quanta invariant on every rule and transaction",
+    "total_momentum invariant (carrier momentum + direction-weighted quanta) on the joint transaction"
+  ],
+  "not_reproduced": [
+    "photon energy/frequency shift (Compton formula)",
+    "Klein-Nishina or any derived cross section",
+    "relativistic kinematics; the 511 keV/c2 mass is inert inventory in this rule",
+    "Coulomb 1/r^2 field; electric_signal is a configured outward signal only",
+    "energy-family law: absent. No declared relation between the photon quanta's energy/momentum and the electron family's response; the hold fraction presence*2 is fixed"
+  ],
+  "dependencies_sha256": {
+    "examples/radiation-scattering/build.py": "e13044cb0f046b3f067a466ef566bb23e02ca3e17c89b46b11b7222aa2da4afb",
+    "examples/known-entities/catalog.json": "bbe8d5c0549790524e84efd2574a2dd4f7646f17821025ab368543753ef58f3e",
+    "examples/known-entities/physical-units.json": "2357d218a4e59c55eebd07f10f1f3e41dc0c0327889d79587536dd5f0acefb0b"
+  }
+}
