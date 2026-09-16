@@ -1217,3 +1217,21 @@ mapping entries and continued stepping without scans of inactive bank history.
 The existing Focus, field, delay, boundary, parallel and formula-free state tests
 remain consumers of this host-only optimization. Timing is measured outside CI
 assertions with identical inputs; no speed threshold replaces physical equality.
+
+
+### Boundary validation once per crossing and readout reuse
+
+`test_node_runtime.py` rejects a malformed delivered record (unknown type,
+zero code, mutable payload) and a record policy's unvalidated output at the
+Node boundary without changing owners, and counts boundary validations by
+object identity: one per delivered record at the Node and through transport,
+plus one for a merged record, while a malformed link packet leaves its link
+and target untouched. `test_payload_validation.py` tables signed, unsigned,
+negative-in-unsigned, largest, zero, above-bound, negative, float and bool
+codes and wrong component counts for field and spatial-state validation
+against the original decoding reference, with identical messages in the same
+order, and confirms that validation decodes no component.
+`test_node_conservation.py` also checks that repeated readouts of equal
+payloads reuse host evaluations with identical results, that changed values,
+bundles or quantities miss the bounded cache while bookkeeping outside the
+values hits it, and that failed readouts are requested again and never retained.

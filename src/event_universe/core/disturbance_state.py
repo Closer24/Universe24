@@ -58,6 +58,18 @@ def decode(code: int) -> int:
     return code // 2 if code % 2 else -(code // 2)
 
 
+def validate_codes(values: Payload) -> None:
+    """Reject, in order, every component that decode would reject, without decoding."""
+    for code in values:
+        if type(code) is not int or not 1 <= code <= 2 * MAX_VALUE + 1:
+            raise ValueError("invalid positive integer component code")
+
+
+def any_negative(values: Payload) -> bool:
+    """Among validated codes, an even code is a negative value; odd codes are not."""
+    return any(code % 2 == 0 for code in values)
+
+
 def pack(values: tuple[int, ...]) -> Payload:
     return tuple(encode(v) for v in values)
 
@@ -80,8 +92,8 @@ class FieldDefinition:
     def validate(self, values: Payload) -> None:
         if len(values) != self.components:
             raise ValueError(f"invalid component count for field {self.name}")
-        decoded = unpack(values)
-        if not self.signed and any(v < 0 for v in decoded):
+        validate_codes(values)
+        if not self.signed and any_negative(values):
             raise ValueError(f"negative value forbidden for field {self.name}")
 
 
