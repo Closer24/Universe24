@@ -80,13 +80,17 @@ and the still-open encounter policies.
 
 The latest user intent also requires RETURN to claim/cancel the selected branch
 back to the Node of its previous interaction. This is branch-local cancellation,
-not deletion of unrelated branches. A proposed causal realization carries a
-cancellation notice backward along that branch in space and forward in time,
-one Link per allowed transit; it does not erase already committed events,
+not deletion of unrelated branches. The user-approved locality principle requires cancellation to progress under
+ordinary local Node laws and Link timing, backward along that branch in space
+and forward in time, one Link per allowed transit; it does not erase already committed events,
 instantaneously clear a path, remove topology or permanently close Ports.
-The precise endpoint, bounded branch identity/ownership, effect on future packets
-and competing notices remain OPEN. This proposal is not an implemented transport
-law and does not permit unbounded histories or a global branch registry in a Node.
+A counterpropagating ray is a possible mechanism, not a specified or proven
+cancellation law: opposite direction alone does not establish destructive
+interference. The precise prior-interaction endpoint, bounded branch identity,
+collision arithmetic, retained/transferred inventory and remainders, future
+packets and competing notices remain OPEN. No mechanism may use hidden global
+status reads, unbounded histories or a global branch registry in an ordinary Node.
+This binding causal requirement is not a claim of implemented cancellation.
 
 Distinguish model time in integer multiples of `delta_t_min`, Detector time with
 an explicitly defined mapping, and host recording time used only for diagnostics.
