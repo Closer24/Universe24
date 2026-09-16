@@ -1,9 +1,11 @@
 # Canonical simulation terminology
 
-Universe24 uses the following vocabulary for its intended architecture.
+Universe24 uses the following vocabulary for its binding architecture.
 The Node/Register distinction is a design definition, not a claim that the
-Register-level scheduler is already implemented. Existing execution contracts
-remain in force until an explicit implementation change is validated.
+Register-level scheduler is already implemented. See the project-wide
+[binding architecture](ARCHITECTURE.md#binding-system-architecture) for required
+periodic topology, scheduling and lossless arithmetic. Existing execution
+contracts describe implementation; gaps do not relax the binding design.
 
 ## Core terms
 
