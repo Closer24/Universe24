@@ -9,6 +9,12 @@ Each document below owns one subject. Link to that owner instead of maintaining
 another copy of its rules. A configured law, a research hypothesis and a measured
 result are different claims. Revision-specific results are not a live status feed.
 
+## Definition drafts
+
+- [Detector exchange](DETECTOR_EXCHANGE.md): external action-bit selection,
+  PASS/content preservation, fresh return and causal branch cancellation;
+  open decisions remain, with no implementation or run authorization.
+
 ## Active implementation contracts
 
 | Document | Responsibility |
