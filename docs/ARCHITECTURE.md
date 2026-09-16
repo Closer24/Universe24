@@ -406,6 +406,33 @@ execution are binding design requirements, not completed features or measured sp
 Any implementation must demonstrate equal state, ownership, timing, event order,
 failure behavior and model costs before claiming an equivalent host optimization.
 
+### Computational layer implementation map
+
+The Node/Register architecture above is already binding. Its specification was
+not replaced by the property-transport or finite-wave examples; the missing work
+is the actual computational Register and due-endpoint runtime. Configuration
+benchmarks exercise existing mechanisms and cannot establish this implementation.
+
+| Planned component | Owned responsibility and boundary |
+| --- | --- |
+| Shared Register contract | One writer defines the proposed `core/register_contracts.py` interface: bounded Node-local Register state, per-slot ownership/readiness and coherent joint reservation/commit. This path is planned, not an existing implementation claim. |
+| Node-local execution | Each initial Node contains six per-Port computational Registers using the same generic rules. Their state is part of one NodeState; joint operations take one coherent snapshot and commit all affected owners atomically. Do not invoke the full Node planner six times or duplicate inventory. |
+| External due scheduler and transport | Index active/due endpoints and timers, keep current/next-or-later work separate and route only at declared Link arrival times. Topology and periodic endpoint mapping remain external; local rules receive no global reads. |
+| Simulation integration | Adapt the selected profile through the existing Simulation owner, with explicit support checks and unchanged accounting, failures and causal timing. Do not substitute fixture configuration for this adapter. |
+
+The first proposed executable slice is exact whole-record movement plus local
+joint generic transactions. Unsupported spatial-ray or native-quantum composition
+must fail explicitly, not silently fall back to another scheduler. This is an
+incremental supported scope, not a permanent narrowing of the general design.
+The shared contract is settled before dependent concurrent writes; implementation
+owners use isolated files/branches and one writer per shared interface.
+
+Completion requires actual source and focused tests for Register ownership,
+due-only dispatch, dormant wakeup/internal timers, causal ordering, joint atomicity,
+bounded pending state and explicit unsupported-mode rejection, with independent
+review. Until that evidence exists, this map remains planned implementation work,
+not a completed runtime or a speedup claim.
+
 ## Current Node execution ownership
 
 [Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
