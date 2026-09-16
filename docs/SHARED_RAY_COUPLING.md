@@ -12,7 +12,7 @@ This document closes a necessary executable interface under the explicit model
 identity `node-ray-coupling-v1`. Its numerical fixture demonstrates finite,
 phase-sensitive residence followed by release. It is not a nuclear law, an
 electron bound state, an empirical frequency prediction or a new runtime default.
-The [generic operation annex](NODE_GENERIC_OPERATIONS.md),
+The [generic operation annex](https://github.com/Closer24/Universe24/blob/docs/architecture-entity-layers/docs/NODE_GENERIC_OPERATIONS.md),
 [spatial fields](SPATIAL_FIELDS.md), [architecture](ARCHITECTURE.md) and
 [local conservation](LOCAL_CONSERVATION.md) retain their existing ownership.
 
@@ -78,6 +78,10 @@ Within the admitted spatial processing lane:
    advances its phase once. Link transit never advances it a second time for
    that same accounted interval.
 
+No configured `k` is accepted in `ray_interactions` for this first fixed-interval
+interface; residence is the explicit `delay` output. Carrier Node-execution
+duration semantics are not silently applied to these spatial participants.
+
 The coupling pass occurs before absorption and transport. Newly emitted rays
 are not participants until a later interval. A delayed ray's stock remains an
 ordinary resident owner available to admitted local absorption only if that
@@ -88,6 +92,9 @@ For the fixture, phase is an integer in `0..7`, and one accounted interval adds
 one modulo eight. The phase recurrence is therefore eight intervals by the
 configured rule. This is a phase-tag recurrence, not evidence of eight-tick
 spatial motion, proper time, a quantum energy-frequency relation or interference.
+The prepared integer phase table remains the existing phased-ray convention.
+Conserved amount is actual ray stock; a phase-dependent signed amplitude or
+cosine-table projection is not substituted for that stock in the energy audit.
 
 The initial implementation uses the existing fixed Link clock with `H = 1`.
 The selected main tree has no six-output-clock implementation to compose here;
@@ -117,9 +124,11 @@ is a declared demonstration parameter; it is not a measured nuclear constant.
 | 2 | 3 | 0 | Guard is false; rays depart through opposite Ports |
 
 The adjacent receiver cannot own a departure earlier than its send time plus
-`H`. Event timestamp conventions may label a completed interval at its start
-or end; tests must state which convention they inspect and retain this causal
-inequality. The delay belongs to both actual rays, not a shadow copy of their
+`H`. An independent integration fixture must pin the actual `Simulation.tick`,
+send-event tick and arrival-event tick for its known initial preparation before
+running; it must not accept multiple timestamp conventions to hide an off-by-one
+error. The table above indexes local processing calls, while event timestamps
+use the existing engine convention. The delay belongs to both actual rays, not a shadow copy of their
 stock. After release, the rays separate under the ordinary transport rule.
 
 Use the declared axial readouts `E = sum(a)` and `P = sum(a*h)` across all actual

@@ -106,6 +106,9 @@ def document(
     raw: dict = {
         "schema_version": 1,
         "model_id": "kerengonen-double-slit-probe-v1",
+        "sampling_profile": "historical-autonomous-v1"
+        if capture_seed is not None
+        else "detector-only-v1",
         "shape": [SIZE, SIZE, 3],
         "boundary": "open",
         "slots_per_node": 2,

@@ -100,3 +100,5 @@ concepts.
 The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DEFINITIONS.md)
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
+
+- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, explicit historical research profiles and external exchange blockers.

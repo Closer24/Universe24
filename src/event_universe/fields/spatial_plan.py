@@ -14,6 +14,11 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work, reduced_ratio
+from event_universe.core.sampling_contract import (
+    DETECTOR_ONLY,
+    require_historical_sampling,
+    validate_spatial_sampling,
+)
 from event_universe.core.spatial_state import (
     BOND_ORIGIN_MARK,
     TICKET_MODULUS,
@@ -75,6 +80,12 @@ class SpatialLaw:
     # The one shared object: the bond registry, the declared exception to the
     # causal bound. None when no field is bonded.
     bonds: BondRegistry | None = None
+    sampling_profile: str = DETECTOR_ONLY
+
+    def __post_init__(self) -> None:
+        validate_spatial_sampling(self.sampling_profile, self.definitions)
+        if self.bonds is not None or any(rule.bond_setting is not None for rule in self.absorptions):
+            require_historical_sampling(self.sampling_profile, "ordinary bond registry binding")
 
     def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
         """Complete keys of the record's own rays that arrived here with it."""

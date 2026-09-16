@@ -100,6 +100,8 @@ def violations(source, module):
                     or dependency.startswith("core.coupling_selectors.")
                     or dependency == "core.validation"
                     or dependency.startswith("core.validation.")
+                    or dependency == "core.sampling_contract"
+                    or dependency.startswith("core.sampling_contract.")
                     or dependency == "core.integer"
                     or dependency.startswith("core.integer.")
                     or dependency == "core.node_conservation"

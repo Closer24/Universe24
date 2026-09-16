@@ -1716,6 +1716,7 @@ def parse_initial_state(document: object) -> InitialState:
             "ray_delay",
             "focus",
             "ray_phase_per_tick",
+            "sampling_profile",
         },
         required,
     )
@@ -1740,6 +1741,7 @@ def parse_initial_state(document: object) -> InitialState:
     spatial = _spatial_fields(obj.get("spatial_fields", []), fields, schema_version)
     initial = InitialState(
         model_id=_text(obj["model_id"], "model_id"),
+        sampling_profile=_text(obj.get("sampling_profile", "detector-only-v1"), "sampling_profile"),
         shape=shape,
         slots_per_node=capacity,
         link_ticks=_integer(obj["link_ticks"], "link_ticks", 1),

@@ -52,6 +52,7 @@ class Simulation(DisturbanceEngine):
             bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps, bonded[0].bond_stream)
             if bonded
             else None,
+            sampling_profile=initial.sampling_profile,
         )
         super().__init__(
             initial,

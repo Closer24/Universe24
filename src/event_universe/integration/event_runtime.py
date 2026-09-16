@@ -12,15 +12,17 @@ from event_universe.core.disturbance_state import InitialState, LocalPlan, bound
 from event_universe.core.event_resolution import EventResolver, LocalContext, Planner
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.integer import checked_work
+from event_universe.core.sampling_contract import require_historical_sampling
 from event_universe.quantum import DeferredQuantum
 
-from .event_program import Program, parse_event_program
+from .event_program import Program, parse_event_program, validate_program_sampling
 
 
 class NativeEventResolver:
     """One configured bounded rule per register_index; new local arrivals can trigger again."""
 
     def __init__(self, initial: InitialState, program: Program, events: CausalEventSpace) -> None:
+        validate_program_sampling(initial, program)
         if program.network is None:
             raise ValueError("quantum configuration required by this resolver")
         self.initial = initial
@@ -39,6 +41,7 @@ class NativeEventResolver:
         self._null_certificates: dict[tuple[int, int, int], int] = {}
 
     def _sample(self, total: int) -> int:
+        require_historical_sampling(self.initial.sampling_profile, "native quantum ticket sampling")
         if self.program.tickets is None:
             ticket = self.rng.randrange(total)
         else:

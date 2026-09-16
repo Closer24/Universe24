@@ -1235,3 +1235,14 @@ order, and confirms that validation decodes no component.
 payloads reuse host evaluations with identical results, that changed values,
 bundles or quantities miss the bounded cache while bookkeeping outside the
 values hits it, and that failed readouts are requested again and never retained.
+
+## Detector-owned sampling admission
+
+[Detector sampling tests](../tests/test_detector_sampling_contract.py) reject the
+previous unbound lottery and native instrument/contact fixtures under the default
+[Detector-only contract](DETECTOR_SAMPLING.md), including direct owner construction
+and renamed-observer counterexamples. Coherent preparation remains zero-draw.
+The explicitly historical seed-7 fixture retains 18 tickets and five absorbed
+quanta, complete accounting and its marked run metadata; it does not become
+canonical Detector acceptance. Full PASS/RETURN and output-clock composition
+remain blocked by the contract's owner/acceptance table.

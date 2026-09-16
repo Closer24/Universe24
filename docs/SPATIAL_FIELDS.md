@@ -574,7 +574,7 @@ asking end's salt, its setting and its answer; the second question, from the
 other end at its own setting, draws nothing and is answered by the lower half
 of the same number so that the two ends agree with probability
 `(1 - cos(difference)) / 2` from the fixed cosine table, the singlet's law
-([postulate 22](../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)).
+([postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates)).
 An answer of +1 takes the whole ray, -1 leaves it to walk on. The registry's
 second answer knows the first at once, at any distance; it moves no energy, no
 momentum and no message, and the [Bell probe](../examples/bell-chsh/README.md)

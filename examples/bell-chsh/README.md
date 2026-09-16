@@ -90,7 +90,7 @@ pairs per correlation:
 | Plus rates, Alice and Bob | 0.48 to 0.51, whatever the other side's setting |
 | Missing pairs, closure | 0 of 4,096; every run closed |
 
-Under [postulate 22](../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction)
+Under [postulate 22](../../POSTULATES.md#22-historical-autonomous-sampling-candidates)
 the registry draws one number per pair, fixed by its seed and the pair's
 birth code: the first end's coin is its upper half and the other end's
 agreement its lower half. Earlier runs read 2.861 with the number drawn from
@@ -119,7 +119,7 @@ state, and the same-setting correlation reads its predicted `-0.5`.
 
 `--source uniform` and `--source biased` hand the registry each pair's number
 from outside the world instead of from its own sequence
-([postulate 22](../../POSTULATES.md#22-the-lottery-is-the-reality-one-integer-per-interaction),
+([postulate 22](../../POSTULATES.md#22-historical-autonomous-sampling-candidates),
 [the contract](../../docs/SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)).
 The uniform source is a generator that is not the registry's. The biased source
 keeps every number's upper half below one half, so the end that asks first,
