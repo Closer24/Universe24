@@ -1,5 +1,10 @@
 # Physical reference units and integer authoring
 
+The project-wide [lossless remainder requirement](ARCHITECTURE.md#lossless-remainder-ownership)
+is binding for the intended model. The existing behaviors documented below are
+not automatically compliant: preserve their evidence and report the mapped gaps,
+without silently changing runtime semantics through documentation.
+
 The canonical shared registry is
 [physical-units.json](../examples/known-entities/physical-units.json).
 It defines SI base dimensions, named unit scales and sourced constants once.
