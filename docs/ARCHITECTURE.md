@@ -433,6 +433,32 @@ bounded pending state and explicit unsupported-mode rejection, with independent
 review. Until that evidence exists, this map remains planned implementation work,
 not a completed runtime or a speedup claim.
 
+### Dual-execution acceptance and measured selection
+
+The user requires two parallel execution implementations: a conventional
+whole-Node reference and a Register worklist implementation per model clock.
+Run the same experiment with the same physical configuration, preparation,
+topology, local laws and declared timing in both. Retain independent analytical
+expectations; agreement between implementations alone can share the same error.
+
+First establish exact equivalence of physical state, committed events, structured
+outputs and model timing at every tick, including joint ownership, failures and
+declared model costs. Host indexes, queue entries and diagnostic visit counters
+need not be identical and must not be mistaken for physical state. Register
+worklists retain separate current/next sets and due future wakeups for timers
+and internal events, not only arrivals.
+
+Only after equivalence passes, compare speed fairly on the verified identical
+workload and machine: control setup, recording/rendering, repetitions and timing
+boundaries, and report host time/storage separately from model time. Select the
+faster verified implementation for that measured workload while retaining the
+conventional reference and the independent expectations. No automatic assumption
+that Register scheduling is faster, universal speed claim or unmeasured selection
+is allowed. Keeping this reference and measurement-based host choice is explicitly
+authorized; it does not change Node/Register physical ownership, locality or
+causal behavior. The initial six-Register topology remains unchanged pending
+explicit resolution of the later four-Register wording.
+
 ## Current Node execution ownership
 
 [Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
