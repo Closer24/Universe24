@@ -1,5 +1,12 @@
 # Generic integer Node processor
 
+This is the current Node-owned execution contract, not the proposed per-Port
+Register scheduler. The [canonical Node/Register distinction](TERMINOLOGY.md) and
+[Register execution target](ARCHITECTURE.md#register-level-execution-target)
+define the intended decomposition. Storage-register counts and quantum registers
+in existing contracts do not count these computational Registers. No runtime
+behavior or timing changes through the terminology update.
+
 This implements the bounded local execution part of [task 82](https://github.com/Closer24/Universe24/issues/82).
 The configuration opts in with `node_execution: true`. Existing configurations
 retain their existing timing. It is one execution path in the active engine,
