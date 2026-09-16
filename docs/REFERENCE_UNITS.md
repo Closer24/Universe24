@@ -15,6 +15,29 @@ unit conversion inside the engine or a new physical law.
 
 ## Constants, units and model timing
 
+### Minimum model time and output delay
+
+Use `delta_t_min` (Delta t_min) for the minimum model time interval; no SI value
+is assigned. Physical h and hbar are action constants, not time intervals.
+In the accepted Register design, the locally received computation field sets
+each output delay through a defined local rule in integer multiples of this
+interval, not through host load or an inferred hbar/energy law.
+
+For additional waiting before dispatch, define
+`tau_wait(n,p) = k_wait(n,p) * delta_t_min`, with a nonnegative integer count.
+Waiting and Link transit are distinct. **Open convention:** does a generic `k`
+already include transit? Only if transit is one tick and `k` counts additional
+waiting is total elapsed time `(k + 1) * delta_t_min`. Do not add one
+unconditionally or count transit twice. Zero waiting never permits same-tick
+Link traversal; preserve current/future queues and causal readiness.
+
+Speed `c` has dimensions length/time. A calibrated Link speed needs its length
+and transit duration; neither a numerical tick scale nor a new physical law
+is inferred here. This is the canonical timing clarification for the target
+design; existing executable profile timing below remains unchanged.
+
+### Existing profiles and physical constants
+
 The registry distinguishes exact SI defining constants (`speed_of_light`,
 `planck_h`, `elementary_charge`, `boltzmann_k`) from measured constants
 (`newton_G`, `fine_structure_alpha`, magnetic moment units). All cite
