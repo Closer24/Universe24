@@ -1411,7 +1411,9 @@ apparatus role and `"body"`, and 3 for `"setting"`. The test is parametrized
 over `records`, `undecided`, `experiments` and `worlds`. Pinned before the
 first run:
 
-- `records`: the eleven sections; 14 rays and 16 couplings; every ray with
+- `records`: the twelve sections, `phase_bits` without a real-N value and
+  `lag_bits` open, its world key undecided and its engine (feature 8b) not
+  landed; 14 rays and 16 couplings; every ray with
   `kind`, `rest_rate`, `charge`, `phase_bits`, `field` and `note`, a field ray
   with rest rate 0, charge 0 and no field, listed by every ray in its
   `field_of` and listing each of them, a bound group's charge the sum over its
@@ -1426,10 +1428,11 @@ first run:
   field, not a ray of the catalog; the Detector's declaration exactly
   `position`, `setting`, `seed`; both apparatus kinds landed;
 - `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
-  A10, A11, A12, hypothesis 12, hypothesis 13, read from the `### A<n>.` and
-  `### B<n>.` headings of the register and the `## <n>.` headings of the
-  hypotheses page; the table of `CATALOG.md` equal to the file, path for path
-  and decider for decider;
+  A10, A12, hypothesis 12, hypothesis 13, feature 8b, read from the
+  `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
+  of the hypotheses page and the `feature <n>` names of the ray-event model;
+  the table of `CATALOG.md` equal to the file, path for path and decider for
+  decider;
 - `experiments`: the ids equal to the `### A<n>.` headings of the register,
   14 of them, every listed ray, coupling and apparatus resolving and none
   repeated; A1's first coupling `born_steering`, A5's `electron_field_turn`;

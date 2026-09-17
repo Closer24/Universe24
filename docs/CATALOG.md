@@ -50,7 +50,8 @@ rule already takes. A test pins the file's contract
 | --- | --- | --- |
 | m₀, the rest rate | One phase step per interval, the rest rate of the electron ([hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding), hypothesis 14); every rest rate is an integer multiple of it and light is 0; a rest rate is the ray's mass as a clock (Highlights 3.3) | `kerengonen.phase_advance` |
 | e/3, the charge unit 3 | Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers: up +2, down −1, electron −3, positron +3, proton +3, neutron 0; `charge × amount` summed over a meeting's rays is the invariant the engine appends to every coupling | `charge`, per quantum |
-| The phase width | N = 2^`phase_bits` steps per turn; a phase is an integer from 0 below N, an advance or a difference a mask with N − 1; the register's boards use 8 (N = 256), the reference Born table is written at 3 (N = 8), and the real N, of the order of 2^74 (hypothesis 14; A11 at `phase_bits` 75), is the model owner's declaration before that run | `phase_bits`, one width per world |
+| The phase width | 2^`phase_bits` steps per turn; a phase is an integer from 0 below that, an advance or a difference a mask with it less one. A phase is read only at a meeting and only as a difference, so the width is the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): eight steps resolve the Born table, the register's boards use 8 (256 steps), the reference table is written at 3 (8 steps), and a wider circle is allowed but never required; A11's 75-bit phase is a check that a wide width leaks into no coupling | `phase_bits`, one width per world |
+| The lag width | The modulus of the lag register in which a field ray's delay is carried and spent as one Link toward the lagging side when it reaches that modulus; declared per family, of any width because it enters no phase sum; it, not the phase circle, is the N of hypothesis 14. Feature 8b, planned after feature 10: until it lands the engine counts the lag in phase steps and the two moduli are one | the `lag_bits` entry: world key open |
 | The quantum | The content of a ray, a bounded integer; the energy of the invariants is the amount, the momentum is amount × heading | `amount` |
 
 ## The records
@@ -101,11 +102,14 @@ that the register and the catalog agree; the test holds the two together.
 ## Undecided entries and what decides each
 
 The test reads this table and holds it equal to the `"undecided"` values of
-the file, path for path and decider for decider.
+the file, path for path and decider for decider. A decider is an entry of the
+[register](EXPERIMENTS.md), a numbered hypothesis of the
+[hypotheses page](HYPOTHESES.md), or a feature of the
+[ray-event model's migration list](RAY_EVENT_MODEL.md#6-migration-in-order).
 
 | Entry | What is undecided | Decided by |
 | --- | --- | --- |
-| `phase_bits.real` | The exact N of nature, of the order of 2^74 | A11 |
+| `lag_bits.world_key` | The key that declares the lag modulus per family, the N of hypothesis 14 on the lag register and not on the phase | feature 8b |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |

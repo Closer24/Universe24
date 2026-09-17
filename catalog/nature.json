@@ -32,9 +32,14 @@
   "phase_bits": {
     "default": 8,
     "reference_table": 3,
-    "real": "undecided",
-    "decided_by": "A11",
-    "note": "N = 2^phase_bits phase steps per turn. 8 (N = 256) is the width of the register's boards and 3 (N = 8) the width of the reference Born table; a world declares one width for all its rays, since a field and the ray that releases it must share it (released-field-v1). The real N is of the order of 2^74, held by phase_bits 75 (hypothesis 14; A11), and is the model owner's exact declaration before that run."
+    "note": "2^phase_bits phase steps per turn, the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): a phase is read only at a meeting and only as a difference, so eight steps resolve the Born table and a wider circle is allowed but never required. 8 (256 steps) is the width of the register's boards and 3 (8 steps) the width of the reference Born table; a world declares one width for all its rays, since a field and the ray that releases it must share it (released-field-v1). The weakness of gravity does not live in the phase: the N of hypothesis 14 is the lag modulus below, and A11's 75-bit phase is a check that a wide width leaks into no coupling."
+  },
+  "lag_bits": {
+    "status": "open",
+    "world_key": "undecided",
+    "engine": {"identity": "feature 8b of issue #169, the lag modulus, after feature 10", "landed": false},
+    "decided_by": "feature 8b",
+    "note": "The width of the lag register (Highlights 3.28, 2026-09-17): the delay a field ray lays on the ray it meets is carried in a lag register with its own declared modulus per family, spent as one Link toward the lagging side when it reaches that modulus, exactly as a heading is carried with a resolution of one part in 2^30 through six Ports. That modulus, not the phase circle, is the N of hypothesis 14, of any width because it enters no phase sum; a world declares it per family as it declares phase_bits, the runs of hypothesis 14 and A6 declaring their four N on it. Until feature 8b the engine counts the lag in phase steps (ray-binding-v1), so the two moduli are one and those runs set them equal; the world key is feature 8b's."
   },
   "rays": {
     "light": {
@@ -235,7 +240,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "table_shape": "delay per field amount per Port: for each Port a mass_field ray arrives through, an integer times the arriving amount, in phase steps of the output clock on that side (Highlights 3.28), larger on the side nearer the heavy Node so that the ray bends toward it; a lag that reaches N is one Link toward the lagging side",
+      "table_shape": "delay per field amount per Port: for each Port a mass_field ray arrives through, an integer times the arriving amount, in steps of the lag register on that side (Highlights 3.28; phase steps until feature 8b, the lag's own modulus after it, lag_bits), larger on the side nearer the heavy Node so that the ray bends toward it; a lag that reaches its modulus is one Link toward the lagging side",
       "note": "Gravity as bending by delay (Highlights 3.28; ray-binding-v1): the met ray is delayed, the field ray returns reversed with the opposite momentum, nothing is absorbed and momentum is exact. The engine applies the table; the physics is the table, A6's declaration written before its run and pinned by the exponent -1 in the impact parameter, the linearity in M and G_eff x N^2 constant over the phase width (the acceptance test of feature 8 used [4, 4, 4, 4, 4, 4] per 1, a test value, not this declaration); A7 runs it between two bodies (exponent -2), A11 at the real N."
     },
     "electron_proton_binding": {
@@ -507,7 +512,7 @@
       "rays": ["light", "electron", "positron", "electron_field", "positron_field", "mass_field"],
       "couplings": ["born_steering", "slit", "absorber", "electron_field_turn", "recoil_return", "mass_field_delay"],
       "apparatus": ["detector", "external_body"],
-      "note": "The worlds of A1, A5 and A6 at phase_bits 75, the electron rays at the rung k of A10."
+      "note": "The worlds of A1, A5 and A6 at phase_bits 75, the electron rays at the rung k of A10: a width check that the wide phase leaks into no coupling, the N of nature being the lag modulus of feature 8b (lag_bits) and not the phase circle (Highlights 3.28)."
     },
     "A12": {
       "rays": ["light"],

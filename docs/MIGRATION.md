@@ -772,8 +772,11 @@ exists on the board.
   binding, the weak conversion, Pauli exclusion, the transmission meeting its
   held share, and the external-body couplings absorber, mirror, beam splitter,
   phase plate, slit and polarizer), the two apparatus kinds and, per register
-  entry A1 to A14, the ids it uses. Twenty-eight values are `"undecided"`,
-  each with the experiment or hypothesis that decides it.
+  entry A1 to A14, the ids it uses, and the lag width of feature 8b as an
+  open entry (Highlights 3.28: `phase_bits` is the family's resolution
+  choice, the N of hypothesis 14 the lag modulus). Twenty-eight values are
+  `"undecided"`, each with the experiment, hypothesis or feature that decides
+  it.
 - No engine code changed: no module, key or rule was added, and the parser
   accepts exactly what it did. A world file is still written by hand from the
   catalog; there is no loader.

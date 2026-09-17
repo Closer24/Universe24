@@ -41,6 +41,7 @@ SECTIONS = {
     "statement",
     "units",
     "phase_bits",
+    "lag_bits",
     "rays",
     "couplings",
     "layers",
@@ -101,11 +102,16 @@ def undecided(value: object, path: str = "") -> dict[str, list[object]]:
 
 
 def deciders() -> set[str]:
+    """The names a decided_by may carry: an entry of the register, a hypothesis of the
+    hypotheses page, or a feature of the ray-event model's migration list."""
     register = (ROOT / "docs/EXPERIMENTS.md").read_text(encoding="utf-8")
     hypotheses = (ROOT / "docs/HYPOTHESES.md").read_text(encoding="utf-8")
-    return set(re.findall(r"^### ([AB]\d+)\. ", register, re.M)) | {
-        f"hypothesis {number}" for number in re.findall(r"^## (\d+)\. ", hypotheses, re.M)
-    }
+    model = (ROOT / "docs/RAY_EVENT_MODEL.md").read_text(encoding="utf-8")
+    return (
+        set(re.findall(r"^### ([AB]\d+)\. ", register, re.M))
+        | {f"hypothesis {number}" for number in re.findall(r"^## (\d+)\. ", hypotheses, re.M)}
+        | {f"feature {number}" for number in re.findall(r"\b[Ff]eature (\d+b?)\b", model)}
+    )
 
 
 def documented_undecided() -> dict[str, list[object]]:
@@ -297,6 +303,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert data["units"]["rest_rate"]["value"] == 1 and data["units"]["charge"]["per_e"] == 3
         assert data["phase_bits"]["default"] == 8
         assert data["phase_bits"]["reference_table"] == REFERENCE_BITS
+        assert "real" not in data["phase_bits"]
+        lag = data["lag_bits"]
+        assert (lag["status"], lag["world_key"], lag["engine"]["landed"]) == ("open", UNDECIDED, False)
         assert set(data["layers"]) == {"note"}
         for name, ray in rays.items():
             assert RAY_KEYS <= ray.keys(), name
@@ -393,10 +402,10 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A8",
             "A9",
             "A10",
-            "A11",
             "A12",
             "hypothesis 12",
             "hypothesis 13",
+            "feature 8b",
         }
     elif case == "experiments":
         # (c) The catalog lists exactly the confrontation entries of the register,
