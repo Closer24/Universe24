@@ -962,6 +962,12 @@ from the event stream alone (no per-tick recording, so no phase):
   (tick 3 named one G click, tick 4 ended "field escaped: G 10"); the
   tick-2 departure release, the tick-3 and tick-4 releases, the escape
   counts, the ray count and `final_totals` are unchanged;
+- (h) the eye view (Highlights 5.4, "everything begins and is realized at
+  a marked Node"): the run's `eye` block lists the marked Nodes (`marks`,
+  (4,1,1) with setting 1/1) and every PASS click (`clicks`: the same five
+  ticks, families and amounts as the click markers, each at (4,1,1) through
+  Port -X with bit 1) and counts the hits per Node (`hits`: five at
+  "4,1,1"); the page's eye view draws only these;
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
@@ -992,7 +998,9 @@ from the event stream alone (no per-tick recording, so no phase):
   `camera_fit` `rays` with `camera_fit_margin_links` 1 (the camera and the
   lattice fit the box around every matter ray path, source, Detector mark and
   body over the run, padded by one Link; `board` fits the whole board), and
-  fixed colours for the families `electron`, `light`, `proton` and `neutron`, of the `page_text` flags
+  fixed colours for the families `electron`, `light`, `proton` and `neutron`,
+  `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
+  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot), of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 

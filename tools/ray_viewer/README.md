@@ -86,6 +86,23 @@ here that touches the engine.
   loops (`motion.autoplay`, `motion.loop`), and the space key pauses and
   resumes.
 
+## The eye view
+
+By the model owner's decision on Highlights 5.4 ("everything begins and is
+realized at a marked Node"), the physical picture is the list of PASS
+clicks; the board rendering is the record's view. `draw.view` chooses:
+`board` (the default, everything above) or `eye`, which draws only the
+marked Nodes as dim spheres and each PASS click as a bright flash of its
+family's colour at its Node, sized by amount (`click_flash_px_per_quantum`,
+`click_flash_min_px`), fading over `click_flash_ticks` and leaving a
+persistent dim dot (`click_dot_px`, `click_dot_alpha`), like a screen
+accumulating hits; no rays, fields or other markers; the title, the tick
+and the camera fit as before. A run without a mark has an empty eye view,
+which is itself the point. `extract.py` writes the `eye` block of every run
+(marks, clicks, hits per Node); `render_gif.py --view eye` renders that
+view, and `--side-by-side` renders the board view and the eye view as two
+panels, left and right, in one GIF and one contact sheet.
+
 ## The look lives in `style.json`
 
 Everything about how the renderer looks and what it shows is in
@@ -96,8 +113,8 @@ never a code change. Its sections and keys, all of them, are:
 | Section | Keys |
 | --- | --- |
 | `colors` | `background`, `surface`, `scene` (the vignette's centre), `scene_edge` (its edge), `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
-| `sizes` | `ray_width_px`, `head_radius_px` (a sphere head, on screen), `head_links` (a segment head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `marker_ring_thickness`, `marker_alpha`, `escape_dot_radius`, `escape_alpha`, `source_size`, `detector_size`, `body_size`, `detector_alpha`, `glow_scale`, `glow_alpha`, `sphere_roughness`, `sphere_metalness`, `sphere_emissive`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `node_dot_alpha`, `lattice_alpha`, `box_alpha` |
-| `draw` | `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
+| `sizes` | `ray_width_px`, `head_radius_px` (a sphere head, on screen), `head_links` (a segment head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `marker_ring_thickness`, `marker_alpha`, `escape_dot_radius`, `escape_alpha`, `click_flash_ticks`, `click_flash_px_per_quantum`, `click_flash_min_px`, `click_dot_px`, `click_dot_alpha`, `mark_alpha` (the eye view), `source_size`, `detector_size`, `body_size`, `detector_alpha`, `glow_scale`, `glow_alpha`, `sphere_roughness`, `sphere_metalness`, `sphere_emissive`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `node_dot_alpha`, `lattice_alpha`, `box_alpha` |
+| `draw` | `view` (`board` or `eye`), `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
 | `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `gif_supersample`, `contact_stills`, `elevation_deg`, `start_angle_deg`, `camera_fit` (`rays` or `board`), `camera_fit_margin_links` |
 
