@@ -764,7 +764,11 @@ information, an event is where that information splits, and a ray is what
 was split off from an event. An interaction is a meeting of rays at a node in
 one interval, decided by the coupling declared between the families present;
 it is the only place where anything is decided, and its result is at most six
-events, one per Port. An event is a change of trajectory: a new straight line
+events, one per Port. Event spacetime has layers: a layer is a set of
+families that couple, and a meeting exists only inside a layer; rays whose
+families have no declared coupling never meet and cross as if the other were
+not there, so two events can happen at the same node in the same interval in
+layers that do not communicate. An event is a change of trajectory: a new straight line
 leaving the interaction through one Port. A ray is not an object; it is the
 trajectory of one event between two interactions, the same event with the
 same family properties, one node per Link interval, one heading. From its
@@ -785,7 +789,8 @@ second kind. Light is a wave ray with no mass and no charge, an event moving
 in time.
 
 At a node where rays meet, the declared coupling decides one of three things:
-no interaction, and the rays cross; a deterministic interaction, up to six
+no interaction, and the rays cross as if the other were not there; a
+deterministic interaction, up to six
 events computed from the frozen inputs with every declared invariant exact
 over all inputs and outputs; or a Detector interaction, at a node whose Detector
 bit is set, which draws 1 or 0 for each arriving transfer, independently,

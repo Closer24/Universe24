@@ -29,7 +29,11 @@ is where events are made; everything else is defined from these.
 
 **Interaction.** An interaction is a meeting of rays at a Node in one
 interval, decided by the coupling declared between the families present.
-It is the only place where anything is decided. Its result is a set of
+Event spacetime has layers: a layer is a set of families that couple, and a
+meeting exists only inside a layer. Rays whose families have no declared
+coupling never meet; they cross as if the other were not there, so two
+events can happen at the same Node in the same interval in layers that do
+not communicate. An interaction is the only place where anything is decided. Its result is a set of
 events leaving the Node: at most six, one per Port, because a Node has six
 Ports. Fewer when some Ports stay empty; one when a ray continues or
 reverses; none when the rays stay bound at the Node.
@@ -61,7 +65,9 @@ information was added or lost along the line.
 permits actually happens: the up-to-six events leaving the interaction all
 propagate, each as a straight ray, each carrying its share of the conserved
 quantities and its phase. Alternatives are created only at
-interactions, never at the empty Nodes a ray crosses. A wave ray between two
+interactions, never at the empty Nodes a ray crosses, and only inside a
+layer: events in different layers at the same Node do not communicate. A
+wave ray between two
 interactions is one line; at an interaction it becomes up to six lines.
 
 **Wave ray.** Every ray is a wave ray and carries a phase that advances along
@@ -203,8 +209,9 @@ they exist, held source records remain an explicitly labeled interim device.
 At a Node where two or more rays are resident in the same interval, the
 declared coupling between their families decides one of:
 
-- **no interaction**: the rays cross and continue (no coupling declared, or
-  the coupling's guard is false);
+- **no interaction**: the rays cross and continue as if the other were not
+  there (no coupling declared, so the rays are in different layers and never
+  meet; or the coupling's guard is false);
 - **a deterministic interaction**: up to six events leave the Node, computed
   from the frozen inputs by the declared operation, with every declared
   invariant (energy, momentum component by component, charge, family counts)
@@ -236,7 +243,7 @@ The rule in the form Highlights 3.27 requires:
 | Question | Answer under this model |
 | --- | --- |
 | Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
-| What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
+| What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
