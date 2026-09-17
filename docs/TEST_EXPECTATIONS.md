@@ -55,10 +55,9 @@ not a claim of linear host work.
 
 `test_active_node_contracts.py` exercises receipt and completion at all six Ports
 for the active carrier Node, spatial Node and source-envelope Node. For the same
-local payload and fixed capacity it varies world extent, unrelated resident/event
+local payload and fixed capacity it varies world extent, unrelated resident
 counts (0, 8, 128) and elapsed model ticks. The measured production-path line counts,
-modeled carrier cost, local event count and recursively retained payload size must
-stay equal. Host world indexes are made unreadable during each local transition.
+modeled carrier cost and recursively retained payload size must stay equal. Host world indexes are made unreadable during each local transition.
 Expected outputs remain explicit: one carrier crosses one Link, spatial stock 64
 is owned locally or in outgoing packets, and the source mixer yields amplitude 3/5.
 These are bounded-work regressions plus state/locality guards, not a timing-based
@@ -112,20 +111,19 @@ bucket B.3.
 envelope: factor 25/9 from a 16/25 null and `None` for vacuum or certain
 occupation; scaled weight clipped at one; notice packets require a factor of at
 least one and an event identity; a null without the option sends nothing and
-keeps scale one; a null with it scales itself and fills one notice slot per
-Port; a received notice waits the control delay, applies, forwards away from
-its arrival Port and is ignored when repeated or at a retired Node; the
-applied bank keeps six identities. Crossing nulls: the correction of a 256/625
+keeps scale one; a received notice waits the control delay, applies, forwards
+away from its arrival Port and is ignored when repeated or at a retired Node;
+the applied bank keeps six identities. Crossing nulls: the correction of a 256/625
 null after a delivered 625/481 is 19721/15625 and completes 625/481 x 625/369
 to 25/9, two corrections telescope to one, a weight that would reach one gives
 none, and a factor below one or a weight above one is rejected; notice packets
 carry an optional (tick, position) key that requires both parts; at the Node
-level a null with the weight law keeps the record (4, 16/25, 1), an
-earlier-ordered notice produces one correction in the correction bank under
-the Node's own key, a later-ordered one produces none, a null without the
-weight law keeps no record, and more than six queued corrections are rejected.
-The world-level cases (the two-arm world, the crossing-null probe and the
-headless run) were deleted on 2026-09-17 with the integration layer.
+level a notice-sending null is rejected without a recording event identity,
+and more than six queued corrections are rejected. The world-level cases (the
+two-arm world, the crossing-null probe and the headless run) were deleted on
+2026-09-17 with the integration layer; the Node-level notice-sending and
+crossing-null cases took their identities from the causal event ledger and
+were deleted with it on 2026-09-17 (issue #164, bucket B.4).
 
 
 ## Computational response
@@ -625,13 +623,9 @@ cases; the check selector maps every lab source/configuration change to it.
 
 ## Causal event ledger
 
-`test_event_links.py` checks immutable event spacetime through a split/join,
-direct event lookup without separate predecessor lists, current-head updates,
-foreign and forged handle rejection, failed-append atomicity, fixed capacity,
-and that a dependency edge is not a physical link while a capacity failure
-leaves the identity counter unchanged. The quantum event network, the origin
-cells and their suites were deleted on 2026-09-17; the ledger stays until
-issue #164 bucket B.4.
+`test_event_links.py` and the ledger it checked were deleted on 2026-09-17
+under issue #164 bucket B.4 (Highlights 3.20: there is no register), after the
+quantum event network, the origin cells and their suites went the same day.
 
 
 ## Local field impulse and node ownership

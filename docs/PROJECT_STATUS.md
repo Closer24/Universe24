@@ -25,9 +25,10 @@ localized-contact profiles, the quantum origin cells and the native event
 programs, were deleted on 2026-09-17 under Highlights sections 3.18 (deleted),
 3.19, 3.20 and 5.4; see the
 [migration note](MIGRATION.md#shared-quantum-resource-and-integration-layer-deleted-on-2026-09-17).
-Their dated evidence stays in [validation](VALIDATION.md); the source-envelope
-modules, the causal event ledger, the bond registry and claim/gather stay until
-buckets B.3 to B.6 of issue #164.
+Their dated evidence stays in [validation](VALIDATION.md); the causal event
+ledger was deleted on 2026-09-17 under bucket B.4, and the source-envelope
+modules, the bond registry and claim/gather stay until buckets B.3, B.5 and
+B.6 of issue #164.
 
 
 [Computational response](COMPUTATIONAL_RESPONSE.md) adds an emission-only readout
@@ -249,7 +250,6 @@ records are temporary, while their recorded conclusions remain in the repository
 | Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |
 | Local field read/response rules | [local_field_rules.py](../src/event_universe/fields/local_field_rules.py) | Six-port reads and guarded local field/carrier proposals; no implied Maxwell law |
 | Entity reference and representation | [entity_catalog.py](../src/event_universe/entity_catalog.py), [entities.py](../src/event_universe/entities.py), [catalog.json](../examples/known-entities/catalog.json) | Sourced properties and interactions are validated separately; 46 explicitly supplied experiment profiles compile without deriving laws from labels |
-| Causal event ledger | [event_space.py](../src/event_universe/core/event_space.py), [event_links.py](../src/event_universe/core/event_links.py) | Immutable event identities and fixed handles; no public assembly creates it since the `event_program` member was deleted on 2026-09-17; stays until issue #164 bucket B.4 |
 | Shared integer arithmetic | [integer.py](../src/event_universe/core/integer.py) | Shared bounded integer primitives; expression evaluation retains its separate owner |
 | Local E/B pulse candidate | [local impulse contract](LOCAL_LORENTZ_FIELD.md) | Held one-shot probes, finite pulse transport and an opposite local reservoir; not derived Maxwell dynamics |
 | Formula-free state diagnostic | [node_contract.py](../src/event_universe/diagnostics/node_contract.py) | Read-only structural guard for state ownership; host diagnostics are not physical updates |

@@ -203,12 +203,6 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
-    if world.event_space is not None:
-        from dataclasses import asdict
-
-        with (output / "causal-events.jsonl").open("w", encoding="utf-8") as causal_stream:
-            for entry in world.event_space.events:
-                causal_stream.write(json.dumps(asdict(entry)) + "\n")
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],

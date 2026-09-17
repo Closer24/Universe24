@@ -89,28 +89,14 @@ class DisturbanceNode(DisturbanceNodeState):
         tick: int,
         services: NodeServices,
         *,
-        causes: tuple[int, ...] = (),
-        event_cost: int = 0,
         notifications: list[dict[str, object]] | None = None,
         **data: object,
-    ) -> int | None:
-        identity, message = services.events.record(
-            event,
-            tick,
-            self.position,
-            self.cause_id,
-            causes=causes,
-            event_cost=event_cost,
-            owner="disturbance",
-            **data,
-        )
-        if identity is not None:
-            self.cause_id = identity
+    ) -> None:
+        message = services.events.message(event, tick, self.position, **data)
         if notifications is None:
             services.events.publish(message)
         else:
             notifications.append(message)
-        return identity
 
     def receive(
         self,
@@ -140,7 +126,6 @@ class DisturbanceNode(DisturbanceNodeState):
                 raise ValueError("node received a packet addressed to another Node")
             validate_record(initial, packet.record)
             mask[packet.port ^ 1] = 1
-        services.events.require_room(len(packets))
         locked = (
             frozenset()
             if self.pending is None
@@ -186,7 +171,6 @@ class DisturbanceNode(DisturbanceNodeState):
                 "received",
                 tick,
                 services,
-                causes=() if packet.cause_id is None else (packet.cause_id,),
                 port=packet.port ^ 1,
                 disturbance=services.initial.disturbances[packet.record.type_index].name,
                 values=record_values(services.initial, packet.record),
@@ -263,7 +247,6 @@ class DisturbanceNode(DisturbanceNodeState):
                     self.records,
                     self.coupling_remainders,
                     self.received_count,
-                    self.cause_id,
                 )
             )
         ):
@@ -285,15 +268,12 @@ class DisturbanceNode(DisturbanceNodeState):
         port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
         if services.initial.least_delay_routing and spatial is not None and spatial_services is not None:
             port_loads = tuple(spatial.directional_load(port, spatial_services) for port in range(6))
-        if services.events.enabled:
-            services.events.require_room(1)
         context = LocalContext(
             tick,
             self.position,
             self.records if coupled is None else coupled.records,
             self.coupling_remainders,
             self.received_count,
-            self.cause_id,
             port_loads,
         )
         if services.resolver is None:
@@ -377,24 +357,14 @@ class DisturbanceNode(DisturbanceNodeState):
         self.last_cost = plan.cost
         self.arrival_mask = (0,) * port_count(services.initial)
         self.delay_counts = (extra // services.initial.link_ticks,) * port_count(services.initial)
-        cause = self.notify(
+        self.notify(
             "cycle_started",
             tick,
             services,
-            causes=(
-                (() if plan.cause_id is None else (plan.cause_id,))
-                + (
-                    spatial.cycle_causes(tick, spatial_services, sampled=coupled is not None)
-                    if services.events.enabled and spatial is not None and spatial_services is not None
-                    else ()
-                )
-            ),
-            event_cost=plan.cost,
             cost=plan.cost,
             ready_tick=pending.ready_tick,
             next_tick=pending.next_tick,
         )
-        self.pending = replace(pending, cause_id=cause)
 
     def _begin_shared(
         self, tick: int, services: NodeServices, spatial: SpatialNode, spatial_services: SpatialServices
@@ -406,7 +376,6 @@ class DisturbanceNode(DisturbanceNodeState):
         has_carriers = services.record_policy.has_work(self.records)
         if not has_carriers and field_plan.cost == 0:
             spatial.last_cost = 0
-            spatial.cost_cause_id = None
             spatial_services.activity.mark(self.position, False)
             return
         # Under the shared clock the computation load delays field forwarding too.
@@ -489,27 +458,21 @@ class DisturbanceNode(DisturbanceNodeState):
             spatial_phases=phases,
             spatial_guard_states=guard_states,
         )
-        if services.events.enabled:
-            services.events.require_room(1)
-        field_cause = spatial.cause_id
         services.accounting.charge_cycle(plan.cost)
         self.pending, self.received_count, self.last_cost = pending, 0, plan.cost
         spatial.shared_pending = 1
         spatial.last_cost = field_plan.cost
         self.arrival_mask = (0,) * port_count(services.initial)
         self.delay_counts = (extra // services.initial.link_ticks,) * port_count(services.initial)
-        cause = self.notify(
+        self.notify(
             "cycle_started",
             tick,
             services,
-            causes=() if field_cause is None else (field_cause,),
-            event_cost=plan.cost,
             cost=plan.cost,
             ready_tick=pending.ready_tick,
             next_tick=pending.next_tick,
             spatial_cost=field_plan.cost,
         )
-        self.pending = replace(pending, cause_id=cause)
 
     def _commit(
         self,
@@ -538,14 +501,6 @@ class DisturbanceNode(DisturbanceNodeState):
                     guarded, pending.plan.spatial_reaction, pending.plan.spatial_guards
                 )
             field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services, field_plan.rays)
-        if services.events.enabled:
-            services.events.require_room(
-                1
-                + int(bool(pending.plan.spatial_reaction))
-                + len(pending.plan.departures)
-                + int(field_plan is not None)
-                + sum(p is not None for p in field_packets)
-            )
         old_links = self.output.packets
         if any(packet is not None for packet in old_links):
             raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
@@ -560,9 +515,7 @@ class DisturbanceNode(DisturbanceNodeState):
         records = [self._staying(record) for record in records]
         alternatives: list[tuple[DisturbanceRecord | None, ...]] = []
         resolver = services.resolver
-        context = LocalContext(
-            tick, self.position, tuple(records), self.coupling_remainders, 0, pending.cause_id
-        )
+        context = LocalContext(tick, self.position, tuple(records), self.coupling_remainders, 0)
         if pending.plan.resolution_token is not None:
             if not isinstance(resolver, CommitResolver):
                 raise ValueError("pending resolution requires a commit resolver")
@@ -613,14 +566,6 @@ class DisturbanceNode(DisturbanceNodeState):
             if spatial is None or spatial_services is None or field_plan is not None
             else spatial.prepare_reaction(tick, pending.plan.spatial_reaction, spatial_services)
         )
-        field_causes = (
-            spatial.reaction_causes(outgoing=reaction is not None and reaction.links is not None)
-            if services.events.enabled
-            and spatial is not None
-            and spatial_services is not None
-            and (field_plan is not None or pending.plan.spatial_reaction or pending.plan.spatial_guards)
-            else ()
-        )
         if services.balance_guard is not None:
             before_fields = (
                 () if spatial is None else tuple(state.populations for state in spatial.states)
@@ -652,15 +597,13 @@ class DisturbanceNode(DisturbanceNodeState):
                 ),
                 "carrier interaction commit",
             )
-        resolution_cause: tuple[int, ...] = ()
         if alternatives:
             assert isinstance(resolver, CommitResolver)
             assert pending.plan.resolution_token is not None
-            choice, event_id = resolver.commit_choice(
+            choice, _ = resolver.commit_choice(
                 context, pending.plan.resolution_token, 1 + int(bool(pending.plan.spatial_reaction))
             )
             records = list(alternatives[choice])
-            resolution_cause = (event_id,)
         # All proposal validation has succeeded; commit coupled records together.
         self.records = tuple(records)
         self.committed_cost = pending.plan.cost
@@ -685,24 +628,20 @@ class DisturbanceNode(DisturbanceNodeState):
             spatial.commit_reaction(reaction, pending.plan.spatial_reaction, spatial_services)
         services.accounting.record_sources(pending.plan.source_delta)
         notifications: list[dict[str, object]] = []
-        committed = self.notify(
+        self.notify(
             "cycle_committed",
             tick,
             services,
-            causes=(() if pending.cause_id is None else (pending.cause_id,))
-            + field_causes
-            + resolution_cause,
             notifications=notifications,
             cost=pending.plan.cost,
             transfers=len(pending.plan.departures),
         )
         if field_plan is not None:
             assert spatial is not None and spatial_services is not None
-            cause = spatial._event(
+            spatial._event(
                 "spatial_cycle",
                 tick,
                 spatial_services,
-                causes=(committed,),
                 notifications=notifications,
                 cost=field_plan.cost,
                 source_delta={
@@ -716,14 +655,11 @@ class DisturbanceNode(DisturbanceNodeState):
                     if field_plan.rule_delta and any(field_plan.rule_delta[i])
                 },
             )
-            spatial.cause_id = spatial.cost_cause_id = cause
         if pending.plan.spatial_reaction:
-            cause = self.notify(
+            self.notify(
                 "spatial_coupled",
                 tick,
                 services,
-                causes=(),
-                event_cost=0,
                 notifications=notifications,
                 reaction={
                     field.name: values
@@ -744,29 +680,20 @@ class DisturbanceNode(DisturbanceNodeState):
                     else {}
                 ),
             )
-            if cause is not None and spatial is not None and spatial_services is not None:
-                if field_plan is not None:
-                    spatial.cause_id = cause
-                else:
-                    spatial.link_reaction(reaction, cause)
         if field_plan is not None:
             assert spatial is not None and spatial_services is not None
-            linked_fields = list(spatial.output.packets)
-            for index, field_packet in enumerate(linked_fields):
+            for field_packet in spatial.output.packets:
                 if field_packet is not None:
-                    cause = spatial._event(
+                    spatial._event(
                         "spatial_sent",
                         tick,
                         spatial_services,
-                        causes=(spatial.cause_id,),
                         notifications=notifications,
                         port=field_packet.port,
                         arrival_tick=field_packet.arrival_tick,
                     )
-                    linked_fields[index] = replace(field_packet, cause_id=cause)
-            spatial.output.publish(tuple(linked_fields))
         for index, departure in enumerate(pending.plan.departures):
-            cause = self.notify(
+            self.notify(
                 "sent",
                 tick,
                 services,
@@ -781,12 +708,6 @@ class DisturbanceNode(DisturbanceNodeState):
                     )
                 ),
             )
-            if cause is not None:
-                linked = list(self.output.packets)
-                packet = linked[index]
-                assert packet is not None
-                linked[index] = replace(packet, cause_id=cause)
-                self.output.publish(tuple(linked))
         for event in notifications:
             services.events.publish(event)
 

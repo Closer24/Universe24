@@ -1,16 +1,18 @@
-"""Source-envelope null notices: local factor, Link transport, delayed commit and corrections."""
+"""Source-envelope null notices: local factor, Link transport, delayed commit and corrections.
+
+A null that sends notices needs a ledger event identity; that case and the crossing-null
+Node case went with the causal event ledger on 2026-09-17 (issue #164, bucket B.4).
+"""
 
 from fractions import Fraction
 
 import pytest
 
 from event_universe.core.disturbance_state import OPERATIONS, CostMeter, OperationCosts
-from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
 from event_universe.core.source_envelope_node import (
     CORRECTION_QUEUE,
     NOTICE_BANK,
-    OUTPUT_SLOTS,
     EnvelopePacket,
     SourceEnvelopeNode,
 )
@@ -32,6 +34,11 @@ COSTS = OperationCosts((1,) * len(OPERATIONS))
 
 def meter():
     return CostMeter(COSTS)
+
+
+def observed() -> tuple[NodeEvents, list[dict[str, object]]]:
+    published: list[dict[str, object]] = []
+    return NodeEvents(published.append), published
 
 
 def test_scale_and_factor_arithmetic_are_exact_and_clip_at_one():
@@ -67,50 +74,24 @@ def test_null_without_a_factor_keeps_the_original_local_only_behavior():
     assert all(packet is None for packet in node.output)
 
 
-def test_null_with_a_factor_scales_itself_and_sends_one_notice_per_port():
-    space = CausalEventSpace(40)
-    events = NodeEvents(space, None)
-    node = SourceEnvelopeNode(MIDDLE, source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
-    node.null(
-        1,
-        None,
-        null_factor=null_factor,
-        neighbor_ports=(0, 1),
-        send_delay=0,
-        link_ticks=1,
-        costs=COSTS,
-        events=events,
-    )
-    assert node.amplitude == EnvelopeAmplitude() and node.scale == EnvelopeScale(25, 9)
-    notices = [packet for packet in node.output if packet is not None]
-    assert [packet.port for packet in notices] == [0, 1]
-    assert all(packet.scale == (25, 9) and packet.arrival_tick == 2 for packet in notices)
-    assert notices[0].notice_id == notices[1].notice_id == node.cause_id >= 0
-    assert node.applied_notices[-1] == notices[0].notice_id
-    assert space.events[-1].kind == "source-null-notice"
-    assert len(node.output) == OUTPUT_SLOTS and node.output[12] is notices[0]
-
-
 def test_vacuum_or_certain_null_sends_no_notice():
-    space = CausalEventSpace(40)
-    events = NodeEvents(space, None)
+    events, published = observed()
     vacuum = SourceEnvelopeNode(DETECTOR)
     vacuum.null(1, None, null_factor=null_factor, neighbor_ports=(1,), costs=COSTS, events=events)
     assert all(packet is None for packet in vacuum.output) and vacuum.scale == EnvelopeScale()
     empty = SourceEnvelopeNode(DETECTOR, source_id=7)
     empty.null(1, None, null_factor=null_factor, neighbor_ports=(1,), costs=COSTS, events=events)
     assert all(packet is None for packet in empty.output) and empty.scale == EnvelopeScale()
-    assert not space.events
+    assert not published
 
 
 def test_received_notice_waits_the_control_delay_then_forwards_away_from_its_arrival_port():
-    space = CausalEventSpace(60)
-    events = NodeEvents(space, None)
+    events, published = observed()
     node = SourceEnvelopeNode(MIDDLE, source_id=7, amplitude=EnvelopeAmplitude(3, 0, 5))
     # Sent by the Node on the +x side through its -x Port (1); it enters here through Port 0.
     packet = EnvelopePacket(3, DETECTOR, 1, 7, None, scale=(25, 9), notice_id=11)
     node.receive(packet, 3, 1, 2, events, costs=COSTS)
-    assert space.events[-1].kind == "source-notice-received"
+    assert published[-1]["event"] == "source-notice-received"
     assert node.pending_scales[0] is not None and node.pending_scales[0].ready_tick == 5
     assert node.scale == EnvelopeScale()
     assert not node.complete(4, local_output, (), COSTS, (0, 1), 0, 1, events)
@@ -120,17 +101,16 @@ def test_received_notice_waits_the_control_delay_then_forwards_away_from_its_arr
     forwarded = [(slot, p) for slot, p in enumerate(node.output) if p is not None]
     assert [slot for slot, _ in forwarded] == [12 + 1]
     assert forwarded[0][1].scale == (25, 9) and forwarded[0][1].notice_id == 11
-    assert space.events[-1].kind == "source-scale-committed"
+    assert published[-1]["event"] == "source-scale-committed"
     duplicate = EnvelopePacket(6, SOURCE, 0, 7, None, scale=(25, 9), notice_id=11)
     node.receive(duplicate, 6, 1, 0, events, costs=COSTS)
-    assert space.events[-1].kind == "source-notice-ignored"
+    assert published[-1]["event"] == "source-notice-ignored"
     assert node.scale == EnvelopeScale(25, 9) and node.pending_scales[1] is None
     assert not node_state_violations(node)
 
 
 def test_applied_notice_bank_is_fixed_and_a_retired_node_ignores_notices():
-    space = CausalEventSpace(80)
-    events = NodeEvents(space, None)
+    events, published = observed()
     node = SourceEnvelopeNode(MIDDLE, source_id=7, amplitude=EnvelopeAmplitude(1, 0, 2))
     for identity in range(0, NOTICE_BANK + 1):
         node.receive(
@@ -147,7 +127,7 @@ def test_applied_notice_bank_is_fixed_and_a_retired_node_ignores_notices():
     retired.receive(
         EnvelopePacket(9, DETECTOR, 1, 7, None, scale=(4, 3), notice_id=99), 9, 1, 0, events, costs=COSTS
     )
-    assert space.events[-1].kind == "source-notice-ignored"
+    assert published[-1]["event"] == "source-notice-ignored"
     assert retired.scale == EnvelopeScale() and all(p is None for p in retired.pending_scales)
 
 
@@ -188,66 +168,19 @@ def test_notice_packets_carry_an_optional_ordering_key():
         EnvelopePacket(3, (1, 1, 1), 0, 7, None, null_origin=(2, 1, 1))
 
 
-def test_corrections_leave_through_their_own_bank_and_are_bounded():
-    events = NodeEvents(CausalEventSpace(400), None)
-    node = SourceEnvelopeNode((2, 1, 1), source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
-    node.null(
-        4,
-        None,
-        null_factor=null_factor,
-        neighbor_ports=(0, 1),
-        costs=COSTS,
-        events=events,
-        null_weight=squared_weight,
-    )
-    assert node.null_record == NullRecord(4, 16, 25, 1, 1)
-    assert node.output[12].null_tick == 4 and node.output[12].null_origin == (2, 1, 1)
-    # A notice from a null ordered earlier (tick 3) arrives; the Node corrects itself.
-    node.receive(
-        EnvelopePacket(
-            5, (1, 1, 1), 0, 7, None, scale=(5, 4), notice_id=90, null_tick=3, null_origin=(1, 1, 1)
-        ),
-        5,
-        1,
-        0,
-        events,
-        costs=COSTS,
-    )
-    node.clear_output(12, node.output[12])
-    node.clear_output(13, node.output[13])
-    node.complete(5, lambda *a: EnvelopeAmplitude(), (), COSTS, (0, 1), 0, 1, events, null_correction)
-    expected = null_correction(NullRecord(4, 16, 25, 1, 1), (5, 4), meter())
-    assert expected is not None and node.corrections == 1
-    assert node.null_record is not None and (
-        node.null_record.scale_numerator,
-        node.null_record.scale_denominator,
-    ) == (5, 4)
-    sent = [node.output[18 + port] for port in (0, 1)]
-    assert all(
-        p is not None and (p.scale, p.null_tick, p.null_origin) == (expected[0], 4, (2, 1, 1))
-        for p in sent
-    )
-    assert node.pending_corrections == ()
-    assert not node_state_violations(node)
-    # A notice ordered later than the Node's own null is applied and forwarded, never corrected.
-    node.receive(
-        EnvelopePacket(
-            6, (3, 1, 1), 1, 7, None, scale=(7, 6), notice_id=91, null_tick=4, null_origin=(3, 1, 1)
-        ),
-        6,
-        1,
-        0,
-        events,
-        costs=COSTS,
-    )
-    for slot in (12, 13, 18, 19):
-        if node.output[slot] is not None:
-            node.clear_output(slot, node.output[slot])
-    node.complete(6, lambda *a: EnvelopeAmplitude(), (), COSTS, (0, 1), 0, 1, events, null_correction)
-    assert node.corrections == 1 and node.output[18] is None
-    # Without a weight law there is no record and no correction; the queue is bounded.
-    plain = SourceEnvelopeNode((2, 1, 1), source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
-    plain.null(4, None, null_factor=null_factor, neighbor_ports=(0,), costs=COSTS, events=events)
-    assert plain.null_record is None and plain.output[12].order_key is None
+def test_a_notice_sending_null_needs_an_event_identity_and_the_correction_queue_is_bounded():
+    events, published = observed()
+    node = SourceEnvelopeNode(MIDDLE, source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
+    with pytest.raises(ValueError, match="recording event owner"):
+        node.null(
+            4,
+            None,
+            null_factor=null_factor,
+            neighbor_ports=(0, 1),
+            costs=COSTS,
+            events=events,
+            null_weight=squared_weight,
+        )
+    assert not published
     with pytest.raises(ValueError, match="at most six pending corrections"):
-        SourceEnvelopeNode((2, 1, 1), pending_corrections=(None,) * (CORRECTION_QUEUE + 1))
+        SourceEnvelopeNode(MIDDLE, pending_corrections=(None,) * (CORRECTION_QUEUE + 1))

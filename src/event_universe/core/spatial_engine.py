@@ -18,7 +18,6 @@ from .disturbance_state import (
     pack,
     unpack,
 )
-from .event_space import CausalEventSpace
 from .integer import checked_work
 from .node_boundary import validate_spatial_bundle, validate_spatial_states
 from .node_conservation import NodeConservationGuard
@@ -60,8 +59,6 @@ SpatialPlanner = Callable[
 SpatialDecayer = Callable[[SpatialBundle], tuple[SpatialBundle, Values, int]]
 EventSink = Callable[[dict[str, object]], None]
 RecordCommit = Callable[[Address3, tuple[DisturbanceRecord | None, ...]], None]
-RecordCause = Callable[[Address3], int | None]
-CauseCommit = Callable[[Address3, int], None]
 
 
 class SpatialEngine:
@@ -95,22 +92,19 @@ class SpatialEngine:
                 checked_work(value)
         if tuple(tuple(values) for values in actual) != proposal.source_delta:
             raise ValueError("source accounting differs from its local population change")
-        if self.event_space is not None:
-            self.event_space.require_room(1)
         notifications: list[dict[str, object]] = []
-        cause = self._event(
+        self._event(
             "spatial_envelope_source",
             tick,
             position,
             notifications=notifications,
-            causes=(node.cause_id, proposal.cause_id),
             source_delta={
                 field.name: proposal.source_delta[i]
                 for i, field in enumerate(self.initial.fields)
                 if any(proposal.source_delta[i])
             },
         )
-        node.states, node.cause_id = proposal.states, cause
+        node.states = proposal.states
         external = proposal.source_delta
         if proposal.funded_delta:
             if len(proposal.funded_delta) != len(proposal.source_delta):
@@ -145,7 +139,6 @@ class SpatialEngine:
         coupler: SpatialCoupler | None = None,
         decayer: SpatialDecayer | None = None,
         *,
-        event_space: CausalEventSpace | None = None,
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
         execution_planner: SpatialPlanner | None = None,
@@ -159,7 +152,6 @@ class SpatialEngine:
         self.observer = observer
         self.coupler = coupler
         self.decayer = decayer
-        self.event_space = event_space
         self.nodes: dict[Address3, SpatialNode] = {}
         # Host scheduling index only: retain physical registers in self.nodes.
         self._active: set[Address3] = set()
@@ -180,7 +172,7 @@ class SpatialEngine:
         self._services = SpatialServices(
             replace(initial, seeds=(), spatial_seeds=()),
             planner if execution_planner is None else execution_planner,
-            NodeEvents(event_space, observer),
+            NodeEvents(observer),
             coupler,
             decayer,
             NodeActivity(self._active),
@@ -200,10 +192,6 @@ class SpatialEngine:
             node.states = tuple(states)
             self.values(seed.position)
         self._initial_totals = self.totals()
-        if self.event_space is not None:
-            self.event_space.require_room(len(self.nodes))
-            for position, node in sorted(self.nodes.items()):
-                node.cause_id = self._event("spatial_source", 0, position)
 
     def _blank_states(self) -> tuple[SpatialState, ...]:
         result = []
@@ -254,28 +242,15 @@ class SpatialEngine:
         tick: int,
         position: Address3,
         *,
-        causes: tuple[int | None, ...] = (),
         notifications: list[dict[str, object]] | None = None,
         **details: object,
-    ) -> int | None:
-        identity = None
-        if self.event_space is not None:
-            entry = self.event_space.append(
-                tick=tick,
-                addresses=(position,),
-                owner="spatial",
-                kind=event,
-                physical_parents=tuple(dict.fromkeys(c for c in causes if c is not None)),
-            )
-            identity = entry.id
-            details = {**details, "event_id": identity, "parents": entry.parents}
+    ) -> None:
         if self.observer is not None:
             data = {"event": event, "tick": tick, "position": position, **details}
             if notifications is None:
                 self.observer(data)
             else:
                 notifications.append(data)
-        return identity
 
     def _notify(self, notifications: list[dict[str, object]]) -> None:
         if self.observer is not None:
@@ -326,8 +301,6 @@ class SpatialEngine:
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving node exists outside; terminal stock escapes without exterior decay."""
         amounts = [[0] * field.components for field in self.initial.fields]
-        if self.event_space is not None:
-            self.event_space.require_room(1)
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
                 raise ValueError("a terminal spatial packet requires eight octants")
@@ -359,7 +332,6 @@ class SpatialEngine:
             "spatial_escaped",
             tick,
             packet.origin,
-            causes=(packet.cause_id,),
             port=packet.port,
             escaped={
                 field.name: tuple(amounts[i])

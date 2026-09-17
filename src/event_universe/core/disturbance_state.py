@@ -3,7 +3,6 @@
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, NamedTuple
 
-from .event_links import EventCursor, EventReferences
 from .sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 
 if TYPE_CHECKING:
@@ -400,7 +399,6 @@ class LocalPlan:
     cost: int
     spatial_reaction: Values = ()
     spatial_guards: tuple[FieldInteractionGuard, ...] = ()
-    cause_id: int | None = None
     interaction_ticks: int = 0
     resolution_token: int | None = None
 
@@ -410,7 +408,6 @@ class PendingCycle:
     ready_tick: int
     next_tick: int
     plan: LocalPlan
-    cause_id: int | None = None
     # Extra ticks each departure spends before arrival under a directional delay.
     departure_delays: tuple[int, ...] = ()
     spatial_plan: SpatialPlan | None = None
@@ -424,7 +421,6 @@ class Packet:
     origin: Address3
     port: int
     record: DisturbanceRecord
-    cause_id: int | None = None
 
 
 @dataclass(slots=True)
@@ -437,11 +433,8 @@ class DisturbanceNodeState:
     available_tick: int = 0
     received_count: int = 0
     last_cost: int = 0
-    cause_id: int | None = None
     # Per slot: 0, or travel port + 1 of a record that arrived in the current interval.
     arrival_port_codes: tuple[int, ...] = ()
-    event_cursors: tuple[EventCursor, ...] = ()
-    event_references: EventReferences | None = None
     source_envelope: EmittingEnvelopeNode | None = None
 
 
@@ -458,5 +451,3 @@ class NodeView:
     arrival_mask: tuple[int, ...] = ()
     delay_counts: tuple[int, ...] = ()
     committed_cost: int = 0
-    event_heads: tuple[tuple[int, int | None], ...] = ()
-    event_origins: tuple[int, ...] = ()

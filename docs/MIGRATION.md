@@ -78,10 +78,34 @@ alternative is an event on the board.
   `test_active_node_contracts.py`, `test_null_notices.py` and
   `test_event_links.py`.
 
-There is no replacement API. `core/event_space.py`, `core/event_links.py`,
-`core/event_resolution.py`, the source-envelope modules, the bond registry,
-claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
-of the same issue.
+There is no replacement API. `core/event_resolution.py`, the source-envelope
+modules, the bond registry, claim/gather and `fields/record_operations.py` stay
+until buckets B.3, B.5 and B.6 of the same issue.
+
+## Causal event ledger deleted on 2026-09-17
+
+`core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
+were deleted on 2026-09-17 under issue #164 bucket B.4 (Highlights 3.20: the
+origin Node keeps nothing and there is no register). There is no replacement.
+
+- `DisturbanceEngine` and `SpatialEngine` no longer accept `event_space=`.
+  `NodeEvents(observer)` takes the observer alone; `message()` builds the
+  observer message that `publish()` sends. Observer messages carry no
+  `event_id` or `parents`.
+- `Packet`, `LocalPlan`, `PendingCycle`, `SpatialPacket` and
+  `PendingSpatialCycle` lost `cause_id`; `SpatialNodeState` lost `cause_id`,
+  `sample_cause_id` and `cost_cause_id`; `DisturbanceNodeState` lost
+  `cause_id`, `event_cursors` and `event_references`; `NodeView` lost
+  `event_heads` and `event_origins`; `LocalContext` lost `cause`.
+- `computation_report()` no longer reports `causal_events`,
+  `causal_event_capacity`, `event_ledger_cost` or
+  `carrier_model_operations_cost`; `state.json` and recorded frames carry no
+  `event_support`, and the playback page draws none.
+- A source-envelope null that sends notices took its notice identity from the
+  ledger and now raises; its Node-level cases left `test_null_notices.py` and
+  `test_active_node_contracts.py` with the ledger. `NodeEvents.record()` and
+  `NodeEvents.require_room()` remain only for `core/source_envelope_node.py`
+  until bucket B.3.
 
 ## Primary initialization-based API
 

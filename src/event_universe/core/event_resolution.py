@@ -29,7 +29,6 @@ class LocalContext:
     records: tuple[DisturbanceRecord | None, ...]
     residuals: tuple[int, ...]
     received: int
-    cause: int | None
     # Computation load pricing a departure through each of the six ports.
     port_loads: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
 

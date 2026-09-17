@@ -131,7 +131,6 @@ class PendingSpatialCycle:
     before: tuple[SpatialState, ...]
     plan: SpatialPlan
     cost: int
-    cause_id: int | None = None
 
 
 class NodeActivity:
@@ -227,25 +226,14 @@ class SpatialNode(SpatialNodeState):
         tick: int,
         services: SpatialServices,
         *,
-        causes: tuple[int | None, ...] = (),
         notifications: list[dict[str, object]] | None = None,
         **details: object,
-    ) -> int | None:
-        identity, message = services.events.record(
-            event,
-            tick,
-            self.position,
-            None,
-            causes=tuple(dict.fromkeys(c for c in causes if c is not None)),
-            owner="spatial",
-            event_cost=0,
-            **details,
-        )
+    ) -> None:
+        message = services.events.message(event, tick, self.position, **details)
         if notifications is None:
             services.events.publish(message)
         else:
             notifications.append(message)
-        return identity
 
     def catch_up_idle(self, tick: int) -> None:
         self.last_begin_tick = tick
@@ -305,7 +293,6 @@ class SpatialNode(SpatialNodeState):
             self.sample_fluxes,
             self.sample_ports,
         )
-        sample_cause = self.sample_cause_id
         sample_received_masks = self.sample_received_masks
         if (
             services.coupler is not None
@@ -315,7 +302,6 @@ class SpatialNode(SpatialNodeState):
             # Freeze only locally delivered input, before fresh source injection.
             sample_values = services.coupler.sample(self._sampled_states(services))
             sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
-            sample_cause = self.cause_id
             if services.initial.arrival_port_blind:
                 self.sample_delivered = tuple(state.delivered for state in self.states)
             if services.initial.spatial_interactions:
@@ -359,13 +345,11 @@ class SpatialNode(SpatialNodeState):
                 for state in states
             )
             self.last_cost = 0
-            self.cost_cause_id = None
             self.sample_values, self.sample_fluxes, self.sample_ports = (
                 sample_values,
                 sample_fluxes,
                 sample_ports,
             )
-            self.sample_cause_id = sample_cause
             self.sample_received_masks = sample_received_masks
             self.last_begin_tick = tick
             services.activity.mark(self.position, False)
@@ -401,7 +385,6 @@ class SpatialNode(SpatialNodeState):
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))
         if services.initial.node_execution and plan.interaction_ticks:
             ready_tick = bounded(tick + plan.interaction_ticks)
-            services.events.require_room(1)
             self.pending = PendingSpatialCycle(ready_tick, self.states, plan, cost)
             # Samples received during the wait have an independent fixed window.
             # Clearing these views does not remove any owned physical inventory.
@@ -418,16 +401,14 @@ class SpatialNode(SpatialNodeState):
             self.received_decay_cost = 0
             self.last_cost = cost
             self.delay_counts = (plan.interaction_ticks,) * port_count(services.initial)
-            cause = self._event(
+            self._event(
                 "spatial_cycle_started",
                 tick,
                 services,
-                causes=(self.cause_id, None if carrier is None else carrier.cause_id),
                 ready_tick=ready_tick,
                 interaction_ticks=plan.interaction_ticks,
                 cost=cost,
             )
-            self.pending = replace(self.pending, cause_id=cause)
             services.activity.mark(self.position, True)
             return
         self.sample_values, self.sample_fluxes, self.sample_ports = (
@@ -435,7 +416,6 @@ class SpatialNode(SpatialNodeState):
             sample_fluxes,
             sample_ports,
         )
-        self.sample_cause_id = sample_cause
         self.sample_received_masks = sample_received_masks
         self._commit_plan(tick, carrier, services, plan, cost, next_ray_wait=next_ray_wait)
 
@@ -472,7 +452,7 @@ class SpatialNode(SpatialNodeState):
         plan = replace(pending.plan, states=tuple(states), emission_records=records)
         validate_spatial_plan(services.initial, plan, len(records), records)
         services.validate_field_guards(self.states, plan)
-        self._commit_plan(tick, carrier, services, plan, pending.cost, pending_cause=pending.cause_id)
+        self._commit_plan(tick, carrier, services, plan, pending.cost)
 
     def _commit_plan(
         self,
@@ -482,7 +462,6 @@ class SpatialNode(SpatialNodeState):
         plan: SpatialPlan,
         cost: int,
         *,
-        pending_cause: int | None = None,
         next_ray_wait: int | None = None,
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
@@ -541,9 +520,6 @@ class SpatialNode(SpatialNodeState):
                 ),
                 "spatial interaction commit",
             )
-        if services.events.enabled:
-            services.events.require_room(1 + sum(p is not None for p in packets))
-        carrier_cause = None if carrier is None else carrier.cause_id
         if carrier is None:
             if plan.emission_records:
                 raise ValueError("spatial emission cannot create disturbance records")
@@ -581,11 +557,10 @@ class SpatialNode(SpatialNodeState):
         if plan.transfer_delta:
             services.accounting.record_reactions(plan.transfer_delta)
         notifications: list[dict[str, object]] = []
-        cause = self._event(
+        self._event(
             "spatial_cycle",
             tick,
             services,
-            causes=(self.cause_id, carrier_cause, pending_cause),
             notifications=notifications,
             cost=cost,
             source_delta={
@@ -605,23 +580,16 @@ class SpatialNode(SpatialNodeState):
                 else {}
             ),
         )
-        self.cause_id = self.cost_cause_id = cause
-        if cause is not None and carrier is not None and plan.emission_records != records:
-            carrier.cause_id = cause
-        for index, packet in enumerate(packets):
+        for packet in packets:
             if packet is not None:
-                sent = self._event(
+                self._event(
                     "spatial_sent",
                     tick,
                     services,
-                    causes=(cause,),
                     notifications=notifications,
                     port=packet.port,
                     arrival_tick=packet.arrival_tick,
                 )
-                if sent is not None:
-                    packets[index] = replace(packet, cause_id=sent)
-        self.output.publish(tuple(packets))
         for message in notifications:
             services.events.publish(message)
 
@@ -634,31 +602,6 @@ class SpatialNode(SpatialNodeState):
             replace(claim, origin=self.position) if claim.origin == (-1, -1, -1) else claim
             for claim in claims
         )
-
-    def cycle_causes(self, tick: int, services: SpatialServices, *, sampled: bool) -> tuple[int, ...]:
-        """IDs of the exact frozen sample and current cost consumed by a carrier."""
-        causes = (
-            self.sample_cause_id if sampled else None,
-            self.cost_cause_id if tick % services.initial.link_ticks == 0 else None,
-        )
-        return tuple(dict.fromkeys(c for c in causes if c is not None))
-
-    def reaction_causes(self, *, outgoing: bool) -> tuple[int, ...]:
-        """Bounded owners read by a joint commit, including departure amendments."""
-        causes = (self.cause_id,) + (
-            tuple(p.cause_id for p in self.output.packets if p is not None) if outgoing else ()
-        )
-        return tuple(dict.fromkeys(c for c in causes if c is not None))
-
-    def link_reaction(self, proposal: ReactionCommit | None, cause: int) -> None:
-        """The joint event owns the new stock and any amended departure bundle."""
-        if proposal is None:
-            return
-        self.cause_id = cause
-        if proposal.links is not None:
-            self.output.publish(
-                tuple(None if p is None else replace(p, cause_id=cause) for p in proposal.links)
-            )
 
     def couple(
         self,
@@ -688,7 +631,6 @@ class SpatialNode(SpatialNodeState):
                 self.sample_fluxes = services.coupler.sample_fluxes(self.states, self.rays)
                 self.sample_ports = services.coupler.sample_ports(self.states)
                 self.sample_received_masks = services.coupler.sample_received_masks(self.states)
-                self.sample_cause_id = self.cause_id
             validate_samples(services.initial, self.sample_values, self.sample_fluxes, self.sample_ports)
         return services.coupler(
             records,
@@ -993,7 +935,6 @@ class SpatialNode(SpatialNodeState):
         if services.initial.spatial_interactions:
             self.sample_ports = services.coupler.sample_ports(self.states)
             self.sample_received_masks = services.coupler.sample_received_masks(self.states)
-        self.sample_cause_id = self.cause_id
 
     def blind_samples(
         self,
@@ -1057,8 +998,6 @@ class SpatialNode(SpatialNodeState):
             validate_claim_bundle(services.initial, packet.claims, optional=True)
             if any(claim.since > tick for claims in packet.claims for claim in claims):
                 raise ValueError("a received claim cannot originate in a future tick")
-        if services.events.enabled:
-            services.events.require_room(1 + int(services.decayer is not None))
         losses = [[0] * field.components for field in services.initial.fields]
         receiving = (
             (
@@ -1263,21 +1202,19 @@ class SpatialNode(SpatialNodeState):
             for port in range(6)
         ]
         notifications: list[dict[str, object]] = []
-        self.cause_id = self._event(
+        self._event(
             "spatial_received",
             tick,
             services,
-            causes=(self.cause_id, *(p.cause_id for p in arrivals)),
             notifications=notifications,
             packets=len(arrivals),
             received_fields=received_fields,
         )
         if services.decayer is not None:
-            self.cause_id = self._event(
+            self._event(
                 "spatial_decayed",
                 tick,
                 services,
-                causes=(self.cause_id,),
                 notifications=notifications,
                 dissipated={
                     field.name: tuple(losses[i])

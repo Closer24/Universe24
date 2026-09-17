@@ -9,7 +9,6 @@ import pytest
 
 from event_universe import Simulation
 from event_universe.core.disturbance_state import OPERATIONS, OperationCosts, Packet, pack, unpack
-from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
 from event_universe.core.source_envelope_node import (
     OUTPUT_SLOTS,
@@ -91,10 +90,7 @@ def fixture(owner, port, remote_count):
     initial = parse_initial_state(raw)
     world = Simulation(initial)
     assert len(world.nodes) == remote_count + 1
-    ledger = CausalEventSpace(remote_count + 32)
-    for index in range(remote_count):
-        ledger.append(tick=0, addresses=((20 + index, 20, 20),), owner="state", kind="source")
-    events = NodeEvents(ledger, None)
+    events = NodeEvents(None)
     origin = neighbor_address(SOURCE, port ^ 1, initial.shape, initial.boundary)
 
     if owner == "carrier":
@@ -117,7 +113,7 @@ def fixture(owner, port, remote_count):
                 tick + 1,
                 (1,),
             )
-            return node.last_cost, retained_slots(node), len(ledger.events) - remote_count
+            return node.last_cost, retained_slots(node)
 
     elif owner == "spatial":
         node = world._spatial._at(SOURCE)
@@ -136,7 +132,7 @@ def fixture(owner, port, remote_count):
                 unpack(value)[0] for packet in packets for row in packet.fields for value in row
             )
             assert local + outgoing == 64
-            return retained_slots(node), len(ledger.events) - remote_count
+            return retained_slots(node)
 
     else:
         node = SourceEnvelopeNode(SOURCE, source_id=1, amplitude=EnvelopeAmplitude(1))
@@ -161,7 +157,7 @@ def fixture(owner, port, remote_count):
             assert node.amplitude == EnvelopeAmplitude(3, 0, 5)
             assert node.pending_gate is None and node.incoming_gate is None
             assert len(node.output) == OUTPUT_SLOTS
-            return retained_slots(node), len(ledger.events) - remote_count
+            return retained_slots(node)
 
     # The same real services still run; only prohibited host read paths are poisoned.
     world._nodes = world._links = ForbiddenWorld()
@@ -172,7 +168,7 @@ def fixture(owner, port, remote_count):
 
 @pytest.mark.parametrize("owner", ["carrier", "spatial", "envelope"])
 @pytest.mark.parametrize("port", range(6))
-def test_active_local_transition_is_independent_of_remote_world_and_event_growth(owner, port):
+def test_active_local_transition_is_independent_of_remote_world_size(owner, port):
     observations = []
     for remote_count in (0, 8, 128):
         node, action, result = fixture(owner, port, remote_count)
@@ -187,7 +183,7 @@ def test_active_local_transition_is_independent_of_remote_world_and_event_growth
 
 def test_null_during_frozen_pair_preserves_the_complete_unitary_snapshot():
     costs = OperationCosts((1,) * len(OPERATIONS))
-    events = NodeEvents(None, None)
+    events = NodeEvents(None)
     left = SourceEnvelopeNode(SOURCE, source_id=1, amplitude=EnvelopeAmplitude(3, 0, 5))
     right = SourceEnvelopeNode(MIDDLE, source_id=1, amplitude=EnvelopeAmplitude(4, 0, 5))
     matrices = tuple(
@@ -216,12 +212,12 @@ def test_null_during_frozen_pair_preserves_the_complete_unitary_snapshot():
     assert (left.amplitude, right.amplitude) == (EnvelopeAmplitude(3, 0, 5), EnvelopeAmplitude(4, 0, 5))
 
 
-def test_duplicate_terminal_is_charged_without_restarting_or_forwarding():
+def test_duplicate_terminal_is_ignored_without_restarting_or_forwarding():
     costs = OperationCosts(
         tuple(7 if name == "receive" else 3 if name == "read" else 1 for name in OPERATIONS)
     )
-    space = CausalEventSpace(20)
-    events = NodeEvents(space, None)
+    published: list[dict[str, object]] = []
+    events = NodeEvents(published.append)
     node = SourceEnvelopeNode(SOURCE, source_id=7, amplitude=EnvelopeAmplitude(1))
     first = EnvelopePacket(1, MIDDLE, 1, 7, None)
     node.receive(first, 1, 1, 0, events, costs=costs)
@@ -231,8 +227,7 @@ def test_duplicate_terminal_is_charged_without_restarting_or_forwarding():
     assert outputs[6] is not None
     duplicate = EnvelopePacket(2, MIDDLE, 1, 7, None)
     node.receive(duplicate, 2, 1, 5, events, costs=costs)
-    assert space.events[-1].kind == "source-terminal-ignored"
-    assert space.events[-1].model_cost == costs.price("receive") + costs.price("read") == 10
+    assert published[-1]["event"] == "source-terminal-ignored"
     assert node.pending_stop is None
     assert node.output is outputs
     assert node.generation == generation and node.cause_id == cause
@@ -241,8 +236,8 @@ def test_duplicate_terminal_is_charged_without_restarting_or_forwarding():
 
 def test_terminal_commits_before_later_amplitude_and_prevents_resurrection():
     costs = OperationCosts((1,) * len(OPERATIONS))
-    space = CausalEventSpace(20)
-    events = NodeEvents(space, None)
+    published: list[dict[str, object]] = []
+    events = NodeEvents(published.append)
     node = SourceEnvelopeNode(SOURCE, source_id=7, amplitude=EnvelopeAmplitude(3, 0, 5))
     node.start_gate(0, 0, EnvelopeGate(0, 0, 0), 2, 1, 1, 4, events)
     node.receive(EnvelopePacket(1, MIDDLE, 1, 7, None), 1, 1, 1, events, costs=costs)
@@ -263,4 +258,4 @@ def test_terminal_commits_before_later_amplitude_and_prevents_resurrection():
     assert node.amplitude == EnvelopeAmplitude()
     assert node.pending_gate is None and node.incoming_gate is None
     assert node.output is outputs
-    assert not [event for event in space.events if event.kind == "source-gate-committed"]
+    assert not [message for message in published if message["event"] == "source-gate-committed"]
