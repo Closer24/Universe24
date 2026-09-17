@@ -250,7 +250,10 @@ def test_a5s_dense_predictions_are_the_mean_fields_and_the_r12_row_recomputes():
     for key in ("t50", "t90", "ticks", "first_push_tick", "box", "mean_field_shape"):
         assert again[key] == rows[12][key], key
     for key in ("steady_push", "predicted_push", "previous_window_push"):
-        assert abs(again[key] - rows[12][key]) < 1e-9, key
+        # The kernel is floating point (a computation about the average); another
+        # host's BLAS differs in the last bits, so the row is matched to one part in
+        # a million, not to the bit.
+        assert abs(again[key] - rows[12][key]) <= 1e-6 * max(1.0, abs(rows[12][key])), key
 
 
 def test_a5s_r4_like_charges_first_eight_ticks(tmp_path):
