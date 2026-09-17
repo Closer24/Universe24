@@ -358,6 +358,10 @@ class InitialState:
     ray_phase_per_tick: bool = False
     # Host scheduling only; physical rules and their clocks do not read this flag.
     focus: bool = True
+    # Host scheduling only (dense-field-v1): the pure-field Nodes of a board are
+    # cycled as one vectorized step; off unless declared, and admitted only for
+    # the worlds the prototype supports (validate_dense_field_admission).
+    dense_field: bool = False
     sampling_profile: str = DETECTOR_ONLY
     # The Nodes whose Detector bit is set, each with its setting and ticket seed
     # (detector-mark-v1): the only place a draw exists.
@@ -372,6 +376,7 @@ class InitialState:
     def __post_init__(self) -> None:
         from .spatial_state import (
             RETURN_MODES,
+            validate_dense_field_admission,
             validate_detector_marks,
             validate_external_bodies,
             validate_ray_coupling,
@@ -401,9 +406,10 @@ class InitialState:
                 raise ValueError(
                     "one-Link self-exclusion does not support paced, delayed or mirrored rays"
                 )
-        for name in ("ray_delay", "ray_phase_per_tick", "focus"):
+        for name in ("ray_delay", "ray_phase_per_tick", "focus", "dense_field"):
             if type(getattr(self, name)) is not bool:
                 raise ValueError(f"{name} must be boolean")
+        validate_dense_field_admission(self)
         if self.ray_delay:
             if self.computation_field is None:
                 raise ValueError("ray_delay requires computation_field")

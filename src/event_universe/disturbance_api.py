@@ -93,6 +93,16 @@ class Simulation(DisturbanceEngine):
             reuse_carrier_plans=initial.focus,
             reuse_spatial_plans=initial.focus,
         )
+        if initial.dense_field:
+            # The dense mode (dense-field-v1): the board's pure-field Nodes cycled
+            # as one step by a component composed here, outside the core; the
+            # admission is the parser's (`validate_dense_field_admission`).
+            from event_universe.dense_field import DenseField
+
+            if node_workers > 1:
+                raise ValueError("dense_field does not support parallel Node execution")
+            assert self._spatial is not None
+            self._spatial.dense = DenseField(initial, self._spatial)
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:
             from event_universe.diagnostics.local_conservation import LocalConservationAudit

@@ -193,6 +193,13 @@ class DisturbanceEngine:
 
     def inventory_view(self) -> InventoryView:
         """Expose immutable actual owners for host audits, excluding proposal views."""
+        if self._spatial is not None and self._spatial.dense is not None:
+            # The dense region's Nodes read as Node state (dense-field-v1).
+            with self._spatial.materialized():
+                return self._inventory_view()
+        return self._inventory_view()
+
+    def _inventory_view(self) -> InventoryView:
         spatial = self._spatial
         positions = self._nodes.keys() | ({} if spatial is None else spatial.nodes).keys()
         blank = () if spatial is None else spatial._blank_states()

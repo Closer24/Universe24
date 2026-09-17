@@ -224,6 +224,17 @@ SPREAD_BACKWARD = 1
 FIELD_REMAINDER = "field-remainder-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
+# The dense mode for boards that a field fills (dense-field-v1; performance,
+# 2026-09-17): the pure-field Nodes of a board, those holding nothing but
+# outbound content of spreading families and their remainder registers, are
+# cycled by the host as one vectorized step over integer arrays that applies
+# the same spread and remainder rule to every such Node at once. A host
+# scheduling choice, not a physical rule: the law is the one above, the
+# integers are the same, and a Node holding anything else (a Detector mark, an
+# external body, a record, a ray of another family, a returning ray, an
+# event-carrying ray) is cycled by the engine as before. Off unless the world
+# declares `dense_field: true`; the runner records the identity when on.
+DENSE_FIELD = "dense-field-v1"
 # Polarization (Highlights 3.26, feature 11; ray-polarization-v1): a family
 # property read only at a meeting, exactly as charge is. A ray carries a
 # transverse direction modulo a half turn, an integer from 0 below
@@ -1070,6 +1081,44 @@ def validate_spread_admission(initial: InitialState) -> None:
     spreading = {definition.field for definition in initial.spatial_fields if definition.spread}
     if any(rule.field in spreading for rule in initial.spatial_couplings):
         raise ValueError("a spreading family does not support coupled responses or absorption")
+
+
+def validate_dense_field_admission(initial: InitialState) -> None:
+    """What the dense mode's prototype supports (dense-field-v1): a spreading
+    family on a board of ray fields only, no local conservation audit (a dense
+    Node publishes no per-Node events for it to read), no polarization (the
+    dense region carries unpolarized content), and no ray interaction two of
+    whose participants can be spreading families (a coupling on field rays
+    inside the dense region, which no engine Node would meet)."""
+    if not initial.dense_field:
+        return
+    spreading = {index for index, definition in enumerate(initial.spatial_fields) if definition.spread}
+    if not spreading:
+        raise ValueError("dense_field requires a spreading family (field-spreading-v1)")
+    if any(not definition.rays for definition in initial.spatial_fields):
+        raise ValueError(
+            "dense_field requires ray transport on every spatial field: the dense region "
+            "carries rays and remainder registers only"
+        )
+    if initial.conservation is not None:
+        raise ValueError(
+            "dense_field does not support the local conservation audit (`conservation`): a "
+            "dense Node publishes no per-Node events for the audit to read; the world ledger "
+            "of ray-event-audit-v1 is kept"
+        )
+    if polarization_declared(initial):
+        raise ValueError(
+            "dense_field does not support polarization (ray-polarization-v1): the prototype "
+            "carries unpolarized field content only"
+        )
+    for rule in initial.ray_interactions:
+        roles = sum(1 for role in rule.participants if any(kind in spreading for kind in role))
+        if roles >= 2:
+            raise ValueError(
+                f"dense_field does not support the ray interaction {rule.name!r}: two of its "
+                "participants can be spreading families, a coupling on field rays inside the "
+                "dense region"
+            )
 
 
 def relative_ports(port: int) -> tuple[int, ...]:

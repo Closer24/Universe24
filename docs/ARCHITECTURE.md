@@ -244,7 +244,11 @@ absent unless explicitly requested.
 The optional spatial extension uses `core/spatial_state.py` for fixed schemas,
 `fields/spatial.py` for bounded emission/splitting and `fields/spatial_plan.py`
 for pure local proposals. `core/spatial_engine.py` schedules and owns field
-packets; `disturbance_api.py` composes its planner without formulas. The shared
+packets; `disturbance_api.py` composes its planner without formulas, and, when
+a world declares `dense_field`, the dense region of `dense_field.py` (numpy
+integer arrays, outside the core, behind the engine's `DenseRegion` protocol)
+that cycles the board's pure-field Nodes as one step with the same integers
+([the dense mode](SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1)). The shared
 engine combines diagnostics and costs while retaining separate field and
 carrier clocks. See [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) for the contract and
 the remaining self-attribution requirement. `fields/spatial_coupling.py` owns
