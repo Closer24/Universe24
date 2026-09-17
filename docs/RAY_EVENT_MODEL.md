@@ -10,13 +10,15 @@ implementation contract, the contradiction is listed in the migration section;
 nothing here changes runtime behavior until an implementation is published
 against this document under the [published-design rule](../skills/workflow.md#implement-from-a-published-design).
 
-Authority: the central model specification (the Google Doc named in the
-[README](../README.md#project-specification-google-docs)) owns model
-definitions; this document is the candidate text proposed for its sections 1,
-3 and 4. The [Detector-only sampling contract](DETECTOR_SAMPLING.md)
-(`detector-only-v1`) is preserved and made concrete here. The
-[Highlights snapshot](HIGHLIGHTS.md) sections 3.3 to 3.5, 3.19, 3.20 and 5.4
-state the principles this model implements.
+Authority: the [Highlights specification](HIGHLIGHTS.md) is the Highlights
+text, edited directly since 2026-09-17 by the model owner's decision; the
+Google Doc named in the [README](../README.md#project-specification-google-docs)
+is its historical source up to the revision of 2026-09-16 and is neither
+edited nor resynced. Highlights sections 3.3, 3.4, 3.15, 3.19, 3.20, 5.1 and
+5.4 record the decisions this document restates in the coordinator's words;
+where the two differ, Highlights is the text to follow and this document is
+corrected. The [Detector-only sampling contract](DETECTOR_SAMPLING.md)
+(`detector-only-v1`) is preserved and made concrete here.
 
 ## 1. Definitions
 
@@ -37,36 +39,40 @@ a changed trajectory. A Node that a ray merely crosses hosts no event.
 
 **Ray.** A ray is not an object. It is the trajectory of one event between
 two interactions: the same event, the same family properties, one Node per
-Link interval, one heading, a straight line. Between two interactions nothing
-new happens to it. A ray trajectory is therefore reversible: run backward step
+Link interval, one heading, a straight line. From its event, every ray carries
+the number of steps it has made. Between two interactions nothing new happens
+to it. A ray trajectory is therefore reversible: run backward step
 by step it returns exactly to the interaction that created it, because no
 information was added or lost along the line.
 
 **Alternatives.** Outside a Detector, every trajectory that an interaction
 permits actually happens: the up-to-six events leaving the interaction all
 propagate, each as a straight ray, each carrying its share of the conserved
-quantities and, for a wave ray, its phase. Alternatives are created only at
+quantities and its phase. Alternatives are created only at
 interactions, never at the empty Nodes a ray crosses. A wave ray between two
 interactions is one line; at an interaction it becomes up to six lines.
 
-**Wave ray and non-wave ray.** A wave ray carries a phase that advances along
-the line. A non-wave ray carries quantities only (energy, momentum, charge,
-family properties). Light is a wave ray with no mass and no charge: it is an
-event moving in time, exactly as defined above, not a separate photon object.
+**Wave ray.** Every ray is a wave ray and carries a phase that advances along
+the line, together with its quantities (energy, momentum, charge, family
+properties); a plain ray is a special case of the wave ray, not a second kind.
+Light is a wave ray with no mass and no charge: it is an event moving in time,
+exactly as defined above, not a separate photon object.
 
 **Detector.** Every Node carries one bit: Detector or not. The mark is
 bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
 an object and not an external device; "Detector behavior" is simply how a
 Node behaves when the bit is set. A marked Node does one very simple thing.
-What arrives at it is a ray carrying information, wave or not; the kind of
-ray makes no difference to the Detector. For each transfer that arrives,
+What arrives at it is a wave ray carrying information; every ray is a wave
+ray, so the kind of ray makes no difference to the Detector. For each
+transfer that arrives,
 whatever it is, it draws one bounded integer and reads it as 1 or 0, and this
 is the only place a lottery exists (`detector-only-v1`). On 1 the Node
 behaves as an ordinary Node for that arrival: the transfer continues on its
 line, or enters the declared interaction, as if no Detector were there. On 0
-the Node behaves as a Detector for that arrival: it returns the transfer on
-the same line in the opposite direction, unchanged, so that it arrives at the
-Node it left from with exactly the information it left with. Up to six
+the Node behaves as a Detector for that arrival: it returns that wave ray on
+the same line in the opposite direction, unchanged, back the same number of
+steps it has made since its event, so that it arrives at the Node it left
+from with exactly the information it left with. Up to six
 transfers can arrive in the same interval, one through each Port, and the
 Node draws once for each arrival, independently: the arrivals that drew 1
 enter the ordinary interaction together, exactly as at an unmarked Node, and
@@ -78,13 +84,13 @@ like any other, everything else about it (rays crossing, interactions of
 other families, fields) is unchanged.
 
 **Return.** A returning ray retraces its own trajectory: it reverses its
-heading and walks back the number of steps it counted since its last
-interaction. On a fixed lattice this reaches, with certainty, the interaction
+heading and walks back the same number of steps it has made since its event,
+unchanged. On a fixed lattice this reaches, with certainty, the interaction
 that created it. The return is the ray itself, not a message and not a
 separate carrier; it carries what the ray already carries (family properties,
-phase, and the Detector's outcome in a bounded register). When it reaches its
-birth interaction it continues straight through it, which is by construction
-the direction of the partner ray of a pair.
+phase, its step count, and the Detector's outcome in a bounded register).
+When it reaches its birth interaction it continues straight through it, which
+is by construction the direction of the partner ray of a pair.
 
 **Information.** Everything on the board is a transfer of information. A ray
 carries a piece of information away from the interaction that created it;
@@ -120,8 +126,8 @@ integer arithmetic is what makes the undoing exact rather than approximate.
 **Moving an event.** The event is its information, not a place. The open
 piece kept at the origin may be displaced along the trajectory line of the
 rays it is waiting for, and a returning ray, which walks that line, still
-meets it. This is the occupied-channel displacement rule of the central
-specification (section 5.1): a saved event is pushed along the same path
+meets it. This is the occupied-channel displacement rule of Highlights
+section 5.1: a saved event is pushed along the same path
 without capacity waiting. Its exact resolution (which neighbor, what happens
 when two pushes meet, how the step count of a returning ray accounts for the
 displacement) is a decision this document must record before step 4 of the
@@ -176,9 +182,9 @@ The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray: family properties, phase, heading, step count since the last interaction, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, the Detector mark if the Node carries one (mark, setting, ticket seed), and a bounded register of open alternatives for the interactions born there |
+| Where is state stored | On the ray: family properties, phase (every ray is a wave ray), heading, the number of steps it has made since its event, one bounded outcome register. On the Node: the rays resident this interval, the bounded bound group if any, the Detector mark if the Node carries one (mark, setting, ticket seed), and a bounded register of open alternatives for the interactions born there |
 | What arrived | The rays delivered through the six Ports this interval; a resident bound group counts as arrived every interval |
-| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, wave or not; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line |
+| What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count. No message, no registry answer, nothing that skips a Node |
@@ -205,11 +211,13 @@ on 16 September 2026.
 
 ## 4. Why this is consistent
 
-- One kind of entity (an event trajectory with family properties and an
-  optional phase), one kind of interaction (a meeting at a Node, declared per
+- One kind of entity (an event trajectory with family properties, a phase
+  and its step count), one kind of interaction (a meeting at a Node, declared per
   family set, exactly conserved, at most six events out), one door for
   randomness (the Detector draw, one per transfer arriving at a marked Node). Postulates 1 to 4 hold
-  without exception; the registry exception of postulate 4 is withdrawn.
+  without exception; the registry exception of postulate 4 is withdrawn and
+  Highlights section 3.18, which described the shared resource, is deleted
+  (2026-09-17).
 - Fields as rays satisfies Highlights 3.5 and 3.28 directly: a field is a
   local description of ray state, and the computation field is a propagating
   property.
@@ -234,8 +242,8 @@ on 16 September 2026.
 | Today | Under this model |
 | --- | --- |
 | Every interaction passes through a resident record (mirror, screen, detector, lamp) with stock and absorption | An interaction is a property of the meeting of rays; a Detector is a mark on a Node, not a record with stock |
-| The shared quantum resource (Q-ORACLE-1, bond registry) is an accepted exception to locality | Withdrawn by the model owner on 2026-09-17: no owner answers at a distance; the marked-Node lottery and the returning ray are the whole quantum mechanism |
-| The photon is a record of a family; conversion products are records | Light is a wave ray with no mass and no charge; conversion products are events leaving the interaction |
+| The shared quantum resource (Q-ORACLE-1, bond registry) is an accepted exception to locality | Deleted by the model owner on 2026-09-17 (Highlights section 3.18): no owner answers at a distance; the marked-Node lottery and the returning ray are the whole quantum mechanism |
+| The photon is a record of a family; conversion products are records | Every ray is a wave ray with a phase; light is a wave ray with no mass and no charge; conversion products are events leaving the interaction |
 | A bonded pair is answered by a global registry keyed by (Node, tick) | The first draw's outcome travels back and forward on the ray itself; pair identity is the trajectory |
 | Records emit fields; rays do not | A traveling ray of an emitting family releases field rays along its line |
 | A record can hold, wait at zero cost and be updated in place | Nothing holds except a bound group under a declared binding coupling |
@@ -244,15 +252,17 @@ on 16 September 2026.
 
 ## 6. Migration, in order
 
-1. This document, reviewed by the model owner; then its text proposed to the
-   central specification sections 1, 3 and 4 and reflected in
-   [TERMINOLOGY.md](TERMINOLOGY.md) (Event, Ray, Interaction, Detector), in
-   the [postulates](../POSTULATES.md) 1, 4, 22 and 23, and in
-   [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) (the bonded profile becomes
+1. This document, reviewed by the model owner; its decisions recorded in
+   [Highlights](HIGHLIGHTS.md) (done on 2026-09-17: sections 3.3, 3.4, 3.15,
+   3.19, 3.20, 5.1 and 5.4, with 3.18 deleted) and reflected in the
+   [postulates](../POSTULATES.md) 1, 4, 22, 23 and 24 (done on 2026-09-17),
+   in [TERMINOLOGY.md](TERMINOLOGY.md) (Event, Ray, Interaction, Detector)
+   and in [SPATIAL_FIELDS.md](SPATIAL_FIELDS.md) (the bonded profile becomes
    historical).
-2. Ray state: step count since the last interaction and one bounded outcome
-   register added to the ray; heading and phase exist. No origin reference is
-   stored: the count suffices on a straight line.
+2. Ray state: the number of steps made since its event and one bounded
+   outcome register added to the ray; heading and phase exist, and the phase
+   is carried by every ray, since every ray is a wave ray. No origin
+   reference is stored: the count suffices on a straight line.
 3. Detector as a Node bit in the initialization (position, setting, ticket
    seed): each transfer through a marked Node draws 1 or 0 from the mark's
    ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
@@ -261,7 +271,8 @@ on 16 September 2026.
    the birth interaction; meeting rule at the far Detector as in section 3.
 5. Registry removal from the physical path; the historical bonded profile and
    its tests are retained as history, not as the active law.
-6. Light as a wave ray family; conversion products emitted as events from the
+6. Light as a wave ray with no mass and no charge, every ray being a wave
+   ray; conversion products emitted as events from the
    interaction; the N-to-M mechanism invoked at a meeting of rays without a
    resident record, up to six events out.
 7. Field emission by traveling rays, with the outward dilution or declared
@@ -284,11 +295,12 @@ and evidence, under the ordinary gates.
 
 - A transfer through a marked Node draws 1 or 0; on 1 the Node's behavior is
   identical to the unmarked Node (same events, same totals); on 0 the
-  returned ray reaches its birth Node after exactly the counted number of
-  steps, on every seed, in every direction, with its information unchanged,
+  returned ray reaches its birth Node after exactly the number of steps it
+  had made since its event, on every seed, in every direction, with its information unchanged,
   and continues straight; an unmarked Node never draws.
 - Six transfers arriving at a marked Node in one interval receive six
-  independent draws, wave or not; those that drew 1 interact exactly as at
+  independent draws, whatever they carry, every ray being a wave ray; those
+  that drew 1 interact exactly as at
   an unmarked Node, each that drew 0 is returned on its own line, and the
   totals of the two groups together equal the totals that arrived.
 - One number per transfer arriving at a marked Node; replay with the same

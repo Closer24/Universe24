@@ -123,7 +123,9 @@ Sections 1–5 and 10–11 state shared locality, arithmetic and evidence princi
 Sections 6–9 document the source, self-force, momentum and turning requirements
 of the explicitly selected historical research models; they are not implicit
 laws of every configured disturbance. Sections 13 and 15 likewise belong to
-named historical candidates. Section 14 defines the optional quantum assumption. Section 23 states the
+named historical candidates. Section 14 defines the optional quantum
+assumption of the current implementation; as a model law it lapsed with
+Highlights section 3.18, deleted on 2026-09-17 (section 23). Section 23 states the
 ray-event model adopted as the target direction on 2026-09-17, with
 implementation pending. Section 16 explicitly
 selects its native local-cycle integration without changing unselected worlds.
@@ -211,7 +213,8 @@ step, back to the birth event and on to the partner ray
 ([section 23](#23-the-ray-event-model)). The registry exception described in
 the next paragraph is withdrawn as a model law and retained only as the
 historical `bonded-ray-field-v1` profile; its measurements stand as evidence
-about that profile.
+about that profile, not for the current model. Highlights section 3.18,
+which described the shared resource, was deleted on 2026-09-17.
 
 Historical (withdrawn 2026-09-17): the bound was split in two, as the
 experiments split it. Energy, momentum,
@@ -674,11 +677,12 @@ limits; it does not derive the matrices or establish physical energy closure.
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
 Detector interaction, 1 or 0 for each transfer arriving at a marked node,
-wave or not, 1 ordinary behavior and 0 return, one bounded integer per
-arriving transfer
+every ray being a wave ray, 1 ordinary behavior and 0 return, one bounded
+integer per arriving transfer
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
 [section 23](#23-the-ray-event-model)). A pair's number is drawn at the first
-Detector and carried by the returning ray; no owner answers at a distance.
+Detector and carried by the returning ray, which walks back the same number
+of steps it has made since its event; no owner answers at a distance.
 For two Detectors at equal distance from the birth the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below
@@ -733,9 +737,12 @@ and that law is configured. The [hypotheses page](docs/HYPOTHESES.md) states the
 
 ## 23. The ray-event model
 
-Adopted as the target direction by the model owner on 2026-09-17. The design
-candidate `ray-event-model-v1` in [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md)
-holds the complete statement, the migration order and the acceptance criteria.
+Adopted as the target direction by the model owner on 2026-09-17 and recorded
+in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) (sections 3.3, 3.4, 3.15, 3.19,
+3.20, 5.1 and 5.4), the Highlights specification edited directly since that
+date. The design candidate `ray-event-model-v1` in
+[docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md) holds the complete
+statement, the migration order and the acceptance criteria.
 Nothing in this section is implemented yet; every implementation step is a
 separate published change measured against that document.
 
@@ -745,17 +752,19 @@ it is the only place where anything is decided, and its result is at most six
 events, one per Port. An event is a change of trajectory: a new straight line
 leaving the interaction through one Port. A ray is not an object; it is the
 trajectory of one event between two interactions, the same event with the
-same family properties, one node per Link interval, one heading. A ray
-trajectory is reversible: run backward it returns exactly to the interaction
+same family properties, one node per Link interval, one heading. From its
+event, every ray carries the number of steps it has made. A ray trajectory is
+reversible: run backward it returns exactly to the interaction
 that created it, because nothing was added or lost along the line. A node
 that a ray merely crosses hosts no event.
 
 Outside a Detector every trajectory an interaction permits actually happens:
 the up-to-six events all propagate, each as a straight ray with its share of
-the conserved quantities and, for a wave ray, its phase. Alternatives are
-created only at interactions, never at the empty nodes a ray crosses. A wave
-ray carries a phase; light is a wave ray with no mass and no charge, an event
-moving in time.
+the conserved quantities and its phase. Alternatives are created only at
+interactions, never at the empty nodes a ray crosses. Every ray is a wave ray
+and carries a phase; a plain ray is a special case of the wave ray, not a
+second kind. Light is a wave ray with no mass and no charge, an event moving
+in time.
 
 At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross; a deterministic interaction, up to six
@@ -772,13 +781,14 @@ interval.
 Every node carries one bit, Detector or not; the mark is bounded node
 metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
-marked node does one very simple thing. What arrives is a ray carrying
-information, wave or not; the kind makes no difference. For each transfer
-that arrives, whatever it is, it draws 1 or 0. On 1 it behaves as an ordinary
-node for that arrival and the transfer continues or interacts. On 0 it
-returns that transfer on the same line in the opposite direction, unchanged,
-so that it arrives at the node it left from with exactly the information it
-left with. Up to six transfers can arrive in one interval, one per Port, and
+marked node does one very simple thing. What arrives is a wave ray carrying
+information; every ray is a wave ray, so the kind makes no difference. For
+each transfer that arrives, whatever it is, it draws 1 or 0. On 1 it behaves
+as an ordinary node for that arrival and the transfer continues or interacts.
+On 0 it returns that wave ray on the same line in the opposite direction,
+unchanged, back the same number of steps it has made since its event, so that
+it arrives at the node it left from with exactly the information it left
+with. Up to six transfers can arrive in one interval, one per Port, and
 the node draws once for each, independently: the arrivals that drew 1 enter
 the ordinary interaction together, each arrival that drew 0 is returned on
 its own line. The Detector reads, changes,
@@ -800,8 +810,9 @@ clock. Held source records remain an explicitly labeled interim device until
 the binding couplings exist.
 
 Postulates 1 to 4 hold under this model without exception; the registry
-exception of postulate 4 is withdrawn, and the price stated in postulate 22 is
-accepted.
+exception of postulate 4 and the shared query of section 14 lapsed with
+Highlights section 3.18, deleted on 2026-09-17, and the price stated in
+postulate 22 is accepted.
 
 ## 24. Everything is information transfer; a return erases at the origin
 
@@ -842,7 +853,7 @@ which piece it gives back. Since the event is its information and not a
 place, the event can be moved: the open piece kept at the origin may be
 displaced along the trajectory line, and a returning ray, which walks that
 line, still meets it. The displacement mechanism (the occupied-channel rule
-of the central specification, section 5.1, which pushes a saved event toward
+of Highlights section 5.1, which pushes a saved event toward
 its origin along the same path without capacity waiting) is to be specified
 in the design document before implementation.
 

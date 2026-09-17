@@ -13,8 +13,11 @@ tables. Exact share capture and whole-ray threshold funding have regression
 coverage. Unsupported self-exclusion compositions fail preflight. The bond
 registry is bounded and idempotent (at most 4096 open pairs, released at the
 second answer, one number per pair fixed by seed and birth code) and drives
-ordinary Simulation as the declared split of postulate 4; the explicit
-Q-ORACLE option remains separate and available.
+ordinary Simulation as the split of postulate 4 that the model owner withdrew
+as a model law on 2026-09-17, retained as the historical `bonded-ray-field-v1`
+profile; the explicit Q-ORACLE option remains separate and available as
+current code, not as a model law ([Highlights](HIGHLIGHTS.md) section 3.18,
+deleted).
 See the exact submitted source and check results in the integration PR.
 
 The [position-output experiment](../examples/quantum/position_moment_response.md)
@@ -135,7 +138,7 @@ For a clean machine or deleted conversation, follow
 [recovery without chat history](RECOVERY.md), including the versioned daily
 genericity skill and local retention setup.
 The [Highlights implementation map](HIGHLIGHTS_IMPLEMENTATION.md) records the
-live specification reconciliation, entity coverage and exact source contracts.
+dated Highlights reconciliations, entity coverage and exact source contracts.
 
 The [quantum and classical coupling summary](QUANTUM_CLASSICAL_COUPLING.md)
 states the hybrid hypothesis, its measured evidence and its non-claims for an
@@ -234,7 +237,7 @@ particle at one Node. The [Bell probe](../examples/bell-chsh/README.md) puts
 two phased rays from one source through CHSH detectors built from the
 coherence and the lottery, and measures S below the local bound 2 for the
 lottery (1.48) and deterministic hidden variables (2.00); with bonded rays
-(`bonded-ray-field-v1`, the declared split of postulate 4) the bounded
+(`bonded-ray-field-v1`, the split of postulate 4 withdrawn on 2026-09-17) the bounded
 registry answers the pair's joint outcome from one number and S reaches the
 quantum value ([the contract](SPATIAL_FIELDS.md#bonded-rays-bonded-ray-field-v1)). The
 [gathered gravity probe](../examples/gathered-gravity/README.md) asks whether
@@ -343,10 +346,16 @@ with a 120-tick override instead of a duration-only copy of the initialization.
 
 ## Specifications and gaps
 
+[docs/HIGHLIGHTS.md](HIGHLIGHTS.md) is the high-level specification, edited
+directly since 2026-09-17 by the model owner's decision; it is not automatic
+evidence of implementation. The Google Doc
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
-is the high-level specification, not automatic evidence of implementation.
-Repository cleanup does not modify that external document. Read its current
-revision when working on specification changes and reconcile differences explicitly.
+is its historical source up to the revision of 2026-09-16 and is neither
+edited nor resynced. Read the current file when working on specification
+changes and correct the documents that restate a changed rule to it. The
+[ray-event model](RAY_EVENT_MODEL.md) (postulate 23) is the adopted target
+direction of 2026-09-17; the implementation contracts below describe the
+current code until its migration is published.
 
 The active [disturbance contract](DISTURBANCES.md) supports named scalar/vector
 fields, whole-record movement, extensive splitting, atomic interactions, explicit
