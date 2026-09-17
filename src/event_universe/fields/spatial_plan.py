@@ -15,16 +15,8 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work, reduced_ratio
-from event_universe.core.sampling_contract import (
-    DETECTOR_ONLY,
-    require_historical_sampling,
-    validate_spatial_sampling,
-)
+from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 from event_universe.core.spatial_state import (
-    BOND_ORIGIN_MARK,
-    TICKET_MODULUS,
-    Claim,
-    Claims,
     EmissionDefinition,
     FieldRuleGuard,
     NodeFieldRuleDefinition,
@@ -39,19 +31,13 @@ from event_universe.core.spatial_state import (
     advance_ray,
     coherence,
     merge_rays,
-    next_ticket,
     phase_of_sum,
     ray_momentum,
-    ray_salt,
     ray_stock,
-    ticket_draw,
-    validate_claims,
-    validate_ray_coupling_scope,
     validate_ray_participants,
     validate_rays,
 )
 
-from .bonds import BondRegistry
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
 from .ray_interactions import apply_ray_interactions
@@ -81,16 +67,12 @@ class SpatialLaw:
     # When set, indivisible portions prefer the axis whose port carries the least
     # computation load travelling along ("along") or against it ("against").
     least_delay_direction: str | None = None
-    # The one shared object: the bond registry, the declared exception to the
-    # causal bound. None when no field is bonded.
-    bonds: BondRegistry | None = None
     ray_interactions: tuple[InteractionDefinition, ...] = ()
     sampling_profile: str = DETECTOR_ONLY
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
         if self.ray_interactions:
-            validate_ray_coupling_scope(self.definitions, self.sampling_profile)
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
             if (
                 self.field_rules
@@ -102,8 +84,6 @@ class SpatialLaw:
                 )
             ):
                 raise ValueError("ray interactions do not support another coupled field program")
-        if self.bonds is not None or any(rule.bond_setting is not None for rule in self.absorptions):
-            require_historical_sampling(self.sampling_profile, "ordinary bond registry binding")
 
     def _own_departed_keys(self, record: DisturbanceRecord, index: int, meter: CostMeter) -> set[Ray]:
         """Complete keys of the record's own rays that arrived here with it."""
@@ -145,15 +125,6 @@ class SpatialLaw:
                 return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
-    def _carried_train(self, record: DisturbanceRecord, definition: SpatialFieldDefinition) -> int:
-        """The train of the record's last absorption on this field, zero before any."""
-        for rule_index, rule in enumerate(self.absorptions):
-            if rule.field == definition.field and matches_type(rule, record.type_index):
-                if rule_index < len(record.absorbed_trains):
-                    return unpack(record.absorbed_trains[rule_index])[0]
-                return 0
-        raise ValueError("a carried train requires an absorb rule on the same field")
-
     def _mirrored_heading(
         self,
         heading: int,
@@ -169,82 +140,12 @@ class SpatialLaw:
         )
         return definition.headings.index(image)
 
-    def _gather(
-        self,
-        index: int,
-        resident: list[Ray],
-        claims: list[Claim],
-        records: list[DisturbanceRecord | None],
-        meter: CostMeter,
-    ) -> int:
-        """Claims turn their trains' rays homeward; at the claiming Node a record takes them whole.
-
-        A free ray whose train this Node holds a claim for becomes homing: it no
-        longer follows its line but the claim's parent ports back to the Node
-        that opened the claim. There, a record with a claiming absorb rule takes
-        every homing ray of its trains whole, amount to its field and amount x
-        heading to its momentum field, with no coherence or lottery: the claim
-        owns the train. Returns the amount gathered.
-        """
-        if not claims:
-            return 0
-        definition = self.definitions[index]
-        claimed = {claim.train: claim for claim in claims}
-        for position, ray in enumerate(resident):
-            if ray.train and not ray.homing and ray.train in claimed:
-                meter.charge("read")
-                meter.charge("update")
-                resident[position] = replace(ray, homing=1, wait=0)
-        roots = {train for train, claim in claimed.items() if claim.parent < 0}
-        gathered = 0
-        if not roots:
-            return 0
-        for rule in self.absorptions:
-            if rule.field != definition.field or not rule.claim:
-                continue
-            for slot, record in enumerate(records):
-                if record is None or not matches_type(rule, record.type_index):
-                    continue
-                values = list(record.values)
-                stock = unpack(values[definition.field])[0]
-                momentum = (
-                    list(unpack(values[rule.momentum_field]))
-                    if rule.momentum_field is not None
-                    else None
-                )
-                remaining: list[Ray] = []
-                for ray in resident:
-                    if not (ray.homing and ray.train in roots):
-                        remaining.append(ray)
-                        continue
-                    meter.charge("read")
-                    meter.charge("couple")
-                    stock = checked_work(stock + ray.amount)
-                    gathered = checked_work(gathered + ray.amount)
-                    if momentum is not None:
-                        heading = definition.headings[ray.heading]
-                        for axis in range(3):
-                            momentum[axis] = checked_work(momentum[axis] + ray.amount * heading[axis])
-                if len(remaining) == len(resident):
-                    continue
-                resident[:] = remaining
-                values[definition.field] = pack((stock,))
-                self.fields[definition.field].validate(values[definition.field])
-                if momentum is not None and rule.momentum_field is not None:
-                    values[rule.momentum_field] = pack(tuple(momentum))
-                    self.fields[rule.momentum_field].validate(values[rule.momentum_field])
-                meter.charge("update", 1 + (3 if momentum is not None else 0))
-                records[slot] = replace(record, values=tuple(values))
-        return gathered
-
     def _absorb(
         self,
         index: int,
         resident: list[Ray],
         records: list[DisturbanceRecord | None],
         meter: CostMeter,
-        claims: list[Claim] | None = None,
-        tick: int = 0,
     ) -> int:
         """Absorbing records take a share of the resident rays of one field, in slot order.
 
@@ -253,7 +154,9 @@ class SpatialLaw:
         from the record's own stock and never beyond it. The share adds to the
         record's field of the same name and share x heading to its momentum field;
         the rest of the ray stays resident and is forwarded. A record's own rays
-        that arrived with it are left alone. Returns the total amount absorbed.
+        that arrived with it are left alone. Nothing here draws: the capture is
+        the coherent share or the deterministic threshold. Returns the total
+        amount absorbed.
         """
         definition = self.definitions[index]
         absorbed_total = 0
@@ -261,7 +164,6 @@ class SpatialLaw:
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
         if definition.kerengonen:
             meter.charge("evaluate", len(resident))
-        lottery = definition.capture == "lottery"
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field != definition.field:
                 continue
@@ -271,17 +173,8 @@ class SpatialLaw:
                 own = self._own_departed_keys(record, index, meter)
                 if all(replace(ray, amount=1) in own for ray in resident):
                     continue
-                tickets = list(record.absorb_tickets)
-                if lottery and len(tickets) != len(self.absorptions):
-                    seeds = {item.field: item.capture_seed for item in self.definitions}
-                    tickets = [
-                        pack(((seeds[item.field] + item.capture_salt) % TICKET_MODULUS,))
-                        for item in self.absorptions
-                    ]
-                ticket = unpack(tickets[rule_index])[0] if lottery else 0
                 absorbed_terms: list[tuple[int, int]] = []
                 carried_share, carried_advance, carried_heading = 0, -1, -1
-                largest_share, carried_train = 0, 0
                 values = list(record.values)
                 stock = unpack(values[definition.field])[0]
                 momentum = (
@@ -296,7 +189,7 @@ class SpatialLaw:
                         raise ValueError("absorb fraction must not be negative")
                 remaining: list[Ray] = []
                 for ray in resident:
-                    if replace(ray, amount=1) in own or ray.homing:
+                    if replace(ray, amount=1) in own:
                         remaining.append(ray)
                         continue
                     meter.charge("read")
@@ -314,26 +207,7 @@ class SpatialLaw:
                         right, left_denominator = reduced_ratio(numerator, share_denominator)
                         share_numerator = checked_work(left * right)
                         share_denominator = checked_work(left_denominator * right_denominator)
-                    while lottery and share_denominator > TICKET_MODULUS:
-                        # Keep the share at the ticket's resolution so the draw and the
-                        # truncated share stay within the working register.
-                        share_numerator //= 2
-                        share_denominator //= 2
-                    if rule.bond_setting is not None and ray.bond and self.bonds is not None:
-                        # A bonded ray: the registry answers for both ends of the pair.
-                        setting = unpack(record.values[rule.bond_setting])[0]
-                        meter.charge("evaluate")
-                        if self.bonds.draw(ray.bond, setting, ray_salt(ray)) < 0:
-                            share = 0
-                    elif lottery:
-                        # Whole ray or nothing: the local ticket draws against the share.
-                        ticket = next_ticket(ticket, ray_salt(ray))
-                        meter.charge("evaluate")
-                        if checked_work(ticket_draw(ticket) * share_denominator) >= checked_work(
-                            share_numerator * TICKET_MODULUS
-                        ):
-                            share = 0
-                    elif definition.capture == "threshold":
+                    if definition.capture == "threshold":
                         # Whole ray or nothing, decided by the hidden phases alone: taken
                         # when the coherent share reaches one half, left otherwise.
                         meter.charge("evaluate")
@@ -347,25 +221,11 @@ class SpatialLaw:
                         available = max(stock, 0)
                         share = (
                             (0 if -share > available else share)
-                            if definition.capture != "share" or rule.bond_setting is not None
+                            if definition.capture != "share"
                             else max(share, -available)
                         )
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
-                    if (
-                        share
-                        and rule.claim
-                        and ray.train
-                        and claims is not None
-                        and all(claim.train != ray.train for claim in claims)
-                        and len(claims) < definition.claim_slots
-                    ):
-                        # Claim and gather: taking any of a train opens a claim here,
-                        # the root that every neighbor's claim will lead back to.
-                        meter.charge("update")
-                        claims.append(Claim(ray.train, -1, tick))
-                    if share and definition.claims and abs(share) > largest_share:
-                        largest_share, carried_train = abs(share), ray.train
                     if share and definition.kerengonen:
                         absorbed_terms.append((abs(share), ray.phase))
                         if abs(share) > carried_share:
@@ -384,8 +244,6 @@ class SpatialLaw:
                     values[rule.momentum_field] = pack(tuple(momentum))
                     self.fields[rule.momentum_field].validate(values[rule.momentum_field])
                 meter.charge("update", 1 + (3 if momentum is not None else 0))
-                if lottery:
-                    tickets[rule_index] = pack((ticket,))
                 phases = list(record.absorbed_phases)
                 if definition.kerengonen:
                     if len(phases) != len(self.absorptions):
@@ -401,18 +259,10 @@ class SpatialLaw:
                                 carried_heading,
                             )
                         )
-                trains = list(record.absorbed_trains)
-                if definition.claims:
-                    if len(trains) != len(self.absorptions):
-                        trains = [pack((0,)) for _ in self.absorptions]
-                    if largest_share:
-                        trains[rule_index] = pack((carried_train,))
                 records[slot] = replace(
                     record,
                     values=tuple(values),
-                    absorb_tickets=tuple(tickets) if lottery else record.absorb_tickets,
                     absorbed_phases=tuple(phases) if definition.kerengonen else record.absorbed_phases,
-                    absorbed_trains=tuple(trains) if definition.claims else record.absorbed_trains,
                 )
         return absorbed_total
 
@@ -507,7 +357,6 @@ class SpatialLaw:
         received_count: int = 0,
         node_cost: int | None = None,
         rays: tuple[Rays, ...] = (),
-        claims: tuple[Claims, ...] = (),
         tick: int = 0,
         ray_hold: int = 0,
     ) -> SpatialPlan:
@@ -517,17 +366,9 @@ class SpatialLaw:
             raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
+        if bounded(tick) < 0:
+            raise ValueError("node clock must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
-        has_claims = any(definition.claims for definition in self.definitions)
-        # Claims this Node still holds: a claim expires claim_ticks after it opened.
-        claims_state: list[list[Claim]] = [
-            [
-                claim
-                for claim in (claims[index] if claims and index < len(claims) else ())
-                if checked_work(bounded(tick) - claim.since) <= definition.claim_ticks
-            ]
-            for index, definition in enumerate(self.definitions)
-        ]
         # Rays that arrived on the previous link; this cycle's emission joins them
         # only after absorption, so a record never swallows its own fresh rays.
         resident_rays: list[list[Ray]] = [
@@ -653,31 +494,6 @@ class SpatialLaw:
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:
                         last[index] = pack((unpack(amount)[0], cursor_before, phase, advance))
-                    if (rule.train_field is not None or rule.train_carried) and new_rays:
-                        # Claim and gather: every ray of this emission belongs to the
-                        # record's train, or to the train it last absorbed, so a claim
-                        # can gather it later.
-                        train = (
-                            self._carried_train(record, definition)
-                            if rule.train_carried
-                            else unpack(record_values[rule.train_field or 0])[0]
-                        )
-                        if train < 0:
-                            raise ValueError("a train must not be negative")
-                        new_rays = tuple(replace(ray, train=train) for ray in new_rays)
-                        meter.charge("update", len(new_rays))
-                    if (rule.bond_field is not None or rule.bond_origin) and new_rays:
-                        # Bonded at birth: by the emitter's label, or by the birth Node
-                        # and tick, which the Node stamps when it commits this plan.
-                        bond = (
-                            BOND_ORIGIN_MARK
-                            if rule.bond_origin
-                            else unpack(record_values[rule.bond_field or 0])[0]
-                        )
-                        if bond < 0:
-                            raise ValueError("a bond must not be negative")
-                        new_rays = tuple(replace(ray, bond=bond) for ray in new_rays)
-                        meter.charge("update", len(new_rays))
                     emitted_rays[rule.spatial_field].extend(new_rays)
                     if not rule.funded and definition.momentum_field is not None:
                         for axis, value in enumerate(ray_momentum(new_rays, definition)):
@@ -735,7 +551,6 @@ class SpatialLaw:
         outgoing_phases: list[list[SpatialPopulations]] = [[] for _ in range(6)]
         outgoing_rays: list[list[Rays]] = [[] for _ in range(6)]
         kept_rays: list[Rays] = [() for _ in self.definitions]
-        outgoing_claims: list[list[Claims]] = [[() for _ in self.definitions] for _ in range(6)]
         retained = []
         rule_delta = [[0] * field.components for field in self.fields]
         for index, definition in enumerate(self.definitions):
@@ -747,26 +562,10 @@ class SpatialLaw:
                 # Ray fields keep no octant stock; every resident ray moves one link.
                 if any(any(unpack(payload)) for payload in working[index].populations):
                     raise ValueError("ray transport does not own octant populations")
-                absorbed = self._gather(
-                    index, resident_rays[index], claims_state[index], updated_records, meter
-                )
-                absorbed = checked_work(
-                    absorbed
-                    + self._absorb(
-                        index, resident_rays[index], updated_records, meter, claims_state[index], tick
-                    )
-                )
-                absorbed = checked_work(
-                    absorbed
-                    + self._gather(
-                        index, resident_rays[index], claims_state[index], updated_records, meter
-                    )
-                )
+                absorbed = self._absorb(index, resident_rays[index], updated_records, meter)
                 absorbed_by_field[definition.field] = checked_work(
                     absorbed_by_field[definition.field] + absorbed
                 )
-                free = tuple(ray for ray in resident_rays[index] if not ray.homing)
-                homing = tuple(ray for ray in resident_rays[index] if ray.homing)
                 if ray_hold:
                     ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
                     kept = merge_rays(
@@ -775,41 +574,12 @@ class SpatialLaw:
                         )
                         + fresh_kept
                     )
-                    homing = ()
                 else:
-                    ports, kept = forward_rays(free + tuple(emitted_rays[index]), definition, meter)
-                if homing:
-                    # Homing rays follow the claim's parent port one link per tick;
-                    # without a parent here (the root, or no claim) they wait.
-                    port_lists = [list(port_rays) for port_rays in ports]
-                    kept_list = list(kept)
-                    claimed = {claim.train: claim for claim in claims_state[index]}
-                    for ray in homing:
-                        meter.charge("read")
-                        meter.charge("route")
-                        claim = claimed.get(ray.train)
-                        if claim is None or claim.parent < 0:
-                            kept_list.append(ray)
-                        else:
-                            meter.charge("send")
-                            port_lists[claim.parent].append(ray)
-                    ports = tuple(merge_rays(tuple(port_rays)) for port_rays in port_lists)
-                    kept = merge_rays(tuple(kept_list))
+                    ports, kept = forward_rays(
+                        tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
+                    )
                 validate_rays(kept, definition, field)
                 kept_rays[index] = kept
-                if definition.claims:
-                    # The flood: a claim not yet passed on goes to every port but the
-                    # one it came from, then stays here as knowledge until it expires.
-                    unsent = [claim for claim in claims_state[index] if not claim.sent]
-                    for port in range(6):
-                        outgoing_claims[port][index] = tuple(
-                            Claim(claim.train, -1, claim.since, 0, claim.origin)
-                            for claim in unsent
-                            if claim.parent != port
-                        )
-                    meter.charge("send", sum(1 for _ in unsent) * 5)
-                    claims_state[index] = [replace(claim, sent=1) for claim in claims_state[index]]
-                    validate_claims(tuple(claims_state[index]), definition)
                 before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
                 before_rays = checked_work(
                     before_rays + source[definition.field][0] + funded[definition.field]
@@ -900,8 +670,4 @@ class SpatialLaw:
             if self.allocation_phase != "node"
             else (),
             kept_rays=tuple(kept_rays) if has_rays and any(kept_rays) else (),
-            claims=tuple(tuple(field_claims) for field_claims in claims_state) if has_claims else (),
-            outgoing_claims=tuple(tuple(port_claims) for port_claims in outgoing_claims)
-            if has_claims
-            else (),
         )

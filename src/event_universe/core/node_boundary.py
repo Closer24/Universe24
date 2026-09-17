@@ -16,7 +16,7 @@ from .disturbance_state import (
     bounded,
 )
 from .node_services import port_count
-from .spatial_state import Claims, FieldInteractionGuard, Rays, SpatialBundle, SpatialPlan, SpatialState
+from .spatial_state import FieldInteractionGuard, Rays, SpatialBundle, SpatialPlan, SpatialState
 
 
 def _tuple(value: object, maximum: int, size: int | None = None) -> None:
@@ -69,10 +69,8 @@ def validate_record(initial: InitialState, record: DisturbanceRecord) -> None:
         record.spatial_remaining,
         record.emission_last,
         record.emission_departed,
-        record.absorb_tickets,
         record.absorbed_phases,
         record.dissolve_clocks,
-        record.absorbed_trains,
     ):
         _tuple(rows, max(len(initial.fields), MAX_RULES))
         for row in rows:
@@ -269,31 +267,6 @@ def validate_spatial_plan(
     if bounded(plan.interaction_ticks) < 0:
         raise ValueError("node I/O interaction duration must be nonnegative")
     validate_plan_rays(initial, plan)
-    validate_plan_claims(initial, plan)
-
-
-def validate_plan_claims(initial: InitialState, plan: SpatialPlan) -> None:
-    """Claims: one tuple per field for the Node and per port, each within its slot budget."""
-    from .spatial_state import validate_claims
-
-    has_claims = any(definition.claims for definition in initial.spatial_fields)
-    _tuple(plan.claims, len(initial.spatial_fields))
-    _tuple(plan.outgoing_claims, port_count(initial))
-    if not plan.claims and not plan.outgoing_claims:
-        # A plan without claim state leaves the Node's claims as they are.
-        return
-    if not has_claims:
-        raise ValueError("claims require a claim field")
-    count = len(initial.spatial_fields)
-    _tuple(plan.claims, count, count)
-    for definition, claims in zip(initial.spatial_fields, plan.claims, strict=True):
-        validate_claims(claims, definition)
-    degree = port_count(initial)
-    _tuple(plan.outgoing_claims, degree, degree)
-    for port_claims in plan.outgoing_claims:
-        _tuple(port_claims, count, count)
-        for definition, claims in zip(initial.spatial_fields, port_claims, strict=True):
-            validate_claims(claims, definition)
 
 
 def validate_plan_rays(initial: InitialState, plan: SpatialPlan) -> None:
@@ -328,18 +301,3 @@ def validate_ray_bundle(
         if rays and not definition.rays:
             raise ValueError("rays on a field without ray transport")
         validate_rays(rays, definition, initial.fields[definition.field])
-
-
-def validate_claim_bundle(
-    initial: InitialState, bundle: tuple[Claims, ...], *, optional: bool = False
-) -> None:
-    """Reject malformed claim packets even when the receiving slots are full."""
-    from .spatial_state import validate_claims
-
-    count = len(initial.spatial_fields)
-    _tuple(bundle, count)
-    if optional and not bundle:
-        return
-    _tuple(bundle, count, count)
-    for definition, claims in zip(initial.spatial_fields, bundle, strict=True):
-        validate_claims(claims, definition)

@@ -65,8 +65,9 @@ needs no response law, and is described with funded emission in
 [Kerengonen field](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1)
 every share is further scaled by the coherence of the rays resident at the
 Node, so opposite phases are not absorbed and pass on; with the field's
-`"capture": "lottery"` the record instead takes each whole ray or nothing,
-by a local ticket drawn against that share.
+`"capture": "threshold"` the record instead takes each whole ray when that
+share reaches one half and leaves it otherwise, with no draw (the lottery
+capture was deleted on 2026-09-17).
 
 ## Exchange and rotation
 

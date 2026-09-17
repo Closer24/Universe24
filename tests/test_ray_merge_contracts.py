@@ -7,7 +7,7 @@ import pytest
 from event_universe import Simulation
 from event_universe.core.disturbance_state import CostMeter, bounded, pack, unpack
 from event_universe.core.node_boundary import validate_spatial_plan
-from event_universe.core.spatial_state import Claim, Ray, SpatialPacket, zero_spatial_state
+from event_universe.core.spatial_state import Ray, SpatialPacket, zero_spatial_state
 from event_universe.initialization import parse_initial_state
 
 from .test_energy_audit import absorbing_document, document
@@ -148,50 +148,43 @@ def test_directed_self_exclusion_uses_the_emitted_heading_and_full_ray_identity(
         emission_departed=(pack((4, 0, 0, -1)), pack((0, 0, 0, 0))),
     )
     own = Ray(1, (0, 0, 0), 4, 1)
-    foreign = replace(own, train=7)
+    foreign = replace(own, advance=2)
     residents, records = [own, foreign], [record]
     taken = _law(initial)._absorb(0, residents, records, CostMeter(initial.operation_costs))
     assert taken == 4 and residents == [own]
 
 
-@pytest.mark.parametrize("option", ["pace", "metric", "claim", "mirror"])
+@pytest.mark.parametrize("option", ["pace", "metric", "mirror"])
 def test_self_exclusion_refuses_compositions_without_a_complete_departure_record(option):
     raw = two_lamps(4, 1)
     raw["spatial_fields"][0]["self_exclusion"] = True
     if option == "mirror":
         raw["emissions"][0]["kerengonen_mirror"] = "x"
     else:
-        raw["spatial_fields"][0][option] = {
-            "pace": [1, 2],
-            "metric": "euclidean",
-            "claim": {"ticks": 3, "slots": 1},
-        }[option]
+        raw["spatial_fields"][0][option] = {"pace": [1, 2], "metric": "euclidean"}[option]
     with pytest.raises(ValueError, match="self-exclusion"):
         parse_initial_state(raw)
 
 
-def _claim_receiver():
+def _ray_receiver():
     raw = document(headings=[[1, 0, 0]], rays_per_tick=1)
-    raw["spatial_fields"][0]["claim"] = {"ticks": 3, "slots": 1}
+    raw["spatial_fields"][0]["ray_slots"] = 2
     world = Simulation(parse_initial_state(raw))
     spatial = world._spatial
     node = spatial._at((2, 2, 2))
-    packet = SpatialPacket(10, (1, 2, 2), 0, ((pack((0,)),) * 8,), claims=((Claim(2, -1, 10),),))
+    packet = SpatialPacket(10, (1, 2, 2), 0, ((pack((0,)),) * 8,), rays=((Ray(0, (0, 0, 0), 3),),))
     return spatial, node, packet
 
 
-def test_receipt_reclaims_an_expired_idle_claim_slot():
-    spatial, node, packet = _claim_receiver()
-    node.claims = ((Claim(1, -1, 0, 1),),)
-    node.receive((packet,), 10, spatial._services)
-    assert node.claims == ((Claim(2, 1, 10),),)
-
-
-def test_receipt_validates_the_entire_claim_packet_before_capacity_filtering():
-    spatial, node, packet = _claim_receiver()
-    node.claims = ((Claim(1, -1, 10, 1),),)
-    before = node.claims
-    invalid = replace(packet, claims=((Claim(2, -1, 10), Claim(3, -1, 10)),))
-    with pytest.raises(ValueError, match="claim slot"):
+def test_receipt_validates_the_entire_ray_packet_before_merging_residents():
+    spatial, node, packet = _ray_receiver()
+    node.rays = ((Ray(0, (0, 0, 0), 2),),)
+    before = node.rays
+    invalid = replace(packet, rays=((Ray(0, (0, 0, 0), 3), Ray(0, (0, 0, 0), 4, wait=1)),))
+    with pytest.raises(ValueError, match="ray wait"):
         node.receive((invalid,), 10, spatial._services)
-    assert node.claims == before
+    assert node.rays == before
+    node.receive((packet,), 10, spatial._services)
+    # Rays on one line merge on arrival; the slot budget bounds residency, and no
+    # occupied-channel rule pushes a ray back or makes it wait for room.
+    assert node.rays == ((Ray(0, (0, 0, 0), 5),),)

@@ -100,7 +100,7 @@ def test_no_admitted_coupling_does_not_hold_rays(control):
 
 def test_common_swap_preserves_complete_metadata_and_resets_changed_line():
     initial = parse_initial_state(document())
-    rays = (Ray(0, (1, 0, 0), 5, train=11), Ray(1, (0, 1, 0), 5, train=12))
+    rays = (Ray(0, (1, 0, 0), 5, advance=3), Ray(1, (0, 1, 0), 5, advance=5))
     updated = apply(initial, rays)
     assert updated == (
         replace(rays[0], heading=1, accumulators=(0, 0, 0), interaction_delay=2),
@@ -113,10 +113,10 @@ def test_later_group_invariant_failure_produces_no_partial_ray_proposal():
     initial = parse_initial_state(document())
     rule = replace(initial.ray_interactions[0], when=Expression("literal", literal=(1,)))
     rays = (
-        Ray(0, (0, 0, 0), 5, train=1),
-        Ray(1, (0, 0, 0), 5, train=2),
-        Ray(0, (0, 0, 0), 5, train=3),
-        Ray(1, (0, 0, 0), 3, train=4),
+        Ray(0, (0, 0, 0), 5, advance=1),
+        Ray(1, (0, 0, 0), 5, advance=2),
+        Ray(0, (0, 0, 0), 5, advance=3),
+        Ray(1, (0, 0, 0), 3, advance=4),
     )
     frozen = tuple(rays)
     with pytest.raises(ValueError, match="invariant momentum"):
@@ -171,35 +171,41 @@ def test_unchanged_vector_preserves_duplicate_heading_index_and_dda():
     assert apply(initial, rays) == tuple(replace(ray, interaction_delay=2) for ray in rays)
 
 
-def test_new_ray_candidate_rejects_historical_sampling_opt_in():
+def test_new_ray_candidate_rejects_a_sampling_profile_other_than_detector_only():
     doc = document()
     doc["sampling_profile"] = "historical-autonomous-v1"
-    with pytest.raises(ValueError, match="Detector-only"):
+    with pytest.raises(ValueError, match="detector-only-v1"):
         parse_initial_state(doc)
-
-
-def test_unselected_claim_field_is_rejected_by_native_ray_profile():
     initial = parse_initial_state(document())
-    with pytest.raises(ValueError, match="Detector-only"):
+    with pytest.raises(ValueError, match="detector-only-v1"):
+        SpatialLaw(
+            initial.fields,
+            initial.spatial_fields,
+            initial.emissions,
+            initial.operation_costs,
+            ray_interactions=initial.ray_interactions,
+            sampling_profile="historical-autonomous-v1",
+        )
+
+
+def test_unselected_lottery_field_is_rejected_by_the_sampling_contract():
+    initial = parse_initial_state(document())
+    with pytest.raises(ValueError, match="lottery capture was deleted"):
         replace(
             initial,
             spatial_fields=(
                 *initial.spatial_fields,
-                replace(initial.spatial_fields[0], claim_ticks=3, claim_slots=2),
+                replace(initial.spatial_fields[0], capture="lottery"),
             ),
         )
 
 
-@pytest.mark.parametrize("unsupported", ["historical", "claim", "second_clock", "absorb", "routing"])
+@pytest.mark.parametrize("unsupported", ["second_clock", "absorb", "routing"])
 def test_direct_spatial_law_keeps_native_coupling_admission(unsupported):
     initial = parse_initial_state(document())
     options = {"ray_interactions": initial.ray_interactions}
     definitions = initial.spatial_fields
-    if unsupported == "historical":
-        options["sampling_profile"] = "historical-autonomous-v1"
-    elif unsupported == "claim":
-        definitions = (*definitions, replace(definitions[0], claim_ticks=3))
-    elif unsupported == "absorb":
+    if unsupported == "absorb":
         options["absorptions"] = (
             SpatialCouplingDefinition("capture", 0, 0, "absorb", Expression("literal", literal=(1,))),
         )

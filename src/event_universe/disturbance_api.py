@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING
 from event_universe.core.coupling_selectors import selected_type_set
 from event_universe.core.disturbance_engine import DisturbanceEngine, EventSink
 from event_universe.core.disturbance_state import InitialState
-from event_universe.fields.bonds import BondRegistry
 from event_universe.fields.disturbances import DisturbanceLaw
 from event_universe.fields.node_conservation import LocalBalanceGuard
 from event_universe.fields.record_operations import RecordOperations
@@ -29,9 +28,6 @@ class Simulation(DisturbanceEngine):
         node_workers: int = 1,
     ) -> None:
         responses = tuple(rule for rule in initial.spatial_couplings if rule.mode != "absorb")
-        bonded = [field for field in initial.spatial_fields if field.bonded]
-        if bonded and type(node_workers) is int and node_workers > 1:
-            raise ValueError("bonded rays share one registry and require a single Node worker")
         spatial_law = SpatialLaw(
             initial.fields,
             initial.spatial_fields,
@@ -43,9 +39,6 @@ class Simulation(DisturbanceEngine):
             allocation_phase=initial.allocation_phase,
             computation_field=initial.computation_field,
             least_delay_direction=initial.delay_direction if initial.least_delay_routing else None,
-            bonds=BondRegistry(bonded[0].bond_seed, bonded[0].phase_steps, bonded[0].bond_stream)
-            if bonded
-            else None,
             sampling_profile=initial.sampling_profile,
         )
         super().__init__(
@@ -106,7 +99,7 @@ class Simulation(DisturbanceEngine):
             ),
             node_workers=node_workers,
             reuse_carrier_plans=initial.focus,
-            reuse_spatial_plans=initial.focus and not bonded,
+            reuse_spatial_plans=initial.focus,
         )
         self._audit: LocalConservationAudit | None = None
         if initial.conservation is not None:

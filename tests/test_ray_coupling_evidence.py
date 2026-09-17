@@ -56,7 +56,7 @@ def test_phase_or_missing_tick_is_not_repaired_by_expected_sequence():
 
 
 def test_copied_owner_trace_preserves_metadata_without_counting_pending_shadow():
-    ray = Ray(0, (0, 0, 0), 5, phase=3, advance=1, train=7, bond=11)
+    ray = Ray(0, (0, 0, 0), 5, phase=3, advance=1, wait=0, interaction_delay=2)
     node = SimpleNamespace(rays=((ray,),), pending=SimpleNamespace(rays=((ray,),)))
     packet = SimpleNamespace(rays=((ray,),), origin=(1, 1, 1), port=0, arrival_tick=4)
     spatial = SimpleNamespace(
@@ -73,8 +73,8 @@ def test_copied_owner_trace_preserves_metadata_without_counting_pending_shadow()
     )
     owners = EVIDENCE.owned_rays(world)
     assert [item["owner"] for item in owners] == ["node", "link"]
-    assert [item["ray"]["bond"] for item in owners] == [11, 11]
-    assert [item["ray"]["train"] for item in owners] == [7, 7]
+    assert [item["ray"]["advance"] for item in owners] == [1, 1]
+    assert [item["ray"]["interaction_delay"] for item in owners] == [2, 2]
     assert owners[1]["arrival_tick"] == 4
     owners[0]["ray"]["phase"] = 0
     assert ray.phase == 3

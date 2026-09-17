@@ -37,8 +37,9 @@ properties. Only heading, phase and delay are writable. Native
 implementation admits at most six roles and 32 selected ray slots, positive
 unit-axial unpaced rays, the default fixed `H=1` clock, and Detector-only sampling.
 JSON and typed `InitialState` callers use the same capability validation. Other
-clocks, claim/bond sampling, response/absorption of participating rays and other
-unsupported owner combinations fail before the run.
+clocks, response/absorption of participating rays and other unsupported owner
+combinations fail before the run; the claim and bond samplers this rule once
+excluded were deleted on 2026-09-17.
 
 With the project environment active:
 

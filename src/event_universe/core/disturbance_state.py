@@ -231,9 +231,6 @@ class DisturbanceRecord:
     # the record subtracts the rays of that departure from the flux it samples.
     emission_last: Values = ()
     emission_departed: Values = ()
-    # Kerengonen lottery capture: one local ticket state per absorb rule, advanced
-    # on every draw from the record's own row and the ray it meets.
-    absorb_tickets: Values = ()
     # Kerengonen carried phase: per absorb rule, the phase of the coherent sum of
     # what the record last absorbed, so a re-emission can continue the wave.
     absorbed_phases: Values = ()
@@ -241,9 +238,6 @@ class DisturbanceRecord:
     # stock it held when the rule first saw it, so a record can pay itself out
     # as rays on a schedule.
     dissolve_clocks: Values = ()
-    # Claim and gather: per absorb rule, the train of the largest share the record
-    # last absorbed, so a re-emission can keep the train a claim will gather.
-    absorbed_trains: Values = ()
     route_count_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     route_weight_codes: tuple[int, ...] = (1, 1, 1, 1, 1, 1)
     rate_credit_denominator: int = 1
@@ -310,15 +304,13 @@ class InitialState:
             if spatial_definition.self_exclusion and (
                 self.ray_delay
                 or spatial_definition.euclidean
-                or spatial_definition.claims
-                or spatial_definition.bonded
                 or spatial_definition.pace_numerator != spatial_definition.pace_denominator
                 or any(
                     rule.spatial_field == index and rule.mirror is not None for rule in self.emissions
                 )
             ):
                 raise ValueError(
-                    "one-Link self-exclusion does not support paced, delayed, mirrored, claimed or bonded rays"
+                    "one-Link self-exclusion does not support paced, delayed or mirrored rays"
                 )
         for name in ("ray_delay", "ray_phase_per_tick", "focus"):
             if type(getattr(self, name)) is not bool:

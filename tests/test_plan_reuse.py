@@ -8,7 +8,7 @@ from event_universe import Simulation
 from event_universe.core.disturbance_state import LocalPlan, pack
 from event_universe.core.node_execution import NodeExecution
 from event_universe.core.plan_reuse import PlanReuse
-from event_universe.core.spatial_state import Claim, Ray, SpatialPlan, zero_spatial_state
+from event_universe.core.spatial_state import Ray, SpatialPlan, zero_spatial_state
 from event_universe.initialization import parse_initial_state
 
 from .support.disturbances import document, kind
@@ -91,7 +91,7 @@ def test_all_carrier_arguments_separate_reuse_entries():
     assert len(calls) == 5
 
 
-def test_all_spatial_arguments_including_time_phase_and_claims_separate_reuse_entries():
+def test_all_spatial_arguments_including_time_and_phase_separate_reuse_entries():
     calls = []
 
     def planner(*args):
@@ -103,14 +103,13 @@ def test_all_spatial_arguments_including_time_phase_and_claims_separate_reuse_en
 
     record = parse_initial_state(document([kind("held")], [((0, 0, 0), "held")])).seeds[0].record
     state = zero_spatial_state(1)
-    base = ((state,), (None,), 0, 0, (), (), 0, 0)
+    base = ((state,), (None,), 0, 0, (), 0, 0)
     changes = (
         (replace(state, received_mask=1),),
         (record,),
         1,
         3,
         ((Ray(0, (0, 0, 0), 1, phase=2),),),
-        ((Claim(1, 0, 0),),),
         7,
         2,
     )
@@ -121,7 +120,7 @@ def test_all_spatial_arguments_including_time_phase_and_claims_separate_reuse_en
         args = list(base)
         args[index] = value
         assert execution.spatial(*args).cost == index + 2
-    assert len(calls) == 9
+    assert len(calls) == 8
 
 
 @pytest.mark.parametrize("workers", [1, 2])

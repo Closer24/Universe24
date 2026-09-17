@@ -81,8 +81,8 @@ alternative is an event on the board.
 There is no replacement API. `core/event_space.py`, `core/event_links.py`,
 `core/event_resolution.py`, the source-envelope modules, the bond registry,
 claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
-of the same issue. The source-envelope modules and the causal event ledger
-were deleted in the next steps, below.
+of the same issue. The source-envelope modules, the causal event ledger and
+the bond registry were deleted in the next steps, below.
 
 ## Source envelopes deleted on 2026-09-17
 
@@ -128,9 +128,48 @@ the rays, the origin Node keeps nothing and there is no register.
   `event_support`, and the playback page draws none. The profile tool reports
   no `event_history_enabled`.
 
-There is no replacement API. `core/event_resolution.py`, the bond registry,
-claim/gather and `fields/record_operations.py` stay until buckets B.5 and B.6
-of the same issue.
+There is no replacement API. `core/event_resolution.py` and
+`fields/record_operations.py` stay until bucket B.6 of the same issue.
+
+## Bond registry, claim-gather, lottery capture and occupied-links guard deleted on 2026-09-17
+
+Under the same instruction, issue #164 bucket B.5 removed the last owners that
+answered at a distance, kept a register at a Node or made a ray wait for room
+([Highlights](HIGHLIGHTS.md) 3.18 deleted, 3.19, 3.20, 5.1 and 5.4;
+[ray-event model](RAY_EVENT_MODEL.md) section 5 and section 6 step 5):
+
+- `fields/bonds.py` (`BondRegistry`), the ray fields `bond`, `train` and
+  `homing`, the `Claim` record, the spatial-field keys `bond` and `claim`, the
+  emission keys `bond_field` and `train_field`, the absorb-rule keys
+  `bond_setting`, `claim` and `capture_salt`, the Kerengonen
+  `"capture": "lottery"` and `capture_seed`, the record rows `absorb_tickets`
+  and `absorbed_trains`, the runner metadata `spatial_claims` and
+  `spatial_bonds`, the sampling profile `historical-autonomous-v1` and the
+  planner argument `claims`: the spatial planner now takes states, records,
+  received count, node cost, rays, tick and ray hold;
+- the pre-planning refusal "outgoing spatial links are occupied": there is no
+  occupied channel and no capacity rule, rays leaving on one Link in one
+  interval travel in one packet bounded by `ray_slots`, and
+  `SpatialNode.require_free_links` rejects at commit a departure that would
+  overwrite a packet still in transit, a host scheduling error rather than a
+  physical rule;
+- the examples `bell-chsh/`, `kerengonen-bell/`, `claim-gather/`,
+  `gathered-gravity/`, `research/bell-postulate-22/` and the ray-gallery
+  panels `4-bonded-pair`, `5-claim-gather` and `8-lottery-detector`; the
+  double-slit probe's lottery columns; the redshift sweep reads its train by
+  arrival order instead of a claim-stamped label;
+- the tests `test_bonds.py`, `test_ray_bell_chsh.py`, `test_kerengonen_bell.py`,
+  `test_claim_gather.py`, `test_research_sampling_admission.py` and
+  `test_gathered_gravity.py`, and the lottery cases of `test_kerengonen.py`,
+  `test_ray_integration_guards.py` and `test_detector_sampling_contract.py`.
+
+There is no replacement API: `capture` is `share` or `threshold`, and the
+Detector mark of Highlights 3.19 (issue #169, feature 2) will own the ticket
+sequence that `core/spatial_state.py` keeps (`TICKET_MODULUS`, `next_ticket`,
+`ticket_draw`, `phase_cosines`). `core/event_resolution.py` and
+`fields/record_operations.py` stay until bucket B.6; the source-envelope
+modules went with bucket B.3 and the causal event ledger with bucket B.4 on
+the same day.
 
 ## Primary initialization-based API
 

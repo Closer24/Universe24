@@ -489,8 +489,7 @@ class DisturbanceNode(DisturbanceNodeState):
         field_packets: tuple[SpatialPacket | None, ...] = ()
         if field_plan is not None:
             assert spatial is not None and spatial_services is not None
-            if any(packet is not None for packet in spatial.output.packets):
-                raise ValueError("outgoing spatial links are occupied")
+            spatial.require_free_links()
             field_states = spatial.node_states(field_plan, spatial_services)
             if pending.spatial_guard_states and spatial.incoming:
                 assert spatial_services.coupler is not None
@@ -726,10 +725,8 @@ class DisturbanceNode(DisturbanceNodeState):
             emission_remaining=current.emission_remaining,
             emission_last=current.emission_last,
             emission_departed=current.emission_departed,
-            absorb_tickets=current.absorb_tickets,
             absorbed_phases=current.absorbed_phases,
             dissolve_clocks=current.dissolve_clocks,
-            absorbed_trains=current.absorbed_trains,
         )
 
     @staticmethod

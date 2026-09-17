@@ -354,8 +354,9 @@ draw independently, and the CHSH value for spacelike settings is at most 2.
 The quantum value appears only when the second ray's path is longer than the
 round trip through the first Detector. Pair identity becomes the trajectory,
 so two pairs born at one Node in one tick are distinct, which closes the
-[birth-code collision](../examples/research/bell-postulate-22/README.md) found
-on 16 September 2026.
+birth-code collision found on 16 September 2026 by the Bell and postulate 22
+study (`examples/research/bell-postulate-22/`, deleted on 2026-09-17 with the
+bond registry).
 
 ## 4. Why this is consistent
 
@@ -445,8 +446,11 @@ on 16 September 2026.
    by the declared coupling, and for a ray-interaction event whose inputs
    were consumed it cancels its own share only and continues along the
    event's output lines.
-5. Registry removal from the physical path; the historical bonded profile and
-   its tests are retained as history, not as the active law.
+5. Registry removal from the physical path (done on 2026-09-17, issue #164
+   bucket B.5: the registry, the bonded profile, claim-gather, the lottery
+   capture, the occupied-links guard and their tests and probes were deleted;
+   their measurements stay in the validation log as history, not as the
+   active law).
 6. Light as a wave ray with no mass and no charge and rest rate zero, every
    ray being a wave ray: its phase does not advance along its line; it
    carries its emitter's clock phase at emission and delivers it unchanged;

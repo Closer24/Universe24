@@ -1,4 +1,4 @@
-"""Compose one animated GIF: eight panels, one ray kind each, advancing tick by tick.
+"""Compose one animated GIF: five panels, one ray kind each, advancing tick by tick.
 
 Input: the per-tick JSON that record_ticks.py read back from the recorded runs
 (verified against the runner's own frames). One GIF frame per recorded tick;
@@ -6,7 +6,7 @@ panels whose run is shorter hold their final recorded state (marked "held").
 Nothing is interpolated, no trajectory is invented. Arrows are rays resident at
 a Node (the recorded state after each tick has every ray at a Node; nothing is
 in flight at frame time), squares are records, shaded cells are octant field
-stock or claims. The picture is a faithful drawing of recorded state; it is not
+stock. The picture is a faithful drawing of recorded state; it is not
 evidence of physics.
 
 Run:  PYTHONPATH=src python examples/research/ray-gallery/render_rays.py --output DIR
@@ -39,15 +39,12 @@ INK = "#e8ecf4"
 DIM = "#8a95b3"
 LATTICE = "#2a3a5f"
 RAY = "#ffd166"  # unphased ray
-HOMING = "#ffffff"  # homing ray (claim and gather): white, a hue the phase wheel never produces
 LOAD = (0.35, 0.55, 1.0)  # computation field halo (panel 7), drawn translucent under the rays
-EMITTER = "#ff8a3d"  # records that emit (lamps, sources, charge, particle)
-ABSORBER = "#4c5c80"  # records that absorb or detect, filled toward white by stock
+EMITTER = "#ff8a3d"  # records that emit (lamps, sources, charge)
+ABSORBER = "#4c5c80"  # records that absorb, filled toward white by stock
 MIRROR = "#d8dfec"
 MASS = "#d05cff"
-CLAIM = "#a06cff"
 WAIT = "#ff5c5c"
-BOND = "#ff6bd6"
 FRAME_MS = 450
 FINAL_MS = 4000
 STILL_TICKS = ("first", 8, 20, "final")
@@ -59,12 +56,7 @@ EMITTER_TYPES = {
     "lamp_diag",
     "lamp_a",
     "lamp_b",
-    "source_alice",
-    "source_bob",
-    "reference_alice",
-    "reference_bob",
     "charge",
-    "particle",
 }
 LABELS = {
     "lamp": "lamp",
@@ -73,17 +65,8 @@ LABELS = {
     "lamp_diag": "lamp",
     "lamp_a": "lamp A",
     "lamp_b": "lamp B",
-    "source_alice": "source A+B",
-    "source_bob": None,
-    "reference_alice": "ref lamp",
-    "reference_bob": "ref lamp",
     "charge": "charge",
-    "particle": "particle",
     "screen": "screen",
-    "plus_alice": "+A",
-    "minus_alice": "−A",
-    "plus_bob": "+B",
-    "minus_bob": "−B",
     "mirror": "mirror",
     "mass body": "mass",
 }
@@ -94,16 +77,10 @@ LEGENDS = {
     "Records (not rays): lamps.",
     "3-double-slit": "lamps A and B in phase, 8 phase steps, +2 per link; the fringe builds in the screen stock. "
     "Records (not rays): lamps, 9 screen absorbers.",
-    "4-bonded-pair": "one Node births a pair per tick (dashed = equal bond code); +A/+B ask the registry, "
-    "−A/−B take what walks on. Records (not rays): sources, detectors.",
-    "5-claim-gather": "particle dissolves at pace 1/4; the screen's click opens a claim (violet cells, small arrow = "
-    "way home); white = homing ray. Records (not rays): particle, screen.",
     "6-mirror-cavity": "lamp fires 8 quanta each way, once; a mirror absorbs a ray for one tick and re-emits it "
     "along the mirrored heading at the carried phase. Records (not rays): lamp, mirrors.",
     "7-ray-delay": "blue shade = the mass's outward computation field; red ring k = ray_wait, rays held k cycles. "
     "Records (not rays): lamp, screen, mass body.",
-    "8-lottery-detector": "a reference lamp lands a quantum per tick at +A/+B at the setting phase; the lottery takes or "
-    "passes each arriving ray. Records (not rays): sources, reference lamps, detectors.",
 }
 
 
@@ -173,37 +150,6 @@ def draw_panel(ax, panel: dict, frame: dict, held: bool, scales: dict) -> None:
                     lw=0.6,
                     zorder=3,
                 )
-    # Claims: every Node that knows a train was captured, with the way home.
-    for x, y, parent, root, _train, _since in frame["claims"]:
-        ax.scatter(
-            [x], [y], s=(cell_pt * 0.95) ** 2, marker="s", c=[CLAIM], alpha=0.22, linewidths=0, zorder=2
-        )
-        if root:
-            ax.scatter(
-                [x],
-                [y],
-                s=(cell_pt * 1.1) ** 2,
-                marker="s",
-                facecolors="none",
-                edgecolors=CLAIM,
-                linewidths=1.2,
-                zorder=6,
-            )
-        else:
-            px, py = worlds_port(parent)
-            ax.arrow(
-                x,
-                y,
-                px * 0.28,
-                py * 0.28,
-                head_width=0.1,
-                head_length=0.09,
-                length_includes_head=True,
-                color=CLAIM,
-                alpha=0.55,
-                lw=0.5,
-                zorder=3,
-            )
     # Records: squares, labelled; absorbers fill toward white with stock.
     absorber_max = scales["absorber_max"]
     labelled = set()
@@ -338,23 +284,15 @@ def draw_panel(ax, panel: dict, frame: dict, held: bool, scales: dict) -> None:
     steps = panel["phase_steps"]
     groups: dict[tuple, list] = {}
     for ray in frame["rays"]:
-        groups.setdefault((ray[0], ray[1], ray[2], ray[3], ray[6]), []).append(ray)
-    bonds: dict[int, list] = {}
+        groups.setdefault((ray[0], ray[1], ray[2], ray[3]), []).append(ray)
     for rays in groups.values():
         n = len(rays)
-        for i, (x, y, hx, hy, amount, phase, homing, wait, bond, _train, parent_vec) in enumerate(rays):
-            if homing and parent_vec is not None and any(parent_vec):
-                dx, dy = parent_vec
-            elif homing:
-                dx, dy = 0, 0
-            else:
-                dx, dy = hx, hy
+        for i, (x, y, hx, hy, amount, phase, _wait) in enumerate(rays):
+            dx, dy = hx, hy
             norm = math.hypot(dx, dy)
             length = min(0.78, 0.26 + 0.46 * math.sqrt(amount / amax)) if amax else 0.3
             lw = 0.7 + 1.6 * math.sqrt(amount / amax) if amax else 0.8
-            color = (
-                HOMING if homing else (phase_color(phase, steps) if steps and phase is not None else RAY)
-            )
+            color = phase_color(phase, steps) if steps and phase is not None else RAY
             jitter = 0.09 * (i - (n - 1) / 2)
             if norm:
                 ox, oy = -dy / norm * jitter, dx / norm * jitter
@@ -382,37 +320,6 @@ def draw_panel(ax, panel: dict, frame: dict, held: bool, scales: dict) -> None:
                     linewidths=lw,
                     zorder=9,
                 )
-            if homing:
-                ax.scatter(
-                    [x + (ox if norm else jitter)],
-                    [y + (oy if norm else 0)],
-                    s=(cell_pt * 0.42) ** 2,
-                    marker="o",
-                    facecolors="none",
-                    edgecolors=HOMING,
-                    linewidths=0.8,
-                    zorder=9,
-                )
-            if wait and panel["key"] == "5-claim-gather" and not homing:
-                pass
-            if bond:
-                bonds.setdefault(bond, []).append(
-                    (x + (ox if norm else jitter), y + (oy if norm else 0))
-                )
-    for code, points in bonds.items():
-        if len(points) == 2:
-            (x1, y1), (x2, y2) = points
-            ax.plot([x1, x2], [y1, y2], ls=(0, (3, 2)), lw=0.8, color=BOND, alpha=0.8, zorder=4)
-            ax.text(
-                (x1 + x2) / 2,
-                (y1 + y2) / 2 + 0.22,
-                f"bond …{str(code)[-2:]}",
-                ha="center",
-                va="bottom",
-                fontsize=5.2,
-                color=BOND,
-                zorder=8,
-            )
     if held:
         ax.text(
             -0.45,
@@ -425,10 +332,6 @@ def draw_panel(ax, panel: dict, frame: dict, held: bool, scales: dict) -> None:
             zorder=10,
             bbox=dict(boxstyle="round,pad=0.15", fc=BACKGROUND, ec=DIM, lw=0.4),
         )
-
-
-def worlds_port(port: int) -> tuple[int, int]:
-    return [(1, 0), (-1, 0), (0, 1), (0, -1), (0, 0), (0, 0)][port]
 
 
 def footer(panel: dict, frame: dict, held: bool) -> tuple[str, str]:
@@ -446,29 +349,7 @@ def footer(panel: dict, frame: dict, held: bool) -> tuple[str, str]:
     d = panel["derived"]
     key = panel["key"]
     line2 = ""
-    if key in ("4-bonded-pair", "8-lottery-detector"):
-        row = next((r for r in d["per_tick"] if r["tick"] == frame["tick"]), None)
-        if row is None and frame["tick"] == 0:
-            row = {"taken": {"alice": 0, "bob": 0}, "passed": {"alice": 0, "bob": 0}}
-        if row:
-            line2 = (
-                f"Alice: taken at +A {row['taken']['alice']}, passed to −A {row['passed']['alice']} · "
-                f"Bob: taken at +B {row['taken']['bob']}, passed to −B {row['passed']['bob']}"
-            )
-        if key == "4-bonded-pair":
-            outcomes = d["pair_outcomes"]
-            resolved = []
-            for code, sides in outcomes.items():
-                resolved.append(f"…{code[-2:]}: A{sides.get('alice', '?')} B{sides.get('bob', '?')}")
-            line2 = "pairs (registry answers, final): " + "  ".join(resolved) + " | " + line2
-    elif key == "5-claim-gather":
-        row = next(r for r in d["per_tick"] if r["tick"] == frame["tick"])
-        screen = next((r[3]["matter"][0] for r in frame["records"] if r[2] == "screen"), 0)
-        line2 = (
-            f"claimed Nodes {row['claims']}/405 · free rays {row['free']} · homing {row['homing']} · "
-            f"screen holds {screen}/64 · first claim tick {d['first_claim_tick']}, gathered tick {d['gathered_tick']}"
-        )
-    elif key == "7-ray-delay":
+    if key == "7-ray-delay":
         screen = next((r[3]["quanta"][0] for r in frame["records"] if r[2] == "screen"), 0)
         waits = ", ".join(f"x={x}:k={k}" for x, y, k in frame["waits"]) or "none"
         line2 = f"first screen click tick {d['first_click_tick']} (same world without load: 11) · screen {screen}/128 · waits {waits}"
@@ -535,8 +416,7 @@ def compose(panels: list[dict], tick: int, meta: dict, plt_module) -> Image.Imag
         0.008,
         0.932,
         "arrow = ray resident at its Node (length by amount; hue = Kerengonen phase, see strip; amber = no phase) · "
-        "white arrow with ring = homing ray, drawn along the claim's parent port · ■ = record (emits, absorbs, "
-        "reflects or detects; a record is not a ray)",
+        "■ = record (emits, absorbs or reflects; a record is not a ray)",
         fontsize=7.2,
         color=DIM,
         va="top",
@@ -544,7 +424,7 @@ def compose(panels: list[dict], tick: int, meta: dict, plt_module) -> Image.Imag
     fig.text(
         0.008,
         0.913,
-        "shaded cell = octant field stock (panels 1, 7) or claim (panel 5) · nothing is in flight at frame time: after "
+        "shaded cell = octant field stock (panels 1, 7) · nothing is in flight at frame time: after "
         "each tick every ray is at a Node · the picture is recorded state, not evidence of physics",
         fontsize=7.2,
         color=DIM,
@@ -671,14 +551,14 @@ def main() -> None:
         ),
         "commands_log": str(out / "commands.log"),
         "scripts": [str(HERE / name) for name in ("worlds.py", "record_ticks.py", "render_rays.py")],
-        "validator": "python -m event_universe.configuration_validation --kind initialization <config> reported VALID for all eight",
+        "validator": "python -m event_universe.configuration_validation --kind initialization <config> reported VALID for all five",
         "notes": [
             "panel 7 was first run with normal_budget 100 and emission 2400 and failed at tick 7 with 'funded ray emission or "
             "absorption does not support a delayed carrier cycle' (the load reaching the held lamp/screen plus their cycle cost "
             "exceeded the budget); the recorded panel uses budget 1000 and emission 28000 as tests/test_ray_delay.py's scale does",
             "conserved_at_every_completed_tick is False wherever quanta escape or are injected by design (open boundary, source: true); "
             "accounting_balanced_at_every_completed_tick (final = initial + sources - escaped) is True for every panel",
-            "the bond registry (panel 4) and the lottery ticket (panel 8) have no drawing: only their recorded consequences on the board are shown",
+            "panels 4, 5 and 8 of the 2026-09-16 recording were deleted on 2026-09-17 with the bond registry, claim-gather and the lottery capture",
         ],
         "panels": [
             {
@@ -715,14 +595,6 @@ SHOWS = {
         "phased rays from two lamps in phase meeting at screen records; the fringe in Manhattan path difference builds in the screen stock",
         "the coherence gate itself is not drawn (only its result in absorbed stock); quanta that cancel continue and escape; no wavelength unit",
     ),
-    "4-bonded-pair": (
-        "pairs born at one Node on one tick carrying the same bond code (dashed link), plus detectors with settings, the registry's answers as captures",
-        "the registry is not on the board and has no drawing: the dashed link marks equal bond codes, it is not a ray or a signal; four pairs are not a statistic",
-    ),
-    "5-claim-gather": (
-        "a slow wave (pace 1/4), a screen click opening a claim, the claim flooding every Node with its parent port, free rays turning homing and walking home, gathered whole",
-        "no lottery here (share capture of a single train); the flood is knowledge at Nodes, not stock",
-    ),
     "6-mirror-cavity": (
         "one parcel each way, absorbed by a mirror record for one tick and re-emitted along the mirrored heading at the carried phase; the phase hue advances per link",
         "no standing wave (the lamp fires once); reflection passes through a record, there is no ray-to-ray reflection rule",
@@ -730,10 +602,6 @@ SHOWS = {
     "7-ray-delay": (
         "a lamp's ray train crossing Nodes loaded by a mass record's outward computation field; ray_wait registers holding rays k cycles; rays merging while they wait; the delayed first click",
         "no gravitational law: the wait is the configured local delay law applied to rays; the whole row is loaded because the field spreads",
-    ),
-    "8-lottery-detector": (
-        "single quanta meeting a reference lamp's quantum at a plus detector with coherence one half; the lottery taking or passing each whole ray; the minus detector taking what passed",
-        "plus detector stock includes the reference quanta it absorbs; reference quanta not taken walk on along -y and escape; eight quanta per side are not a rate measurement",
     ),
 }
 

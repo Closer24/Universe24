@@ -8,7 +8,7 @@ from typing import TypeVar
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
 from .plan_reuse import PlanReuse
-from .spatial_state import Claims, Rays, SpatialPlan, SpatialState
+from .spatial_state import Rays, SpatialPlan, SpatialState
 
 SpatialPlanner = Callable[
     [
@@ -17,7 +17,6 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
-        tuple[Claims, ...],
         int,
         int,
     ],
@@ -43,7 +42,6 @@ class SpatialPlanningInput:
     received: int
     node_cost: int = 0
     rays: tuple[Rays, ...] = ()
-    claims: tuple[Claims, ...] = ()
     tick: int = 0
     # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
     ray_hold: int = 0
@@ -81,7 +79,6 @@ def finish_local_cycle(
                     request.received,
                     request.node_cost,
                     request.rays,
-                    request.claims,
                     request.tick,
                     request.ray_hold,
                 )
@@ -110,7 +107,6 @@ def _plan_spatial_batch(
             item.received,
             item.node_cost,
             item.rays,
-            item.claims,
             item.tick,
             item.ray_hold,
         )
@@ -163,13 +159,10 @@ class NodeExecution:
         received: int,
         node_cost: int = 0,
         rays: tuple[Rays, ...] = (),
-        claims: tuple[Claims, ...] = (),
         tick: int = 0,
         ray_hold: int = 0,
     ) -> SpatialPlan:
-        request = SpatialPlanningInput(
-            states, records, received, node_cost, rays, claims, tick, ray_hold
-        )
+        request = SpatialPlanningInput(states, records, received, node_cost, rays, tick, ray_hold)
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 
     def _evaluate_carriers(self, items: tuple[DisturbancePlanningInput, ...]) -> tuple[LocalPlan, ...]:
