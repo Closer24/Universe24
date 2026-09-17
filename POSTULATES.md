@@ -786,10 +786,18 @@ the conserved quantities and its phase. Alternatives are created only at
 interactions, never at the empty nodes a ray crosses. Every ray is a wave ray
 and carries a phase; a plain ray is a special case of the wave ray, not a
 second kind. Light is a wave ray with no mass and no charge, an event moving
-in time. Three things change a phase and nothing else: each step advances it
-at the rate its family declares, the ray's energy; an interaction changes it
-as the declared coupling says; a bound group advances it once per interval
-it is held. There is no amplitude as a number and no probability field: the
+in time. Three things change a phase and nothing else: each interval advances
+it at the rest rate its family declares, which is the ray's mass as a clock,
+and that rate is zero for light, whose phase does not advance along its own
+line; an interaction changes it as the declared coupling says; a bound group
+advances it once per interval it is held. A light ray carries the phase of
+the clock that emitted it at the moment of emission and delivers it
+unchanged, so the frequency of light is the rate of its emitter's clock.
+Interference of light follows from this alone: two paths of different length
+reach one place at one time only if their rays were emitted at different
+times, so they carry different emission phases, and the difference is the
+emitter's rate times the difference in path length; nothing is accumulated
+on the way. There is no amplitude as a number and no probability field: the
 phase and the ray's conserved content together are the discrete stand-in for
 the quantum amplitude, the phase as its angle and the conserved content as
 its size. Because every permitted trajectory happens, the intensity at a
@@ -858,7 +866,8 @@ the ray is and leaves at the causal speed, ahead of the ray or away from it,
 and the ray is never faster than its field, at any output-clock delay; no
 exclusion rule is needed. Only after a change of trajectory can a ray cross
 field it released earlier, and that is a meeting like any other. A ray's
-phase per step comes from its family rate alone, not from its own field.
+phase per interval comes from its family's rest rate alone, not from its
+own field.
 There is no
 matter in the model at this stage: matter is the name for rays bound in one
 node by a declared binding coupling, a neutron ray and a proton ray held
