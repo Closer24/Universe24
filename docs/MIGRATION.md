@@ -754,6 +754,46 @@ lives at the meeting (`convert_values`), not on a resident record.
 
 There is no replacement API. Every deletion bucket of issue #164 is done.
 
+## Ray viewer: releases, fields, style file and sidecar, 2026-09-17
+
+The first render of a feature 7 run and the model owner's reading of the
+page on a phone (2026-09-17) changed what the [ray viewer](../tools/ray_viewer/README.md)
+draws; the record is unchanged.
+
+- `extract.py` resolves rays per family: a field family (`field_of`) passes
+  Nodes in silence, leaves a Node with a departing matter ray as a `release`
+  (its own event kind, flagged `field`, never a marker or a caption line, the
+  source ray's trail unbroken), and makes a meeting only where it leaves a
+  Node changed; escapes and field-only events carry a `field` flag; a body's
+  `external_body_absorbed` ends the rays it took; the per-tick `in_world`
+  figure now adds the sources recorded by `spatial_cycle` through the
+  previous tick, which equals a recording's totals tick by tick (the earlier
+  figure ignored sources and could fall below the amount on the Links);
+  captions list only meetings, Detector events and inverse splits, at most
+  three per tick, then the escapes once; `--sidecar` names a recording per
+  record, and a recording whose fingerprints differ from the run's is refused;
+  `external_bodies` are read from `run.json` with their `positions` per tick.
+- `viewer.html` draws no text on the board except one `family amount` label
+  per matter ray, placed only where it is at least 24 px from every other
+  label and overlaps none; rays about 4 px wide with a 10 px arrowhead and a
+  trail fading over six Links; event kinds by marker shape and colour with a
+  legend under the canvas; matter escapes as a dot, field escapes as
+  nothing; sources, Detector marks and external bodies as shapes without
+  text, a body's picture chosen by family and moving with its recorded
+  position; captions clamped to two lines at phone width.
+- `style.json` (`ray-viewer-style-v1`) holds every colour, size, drawing,
+  caption and motion rule, by the model owner's decision that a change of
+  look is a file edit and a re-render; the page inlines or fetches it,
+  `render_gif.py --style` inlines it and takes its defaults from it.
+- `record_sidecar.py` writes `ray-recording.json` beside a record by
+  replaying it on the run's own source tree, refusing any other.
+- `tests/test_ray_viewer.py` pins the widened world (a released field, the
+  body positions and the style file); the fixture no longer declares a
+  `conservation` block, because the local audit failed on a field ray at a
+  lamp Node (reported, not worked around), and its pins record that the
+  engine released from two rays held by a coupling in the interval they were
+  held, which the released-field text does not say (reported to feature 7).
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

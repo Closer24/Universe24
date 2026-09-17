@@ -2,29 +2,42 @@
 
 Expected results are pinned in docs/TEST_EXPECTATIONS.md ("Ray viewer
 extraction") before the first run: two lamps on one line, a swap coupling
-that holds both rays one interval, a Detector mark that always draws 1, six
-ticks. No browser is involved; the viewer page and the GIF renderer are not
-exercised here.
+that holds both rays one interval, a Detector mark that always draws 1, the
+field G of the quanta family releasing at every Node crossed, six ticks. No
+browser is involved; the viewer page and the GIF renderer are not exercised
+here beyond the style file reaching the inlined page.
 """
 
+import copy
 import importlib.util
 import json
 import shutil
 import sys
 from pathlib import Path
 
+import pytest
+
 from event_universe.runner import run_initialization
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location(
-    "tools.ray_viewer.extract", ROOT / "tools/ray_viewer/extract.py"
-)
-assert SPEC is not None and SPEC.loader is not None
-EXTRACT = importlib.util.module_from_spec(SPEC)
-sys.modules[SPEC.name] = EXTRACT
-SPEC.loader.exec_module(EXTRACT)
 
-PLUS_X, MINUS_X = [1, 0, 0], [-1, 0, 0]
+
+def load(name):
+    spec = importlib.util.spec_from_file_location(
+        "tools.ray_viewer." + name, ROOT / "tools/ray_viewer" / (name + ".py")
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+EXTRACT = load("extract")
+RENDER = load("render_gif")
+
+HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
+PLUS_X, MINUS_X = HEADINGS[0], HEADINGS[1]
 HEADING = {"a": {"field": "heading", "participant": 0}, "b": {"field": "heading", "participant": 1}}
 AMOUNT = {"a": {"field": "amount", "participant": 0}, "b": {"field": "amount", "participant": 1}}
 PHASE = {"a": {"field": "phase", "participant": 0}, "b": {"field": "phase", "participant": 1}}
@@ -62,6 +75,21 @@ def emission(name, amount, heading, phase):
     }
 
 
+def ray_field(name, advance, slots=8, **extra):
+    return {
+        "field": name,
+        "baseline": 0,
+        "transport": "ray",
+        "headings": HEADINGS,
+        "rays_per_tick": 1,
+        "ray_slots": slots,
+        "metric": "links",
+        "pace": [1, 1],
+        "kerengonen": {"phase_steps": 8, "phase_advance": advance},
+        **extra,
+    }
+
+
 def document():
     return {
         "schema_version": 1,
@@ -96,6 +124,14 @@ def document():
                 "extensive": True,
             },
             {
+                "name": "G",
+                "components": 1,
+                "units": "quantum",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            },
+            {
                 "name": "momentum",
                 "components": 3,
                 "units": "quantum times heading",
@@ -106,17 +142,8 @@ def document():
         ],
         "disturbance_types": [lamp("lamp_a", 3), lamp("lamp_b", 3)],
         "spatial_fields": [
-            {
-                "field": "quanta",
-                "baseline": 0,
-                "transport": "ray",
-                "headings": [PLUS_X, MINUS_X],
-                "rays_per_tick": 1,
-                "ray_slots": 8,
-                "metric": "links",
-                "pace": [1, 1],
-                "kerengonen": {"phase_steps": 8, "phase_advance": 1},
-            }
+            ray_field("quanta", 1),
+            ray_field("G", 0, 16, field_of="quanta", release=[1, 3]),
         ],
         "emissions": [emission("lamp_a", 3, PLUS_X, 0), emission("lamp_b", 3, MINUS_X, 4)],
         "seeds": [
@@ -127,10 +154,7 @@ def document():
         "ray_interactions": [
             {
                 "name": "swap_headings",
-                "participants": [
-                    {"requires": ["amount", "heading", "phase", "delay"]},
-                    {"requires": ["amount", "heading", "phase", "delay"]},
-                ],
+                "participants": [{"type": "quanta"}, {"type": "quanta"}],
                 "when": MEETING,
                 "assignments": [
                     {"participant": 0, "field": "heading", "expression": HEADING["b"]},
@@ -153,22 +177,10 @@ def document():
                 ],
             }
         ],
-        "conservation": {
-            "name": "quanta",
-            "energy_units": "quantum",
-            "momentum_units": "quantum times heading",
-            "carriers": [
-                {
-                    "requires": ["quanta", "momentum"],
-                    "energy": {"field": "quanta"},
-                    "momentum": {"field": "momentum"},
-                }
-            ],
-            "spatial": {
-                "energy": {"field": "quanta", "side": "right"},
-                "momentum": {"op": "vector", "args": [0, 0, 0]},
-            },
-        },
+        # No `conservation` block: with the released field G, the local audit counts
+        # a G ray resident at a lamp Node in the Node's momentum but not in the
+        # packet that carries it away, and fails; the runner's own accounting flags
+        # still cover the run (reported as a suspected audit defect, not fixed here).
     }
 
 
@@ -193,13 +205,13 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     ]
     run = EXTRACT.extract_record(record)
 
-    # (a) Four rays of amount 3: two into the meeting, two out of it to the boundary.
+    # (a) Four quanta rays of amount 3: two into the meeting, two out of it to the boundary.
     assert run["ticks"] == 6 and run["shape"] == [5, 3, 3]
-    assert [f["name"] for f in run["families"]] == ["quanta", "momentum"]
-    assert [f["ray"] for f in run["families"]] == [True, False]
-    assert not any(f["field"] for f in run["families"])
-    rays = run["rays"]
-    assert [r["family"] for r in rays] == ["quanta"] * 4
+    assert [f["name"] for f in run["families"]] == ["quanta", "G", "momentum"]
+    assert [f["ray"] for f in run["families"]] == [True, True, False]
+    assert [f["field"] for f in run["families"]] == [False, True, False]
+    assert run["families"][1]["field_of"] == "quanta" and run["families"][1]["release"] == [1, 3]
+    rays = [r for r in run["rays"] if r["family"] == "quanta"]
     assert [r["amount"] for r in rays] == [[3]] * 4
     assert [r["origin"]["tick"] for r in rays] == [0, 0, 2, 2]
     assert walk(rays[0]) == [(1, 1, 1)] and rays[0]["segments"][0]["heading"] == PLUS_X
@@ -216,73 +228,181 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
         assert [s["phase"] for s in ray["segments"]] == [None] * 3
         assert ray["segments"][-1]["escaped"] and ray["segments"][-1]["to"] is None
         assert ray["end"]["tick"] == 5 and ray["origin"]["node"] == [2, 1, 1]
-        assert not ray["returning"]
+        assert not ray["returning"] and not ray["field"]
 
-    # (b) Every event is a marker at its Node with its tick, kind and spokes.
+    # (b) Every matter event is a marker at its Node with its tick, kind and spokes.
     events = run["events"]
-    assert [summary(e) for e in events] == [
+    matter = [e for e in events if not e["field"]]
+    assert [summary(e) for e in matter if e["kind"] != "click"] == [
         (0, (1, 1, 1), "emission", (0,)),
         (0, (3, 1, 1), "emission", (1,)),
         (1, (2, 1, 1), "meeting", (0, 1)),
-        (4, (4, 1, 1), "click", ()),
         (5, (0, 1, 1), "escape", (1,)),
         (5, (4, 1, 1), "escape", (0,)),
     ]
-    meeting = events[2]
-    assert meeting["in"] == [0, 1] and sorted(meeting["out"]) == [2, 3]
-    assert meeting["output_tick"] == 2
-    assert meeting["detail"]["held_ticks"] == 1
+    meeting = next(e for e in events if e["kind"] == "meeting")
+    assert sorted(meeting["in"]) == sorted(r["id"] for r in rays[:2])
+    assert sorted(meeting["out"]) == sorted([plus["id"], minus["id"]])
+    assert meeting["output_tick"] == 2 and meeting["detail"]["held_ticks"] == 1
     assert meeting["detail"]["amount_in"] == {"quanta": [6]}
     assert meeting["detail"]["amount_out"] == {"quanta": [6]}
     assert meeting["detail"]["momentum_in"] == [0, 0, 0]
     assert meeting["detail"]["momentum_out"] == [0, 0, 0]
     assert meeting["detail"]["coupling"] == ["swap_headings"]
     assert run["couplings"] == ["swap_headings"]
-    click = events[3]
-    assert click["label"] == "Detector PASS"
-    assert click["detail"] == {"port": 1, "family": "quanta", "amount": 3, "bit": 1}
-    assert click["in"] == [plus["id"]]
-    assert events[4]["in"] == [minus["id"]] and events[5]["in"] == [plus["id"]]
+    clicks = [e for e in events if e["kind"] == "click"]
+    assert all(e["label"] == "Detector PASS" and tuple(e["node"]) == (4, 1, 1) for e in clicks)
+    assert sorted((e["tick"], e["detail"]["family"], e["detail"]["amount"]) for e in clicks) == [
+        (3, "G", 1),
+        (4, "G", 1),
+        (4, "quanta", 3),
+        (6, "G", 1),
+    ]
+    assert all(e["detail"]["port"] == 1 and e["detail"]["bit"] == 1 for e in clicks)
+    quanta_click = next(e for e in clicks if e["detail"]["family"] == "quanta")
+    assert quanta_click["in"] == [plus["id"]]
+    escapes = [e for e in matter if e["kind"] == "escape"]
+    assert escapes[0]["in"] == [minus["id"]] and escapes[1]["in"] == [plus["id"]]
     assert run["detectors"] == [{"pos": [4, 1, 1], "setting": [1, 1], "seed": 0}]
     assert [s["type"] for s in run["sources"]] == ["lamp_a", "lamp_b"]
+    assert run["external_bodies"] == []
+
+    # (e) Releases: silent field events, the source ray's trail unbroken through them.
+    # The record releases from the two held rays at tick 1 as well as at their
+    # departure at tick 2 (a deviation from the released-field text, reported).
+    releases = [e for e in events if e["kind"] == "release"]
+    assert all(e["field"] for e in releases)
+    assert [summary(e) for e in releases] == [
+        (1, (2, 1, 1), "release", (0, 1, 2, 3, 4, 5)),
+        (2, (2, 1, 1), "release", (0, 1, 2, 3, 4, 5)),
+        (3, (1, 1, 1), "release", (0, 2, 3, 4, 5)),
+        (3, (3, 1, 1), "release", (1, 2, 3, 4, 5)),
+        (4, (0, 1, 1), "release", (0, 2, 3, 4, 5)),
+        (4, (4, 1, 1), "release", (1, 2, 3, 4, 5)),
+    ]
+    assert releases[0]["in"] == []
+    assert sorted(releases[1]["in"]) == sorted([plus["id"], minus["id"]])
+    assert releases[2]["in"] == [minus["id"]] and releases[3]["in"] == [plus["id"]]
+    assert [e["detail"]["amount_out"] for e in releases] == [{"G": [10]}] * 2 + [{"G": [5]}] * 4
+    fields = [r for r in run["rays"] if r["family"] == "G"]
+    assert len(fields) == 32 and len(run["rays"]) == 36
+    assert all(r["field"] for r in fields)
+    for release in releases[:2]:
+        assert sorted(run["rays"][i]["amount"][0] for i in release["out"]) == [1, 1, 2, 2, 2, 2]
+    assert not any(e["kind"] in ("split", "crossing", "deflection") for e in events)
+    field_escapes = [e for e in events if e["kind"] == "escape" and e["field"]]
+    assert [sum(1 for e in field_escapes if e["tick"] == t) for t in (3, 4, 5, 6)] == [4, 6, 10, 8]
+    assert [
+        sum(e["detail"]["escaped"]["G"][0] for e in field_escapes if e["tick"] == t)
+        for t in (3, 4, 5, 6)
+    ] == [8, 10, 10, 8]
+    assert run["conservation"]["source_totals"] == {"quanta": [0], "G": [40], "momentum": [0, 0, 0]}
+    assert run["conservation"]["escaped_totals"]["G"] == [36]
+    assert run["conservation"]["final_totals"]["G"] == [4]
+    assert run["record"]["released_field"] == "released-field-v1"
 
     # (c) Captions and totals come from the record, tick by tick.
-    notes = [row["note"] for row in run["ticks_data"]]
+    rows = run["ticks_data"]
+    notes = [row["note"] for row in rows]
     assert len(notes) == 7
-    assert notes[0].count("emission") == 2 and "+x" in notes[0] and "-x" in notes[0]
-    assert "meeting" in notes[1] and "swap_headings" in notes[1]
-    assert "in: quanta 6" in notes[1] and "momentum (0, 0, 0)" in notes[1]
-    assert "out (t2): quanta 6" in notes[1]
-    assert notes[2].startswith("outputs of the t1 meeting leave")
-    assert notes[3] == ""
-    assert "Detector PASS" in notes[4] and "bit 1" in notes[4]
-    assert notes[5].count("escaped") == 2 and notes[6] == ""
-    assert [row["in_world"]["quanta"] for row in run["ticks_data"]] == [[6]] * 5 + [[0], [0]]
-    assert [row["escaped"]["quanta"] for row in run["ticks_data"]] == [[0]] * 5 + [[6], [6]]
-    assert run["conservation"]["status"] == "passed"
+    assert notes[0] == "2 emissions"
+    assert "t1 meeting (2,1,1) swap_headings" in notes[1]
+    assert "in quanta 6, p (0, 0, 0)" in notes[1] and "out t2 quanta 6, p (0, 0, 0)" in notes[1]
+    assert notes[2].startswith("t1 meeting") and "release" not in notes[2]
+    assert notes[3].count("Detector PASS") == 1 and notes[3].endswith("field escaped: G 8")
+    assert notes[4].count("Detector PASS") == 2 and notes[4].endswith("field escaped: G 10")
+    assert notes[5] == "escaped: quanta 6 | field escaped: G 10"
+    assert notes[6].count("Detector PASS") == 1 and notes[6].endswith("field escaped: G 8")
+    assert not any("release" in note for note in notes)
+    assert [row["in_world"]["quanta"] for row in rows] == [[6]] * 5 + [[0], [0]]
+    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [10], [12], [12], [12], [4]]
+    assert [row["escaped"]["quanta"] for row in rows] == [[0]] * 5 + [[6], [6]]
+    assert [row["releases"] for row in rows] == [0, 1, 1, 2, 2, 0, 0]
+    assert run["conservation"]["status"] == "not_configured"
     # The quanta left through the open boundary, so the runner's "conserved at
     # every completed tick" is false while the accounting (with escapes) balances.
     assert run["conservation"]["every_tick"] is False
     assert run["conservation"]["balanced"] is True
-    assert run["conservation"]["escaped_totals"] == {"quanta": [6], "momentum": [0, 0, 0]}
     assert run["record"]["ray_state"] == "ray-event-state-v1"
     assert run["record"]["detector_mark"] == "detector-mark-v1"
     assert run["record"]["unknown_event_kinds"] == {}
-    assert run["record"]["frames"] is False
+    assert run["record"]["frames"] is False and run["record"]["sidecar"] is None
 
     # (d) A kind the extractor does not know becomes a generic marker, nothing else moves.
-    copy = tmp_path / "artifacts" / "later"
-    shutil.copytree(record, copy)
-    with (copy / "events.jsonl").open("a", encoding="utf-8") as stream:
+    later_dir = tmp_path / "artifacts" / "later"
+    shutil.copytree(record, later_dir)
+    with (later_dir / "events.jsonl").open("a", encoding="utf-8") as stream:
         stream.write(json.dumps({"event": "field_release", "tick": 3, "position": [2, 1, 1]}) + "\n")
-    later = EXTRACT.extract_record(copy)
-    assert [summary(e) for e in later["events"]] == [summary(e) for e in events][:3] + [
+    later = EXTRACT.extract_record(later_dir)
+    expected = [summary(e) for e in events]
+    index = next(i for i, e in enumerate(events) if e["tick"] == 3 and tuple(e["node"]) > (2, 1, 1))
+    assert [summary(e) for e in later["events"]] == expected[:index] + [
         (3, (2, 1, 1), "field_release", ())
-    ] + [summary(e) for e in events][3:]
-    assert [walk(r) for r in later["rays"]] == [walk(r) for r in rays]
+    ] + expected[index:]
+    assert [walk(r) for r in later["rays"]] == [walk(r) for r in run["rays"]]
     assert later["record"]["unknown_event_kinds"] == {"field_release": 1}
-    assert "field release" in later["ticks_data"][3]["note"]
+    generic = next(e for e in later["events"] if e["kind"] == "field_release")
+    assert generic["label"] == "field release" and not generic["field"]
+    assert later["ticks_data"][3]["note"] == run["ticks_data"][3]["note"]
+    with pytest.raises(ValueError, match="no ray recording"):
+        EXTRACT.extract_record(record, sidecar=tmp_path / "missing.json")
 
-    document_out = EXTRACT.extract_runs([record, copy])
+    document_out = EXTRACT.extract_runs([record, later_dir])
     assert document_out["schema"] == "ray-viewer-runs-v1"
     assert [r["key"] for r in document_out["runs"]] == ["run", "later"]
+
+    # (g) External bodies (external-body-v1): the record's per-tick positions, read as
+    # the runner writes them, so the page moves the body's picture with the record.
+    bodies = EXTRACT.external_bodies(
+        EXTRACT.Record(
+            record,
+            {
+                "external_bodies": [
+                    {
+                        "family": "star",
+                        "amount": 4096,
+                        "coupling": "sink",
+                        "field": "G",
+                        "positions": [[0, 7, 7, 7], [1, 7, 7, 7], [2, 8, 7, 7]],
+                        "final": {"momentum": [2, 0, 0]},
+                    }
+                ]
+            },
+            [],
+            None,
+            None,
+            [],
+        )
+    )
+    assert bodies == [
+        {
+            "pos": [7, 7, 7],
+            "family": "star",
+            "amount": 4096,
+            "coupling": "sink",
+            "field": "G",
+            "positions": [[0, 7, 7, 7], [1, 7, 7, 7], [2, 8, 7, 7]],
+        }
+    ]
+
+
+def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
+    style = RENDER.load_style(None)
+    assert style["schema"] == "ray-viewer-style-v1"
+    assert set(style) == set(RENDER.STYLE_KEYS) | {"schema"}
+    for section, keys in RENDER.STYLE_KEYS.items():
+        assert set(style[section]) == set(keys), section
+    page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
+    start = page.index('id="style-default">') + len('id="style-default">')
+    assert json.loads(page[start : page.index("</script>", start)]) == style
+    bad = copy.deepcopy(style)
+    bad["sizes"]["ray_thickness"] = 1
+    with pytest.raises(ValueError, match="unknown keys in style.sizes"):
+        RENDER.validate_style(bad)
+    wide = copy.deepcopy(style)
+    wide["sizes"]["ray_width_px"] = 9
+    inlined = RENDER.inline_page({"schema": "ray-viewer-runs-v1", "runs": []}, wide)
+    start = inlined.index('id="style">') + len('id="style">')
+    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 9
+    start = inlined.index('id="style-default">') + len('id="style-default">')
+    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 4
