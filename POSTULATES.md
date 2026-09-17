@@ -685,7 +685,12 @@ Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
 at the birth event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it; a Detector sees nothing of the ray,
-only its own value, and no owner answers at a distance.
+only its own value, and no owner answers at a distance. With two Detectors,
+Alice's and Bob's, whichever returns first sends its value through the birth
+event and the other receives it; sometimes it is Alice's information,
+sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
+at time zero, but nothing happened at time zero: the value was carried
+through the birth event in event spacetime, one Link per interval.
 For two Detectors at equal distance from the birth the CHSH value is at most 2,
 and the joint law's value appears only when the second ray's path exceeds the
 round trip through the first Detector. This price is accepted. The text below

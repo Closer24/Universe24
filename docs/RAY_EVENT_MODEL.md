@@ -248,10 +248,15 @@ the inverse split of its share: it transmits what happened at the event, with
 its bit (the outcome of the first draw, all the Detector added), to the same
 places the event sent to, the partner ray's line among them, so the partner's
 Detector is not missing it: the first Detector saw only its own value, and
-the second Detector receives that value on the ray that reaches it. If that
-transmission reaches the second Detector before the second ray is drawn, the
-second draw reads it and the pair agrees by the configured joint law; if the
-second ray was already drawn, the transmission is recorded and ignored.
+the second Detector receives that value on the ray that reaches it. With two
+Detectors, Alice's and Bob's, whichever returns first sends its value through
+the birth event and the other receives it; sometimes it is Alice's
+information, sometimes Bob's. To Alice and Bob the correlation feels as if it
+were decided at time zero, but nothing happened at time zero: the value was
+carried through the birth event in event spacetime, one Link per interval. If
+that transmission reaches the second Detector before the second ray is drawn,
+the second draw reads it and the pair agrees by the configured joint law; if
+the second ray was already drawn, the transmission is recorded and ignored.
 
 This replaces the shared registry of the historical bonded profile with a
 carried bit, so the model has no owner that answers at a distance. The
