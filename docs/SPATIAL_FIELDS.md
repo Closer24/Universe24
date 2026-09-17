@@ -321,11 +321,12 @@ carries the number of steps it has made since its event and the information
 of that event, and if that event was at a Detector, the bit drawn. They are
 carried, part of the merge identity and validated. `steps` and `outbound`
 are read by the return alone ([Detector return](#detector-return-detector-return-v1)):
-the transport of a returning ray and the momentum readout. The event Ports,
-the event shares and the Detector bit are hidden variables (Highlights 5.4),
-read by no rule, coupling, absorber or readout. An existing world runs
-exactly as before except where rays of different events used to merge; they
-no longer do.
+the transport of a returning ray and the momentum readout. The event Ports
+and the event shares are hidden variables (Highlights 5.4), read by no rule,
+coupling, absorber or readout; the Detector bit is a visible property of the
+ray since 2026-09-17 ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+An existing world runs exactly as before except where rays of different
+events used to merge; they no longer do.
 
 The `Ray` record (`core/spatial_state.py`) holds, beside its heading index,
 DDA accumulators, amount, wave phase, advance, pace wait and interaction
@@ -337,7 +338,7 @@ delay:
 | `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. Every created ray is outbound; a draw of 0 at a marked Node sets `0` ([Detector return](#detector-return-detector-return-v1)) |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
-| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
+| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
@@ -396,24 +397,32 @@ feature 2). The schema key:
 | `position` | three integers within `shape` | The marked Node; one mark per position |
 | `setting` | `[n, d]`, `1 <= d <= MAX_VALUE`, `0 <= n <= d` | The pass share of the draw range: the bit is 1 when the drawn number times `d` is below `n` times `TICKET_MODULUS`. Required; there is no default rate |
 | `seed` | `0 <= seed < TICKET_MODULUS` | The start of the mark's own ticket stream. Required |
+| `on_bit_1` | `"pass"` (default) or `"draw"` | What the mark does with a ray carrying bit 1 ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)): passes it without a draw, or draws as for a ray carrying no bit. Optional |
+| `on_bit_0` | `"pass"` (default) or `"draw"` | The same for a ray carrying bit 0, a transmission. Optional |
 
-All three keys are required and no other key is accepted. The parsed
-`DetectorMark(position, pass_numerator, pass_denominator, seed)` records are
-`InitialState.detectors`; the engine installs each on its Node as
+The first three keys are required, the two couplings are optional, and no
+other key is accepted. The parsed
+`DetectorMark(position, pass_numerator, pass_denominator, seed, on_bit_1,
+on_bit_0, bit_keys)` records are `InitialState.detectors` (the couplings as
+`BIT_PASS` 0 or `BIT_DRAW` 1, `bit_keys` 1 when the file wrote either); the
+engine installs each on its Node as
 `SpatialNodeState.detector` with `detector_ticket` seeded from `seed`. A
 document with marks is admitted only under the shared Detector admission:
 `schema_version` 1, `link_ticks` 1, at least one ray field, every ray field on
 `"metric": "links"` with pace `1 / 1`, no decay and unit-axial headings closed
 under negation, without `node_execution` or `spatial_computation_delay`.
 
-On arrival each ray draws one bit from the mark's stream, in Port then
+On arrival each ray carrying no bit (and each ray carrying a bit whose
+coupling is `draw`) draws one bit from the mark's stream, in Port then
 merge-key order, and leaves with its `detector` field set: `2` on 1, with a
 `detector_click` event (position, tick, Port, family, amount, bit 1), the ray
 continuing unchanged; `1` on 0, the ray returned on its line
 ([Detector return](#detector-return-detector-return-v1)) with a
-`detector_return` event and no click. A document without `detectors` has no
-marked Node and runs exactly as before, and the runner records
-`detector_mark: "detector-mark-v1"`.
+`detector_return` event and no click. A ray carrying a bit whose coupling is
+`pass`, the default, is read and not drawn: it continues unchanged with a
+`detector_pass` event ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+A document without `detectors` has no marked Node and runs exactly as
+before, and the runner records `detector_mark: "detector-mark-v1"`.
 
 ### Detector return (`detector-return-v1`)
 
@@ -442,7 +451,8 @@ On the walk back a ray with `outbound` 0:
   (`sample_fluxes`, both projections) that couplings read are taken over the
   outbound rays, and its arrival adds nothing to the per-Port readings;
 - is not drawn for: a marked Node on its way sets nothing and records
-  nothing;
+  nothing (a returning ray is not an arrival; `detector-bit-property-v1`
+  reads the bit of arrivals only);
 - merges with nothing: `outbound` is in the merge key, and the returned ray
   is the only ray of its event on its line;
 - counts: it is in the Node's rays, in `ray_count`, in the totals and in the
@@ -532,6 +542,91 @@ takes the returned share's momentum back and gives the transmission's, so
 the momentum total is unchanged; in `annul` the sink takes the share's
 reading and the lamp is unchanged.
 
+### The Detector's bit as a property (`detector-bit-property-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.20 and 5.4 "The Detector's bit is a
+property of the ray", model owner, 2026-09-17; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 2b under step 3;
+issue #169): the bit a marked Node set on a ray, 1 for PASS and 0 for
+RETURN, travels with the ray as a property like charge, visible to every
+meeting, to the record and to the rendering; it propagates, so the
+descendants of a realized ray are known to be realized and the descendants
+of a transmission are known to carry a return; and a Detector reads it. The
+statement of the rule at the mark is in [Detector-owned
+sampling](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1); this
+section is the schema and what the code does. Three things, and nothing
+else, changed on 2026-09-17:
+
+**Inheritance.** `stamp_event(rays, headings, detector)` stamps the bit the
+event's outputs carry: `DETECTOR_NONE` for an emission (a lamp, a release, a
+restored share emitted again), the returned ray's bit for an inverse split
+(as before), and for a meeting the bit `inherited_bit(bits, rule)` hands
+down from the inputs. Every group that fires in `apply_ray_interactions`,
+a rule with `outputs` and a rule with assignments alike, stamps its outputs
+with it: by default the highest bit among the inputs in the order 1 over 0
+over none (`DETECTOR_BIT_1` 2 over `DETECTOR_BIT_0` 1 over `DETECTOR_NONE`
+0, the stored order), unless the rule declares `bit`:
+
+```json
+{"name": "meeting", "participants": [{"type": "a"}, {"type": "a"}],
+ "bit": "none",
+ "outputs": [...], "invariants": [...]}
+```
+
+| `bit` | The outputs carry |
+| --- | --- |
+| `"highest"` (default) | The highest bit among the inputs, 1 over 0 over none |
+| `"none"` | No bit |
+| `{"of": i}` | The bit of input i, one of the rule's roles |
+
+Any other value, or an index beyond the roles, is rejected before a world
+exists. A meeting of a marked ray with an unmarked ray therefore sends both
+outputs on with the bit (a realized ray's meeting products are realized; a
+transmission's are transmissions); an external body's coupled token
+(`external-body-v1`) inherits it too and is stripped as before. A field ray
+released by a marked ray carries no bit, since a release is an emission and
+a field ray carries no event.
+
+**Visibility.** `RAY_PROPERTIES`, the view of a ray in a [ray
+interaction](SHARED_RAY_COUPLING.md), gains the read-only property
+`detector`, the bit as the engine stores it: `0` none, `1` a draw of 0, `2`
+a draw of 1. A `when` guard or an invariant reads it as it reads `charge`
+(`{"field": "detector", "participant": 0}`); an assignment to it is refused
+as read-only, and a meeting's outputs carry the inherited bit whatever the
+view of the outputs says of it. A world with ray interactions reads one
+more view component per participant (`read` cost 10 instead of 9), as
+`wave-ray-family-v1` added two; a world without is unchanged.
+
+**The marked Node reads the bit.** In `SpatialNode.receive`, before the
+draw, each arriving ray is read: a ray carrying 1 under `on_bit_1: "pass"`
+(the default) passes without a draw, unchanged, and a ray carrying 0 under
+`on_bit_0: "pass"` (the default) is a transmission and passes without a
+draw, unchanged; a `detector_pass` event (position, tick, the Port the ray
+came in through, family, amount, `bit` 1 or 0, the bit it carries) records
+each such pass, after the interval's clicks and before its returns, and the
+mark's ticket stream does not move. Under `"draw"` the ray is drawn exactly
+as a ray carrying no bit (`detector-mark-v1`), its bit set by that draw: a
+mark that declares both keys `"draw"` behaves as every mark did before
+2026-09-17. Only a ray carrying no bit is always drawn. A ray on its walk
+back is not an arrival and is never drawn nor recorded, as before
+([Detector return](#detector-return-detector-return-v1)); a ray arriving at
+its event Node performs the inverse split undrawn; what a marked Node emits
+or transmits is not an arrival and is not drawn.
+
+**Identity and the record.** The runner records `detector_bit_property:
+"detector-bit-property-v1"` in `run.json` when the world declares the rule
+anywhere (a mark that writes `on_bit_1` or `on_bit_0`, a ray interaction
+that writes `bit`); a world that declares neither runs the same rule with
+its defaults and its record is what it was, byte for byte, unless a marked
+ray reaches a second mark (a `detector_pass` line, no draw) or meets another
+ray (the outputs carry the bit). The viewer
+([`tools/ray_viewer/extract.py`](../tools/ray_viewer/README.md)) reads
+`detector_pass` as the event kind `pass`, a marker listed in the captions
+like a click, and carries each ray's `bit` (`null`, 0 or 1) in `runs.json`.
+`test_detector_bit_property.py`
+([expectations](TEST_EXPECTATIONS.md#detector-bit-as-a-property)) is the
+test.
+
 ### Layers (`ray-layers-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 5.1; [ray-event
@@ -583,10 +678,11 @@ and at most six events out. A `ray_interactions` rule with `outputs`
 replaces its participants, two to six rays of one layer, by one to six new
 rays at the meeting Node, one per output. Each output is a new event ray:
 `steps 0`, `outbound 1`, `event_ports` the mask of the Ports the outputs
-leave through, `event_shares` the amount per Port, `detector 0`, so outputs
-on distinct Ports are distinct events in the record and two outputs on one
-Port are one share; nothing is left at the Node. A rule with outputs declares
-no `assignments`: it assigns through its outputs.
+leave through, `event_shares` the amount per Port, `detector` the bit the
+inputs hand down ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)),
+so outputs on distinct Ports are distinct events in the record and two
+outputs on one Port are one share; nothing is left at the Node. A rule with
+outputs declares no `assignments`: it assigns through its outputs.
 
 | Key | Contract |
 | --- | --- |
@@ -596,6 +692,10 @@ no `assignments`: it assigns through its outputs.
 | `phase` | Optional, default `"same"`, the source input's phase; an integer offset k below the phase modulus, the source input's phase plus k; `{"of": i, "offset": k}`, input i's phase plus k; read modulo the field's phase steps |
 | `delay` | Optional nonnegative interaction delay, default 0; or `{"of": i, "table": [six], "per": u}`, a delay by a declared table per the Port input i came through ([binding](#binding-and-gravity-by-delay-ray-binding-v1)) |
 | `input` | Optional source input index, default 0: the input whose heading and phase the output reads by default; every output carries its source input's advance |
+
+The rule's optional `bit` (`"highest"`, the default, `"none"` or `{"of": i}`)
+says which Detector bit every output carries
+([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 
 The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
 `{"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}`) summed
@@ -657,7 +757,8 @@ split per pair of outputs, the admission of every ray interaction (schema 1,
 on the selected fields), and at most `ray_slots` rays per field after the
 meeting; more is an explicit failure. The outputs are new rays with
 accumulators (0, 0, 0) and pace wait 0. No draw anywhere; the Detector
-(feature 2) is not touched; a family with no rule crosses
+(feature 2) is not touched, and its bit is inherited (feature 2b); a family
+with no rule crosses
 ([layers](#layers-ray-layers-v1)); existing worlds with single-output rules
 run byte-identically, and the runner records
 `ray_meeting: "ray-meeting-conversion-v1"` beside `ray_layers`.
@@ -709,7 +810,8 @@ keeps 32-bit storage and 64-bit intermediates.
 
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
 gains two read-only properties: `family`, the index of the ray's spatial
-field, and `charge`, the family's charge per quantum. Charge is per quantum
+field, and `charge`, the family's charge per quantum (and, since
+`detector-bit-property-v1`, a third, `detector`). Charge is per quantum
 because amounts merge and split; the charge readout of a bundle is `charge x
 amount` summed over its rays (`ray_charge`), and `charge_totals()` reads it
 per ray field over the rays resident at active Nodes and in flight on Links,
@@ -725,7 +827,8 @@ Nothing else changes: an existing world without ray interactions runs
 byte-identically (a plain field has width 0 and rate 0; a Kerengonen field has
 the width of its `phase_steps`, and the mask equals its former modulus), and a
 world with ray interactions reads the two added view components per
-participant (`read` cost 9 instead of 7) and is otherwise identical. The runner
+participant (`read` cost 9 instead of 7; 10 since `detector-bit-property-v1`)
+and is otherwise identical. The runner
 records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
 `test_wave_ray_families.py` ([expectations](TEST_EXPECTATIONS.md#wave-ray-families))
 is the test.
@@ -773,12 +876,13 @@ six headings every interval it is held
 ([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
 Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
-lattice alone. Until feature 12, field spreading (Highlights 3.5, model
-owner, 2026-09-17), a G ray therefore stays on its line and the field of a
-source lives on the six axis lines of the Nodes it crosses; with it every
-Node that field content reaches releases it again by the family's declared
-split table, and light, the field of a charge, is one such family. A G ray
-that reaches an open boundary escapes like any ray.
+lattice alone. Without `spread` a G ray therefore stays on its line and the
+field of a source lives on the six axis lines of the Nodes it crosses; with
+it, feature 12, field spreading (Highlights 3.5, model owner, 2026-09-17;
+[field spreading](#field-spreading-field-spreading-v1)), every Node that
+field content reaches releases it again by the family's declared split
+table, and light, the field of a charge, is one such family. A G ray that
+reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the
 spatial law after its emissions and before forwarding.
 
@@ -959,6 +1063,177 @@ with its `positions` per completed tick, `[tick, x, y, z]`, and its final
 state), `external_body_totals` and `external_body_momentum`. A world that
 declares no `external_bodies` runs byte-identically.
 
+### Field spreading (`field-spreading-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.5, "Light is the field, and the
+field spreads", 3.17, 3.20 and 3.23; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 12; model owner,
+2026-09-17): light and the field of a charge are one family, and because
+light spreads, the field spreads by the same rule: every Node that field
+content reaches releases it again in all six headings by a declared split
+table, Huygens' principle in the lattice's language, one catalog entry of the
+family and not an engine mechanism. A ray family declares it with `spread`:
+
+```json
+{"field": "light", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
+ "rays_per_tick": 1, "ray_slots": 16, "spread": [6, 1, 1, 1, 1, 1],
+ "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
+```
+
+**The table.** `spread` is six nonnegative integer weights in Port order
+relative to the arriving heading: forward (the heading the content arrived
+on), backward (its reverse) and the four transverse Port headings in Port
+order (for content arriving on +X or -X: +Y, -Y, +Z, -Z; on +Y or -Y: +X,
+-X, +Z, -Z; on +Z or -Z: +X, -X, +Y, -Y); the denominator is their sum, as
+for `octant_weights`. The backward weight must be positive: a forward-only
+split piles the field on the diagonals and empties the axes (Highlights
+3.5). The four transverse weights must be equal: the lattice has no
+preferred transverse direction (Highlights 3.23), so the momentum a spread
+moves lies on the arriving axis up to the remainder. The total is a bounded
+integer.
+
+**The step.** In every interval, after the marks of step 2 (a Detector's
+draw, a body's sink or coupling) and the meetings of step 3 (Highlights 5.2)
+and before the departures, the spatial law takes off the Node the content of
+the family that arrived this interval and is due to leave: the outbound rays
+with at least one Link walked and no delay or wait pending. A fresh ray at
+its event Node (an emission, a meeting's output, the recoil, a transmission)
+and a fresh release depart on their line and spread from the next Node; a
+returning ray walks back and is not spread; a held ray is not due. What a
+Detector returned or a body took follows those rules first, and only the
+rest spreads. Nothing of the taken content is forwarded as it came, and
+nothing stays at the Node.
+
+**The combination.** Field rays carry no event, so the content combines
+before it spreads (Highlights 3.20): amounts add per arriving heading,
+content on one line being one content; the phase of the whole is one phase,
+the phase step nearest the direction of the coherent sum of amount x
+e^(i phase) over every taken ray (`phase_of_sum`, the coherence rule and its
+cosine table; a cancelled sum gives step 0); the Detector bit of the whole is
+the catalog default of Highlights 5.4, 1 outranks 0 outranks none. The
+amount is exact: the coherence of the arrivals (`coherence`, the ratio a
+reader or an absorber sees) is recorded and never applied to the amount,
+since nothing but a sink ends a quantum.
+
+**The split.** Each arriving heading's content A is shared over the six
+relative headings in whole quanta, floor(A x w_i / S), S the table's total.
+The quanta the floors leave, at most five per heading, are the remainder of
+Highlights 3.17, and it leaves whole through the heading the phase selects,
+as the steering table places a whole quantum by a phase: the phase p, as a
+share of the turn, laid against the weights end to end, selects the smallest
+entry i with m x (w_0 + ... + w_i) > p x S, m the phase modulus
+(2^`phase_bits`; with no width p is 0 and the first entry with a weight is
+selected). With the table `[6, 1, 1, 1, 1, 1]` and eight phase steps, phases
+0 to 4 select forward, 5 backward, 6 the second transverse and 7 the third.
+So over all phases the remainders follow the table and the wave shows in
+intensities; a single quantum cannot split and never waits: a ray of amount
+1 keeps moving at one Link per interval on the path its phase sets, turning
+the same way relative to its heading at every Node. Departures on one Port
+merge. Each departure is a fresh field ray: the Port's heading, accumulators
+(0, 0, 0), the combined phase, the family's rate, no wait, no delay, no lag,
+`steps` 0, `outbound` 1, no event (mask 0, shares all zero), the combined
+bit and its source sign; it walks one Link with this interval's residents
+and is spread again at the next Node.
+
+**The booking.** The total is exact, so the amount has no source and the
+world ledger of feature 10 is unchanged by a spread. A spread changes the
+momentum of field content, amount x heading: a ray heading +X becomes six
+rays, and the difference, amount x heading summed over the departures less
+the same sum over what arrived, is booked as an explicitly accounted source
+of the family's momentum field when one is bound (Highlights 3.15), exactly
+as the release of feature 7 and the table split of feature 6 are booked;
+`source_totals` and the per-tick `source_delta` name it, and
+`conserved_at_every_completed_tick` stays the ledger's identity. The local
+audit (`diagnostics/local_conservation.py`) measures the departures as it
+measures a release, a source at the Node, and reads the `field_spread`
+record to give back what the Node itself held, so its `sourced` line gains
+the momentum difference and nothing else
+([local conservation](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)).
+
+**The record.** One `field_spread` record per Node, interval and family:
+`family`, `amount` (what was taken), `arrived` (the amount per arriving
+heading, six entries by the heading's Port index), `amounts` (the departure
+per Port), `remainders` (the remainder quanta placed per Port), `phase` (the
+combined phase) and `coherence` (the reduced ratio of the arrivals'
+coherence). It is published before the interval's `spatial_cycle` record,
+like `inverse_split`. `FieldSpread` (`core/spatial_state.py`) is the plan's
+record, registered in the Node state contract; `spread_content` is the pure
+function, `relative_ports` the relative Port order and
+`spread_remainder_entry` the phase's choice.
+
+**The sign of the source (Highlights 3.5, the field is matter's message
+about itself; model owner, 2026-09-17).** The sign of the source's charge
+travels on the field ray as a visible property, like the Detector bit and
+never encoded in the phase, which is reserved for interference: `Ray` carries
+`source_sign`, -1, 0 or 1, set at the release from the releasing family's
+charge (`release_field`, `release_stock`; a body's release from its declared
+`charge`, `body_release`), 0 on an emission and on every existing world's
+ray, part of the merge identity, so content of opposite signs at one Node
+stays two rays of the same family, kept by the return and copied by the
+inverse split (`transmit`), carried by a meeting's output from the first
+input of its own family (the recoil keeps its field's sign) and through the
+spread: the content of one Node combines by phase as content does, and each
+sign's content is split and placed on its own, the departures carrying
+their sign and the record its `signs`. The engine reads it nowhere; a
+coupling reads it as it reads the Detector bit, with the catalog read of
+feature 2b, and the attraction of opposite charges (the catalog's
+`opposite_charge` entry of `electron_field_turn`, experiment A5) closes with
+it.
+
+**A returned field quantum (the orchestrator's proposal of Highlights 5.5,
+pending the model owner's decision).** A returning ray retraces its line by
+its step count; once the field spreads, a field quantum's path is no longer
+one line and a field ray has no event at which to perform an inverse split.
+The proposal, implemented exactly and stated as such until the model owner
+decides it: a field quantum of a spreading family that a Detector returns
+with 0 (`outbound` 0, no event) reverses on the line it arrived by and walks
+back one Link per interval, its steps counting down to 0 and staying 0, past
+the Node that spread it, with no inverse split, until it is absorbed by the
+first content its coupling responds to or reaches its source. At every Node
+it reaches, before the spread of that interval: if the record that emitted
+the family is there (the funded emission's input), it is restored to that
+record's stock with its recoil, exactly as the inverse split restores a
+share; else if content of the family this field is the field of is there (a
+record holding its stock, a resident ray of it) or a resident ray of a family
+a declared `ray_interactions` rule couples with this one, it ends there and
+its release is unbooked, a negative source of the family and of its momentum
+field; an external body takes it into its sink as it takes every returning
+ray; otherwise it walks on, and through an open boundary it escapes like any
+ray. Nothing is created and every audit stays exact. One `field_returned`
+record per quantum that ends (`family`, `amount`, `port`, the Port index of
+the heading it walked on, `by`, the family that took it or none for the
+emitter, `restored`), published before the cycle's record; the local audit
+gives back what an unbooked quantum took off its Node, as it does for a
+spread. A world without `spread` keeps the return of feature 3 and the
+inverse split of feature 4 unchanged.
+
+**Consequences, none inserted.** With the released field of feature 7
+declared with `spread`, a charge's field fills the board: five rays per Node
+crossed, each spread again at the next Node, whole quanta wandering by
+phase. A recoil, the reversed output of a meeting, departs on its line and
+spreads from the next Node like every field content: what walks back toward
+the source is the net momentum of the spread, forward less backward on the
+line, not one whole ray; a world that wants the recoil whole declares no
+`spread`. Field content that meets a ray whose coupling responds is met
+before it spreads, so the rule of feature 7 and the sink of feature 7b act on
+what arrived. The cost is measured before adoption
+([performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables)).
+
+Admission: `spread` requires ray transport, a positive, conserved, unpaced
+unit-axial ray field on the links metric with the six Port headings, zero
+baseline, no decay and no self-exclusion (the geometry of a released field),
+a phase width of at most twelve bits (the coherent sum uses the family's
+coherence table, or the table of its modulus when none is declared), and
+the shared Detector admission
+(schema 1, `link_ticks` 1, the default fixed clock, no field rules, spatial
+interactions or couplings on the family); a table of another length, a
+negative weight, a zero backward weight or unequal transverse weights is
+rejected at initialization. The runner records `field_spreading:
+"field-spreading-v1"` and `spreading_fields` (each family with its table)
+only when a family declares `spread`; a world that declares none runs
+byte-identically, records included. `test_field_spreading.py`
+([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
+
 ### Audits (`ray-event-audit-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.15; [ray-event
@@ -1013,6 +1288,13 @@ feature 8): matter is a bound group, binding is the interaction whose result
 is zero events, a bound group is unbound by an arriving ray, and gravity is
 bending by delay. `test_ray_binding.py`
 ([expectations](TEST_EXPECTATIONS.md#ray-binding)) is the test.
+
+Interim form (model owner, 2026-09-17, Highlights 3.4): binding is a
+periodic orbit of the ordinary meeting rule, a bound group a set of rays
+whose meetings reproduce the rays that entered them on a ring of Nodes, and
+the held form of this section, rays resident under a rule with `delay` 1 and
+no outputs and the `ray_delay` wait, is superseded by feature 14, binding as
+a loop, after features 12, 8c, 2b and 8b.
 
 **Binding.** A `ray_interactions` rule without outputs whose assignments set
 `delay` 1 on its participants binds them: the rays stay resident at the Node

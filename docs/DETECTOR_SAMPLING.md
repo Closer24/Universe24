@@ -52,14 +52,14 @@ stream, reading nothing from the ray. This section states the rule the code
 implements; the schema key is in [spatial fields](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1).
 
 Decision of 2026-09-17 (Highlights 5.4; feature 2b of the ray-event model,
-after feature 10): a Detector reads the bit a ray already carries. A ray
-carrying 1 is already realized and passes a later Detector without a draw,
-as a measurement repeated in the same basis repeats its result, a ray
-carrying 0 is a transmission and is never drawn, and only a ray carrying no
-bit is drawn, how a marked Node meets each bit being its declared coupling
-in the catalog with this as the default and the draw on every arrival, as
-this section states, the declarable alternative, feature 2b implementing
-both. Until feature 2b lands the code draws once for each arriving ray.
+landed the same day as `detector-bit-property-v1`): a Detector reads the
+bit a ray already carries. A ray carrying 1 is already realized and passes
+a later Detector without a draw, as a measurement repeated in the same
+basis repeats its result, a ray carrying 0 is a transmission and is never
+drawn, and only a ray carrying no bit is drawn, how a marked Node meets each
+bit being its declared coupling in the catalog with this as the default
+([the bit read](#the-bit-read-detector-bit-property-v1)). This section
+states the draw of a ray carrying no bit.
 
 **The mark.** The initialization key `"detectors": [{"position": [x, y, z],
 "setting": [n, d], "seed": s}]` sets the Detector bit of the Node at
@@ -79,7 +79,8 @@ emits). Nothing else about the Node changes: rays crossing it, couplings,
 absorption, fields and audits are what they are at an unmarked Node.
 
 **The draw.** In `SpatialNode.receive`, for each ray that arrives at a marked
-Node in one interval, the Node draws one bit from the mark's own stream,
+Node in one interval carrying no bit (and each ray carrying a bit that the
+mark's coupling says to draw), the Node draws one bit from the mark's own stream,
 unsalted: `state = next_ticket(state, 0)`, `number = ticket_draw(state)`, and
 the bit is `1` (PASS) when `number x d < n x TICKET_MODULUS` and `0`
 otherwise, so the setting `n / d` is the pass share of the draw range and
@@ -130,6 +131,66 @@ and nothing about the rays it drew for; the bit travels on the ray.
 
 **Identity.** The runner records `detector_mark: "detector-mark-v1"` in
 `run.json` beside `sampling_profile` and `ray_state`.
+
+## The bit read (`detector-bit-property-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.20 "Everything is information on
+rays" and 5.4 "The Detector's bit is a property of the ray", model owner,
+2026-09-17; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)
+feature 2b under step 3; issue #169): the bit is a property of the ray like
+charge, and a marked Node reads it before it draws. A ray carrying 1 is
+already realized: it passes a later Detector without a draw, as a
+measurement repeated in the same basis repeats its result. A ray carrying 0
+is a transmission: it is never drawn, it passes the marked Node and does
+what a transmission does. Only a ray carrying no bit is drawn, as [the
+mark](#the-detector-mark-detector-mark-v1) states. How a marked Node meets
+each bit is its declared coupling in the catalog
+(`apparatus.detector.couplings` of `catalog/nature.json`, `on_bit_1` and
+`on_bit_0`), a table entry and not an engine mechanism (Highlights 3.26):
+the mark's `detectors[]` entry writes `on_bit_1` and `on_bit_0` as
+`"pass"`, the default, or `"draw"`, the draw of `detector-mark-v1` on that
+arrival as for a ray carrying no bit, and a mark that writes both `"draw"`
+behaves as every mark did before 2026-09-17. Any other value is rejected
+before a world exists.
+
+**The pass.** A ray read and passed is unchanged: its bit, steps, phase and
+event record are what arrived, it continues on its line or enters the
+declared coupling as a pass does, and the mark's ticket stream does not
+move. A `detector_pass` event records it: position, tick, the Port the ray
+came in through, family, amount and `bit`, the bit it carries (1 or 0). The
+passes of one interval follow its clicks and precede its returns in the
+event stream. A pass is no measurement: the ray was measured where its bit
+was set. A ray on its walk back is not an arrival and is neither drawn nor
+recorded ([the return](#the-return-detector-return-v1)); a returning ray at
+its event Node performs the inverse split undrawn; what a marked Node emits
+or transmits is not an arrival.
+
+**The property.** Two more things make the bit a property and not a hidden
+variable, stated with the schema in [spatial
+fields](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1):
+the outputs of every meeting a marked ray takes part in inherit it, the
+highest bit among the inputs by the order 1 over 0 over none unless the
+rule declares `bit` (`"highest"`, `"none"`, `{"of": i}`), so the
+descendants of a realized ray are known to be realized and the descendants
+of a transmission are known to carry a return; and a coupling reads it at a
+meeting as it reads charge, the read-only ray property `detector` (`0`
+none, `1` a draw of 0, `2` a draw of 1) in a `when` guard or an invariant,
+so an apparatus that behaves differently for realized content is a catalog
+entry. The event Ports and shares stay hidden.
+
+**The price.** The price of Highlights 5.4 (CHSH at most 2 for spacelike
+settings) was derived under the rule that the second Detector draws on
+every arrival; it is to be re-derived under this rule by hypothesis 11 and
+experiment A13 before it is quoted again.
+
+**Identity.** The runner records `detector_bit_property:
+"detector-bit-property-v1"` in `run.json` when the world declares the rule
+anywhere (a mark's `on_bit_1` or `on_bit_0`, a rule's `bit`); a world that
+declares neither runs the defaults and its record is what it was, byte for
+byte, unless a marked ray reaches a second mark or meets another ray. The
+viewer reads `detector_pass` as the kind `pass` and carries each ray's
+`bit`. The test is `test_detector_bit_property.py` ([Detector bit as a
+property](TEST_EXPECTATIONS.md#detector-bit-as-a-property)).
 
 ## The return (`detector-return-v1`)
 
@@ -372,3 +433,9 @@ coupling.
 8. The cancellation where the transmission meets the share it chases and
    output-clock composition remain separately blocked until their contracts
    and implementation meet the table above.
+9. A marked Node reads the bit a ray carries: a realized ray passes a later
+   mark without a draw with a `detector_pass` record and a transmission is
+   never drawn, unless the mark declares `draw`; the outputs of a meeting
+   inherit the highest bit of its inputs unless the rule declares `bit`; a
+   `when` guard on `detector` fires for a realized ray only
+   ([Detector bit as a property](TEST_EXPECTATIONS.md#detector-bit-as-a-property)).

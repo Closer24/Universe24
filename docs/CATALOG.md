@@ -68,16 +68,18 @@ heading except the ray's own,
 3.5, model owner, 2026-09-17): released by the electron and the positron as
 their field (the families `electron_field` and `positron_field` until that
 date) and emitted at an event by any source, a photon one quantum of it. Its
-`spread` key is the six-heading split table of feature 12 by which every Node
-that light reaches releases it again, the backward heading included, a
-quantum never waiting; until it is declared the field lives on the six axis
-lines of its source and light goes straight.
-Its `source_sign` key is the sign of the releasing charge carried on the
-field ray as a visible property, like the Detector's bit (Highlights 3.5,
-"the field is matter's message about itself", 2026-09-17), read by couplings
-and never the phase; feature 12 carries it, and
-`electron_field_turn.opposite_charge` closes with it (A5). A field ray is a
-ray with an empty event record, rest rate 0 and charge 0, and nothing else.
+`spread` key is the six-heading split table by which every Node that light
+reaches releases it again, the backward heading included, a quantum never
+waiting (feature 12, `field-spreading-v1`, 2026-09-17,
+[field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
+`[6, 1, 1, 1, 1, 1]`, the first declared table, which A1 and A6 confront.
+Its `source_sign` key, `releaser`, is the sign of the releasing charge
+carried on the field ray as a visible property, like the Detector's bit
+(Highlights 3.5, "the field is matter's message about itself", 2026-09-17),
+set by the engine at the release, read by couplings and never the phase;
+feature 12 carries it, and `electron_field_turn.opposite_charge` closes with
+it (A5). A field ray is a ray with an empty event record, rest rate 0 and
+charge 0, and nothing else.
 A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
 holds it) and, if it can decay, `decay` (the conversion and the mark's
 setting). A property read only at a meeting (`colour`, `spin`,
@@ -91,8 +93,11 @@ identity that runs it, and `landed`: true when every mechanism it needs is on
 group's draw, is not), `participants` (the ray ids that meet, `"any"` for
 every ray, or `{"apparatus": "external_body"}`), one of `outputs` (the event
 rays, in the format of a `ray_interactions` rule when decided, or the shape
-of the table when not), `binds` (the rays held at the Node, zero events) or
-`sink` (absorption into the accounted sink), `invariants` (the exact sums
+of the table when not), `binds` (the rays held at the Node, zero events: the
+interim held form of feature 8; under feature 14, binding as a loop,
+Highlights 3.4, 2026-09-17, a binding coupling is an ordinary meeting table
+whose loop closes) or `sink` (absorption into the accounted sink),
+`invariants` (the exact sums
 over inputs and outputs; `charge × amount` is appended by the engine) and
 `note`. In an external-body coupling `"any"` and `"same"` stand for the met
 family, `"body"` for the body's family and `"setting"` for the body's
@@ -108,13 +113,13 @@ among the outputs) and the `apparatus_family` a world gives a mirror, a
 splitter or a plate under a declared coupling: rest rate 0, since the token
 must come back with the body's phase, no charge, no field.
 The Detector's record also lists its `couplings` on the bit a ray already
-carries (Highlights 5.4, model owner, 2026-09-17; feature 2b, after feature
-10), two open entries with the decided default: `on_bit_1`, a ray carrying 1
-passes without a draw; `on_bit_0`, a ray carrying 0 is a transmission and is
-never drawn; only a ray carrying no bit is drawn, and the key by which a
-mark declares another behaviour is undecided until the feature lands.
-Each lists `draw`, the draw on every arrival as before, as its declarable
-alternative; feature 2b implements both.
+carries (Highlights 5.4, model owner, 2026-09-17; feature 2b,
+`detector-bit-property-v1`, landed 2026-09-17), two decided entries with
+their world keys on the mark's `detectors[]` entry: `on_bit_1`, a ray
+carrying 1 passes without a draw; `on_bit_0`, a ray carrying 0 is a
+transmission and is never drawn; only a ray carrying no bit is drawn. Each
+key takes `"pass"` (the default) or `"draw"`, the draw of `detector-mark-v1`
+on that arrival ([the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -133,8 +138,6 @@ the file, path for path and decider for decider. A decider is an entry of the
 | --- | --- | --- |
 | `lag_bits.world_key` | The key that declares the lag modulus per family, the N of hypothesis 14 on the lag register and not on the phase | feature 8b |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
-| `rays.light.spread` | The six-heading split table by which every Node that light reaches releases it again (feature 12, Highlights 3.5, 2026-09-17), the backward heading included; a quantum never waits, the remainder leaving whole through the heading the phase selects | feature 12 |
-| `rays.light.source_sign` | The sign of the releasing charge carried on the field ray as a visible property, read by couplings and never the phase (feature 12, Highlights 3.5, 2026-09-17) | feature 12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -161,8 +164,6 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
 | `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
-| `apparatus.detector.couplings.on_bit_1.world_key` | The key by which a mark declares what it does with a ray carrying 1, the default being to pass it without a draw (Highlights 5.4, 2026-09-17) and the alternative `draw`, the draw on every arrival as before, declarable | feature 2b |
-| `apparatus.detector.couplings.on_bit_0.world_key` | The key by which a mark declares what it does with a ray carrying 0, the default being a transmission that is never drawn and the alternative `draw` declarable | feature 2b |
 
 ## How a world selects rays from the catalog
 
@@ -180,16 +181,19 @@ it uses; the layers follow.
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
 | A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
-| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode`; the couplings on the bit have no world key yet (feature 2b) |
+| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, the optional `on_bit_1` and `on_bit_0` (`"pass"` or `"draw"`, the couplings on the bit a ray carries, `detector-bit-property-v1`), and the world's `return_mode`; a coupling's `bit` (`"highest"`, `"none"`, `{"of": i}`) is the `bit` key of its `ray_interactions` rule |
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
-| A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
+| A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)); the interim held form, superseded by feature 14, binding as a loop, under which a bound group is a fixed point of the ordinary meeting table over a loop on a ring of Nodes (Highlights 3.4, 2026-09-17) |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 
-A bound group's decay draw (the mark drawing at the group's tick), colour,
-the properties of feature 11 and the split table of feature 12 (`spread`)
-have no world key yet; their catalog records wait for them, and no engine
-rule is added for them
+A bound group's decay draw (the mark drawing at the group's tick), colour
+and the properties of feature 11 have no world key yet; their catalog
+records wait for them, and no engine rule is added for them
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
+The split table of feature 12 has its world key, `spread` on a ray spatial
+field, and the light family declares it (`field-spreading-v1`,
+2026-09-17), with `source_sign` the sign the engine puts on every released
+ray.
 
 ## What the catalog is not
 

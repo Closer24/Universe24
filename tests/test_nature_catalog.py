@@ -10,7 +10,7 @@ engine runs today is built from the file into a minimal inline world, parsed and
 run for two ticks against pinned integers, an external body under each of its
 decided couplings among them. Light is the field of a charge (Highlights 3.5,
 2026-09-17): one family, released by the electron and the positron and emitted
-by any source, its spread table open for feature 12.
+by any source, its spread table declared and its source sign the releaser's (feature 12).
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Catalog of nature")
 before the first run.
@@ -165,6 +165,9 @@ def spatial_field(records: JsonObject, name: str, source: str | None = None) -> 
     if source is not None:
         assert ray["kind"] == "field" and source in ray["field_of"], name
         entry |= {"field_of": source, "release": ray["release"]}
+    if isinstance(ray.get("spread"), list):
+        # The declared split table (field-spreading-v1): the world reads it as data.
+        entry["spread"] = list(ray["spread"])
     return entry
 
 
@@ -286,9 +289,10 @@ def event_ray(heading: int, amount: int, phase: int, mask: int, shares: Shares, 
     )
 
 
-def released_ray(heading: int, amount: int, phase: int) -> Ray:
-    """A field ray: no event, its source's phase at the release, one Link walked."""
-    return Ray(heading, (0, 0, 0), amount, phase=phase, steps=1)
+def released_ray(heading: int, amount: int, phase: int, sign: int = 0) -> Ray:
+    """A field ray: no event, its source's phase at the release and the sign of its
+    source's charge (field-spreading-v1), one Link walked."""
+    return Ray(heading, (0, 0, 0), amount, phase=phase, steps=1, source_sign=sign)
 
 
 def neighbor(position: tuple[int, int, int], heading: int) -> tuple[int, int, int]:
@@ -372,7 +376,13 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert isinstance(item["declaration"], dict) and item["declaration"], name
             assert type(item["engine"]["landed"]) is bool, name
         assert set(apparatus) == {"detector", "external_body"}
-        assert set(apparatus["detector"]["declaration"]) == {"position", "setting", "seed"}
+        assert set(apparatus["detector"]["declaration"]) == {
+            "position",
+            "setting",
+            "seed",
+            "on_bit_1",
+            "on_bit_0",
+        }
         assert set(apparatus["external_body"]["couplings"]) == external
         assert apparatus["external_body"]["default_coupling"] in external
         assert set(apparatus["external_body"]["declaration"]) == {
@@ -389,17 +399,20 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
-        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two open couplings
-        # on the bit a ray carries, decided by feature 2b, with the decided default.
+        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two couplings on
+        # the bit a ray carries, decided and landed by feature 2b on 2026-09-17
+        # (detector-bit-property-v1), each with its world key on the mark and the
+        # values pass (the default) and draw.
         bits = apparatus["detector"]["couplings"]
         assert set(bits) == {"on_bit_1", "on_bit_0"}
         for name, entry in bits.items():
-            assert (entry["status"], entry["world_key"], entry["decided_by"]) == (
-                "open",
-                UNDECIDED,
-                "feature 2b",
+            assert (entry["status"], entry["world_key"], entry["engine"]) == (
+                "decided",
+                name,
+                {"identity": "detector-bit-property-v1", "landed": True},
             ), name
-            assert entry["engine"]["landed"] is False, name
+            assert set(entry["values"]) == {"pass", "draw"} and "decided_by" not in entry, name
+            assert not undecided(entry), name
             assert entry["alternative"] == "draw", name
         assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
             {"bit": 1},
@@ -413,7 +426,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert len(rays) == 12 and len(couplings) == 16
         # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
         # electromagnetic family, released by the electron, the positron and the
-        # proton (a body of that family radiates it), its spread table open, and
+        # proton (a body of that family radiates it), its spread table declared, and
         # no other family the field of a charged ray.
         light = rays["light"]
         assert (light["kind"], light["field_of"], light["release"]) == (
@@ -421,11 +434,10 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             ["electron", "positron", "proton"],
             [1, 4],
         )
-        assert light["spread"] == UNDECIDED and light["decided_by"]["spread"] == "feature 12"
-        # The sign of the releasing charge travels on the field ray as a visible
-        # property, never the phase (Highlights 3.5, 2026-09-17), carried by feature 12.
-        assert light["source_sign"] == UNDECIDED
-        assert light["decided_by"]["source_sign"] == "feature 12"
+        # Feature 12 (field-spreading-v1): the split table declared, the source sign
+        # the releaser's; polarization stays open.
+        assert light["spread"] == [6, 1, 1, 1, 1, 1] and light["source_sign"] == "releaser"
+        assert light["decided_by"] == {"polarization": "A12"}
         assert not {"electron_field", "positron_field"} & rays.keys()
         assert all("light" in rays[name]["field"] for name in ("electron", "positron"))
     elif case == "undecided":
@@ -437,7 +449,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        assert len(found) == 32
+        # 28 since 2026-09-17: feature 12 decided light's spread and source_sign,
+        # feature 2b the two couplings of the Detector.
+        assert len(found) == 28
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -450,9 +464,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A12",
             "hypothesis 12",
             "hypothesis 13",
-            "feature 2b",
             "feature 8b",
-            "feature 12",
         }
     elif case == "experiments":
         # (c) The catalog lists exactly the confrontation entries of the register,
@@ -497,16 +509,22 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             lamps: list[Lamp] = [((7, 7, 7), source, 5, 0, 3)]
             simulation = run(board(rays, names, lamps, [], released=released))
             rate = rays[source]["rest_rate"]
-            assert rays_at(simulation, (9, 7, 7)) == [
-                event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
-            ]
+            charge = rays[source]["charge"]
+            sign = (charge > 0) - (charge < 0)
+            expected = event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
+            if isinstance(rays[source].get("spread"), list):
+                # A spreading family (field-spreading-v1): its content was released
+                # again at (8,7,7), a fresh field ray with no event, whole because
+                # phase 3 selects the forward entry of its table.
+                expected = Ray(0, (0, 0, 0), 5, phase=(3 + 2 * rate) % 8, steps=1)
+            assert rays_at(simulation, (9, 7, 7)) == [expected]
             totals = {source: (5,)}
             if name is not None:
                 numerator, denominator = rays[name]["release"]
                 each = 5 * numerator // denominator
                 for heading in range(1, 6):
                     assert rays_at(simulation, neighbor((8, 7, 7), heading)) == [
-                        released_ray(heading, each, (3 + rate) % 8)
+                        released_ray(heading, each, (3 + rate) % 8, sign)
                     ]
                 totals[name] = (5 * each,)
                 assert simulation.source_totals()[name] == (5 * each,)
@@ -559,7 +577,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert rays_at(simulation, (7, 6, 7)) == [event_ray(3, 5, 2, 12, shares)]
         assert rays_at(simulation, (7, 7, 7)) == []
         for heading in (0, 1, 2, 4, 5):
-            expected = [released_ray(heading, 1, 1)]
+            expected = [released_ray(heading, 1, 1, -1)]
             if heading == 2:
                 expected.append(event_ray(2, 1, 0, 12, shares))
             assert rays_at(simulation, neighbor((7, 7, 7), heading)) == expected

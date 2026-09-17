@@ -22,7 +22,7 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work
-from event_universe.core.spatial_state import Rays
+from event_universe.core.spatial_state import PORT_HEADINGS, Ray, Rays
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
@@ -82,6 +82,10 @@ class LocalConservationAudit:
         # source at the Node that released it, the world total (ray-event-audit-v1).
         self.sourced: Quantity = ZERO
         self._pending_annulled: dict[Address3, Quantity] = {}
+        # What each Node spread since its last check (field-spreading-v1): the
+        # content that arrived and was taken off the Node, given back to its
+        # residual because its departures are measured as a release.
+        self._pending_spread: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         # The charged ray families (ray-event-audit-v1): the audit measures their
         # charge, charge x amount over rays and over held stock, beside energy and
@@ -194,6 +198,51 @@ class LocalConservationAudit:
             charge,
         )
 
+    def _spread(self, event: dict[str, object]) -> Quantity:
+        """The content a spread took off its Node (field-spreading-v1): what the
+        record says arrived per heading, measured as resident rays are (energy
+        through the declared spatial expression, momentum amount x heading, charge
+        x amount), so that the departures, measured as a release, are balanced by
+        it and only the momentum the spread moved is sourced."""
+        if self.definition.spatial is None:
+            return ZERO
+        family = str(event.get("family"))
+        arrived = cast(tuple[int, ...], event.get("arrived", ()))
+        bundle: list[Rays] = []
+        for definition in self.initial.spatial_fields:
+            if self.initial.fields[definition.field].name != family:
+                bundle.append(())
+                continue
+            bundle.append(
+                tuple(
+                    Ray(definition.headings.index(PORT_HEADINGS[port]), (0, 0, 0), int(amount))
+                    for port, amount in enumerate(arrived)
+                    if amount
+                )
+            )
+        if not any(bundle):
+            raise ValueError("a field_spread record names a spreading ray family")
+        return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+
+    def _returned(self, event: dict[str, object]) -> Quantity:
+        """The returned field quantum a Node ended without an owner to give it to
+        (field-spreading-v1): measured as the returning ray it was, its momentum
+        read as its share on the heading it arrived by."""
+        if self.definition.spatial is None:
+            return ZERO
+        family = str(event.get("family"))
+        port, amount = int(cast(int, event.get("port", 0))), int(cast(int, event.get("amount", 0)))
+        bundle: list[Rays] = []
+        for definition in self.initial.spatial_fields:
+            if self.initial.fields[definition.field].name != family:
+                bundle.append(())
+                continue
+            heading = definition.headings.index(PORT_HEADINGS[port])
+            bundle.append((Ray(heading, (0, 0, 0), amount, outbound=0),))
+        if not any(bundle):
+            raise ValueError("a field_returned record names a spreading ray family")
+        return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+
     def _packet(self, packet: InventoryPacket) -> Quantity:
         if packet.record is not None:
             return self._carrier(packet.record)
@@ -205,12 +254,15 @@ class LocalConservationAudit:
         Link walked, measured like any rays. A release is booked as a source and
         no owner pays for it, so it is a source term at the Node, not a residual
         (ray-event-audit-v1); an emitted or transmitted ray carries its event's
-        mask, and a field ray that crosses the Node has walked more than one Link."""
+        mask, and a field ray that crosses the Node has walked more than one Link.
+        The departures of a spreading family (field-spreading-v1) are fresh field
+        rays and read the same way; what the Node itself held is given back from
+        its `field_spread` record."""
         if packet.record is not None or not packet.rays:
             return ZERO
         rays = tuple(
             tuple(ray for ray in bundle if ray.outbound and ray.steps == 1 and not ray.event_ports)
-            if definition.field_of is not None
+            if definition.field_of is not None or definition.spread
             else ()
             for definition, bundle in zip(self.initial.spatial_fields, packet.rays, strict=True)
         )
@@ -254,6 +306,19 @@ class LocalConservationAudit:
             self._pending_annulled[position] = _add(self._pending_annulled.get(position, ZERO), amount)
             self.annulled = _add(self.annulled, amount)
             return
+        if event.get("event") == "field_spread":
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            amount = self._spread(event)
+            self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
+            return
+        if event.get("event") == "field_returned" and not event.get("restored"):
+            # A returned field quantum whose release was unbooked as a source
+            # (field-spreading-v1): what left the Node for no Link is given back to
+            # its residual and taken off the sourced line, as a spread's content is.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            amount = self._returned(event)
+            self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
+            return
         if event.get("event") not in EVENTS:
             return
         tick = cast(int, event["tick"])
@@ -295,7 +360,15 @@ class LocalConservationAudit:
                 if released != ZERO:
                     sourced[packet.origin] = _add(sourced.get(packet.origin, ZERO), released)
         self.current_total = self._total(nodes, packets)
-        for position in sorted(self._nodes.keys() | nodes.keys() | incoming.keys() | outgoing.keys()):
+        spread_back: Quantity = ZERO
+        positions = (
+            self._nodes.keys()
+            | nodes.keys()
+            | incoming.keys()
+            | outgoing.keys()
+            | self._pending_spread.keys()
+        )
+        for position in sorted(positions):
             before, after = self._nodes.get(position, ZERO), nodes.get(position, ZERO)
             arrived, sent = incoming.get(position, ZERO), outgoing.get(position, ZERO)
             residual = _add(_subtract(after, before), _subtract(sent, arrived))
@@ -303,6 +376,12 @@ class LocalConservationAudit:
             residual = _add(residual, self._pending_annulled.pop(position, ZERO))
             # What the Node released as a field came from no owner: a source.
             residual = _subtract(residual, sourced.get(position, ZERO))
+            # What the Node spread it held itself: its departures were measured as a
+            # release above, so the content that arrived is given back
+            # (field-spreading-v1), and the momentum the spread moved is the source.
+            held = self._pending_spread.pop(position, ZERO)
+            residual = _add(residual, held)
+            spread_back = _add(spread_back, held)
             self.checks += 1
             if residual != ZERO:
                 self.failure = {
@@ -319,6 +398,7 @@ class LocalConservationAudit:
         self.escaped = cast(Quantity, tuple(a + b for a, b in zip(self.escaped, escaped, strict=True)))
         for released in sourced.values():
             self.sourced = _add(self.sourced, released)
+        self.sourced = _subtract(self.sourced, spread_back)
         self._nodes, self._packets = nodes, packets
 
     def report(self) -> dict[str, object]:

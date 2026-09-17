@@ -73,8 +73,25 @@ EventShares = tuple[int, int, int, int, int, int]
 NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # The Detector bit carried by a ray: no Detector event, or a Detector event
 # that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
-# arrival (detector_draw) and no rule reads it.
+# arrival (detector_draw). The order of the three values is the order of the
+# inheritance below: 1 over 0 over none.
 DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
+# The Detector's bit as a property of the ray (Highlights 5.4, 2026-09-17,
+# detector-bit-property-v1): the bit travels with the ray like charge. A coupling
+# reads it at a meeting as the read-only ray property `detector`; the outputs of
+# every meeting a marked ray takes part in inherit it, the highest bit of the
+# inputs unless the rule declares `bit` (inherited_bit); and a marked Node reads
+# it: a ray carrying 1 is already realized and passes without a draw, a ray
+# carrying 0 is a transmission and is never drawn, only a ray carrying no bit is
+# drawn, each by the mark's declared coupling (on_bit_1, on_bit_0), pass being
+# the default and draw the draw of detector-mark-v1 on that arrival.
+DETECTOR_BIT_PROPERTY = "detector-bit-property-v1"
+# What a mark declares for a ray carrying a bit: pass it without a draw, or draw.
+BIT_PASS, BIT_DRAW = 0, 1
+BIT_COUPLINGS = ("pass", "draw")
+# What a meeting's outputs inherit: the highest of the inputs' bits (the default),
+# no bit, or the bit of input i (a nonnegative index, the participant's role).
+BIT_HIGHEST, BIT_NONE = -1, -2
 # Layers of event spacetime (Highlights 5.1): a layer is a set of families that
 # couple, and a meeting exists only inside a layer. Layers are derived, never
 # declared: the connected components of the ray fields over the participants
@@ -147,6 +164,19 @@ RETURN_MODES = ("siblings", "straight", "annul")
 EXTERNAL_BODY = "external-body-v1"
 MAX_EXTERNAL_BODIES = 4096
 BODY_SINK = -1
+# Field spreading (Highlights 3.5, 3.17, 3.20 and 3.23, model owner 2026-09-17;
+# field-spreading-v1): light is the field, and the field spreads. A family that
+# declares `spread`, six weights in Port order relative to the arriving heading
+# (forward, backward, the four transverse in Port order), releases again at
+# every Node its content reaches: the outbound content that arrived is taken
+# off the Node, amounts add per arriving heading, the phase is the phase of the
+# coherent sum, each heading's content is shared by the table in whole quanta
+# and the remainder leaves whole through the entry the phase selects; the
+# departures are fresh field rays with no event. Huygens' principle in the
+# lattice's language: one catalog entry of the family, not an engine mechanism.
+FIELD_SPREADING = "field-spreading-v1"
+SPREAD_ENTRIES = 6
+SPREAD_BACKWARD = 1
 
 
 @dataclass(frozen=True, slots=True)
@@ -154,7 +184,12 @@ class DetectorMark:
     """A Node's Detector bit with its setting and ticket seed: bounded Node metadata.
 
     The setting is the pass share of the draw range, an explicit rational with no
-    default; the seed starts the mark's own ticket stream. Nothing here is a
+    default; the seed starts the mark's own ticket stream. What the mark does with
+    a ray that already carries a bit is its declared coupling
+    (detector-bit-property-v1): `on_bit_1` and `on_bit_0` are BIT_PASS (the
+    default: the ray passes without a draw) or BIT_DRAW (the draw of
+    detector-mark-v1 on that arrival); `bit_keys` is 1 when the world file wrote
+    either key, read by the runner's identity record alone. Nothing here is a
     record, stock or a reading of any ray.
     """
 
@@ -162,6 +197,9 @@ class DetectorMark:
     pass_numerator: int
     pass_denominator: int
     seed: int
+    on_bit_1: int = BIT_PASS
+    on_bit_0: int = BIT_PASS
+    bit_keys: int = 0
 
     def __post_init__(self) -> None:
         if type(self.position) is not tuple or len(self.position) != 3:
@@ -174,6 +212,10 @@ class DetectorMark:
             raise ValueError("a Detector setting must be a rational from 0 through 1")
         if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
             raise ValueError("a Detector seed must stay below the ticket modulus")
+        if any(value not in (BIT_PASS, BIT_DRAW) for value in (self.on_bit_1, self.on_bit_0)):
+            raise ValueError("a Detector mark meets a carried bit by pass or draw")
+        if self.bit_keys not in (0, 1):
+            raise ValueError("a Detector mark declares its bit keys as 0 or 1")
 
 
 @dataclass(frozen=True, slots=True)
@@ -268,6 +310,14 @@ class Ray:
     # spent as one Link toward the lagging side at the next departure; a lag on
     # the ray's own axis as one interval of wait. Zero on every created ray.
     lag: tuple[int, int, int] = (0, 0, 0)
+    # The sign of the source's charge on a field ray (field-spreading-v1;
+    # Highlights 3.5, the field is matter's message about itself): -1, 0 or 1,
+    # set at the release from the releasing family's charge (a body's from its
+    # declared charge), kept through spreading, merging, the return and the
+    # inverse split, carried by a meeting's output from the input of its own
+    # family; a visible property like the Detector bit, never encoded in the
+    # phase, read by no rule of the engine.
+    source_sign: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -283,8 +333,20 @@ RAY_PROPERTIES = (
     # that family's charge per quantum, read-only views for a coupling at a meeting.
     FieldDefinition("family", 1, "spatial field index", False, False),
     FieldDefinition("charge", 1, "charge per quantum", True, False),
+    # detector-bit-property-v1: the Detector bit the ray carries, as the engine
+    # stores it (0 none, 1 a draw of 0, 2 a draw of 1), a read-only view.
+    FieldDefinition("detector", 1, "Detector bit", False, False),
 )
-RAY_AMOUNT, RAY_HEADING, RAY_PHASE, RAY_ADVANCE, RAY_DELAY, RAY_FAMILY, RAY_CHARGE = range(7)
+(
+    RAY_AMOUNT,
+    RAY_HEADING,
+    RAY_PHASE,
+    RAY_ADVANCE,
+    RAY_DELAY,
+    RAY_FAMILY,
+    RAY_CHARGE,
+    RAY_DETECTOR,
+) = range(8)
 # A ray interaction may assign heading, phase and delay; the rest is read-only.
 RAY_WRITABLE = frozenset((RAY_HEADING, RAY_PHASE, RAY_DELAY))
 RAY_VIEW_COMPONENTS = sum(field.components for field in RAY_PROPERTIES)
@@ -586,9 +648,16 @@ def release_amount(amount: int, definition: SpatialFieldDefinition) -> int:
     return checked_work(amount * definition.release_numerator) // definition.release_denominator
 
 
-def _released(amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None) -> Rays:
+def charge_sign(charge: int) -> int:
+    """The sign a field ray carries for its source's charge: -1, 0 or 1."""
+    return -1 if charge < 0 else (1 if charge > 0 else 0)
+
+
+def _released(
+    amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None, sign: int = 0
+) -> Rays:
     return tuple(
-        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase)
+        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase, source_sign=sign)
         for heading in PORT_HEADINGS
         if heading != skip
     )
@@ -604,14 +673,16 @@ def release_field(
     it, which at link speed the source itself occupies, so it releases nothing
     there and a straight ray never shares a Node with its own field. A ray held
     at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
-    no line ahead of it and releases on all six headings, once per interval."""
+    no line ahead of it and releases on all six headings, once per interval. Every
+    released ray carries the sign of the source family's charge (`source_sign`)."""
     released: list[Ray] = []
+    sign = charge_sign(origin.charge)
     for ray in rays:
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
         skip = None if ray.interaction_delay else origin.headings[ray.heading]
-        released.extend(_released(amount, ray.phase, definition, skip))
+        released.extend(_released(amount, ray.phase, definition, skip, sign))
     return tuple(released)
 
 
@@ -629,12 +700,15 @@ def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
     )
 
 
-def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
+def release_stock(
+    stock: int, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition | None = None
+) -> Rays:
     """The field rays resident content releases once per interval: one ray per Port
     heading, all six, from the stock a record holds, with phase 0 (a record has no
-    phase of its own in this slice)."""
+    phase of its own in this slice) and the sign of the origin family's charge."""
     amount = release_amount(stock, definition)
-    return _released(amount, 0, definition, None) if amount > 0 else ()
+    sign = 0 if origin is None else charge_sign(origin.charge)
+    return _released(amount, 0, definition, None, sign) if amount > 0 else ()
 
 
 def holds_source_stock(
@@ -665,6 +739,270 @@ def released_field_names(
         }
         for definition in definitions
         if definition.field_of is not None
+    ]
+
+
+# Field spreading (field-spreading-v1). Every rule here reads the content that
+# arrived at one Node and the family's declared table; nothing reads another Node.
+
+
+@dataclass(frozen=True, slots=True)
+class FieldSpread:
+    """The record of one spread for the Node to publish (field-spreading-v1): plain
+    bounded integers, as the Node state contract requires. The spatial field, the
+    amount taken off the Node, the amount that arrived per heading (six entries by
+    the heading's Port index), the departure per Port, the remainder quanta placed
+    per Port, the combined phase and the reduced coherence of the arrivals."""
+
+    field: int
+    amount: int
+    arrived: tuple[int, ...]
+    amounts: tuple[int, ...]
+    remainders: tuple[int, ...]
+    phase: int
+    coherence: tuple[int, int]
+    # The distinct source signs of the content taken, in order (field-spreading-v1).
+    signs: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class ReturnedField:
+    """The record of one returned field quantum that ended (field-spreading-v1; the
+    orchestrator's proposal of Highlights 5.5, pending the model owner's decision):
+    plain bounded integers. The spatial field, the amount, the Port index of the
+    heading it walked on, the spatial field of the content that took it (-1 for the
+    record that emitted it) and 1 when it was restored to that record's stock, 0
+    when its release was unbooked as a source."""
+
+    field: int
+    amount: int
+    port: int
+    by: int
+    restored: int
+
+
+def validate_spread_table(table: tuple[int, ...]) -> int:
+    """The split table of a spreading family: six nonnegative bounded weights in Port
+    order relative to the arriving heading, the backward weight positive (a
+    forward-only split piles the field on the diagonals and empties the axes,
+    Highlights 3.5) and the four transverse weights equal (the lattice has no
+    preferred transverse direction, Highlights 3.23). Returns the total, the
+    table's denominator."""
+    if (
+        type(table) is not tuple
+        or len(table) != SPREAD_ENTRIES
+        or any(type(weight) is not int or bounded(weight) < 0 for weight in table)
+    ):
+        raise ValueError(
+            "a spread table holds six nonnegative integer weights in Port order relative to "
+            "the arriving heading"
+        )
+    if table[SPREAD_BACKWARD] <= 0:
+        raise ValueError("a spread table must give the backward heading a positive weight")
+    if len(set(table[2:])) != 1:
+        raise ValueError("a spread table gives the four transverse headings one weight")
+    return bounded(sum(table))
+
+
+def validate_spread_fields(
+    definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
+) -> None:
+    """The admission of a spreading family (field-spreading-v1): the geometry of a
+    released field (a positive, conserved, unpaced unit-axial ray field on the
+    links metric with the six Port headings, zero baseline, no decay, no
+    self-exclusion) and a phase width of at most twelve bits, since the phase of
+    the content is the phase of the coherent sum over the table of its modulus."""
+    for definition in definitions:
+        if not definition.spread:
+            continue
+        field = fields[definition.field]
+        if (
+            not definition.rays
+            or field.signed
+            or not field.conserved
+            or any(unpack(definition.baseline))
+            or definition.euclidean
+            or definition.pace_numerator != definition.pace_denominator
+            or definition.self_exclusion
+            or definition.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
+        ):
+            raise ValueError("a spreading family requires a positive unit-axial unpaced ray field")
+        if any(heading not in definition.headings for heading in PORT_HEADINGS):
+            raise ValueError("a spreading family requires the six Port headings")
+        if definition.phase_bits > MAX_TABLE_BITS:
+            raise ValueError(
+                "a spreading family's phase width is at most twelve bits: the phase of its "
+                "content is the phase of the coherent sum over the cosine table of its modulus"
+            )
+
+
+def validate_spread_admission(initial: InitialState) -> None:
+    """A world with a spreading family runs under the shared Detector admission."""
+    if not any(definition.spread for definition in initial.spatial_fields):
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+    ):
+        raise ValueError("a spreading family requires the default fixed H=1 spatial clock")
+    validate_spread_fields(initial.spatial_fields, initial.fields)
+    spreading = {definition.field for definition in initial.spatial_fields if definition.spread}
+    if any(rule.field in spreading for rule in initial.spatial_couplings):
+        raise ValueError("a spreading family does not support coupled responses or absorption")
+
+
+def relative_ports(port: int) -> tuple[int, ...]:
+    """The six Ports in the order of a spread table for content arriving on the
+    heading of Port `port`: forward, that Port; backward, its opposite; then the
+    four transverse Ports in Port order."""
+    if type(port) is not int or not 0 <= port < 6:
+        raise ValueError("a relative Port order requires a Port index")
+    return (port, port ^ 1, *(other for other in range(6) if other >> 1 != port >> 1))
+
+
+def spread_remainder_entry(phase: int, phase_modulus: int, table: tuple[int, ...]) -> int:
+    """The entry of the table the phase selects for the remainder (Highlights 3.17
+    and 3.20, the steering table's rule for a whole quantum): the phase, as a
+    share of the turn, laid against the weights end to end; the smallest entry i
+    with modulus x (w_0 + ... + w_i) > phase x total. At phase 0 the first entry
+    with a weight; over all phases the remainders follow the table."""
+    total = sum(table)
+    target = checked_work(phase * total)
+    cumulative = 0
+    for entry, weight in enumerate(table):
+        cumulative = checked_work(cumulative + weight)
+        if checked_work(phase_modulus * cumulative) > target:
+            return entry
+    raise ValueError("a spread phase must be below the family's phase width")
+
+
+def spread_tables(
+    definition: SpatialFieldDefinition,
+) -> tuple[tuple[int, ...], tuple[int, ...]] | None:
+    """The cosine and sine tables the spread combines phases with: the family's
+    declared coherence table, or the table of its phase modulus (at most twelve
+    bits); None for a family without a phase width, whose one phase is 0."""
+    modulus = definition.phase_modulus
+    if modulus < 2:
+        return None
+    if definition.coherent:
+        return definition.cosine_table, definition.sine_table
+    return phase_cosines(modulus), phase_sines(modulus)
+
+
+def spread_phase(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The one phase of the content a Node spreads: the phase step nearest the
+    direction of the coherent sum over every taken ray (the coherence rule of
+    Highlights 3.20; a cancelled sum gives step 0), 0 for a family without a
+    phase width."""
+    tables = spread_tables(definition)
+    if tables is None:
+        return 0
+    terms = tuple((abs(ray.amount), ray.phase) for ray in rays)
+    return _phase_of_sum(terms, tables[0], tables[1], definition.phase_modulus)
+
+
+def spread_coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]:
+    """The reduced coherence of the content a Node spreads, over the same table."""
+    tables = spread_tables(definition)
+    if tables is None or not rays:
+        return (1, 1)
+    numerator, denominator = _coherence(rays, tables[0], definition.phase_mask)
+    return reduced_ratio(numerator, denominator)
+
+
+def spread_content(
+    index: int, rays: Rays, definition: SpatialFieldDefinition
+) -> tuple[Rays, FieldSpread]:
+    """The spread of one family's content at a Node (field-spreading-v1): the
+    departures, one fresh field ray per Port and source sign with content, in
+    Port then sign order, and the record. The rays are the outbound content that
+    arrived (at least one Link walked). Amounts add per arriving heading and
+    source sign, content of opposite signs at one Node combining by phase as
+    content does and keeping its sign per ray; the phase of the whole is the
+    phase of the coherent sum and its Detector bit the catalog default, 1
+    outranks 0 outranks none; each heading's content is shared over the six
+    relative headings in whole quanta, floor(content x weight / total), and the
+    quanta the floors leave, at most five per heading and sign, leave whole
+    through the entry the phase selects. Each departure carries the Port's
+    heading, accumulators (0, 0, 0), the combined phase, the family's rate, no
+    wait, delay or lag, steps 0, outbound 1, no event and its sign. The total
+    is exact."""
+    table = definition.spread
+    total = validate_spread_table(table)
+    arrived = [0] * 6
+    by_sign: dict[tuple[int, int], int] = {}
+    for ray in rays:
+        if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
+            raise ValueError("a spread takes the outbound content that arrived at the Node")
+        heading = definition.headings[ray.heading]
+        if heading not in PORT_HEADINGS:
+            raise ValueError("a spread requires content on a Port heading")
+        port = PORT_HEADINGS.index(heading)
+        arrived[port] = checked_work(arrived[port] + ray.amount)
+        key = (port, ray.source_sign)
+        by_sign[key] = checked_work(by_sign.get(key, 0) + ray.amount)
+    phase = spread_phase(rays, definition)
+    entry = spread_remainder_entry(phase, definition.phase_modulus, table)
+    amounts, remainders = [0] * 6, [0] * 6
+    departing: dict[tuple[int, int], int] = {}
+    for (port, sign), content in sorted(by_sign.items()):
+        ports = relative_ports(port)
+        placed = 0
+        for weight, target in zip(table, ports, strict=True):
+            share = checked_work(content * weight) // total
+            amounts[target] = checked_work(amounts[target] + share)
+            departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + share)
+            placed = checked_work(placed + share)
+        rest = content - placed
+        target = ports[entry]
+        amounts[target] = checked_work(amounts[target] + rest)
+        remainders[target] = checked_work(remainders[target] + rest)
+        departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + rest)
+    bit = max(ray.detector for ray in rays)
+    departures = tuple(
+        Ray(
+            definition.headings.index(PORT_HEADINGS[port]),
+            (0, 0, 0),
+            bounded(amount),
+            phase=phase,
+            detector=bit,
+            source_sign=sign,
+        )
+        for (port, sign), amount in sorted(departing.items())
+        if amount
+    )
+    record = FieldSpread(
+        index,
+        bounded(sum(arrived)),
+        tuple(arrived),
+        tuple(amounts),
+        tuple(remainders),
+        phase,
+        spread_coherence(rays, definition),
+        tuple(sorted({ray.source_sign for ray in rays})),
+    )
+    return departures, record
+
+
+def spreading_field_names(
+    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> list[dict[str, object]]:
+    """The spreading families for the run record: each with its table, in field order."""
+    return [
+        {"field": fields[definition.field].name, "spread": list(definition.spread)}
+        for definition in definitions
+        if definition.spread
     ]
 
 
@@ -723,6 +1061,10 @@ class SpatialFieldDefinition:
     field_of: int | None = None
     release_numerator: int = 0
     release_denominator: int = 1
+    # Field spreading (field-spreading-v1): the split table, six weights in Port
+    # order relative to the arriving heading; empty for a family that does not
+    # spread, the behaviour of every existing world.
+    spread: tuple[int, ...] = ()
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
@@ -752,6 +1094,10 @@ class SpatialFieldDefinition:
             object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
             object.__setattr__(self, "sine_table", phase_sines(self.phase_steps))
         bounded(self.charge)
+        if self.spread:
+            if not self.rays:
+                raise ValueError("spread requires ray transport")
+            validate_spread_table(self.spread)
 
     @property
     def rays(self) -> bool:
@@ -1014,6 +1360,10 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
+    # The spreads of this cycle, one per spreading family whose content arrived,
+    # and the returned field quanta that ended here (field-spreading-v1).
+    spreads: tuple[FieldSpread, ...] = ()
+    returned: tuple[ReturnedField, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1106,6 +1456,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("a ray requires three integer face-clock lags")
         for value in ray.lag:
             bounded(value)
+        if ray.source_sign not in (-1, 0, 1):
+            raise ValueError("ray source_sign must be -1, 0 or 1")
         validate_ray_event_state(ray)
 
 
@@ -1169,6 +1521,10 @@ def advance_ray(
         steps = bounded(checked_work(ray.steps + 1))
     elif ray.steps > 0:
         steps = ray.steps - 1
+    elif not ray.event_ports:
+        # A returned field quantum has no event Node to rest at: it walks on with
+        # its count at 0 (field-spreading-v1, the proposal of Highlights 5.5).
+        steps = 0
     else:
         raise ValueError("a returning ray with no steps left is at its event Node")
     phase = ray.phase
@@ -1199,10 +1555,14 @@ def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventSh
     )
 
 
-def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
+def stamp_event(rays: Rays, headings: tuple[Heading, ...], detector: int = DETECTOR_NONE) -> Rays:
     """Make the given rays the events of one interaction: fresh outbound trajectories
-    with no steps walked, each carrying the mask and shares of that interaction. A
-    fresh event carries no Detector bit; a marked Node sets it on arrival."""
+    with no steps walked, each carrying the mask and shares of that interaction and
+    the Detector bit the event's outputs inherit (detector-bit-property-v1): none
+    for an emission, the bit the inputs hand down for a meeting (inherited_bit) and
+    the returned ray's bit for an inverse split."""
+    if detector not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1):
+        raise ValueError("an event stamps the Detector bit 0 (none), 1 (bit 0) or 2 (bit 1)")
     mask, shares = event_stamp(rays, headings)
     return tuple(
         replace(
@@ -1211,10 +1571,27 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
             outbound=1,
             event_ports=mask,
             event_shares=shares,
-            detector=DETECTOR_NONE,
+            detector=detector,
         )
         for ray in rays
     )
+
+
+def inherited_bit(bits: tuple[int, ...], rule: int = BIT_HIGHEST) -> int:
+    """The Detector bit the outputs of one meeting inherit from its inputs
+    (detector-bit-property-v1, Highlights 5.4): by default the highest bit among
+    the inputs in the order 1 over 0 over none, which is the order of the stored
+    values; BIT_NONE stamps no bit; a nonnegative rule is the index of the input
+    whose bit the outputs carry."""
+    if any(bit not in (DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1) for bit in bits):
+        raise ValueError("a meeting inherits Detector bits 0 (none), 1 (bit 0) or 2 (bit 1)")
+    if rule == BIT_HIGHEST:
+        return max(bits, default=DETECTOR_NONE)
+    if rule == BIT_NONE:
+        return DETECTOR_NONE
+    if type(rule) is not int or not 0 <= rule < len(bits):
+        raise ValueError("a meeting's bit rule names an input by its role index")
+    return bits[rule]
 
 
 def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
@@ -1302,16 +1679,35 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
     ports = split_ports(ray, definition, mode)
     amounts = split_amounts(ray.amount, len(ports))
     rays = tuple(
-        Ray(port_heading(port, definition), (0, 0, 0), amount, ray.phase, ray.advance)
+        Ray(
+            port_heading(port, definition),
+            (0, 0, 0),
+            amount,
+            ray.phase,
+            ray.advance,
+            source_sign=ray.source_sign,
+        )
         for port, amount in zip(ports, amounts, strict=True)
         if amount
     )
-    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays))
-    return tuple(replace(r, detector=ray.detector) for r in stamped), ports
+    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays), ray.detector)
+    return stamped, ports
 
 
 RayMergeKey = tuple[
-    int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int, tuple[int, int, int]
+    int,
+    tuple[int, int, int],
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    EventShares,
+    int,
+    tuple[int, int, int],
+    int,
 ]
 
 
@@ -1330,6 +1726,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.event_shares,
         ray.detector,
         ray.lag,
+        ray.source_sign,
     )
 
 
@@ -1338,7 +1735,8 @@ def merge_rays(rays: Rays) -> Rays:
 
     Rays of different events never merge, whatever their heading and phase: the
     event state is part of the identity, so each ray keeps the information of
-    its own event.
+    its own event. Field content of opposite source signs never merges either:
+    it stays two rays of the same family (field-spreading-v1).
     """
     combined: dict[RayMergeKey, int] = {}
     for ray in rays:
@@ -1359,6 +1757,7 @@ def merge_rays(rays: Rays) -> Rays:
             event_shares=shares,
             detector=detector,
             lag=lag,
+            source_sign=sign,
         )
         for (
             heading,
@@ -1373,6 +1772,7 @@ def merge_rays(rays: Rays) -> Rays:
             shares,
             detector,
             lag,
+            sign,
         ), amount in sorted(combined.items())
         if amount
     )
@@ -1481,13 +1881,14 @@ def phase_sines(phase_steps: int) -> tuple[int, ...]:
     return tuple(entries)
 
 
-def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
-    """The phase step nearest the direction of sum a e^(i phi): the best projection.
-
-    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
-    """
-    phase_steps, mask = definition.phase_steps, definition.phase_mask
-    cosines, sines = definition.cosine_table, definition.sine_table
+def _phase_of_sum(
+    terms: tuple[tuple[int, int], ...],
+    cosines: tuple[int, ...],
+    sines: tuple[int, ...],
+    phase_steps: int,
+) -> int:
+    """The phase step nearest the direction of sum a e^(i phi) over the given tables."""
+    mask = phase_mask(phase_steps)
     x = y = 0
     for amount, phase in terms:
         x = checked_work(x + amount * cosines[phase & mask])
@@ -1498,6 +1899,14 @@ def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDef
         if best_projection is None or projection > best_projection:
             best, best_projection = step, projection
     return best
+
+
+def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
+    """The phase step nearest the direction of sum a e^(i phi): the best projection.
+
+    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
+    """
+    return _phase_of_sum(terms, definition.cosine_table, definition.sine_table, definition.phase_steps)
 
 
 @lru_cache(maxsize=16)
@@ -1526,8 +1935,11 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     """Numerator and denominator of the coherent fraction of one Node's rays, in [0, 1]."""
     if not definition.coherent or not rays:
         return (1, 1)
-    mask = definition.phase_mask
-    cosines = definition.cosine_table
+    return _coherence(rays, definition.cosine_table, definition.phase_mask)
+
+
+def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, int]:
+    """The coherent fraction over the given cosine table and phase mask."""
     by_phase: dict[int, int] = {}
     magnitude = 0
     for ray in rays:
@@ -1586,6 +1998,16 @@ def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
         mark.pass_numerator * TICKET_MODULUS
     )
     return state, int(passes)
+
+
+def detector_bit_property_declared(initial: InitialState) -> bool:
+    """Whether the world declares the rule of detector-bit-property-v1 anywhere: a mark
+    that writes `on_bit_1` or `on_bit_0`, or a ray interaction that declares `bit`.
+    The runner records the identity when it does; a world that declares neither
+    runs the same rule with its defaults and its record is what it was."""
+    return any(mark.bit_keys for mark in initial.detectors) or any(
+        rule.bit_declared for rule in initial.ray_interactions
+    )
 
 
 def validate_detector_marks(initial: InitialState) -> None:
@@ -1712,7 +2134,13 @@ def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: i
     if amount <= 0:
         return ()
     skip = PORT_HEADINGS[port] if port >= 0 else None
-    return _released(bounded(amount), body.phase & definition.phase_mask, definition, skip)
+    return _released(
+        bounded(amount),
+        body.phase & definition.phase_mask,
+        definition,
+        skip,
+        charge_sign(body.charge),
+    )
 
 
 def body_absorb(
