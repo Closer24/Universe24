@@ -780,6 +780,23 @@ every such set; Highlights 3.20 is the text to follow.
    lagging side per phase modulus, the field ray returning reversed; the
    recoil's coupling to the group and the orbit are open; see
    [binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1).)
+   Feature 8c, bound groups that move, `bound-group-motion-v1` (done on
+   2026-09-17, issue #169; the gap the helium-ion run E4 found): a bound
+   group carries a momentum register and three accumulators, set at its
+   formation as the sum of amount x heading of its rays, and steps one Link
+   through the Port of the first axis whose accumulator has reached its
+   content, exactly as the external body of feature 7b steps, its rays
+   carried with their phases, its register and its clock and the binding
+   rule firing again at the neighbour on arrival; a binding rule's
+   `momentum_table` lets the field rays it names push the group by sign x
+   amount x heading, the field ray returned reversed as the recoil; the
+   ledger reads a group by its register and a group leaving an open
+   boundary is booked as escaped with its content and momentum; speed is
+   momentum over content, one Link every k intervals, Highlights 3.28 with
+   no kinematic rule; see [bound group
+   motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1).
+   Two groups at one Node and the absorption of a field ray into a group
+   are not in that slice.
    Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
    3.28): the lag counted in its own modulus, declared per family, in place
    of the phase steps of feature 8; the register is spent as one Link toward

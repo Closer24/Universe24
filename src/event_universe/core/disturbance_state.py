@@ -226,6 +226,10 @@ class InteractionDefinition:
     # Node that holds its bound group: every arrival there waits this many intervals.
     lags: tuple[LagTable, ...] = ()
     ray_delay: int = 0
+    # The momentum table of a binding rule (bound-group-motion-v1): one sign per
+    # spatial field, -1 attraction toward the source of an arriving field ray of
+    # that family, 1 repulsion, 0 for a family the table does not name.
+    momentum_table: tuple[int, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
+    BoundMotion,
     DetectorMark,
     ExternalBody,
     FieldInteractionGuard,
@@ -49,6 +50,7 @@ STATE_RECORDS = (
     DetectorMark,
     InverseSplit,
     ExternalBody,
+    BoundMotion,
 )
 
 

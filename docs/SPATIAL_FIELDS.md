@@ -1027,12 +1027,16 @@ again (a guarded bounce) forms no lasting group and publishes no tick. The group
 it, so it releases its field on all six headings once per interval
 (`release_field`, [released field](#field-as-the-rays-information-released-field-v1)),
 booked as a source like every release. The Node keeps nothing beyond its
-rays: `bound_group` reads the group from them (the outbound rays at their
+rays and, since `bound-group-motion-v1`, the group's momentum register:
+`bound_group` reads the group from the rays (the outbound rays at their
 event Node with no delay or wait pending, which under this admission are
 exactly the rays a rule holds there), the snapshot lists `bound_groups`
-(position, families, amounts, phases, `ray_delay`) for a Renderer to draw
-matter, and the runner records `ray_binding: "ray-binding-v1"` beside
-`released_field`. A rule assigning a delay above 1 holds its group and ticks
+(position, families, amounts, phases, `ray_delay`, `momentum`,
+`accumulators`) for a Renderer to draw matter, and the runner records
+`ray_binding: "ray-binding-v1"` beside `released_field`. A group whose
+register is nonzero moves by it ([bound group
+motion](#bound-group-motion-bound-group-motion-v1)); the head-on pair of
+this section, with register (0, 0, 0), stays. A rule assigning a delay above 1 holds its group and ticks
 once per that many intervals; a returned ray resident at its event Node joins
 no binding rule before its inverse split.
 
@@ -1116,6 +1120,133 @@ one output, six entries from 0 through `MAX_VALUE` and a unit from 1, the
 input's field unit-axial as every selected field is. No draw, no new
 arithmetic beyond the table's product and floor; a world without a binding
 rule, a `ray_delay` or a delay table runs byte-identically.
+
+### Bound group motion (`bound-group-motion-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.4, 3.14, 3.16, 3.19 and 3.28;
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature
+8c; issue #169): matter is a bound group, and a group that moves one Link
+every k intervals has speed 1/k with no kinematic rule in the engine. The
+motion is the external body's rule of section 3.19 applied to matter, the
+same integers and nothing new: a momentum register over the group's content,
+exact accumulators that step one Link when a whole content has accumulated
+on an axis. The gap it closes was found by the helium-ion run
+([E4](EXPERIMENTS.md#e4-the-helium-ion-one-electron-at-a-nucleus-of-charge-2)):
+under `ray-binding-v1` alone a group was held at its Node and could not
+move. `test_bound_group_motion.py`
+([expectations](TEST_EXPECTATIONS.md#bound-group-motion)) is the test.
+
+**The register.** A bound group carries a momentum register, three integers,
+and three per-axis accumulators (`BoundMotion`, held by the Node beside the
+rays as `bound_motion`, bounded metadata of the group like the external
+body's mark; None at a Node without a group). The register is set when the
+group forms, in the cycle whose binding meeting first holds the rays, as the
+sum of amount x heading of the group's rays as that meeting stamps them (a
+binding rule assigns no heading, so this is the momentum that arrived): a
+head-on pair of equal amounts has (0, 0, 0) and stays at rest. The
+accumulators start at (0, 0, 0). A meeting that re-holds the group with its
+rays turned (an outputs rule whose outputs carry `delay` 1, the excited
+electron of the nature examples) moves the register by exactly the momentum
+by headings it moved, so the register is the rays' headings plus every push
+the group has received.
+
+**The push.** A binding rule may declare `"momentum_table": {family: sign}`
+(family name to -1, attraction toward the source of an arriving field ray,
+or 1, repulsion; [disturbances](DISTURBANCES.md#json-schema-versions-1-and-2)),
+exactly the external body's table. The named families join the rule's
+layer. In every interval the binding rule fires, every resident outbound ray
+of a named family that no earlier declared rule met (a field ray that
+arrived that interval) is met by the group: the register changes by sign x
+amount x heading of the arriving ray, as `body_absorb` changes the body's
+momentum, and the field ray is returned reversed as the recoil, a new event
+ray on the negated heading with its amount and phase (the recoil of
+[released-field-v1](#field-as-the-rays-information-released-field-v1),
+Highlights 3.5). A family that also has a declared rule with the group's
+families is met by that rule first, in declared order; absorption of the
+field ray into the group is not declared in this slice (the group's content
+is its rays, and a field ray is information).
+
+**The step.** Each interval the group is bound, from the first tick after the
+meeting that formed it and before the cycle, every accumulator adds its
+momentum component, and the whole group departs one Link through the Port
+of the first axis (x before y before z) whose accumulator has reached the
+group's content, the sum of the amounts of the rays held at the start of the
+interval, the accumulator reduced by the content: `body_step` applied to the
+group, at most one Link per interval, never faster than a ray, a momentum
+above the content failing the cycle. In that cycle the binding rule fires as
+every interval (the group's tick: the event stamp, each phase advanced by
+its rest rate, `bound_tick` published), the group releases its field on the
+five headings other than the one it steps through (that heading is its own
+line ahead of it, which the group occupies: no self-field, Highlights 3.5,
+as the body releases), and the held rays leave on the packet of that Port as
+the group reads them, steps 0 and delay 0, with their event stamp and phases,
+the register and its accumulators (`SpatialPacket.group`) and the group's
+clock; the Node publishes `bound_group_step` (position left, Port, arrival
+tick, momentum, accumulators, content) after the `bound_tick`, and its
+output-clock delay `bound_delay` returns to 0, since the clock went with the
+group. The group is on the Link for the interval, and at the arrival tick
+the neighbour Node holds its rays resident with the register installed; in
+that Node's cycle the binding rule fires again on arrival, as at any
+meeting, so the group re-forms there and `bound_tick` continues at the new
+Node; whatever else arrives or is resident there is met by the declared
+rules in declared order (a collision decided by the tables, an unbinding
+rule with outputs first). The `ray_delay` of the rule is set on the new Node
+by the plan of that cycle, so rays arriving there with the group are not
+delayed in the arrival interval. Speed is therefore momentum over content,
+one Link every k = content / |p| intervals on an axis, Highlights 3.28 with
+no kinematic rule: a group of content 8 and momentum (4, 0, 0) moves one
+Link every two intervals, and one pushed to (-2, 0, 0) one every four.
+
+**Dissolution and collision.** When a group dissolves (an earlier outputs
+rule unbinds it, or the rule does not fire and the rays leave along their
+lines), the Node books the difference between the held rays' momentum by
+headings and the register as the meeting's source of the momentum field
+(zero unless the group was pushed), so that the outputs' momentum by
+headings is exact against the register that left the ledger, as the
+momentum a table split moves is booked
+([meetings](#meetings-with-outputs-ray-meeting-conversion-v1)); the register
+is dropped. A Node holds one register: a group arriving at a Node that
+already holds a group, or two groups arriving in one interval, fails closed
+(two bound groups at one Node are not admitted in this slice, and a Renderer
+draws a moving group as one sphere that moves).
+
+**The audit.** The world ledger reads a bound group's momentum by its
+register, not by its held rays' headings: at a Node, or on a Link while it
+steps, the group's rays add nothing by heading and the register is added
+once under the momentum field the group's families bind (a group whose
+families bind two momentum fields fails closed at formation; one whose
+families bind none reads nothing, as before). The push is booked as an
+explicitly accounted source of that momentum field, and the recoil's
+reversal by headings as any meeting's momentum change, so
+`conserved_at_every_completed_tick` stays true at every tick; a group that
+leaves an open boundary is booked as escaped with its content per family and
+its register (`spatial_escaped` carries `bound_group`: families, amounts,
+content, momentum). The local conservation audit reads the register the same
+way (`InventoryNode.group`, `InventoryPacket.group`,
+[local conservation](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1));
+the push, like the momentum a split moves, is booked to the world ledger
+only. The snapshot's `bound_groups` entries carry `momentum` and
+`accumulators`; the runner records `bound_group_motion:
+"bound-group-motion-v1"` when any group stepped or any rule declares a
+momentum table. A world where no group ever has a nonzero register runs
+byte-identically in its events and run record (the head-on pair of
+`ray-binding-v1`); its `state.json` gains the two zero entries per group.
+
+```json
+{"name": "bind", "participants": [{"type": "n"}, {"type": "n"}],
+ "assignments": [
+   {"participant": 0, "field": "delay", "expression": 1},
+   {"participant": 1, "field": "delay", "expression": 1}],
+ "momentum_table": {"G": -1},
+ "invariants": [{"name": "energy", "expression": {"op": "add", "args": [
+   {"field": "amount", "participant": 0}, {"field": "amount", "participant": 1}]}}]}
+```
+
+Admission: `momentum_table` on a rule without outputs that assigns `delay`
+only, naming ray families that are not among its participants, signs -1 or
+1; the named families are admitted as every selected ray field is
+(unit-axial, unpaced, no decay). No draw, no new arithmetic beyond the
+body's; nothing else changes.
 
 ### Funded emission and absorption
 

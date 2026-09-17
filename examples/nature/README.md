@@ -342,6 +342,12 @@ an orbit either: it shifts the line one Link with the heading unchanged, and
 on the axis the next Node lays the next lag, a runaway into the nucleus once
 the lag per crossing reaches N and nothing at all below it. A bound group
 cannot be the electron at 1/k: it is held at its Node and does not move.
+(Closed later on 2026-09-17 by feature 8c, `bound-group-motion-v1`: a bound
+group carries a momentum register and steps one Link when a whole content
+has accumulated on an axis, and the field rays a binding rule's
+`momentum_table` names push it; see [bound group
+motion](../../docs/SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1).
+This run was made before it and is not re-made here.)
 
 **The missing rules, smallest generic additions.** (i) The field off the
 axes: a ray of the nucleus's light at a Node re-releasing its information on

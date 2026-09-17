@@ -29,6 +29,7 @@ Feature tests of issue #169 join this table as they land.
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
+| `test_bound_group_motion.py` | 5 | 0.90 | Issue #169 feature 8c: a bound group carries a momentum register and steps one Link when a whole content has accumulated on an axis, pushed by the field rays its binding rule's table names (`bound-group-motion-v1`) |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
@@ -1582,6 +1583,115 @@ parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
   as its owner. The bending is alpha = 16 / N (Links of shift per Node of
   passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
   1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.
+
+## Bound group motion
+
+`test_bound_group_motion.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
+([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)).
+The family `n` has rest rate 1 on a 3-bit phase (8 steps), 8 ray slots; `G`,
+where declared, is its field, `field_of: "n"` with `release: [1, 4]`, rate 0,
+16 ray slots; `f` is a plain family of rate 0 (the field ray of (c) with no
+release around it). A vector field `momentum` (three signed components) is
+bound to every ray family through `recoil_field` on every emission, so the
+world ledger carries a momentum line and every lamp keeps the recoil of what
+it emits. Every lamp holds its amount and emits it once, funded and directed,
+at phase 0, in the cycle of tick 0. The binding rule `bind` is `n x n`
+without outputs, assigning `delay` 1 to both participants, invariant energy,
+with `"momentum_table": {family: -1}` where a case says so. A tick t is one
+`step()`: the cycle of interval t - 1 and the delivery of tick t; a record
+carries the tick its cycle started at. The test is parametrized over
+`uniform`, `push`, `escape`, `rest` and `rejected`. Pinned before the first
+run:
+
+- (a) `uniform`: lamps at (9,10,10) and (11,10,10) emit `n` 6 along +X and
+  `n` 2 along -X; the rays meet at the center (10,10,10) after tick 1
+  (headings 0 and 1, phase 1, steps 1). The cycle of tick 1 forms the group:
+  register (4, 0, 0) (6 x (1,0,0) + 2 x (-1,0,0)), accumulators (0, 0, 0),
+  content 8, one event on both Ports (mask 3, shares (6, 2, 0, 0, 0, 0)).
+  From the cycle of tick 2 the accumulator x adds 4 per interval: 4 after
+  the cycle of tick 2, 8 in the cycle of tick 3, a step through Port 0 with
+  the accumulator back to 0, and so on: the group steps in the cycles of
+  ticks 3, 5, 7, 9 and 11 (`bound_group_step` at those ticks, Port 0,
+  arrival ticks 4, 6, 8, 10, 12, momentum (4, 0, 0), accumulators (0, 0, 0),
+  content 8), one Link every two intervals, speed 1/2. After tick t (2 to
+  12) the group is at (10 + floor((t - 2) / 2), 10, 10) with accumulators
+  (4 x ((t - 2) mod 2), 0, 0), its rays at steps 0, delay 0, phases t mod 8
+  (advanced once per interval by the rest rate on the move as at rest),
+  mask 3 and shares (6, 2, 0, 0, 0, 0); the snapshot's `bound_groups` is
+  that one entry with `momentum` (4, 0, 0). `bound_tick` is published at
+  every tick 2 to 11, at the Node the group was at (ticks 2 and 3 at
+  x = 10, 4 and 5 at x = 11, ..., 10 and 11 at x = 14). The held 6-ray
+  releases G of amount floor(6 / 4) = 1 per heading (the 2-ray releases
+  0), six headings in a resting interval and five in a stepping one (not
+  +X, its line ahead): G sourced after tick t is 6 (t - 1) - floor((t - 2)
+  / 2) for t from 2 (6, 12, 17, 23, 28, 34, 39, 45, 50, 56, 61), the six
+  rays of the cycle of tick 1 escaping at tick 12 (current 55, escaped 6).
+  `n` stays 8. The momentum line reads (0, 0, 0) initial, sourced and
+  current at every tick, the lamps holding (-6, 0, 0) and (2, 0, 0) against
+  the register (4, 0, 0); every ledger balances, and the runner's
+  `conserved_at_every_completed_tick` is true with `bound_group_motion:
+  "bound-group-motion-v1"`;
+- (b) `push`: lamps at (9,10,10) and (11,10,10) emit `n` 4 along +X and
+  along -X (a head-on pair at rest, register (0, 0, 0), content 8), and a
+  lamp at (5,10,10) emits a `G` ray of amount 2 along +X, the field ray from
+  the -X side; `bind` declares `momentum_table` `{"G": -1}`. The G ray is
+  at (5 + t, 10, 10) after tick t and resident at the center after tick 5
+  (steps 5, mask 1, shares (2, 0, 0, 0, 0, 0)). In the cycle of tick 5 the
+  rule fires and the table meets it: the register becomes (-2, 0, 0) (-1 x
+  2 x (1, 0, 0), toward the source) with accumulators (0, 0, 0), and the G
+  ray returns reversed as a new event: heading 1, amount 2, phase 0, mask
+  2, shares (0, 2, 0, 0, 0, 0), at (15 - t, 10, 10) after tick t from 6
+  with steps t - 5. The accumulator x then adds -2 per interval and reaches
+  -8 in the cycles of ticks 9 and 13: the group steps through Port 1 at
+  those ticks (`bound_group_step`, momentum (-2, 0, 0), accumulators
+  (0, 0, 0), content 8, arrival ticks 10 and 14), one Link every four
+  intervals toward the source, speed 1/4. After tick t (6 to 14) the group
+  is at (10 - floor((t - 6) / 4), 10, 10) with accumulators (-2 x ((t - 6)
+  mod 4), 0, 0). The momentum line: sourced (-6, 0, 0) after tick 6 (the
+  reversal of the G ray, -4, and the push, -2), then +2 at each stepping
+  cycle (the release skips -X, two rays of amount 1 merged): (-4, 0, 0)
+  after tick 10, (-2, 0, 0) after tick 14; the current line equals it at
+  every tick (the lamps (-4, 0, 0), (4, 0, 0), (-2, 0, 0), the register and
+  the rays), every ledger balanced. G: initial 2 (the lamp's stock), 12
+  released per cycle from the cycle of tick 1 (2 per heading), 10 in a
+  stepping cycle, the six rays of a resting cycle at the center escaping
+  together from tick 12 (12 per tick): current after tick t is 2 + 12 (t -
+  1) - 2 [t >= 10] - 2 [t >= 14] - 12 max(0, t - 11), that is 118 after
+  tick 14, escaped momentum (0, 0, 0) through tick 14;
+- (c) `escape`: lamps at (17,10,10) and (19,10,10) emit `n` 4 along +X and
+  along -X, meeting at (18,10,10) after tick 1, and a lamp at (20,10,10)
+  emits an `f` ray of amount 3 along -X; no G; `bind` declares
+  `momentum_table` `{"f": -1}`. The f ray is resident at the group's Node
+  after tick 2, and the cycle of tick 2 pushes the group to (3, 0, 0)
+  (toward the +X side it came from) and returns the f ray reversed
+  (heading 0, amount 3, mask 1, shares (3, 0, 0, 0, 0, 0)): at (19,10,10)
+  after tick 3, (20,10,10) after tick 4, escaped at tick 5. The
+  accumulator x adds 3 per interval over content 8 from the cycle of tick
+  3 (the step decision of the push cycle reads the register before the
+  push): 3, 6, 9 -> step (cycle of tick 5, accumulator 1), 4, 7, 10 -> step
+  (cycle of tick 8, accumulator 2), 5, 8 -> step (cycle of tick 10,
+  accumulator 0), that is 0, 0, 3, 6, 1, 4, 7, 2, 5 after ticks 2 to 10; the
+  group is at (18,10,10) through tick 5, (19,10,10) through tick 8,
+  (20,10,10) through tick 10, and the step of the cycle of tick 10 leaves
+  the world: `spatial_escaped` at tick 11 from (20,10,10), Port 0, escaped
+  `n` (8,) and `momentum` (3, 0, 0), `bound_group` families `["n", "n"]`,
+  amounts `[4, 4]`, content 8, momentum (3, 0, 0); `bound_groups` empty
+  after tick 11. Escaped totals after tick 11: `n` 8, `f` 3, momentum
+  (6, 0, 0) (the f ray's 3 and the group's 3); sourced momentum (9, 0, 0)
+  from tick 3 (the reversal 6 and the push 3); current (3, 0, 0) after tick
+  11, the lamps' recoil; every ledger balanced, the runner's flag true;
+- (d) `rest`: the head-on pair of `ray-binding-v1` (8 and 8 at (9,10,10)
+  and (11,10,10), no table) for 6 ticks: register (0, 0, 0) and
+  accumulators (0, 0, 0) at every tick, the group at the center, no
+  `bound_group_step` record, `bound_tick` at ticks 2 to 5 with exactly the
+  keys of `ray-binding-v1`, the runner writing no `bound_group_motion`
+  key: byte for byte the events and run record of the feature 8 case, the
+  snapshot's entries carrying the two zero vectors;
+- (e) `rejected`: a `momentum_table` on a rule with outputs, one naming a
+  participant family, one naming an unknown family, a sign of 2 and a table
+  on a rule that assigns no delay are each rejected at initialization.
 
 ## Catalog of nature
 

@@ -48,6 +48,21 @@ ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
 | 3.19, the external body's sinks and momentum | The `absorbed` line is what the bodies' sinks took (`external_body_totals`); the bodies' count, momentum, charge and sinks are their own lines beside the identity |
 | 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
 
+## Bound groups that move - 2026-09-17 (`bound-group-motion-v1`)
+
+Issue #169, feature 8c, implements the motion of matter of sections 3.4 and
+3.28 by the external body's rule of section 3.19
+([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)),
+the gap the helium-ion run (E4) found:
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.4, matter is a bound group (and moves: the electron ray "whose trajectory is changed at every step by the field rays") | A bound group carries a momentum register and three accumulators, set at its formation as the sum of amount x heading of its rays; the group steps one Link through the Port of the first axis whose accumulator has reached its content, its rays carried with their phases, its register and its clock, the binding rule firing again at the neighbour on arrival (`bound_group_step`, `bound_groups` with `momentum` and `accumulators`) |
+| 3.28, a group that moves one Link every k intervals has speed 1/k; nothing slows a clock because of motion, there is no kinematic rule | Speed is momentum over content: one Link every k = content / \|p\| intervals on an axis, exactly the external body's accumulator, with no other rule; the group's phases advance by the rest rate on the move as at rest, and the release skips the heading it is carried through (no self-field, 3.5) |
+| 3.19, the external body's motion by fields only, its velocity its momentum over its amount as an exact accumulator | The same integers (`motion_step` shared by `body_step` and `group_step`); a binding rule's `momentum_table` is the body's table applied to the group: sign x amount x heading of an arriving field ray, the field ray returned reversed as the recoil (3.5, 3.14) |
+| 3.16, momentum is directional, conserved component by component; 3.15, exact accounting | The world ledger and the local audit read a bound group by its register, the push and the recoil's reversal are booked as the meeting's sources of the momentum field, a group leaving an open boundary is booked as escaped with its content and register; `conserved_at_every_completed_tick` stays true |
+| Hypothesis 15, the slower ticking of a moving group must emerge, not be inserted | Nothing here slows a clock: a moving group ticks once per interval as at rest; A14 remains the experiment |
+
 ## Binding and gravity by delay - 2026-09-17 (`ray-binding-v1`)
 
 Issue #169, feature 8, implements the bound group of section 3.4 and gravity
@@ -56,7 +71,7 @@ as bending by delay of section 3.28
 
 | Highlights | Implementation |
 | --- | --- |
-| 3.4, matter is a bound group; binding is the interaction whose result is zero events, the rays stay at the Node and interact again every interval | A `ray_interactions` rule without outputs assigning `delay` 1 holds its participants; the rule fires again every interval, the group's tick, stamped as one event and published as `bound_tick`; `bound_group` reads the group from the Node's rays and the snapshot lists `bound_groups` |
+| 3.4, matter is a bound group; binding is the interaction whose result is zero events, the rays stay at the Node and interact again every interval | A `ray_interactions` rule without outputs assigning `delay` 1 holds its participants; the rule fires again every interval, the group's tick, stamped as one event and published as `bound_tick`; `bound_group` reads the group from the Node's rays and the snapshot lists `bound_groups`; since feature 8c a group with a nonzero register moves (above) |
 | 3.4, mass is the retained energy of a bound group; the group's phase advance is its clock | The held rays keep their amounts; each phase advances once per interval by its family's rest rate; the group's mass in phase units is the sum of the rates |
 | 3.4, the binding may be a very large output-clock delay; a large mass makes the Node very slow | `ray_delay` on the binding rule: every arrival at the group's Node waits the declared intervals, one Node-wide wait approximating the six per-face clocks of 3.28 |
 | 3.4, unbound the same way anything else happens: a ray arrives and the declared coupling produces events that leave | An earlier declared outputs rule naming a bound participant and an arriving ray fires; its outputs leave as new event rays; the binding rule no longer fires |

@@ -15,6 +15,7 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
+    BOUND_GROUP_MOTION,
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
@@ -132,11 +133,16 @@ def _execute_run(
     # The world ledger per completed tick (ray-event-audit-v1); the conservation
     # flag is true when every line of every completed tick balances.
     audit: list[dict[str, object]] = []
+    # Whether any bound group stepped (bound-group-motion-v1).
+    moved = False
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
+            nonlocal moved
             stream.write(json.dumps(event) + "\n")
+            if event.get("event") == "bound_group_step":
+                moved = True
             if probe is not None:
                 probe.receive(event)
 
@@ -262,6 +268,9 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
+    if moved or any(any(rule.momentum_table) for rule in initial.ray_interactions):
+        # A world where no group ever has a nonzero register records nothing here.
+        metadata["bound_group_motion"] = BOUND_GROUP_MOTION
     if initial.spatial_fields:
         metadata.update(
             spatial_fields=[initial.fields[item.field].name for item in initial.spatial_fields],
