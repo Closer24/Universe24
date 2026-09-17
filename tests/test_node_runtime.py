@@ -37,7 +37,7 @@ def local_fixture(*, policy_type=RecordOperations, budget=10000, travel=1, mode=
         definitions,
         law,
         policy_type(initial.fields, initial.disturbances),
-        NodeEvents(None, None),
+        NodeEvents(None),
         NodeAccounting(WorkLedger(), [[0]]),
         frozenset(),
         (0,) * 6,

@@ -154,10 +154,11 @@ are not compliant active-engine implementations, even if their GIFs look useful.
 Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
 2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2), the
 source envelopes on the same day under Highlights section 3.5 (bucket B.3),
-and the bond registry, claim-gather and the lottery capture the same day under
+the causal event ledger under Highlights section 3.20 (bucket B.4) and the
+bond registry, claim-gather and the lottery capture the same day under
 Highlights sections 3.19, 3.20, 5.1 and 5.4 (bucket B.5). No path in the
-package answers at a distance. The event-ledger modules that stay until
-buckets B.4 and B.6 are scope limits to report, not evidence that every
+package answers at a distance. The record operations that stay until bucket
+B.6 are scope limits to report, not evidence that every
 repository path already satisfies the active local integer contract.
 
 ## Generated output ownership
@@ -455,18 +456,17 @@ coupling is a toy experiment of the lab alone; the repository's shared quantum
 resource was deleted on 2026-09-17. The active source-of-truth boundaries above
 remain unchanged.
 
-## Causal event ledger, kept until bucket B.4
+## Causal event ledger, deleted on 2026-09-17
 
-`core/event_space.py` and `core/event_links.py` own the immutable event
-identities, dependency edges, fixed `EventCursor` and `EventReferences`
-handles and write-once resolution slots of the causal ledger;
-`core/event_resolution.py` keeps the resolver protocols. Since the
-`event_program` member and the integration layer were deleted on 2026-09-17,
-the public `Simulation` assembles no ledger and no resolver: `DisturbanceEngine`
-still accepts `event_space=` for direct callers and the ledger's own tests,
-`SpatialNodeState` keeps its three optional host IDs and `SpatialPacket` its
-final-departure cause. The ledger stays until issue #164 bucket B.4
-(Highlights 3.20: there is no register).
+`core/event_space.py`, `core/event_links.py` and `tests/test_event_links.py`
+were deleted on 2026-09-17 under issue #164 bucket B.4: all the information is
+on the rays, the origin Node keeps nothing and there is no register
+([Highlights 3.20](HIGHLIGHTS.md), the "Where is state stored" row of the
+[ray/event model](RAY_EVENT_MODEL.md)). No engine, Node, packet, plan, pending
+cycle or view carries an event identity, cursor, reference bank or cause;
+`NodeEvents` only builds and publishes observer messages; the snapshot has no
+`event_support`. `core/event_resolution.py` keeps the `Planner` protocol used
+by the local planners and the resolver protocols, which no code implements.
 
 
 ### Local carrier scheduling and prepared ray laws

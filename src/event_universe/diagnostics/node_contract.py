@@ -13,7 +13,6 @@ from event_universe.core.disturbance_state import (
     Packet,
     PendingCycle,
 )
-from event_universe.core.event_links import EventCursor, EventReferences
 from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
@@ -27,8 +26,6 @@ from event_universe.core.spatial_state import (
 )
 
 STATE_RECORDS = (
-    EventCursor,
-    EventReferences,
     DisturbanceNode,
     SpatialNode,
     PortBank,

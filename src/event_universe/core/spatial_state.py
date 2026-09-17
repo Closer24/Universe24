@@ -434,10 +434,6 @@ class SpatialNodeState:
     load: int = 0
     # The same stock split by the six travel channels it was delivered through.
     load_channels: tuple[int, ...] = (0, 0, 0, 0, 0, 0)
-    # Fixed host provenance references; never inputs to a physical field law.
-    cause_id: int | None = None
-    sample_cause_id: int | None = None
-    cost_cause_id: int | None = None
     # Later arrivals have destination ownership but cannot enter a frozen cycle.
     shared_pending: int = 0
     # Stationary stock per spatial field, deposited by localizing decay. It is
@@ -480,7 +476,6 @@ class SpatialPacket:
     origin: Address3
     port: int
     fields: SpatialBundle
-    cause_id: int | None = None
     rays: tuple[Rays, ...] = ()
     phases: SpatialBundle = ()
 

@@ -5,7 +5,6 @@ from dataclasses import dataclass
 
 from .disturbance_state import Address3, InitialState, Values, bounded
 from .event_resolution import EventResolver, Planner
-from .event_space import CausalEventSpace
 from .integer import ceil_div, checked_work
 from .node_conservation import NodeConservationGuard
 from .record_policy import RecordPolicy
@@ -27,45 +26,18 @@ def cycle_timing(cost: int, budget: int, link_ticks: int) -> tuple[int, int]:
 
 
 class NodeEvents:
-    """Append causal identities and publish diagnostics; never offer graph reads."""
+    """Publish local diagnostics to the host observer; never offer a read interface.
 
-    def __init__(self, space: CausalEventSpace | None, observer: EventSink | None) -> None:
-        self.__space = space
+    A Node keeps no register of its events: the message is host diagnostics, not
+    NodeState, and nothing here returns an identity a physical rule could read.
+    """
+
+    def __init__(self, observer: EventSink | None) -> None:
         self.__observer = observer
 
-    @property
-    def enabled(self) -> bool:
-        return self.__space is not None
-
-    def require_room(self, count: int) -> None:
-        if self.__space is not None:
-            self.__space.require_room(count)
-
-    def record(
-        self,
-        event: str,
-        tick: int,
-        position: Address3,
-        cause: int | None,
-        *,
-        causes: tuple[int, ...] = (),
-        event_cost: int = 0,
-        owner: str = "disturbance",
-        **data: object,
-    ) -> tuple[int | None, dict[str, object]]:
-        identity = None
-        if self.__space is not None:
-            entry = self.__space.append(
-                tick=tick,
-                addresses=(position,),
-                owner=owner,
-                kind=event,
-                physical_parents=causes if cause is None else (*causes, cause),
-                model_cost=event_cost,
-            )
-            identity = entry.id
-            data = {**data, "event_id": identity, "parents": entry.parents}
-        return identity, {"event": event, "tick": tick, "position": position, **data}
+    @staticmethod
+    def message(event: str, tick: int, position: Address3, **data: object) -> dict[str, object]:
+        return {"event": event, "tick": tick, "position": position, **data}
 
     def publish(self, message: dict[str, object]) -> None:
         if self.__observer is not None:
