@@ -288,6 +288,21 @@ dilation and gravity are therefore one bookkeeping of integer delays read
 from different tables, and the tables, not the engine, are what the
 confrontation runs test.
 
+Addition (decided by the orchestrator on the model owner's delegation,
+2026-09-17; Highlights 3.28, "the phase circle stays small"): a family's
+phase is read only at a meeting and only as a difference, so its width
+`phase_bits` is the family's choice of the resolution its couplings need,
+eight steps resolving the Born table and a wider circle allowed but never
+required. The delay a field ray lays on the ray it meets is carried in a
+lag register with its own declared modulus, spent as one Link toward the
+lagging side when it reaches that modulus, exactly as a heading is carried
+with a resolution of one part in 2^30 through six Ports; that modulus, not
+the phase circle, is the N of hypothesis 14 of
+[docs/HYPOTHESES.md](docs/HYPOTHESES.md), and it may be of any width
+because it enters no phase sum. The weakness of gravity therefore lives in
+a register, not in the phase, and nothing on the road to the confrontation
+runs needs a wide phase.
+
 ## 5. Physical calculations use integers only
 
 Every value affecting simulation evolution is an integer: position, time, field,

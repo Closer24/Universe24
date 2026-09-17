@@ -519,6 +519,19 @@ content and does not scale with N, while the mass does; a table acting on
 the rate would give G_eff x N^2 growing with N. Experiment A6 (the five b,
 the exponent, the linearity in M, feature 7b) is still to run.
 
+**Reading (2026-09-17, Highlights 3.28).** N is the lag modulus: the finest
+lag a field can impress on the ray it meets, one part in N of a phase step,
+carried in the ray's lag register with its own declared modulus (feature 8b
+of `docs/RAY_EVENT_MODEL.md`, after feature 10), and not the phase circle,
+which stays as small as the family's couplings need. The formula
+G = ħc/(N m₀)² is unchanged, and so is the measurement above, whose delay is
+counted in content and not in the rate; until feature 8b the code counts the
+lag in phase steps, so those runs set the two moduli equal, and after it the
+four N are declared on the lag alone. The reading of N as the ceiling of the
+rest rate is withdrawn: mass is content, an amount (Highlights 3.19), and
+the phase reads it only modulo the circle, so no rest rate needs a wide
+phase to be represented.
+
 ## 15. Time dilation from transit: a moving bound group's clock runs at 1 − v
 
 Recorded 2026-09-17 from the model owner's statement of that day ("speed is a clock slowing, otherwise everything would move at c"); open.
