@@ -354,8 +354,10 @@ the event's mask and shares as a fresh outbound trajectory with `steps 0`:
   through one Port is one event on that Port;
 - a ray interaction (`ray_interactions`) is one event per group that fires: its
   outputs, whether their heading changed or not, carry the mask and shares of
-  all the group's outputs. A group that does not fire leaves its rays, and
-  their event state, untouched.
+  all the group's outputs; a rule with declared `outputs` stamps the new rays
+  that replace its participants the same way
+  ([meetings with outputs](#meetings-with-outputs-ray-meeting-conversion-v1)).
+  A group that does not fire leaves its rays, and their event state, untouched.
 
 Merge identity: `merge_rays` combines rays that agree in heading, lattice
 accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
@@ -444,6 +446,97 @@ single layer runs byte-identically to the previous rule, and the existing
 suite is its regression. No new draw, no new arithmetic and no new
 initialization key; the Detector (issue #169, feature 2) is untouched.
 
+### Meetings with outputs (`ray-meeting-conversion-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.15, 3.17, 3.26 and 5.1; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), step 6): at a meeting the
+declared coupling decides a deterministic interaction with exact invariants
+and at most six events out. A `ray_interactions` rule with `outputs`
+replaces its participants, two to six rays of one layer, by one to six new
+rays at the meeting Node, one per output. Each output is a new event ray:
+`steps 0`, `outbound 1`, `event_ports` the mask of the Ports the outputs
+leave through, `event_shares` the amount per Port, `detector 0`, so outputs
+on distinct Ports are distinct events in the record and two outputs on one
+Port are one share; nothing is left at the Node. A rule with outputs declares
+no `assignments`: it assigns through its outputs.
+
+| Key | Contract |
+| --- | --- |
+| `field` | The output's family, a ray field; the layers derivation puts a rule's output fields in its layer |
+| `amount` | An integer of at least 1; `{"of": i}`, input i's amount; `{"of": "sum"}`, the sum over the inputs; a split by a table (below); `{"rest_of": j}`, the rest of the content that output j's table splits |
+| `heading` | A Port index 0 to 5 (the unit-axial heading in Port order, which the field's heading table must contain), `"same"` (the source input's heading) or `"reversed"` (its negation) |
+| `phase` | Optional, default `"same"`, the source input's phase; an integer offset k below the phase modulus, the source input's phase plus k; `{"of": i, "offset": k}`, input i's phase plus k; read modulo the field's phase steps |
+| `delay` | Optional nonnegative interaction delay, default 0 |
+| `input` | Optional source input index, default 0: the input whose heading and phase the output reads by default; every output carries its source input's advance |
+
+The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
+`{"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}`) summed
+over the inputs and over the outputs and compared exactly, as the
+[N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) of records
+does; the total amount and the stock of every family (the sum of the amounts
+of one field over the inputs equals the sum over its outputs) are checked
+without a declaration, so no family total changes and the spatial
+accounting's `rule_delta` is zero. Every output is a ray of its `field` with
+that family's charge per quantum, and the charge readout of feature 9
+(`charge x amount` of one ray, summed over the inputs and over the outputs) is
+appended to every meeting's invariants as the `charge` invariant, checked like
+the declared ones. Momentum is a declared invariant, as in the
+[shared coupling contract](SHARED_RAY_COUPLING.md): the adapter hardcodes no
+physical formula. A false guard leaves the group untouched; a failed check
+rejects the interval's proposal before any owner changes. The arithmetic is
+`convert_values` (`fields/disturbances.py`), one pure function over bounded
+integers used unchanged by the record conversion and by the meeting: the
+guard, the outputs built from the frozen inputs, the table splits, the
+conserved sums and the invariant sums, returning the outputs and the
+remainder.
+
+**Split by a table (the Born decision).** An output amount may be
+`{"table": [n0, n1, ...], "of": "sum", "index": "phase_difference"}` (`of`
+may also name one input, and `"between": [i, j]` the two inputs, default 0
+and 1): the content is shared between this output and the one that declares
+`{"rest_of": <this output>}` in the ratio `table[d] : (m - table[d])`, `m`
+the table length, which must equal the phase modulus of the rule's fields,
+and `d = (phase_j - phase_i) mod m` the phase difference of the two inputs;
+every entry is an integer from 0 to m. The reference table for 8 phase steps
+is `[8, 7, 4, 1, 0, 1, 4, 7]`, cos^2(d/2) in eighths, rounded. The engine
+only splits by the table; the physics is the declared table. The table
+output takes the whole quanta of its share, `floor(content x table[d] / m)`;
+the rest output takes the rest, so the quantum that the two floors leave,
+the remainder, has an explicit bounded owner, the rest output, and never a
+Node register (Highlights 3.17 and 3.20); `convert_values` reports it and
+charges one `split` per table. An output of amount zero is no ray and no
+Port in the mask: at d = 0 the whole content leaves through the table
+output's Port, at half a turn through the rest output's, at a quarter turn
+half through each.
+
+**Momentum of a split.** A split between two Ports moves the rays' momentum
+(amount x heading) and no ray owns the difference: the recoil belongs to the
+field ray of feature 7, which does not exist yet. Until then the spatial law
+books the momentum change of a meeting as an explicitly accounted source of
+the ray field's momentum field (Highlights 3.15), so `source_totals` names
+it and `conserved_at_every_completed_tick` stays exact. The local
+energy/momentum audit (`diagnostics/local_conservation.py`) has no source
+term, so a world that declares it must keep momentum at every meeting, as a
+declared momentum invariant does.
+
+Bounds and admission: two to six participants, one to six outputs, one table
+split per pair of outputs, the admission of every ray interaction (schema 1,
+`link_ticks` 1, positive unit-axial unpaced fields, no decay, no absorption
+on the selected fields), and at most `ray_slots` rays per field after the
+meeting; more is an explicit failure. The outputs are new rays with
+accumulators (0, 0, 0) and pace wait 0. No draw anywhere; the Detector
+(feature 2) is not touched; a family with no rule crosses
+([layers](#layers-ray-layers-v1)); existing worlds with single-output rules
+run byte-identically, and the runner records
+`ray_meeting: "ray-meeting-conversion-v1"` beside `ray_layers`.
+
+```json
+{"name": "split", "participants": [{"type": "a"}, {"type": "a"}],
+ "outputs": [
+   {"field": "a", "amount": {"table": [8, 7, 4, 1, 0, 1, 4, 7], "of": "sum", "index": "phase_difference"}, "heading": 2},
+   {"field": "a", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
 ### Wave-ray families (`wave-ray-family-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.3 and 5.1; [ray-event

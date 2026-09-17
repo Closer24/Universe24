@@ -378,6 +378,46 @@ directories removed the same day; their dated results stay in the
 [documentation index](README.md) routes to the register and the
 [hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
 runtime behavior changes.
+## Meeting of rays with N-to-M outputs added on 2026-09-17 (`ray-meeting-conversion-v1`)
+
+Issue #169, feature 6, under [Highlights](HIGHLIGHTS.md) 3.15, 3.17, 3.26
+and 5.1 and step 6 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a rule of
+`ray_interactions` with declared `outputs` replaces its participants by one
+to six new event rays at the meeting Node
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+
+- `convert_values` (`fields/disturbances.py`) is the arithmetic of the record
+  conversion's `_convert_group` factored into one pure function over bounded
+  integers (guard, outputs from the frozen inputs, table splits, conserved
+  sums, invariant sums, returning the outputs and the remainder), used
+  unchanged by the record path and by the meeting of rays.
+- `InteractionDefinition.outputs` names spatial fields for a ray rule and
+  `InteractionDefinition.splits` holds its `TableSplit` entries
+  (`core/disturbance_state.py`); `_ray_meeting` (`initialization.py`)
+  compiles each output's `field`, `amount`, `heading`, `phase`, `delay` and
+  `input` to assignments and splits; `apply_ray_interactions`
+  (`fields/ray_interactions.py`) removes the participants, stamps the outputs
+  as the events of the meeting (`steps 0`, the mask and shares of the
+  outputs' Ports) and checks every family's stock; `ray_layers` puts a rule's
+  output fields in its layer; `validate_ray_participants` admits outputs and
+  still rejects `output_types` and `k`.
+- The momentum a split by a table moves between two Ports is booked by the
+  spatial law as an explicitly accounted source of the momentum field until
+  the field ray of feature 7 owns it as recoil; `source_totals` shows it.
+- With `wave-ray-family-v1` every output carries its field's `family` and
+  `charge`, and a meeting's appended `charge` invariant is the per-ray readout
+  `charge x amount` summed over its inputs and over its outputs.
+- The runner records `ray_meeting: "ray-meeting-conversion-v1"` beside
+  `ray_layers`.
+- The ray path no longer needs `fields/record_operations.py` and
+  `core/record_policy.py`: a meeting of rays converts without a resident
+  record. Both stay for the record path until step 6 of issue #164 deletes
+  them.
+- Existing worlds with single-output rules run byte-identically. The
+  native-ray coupling tests that asserted `outputs` are rejected now assert
+  that the carrier output form (`{"type": ...}`) and malformed meeting outputs
+  are rejected.
 ## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
 
 Issue #169, feature 9, the wave-ray part of
