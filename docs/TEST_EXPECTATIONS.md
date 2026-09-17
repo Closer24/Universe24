@@ -1234,3 +1234,101 @@ there), and the odd table sizes 3 and 37 of `test_ray_integration_guards.py`
 are checked through `phase_cosines` and `phase_sines` directly, a field
 admitting only a power of two (the table-construction guard world uses 32
 phase steps instead of 37).
+
+## Ray binding
+
+`test_ray_binding.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on an open 21^3 lattice
+([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
+The family `n` has rest rate 1 on a 3-bit phase (8 steps); `G` is its
+field, `field_of: "n"` with `release: [1, 4]`, rate 0, 16 ray slots;
+`light`, `x` and `p` are families of rate 0 with 8 ray slots. Two lamps at
+(9,10,10) and (11,10,10) hold 8 of `n` each and emit it once, funded and
+directed, toward each other at phase 0, so the two rays meet at the center
+(10,10,10) after tick 1. The binding rule `bind` is `n x n` without outputs,
+assigning `delay` 1 to both participants, invariant energy. The test is
+parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
+`criterion`. Pinned before the first run:
+
+- (a) `binding`: after tick 1 the two `n` rays are at the center with
+  headings 0 and 1, amount 8, phase 1, steps 1, masks 1 and 2 and shares
+  (8, 0, 0, 0, 0, 0) and (0, 8, 0, 0, 0, 0). From tick 2 the rule fires
+  every interval: after tick t (2 to 6) both rays are at the center with
+  steps 0, delay 0, phase t (advanced once per interval by the rest rate
+  1), mask 3 and shares (8, 8, 0, 0, 0, 0), the group's tick being one event
+  on both Ports; `bound_group` reads them, and the snapshot's
+  `bound_groups` is one entry, position (10,10,10), families
+  `["n", "n"]`, amounts `[8, 8]`, phases `[t, t]`, `ray_delay` 0. In the
+  interval of every tick t from 2 the held rays release on all six
+  headings: two rays of amount floor(8 x 1 / 4) = 2 per heading with equal
+  phase merge to one G ray of amount 4 per heading, phase t - 1, steps 0,
+  mask 0, so after tick t the G ray released at tick s (2 to t) is at
+  distance t - s + 1 from the center along every axis with steps t - s + 1
+  and phase s - 1. The G total and the G source total after tick t are both
+  24 (t - 1): 0, 24, 48, 72, 96, 120; the `n` total is 16 with source 0;
+  the spatial accounting balances. The runner records
+  `ray_binding: "ray-binding-v1"` beside `released_field`, and a run of 6
+  ticks writes four `bound_tick` events, one per cycle of ticks 2 to 5 (a
+  cycle record carries the tick it started at; the cycle of tick t completes
+  tick t + 1; the cycle of tick 1 is the meeting that forms the group, not a
+  tick), each with position (10,10,10), families `["n", "n"]`, amounts
+  `[8, 8]`, phases `[t + 1, t + 1]` and `ray_delay` 0;
+- (b) `unbinding`: the rule `ionize`, declared before `bind`, is
+  `n x n x x` with outputs `n` on Port 2 (amount and phase of input 0), `n`
+  on Port 3 (of input 1) and `x` on `"same"` of input 2, invariant energy.
+  A lamp at (10,6,10) emits an `x` ray of amount 3 along +Y: it is at
+  (10,6+t,10) after tick t (1 to 4) and at the center after tick 4, the
+  group intact through tick 4 (G total 72). At tick 5 `ionize` fires and
+  `bind` has no participants left: after tick 5 the `n` rays are at
+  (10,11,10) (heading 2) and (10,9,10) (heading 3), amount 8, phase 5,
+  steps 1, mask 12, shares (0, 0, 11, 8, 0, 0); the `x` ray is at
+  (10,11,10), heading 2, amount 3, phase 0, steps 1, the same mask and
+  shares; `bound_groups` is empty from tick 5 and nothing is left at the
+  center. The departing `n` rays release five headings each in the interval
+  of tick 5 and after: the G total after tick t (5 to 8) is 72 + 20 (t - 4):
+  92, 112, 132, 152, equal to the source; the `n` total is 16 and `x` 3;
+- (c) `ray_delay`: `bind` declares `ray_delay` 2. A lamp at (10,7,10) emits
+  a `p` ray of amount 3 along +Y (a family with no rule, its own layer). It
+  reaches the center after tick 3 with `interaction_delay` 2 and steps 3,
+  is still there after ticks 4 (delay 1) and 5 (delay 0), leaves at tick 6
+  and is at (10,11,10) after tick 6 with steps 4 and at (10,14,10) after
+  tick 9 with steps 7: every departure from the Node waits the declared two
+  intervals. `bound_groups` reports `ray_delay` 2 from tick 2. Without the
+  key the `p` ray is at (10,11,10) after tick 4;
+- (d) `gravity`: the rule `gravity`, declared before `bind`, is `light x G`
+  with outputs `light` (amount of input 0, heading `"same"`, phase
+  `"same"`, `delay` `{"of": 1, "table": [4, 4, 4, 4, 4, 4], "per": 1}`)
+  and `G` (amount of input 1, heading `"reversed"` of input 1), invariant
+  energy. A lamp at (4,14,10) emits a light ray of amount 6 along +X at
+  impact parameter b = 4 above the center. The light is at (4+t,14,10)
+  after tick t (1 to 6), heading 0, steps t, phase 0, mask 1, shares
+  (6, 0, 0, 0, 0, 0), lag (0, 0, 0). At tick 7 it meets at (10,14,10) the G
+  ray released at tick 3 (amount 4, phase 2, steps 4, heading 2, which
+  came in through Port 3): the delay is floor(4 x 4 / 1) = 16 phase steps
+  on the -Y side, 2 full intervals at N = 8. After tick 7 the light is at
+  (11,14,10), steps 1, mask 9, shares (6, 0, 0, 4, 0, 0), lag (0, -16, 0),
+  having left its event Node through its event's Port; after tick 8 at
+  (11,13,10), steps 2, lag (0, -8, 0); after tick 9 at (11,12,10), steps 3,
+  lag (0, 0, 0): turned toward the group by 2 Links; after ticks 10 and 11
+  at (12,12,10) and (13,12,10), steps 4 and 5, on its new line. The recoil,
+  the G ray reversed (heading 3, amount 4, phase 2, mask 9, shares
+  (6, 0, 0, 4, 0, 0)), is at (10,13,10) after tick 7 with steps 1,
+  (10,12,10) after 8, (10,11,10) after 9, at the group's Node (10,10,10)
+  after tick 10 with steps 4, and, crossing it (no coupling of `n` with `G`
+  is declared), at (10,9,10) after tick 11. The G total and source are
+  24 (t - 1) after every tick t of the 11 (the first release of tick 2
+  reaches the open boundary at tick 12); the light total is 6, `n` 16; the
+  accounting balances;
+- (e) `criterion`: the board of (d) with the phase width N = 2^8, 2^10,
+  2^12 and 2^16 (`phase_bits` 8, 10, 12, 16 on every family, no coherence
+  table), the rest rate of `n` scaled to N / 8 so that the group's mass in
+  phase units, M = 2 x N / 8 = N / 4 (the sum of its participants' rates in
+  units of m_0 = 1 phase step per interval), is the same fraction of N:
+  M = 64, 256, 1024, 16384. Everything else is fixed: the light ray, b = 4,
+  the release, the table. After tick 8 the light is at (12,14,10), steps 2,
+  heading 0, with lag (0, -16, 0): the delay is 16 phase steps at every N,
+  below the modulus, so no Link is completed and the lag stays on the ray
+  as its owner. The bending is alpha = 16 / N (Links of shift per Node of
+  passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
+  1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.

@@ -147,7 +147,7 @@ separate carriers and their different directions.
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
-| `ray_interactions` | Schema 1 only: at most 32 meetings of rays over indexed ray-field roles ([shared coupling](SHARED_RAY_COUPLING.md)); an entry with `outputs` replaces its participants by one to six new event rays, an amount optionally split by a declared table ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)) |
+| `ray_interactions` | Schema 1 only: at most 32 meetings of rays over indexed ray-field roles ([shared coupling](SHARED_RAY_COUPLING.md)); an entry with `outputs` replaces its participants by one to six new event rays, an amount optionally split by a declared table ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)), an output's `delay` optionally `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came through; an entry without outputs assigning `delay` 1 binds its participants and may declare `ray_delay`, the output-clock delay of the Node that holds its group ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
 
 The authoritative contract for local field selection, group semantics, rule
 expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).

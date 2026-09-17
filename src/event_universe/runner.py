@@ -18,6 +18,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_RETURN,
     EXTERNAL_BODY,
     INVERSE_SPLIT,
+    RAY_BINDING,
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
@@ -226,6 +227,7 @@ def _execute_run(
         ],
         "ray_meeting": RAY_MEETING,
         "released_field": RELEASED_FIELD,
+        "ray_binding": RAY_BINDING,
         "released_fields": released_field_names(initial.fields, initial.spatial_fields),
         "external_body": EXTERNAL_BODY,
         "external_bodies": [

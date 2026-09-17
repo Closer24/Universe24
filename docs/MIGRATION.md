@@ -610,6 +610,29 @@ record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
 No engine, schema or record change. The prototype under the session
 scratchpad (`gif-electrons-3d`) is superseded by the tool.
 
+## Binding and gravity by delay added on 2026-09-17 (`ray-binding-v1`)
+
+Issue #169, feature 8 ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1);
+Highlights 3.4 and 3.28). A `ray_interactions` rule without outputs whose
+assignments set `delay` 1 binds its participants as a bound group: the rays
+stay at the Node, the rule fires again every interval (the group's tick,
+published as the `bound_tick` record), each phase advances once per interval
+by its rest rate, and a held ray releases its field on all six headings. An
+earlier declared outputs rule naming a bound participant and an arriving ray
+unbinds the group. New keys: `ray_delay` on a binding rule, the Node's
+output-clock delay while it holds the group (every arrival of matter waits
+it, a field ray never, one Node-wide wait for the six per-face clocks), and
+a meeting output's `delay`
+as `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came
+through, carried as the ray's new `lag` field (three signed integers, part
+of the merge key, reset by a return) and spent one Link toward the lagging
+side per phase modulus: gravity as bending by delay. New registers:
+`SpatialPlan.bound_delay`, `SpatialNodeState.bound_delay`; the snapshot lists
+`bound_groups`; the runner records `ray_binding: "ray-binding-v1"`.
+`test_ray_binding.py` pins the acceptance criterion G_eff x N^2 = 64 over
+N = 2^8, 2^10, 2^12, 2^16. Worlds without a binding rule, a `ray_delay` or a
+delay table run byte-identically.
+
 ## Field as the ray's information added on 2026-09-17 (`released-field-v1`)
 
 Issue #169, feature 7, under [Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.15,
