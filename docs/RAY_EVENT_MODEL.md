@@ -14,8 +14,9 @@ Authority: the [Highlights specification](HIGHLIGHTS.md) is the Highlights
 text, edited directly since 2026-09-17 by the model owner's decision; the
 Google Doc named in the [README](../README.md#project-specification-google-docs)
 is its historical source up to the revision of 2026-09-16 and is neither
-edited nor resynced. Highlights sections 3.3, 3.4, 3.5, 3.15, 3.19, 3.20, 5.1
-and 5.4 record the decisions this document restates in the coordinator's words;
+edited nor resynced. Highlights sections 3.3, 3.4, 3.5, 3.15, 3.19, 3.20, 3.26,
+5.1, 5.3 and 5.4 record the decisions this document restates in the
+coordinator's words;
 where the two differ, Highlights is the text to follow and this document is
 corrected. The [Detector-only sampling contract](DETECTOR_SAMPLING.md)
 (`detector-only-v1`) is preserved and made concrete here.
@@ -495,6 +496,49 @@ bond registry).
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
 
+**After feature 10 (decided 2026-09-17, Highlights 3.26 and 5.3).** The ten
+features of [issue #169](https://github.com/Closer24/Universe24/issues/169)
+(ray state, the Node Detector bit, the return, the inverse split, layers, the
+meeting with N-to-M conversion, the released field, binding, every ray a wave
+ray with family and charge, the audits) close the engine: a step on a Link, a
+phase advance, a split by a declared table, a sum, and the one draw at a
+marked Node. Anything that does not change how a ray moves between events is
+catalog work on that engine, a family property or a coupling table read only
+at a meeting, exactly as charge is (feature 9), and none of the ten features
+needs it. What follows adds no engine mechanism.
+
+**Feature 11, polarization.** A family property: a transverse mode
+perpendicular to the heading, two states for light (the two lattice axes
+perpendicular to an axial heading) and two for the electron family (spin),
+read by the declared couplings at a meeting. A circular polarization is not
+defined; if wanted, it is a transverse direction that turns with the phase
+plus one handedness bit, again a catalog choice. Pauli exclusion is a binding
+coupling (feature 8) that does not fire for two electrons in the same state
+with the same spin. The Bell prediction of
+[hypothesis 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail)
+is testable before this feature, in its phase form.
+
+**The strong interaction, catalog work after feature 10.** Quark families,
+colour a property with three values (a family property like charge, feature
+9), the gluon the quark's own field in ray form (feature 7, Highlights 3.5),
+the binding of three quarks a binding coupling (feature 8, Highlights 3.4),
+and one more declared coupling, the quark's field rays binding to each
+other, from which the short range and the growth with distance are expected.
+Whether that yields confinement is
+[hypothesis 13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
+a research question for a run, not an engine decision.
+
+**The weak interaction and decay, catalog work after feature 10.** A change
+of family: an N-to-M conversion at an event (feature 6) with its declared
+invariants (charge, energy, momentum). A free particle never decays, because
+there is no event without a meeting and a straight ray does not change. A
+neutron is a bound group whose ticks are events; a bound group that can decay
+is a source, and a source is a Detector (Highlights 3.19), so at each tick it
+draws with its declared ratio as the setting (the mark of feature 2), 1 = the
+conversion fires, 0 = the group ticks on unchanged, and half-life follows.
+That is the one draw of the Detector interaction, at a Node whose Detector
+bit is set; nothing else in the world draws, and no second lottery is added.
+
 ## 7. Acceptance criteria for the first implementation slice
 
 - A transfer through a marked Node draws 1 or 0; on 1 the Node's behavior is
@@ -586,3 +630,11 @@ was has changed: the returned ray reversed its share, so the event lost that
 share, and the information is never lost, it chases the share it cancels. If
 the share is delayed and caught, momentum and everything else are conserved
 at the Node where they meet.
+
+Deferred on 2026-09-17 (Highlights 3.26), not open: polarization is feature
+11, and the strong and weak interactions and decay are catalog entries on the
+same engine after feature 10, stated at the end of section 6. The one
+research question they leave, whether the quark's field rays binding to each
+other yields confinement, is
+[hypothesis 13](HYPOTHESES.md#13-confinement-from-the-quarks-field-rays-binding-to-each-other),
+answered by a run, not by an engine decision.
