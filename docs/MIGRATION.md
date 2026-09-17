@@ -699,6 +699,42 @@ lives at the meeting (`convert_values`), not on a resident record.
 
 There is no replacement API. Every deletion bucket of issue #164 is done.
 
+## Catalog of nature added on 2026-09-17 (`catalog/nature.json`)
+
+By the model owner's decision of 2026-09-17 under [Highlights](HIGHLIGHTS.md)
+3.26 and 3.30, the families of nature and their couplings are data on the one
+generic engine: [`catalog/nature.json`](../catalog/nature.json), described in
+[the catalog of nature](CATALOG.md). The catalog is exactly two things, the
+rays of nature with their couplings and the apparatus; the engine only reads
+it, a world file selects rays from it and places apparatus, and nothing else
+exists on the board.
+
+- The file declares the rays (light, the electron and the positron with their
+  fields, the muon, the neutrinos, up and down with colour, the gluon, the
+  proton and the neutron as bound groups, the mass field), the couplings (the
+  Born steering table, the electron's turn at its field, the recoil, the
+  mass-field delay, the electron-proton and quark bindings, the gluon-gluon
+  binding, the weak conversion, Pauli exclusion, the transmission meeting its
+  held share, and the external-body couplings absorber, mirror, beam splitter,
+  phase plate, slit and polarizer), the two apparatus kinds and, per register
+  entry A1 to A14, the ids it uses. Twenty-eight values are `"undecided"`,
+  each with the experiment or hypothesis that decides it.
+- No engine code changed: no module, key or rule was added, and the parser
+  accepts exactly what it did. A world file is still written by hand from the
+  catalog; there is no loader.
+- `tests/test_nature_catalog.py` is the gate: it parses the file, checks every
+  record and reference, holds every undecided entry to the register and the
+  hypotheses and to the table in `CATALOG.md`, builds a world from the file
+  for every ray a world can select and every decided coupling the engine runs
+  today and runs it for two ticks against pinned integers, and checks that the
+  parser refuses the external body's key while feature 7b has not landed.
+  `tools/check.py` selects it when the catalog, its document, the register or
+  the hypotheses change; `MANIFEST.in` ships the catalog with the tests.
+- Documentation: [the catalog of nature](CATALOG.md), a row in the
+  [documentation index](README.md), a sentence in the
+  [register](EXPERIMENTS.md), the expectations in
+  [test expectations](TEST_EXPECTATIONS.md#catalog-of-nature).
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an
