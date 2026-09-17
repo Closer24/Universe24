@@ -100,6 +100,9 @@
   </div>
 
   <div class="runs" id="runs" role="group" aria-label="Recorded run" hidden></div>
+  <div class="runs" id="views" role="group" aria-label="View" hidden>
+    <button class="run-btn" type="button" id="eye-toggle" aria-pressed="false">eye view</button>
+  </div>
 
   <div class="stage" id="stage" tabindex="0" aria-label="3D view of the board; drag to rotate, scroll to zoom, arrow keys rotate">
     <canvas id="view"></canvas>
@@ -303,7 +306,9 @@
       "captions": false,
       "totals": false,
       "tick_counter": true,
-      "controls": false
+      "controls": false,
+      "runs": true,
+      "eye_toggle": true
     }
   },
   "caption": {
@@ -381,15 +386,17 @@
   "use strict";
   var root = document.documentElement;
   var els = {};
-  ["title", "board-label", "record-label", "loader", "file", "runs", "stage", "view", "hud-tick", "legend",
-   "note", "totals", "play", "tick", "tickcount", "speed", "orbit", "orbit-label", "trails", "fallback"]
+  ["title", "board-label", "record-label", "loader", "file", "runs", "views", "eye-toggle", "stage", "view",
+   "hud-tick", "legend", "note", "totals", "play", "tick", "tickcount", "speed", "orbit", "orbit-label",
+   "trails", "fallback"]
     .forEach(function (id) { els[id.replace(/-([a-z])/g, function (_, c) { return c.toUpperCase(); })] = document.getElementById(id); });
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var PORTS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
   var state = {
     data: null, style: null, run: 0, tick: 0, playing: false, speed: 4, acc: 0,
     autoRotate: !reduced, trails: true, frozen: false, lastInput: -1e9,
-    theta: -0.55, phi: 0.5, radius: 20, dirty: true
+    theta: -0.55, phi: 0.5, radius: 20, dirty: true,
+    view: null  // the eye toggle's choice for the page ("eye"), null for the style's draw.view
   };
   var scene3d = null;
   window.__ready = false;
@@ -431,8 +438,18 @@
     document.querySelector(".status").hidden = !pt.captions && !pt.totals;
     els.hudTick.hidden = !pt.tick_counter;
     document.querySelector(".controls").hidden = !pt.controls;
-    els.runs.hidden = !pt.controls || !(state.data && state.data.runs.length > 1);
+    els.runs.hidden = !pt.runs || !(state.data && state.data.runs.length > 1);
+    updateViews();
   }
+  // The eye toggle (draw.page_text.eye_toggle) shows only for a run with marked Nodes.
+  function updateViews() {
+    var pt = state.style.draw.page_text || {};
+    var run = state.data ? state.data.runs[state.run] : null;
+    var marks = run && run.eye && run.eye.marks ? run.eye.marks.length : (run && run.detectors ? run.detectors.length : 0);
+    els.views.hidden = !pt.eye_toggle || !marks;
+    els.eyeToggle.setAttribute("aria-pressed", state.view === "eye" ? "true" : "false");
+  }
+  function currentView() { return state.view || state.style.draw.view; }
   function buildLegend() {
     var s = state.style, c = s.colors;
     var items = [
@@ -479,7 +496,7 @@
       b.className = "run-btn"; b.type = "button"; b.dataset.run = run.key;
       b.textContent = run.label || run.key;
       b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
-      b.addEventListener("click", function () { setRun(i); });
+      b.addEventListener("click", function () { selectRun(i); });
       els.runs.appendChild(b);
     });
     if (!scene3d && window.THREE) scene3d = buildScene();
@@ -577,7 +594,20 @@
     Array.prototype.forEach.call(els.runs.children, function (b, j) { b.setAttribute("aria-pressed", j === i ? "true" : "false"); });
     if (scene3d) scene3d.setRun(run);
     setTick(Math.min(state.tick, run.ticks));
+    updateViews();
   }
+  // A run button: that run from its first tick, in the board view, playing when the style autoplays.
+  function selectRun(i) {
+    state.view = null;
+    setRun(i);
+    setTick(0);
+    if (state.style.motion.autoplay && !state.frozen) setPlaying(true);
+  }
+  els.eyeToggle.addEventListener("click", function () {
+    state.view = state.view === "eye" ? null : "eye";
+    updateViews();
+    if (state.data) setTick(state.tick);
+  });
   function setPlaying(p) {
     state.playing = p; state.acc = 0;
     els.play.textContent = p ? "Pause" : "Play";
@@ -1063,7 +1093,7 @@
       var fam = {}; run.families.forEach(function (f) { fam[f.name] = f; });
       var nSeg = 0, nHead = 0, nLabel = 0, nMarker = 0, nLamp = 0, nDet = 0, nBody = 0;
       placed = []; nGlow = 0; nSphere = 0;
-      if (dr.view === "eye") {
+      if (currentView() === "eye") {
         segs.hide(0); heads.hide(0); markers.hide(0); lamps.hide(0); detectors.hide(0); bodies.hide(0);
         labels.forEach(function (l) { l.wanted = false; });
         applyEye();

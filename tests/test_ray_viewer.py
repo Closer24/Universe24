@@ -389,6 +389,12 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert document_out["schema"] == "ray-viewer-runs-v1"
     assert [r["key"] for r in document_out["runs"]] == ["run", "later"]
 
+    # (k) A tick cap for a large record: the events through the cap alone are read.
+    capped = EXTRACT.extract_record(record, ticks=3)
+    assert capped["ticks"] == 3 and capped["record"]["ticks_capped_from"] == 6
+    assert max(e["tick"] for e in capped["events"]) <= 3 and len(capped["ticks_data"]) == 4
+    assert EXTRACT.extract_record(record, ticks=9)["record"]["ticks_capped_from"] is None
+
     # (g) External bodies (external-body-v1): the record's per-tick positions, read as
     # the runner writes them, so the page moves the body's picture with the record.
     bodies = EXTRACT.external_bodies(
@@ -537,9 +543,11 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
         "totals",
         "tick_counter",
         "controls",
+        "runs",
+        "eye_toggle",
     }
     on = {k for k, v in style["draw"]["page_text"].items() if v}
-    assert on == {"header", "tick_counter"}
+    assert on == {"header", "tick_counter", "runs", "eye_toggle"}
     assert not any(style["draw"]["labels"].values())
     assert style["motion"]["autoplay"] is True and style["motion"]["loop"] is True
     bad = copy.deepcopy(style)
