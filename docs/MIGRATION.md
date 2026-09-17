@@ -1003,6 +1003,31 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   times; after it the whole screen. The test pins the world file's
   integers, not its run.
 
+## Ray viewer: phone GIF preset, 2026-09-17
+
+The model owner's GIFs do not always open on the phone, and he wants GIFs
+only ([ray viewer](../tools/ray_viewer/README.md)); the record is
+unchanged.
+
+- `style.json` gains `motion.gif_preset` (`phone`, the default) and
+  `motion.gif_presets`. `phone` renders 640 px wide (480 px per panel side
+  by side), at most 20 frames spread evenly over the run (`tick_schedule`:
+  the run still reaches its end, at most a quarter of the frames hold the
+  last tick with the camera still, `gif_hold_still`, so the hold is stored
+  once; the 24 frames the model owner allowed left the two-panel screen
+  GIF at 1.05 MB, 20 bring every GIF under the target), 128 colours, no
+  supersampling, a frame duration that makes
+  the GIF read in about six seconds (`gif_seconds`), a target of under 1 MB
+  (`gif_target_bytes`), no contact sheet and no stills. `full` holds the
+  earlier numbers: every tick and twelve hold frames, supersampled, 120 ms
+  a frame, a contact sheet of 16 stills.
+- `render_gif.py --preset phone|full` chooses one; `--frames N` now spreads
+  the run over N frames instead of cutting it. The summary records the byte
+  size, the preset and the tick of every frame, and the renderer prints the
+  size, with a note when it is above the target; it refuses nothing. The
+  nature README's render lines are unchanged and make phone GIFs now.
+- The test pins the presets and the schedule.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an

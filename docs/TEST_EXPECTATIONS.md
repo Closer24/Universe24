@@ -64,7 +64,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and the screen example world, pinned below (no browser) |
+| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -977,6 +977,20 @@ from the event stream alone (no per-tick recording, so no phase):
   every one with setting [1, 1] and seed 0; one rule, `bind`, with
   `ray_delay` 1. The on-axis mark (7,5,5) is the one that clicks before
   feature 12;
+- (j) the phone GIF preset (model owner, 2026-09-17: GIFs only, small enough
+  for the phone): `motion.gif_preset` is `phone` and `gif_presets` holds
+  `phone` and `full`; `phone` is 640 px wide, 480 px per panel side by
+  side, at most 20 frames (24 left the two-panel GIF above the target), 12
+  hold frames with the camera still (`gif_hold_still`), 128 colours,
+  supersample 1, six seconds, a target of 1000000 bytes and no stills;
+  `full` is uncapped, its hold turning on, supersample 2, 120 ms a frame,
+  16 stills. The frame schedule of a 24-tick
+  run capped at 24 frames is the ticks 0, 1, 3, 4, 6, 7, 8, 10, 11, 13, 14,
+  16, 17, 18, 20, 21, 23, 24 and then six frames holding 24 (the run reaches
+  its end, a quarter of the frames hold); an uncapped 6-tick run is 0..6 and
+  twelve holds; 24 frames in six seconds is 250 ms a frame (the style's 120
+  ms when no seconds are set). An unknown preset name, a preset with an
+  unknown key and a `gif_preset` naming no preset are refused;
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
@@ -1009,7 +1023,8 @@ from the event stream alone (no per-tick recording, so no phase):
   body over the run, padded by one Link; `board` fits the whole board), and
   fixed colours for the families `electron`, `light`, `proton` and `neutron`,
   `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
-  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot), of the `page_text` flags
+  a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot),
+  `motion.gif_preset` `phone` ((j) above), of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 
