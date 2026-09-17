@@ -28,6 +28,7 @@ Feature tests of issue #169 join this table as they land.
 
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
+| `test_a5_static.py` | 3 | 5.92 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step) and the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), pinned below |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_bound_group_motion.py` | 5 | 0.90 | Issue #169 feature 8c: a bound group carries a momentum register and steps one Link when a whole content has accumulated on an axis, pushed by the field rays its binding rule's table names (`bound-group-motion-v1`) |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
@@ -2471,12 +2472,28 @@ the measured record:
   these eight ticks are those of an unbounded board, and of the 16-tick
   probe at margin 8 on which the register's planning paragraph rests.)
 - `record.json`, written by `analyze.py --record` from the runs of
-  2026-09-17: fifteen runs, every one completed with the recorded source,
-  its `initialization_sha256` equal to the SHA-256 of the committed world
-  file, every ledger line balanced and `conserved_at_every_completed_tick`
-  true, the positions fixed; the measured integers, written into the test
-  from the record after the run (the register's entry states them): the
-  final registers and the last-32-tick sums per world, the control zero
-  at every tick, the equal and opposite registers, the exact negation of
-  the like-charge series by the opposite-charge series, and the clause
-  table's verdicts.
+  2026-09-17 (the register's entry holds the fingerprints): fifteen runs,
+  every one completed under one recorded source, its
+  `initialization_sha256` equal to the SHA-256 of the committed world file,
+  its ticks the world's, every ledger line balanced and
+  `conserved_at_every_completed_tick` true, the positions fixed, the
+  momentum line and the bodies' momentum line zero, the window 32 ticks;
+  the control's register zero at every tick with 378 absorptions and no
+  first push; in every two-body world the registers equal and opposite at
+  every tick; the opposite-charge series the exact negation of the
+  like-charge series (the register series and the window sums); the
+  measured integers, written into the test from the record: the sums of
+  B's pushes over the last 32 ticks (F(r) their 32nd part) 23770, 8090,
+  2872, 422 and 77 at r = 4, 6, 8, 12, 16, B's register at the end 27214,
+  9608, 3501, 522 and 91, the first push at tick 4, 6, 8, 12 and 18, the
+  fit of `analyze.fit` over the five points −4.142 with standard error
+  0.369 (three decimals), outside the band [−2.2, −1.8]; the pushes on B
+  per tick of `pp_r4`, 0, 0, 0, 664, 665, 699, 699, 717, 717, 725, 727,
+  732, 732, 736, 737, 739, 741, 742, 742, 743, 744, 746, 744, 746, 747,
+  748, 747, 748, 747, 749, 749, 747, 750, 748, 750, 749, 750, 750, 748,
+  750; the diagonal's window sums equal on x and y and zero on z, 3019,
+  1509, 447 and 158 at d = 3, 4, 6, 8, the registers at the end 3461,
+  1756, 524 and 182 on both axes, the first push at tick 6, 8, 12 and 19;
+  the clause table's verdicts in order: ledger pass, control pass,
+  registers pass, exponent fail, signs pass, diagonal reported; and the
+  clause's series of (r, F) with the same exponent for `pp` and `pe`.

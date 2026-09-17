@@ -37,7 +37,7 @@ RELEASE = [1, 65536]
 SPREAD = [6, 1, 1, 1, 1, 1]
 # The phase is read nowhere in these worlds (no meeting, every release at phase 0),
 # and the coherent sum of a spread costs one pass over the circle per register, so
-# the width is the reference Born width of E6's screen, 8 steps.
+# the width is the reference Born width, 8 steps.
 PHASE_BITS = 3
 # The margin of empty Nodes beyond each body on every side (open boundary): the
 # entry plans at least 8; the engine's cost, 2.3 ms per Node cycle with every Node

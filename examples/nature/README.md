@@ -780,7 +780,72 @@ a mean-field estimate of what each costs.
 
 ### What the static runs show
 
-(Written from the records after the run; see the register's entry.)
+Made on 2026-09-17 on the branch at `b701ea7` (`main` at `1868324` with the
+planned entry; the source fingerprint and the fifteen initialization
+fingerprints are in the register's entry). The push per interval on B, the
+change of its momentum register per tick averaged over the last 32 ticks,
+F(r) in quanta per interval (the window sum is the record's integer, F its
+32nd part):
+
+| r | F(r), like charges (`pp_r`) | opposite charges (`pe_r`) | r² F | window sum | first push at tick | B's register at the end |
+| --- | --- | --- | --- | --- | --- | --- |
+| 4 | +742.81 | −742.81 | 11885 | 23770 | 4 | 27214 |
+| 6 | +252.81 | −252.81 | 9101 | 8090 | 6 | 9608 |
+| 8 | +89.75 | −89.75 | 5744 | 2872 | 8 | 3501 |
+| 12 | +13.19 | −13.19 | 1899 | 422 | 12 | 522 |
+| 16 | +2.41 | −2.41 | 616 | 77 | 18 | 91 |
+
+A's register is the negative of B's at every tick of every world, and the
+opposite-charge series is the exact negation of the like-charge series, tick
+by tick (the two light fields are the same in both, only the tables' sign
+differs). The log-log least-squares exponent of F over r is −4.14 ± 0.37
+(standard error from the five points), against the criterion's −2.0 ± 0.2:
+the exponent clause fails; the ledger, the control, the equal and opposite
+registers and the signs pass. The diagonal series, B at (d, d, 0):
+
+| d | distance d√2 | F on B | \|F\| | axis fit at d√2 | ratio | first push at tick |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | 4.24 | (94.34, 94.34, 0) | 133.42 | 849.2 | 0.157 | 6 |
+| 4 | 5.66 | (47.16, 47.16, 0) | 66.69 | 257.9 | 0.259 | 8 |
+| 6 | 8.49 | (13.97, 13.97, 0) | 19.75 | 48.09 | 0.411 | 12 |
+| 8 | 11.31 | (4.94, 4.94, 0) | 6.98 | 14.61 | 0.478 | 19 |
+
+The push is along the diagonal exactly (F_x = F_y, F_z = 0; the window sums
+3019, 1509, 447 and 158 on both axes) and a small fraction of the axis fit
+at the same Euclidean distance, rising with d: the lattice's anisotropy of
+the split table at short range, where the field on an axis is mostly the
+forward share that never scatters.
+
+What the integers say (a reading, not a clause): the mean-field transport of
+the split table, run before the run to size it (the register's entry),
+predicted F = 742, 252, 89, 13.1 and 2.4, the exponent −4.2 ± 0.4 and the
+diagonal ratios 0.16, 0.26, 0.41 and 0.47 at these settings; the engine
+gives the same to within a quantum per interval. The forward share that
+never scatters, 4096 × (6/11)^(r−1) on the axis, is 665, 198, 59, 5.2 and
+0.46 quanta per interval at r = 4 to 16: the first push at r = 4 is 664 at
+tick 4, then 665, and the pushes rise to 750 by tick 40 as the scattered
+part builds up; at r = 16 the forward share is below one quantum, so the
+first quantum reaches B at tick 18, through the remainder registers, and
+the push is 1 to 4 per tick to the end, still rising. The rest of F, 78,
+55, 31, 8.0 and 1.9, is the scattered field, which the open boundary at the
+margin of 5 drains and which has not reached its steady state at the far r
+in 2r + 32 ticks (the mean field at the plan's settings gives −3.7 ± 0.3 and
+in free space at its steady state −3.2 ± 0.1). So the fail is the short
+range of the declared table: at these r the force falls like the forward
+share, e^(−r/1.65), and the 1/r² flux of Gauss is the small diffusive
+remainder. The control's body absorbs its own returning light (378
+absorptions in 64 ticks) with its register at (0, 0, 0) at every tick. The
+ledger at the end of `pp_r4`, `light_a`: sourced 983040 (6 × 4096 × 40) =
+current 421226 + escaped 383590 + absorbed 178224, and the same for
+`light_b`; at the end of `pp_r16`: 1572864 = 492494 + 837246 + 243124; the
+momentum line and the bodies' momentum line (0, 0, 0) throughout; every
+line balanced, `conserved_at_every_completed_tick` true in every world;
+both bodies at their Nodes at every tick, no step. Run times with two runs
+in parallel on four cores shared with other work: 156, 197, 239, 341 and
+448 s for `pp_r4` to `pp_r16`, 154, 328, 247, 342 and 443 s for `pe_r4` to
+`pe_r16`, 209, 264, 396 and 570 s for the diagonal d = 3 to 8, 111 s for
+the control; each viewer document (`runs.json`) is 136 MB (the control) to
+582 MB (d = 8), the field's rays being the record.
 
 ### Run and render
 

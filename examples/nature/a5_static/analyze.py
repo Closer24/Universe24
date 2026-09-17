@@ -297,7 +297,7 @@ def clauses(results):
         if not rs:
             continue
         points = [(r["manhattan"], abs(force(r, 1)[0])) for r in rs]
-        fits[case] = {"points": points, **fit(points)}
+        fits[case] = {"series": points, **fit(points)}
     table.append(
         {
             "clause": "log-log exponent of F(r) over the axis r is -2.0 +- 0.2",

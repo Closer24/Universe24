@@ -593,9 +593,86 @@ states "exactly" and means integer equality at every tick.
   like-charge series, tick by tick, since the two light fields are the same
   in both and only the tables' sign differs; it is run in full as planned
   and the clause reads the equality.
-- **Status.** planned, 2026-09-17, on `main` at `1868324` (features 12,
-  12b, 7b and 8b in it), the criterion and the deviations above written
-  before the run.
+- **Deviations seen in the run, stated after it.** (vii) The front: the
+  entry above says the front reaches the other body at tick r and the
+  axis is lit at once; so it is for r ≤ 12 (the first push on B at tick
+  4, 6, 8 and 12), but at r = 16 the forward share that never scatters,
+  4096 × (6/11)^15 = 0.46 quanta per interval, is below one quantum, so
+  the first quantum reaches B at tick 18 (tick 19 on the diagonal at d =
+  8), through the remainder registers. (viii) The records were made in
+  two sittings of one runner script (two worlds at a time, each world in
+  its own sibling record directory): ten records in the first sitting;
+  the session was then resumed while the first sitting's runner was still
+  working, and the resumed runner's collision with it (each deletes an
+  incomplete record directory before it runs) destroyed the record
+  directories of `pp_r4` and `pe_r4` (both sittings' attempts, the engine
+  refusing the second lease: "artifact path already has an active
+  writer", "artifact path was replaced during its writer lease") and the
+  first sitting's `run.json` of `pe_r6` and `p_alone`; these four were
+  run again from the same world files under the same source (the
+  fingerprints below are the records'), their viewer documents extracted
+  from the re-runs; `pp_r6` is the first sitting's. (ix) After the run
+  the analyzer's clause-4 entry was found to have its list of (r, F)
+  points overwritten by the fit's count of the same name (`points`); the
+  list's key was renamed `series` and the record rewritten from the same
+  runs, no number changed.
+- **Status.** measured on 2026-09-17, commit
+  `b701ea779d14c7aa319c58f67db324b8802f29c5` (`main` at `1868324` with
+  this entry planned; no engine change), source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`;
+  initialization fingerprints, like charges r = 4, 6, 8, 12, 16:
+  `58abf9051ab315163b5cf08d906271568155d63fab05f75845d18ad524cccdab`,
+  `b1d3ca6d0318b9834f6ed6886b44698c029a4aee993707c757d1b03c5e57f4a0`,
+  `e1dd71bda82ee646dd792603a101f072403d66aa5beee416bc24ecc64d4324ea`,
+  `2f47e912389aedf19d8e3c542ddf420f5e507f827e90c68eebfa0243f7887658`,
+  `624292813b31ac95fa60b6287b9a6dd869f345fe1936e777960c2327af933cb1`;
+  opposite charges r = 4, 6, 8, 12, 16:
+  `1037e95e2ad521ad132612644496839ce9478756cbc5314acde078472e8292e2`,
+  `86fc91c11af22769fde7f3a57321dd18900d83a41caf9b9fe113d8184230a302`,
+  `47bf17836e2fe9022cac235013b8be14303975692ccffab8f8845f52fdc3866c`,
+  `437448ce62dd153c68468b8ff2de59da0b5284acbc5f29b56bfbb5977b917096`,
+  `ef3cbe5d76c988e56126a3f57f01029d4042c1ad09a0fd850fbeb0bdd044cc24`;
+  the diagonal d = 3, 4, 6, 8:
+  `fabca15ee719b60cb8b73c104a13487956dc1391c9a5bf19796fcc60814e43d0`,
+  `0772cb34169010481b5aa09dc904e6d604301b5ea4fb5319e5aa06bc675b1247`,
+  `54c30a7cd8ac5e280b586ce1a1d69e2f68cb035fec58b1a469f4e9ab038b7f19`,
+  `7a1b520bc7232128917bdc9223190b425033a31066ce2b7ee021d8a5a2dbecc8`;
+  the control
+  `150c99afb724cb0ade43920a2046afda80c95773a4922324502f2921cdd7479a`;
+  outcome: fail, the exponent clause (4), with (1), (2), (3) and (5)
+  passing and (6) reported: (1) every ledger line balanced and
+  `conserved_at_every_completed_tick` true at every tick of every world
+  (at the end of `pp_r4`, `light_a` sourced 983040 = current 421226 +
+  escaped 383590 + absorbed 178224; the momentum line and the bodies'
+  momentum line (0, 0, 0) throughout); (2) the control's register (0, 0,
+  0) at every tick, with 378 absorptions of its own light; (3) the two
+  registers equal and opposite at every tick of every two-body world; (4)
+  F(r) on B, the mean push per interval over the last 32 ticks, 742.81,
+  252.81, 89.75, 13.19 and 2.41 quanta per interval at r = 4, 6, 8, 12,
+  16 (the window sums 23770, 8090, 2872, 422, 77; r²F 11885, 9101, 5744,
+  1899, 616), exponent −4.14 ± 0.37, outside −2.0 ± 0.2; (5) like charges
+  apart (A's push on −X, B's on +X) and opposite charges together at every
+  r, the opposite-charge series the exact negation of the like-charge
+  series tick by tick; (6) the diagonal, B at (d, d, 0): |F| = 133.42,
+  66.69, 19.75 and 6.98 at d = 3, 4, 6, 8 (Euclidean 4.24, 5.66, 8.49,
+  11.31) against the axis fit at the same distance 849.2, 257.9, 48.09
+  and 14.61, the ratios 0.157, 0.259, 0.411 and 0.478, the push along the
+  diagonal exactly (the window sums 3019, 1509, 447, 158 on both axes, 0
+  on z). The fail is the one the mean field predicted, to within a
+  quantum per interval (predicted 742, 252, 89, 13.1, 2.4; −4.2 ± 0.4;
+  the ratios 0.16, 0.26, 0.41, 0.47): at these r the force falls like the
+  forward share that never scatters, 4096 × (6/11)^(r−1) = 665, 198, 59,
+  5.2 and 0.46 (the rest of F, 78, 55, 31, 8.0 and 1.9, is the scattered
+  field, drained by the open boundary and still rising at the far r),
+  that is, the short range of the declared table and not the box or the
+  transient alone (the mean field at the plan's settings gives −3.7 ±
+  0.3, in free space at its steady state −3.2 ± 0.1). The records stay
+  outside the tree; `record.json` holds the integers and the
+  [README](../examples/nature/README.md#what-the-static-runs-show) the
+  tables. Run times with two runs in parallel on four cores shared with
+  other work: 156, 197, 239, 341, 448 s for the like-charge axis worlds,
+  154, 328, 247, 342, 443 s for the opposite-charge ones, 209, 264, 396,
+  570 s for the diagonal, 111 s for the control.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
