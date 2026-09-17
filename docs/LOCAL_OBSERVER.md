@@ -92,11 +92,11 @@ commits stay committed if diagnostic output later fails.
 
 ## Acceptance and demonstration
 
-`tests/test_local_observer.py` checks remote withholding until delivery, two-tick
+`tests/test_local_observer.py` (deleted on 2026-09-17) checks remote withholding until delivery, two-tick
 periodic transit, signed post-decay readings, zero versus absence, atomic archive
 overflow, copied payloads, exact capture prefixes, clock independence from global
 timestamps, frame-stride independence and unchanged physical results/costs.
-`tests/test_observer_playback.py` checks backward seeking, paused-clock samples,
+`tests/test_observer_playback.py` (deleted on 2026-09-17) checks backward seeking, paused-clock samples,
 safe labels, zero versus unknown and explicit global audit access.
 
 The example uses the same simple rules in 9-cubed and 15-cubed worlds. Two

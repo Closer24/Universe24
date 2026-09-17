@@ -66,7 +66,7 @@ automatically. This finite structural guard supplements the existing architectur
 and locality audits; it cannot prove arbitrary code behavior.
 
 The daily genericity audit runs the compatibility-selected guard suite and
-[the local response suite](../tests/test_local_lorentz_field.py). It also reviews
+the local response suite (`tests/test_local_lorentz_field.py` (deleted on 2026-09-17), deleted on 2026-09-17). It also reviews
 new dynamic consumers for global source reconstruction and formula duplication.
 
 ```text

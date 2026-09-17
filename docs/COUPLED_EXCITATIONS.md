@@ -91,7 +91,7 @@ python -m event_universe --init artifacts/coupling-input.json --output artifacts
 ```
 
 Use new output paths. No simulator rebuild or visualization is required.
-[Acceptance tests](../tests/test_coupled_excitations.py) exercise the configured
+Acceptance tests (`tests/test_coupled_excitations.py` (deleted on 2026-09-17), deleted on 2026-09-17) exercise the configured
 rules with independent expected states; the test-selection gate tracks changes
 to the saved law and all authoring resources.
 

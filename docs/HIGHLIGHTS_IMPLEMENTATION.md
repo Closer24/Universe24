@@ -114,7 +114,7 @@ model choices whose consequences can be tested.
 | Whole detections and a classical mean flux | Counting probe (`examples/quantum-classical/README.md`, deleted on 2026-09-17): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
 | Radiation and mechanical exchange | [Local conservation contract](LOCAL_CONSERVATION.md) and [runner validation](VALIDATION.md#kerengonen-guards-reconciled-with-current-main---2026-09-14): funded emission, recoil, absorption and escaped rays close the declared energy/momentum accounting | The quantity definitions and exchange laws are explicit; this is not complete electromagnetic dynamics |
 | Coherent evolution and classical probability | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) and claim check (`examples/quantum/quantum_classical_check.md`, deleted on 2026-09-17): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
-| Matter-wave wavelength and momentum | [De Broglie probe](../examples/de-broglie/README.md): momenta 16, 32 and 64 move the first dark fringe to 4, 2 and 1 | The phase advance `abs(p) / 4` is supplied; the inverse relation is propagated and measured, not derived from spatial discreteness |
+| Matter-wave wavelength and momentum | De Broglie probe (`examples/de-broglie/`, deleted on 2026-09-17): momenta 16, 32 and 64 move the first dark fringe to 4, 2 and 1 | The phase advance `abs(p) / 4` is supplied; the inverse relation is propagated and measured, not derived from spatial discreteness |
 | Quantum contact and later ordinary motion | Recurrent contacts (`docs/RECURRENT_QUANTUM_CONTACT.md`, deleted on 2026-09-17) and local moment response (`examples/quantum/local_moment_exchange.md`, deleted on 2026-09-17): local encounters can continue a wave, create a new one or localize a record; a later local exchange can produce slow motion | Finite instruments and the response law are supplied; complete field/matter closure and an emergent classical trajectory remain open |
 
 The supported highlight is therefore a tested bridge between selected classical,
@@ -214,13 +214,13 @@ a schedule (`dissolve`: a particle becoming its own wave train).
 | Highlights sections | Implemented contract and limits | Repository owner |
 | --- | --- | --- |
 | 10.3.2 | Straight rays: isotropic inverse square, shell conservation, a small stock sweeping the heading sequence in turn. | [Straight-ray contract](SPATIAL_FIELDS.md#straight-ray-transport-isotropic-ray-field-v1) |
-| 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
+| 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), gravity probe (`examples/gravity-probe/`, deleted on 2026-09-17) |
 | 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
 | 3.3, 3.19, 3.20, 5.1, 5.4 | Ray hidden state (2026-09-17, issue #169 feature 1): every ray carries its steps since its event, whether it is outbound, the Ports and shares of its event and the Detector bit; emissions and ray interactions stamp them, rays of different events never merge, a returning ray counts steps and phase down, and no rule reads them. Identity `ray-event-state-v1`. | [Ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1), [expectations](TEST_EXPECTATIONS.md#ray-hidden-state) |
 | 3.19, 3.20, 5.4 | Node Detector bit (2026-09-17, issue #169 feature 2): a Node marked in the initialization (`detectors`: position, setting, ticket seed, no default rate) draws one unsalted bit per arriving ray from its own ticket stream, independently for up to six arrivals in one interval, in Port then merge-key order, reading nothing from the ray; on 1 the ray passes as at an unmarked Node with its Detector bit set to 1 and a `detector_click` recorded, the only measurement; on 0 the ray records bit 0 and no click, and in this slice continues unchanged (the return is feature 3); a replay redraws nothing and an unmarked Node never draws. Identity `detector-mark-v1`. | [Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1), [schema](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1), [expectations](TEST_EXPECTATIONS.md#node-detector-bit) |
 | 5.1 | Layers (2026-09-17, issue #169 feature 5): the layers of event spacetime are derived, never declared, as the connected components of the ray fields over the participants of the declared `ray_interactions`, a field no rule selects being its own layer; at a Node in one interval the rays are met layer by layer, rules of different layers fire independently with their own participants, invariants and events, an unruled ray crosses unchanged, and the runner records the derived layers. A single-layer world runs as before. Identity `ray-layers-v1`. | [Layers](SPATIAL_FIELDS.md#layers-ray-layers-v1), [expectations](TEST_EXPECTATIONS.md#ray-layers) |
 | 3.15, 3.17, 3.26, 5.1 | Meeting of rays with N-to-M outputs (2026-09-17, issue #169 feature 6): a rule with declared outputs replaces its participants by one to six new event rays at the meeting Node, each stamped `steps 0` with the mask and shares of the meeting; every family's stock and the declared readout invariants are exact as sums over inputs and outputs; an amount may be split by a declared table indexed by the phase difference of two inputs, the rest output owning the remainder (3.17), the engine only splitting by the table (3.26); the momentum a split moves is booked as an accounted source until the field ray of feature 7 owns it (3.15); no draw. Identity `ray-meeting-conversion-v1`. | [Meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1), [expectations](TEST_EXPECTATIONS.md#ray-meetings-with-outputs) |
-| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), claim and gather (`examples/claim-gather/`, deleted on 2026-09-17), [validation](VALIDATION.md) |
+| 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), de Broglie (`examples/de-broglie/`, deleted on 2026-09-17), matter wave (`examples/matter-wave/`, deleted on 2026-09-17), mirror (`examples/kerengonen-mirror/`, deleted on 2026-09-17), Euclidean pace (`examples/euclidean-pace/`, deleted on 2026-09-17), claim and gather (`examples/claim-gather/`, deleted on 2026-09-17), [validation](VALIDATION.md) |
 | 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) |
 
 What the ray is not, recorded rather than claimed: a single particle's matter
@@ -422,7 +422,7 @@ adjacent Links. Matching heading and phase may merge; capacity exhaustion fails.
 Ray fields currently reject vector payloads, octant seeds/weights, field rules,
 spatial interactions, `node_execution` and `spatial_computation_delay`.
 
-The published [inverse-square probe](../examples/inverse-square/README.md) reports
+The published inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) reports
 a 41-cubed open world with 4,096 headings, 64 rays per tick and a 64-tick measurement
 sweep. Finite fitted slopes are -2.25, -2.05 and -1.92 on the axis, face diagonal
 and body diagonal. Angular-patch coefficients of variation are 6-8 percent over
@@ -700,7 +700,7 @@ treating its omissions as current gaps.
 
 ## Relativity probes of 2026-09-14
 
-Configuration-only probes in [examples/relativity-probes](../examples/relativity-probes/README.md)
+Configuration-only probes in examples/relativity-probes (`examples/relativity-probes/`, deleted on 2026-09-17)
 test what section 4.4's computational field yields when a mass emits it and
 bodies exchange momentum with its delivered flux (the sign is supplied, as for
 charge). The supplied couplings and transport/phase policies produce finite
@@ -769,8 +769,8 @@ section 11 with subsections 11.1 to 11.7, each naming the section it amends;
 earlier paragraphs were preserved. Section 10 above is unchanged so that it
 remains the recorded snapshot. Each bullet below is written in the document's style and names the
 heading it belongs under. Evidence: `examples/collisions`, `examples/charged-pair`,
-`tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
-`tests/test_rotation_self_interaction.py`.
+`tests/test_field_phase_first.py` (deleted on 2026-09-17), `tests/test_arrival_port_blind.py` (deleted on 2026-09-17) and
+`tests/test_rotation_self_interaction.py` (deleted on 2026-09-17).
 
 Under 3.3.1 Discrete directional-flux conservation:
 
@@ -863,7 +863,7 @@ the repository. This reconciliation does not edit the live Google document.
 
 ### Local Maxwell research reconciliation
 
-For the [configuration-only Maxwell experiment](../examples/maxwell/README.md),
+For the configuration-only Maxwell experiment (`examples/maxwell/`, deleted on 2026-09-17),
 Highlights was reread on 2026-09-12.
 Sections 1.3.3, 1.3.4 and 10.4 are reconciled as follows: the existing generic
 local field interface can express a transverse reflection and one-link
@@ -890,8 +890,8 @@ at least one link ahead on every free-space path; `arrival_port_blind` keeps
 the default clock and excludes the arrival travel port from an arriving
 carrier's single sample, so straight paths are self-blind while maximum-speed
 corners still coarrive. Both pass isolated-source and external-source controls
-in `tests/test_field_phase_first.py`, `tests/test_arrival_port_blind.py` and
-`tests/test_rotation_self_interaction.py`. The same probes recorded that a
+in `tests/test_field_phase_first.py` (deleted on 2026-09-17), `tests/test_arrival_port_blind.py` (deleted on 2026-09-17) and
+`tests/test_rotation_self_interaction.py` (deleted on 2026-09-17). The same probes recorded that a
 decay-free schema 1 pulse keeps every unit on the Manhattan shell but that
 indivisible far-field units all follow the first axis weight, which is a
 separate open finding. This reconciliation edits repository contracts only;
@@ -901,11 +901,11 @@ the live Google document was not edited.
 
 | Highlights section | Authoritative contract / implementation owner | Evidence owner |
 | --- | --- | --- |
-| 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_open_boundaries.py, test_boundary_configuration.py and architecture tests |
-| 10.2 | [Disturbances](DISTURBANCES.md), core/disturbance_state.py | test_generic_identity.py |
+| 10.1 | [Disturbances](DISTURBANCES.md), core/topology.py | test_boundary_configuration.py and architecture tests (test_open_boundaries.py deleted on 2026-09-17) |
+| 10.2 | [Disturbances](DISTURBANCES.md), core/disturbance_state.py | test_initialization.py and test_disturbance_engine.py (test_generic_identity.py deleted on 2026-09-17) |
 | 10.3 | [Spatial fields](SPATIAL_FIELDS.md), fields/spatial.py, fields/spatial_decay.py | finite-field and spatial transport tests |
 | 10.4 | [Local field rules](LOCAL_FIELD_RULES.md), fields/local_field_rules.py | test_local_field_rules.py |
-| 10.5 | [Spatial couplings](SPATIAL_COUPLINGS.md), fields/spatial_interactions.py | test_spatial_interactions.py, test_atomic_interactions.py |
+| 10.5 | [Spatial couplings](SPATIAL_COUPLINGS.md), fields/spatial_interactions.py | test_spatial_interactions.py (test_atomic_interactions.py deleted on 2026-09-17) |
 | 10.6 | [Definitions](../SIMULATOR_DEFINITIONS.md), core/disturbance_engine.py, core/spatial_engine.py | disturbance and spatial scheduling tests |
-| 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_workspace_integration.py, test_recorded_movie.py |
+| 10.7 | [Workspace](WORKSPACE.md), runner.py, diagnostics/disturbance_render.py, ui_assets | test_disturbance_application.py (test_workspace_integration.py and test_recorded_movie.py deleted on 2026-09-17) |
 | 10.8 | [Architecture](ARCHITECTURE.md), [recovery](RECOVERY.md), [regression skill](../skills/regression-check/SKILL.md) | [test expectations](TEST_EXPECTATIONS.md), [validation](VALIDATION.md) |

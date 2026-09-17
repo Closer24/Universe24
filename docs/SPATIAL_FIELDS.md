@@ -302,11 +302,11 @@ boundaries record escaping rays. Ray fields reject octant seeds, axis/octant
 weights, vector fields, field rules, spatial interactions, `node_execution` and
 the shared field clock. Host work per Node is bounded by `ray_slots`. An emitted amount below `rays_per_tick` fills only as many headings as it has quanta and moves the cursor on by that many, so a small stock still sweeps the whole sequence in turn.
 
-The [inverse-square probe](../examples/inverse-square/README.md) measures the
+The inverse-square probe (`examples/inverse-square/`, deleted on 2026-09-17) measures the
 result: every Manhattan shell still carries exactly one tick of emission, and
 with an evenly spread heading sequence the time-averaged flux per node follows the
 solid angle the node subtends from the source, in every direction. The
-[gravity probe](../examples/gravity-probe/README.md) then couples held and moving
+gravity probe (`examples/gravity-probe/`, deleted on 2026-09-17) then couples held and moving
 bodies to that flux with `mass x flux / D` and reports attraction, an inverse
 square in every direction, and mass-independent acceleration.
 
@@ -558,7 +558,7 @@ cycles, then the stock it held when the rule first saw it, divided over `K`
 cycles and never more than is left. The count and the initial stock are a
 record row (`dissolve_clocks`), so the schedule follows the record wherever it
 moves. A particle that pays itself out as rays this way is a matter wave in
-flight; the [matter-wave probe](../examples/matter-wave/README.md) lands one
+flight; the matter-wave probe (`examples/matter-wave/`, deleted on 2026-09-17) lands one
 on a screen as the fringe of its momentum.
 
 Quanta are signed when the field is. A funded emission of a negative amount
@@ -645,7 +645,7 @@ with equal advance, and a Huygens re-emission carries the advance of the
 largest share it absorbed with the phase. An advance from the emitter's
 momentum, `|p| / D`, supplies a candidate de Broglie relation: a faster beam has a
 shorter wavelength within the probe's configured range. The
-[de Broglie probe](../examples/de-broglie/README.md) measures the fringe spacing
+de Broglie probe (`examples/de-broglie/`, deleted on 2026-09-17) measures the fringe spacing
 it gives; this relation is configured, not derived. A ray without its own advance uses the
 field's. Without the key the field is the plain `isotropic-ray-field-v1`; a
 `kerengonen_phase` or `kerengonen_advance` on an emission requires the key. The
@@ -679,7 +679,7 @@ resident rays, in-flight rays, external injection and completed escape contribut
 binding, and this accounting never repairs state or replaces the separate local
 energy/momentum audit.
 momentum, `|p| / D`, is the de Broglie rule: a faster beam has a shorter
-wavelength, and the [de Broglie probe](../examples/de-broglie/README.md)
+wavelength, and the de Broglie probe (`examples/de-broglie/`, deleted on 2026-09-17)
 measures the fringe spacing it gives. A ray without its own advance uses the
 field's.
 
@@ -696,7 +696,7 @@ the field. A mirror whose absorb rule carries a `fraction` is partial: it
 returns the fraction it takes and lets the rest pass. A lamp facing a mirror
 then holds a standing wave: the reading along the line repeats every
 `phase_steps / (2 x advance)` links, as the
-[mirror probe](../examples/kerengonen-mirror/README.md) measures.
+mirror probe (`examples/kerengonen-mirror/`, deleted on 2026-09-17) measures.
 Without the key the field is the plain `isotropic-ray-field-v1`; a
 `kerengonen_phase`, `kerengonen_advance` or `kerengonen_mirror` on an emission
 requires the key. The runner records the identity `kerengonen-ray-field-v1`. The [double-slit probe](../examples/kerengonen-double-slit/README.md)
@@ -720,7 +720,7 @@ Euclidean metric only makes rays slower, so that every heading covers the same
 Euclidean distance per tick and the front is round to within one link. Rays
 merge only with equal wait. Two sources in phase then give a fringe in
 Euclidean path difference, and the
-[Euclidean pace probe](../examples/euclidean-pace/README.md) measures both.
+Euclidean pace probe (`examples/euclidean-pace/`, deleted on 2026-09-17) measures both.
 
 A ray field may also set `"pace": [n, d]` with `n <= d`: the fastest heading
 then hops `n` links every `d` ticks, on either metric, by the same wait. A
