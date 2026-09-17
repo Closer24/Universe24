@@ -280,6 +280,31 @@ bending of a passing ray is the same on an axis and on a diagonal is a
 measurable prediction (experiment A6 of the
 [experiments register](EXPERIMENTS.md)), not an assumption.
 
+**Light is the field, and the field spreads (model owner, 2026-09-17;
+Highlights 3.5).** Light and the field of a charge are one family of the
+catalog, the electromagnetic field in ray form: a photon is one quantum of a
+field ray, an emission is a release of that family at an event, an
+absorption is a meeting of a field ray with a bound group, and nothing
+distinguishes the field ray an electron releases from the light an atom
+emits but its amount, its phase and its event. Because light spreads, the
+field spreads by the same rule: every Node that field content reaches
+releases it again in all six headings by a declared split table of the
+family, the backward heading included (a forward-only split piles the field
+on the diagonals and empties the axes), the remainder placed by Highlights
+3.17; Huygens' principle in the lattice's language, one catalog entry of the
+family and not an engine mechanism. Field rays carry no event, so field
+content meeting at a Node combines by phase before it spreads (Highlights
+3.20); a single quantum cannot split, and where the table would give a
+heading less than one the remainder leaves whole through the heading the
+phase selects, so a quantum never waits, the wave shows in intensities and
+the Detector decides where a quantum is realized. The field of a static
+charge filling space with its net momentum through a Node falling as 1/r²
+(Gauss), isotropy at large scale with the lattice's residue for A6, the
+photon as the far field arriving a whole quantum at a time, and diffraction
+with a wall as a body that absorbs follow from it, none inserted. This is
+feature 12 of section 6; until it lands the field lives on the six axis
+lines of its source and light goes straight.
+
 **Speed is a clock slowing (model owner, 2026-09-17; Highlights 3.28).**
 Everything on the board moves at one Link per interval; there is no other
 speed in the engine. Matter is slower only because the output clock of its
@@ -706,6 +731,10 @@ every such set; Highlights 3.20 is the text to follow.
    never changes, the momentum table and the per-axis accumulator, the
    bodies' momentum line and the run record `external_bodies`; see
    [external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1).)
+   Light is the field (model owner, 2026-09-17, Highlights 3.5): the
+   catalog's `light` family is the field of the electron and the positron,
+   one family for the released field and the emitted light, and its
+   spreading at every Node it reaches is feature 12, below.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
@@ -803,6 +832,20 @@ coupling (feature 8) that does not fire for two electrons in the same state
 with the same spin. The Bell prediction of
 [hypothesis 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail)
 is testable before this feature, in its phase form.
+
+**Feature 12, field spreading (model owner, 2026-09-17; Highlights 3.5).**
+Planned. One catalog entry of the light family, its `spread` table, not an
+engine mechanism: every Node that field content reaches releases it again
+in all six headings by the declared split table, the backward heading
+included, the remainder placed by Highlights 3.17; field content meeting at
+a Node combines by phase before it spreads; a quantum never waits, the
+remainder leaving whole through the heading the phase selects where the
+table would give a heading less than one. Its cost is measured before
+adoption, since the field then fills the board
+([performance record](PERFORMANCE.md)); until it lands the field lives on
+the six axis lines of its source and light goes straight. It unlocks A1, A2
+and the diagonal series of A6 in the
+[experiments register](EXPERIMENTS.md).
 
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature

@@ -43,55 +43,38 @@
   },
   "rays": {
     "light": {
-      "kind": "ray",
+      "kind": "field",
+      "field_of": ["electron", "positron"],
+      "release": [1, 4],
       "rest_rate": 0,
       "charge": 0,
       "phase_bits": "default",
       "field": [],
       "polarization": "undecided",
-      "decided_by": {"polarization": "A12"},
-      "note": "A wave ray with no mass and no charge (Highlights 3.3): its phase does not advance along its line, so it carries the phase of the clock that emitted it and delivers it unchanged, and the frequency of light is its emitter's rate. Its field is not declared in this slice: no entry of the register meets the field of a light ray. Polarization, a transverse mode with two states (the two lattice axes perpendicular to an axial heading), is feature 11 (Highlights 3.26), read by the polarizer coupling."
+      "spread": "undecided",
+      "decided_by": {"polarization": "A12", "spread": "feature 12"},
+      "note": "The electromagnetic field in ray form (Highlights 3.5, model owner, 2026-09-17): light and the field of a charge are one family, and a photon is one quantum of it. No mass and no charge (Highlights 3.3): its phase does not advance along its line, so a ray carries the phase of the clock that emitted it, the emitter's at emission, and delivers it unchanged, and the frequency of light is its emitter's rate. It is released by the electron and the positron as their field, at every Node the releaser is at, one ray per Port heading except a traveling releaser's own, of amount floor(amount x 1 / 4), with the releaser's phase (the ratio tests/test_released_field.py declares; A5 confronts it with Coulomb's law), and it is emitted at an event by any source, a lamp or an atom; nothing distinguishes the ray a charge releases from the light an atom emits but its amount, its phase and its event, and an absorption is its meeting with a bound group (examples/nature, 2026-09-17). Charge 0: a release is booked as a source (Highlights 3.15), so a charge on this family would be created with it; the sign of the charge a released ray stands for is its releaser's, read from the two families that meet by the coupling (electron_field_turn, A5) or by a body's momentum_table. A field has no field. The engine names one family per field_of, so a world that holds both charged families declares this family once per releaser today, as it declares the mass field, and a world whose light no charge releases declares neither field_of nor release. The spread entry is the six-heading split table of feature 12 by which every Node that light reaches releases it again, the remainder placed by Highlights 3.17: it must include the backward heading, since a forward-only split piles the field on the diagonals and empties the axes, and a quantum never waits: where the table would give a heading less than one, the remainder leaves whole through the heading the phase selects. Until it is declared the field lives on the six axis lines of its source and light goes straight. Polarization, a transverse mode with two states (the two lattice axes perpendicular to an axial heading), is feature 11 (Highlights 3.26), read by the polarizer coupling."
     },
     "electron": {
       "kind": "ray",
       "rest_rate": 1,
       "charge": -3,
       "phase_bits": "default",
-      "field": ["electron_field", "mass_field"],
+      "field": ["light", "mass_field"],
       "spin": "undecided",
       "decided_by": {"spin": "hypothesis 12"},
       "reference": {"mass_kev": 511, "note": "the register's value for A9; a measured number for comparison, not a lattice value"},
-      "note": "Rest rate 1, the unit m_0 (hypotheses 12 and 14): one phase step per interval, the electron's mass as a clock. Charge -1 e, that is -3 in thirds. Its own field is electron_field and, for gravity, the mass field of its content. A10 decides whether the electron is the first rung of the ladder at the real N; until then every other rest rate is written as a multiple of the electron's. Spin, the two-state polarization of the electron family (feature 11), is read only by pauli_exclusion; the composite spectrum of hypothesis 12 is where it is decided."
+      "note": "Rest rate 1, the unit m_0 (hypotheses 12 and 14): one phase step per interval, the electron's mass as a clock. Charge -1 e, that is -3 in thirds. Its own field is light, the electromagnetic field in ray form (Highlights 3.5, 2026-09-17; the family electron_field until that date), and, for gravity, the mass field of its content. A10 decides whether the electron is the first rung of the ladder at the real N; until then every other rest rate is written as a multiple of the electron's. Spin, the two-state polarization of the electron family (feature 11), is read only by pauli_exclusion; the composite spectrum of hypothesis 12 is where it is decided."
     },
     "positron": {
       "kind": "ray",
       "rest_rate": 1,
       "charge": 3,
       "phase_bits": "default",
-      "field": ["positron_field", "mass_field"],
+      "field": ["light", "mass_field"],
       "spin": "undecided",
       "decided_by": {"spin": "hypothesis 12"},
-      "note": "The electron's antiparticle: the same rest rate, charge +1 e (+3 in thirds), its own field positron_field. A5 runs it against an electron for the attraction of opposite charges."
-    },
-    "electron_field": {
-      "kind": "field",
-      "field_of": ["electron"],
-      "release": [1, 4],
-      "rest_rate": 0,
-      "charge": 0,
-      "phase_bits": "default",
-      "field": [],
-      "note": "The electron's own information spreading in ray form in all directions (Highlights 3.5): released at every Node an electron departs, one ray per Port heading except the electron's own, of amount floor(amount x 1 / 4), with the electron's phase, which a field ray delivers unchanged (rest rate 0). A field has no field. Charge 0: the released field is booked as a source (Highlights 3.15), so a charge on the field family would be created with it; the charge it stands for is that of its field_of family, and a coupling that reads the charge product (A5) reads it from the two families that meet. The release ratio is the one tests/test_released_field.py declares; A5 confronts the field with Coulomb's law."
-    },
-    "positron_field": {
-      "kind": "field",
-      "field_of": ["positron"],
-      "release": [1, 4],
-      "rest_rate": 0,
-      "charge": 0,
-      "phase_bits": "default",
-      "field": [],
-      "note": "The positron's own field, declared as electron_field is: the engine names one family per field (field_of), and the sign of the charge a field ray stands for is its family's. A5 meets it with an electron."
+      "note": "The electron's antiparticle: the same rest rate, charge +1 e (+3 in thirds), its own field light, as the electron's is (Highlights 3.5, 2026-09-17; the family positron_field until that date), the sign of the charge its released rays stand for being the positron's, read by the coupling that meets them. A5 runs it against an electron for the attraction of opposite charges."
     },
     "muon": {
       "kind": "ray",
@@ -100,7 +83,7 @@
       "phase_bits": "default",
       "field": ["mass_field"],
       "decided_by": {"rest_rate": "A10"},
-      "note": "A charged ray of the electron's kind on a higher rung of the ladder: its rest rate is k x 206.768 28 for the electron's rung k, and A10 finds the smallest k at which the muon, tau and proton ratios are all integers at one N (hypothesis 12); the ladder value is undecided until then. No entry of the register places a muon ray on a board, so its own field family and its couplings are declared when one does; its mass field is declared because it is massive."
+      "note": "A charged ray of the electron's kind on a higher rung of the ladder: its rest rate is k x 206.768 28 for the electron's rung k, and A10 finds the smallest k at which the muon, tau and proton ratios are all integers at one N (hypothesis 12); the ladder value is undecided until then. No entry of the register places a muon ray on a board, so its field, light as for every charge (Highlights 3.5, 2026-09-17), and its couplings are declared in its record when one does; its mass field is declared because it is massive."
     },
     "neutrino": {
       "kind": "ray",
@@ -150,7 +133,7 @@
       "field": [],
       "colour": "undecided",
       "decided_by": {"release": "hypothesis 13", "colour": "hypothesis 13"},
-      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as electron_field is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding."
+      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as light is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding."
     },
     "proton": {
       "kind": "bound_group",
@@ -208,21 +191,21 @@
     "electron_field_turn": {
       "status": "decided",
       "engine": {"identity": "released-field-v1 with ray-meeting-conversion-v1", "landed": true},
-      "participants": [{"type": "electron"}, {"type": "electron_field"}],
+      "participants": [{"type": "electron"}, {"type": "light"}],
       "outputs": [
         {"field": "electron", "amount": {"of": 0}, "heading": "same", "input": 1, "phase": {"of": 0}},
-        {"field": "electron_field", "amount": {"of": 1}, "heading": "reversed", "input": 1}
+        {"field": "light", "amount": {"of": 1}, "heading": "reversed", "input": 1}
       ],
       "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
       "strength_table": "undecided",
       "opposite_charge": "undecided",
       "decided_by": {"strength_table": "A5", "opposite_charge": "A5"},
-      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets an electron_field ray leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting an electron_field ray, an electron meeting a positron_field ray) are written before A5's run."
+      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets a light ray, the field of a charge (Highlights 3.5, 2026-09-17; the family electron_field until that date), leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting the light an electron released, an electron meeting a positron's) are written before A5's run."
     },
     "recoil_return": {
       "status": "open",
       "engine": {"identity": "ray-meeting-conversion-v1, a rule of the releasing family with its own field at the group's Node", "landed": true},
-      "participants": [{"type": ["electron_field", "positron_field", "mass_field", "gluon"]}, {"type": ["electron", "positron", "muon", "up", "down", "proton", "neutron"]}],
+      "participants": [{"type": ["light", "mass_field", "gluon"]}, {"type": ["electron", "positron", "muon", "up", "down", "proton", "neutron"]}],
       "outputs": "undecided",
       "invariants": [{"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}],
       "decided_by": {"outputs": "A5"},
@@ -387,7 +370,7 @@
         "decided_by": "A1"
       },
       "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
-      "note": "A1: each slit is a declared catalog coupling that re-emits the arriving light ray over the forward headings with its phase unchanged; the share per heading is written before the run. The two slit rays then meet at each screen Node under born_steering."
+      "note": "A1: each slit is a declared catalog coupling that re-emits the arriving light ray over the forward headings with its phase unchanged; the share per heading is written before the run. The two slit rays then meet at each screen Node under born_steering. With feature 12, field spreading (Highlights 3.5, 2026-09-17), light spreads by the split table of its own family and a slit is a gap in a wall that absorbs, needing no rule of its own; this coupling stands until then."
     },
     "polarizer": {
       "status": "open",
@@ -473,10 +456,10 @@
       "note": "The massive neutral and the massive charged families of rate 3 are the run's own declarations, not catalog rays; return_mode annul; nothing meets anything."
     },
     "A5": {
-      "rays": ["electron", "positron", "electron_field", "positron_field"],
+      "rays": ["electron", "positron", "light"],
       "couplings": ["electron_field_turn", "recoil_return"],
       "apparatus": ["detector"],
-      "note": "The neutral control family of the same rate and content is the run's own declaration."
+      "note": "The neutral control family of the same rate and content is the run's own declaration; light, the field of both charged families (Highlights 3.5, 2026-09-17), is declared once per releaser today, one family per field_of."
     },
     "A6": {
       "rays": ["light", "mass_field"],
@@ -491,7 +474,7 @@
       "note": "Two bound groups of retained content M1 and M2, their families the run's declaration, and the same as two external bodies each with a coupling table naming the other's field."
     },
     "A8": {
-      "rays": ["electron", "proton", "electron_field", "light"],
+      "rays": ["electron", "proton", "light"],
       "couplings": ["electron_field_turn", "electron_proton_binding", "absorber"],
       "apparatus": ["external_body", "detector"],
       "note": "The fixed proton is an external body of the proton family, charge +3, amount M_p, marked as a source; when its recoil is wanted it is the bound group proton under quark_binding."
@@ -509,7 +492,7 @@
       "note": "A catalog fit, no board: the smallest electron rung k at which the muon, tau and proton ratios are integers at one N; the tau is fitted as a number, not being a catalog ray yet."
     },
     "A11": {
-      "rays": ["light", "electron", "positron", "electron_field", "positron_field", "mass_field"],
+      "rays": ["light", "electron", "positron", "mass_field"],
       "couplings": ["born_steering", "slit", "absorber", "electron_field_turn", "recoil_return", "mass_field_delay"],
       "apparatus": ["detector", "external_body"],
       "note": "The worlds of A1, A5 and A6 at phase_bits 75, the electron rays at the rung k of A10: a width check that the wide phase leaks into no coupling, the N of nature being the lag modulus of feature 8b (lag_bits) and not the phase circle (Highlights 3.28)."

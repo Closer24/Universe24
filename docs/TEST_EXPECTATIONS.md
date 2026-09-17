@@ -1601,7 +1601,11 @@ first run:
 
 - `records`: the twelve sections, `phase_bits` without a real-N value and
   `lag_bits` open, its world key undecided and its engine (feature 8b) not
-  landed; 14 rays and 16 couplings; every ray with
+  landed; 12 rays and 16 couplings; `light` a field ray of `field_of`
+  electron and positron with release `[1, 4]`, its `spread` undecided and
+  decided by feature 12, `light` in the `field` of both charged families and
+  neither `electron_field` nor `positron_field` a ray (Highlights 3.5,
+  2026-09-17); every ray with
   `kind`, `rest_rate`, `charge`, `phase_bits`, `field` and `note`, a field ray
   with rest rate 0, charge 0 and no field, listed by every ray in its
   `field_of` and listing each of them, a bound group's charge the sum over its
@@ -1615,8 +1619,8 @@ first run:
   `external-body-v1` and its apparatus family of rest rate 0, charge 0 and no
   field, not a ray of the catalog; the Detector's declaration exactly
   `position`, `setting`, `seed`; both apparatus kinds landed;
-- `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
-  A10, A12, hypothesis 12, hypothesis 13, feature 8b, read from the
+- `undecided`: 29 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  A10, A12, hypothesis 12, hypothesis 13, feature 8b, feature 12, read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
   of the hypotheses page and the `feature <n>` names of the ray-event model;
   the table of `CATALOG.md` equal to the file, path for path and decider for
@@ -1624,21 +1628,23 @@ first run:
 - `experiments`: the ids equal to the `### A<n>.` headings of the register,
   14 of them, every listed ray, coupling and apparatus resolving and none
   repeated; A1's first coupling `born_steering`, A5's `electron_field_turn`;
-- `worlds`: the rays a world can select today are `light`, `electron`,
-  `positron`, `electron_field` and `positron_field`, in that order. For each,
-  one lamp at (7,7,7) holding 5 emits along +X at phase 3 (a field's world
-  holds its source and the field, the lamp emitting the source): after tick 2
-  the emitted ray is at (9,7,7), heading 0, amount 5, steps 2, mask 1, shares
-  (5, 0, 0, 0, 0, 0) and phase 3 + 2 × rate mod 8, that is 3 for light and 5
-  for the electron and the positron; for a field, the source's departure from
-  (8,7,7) at tick 2 releases five rays of amount floor(5 × 1 / 4) = 1, phase 4
-  (the source's phase at the release), steps 1 and no event, at (7,7,7)
-  heading 1, (8,8,7) heading 2, (8,6,7) heading 3, (8,7,8) heading 4 and
-  (8,7,6) heading 5; the totals are 5 per source and 5 per field with a field
-  source total of 5; the charge totals are 5 × charge, −15 for the electron
-  and +15 for the positron, 0 for light and for a field; the accounting
-  balances at every tick. The couplings the engine runs today are
-  `born_steering`, `electron_field_turn`, `absorber`, `mirror` and
+- `worlds`: the rays a world can select today are `light`, `electron` and
+  `positron`, in that order, and the releases a world can declare today are
+  `light` by the electron and `light` by the positron, in that order
+  (Highlights 3.5, 2026-09-17). For each ray, one lamp at (7,7,7) holding 5
+  emits along +X at phase 3: after tick 2 the emitted ray is at (9,7,7),
+  heading 0, amount 5, steps 2, mask 1, shares (5, 0, 0, 0, 0, 0) and phase
+  3 + 2 × rate mod 8, that is 3 for light and 5 for the electron and the
+  positron. For each release, the world holds the releaser and `light`
+  declared `field_of` the releaser with its release, the same lamp emitting
+  the releaser: the releaser's departure from (8,7,7) at tick 2 releases five
+  rays of amount floor(5 × 1 / 4) = 1, phase 4 (the releaser's phase at the
+  release), steps 1 and no event, at (7,7,7) heading 1, (8,8,7) heading 2,
+  (8,6,7) heading 3, (8,7,8) heading 4 and (8,7,6) heading 5; the totals are
+  5 for the releaser and 5 for light with a light source total of 5; the
+  charge totals are 5 × charge, −15 for the electron and +15 for the
+  positron, 0 for light; the accounting balances at every tick. The
+  couplings the engine runs today are `born_steering`, `electron_field_turn`, `absorber`, `mirror` and
   `phase_plate`, in that order. `born_steering`: two light lamps holding 8,
   at (6,7,7) emitting along +X at phase 0 and at (8,7,7) along −X at phase
   d, meet at (7,7,7) after tick 1 and are steered at tick 2: at d = 0, 1, 2,
@@ -1647,8 +1653,9 @@ first run:
   and shares (0, 0, +Y amount, −Y amount, 0, 0) with steps 1, an output of 0
   being no ray; nothing is left at (7,7,7); the total is 16 and the source
   total 0. `electron_field_turn`: an electron lamp holding 5 at (6,7,7)
-  emitting along +X at phase 0 and an `electron_field` lamp holding 1 at
-  (7,8,7) emitting along −Y at phase 0 meet at (7,7,7) after tick 1; at tick
+  emitting along +X at phase 0 and a `light` lamp holding 1 at (7,8,7)
+  emitting along −Y at phase 0, light declared `field_of` the electron, meet
+  at (7,7,7) after tick 1; at tick
   2 the electron leaves on the field ray's heading −Y to (7,6,7) with amount
   5, phase 2, steps 1, mask 12 and shares (0, 0, 1, 5, 0, 0), the field ray
   returns reversed to (7,8,7) with amount 1, phase 0, steps 1 and the same
@@ -1656,7 +1663,7 @@ first run:
   field rays of amount 1, phase 1, steps 1 and no event, at (8,7,7) heading
   0, (6,7,7) heading 1, (7,8,7) heading 2 (beside the reversed ray), (7,7,8)
   heading 4 and (7,7,6) heading 5; the totals are electron 5 and
-  `electron_field` 6, the source totals 0 and 5, the charge totals −15 and
+  `light` 6, the source totals 0 and 5, the charge totals −15 and
   0; nothing is left at (7,7,7). The three external-body couplings share one
   light lamp holding 5 at (7,7,7) emitting along +X at phase 1 and one body
   at (8,7,7) of amount 4096 at rest. `absorber`: the body is of the electron
