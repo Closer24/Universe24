@@ -830,6 +830,10 @@ interval.
 Every node carries one bit, Detector or not; the mark is bounded node
 metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
+source is a Detector: whatever emits a ray of a known family is a marked
+node, because knowing the family of what it emits is a measurement; the
+birth event of a pair therefore happens at a marked node, which draws on
+every arrival like any other. A
 marked node does one very simple thing. What arrives is a wave ray carrying
 information; every ray is a wave ray, so the kind makes no difference. For
 each transfer that arrives, whatever it is, it draws 1 or 0. On 1 it behaves
