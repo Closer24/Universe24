@@ -222,13 +222,11 @@ class InteractionDefinition:
     # Splits by a declared table among the outputs, applied after the assignments.
     splits: tuple[TableSplit, ...] = ()
     # Delays by a declared table per Port, on the outputs of a meeting of rays
-    # (ray-binding-v1), and the output-clock delay a binding rule declares for the
-    # Node that holds its bound group: every arrival there waits this many intervals.
+    # (ray-binding-v1, gravity by delay).
     lags: tuple[LagTable, ...] = ()
-    ray_delay: int = 0
-    # The momentum table of a binding rule (bound-group-motion-v1): one sign per
-    # spatial field, -1 attraction toward the source of an arriving field ray of
-    # that family, 1 repulsion, 0 for a family the table does not name.
+    # The momentum table of a coupling of free rays (ray-momentum-turn-v1): one
+    # sign per spatial field, -1 attraction toward the source of an arriving field
+    # ray of that family, 1 repulsion, 0 for a family the table does not name.
     momentum_table: tuple[int, ...] = ()
     # The Detector bit the outputs of a meeting of rays inherit
     # (detector-bit-property-v1, `inherited_bit` in spatial_state): -1 the highest

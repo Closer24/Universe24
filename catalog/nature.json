@@ -146,7 +146,7 @@
       "field": ["light", "mass_field"],
       "decided_by": {"rest_rate": "A10"},
       "reference": {"mass_kev": 938272, "note": "the register's value for A9; the ratio to the electron, 1836.152 67, is the one A10 fits"},
-      "note": "Matter (Highlights 3.4): two up and one down quark rays held at one Node by quark_binding, colour-neutral, charge +3 in thirds (+1 e). Its rest rate is its retained content, the ladder rung A10 fits; its fields are light, the field of its charge (Highlights 3.5, 2026-09-17), and the mass field of its retained content, for gravity (Highlights 3.28), and the gluon is released through its members. In A8 it stands as an external body of this family, charge +3, amount M_p, radiating light; when its recoil is wanted it is this bound group. No coupling converts it: the proton is stable."
+      "note": "Matter (Highlights 3.4): two up and one down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1; held at one Node under the interim form before), colour-neutral, charge +3 in thirds (+1 e). Its rest rate is its retained content, the ladder rung A10 fits; its fields are light, the field of its charge (Highlights 3.5, 2026-09-17), and the mass field of its retained content, for gravity (Highlights 3.28), and the gluon is released through its members. In A8 it stands as an external body of this family, charge +3, amount M_p, radiating light; when its recoil is wanted it is this bound group. No coupling converts it: the proton is stable."
     },
     "neutron": {
       "kind": "bound_group",
@@ -162,7 +162,7 @@
       },
       "decided_by": {"rest_rate": "hypothesis 12"},
       "reference": {"mass_kev": 939565, "note": "the register's value for A9"},
-      "note": "Matter: one up and two down quark rays held at one Node by quark_binding, colour-neutral, charge 0. Its rest rate is its retained content, the composite spectrum of hypothesis 12; A9 runs its decay and A14 may run it as the moving bound group. Its own field is the mass field, and the gluon is released through its members, as for the proton."
+      "note": "Matter: one up and two down quark rays on a ring of Nodes under quark_binding (since 2026-09-17 a corner table, loop-binding-v1), colour-neutral, charge 0. Its rest rate is its retained content, the composite spectrum of hypothesis 12; A9 runs its decay and A14 may run it as the moving bound group. Its own field is the mass field, and the gluon is released through its members, as for the proton."
     },
     "mass_field": {
       "kind": "field",
@@ -229,45 +229,47 @@
     },
     "electron_proton_binding": {
       "status": "open",
-      "engine": {"identity": "ray-binding-v1", "landed": true},
+      "engine": {"identity": "loop-binding-v1: ray-meeting-conversion-v1, an outputs rule whose loop closes", "landed": true},
       "participants": [{"type": "electron"}, {"type": "proton"}],
-      "binds": ["electron"],
-      "delay": 1,
-      "rule_form": "a rule without outputs whose assignments set delay 1 on its participants (ray-binding-v1): the first firing forms the group, each later firing is its tick, an event, and an earlier declared outputs rule naming a bound participant and an arriving ray unbinds it; ray_delay on the rule is the group's mass as output-clock delay",
+      "outputs": [
+        {"field": "electron", "amount": {"of": 0}, "heading": "reversed", "input": 1, "phase": {"of": 0}},
+        {"field": "proton", "amount": {"of": 1}, "heading": "reversed", "input": 0, "phase": {"of": 1}}
+      ],
+      "closes": "the Port form of the corner table (docs/LOOP_BINDING.md, section 2): at a corner each input leaves through the Port the other came in by, with its own amount and phase, so on a ring an electron ray circulating one way and a proton ray the other are back at every corner in the same state; closure is the presence of a partner at every corner, the headings by the ring's geometry, every amount under this form, and the phase closing on the circle, L r = 0 (mod N) per family in one circuit (docs/LOOP_BINDING.md, section 3); this form gives no content ladder, which is A8's, and the electron's meetings with the proton's own field rays (electron_field_turn) are the open closure the ladder needs",
       "binding_energy_ladder": "undecided",
       "decided_by": {"binding_energy_ladder": "A8"},
       "invariants": [
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "Matter as a bound group (Highlights 3.4): the electron ray around a bound proton, its trajectory changed at every step by the field rays the proton releases; binding is the interaction whose result is zero events, and here it is a delay-1 rule: the electron is held one interval at the Node and meets the proton's field again at the next tick. Whether bound trajectories exist only at discrete retained energies, and their ladder (the Balmer ratio 27/5), is what A8 decides; nothing states a level structure. Unbinding is an arriving light ray of content at least the binding (A8's second series). Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), a binding coupling is an ordinary meeting table whose loop closes: the electron's meetings with the proton's field rays reproduce the rays that entered them on a ring of Nodes, the held delay-1 form of ray-binding-v1 is the interim form, and the ladder A8 decides is the set of loop-closing contents."
+      "note": "Matter as a bound group (Highlights 3.4): the electron ray around a proton, on a ring of Nodes, its meetings with the proton reproducing the rays that entered them. Whether bound trajectories exist only at discrete retained energies, and their ladder (the Balmer ratio 27/5), is what A8 decides; nothing states a level structure. Unbinding is an arriving light ray of content at least the binding (A8's second series): a ray arriving at a corner is met by the table declared for the families present, and its outputs leave the ring or join it. Written as a corner table on 2026-09-17 (feature 14, loop-binding-v1): the held delay-1 form of ray-binding-v1, with its ray_delay wait, is gone from the engine; a binding coupling is an ordinary meeting table whose loop closes, the electron's meetings with the proton reproduce the rays that entered them on a ring of Nodes, and the ladder A8 decides is the set of loop-closing contents, which the Port form does not restrict (docs/LOOP_BINDING.md, section 7)."
     },
     "quark_binding": {
       "status": "open",
-      "engine": {"identity": "ray-binding-v1 with three participants and the colour property (catalog work after feature 10)", "landed": false},
+      "engine": {"identity": "loop-binding-v1 with three participants and the colour property (catalog work after feature 10)", "landed": false},
       "participants": [{"type": ["up", "down"]}, {"type": ["up", "down"]}, {"type": ["up", "down"]}],
-      "binds": ["up", "down"],
       "guard": "the three colours differ (the group is colour-neutral)",
-      "table": "undecided",
-      "decided_by": {"table": "hypothesis 12"},
+      "outputs": "undecided",
+      "closes": "a corner table over three quark rays, an outputs rule whose loop closes: which contents and phases of three rays on a ring reproduce themselves under it is the composite spectrum of hypothesis 12, counted as A10 counts (docs/LOOP_BINDING.md, section 7)",
+      "decided_by": {"outputs": "hypothesis 12"},
       "invariants": [
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The strong binding (Highlights 3.4, 3.26): three quark rays held at one Node, one of each colour, an interaction that repeats every interval and releases no event, possibly nothing more than a very large output-clock delay the bound rays create together (3.28). The proton and the neutron are its bound groups; which combinations stay bound and what they retain is the composite spectrum of hypothesis 12, its first targets the lightest cases; A9 and A14 run its groups. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), this is an ordinary meeting table whose loop closes, the three quark rays circulating on a ring of Nodes and meeting again in the same state; the held form at one Node is the interim form, and the composite spectrum of hypothesis 12 is the set of loops the table closes."
+      "note": "The strong binding (Highlights 3.4, 3.26): three quark rays, one of each colour, circulating on a ring of Nodes and meeting again in the same state, their corner table reproducing the rays that entered it. The proton and the neutron are its bound groups; which combinations stay bound and what they retain is the composite spectrum of hypothesis 12, its first targets the lightest cases; A9 and A14 run its groups. Written as a corner table on 2026-09-17 (feature 14, loop-binding-v1): the held form at one Node is gone from the engine, this is an ordinary meeting table whose loop closes, its outputs undecided, and the composite spectrum of hypothesis 12 is the set of loops the table closes."
     },
     "gluon_gluon_binding": {
       "status": "open",
-      "engine": {"identity": "ray-binding-v1 on gluon rays, with the colour of hypothesis 13", "landed": false},
+      "engine": {"identity": "loop-binding-v1 on gluon rays, with the colour of hypothesis 13", "landed": false},
       "participants": [{"type": "gluon"}, {"type": "gluon"}],
-      "binds": ["gluon"],
-      "table": "undecided",
-      "decided_by": {"table": "hypothesis 13"},
+      "outputs": "undecided",
+      "closes": "a corner table over two gluon rays, an outputs rule whose loop closes along the line between two quarks: the string of E7; which patterns close under it is hypothesis 13's",
+      "decided_by": {"outputs": "hypothesis 13"},
       "invariants": [
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), an ordinary meeting table whose loop closes. In the language of binding as a loop (Highlights 3.26, 2026-09-17): the strong field differs from light by one catalog line, its rays couple to each other, so the field between quarks does not spread as a sphere but closes into loops of gluon rays along the line between them, a string whose content, and so whose mass, grows with the distance; only colour-neutral patterns close a loop, which is confinement as a closure condition; and a string stretched to the content at which a new loop closes with a quark and an antiquark breaks into two hadrons, which is hadronization; nothing inserted, hypothesis 13 in the research run E7 after feature 14."
+      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it. Written as a corner table on 2026-09-17 (feature 14, loop-binding-v1): an ordinary meeting table whose loop closes, its outputs undecided; the held form is gone from the engine. In the language of binding as a loop (Highlights 3.26, 2026-09-17): the strong field differs from light by one catalog line, its rays couple to each other, so the field between quarks does not spread as a sphere but closes into loops of gluon rays along the line between them, a string whose content, and so whose mass, grows with the distance; only colour-neutral patterns close a loop, which is confinement as a closure condition; and a string stretched to the content at which a new loop closes with a quark and an antiquark breaks into two hadrons, which is hadronization; nothing inserted, hypothesis 13 in the research run E7 after feature 14."
     },
     "weak_conversion": {
       "status": "open",
@@ -287,22 +289,22 @@
     },
     "pauli_exclusion": {
       "status": "open",
-      "engine": {"identity": "ray-binding-v1 with the spin property of feature 11", "landed": false},
+      "engine": {"identity": "loop-binding-v1 with the spin property of feature 11", "landed": false},
       "participants": [{"type": "electron"}, {"type": "electron"}],
-      "binds": ["electron"],
       "guard": "does not fire for two electrons in the same state with the same spin",
-      "table": "undecided",
-      "decided_by": {"table": "hypothesis 12"},
+      "outputs": "undecided",
+      "closes": "a corner table over two electron rays of one family, the Born form named by the design (docs/LOOP_BINDING.md, section 3, item 6: born_steering at the corner, closing at equal amounts with the senses a quarter turn apart, d = N/4 or 3N/4, and dispersing in phase), with the guard on spin; what two electrons of opposite spin bind to is hypothesis 12's",
+      "decided_by": {"outputs": "hypothesis 12"},
       "after": "feature 11",
       "invariants": [
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "Pauli exclusion is a binding coupling that does not fire for two electrons in the same state with the same spin (Highlights 3.26); after feature 11, polarization. Its table, what two electrons of opposite spin bind to, is decided with the composite spectrum of hypothesis 12."
+      "note": "Pauli exclusion is a binding coupling that does not fire for two electrons in the same state with the same spin (Highlights 3.26); after feature 11, polarization. Its table, what two electrons of opposite spin bind to, is decided with the composite spectrum of hypothesis 12. Written as a corner table on 2026-09-17 (feature 14, loop-binding-v1): an ordinary meeting table whose loop closes, its outputs undecided; the held form is gone from the engine."
     },
     "transmission_meets_held_share": {
       "status": "open",
-      "engine": {"identity": "ray-meeting-conversion-v1 with the hold of ray-binding-v1, where a transmission of inverse-split-v1 catches its share", "landed": true},
+      "engine": {"identity": "ray-meeting-conversion-v1 with the delay output of a meeting (an output-clock wait), where a transmission of inverse-split-v1 catches its share", "landed": true},
       "participants": [{"type": "light"}, {"type": "light"}],
       "outputs": "undecided",
       "decided_by": {"outputs": "A3"},
@@ -310,7 +312,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "A3: the transmission returned through the birth event by Alice's Detector meets Bob's share, held by an output-clock delay beyond the round trip; the coupling between the transmission and the held ray is a declared table, written before the run, whose exact expectation on the 256-step circle (724/256 at the singlet settings) is computed before it (hypothesis 11, line 2). The two rays are siblings of one event and the transmission carries the bit; the coupling reads only what a coupling reads."
+      "note": "A3: the transmission returned through the birth event by Alice's Detector meets Bob's share, waiting under a delay output beyond the round trip; the coupling between the transmission and the waiting ray is a declared table, and since loop-binding-v1 (2026-09-17) a ray waiting at its event Node is met by nothing there, so where the two meet is A3's to write with the table; written before the run, whose exact expectation on the 256-step circle (724/256 at the singlet settings) is computed before it (hypothesis 11, line 2). The two rays are siblings of one event and the transmission carries the bit; the coupling reads only what a coupling reads."
     },
     "absorber": {
       "status": "decided",

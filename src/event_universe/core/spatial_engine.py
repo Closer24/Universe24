@@ -30,7 +30,6 @@ from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
     REMAINDER_SIGNS,
-    BoundMotion,
     ExternalBody,
     Rays,
     Remainders,
@@ -39,11 +38,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     blank_remainders,
-    bound_group,
     coherent_stock,
-    group_content,
-    group_momentum_field,
-    held_ray,
     holds_source_stock,
     ray_charge,
     ray_momentum,
@@ -53,16 +48,6 @@ from .spatial_state import (
 )
 from .topology import neighbor_address
 
-
-def free_rays(rays: Rays, group: BoundMotion | None) -> Rays:
-    """The rays of one bundle whose momentum reads by heading: all of them at an
-    owner without a bound group, the rays not held at one with a register
-    (bound-group-motion-v1), whose group reads by that register once."""
-    if group is None:
-        return rays
-    return tuple(ray for ray in rays if not held_ray(ray))
-
-
 SpatialPlanner = Callable[
     [
         tuple[SpatialState, ...],
@@ -70,7 +55,6 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
-        int,
         int,
         int,
         Remainders,
@@ -305,24 +289,6 @@ class SpatialEngine:
         if packet.body is not None:
             raise ValueError("an external body cannot leave the world: its Node must exist")
         amounts = [[0] * field.components for field in self.initial.fields]
-        escaped_group: dict[str, object] = {}
-        if packet.group is not None:
-            # A bound group leaves the world whole (bound-group-motion-v1): its
-            # content per family with its rays, its momentum by its register.
-            group = bound_group(packet.rays)
-            momentum_field = group_momentum_field(group, self.initial.spatial_fields)
-            if momentum_field is not None:
-                for axis, value in enumerate(packet.group.momentum):
-                    amounts[momentum_field][axis] = checked_work(amounts[momentum_field][axis] + value)
-            escaped_group = {
-                "families": [
-                    self.initial.fields[self.initial.spatial_fields[index].field].name
-                    for index, _ in group
-                ],
-                "amounts": [ray.amount for _, ray in group],
-                "content": group_content(group),
-                "momentum": packet.group.momentum,
-            }
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
                 raise ValueError("a terminal spatial packet requires eight octants")
@@ -343,9 +309,7 @@ class SpatialEngine:
                     self.escaped_charge[index] + ray_charge(rays, definition)
                 )
                 if definition.momentum_field is not None:
-                    for axis, value in enumerate(
-                        ray_momentum(free_rays(rays, packet.group), definition)
-                    ):
+                    for axis, value in enumerate(ray_momentum(rays, definition)):
                         amounts[definition.momentum_field][axis] = checked_work(
                             amounts[definition.momentum_field][axis] + value
                         )
@@ -360,17 +324,7 @@ class SpatialEngine:
             for i, field in enumerate(self.initial.fields)
             if any(amounts[i])
         }
-        if escaped_group:
-            self._event(
-                "spatial_escaped",
-                tick,
-                packet.origin,
-                port=packet.port,
-                escaped=escaped,
-                bound_group=escaped_group,
-            )
-        else:
-            self._event("spatial_escaped", tick, packet.origin, port=packet.port, escaped=escaped)
+        self._event("spatial_escaped", tick, packet.origin, port=packet.port, escaped=escaped)
 
     def deliver(self, tick: int, residents: Mapping[Address3, DisturbanceNode] | None = None) -> None:
         ready: dict[Address3, list[SpatialPacket]] = {}
@@ -454,16 +408,12 @@ class SpatialEngine:
                         )
             if definition.rays:
                 # Resident rays keep a Node active, including finite local residence.
-                # A bound group's rays read their momentum by the group's register,
-                # added once below (bound-group-motion-v1).
                 for position in self._active:
                     node = self.nodes[position]
                     if node.rays:
                         result[definition.field][0] += ray_stock(node.rays[index])
                         if definition.momentum_field is not None:
-                            for axis, value in enumerate(
-                                ray_momentum(free_rays(node.rays[index], node.bound_motion), definition)
-                            ):
+                            for axis, value in enumerate(ray_momentum(node.rays[index], definition)):
                                 result[definition.momentum_field][axis] += value
                 for packets in self.links.values():
                     for packet in packets:
@@ -471,29 +421,10 @@ class SpatialEngine:
                             result[definition.field][0] += ray_stock(packet.rays[index])
                             if definition.momentum_field is not None:
                                 for axis, value in enumerate(
-                                    ray_momentum(free_rays(packet.rays[index], packet.group), definition)
+                                    ray_momentum(packet.rays[index], definition)
                                 ):
                                     result[definition.momentum_field][axis] += value
-        for motion, rays in self._bound_registers():
-            momentum_field = group_momentum_field(bound_group(rays), self.initial.spatial_fields)
-            if momentum_field is not None:
-                for axis, value in enumerate(motion.momentum):
-                    result[momentum_field][axis] += value
         return result
-
-    def _bound_registers(self) -> list[tuple[BoundMotion, tuple[Rays, ...]]]:
-        """Every bound group's register with its rays (bound-group-motion-v1): held at
-        an active Node, or on a Link while the group steps."""
-        found: list[tuple[BoundMotion, tuple[Rays, ...]]] = []
-        for position in sorted(self._active):
-            node = self.nodes[position]
-            if node.bound_motion is not None and node.rays:
-                found.append((node.bound_motion, node.rays))
-        for packets in self.links.values():
-            for packet in packets:
-                if packet is not None and packet.group is not None:
-                    found.append((packet.group, packet.rays))
-        return found
 
     def charge_totals(self) -> dict[str, int]:
         """The charge readout of every ray field: charge x amount summed over the rays
@@ -641,33 +572,9 @@ class SpatialEngine:
         return (total[0], total[1], total[2])
 
     def snapshot(self) -> dict[str, object]:
-        bound_groups: list[dict[str, object]] = []
-        for position, node in sorted(self.nodes.items()):
-            group = bound_group(node.rays) if node.rays else ()
-            if group:
-                # Matter (ray-binding-v1, Highlights 3.4): the bound group held at
-                # the Node this tick, for a Renderer to draw.
-                bound_groups.append(
-                    {
-                        "position": position,
-                        "families": [
-                            self.initial.fields[self.initial.spatial_fields[index].field].name
-                            for index, _ in group
-                        ],
-                        "amounts": [ray.amount for _, ray in group],
-                        "phases": [ray.phase for _, ray in group],
-                        "ray_delay": node.bound_delay,
-                        # bound-group-motion-v1: the group's register.
-                        "momentum": (
-                            (0, 0, 0) if node.bound_motion is None else node.bound_motion.momentum
-                        ),
-                        "accumulators": (
-                            (0, 0, 0) if node.bound_motion is None else node.bound_motion.accumulators
-                        ),
-                    }
-                )
+        # Nothing at a Node names a bound group (loop-binding-v1, Highlights 3.4): a
+        # group is read from the record by a reader, not listed here.
         result: dict[str, object] = {
-            "bound_groups": bound_groups,
             "spatial_fields": [
                 {
                     "position": position,

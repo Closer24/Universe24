@@ -40,7 +40,6 @@ from event_universe.core.spatial_state import (
     SpatialState,
     advance_ray,
     coherence,
-    group_momentum_field,
     merge_rays,
     phase_of_sum,
     ray_layers,
@@ -61,8 +60,8 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
-from .ray_interactions import Pushes, Turns, apply_ray_interactions
-from .rays import carry_rays, emit_rays, forward_rays, hold_rays, validate_ray_definition
+from .ray_interactions import Turns, apply_ray_interactions
+from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
     bounded_emission_amount,
@@ -71,13 +70,6 @@ from .spatial import (
     split_outward,
     split_outward_carried,
 )
-
-
-def held_group_rays(rays: Rays) -> Rays:
-    """The rays a rule holds at this Node this cycle (ray-binding-v1): outbound, stamped
-    at their event Node with steps 0 and a delay to spend, the bound group as the
-    cycle leaves it; a ray waiting under the Node's clock has walked a Link."""
-    return tuple(ray for ray in rays if ray.outbound and ray.steps == 0 and ray.interaction_delay)
 
 
 @dataclass(frozen=True, slots=True)
@@ -486,29 +478,26 @@ class SpatialLaw:
         emitted: list[list[Ray]],
         source: list[list[int]],
         meter: CostMeter,
-        bound_port: int = -1,
     ) -> None:
         """The field as the ray's information (released-field-v1, Highlights 3.5).
 
         Every resident ray of a family that has a released field releases, at the
-        Node it departs from, one field ray per Port heading except its own, each
+        Node it is at, one field ray per Port heading except its own, each
         carrying the whole quanta of its amount times the release ratio and its
-        phase; a ray held at the Node (a bound group, ray-binding-v1) and resident
-        content (a record holding stock of the family after this interval's
-        emission) release on all six headings once per interval. The
-        released rays leave this interval with the residents. They are booked as an
-        explicitly accounted source of their field, and of its momentum field when
-        one is bound, so the source ray pays nothing: its amount, phase and heading
-        are untouched. A field ray releases nothing (a field has no field). A
-        bound group carried through `bound_port` this interval releases nothing on
-        that heading, its own line ahead of it (bound-group-motion-v1).
+        phase, in every interval it is there (a ray waiting under a declared delay
+        included: the release does not wait for the clock); resident content (a
+        record holding stock of the family after this interval's emission)
+        releases on all six headings once per interval. The released rays leave
+        this interval with the residents. They are booked as an explicitly
+        accounted source of their field, and of its momentum field when one is
+        bound, so the source ray pays nothing: its amount, phase and heading are
+        untouched. A field ray releases nothing (a field has no field).
         """
-        carried = PORT_HEADINGS[bound_port] if bound_port >= 0 else None
         for index, definition in enumerate(self.definitions):
             if definition.field_of is None:
                 continue
             origin = self.definitions[definition.field_of]
-            released = release_field(tuple(resident[definition.field_of]), definition, origin, carried)
+            released = release_field(tuple(resident[definition.field_of]), definition, origin)
             meter.charge("read", len(resident[definition.field_of]))
             for record in records:
                 if record is None or origin.field >= len(record.values):
@@ -764,7 +753,6 @@ class SpatialLaw:
         rays: tuple[Rays, ...] = (),
         tick: int = 0,
         ray_hold: int = 0,
-        bound_port: int = -1,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
     ) -> SpatialPlan:
@@ -784,10 +772,6 @@ class SpatialLaw:
         ]
         if self.ray_interactions and ray_hold:
             raise ValueError("ray interactions do not support a second ray hold clock")
-        if type(bound_port) is not int or not -1 <= bound_port < 6:
-            raise ValueError("a bound group departs through one of six Ports or stays")
-        if bound_port >= 0 and (not self.ray_interactions or ray_hold):
-            raise ValueError("a bound group steps under its binding rule alone")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
         if bounded(tick) < 0:
@@ -806,12 +790,6 @@ class SpatialLaw:
         # the field ray of feature 7, does not exist yet, so the change is booked as
         # an explicitly accounted source of the momentum field (Highlights 3.15).
         meeting_momentum: list[tuple[int, tuple[int, int, int]]] = []
-        # The output-clock delay of a bound group held here (ray-binding-v1): the
-        # largest ray_delay of the binding rules that fired this cycle; and the
-        # momentum the field rays a binding rule's table met gave the group
-        # (bound-group-motion-v1).
-        bound: list[int] = []
-        pushes: Pushes = []
         # The pushes of free rays (ray-momentum-turn-v1): each moves its ray's
         # register, which the momentum readout below reads, so the push and the
         # recoil's reversal are booked together as the meeting's momentum change.
@@ -825,8 +803,6 @@ class SpatialLaw:
                 meter,
                 self.costs,
                 self.layers,
-                bound,
-                pushes,
                 turns,
             )
             for index, definition in enumerate(self.definitions):
@@ -857,27 +833,6 @@ class SpatialLaw:
         for momentum_field, delta in meeting_momentum:
             for axis, value in enumerate(delta):
                 source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
-        # The group held here after the meetings (bound-group-motion-v1): the push
-        # of its table is booked as an explicitly accounted source of the momentum
-        # field its families bind, where the ledger reads its register.
-        held = tuple(
-            (index, ray)
-            for index, definition in enumerate(self.definitions)
-            if definition.rays
-            for ray in held_group_rays(tuple(resident_rays[index]))
-        )
-        push = [0, 0, 0]
-        for vector in pushes:
-            for axis, value in enumerate(vector):
-                push[axis] = checked_work(push[axis] + value)
-        if any(push):
-            if not held:
-                raise ValueError("a momentum table pushes a bound group its rule holds")
-            push_field = group_momentum_field(held, self.definitions)
-            if push_field is not None:
-                for axis, value in enumerate(push):
-                    source[push_field][axis] = checked_work(source[push_field][axis] + value)
-        stepped_port = bound_port if bound_port >= 0 and held else -1
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
@@ -1023,7 +978,7 @@ class SpatialLaw:
                     source[definition.field][component] = checked_work(
                         source[definition.field][component] + value
                     )
-        self._release(resident_rays, updated_records, emitted_rays, source, meter, stepped_port)
+        self._release(resident_rays, updated_records, emitted_rays, source, meter)
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
@@ -1106,17 +1061,6 @@ class SpatialLaw:
                         )
                         + fresh_kept
                     )
-                elif stepped_port >= 0:
-                    # The bound group departs through its Port with its rays carried
-                    # (bound-group-motion-v1); every other ray walks its own line.
-                    moving = held_group_rays(tuple(resident_rays[index]))
-                    staying = tuple(ray for ray in resident_rays[index] if ray not in moving)
-                    walked, kept = forward_rays(staying + tuple(emitted_rays[index]), definition, meter)
-                    carried_out = list(walked)
-                    carried_out[stepped_port] = merge_rays(
-                        carried_out[stepped_port] + carry_rays(moving, definition, meter)
-                    )
-                    ports = tuple(carried_out)
                 else:
                     ports, kept = forward_rays(
                         tuple(resident_rays[index]) + tuple(emitted_rays[index]), definition, meter
@@ -1223,9 +1167,6 @@ class SpatialLaw:
             kept_rays=tuple(kept_rays) if has_rays and any(kept_rays) else (),
             inverse_splits=tuple(inverse_splits),
             annulled=tuple(tuple(v) for v in annulled) if any(any(v) for v in annulled) else (),
-            bound_delay=max(bound, default=0),
-            bound_port=stepped_port,
-            bound_push=(push[0], push[1], push[2]),
             spreads=tuple(spreads),
             returned=tuple(returned),
             remainders=tuple(registers_held),

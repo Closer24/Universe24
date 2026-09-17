@@ -42,9 +42,7 @@ from .spatial_state import (
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
     RETURN_MODES,
-    BoundMotion,
     FieldInteractionGuard,
-    Ray,
     Rays,
     Remainders,
     SpatialBundle,
@@ -61,13 +59,8 @@ from .spatial_state import (
     body_release,
     body_step,
     body_token,
-    bound_group,
     coherent_stock,
     detector_draw,
-    group_content,
-    group_momentum,
-    group_momentum_field,
-    group_step,
     holds_source_stock,
     merge_rays,
     ray_merge_key,
@@ -90,7 +83,6 @@ SpatialPlanner = Callable[
         int,
         int,
         tuple[Rays, ...],
-        int,
         int,
         int,
         Remainders,
@@ -434,13 +426,6 @@ class SpatialNode(SpatialNodeState):
                 waiting = next_ray_wait > 0
             if waiting:
                 ray_hold = 2 if services.initial.ray_phase_per_tick else 1
-        # The bound group's step (bound-group-motion-v1): decided here from the
-        # register before the cycle, the Port handed to the planner.
-        bound_port = -1
-        if self.bound_motion is not None and self.rays:
-            held = bound_group(self.rays)
-            if held:
-                bound_port, _ = group_step(self.bound_motion, group_content(held))
         plan = yield SpatialPlanningInput(
             states,
             records,
@@ -449,7 +434,6 @@ class SpatialNode(SpatialNodeState):
             resident_rays,
             tick,
             ray_hold,
-            bound_port,
             self.remainders,
             self.remainder_phases,
         )
@@ -592,56 +576,6 @@ class SpatialNode(SpatialNodeState):
         )
         return kept
 
-    def _bound_motion(
-        self,
-        plan: SpatialPlan,
-        held_before: tuple[tuple[int, Ray], ...],
-        group: tuple[tuple[int, Ray], ...],
-        services: SpatialServices,
-    ) -> tuple[BoundMotion | None, tuple[int, tuple[int, int, int]] | None]:
-        """The bound group's register after this cycle (bound-group-motion-v1), and
-        what the Node books as the meeting's source of the momentum field when the
-        group dissolves. At formation the register is the momentum of the group's
-        rays by headings plus the push of the cycle, the accumulators zero; while
-        the group persists, at the Node or stepping, the accumulators advance by
-        `group_step` over the content held at the start of the interval and the
-        register moves by what the cycle moved in headings and by the push; when
-        the group dissolves, the held rays' momentum by headings less the register
-        is booked so that the outputs' momentum by headings is exact against the
-        register that left the ledger."""
-        definitions = services.initial.spatial_fields
-        if not group:
-            if held_before and self.bound_motion is not None:
-                momentum_field = group_momentum_field(held_before, definitions)
-                headings = group_momentum(held_before, definitions)
-                delta = tuple(
-                    checked_work(by_heading - registered)
-                    for by_heading, registered in zip(headings, self.bound_motion.momentum, strict=True)
-                )
-                if momentum_field is not None and any(delta):
-                    return None, (momentum_field, (delta[0], delta[1], delta[2]))
-            return None, None
-        momentum = list(group_momentum(group, definitions))
-        push = plan.bound_push
-        if not held_before or self.bound_motion is None:
-            return BoundMotion(
-                (
-                    checked_work(momentum[0] + push[0]),
-                    checked_work(momentum[1] + push[1]),
-                    checked_work(momentum[2] + push[2]),
-                ),
-                (0, 0, 0),
-            ), None
-        _, stepped = group_step(self.bound_motion, group_content(held_before))
-        before = group_momentum(held_before, definitions)
-        register = tuple(
-            checked_work(registered + after - earlier + pushed)
-            for registered, after, earlier, pushed in zip(
-                stepped.momentum, momentum, before, push, strict=True
-            )
-        )
-        return replace(stepped, momentum=(register[0], register[1], register[2])), None
-
     def commit_ready(
         self, tick: int, carrier: DisturbanceNode | None, services: SpatialServices
     ) -> None:
@@ -689,23 +623,6 @@ class SpatialNode(SpatialNodeState):
     ) -> None:
         """Commit all proposed local owners before publishing any observation."""
         records = () if carrier is None else carrier.records
-        # The bound group held here before this cycle (ray-binding-v1): a firing
-        # of the binding rule on it is the group's tick, published below.
-        held_before = bound_group(self.rays) if self.rays else ()
-        # The group after this cycle: held here, or carried on the packet of the
-        # Port it departs through (bound-group-motion-v1), with its register.
-        group = (
-            bound_group(plan.rays[plan.bound_port])
-            if plan.bound_port >= 0 and plan.rays
-            else bound_group(plan.kept_rays)
-        )
-        motion, dissolved = self._bound_motion(plan, held_before, group, services)
-        if dissolved is not None:
-            momentum_field, delta = dissolved
-            source = [list(values) for values in plan.source_delta]
-            for axis, value in enumerate(delta):
-                source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
-            plan = replace(plan, source_delta=tuple(tuple(values) for values in source))
         packets: list[SpatialPacket | None] = [None] * 6
         # Field-phase-first packets complete their link inside the departure interval.
         arrival = bounded(tick + services.initial.link_ticks - int(services.initial.field_phase_first))
@@ -725,7 +642,6 @@ class SpatialNode(SpatialNodeState):
                     rays=port_rays if any(port_rays) else (),
                     phases=plan.outgoing_phases[port] if plan.outgoing_phases else (),
                     body=stepping,
-                    group=motion if plan.bound_port == port else None,
                 )
         # All physical calculations and validation precede the local commit.
         self.require_free_links()
@@ -760,12 +676,6 @@ class SpatialNode(SpatialNodeState):
         if next_ray_wait is not None:
             # A later unrelated arrival starts its own load-priced wait.
             self.ray_wait = next_ray_wait if any(self.rays) else 0
-        # The output-clock delay of the bound group held here (ray-binding-v1):
-        # declared by the binding rule that fired this cycle, 0 once it is unbound
-        # or the group has departed with its clock (bound-group-motion-v1), and the
-        # group's register, gone with the group when it steps.
-        self.bound_delay = plan.bound_delay if plan.bound_port < 0 else 0
-        self.bound_motion = None if plan.bound_port >= 0 else motion
         if plan.remainders:
             # The remainder registers after this cycle (field-remainder-v1).
             validate_remainders(plan.remainders, plan.remainder_phases, services.initial.spatial_fields)
@@ -881,39 +791,6 @@ class SpatialNode(SpatialNodeState):
                     else services.initial.fields[services.initial.spatial_fields[item.by].field].name
                 ),
                 restored=bool(item.restored),
-            )
-        if group and held_before:
-            # The tick of the bound group (ray-binding-v1, Highlights 3.4): the
-            # binding rule fired again on rays it already held and the group
-            # stays, or steps (bound-group-motion-v1), its phases advanced. The
-            # first firing is the meeting that forms the group, recorded as every
-            # meeting is.
-            self._event(
-                "bound_tick",
-                tick,
-                services,
-                notifications=notifications,
-                families=[
-                    services.initial.fields[services.initial.spatial_fields[index].field].name
-                    for index, _ in group
-                ],
-                amounts=[ray.amount for _, ray in group],
-                phases=[ray.phase for _, ray in group],
-                ray_delay=plan.bound_delay,
-            )
-        if group and plan.bound_port >= 0 and motion is not None:
-            # The group's step (bound-group-motion-v1, Highlights 3.28): one Link
-            # through the Port its accumulator reached the content on.
-            self._event(
-                "bound_group_step",
-                tick,
-                services,
-                notifications=notifications,
-                port=plan.bound_port,
-                arrival_tick=arrival,
-                momentum=motion.momentum,
-                accumulators=motion.accumulators,
-                content=group_content(group),
             )
         self._event(
             "spatial_cycle",
@@ -1458,12 +1335,6 @@ class SpatialNode(SpatialNodeState):
         returns: list[dict[str, object]] = []
         absorbed = [[0] * field.components for field in services.initial.fields]
         for packet in arrivals:
-            if packet.group is not None:
-                # A bound group arrives whole with its register; the binding rule
-                # fires on its rays in this Node's cycle (bound-group-motion-v1).
-                if self.bound_motion is not None:
-                    raise ValueError("a Node holds one bound group: two groups at one Node")
-                self.bound_motion = packet.group
             if packet.body is None:
                 continue
             # The body arrives whole with this interval's packets and meets every
@@ -1500,23 +1371,6 @@ class SpatialNode(SpatialNodeState):
                         index, arriving + returning, packet.port ^ 1, tick, services, absorbed, returns
                     )
                     returning = ()
-                if self.bound_delay and definition.field_of is None:
-                    # The bound load delays every departure of matter from this Node
-                    # (ray-binding-v1, Highlights 3.28): an arrival waits the declared
-                    # intervals before it meets or departs, one Node-wide wait in
-                    # place of the six per-face clocks. A field ray is information
-                    # and is never delayed by a clock (Highlights 3.5).
-                    arriving = tuple(
-                        replace(
-                            ray,
-                            interaction_delay=bounded(
-                                checked_work(ray.interaction_delay + self.bound_delay)
-                            ),
-                        )
-                        if ray.outbound
-                        else ray
-                        for ray in arriving
-                    )
                 ray_arrivals[index][packet.port] = checked_work(
                     ray_arrivals[index][packet.port]
                     + ray_stock(tuple(ray for ray in arriving if ray.outbound))

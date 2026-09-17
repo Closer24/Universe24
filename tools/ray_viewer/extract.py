@@ -878,6 +878,235 @@ def resolve(
 # Families, sources and the per-tick caption
 
 
+# ---------------------------------------------------------------------------
+# The reading of a group from the record (loop-binding-v1, Highlights 3.4)
+
+# A bound group lives on a ring of Nodes, the closed path its rays walk; the
+# smallest closed path of the cubic lattice is the unit square, four Nodes. A ray
+# waiting at one Node or bouncing on one Link is not a loop.
+RING_MIN_NODES = 4
+State = tuple[Position, int, tuple[int, ...], int | None]
+
+
+def ray_states(chain: Chain) -> dict[int, State]:
+    """The state of a matter ray at every tick it is at a Node: (Node, the Port it
+    leaves through, amount, phase), read from the segment leaving that Node at
+    that tick; a wait there under a declared delay repeats the last state with
+    the phase of its last arrival."""
+    states: dict[int, State] = {}
+    for unit in chain.units:
+        states[unit.transit.tick] = (
+            unit.transit.origin,
+            unit.transit.port,
+            tuple(unit.amount),
+            unit.phase,
+        )
+    for item in chain.held:
+        tick_value = item["tick"]
+        tick = tick_value if isinstance(tick_value, int) else int(tick_value[0])
+        if tick in states:
+            continue
+        node = position_of(item["node"])
+        last = chain.units[-1] if chain.units else None
+        port = -1 if last is None else last.transit.port
+        phase = None if last is None else last.arrival_phase
+        states[tick] = (node, port, tuple(chain.amount), phase)
+    return states
+
+
+def meeting_components(events: list[Event], matter: list[Chain]) -> list[list[Chain]]:
+    """The sets of matter rays that keep meeting each other: the connected
+    components of the rays over the events, an event joining its inputs and its
+    outputs. A ray that met nothing is its own component."""
+    parent = {chain.identifier: chain.identifier for chain in matter}
+
+    def find(identifier: int) -> int:
+        while parent[identifier] != identifier:
+            parent[identifier] = parent[parent[identifier]]
+            identifier = parent[identifier]
+        return identifier
+
+    for event in events:
+        members = [i for i in event.inputs + event.outputs if i in parent]
+        for first, second in zip(members, members[1:], strict=False):
+            parent[find(first)] = find(second)
+    grouped: dict[int, list[Chain]] = {}
+    for chain in matter:
+        grouped.setdefault(find(chain.identifier), []).append(chain)
+    return [group for _, group in sorted(grouped.items())]
+
+
+def periodic_window(states: dict[int, list[State]], ticks: int) -> tuple[int, int, int] | None:
+    """The smallest period T at which the states of a set of rays repeat, with the
+    first window that covers at least two periods: (T, from_tick, to_tick) such
+    that the states at every tick t from from_tick through to_tick - T equal the
+    states at t + T, none of them empty; None when nothing repeats."""
+    for period in range(1, ticks // 2 + 1):
+        start: int | None = None
+        for tick in range(0, ticks - period + 1):
+            here, later = states.get(tick), states.get(tick + period)
+            if here and here == later:
+                if start is None:
+                    start = tick
+                continue
+            if start is not None and tick - start >= period:
+                return period, start, tick - 1 + period
+            start = None
+        if start is not None and ticks - period + 1 - start >= period:
+            return period, start, ticks
+    return None
+
+
+def ring_order(nodes: set[Position], links: set[tuple[Position, Position]]) -> list[list[int]]:
+    """The ring as a closed walk: from its lowest Node, always the unvisited
+    neighbour reached through the lowest Port, over the Links the rays walked."""
+    if not nodes:
+        return []
+    start = min(nodes)
+    order = [start]
+    seen = {start}
+    at = start
+    while True:
+        candidates = []
+        for origin, target in links:
+            if origin == at and target not in seen:
+                delta = tuple(t - o for o, t in zip(origin, target, strict=True))
+                port = next((p for p in range(6) if tuple(heading_of_port(p)) == delta), 6)
+                candidates.append((port, target))
+        if not candidates:
+            break
+        _, at = min(candidates)
+        order.append(at)
+        seen.add(at)
+    return [list(node) for node in order]
+
+
+def periodic_groups(
+    resolution: Resolution,
+    family_list: list[dict[str, Any]],
+    field_families: set[str],
+    ticks: int,
+) -> list[dict[str, Any]]:
+    """The bound groups of a record (loop-binding-v1, Highlights 3.4): a bound
+    group is a set of rays that repeat, a periodic orbit of the meeting rule on a
+    ring of Nodes. Nothing at a Node names a group, so it is read here, from the
+    record alone. The matter rays that keep meeting each other (a component over
+    the events) are read at the Nodes where they meet, the corners: their states
+    there (Node, heading, amount, phase) must recur with a period T, over the
+    first window of at least two periods, and the rays that meet at those corners
+    within the window are the group, the Nodes they walk its ring, at least four
+    distinct Nodes. A visitor that meets the group later, or a fragment that
+    leaves it, is outside the window. The components that walk one ring are one
+    group (the eight-ray unit square is two interleaved four-ray orbits whose
+    meetings never mix). Each group reports its ring (the closed walk of its
+    Nodes), its content (the sum of its rays' amounts at the window's first
+    tick, per family and in all), its period T (the state period, phases
+    included), its clock (the phase advance per interval of each family, read
+    from the recorded phases, on the family's circle) and the ticks it was read
+    over."""
+    steps = {str(f["name"]): f.get("phase_steps") for f in family_list}
+    matter = [c for c in resolution.chains if c.family not in field_families]
+    identifiers = {chain.identifier for chain in matter}
+    by_ring: dict[frozenset[Position], Members] = {}
+    for component in meeting_components(resolution.events, matter):
+        per_chain = [(chain, ray_states(chain)) for chain in component]
+        reading = read_ring(per_chain, resolution.events, identifiers, ticks)
+        if reading is not None:
+            by_ring.setdefault(frozenset(reading[2]), []).extend(per_chain)
+    groups: list[dict[str, Any]] = []
+    for per_chain in by_ring.values():
+        reading = read_ring(per_chain, resolution.events, identifiers, ticks)
+        if reading is None:
+            continue
+        (period, from_tick, to_tick), members, nodes = reading
+        links = {
+            (unit.transit.origin, unit.transit.target)
+            for chain, _ in members
+            for unit in chain.units
+            if unit.transit.target is not None
+            and from_tick <= unit.transit.tick <= to_tick
+            and unit.transit.origin in nodes
+            and unit.transit.target in nodes
+        }
+        families: dict[str, int] = {}
+        for chain, states in members:
+            first = states.get(from_tick)
+            if first is not None:
+                families[chain.family] = families.get(chain.family, 0) + first[2][0]
+        clock: dict[str, int | None] = {}
+        for chain, _ in members:
+            if clock.get(chain.family) is not None:
+                continue
+            modulus = steps.get(chain.family)
+            rate = None
+            for unit in chain.units:
+                if unit.phase is not None and unit.arrival_phase is not None and modulus:
+                    rate = (unit.arrival_phase - unit.phase) % int(modulus)
+                    break
+            clock[chain.family] = rate
+        groups.append(
+            {
+                "ring": ring_order(nodes, links),
+                "ring_size": len(nodes),
+                "content": sum(families.values()),
+                "families": dict(sorted(families.items())),
+                "period": period,
+                "clock": {name: clock.get(name) for name in sorted(families)},
+                "phase_steps": {name: steps.get(name) for name in sorted(families)},
+                "from_tick": from_tick,
+                "to_tick": to_tick,
+                "rays": sorted(chain.identifier for chain, _ in members),
+            }
+        )
+    groups.sort(key=lambda group: (group["from_tick"], group["ring"]))
+    return groups
+
+
+Members = list[tuple[Chain, dict[int, State]]]
+
+
+def read_ring(
+    per_chain: Members, events: list[Event], identifiers: set[int], ticks: int
+) -> tuple[tuple[int, int, int], Members, set[Position]] | None:
+    """Read one set of rays at the Nodes where they meet: the window over which
+    their states there repeat, the rays that meet there within it, and the Nodes
+    those rays walk within it; None when nothing repeats or the Nodes are fewer
+    than a ring."""
+    own = {chain.identifier for chain, _ in per_chain}
+    corners = {
+        event.node
+        for event in events
+        if sum(1 for i in event.inputs if i in identifiers and i in own) >= 2
+    }
+    if not corners:
+        return None
+    states: dict[int, list[State]] = {}
+    for _, states_of in per_chain:
+        for tick, state in states_of.items():
+            if state[0] in corners:
+                states.setdefault(tick, []).append(state)
+    for tick in states:
+        states[tick].sort(key=repr)
+    window = periodic_window(states, ticks)
+    if window is None:
+        return None
+    _, from_tick, to_tick = window
+    members = [
+        (chain, states_of)
+        for chain, states_of in per_chain
+        if any(from_tick <= tick <= to_tick and state[0] in corners for tick, state in states_of.items())
+    ]
+    nodes = {
+        state[0]
+        for _, states_of in members
+        for tick, state in states_of.items()
+        if from_tick <= tick <= to_tick
+    }
+    if len(nodes) < RING_MIN_NODES:
+        return None
+    return window, members, nodes
+
+
 def is_field_family(name: str, definition: dict[str, Any] | None) -> bool:
     """A field family: declared with ``field_of`` (feature 7) or named as a field."""
     if definition is not None and (definition.get("field_of") or definition.get("release")):
@@ -898,6 +1127,8 @@ def families(record: Record) -> list[dict[str, Any]]:
     for name in names:
         definition = spatial.get(name)
         kerengonen = dict(definition.get("kerengonen") or {}) if definition else {}
+        bits = None if definition is None else definition.get("phase_bits")
+        phase_steps = (1 << int(bits)) if isinstance(bits, int) else kerengonen.get("phase_steps")
         result.append(
             {
                 "name": name,
@@ -908,7 +1139,7 @@ def families(record: Record) -> list[dict[str, Any]]:
                 "field_of": None if definition is None else definition.get("field_of"),
                 "release": None if definition is None else definition.get("release"),
                 "spread": None if definition is None else definition.get("spread"),
-                "phase_steps": kerengonen.get("phase_steps"),
+                "phase_steps": phase_steps,
             }
         )
     return result
@@ -1049,7 +1280,11 @@ def tick_note(
 
 
 def tick_captions(
-    record: Record, resolution: Resolution, builder: Builder, ticks: int
+    record: Record,
+    resolution: Resolution,
+    builder: Builder,
+    ticks: int,
+    groups: list[dict[str, Any]] | None = None,
 ) -> list[dict[str, Any]]:
     metadata = record.metadata
     initial: Amounts = {
@@ -1078,6 +1313,13 @@ def tick_captions(
         for chain in resolution.chains:
             if any(h["tick"] == tick for h in chain.held):
                 add_amounts(held, chain.family, chain.amount)
+        # The content bound in loops at this tick (loop-binding-v1): what a
+        # Renderer draws as matter, read from the record.
+        bound: Amounts = {}
+        for group in groups or []:
+            if group["from_tick"] <= tick <= group["to_tick"]:
+                for family, content in group["families"].items():
+                    add_amounts(bound, family, [content])
         # What a tick released is on the Links from the next tick, so the in-world
         # figure of tick t counts the sources through t - 1, as a recording does.
         sourced_before = {k: list(v) for k, v in sourced.items()}
@@ -1109,6 +1351,7 @@ def tick_captions(
                 "tick": tick,
                 "on_links": on_links,
                 "held": held,
+                "bound": bound,
                 "sourced": {k: list(v) for k, v in sourced.items()},
                 "escaped": {k: list(v) for k, v in escaped.items()},
                 "in_world": in_world,
@@ -1145,7 +1388,9 @@ def conservation(record: Record) -> dict[str, Any]:
     }
 
 
-def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any]:
+def chain_document(
+    chain: Chain, family_flags: dict[str, bool], group: int | None = None
+) -> dict[str, Any]:
     segments = []
     for index, unit in enumerate(chain.units):
         if unit.steps is not None:
@@ -1194,6 +1439,8 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
         "segments": segments,
         "held": chain.held,
         "end": chain.end,
+        # The bound group the ray belongs to, read from the record (loop-binding-v1).
+        "group": group,
     }
 
 
@@ -1283,6 +1530,11 @@ def extract_record(
         field_families=field_set,
     )
     flags = {str(f["name"]): bool(f["field"]) for f in family_list}
+    groups = periodic_groups(resolution, family_list, field_set, run_ticks)
+    group_of: dict[int, int] = {}
+    for index, group in enumerate(groups):
+        for identifier in group["rays"]:
+            group_of.setdefault(identifier, index)
     name = key or record.directory.name or str(metadata.get("model", "run"))
     kinds: dict[str, int] = {}
     for event in resolution.events:
@@ -1319,10 +1571,12 @@ def extract_record(
         "couplings": couplings(record),
         "conservation": conservation(record),
         "event_kinds": kinds,
-        "rays": [chain_document(c, flags) for c in resolution.chains],
+        "rays": [chain_document(c, flags, group_of.get(c.identifier)) for c in resolution.chains],
         "events": [event_document(e, resolution.chains) for e in resolution.events],
         "eye": eye_document(resolution.events, marks),
-        "ticks_data": tick_captions(record, resolution, builder, run_ticks),
+        # The bound groups read from the record (loop-binding-v1, Highlights 3.4).
+        "groups": groups,
+        "ticks_data": tick_captions(record, resolution, builder, run_ticks, groups),
     }
 
 

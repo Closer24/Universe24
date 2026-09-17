@@ -109,25 +109,23 @@ RAY_MEETING = "ray-meeting-conversion-v1"
 # a meeting of a field ray is an ordinary declared rule whose outputs return it
 # reversed as the recoil. A field has no field.
 RELEASED_FIELD = "released-field-v1"
-# Binding and gravity by delay (Highlights 3.4 and 3.28, ray-binding-v1): a rule
-# without outputs whose assignment sets delay 1 binds its participants as a bound
-# group that stays at the Node, ticks every interval and releases its field on all
-# six headings; an earlier outputs rule that names a bound participant and an
-# arriving ray unbinds it; a binding rule may declare the Node's output-clock
-# delay (ray_delay); a meeting output may carry a delay by a declared table per
-# the Port the field ray came through, a lag of the output's face clock in phase
-# steps that turns the ray toward the lagging side one Link per phase modulus.
+# Gravity by delay (Highlights 3.28, ray-binding-v1): a meeting output may carry
+# a delay by a declared table per the Port the field ray came through, a lag of
+# the output's face clock in phase steps that turns the ray toward the lagging
+# side one Link per phase modulus. The held form of this identity (a rule
+# without outputs whose assignments set delay 1 as a hold, its ray_delay wait and
+# the six-heading release of a held ray) was removed on 2026-09-17 by
+# loop-binding-v1 (docs/MIGRATION.md).
 RAY_BINDING = "ray-binding-v1"
-# Bound groups that move (Highlights 3.4, 3.14, 3.16, 3.19 and 3.28,
-# bound-group-motion-v1): a bound group carries a momentum register and three
-# per-axis accumulators, set at its formation as the sum of amount x heading of
-# its rays; each interval it is bound the accumulators add the momentum and the
-# whole group departs one Link through the Port of the first axis whose
-# accumulator has reached its content, as the external body steps; a binding
-# rule's momentum_table lets an arriving field ray push the group by sign x
-# amount x heading, the field ray returned reversed. Speed is momentum over
-# content, one Link every k intervals, with no kinematic rule.
-BOUND_GROUP_MOTION = "bound-group-motion-v1"
+# Binding as a loop (Highlights 3.4 and 3.28, loop-binding-v1): a ray never
+# stops, and a bound group is a periodic orbit of the ordinary meeting rule, a
+# set of rays that a ring of Nodes brings back to the same place in the same
+# state, whose corner meetings, under an ordinary rule with outputs, reproduce
+# the rays that entered them. Nothing in the engine names a group: a rule meets
+# only the rays that arrived at the Node, the outputs of a rule wait their
+# declared delay at their event Node without meeting anything there and leave,
+# and a group is read from the record by a reader (tools/ray_viewer/extract.py).
+LOOP_BINDING = "loop-binding-v1"
 # A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
 # ray-momentum-turn-v1): a ray's direction is its momentum vector, three integers
 # carried as its register, by default amount x heading, the line its event gave
@@ -135,9 +133,9 @@ BOUND_GROUP_MOTION = "bound-group-motion-v1"
 # a ray with momentum (7, -1, 0) takes seven +x Links per -y Link. A coupling
 # without outputs whose momentum_table names a participant family pushes the
 # one participant it does not name by sign x amount x heading of every field
-# ray it meets, as the table pushes a bound group, the field ray returned
-# reversed; the push stamps no event and changes no amount, phase or bit. The
-# heading index stays the ray's line for the rules that read it.
+# ray it meets, as the external body's table pushes the body, the field ray
+# returned reversed; the push stamps no event and changes no amount, phase or
+# bit. The heading index stays the ray's line for the rules that read it.
 RAY_MOMENTUM_TURN = "ray-momentum-turn-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
@@ -304,25 +302,6 @@ class ExternalBody:
             raise ValueError("an external body momentum table holds signs -1, 0 or 1")
         if type(self.sink) is not tuple or any(type(v) is not int or v < 0 for v in self.sink):
             raise ValueError("an external body sink holds nonnegative counters")
-
-
-@dataclass(frozen=True, slots=True)
-class BoundMotion:
-    """The momentum register of a bound group (bound-group-motion-v1): its momentum,
-    three integers, and its three per-axis accumulators, held by the Node beside
-    the group's rays and carried on the packet the group departs on. Bounded
-    metadata of the group, like the external body's momentum; no rays, no history.
-    """
-
-    momentum: tuple[int, int, int] = (0, 0, 0)
-    accumulators: tuple[int, int, int] = (0, 0, 0)
-
-    def __post_init__(self) -> None:
-        for vector in (self.momentum, self.accumulators):
-            if type(vector) is not tuple or len(vector) != 3:
-                raise ValueError("a bound group momentum requires three integers")
-            for value in vector:
-                checked_work(value)
 
 
 @dataclass(frozen=True, slots=True)
@@ -502,8 +481,6 @@ def validate_ray_participants(
                 for split in rule.splits
             ):
                 raise ValueError("ray meeting table split requires two outputs and the phase modulus")
-            if bounded(rule.ray_delay):
-                raise ValueError("ray_delay is declared by a binding rule, one without outputs")
             for lag in rule.lags:
                 # ray-binding-v1: a delay by a table per Port on one output, read from
                 # the amount and the Port of one input.
@@ -524,35 +501,27 @@ def validate_ray_participants(
             raise ValueError("a delay table requires a meeting with outputs")
         elif any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
-        elif type(rule.ray_delay) is not int or bounded(rule.ray_delay) < 0:
-            raise ValueError("a binding rule's ray_delay is a nonnegative bounded integer")
         if rule.momentum_table:
-            # bound-group-motion-v1: a binding rule's table names the field families
-            # that push its group, families it does not itself bind;
             # ray-momentum-turn-v1: a table that names a participant family is a
             # coupling of free rays, assigning nothing, whose one unnamed role is
-            # the ray the named field rays push.
+            # the ray the named field rays push. A table on a rule that assigns was
+            # the push of a bound group (bound-group-motion-v1), removed on
+            # 2026-09-17 by loop-binding-v1.
             participants = {kind for role in rule.participants for kind in role}
             if (
                 rule.outputs
+                or rule.assignments
                 or len(rule.momentum_table) != len(definitions)
                 or any(sign not in (-1, 0, 1) for sign in rule.momentum_table)
                 or not any(rule.momentum_table)
             ):
                 raise ValueError(
-                    "a momentum table is declared by a binding rule and names families it does not bind"
+                    "a momentum table is declared by a coupling of free rays without outputs or assignments"
                 )
             names_participant = any(
                 sign and kind in participants for kind, sign in enumerate(rule.momentum_table)
             )
-            if rule.assignments or bounded(rule.ray_delay):
-                if names_participant or not any(
-                    assignment.field == RAY_DELAY for assignment in rule.assignments
-                ):
-                    raise ValueError(
-                        "a momentum table is declared by a binding rule and names families it does not bind"
-                    )
-            elif not names_participant or turn_receiver(rule) in (None, -1):
+            if not names_participant or turn_receiver(rule) in (None, -1):
                 raise ValueError(
                     "a momentum table on a coupling of free rays names every role but the one ray it turns"
                 )
@@ -607,7 +576,7 @@ def ray_layers(
 
     for rule in rules:
         # The fields a rule's roles select, the fields of its outputs and the
-        # families its momentum table names (bound-group-motion-v1) couple.
+        # families its momentum table names (ray-momentum-turn-v1) couple.
         selected = (
             {kind for role in rule.participants for kind in role}
             | set(rule.outputs)
@@ -766,97 +735,36 @@ def release_field(
     rays: Rays,
     definition: SpatialFieldDefinition,
     origin: SpatialFieldDefinition,
-    carried: Heading | None = None,
 ) -> Rays:
-    """The field rays a bundle of source rays releases at the Node they depart from
+    """The field rays a bundle of source rays releases at the Node it is at
     (released-field-v1): one ray per Port heading except the source ray's own,
     each with the released amount and the source's phase, no event (mask 0,
     steps 0). The heading the source travels on is the source's own line ahead of
     it, which at link speed the source itself occupies, so it releases nothing
-    there and a straight ray never shares a Node with its own field. A ray held
-    at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
-    no line ahead of it and releases on all six headings, once per interval; in an
-    interval its group is carried one Link through a Port (bound-group-motion-v1),
-    `carried` is that heading, the group's own line ahead of it, and the group's
-    rays (held at their event Node, steps 0) release nothing there. Every
-    released ray carries the sign of the source family's charge (`source_sign`)."""
+    there and a straight ray never shares a Node with its own field. A ray that
+    waits at a Node under a declared delay releases the same five headings in
+    every interval it is there (the release does not wait for the clock,
+    Highlights 3.5); the six-heading release of a held ray went with the held
+    form on 2026-09-17 (loop-binding-v1). Every released ray carries the sign of
+    the source family's charge (`source_sign`)."""
     released: list[Ray] = []
     sign = charge_sign(origin.charge)
     for ray in rays:
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
-        if ray.interaction_delay:
-            skip = carried if ray.steps == 0 else None
-        else:
-            skip = ray_line(ray, origin)
-        released.extend(_released(amount, ray.phase, definition, skip, sign))
+        released.extend(_released(amount, ray.phase, definition, ray_line(ray, origin), sign))
     return tuple(released)
-
-
-def held_ray(ray: Ray) -> bool:
-    """Whether a resident ray is one of its Node's bound group (ray-binding-v1): an
-    outbound ray at its event Node with no delay or wait pending. A ray is at its
-    event Node with `steps` 0 only while a rule holds it there and ticks again;
-    every other resident ray has walked a Link, is waiting, or is returned."""
-    return bool(ray.outbound and ray.steps == 0 and not ray.interaction_delay and not ray.wait)
-
-
-def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
-    """The bound group resident at a Node (ray-binding-v1, Highlights 3.4): the held
-    rays (`held_ray`) as (spatial field, ray) pairs in field and merge-key order.
-    The Node keeps nothing else beyond the group's momentum register
-    (bound-group-motion-v1), which is read where the group's rays are."""
-    return tuple(
-        (index, ray)
-        for index, bundle in enumerate(rays)
-        for ray in sorted(bundle, key=ray_merge_key)
-        if held_ray(ray)
-    )
-
-
-def group_content(group: tuple[tuple[int, Ray], ...]) -> int:
-    """The content of a bound group: the sum of its rays' amounts (Highlights 3.4)."""
-    total = 0
-    for _, ray in group:
-        total = checked_work(total + ray.amount)
-    return bounded(total)
-
-
-def group_momentum(
-    group: tuple[tuple[int, Ray], ...], definitions: tuple[SpatialFieldDefinition, ...]
-) -> tuple[int, int, int]:
-    """The momentum of a bound group's rays by headings, amount x heading summed over
-    its (spatial field, ray) pairs: the register at the group's formation
-    (bound-group-motion-v1)."""
-    result = [0, 0, 0]
-    for index, ray in group:
-        for axis, component in enumerate(definitions[index].headings[ray.heading]):
-            result[axis] = checked_work(result[axis] + checked_work(ray.amount * component))
-    return result[0], result[1], result[2]
-
-
-def group_momentum_field(
-    group: tuple[tuple[int, Ray], ...], definitions: tuple[SpatialFieldDefinition, ...]
-) -> int | None:
-    """The momentum field a bound group's register is read under: the one its
-    families bind, or None when they bind none; families binding two different
-    momentum fields fail closed (bound-group-motion-v1)."""
-    bound = {definitions[index].momentum_field for index, _ in group}
-    bound.discard(None)
-    if len(bound) > 1:
-        raise ValueError("a bound group's families bind one momentum field")
-    return next(iter(bound)) if bound else None
 
 
 def motion_step(
     momentum: tuple[int, int, int], accumulators: tuple[int, int, int], content: int
 ) -> tuple[int, tuple[int, int, int]]:
-    """One interval of motion over a content (external-body-v1, bound-group-motion-v1):
-    each axis accumulator adds the momentum component, and the owner steps one Link
-    through the Port of the first axis (x before y before z) whose accumulator has
-    reached a whole content, subtracting the content; at most one Link per interval,
-    never faster than a ray. Returns the Port, or -1 when it stays, and the new
+    """One interval of motion over a content (external-body-v1): each axis
+    accumulator adds the momentum component, and the owner steps one Link through
+    the Port of the first axis (x before y before z) whose accumulator has reached
+    a whole content, subtracting the content; at most one Link per interval, never
+    faster than a ray. Returns the Port, or -1 when it stays, and the new
     accumulators. An accumulator only grows past the content while the owner waits
     its turn on another axis; it is capped so the register stays bounded metadata."""
     advanced = [a + m for a, m in zip(accumulators, momentum, strict=True)]
@@ -873,15 +781,6 @@ def motion_step(
     if any(abs(value) > 2 * content for value in advanced):
         raise ValueError("a momentum exceeds its content: faster than a ray")
     return port, (advanced[0], advanced[1], advanced[2])
-
-
-def group_step(motion: BoundMotion, content: int) -> tuple[int, BoundMotion]:
-    """One interval of a bound group's motion: `motion_step` over the group's content,
-    the Port it departs through (or -1) and the register with its new accumulators."""
-    if type(content) is not int or content < 1:
-        raise ValueError("a bound group steps over a positive content")
-    port, accumulators = motion_step(motion.momentum, motion.accumulators, content)
-    return port, replace(motion, accumulators=accumulators)
 
 
 def release_stock(
@@ -1592,12 +1491,6 @@ class SpatialNodeState:
     # The external body this Node holds, whole, when one is declared or has
     # stepped here (external-body-v1); None at every other Node.
     body: ExternalBody | None = None
-    # The output-clock delay of the bound group held here (ray-binding-v1): the
-    # intervals every arriving ray waits before it meets or departs; 0 without.
-    bound_delay: int = 0
-    # The momentum register of the bound group held here (bound-group-motion-v1):
-    # its momentum and accumulators; None at a Node without a group.
-    bound_motion: BoundMotion | None = None
     # The remainder registers of the spreading families and their phases
     # (field-remainder-v1): one block of eighteen per spreading family.
     remainders: Remainders = ()
@@ -1623,8 +1516,6 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
-    # The output-clock delay declared by the binding rule that fired this cycle.
-    bound_delay: int = 0
     # The inverse splits of this cycle, one per returned ray at its event Node,
     # and the content they annulled per field (inverse-split-v1).
     inverse_splits: tuple[InverseSplit, ...] = ()
@@ -1633,11 +1524,6 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
-    # The Port the bound group held here departed through this cycle, or -1
-    # when it stays or there is none, and the momentum its binding rule's table
-    # gave it from the field rays it met (bound-group-motion-v1).
-    bound_port: int = -1
-    bound_push: tuple[int, int, int] = (0, 0, 0)
     # The spreads of this cycle, one per spreading family whose content arrived,
     # and the returned field quanta that ended here (field-spreading-v1).
     spreads: tuple[FieldSpread, ...] = ()
@@ -1698,9 +1584,6 @@ class SpatialPacket:
     phases: SpatialBundle = ()
     # An external body stepping one Link through this Port (external-body-v1).
     body: ExternalBody | None = None
-    # The momentum register of a bound group stepping one Link through this Port
-    # with its rays (bound-group-motion-v1); None on every other packet.
-    group: BoundMotion | None = None
 
 
 def zero_spatial_state(components: int) -> SpatialState:
@@ -1882,8 +1765,8 @@ def turn_receiver(rule: InteractionDefinition) -> int | None:
     """The role a momentum table on a coupling of free rays pushes
     (ray-momentum-turn-v1): a table that names a participant family is the free
     ray's table, and the one role the table does not name receives every push.
-    None for a binding rule's table, which names no participant (bound-group-motion-v1),
-    and for a rule without a table; -1 when the roles do not give one receiver."""
+    None for a rule without a table or a table naming no participant; -1 when
+    the roles do not give one receiver."""
     if not rule.momentum_table:
         return None
     named = {kind for kind, sign in enumerate(rule.momentum_table) if sign}

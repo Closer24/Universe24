@@ -266,10 +266,11 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert run["couplings"] == ["swap_headings"]
     clicks = [e for e in events if e["kind"] == "click"]
     assert all(e["label"] == "Detector PASS" and tuple(e["node"]) == (4, 1, 1) for e in clicks)
-    # Two G clicks at tick 3: each ray held at (2,1,1) during tick 1 released its
-    # own +X G ray (feature 8), and the Detector draws once per ray in the packet.
+    # One G click at tick 3: of the two rays waiting at (2,1,1) during tick 1 only
+    # the one heading -X released on +X (five headings, its own line excluded, since
+    # loop-binding-v1 removed the six-heading release of a held ray on 2026-09-17),
+    # and the Detector draws once per ray in the packet.
     assert sorted((e["tick"], e["detail"]["family"], e["detail"]["amount"]) for e in clicks) == [
-        (3, "G", 1),
         (3, "G", 1),
         (4, "G", 1),
         (4, "quanta", 3),
@@ -297,10 +298,13 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert run["external_bodies"] == []
 
     # (e) Releases: silent field events, the source ray's trail unbroken through them.
-    # The record releases from the two held rays at tick 1 as well as at their
-    # departure at tick 2: content held at a Node releases on all six headings
-    # (Highlights 3.5, feature 8), so the tick-1 release sources G 12 and each of
-    # its six packets carries G 2, which the extractor reads as one G ray of 2.
+    # The record releases from the two waiting rays at tick 1 as well as at their
+    # departure at tick 2: a ray waiting under a declared delay releases on the
+    # five headings other than its own in every interval it is there (Highlights
+    # 3.5; the six-heading release of a held ray went with the held form,
+    # loop-binding-v1, 2026-09-17), so the tick-1 release sources G 10, its four
+    # transverse packets carry G 2 and the two axial ones G 1, which the extractor
+    # reads as one G ray each.
     releases = [e for e in events if e["kind"] == "release"]
     assert all(e["field"] for e in releases)
     assert [summary(e) for e in releases] == [
@@ -314,24 +318,24 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert releases[0]["in"] == []
     assert sorted(releases[1]["in"]) == sorted([plus["id"], minus["id"]])
     assert releases[2]["in"] == [minus["id"]] and releases[3]["in"] == [plus["id"]]
-    assert [e["detail"]["amount_out"] for e in releases] == [{"G": [12]}, {"G": [10]}] + [{"G": [5]}] * 4
+    assert [e["detail"]["amount_out"] for e in releases] == [{"G": [10]}, {"G": [10]}] + [{"G": [5]}] * 4
     fields = [r for r in run["rays"] if r["family"] == "G"]
     assert len(fields) == 32 and len(run["rays"]) == 36
     assert all(r["field"] for r in fields)
-    assert sorted(run["rays"][i]["amount"][0] for i in releases[0]["out"]) == [2, 2, 2, 2, 2, 2]
+    assert sorted(run["rays"][i]["amount"][0] for i in releases[0]["out"]) == [1, 1, 2, 2, 2, 2]
     assert sorted(run["rays"][i]["amount"][0] for i in releases[1]["out"]) == [1, 1, 2, 2, 2, 2]
     held_plus = next(i for i in releases[0]["out"] if run["rays"][i]["segments"][0]["heading"] == PLUS_X)
-    assert run["rays"][held_plus]["amount"] == [2]
-    assert [e["in"] for e in clicks if e["tick"] == 3] == [[held_plus]] * 2
+    assert run["rays"][held_plus]["amount"] == [1]
+    assert [e["in"] for e in clicks if e["tick"] == 3] == [[held_plus]]
     assert not any(e["kind"] in ("split", "crossing", "deflection") for e in events)
     field_escapes = [e for e in events if e["kind"] == "escape" and e["field"]]
     assert [sum(1 for e in field_escapes if e["tick"] == t) for t in (3, 4, 5, 6)] == [4, 6, 10, 8]
     assert [
         sum(e["detail"]["escaped"]["G"][0] for e in field_escapes if e["tick"] == t)
         for t in (3, 4, 5, 6)
-    ] == [8, 12, 10, 8]
-    assert run["conservation"]["source_totals"] == {"quanta": [0], "G": [42], "momentum": [0, 0, 0]}
-    assert run["conservation"]["escaped_totals"]["G"] == [38]
+    ] == [8, 10, 10, 8]
+    assert run["conservation"]["source_totals"] == {"quanta": [0], "G": [40], "momentum": [0, 0, 0]}
+    assert run["conservation"]["escaped_totals"]["G"] == [36]
     assert run["conservation"]["final_totals"]["G"] == [4]
     assert run["record"]["released_field"] == "released-field-v1"
 
@@ -343,13 +347,13 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
     assert "t1 meeting (2,1,1) swap_headings" in notes[1]
     assert "in quanta 6, p (0, 0, 0)" in notes[1] and "out t2 quanta 6, p (0, 0, 0)" in notes[1]
     assert notes[2].startswith("t1 meeting") and "release" not in notes[2]
-    assert notes[3].count("Detector PASS") == 2 and notes[3].endswith("field escaped: G 8")
-    assert notes[4].count("Detector PASS") == 2 and notes[4].endswith("field escaped: G 12")
+    assert notes[3].count("Detector PASS") == 1 and notes[3].endswith("field escaped: G 8")
+    assert notes[4].count("Detector PASS") == 2 and notes[4].endswith("field escaped: G 10")
     assert notes[5] == "escaped: quanta 6 | field escaped: G 10"
     assert notes[6].count("Detector PASS") == 1 and notes[6].endswith("field escaped: G 8")
     assert not any("release" in note for note in notes)
     assert [row["in_world"]["quanta"] for row in rows] == [[6]] * 5 + [[0], [0]]
-    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [12], [14], [12], [12], [4]]
+    assert [row["in_world"]["G"] for row in rows] == [[0], [0], [10], [12], [12], [12], [4]]
     assert [row["escaped"]["quanta"] for row in rows] == [[0]] * 5 + [[6], [6]]
     assert [row["releases"] for row in rows] == [0, 1, 1, 2, 2, 0, 0]
     assert run["conservation"]["status"] == "passed"
@@ -428,33 +432,6 @@ def test_extractor_reads_rays_events_and_captions_from_the_record(tmp_path):
             "positions": [[0, 7, 7, 7], [1, 7, 7, 7], [2, 8, 7, 7]],
         }
     ]
-
-
-def test_screen_example_world_is_the_pinned_geometry():
-    world = json.loads((ROOT / "examples/nature/screen.json").read_text(encoding="utf-8"))
-    assert (
-        world["shape"],
-        world["boundary"],
-        world["ticks"],
-        [
-            (seed["position"], emission["heading"], emission["amount"])
-            for seed, emission in zip(world["seeds"], world["emissions"], strict=True)
-        ],
-        [
-            (field["field"], field.get("field_of"), field.get("release"))
-            for field in world["spatial_fields"]
-        ],
-        [(mark["position"], mark["setting"], mark["seed"]) for mark in world["detectors"]],
-        [(rule["name"], rule["ray_delay"]) for rule in world["ray_interactions"]],
-    ) == (
-        [12, 11, 11],
-        "open",
-        24,
-        [([0, 5, 5], [1, 0, 0], 4), ([2, 5, 5], [-1, 0, 0], 4)],
-        [("electron", None, None), ("light", "electron", [1, 4])],
-        [([7, y, 5], [1, 1], 0) for y in range(2, 9)],
-        [("bind", 1)],
-    )
 
 
 def test_phone_preset_schedules_the_frames():

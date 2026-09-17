@@ -6,6 +6,67 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Binding as a loop landed on 2026-09-17 (`loop-binding-v1`)
+
+Issue #169, feature 14 ([binding as a
+loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop
+binding](LOOP_BINDING.md); Highlights 3.4, "Binding is a periodic orbit of the
+meeting rule", model owner, 2026-09-17). A ray never stops: a bound group is a
+set of rays in motion on a ring of Nodes whose corner meetings, under an
+ordinary `ray_interactions` rule with outputs, reproduce the rays that entered
+them; nothing holds and nothing registers. Removed from the engine and the
+schema, as the design's section 9 lists:
+
+- The binding form of a rule without outputs (assignments of `delay` 1 as a
+  hold): a rule meets only rays that arrived at the Node, so the output of a
+  rule waiting its declared delay at its event Node (an event ray with
+  `steps` 0) is met by nothing there and leaves; no rule can hold its
+  participants by meeting them again (`_meet` in `fields/ray_interactions.py`).
+  A `delay` assignment or output is a wait, as the
+  [shared coupling](SHARED_RAY_COUPLING.md) always said.
+- The `ray_delay` key of a rule and the Node's `bound_delay` wait,
+  `bound_group`, `held_ray`, the snapshot's `bound_groups`, the `bound_tick`
+  record, and the six-heading release of a held ray in `release_field` (a
+  ray waiting under a delay releases the five headings other than its own in
+  every interval it is there, as any ray).
+- All of `bound-group-motion-v1`: `BoundMotion`, `SpatialNodeState.bound_motion`,
+  `SpatialPlan.bound_delay`, `bound_port` and `bound_push`,
+  `SpatialPacket.group`, `InventoryNode.group`, `InventoryPacket.group`,
+  `SpatialPlanningInput.bound_port`, `group_step`, `group_content`,
+  `group_momentum`, `group_momentum_field`, `carry_rays`, `free_rays`,
+  `bound_group_step`, the escape's `bound_group` entry, `momentum_table` on a
+  rule that assigns, the ledgers' reading of a group by its register, and the
+  runner's `bound_group_motion` key; `BOUND_GROUP_MOTION` is gone,
+  `motion_step` stays for the external body.
+- A world that declares `ray_delay` on a rule, or `momentum_table` beside
+  `assignments`, is rejected at initialization with a message naming this
+  note. The world key `ray_delay` of the computation-field hold is a
+  different rule and is unchanged.
+
+What stays, unchanged: the outputs rule and its `delay` output as an
+output-clock wait, the delay table and the lag register (`ray-binding-v1`
+keeps its identity for gravity by delay; `test_ray_binding.py` keeps the
+`gravity` and `criterion` cases with resident content, a record holding
+stock, as the mass), the momentum register of a free ray and `momentum_table`
+on a coupling of free rays and on the external body, the released field with
+its spreading and remainder, the external body, and the Node's five-step law.
+New: `LOOP_BINDING = "loop-binding-v1"`, recorded by the runner as
+`loop_binding` beside `ray_binding`; the reading of a group from the record in
+the ray viewer's extractor (`periodic_groups`: a run document's `groups`, each
+ray's `group`, each tick row's `bound`; `phase_steps` read from `phase_bits`);
+`tests/test_loop_binding.py`. Re-pinned with dated notes: the `state.json`
+digests of `test_ray_momentum_turn.py` (`meeting`) and
+`test_field_spreading.py` (`unchanged`), whose snapshots lost the
+`bound_groups` key; the viewer test's release lines (five headings from a
+waiting ray). Deleted: `tests/test_bound_group_motion.py`, the
+`binding`, `unbinding` and `ray_delay` cases of `test_ray_binding.py`, the
+`group` world of `test_ray_momentum_turn.py`, the screen geometry test of
+`test_ray_viewer.py`. The catalog's `binds` entries are corner tables
+(`outputs` with a `closes` note; [catalog](CATALOG.md)). The nature examples
+`absorption.json`, `absorption_emission.json` and `photofission.json` are
+rewritten as loops (E1 to E3 measured again); `screen.json` and
+`screen_spread.json` are retired with their records kept (E6).
+
 ## A free ray turns by momentum on 2026-09-17 (`ray-momentum-turn-v1`)
 
 Issue #169, feature 8b ([a free ray turns by

@@ -847,11 +847,12 @@ every such set; Highlights 3.20 is the text to follow.
    motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1).
    Two groups at one Node and the absorption of a field ray into a group
    are not in that slice.
-   Interim (model owner, 2026-09-17, Highlights 3.4): the held-ray binding
+   Removed on 2026-09-17 (model owner, Highlights 3.4): the held-ray binding
    of this feature, a rule with delay 1 and no outputs and its `ray_delay`
-   wait, holds any content and therefore has no ladder, and the
-   register-driven motion of a group (feature 8c) is the interim form of its
-   motion; both are superseded by feature 14, binding as a loop, below.
+   wait, held any content and therefore had no ladder, and the
+   register-driven motion of a group (feature 8c) was the interim form of
+   its motion; both went with feature 14, binding as a loop, below, which
+   keeps of this feature gravity by delay, the delay table and the lag.
    Feature 8b, a free ray turns by momentum, `ray-momentum-turn-v1` (done on
    2026-09-17, issue #169; the second gap the helium-ion run E4 found): a
    ray's direction is its momentum register, three integers, by default
@@ -1006,8 +1007,14 @@ Design done on 2026-09-17 ([loop binding](LOOP_BINDING.md),
 as integer equalities, the unit-square electron as the world
 `examples/nature/ring.json` with its dispersing control `ring_open.json`,
 register entry E5, and the expected integers of `tests/test_loop_binding.py`
-pinned before any run); implementation after feature 8b, features 12, 8c and
-2b having landed on 2026-09-17. A ray never stops, and "bound" does not mean
+pinned before any run); done on 2026-09-17 after feature 8b ([binding as a
+loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)): the held form
+of feature 8 and all of feature 8c removed from the engine and the schema
+(a rule meets only rays that arrived at the Node, so nothing can hold; the
+removed keys are rejected naming the migration note), the reading of a group
+from the record by the ray viewer's extractor (ring, content, period,
+clock), the catalog's binding entries as corner tables, E5 measured and the
+nature examples as loops (E1 to E3) or retired (E6). A ray never stops, and "bound" does not mean
 "resident": a bound group is a set of rays whose meetings, under the
 ordinary coupling table, reproduce the rays that entered them: the outputs
 leave, walk their Links, meet again, and the meeting gives the same amounts,
