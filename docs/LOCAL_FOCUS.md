@@ -44,8 +44,13 @@ only its execution service receives the reuse adapter.
 Equality means the complete immutable planning input, not equal output on the
 previous tick. Carrier keys include every record field (including residuals and
 phase), coupling remainders, arrival count and directional loads. Spatial keys
-also include field state, rays, local computation cost, the tick and
-ray-hold mode. Each cache belongs to one law/configuration in one simulation;
+also include field state, rays, local computation cost, ray-hold mode and the
+remainder registers, and since 2026-09-17 not the world tick: the spatial law
+reads nothing from the clock (the Node checks its own tick before it plans),
+so a Node whose local input repeats reuses its plan across ticks, and a Node
+whose plan changes with time carries that time in its records (a lamp's stock
+or allowance, its emission cursor and wave phase), which are in the key. Each
+cache belongs to one law/configuration in one simulation;
 results cannot leak across configurations. Hash matches still require full key
 equality. Exceptions are never cached. Pending proposals are immutable.
 

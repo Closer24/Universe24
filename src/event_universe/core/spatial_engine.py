@@ -56,7 +56,6 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        int,
         Remainders,
         Remainders,
     ],
