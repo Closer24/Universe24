@@ -7,8 +7,8 @@ keeps one module per generic rule, each exercising that rule in isolation on a
 minimal board, and one module per feature of the
 [ray-event model](RAY_EVENT_MODEL.md) (issue #169). Before the reduction the
 suite had 108 modules and 2,194 tests (2,191 passed, 3 visual-only skipped) in
-622 seconds single-process on the recording host; after it, 39 modules and
-1,008 tests in 35 seconds on the same host. Seconds are the recorded
+622 seconds single-process on the recording host; after it, 40 modules and
+1,009 tests in 35 seconds on the same host. Seconds are the recorded
 durations of the run in the [validation entry](VALIDATION.md#test-suite-reduced-to-one-test-per-rule---2026-09-17)
 (tests under five milliseconds are not recorded). The deleted modules and the
 deleted example studies are named in the
@@ -17,40 +17,41 @@ Feature tests of issue #169 join this table as they land.
 
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
-| `test_architecture.py` | 28 | 0.33 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
+| `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 47 | 0.10 | Changed-code test selection of `tools/check.py` (running branch, untouched) |
-| `test_configuration_validation.py` | 99 | 2.37 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_sampling_contract.py` | 18 | 0.00 | Detector-only sampling admission (running branch, untouched) |
-| `test_disturbance_application.py` | 14 | 0.28 | Runner record: headless run files, the saved initialization and source fingerprint that replay a run, explicit CLI opt-ins |
-| `test_disturbance_engine.py` | 23 | 0.03 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
+| `test_disturbance_application.py` | 14 | 0.29 | Runner record: headless run files, the saved initialization and source fingerprint that replay a run, explicit CLI opt-ins |
+| `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
 | `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
-| `test_kerengonen.py` | 19 | 6.84 | Phased rays: phase advance, coherence, capture, slit, mirror and pace (running branch, untouched) |
-| `test_local_conservation.py` | 18 | 0.02 | Passive local energy/momentum audit across Node events and Link flux |
+| `test_kerengonen.py` | 19 | 6.88 | Phased rays: phase advance, coherence, capture, slit, mirror and pace (running branch, untouched) |
+| `test_local_conservation.py` | 18 | 0.01 | Passive local energy/momentum audit across Node events and Link flux |
 | `test_local_conversions.py` | 16 | 0.00 | N-to-M record conversion as an atomic inventory transfer with declared balances |
 | `test_local_field_rules.py` | 11 | 0.13 | Local field rule: six-Port reads, retained and outgoing owners, guarded joint proposals |
-| `test_local_focus.py` | 31 | 1.27 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
+| `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
 | `test_node_rule_contract.py` | 38 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, record policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
-| `test_plan_reuse.py` | 8 | 0.17 | Exact transition plan reuse (running branch, untouched) |
+| `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
-| `test_ray_delay.py` | 6 | 12.68 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
-| `test_ray_field.py` | 22 | 0.32 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
-| `test_ray_hidden_state.py` | 1 | 0.20 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
-| `test_ray_integration_guards.py` | 22 | 0.37 | Ray integration boundaries (running branch, untouched) |
+| `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
+| `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
+| `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
+| `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_record_operations.py` | 19 | 0.00 | Record merge by type and channel, reserved slots and capacity policy |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
-| `test_repository_navigation.py` | 8 | 0.08 | Documentation gate: Markdown links and Skill routes resolve |
+| `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
@@ -239,6 +240,7 @@ the key selects the default localizing residue.
 | `test_energy_audit.py` | Funded emission along (1,0,0) and (0,2,0) debits the emitter by 2 per tick and recoils by (-1,-2,0) per tick with the audit closed; a stock of 5 emits 2, 2, 1, 0; `source: true` is still rejected and `recoil_field` needs funding; escaped quanta are measured escape; an absorber banks five quanta with momentum (5,0,0) while quanta beyond it vanish and the audit stays closed; a moving absorber-emitter never eats the wake of the cycle it departed on, and since `ray-event-state-v1` the quantum of the cycle before, a distinct event travelling with it, is absorbed back from the third tick on (38, 36, 35, 34, 33, formerly 38, 36, 34, 32, 30 when the two cycles merged); absorb validation rejects a scalar momentum field and an amount key; a fraction 1/4 absorbs one quantum of each 4-quantum ray and forwards 3; negative quanta pull an absorber with stock 3 by (-2, -1, 0, 0) and credit the emitter 16 with recoil (16, 0, 0); a ray field cannot be both absorbed and exchanged |
 | `test_kerengonen.py` | A phase advances by the field's step on every link and wraps, a plain field leaves it alone, and rays merge only with equal phase; the cosine table for four steps is (256, 0, -256, 0), equal phases give coherence exactly one, opposite equal amounts exactly zero and a quarter turn one half; two lamps three links from a Node fire 2-quantum rays at each other and the sampled values along the line are 4, 0, 4, 0, 4 with four steps and 4, 2, 0 with eight, while the plain field reads 4 everywhere and the audit closes on 800 quanta; an absorber between the lamps takes 4 quanta before the opposite pair arrives and nothing after, takes 20 at the in-phase Node, and 20 at the dark Node when the second lamp is offset two steps; the runner records `kerengonen-ray-field-v1` and rejects one phase step, an advance equal to the steps, a missing advance, an emission phase beyond the steps, a phase without the key and the key without ray transport; the double-slit probe composes and closes; the bounded ticket rule advances and squares as specified and no absorber draws from it, the share rule takes 2 whole single quanta at a quarter turn where a half share truncates to nothing (closed on 800 quanta), and an unknown capture, the deleted lottery capture and a capture seed are rejected; a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), and partial at a fixed re-emission phase (3), and a carried phase without an absorb rule is rejected; a ray with its own advance ignores the field's, rays of different advance do not merge, beams of momentum 16 and 32 at advance |p|/4 carry advances 4 and 8 with phases in ratio two after the same links, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance so readings are 2, 4, 0 for lamp offsets 0, 16, 48 on a 64-step field; a mirror sends a lamp's wave back along -x with the carried phase, holds 4 quanta and the reversed momentum, closes on 400 quanta, and the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 (period 8) and 6, 1, 1, 6 repeating at advance 8 (period 4); a mirror without every image heading, without a recoil field, on an unknown axis or without an absorb rule is rejected; a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed; a dissolving record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0 and a moving one flies while it holds quanta and stops at x = 2 when empty, both closed; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected; on the Euclidean metric the integer square root is exact at 0, 1, 2, 3, 4, 15, 16, 17 and a million, the paces of an axis, face and body diagonal are 2364/4096, 2364/2896 and equal, twelve ticks carry the first axis ray 6 links, the face diagonal 9 and the body diagonal 12, the world closes on 400 quanta and an unknown metric is rejected; a diagonal `xy` mirror returns the +x ray along +y with nothing back along -x, and a quarter-fraction mirror passes 3 of every 4 quanta and returns 1, closed; a directed emitter with `heading` fires every ray along -x and closes, and a heading outside the field's list or combined with a mirror is rejected |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
+| `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the six rays leave with `detector` 1 or 2 matching the bits and continue unchanged, the marked and the unmarked control world agree on totals, momentum, lamps and rays at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
 
 The runner must distinguish actual physical conservation from balanced loss
 accounting. It checks tracked combined quantities and every spatial owner,
@@ -535,6 +537,65 @@ change is the moving absorber-emitter of `test_energy_audit.py` above, whose
 earlier-cycle wake is a distinct event and no longer merges with the excluded
 one.
 
+## Node Detector bit
+
+`test_detector_mark.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)).
+The Node C = (7,7,7) carries the one mark, setting `[1, 2]` and seed 3. Six
+lamps stand one Link from C, one on each side, each aimed at C through a
+directed emission (`heading`) and holding exactly the amount it emits, funded,
+so each fires once at tick 0 and holds 0 afterwards: by the Port of C the ray
+comes in through, Port 0 (+X) the lamp at (8,7,7) emitting -X with amount 1,
+Port 1 (-X) the lamp at (6,7,7) emitting +X with amount 2, Port 2 (+Y) the
+lamp at (7,8,7) emitting -Y with amount 3, Port 3 (-Y) the lamp at (7,6,7)
+emitting +Y with amount 4, Port 4 (+Z) the lamp at (7,7,8) emitting -Z with
+amount 5, Port 5 (-Z) the lamp at (7,7,6) emitting +Z with amount 6; 21
+quanta in all, every emission at phase 0, every lamp recoiling into its own
+momentum. The control world is the same document without `detectors`. Pinned
+before the first run from the published rule (`state = (state x 48271 + 1)
+mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
+`2 x number < 1073741789`):
+
+- (a) the six rays arrive at C at tick 1, one per Port, and are drawn in Port
+  order from seed 3: ticket states 144814, 547865861, 846455051, 135470005,
+  185116346, 71969709; numbers 570000605, 726844321, 834939851, 327526431,
+  382336536, 965202535; bits (0, 0, 0, 1, 1, 0). Exactly two clicks, both at
+  tick 1 and position (7,7,7): Port 3, family `quanta`, amount 4, bit 1, and
+  Port 4, family `quanta`, amount 5, bit 1; a draw of 0 records nothing.
+  After tick 1 C holds six rays (`ray_count` 6): the ray that came in through
+  Port p has heading index `p ^ 1` (it travels toward the opposite side),
+  amount p + 1, `steps` 1, phase 1, `outbound` 1, `event_ports` `1 << (p ^ 1)`
+  and `event_shares` its amount on that Port, and `detector` 2 for Ports 3 and
+  4 and 1 for Ports 0, 1, 2 and 5;
+- (b) after tick t (2 to 4) the ray that came in through Port p is t - 1
+  Links beyond C on the opposite side, at C minus (t - 1) times the unit
+  vector of Port p, with `steps` t, phase t, its amount and its bit unchanged:
+  after tick 2 at (6,7,7), (8,7,7), (7,6,7), (7,8,7), (7,7,6), (7,7,8) for
+  Ports 0 to 5; the six rays are the whole ray inventory of the world at
+  every tick;
+- (c) the marked world and the control world agree at every tick 1 to 4 on
+  the totals (21 quanta, momentum (0, 0, 0)), on the audited energy and
+  momentum, on every lamp's stock and recoil (0 quanta each; momentum
+  (1,0,0), (-2,0,0), (0,3,0), (0,-4,0), (0,0,5), (0,0,-6)), and on every ray's
+  position, heading, amount, steps and phase; the control's rays carry
+  `detector` 0 everywhere, its Nodes carry no mark and it records no click;
+  neither world's unmarked Nodes call the ticket rule, and the control world
+  never does (a monkeypatched `next_ticket` fails the test if called);
+- (d) the runner run twice on the same document writes the same
+  `events.jsonl` byte for byte, including exactly two `detector_click`
+  lines, and the same `run.json` apart from `elapsed_seconds`, recording
+  `detector_mark: "detector-mark-v1"` beside `sampling_profile:
+  "detector-only-v1"` and `ray_state: "ray-event-state-v1"`, with
+  `conserved_at_every_completed_tick` true and final quanta 21;
+- (e) `parse_initial_state` rejects a mark without `setting`, a setting
+  `[3, 2]`, `[1, 0]` or `[-1, 2]`, a seed of 1073741789 or -1, two marks at
+  one position, a mark outside the shape, marks on a world without a ray
+  field, and marks on a Euclidean-metric ray field; `validate_configuration`
+  reports the same documents invalid.
+
 ## Detector-owned sampling admission
 
 [Detector sampling tests](../tests/test_detector_sampling_contract.py) accept only
@@ -546,5 +607,7 @@ at parsing, at direct typed construction and at `SpatialLaw` before any ticket i
 consumed; a record named Detector or an observer grants no draw authority; and
 the share and threshold captures parse and draw nothing. The historical seed-7
 lottery fixture was deleted on 2026-09-17 with the lottery capture, and the native
-instrument/contact fixtures with the integration layer. Full PASS/RETURN and
-output-clock composition remain blocked by the contract's owner/acceptance table.
+instrument/contact fixtures with the integration layer. PASS and the draw are
+implemented by the Detector mark (`detector-mark-v1`,
+[Node Detector bit](#node-detector-bit)); the return on 0 and output-clock
+composition remain blocked by the contract's owner/acceptance table.

@@ -2,7 +2,8 @@
 
 ## Test suite reduced to one test per rule - 2026-09-17
 
-Base: main `5df25f3` (after PR #184), branch `cleanup/prune-tests`. Decision
+Base: main `5df25f3` (after PR #184), branch `cleanup/prune-tests`, merged
+with main `bbb4de7` (PR #186) before publication. Decision
 of the model owner, 2026-09-17: one module per generic rule and one per feature
 of the ray-event model; see the
 [migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule)
@@ -13,7 +14,7 @@ runs.
 | Check | Result |
 | --- | --- |
 | Whole suite before the reduction | 108 modules; 2,191 passed, 3 visual-only skipped in 622 seconds (the same suite runs about 15 minutes in CI) |
-| Whole suite after the reduction | 39 modules; 1,008 passed in 35 seconds; the slowest modules are `test_ray_delay.py` (13 s), `test_kerengonen.py` (7 s) and `test_repository_language.py` (5 s) |
+| Whole suite after the reduction, merged with main `bbb4de7` (PR #186, `test_detector_mark.py`) | 40 modules; 1,009 passed in 35 seconds; the slowest modules are `test_ray_delay.py` (13 s), `test_kerengonen.py` (7 s) and `test_repository_language.py` (5 s) |
 | Documentation gates (`test_repository_navigation.py`, `test_repository_language.py`, `test_repository_hygiene.py`, `test_json_documents.py`) | 80 passed before and after |
 | `python tools/check.py` against `origin/main` | ruff lint and format, mypy on the changed tool, and the affected kept modules passed |
 
