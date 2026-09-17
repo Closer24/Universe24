@@ -1014,6 +1014,13 @@ is zero events, a bound group is unbound by an arriving ray, and gravity is
 bending by delay. `test_ray_binding.py`
 ([expectations](TEST_EXPECTATIONS.md#ray-binding)) is the test.
 
+Interim form (model owner, 2026-09-17, Highlights 3.4): binding is a
+periodic orbit of the ordinary meeting rule, a bound group a set of rays
+whose meetings reproduce the rays that entered them on a ring of Nodes, and
+the held form of this section, rays resident under a rule with `delay` 1 and
+no outputs and the `ray_delay` wait, is superseded by feature 14, binding as
+a loop, after features 12, 8c, 2b and 8b.
+
 **Binding.** A `ray_interactions` rule without outputs whose assignments set
 `delay` 1 on its participants binds them: the rays stay resident at the Node
 as a bound group and the rule fires again every interval. The first firing is

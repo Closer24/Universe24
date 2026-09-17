@@ -240,7 +240,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "Matter as a bound group (Highlights 3.4): the electron ray around a bound proton, its trajectory changed at every step by the field rays the proton releases; binding is the interaction whose result is zero events, and here it is a delay-1 rule: the electron is held one interval at the Node and meets the proton's field again at the next tick. Whether bound trajectories exist only at discrete retained energies, and their ladder (the Balmer ratio 27/5), is what A8 decides; nothing states a level structure. Unbinding is an arriving light ray of content at least the binding (A8's second series)."
+      "note": "Matter as a bound group (Highlights 3.4): the electron ray around a bound proton, its trajectory changed at every step by the field rays the proton releases; binding is the interaction whose result is zero events, and here it is a delay-1 rule: the electron is held one interval at the Node and meets the proton's field again at the next tick. Whether bound trajectories exist only at discrete retained energies, and their ladder (the Balmer ratio 27/5), is what A8 decides; nothing states a level structure. Unbinding is an arriving light ray of content at least the binding (A8's second series). Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), a binding coupling is an ordinary meeting table whose loop closes: the electron's meetings with the proton's field rays reproduce the rays that entered them on a ring of Nodes, the held delay-1 form of ray-binding-v1 is the interim form, and the ladder A8 decides is the set of loop-closing contents."
     },
     "quark_binding": {
       "status": "open",
@@ -254,7 +254,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The strong binding (Highlights 3.4, 3.26): three quark rays held at one Node, one of each colour, an interaction that repeats every interval and releases no event, possibly nothing more than a very large output-clock delay the bound rays create together (3.28). The proton and the neutron are its bound groups; which combinations stay bound and what they retain is the composite spectrum of hypothesis 12, its first targets the lightest cases; A9 and A14 run its groups."
+      "note": "The strong binding (Highlights 3.4, 3.26): three quark rays held at one Node, one of each colour, an interaction that repeats every interval and releases no event, possibly nothing more than a very large output-clock delay the bound rays create together (3.28). The proton and the neutron are its bound groups; which combinations stay bound and what they retain is the composite spectrum of hypothesis 12, its first targets the lightest cases; A9 and A14 run its groups. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), this is an ordinary meeting table whose loop closes, the three quark rays circulating on a ring of Nodes and meeting again in the same state; the held form at one Node is the interim form, and the composite spectrum of hypothesis 12 is the set of loops the table closes."
     },
     "gluon_gluon_binding": {
       "status": "open",
@@ -267,7 +267,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it."
+      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it. Under feature 14, binding as a loop (Highlights 3.4, 2026-09-17), an ordinary meeting table whose loop closes."
     },
     "weak_conversion": {
       "status": "open",

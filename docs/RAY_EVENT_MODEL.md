@@ -363,6 +363,18 @@ destroys matter. Everything is the same generic ray with the same generic
 interaction, and everything follows from the generic transactions of the
 declared couplings; what remains is to close the binding couplings. Until
 they exist, held source records remain an explicitly labeled interim device.
+Binding is a periodic orbit of the meeting rule (model owner, 2026-09-17,
+Highlights 3.4): a ray never stops, and "bound" means back at the same place
+in the same state; a bound group is a set of rays whose meetings, under the
+ordinary coupling table, reproduce the rays that entered them: the outputs
+leave, walk their Links, meet again, and the meeting gives the same amounts,
+the same phases modulo the circle and the same headings, so the pattern
+repeats forever; a pattern whose meeting does not close disperses. There is
+no binding rule, only the table, of which a bound group is a fixed point
+over a loop; a group lives on a ring of Nodes, not at one Node, its clock is
+the period of the loop and its mass is its content. The held rays of feature
+8 and the register-driven motion of feature 8c are the interim form,
+superseded by feature 14, binding as a loop (section 6).
 
 **External body (model owner, 2026-09-17; Highlights 3.19; named "fixed
 body" earlier that day).** Beside the Detector there is one more declared
@@ -802,6 +814,11 @@ every such set; Highlights 3.20 is the text to follow.
    lagging side per phase modulus, the field ray returning reversed; the
    recoil's coupling to the group and the orbit are open; see
    [binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1).)
+   Interim (model owner, 2026-09-17, Highlights 3.4): the held-ray binding
+   of this feature, a rule with delay 1 and no outputs and its `ray_delay`
+   wait, holds any content and therefore has no ladder, and the
+   register-driven motion of a group (feature 8c) is the interim form of its
+   motion; both are superseded by feature 14, binding as a loop, below.
    Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
    3.28): the lag counted in its own modulus, declared per family, in place
    of the phase steps of feature 8; the register is spent as one Link toward
@@ -906,6 +923,29 @@ by and walks back until the first content its coupling responds to absorbs
 it or it reaches its source, with no inverse split, every audit exact. It
 unlocks A1, A2 and the diagonal series of A6 in the [experiments
 register](EXPERIMENTS.md).
+
+**Feature 14, binding as a loop (model owner, 2026-09-17; Highlights 3.4).**
+Planned, after features 12, 8c, 2b and 8b. A ray never stops, and "bound"
+does not mean "resident": a bound group is a set of rays whose meetings,
+under the ordinary coupling table, reproduce the rays that entered them: the
+outputs leave, walk their Links, meet again, and the meeting gives the same
+amounts, the same phases modulo the circle and the same headings, so the
+pattern repeats forever; a pattern whose meeting does not close disperses.
+There is no binding rule: a bound group is a fixed point of the ordinary
+meeting table over a loop, the only declared thing is the table, and step 3
+of the Node's law is untouched, since the loop uses the ordinary meeting. On
+the cubic lattice the smallest loop is a unit square of four Nodes with rays
+circulating both ways, each corner meeting every interval two rays that
+leave through each other's Ports; a group lives on a ring of Nodes, not at
+one Node, its size is the ring, its clock is the period of the loop, its
+mass is its content (Highlights 3.28), its field is released by rays in
+motion, five headings each (Highlights 3.5), and its motion as a whole is
+its corners shifting, not a register on a Node. The ladder of hypothesis 12
+is the set of contents and phases that close a loop under the table, which
+experiment A10 counts once this feature lands; the held-ray binding of
+feature 8 and the register-driven motion of feature 8c are its interim
+forms, and a binding coupling of the catalog is then an ordinary meeting
+table whose loop closes.
 
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature
