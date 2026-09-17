@@ -6,7 +6,10 @@ stated so that a run can confirm or refute it, or stated as outside the model's
 reach. Nothing here is a claim of the coupling summary
 (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17) or of the
 [validation log](VALIDATION.md). A hypothesis moves off this page
-only with a measured result and a fingerprint.
+only with a measured result and a fingerprint. The runs that confront these
+hypotheses with known measurements, and the demonstrations the paper needs,
+are entries of the [experiments register](EXPERIMENTS.md), each with its
+features and its criterion pinned before the run.
 
 ## 1. The lottery is the only door for outside information
 
