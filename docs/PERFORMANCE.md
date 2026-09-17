@@ -1,5 +1,161 @@
 # Run performance
 
+## Ray-event engine: Local Focus measured (2026-09-17)
+
+Measured on Linux with Python 3.14.0rc2 on 2026-09-17 at head `f64b3f7`,
+source fingerprint
+`ae363f86be9b57c2e8e3fc120368496c36eff9b5204be51bb74cd178f02dacd6`, one Node
+worker, through `event_universe.runner.run_initialization`. Local Focus has
+been the default since the 2026-09-15 change below; every input was run with
+`"focus": false` and with `"focus": true` and nothing else changed. Three
+inputs: the two-electron released-field world of the 2026-09-17 electron-field
+recording (21 x 11 x 7, open boundary, two `hold` lamps emitting electron 8
+toward each other on parallel lines, G released `[1, 4]`, `phase_steps` 8,
+the `turn` interaction) for 24 and for 96 ticks, and the pair-lamp Detector
+world of `tests/test_inverse_split.py` (15 x 15 x 15 periodic, arm A returned
+at the mark three Links out, `return_mode` `siblings`) for 48 ticks. The
+earlier measurement of the pre-prune engine is [PR #134](https://github.com/Closer24/Universe24/pull/134)
+(2026-09-15, sparse carrier 57.95% shorter, straight-ray field 20.74%); it is
+prior art for the method, not reused here.
+
+| Input | Ticks | Wall, Focus off | Wall, Focus on | Spatial plan requests -> evaluations | Hit rate | Carrier plan hits | Records identical |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Two electrons, released G | 24 | 0.487 s | 0.490 s | 754 -> 530 | 29.7% | 0 of 0 | yes |
+| Two electrons, released G | 96 | 0.614 s | 0.601 s | 902 -> 678 | 24.8% | 0 of 0 | yes |
+| Detector pair lamp, siblings | 48 | 0.200 s | 0.203 s | 150 -> 150 | 0.0% | 33 of 36 | yes |
+
+Wall time is the median of five interleaved off/on runs of the whole runner
+call, files included. Stepping alone through the `Simulation` API, the median
+of fifteen interleaved runs, gives 0.404 s against 0.396 s, 0.457 s against
+0.447 s and 0.178 s against 0.183 s. The 224 hits of the electron world all
+fall in ticks 3 to 24, where the two mirror-image electrons and their parallel
+G columns present equal planning inputs in the same tick; ticks 25 to 96 add
+148 requests and no hit. The Detector world has one lamp and no symmetric
+Node, so no spatial plan repeats; its 33 carrier hits are the lamp's unchanged
+`hold` record, and `return_mode` `straight` and `annul` behave the same (no
+spatial hit, identical records). Carrier phase visits are equal with and
+without Focus (144, 576 and 144) because the only carrier Nodes in these
+worlds are the lamps; ray Nodes belong to the spatial engine, whose active
+index does not depend on Focus.
+
+Records identical means equal SHA-256 digests of `events.jsonl` and
+`state.json`, and of `run.json` after removing `elapsed_seconds`, `execution`
+and `initialization_sha256` (the input file differs by the flag). Replayed on
+`494acfd`, source fingerprint
+`9515c6cddf9dbb8850f110161c032300bd8074e6b3869d2a91076dbed98c14e7`, every
+`events.jsonl` and `state.json` digest matched `f64b3f7` exactly; those replay
+timings are not used.
+
+Counter caveat: with Focus off the engine hands the spatial planner to the
+Nodes directly (`core/disturbance_engine.py`, constructor), so
+`spatial_plan_reuse.requests` reads 0 in the off report. cProfile of the same
+run shows 754 planner calls (`fields/spatial_plan.py`) off and 530 on, so the
+requests column describes the same run either way.
+
+Profile split (cProfile, two electrons, 24 ticks, Focus off, 1.90 s profiled):
+the spatial planner takes 20% of the step time (754 calls),
+`validate_spatial_plan` 22% and delivery through `spatial_node.receive` 23%.
+Validation and delivery run on every request, hit or miss, so plan reuse can
+touch only the planner's fifth; with Focus on the planner drops to 530 calls
+and `plan_reuse.one` adds about 0.01 s of key hashing.
+
+Cache size: after 24 ticks the spatial cache holds 530 entries of about
+10.4 KB each as Python objects (3.5 KB key, 6.9 KB plan), 5.5 MB in all; at
+the 4096-entry capacity about 43 MB per cache, two caches per simulation. The
+spatial key carries the world tick (`core/spatial_node.py`), so a ray Node can
+hit only against another Node of the same tick; ignoring the tick, 158 of the
+530 entries repeat and the hit rate would be 382 of 754 (50.7%). The planner
+in `fields/spatial_plan.py` reads the tick only in a bounds check; the
+parameter serves `ray_delay` and per-tick phase.
+
+Focus is already the default and stays so: the records are byte-identical,
+the 2% saving on the symmetric world is inside the run-to-run noise of about
+3%, the Detector world loses 3% to key construction without a hit, and no
+change is made now.
+
+Reproduction, without a committed script: copy the input JSON twice with
+`"focus"` set each way; in one process call `run_initialization(path, output,
+ticks=N)` five times per flag in alternating order into a fresh output
+directory, timing each call with `time.perf_counter()` and taking the median;
+read the counters from the `execution` object of `run.json`; hash the three
+records as described. For stepping alone, build `parse_initial_state` from
+the same documents and time `Simulation(initial).step()` over N ticks,
+fifteen times per flag in alternating order. For the cache size, read
+`_execution._field_reuse._entries` of a live `Simulation` before `close()`
+and sum `sys.getsizeof` over dataclass fields and tuples. Wrap one runner
+call in `cProfile` for the split.
+
+## Plan: compiling the catalog into transition tables
+
+The model owner's direction of 2026-09-17: because every quantity sits on a
+ladder, the Node's law can be split into streaming and collision, like a
+lattice gas. Streaming is one fixed permutation of the whole board, the
+lattice wiring, the same for every Node; a body Node only excludes the body's
+content from it (the flag). Collision is a lookup on a small key. The phase
+enters a meeting only through the phase difference: the coherence table in
+`core/spatial_state.py` is a cosine over differences computed once, and the
+Born split is a catalog coupling indexed by the difference in sectors, so the
+collision key of a two-ray meeting carries one phase dimension, the
+difference, not one per ray. Rays of different layers never meet
+(ray-layers-v1), so there is one table per layer, compiled from that layer's
+families and couplings. Feasibility from the key the cache actually uses,
+`SpatialPlanningInput(states, records, received, node_cost, rays, tick,
+ray_hold)` with each `Ray` carrying heading, accumulators, amount, phase,
+advance, wait, interaction delay, steps, outbound, event Ports, event shares
+and Detector bit:
+
+- Reduced key per ray, what the `turn` interaction reads: heading x amount x
+  phase = 6 x 8 x 8 = 384 (eight phase steps, six Ports, amounts up to 8).
+  Counting one phase per ray, two rays in one layer give 384^2 = 147,456
+  entries, about 9.4 MB packed at 64 bytes per entry (1.5 GB at the measured
+  10.4 KB per Python entry). On the difference key the same meeting is
+  heading_a x amount_a x heading_b x amount_b x difference = 6 x 8 x 6 x 8 x 8
+  = 18,432 rows per family pair and layer, about 1.2 MB packed (192 MB as
+  Python entries).
+- The full planner key is not precomputable: per ray it adds steps (up to the
+  world diameter, unbounded on a periodic board), outbound, event shares
+  (9^6 = 531,441 combinations, which fix the event Ports) and the Detector
+  bit, about 4.7 x 10^7 per ray, so 147,456 x (4.7 x 10^7)^2, about 3 x 10^20
+  entries, plus the unbounded tick and the records of lamp Nodes.
+- Growth. With one phase per ray the count is 384^N in the ray count N, and
+  6,144^N at 128 phase values (`phase_bits` 7; 6 x 8 x 128 per ray): two rays
+  3.8 x 10^7 entries (2.4 GB packed), three rays at eight steps 5.7 x 10^7
+  (3.6 GB packed), three rays at 128 values 2.3 x 10^11 (15 TB packed). On
+  the difference key N rays carry N - 1 differences, 48^N x P^(N-1) rows for
+  P phase values: two rays at 128 values 294,912 rows (19 MB packed), three
+  rays at eight steps 7.1 x 10^6 (453 MB packed), three rays at 128 values
+  1.8 x 10^9 (116 GB packed). A true 128-bit phase, feature 9's wide case,
+  has 2^128 values and cannot be tabulated at all.
+
+Where the apparatus sits in the compiled tables. The external body
+(Highlights 3.19, external-body-v1 on `494acfd`; `body_release`,
+`body_absorb` and `body_step` in `core/spatial_state.py`): its release is a
+constant packet per body, amount x n/d on each heading with its declared
+phase, computed once at load (seven variants: all six headings, or five when
+it steps through a Port), so it never enters a key. Its couplings are
+catalog entries, realised as a feature 6 meeting with the body as a
+one-quantum token participant, so they are rows of the same collision table,
+keyed by the arriving ray's reduced key (heading x amount x phase, the body's
+declared phase being the constant the difference is taken against) and the
+body's family; the sink default is the row that absorbs. Its momentum change
+is a fixed linear map, the momentum table's sign x amount x heading summed
+over arrivals, and its motion is the per-axis accumulator compared with the
+amount: registers outside the key, like a ray's steps. Its amount is of any
+width and is never a key dimension, which is why the "spreading not
+enforced" flag costs nothing in the table. The Detector (detector-mark-v1):
+the draw is outside any table, one unsalted draw per arrival; its two
+outcomes, click on 1 and return on 0, are two rows.
+
+Consequence: the tables are feasible only for the collision step on the
+reduced key, with the ray-event bookkeeping (steps, event Ports, shares,
+Detector bit) carried outside the key. That is a refactor of the planner's
+key, scheduled as the step after feature 10 of issue #169, before any GPU
+port. Two cheaper levers come first, each as its own PR with byte identity of
+the run records as the acceptance test: drop the tick from the spatial key
+where the planner ignores it (+21 points of hit rate on the electron world),
+and skip `validate_spatial_plan` on a cache hit (22% of step time). A dense
+numpy mode for boards that fields fill is measured before adoption.
+
 ## Active engine: default Focus and exact plan reuse
 
 Measured on Linux with Python 3.14.7 on 2026-09-15. Baseline:
