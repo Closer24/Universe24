@@ -965,6 +965,27 @@ on unchanged, so half-life follows. That draw is the one draw of section 22,
 at a node whose Detector bit is set; nothing else in the world draws. None
 of this adds anything to the engine; all of it comes after feature 10.
 
+Addition (model owner, 2026-09-17; Highlights 3.19): beside the Detector
+there is one more declared element of a world, and like the Detector it is a
+declaration, not physics: the fixed body, a node declared to hold a family
+with a very large amount and, if wanted, a charge, standing for a star or a
+large charge. It radiates exactly as any bound group does, by the one field
+rule of this section (Highlights 3.5) and with the strength its amount gives,
+so its gravity and its electric field are the ordinary field rays of the
+model and every ray that meets them responds by its declared coupling. It
+never changes: whatever arrives at it, a recoil field ray or a ray that
+couples to it, is absorbed into an explicitly accounted sink, and it never
+splits, binds, unbinds, converts or decays; the audit books what it radiates
+as a source and what it absorbs as a sink, so conservation stays exact at
+every tick. It may move on a declared trajectory, and wherever it is, the
+node it is at holds all of it; its motion is declared, never caused, because
+nothing on the board can push it. It is the approximation of infinite mass,
+used for the confrontation runs: light bending by a star, an electron near a
+large charge, a hydrogen-like spectrum around a fixed proton. It is feature
+7b of the migration in
+[docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md#6-migration-in-order),
+after feature 7.
+
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 and the shared query of section 14 lapsed with
 Highlights section 3.18, deleted on 2026-09-17, and the price stated in
