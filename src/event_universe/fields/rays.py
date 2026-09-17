@@ -92,13 +92,18 @@ def forward_rays(
     On the links metric every ray is due every tick and the Node keeps none. On
     the Euclidean metric a ray hops when its wait passes its heading's pace; a
     ray that waits stays resident, and its phase still advances with the tick,
-    forward while outbound and backward on the walk back.
+    forward while outbound and backward on the walk back. A returning ray with
+    no steps left is at its event Node and stays resident, inert, with its phase
+    unchanged, until the inverse split (detector-return-v1).
     """
     outgoing: list[list[Ray]] = [[] for _ in range(6)]
     kept: list[Ray] = []
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
+        if not ray.outbound and ray.steps == 0:
+            kept.append(ray)
+            continue
         if ray.interaction_delay:
             if bounded(ray.interaction_delay) < 0:
                 raise ValueError("ray interaction delay must be nonnegative")

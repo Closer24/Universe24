@@ -243,7 +243,14 @@ class SpatialEngine:
                     self.links.refresh(position)
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
-        """No receiving node exists outside; terminal stock escapes without exterior decay."""
+        """No receiving node exists outside; terminal stock escapes without exterior decay.
+
+        A returning ray never reaches the boundary before its event Node, which its
+        steps bound; one that would escape has no event Node in the world, and the
+        engine fails closed instead of recording an escape (detector-return-v1).
+        """
+        if any(not ray.outbound for rays in packet.rays for ray in rays):
+            raise ValueError("a returning ray cannot escape: its event Node is not in the world")
         amounts = [[0] * field.components for field in self.initial.fields]
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:

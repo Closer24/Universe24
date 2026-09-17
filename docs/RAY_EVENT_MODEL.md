@@ -459,8 +459,7 @@ every such set; Highlights 3.20 is the text to follow.
    2, `detector-mark-v1`: the `detectors` key, `DetectorMark`, one unsalted
    draw per arriving ray from the mark's own stream in Port then merge-key
    order, the ray's bit set to 2 on 1 and 1 on 0, the click on 1 only, a
-   replay redrawing nothing; the reversal on 0 is step 4, feature 3, and
-   until then a ray that drew 0 continues unchanged with its bit 0; see
+   replay redrawing nothing; the reversal on 0 is step 4, feature 3; see
    [Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1).)
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
@@ -474,7 +473,14 @@ every such set; Highlights 3.20 is the text to follow.
    in every mode a returning ray that finds something at the Node meets it
    by the declared coupling, and for a ray-interaction event whose inputs
    were consumed it cancels its own share only and continues along the
-   event's output lines.
+   event's output lines. (Return propagation done on 2026-09-17, issue #169
+   feature 3, `detector-return-v1`: on 0 the ray is reversed on its line in
+   its arrival interval, unchanged, and walks its steps back one Link per
+   tick through no coupling, no absorption and no draw, to rest inert at its
+   event Node with the phase it left with; its momentum reads as its share
+   on the event's heading; see
+   [the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1). The
+   inverse split and `return_mode` are feature 4.)
 5. Registry removal from the physical path (done on 2026-09-17, issue #164
    bucket B.5: the registry, the bonded profile, claim-gather, the lottery
    capture, the occupied-links guard and their tests and probes were deleted;

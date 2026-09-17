@@ -315,11 +315,14 @@ square in every direction, and mass-independent acceleration.
 The rule ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1; [ray-event
 model](RAY_EVENT_MODEL.md#1-definitions), migration step 2): every ray
 carries the number of steps it has made since its event and the information
-of that event, and if that event was at a Detector, the bit drawn. In this
-slice they are hidden variables (Highlights 5.4): carried, part of the merge
-identity, validated, and read by no rule, coupling, absorber or readout. An
-existing world runs exactly as before except where rays of different events
-used to merge; they no longer do.
+of that event, and if that event was at a Detector, the bit drawn. They are
+carried, part of the merge identity and validated. `steps` and `outbound`
+are read by the return alone ([Detector return](#detector-return-detector-return-v1)):
+the transport of a returning ray and the momentum readout. The event Ports,
+the event shares and the Detector bit are hidden variables (Highlights 5.4),
+read by no rule, coupling, absorber or readout. An existing world runs
+exactly as before except where rays of different events used to merge; they
+no longer do.
 
 The `Ray` record (`core/spatial_state.py`) holds, beside its heading index,
 DDA accumulators, amount, wave phase, advance, pace wait and interaction
@@ -327,8 +330,8 @@ delay:
 
 | Field | Values | Rule |
 | --- | --- | --- |
-| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node; what it does there is features 3 and 4 of issue #169, so walking it further is refused |
-| `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. No rule sets `0` yet: every created ray is outbound |
+| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node: it stays resident there, inert, for the inverse split (feature 4 of issue #169); no Link is planned for it and a Link beyond its event Node is refused |
+| `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. Every created ray is outbound; a draw of 0 at a marked Node sets `0` ([Detector return](#detector-return-detector-return-v1)) |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
@@ -394,11 +397,60 @@ under negation, without `node_execution` or `spatial_computation_delay`.
 
 On arrival each ray draws one bit from the mark's stream, in Port then
 merge-key order, and leaves with its `detector` field set: `2` on 1, with a
-`detector_click` event (position, tick, Port, family, amount, bit 1); `1` on
-0, with nothing recorded. In this slice the ray continues unchanged in both
-cases; the return is feature 3. A document without `detectors` has no marked
-Node and runs exactly as before, and the runner records
+`detector_click` event (position, tick, Port, family, amount, bit 1), the ray
+continuing unchanged; `1` on 0, the ray returned on its line
+([Detector return](#detector-return-detector-return-v1)) with a
+`detector_return` event and no click. A document without `detectors` has no
+marked Node and runs exactly as before, and the runner records
 `detector_mark: "detector-mark-v1"`.
+
+### Detector return (`detector-return-v1`)
+
+The rule is stated in [Detector-owned sampling](DETECTOR_SAMPLING.md#the-return-detector-return-v1)
+([Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4; migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), first half;
+issue #169, feature 3). This section is the transport of a returning ray.
+
+On a draw of 0 the arriving ray is returned in the same interval
+(`return_ray`): heading index replaced by the index of the negated heading,
+`outbound` 0, accumulators `(0, 0, 0)`, `wait` 0, `interaction_delay` 0,
+everything else as it arrived. It is not counted in the Node's per-Port
+delivered readings of that interval (as if it had not arrived), so the `flux`
+sample and the `received_fields` of the `spatial_received` event do not see
+it. At the next cycle it leaves through the Port it came in through, an
+ordinary departure of `forward_rays`: one Link per tick, `steps` down by one
+and the phase back by the field's advance per Link (`advance_ray`).
+
+On the walk back a ray with `outbound` 0:
+
+- enters no absorption: `_absorb` leaves it in the residents untouched and
+  computes the coherence of the arrivals over the outbound rays only;
+- takes part in no ray interaction: `apply_ray_interactions` gives it no
+  participant view, so no group contains it;
+- is not sampled: the value sample (`coherent_stock`) and the flux sample
+  (`sample_fluxes`, both projections) that couplings read are taken over the
+  outbound rays, and its arrival adds nothing to the per-Port readings;
+- is not drawn for: a marked Node on its way sets nothing and records
+  nothing;
+- merges with nothing: `outbound` is in the merge key, and the returned ray
+  is the only ray of its event on its line;
+- counts: it is in the Node's rays, in `ray_count`, in the totals and in the
+  escape check.
+
+At `steps` 0 it is at its event Node and stops: `forward_rays` keeps it as a
+resident ray with `outbound` 0 and does not move its phase, and `advance_ray`
+refuses a Link for it. A resident returned ray is inert until the inverse
+split (feature 4): it carries exactly the phase, amount and event record it
+left the event with, and the Node keeps nothing else.
+
+`ray_momentum` reads a ray with `outbound` 0 as amount times its heading
+negated, its share of the event on the event's heading, in the totals, the
+carried-heading flux projection and the escape ledger alike: a return leaves
+the momentum total unchanged and the audits exact. A returning ray in a
+packet that would leave an open boundary is a validation error (its event
+Node is not in the world), never an escape. The runner records
+`detector_return: "detector-return-v1"`, and a world without a mark has no
+returning ray and runs byte for byte as before.
 
 ### Funded emission and absorption
 

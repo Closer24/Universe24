@@ -18,21 +18,25 @@ Universe24 uses one canonical vocabulary for the active simulator. These names d
 The ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1;
 [ray-event model](RAY_EVENT_MODEL.md#1-definitions)) uses these terms;
 `ray-event-state-v1` ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1))
-carries them on every ray, and `detector-mark-v1`
+carries them on every ray, `detector-mark-v1`
 ([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)) sets
-the Detector bit at a marked Node.
+the Detector bit at a marked Node, and `detector-return-v1`
+([Detector return](DETECTOR_SAMPLING.md#the-return-detector-return-v1)) returns
+the ray on a draw of 0.
 
 - **Ray** — the trajectory of one event between two interactions: one heading, one straight line, one Node per Link interval, carrying its share of the event's information. In the spatial-field implementation a `Ray` record is one straight-moving share of a ray field.
 - **Interaction** — a meeting of rays at a Node in one interval, decided by the coupling declared between their families; its result is at most six events, one per Port. In the current slice an emission by a resident record and a firing `ray_interactions` group are the interactions that create rays.
 - **Event of a ray** — a change of trajectory: a new straight line leaving an interaction through one Port. The core term Event above names the engine's local transitions and completed transfers; a ray's event is the interaction that created its trajectory.
 - **Steps** — the number of Links a ray has walked since its event, counted up while outbound and down on the walk back; zero at the event Node.
-- **Outbound** — `1` while a ray travels on its event's heading, `0` once it is reversed on its own line (a return).
+- **Outbound** — `1` while a ray travels on its event's heading, `0` once it is reversed on its own line (a return). A draw of 0 at a marked Node is the one thing that sets `0`.
+- **Return** — what a marked Node does with a ray whose draw is 0 (`detector-return-v1`): the same wave ray reversed on its line, unchanged in amount, phase and event record, leaving in the same interval through the Port it came in through and walking its steps back one Link per tick. A returning ray enters no coupling and no absorption, is sampled by nothing, merges with nothing and is drawn for by no mark; a return is no measurement, and the `detector_return` record is a record of the reversal, not of an outcome.
+- **Resident returned ray** — a returning ray at `steps` 0: it is at its event Node and stays there as a resident ray with `outbound` 0, its phase, amount and event record exactly what it left the event with. It is inert until the inverse split (feature 4 of issue #169) consumes it: no Link is planned for it, its phase does not move, and it enters no coupling.
 - **Event Ports** — the six-bit mask of the Ports the ray's event sent to, in Port order `[+X, -X, +Y, -Y, +Z, -Z]`.
 - **Event shares** — the amount the ray's event sent through each Port, six entries in Port order and zero where the mask bit is zero: the information a returning ray needs for the inverse split.
 - **Detector bit** — what a ray records of a Detector event: `0` none, `1` a Detector event that drew 0, `2` a Detector event that drew 1. The bit is all a Detector adds to a ray; a marked Node sets it on every arrival (`detector-mark-v1`).
 - **Detector mark** — the Detector bit of a Node together with its setting `n / d` and its ticket seed (`detectors` in the initialization, `DetectorMark` in the code): bounded Node metadata, not a record and not stock. A marked Node draws one bit per arriving ray from its own ticket stream, reading nothing from the ray, and is otherwise an ordinary Node.
 - **Click** — the `detector_click` record of a draw of 1 at a marked Node: position, tick, Port, family, amount and bit 1. The click is the record of the measurement and the only one; a draw of 0 records nothing, because a return is no measurement.
-- **Hidden variable** — a value carried on a ray that no rule, coupling, absorber or readout reads; steps, outbound, event Ports, event shares and the Detector bit are hidden in `ray-event-state-v1`. A marked Node writes the Detector bit and reads none of them.
+- **Hidden variable** — a value carried on a ray that no rule, coupling, absorber or readout reads; the event Ports, the event shares and the Detector bit are hidden in `ray-event-state-v1`. Steps and outbound are read by the return alone (`detector-return-v1`): the transport of a returning ray and its momentum readout. A marked Node writes the Detector bit and reads none of them.
 
 ## Values do not become new physical kinds when they move
 

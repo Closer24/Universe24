@@ -15,6 +15,7 @@ from event_universe.core.disturbance_state import CostMeter
 from event_universe.core.spatial_state import (
     RAY_EVENT_STATE,
     Ray,
+    advance_ray,
     merge_rays,
     ray_momentum,
     validate_rays,
@@ -211,7 +212,8 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
         stock += sum(ray.amount for ray in rays_at(world, node.position))
     assert stock == 76 and in_flight == [16, 4, 0]
     # (c) A ray flagged returning walks its steps and its phase back one Link at a
-    # time on its own line, and is refused a Link beyond its event Node.
+    # time on its own line; at its event Node it stays resident, inert, and is
+    # refused a Link beyond it.
     returning = Ray(
         0, (0, 0, 0), 5, phase=1, steps=5, outbound=0, event_ports=1, event_shares=(5,) + (0,) * 5
     )
@@ -223,8 +225,10 @@ def test_rays_carry_their_event_and_count_their_steps(tmp_path):
         walked.append((returning.steps, returning.phase))
     assert walked == [(4, 0), (3, 7), (2, 6), (1, 5), (0, 4)]
     assert returning.outbound == 0 and returning.event_ports == 1
+    ports, kept = forward_rays((returning,), definition, CostMeter(initial.operation_costs))
+    assert kept == (returning,) and ports == ((),) * 6
     with pytest.raises(ValueError, match="event Node"):
-        forward_rays((returning,), definition, CostMeter(initial.operation_costs))
+        advance_ray(returning, definition.headings[0], definition.phase_steps, 1)
     for invalid in (
         {"steps": -1},
         {"outbound": 2},

@@ -118,9 +118,14 @@ class LocalConservationAudit:
             if definition.rays and rays and index < len(rays):
                 for ray in rays[index]:
                     components[0] = checked_work(components[0] + ray.amount)
+                    # A returning ray reads as its share on the event's heading, its
+                    # own heading negated (detector-return-v1).
                     heading = definition.headings[ray.heading]
+                    sign = 1 if ray.outbound else -1
                     for axis in range(3):
-                        intrinsic[axis] = checked_work(intrinsic[axis] + ray.amount * heading[axis])
+                        intrinsic[axis] = checked_work(
+                            intrinsic[axis] + sign * ray.amount * heading[axis]
+                        )
             values[definition.field] = pack(tuple(components))
         energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
         return (

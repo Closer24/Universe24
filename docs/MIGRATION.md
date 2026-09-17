@@ -226,8 +226,8 @@ is otherwise an ordinary Node
   (`next_ticket(state, 0)`, `ticket_draw`, bit 1 when
   `number x d < n x TICKET_MODULUS`), in Port then merge-key order, sets the
   ray's `detector` to 2 on 1 and 1 on 0, and records a `detector_click` event
-  (position, tick, Port, family, amount, bit 1) on 1 only. In this slice the
-  ray continues unchanged on both outcomes; the return is feature 3.
+  (position, tick, Port, family, amount, bit 1) on 1 only. Until
+  `detector-return-v1` (below) the ray continued unchanged on both outcomes.
 - The runner records `detector_mark: "detector-mark-v1"` in `run.json`
   beside `sampling_profile` and `ray_state`.
 - The ticket rule keeps its signature (`next_ticket(state, salt)`); the mark
@@ -239,6 +239,48 @@ is otherwise an ordinary Node
 
 A document without `detectors` has no marked Node, calls the ticket rule
 nowhere and runs exactly as before.
+
+## Detector return added on 2026-09-17 (`detector-return-v1`)
+
+Issue #169, feature 3, the first half of migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+[Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4: a draw of 0 at a marked Node
+returns the arriving ray, the same wave ray reversed on its line, unchanged,
+walking back the number of steps it has made since its event
+([the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1),
+[transport](SPATIAL_FIELDS.md#detector-return-detector-return-v1)).
+
+- `return_ray(ray, definition)` and `DETECTOR_RETURN` in
+  `core/spatial_state.py`: heading index replaced by the negated heading's
+  index, `outbound` 0, accumulators, wait and interaction delay reset,
+  amount, phase, steps, event record and family unchanged.
+- `SpatialNode.receive`: a ray whose draw is 0 is returned in its arrival
+  interval, records a `detector_return` event (position, tick, Port, family,
+  amount) and no click, and is left out of the per-Port delivered readings;
+  a ray that arrives already returning is not drawn for and not counted in
+  those readings either. The `detector_click` list is what it was.
+- A returning ray enters no coupling: `_absorb` leaves it untouched and
+  takes the coherence over the outbound rays, `apply_ray_interactions` gives
+  it no participant view, and the value and flux samples couplings read are
+  taken over the outbound rays (`SpatialNode.coupling_rays`).
+- `forward_rays` keeps a returning ray with `steps` 0 resident, inert, with
+  its phase unchanged; `advance_ray` still refuses it a Link. A resident
+  returned ray waits for the inverse split (feature 4).
+- `ray_momentum` reads a ray with `outbound` 0 as amount times its heading
+  negated, its share on the event's heading, so a return leaves the momentum
+  total unchanged and every audit exact (issue #169: the Detector takes no
+  recoil).
+- `SpatialEngine._escape` refuses a packet holding a returning ray with a
+  validation error: its event Node is not in the world.
+- The runner records `detector_return: "detector-return-v1"` in `run.json`
+  beside `detector_mark`.
+
+Pinned consequences in existing tests: the four rays of
+`test_detector_mark.py` that draw 0 now return to their lamps and rest there,
+and the returning ray of `test_ray_hidden_state.py` is kept resident at
+`steps` 0 instead of failing the forwarding ([expectations](TEST_EXPECTATIONS.md#node-detector-bit)).
+A document without `detectors` has no returning ray and runs byte for byte
+as before.
 
 ## Primary initialization-based API
 

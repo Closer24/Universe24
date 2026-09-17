@@ -362,8 +362,9 @@ the key selects the default localizing residue.
 | `test_euclidean_pace.py` | One lamp on the 26 neighbor headings after twelve ticks reaches 12 links in every heading on the links metric (Euclidean radii 12, 8.49, 6.93, spread 1.732) and 6, 9 and 12 links on the Euclidean metric (radii 6, 6.4, 6.93, spread below 1.2); two lamps four links apart behind a screen twelve links away read their darkest Nodes at x = -1 and 1 on the links metric with a flat line beyond, and at x = -5 and 5 on the Euclidean metric where the Euclidean path difference is a half turn, with the center more than four times the dark reading; every world closed; the runner records `euclidean-ray-pace-v1` beside `isotropic-ray-field-v1` |
 | `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
-| `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
-| `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the six rays leave with `detector` 1 or 2 matching the bits and continue unchanged, the marked and the unmarked control world agree on totals, momentum, lamps and rays at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
+| `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward, is kept resident at steps 0 and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
+| `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the two rays that drew 1 leave with `detector` 2 and continue unchanged while the four that drew 0 leave with `detector` 1 reversed and rest at their lamps from tick 2 on, the marked and the unmarked control world agree on totals, momentum and lamps at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
+| `test_detector_return.py` | A draw of 0 returns the ray ([Detector return](#detector-return)): for each of the six unit-axial headings a lamp's ray of 8 is halved by an absorber one Link before the marked Node, drawn 0 there at tick 3 (seed 3, setting 1/2), reversed with `outbound` 0 and no click, walks back one Link per tick with steps 3, 2, 1, 0 and phase 3, 2, 1, 0, crosses the absorber untouched, rests at the lamp with the phase it left with, 8 quanta and zero momentum every tick, one `detector_return` event, the runner recording `detector-return-v1`, and a returning ray at an open boundary refused |
 
 The runner must distinguish actual physical conservation from balanced loss
 accounting. It checks tracked combined quantities and every spatial owner,
@@ -830,9 +831,12 @@ the first run:
   ray of amount 7; the world holds 7t rays after tick t: 7, 14, 21, 28;
 - (c) a ray constructed with `outbound` 0, `steps` 5 and phase 1 on the +X
   heading, forwarded five times, leaves through Port 0 each time with `steps`
-  4, 3, 2, 1, 0 and phase 0, 7, 6, 5, 4; a sixth Link is refused ("event
-  Node"); `validate_rays` rejects `steps` -1, `outbound` 2, `event_ports` 64,
-  a share where the mask bit is zero, and `detector` 3;
+  4, 3, 2, 1, 0 and phase 0, 7, 6, 5, 4; a sixth forwarding keeps it
+  resident with `steps` 0 and phase 4 and sends nothing (`detector-return-v1`,
+  updated 2026-09-17: a returned ray at its event Node is resident and
+  inert), and `advance_ray` refuses it a Link ("event Node"); `validate_rays`
+  rejects `steps` -1, `outbound` 2, `event_ports` 64, a share where the mask
+  bit is zero, and `detector` 3;
 - (d) totals stay at 1200 quanta with audited momentum (0, 0, 0) every tick:
   after tick 4 lamp A holds 540 with momentum (0, -4, 0), lamp B 584 with
   momentum (-16, 0, 0), and the rays 76 with momentum (16, 4, 0); the
@@ -876,27 +880,40 @@ mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
   Port 4, family `quanta`, amount 5, bit 1; a draw of 0 records nothing.
   After tick 1 C holds six rays (`ray_count` 6): the ray that came in through
   Port p has heading index `p ^ 1` (it travels toward the opposite side),
-  amount p + 1, `steps` 1, phase 1, `outbound` 1, `event_ports` `1 << (p ^ 1)`
-  and `event_shares` its amount on that Port, and `detector` 2 for Ports 3 and
-  4 and 1 for Ports 0, 1, 2 and 5;
-- (b) after tick t (2 to 4) the ray that came in through Port p is t - 1
-  Links beyond C on the opposite side, at C minus (t - 1) times the unit
-  vector of Port p, with `steps` t, phase t, its amount and its bit unchanged:
-  after tick 2 at (6,7,7), (8,7,7), (7,6,7), (7,8,7), (7,7,6), (7,7,8) for
-  Ports 0 to 5; the six rays are the whole ray inventory of the world at
-  every tick;
+  amount p + 1, `steps` 1, phase 1, `event_ports` `1 << (p ^ 1)` and
+  `event_shares` its amount on that Port; the rays of Ports 3 and 4 carry
+  `detector` 2 and `outbound` 1, and (`detector-return-v1`, updated
+  2026-09-17) the rays of Ports 0, 1, 2 and 5 carry `detector` 1 and are
+  returned: heading index p (reversed on their line), `outbound` 0, amount,
+  steps and phase as they arrived; four `detector_return` events at tick 1
+  and position (7,7,7), Ports 0, 1, 2 and 5, family `quanta`, amounts 1, 2, 3
+  and 6, after the two clicks in the event stream;
+- (b) after tick t (2 to 4) the passed ray that came in through Port p (3
+  and 4) is t - 1 Links beyond C on the opposite side, at C minus (t - 1)
+  times the unit vector of Port p, with `steps` t, phase t, its amount and
+  its bit unchanged: after tick 2 at (7,8,7) and (7,7,6); the returned ray
+  of Port p (0, 1, 2 and 5) leaves C at tick 2 through Port p, the Port it
+  came in through, reaches its lamp's Node C plus the unit vector of Port p
+  ((8,7,7), (6,7,7), (7,8,7), (7,7,6)) with `steps` 0 and phase 0 and stays
+  there resident and unchanged through tick 4 (after tick 2 the Nodes
+  (7,8,7) and (7,7,6) each hold two rays, a passing and a resident returned
+  one, which never merge); the six rays are the whole ray inventory of the
+  world at every tick;
 - (c) the marked world and the control world agree at every tick 1 to 4 on
-  the totals (21 quanta, momentum (0, 0, 0)), on the audited energy and
-  momentum, on every lamp's stock and recoil (0 quanta each; momentum
-  (1,0,0), (-2,0,0), (0,3,0), (0,-4,0), (0,0,5), (0,0,-6)), and on every ray's
-  position, heading, amount, steps and phase; the control's rays carry
-  `detector` 0 everywhere, its Nodes carry no mark and it records no click;
-  neither world's unmarked Nodes call the ticket rule, and the control world
-  never does (a monkeypatched `next_ticket` fails the test if called);
+  the totals (21 quanta, momentum (0, 0, 0): a returned ray's momentum reads
+  as its share on the event's heading), on the audited energy and momentum,
+  and on every lamp's stock and recoil (0 quanta each; momentum (1,0,0),
+  (-2,0,0), (0,3,0), (0,-4,0), (0,0,5), (0,0,-6)); the control's six rays all
+  continue, at C minus (t - 1) times the unit vector of Port p after tick t
+  with `steps` t and phase t, and carry `detector` 0 everywhere, its Nodes
+  carry no mark and it records no click and no return; neither world's
+  unmarked Nodes call the ticket rule, and the control world never does (a
+  monkeypatched `next_ticket` fails the test if called);
 - (d) the runner run twice on the same document writes the same
   `events.jsonl` byte for byte, including exactly two `detector_click`
-  lines, and the same `run.json` apart from `elapsed_seconds`, recording
-  `detector_mark: "detector-mark-v1"` beside `sampling_profile:
+  lines and four `detector_return` lines, and the same `run.json` apart from
+  `elapsed_seconds`, recording `detector_mark: "detector-mark-v1"` and
+  `detector_return: "detector-return-v1"` beside `sampling_profile:
   "detector-only-v1"` and `ray_state: "ray-event-state-v1"`, with
   `conserved_at_every_completed_tick` true and final quanta 21;
 - (e) `parse_initial_state` rejects a mark without `setting`, a setting
@@ -904,6 +921,66 @@ mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
   one position, a mark outside the shape, marks on a world without a ray
   field, and marks on a Euclidean-metric ray field; `validate_configuration`
   reports the same documents invalid.
+
+## Detector return
+
+`test_detector_return.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([Detector return](DETECTOR_SAMPLING.md#the-return-detector-return-v1)), one
+world per heading p (Port index 0 to 5, unit vector u). The Node M = (7,7,7)
+carries the one mark, setting `[1, 2]` and seed 3. The lamp stands three
+Links before M at L = M - 3u, holds 8 quanta and emits them once at tick 0
+through a directed emission on heading u, funded, with emission phase 0,
+recoiling into its own momentum. A sail stands one Link before M at
+N = M - u, holds 0 quanta and absorbs half of every resident ray
+(`fraction` 1, `fraction_denominator` 2) into its quanta and `share x
+heading` into its momentum. Pinned before the first run from the published
+ticket rule (one draw, seed 3: state 144814, number 570000605, bit 0, as the
+first draw of [Node Detector bit](#node-detector-bit)):
+
+- (a) exact tick table of the one ray of the world (position, heading index,
+  amount, `steps`, `outbound`, phase, `detector`) after each tick, for
+  p = 0 (u = +X, L = (4,7,7), N = (6,7,7)); for another p the positions are
+  L + t u, N and M and the heading indices p and p ^ 1:
+  tick 1: (5,7,7), 0, 8, 1, 1, 1, 0;
+  tick 2: (6,7,7), 0, 8, 2, 1, 2, 0;
+  tick 3: (7,7,7), 1, 4, 3, 0, 3, 1 (the sail took 4 on the cycle after the
+  ray's arrival at N, the ray reached M with 4, drew 0 and was returned in
+  that interval: heading negated, `outbound` 0, amount, steps and phase as
+  they arrived);
+  tick 4: (6,7,7), 1, 4, 2, 0, 2, 1;
+  tick 5: (5,7,7), 1, 4, 1, 0, 1, 1 (it crossed N on the cycle after tick 4
+  without absorption: the sail still holds 4);
+  tick 6: (4,7,7), 1, 4, 0, 0, 0, 1 (at L, its event Node, with phase 0, the
+  phase it left with);
+  ticks 7 and 8: (4,7,7), 1, 4, 0, 0, 0, 1, resident and unchanged, the lamp
+  beside it emitting nothing; the ray's accumulators are (0,0,0), `wait` 0
+  and `interaction_delay` 0 at every tick, its `event_ports` `1 << p` and
+  `event_shares` 8 on Port p throughout;
+- (b) the sail holds 0 quanta and momentum (0,0,0) after ticks 1 and 2 and
+  4 quanta with momentum 4u after every tick from 3 to 8; the lamp holds 0
+  quanta and momentum -8u from tick 1 on; the totals are 8 quanta and
+  momentum (0,0,0) at every tick, the conservation report passes and the
+  spatial accounting balances; the momentum read from the rays in the world
+  (`ray_momentum`) is 8u after ticks 1 and 2 and 4u after every tick from 3
+  on, the returning ray reading as its share on the event's heading; the
+  world holds exactly one ray at every tick, and `ray_count` at M after tick
+  3 and at N after tick 4 is 1;
+- (c) no `detector_click` is recorded, and exactly one `detector_return`:
+  tick 3, position (7,7,7), Port p ^ 1 (the Port the ray came in through and
+  leaves by), family `quanta`, amount 4; the mark's ticket state after the
+  draw is 144814;
+- (d) the runner on the same document records `detector_return:
+  "detector-return-v1"` beside `detector_mark: "detector-mark-v1"`,
+  `sampling_profile: "detector-only-v1"` and `ray_state:
+  "ray-event-state-v1"`, `conserved_at_every_completed_tick` true, final
+  quanta 8 and final momentum (0, 0, 0); a second run writes the same
+  `events.jsonl` byte for byte;
+- (e) on an open boundary, a packet holding a returning ray that would
+  escape is refused by the engine with a validation error ("event Node")
+  and records no escape.
 
 ## Detector-owned sampling admission
 
@@ -918,5 +995,7 @@ the share and threshold captures parse and draw nothing. The historical seed-7
 lottery fixture was deleted on 2026-09-17 with the lottery capture, and the native
 instrument/contact fixtures with the integration layer. PASS and the draw are
 implemented by the Detector mark (`detector-mark-v1`,
-[Node Detector bit](#node-detector-bit)); the return on 0 and output-clock
-composition remain blocked by the contract's owner/acceptance table.
+[Node Detector bit](#node-detector-bit)) and the return on 0 by
+`detector-return-v1` ([Detector return](#detector-return)); the inverse split
+and output-clock composition remain blocked by the contract's
+owner/acceptance table.
