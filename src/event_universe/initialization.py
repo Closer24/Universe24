@@ -35,6 +35,7 @@ from .core.disturbance_state import (
     OperationCosts,
     Payload,
     Seed,
+    TableSplit,
     TransportDefinition,
     UpdateRule,
     Values,
@@ -52,6 +53,7 @@ from .core.spatial_state import (
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
     MAX_STORED_PHASE_BITS,
+    PORT_HEADINGS,
     RAY_PROPERTIES,
     RAY_WRITABLE,
     DecayDefinition,
@@ -1748,29 +1750,226 @@ def _ray_interactions(
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
 ) -> tuple[InteractionDefinition, ...]:
-    """Compile the existing indexed syntax against structural complete-ray views."""
+    """Compile the existing indexed syntax against structural complete-ray views.
+
+    A rule with `outputs` is a meeting with N-to-M outputs
+    (ray-meeting-conversion-v1): its outputs, not assignments, define the new
+    event rays that replace its participants.
+    """
     definitions = ray_participant_definitions(fields, spatial)
-    required = {"name", "participants", "assignments", "invariants"}
+    required = {"name", "participants", "invariants"}
     rules: list[InteractionDefinition] = []
     for raw in _array(value, "ray_interactions", MAX_RULES):
-        obj = _object(raw, "ray interaction", required | {"when"}, required)
-        rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+        obj = _object(raw, "ray interaction", required | {"when", "assignments", "outputs"}, required)
+        if "outputs" in obj:
+            if "assignments" in obj:
+                raise ValueError("a ray meeting with outputs assigns through its outputs")
+            rule = _ray_meeting(obj, spatial, definitions)
+        elif "assignments" not in obj:
+            raise ValueError("a ray interaction requires assignments or outputs")
+        else:
+            rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+            if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
+                raise ValueError("ray interaction amount, advance, family and charge are read-only")
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
-        if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
-            raise ValueError("ray interaction amount, advance, family and charge are read-only")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
-        if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
-            raise ValueError(
-                "the charge invariant is declared for every ray interaction; "
-                "do not declare another invariant named charge"
-            )
         # wave-ray-family-v1: charge x amount summed over the participants is an
         # invariant of every declared ray interaction, checked like the declared ones.
-        rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
+        # A meeting with outputs carries it as a per-ray readout summed over its
+        # inputs and over its outputs, appended by _ray_meeting after the same check.
+        if not rule.outputs:
+            if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
+                raise ValueError(
+                    "the charge invariant is declared for every ray interaction; "
+                    "do not declare another invariant named charge"
+                )
+            rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
+
+
+def _ray_meeting(
+    obj: dict[str, object],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    definitions: tuple[DisturbanceDefinition, ...],
+) -> InteractionDefinition:
+    """Compile a meeting of rays with declared outputs (ray-meeting-conversion-v1).
+
+    Each output declares its `field`, `amount` (an integer, `{"of": i}` for an
+    input's amount, `{"of": "sum"}` for the sum over the inputs, a split by a
+    declared table `{"table": [...], "of": ..., "index": "phase_difference"}`, or
+    `{"rest_of": j}` for the rest of the content that output `j`'s table splits),
+    `heading` (a Port index, `"same"` or `"reversed"` from its source `input`),
+    `phase` (`"same"`, an offset from the source input, or `{"of": i, "offset": k}`)
+    and `delay`; its advance is its source input's. The outputs are compiled to the
+    assignments and table splits of `convert_values`.
+    """
+    selections, layouts = _participant_selections(
+        obj, RAY_PROPERTIES, definitions, minimum=2, maximum=MAX_CONVERSION_ARITY
+    )
+    names = _names(definitions)
+    parser = _Expressions(RAY_PROPERTIES, (), participants=layouts)
+
+    def ref(field: str, participant: int) -> dict[str, object]:
+        return {"field": field, "participant": participant}
+
+    raw_outputs = _array(obj["outputs"], "ray meeting outputs", MAX_CONVERSION_ARITY, 1)
+    outputs: list[int] = []
+    assignments: list[Assignment] = []
+    tables: dict[int, tuple[int, ...]] = {}
+    tables_source: dict[int, tuple[int, tuple[int, int]]] = {}
+    rests: dict[int, int] = {}
+    for position, raw in enumerate(raw_outputs):
+        item = _object(
+            raw,
+            "ray meeting output",
+            {"field", "amount", "heading", "phase", "delay", "input"},
+            {"field", "amount", "heading"},
+        )
+        kind = _index(item["field"], names, "output.field")
+        definition = spatial[kind]
+        if not definition.rays:
+            raise ValueError("ray meeting outputs require a ray field")
+        outputs.append(kind)
+        source = _integer(item.get("input", 0), "output.input", 0)
+        if source >= len(selections):
+            raise ValueError("output.input exceeds the declared roles")
+        amount = item["amount"]
+        if type(amount) is int:
+            amount_expression: object = _integer(amount, "output.amount", 1)
+            assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
+        elif isinstance(amount, dict) and "rest_of" in amount:
+            spec = _object(amount, "output.amount", {"rest_of"}, {"rest_of"})
+            rests[position] = _integer(spec["rest_of"], "output.amount.rest_of", 0)
+        elif isinstance(amount, dict) and "table" in amount:
+            spec = _object(
+                amount, "output.amount", {"table", "of", "index", "between"}, {"table", "of", "index"}
+            )
+            if spec["index"] != "phase_difference":
+                raise ValueError("a table split is indexed by the phase difference of two inputs")
+            table = tuple(
+                _integer(weight, "output.amount.table", 0)
+                for weight in _array(spec["table"], "output.amount.table", MAX_PHASE_STEPS, 1)
+            )
+            if any(weight > len(table) for weight in table):
+                raise ValueError("a table weight is at most the table length, the phase modulus")
+            between_raw = _array(spec.get("between", [0, 1]), "output.amount.between", 2, 2)
+            between = (
+                _integer(between_raw[0], "output.amount.between", 0),
+                _integer(between_raw[1], "output.amount.between", 0),
+            )
+            if max(between) >= len(selections) or between[0] == between[1]:
+                raise ValueError("a table split reads the phases of two distinct inputs")
+            of = spec["of"]
+            if of == "sum":
+                shared = -1
+            else:
+                shared = _integer(of, "output.amount.of", 0)
+                if shared >= len(selections):
+                    raise ValueError("output.amount.of exceeds the declared roles")
+            tables[position] = table
+            tables_source[position] = (shared, between)
+        else:
+            spec = _object(amount, "output.amount", {"of"}, {"of"})
+            if spec["of"] == "sum":
+                amount_expression = ref("amount", 0)
+                for participant in range(1, len(selections)):
+                    amount_expression = {
+                        "op": "add",
+                        "args": [amount_expression, ref("amount", participant)],
+                    }
+            else:
+                of_index = _integer(spec["of"], "output.amount.of", 0)
+                if of_index >= len(selections):
+                    raise ValueError("output.amount.of exceeds the declared roles")
+                amount_expression = ref("amount", of_index)
+            assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
+        heading = item["heading"]
+        if heading == "same":
+            heading_expression: object = ref("heading", source)
+        elif heading == "reversed":
+            heading_expression = {"op": "neg", "args": [ref("heading", source)]}
+        else:
+            port = _integer(heading, "output.heading", 0)
+            if port >= 6:
+                raise ValueError("output.heading is a Port index from 0 through 5, same or reversed")
+            if PORT_HEADINGS[port] not in definition.headings:
+                raise ValueError("ray meeting output Port is absent from its field's heading table")
+            heading_expression = list(PORT_HEADINGS[port])
+        assignments.append(Assignment(position, 1, parser.parse(heading_expression, 3)))
+        phase = item.get("phase", "same")
+        modulus = definition.phase_modulus
+        if phase == "same":
+            phase_of, offset = source, 0
+        elif type(phase) is int:
+            phase_of, offset = source, _integer(phase, "output.phase", 0)
+        else:
+            spec = _object(phase, "output.phase", {"of", "offset"}, {"of"})
+            phase_of = _integer(spec["of"], "output.phase.of", 0)
+            offset = _integer(spec.get("offset", 0), "output.phase.offset", 0)
+        if phase_of >= len(selections) or offset >= modulus:
+            raise ValueError("output.phase reads a declared input plus an offset below the modulus")
+        phase_expression: object = ref("phase", phase_of)
+        if offset:
+            phase_expression = {"op": "add", "args": [phase_expression, offset]}
+        assignments.append(Assignment(position, 2, parser.parse(phase_expression, 1)))
+        assignments.append(Assignment(position, 3, parser.parse(ref("advance", source), 1)))
+        delay = _integer(item.get("delay", 0), "output.delay", 0)
+        assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
+        # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
+        assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
+        assignments.append(Assignment(position, 6, parser.parse(definition.charge, 1)))
+    if any(target not in tables for target in rests.values()):
+        raise ValueError("rest_of requires an output split by a table")
+    splits: list[TableSplit] = []
+    for first, table in tables.items():
+        partners = [second for second, target in rests.items() if target == first]
+        if len(partners) != 1:
+            raise ValueError("a table split requires exactly one output taking the rest")
+        shared, between = tables_source[first]
+        splits.append(TableSplit(first, partners[0], 0, 2, table, shared, between))
+    involved = {kind for role in selections for kind in role} | set(outputs)
+    if any(len(split.table) != spatial[kind].phase_modulus for split in splits for kind in involved):
+        raise ValueError("a table split requires the table length to equal the phase steps")
+    every_field = tuple(range(len(RAY_PROPERTIES)))
+    invariants: list[Invariant] = []
+    for raw in _array(obj["invariants"], "invariants", MAX_FIELDS, 1):
+        item = _object(raw, "invariant", {"name", "expression"}, {"name", "expression"})
+        name = _text(item["name"], "invariant.name")
+        if any(invariant.name == name for invariant in invariants):
+            raise ValueError("duplicate invariant name")
+        # A readout of one ray, summed over the inputs and over the outputs.
+        invariants.append(
+            Invariant(name, _Expressions(RAY_PROPERTIES, every_field).parse(item["expression"]))
+        )
+    if any(invariant.name == CHARGE_INVARIANT for invariant in invariants):
+        raise ValueError(
+            "the charge invariant is declared for every ray interaction; "
+            "do not declare another invariant named charge"
+        )
+    # wave-ray-family-v1: charge x amount of one ray, summed over the inputs and over
+    # the outputs, is an invariant of every meeting.
+    invariants.append(
+        Invariant(
+            CHARGE_INVARIANT,
+            _Expressions(RAY_PROPERTIES, every_field).parse(
+                {"op": "mul", "args": [{"field": "charge"}, {"field": "amount"}]}
+            ),
+        )
+    )
+    return InteractionDefinition(
+        name=_text(obj["name"], "interaction.name"),
+        left_type=selections[0][0],
+        right_type=selections[-1][0],
+        assignments=tuple(assignments),
+        invariants=tuple(invariants),
+        when=parser.parse(obj["when"], 1) if "when" in obj else None,
+        participants=tuple(selections),
+        outputs=tuple(outputs),
+        splits=tuple(splits),
+    )
 
 
 def parse_initial_state(document: object) -> InitialState:

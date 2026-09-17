@@ -59,6 +59,8 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
 | `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
 | `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
+| `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
+| `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_record_operations.py` | 19 | 0.00 | Record merge by type and channel, reserved slots and capacity policy |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
@@ -255,6 +257,8 @@ the key selects the default localizing residue.
 | `test_kerengonen.py` | A phase advances by the field's step on every link and wraps, a plain field leaves it alone, and rays merge only with equal phase; the cosine table for four steps is (256, 0, -256, 0), equal phases give coherence exactly one, opposite equal amounts exactly zero and a quarter turn one half; two lamps three links from a Node fire 2-quantum rays at each other and the sampled values along the line are 4, 0, 4, 0, 4 with four steps and 4, 2, 0 with eight, while the plain field reads 4 everywhere and the audit closes on 800 quanta; an absorber between the lamps takes 4 quanta before the opposite pair arrives and nothing after, takes 20 at the in-phase Node, and 20 at the dark Node when the second lamp is offset two steps; the runner records `kerengonen-ray-field-v1` and rejects one phase step, an advance equal to the steps, a missing advance, an emission phase beyond the steps, a phase without the key and the key without ray transport; the double-slit probe composes and closes; the bounded ticket rule advances and squares as specified and no absorber draws from it, the share rule takes 2 whole single quanta at a quarter turn where a half share truncates to nothing (closed on 800 quanta), and an unknown capture, the deleted lottery capture and a capture seed are rejected; a slit that re-emits the phase it absorbed makes a lamp's wave arrive at a Node three links on opposite to a second lamp's (reading 0), equal with that lamp offset four steps (4), and partial at a fixed re-emission phase (3), and a carried phase without an absorb rule is rejected; a ray with its own advance ignores the field's, rays of different advance do not merge, beams of momentum 16 and 32 at advance |p|/4 carry advances 4 and 8 with phases in ratio two after the same links, a negative advance and one without the key are rejected, and a slit re-emits the absorbed advance so readings are 2, 4, 0 for lamp offsets 0, 16, 48 on a 64-step field; a mirror sends a lamp's wave back along -x with the carried phase, holds 4 quanta and the reversed momentum, closes on 400 quanta, and the line reads 0, 2, 5, 7, 7, 5, 2, 0, 0, 2, 5 at advance 4 (period 8) and 6, 1, 1, 6 repeating at advance 8 (period 4); a mirror without every image heading, without a recoil field, on an unknown axis or without an absorb rule is rejected; a three-layer screen's first layer absorbs exactly what a one-layer screen does and the layers behind add to it, both worlds closed; a dissolving record of 10 quanta with after 3 and over 4 holds 10, 10, 10, 7, 4, 1, 0 and a moving one flies while it holds quanta and stops at x = 2 when empty, both closed; dissolution on a sourced emission, an emission without amount or dissolve, and over_ticks 0 are rejected; on the Euclidean metric the integer square root is exact at 0, 1, 2, 3, 4, 15, 16, 17 and a million, the paces of an axis, face and body diagonal are 2364/4096, 2364/2896 and equal, twelve ticks carry the first axis ray 6 links, the face diagonal 9 and the body diagonal 12, the world closes on 400 quanta and an unknown metric is rejected; a diagonal `xy` mirror returns the +x ray along +y with nothing back along -x, and a quarter-fraction mirror passes 3 of every 4 quanta and returns 1, closed; a directed emitter with `heading` fires every ray along -x and closes, and a heading outside the field's list or combined with a mirror is rejected |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward, is kept resident at steps 0 and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
 | `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the two rays that drew 1 leave with `detector` 2 and continue unchanged while the four that drew 0 leave with `detector` 1 reversed and rest at their lamps from tick 2 on, the marked and the unmarked control world agree on totals, momentum and lamps at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
+| `test_ray_layers.py` | Rules of different layers fire in one interval and an unruled family crosses ([ray layers](#ray-layers)): five rays of families a, a, b, b, c meet at one Node after tick 2; after tick 3 the a rays have swapped headings (mask 3, shares (5, 5, 0, 0, 0, 0), steps 1), the b rays have turned to +Z and -Z at phase 7 (mask 48, shares (0, 0, 0, 0, 5, 5), steps 1) and the c ray is one Link past the Node unchanged (mask 16, steps 3, phase 3); the derived layers are (a), (b), (c) whether or not the b rule is declared, and without it the b rays cross like c; totals 10, 10, 5 and zero momentum every tick with the audit passed, the runner recording `ray-layers-v1` and the layer families |
+| `test_ray_meeting_conversion.py` | A meeting replaces its rays by declared outputs ([ray meetings with outputs](#ray-meetings-with-outputs)): two rays of 5 meet at one Node after tick 2; with four declared outputs the meeting returns four new rays on Ports 2 to 5 with amounts 2, 2, 3, 3, steps 0, mask 60 and shares (0, 0, 2, 2, 3, 3), and nothing stays at the Node; with the table [8, 7, 4, 1, 0, 1, 4, 7] the shared 10 goes 10:0, 0:10, 5:5 and 8:2 to the two Ports at phase differences 0, 4, 2 and 1, the rest output owning the remainder and the moved momentum booked as a source; outputs that break the amount or the momentum invariant are rejected before any owner changes, malformed tables at initialization; the runner records `ray-meeting-conversion-v1` |
 
 The runner must distinguish actual physical conservation from balanced loss
 accounting. It checks tracked combined quantities and every spatial owner,
@@ -685,6 +689,141 @@ first draw of [Node Detector bit](#node-detector-bit)):
 - (e) on an open boundary, a packet holding a returning ray that would
   escape is refused by the engine with a validation error ("event Node")
   and records no escape.
+
+## Ray layers
+
+`test_ray_layers.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice: three ray families `a`, `b` and `c`, each its own
+conserved scalar field with an 8-step phase advancing 1 per Link, and one
+signed `momentum` vector ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+Five lamps around the Node N = (7,7,7) each hold 5 of their family and emit
+it once, funded, directed at N with recoil into `momentum`: `a` from (5,7,7)
+along +X and from (9,7,7) along -X, `b` from (7,5,7) along +Y and from
+(7,9,7) along -Y, `c` from (7,7,5) along +Z. Two rules are declared, both
+guarded by equal amounts and opposite headings with energy and momentum
+invariants: `a_swap`, two `a` rays exchange headings; `b_turn`, two `b` rays
+turn by the cyclic axis permutation (x, y, z) to (z, x, y) and take phase 6.
+No rule selects `c`. The test is parametrized over the declared rules: both,
+or `a_swap` alone. Pinned before the first run:
+
+- (a) the derived layers are ((0,), (1,), (2,)) by field index and (("a",),
+  ("b",), ("c",)) by name in both worlds, since an unruled field is its own
+  layer; a rule whose roles select `a` and `b` would give (("a", "b"),
+  ("c",)), and a world with no rule gives one layer per field;
+- (b) after tick 1 each lamp holds 0 of its family and the recoil of its ray
+  ((-5,0,0), (5,0,0), (0,-5,0), (0,5,0), (0,0,-5)); after tick 2 N holds all
+  five rays, two of `a` (headings 0 and 1, masks 1 and 2), two of `b`
+  (headings 2 and 3, masks 4 and 8) and one of `c` (heading 4, mask 16),
+  every one with steps 2, phase 2, `outbound` 1 and `detector` 0;
+- (c) after tick 3, with both rules, N is empty and the six neighbors hold:
+  at (6,7,7) one `a` ray, heading 1, phase 3, steps 1, `event_ports` 3,
+  `event_shares` (5, 5, 0, 0, 0, 0); at (8,7,7) the same with heading 0; at
+  (7,7,8) one `b` ray, heading 4, phase 7, steps 1, mask 48, shares
+  (0, 0, 0, 0, 5, 5), beside the `c` ray, heading 4, phase 3, steps 3, mask
+  16, shares (0, 0, 0, 0, 5, 0), unchanged from its emission; at (7,7,6) one
+  `b` ray, heading 5, phase 7, steps 1, mask 48, shares (0, 0, 0, 0, 5, 5);
+  nothing at (7,6,7) and (7,8,7): two events at one Node in one interval,
+  and a third family crossing;
+- (d) after tick 3 with `a_swap` alone, the `a` rays and the `c` ray are
+  exactly as in (c), (7,7,8) holds the `c` ray only, and the `b` rays cross:
+  at (7,8,7) heading 2, phase 3, steps 3, mask 4, shares (0, 0, 5, 0, 0, 0);
+  at (7,6,7) heading 3, phase 3, steps 3, mask 8, shares (0, 0, 0, 5, 0, 0);
+- (e) after tick 4, with both rules, (7,7,9) holds the `b` ray (heading 4,
+  phase 0, steps 2) and the `c` ray (heading 4, phase 4, steps 4) on one
+  line without meeting, and the `a` rays are at (5,7,7) and (9,7,7) with
+  steps 2 and phase 4;
+- (f) at every tick 1 to 4 the world holds exactly five rays; the totals are
+  `a` 10, `b` 10, `c` 5 and `momentum` (0, 0, 0); the conservation report
+  passes with energy 25 and momentum (0, 0, 0); the spatial accounting
+  balances; the runner records `ray_layers: "ray-layers-v1"`,
+  `ray_layer_families` [["a"], ["b"], ["c"]], `ray_state`
+  "ray-event-state-v1", `conserved_at_every_completed_tick` true and final
+  totals `a` [10], `b` [10], `c` [5].
+
+Existing worlds keep their amounts, phases, totals, audits and charges: a
+world whose rules select one layer meets the same owners in the same order.
+
+## Ray meetings with outputs
+
+`test_ray_meeting_conversion.py` builds its board inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on a periodic 15^3
+lattice: one ray family `a`, a conserved scalar with an 8-step phase
+advancing 1 per Link, and one signed `momentum` vector
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+Two lamps each hold 5 of `a` and emit it once, funded, directed at
+N = (7,7,7) with recoil into `momentum`: lamp 0 from (5,7,7) along +X at
+phase 0, lamp 1 from (9,7,7) along -X at the emission phase d of the case.
+One rule is declared, guarded by equal amounts and opposite headings, with
+per-ray readout invariants summed over inputs and outputs. The test is
+parametrized over the cases `four` (d = 0), `table_0`, `table_4`, `table_2`,
+`table_1` (d = 0, 4, 2, 1) and `broken`. Pinned before the first run:
+
+- at ticks 1 and 2 the world holds two rays; after tick 2 both are at N:
+  heading 0, phase 2, mask 1, shares (5, 0, 0, 0, 0, 0) and heading 1, phase
+  (2 + d) mod 8, mask 2, shares (0, 5, 0, 0, 0, 0), both steps 2, amount 5,
+  `outbound` 1, `detector` 0; after tick 1 the lamps hold 0 of `a` and the
+  recoils (-5, 0, 0) and (5, 0, 0);
+- (a) `four`: the rule's outputs are four rays of `a` on Ports 2, 3, 4 and 5
+  with amounts 2, 2, 3 and 3 and phases "same" (input 0), input 1, offset 3
+  from input 0 and input 1 plus 7, invariants energy (`amount`) and
+  momentum (`amount x heading`). Applied to the two residents, the meeting
+  returns one bundle of exactly these four rays, in declared order, each
+  with steps 0, `outbound` 1, `detector` 0, accumulators (0, 0, 0), mask 60
+  (0b111100) and shares (0, 0, 2, 2, 3, 3): heading 2 amount 2 phase 2,
+  heading 3 amount 2 phase 2, heading 4 amount 3 phase 5, heading 5 amount
+  3 phase 1. After tick 3 N is empty, (6,7,7) and (8,7,7) are empty, and
+  the four neighbors hold one ray each with steps 1: (7,8,7) heading 2
+  amount 2 phase 3, (7,6,7) heading 3 amount 2 phase 3, (7,7,8) heading 4
+  amount 3 phase 6, (7,7,6) heading 5 amount 3 phase 2; after tick 4, with
+  steps 2, (7,9,7) phase 4, (7,5,7) phase 4, (7,7,9) phase 7, (7,7,5) phase
+  3. The world holds four rays at ticks 3 and 4;
+- (b) `table_d`: output 0 on Port 2 takes the sum of the inputs split by the
+  table [8, 7, 4, 1, 0, 1, 4, 7] at the phase difference d of inputs 0 and
+  1, output 1 on Port 3 takes the rest and owns the remainder, invariant
+  energy. The shared content is 10. Applied to the residents the meeting
+  returns: d = 0, one ray, heading 2 amount 10 phase 2, mask 4, shares
+  (0, 0, 10, 0, 0, 0); d = 4, one ray, heading 3 amount 10 phase 6, mask 8,
+  shares (0, 0, 0, 10, 0, 0); d = 2, heading 2 amount 5 phase 2 and heading
+  3 amount 5 phase 4, mask 12, shares (0, 0, 5, 5, 0, 0); d = 1, 10 x 7 / 8
+  is 8 whole quanta with 6/8 left and 10 x 1 / 8 is 1 with 2/8 left, so the
+  rest output owns the quantum the two floors leave: heading 2 amount 8
+  phase 2 and heading 3 amount 2 phase 3, mask 12, shares (0, 0, 8, 2, 0, 0).
+  An output of amount 0 is no ray and no Port. After tick 3 N, (6,7,7) and
+  (8,7,7) are empty and the products are at (7,8,7) (phase 3) and (7,6,7)
+  (phase (3 + d) mod 8) with steps 1, at (7,9,7) and (7,5,7) after tick 4
+  with steps 2 and phases 4 and (4 + d) mod 8; the world holds one ray at
+  ticks 3 and 4 for d = 0 and d = 4, two rays for d = 2 and d = 1. A split
+  between two Ports moves ray momentum whose owner, the recoil of the field
+  ray, is feature 7; the move is booked as an explicitly accounted source
+  of `momentum` (Highlights 3.15): after ticks 3 and 4 the `momentum` total
+  and the `momentum` source total are both (0, 10, 0) for d = 0,
+  (0, -10, 0) for d = 4, (0, 0, 0) for d = 2 and (0, 6, 0) for d = 1, and
+  (0, 0, 0) at ticks 1 and 2. The table worlds declare no local
+  energy/momentum audit (its per-Node residual has no source term) and
+  their conservation report reads `not_configured`; the `four` world
+  declares it and its meeting keeps the rays' momentum at (0, 0, 0);
+- in every case, at every tick 1 to 4, the `a` total is 10 with source 0,
+  the spatial accounting balances, in `four` the totals and sources of
+  `momentum` are (0, 0, 0) and the conservation report passes with energy
+  10 and momentum (0, 0, 0), and the runner records `ray_meeting:
+  "ray-meeting-conversion-v1"` beside `ray_state` "ray-event-state-v1" and
+  `ray_layers` "ray-layers-v1", with `conserved_at_every_completed_tick`
+  true, final totals `a` [10] and `momentum` as above, and the same
+  `momentum` in `source_totals`;
+- (c) `broken`: the `four` rule with amounts 2, 2, 3 and 4 (11 out of 10 in)
+  is rejected by the meeting ("violates conservation of amount") both when
+  applied to the residents directly and at tick 3 of the run, before any
+  owner changes; the `four` rule with amounts 2, 2, 3, 3 on Ports 2, 2, 4, 5
+  (momentum (0, 4, 0) out of (0, 0, 0) in) is rejected for its momentum
+  invariant; at initialization a table of 7 entries under 8 phase steps
+  ([7, 4, 1, 0, 1, 4, 7]), a `rest_of` naming an output without a table,
+  and a heading Port 6 are rejected before any run.
+
+Existing worlds with the single-output rules are byte-identical: the suite
+is the regression.
 
 ## Detector-owned sampling admission
 

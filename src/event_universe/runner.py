@@ -17,7 +17,10 @@ from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     DETECTOR_RETURN,
     RAY_EVENT_STATE,
+    RAY_LAYERS,
+    RAY_MEETING,
     WAVE_RAY_FAMILY,
+    ray_layer_names,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -189,6 +192,14 @@ def _execute_run(
         "detector_mark": DETECTOR_MARK,
         "detector_return": DETECTOR_RETURN,
         "wave_ray": WAVE_RAY_FAMILY,
+        "ray_layers": RAY_LAYERS,
+        "ray_layer_families": [
+            list(layer)
+            for layer in ray_layer_names(
+                initial.fields, initial.spatial_fields, initial.ray_interactions
+            )
+        ],
+        "ray_meeting": RAY_MEETING,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

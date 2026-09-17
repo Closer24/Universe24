@@ -282,6 +282,32 @@ and the returning ray of `test_ray_hidden_state.py` is kept resident at
 A document without `detectors` has no returning ray and runs byte for byte
 as before.
 
+## Ray layers added on 2026-09-17 (`ray-layers-v1`)
+
+Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): event spacetime
+has layers, a layer is a set of families that couple, and a meeting exists
+only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+
+- `ray_layers` (`core/spatial_state.py`) derives the layers from the catalog
+  as the connected components of the ray fields over the participants of the
+  declared `ray_interactions`; a ray field that no rule selects is its own
+  layer. `SpatialLaw` derives them once when it is built (`layers`) and
+  `apply_ray_interactions` (`fields/ray_interactions.py`) meets the resident
+  rays of a Node layer by layer: each layer's rules fire over that layer's
+  rays alone, in declared order, and a ray of a layer without a firing rule
+  crosses unchanged. Rules of different layers fire independently in one
+  interval.
+- The 32-slot participant capacity of `validate_ray_participants` is now a
+  bound per layer with a rule (the `ray_slots` of that layer's fields sum to
+  at most 32) instead of over every selected field.
+- The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
+  (the derived layers as sorted lists of field names) in `run.json` beside
+  `ray_state`.
+- A world with a single layer runs byte-identically to before: the same
+  owners, rules, charges and events. No initialization key changes; no
+  draw, absorber, readout or Detector is touched.
+
 ## Test suite reduced on 2026-09-17: one test per rule
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the test
@@ -394,6 +420,46 @@ directories removed the same day; their dated results stay in the
 [documentation index](README.md) routes to the register and the
 [hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
 runtime behavior changes.
+## Meeting of rays with N-to-M outputs added on 2026-09-17 (`ray-meeting-conversion-v1`)
+
+Issue #169, feature 6, under [Highlights](HIGHLIGHTS.md) 3.15, 3.17, 3.26
+and 5.1 and step 6 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a rule of
+`ray_interactions` with declared `outputs` replaces its participants by one
+to six new event rays at the meeting Node
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+
+- `convert_values` (`fields/disturbances.py`) is the arithmetic of the record
+  conversion's `_convert_group` factored into one pure function over bounded
+  integers (guard, outputs from the frozen inputs, table splits, conserved
+  sums, invariant sums, returning the outputs and the remainder), used
+  unchanged by the record path and by the meeting of rays.
+- `InteractionDefinition.outputs` names spatial fields for a ray rule and
+  `InteractionDefinition.splits` holds its `TableSplit` entries
+  (`core/disturbance_state.py`); `_ray_meeting` (`initialization.py`)
+  compiles each output's `field`, `amount`, `heading`, `phase`, `delay` and
+  `input` to assignments and splits; `apply_ray_interactions`
+  (`fields/ray_interactions.py`) removes the participants, stamps the outputs
+  as the events of the meeting (`steps 0`, the mask and shares of the
+  outputs' Ports) and checks every family's stock; `ray_layers` puts a rule's
+  output fields in its layer; `validate_ray_participants` admits outputs and
+  still rejects `output_types` and `k`.
+- The momentum a split by a table moves between two Ports is booked by the
+  spatial law as an explicitly accounted source of the momentum field until
+  the field ray of feature 7 owns it as recoil; `source_totals` shows it.
+- With `wave-ray-family-v1` every output carries its field's `family` and
+  `charge`, and a meeting's appended `charge` invariant is the per-ray readout
+  `charge x amount` summed over its inputs and over its outputs.
+- The runner records `ray_meeting: "ray-meeting-conversion-v1"` beside
+  `ray_layers`.
+- The ray path no longer needs `fields/record_operations.py` and
+  `core/record_policy.py`: a meeting of rays converts without a resident
+  record. Both stay for the record path until step 6 of issue #164 deletes
+  them.
+- Existing worlds with single-output rules run byte-identically. The
+  native-ray coupling tests that asserted `outputs` are rejected now assert
+  that the carrier output form (`{"type": ...}`) and malformed meeting outputs
+  are rejected.
 ## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
 
 Issue #169, feature 9, the wave-ray part of
@@ -440,6 +506,32 @@ ray interaction is the one recorded difference. Tests adapted:
 `test_kerengonen.py` (a nonzero phase before the plain-field rejection) and
 `test_ray_integration_guards.py` (odd table sizes through the builders, 32
 phase steps in the table-construction guard).
+
+## Fixed body renamed external body on 2026-09-17
+
+Fixed body renamed external body, 2026-09-17, same specification extended.
+By the model owner's statement of that day, the declared element named
+"fixed body" earlier the same day is the external body: a Node declared to
+hold a family with an amount and, if wanted, a charge and a trajectory,
+standing for a star, a neutron star, a fixed proton, a large charge or a
+piece of apparatus; it radiates by the one field rule, does not spread and
+is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+text; the [postulates](../POSTULATES.md) section 23, the
+[ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
+migration step 7b (`external-body-v1`, after feature 7), the
+[experiments register](EXPERIMENTS.md) (A1, A2, A3, A6, A8, A12, A13 and
+section C), the [terminology](TERMINOLOGY.md) (External body, Apparatus)
+and section 14 of the [hypotheses page](HYPOTHESES.md) restate it. What the
+extension adds: the amount is finite and of any width, since it enters no
+sum; absorption into an explicitly accounted sink is the default coupling of
+the body's family and the other couplings make the apparatus (a reversed
+heading a mirror, a split by a declared table a beam splitter, a phase
+offset a phase plate, a polarization read a polarizer once feature 11
+exists; a wall, a screen and a beam stop the default); on the Node the body
+is bounded metadata like the Detector mark, with one exact counter, the
+sink totals per family; and where the back-reaction is wanted an ordinary
+bound group with a large amount is declared instead. No initialization key,
+API or runtime behavior changes; `external-body-v1` is not yet in the code.
 
 ## Primary initialization-based API
 

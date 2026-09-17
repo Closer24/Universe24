@@ -74,6 +74,26 @@ NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
 # arrival (detector_draw) and no rule reads it.
 DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
+# Layers of event spacetime (Highlights 5.1): a layer is a set of families that
+# couple, and a meeting exists only inside a layer. Layers are derived, never
+# declared: the connected components of the ray fields over the participants
+# of the declared ray interactions, a field no rule selects being its own layer.
+RAY_LAYERS = "ray-layers-v1"
+Layers = tuple[tuple[int, ...], ...]
+# The meeting of rays with N-to-M outputs (Highlights 3.17, 3.26 and 5.1): a rule
+# with declared outputs replaces its participants by new event rays at the
+# meeting Node, an amount may be split by a declared table indexed by the phase
+# difference of two inputs, and every family's stock is exact across the event.
+RAY_MEETING = "ray-meeting-conversion-v1"
+# The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
+PORT_HEADINGS: tuple[Heading, ...] = (
+    (1, 0, 0),
+    (-1, 0, 0),
+    (0, 1, 0),
+    (0, -1, 0),
+    (0, 0, 1),
+    (0, 0, -1),
+)
 # Every ray is a wave ray (Highlights 3.3 and 5.1, wave-ray-family-v1): the phase
 # every ray carries has the width its family declares, `phase_bits`, and every
 # phase advance or difference is a mask over 2^phase_bits, never a division. A
@@ -223,12 +243,7 @@ def validate_ray_participants(
         raise ValueError("ray interaction rules exceed their fixed capacity")
     selected: set[int] = set()
     for rule in rules:
-        if (
-            not 2 <= len(rule.participants) <= 6
-            or rule.k
-            or rule.output_types is not None
-            or rule.outputs
-        ):
+        if not 2 <= len(rule.participants) <= 6 or rule.k or rule.output_types is not None:
             raise ValueError("ray interactions require two to six indexed roles without k or conversion")
         for role in rule.participants:
             if not role or any(
@@ -236,10 +251,49 @@ def validate_ray_participants(
             ):
                 raise ValueError("ray participant role refers to an unavailable spatial field")
             selected.update(role)
-        if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
+        if rule.outputs:
+            # A meeting with outputs (ray-meeting-conversion-v1): one to six new event
+            # rays of ray fields, assigned from the frozen inputs, in the same layer.
+            if not 1 <= len(rule.outputs) <= 6 or any(
+                type(kind) is not int or not 0 <= kind < len(definitions) for kind in rule.outputs
+            ):
+                raise ValueError("ray meeting outputs require one to six ray fields")
+            selected.update(rule.outputs)
+            if any(
+                not 0 <= assignment.side < len(rule.outputs)
+                or not 0 <= assignment.field < len(RAY_PROPERTIES)
+                for assignment in rule.assignments
+            ):
+                raise ValueError("ray meeting assignments address its declared outputs")
+            if any(
+                not 0 <= split.first < len(rule.outputs)
+                or not 0 <= split.second < len(rule.outputs)
+                or split.first == split.second
+                or split.field != 0
+                or split.phase_field != 2
+                or not 1 <= len(split.table) <= MAX_PHASE_STEPS
+                or any(
+                    type(weight) is not int or not 0 <= weight <= len(split.table)
+                    for weight in split.table
+                )
+                or any(not 0 <= index < len(rule.participants) for index in split.between)
+                or split.between[0] == split.between[1]
+                or not -1 <= split.source < len(rule.participants)
+                or any(len(split.table) != definitions[kind].phase_modulus for kind in rule.outputs)
+                for split in rule.splits
+            ):
+                raise ValueError("ray meeting table split requires two outputs and the phase modulus")
+        elif rule.splits:
+            raise ValueError("a table split requires a meeting with outputs")
+        elif any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
             raise ValueError("ray interaction amount, advance, family and charge are read-only")
-    if sum(definitions[index].ray_slots for index in selected) > MAX_SLOTS:
-        raise ValueError("ray interactions require at most 32 selected ray slots")
+    for layer in ray_layers(definitions, rules):
+        # The indexed selector's capacity bounds one meeting, and a meeting exists
+        # only inside a layer: fields of different layers never share it.
+        if selected.intersection(layer) and (
+            sum(definitions[index].ray_slots for index in layer) > MAX_SLOTS
+        ):
+            raise ValueError("ray interactions require at most 32 selected ray slots in one layer")
     for index in selected:
         definition = definitions[index]
         field = fields[definition.field]
@@ -260,6 +314,55 @@ def validate_ray_participants(
                 "ray interactions view the phase as a stored value: they require phase_bits at most 30"
             )
     return frozenset(selected)
+
+
+def ray_layers(
+    definitions: tuple[SpatialFieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> Layers:
+    """The layers over the ray fields (ray-layers-v1): the connected components of the
+    fields that the roles of one rule can select, and one layer for every ray field
+    that no rule selects. Each layer lists its spatial-field indices in field order
+    and the layers are in the order of their first field. Bounded by the number of
+    spatial fields and the fixed rule capacity; nothing is declared."""
+    if type(rules) is not tuple or len(rules) > MAX_RULES:
+        raise ValueError("ray interaction rules exceed their fixed capacity")
+    parent = list(range(len(definitions)))
+
+    def root(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    for rule in rules:
+        # The fields a rule's roles select and the fields of its outputs couple.
+        selected = {kind for role in rule.participants for kind in role} | set(rule.outputs)
+        if any(type(kind) is not int or not 0 <= kind < len(definitions) for kind in selected):
+            raise ValueError("ray participant role refers to an unavailable spatial field")
+        kinds = sorted(selected)
+        for kind in kinds[1:]:
+            parent[root(kind)] = root(kinds[0])
+    members: dict[int, list[int]] = {}
+    for index, definition in enumerate(definitions):
+        if definition.rays:
+            members.setdefault(root(index), []).append(index)
+    return tuple(tuple(layer) for layer in sorted(members.values()))
+
+
+def ray_layer_names(
+    fields: tuple[FieldDefinition, ...],
+    definitions: tuple[SpatialFieldDefinition, ...],
+    rules: tuple[InteractionDefinition, ...],
+) -> tuple[tuple[str, ...], ...]:
+    """The derived layers as family names for the run record, sorted within each layer
+    and between layers."""
+    return tuple(
+        sorted(
+            tuple(sorted(fields[definitions[index].field].name for index in layer))
+            for layer in ray_layers(definitions, rules)
+        )
+    )
 
 
 def validate_ray_coupling(initial: InitialState) -> None:

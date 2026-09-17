@@ -20,6 +20,7 @@ from event_universe.core.disturbance_state import (
     LocalPlan,
     OperationCosts,
     Payload,
+    TableSplit,
     Values,
     Weights,
     bounded,
@@ -241,6 +242,88 @@ def interact_values(
     return after
 
 
+def _split_by_table(
+    split: TableSplit, before: tuple[Values, ...], candidates: list[list[Payload]], meter: CostMeter
+) -> int:
+    """Share the split content between two outputs by the declared table and return
+    the whole quantum the exact division leaves, owned by the second output."""
+    modulus = len(split.table)
+    phases = tuple(unpack(before[index][split.phase_field])[0] for index in split.between)
+    weight = split.table[(phases[1] - phases[0]) % modulus]
+    if split.source < 0:
+        shared = checked_sum(unpack(values[split.field])[0] for values in before)
+    else:
+        shared = unpack(before[split.source][split.field])[0]
+    first = checked_work(shared * weight) // modulus
+    rest = checked_work(shared * (modulus - weight)) // modulus
+    remainder = checked_work(shared - first - rest)
+    candidates[split.first][split.field] = pack((bounded(first),))
+    candidates[split.second][split.field] = pack((bounded(rest + remainder),))
+    meter.charge("split")
+    return remainder
+
+
+def convert_values(
+    rule: InteractionDefinition,
+    before: tuple[Values, ...],
+    fields: tuple[FieldDefinition, ...],
+    meter: CostMeter,
+    costs: OperationCosts,
+) -> tuple[tuple[Values, ...], int] | None:
+    """N frozen inputs to M declared outputs, or None when the guard is false.
+
+    One arithmetic for a record conversion and a meeting of rays: every output
+    value is built from the same frozen inputs by the rule's assignments; a split
+    by a declared table shares the inputs' content between two outputs in the
+    table's ratio and gives the whole quantum that the exact division leaves to
+    the second output, its explicit owner (Highlights 3.17), counted in the
+    returned remainder; every conserved field and every declared readout
+    invariant is compared as a sum over the inputs against a sum over the
+    outputs, exactly, before anything is returned.
+    """
+    if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+        return None
+    meter.advance(rule.k)
+    meter.charge("couple")
+    zero = tuple(pack((0,) * field.components) for field in fields)
+    candidates = [list(zero) for _ in rule.outputs]
+    for assignment in rule.assignments:
+        value = evaluate(assignment.expression, (), (), meter, participants=before)
+        candidates[assignment.side][assignment.field] = pack(value)
+        meter.charge("update")
+    remainder = 0
+    for split in rule.splits:
+        remainder = checked_work(remainder + _split_by_table(split, before, candidates, meter))
+    after = tuple(tuple(values) for values in candidates)
+    for values in after:
+        for field, value in zip(fields, values, strict=True):
+            field.validate(value)
+    for index, field in enumerate(fields):
+        if field.conserved:
+            old = tuple(
+                checked_sum(unpack(values[index])[c] for values in before)
+                for c in range(field.components)
+            )
+            new = tuple(
+                checked_sum(unpack(values[index])[c] for values in after)
+                for c in range(field.components)
+            )
+            if old != new:
+                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
+    checks = ValidationMeter(costs)
+    for invariant in rule.invariants:
+        sums = []
+        for group in (before, after):
+            readouts = [evaluate(invariant.expression, values, values, checks) for values in group]
+            width = len(readouts[0])
+            if any(len(readout) != width for readout in readouts):
+                raise ValueError(f"invariant {invariant.name} readout shape differs across records")
+            sums.append(tuple(checked_sum(readout[c] for readout in readouts) for c in range(width)))
+        if sums[0] != sums[1]:
+            raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
+    return after, remainder
+
+
 @dataclass(frozen=True, slots=True)
 class DisturbanceLaw:
     """Pure local proposal: immutable definitions, fixed records and carried phases."""
@@ -344,57 +427,32 @@ class DisturbanceLaw:
     ) -> tuple[DisturbanceRecord, ...] | None:
         """Replace N frozen inputs by M declared output families, or None when the guard is false.
 
-        Every output payload is built from the same frozen inputs. Conserved fields
+        The values are `convert_values`, shared with the meeting of rays: every
+        output payload is built from the same frozen inputs, and conserved fields
         and every per-record readout invariant are compared as sums over all inputs
         against sums over all outputs before anything is returned.
         """
         before = tuple(record.values for record in records)
-        if rule.when is not None and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0:
+        converted = convert_values(rule, before, self.fields, meter, self.operation_costs)
+        if converted is None:
             return None
-        meter.advance(rule.k)
-        meter.charge("couple")
         for original in records:
             self._require_convertible(original)
         zero_phases = tuple((1,) * field.components for field in self.fields)
-        zero_values = tuple(pack((0,) * field.components) for field in self.fields)
-        candidates = [
+        candidates = tuple(
             DisturbanceRecord(
                 kind,
-                zero_values,
+                values,
                 zero_phases,
                 # Outputs that reuse an input slot keep its arrival provenance; new ones are local.
                 channel_code=records[index].channel_code if index < len(records) else 1,
             )
-            for index, kind in enumerate(rule.outputs)
-        ]
-        for assignment in rule.assignments:
-            value = evaluate(assignment.expression, (), (), meter, participants=before)
-            candidates[assignment.side] = _with_value(
-                candidates[assignment.side], assignment.field, pack(value)
-            )
-            meter.charge("update")
+            for index, (kind, values) in enumerate(zip(rule.outputs, converted[0], strict=True))
+        )
         for candidate in candidates:
             meter.charge("update")
             self._validate(candidate, meter)
-        inputs, outputs = (
-            _sum_records(records, self.fields),
-            _sum_records(tuple(candidates), self.fields),
-        )
-        for index, field in enumerate(self.fields):
-            if field.conserved and inputs[index] != outputs[index]:
-                raise ValueError(f"interaction {rule.name} violates conservation of {field.name}")
-        checks = ValidationMeter(self.operation_costs)
-        for invariant in rule.invariants:
-            sums = []
-            for group in (records, tuple(candidates)):
-                readouts = [evaluate(invariant.expression, r.values, r.values, checks) for r in group]
-                width = len(readouts[0])
-                if any(len(readout) != width for readout in readouts):
-                    raise ValueError(f"invariant {invariant.name} readout shape differs across records")
-                sums.append(tuple(checked_sum(readout[c] for readout in readouts) for c in range(width)))
-            if sums[0] != sums[1]:
-                raise ValueError(f"interaction {rule.name} violates invariant {invariant.name}")
-        return tuple(candidates)
+        return candidates
 
     def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
         definition = self.definitions[record.type_index]

@@ -19,6 +19,7 @@ from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatia
 from event_universe.core.spatial_state import (
     EmissionDefinition,
     FieldRuleGuard,
+    Layers,
     NodeFieldRuleDefinition,
     Ray,
     Rays,
@@ -32,6 +33,7 @@ from event_universe.core.spatial_state import (
     coherence,
     merge_rays,
     phase_of_sum,
+    ray_layers,
     ray_momentum,
     ray_stock,
     stamp_event,
@@ -70,11 +72,15 @@ class SpatialLaw:
     least_delay_direction: str | None = None
     ray_interactions: tuple[InteractionDefinition, ...] = ()
     sampling_profile: str = DETECTOR_ONLY
+    # The layers of event spacetime (ray-layers-v1): derived here from the declared
+    # ray interactions, never declared; every meeting reads them.
+    layers: Layers = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
+            object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
             if (
                 self.field_rules
                 or self.least_delay_direction is not None
@@ -382,18 +388,34 @@ class SpatialLaw:
         ]
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
         meter = CostMeter(self.costs)
+        # The momentum a meeting moves between lines (ray-meeting-conversion-v1): a
+        # split by a table steers content between two Ports, and the recoil owner,
+        # the field ray of feature 7, does not exist yet, so the change is booked as
+        # an explicitly accounted source of the momentum field (Highlights 3.15).
+        meeting_momentum: list[tuple[int, tuple[int, int, int]]] = []
         if self.ray_interactions:
-            resident_rays = [
-                list(bundle)
-                for bundle in apply_ray_interactions(
-                    tuple(tuple(bundle) for bundle in resident_rays),
-                    self.definitions,
-                    self.fields,
-                    self.ray_interactions,
-                    meter,
-                    self.costs,
-                )
-            ]
+            met = apply_ray_interactions(
+                tuple(tuple(bundle) for bundle in resident_rays),
+                self.definitions,
+                self.fields,
+                self.ray_interactions,
+                meter,
+                self.costs,
+                self.layers,
+            )
+            for index, definition in enumerate(self.definitions):
+                if definition.rays and definition.momentum_field is not None:
+                    before_momentum = ray_momentum(tuple(resident_rays[index]), definition)
+                    after_momentum = ray_momentum(met[index], definition)
+                    delta = tuple(
+                        checked_work(after - before)
+                        for after, before in zip(after_momentum, before_momentum, strict=True)
+                    )
+                    if any(delta):
+                        meeting_momentum.append(
+                            (definition.momentum_field, (delta[0], delta[1], delta[2]))
+                        )
+            resident_rays = [list(bundle) for bundle in met]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
         received_components = sum(self.fields[d.field].components for d in self.definitions)
@@ -406,6 +428,9 @@ class SpatialLaw:
             for record in records
         ]
         source = [[0] * field.components for field in self.fields]
+        for momentum_field, delta in meeting_momentum:
+            for axis, value in enumerate(delta):
+                source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
         for index, rule in enumerate(self.emissions):
