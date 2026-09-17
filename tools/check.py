@@ -241,6 +241,8 @@ def select(changed, sources):
     for path in changed:
         if path.startswith("tools/generic_vector_lab/"):
             tests.add("tests/test_generic_vector_lab.py")
+        if path.startswith("tools/ray_viewer/"):
+            tests.add("tests/test_ray_viewer.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
             tests.add("tests/test_configuration_validation.py")
