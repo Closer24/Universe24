@@ -114,7 +114,11 @@ cancels the share only where it meets it, and where it meets nothing it makes
 no event, by the same definitions. A share that left the event earlier on a
 straight line at the same speed is met only where it was delayed: bound at a
 Node, slowed by an output clock, changed by an interaction or standing at a
-Detector; for a pair this is the condition of Highlights 5.4.
+Detector; for a pair this is the condition of Highlights 5.4. Even when it
+is never caught, the event as it was has changed: the returned ray reversed
+its share, so the event lost that share, and the information is never lost,
+it chases the share it cancels. If the share is delayed and caught, momentum
+and everything else are conserved at the Node where they meet.
 
 **Information.** Everything on the board is a transfer of information. An
 event is a splitting of information: each ray carries its own share of what
@@ -404,4 +408,8 @@ it, and where it meets nothing it makes no event, by the same definitions. A
 share that left the event earlier on a straight line at the same speed is
 met only where it was delayed: bound at a Node, slowed by an output clock,
 changed by an interaction or standing at a Detector; for a pair this is the
-condition of Highlights 5.4.
+condition of Highlights 5.4. Even when it is never caught, the event as it
+was has changed: the returned ray reversed its share, so the event lost that
+share, and the information is never lost, it chases the share it cancels. If
+the share is delayed and caught, momentum and everything else are conserved
+at the Node where they meet.
