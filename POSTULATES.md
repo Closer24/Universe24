@@ -305,11 +305,11 @@ baseline. The opt-in `field_phase_first` and `arrival_port_blind` policies in
 it for straight motion by ordering alone; the flux-driven rotation law satisfies
 it under the default clock by geometry, as `tests/test_rotation_self_interaction.py`
 shows. None of these selects a self-force law under acceleration.
-The opt-in `causal-octant-stream-v1` candidate tests this through outward one-link
-transport before the particle response, with no source identity or subtraction.
-Its free-space guarantee ends at periodic return, which is a boundary effect
-requiring separate evidence. The fixed state and limits are specified in
-`SIMULATOR_DEFINITIONS.md` and `docs/CAUSAL_STREAM_FIELD.md`.
+The historical `causal-octant-stream-v1` candidate, deleted on 2026-09-17, tested
+this through outward one-link transport before the particle response, with no
+source identity or subtraction. Its free-space guarantee ended at periodic return,
+which is a boundary effect requiring separate evidence. Its fixed state and limits
+remain recorded in `SIMULATOR_DEFINITIONS.md`.
 
 ## 8. Momentum is exchanged at the event location
 
@@ -454,8 +454,8 @@ that local world. It does not turn host evaluation into physical communication.
 
 ## 13. Experimental extension: variable-length links
 
-This historical candidate is selected explicitly through LinkedSimulation. It
-does not replace the active disturbance model's fixed neighbor transit time.
+This historical candidate was selected explicitly through a named research API
+that was deleted on 2026-09-17. It did not replace the active disturbance model's fixed neighbor transit time.
 In this candidate, each node also stores fixed information about its six links.
 It owns the three positive-direction links and keeps local copies of the other
 three. Ownership organizes storage; it must not privilege a physical direction.

@@ -44,6 +44,6 @@ def audit_physical_modules() -> dict[str, list[tuple[int, str]]]:
     root = Path(__file__).parents[1]
     return {
         str(path.relative_to(root)): static_integer_audit(path)
-        for folder in ("core", "fields", "dynamics", "models")
+        for folder in ("core", "fields")
         for path in sorted((root / folder).rglob("*.py"))
     }

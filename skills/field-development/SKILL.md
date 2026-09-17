@@ -14,7 +14,7 @@ Preserve the current model identity until the numerical replacement is specified
 
 Before behavior edits, apply [the published-design requirement](../workflow.md#implement-from-a-published-design). Implement the cited design revision; return missing laws or interface decisions to its owner before adding behavior.
 
-Read [the shared workflow](../workflow.md), [field interfaces](../../docs/SCALAR_FIELDS.md)
+Read [the shared workflow](../workflow.md)
 and [the physical feature procedure](../../docs/PHYSICAL_FEATURES.md).
 
 The active field contract is [DISTURBANCES.md](../../docs/DISTURBANCES.md).

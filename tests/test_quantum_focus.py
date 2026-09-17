@@ -4,8 +4,6 @@ from pathlib import Path
 
 import pytest
 
-from event_universe import Config
-from event_universe import ScalarSimulation as Simulation
 from event_universe.diagnostics.numeric_audit import static_integer_audit
 from event_universe.integration.quantum_bridge import QuantumBridge
 from event_universe.quantum import (
@@ -208,42 +206,6 @@ def test_zero_total_weight_is_error_not_no_event():
     bridge.bind_focus_set(1, FocusSet(region_from_shape(1, 1, 1), (FocusCandidate(root, (0, 0, 0), 1),)))
     with pytest.raises(ValueError, match="zero total"):
         bridge.focus_event(FocusRequest(1, 1, 0, 0))
-
-
-def test_focus_does_not_advance_or_mutate_main_world():
-    baseline = Simulation(Config(nx=12, ny=12, nz=12))
-    world = Simulation(Config(nx=12, ny=12, nz=12))
-    for sim in (baseline, world):
-        sim.add_particle(1, 3, 3, 3, 1, 0, 0)
-    for _ in range(8):
-        baseline.step()
-        world.step()
-
-    q = DeferredQuantum()
-    bridge = QuantumBridge(q)
-    roots = (
-        bridge.prepare(1, (1, 1, 1), 0, 1).quantum_node,
-        bridge.prepare(2, (9, 9, 9), 0, 2).quantum_node,
-    )
-    bridge.bind_focus_set(
-        1,
-        FocusSet(
-            region_from_shape(12, 12, 12),
-            (FocusCandidate(roots[0], (1, 1, 1), 10), FocusCandidate(roots[1], (9, 9, 9), 20)),
-        ),
-    )
-    before = (world.tick, dict(world.nodes), dict(world.particles), dict(world.occupancy), world.active)
-    reply = bridge.focus_event(FocusRequest(99, 1, world.tick, 3))
-    after = (world.tick, dict(world.nodes), dict(world.particles), dict(world.occupancy), world.active)
-    assert reply.event is not None and reply.event.address == (9, 9, 9)
-    assert before == after
-    assert after == (
-        baseline.tick,
-        dict(baseline.nodes),
-        dict(baseline.particles),
-        dict(baseline.occupancy),
-        baseline.active,
-    )
 
 
 def test_focus_modules_pass_integer_static_audit():

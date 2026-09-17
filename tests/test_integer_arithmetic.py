@@ -7,6 +7,7 @@ from event_universe.core.integer import (
     add_components,
     ceil_div,
     checked_sum,
+    checked_work,
     cross_product,
     dot_product,
     signed_divrem,
@@ -44,6 +45,26 @@ def test_ceiling_preserves_adjusted_numerator_bound():
 @pytest.mark.parametrize("value,expected", [(7, (2, 1)), (-7, (-2, -1)), (-2, (0, -2)), (0, (0, 0))])
 def test_signed_division_rounds_toward_zero_and_keeps_residue(value, expected):
     assert signed_divrem(value, 3) == expected
+
+
+@pytest.mark.parametrize("numerator", [-129, -65, -1, 0, 1, 65, 129])
+@pytest.mark.parametrize("denominator", [1, 12, 64])
+def test_signed_remainder_is_exact(numerator, denominator):
+    quotient, remainder = signed_divrem(numerator, denominator)
+    assert numerator == quotient * denominator + remainder
+    assert abs(remainder) < denominator
+    assert remainder == 0 or (remainder > 0) == (numerator > 0)
+
+
+def test_working_register_is_bounded():
+    assert checked_work(MAX_WORK_INT) == MAX_WORK_INT
+    assert checked_work(-MAX_WORK_INT) == -MAX_WORK_INT
+    with pytest.raises(OverflowError):
+        checked_work(MAX_WORK_INT + 1)
+    with pytest.raises(OverflowError):
+        checked_work(-MAX_WORK_INT - 1)
+    with pytest.raises(TypeError):
+        checked_work(True)
 
 
 @pytest.mark.parametrize(

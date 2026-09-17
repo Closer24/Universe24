@@ -68,20 +68,7 @@ established particle references to the existing causal source/contact mechanism.
 | [Many-contact experiment](../examples/quantum/many_contacts.md) | Six simultaneous domains, 200 seeded repetitions, recorded captures and the one-shot limit |
 | [Quantum focus](QUANTUM_FOCUS.md) | Optional hierarchical candidate selection, not a default physical law |
 | [Quantum contact trial](QUANTUM_CONTACT_TRIAL.md) | Bounded one-contact composition with the active disturbance engine |
-| [Quantum detector trial](QUANTUM_DETECTOR_TRIAL.md) | Historical opt-in detector/controller experiment |
-
-## Historical particle candidates
-
-These named APIs remain testable; none is the implicit active `Simulation`.
-Historical documents may quote legacy identifiers that predate the canonical
-Node vocabulary; those names are compatibility references, not separate physical
-concepts.
-
-| Document | Responsibility |
-| --- | --- |
-| [Scalar fields](SCALAR_FIELDS.md) | Historical scalar field composition and turning policies |
-| [Balanced motion](BALANCED_MOTION.md) | Digital movement and local halo candidate, including its limits |
-| [Causal-stream field](CAUSAL_STREAM_FIELD.md) | Outward stream candidate and pre-wrap isolation result |
+| [Quantum detector trial](QUANTUM_DETECTOR_TRIAL.md) | Historical opt-in terminal detector experiment |
 
 ## Operation, validation and change procedure
 

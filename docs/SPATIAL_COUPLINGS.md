@@ -217,8 +217,8 @@ interval cross the same link together and are sampled together at the
 destination. A value-driven `exchange` therefore reads one packet of its own
 field after every hop: a coarrival self push proportional to the emitted share
 on the travel port. The top-level boolean `"field_phase_first": true` selects
-the `causal-front-first-v1` ordering already used by
-[the causal stream candidate](CAUSAL_STREAM_FIELD.md): every field packet
+the `causal-front-first-v1` ordering, first used by the historical causal-stream
+candidate that was deleted on 2026-09-17: every field packet
 completes its link inside the interval in which it departs, delivery happens
 before any carrier sample is frozen, and carriers still cross one link per
 interval. A straight-moving emitter's own field is then at least one link ahead

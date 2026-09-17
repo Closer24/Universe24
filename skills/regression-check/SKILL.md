@@ -51,7 +51,7 @@ records, occupancy, active frontier and events when the contract promises exact
 equivalence; final momentum or a similar-looking image is not enough.
 
 Historical API/frozen-v10 equality and older-Python compatibility are not required
-gates. The source under `tests/reference/` remains an untouched archive. Use
+gates. Use
 current physical invariants and explicit numerical expectations; reuse an existing
 world when it already exercises the required behavior. New state defaults need
 evidence when their values affect a current contract.

@@ -3,17 +3,6 @@
 import importlib.util
 from pathlib import Path
 
-from event_universe import (
-    BalancedSimulation,
-    CausalStreamSimulation,
-    LinkedSimulation,
-    ScalarSimulation,
-    Simulation,
-)
-from event_universe.core.scalar_engine import ScalarEngine
-from event_universe.disturbance_api import Simulation as GenericSimulation
-from event_universe.particle_api import ScalarSimulation as HistoricalSimulation
-
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "examples/known-entities/run_reference_checks.py"
 
@@ -23,14 +12,6 @@ def load_reference_checks():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
-
-
-def test_public_names_resolve_active_and_historical_owners_without_duplicate_engines():
-    assert Simulation is GenericSimulation
-    assert ScalarSimulation is HistoricalSimulation
-    assert issubclass(ScalarSimulation, ScalarEngine)
-    for candidate in (ScalarSimulation, LinkedSimulation, BalancedSimulation, CausalStreamSimulation):
-        assert candidate.__module__ == "event_universe.particle_api"
 
 
 def test_reference_collision_uses_the_workspace_configuration():

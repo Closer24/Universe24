@@ -18,9 +18,6 @@ checkout; do not rely on a previous conversation.
 
 [Monorepo ownership](docs/ARCHITECTURE.md#monorepo-ownership) defines boundaries.
 The active implementation lives only in `src/event_universe/`.
-`src/persistent_source_field.py` is a compatibility facade, not a second engine.
-`tests/reference/` is a historical archive, not an active compatibility gate;
-never edit it to make a test pass.
 Generated artifacts, distributions and backups are outputs or history.
 One repository does not require one runtime process or a new package hierarchy.
 
@@ -126,7 +123,7 @@ responsibilities. Keep renames, consumers, migration notes and the
   schedules work and validates contracts.
 - The active Simulation requires initialization-defined disturbance types and
   fields. Do not branch on physical field names or reintroduce an implicit scalar
-  default. Named historical research APIs retain their own contracts.
+  default.
 - Displays and measurements only read state. Runs and tests are headless unless
   visualization is explicitly requested. Do not capture frames or load render
   dependencies in the ordinary runner path; see the definitions display contract.

@@ -30,9 +30,8 @@ alongside the inspected HTML. A visual match is not physical acceptance.
 
 For primary runs, require the explicit initialization file and read its field,
 disturbance, transport, coupling and cost definitions; see
-[DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select a
-historical scalar universe. Historical scenarios belong to the separate
-`event_universe.legacy_runner` entry point.
+[DISTURBANCES.md](../../docs/DISTURBANCES.md). Missing input must not select an
+implicit historical universe.
 
 Follow the shared
 [configuration task scope](../workflow.md#configuration-tasks-and-implementation-scope)
@@ -86,7 +85,5 @@ laws or use diagnostic results to repair the world while running an experiment.
 For speed investigations, follow the shared workflow's
 [performance procedure](../workflow.md#performance-work). Reuse the environment
 once dependencies and source identity are verified; installing it again is setup
-work, not a simulator benchmark.
-Historical live previews require explicit `--live` or API `live=True`, which
-also requests recorded visualization. A performance investigation alone does not request
-visualization, a live preview or visual test execution.
+work, not a simulator benchmark. A performance investigation alone does not
+request visualization or visual test execution.

@@ -133,9 +133,11 @@ elastic example and its limits are specified in the disturbance contract; they
 do not change the historical collision laws below or introduce a built-in force.
 
 The source/self-force, scalar node, particle, turning, variable-link and collision
-laws below remain requirements of explicitly named research APIs. They do not
-define the active generic schema. Shared locality, integer bounds, read-only
-diagnostics and honest failure reporting still apply across applicable models.
+laws below were requirements of explicitly named historical research APIs whose
+implementations were deleted on 2026-09-17 (Highlights sections 3.3, 3.4, 3.5,
+3.19, 3.20, 5.1 and 5.4; issue #164, bucket A). They are retained as the record of
+those candidates and do not define the active generic schema. Shared locality,
+integer bounds, read-only diagnostics and honest failure reporting still apply.
 
 ## Local energy and momentum audit
 
@@ -158,10 +160,10 @@ The law still needs independent admitted-domain and physical-interpretation
 evidence. Additive component conservation, local coupling and labels such as
 energy, spin or gravity do not provide that evidence by themselves.
 
-## Opt-in causal outward streams
+## Historical causal outward streams
 
-`CausalStreamSimulation` selects `causal-octant-stream-v1`. It replaces scalar
-transport with exactly fourteen nonnegative bounded integers per stream node:
+The historical `causal-octant-stream-v1` candidate, deleted on 2026-09-17, replaced
+scalar transport with exactly fourteen nonnegative bounded integers per stream node:
 eight octant populations and six delivered directional amounts. Ordinary node
 momentum registers remain the local exchange ledger. Stream records contain no
 source identities or histories. Each update reads one old population record and
@@ -182,11 +184,11 @@ with the existing bounded impulse exchange and movement. `source_per_octant`
 is an explicit independent strength. The three-tick integer branching phase
 is anisotropic. Periodic return, radial falloff, energy conservation and physical
 field-momentum transport are not established by the free-space self-force proof.
-See [the candidate contract](docs/CAUSAL_STREAM_FIELD.md).
+Its separate candidate contract document was deleted with it.
 
 The canonical implementation is the `event_universe` Python package under `src/`.
-`persistent_source_field.py` is a compatibility facade, with no copied physical law.
-The historical scalar model identifier is `scalar-field-v10-contact`.
+The historical scalar model identifier was `scalar-field-v10-contact`; its
+implementation was deleted on 2026-09-17.
 The active generic user identity is supplied by initialization; its schema version
 separately identifies conservative or finite attenuating spatial policy, and the
 decay residue distinguishes localizing from dissipative attenuation.
@@ -216,14 +218,14 @@ and the historical constraints below remain unchanged. This is a numeric
 contract extension, not unbounded host arithmetic or a relaxation of locality.
 
 The numbered record/source/response constraints here describe the historical
-scalar models selected through ScalarSimulation and related named APIs. Their
+scalar models whose named APIs were deleted on 2026-09-17. Their
 five-register node and sixteen-register particle schema is not universal. The
 active generic state and its smaller payload bound are defined in
 [the disturbance contract](docs/DISTURBANCES.md).
 
 1. All dynamic physical registers and arithmetic are integers. No floats, true
    division, trigonometry, square roots, logarithms or vector normalization occur
-   in `core/`, `fields/`, `dynamics/` or `models/`. Rational factors use integer numerators, denominators
+   in `core/` or `fields/`. Rational factors use integer numerators, denominators
    and retained integer remainders.
 2. Physical registers are bounded to `[-2147483647, 2147483647]`. Intermediate
    working registers are bounded to `[-9223372036854775807, 9223372036854775807]`.
@@ -255,32 +257,27 @@ active generic state and its smaller payload bound are defined in
 
 ## Engine, candidate model and measurements
 
-The engine owns addresses, fixed occupancy, scheduling and commits. Generic
-`fields/` code owns scalar arithmetic and gradients; generic `dynamics/` code
-owns the shared response, local momentum exchange and movement calculations.
-`models/scalar_field.py` selects their policies and maps them to physical
-records: six equal neighbor weights, no local retention, occupancy-based source,
-nonnegative scalar values and dominant-axis transverse response. No copied
-formulas are maintained in the adapter or compatibility imports.
-Source scaling and range/activity policies are reusable functions in
-`fields/policies.py`. `core/lattice.py` owns all periodic neighbor geometry.
-Model, API and compatibility assembly are checked for accidental runtime
+In the historical scalar candidate, deleted on 2026-09-17, the engine owned
+addresses, fixed occupancy, scheduling and commits; generic field code owned
+scalar arithmetic and gradients; generic dynamics code owned the shared
+response, local momentum exchange and movement calculations; and one model
+adapter selected their policies and mapped them to physical records: six equal
+neighbor weights, no local retention, occupancy-based source, nonnegative scalar
+values and dominant-axis transverse response. No copied formulas were maintained
+in the adapter or compatibility imports. The active package keeps the same
+division of responsibility: API assembly is checked for accidental runtime
 arithmetic, alongside absolute and relative import boundaries.
 
-The field and turning components can be supplied independently to `ScalarSimulation`.
-Their denominators come from the same `Config` used by state audits. A scalar
-replacement must fit the existing fixed node schema; vector or multiple-field
-state needs a separate explicit contract. Custom implementations must be local,
-deterministic, bounded and without evolving private state. Measurement code
-reads output and records evidence. No local law receives a world object or
-knows source identities at remote nodes.
+The field and turning components could be supplied independently to that
+candidate's API, with denominators from the same configuration used by state
+audits. Custom implementations had to be local, deterministic, bounded and
+without evolving private state. Measurement code reads output and records
+evidence. No local law receives a world object or knows source identities at
+remote nodes.
 
-The engine receives field activity as a predicate instead of interpreting the
-candidate law's changes itself. The historical scalar model explicitly retains its legacy
-value-based predicate. An injected scalar law tracks changes to both value and
-remainder unless `field_activity=` is supplied. A law must preserve the all-zero
-sample when neighbors and source are zero, as required by sparse scheduling.
-With no predicate, direct `ScalarEngine` callers retain all visited nodes.
+That engine received field activity as a predicate instead of interpreting the
+candidate law's changes itself, and a law had to preserve the all-zero sample
+when neighbors and source are zero, as required by sparse scheduling.
 
 No gravitational attraction law, Newton/Einstein equation, future path search or
 unproven physical identification is added as part of architecture maintenance.
@@ -354,18 +351,14 @@ and external; JSONL recording streams it to disk.
 
 - Exact signed division and remainder accumulation at denominators 1, 12 and 64.
 - Invalid input, physical-register and working-register overflow rejection.
-- Persistent stationary source and zero stationary self-force.
-- One-edge scalar-field propagation and one-hop movement bound.
-- At most one update per particle per tick and fixed-capacity occupancy.
-- Exact local matter-field exchange and total momentum through tested runs.
-- Offset-pair turning on XY, XZ and YZ slices, and original 180-tick regression.
-- Immediate transverse contact response with unit force denominator.
-- Identical physical evolution with and without recording and measurement.
 - Static numeric audit over every physical module and import-boundary checks.
-- Generic field/turning unit tests, current-model-specific tests and independent
-  replacement of both components through the public simulation API.
-- Dedicated lattice, movement, source/activity-policy and diagnostic-projection
-  tests; explicit numerical expectations in `docs/TEST_EXPECTATIONS.md`.
+- Explicit numerical expectations in `docs/TEST_EXPECTATIONS.md` for every
+  active contract.
+
+The gates of the historical scalar candidate (stationary self-force, one-edge
+propagation, per-particle update order, matter-field exchange, offset-pair
+turning, contact response, recording invariance and component replacement
+through its API) were deleted with that candidate on 2026-09-17.
 
 ## Opt-in quantum contracts — Q-ORACLE-1
 
@@ -399,7 +392,7 @@ the two resolves are counted as host work twice. Readout commits one immutable
 record after all validation; subsequent calls reuse it. The test enumerates
 tickets, rather than validating an RNG or general measurement statistics.
 
-Only the test controller stores detector bits and an event slot. No Engine-native
+Only the quantum owner's single terminal record stores the readout. No Engine-native
 physical event is added, no source or field is changed, and no post-detection
 excitation continues. No general entanglement, Bell, no-signalling, energy or
 momentum claim follows. See docs/QUANTUM_DETECTOR_TRIAL.md for the trial contract.
@@ -431,35 +424,22 @@ captured alongside frames; global tick and state remain audit information.
 This is a passive diagnostic, not human optics or a derived proper-time law.
 
 Runs are headless by default, including ordinary tests. The active CLI requires
-an initialization file. Historical scenarios use the explicitly selected
-`event_universe.legacy_runner` module. Metadata and JSONL events do not depend
-on Matplotlib, Pillow or animation capture.
+an initialization file. Metadata and JSONL events do not depend on Matplotlib,
+Pillow or animation capture.
 
 Only an explicit visualization request enables output frames and rendering.
-`--visualize` requests the active runner's optional view. For historical
-`legacy_runner.run_scenario`, pass `visualize=True`; its `volume` option chooses
-volume or slice. Explicit historical CLI view options also request visualization.
-The historical 3D view uses the existing 1500×1275 renderer; a generic view must
+`--visualize` requests the active runner's optional view. A generic view must
 label configured fields rather than interpreting their names as scalar phi or
 particle momentum.
 
-Pytest enables captured run reports and presentation-only tests only through
-`--visualize-runs`. Without that flag, physical assertions still execute and no
-HTML/GIF run reports are generated. Requested frame stride changes recording
+Pytest enables presentation-only tests only through `--visualize-runs`. Without
+that flag, physical assertions still execute and no HTML/GIF run reports are
+generated. Requested frame stride changes recording
 only, never the physical update interval.
-
-The historical runner supports a live display during calculation and replay
-export only when explicitly requested with `--live` or API `live=True`. A live
-request also enables recorded visualization. Both options default off.
-Live preview snapshots may be coalesced and use explicitly provisional framing
-and color scales. They never replace the canonical sampled frames, final enhanced
-GIF/HTML, event trace or acceptance checks. Preview faults must not alter physical
-evolution or prevent the recorded failure report. A completed live page opens the
-current run's final replay, retaining its completion or failure status.
 
 The active generic local commit and failure behavior is defined in
 [docs/DISTURBANCES.md](docs/DISTURBANCES.md). The following field-phase description
-applies to historical scalar models.
+applied to the historical scalar models deleted on 2026-09-17.
 
 Field proposals are validated before the field phase commits. Particle-field
 proposals are validated before that local exchange commits. A whole tick is not
@@ -473,9 +453,10 @@ and physical claims not established by the tests.
 
 ### Display readability and playback
 
-The following visual conventions apply when the historical scalar/particle
-renderer is explicitly requested. They do not assign meanings to generic field
-names or require visualization for a run.
+The following visual conventions applied to the historical scalar/particle
+renderer, deleted on 2026-09-17; they are kept as the record of that display
+contract. They do not assign meanings to generic field names or require
+visualization for a run.
 
 The 3D axes have readable coordinate ticks and distinct colors: X is coral,
 Y is green and Z is blue. A camera-synchronized corner compass shows positive
@@ -510,12 +491,12 @@ contract applies to both slices and 3D views. None of these display operations
 smooths physical positions, cancels self-force or changes a simulation record.
 
 
-## Optional local-link geometry candidate — v11
+## Historical local-link geometry candidate — v11
 
-The user-authorized link extension is `scalar-field-v11-local-links`, selected
-by `LinkedSimulation` or the historical CLI's `--scenario links`. Baseline v10 remains available for
-comparison. The five/sixteen-register schemas above describe historical scalar field and
-particle records; the frozen v10 reference retains twelve particle registers.
+The user-authorized link extension was `scalar-field-v11-local-links`; its named
+API, CLI scenario and the frozen v10 reference were deleted on 2026-09-17. The
+five/sixteen-register schemas above describe the historical scalar field and
+particle records.
 The v11 candidate additionally has fixed `LinkNodeState` and `Transit` records:
 
 - Six received scalar integers; six active length integers; six packets of
@@ -558,7 +539,7 @@ No force cancellation or momentum repair was introduced to do so.
 
 ### Reject isolated self-force in application runs
 
-The application runner validates particle momentum after every completed tick
+The historical application runner validated particle momentum after every completed tick
 when the initial world contains exactly one particle and entirely zero field
 records. Its own source stays active. Any change in its initial momentum raises
 `InertialMotionViolation`, terminates the application run and saves the failing
@@ -569,19 +550,18 @@ momentum or disables sources. Multi-particle and initially seeded-field worlds
 are not classified as isolated by this check.
 
 This is read-only diagnostic rejection, not a corrected physical law or a proof
-of straight trajectories. Direct Engine/ScalarSimulation callers still receive the
+of straight trajectories. Direct engine callers still received the
 underlying model behavior. Model acceptance requires the separate isolated-motion
 gate; a test that confirms rejection does not turn that failing physical gate
 into a pass. Existing baseline physical requirements remain unchanged.
 No threshold exempts a one-unit impulse.
 
-## User-authorized mass and elastic point contacts — v13
+## Historical mass and elastic point contacts — v13
 
 The user requested same-point particle collisions and then an individual mass
-parameter. `ScalarSimulation(collisions=True)` selects
-`scalar-field-v13-mass-elastic-contact`; `LinkedSimulation(collisions=True)` selects
-`scalar-field-v13-mass-elastic-local-links`. Both public APIs accept
-`add_particle(..., mass=...)`. Mass is a fixed positive integer in simulation
+parameter. The scalar candidate selected `scalar-field-v13-mass-elastic-contact`
+and the linked candidate `scalar-field-v13-mass-elastic-local-links`; both named
+APIs were deleted on 2026-09-17. Both accepted `add_particle(..., mass=...)`. Mass is a fixed positive integer in simulation
 mass units, default 1. Zero, negative, non-integer and overflowing masses fail
 before insertion. It is supplied inertial mass, not emergent mass or a claim
 about gravitational charge. The existing occupancy-based scalar source and field
@@ -656,8 +636,8 @@ energy conservation for the entire field-coupled simulator.
 
 ### Output and compatibility
 
-`--scenario collision`, `collision-masses` and `collision-links` exercise this
-feature through the historical runner. The 3D HTML/GIF renderer is used only
+The historical runner's `collision`, `collision-masses` and `collision-links`
+scenarios exercised this feature. The 3D HTML/GIF renderer is used only
 when visualization is explicitly requested. Scenario `masses`
 contains one mass for each seed (or is empty for unit defaults). Metadata records
 these masses, collision selection and the explicit model identifier. In 3D,
@@ -665,17 +645,17 @@ particle labels show mass and velocity arrows use the mass and momentum scale.
 `particle_collision` JSONL events include named before/after records and their
 denominators. Legacy force events keep their tuple layout; their momentum fields
 are numerators at the denominator from that particle's latest collision record
-(or 1 before any collision). Legacy `TraceRecorder.collisions` still means blocked
-moves; actual scattering events are in `collision_records`.
+(or 1 before any collision). The legacy trace recorder's `collisions` meant blocked
+moves; actual scattering events were in `collision_records`.
 
 The original twelve particle fields keep their order. Four new fields append
 with defaults (1,1,1,-1). Fixed-schema and physical behavior checks cover current
-records. Frozen-v10 equality is no longer an acceptance gate; its source remains
-an unchanged historical archive.
+records. Frozen-v10 equality is no longer an acceptance gate; its archived source was
+deleted on 2026-09-17.
 
-## Opt-in balanced-motion and local-halo candidate
+## Historical balanced-motion and local-halo candidate
 
-`scalar-field-v12-balanced-halo`, exposed as `BalancedSimulation`, combines
+`scalar-field-v12-balanced-halo`, whose named API was deleted on 2026-09-17, combined
 interleaved integer movement with a synchronous local scalar cancellation phase.
 After every particle has completed its response and optional hop, the phase sets
 `phi` and `remainder` to zero in the union of the six neighbors of its previous
@@ -686,8 +666,8 @@ The scheduler may visit at most twelve targets per particle and coalesces overla
 The local rule receives one fixed node record. It adds no physical registers,
 source map or history and satisfies LOCALITY-1 for fixed K. The candidate must keep
 isolated particle momentum exactly at all tested ticks and retain nonzero external
-response. Exact inputs, results and limitations are in
-[docs/BALANCED_MOTION.md](docs/BALANCED_MOTION.md).
+response. Its exact inputs, results and limitations were recorded in a candidate document
+deleted with it.
 
 
 ## Selected quantum event network — Q-EVENTS-1

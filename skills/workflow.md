@@ -286,8 +286,7 @@ resolution and dependencies; report host timings separately from model cost.
 Preserve every physical update, event and acceptance check. Compare traces and
 metadata. Inspect saved frames when visual checks were requested; otherwise
 report visual validation as not run. Do not claim a speedup from fewer frames
-or lower resolution without saying so. Keep historical renderer benchmarks on
-`event_universe.legacy_runner`; active runs require initialization data.
+or lower resolution without saying so. Active runs require initialization data.
 
 When live display validation is explicitly requested, verify that an image is
 available before final output and distinguish simulation-time preview from

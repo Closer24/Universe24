@@ -194,7 +194,6 @@ RESOURCE_CONSUMERS = {
     "examples/known-entities/boundary-open.json": ("tests/test_reference_examples.py",),
     "examples/known-entities/run_reference_checks.py": ("tests/test_reference_examples.py",),
     "examples/known-entities/run_reference_checks.ps1": ("tests/test_reference_examples.py",),
-    "tools/check_diagonal_motion.py": ("tests/test_legacy_application.py",),
 }
 
 

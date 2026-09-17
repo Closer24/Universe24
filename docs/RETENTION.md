@@ -7,12 +7,10 @@ reports. Requested HTML/GIF output follows the same policy; retention never
 enables visualization. Previously retained traces are temporary evidence under
 this policy once they are registered.
 
-The active and historical runners require a new or empty output directory.
+The active runner requires a new or empty output directory.
 The original initialization file must remain outside the active run output.
-Each workspace run uses a separate output directory. Visual test sessions write
-to a unique `artifacts/test-runs/<session-id>` directory and update the generated
-`artifacts/test-runs.html` summary. CI diagnostic uploads use a one-day retention
-setting in [the check workflow](../.github/workflows/check.yml).
+Each workspace run uses a separate output directory. CI diagnostic uploads use a
+one-day retention setting in [the check workflow](../.github/workflows/check.yml).
 The affected-check selector owns only its `artifacts/check-scope.json` report;
 its lease is separate from JUnit and run directories. A dry selection creates
 neither the report nor a retention registry.

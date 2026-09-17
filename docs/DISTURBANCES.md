@@ -39,11 +39,6 @@ or scalar directional flux to a carried field through atomic exchange or exact
 discrete rotation. Their response precedes ordinary updates and movement planning;
 the field receives the opposite change when the frozen carrier proposal commits.
 
-The fixed-physics `ScalarSimulation`, `LinkedSimulation`, `BalancedSimulation`
-and `CausalStreamSimulation` APIs remain explicitly selected research models.
-Their historical record schemas and physical assumptions do not constrain the
-generic payload schema below.
-
 ## Run and initialize
 
 ```bash
@@ -53,8 +48,7 @@ python -m event_universe --init examples/basic.json --node-workers 8 --output ar
 ```
 
 The file contains the run duration; `--ticks` explicitly overrides it. Missing
-initialization is an error. Historical scenarios have a separate explicit
-entry point, `python -m event_universe.legacy_runner --scenario ...`.
+initialization is an error.
 The active runner writes `initialization.json`, `run.json`, `state.json` and
 `events.jsonl`: copied input, source identity, completion or failure, final state
 and local events. Runs are headless by default. Visualization requires
