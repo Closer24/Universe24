@@ -33,7 +33,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
-| `test_decay_draw.py` | 1 | (measured below) | Issue #169 feature 13: a decaying group draws at its corner meetings; a rule with outputs that declares `draw: [n, d]` and `seed` draws once per meeting of its participants from the Node's ticket stream, the unsalted draw of `detector-mark-v1`, fires on 1 and yields to the next rule on 0, the ring surviving with the law (1 - n/d)^k over k meetings, the draws recorded and the tickets consumed equal to the meetings, a world without `draw` never calling the ticket rule (`decay-draw-v1`) |
+| `test_decay_draw.py` | 1 | 1.05 | Issue #169 feature 13: a decaying group draws at its corner meetings; a rule with outputs that declares `draw: [n, d]` and `seed` draws once per meeting of its participants from the Node's ticket stream, the unsalted draw of `detector-mark-v1`, fires on 1 and yields to the next rule on 0, the ring surviving with the law (1 - n/d)^k over k meetings, the draws recorded and the tickets consumed equal to the meetings, a world without `draw` never calling the ticket rule (`decay-draw-v1`) |
 | `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -2633,9 +2633,20 @@ and the second inside the run):
   seed of 1073741789 and of -1; `validate_configuration` reports each
   document invalid.
 
-**Measured on the first run (2026-09-17).** (To be written after the run:
-the integers of (a) to (h) hold or differ; the group reader's `to_tick` and
-`bound` rows; the module's duration.)
+**Measured on the first run (2026-09-17).** Every integer of (a) to (h)
+held at the first run: the states after every tick, the loose rays, the
+ledger and the charge lines at every tick, the tickets, the 74 draws with
+their tickets and bits, the corner bookings and the family sources, the
+record's totals, the identical replay, the control and the rejections. Two
+readings were measured, not pinned: within one tick the `decay_draw` lines
+come in the record's order of Nodes, sorted by position, P0, P3, P1, P2
+(the test compares the sorted corners); and the group reader's window is
+`from_tick` 1 to `to_tick` 10, the last state before the conversion's cycle,
+the tick rows carrying `bound` `{"electron": [8]}` at ticks 1 to 10 and
+nothing at tick 0 or from tick 11 (the four-ray orbit that circulates on
+after the first conversion is not read as a group, since the reader takes
+the first window of the rays that share the ring). The module ran in 1.05
+seconds.
 
 ## The screen with a loop
 

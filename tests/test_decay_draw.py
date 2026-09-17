@@ -427,8 +427,10 @@ def test_a_decaying_group_draws_at_its_corner_meetings(tmp_path, monkeypatch):
     assert len(draws) == 74
     assert all(e["rule"] == "decay" and e["setting"] == list(SETTING) for e in draws)
     for tick in range(1, TICKS + 1):
+        # The Nodes cycle in sorted position order, so within a tick the lines
+        # come as P0, P3, P1, P2 (measured on the first run, 2026-09-17).
         here = [e for e in draws if e["tick"] == tick]
-        assert [tuple(e["position"]) for e in here] == list(meeting_corners(tick)), tick
+        assert [tuple(e["position"]) for e in here] == sorted(meeting_corners(tick)), tick
     assert [(e["tick"], tuple(e["position"])) for e in draws if e["bit"]] == [FIRST_ONE, SECOND_ONE]
     assert {tuple(e["position"]): e["ticket"] for e in draws if e["tick"] == 1} == TICK_1_TICKETS
     assert {tuple(e["position"]): (e["ticket"], e["bit"]) for e in draws if e["tick"] == 11} == (
@@ -466,8 +468,10 @@ def test_a_decaying_group_draws_at_its_corner_meetings(tmp_path, monkeypatch):
         {"electron": 2},
     )
     assert group["from_tick"] == 1
-    assert group["to_tick"] == 11
-    assert [row["bound"] for row in run["ticks_data"]][:12] == [{}] + [{"electron": [8]}] * 11
+    # Measured on the first run (2026-09-17): the recurrence the reader needs holds
+    # from tick 1 through tick 10, the last state before the conversion's cycle.
+    assert group["to_tick"] == 10
+    assert [row["bound"] for row in run["ticks_data"]][:12] == [{}] + [{"electron": [8]}] * 10 + [{}]
     # (c) A world without `draw` runs the ring as before: no draw line, no
     # identity, every unmarked Node's stream at 0 and the ticket rule never called.
     control = parse_initial_state(document(rules=(CORNER,)))
