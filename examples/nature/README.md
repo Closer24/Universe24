@@ -1,6 +1,6 @@
 # Two events of nature in the engine's language
 
-Eight world files that show, on the one generic engine and with the rules
+Ten world files that show, on the one generic engine and with the rules
 that exist today, (A) a photon absorbed by an electron at rest, (B) a nucleus
 split by a high-energy photon, with a low-energy photon that does not split it
 as the control, (C) the photon of (A) held inside the group while its
@@ -12,7 +12,11 @@ view's first picture,
 [below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks), and
 (F) the ring, an electron at rest as a loop of rays on a unit square, with
 the control that disperses, the design world of feature 14,
-[below](#the-ring-an-electron-at-rest-as-a-loop). They are demonstrations under
+[below](#the-ring-an-electron-at-rest-as-a-loop), and (G) the helium ion
+again, on the engine with the field spreading and the momentum turn, with
+the axis-only control,
+[below](#the-helium-ion-with-the-field-spreading-and-the-momentum-turn).
+They are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
@@ -388,6 +392,120 @@ python tools/ray_viewer/render_gif.py runs/helium-ion/runs.json --output runs/he
 ```
 
 The record stays outside the tree; the register holds its fingerprint.
+
+## The helium ion with the field spreading and the momentum turn
+
+`helium_orbit.json` repeats the model owner's request of 2026-09-17 (the
+helium nucleus with one electron around it; the orbit and the frequency a
+stable, closed orbit needs) on the engine that holds the two rules
+[E4](../../docs/EXPERIMENTS.md#e4-the-helium-ion-one-electron-at-a-nucleus-of-charge-2)
+found missing: the field spreads off the axes (feature 12,
+`field-spreading-v1`, with the Node-owned remainder of feature 12b,
+`field-remainder-v1`) and a free ray turns gradually by the momentum of the
+field rays it meets (feature 8b, `ray-momentum-turn-v1`). The orbit is
+computed before the run, in the rule's own terms and on this lattice, and
+the record is registered as
+[E8](../../docs/EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn).
+`helium_orbit_axes.json` is the same world with the field not spreading,
+E4's axis-only field under the momentum turn, the control that shows what
+feature 12 adds.
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| The helium nucleus, charge +2 e | An external body (`external_bodies[0]`) of the catalog's `proton` family at the centre (7, 7, 7) of a 15^3 board, `charge` 6 in thirds of e and `amount` 2^20, as in E4: infinite mass, never split, moved by fields only; the proton's rest rate 0 for the token's sake | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); Highlights 3.19 |
+| The Coulomb field of the nucleus | `light_of_nucleus`, the catalog's `light` released by the proton family (`field_of` `proton`), `release` [1, 749]: every interval the body releases one ray of amount A = floor(2^20 / 749) = 1399 per Port heading, phase 0, `source_sign` +1 from its charge, booked as a source; and, new since E4, `spread` [6, 1, 1, 1, 1, 1], the catalog's table: every Node the field reaches releases it again, six of eleven parts forward, one back, one on each transverse heading, the shares below one quantum owned by the Node per family, sign and Port and released whole when they fill (feature 12b), so the field reaches every Node and its average intensities follow the table exactly | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); Highlights 3.5 |
+| The electron, charge -1 e, mass m | One `electron` ray (rest rate 1, `charge` -3) of amount m = 256, its momentum register m along its line at the launch; one Link per interval, the one speed of the engine (Highlights 3.28: the register sets the direction and never the speed) | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1) |
+| Coulomb attraction | The rule `nucleus_turn` over `[electron, light_of_nucleus]` without outputs, `momentum_table` `{"light_of_nucleus": -1}`: at every Node the electron shares with field content its register moves by -1 x amount x heading of every field ray there (toward the source of each), the accumulators reset, and each field ray returns reversed as the recoil; the DDA then walks the register. It is the catalog's `electron_field_turn` in the momentum-table form with the sign of opposite charges, standing in for the open `opposite_charge` entry (A5): the field ray carries `source_sign` +1, which no guard reads today (a coupling's view is amount, heading, phase, rate, delay, family, charge and bit), so the sign is the table's declaration, as in E4 | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1); Highlights 3.5, 3.14 |
+| The launch, at rest in an established field | A second external body, `launcher`, of an apparatus family (rest rate 0, charge 0, no field) at (13, 6, 7), one Link before the orbit's tangent point (13, 7, 7), with the coupling `launch` over `[electron, launcher]`: the electron arrives from its lamp at (13, 5, 7) at tick 1 with phase 1, the guard `eq(phase, 1)` holds, and the output returns it on its heading with `delay` 40, so it waits forty intervals while the nucleus's field fills the board, and leaves on +Y with phase 41; the guard is false on every later pass (the phase advances while it waits and walks). The launcher's Node sinks every field ray that reaches it (its coupling does not name the field), a hole of one Node in the field on the orbit, counted in the computation below; nothing else in the engine delays an emission | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) ("a declared coupling"); [Meetings with outputs](../../docs/SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1) (`delay` on an output) |
+| The electron's own field | Not declared in this world. A turning electron's transverse Links carry its own released rays along with it (the release skips the dominant axis of the register only), so the catalog's `electron_field_turn` would fire on its own field at the next Node; the self-field of a turning charge is a question of its own (A5) and is left out so that the nucleus's pull alone acts. E4 declared it and never met it | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1) |
+| The recoil of the nucleus | Every field ray the electron meets returns reversed as a new event ray and, since the family spreads, is spread from the next Node like any content; what reaches the nucleus's sink pushes the body by its `momentum_table` (-1, toward where the content came from), together with all of its own field that diffuses back into it; the body's momentum is the running asymmetry of its sink, and a Link needs 2^20 on one axis, which no run of this length reaches | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) ("motion by fields only") |
+| The electron reaching the nucleus | The body's `phase_plate` at setting 0, as in E4: the nucleus is transparent to the electron | [External body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1) |
+| Energy, momentum, charge | The amount; the register read by the ledger's momentum line, the push and the reversal booked as the meeting's source; -3 per electron quantum, 0 on the field, the bodies' line charge 6 | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1); Highlights 3.14 to 3.16 |
+| The orbit | The digital circle of radius R = 6 the DDA traces for a register turning uniformly, 8R = 48 Links per revolution, period T = 48 intervals, frequency 1/48; computed below | Highlights 3.4, 3.28 |
+
+### The orbit computed: what a stable, closed orbit needs
+
+**The rule's own dynamics.** Write P for the length of the electron's
+register, r for its distance from the nucleus and a for the angle between the
+register and the tangent of the circle through it (a > 0 pointing outward).
+The net field flux through the electron's Node is the current of the
+spreading field, on the isotropic average k / r^2 toward the nucleus, so the
+register turns by the push and the ray walks one Link along it:
+
+```text
+dr/dt = sin a,   dP/dt = -(k / r^2) sin a,   da/dt = cos a (1 / r - k / (r^2 P)).
+```
+
+A circular orbit is a = 0 and P = k / r, one for every radius r, with the
+period 8 r in the lattice's L1 metric (the DDA walks one axis Link per
+interval; the L1 length of a circle of radius r is 8 r). Linearized about it,
+d(da)/dt = dr / r^2 + dP / (r P) and its second derivative is zero, so a
+radial displacement d grows as d (1 + t^2 / (2 r^2)) with nothing to restore
+it: the orbit is a neutral equilibrium. Kepler's stability comes from the
+speed falling as the body climbs; here the speed is the one speed of the
+board (Highlights 3.28), the register changes only the direction, and the
+curvature k / (r^2 P) falls faster than 1 / r when the electron drifts out.
+So the answer to "the frequency a stable, closed orbit needs" in this rule
+is: every radius has a closed orbit, of frequency 1 / (8 r) at register
+k / r, and none is stable; the run shows how the first perturbation resolves
+it, a fall or an escape.
+
+**The lattice.** The push per interval that turns a register of length m by
+one step of the circle is p = m tan(pi / (4 R)); for m = 256 and R = 6,
+p = 256 x 0.1317 = 33.7, about 34 quanta per interval. Every push is an
+integer vector added to the register, so a push perpendicular to it lengthens
+it by about p^2 / (2 m) = 2.3 per interval, a second-order term the
+continuum map does not have (there a perpendicular push leaves P unchanged);
+over a revolution the length would grow by 40 percent and the turn per
+interval fall with it, unless the path's opening turns the pushes backward.
+
+**The flux on this lattice.** The isotropic average gives a net push of
+S / (4 pi R^2) per Node at distance R, S the effective source. The exact
+mean field of the split table on the 15^3 board (a linear map; the
+Node-owned remainders make the integer field equal it on average) with the
+body releasing A per heading per interval, the nucleus's sink taking back
+what diffuses into it and the launcher's sink at (13, 6, 7), open faces,
+iterated to its steady state, gives per unit A:
+
+- the nucleus's sink takes 1.014 A per interval of the 6 A released, the
+  backward share of its six neighbours (6 A / 11 = 0.545 A) and the rest
+  diffusion; the effective source is S = 4.986 A;
+- the digital circle of radius 6 from (6, 0) has 48 Nodes at Euclidean
+  distances 5 to 7.07 (the DDA rounds the circle one Link off centre, through
+  (0, 7) and (0, -5)); the mean inward push over them is 0.0241 A per
+  interval, 2.2 times the isotropic S / (4 pi 36) = 0.0110 A, because the
+  forward weight keeps a beam on each axis: 0.065 A at the axis crossing
+  (6, 0), 0.105 A at (0, -5), 0.011 A on the diagonals such as (5, 5); the
+  L1 shell of radius 6 has 4 x 36 + 2 = 146 Nodes; the mean gross flux is
+  0.069 A per interval, so the net is about a third of what arrives;
+- the transient: the mean push on the circle is 82 percent of its steady
+  value at tick 26, 90 percent at tick 40, 94 percent at tick 50, 96 percent
+  at tick 60.
+
+**The integers.** m = 256, R = 6, T = 48; the push wanted is 34 per
+interval, so A = 34 / 0.0241 = 1399, that is `release` [1, 749]
+(floor(2^20 / 749) = 1399) and 6 A = 8394 quanta released per interval; the
+electron is held 40 intervals and leaves the launcher at tick 42 into a field
+at 90 percent of its steady flux; the run is 152 ticks, the hold, two periods
+and a margin of 16. Expected before the run, from the neutral equilibrium and
+the perturbations above (the lattice's anisotropy of 0.47 to 4.3 times the
+mean push along the circle, the lengthening of the register, the transient,
+the integer flux exact only on average): the electron circulates for part of
+a period and then falls in or escapes, the sign set by its first pushes; no
+closed orbit, and none stable at any radius.
+
+**The recoil.** Each met field ray returns reversed and spreads from the
+next Node; the nucleus's sink takes about 1.014 A = 1419 quanta per interval
+in all and its momentum is the running asymmetry of what it takes; at
+2^20 per Link the body completes no Link in 152 intervals whatever the
+asymmetry (at most 1419 x 152 = 215,688 < 1,048,576 on one axis).
+
+**The control.** `helium_orbit_axes.json` declares no `spread`: the field
+lives on the six axis lines, A = 1399 on each, and the electron leaving the
+launcher meets the +X line at (13, 7, 7) with the whole ray: its register
+becomes (-1399, 256, 0), the fall of E4 in the register's language.
 
 ## The screen: the field of an electron at rest on seven marks
 
