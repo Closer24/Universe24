@@ -175,8 +175,8 @@ every line reads six values and its identity:
 | Line | Reads |
 | --- | --- |
 | `initial` | What the world held before the first tick: the lamps' stock, seeded rays and populations |
-| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`), the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`bound-group-motion-v1`) |
-| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`) |
+| `sourced` | What an explicitly accounted source added since: field releases, sourced emissions, the momentum a table split moves, the momentum a spread moves (`field-spreading-v1`), an unfunded inverse split (`source_totals`), the push a binding rule's momentum table gives a bound group and the difference booked when a pushed group dissolves (`bound-group-motion-v1`), the push a coupling's table gives a free ray with the reversal of the field ray (`ray-momentum-turn-v1`) |
+| `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`); a bound group's momentum by its register, not by its rays' headings (`bound-group-motion-v1`); a free ray's by its momentum register where a push set one (`ray-momentum-turn-v1`) |
 | `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`), a bound group with its content and its register |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
 | `absorbed` | What the external bodies' sinks took (`external_body_totals`, the `absorbed_by_bodies` line of `external-body-v1`), the momentum field's components included when one is bound |
@@ -235,7 +235,14 @@ momentum by its register, at its Node and on the Link it steps along
 [bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)):
 a group at rest reads as its rays did, a moving group reads its register
 wherever it is, and the push of a momentum table, like the momentum a split
-moves, is booked to the world ledger only. A spread
+moves, is booked to the world ledger only. Since `ray-momentum-turn-v1`
+(2026-09-17) both audits read a free ray by its momentum register where a
+push set one ([a free ray turns by
+momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)):
+amount x heading until a push, the register after, negated on a return as
+the heading is; the push and the recoil's reversal are the meeting's
+momentum change in the world ledger, booked as its source, and the local
+audit carries them as the push Node's residual, as it carries a group's push. A spread
 (`field-spreading-v1`, [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1))
 is read from its `field_spread` record, published before the cycle's record:
 the departures of a spreading family, field rays with no event and one Link

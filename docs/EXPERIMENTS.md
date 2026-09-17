@@ -314,7 +314,10 @@ states "exactly" and means integer equality at every tick.
   matter's message about itself): the sign of the releasing charge travels
   on the field ray as a visible property (`source_sign`, feature 12), never
   in the phase, and the attraction of opposite charges (`opposite_charge`)
-  closes with it.
+  closes with it; runnable after feature 8b (`ray-momentum-turn-v1`,
+  2026-09-17), which turns a free ray gradually by the momentum of every
+  field ray it meets under a coupling's `momentum_table`, so Δp(b) is a
+  register the audit reads and not a count of whole Ports.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
@@ -401,7 +404,9 @@ states "exactly" and means integer equality at every tick.
   construction of the delay in phase steps of a content-fixed field amount
   ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
   The five b, the exponent, the linearity in M and the external body remain
-  to be run here.
+  to be run here; runnable after feature 8b (`ray-momentum-turn-v1`,
+  2026-09-17), the gradual turn of a free ray by a coupling's
+  `momentum_table`, for the deflection measured as a momentum register.
 
 ### A7. Newtonian attraction between two bound groups
 
@@ -610,8 +615,10 @@ states "exactly" and means integer equality at every tick.
 - **Status.** planned. Reading of 2026-09-17 (Highlights 3.28): the run
   remains a width check, that `phase_bits` = 75 leaks into no coupling, and
   nothing on the road to the confrontation runs requires the wide phase, the
-  N of nature being the lag modulus of feature 8b (declared on the lag
-  register, of any width, entering no phase sum) and not the phase circle.
+  N of nature being a register of any width that enters no phase sum (the
+  momentum register of feature 8b for the turn, `ray-momentum-turn-v1`,
+  2026-09-17; the lag's own modulus for the delay, open) and not the phase
+  circle.
 
 ### A12. Malus's law and the three-polarizer chain (after feature 11)
 
@@ -1135,6 +1142,11 @@ sign rule, and its other couplings are catalog entries.
   heading toward the lagging side, the lag register being the transverse
   momentum the audit reads (Highlights 3.28, feature 8b). Neither is added
   by this run; with both, the orbit is a staircase circle of period 8 r k.
+  Feature 8b landed on 2026-09-17 as `ray-momentum-turn-v1`: the transverse
+  momentum is the ray's momentum register, pushed by a coupling's
+  `momentum_table` and walked by the DDA ([a free ray turns by
+  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1));
+  this run is not repeated.
   The extractor of the ray viewer was corrected for this record: a ray a
   body's sink takes is not in the receiver's reading, so its transit now
   takes the amount from the `external_body_absorbed` record, and at a

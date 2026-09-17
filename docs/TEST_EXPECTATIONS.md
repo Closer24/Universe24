@@ -67,6 +67,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
+| `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
 | `test_ray_viewer.py` | 3 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
@@ -2001,6 +2002,117 @@ run:
 - (e) `rejected`: a `momentum_table` on a rule with outputs, one naming a
   participant family, one naming an unknown family, a sign of 2 and a table
   on a rule that assigns no delay are each rejected at initialization.
+
+## A free ray turns by momentum
+
+`test_ray_momentum_turn.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)).
+The family `m` has rest rate 1 on a 3-bit phase (8 steps); `f` is a plain
+family of rate 0, the field ray, with no release around it; both have 8 ray
+slots. A vector field `momentum` (three signed components) is bound to both
+through `recoil_field` on every emission, so the world ledger carries a
+momentum line and every lamp keeps the recoil of what it emits. Every lamp
+holds its amount and emits it once, funded and directed, at phase 0, in the
+cycle of tick 0. The coupling `turn` is `m x f` without outputs and without
+assignments, with `"momentum_table": {"f": sign}`: the table names the
+field family, and `m`, the one role it does not name, is the ray it pushes.
+A tick t is one `step()`: the cycle of interval t - 1 and the delivery of
+tick t; a record carries the tick its cycle started at. The test is
+parametrized over `turn`, `cancel`, `steep`, `identical` and `rejected`.
+Pinned before the first run:
+
+- (a) `turn`: a lamp at (4,10,10) emits `m` 8 along +X and a lamp at
+  (10,4,10) emits `f` 2 along +Y, the field ray from the -Y side; `turn`
+  declares `{"f": -1}`. After tick t (1 to 6) the m ray is at (4 + t, 10,
+  10) with phase t mod 8, steps t, mask 1, shares (8, 0, 0, 0, 0, 0), no
+  register, and the f ray at (10, 4 + t, 10) with phase 0, steps t, mask 4,
+  shares (0, 0, 2, 0, 0, 0); both are resident at the center (10,10,10)
+  after tick 6. In the cycle of tick 6 the coupling fires: the push is -1 x
+  2 x (0, 1, 0) = (0, -2, 0), toward the source, and the register becomes
+  (8, 0, 0) + (0, -2, 0) = (8, -2, 0), the accumulators (0, 0, 0); the
+  amount, phase, steps, heading index 0, mask and shares are untouched, and
+  no event is stamped; `ray_push` at tick 6 at the center: family `m`,
+  amount 8, before (8, 0, 0), after (8, -2, 0), field `f`, field amount 2,
+  field heading (0, 1, 0). The f ray returns reversed as a new event:
+  heading 3, amount 2, phase 0, mask 8, shares (0, 0, 0, 2, 0, 0), at (10,
+  16 - t, 10) after tick t from 7 to 16 with steps t - 6, escaping through
+  Port 3 at tick 17 (escaped `f` 2, momentum (0, -2, 0)). The m ray walks
+  the DDA on (8, -2, 0), Manhattan length 10, one Link per interval: the
+  accumulators add (8, 2, 0), the axis furthest ahead steps and loses 10,
+  so from (0, 0, 0) the Ports are 0, 0, 3, 0, 0 and repeat (x x y x x, four
+  +X per one -Y over ten Links), the accumulators after each step (-2, 2,
+  0), (-4, 4, 0), (4, -4, 0), (2, -2, 0), (0, 0, 0). Positions after ticks
+  7 to 18: (11,10,10), (12,10,10), (12,9,10), (13,9,10), (14,9,10),
+  (15,9,10), (16,9,10), (16,8,10), (17,8,10), (18,8,10), (19,8,10),
+  (20,8,10), the ray with register (8, -2, 0), phase t mod 8, steps t and
+  its lamp's event record at every tick. The momentum line: initial
+  (0, 0, 0); sourced (0, 0, 0) through tick 6 and (0, -6, 0) from tick 7
+  (the push, -2, and the reversal of the f ray, -4, booked as the
+  meeting's momentum change); escaped (0, -2, 0) from tick 17; current
+  (0, -6, 0) from tick 7 and (0, -4, 0) from tick 17 (the lamps (-8, 0, 0)
+  and (0, -2, 0), the m ray's register, the f ray's -2 while on the board);
+  every ledger balanced, `m` 8 and `f` 2 throughout (`f` 0 and escaped 2
+  from tick 17), the runner's `conserved_at_every_completed_tick` true with
+  `ray_momentum_turn: "ray-momentum-turn-v1"` and no `bound_group_motion`
+  key; final totals `m` 8, `f` 0, momentum (0, -4, 0);
+- (b) `cancel`: the lamps of (a) and a third lamp at (12,18,10) emitting `f`
+  2 along -Y, the field ray from the +Y side, `{"f": -1}`, 14 ticks. The
+  first push at tick 6 is that of (a): after ticks 7 and 8 the m ray is at
+  (11,10,10) and (12,10,10) with register (8, -2, 0) and accumulators
+  (-2, 2, 0), (-4, 4, 0). The second f ray is at (12, 18 - t, 10) after
+  tick t (heading 3, mask 8, shares (0, 0, 0, 2, 0, 0)) and resident with
+  the m ray at (12,10,10) after tick 8: in the cycle of tick 8 the push is
+  -1 x 2 x (0, -1, 0) = (0, 2, 0) and the register (8, 0, 0), the default
+  amount x heading, so it is cleared and the accumulators reset: from tick
+  9 the m ray is at (4 + t, 10, 10) with no register, accumulators
+  (0, 0, 0), phase t mod 8, steps t, mask 1, shares (8, 0, 0, 0, 0, 0),
+  the ray it was; `ray_push` at tick 8 at (12,10,10): before (8, -2, 0),
+  after (8, 0, 0), field heading (0, -1, 0). The second f ray returns
+  reversed (heading 2, mask 4, shares (0, 0, 2, 0, 0, 0)) at (12, t + 2,
+  10) after tick t from 9 with steps t - 8; the first recoil as in (a).
+  The momentum line: sourced (0, -6, 0) after ticks 7 and 8, (0, 0, 0)
+  from tick 9 (the second push +2 and the second reversal +4), current the
+  same, nothing escaped through tick 14; `m` 8 and `f` 4 throughout; final
+  totals `m` 8, `f` 4, momentum (0, 0, 0);
+- (c) `steep`: a lamp at (4,10,10) emits `m` 2 along +X and a lamp at
+  (10,4,10) emits `f` 3 along +Y, `{"f": 1}` (repulsion, away from the
+  source), 16 ticks. In the cycle of tick 6 the push is 1 x 3 x (0, 1, 0) =
+  (0, 3, 0) and the register (2, 3, 0), past 45 degrees; `ray_push` at tick
+  6: before (2, 0, 0), after (2, 3, 0), field heading (0, 1, 0). The DDA on
+  (2, 3, 0), length 5, from (0, 0, 0): the Ports 2, 0, 2, 0, 2 and repeat
+  (y x y x y, three +Y per two +X), the accumulators after each step
+  (2, -2, 0), (-1, 1, 0), (1, -1, 0), (-2, 2, 0), (0, 0, 0). Positions after
+  ticks 7 to 16: (10,11,10), (11,11,10), (11,12,10), (12,12,10),
+  (12,13,10), (12,14,10), (13,14,10), (13,15,10), (14,15,10), (14,16,10);
+  the ray keeps heading index 0 (+X, its line for the rules that read it)
+  while `ray_line` reads (0, 1, 0), the dominant axis of its register, the
+  line the release geometry skips. The recoil (heading 3, amount 3, mask
+  8, shares (0, 0, 0, 3, 0, 0)) is at (10, 16 - t, 10) after tick t from
+  7. The momentum line: sourced (0, -3, 0) from tick 7 (the push +3 and the
+  reversal -6), current the same, nothing escaped; `m` 2 and `f` 3
+  throughout;
+- (d) `identical`: two worlds without a momentum table on a coupling of
+  free rays run byte for byte as before this feature: the lamps of (a)
+  under the outputs meeting `deflect` of `released-field-v1` (the m ray
+  leaves on the field ray's heading, the f ray reversed), 12 ticks, and the
+  bound group of `bound-group-motion-v1` (lamps at (9,10,10) and (11,10,10)
+  emitting `m` 4 along +X and -X, a lamp at (5,10,10) emitting `f` 2 along
+  +X, the binding rule with `{"f": -1}`), 14 ticks. The SHA-256 digests of
+  `events.jsonl` and `state.json`, computed on the source before the
+  feature (main `c21e03e`), are pinned in the test (`IDENTICAL`); no
+  `ray_push` record and no `ray_momentum_turn` key, every ledger balanced;
+- (e) `rejected`: a table naming a participant family on a rule that
+  assigns (`delay` 1) or declares `ray_delay`, a table with two unnamed
+  roles (`m x m x f`), a sign of 2, and a rule with neither assignments,
+  outputs nor table are each rejected at initialization; a role that mixes
+  a named and an unnamed family gives `turn_receiver` no receiver (-1, the
+  admission's refusal); and a push that would leave a ray with no
+  direction fails the cycle: `m` 2 along +X from (4,10,10) meets `f` 2
+  along -X from (16,10,10) at the center after tick 6 under `{"f": 1}`,
+  the push 1 x 2 x (-1, 0, 0) = (-2, 0, 0) would make the register
+  (0, 0, 0), and the seventh `step()` raises ("cannot stop a ray").
 
 ## Catalog of nature
 

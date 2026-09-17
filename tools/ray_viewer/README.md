@@ -14,8 +14,10 @@ here that touches the engine.
 - Dark background. A ray is a ray, not a particle: a small bright head in
   its family colour, a short segment from its Node along its heading
   (`sizes.head_links` 0.5 of the Link, `ray_width_px` 3; `head_links` 1
-  draws the whole Link), a tiny momentum arrow at the head in its heading
-  whose length is its amount times `sizes.momentum_arrow_px_per_quantum`
+  draws the whole Link), a tiny momentum arrow at the head along its
+  momentum register (its heading unless a push turned it,
+  `ray-momentum-turn-v1`; the extractor writes it as the segment's
+  `momentum`) whose length is that momentum times `sizes.momentum_arrow_px_per_quantum`
   (1.75 px, so 14 px for an electron of 8, with an `arrowhead_px` 5 head;
   `draw.momentum_arrow`, `colors.momentum_arrow`; with the flag off the
   small arrowhead alone remains), and a faint white wake 6 px wide fading
