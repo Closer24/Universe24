@@ -2928,7 +2928,15 @@ slots, the rules `corner` alone, `corner` then `electron_field_turn`
 (`momentum_table` `{"light": 1}`), and the two in the other order) with
 `ticks` 16 and runs each through the runner, reading `run.json`,
 `events.jsonl` and the extractor with the recording of `record_sidecar.py`.
-One test.
+One test. Corrected at the first look at the first 96-tick record of E10
+(2026-09-17, before this test's first run; the 16 above is kept as
+written): the run is 24 ticks, since the reader's window
+(`periodic_window`) needs the states to repeat over at least two periods
+with a recorded tick after them, 17 recorded ticks at period 8, and a
+16-tick record holds the corners' states at ticks 1 to 15 only, so it reads
+no group; 24 ticks, three periods, is the length E9's expectations named as
+the fallback. Every statement below at "tick 15" reads "tick 23" and the
+window "1 to 23".
 
 Written before the first run (all of it computed from the rules, the
 "Computed" item of E10): the control's record carries `ray_layer_families`
@@ -2938,7 +2946,17 @@ carry `[["electron", "light"]]` (the coupling names `light`, one layer);
 `field_remainder` as E9's. `corner_first`: no `ray_push` event, no
 `ray_momentum_turn` in `run.json`, and its `events.jsonl` equal byte for
 byte to the control's (the corner rule takes both electrons at every corner
-in every cycle and the turn rule finds none); the electron line 32 at every
+in every cycle and the turn rule finds none). Corrected at the first look
+at the first 96-tick record of E10 (2026-09-17, before this test's first
+run; the statement above is kept as written): the two streams have the same
+events line for line but for the host's `cost` of every `spatial_cycle`,
+`cycle_started` and `cycle_committed` record, which counts the light rays
+the one-layer meeting reads (`_meet` charges one read per view component
+per resident ray of the layer); every physical line (`spatial_received`,
+`spatial_sent`, `field_spread`, `spatial_escaped`, the cycles'
+`source_delta`) is identical, so the test pins equality with `cost`
+removed, the byte inequality, and that the differing keys are those three
+`cost` lines and nothing else. The electron line 32 at every
 tick with no escape; the group read as E9's: ring `[P0, P1, P2, P3]`,
 content 32, `{"electron": 32}`, period 8, clock `{"electron": 1}`, from
 tick 1 to tick 15, every tick row from 1 to 15 bound `{"electron": [32]}`.
@@ -2962,9 +2980,31 @@ current after tick 2 (the four corners' pushes cancel). Every world:
 every completed tick; the light line sourced 40 (t - 1) after tick t in the
 control and in `corner_first`.
 
-Read from the record of the first run of this board and pinned then, as
-the run's integers rather than computed by hand: entered below after the
-first run.
+Corrected at the first look at the first 96-tick record of E10
+(2026-09-17, before this test's first run; the statement above is kept as
+written): at P3 the receiver is the R ray, as written, but the R ray
+arrives at P3 heading -X (from P2) and leaves on -Y, so its register is
+`[-4, 0, 0]`, not `[0, 4, 0]` (that heading is the L ray's arrival there),
+and the record's two pushes at P3 are field heading `[-1, 0, 0]`,
+`[-4, 0, 0]` to `[-5, 0, 0]`, then `[0, 1, 0]` to `[-5, 1, 0]`; the other
+three corners are as written, and the four pushes still sum to zero. The
+test pins the record's values.
+
+Read from the record of the first run of this board (2026-09-17, the first
+24 ticks of the 96-tick records of E10, of which a 24-tick run of the same
+world is a prefix) and pinned then, as the run's integers rather than
+computed by hand: `turn_first` has 20 `ray_push` events in 24 ticks, 8 at
+tick 2 (the corners), 8 at tick 3 (the eight rays one Link off the square,
+each pushed by the light of amount 1 released beside it in the cycle of
+tick 2 by the ray that left the same corner) and 4 at tick 6 (the four
+pushed rays two Links further, at (2, 4, 5), (2, 7, 5), (9, 4, 5) and
+(9, 7, 5)), every field ray of amount 1; the electron line escaped 16 after
+tick 8 and 32 after tick 9, `escaped_totals` electron 32; the light line
+after tick 24: `turn_first` sourced 300, current 300, escaped 0 (the eight
+rays release 40 per interval while on the board, seven intervals of eight
+rays and one of the four still on it, nothing after tick 9, and no light
+has reached the boundary), the control sourced 920, current 900, escaped
+20.
 
 ## Catalog of nature
 

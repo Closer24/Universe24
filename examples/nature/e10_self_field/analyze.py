@@ -81,13 +81,22 @@ def geometry(world):
 
 
 def group_reading(directory, metadata):
-    """The record's group reader: the extractor over the record with its
-    recording; None when no recording lies beside the record."""
+    """The record's group reader: the extractor's document (``runs.json``
+    beside the record, written by ``tools/ray_viewer/extract.py`` from the
+    record and its recording) when it lies there, else the extractor run over
+    the record with its recording; None when neither exists."""
+    document = directory / "runs.json"
     sidecar = directory / "ray-recording.json"
-    if not sidecar.exists():
+    if document.exists():
+        runs = json.loads(document.read_text(encoding="utf-8"))["runs"]
+        (run,) = [
+            run for run in runs if run["record"]["source_sha256"] == metadata["source_sha256"]
+        ] or runs
+    elif sidecar.exists():
+        extract = tool("extract")
+        run = extract.extract_record(directory, sidecar=sidecar)
+    else:
         return None
-    extract = tool("extract")
-    run = extract.extract_record(directory, sidecar=sidecar)
     return {
         "groups": run["groups"],
         "bound": [row["bound"] for row in run["ticks_data"]],
@@ -104,6 +113,10 @@ def analyze(run):
     ticks = int(metadata["completed_ticks"])
     events_path = directory / "events.jsonl"
     events_sha256 = hashlib.sha256(events_path.read_bytes()).hexdigest()
+    # The physical record's digest: every event line without the host's `cost`
+    # (the operation count of a cycle, which counts the rays a meeting reads and
+    # so differs between one layer and two even when nothing meets).
+    physical = hashlib.sha256()
     pushes = []
     kinds = {}
     on_ring = {t: 0 for t in range(ticks + 1)}
@@ -116,6 +129,14 @@ def analyze(run):
             event = json.loads(text)
             kind = event.get("event")
             kinds[kind] = kinds.get(kind, 0) + 1
+            physical.update(
+                json.dumps(
+                    {k: v for k, v in event.items() if k != "cost"},
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode()
+            )
+            physical.update(b"\n")
             if kind == "ray_push":
                 pushes.append(event)
             elif kind == "spatial_received":
@@ -244,6 +265,7 @@ def analyze(run):
         "source_sha256": metadata["source_sha256"],
         "initialization_sha256": metadata["initialization_sha256"],
         "events_sha256": events_sha256,
+        "events_without_cost_sha256": physical.hexdigest(),
         "elapsed_seconds": metadata["elapsed_seconds"],
         "ticks": ticks,
         "content": content,
@@ -342,6 +364,12 @@ def table(results):
                 )
                 if variant != "control"
                 else None,
+                "events_identical_to_control_without_cost": (
+                    control is not None
+                    and r["events_without_cost_sha256"] == control["events_without_cost_sha256"]
+                )
+                if variant != "control"
+                else None,
                 "elapsed_seconds": r["elapsed_seconds"],
             }
         entries.append(entry)
@@ -365,7 +393,9 @@ def answer(entries):
         if verdicts == {"closed"}:
             result[variant] = "every content survives: no ladder from this coupling"
         elif all(v.startswith("dispersed") for v in verdicts):
-            result[variant] = "every content disperses: the loop needs the field not to push its own rays"
+            result[variant] = (
+                "every content disperses: the loop needs the field not to push its own rays"
+            )
         else:
             result[variant] = "the self-field selects contents: " + ", ".join(
                 f"{c} {v}" for c, v in items
@@ -379,7 +409,9 @@ def print_run(r):
         f"  ticks {r['ticks']} status {r['status']} {r['elapsed_seconds']:.1f}s"
     )
     print(f"   source {r['source_sha256']}  init {r['initialization_sha256']}")
-    print(f"   events {r['events_sha256']}  layers {r['ray_layer_families']}  turn {r['ray_momentum_turn']}")
+    print(
+        f"   events {r['events_sha256']}  layers {r['ray_layer_families']}  turn {r['ray_momentum_turn']}"
+    )
     print(
         f"   verdict {r['verdict']}; pushes {r['pushes']} (on ring {r['pushes_on_ring']}, off"
         f" {r['pushes_off_ring']}), first {r['first_push']}; recoils {r['recoils']};"
@@ -397,7 +429,9 @@ def print_run(r):
         f"   near field per corner per interval: max {r['near_field_per_corner_max']},"
         f" max on one axis {r['near_field_transverse_max']} (amount per ray {r['amount']})"
     )
-    print("   tick  on  off  light@corners  pushes  bound            e_cur e_esc  l_src  l_cur  l_esc  p_cur")
+    print(
+        "   tick  on  off  light@corners  pushes  bound            e_cur e_esc  l_src  l_cur  l_esc  p_cur"
+    )
     shown = set(range(1, 9)) | {16, 32, 64, r["ticks"]} | {p["tick"] for p in r["push_list"][:12]}
     for row in r["rows"]:
         if row["tick"] in shown:
@@ -437,7 +471,15 @@ def main():
                 same = (
                     ""
                     if cell["events_identical_to_control"] is None
-                    else (" =control" if cell["events_identical_to_control"] else " !=control")
+                    else (
+                        " =control"
+                        if cell["events_identical_to_control"]
+                        else (
+                            " =control but cost"
+                            if cell["events_identical_to_control_without_cost"]
+                            else " !=control"
+                        )
+                    )
                 )
                 cells.append(f"{variant}: {cell['verdict']} ({cell['pushes']} pushes{same})")
         print(f"   {e['content']:4d}  " + " | ".join(cells))

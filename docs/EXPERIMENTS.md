@@ -988,7 +988,13 @@ states "exactly" and means integer equality at every tick.
   m₀ = h/(N δt c²), so every ratio is a ratio of integers; the rungs of the
   elementary families are catalog values, not predictions; the test is
   representability at one N within the declared encoding error
-  ([reference units](REFERENCE_UNITS.md)).
+  ([reference units](REFERENCE_UNITS.md)). The self-field of the unit-square
+  ring selects no content
+  ([E10](#e10-the-ring-meets-its-own-field-the-loop-under-its-own-light-contents-32-to-128),
+  2026-09-17): with the catalog's turn declared beside the corner table, a
+  ring ray is met by one rule per cycle, so every content survives under
+  the corner first and every content disperses at tick 3 under the turn
+  first, and the ladder at this ring stays the corner table's.
 - **Features.** 9 (and, for the real N, A11).
 - **Run.** A catalog fit, no board: at N = 2^12 (the engine's circle today)
   and at the N of A11, find the smallest integer k (the electron's rung,
@@ -2334,9 +2340,89 @@ sign rule, and its other couplings are catalog entries.
   or every content disperses (the loop needs the field not to push its own
   rays). The runs are made once; nothing is tuned after them, and if the
   first look forces a change, both records are kept and said so.
-- **Shows.** Not yet run at the time of this entry's writing; the readings
-  are entered below the criterion after the run.
-- **Status.** planned (this entry, 2026-09-17, before the run).
+- **Shows.** Run once each, 96 ticks; the controls in 21.7, 44.7 and 79.4
+  s (contents 32, 64, 128), `corner_first` in 22.7, 47.1 and 85.3 s,
+  `turn_first` in 2.8, 4.8 and 7.9 s. The table:
+
+  | Content | `control` | `corner_first` | `turn_first` |
+  | --- | --- | --- | --- |
+  | 32 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes |
+  | 64 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes |
+  | 128 | closed | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 24 pushes |
+
+  The six closed records: one group each, ring P0, P1, P2, P3, content C,
+  `{"electron": C}`, period 8, clock 1 on 8 steps, from tick 1 to tick 95,
+  every tick row from 1 to 95 bound at C, no electron packet received off
+  the ring, no `ray_push`; the `corner_first` record equal to the control's
+  in every event line with the host's `cost` removed (the digests of the
+  cost-stripped lines equal at each content) and differing in the `cost`
+  of every cycle record, which counts the light rays the one-layer meeting
+  reads before it finds no electron free, and in `ray_layer_families`. The
+  light met at the corners (all four together) 8, 16 and 32 per interval
+  from tick 2, the spread adding from tick 7, 5 and 4; the largest amount
+  at one corner in one interval over 96 ticks 8, 16 and 29, on the two
+  Ports of one axis 4, 6 and 11 against a = 4, 8 and 16. The light line
+  after tick 96: sourced 3800, current 3276, escaped 524 (32); 7600, 5456,
+  2144 (64); 15200, 8232, 6968 (128); electron C at every tick; momentum
+  (0, 0, 0) at every tick, each corner booking its two quarter turns. The
+  three `turn_first` records: at tick 2 eight `ray_push` events, two per
+  corner, the receiver the electron in the lower slot pushed by the two
+  edge rays of amount q in heading-index order, the registers as computed
+  at P0, P1 and P2 and at P3 from (-a, 0, 0) to (-a - q, 0, 0) to
+  (-a - q, q, 0) (the R ray arrives at P3 heading -X; the computation had
+  written +Y, the L ray's arrival), each corner booking its receiver's net
+  push, (-q, -q, 0) at P0 and the like, the four summing to zero, eight
+  recoils; the corner rule fires at no corner from tick 2, at tick 3 all
+  eight electron packets are received off the ring and none reaches a
+  corner again, no group is read; off the ring the escaping rays are pushed
+  by the light released beside them, eight pushes at tick 3 along their
+  lines and four (eight at 128) at tick 6 across, no line flipped; half the
+  content escaped after tick 8 and all after tick 9; light sourced 300, 600
+  and 1200 in all, the momentum line (0, 0, 0) and every ledger line
+  balanced at every tick. Deviations from the computation, none from the
+  criterion: the receiver's arrival heading at P3; the `cost` line of the
+  `corner_first` record; the pushes after tick 3; the one-axis near field
+  at content 32 reaching the ray's amount once over 96 ticks (the
+  computation over 16 ticks had 3 below 4). The reading tick by tick is in
+  the [README](../examples/nature/README.md#what-the-runs-show).
+- **Status.** measured, 2026-09-17, commit
+  `2ababa5a6bd45618bdfc47686832d149cacd3061` (the worlds, the computation
+  and the criterion; the readings, `record.json` and this status in the
+  next commit of the same branch); source
+  `aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705`;
+  initialization `c32_control`
+  `8820f4c831b6ee77bfd3a78122efbd73b38793a3de24bdd93ee88b495de1d9b7`,
+  `c32_corner_first`
+  `ccc09423aa2b1b79f56b5003d961aa56655cef174c0c7ce34713369e437281d0`,
+  `c32_turn_first`
+  `41f9fb9d2b72d55c0de8f3285da79e40ef41fb76fabc994efebb799c987062e5`,
+  `c64_control`
+  `1dbbfd0b66571b9aabe7a2f984fcbb4de3b70ee0163e0b2ec5ca46c2b9599da4`,
+  `c64_corner_first`
+  `d5e8bcb70545e88ac2f2142d4da943c3afd050e309fd4af655bc28a222c2fdee`,
+  `c64_turn_first`
+  `b6538871347e8b2ace203f5bc4750490502ca2e0f88ed950634e9b47609a1265`,
+  `c128_control`
+  `837da1c3b47fb32c1ca549df934bf2c6c8c8808d49d5fe8e9e5a27e0619f9ae7`,
+  `c128_corner_first`
+  `04d72372be16a1dd5cd6140b9090ae50258c542f13f63754d8aea79d8873e8c7`,
+  `c128_turn_first`
+  `e51ea4b597c995c90b5f94a139bcba025b3db8fb0248924b7ac7dcbb3674bc83`; 96
+  ticks each; outcome: no content selected. Under the corner first every
+  content survives (no ladder from this coupling on the unit square, the
+  ladder there being the corner table's); under the turn first every
+  content disperses at tick 3 (the loop needs the field not to take its
+  rays out of the corner meeting). Both are the one structural fact
+  computed before the run, one rule per ring ray per cycle on a ring whose
+  every Node is a corner, and no table entry was read: a self-field
+  closure needs a ring Node where a ray is met by its field and not turned
+  (a longer ring's side Nodes), or one table at the corner that reads the
+  field met, which is the catalog's to write; the ledger exact at every
+  tick in all nine records; nothing tuned after the runs; the records stay
+  outside the tree, `record.json` beside the worlds. The isolated test
+  (`tests/test_ring_self_field.py`, the content-32 worlds, 24 ticks) pins
+  the pushes, the identity of the records and the group readings
+  ([expectations](TEST_EXPECTATIONS.md#the-ring-meets-its-own-field)).
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 

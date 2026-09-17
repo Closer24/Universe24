@@ -1248,6 +1248,117 @@ The five computations of the register entry, from the code and the tables
    ladder from this coupling on the unit square, for a structural reason,
    one rule per ring ray per cycle.
 
+### What the runs show
+
+Run once each, 96 ticks, 2026-09-17, on the source
+`aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705`; the
+runs took 21.7, 44.7 and 79.4 s (the controls at 32, 64 and 128), 22.7,
+47.1 and 85.3 s (`corner_first`) and 2.8, 4.8 and 7.9 s (`turn_first`, the
+board empty of matter from tick 9); the recordings and the extractor's
+documents took longer than the runs (up to fourteen minutes at content
+128) and are not part of the runs. The verdict table, read by `analyze.py`
+and kept in `record.json`:
+
+| Content | `control` | `corner_first` | `turn_first` |
+| --- | --- | --- | --- |
+| 32 | closed (0 pushes) | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes (8 at tick 2, 8 at tick 3, 4 at tick 6) |
+| 64 | closed (0 pushes) | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 20 pushes (8, 8, 4) |
+| 128 | closed (0 pushes) | closed, 0 pushes, the control's record line for line | dispersed at tick 3, 24 pushes (8, 8, 8) |
+
+**The controls and `corner_first`.** The extractor reads one group in each
+of the six records: ring (5,5,5), (6,5,5), (6,6,5), (5,6,5), content 32, 64
+or 128, `{"electron": C}`, period 8, clock 1 on 8 steps, from tick 1 to
+tick 95, every tick row from 1 to 95 bound at C; no electron packet is
+received off the ring at any tick; no `ray_push` exists. The `corner_first`
+record has the same events as the control's line for line (every
+`spatial_received`, `spatial_sent`, `field_spread`, `spatial_escaped`
+record and every cycle's `source_delta`; the digest of the event lines
+with the host's `cost` removed is equal at each content) and differs from
+it in the `cost` of every cycle record alone, the operation count, which
+counts the light rays the one-layer meeting reads before finding no
+electron free; and in the runner's `ray_layer_families`, `[["electron",
+"light"]]` against `[["electron"], ["light"]]`. The light met at the
+corners in the control (all four corners together): 8, 16 and 32 per
+interval from tick 2 (the two edge rays of q at each corner), then the
+spread: 16 at tick 7 and 24 at tick 8 (content 32); 40 at tick 5 (64); 56
+at tick 4 and 64 at tick 5 (128); over the 96 ticks the largest amount at
+one corner in one interval was 8, 16 and 29, and on the two Ports of one
+axis 4, 6 and 11 against a = 4, 8 and 16: at content 32 the one-axis total
+reached the ray's amount once (an upper bound, the two faces pushing
+opposite ways), at 64 and 128 it stayed below it. The ledger after tick 96:
+light sourced 3800, current 3276, escaped 524 (32); 7600, 5456, 2144 (64);
+15200, 8232, 6968 (128); electron C at every tick with no source, escape,
+annulment or absorption; momentum (0, 0, 0) sourced and current at every
+tick, each corner booking its two quarter turns, (2a, 2a, 0) at P0 and the
+like; every line balanced, `conserved_at_every_completed_tick` true. The
+events (control, and `corner_first` the same): `spatial_cycle` 51612,
+`spatial_sent` 31264, `spatial_received` 20388, `field_spread` 19960,
+`spatial_escaped` 524 at 32; 80260, 79592, 42300, 41600, 2136 at 64;
+106752, 178668, 74132, 72956, 6808 at 128; the host's 384 `cycle_started`
+and `cycle_committed`; no other kind. The extractor's rays: 11892, 25992 and
+45988.
+
+**`turn_first`.** At tick 2 the record holds eight `ray_push` events, two
+per corner, the receiver the electron in the lower slot pushed by the two
+edge rays of amount q in heading-index order, exactly the computed
+registers at P0, P1 and P2 and, at P3, the R ray heading -X (it arrives at
+P3 from P2 on -X, the computation had written its arrival as +Y, the L
+ray's), from (-a, 0, 0) to (-a - q, 0, 0) to (-a - q, +q, 0): at content 32
+P0 `[-4, 0, 0]` to `[-5, 0, 0]` to `[-5, -1, 0]`, P1 `[4, 0, 0]` to
+`[5, 0, 0]` to `[5, -1, 0]`, P2 `[4, 0, 0]` to `[5, 0, 0]` to `[5, 1, 0]`,
+P3 `[-4, 0, 0]` to `[-5, 0, 0]` to `[-5, 1, 0]`, and the same with 8 and 2
+at 64, 16 and 4 at 128; each corner books its receiver's net push as the
+meeting's momentum source, (-q, -q, 0) at P0, (-q, +q, 0) at P3,
+(+q, -q, 0) at P1, (+q, +q, 0) at P2, the four summing to zero, and the
+world's momentum stays (0, 0, 0); the eight light rays return reversed
+(eight recoils, one per push, the `light` line unchanged). The corner
+rule does not fire at any corner from tick 2 (the corners' cycle records
+book the push and not the quarter turns), both rays of every corner cross
+straight, and at tick 3 all eight electron packets are received off the
+ring, at (4,5,5), (4,6,5), (7,5,5), (7,6,5) (the pushed rays, one Link on
+along their line) and (5,4,5), (6,4,5), (5,7,5), (6,7,5) (the unpushed);
+no electron reaches a corner again; the extractor reads no group at any
+content (the corners' states exist at ticks 1 and 2 only). Off the ring the
+escaping rays meet the light released beside them in the cycle of tick 2
+by the ray that left the same corner on the other edge: eight pushes at
+tick 3, each by q along the ray's own line (register `[-6, -1, 0]`,
+`[0, -5, 0]` and the like at 32), and at tick 6, three Links out, four
+pushes by q across the line at (2,4,5), (2,7,5), (9,4,5), (9,7,5) (to
+`[-6, -2, 0]` and the like at 32; at 128 each of the four is pushed first
+by a whole quantum of 1 along its line, a register's release, then by 4
+across, eight pushes at tick 6); no push flips a line, every ray keeps its
+axis to the boundary. Half the content escapes after tick 8 and all of it
+after tick 9 (16 and 32, 32 and 64, 64 and 128); the light line after tick
+96: sourced 300, current 300, escaped 0 (32); 600, 600, 0 (64); 1200,
+1176, 24 (128), the releases stopping with the last ray; every line
+balanced at every tick. The events at 32: `spatial_cycle` 18076,
+`spatial_sent` 412, `spatial_received` 364, `field_spread` 312,
+`spatial_escaped` 8, `ray_push` 20; at 64: 29756, 868, 752, 700, 8, 20; at
+128: 46700, 2584, 1904, 1852, 32, 24.
+
+**Against the computation.** The verdicts, the pushes of tick 2 at P0, P1
+and P2, the near field's first ticks, the light lines and the ledger are as
+computed. Deviations, none from the criterion: the receiver at P3 arrives
+heading -X, not +Y (the computation misread the R sense's arrival there;
+the receiver is the R ray as written and the push is the same two edge
+rays); the `corner_first` record is not byte for byte the control's, the
+host's `cost` line of every cycle record differing while every physical
+line is the same; the pushes after tick 3 (the escaping rays under the
+light released beside them, 4 at tick 6 at 32 and 64, 8 at 128) were not
+computed; the near field's one-axis total over 96 ticks reached the ray's
+amount once at content 32 (the computation, over 16 ticks, had 3 below 4).
+The answer to section 7's question at this ring: no content is selected.
+Under the corner first every content survives, with no push ever, so the
+coupling gives no ladder and the ladder at the unit square stays the
+corner table's; under the turn first every content disperses at once, so
+the loop needs the field not to take its rays out of the corner meeting.
+Both are the same structural fact, one rule per ring ray per cycle, and no
+table entry was read: for a ring to meet its own field and survive by its
+content, a ring ray must be met by its field at a Node where it is not
+turned, which the unit square has none of, or the corner table and the
+turn must be one table that reads the field met, which is the catalog's to
+write.
+
 ### Run and render
 
 ```bash
