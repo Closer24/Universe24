@@ -74,7 +74,19 @@ interactions is one line; at an interaction it becomes up to six lines.
 the line, together with its quantities (energy, momentum, charge, family
 properties); a plain ray is a special case of the wave ray, not a second kind.
 Light is a wave ray with no mass and no charge: it is an event moving in time,
-exactly as defined above, not a separate photon object.
+exactly as defined above, not a separate photon object. Three things change
+a phase and nothing else: each step advances it at the rate its family
+declares, the ray's energy; an interaction changes it as the declared
+coupling says; a bound group advances it once per interval it is held. There
+is no amplitude as a number and no probability field: the phase and the
+ray's conserved content together are the discrete stand-in for the quantum
+amplitude, the phase as its angle and the conserved content as its size.
+Because every permitted trajectory happens, the intensity at a place is how
+much content arrived there, and interference is steering: where rays meet
+in one layer, the declared coupling reads their phase difference and decides
+through which Port the shared content leaves, with every invariant exact;
+nothing is erased. The Detector reads none of this; the probability of a
+click is already in how much content reached it.
 
 **Detector.** Every Node carries one bit: Detector or not. The mark is
 bounded Node metadata (the bit, a setting, a ticket seed), not a record, not
@@ -215,7 +227,11 @@ declared coupling between their families decides one of:
 - **a deterministic interaction**: up to six events leave the Node, computed
   from the frozen inputs by the declared operation, with every declared
   invariant (energy, momentum component by component, charge, family counts)
-  exact over all inputs and outputs, exactly as the
+  exact over all inputs and outputs, the phase of each leaving ray changed
+  as the declared coupling says and, where the arriving rays' phases
+  differ, the coupling reading their phase difference to decide through
+  which Port the shared content leaves (interference as steering, nothing
+  erased), exactly as the
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
   already does for records: up to six inputs, up to six outputs, one output
   departure per Port;
@@ -418,6 +434,10 @@ and evidence, under the ordinary gates.
   shares are untouched until their own rays return; every declared invariant
   is equal before the split and after the return; no Node keeps anything
   about the event.
+- Two rays of one event that meet in one layer with phase difference 0
+  leave through a different Port than the same two rays meeting with a
+  phase difference of half a turn, with exact totals in both cases: the
+  content that arrived is the content that left, and nothing is erased.
 
 ## 8. Open decisions
 

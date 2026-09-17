@@ -786,7 +786,18 @@ the conserved quantities and its phase. Alternatives are created only at
 interactions, never at the empty nodes a ray crosses. Every ray is a wave ray
 and carries a phase; a plain ray is a special case of the wave ray, not a
 second kind. Light is a wave ray with no mass and no charge, an event moving
-in time.
+in time. Three things change a phase and nothing else: each step advances it
+at the rate its family declares, the ray's energy; an interaction changes it
+as the declared coupling says; a bound group advances it once per interval
+it is held. There is no amplitude as a number and no probability field: the
+phase and the ray's conserved content together are the discrete stand-in for
+the quantum amplitude, the phase as its angle and the conserved content as
+its size. Because every permitted trajectory happens, the intensity at a
+place is how much content arrived there, and interference is steering:
+where rays meet in one layer, the declared coupling reads their phase
+difference and decides through which Port the shared content leaves, with
+every invariant exact; nothing is erased. The Detector reads none of this;
+the probability of a click is already in how much content reached it.
 
 At a node where rays meet, the declared coupling decides one of three things:
 no interaction, and the rays cross as if the other were not there; a
