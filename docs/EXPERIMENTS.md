@@ -1412,12 +1412,16 @@ sign rule, and its other couplings are catalog entries.
   transverse release takes eleven arrivals at one Node, then five forward
   ones); light released 564, 112 escaped, 452 in the world (376 in the
   registers), electron 8, momentum (0, 0, 0), every ledger line balanced.
-  Run for 240 ticks outside the record (exploratory, not fingerprinted) the
-  same world clicks all seven marks, symmetric about the axis and the
-  on-axis mark most: 27 at (7, 5, 5) from tick 19, 6 each at (7, 4, 5) and
-  (7, 6, 5) from tick 82, 3 each at (7, 3, 5) and (7, 7, 5) from tick 122,
-  1 each at (7, 2, 5) and (7, 8, 5) at tick 193: the whole screen lit by
-  the field of a charge at rest.
+  Run for 240 ticks (the same world under the runner's `ticks` override,
+  the record registered below) it clicks all seven marks, symmetric about
+  the axis and the on-axis mark most: 27 at (7, 5, 5) from tick 19, 6 each
+  at (7, 4, 5) and (7, 6, 5) from tick 82, 3 each at (7, 3, 5) and (7, 7,
+  5) from tick 122, 1 each at (7, 2, 5) and (7, 8, 5) at tick 193, 47
+  clicks of amount 1 and 10 passes (4 on the axis, 2 at each of the next
+  pair, 1 at each of the pair after, none at the ends); light 1710 in the
+  world and 1158 escaped at tick 240, electron 8, momentum (0, 0, 0), every
+  ledger line balanced: the whole screen lit by the field of a charge at
+  rest.
 - **Status.** measured, 2026-09-17: `screen.json`, source
   `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
   initialization
@@ -1433,9 +1437,12 @@ sign rule, and its other couplings are catalog entries.
   `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`,
   initialization
   `9b0473248483faf4e0bcc97100e40e411674c5846df130973ac503338c3983b8`;
-  outcome: the on-axis mark clicks four times, the others not yet, and all
-  seven click in an exploratory 240-tick run, the on-axis mark most; the
-  records stay outside the tree.
+  outcome: the on-axis mark clicks four times, the others not yet; the same
+  world for 240 ticks (`ticks` override of the runner, `requested_ticks`
+  240, the same two fingerprints, 33 s), commit
+  `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`; outcome: all seven marks
+  click, 27, 6, 6, 3, 3, 1, 1 from the axis outward, the whole screen lit;
+  the records stay outside the tree.
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 
