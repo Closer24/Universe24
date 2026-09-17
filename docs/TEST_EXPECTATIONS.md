@@ -41,6 +41,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
 | `test_field_spreading.py` | 10 | 0.90 | Issue #169 feature 12: every Node that field content reaches releases it again by the family's split table, amounts adding per heading, the phase of the coherent sum, whole quanta leaving and the shares below one quantum owned by the Node's remainder registers until they reach one (`field-spreading-v1`, `field-remainder-v1`); the source sign on the field ray; a returned field quantum walking back until something takes it |
+| `test_helium_orbit.py` | 1 | 7.6 | The helium orbit of E8 in isolation on a 7^3 board: a proton-family body releasing its spreading light (`field-spreading-v1`, `field-remainder-v1`), an electron held at a launcher body by an output delay and released into that field, pushed at every Node by the momentum-table coupling (`ray-momentum-turn-v1`), the recoils, the transparent nucleus and its sink, the world ledger exact |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
 | `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
@@ -2368,3 +2369,73 @@ first run:
   apparatus 0, the body's sink is empty and `external_body_totals` is 0 per
   family. A `detectors` mark at (9,7,7) with setting [1, 1] and seed 0 parses
   on the light world. The accounting balances at every tick of every world.
+
+## The helium orbit
+
+`test_helium_orbit.py` builds the E8 world
+([the helium ion with the field spreading and the momentum turn](../examples/nature/README.md#the-helium-ion-with-the-field-spreading-and-the-momentum-turn))
+inline on the smallest board that holds it: an open 7^3 lattice under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no
+decay, the six unit-axial headings, `phase_bits` 8), the same families, rules
+and bodies as `examples/nature/helium_orbit.json` with the radius 2 in place of
+6, a hold of four intervals in place of forty and twelve ticks in place of 152.
+The nucleus is a `proton` body of amount 2^20 and charge 6 at (3, 3, 3) under
+`phase_plate`, with `momentum_table` `{"light_of_nucleus": -1}`; its light,
+`field_of` `proton` with `release` [1, 749] (A = 1399 per heading per
+interval) and `spread` [6, 1, 1, 1, 1, 1], has 24 ray slots, the three one-ray
+families (electron 4, proton 2, launcher 2) the rest of the layer's 32; the
+electron of amount 256 (rest rate 1, charge -3) is emitted along +Y from a lamp
+at (5, 1, 3) with its recoil on the lamp's `momentum` vector; the `launcher`
+body (an apparatus family, amount 1) at (5, 2, 3) with the coupling `launch`
+(guard `eq(phase of the electron, 1)`, the electron returned on its heading with
+`delay` 4, the token unchanged); `nucleus_turn` over `[electron,
+light_of_nucleus]` with `momentum_table` `{"light_of_nucleus": -1}`; the
+rules in the order `launch`, `nucleus_turn`, `phase_plate`. One test, run
+through the runner, read from `run.json` and `events.jsonl`.
+
+Written before the first run (the structure): the electron arrives at the
+launcher at tick 1 with phase 1, the guard holds and it waits four intervals,
+no arrival being recorded while it waits and no push reaching it (a delayed
+ray is not met); it leaves on +Y and arrives at the tangent point (5, 3, 3) at
+tick 6, where the spreading field is already present (the body's release
+reaches the neighbours at tick 1 and every Node of the board within a few
+ticks), so `ray_push` records appear from tick 6, one per field ray at the
+Node in slot order, `family` electron, `amount` 256, `field` light_of_nucleus,
+each `after` the `before` moved by -1 x field amount x field heading, the
+register starting at (0, 256, 0), the +X beam of the axis the largest push and
+the +Z and -Z content cancelling in pairs; the register's -X component sends
+the electron down the axis to the nucleus, which it reaches at tick 8 and
+passes (`phase_plate`, which assigns the heading and so clears the register to
+(0, 256, 0)); at the nucleus's Node the sink takes every field ray before the
+meeting, so no push is recorded there; on the +Y line the whole axis ray
+(1399) pushes it back, the two-Link cage of E4, so the electron alternates
+between (3, 4, 3) and (3, 3, 3) from tick 8 to tick 12; the runner records
+`ray_momentum_turn`, `field_spreading`, `field_remainder` and `external_body`;
+the electron total is 256 at every tick, none escaped; the light line reads
+sourced = current + escaped + absorbed at every tick (the registers counted as
+current); the momentum line's `current` equals its `sourced` (the lamp's recoil
+against the ray's register, the pushes and reversals booked as the meeting's
+source); every ledger line is balanced and `conserved_at_every_completed_tick`
+is true.
+
+Read from the record of the first run of this board (2026-09-17) and pinned
+then, as the run's integers rather than computed by hand (the field's integer
+state at tick 6 is the sum of many spreads): the pushes of tick 6 at (5, 3, 3),
+(before, after, field amount, field heading): ((0, 256, 0), (-785, 256, 0),
+785, +X), ((-785, 256, 0), (-743, 256, 0), 42, -X), ((-743, 256, 0), (-743,
+277, 0), 21, -Y), ((-743, 277, 0), (-743, 277, -22), 22, +Z), ((-743, 277,
+-22), (-743, 277, 0), 22, -Z); of tick 7 at (4, 3, 3): ((-743, 277, 0),
+(-2142, 277, 0), 1399, +X), ((-2142, 277, 0), (-1357, 277, 0), 785, -X) (the
+recoil of the +X push of tick 6, walking with the electron, pushes back),
+((-1357, 277, 0), (-1357, 233, 0), 44, +Y), ((-1357, 233, 0), (-1357, 280, 0),
+47, -Y), ((-1357, 280, 0), (-1357, 280, -47), 47, +Z), ((-1357, 280, -47),
+(-1357, 280, 0), 47, -Z); at tick 9 seven pushes at (3, 4, 3) from (0, 256, 0)
+to (-17, -1036, 0) and at tick 11 eleven from (0, 256, 0) to (-8, -1099, 0);
+pushes at ticks 6, 7, 9 and 11 only. The light line (sourced, current,
+escaped, absorbed) after tick 5: 41970, 34466, 3411, 4093; tick 6: 50364,
+38801, 6116, 5447; tick 8: 67152, 44680, 13109, 9363; tick 12: 100728, 51215,
+31967, 17546. The momentum line, sourced and current alike: (0, 0, 0) after
+ticks 5 and 6, (-1357, 24, 0) after tick 8, (-8, -1355, 0) after tick 12. The
+bodies' momentum: (0, 0, 0) after ticks 5 and 6, (1197, 3, 0) after tick 8,
+(1169, 2398, 0) after tick 12, the nucleus's final momentum; its sink 17546
+of light at tick 12; the nucleus at (3, 3, 3) at every tick.
