@@ -105,7 +105,7 @@ class SpatialLaw:
                 first_port, moved = advance_ray(
                     ray,
                     definition.headings[ray.heading],
-                    definition.phase_steps,
+                    definition.phase_modulus,
                     definition.phase_advance,
                 )
                 meter.charge("evaluate")
@@ -122,7 +122,7 @@ class SpatialLaw:
                 if rule_index < len(record.absorbed_phases):
                     stored, advance, heading = unpack(record.absorbed_phases[rule_index])
                     step = advance if advance >= 0 else definition.phase_advance
-                    return (stored + step) % definition.phase_steps, advance, heading
+                    return (stored + step) & definition.phase_mask, advance, heading
                 return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
@@ -166,7 +166,7 @@ class SpatialLaw:
         resident[:] = [ray for ray in resident if ray.outbound]
         # Kerengonen: the coherence of everything that arrived gates every share.
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
-        if definition.kerengonen:
+        if definition.coherent:
             meter.charge("evaluate", len(resident))
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field != definition.field:
@@ -230,7 +230,7 @@ class SpatialLaw:
                         )
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
-                    if share and definition.kerengonen:
+                    if share and definition.coherent:
                         absorbed_terms.append((abs(share), ray.phase))
                         if abs(share) > carried_share:
                             carried_share, carried_advance = abs(share), ray.advance
@@ -249,7 +249,7 @@ class SpatialLaw:
                     self.fields[rule.momentum_field].validate(values[rule.momentum_field])
                 meter.charge("update", 1 + (3 if momentum is not None else 0))
                 phases = list(record.absorbed_phases)
-                if definition.kerengonen:
+                if definition.coherent:
                     if len(phases) != len(self.absorptions):
                         phases = [pack((0, -1, -1)) for _ in self.absorptions]
                     if absorbed_terms:
@@ -266,7 +266,7 @@ class SpatialLaw:
                 records[slot] = replace(
                     record,
                     values=tuple(values),
-                    absorbed_phases=tuple(phases) if definition.kerengonen else record.absorbed_phases,
+                    absorbed_phases=tuple(phases) if definition.coherent else record.absorbed_phases,
                 )
         resident.extend(returning)
         return absorbed_total
@@ -337,10 +337,10 @@ class SpatialLaw:
                     definition = self.definitions[self.emissions[index].spatial_field]
                     if not 0 <= cursor < max(len(definition.headings), 1):
                         raise ValueError("carried self-exclusion cursor is outside its heading sequence")
-                    if not 0 <= wave_phase < max(definition.phase_steps, 1):
-                        raise ValueError("carried self-exclusion phase is outside its phase steps")
-                    if not -1 <= wave_advance < max(definition.phase_steps, 1):
-                        raise ValueError("carried self-exclusion advance is outside its phase steps")
+                    if not 0 <= wave_phase < definition.phase_modulus:
+                        raise ValueError("carried self-exclusion phase is outside its phase width")
+                    if not -1 <= wave_advance < definition.phase_modulus:
+                        raise ValueError("carried self-exclusion advance is outside its phase width")
         elif record.emission_last or record.emission_departed:
             raise ValueError("self-exclusion state requires a self-excluding ray field")
         return replace(record, emission_last=blank_last) if excluding else record
@@ -476,7 +476,7 @@ class SpatialLaw:
                         raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
                         if raw_advance < 0:
                             raise ValueError("kerengonen_advance must not be negative")
-                        advance = (raw_advance // rule.advance_denominator) % definition.phase_steps
+                        advance = (raw_advance // rule.advance_denominator) & definition.phase_mask
                     if rule.mirror is not None:
                         # A mirror: the whole amount back along the image of the absorbed
                         # heading, or nothing until something has been absorbed.

@@ -35,6 +35,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     coherent_stock,
+    ray_charge,
     ray_momentum,
     ray_stock,
     validate_rays,
@@ -382,6 +383,25 @@ class SpatialEngine:
                                     ray_momentum(packet.rays[index], definition)
                                 ):
                                     result[definition.momentum_field][axis] += value
+        return result
+
+    def charge_totals(self) -> dict[str, int]:
+        """The charge readout of every ray field: charge x amount summed over the rays
+        resident at active Nodes and in flight on Links, the owners totals() reads."""
+        result: dict[str, int] = {}
+        for index, definition in enumerate(self.initial.spatial_fields):
+            if not definition.rays:
+                continue
+            total = 0
+            for position in self._active:
+                node = self.nodes[position]
+                if node.rays:
+                    total = checked_work(total + ray_charge(node.rays[index], definition))
+            for packets in self.links.values():
+                for packet in packets:
+                    if packet is not None and packet.rays:
+                        total = checked_work(total + ray_charge(packet.rays[index], definition))
+            result[self.initial.fields[definition.field].name] = total
         return result
 
     def values(self, position: Address3) -> dict[str, dict[str, object]]:

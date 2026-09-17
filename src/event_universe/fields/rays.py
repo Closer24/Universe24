@@ -32,11 +32,10 @@ def validate_ray_definition(definition: SpatialFieldDefinition, field: FieldDefi
         raise ValueError("ray_slots must be between 1 and 4096")
     if not 1 <= definition.rays_per_tick <= definition.ray_slots:
         raise ValueError("rays_per_tick must be between 1 and ray_slots")
-    if definition.kerengonen:
-        if len(definition.cosine_table) != definition.phase_steps:
-            raise ValueError("ray phase law must be prepared before transport")
-        if not 0 <= definition.phase_advance < definition.phase_steps:
-            raise ValueError("kerengonen phase_advance must be below phase_steps")
+    if definition.coherent and len(definition.cosine_table) != definition.phase_steps:
+        raise ValueError("ray phase law must be prepared before transport")
+    if not 0 <= definition.phase_advance < definition.phase_modulus:
+        raise ValueError("kerengonen phase_advance must be below the field's phase width")
 
 
 def emit_rays(
@@ -57,10 +56,10 @@ def emit_rays(
     headings = len(definition.headings)
     if not 0 <= bounded(cursor) < headings:
         raise ValueError("ray emission cursor must index the heading sequence")
-    if not 0 <= phase < max(definition.phase_steps, 1):
-        raise ValueError("ray emission phase must index the field's phase steps")
-    if not -1 <= advance < max(definition.phase_steps, 1):
-        raise ValueError("ray emission advance must be -1 or index the field's phase steps")
+    if type(phase) is not int or not 0 <= phase < definition.phase_modulus:
+        raise ValueError("ray emission phase must be below the field's phase width")
+    if type(advance) is not int or not -1 <= advance < definition.phase_modulus:
+        raise ValueError("ray emission advance must be -1 or below the field's phase width")
     magnitude, sign = abs(bounded(amount)), -1 if amount < 0 else 1
     if heading is not None:
         if type(heading) is not int or not 0 <= heading < headings:
@@ -122,7 +121,7 @@ def forward_rays(
         port, moved = advance_ray(
             replace(ray, wait=wait - denominator),
             definition.headings[ray.heading],
-            definition.phase_steps,
+            definition.phase_modulus,
             definition.phase_advance,
         )
         outgoing[port].append(moved)
@@ -136,15 +135,13 @@ def hold_rays(
 ) -> Rays:
     """Retain the post-interaction rays during one configured local delay interval."""
     meter.charge("read", len(rays))
-    if not advance_phase or not definition.phase_steps:
+    if not advance_phase or not definition.kerengonen:
         return rays
     meter.charge("update", len(rays))
     return merge_rays(tuple(replace(ray, phase=_held_phase(ray, definition)) for ray in rays))
 
 
 def _held_phase(ray: Ray, definition: SpatialFieldDefinition) -> int:
-    """The phase of a ray that spends this tick at its Node: one signed step, or unchanged
-    on a plain field."""
-    if not definition.phase_steps:
-        return ray.phase
-    return (ray.phase + ray_phase_step(ray, definition.phase_advance)) % definition.phase_steps
+    """The phase of a ray that spends this tick at its Node: one signed step of its rate,
+    masked by the family's width; unchanged on a plain field, whose rate is 0."""
+    return (ray.phase + ray_phase_step(ray, definition.phase_advance)) & definition.phase_mask
