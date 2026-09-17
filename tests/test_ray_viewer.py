@@ -434,6 +434,16 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     assert style["colors"]["trail"] == "#ffffff" and style["draw"]["momentum_arrow"] is True
     assert style["sizes"]["momentum_arrow_px_per_quantum"] == 1.75
     assert style["colors"]["momentum_arrow"] == "#7fd7ff"
+    # The softer look: spheres for sources, marks, bodies and heads, thin glowing
+    # rings, a vignette, faint additive field hairlines, a fainter lattice.
+    assert style["draw"]["marker_shape"] == "sphere" and style["draw"]["shape_overrides"] == {}
+    assert style["draw"]["glow"] is True and style["draw"]["vignette"] is True
+    assert style["draw"]["field_additive"] is True
+    assert all(v == "ring" for k, v in style["draw"]["marker_shapes"].items() if k != "escape")
+    assert style["sizes"]["head_radius_px"] == 4 and style["sizes"]["lattice_alpha"] == 0.07
+    assert style["colors"]["scene_edge"] == "#03060b" and style["motion"]["gif_supersample"] == 2
+    assert style["motion"]["camera_fit"] == "rays" and style["motion"]["camera_fit_margin_links"] == 1
+    assert {"electron", "light", "proton", "neutron"} <= set(style["colors"]["families"])
     assert style["colors"]["families"]["default"]["hue"] == "fixed"
     assert style["draw"]["hue_by_phase"] == "arrowhead"
     assert set(style["draw"]["page_text"]) == {
