@@ -265,6 +265,7 @@ only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
 - A world with a single layer runs byte-identically to before: the same
   owners, rules, charges and events. No initialization key changes; no
   draw, absorber, readout or Detector is touched.
+
 ## Test suite reduced on 2026-09-17: one test per rule
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the test
