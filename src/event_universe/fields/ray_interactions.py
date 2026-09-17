@@ -19,6 +19,7 @@ from event_universe.core.spatial_state import (
     PORT_HEADINGS,
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
+    RAY_VIEW_COMPONENTS_UNPOLARIZED,
     Heading,
     Layers,
     Ray,
@@ -44,7 +45,8 @@ Turns = list[RayPush]
 def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
     """The RAY_PROPERTIES view of one ray: its family is the index of its spatial field
     and its charge per quantum is the family's (wave-ray-family-v1); its Detector bit
-    is the one it carries, as stored (detector-bit-property-v1)."""
+    is the one it carries, as stored (detector-bit-property-v1); its polarization
+    is the step it carries, -1 for none (ray-polarization-v1)."""
     return (
         pack((ray.amount,)),
         pack(definition.headings[ray.heading]),
@@ -54,6 +56,7 @@ def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
         pack((family,)),
         pack((definition.charge,)),
         pack((ray.detector,)),
+        pack((ray.polarization,)),
     )
 
 
@@ -65,6 +68,8 @@ def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, f
         raise ValueError("ray coupling family and charge are read-only")
     if unpack(values[7]) != (ray.detector,):
         raise ValueError("ray coupling detector is read-only")
+    if unpack(values[8]) != (ray.polarization,):
+        raise ValueError("ray coupling polarization is read-only")
     vector = unpack(values[1])
     if vector == definition.headings[ray.heading]:
         heading = ray.heading
@@ -140,6 +145,15 @@ def _convert(
         (kind, _output(values, definitions[kind]))
         for kind, values in zip(rule.outputs, converted[0], strict=True)
     ]
+    # ray-polarization-v1: each output carries its source input's polarization
+    # unless it declares its own, input i's or a value; a rule that declares one
+    # is charged one update per output for it.
+    for position, (by_input, value) in enumerate(rule.output_polarization):
+        polarization = inputs[value][1].polarization if by_input == 0 else value
+        kind, ray = produced[position]
+        produced[position] = (kind, replace(ray, polarization=polarization))
+        if rule.polarization_declared:
+            meter.charge("update")
     for lag in rule.lags:
         # ray-binding-v1, Highlights 3.28: the delay by the declared table, per the
         # Port the source input came through, the whole quanta of amount x entry /
@@ -186,7 +200,12 @@ def _recoil(ray: Ray, definition: SpatialFieldDefinition) -> tuple[Ray, Heading]
     if negated not in definition.headings:
         raise ValueError("a recoil requires the negated heading in the field's sequence")
     reversed_ray = Ray(
-        definition.headings.index(negated), (0, 0, 0), ray.amount, phase=ray.phase, advance=ray.advance
+        definition.headings.index(negated),
+        (0, 0, 0),
+        ray.amount,
+        phase=ray.phase,
+        advance=ray.advance,
+        polarization=ray.polarization,
     )
     (stamped,) = stamp_event((reversed_ray,), (negated,))
     return stamped, heading
@@ -297,7 +316,14 @@ def _meet(
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
-    meter.charge("read", RAY_VIEW_COMPONENTS * len(owners))
+    # ray-polarization-v1: the polarization component is read when a rule of the
+    # layer names it; a layer whose rules do not reads the view it read before.
+    components = (
+        RAY_VIEW_COMPONENTS
+        if any(rule.polarization_declared for rule in rules)
+        else RAY_VIEW_COMPONENTS_UNPOLARIZED
+    )
+    meter.charge("read", components * len(owners))
     for index in layer:
         validate_rays(rays[index], definitions[index], fields[definitions[index].field])
         if any(ray.amount <= 0 for ray in rays[index]):

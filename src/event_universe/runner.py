@@ -28,10 +28,12 @@ from event_universe.core.spatial_state import (
     RAY_LAYERS,
     RAY_MEETING,
     RAY_MOMENTUM_TURN,
+    RAY_POLARIZATION_PROPERTY,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
     detector_bit_property_declared,
     external_body_names,
+    polarization_declared,
     ray_layer_names,
     released_field_names,
     spreading_field_names,
@@ -287,6 +289,10 @@ def _execute_run(
         # A free ray turned by momentum (ray-momentum-turn-v1): recorded only when a
         # push happened, so the record of every other world is byte for byte the same.
         metadata["ray_momentum_turn"] = RAY_MOMENTUM_TURN
+    if polarization_declared(initial):
+        # Polarization (ray-polarization-v1): recorded only when the world declares
+        # the property anywhere, so the record of every other world is unchanged.
+        metadata["ray_polarization"] = RAY_POLARIZATION_PROPERTY
     spreading = spreading_field_names(initial.fields, initial.spatial_fields)
     if spreading:
         # Field spreading (field-spreading-v1): recorded only when a family declares

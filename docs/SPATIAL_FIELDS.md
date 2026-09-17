@@ -341,6 +341,7 @@ delay:
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
 | `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
+| `polarization` | `-1` or `0` to 2^`polarization_bits` - 1 | The polarization ([polarization](#polarization-ray-polarization-v1)): a transverse direction modulo a half turn in steps of the family's polarization circle, or `-1` for none, which every created ray carries unless its emission declares one; part of the merge identity, kept by the return, the inverse split, a push and a spread (as the axial mean), read by the polarizer and by a coupling's guard |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -373,7 +374,7 @@ the event's mask and shares as a fresh outbound trajectory with `steps 0`:
 
 Merge identity: `merge_rays` combines rays that agree in heading, lattice
 accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
-event Ports, event shares, Detector bit and momentum register. Rays of different events never
+event Ports, event shares, Detector bit, momentum register and polarization. Rays of different events never
 merge, even with the same heading, family and phase: each keeps the
 information of its own event, and two rays of one emitter's successive cycles
 are two events. `ray_count` and slot use therefore count events on a line,
@@ -812,7 +813,8 @@ keeps 32-bit storage and 64-bit intermediates.
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
 gains two read-only properties: `family`, the index of the ray's spatial
 field, and `charge`, the family's charge per quantum (and, since
-`detector-bit-property-v1`, a third, `detector`). Charge is per quantum
+`detector-bit-property-v1`, a third, `detector`; since
+`ray-polarization-v1`, a fourth, `polarization`). Charge is per quantum
 because amounts merge and split; the charge readout of a bundle is `charge x
 amount` summed over its rays (`ray_charge`), and `charge_totals()` reads it
 per ray field over the rays resident at active Nodes and in flight on Links,
@@ -982,7 +984,9 @@ phase its field rays carry, below the family's width), `initial_momentum`
 (a unit-axial `heading` and a rational `pace` `[n, d]` of Links per interval,
 n at most d; the momentum is the whole quanta of amount x n / d on that
 axis, signed; zero, the default, for a body at rest), `coupling` (`"sink"`,
-the default, or the name of a declared ray interaction) and
+the default, `"polarizer"` with its `polarizer` declaration
+([polarization](#polarization-ray-polarization-v1)), or the name of a
+declared ray interaction) and
 `momentum_table` (family name to sign, -1 attraction toward the source of an
 arriving field ray, 1 repulsion) are optional. One body per Node, never on a
 Detector; a body is never a field family. A world with a body runs under the
@@ -1035,7 +1039,9 @@ outputs therefore counts the token as one quantum on its Port, +X. A family
 the rule does not name, and every returning ray, ends in the sink as under
 the default. A reversed heading of the arriving ray is a mirror, a split by
 a declared table a beam splitter, a phase offset a phase plate; a
-polarization read is a polarizer once feature 11 exists.
+polarization read is a polarizer, the body's third coupling value,
+`"polarizer"`, declared on the body and not as a rule (feature 11,
+[polarization](#polarization-ray-polarization-v1)).
 
 **Motion by fields only.** The body starts with its declared momentum. A
 field ray of a family its `momentum_table` names that ends in its sink
@@ -1280,6 +1286,176 @@ rejected at initialization. The runner records `field_spreading:
 `spread`; a world that declares none runs byte-identically, records
 included. `test_field_spreading.py`
 ([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
+
+### Polarization (`ray-polarization-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.26, "Forces and polarization are
+catalog entries, not engine mechanisms", and 3.19, the external body's
+couplings; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+feature 11; issue #169; 2026-09-17): polarization is a family property read
+only at a meeting, exactly as charge is. A ray carries a transverse direction
+modulo a half turn, an integer from 0 below 2^`polarization_bits`, or none.
+The engine adds no mechanism for it: nothing moves differently because of
+it. Three things read it: a coupling's `when` guard or invariant, a meeting's
+output that declares which polarization it carries, and the polarizer, an
+external body's coupling that splits by a declared table.
+
+**The property.** `Ray.polarization` is `-1` (`POLARIZATION_NONE`, an
+unpolarized ray, which every ray of every existing world is and every field
+ray a charge releases is) or an integer step of the family's polarization
+circle. A polarization is a line, not an arrow, so the circle covers a half
+turn: a family declares `polarization_bits` on its `spatial_fields` entry
+(ray transport only, an integer from 0 through 30), 2^`polarization_bits`
+steps per half turn, and without the key its circle is its phase width
+(`polarization_modulus` is 2^`phase_bits` then), so a world with the
+catalog's default width of 8 has 256 steps of 180/256 degrees and 22.5, 45,
+67.5 and 90 degrees are the steps 32, 64, 96 and 128 exactly. Step 0 is the
+first transverse lattice axis of the ray's heading in Port order (+Y for a
+ray on +X or -X, +X for a ray on +Y, -Y, +Z or -Z) and half the circle the
+second (+Z, +Z, +Y): these two values are the two states of Highlights 3.26,
+the two lattice axes perpendicular to an axial heading; the steps between
+them are the transverse direction 3.26 allows for the circular case, without
+the handedness bit, which no ray carries. The engine reads the value only as
+a difference on the circle, so which axis is "first" is a convention of the
+tables, not a rule. The electron family's spin is the same property at one
+bit: `polarization_bits` 1, the steps 0 and 1 or none, with no other engine
+meaning (the catalog's `pauli_exclusion` may read it; nothing reads it today).
+
+**Where it comes from and what keeps it.** A lamp declares the polarization
+of what it emits: `polarization` on the emission, `"none"` (the default) or
+a step below the field's circle; a directed or swept emission, a Kerengonen
+mirror's re-emission and a carried re-emission stamp it on every ray they
+create (`emit_rays`). A field ray released by a charge or a body carries
+none. It is part of the merge identity (`ray_merge_key`, last): rays merge
+only at equal polarization, as they merge only at equal bit and sign, the
+unpolarized ray ordered first. The return keeps it (`return_ray`), the
+inverse split copies it to every transmission (`transmit`), a push keeps it
+(`pushed_ray`), and a recoil, the field ray a momentum table returns
+reversed, keeps its field ray's. A spread carries it as it carries the phase
+(`spread_polarization`): the polarization of the whole is one polarization,
+the step nearest the direction of the sum of amount x e^(i 2 pi p / 2^bits)
+over the taken polarized rays (the axial mean, each line's doubled angle on
+the polarization circle, which is exactly that circle; `combined_polarization`
+over the family's `polarization_tables`, the cosine and sine tables of the
+polarization modulus, at most twelve bits for a spreading family); an
+unpolarized ray adds no direction, and a cancelled sum, two equal crossed
+lines, or no polarized ray gives none. Every departure of the spread carries
+it, a register's release included: a remainder register stores no
+polarization, as it stores no bit, so keying the registers by polarization,
+which would multiply their eighteen by the circle, is not done and the
+combination is the phase's. A meeting's outputs carry the polarization of
+their source `input` unless the output declares `polarization`:
+
+| `polarization` on an output | The output carries |
+| --- | --- |
+| `"same"` (default) | Its source input's polarization |
+| `{"of": i}` | Input i's |
+| `"none"` | None |
+| an integer | That step of the output field's circle |
+
+An output's polarization is not an assignment of the view (no `read` or
+`update` is charged for the default), so a rule that declares none is
+charged what it was charged before this feature; a rule that declares one,
+or whose guard or invariant names the property, reads one more view
+component per participant and is charged one `update` per output. Any
+other value, an index beyond the roles or a step outside the circle is
+rejected before a world exists.
+
+**Visibility.** `RAY_PROPERTIES` gains the read-only property
+`polarization`, the step as stored (`-1` none): a `when` guard or an
+invariant reads it as it reads `charge` (`{"field": "polarization",
+"participant": 0}`); an assignment to it in a rule without outputs is
+refused as read-only. `validate_rays` refuses a step outside the family's
+circle. The `ray-recording.json` sidecar carries it on every ray and the
+viewer's `runs.json` on every segment (`polarization`, `null` for none).
+
+**The polarizer.** The fourth coupling of an external body beside the sink,
+a rule over a token and the momentum table: a polarization read
+([Highlights](HIGHLIGHTS.md) 3.19), declared on the body, `"coupling":
+"polarizer"` with its declaration:
+
+```json
+{"external_bodies": [
+  {"position": [12, 4, 4], "family": "apparatus", "amount": 1,
+   "coupling": "polarizer",
+   "polarizer": {"family": "light", "angle": 32, "pass": [1, 0, 0],
+                 "table": [256, 256, 256, 255, ...], "unpolarized": 128}}
+]}
+```
+
+`family` is the ray family it polarizes (any ray family of the world other
+than its own), `angle` the body's own polarization, an integer step of that
+family's circle, `pass` a unit-axial heading of the family (+X by default),
+`table` one entry per step of the circle (D = 2^`polarization_bits`
+entries, each from 0 through D), the pass share in D-ths at the difference
+d, and `unpolarized` the pass share of an unpolarized ray in D-ths, the
+table's mean, floor(sum(T) / D), by default. The catalog's reference table
+is cos^2(d x 180 / D degrees) in D-ths, rounded: `[8, 7, 4, 1, 0, 1, 4, 7]`
+at three bits, the Born table read over the half turn; a world writes its
+own D entries, and the engine only splits by the table. A polarizer without
+`angle`, a table of another length, an entry above D, a heading that is not
+unit-axial, a declaration under another coupling and a coupling `polarizer`
+without the declaration are rejected with a message that names the circle.
+
+What it does, in `SpatialNode.receive` at step 2 of the Node's law, where
+the sink acts: each outbound ray of the polarized family that arrives, in
+merge-key order (`polarize_content`), is split by the table at d = (angle -
+polarization) mod D: the whole quanta of amount x T[d] / D leave on the pass
+Port as a fresh event ray of the body's Node (`steps` 0, the mask of the
+pass Port and its amount as the share) with the ray's phase, advance, bit
+and source sign and the body's angle as its polarization, resident this
+interval and one Link on with the residents; the whole quanta of amount x
+(D - T[d]) / D end in the body's sink counter for the family, on the audit's
+`absorbed_by_bodies` line, moving the body by its `momentum_table` as the
+sink does; and the two shares below one quantum, amount x T[d] mod D and
+amount x (D - T[d]) mod D in D-ths, which sum to D or to 0, go to the body's
+pass and sink registers of the ray's sign (`ExternalBody.held`, six per
+body, sign-major -1, 0, 1 then pass and sink, with a phase each,
+`held_phases`, combined with the share's phase by the coherence rule as a
+spread's register's is, `field-remainder-v1`). A register that reaches D
+releases the whole quanta it holds, to the pass Port as a fresh event ray
+with the register's phase, sign and the body's angle and the highest bit of
+this meeting's arrivals, merged with a pass ray of the same phase, or into
+the sink, and keeps the rest; the registers of one sign therefore always
+hold whole quanta in total (`held_stock`), which the ledger's `current` line
+counts (`totals`, `charge_totals`), content without momentum. An unpolarized
+ray takes the `unpolarized` share. A returning ray ends in the sink as at
+every body; a family the polarizer does not name ends in the sink. The
+momentum the body takes is booked on the absorbed momentum line when a
+momentum field is bound: what arrived less what left on the pass Port, the
+held quanta having none. Energy is exact: what arrived equals what passed
+plus what sank plus the whole quanta the registers gained, at every arrival
+and in the world ledger at every tick. When every amount is a multiple of D
+the split is exact and the remainder rule is not exercised; A12's chain of
+four exercises it. The polarizer is declared on the body and not as a rule
+over a token because its rest ends in a counter and its remainder in
+registers, which the rule form (rays in, rays out, exact over rays) cannot
+express; the token form is that form's device and is not needed here. The
+two-channel form A13 names, the rejected share leaving on a second Port
+instead of sinking, is not declared.
+
+**The record.** One `polarizer` event per arriving ray (`body`, `port` the
+Port it came in through, `family`, `amount`, `polarization` (`null` for
+none), `sign`, `angle`, `difference` (`null` for none), `share`, `steps`,
+`passed`, `sunk`, `held` (the two shares added), `released` (the whole
+quanta the registers released to the pass Port and to the sink after this
+ray) and `registers` (the six after it)), published with the interval's
+returns, and one `external_body_absorbed` per arrival Port for what sank in
+whole quanta, so a reader of the sink line and the viewer see it as any
+absorption. `Polarized` (`core/spatial_state.py`) is the record, registered
+in the Node state contract with `Polarizer`. `external_bodies()` lists a
+polarizer body's `held` and `held_phases`; the runner's `external_bodies`
+entry carries its `polarizer` declaration (`family`, `angle`, `pass`,
+`steps`, `unpolarized`) and its `coupling` `"polarizer"`, and the runner
+records `ray_polarization: "ray-polarization-v1"` when the world declares
+the property anywhere (a family's `polarization_bits`, an emission's
+`polarization`, a rule naming it, a polarizer body). A world that declares
+none runs byte-identically, records included: every ray carries none, no
+view is read wider, no output is assigned, and the pinned digests of
+`test_ray_momentum_turn.py` and `test_field_spreading.py` hold.
+`test_ray_polarization.py` ([expectations](TEST_EXPECTATIONS.md#ray-polarization))
+is the test; A12 ([experiments](EXPERIMENTS.md#a12-maluss-law-and-the-three-polarizer-chain-after-feature-11))
+is the confrontation, `examples/nature/a12_malus/`.
 
 ### Audits (`ray-event-audit-v1`)
 

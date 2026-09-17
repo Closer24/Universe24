@@ -142,7 +142,9 @@ class SpatialLaw:
             amount, cursor, phase, advance = unpack(record.emission_departed[rule_index])
             if not amount:
                 continue
-            for ray in emit_rays(amount, cursor, definition, meter, phase, advance, rule.heading)[0]:
+            for ray in emit_rays(
+                amount, cursor, definition, meter, phase, advance, rule.heading, rule.polarization
+            )[0]:
                 first_port, moved = advance_ray(
                     ray,
                     definition.headings[ray.heading],
@@ -918,7 +920,16 @@ class SpatialLaw:
                             image = self._mirrored_heading(absorbed_heading, rule.mirror, definition)
                             # The reflection is one event on the image's first Port.
                             new_rays = stamp_event(
-                                (Ray(image, (0, 0, 0), unpack(amount)[0], phase, advance),),
+                                (
+                                    Ray(
+                                        image,
+                                        (0, 0, 0),
+                                        unpack(amount)[0],
+                                        phase,
+                                        advance,
+                                        polarization=rule.polarization,
+                                    ),
+                                ),
                                 (definition.headings[image],),
                             )
                     else:
@@ -930,6 +941,7 @@ class SpatialLaw:
                             phase,
                             advance,
                             rule.heading,
+                            rule.polarization,
                         )
                     allocation[index] = pack((cursor,))
                     if last and definition.self_exclusion:

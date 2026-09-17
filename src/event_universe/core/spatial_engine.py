@@ -39,6 +39,7 @@ from .spatial_state import (
     SpatialState,
     blank_remainders,
     coherent_stock,
+    held_stock,
     holds_source_stock,
     ray_charge,
     ray_momentum,
@@ -407,6 +408,11 @@ class SpatialEngine:
                             node.remainders[index], sum(definition.spread)
                         )
             if definition.rays:
+                # A polarizer body's registers hold whole quanta of the family it
+                # polarizes (ray-polarization-v1), content without momentum.
+                for body in self._located_bodies():
+                    if body.polarizer is not None and body.polarizer.family == index:
+                        result[definition.field][0] += held_stock(body)
                 # Resident rays keep a Node active, including finite local residence.
                 for position in self._active:
                     node = self.nodes[position]
@@ -447,8 +453,23 @@ class SpatialEngine:
                     if node.remainders and node.remainders[index]:
                         held = remainder_stock(node.remainders[index], sum(definition.spread))
                         total = checked_work(total + checked_work(held * definition.charge))
+            if definition.charge:
+                for body in self._located_bodies():
+                    if body.polarizer is not None and body.polarizer.family == index:
+                        total = checked_work(total + checked_work(held_stock(body) * definition.charge))
             result[self.initial.fields[definition.field].name] = total
         return result
+
+    def _located_bodies(self) -> list[ExternalBody]:
+        """Every external body, at its Node or on a Link while it steps."""
+        found = [node.body for node in self.nodes.values() if node.body is not None]
+        found.extend(
+            packet.body
+            for packets in self.links.values()
+            for packet in packets
+            if packet is not None and packet.body is not None
+        )
+        return found
 
     def escaped_charge_totals(self) -> dict[str, int]:
         """The charge that left the world through an open boundary, per ray field:
@@ -558,6 +579,13 @@ class SpatialEngine:
                     for i, definition in enumerate(self.initial.spatial_fields)
                     if body.sink[i]
                 },
+                # A polarizer's registers and their phases (ray-polarization-v1),
+                # sign-major -1, 0, 1 then pass and sink, in units of 1/D.
+                **(
+                    {}
+                    if body.polarizer is None
+                    else {"held": list(body.held), "held_phases": list(body.held_phases)}
+                ),
             }
         return [found[index] for index in sorted(found)]
 

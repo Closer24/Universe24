@@ -38,9 +38,11 @@ from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
     BIT_DRAW,
     BIT_PASS,
+    BODY_POLARIZER,
     BODY_SINK,
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
+    POLARIZATION_NONE,
     RETURN_MODES,
     FieldInteractionGuard,
     Rays,
@@ -63,6 +65,7 @@ from .spatial_state import (
     detector_draw,
     holds_source_stock,
     merge_rays,
+    polarize_content,
     ray_merge_key,
     ray_momentum,
     ray_stock,
@@ -401,7 +404,7 @@ class SpatialNode(SpatialNodeState):
         # work or a register carried here from another Node.
         node_cost = 0 if carrier is None else carrier.committed_cost
         resident_rays: tuple[Rays, ...] = self.rays
-        if self.body is not None and self.body.coupling != BODY_SINK:
+        if self.body is not None and self.body.coupling not in (BODY_SINK, BODY_POLARIZER):
             # The body takes part in its coupling rule as the participant that
             # never changes: one token of its family beside what arrived.
             bundles = list(self.rays) or [() for _ in services.initial.spatial_fields]
@@ -496,7 +499,7 @@ class SpatialNode(SpatialNodeState):
             else [[() for _ in initial.spatial_fields] for _ in range(6)]
         )
         source = [list(values) for values in plan.source_delta]
-        if body.coupling != BODY_SINK:
+        if body.coupling not in (BODY_SINK, BODY_POLARIZER):
             tokens = [ray for port in range(6) for ray in rays[port][body.family]]
             tokens.extend(plan.kept_rays[body.family] if plan.kept_rays else ())
             if len(tokens) != 1 or tokens[0].amount != 1 or tokens[0].phase != body.phase:
@@ -552,6 +555,75 @@ class SpatialNode(SpatialNodeState):
         coupled = body_coupled_families(self.body, services.initial)
         kept = tuple(ray for ray in rays if ray.outbound and index in coupled)
         taken = tuple(ray for ray in rays if not (ray.outbound and index in coupled))
+        polarizer = self.body.polarizer
+        if polarizer is not None and polarizer.family == index:
+            # The polarizer (ray-polarization-v1): the outbound arrivals of the
+            # polarized family are split by the body's table, the pass share leaving
+            # on the pass Port as fresh event rays, the rest into the sink and the
+            # shares below one quantum into the body's registers; a returning ray
+            # ends in the sink as under the default.
+            arriving = tuple(ray for ray in taken if ray.outbound)
+            taken = tuple(ray for ray in taken if not ray.outbound)
+            if arriving:
+                self.body, kept, records = polarize_content(self.body, index, arriving, definition)
+                sunk = 0
+                momentum = [0, 0, 0]
+                for ray in arriving:
+                    heading = definition.headings[ray.heading]
+                    for axis in range(3):
+                        momentum[axis] = checked_work(momentum[axis] + ray.amount * heading[axis])
+                for ray in kept:
+                    heading = definition.headings[ray.heading]
+                    for axis in range(3):
+                        momentum[axis] = checked_work(momentum[axis] - ray.amount * heading[axis])
+                for record in records:
+                    sunk = checked_work(sunk + record.sunk + record.released[1])
+                    notes.append(
+                        services.events.message(
+                            "polarizer",
+                            tick,
+                            self.position,
+                            body=self.body.index,
+                            port=port,
+                            family=services.initial.fields[definition.field].name,
+                            amount=record.amount,
+                            polarization=None
+                            if record.polarization == POLARIZATION_NONE
+                            else record.polarization,
+                            sign=record.sign,
+                            angle=polarizer.angle,
+                            difference=None if record.difference < 0 else record.difference,
+                            share=record.share,
+                            steps=polarizer.steps,
+                            passed=record.passed,
+                            sunk=record.sunk,
+                            held=list(record.held),
+                            released=list(record.released),
+                            registers=list(record.registers),
+                        )
+                    )
+                # The sink line: what sank in whole quanta, and the momentum the body
+                # took, what arrived less what left on the pass Port; the held quanta
+                # have none, as a spread's registers have none (field-remainder-v1).
+                absorbed[definition.field][0] = checked_work(absorbed[definition.field][0] + sunk)
+                if definition.momentum_field is not None:
+                    for axis in range(3):
+                        absorbed[definition.momentum_field][axis] = checked_work(
+                            absorbed[definition.momentum_field][axis] + momentum[axis]
+                        )
+                if sunk:
+                    notes.append(
+                        services.events.message(
+                            "external_body_absorbed",
+                            tick,
+                            self.position,
+                            body=self.body.index,
+                            port=port,
+                            family=services.initial.fields[definition.field].name,
+                            amount=sunk,
+                            momentum=self.body.momentum,
+                        )
+                    )
         if not taken:
             return kept
         self.body = body_absorb(self.body, index, taken, definition)

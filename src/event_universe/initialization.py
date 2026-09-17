@@ -50,6 +50,7 @@ from .core.spatial_state import (
     BIT_HIGHEST,
     BIT_NONE,
     BIT_PASS,
+    BODY_POLARIZER,
     BODY_SINK,
     CAPTURE_MODES,
     CHARGE_INVARIANT,
@@ -60,7 +61,10 @@ from .core.spatial_state import (
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
     MAX_STORED_PHASE_BITS,
+    POLARIZATION_NONE,
+    POLARIZER_SLOTS,
     PORT_HEADINGS,
+    RAY_POLARIZATION,
     RAY_PROPERTIES,
     RAY_WRITABLE,
     DecayDefinition,
@@ -70,6 +74,7 @@ from .core.spatial_state import (
     FieldAssignment,
     FieldGroupDefinition,
     NodeFieldRuleDefinition,
+    Polarizer,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
@@ -969,6 +974,7 @@ def _external_bodies(
                 "initial_momentum",
                 "coupling",
                 "momentum_table",
+                "polarizer",
             },
             {"position", "family", "amount"},
         )
@@ -998,8 +1004,74 @@ def _external_bodies(
                 magnitude = (amount * numerator * abs(heading[axis])) // denominator
                 momentum[axis] = -magnitude if heading[axis] < 0 else magnitude
         coupling = _text(obj.get("coupling", "sink"), "external body coupling")
-        if coupling != "sink" and coupling not in rule_names:
-            raise ValueError("external body coupling must be sink or a declared ray interaction")
+        if coupling not in ("sink", "polarizer") and coupling not in rule_names:
+            raise ValueError(
+                "external body coupling must be sink or a declared ray interaction, or polarizer"
+            )
+        polarizer: Polarizer | None = None
+        if coupling == "polarizer":
+            # The polarizer (ray-polarization-v1, Highlights 3.19): a polarization read
+            # by a declared table at the difference between the body's angle and the
+            # arriving ray's polarization; the family it polarizes, the angle, the pass
+            # Port and the table are the body's declaration.
+            if "polarizer" not in obj:
+                raise ValueError(
+                    'an external body with coupling "polarizer" requires its polarizer '
+                    "declaration: {family, angle, pass, table} with an optional unpolarized share"
+                )
+            spec = _object(
+                obj["polarizer"],
+                "external body polarizer",
+                {"family", "angle", "pass", "table", "unpolarized"},
+                {"family", "table"},
+            )
+            polarized_name = _text(spec["family"], "polarizer.family")
+            if polarized_name not in families:
+                raise ValueError("polarizer.family must name a ray spatial field of the world")
+            polarized = spatial[families[polarized_name]]
+            steps = polarized.polarization_modulus
+            if "angle" not in spec:
+                raise ValueError(
+                    f"a polarizer requires an angle: an integer from 0 below {steps}, the steps "
+                    f"of {polarized_name}'s polarization circle (2^polarization_bits per half turn)"
+                )
+            angle = _integer(spec["angle"], "polarizer.angle", 0)
+            if angle >= steps:
+                raise ValueError(
+                    f"polarizer.angle must be an integer from 0 below {steps}, the steps of "
+                    f"{polarized_name}'s polarization circle (2^polarization_bits per half turn)"
+                )
+            entries = tuple(
+                _integer(entry, "polarizer.table entry", 0)
+                for entry in _array(spec["table"], "polarizer.table", MAX_PHASE_STEPS, 1)
+            )
+            if len(entries) != steps:
+                raise ValueError(
+                    f"polarizer.table has one entry per step of {polarized_name}'s polarization "
+                    f"circle: {steps} entries, each from 0 through {steps}"
+                )
+            if any(entry > steps for entry in entries):
+                raise ValueError(
+                    f"a polarizer.table entry is the pass share in {steps}-ths: an integer from 0 "
+                    f"through {steps}"
+                )
+            pass_vector = _address(spec.get("pass", [1, 0, 0]), "polarizer.pass", -1)
+            if pass_vector not in polarized.headings or sum(abs(c) for c in pass_vector) != 1:
+                raise ValueError("polarizer.pass must be a unit-axial heading of the polarized family")
+            unpolarized = _integer(
+                spec.get("unpolarized", sum(entries) // steps), "polarizer.unpolarized", 0
+            )
+            if unpolarized > steps:
+                raise ValueError(f"polarizer.unpolarized is a share from 0 through {steps}")
+            polarizer = Polarizer(
+                families[polarized_name],
+                angle,
+                polarized.headings.index(pass_vector),
+                entries,
+                unpolarized,
+            )
+        elif "polarizer" in obj:
+            raise ValueError('an external body polarizer declaration requires coupling "polarizer"')
         signs = [0] * len(spatial)
         table = _object(obj.get("momentum_table", {}), "momentum_table", set(families), set())
         for name, sign in table.items():
@@ -1015,12 +1087,19 @@ def _external_bodies(
                 amount,
                 charge=_integer(obj.get("charge", 0), "external body charge"),
                 field=released[0] if released else -1,
-                coupling=BODY_SINK if coupling == "sink" else rule_names[coupling],
+                coupling=BODY_SINK
+                if coupling == "sink"
+                else BODY_POLARIZER
+                if coupling == "polarizer"
+                else rule_names[coupling],
                 phase=_phase_value(obj.get("phase", 0), "external body phase", definition.phase_bits),
                 signs=tuple(signs),
                 accumulators=(0, 0, 0),
                 momentum=(momentum[0], momentum[1], momentum[2]),
                 sink=(0,) * len(spatial),
+                polarizer=polarizer,
+                held=() if polarizer is None else (0,) * POLARIZER_SLOTS,
+                held_phases=() if polarizer is None else (0,) * POLARIZER_SLOTS,
             )
         )
     return tuple(result)
@@ -1078,6 +1157,7 @@ def _spatial_fields(
                 "spread",
                 "phase_bits",
                 "charge",
+                "polarization_bits",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -1099,6 +1179,7 @@ def _spatial_fields(
         self_exclusion = False
         phase_steps, phase_advance = 0, 0
         phase_bits, charge = 0, 0
+        polarization_bits = -1
         capture = "share"
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
@@ -1133,6 +1214,16 @@ def _spatial_fields(
             if "phase_bits" in obj:
                 phase_bits = _integer(obj["phase_bits"], "phase_bits", 0)
             charge = _integer(obj.get("charge", 0), "spatial field charge")
+            if "polarization_bits" in obj:
+                # Polarization (ray-polarization-v1): the width of the family's
+                # polarization circle, 2^polarization_bits steps per half turn; the
+                # family's phase width when the key is absent.
+                polarization_bits = _integer(obj["polarization_bits"], "polarization_bits", 0)
+                if polarization_bits > MAX_STORED_PHASE_BITS:
+                    raise ValueError(
+                        "a ray interaction views the polarization as a stored value: "
+                        "polarization_bits is at most 30"
+                    )
             if self_exclusion and phase_bits > MAX_STORED_PHASE_BITS:
                 raise ValueError(
                     "self_exclusion stores the departure phase as a bounded value: it requires "
@@ -1204,12 +1295,12 @@ def _spatial_fields(
         elif (
             ray_keys
             | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
-            | {"phase_bits", "charge", "field_of", "release", "spread"}
+            | {"phase_bits", "charge", "field_of", "release", "spread", "polarization_bits"}
         ) & obj.keys():
             raise ValueError(
                 "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
-                "flux_projection, phase_bits, charge, field_of, release and spread require ray "
-                "transport"
+                "flux_projection, phase_bits, charge, field_of, release, spread and "
+                "polarization_bits require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1250,6 +1341,7 @@ def _spatial_fields(
                 phase_bits=phase_bits,
                 charge=charge,
                 spread=spread,
+                polarization_bits=polarization_bits,
             )
         )
         sources.append(field_of)
@@ -1295,12 +1387,22 @@ def _emissions(
                 "kerengonen_mirror",
                 "dissolve",
                 "heading",
+                "polarization",
             }
             | ({"budget"} if schema_version == 2 else set()),
             {"field", "source"} | ({"budget"} if schema_version == 2 else set()),
         )
         if "amount" not in obj and "dissolve" not in obj:
             raise ValueError("emission requires an amount unless it dissolves")
+        polarization = POLARIZATION_NONE
+        if "polarization" in obj:
+            # A lamp declares the polarization of what it emits (ray-polarization-v1).
+            emitted = _index(obj["field"], names, "emission.field")
+            if not spatial[emitted].rays:
+                raise ValueError("emission.polarization requires a ray field")
+            polarization = _polarization_value(
+                obj["polarization"], "emission.polarization", spatial[emitted]
+            )
         source = _boolean(obj["source"], "emission.source")
         kinds, owned = _selection(obj, fields, disturbances, "type", "requires", "emission")
         kind = kinds[0]
@@ -1443,9 +1545,25 @@ def _emissions(
                 dissolve_after,
                 dissolve_over,
                 fixed_heading,
+                polarization,
             )
         )
     return tuple(result)
+
+
+def _polarization_value(value: object, label: str, definition: SpatialFieldDefinition) -> int:
+    """A polarization (ray-polarization-v1): `"none"` (-1, unpolarized) or an integer
+    step from 0 below the family's polarization circle, 2^polarization_bits steps
+    per half turn (the family's phase width when it declares none)."""
+    if value == "none" or value == POLARIZATION_NONE:
+        return POLARIZATION_NONE
+    modulus = definition.polarization_modulus
+    if type(value) is not int or not 0 <= value < modulus:
+        raise ValueError(
+            f"{label} must be none or an integer from 0 below {modulus}, the family's "
+            "polarization circle (2^polarization_bits steps per half turn)"
+        )
+    return value
 
 
 def _spatial_seeds(
@@ -1889,7 +2007,8 @@ def _ray_interactions(
             rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
             if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
                 raise ValueError(
-                    "ray interaction amount, advance, family, charge and detector are read-only"
+                    "ray interaction amount, advance, family, charge, polarization and detector "
+                    "are read-only"
                 )
             if "momentum_table" in obj:
                 # ray-momentum-turn-v1: on a coupling of free rays, assigning
@@ -1913,6 +2032,12 @@ def _ray_interactions(
             raise ValueError("ray interactions admit at most six participants")
         if "bit" in obj:
             rule = replace(rule, bit=_bit_rule(obj["bit"], len(rule.participants)), bit_declared=True)
+        if not rule.polarization_declared and (
+            _reads_polarization(rule.when)
+            or any(_reads_polarization(invariant.expression) for invariant in rule.invariants)
+        ):
+            # ray-polarization-v1: a guard or an invariant that names the property.
+            rule = replace(rule, polarization_declared=True)
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
         # wave-ray-family-v1: charge x amount summed over the participants is an
@@ -1984,11 +2109,15 @@ def _ray_meeting(
     amount_sources: dict[int, tuple[int, ...]] = {}
     every_input = tuple(range(len(selections)))
     lags: list[LagTable] = []
+    # ray-polarization-v1: whether an output declares its polarization, and what
+    # each output carries.
+    names_polarization = False
+    output_polarization: list[tuple[int, int]] = []
     for position, raw in enumerate(raw_outputs):
         item = _object(
             raw,
             "ray meeting output",
-            {"field", "amount", "heading", "phase", "delay", "input"},
+            {"field", "amount", "heading", "phase", "delay", "input", "polarization"},
             {"field", "amount", "heading"},
         )
         kind = _index(item["field"], names, "output.field")
@@ -2108,6 +2237,25 @@ def _ray_meeting(
         # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
         assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
         assignments.append(Assignment(position, 6, parser.parse(definition.charge, 1)))
+        # ray-polarization-v1: the output's polarization, its source input's by
+        # default (`"same"`), `"none"`, a step of its field's circle, or input i's:
+        # (0, i) reads input i's, (1, v) is the value v; no assignment, so a world
+        # that declares none is charged what it was.
+        raw_polarization = item.get("polarization", "same")
+        if raw_polarization == "same":
+            output_polarization.append((0, source))
+        elif isinstance(raw_polarization, dict):
+            spec = _object(raw_polarization, "output.polarization", {"of"}, {"of"})
+            polarization_of = _integer(spec["of"], "output.polarization.of", 0)
+            if polarization_of >= len(selections):
+                raise ValueError("output.polarization.of exceeds the declared roles")
+            output_polarization.append((0, polarization_of))
+            names_polarization = True
+        else:
+            output_polarization.append(
+                (1, _polarization_value(raw_polarization, "output.polarization", definition))
+            )
+            names_polarization = True
     if any(target not in tables for target in rests.values()):
         raise ValueError("rest_of requires an output split by a table")
     # ray-event-audit-v1: a meeting cannot change the total charge. Every output
@@ -2161,18 +2309,31 @@ def _ray_meeting(
             ),
         )
     )
+    when = parser.parse(obj["when"], 1) if "when" in obj else None
     return InteractionDefinition(
         name=_text(obj["name"], "interaction.name"),
         left_type=selections[0][0],
         right_type=selections[-1][0],
         assignments=tuple(assignments),
         invariants=tuple(invariants),
-        when=parser.parse(obj["when"], 1) if "when" in obj else None,
+        when=when,
         participants=tuple(selections),
         outputs=tuple(outputs),
         splits=tuple(splits),
         lags=tuple(lags),
+        polarization_declared=names_polarization,
+        output_polarization=tuple(output_polarization),
     )
+
+
+def _reads_polarization(expression: Expression | None) -> bool:
+    """Whether an expression over ray views reads the polarization property
+    (ray-polarization-v1): a guard or an invariant that names it."""
+    if expression is None:
+        return False
+    if expression.op == "field" and expression.field == RAY_POLARIZATION:
+        return True
+    return any(_reads_polarization(argument) for argument in expression.arguments)
 
 
 def parse_initial_state(document: object) -> InitialState:

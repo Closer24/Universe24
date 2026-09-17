@@ -213,6 +213,27 @@ SPREAD_BACKWARD = 1
 FIELD_REMAINDER = "field-remainder-v1"
 REMAINDER_SIGNS = (-1, 0, 1)
 REMAINDER_SLOTS = 18
+# Polarization (Highlights 3.26, feature 11; ray-polarization-v1): a family
+# property read only at a meeting, exactly as charge is. A ray carries a
+# transverse direction modulo a half turn, an integer from 0 below
+# 2^polarization_bits (a line, not an arrow: 2^polarization_bits steps per half
+# turn), or POLARIZATION_NONE for an unpolarized ray. 0 is the first transverse
+# lattice axis of the ray's heading and half the circle the second, which is the
+# two-state reading of 3.26; the general angle is the transverse direction 3.26
+# allows for the circular case, without the handedness bit. The electron family's
+# spin is the same property at one bit. Part of the merge identity; kept by the
+# spread (as the axial mean of the taken content), the return, the inverse split
+# and a push; carried by a meeting's output from its source input unless the
+# output declares it; read by the polarizer, an external body's coupling. The
+# engine reads it nowhere else.
+RAY_POLARIZATION_PROPERTY = "ray-polarization-v1"
+POLARIZATION_NONE = -1
+# The polarizer coupling of an external body (Highlights 3.19; feature 11): the
+# body's coupling value below BODY_SINK, declared with an angle, a pass Port and
+# a table, its rest ending in the body's sink and the shares below one quantum in
+# the body's registers, six per body (sign-major -1, 0, 1, then pass and sink).
+BODY_POLARIZER = -2
+POLARIZER_SLOTS = 6
 
 
 @dataclass(frozen=True, slots=True)
@@ -255,14 +276,53 @@ class DetectorMark:
 
 
 @dataclass(frozen=True, slots=True)
+class Polarizer:
+    """The polarizer declaration of an external body (ray-polarization-v1; Highlights
+    3.19, 3.26): the spatial field it polarizes, its angle in steps of that
+    family's polarization circle, the heading index of its pass Port, the declared
+    table (one entry per step of the circle, each from 0 through the table's
+    length D, the pass share in D-ths at the difference angle - ray) and the pass
+    share of an unpolarized ray in D-ths. The engine only splits by the table; the
+    physics is the declared table.
+    """
+
+    family: int
+    angle: int
+    pass_heading: int
+    table: tuple[int, ...]
+    unpolarized: int
+
+    def __post_init__(self) -> None:
+        if type(self.family) is not int or self.family < 0:
+            raise ValueError("a polarizer family must be a spatial field index")
+        steps = len(self.table)
+        if type(self.table) is not tuple or steps < 1 or steps & (steps - 1):
+            raise ValueError("a polarizer table has one entry per step of a power-of-two circle")
+        if any(type(entry) is not int or not 0 <= entry <= steps for entry in self.table):
+            raise ValueError("a polarizer table entry is an integer from 0 through the table length")
+        if type(self.angle) is not int or not 0 <= self.angle < steps:
+            raise ValueError("a polarizer angle is an integer step below its polarization circle")
+        if type(self.pass_heading) is not int or self.pass_heading < 0:
+            raise ValueError("a polarizer pass heading must be a heading index")
+        if type(self.unpolarized) is not int or not 0 <= self.unpolarized <= steps:
+            raise ValueError("a polarizer unpolarized share is an integer from 0 through the length")
+
+    @property
+    def steps(self) -> int:
+        return len(self.table)
+
+
+@dataclass(frozen=True, slots=True)
 class ExternalBody:
     """The external body mark of a Node (external-body-v1): bounded Node metadata.
 
     The declaration (position, family as a spatial field index, amount of any
     width, charge, the released field's index or -1, the coupling as a ray
-    interaction index or BODY_SINK, the released phase, the momentum table as one
-    sign per spatial field), the momentum with its three exact accumulators, and
-    one exact sink counter per spatial field. No rays, no history.
+    interaction index, BODY_SINK or BODY_POLARIZER with its polarizer declaration,
+    the released phase, the momentum table as one sign per spatial field), the
+    momentum with its three exact accumulators, one exact sink counter per spatial
+    field and, for a polarizer, six remainder registers with their phases
+    (ray-polarization-v1). No rays, no history.
     """
 
     index: int
@@ -277,6 +337,12 @@ class ExternalBody:
     momentum: tuple[int, int, int] = (0, 0, 0)
     accumulators: tuple[int, int, int] = (0, 0, 0)
     sink: tuple[int, ...] = ()
+    # The polarizer (ray-polarization-v1): the declaration, and the registers that
+    # own the shares below one quantum in units of 1/D, D the table's length,
+    # sign-major (-1, 0, 1) then pass and sink, with a phase each; () otherwise.
+    polarizer: Polarizer | None = None
+    held: tuple[int, ...] = ()
+    held_phases: tuple[int, ...] = ()
 
     def __post_init__(self) -> None:
         if type(self.index) is not int or not 0 <= self.index < MAX_EXTERNAL_BODIES:
@@ -291,8 +357,23 @@ class ExternalBody:
             raise ValueError("an external body family must be a spatial field index")
         if type(self.field) is not int or self.field < -1:
             raise ValueError("an external body field must be a spatial field index or -1")
-        if type(self.coupling) is not int or self.coupling < BODY_SINK:
-            raise ValueError("an external body coupling must be a rule index or the sink")
+        if type(self.coupling) is not int or self.coupling < BODY_POLARIZER:
+            raise ValueError("an external body coupling must be a rule index, the sink or a polarizer")
+        if (self.coupling == BODY_POLARIZER) != (self.polarizer is not None):
+            raise ValueError("an external body polarizer coupling carries its polarizer declaration")
+        if self.polarizer is None:
+            if self.held or self.held_phases:
+                raise ValueError("only a polarizer body holds remainder registers")
+        else:
+            if type(self.polarizer) is not Polarizer:
+                raise ValueError("an external body polarizer must be a Polarizer")
+            for block in (self.held, self.held_phases):
+                if type(block) is not tuple or len(block) != POLARIZER_SLOTS:
+                    raise ValueError("a polarizer body holds six registers and six phases")
+                if any(type(v) is not int or v < 0 for v in block):
+                    raise ValueError("polarizer registers and phases are nonnegative integers")
+            if any(v >= self.polarizer.steps for v in self.held):
+                raise ValueError("a polarizer register stays below one quantum")
         if type(self.phase) is not int or self.phase < 0:
             raise ValueError("an external body phase must be a nonnegative integer")
         bounded(self.charge)
@@ -362,6 +443,12 @@ class Ray:
     # line is the ray it was. Negated by a return with the heading; extensive,
     # so merging rays adds it as it adds their amounts.
     momentum: tuple[int, int, int] | None = None
+    # Polarization (ray-polarization-v1, Highlights 3.26): the transverse direction
+    # modulo a half turn in steps of the family's polarization circle
+    # (2^polarization_bits steps per half turn), or POLARIZATION_NONE for an
+    # unpolarized ray, which every existing world's ray is. Part of the merge
+    # identity; read by the polarizer and by a coupling's guard, nowhere else.
+    polarization: int = POLARIZATION_NONE
 
 
 Rays = tuple[Ray, ...]
@@ -384,6 +471,10 @@ RAY_PROPERTIES = (
     # detector-bit-property-v1: the Detector bit the ray carries, as the engine
     # stores it (0 none, 1 a draw of 0, 2 a draw of 1), a read-only view.
     FieldDefinition("detector", 1, "Detector bit", False, False),
+    # ray-polarization-v1: the polarization the ray carries, a step of the family's
+    # polarization circle or -1 for none, a read-only view in a guard; a meeting's
+    # output declares its own (`polarization` on the output).
+    FieldDefinition("polarization", 1, "polarization step", True, False),
 )
 (
     RAY_AMOUNT,
@@ -394,10 +485,15 @@ RAY_PROPERTIES = (
     RAY_FAMILY,
     RAY_CHARGE,
     RAY_DETECTOR,
-) = range(8)
+    RAY_POLARIZATION,
+) = range(9)
 # A ray interaction may assign heading, phase and delay; the rest is read-only.
 RAY_WRITABLE = frozenset((RAY_HEADING, RAY_PHASE, RAY_DELAY))
 RAY_VIEW_COMPONENTS = sum(field.components for field in RAY_PROPERTIES)
+# The view a meeting reads when none of its layer's rules names polarization: the
+# view of detector-bit-property-v1, so that a world whose rules do not read the
+# property is charged what it was charged before feature 11 (byte-identical).
+RAY_VIEW_COMPONENTS_UNPOLARIZED = RAY_VIEW_COMPONENTS - 1
 CHARGE_INVARIANT = "charge"
 
 
@@ -469,6 +565,15 @@ def validate_ray_participants(
                 for assignment in rule.assignments
             ):
                 raise ValueError("ray meeting assignments address its declared outputs")
+            if len(rule.output_polarization) not in (0, len(rule.outputs)) or any(
+                by_input not in (0, 1)
+                or (by_input == 0 and not 0 <= value < len(rule.participants))
+                or (by_input == 1 and value < POLARIZATION_NONE)
+                for by_input, value in rule.output_polarization
+            ):
+                raise ValueError(
+                    "ray meeting output polarization names an input or a value, one per output"
+                )
             if any(
                 not 0 <= split.first < len(rule.outputs)
                 or not 0 <= split.second < len(rule.outputs)
@@ -1052,6 +1157,50 @@ def spread_coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[in
     return reduced_ratio(numerator, denominator)
 
 
+def polarization_tables(
+    definition: SpatialFieldDefinition,
+) -> tuple[tuple[int, ...], tuple[int, ...]] | None:
+    """The cosine and sine tables of the family's polarization circle
+    (ray-polarization-v1): a polarization is a line, so its circle of
+    2^polarization_bits steps per half turn is the circle of the doubled angle,
+    on which lines add as vectors; None for a circle of one step or wider than
+    the table limit (twelve bits)."""
+    modulus = definition.polarization_modulus
+    if modulus < 2 or modulus > MAX_PHASE_STEPS:
+        return None
+    return phase_cosines(modulus), phase_sines(modulus)
+
+
+def combined_polarization(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
+    """The one polarization of combined content (ray-polarization-v1): the step of
+    the family's polarization circle nearest the direction of the sum of amount x
+    e^(i 2 pi p / 2^bits) over the polarized terms (the axial mean, the doubled
+    angle of each line), the rule by which the spread combines what it takes as
+    it combines the phase; unpolarized terms add no direction. None when no term
+    is polarized, when the sum cancels (two equal crossed lines are unpolarized
+    content) or when the circle has one step."""
+    tables = polarization_tables(definition)
+    polarized = tuple((abs(amount), step) for amount, step in terms if step != POLARIZATION_NONE)
+    if tables is None or not polarized:
+        return POLARIZATION_NONE
+    modulus = definition.polarization_modulus
+    mask = phase_mask(modulus)
+    x = y = 0
+    for amount, step in polarized:
+        x = checked_work(x + amount * tables[0][step & mask])
+        y = checked_work(y + amount * tables[1][step & mask])
+    if not x and not y:
+        return POLARIZATION_NONE
+    return _phase_of_sum(polarized, tables[0], tables[1], modulus)
+
+
+def spread_polarization(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The polarization every departure of a spread carries: the combined
+    polarization of the taken content, as its phase is the phase of the
+    coherent sum and its bit the highest (ray-polarization-v1)."""
+    return combined_polarization(tuple((ray.amount, ray.polarization) for ray in rays), definition)
+
+
 def spread_content(
     index: int,
     rays: Rays,
@@ -1135,6 +1284,11 @@ def spread_content(
             if not rest:
                 held_phases[slot] = 0
     bit = max(ray.detector for ray in rays)
+    # ray-polarization-v1: the polarization of the whole is one polarization, the
+    # axial mean of the taken content, carried by every departure of this spread,
+    # the registers' releases included (a register stores no polarization, as it
+    # stores no bit).
+    polarization = spread_polarization(rays, definition)
     departures = tuple(
         Ray(
             definition.headings.index(PORT_HEADINGS[port]),
@@ -1143,6 +1297,7 @@ def spread_content(
             phase=departure_phase,
             detector=bit,
             source_sign=sign,
+            polarization=polarization,
         )
         for (port, sign, departure_phase), amount in sorted(departing.items())
         if amount
@@ -1236,6 +1391,10 @@ class SpatialFieldDefinition:
     # order relative to the arriving heading; empty for a family that does not
     # spread, the behaviour of every existing world.
     spread: tuple[int, ...] = ()
+    # Polarization (ray-polarization-v1): the width of the family's polarization
+    # circle, 2^polarization_bits steps per half turn; -1 when the world does not
+    # declare it, which reads as the family's phase width (`polarization_modulus`).
+    polarization_bits: int = -1
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
@@ -1269,10 +1428,25 @@ class SpatialFieldDefinition:
             if not self.rays:
                 raise ValueError("spread requires ray transport")
             validate_spread_table(self.spread)
+        if type(self.polarization_bits) is not int or self.polarization_bits < -1:
+            raise ValueError("polarization_bits must be a nonnegative integer")
+        if self.polarization_bits >= 0 and not self.rays:
+            raise ValueError("polarization_bits requires ray transport")
 
     @property
     def rays(self) -> bool:
         return self.transport == "ray"
+
+    @property
+    def polarization_declared(self) -> bool:
+        """The world wrote the family's polarization width (ray-polarization-v1)."""
+        return self.polarization_bits >= 0
+
+    @property
+    def polarization_modulus(self) -> int:
+        """The steps of the family's polarization circle per half turn:
+        2^polarization_bits, or 2^phase_bits when the width is not declared."""
+        return 1 << (self.phase_bits if self.polarization_bits < 0 else self.polarization_bits)
 
     @property
     def coherent(self) -> bool:
@@ -1386,6 +1560,10 @@ class EmissionDefinition:
     # Ray fields only: emit every ray on this one heading of the sequence instead
     # of sweeping the sequence (a directed emitter). None sweeps.
     heading: int | None = None
+    # Ray fields only (ray-polarization-v1): the polarization every emitted ray
+    # carries, a step of the family's polarization circle, or -1 for none (a lamp
+    # declares the polarization of what it emits; unpolarized by default).
+    polarization: int = POLARIZATION_NONE
 
 
 @dataclass(frozen=True, slots=True)
@@ -1662,6 +1840,13 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             bounded(value)
         if ray.source_sign not in (-1, 0, 1):
             raise ValueError("ray source_sign must be -1, 0 or 1")
+        if type(ray.polarization) is not int or not (
+            ray.polarization == POLARIZATION_NONE
+            or 0 <= ray.polarization < definition.polarization_modulus
+        ):
+            raise ValueError(
+                "ray polarization must be none (-1) or a step below the family's polarization circle"
+            )
         validate_ray_event_state(ray)
 
 
@@ -2033,6 +2218,7 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
             ray.phase,
             ray.advance,
             source_sign=ray.source_sign,
+            polarization=ray.polarization,
         )
         for port, amount in zip(ports, amounts, strict=True)
         if amount
@@ -2056,6 +2242,7 @@ RayMergeKey = tuple[
     tuple[int, int, int],
     int,
     tuple[int, int, int] | None,
+    int,
 ]
 
 
@@ -2076,6 +2263,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.lag,
         ray.source_sign,
         ray.momentum,
+        ray.polarization,
     )
 
 
@@ -2112,6 +2300,7 @@ def merge_rays(rays: Rays) -> Rays:
             lag=key[11],
             source_sign=key[12],
             momentum=_merged_register(key[13], counts[key]),
+            polarization=key[14],
         )
         for key, amount in sorted(combined.items(), key=lambda item: _merge_order(item[0]))
         if amount
@@ -2130,9 +2319,11 @@ def _merged_register(momentum: tuple[int, int, int] | None, count: int) -> tuple
 
 
 def _merge_order(key: RayMergeKey) -> tuple[object, ...]:
-    """The fixed order of merged rays: the key with a register not set before one set."""
+    """The fixed order of merged rays: the key with a register not set before one set,
+    the polarization last (ray-polarization-v1), so that rays without one keep the
+    order they had."""
     momentum = key[13]
-    return (*key[:13], momentum is not None, momentum or (0, 0, 0))
+    return (*key[:13], momentum is not None, momentum or (0, 0, 0), key[14])
 
 
 def ray_stock(rays: Rays) -> int:
@@ -2534,8 +2725,9 @@ def body_step(body: ExternalBody) -> tuple[int, ExternalBody]:
 
 def body_coupled_families(body: ExternalBody, initial: InitialState) -> frozenset[int]:
     """The spatial fields the body's declared coupling rule meets: every role of the
-    rule that does not select the body's family; empty for the sink."""
-    if body.coupling == BODY_SINK:
+    rule that does not select the body's family; empty for the sink and for the
+    polarizer, which is no rule (ray-polarization-v1)."""
+    if body.coupling in (BODY_SINK, BODY_POLARIZER):
         return frozenset()
     rule = initial.ray_interactions[body.coupling]
     return frozenset(kind for role in rule.participants for kind in role if kind != body.family)
@@ -2546,6 +2738,185 @@ def body_token(body: ExternalBody) -> Ray:
     quantum of its family at the Node, heading 0, no event; the Node strips the
     rule's unchanged output of it before anything leaves."""
     return Ray(0, (0, 0, 0), 1, phase=body.phase)
+
+
+@dataclass(frozen=True, slots=True)
+class Polarized:
+    """The record of one arriving ray met by a polarizer, for the Node to publish
+    (ray-polarization-v1): plain bounded integers. The ray's amount, polarization
+    (-1 none) and source sign, the difference angle - polarization on the circle
+    (-1 for an unpolarized ray), the pass share in D-ths, the whole quanta passed
+    and sunk, the shares below one quantum added to the pass and the sink
+    registers, the whole quanta the registers released to the pass Port and to
+    the sink after this ray, and the body's six registers after it."""
+
+    amount: int
+    polarization: int
+    sign: int
+    difference: int
+    share: int
+    passed: int
+    sunk: int
+    held: tuple[int, int]
+    released: tuple[int, int]
+    registers: tuple[int, ...]
+
+
+def polarizer_slot(sign: int, output: int) -> int:
+    """The register of one source sign (-1, 0, 1) and output (0 pass, 1 sink)."""
+    if sign not in REMAINDER_SIGNS or output not in (0, 1):
+        raise ValueError("a polarizer register is named by a source sign and pass or sink")
+    return (sign + 1) * 2 + output
+
+
+def polarizer_share(polarizer: Polarizer, polarization: int) -> tuple[int, int]:
+    """The difference d = (angle - polarization) mod D and the pass share T[d] in
+    D-ths of an arriving ray; an unpolarized ray takes the declared unpolarized
+    share and has no difference (-1)."""
+    if polarization == POLARIZATION_NONE:
+        return -1, polarizer.unpolarized
+    if type(polarization) is not int or not 0 <= polarization < polarizer.steps:
+        raise ValueError("a polarizer reads a polarization step of its own circle")
+    difference = (polarizer.angle - polarization) % polarizer.steps
+    return difference, polarizer.table[difference]
+
+
+def held_stock(body: ExternalBody) -> int:
+    """The whole quanta a polarizer body's registers hold in total, exactly
+    (ray-polarization-v1): the pass and the sink fraction of one ray sum to a
+    whole quantum, so the registers of one sign always hold whole quanta."""
+    if body.polarizer is None or not body.held:
+        return 0
+    whole, fraction = divmod(sum(body.held), body.polarizer.steps)
+    if fraction:
+        raise ValueError("a polarizer body holds whole quanta in its registers in total")
+    return whole
+
+
+def polarize_content(
+    body: ExternalBody, index: int, rays: Rays, definition: SpatialFieldDefinition
+) -> tuple[ExternalBody, Rays, tuple[Polarized, ...]]:
+    """The polarizer (ray-polarization-v1; Highlights 3.19, 3.26): each arriving
+    outbound ray of the polarized family, in merge-key order, is split by the
+    body's table at the difference between the body's angle and the ray's
+    polarization: the whole quanta of amount x T[d] / D leave on the pass Port
+    as a fresh event ray with the ray's phase, bit and sign and the body's angle
+    as its polarization; the whole quanta of amount x (D - T[d]) / D end in the
+    body's sink for the family (moving the body by its momentum table as the
+    sink does); and the two shares below one quantum, which sum to one quantum
+    or to none, go to the body's pass and sink registers of the ray's sign, in
+    units of 1/D, each register's phase combined with the share's by the
+    coherence rule as a spread's register is (field-remainder-v1). A register
+    that reaches D releases the whole quanta it holds, to the pass Port as a
+    fresh event ray with the register's phase, sign and the body's angle and the
+    highest bit of this meeting's arrivals, or into the sink, and keeps the rest.
+    Returns the body after, the pass rays stamped as events of this Node, and one
+    record per arriving ray. The total is exact: what arrived equals what passed
+    plus what sank plus the whole quanta the registers gained."""
+    polarizer = body.polarizer
+    if polarizer is None or polarizer.family != index:
+        raise ValueError("a polarizer meets the family it polarizes")
+    steps = polarizer.steps
+    if definition.polarization_modulus != steps:
+        raise ValueError("a polarizer table has one entry per step of its family's circle")
+    heading = definition.headings[polarizer.pass_heading]
+    tables = spread_tables(definition)
+    held = list(body.held) if body.held else [0] * POLARIZER_SLOTS
+    phases = list(body.held_phases) if body.held_phases else [0] * POLARIZER_SLOTS
+    sink = list(body.sink)
+    momentum = list(body.momentum)
+    push = body.signs[index] if index < len(body.signs) else 0
+    bit = max((ray.detector for ray in rays), default=DETECTOR_NONE)
+    passing: list[Ray] = []
+    records: list[Polarized] = []
+    for ray in sorted(rays, key=ray_merge_key):
+        if not ray.outbound or ray.amount <= 0:
+            raise ValueError("a polarizer meets the outbound content that arrived")
+        difference, share = polarizer_share(polarizer, ray.polarization)
+        passed, pass_fraction = divmod(checked_work(ray.amount * share), steps)
+        sunk, sink_fraction = divmod(checked_work(ray.amount * (steps - share)), steps)
+        if passed:
+            passing.append(
+                Ray(
+                    polarizer.pass_heading,
+                    (0, 0, 0),
+                    bounded(passed),
+                    phase=ray.phase,
+                    advance=ray.advance,
+                    detector=ray.detector,
+                    source_sign=ray.source_sign,
+                    polarization=polarizer.angle,
+                )
+            )
+        if sunk:
+            sink[index] = checked_work(sink[index] + sunk)
+            if push:
+                arriving = definition.headings[ray.heading]
+                for axis in range(3):
+                    momentum[axis] = checked_work(momentum[axis] + push * sunk * arriving[axis])
+        released = [0, 0]
+        for output, fraction in ((0, pass_fraction), (1, sink_fraction)):
+            if not fraction:
+                continue
+            slot = polarizer_slot(ray.source_sign, output)
+            if tables is None:
+                phases[slot] = 0
+            elif held[slot]:
+                phases[slot] = _phase_of_sum(
+                    ((held[slot], phases[slot]), (fraction, ray.phase)),
+                    tables[0],
+                    tables[1],
+                    definition.phase_modulus,
+                )
+            else:
+                phases[slot] = ray.phase
+            held[slot] = checked_work(held[slot] + fraction)
+            whole, rest = divmod(held[slot], steps)
+            if not whole:
+                continue
+            held[slot] = rest
+            released[output] = whole
+            if output == 0:
+                passing.append(
+                    Ray(
+                        polarizer.pass_heading,
+                        (0, 0, 0),
+                        bounded(whole),
+                        phase=phases[slot],
+                        detector=bit,
+                        source_sign=ray.source_sign,
+                        polarization=polarizer.angle,
+                    )
+                )
+            else:
+                sink[index] = checked_work(sink[index] + whole)
+            if not rest:
+                phases[slot] = 0
+        records.append(
+            Polarized(
+                ray.amount,
+                ray.polarization,
+                ray.source_sign,
+                difference,
+                share,
+                bounded(passed),
+                bounded(sunk),
+                (pass_fraction, sink_fraction),
+                (released[0], released[1]),
+                tuple(held),
+            )
+        )
+    after = replace(
+        body,
+        sink=tuple(sink),
+        momentum=(momentum[0], momentum[1], momentum[2]),
+        held=tuple(held),
+        held_phases=tuple(phases),
+    )
+    stamped = tuple(
+        stamp_event((ray,), (heading,), ray.detector)[0] for ray in merge_rays(tuple(passing))
+    )
+    return after, stamped, tuple(records)
 
 
 def validate_external_bodies(initial: InitialState) -> None:
@@ -2611,6 +2982,26 @@ def validate_external_bodies(initial: InitialState) -> None:
             raise ValueError("an external body momentum table names ray families")
         if body.coupling == BODY_SINK:
             continue
+        if body.coupling == BODY_POLARIZER:
+            # ray-polarization-v1: the polarizer names a ray family of the world
+            # whose polarization circle its table covers, and a pass Port heading
+            # of that family.
+            polarizer = body.polarizer
+            assert polarizer is not None
+            if polarizer.family >= len(initial.spatial_fields):
+                raise ValueError("a polarizer polarizes a ray spatial field of the world")
+            polarized = initial.spatial_fields[polarizer.family]
+            if not polarized.rays or polarizer.family == body.family:
+                raise ValueError("a polarizer polarizes a ray spatial field other than its own")
+            if polarized.polarization_modulus != polarizer.steps:
+                raise ValueError(
+                    "a polarizer table has one entry per step of its family's polarization circle"
+                )
+            if polarizer.pass_heading >= len(polarized.headings) or (
+                polarized.headings[polarizer.pass_heading] not in PORT_HEADINGS
+            ):
+                raise ValueError("a polarizer pass Port is a unit-axial heading of its family")
+            continue
         if body.coupling >= len(initial.ray_interactions):
             raise ValueError("an external body coupling names a declared ray interaction")
         rule = initial.ray_interactions[body.coupling]
@@ -2639,10 +3030,47 @@ def external_body_names(initial: InitialState) -> list[dict[str, object]]:
                 None if body.field < 0 else initial.fields[initial.spatial_fields[body.field].field].name
             ),
             "coupling": (
-                "sink" if body.coupling == BODY_SINK else initial.ray_interactions[body.coupling].name
+                "sink"
+                if body.coupling == BODY_SINK
+                else "polarizer"
+                if body.coupling == BODY_POLARIZER
+                else initial.ray_interactions[body.coupling].name
             ),
             "initial_position": list(body.position),
             "initial_momentum": list(body.momentum),
+            # ray-polarization-v1: the polarizer's declaration, on such a body alone.
+            **(
+                {}
+                if body.polarizer is None
+                else {
+                    "polarizer": {
+                        "family": initial.fields[
+                            initial.spatial_fields[body.polarizer.family].field
+                        ].name,
+                        "angle": body.polarizer.angle,
+                        "pass": list(
+                            initial.spatial_fields[body.polarizer.family].headings[
+                                body.polarizer.pass_heading
+                            ]
+                        ),
+                        "steps": body.polarizer.steps,
+                        "unpolarized": body.polarizer.unpolarized,
+                    }
+                }
+            ),
         }
         for body in initial.external_bodies
     ]
+
+
+def polarization_declared(initial: InitialState) -> bool:
+    """Whether the world declares the polarization property anywhere
+    (ray-polarization-v1): a family's `polarization_bits`, an emission's
+    `polarization`, a rule naming it, or a polarizer body; the runner records the
+    identity exactly then, and a world that declares none runs byte-identically."""
+    return (
+        any(definition.polarization_declared for definition in initial.spatial_fields)
+        or any(rule.polarization != POLARIZATION_NONE for rule in initial.emissions)
+        or any(rule.polarization_declared for rule in initial.ray_interactions)
+        or any(body.polarizer is not None for body in initial.external_bodies)
+    )

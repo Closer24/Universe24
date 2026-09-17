@@ -45,7 +45,9 @@ here that touches the engine.
   open Link as a small dot. Each ray of `runs.json` carries its Detector
   `bit` (`null`, 0 or 1): set by a click, a pass or a return, inherited by the
   outputs of an event from its inputs, and read from the ray recording when
-  the record carries one.
+  the record carries one. Each segment carries the ray's `polarization`
+  (`ray-polarization-v1`: a step of its family's circle, `null` for none)
+  when the recording carries one.
   Escapes of field rays are drawn as nothing. Crossings without interaction
   and an absorption into a body's sink end or continue the rays but draw
   nothing. A record kind the extractor does not know becomes a generic

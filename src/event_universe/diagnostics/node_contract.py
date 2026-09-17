@@ -22,6 +22,8 @@ from event_universe.core.spatial_state import (
     FieldRuleGuard,
     FieldSpread,
     InverseSplit,
+    Polarized,
+    Polarizer,
     Ray,
     RayPush,
     ReturnedField,
@@ -55,6 +57,8 @@ STATE_RECORDS = (
     FieldSpread,
     ReturnedField,
     RayPush,
+    Polarizer,
+    Polarized,
 )
 
 

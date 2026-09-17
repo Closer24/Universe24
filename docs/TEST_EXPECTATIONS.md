@@ -72,6 +72,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
+| `test_ray_polarization.py` | 7 | 0.30 | Issue #169 feature 11: polarization as a ray property, a transverse direction modulo a half turn in steps of the family's polarization circle or none, declared by a lamp, part of the merge identity, carried by a meeting's outputs from their source input unless declared, by a spread as the axial mean and by the return; the polarizer, an external body's coupling splitting an arriving ray by its declared table at the difference between the body's angle and the ray's polarization, the pass share on the pass Port with the body's angle, the rest in the sink, the shares below one quantum in the body's registers (`ray-polarization-v1`) |
 | `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`; the walk kept through a push since `ray-momentum-turn-v2`, [the walk kept through a push](#the-walk-kept-through-a-push)) |
 | `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the compressed inline page, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
@@ -894,6 +895,146 @@ ray there); the worlds of `test_ray_viewer.py` and
 `test_ray_meeting_conversion.py` differ in their recorded cost alone (one
 more view component per participant, `read` 10 instead of 9), and
 `test_wave_ray_families.py` pins `detector` as the eighth ray property.
+
+## Ray polarization
+
+`test_ray_polarization.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order) on a periodic 15^3
+lattice ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)).
+The family `light` has an 8-step phase advancing 0 and, unless a case says
+otherwise, `polarization_bits` 3: a polarization circle of eight steps per
+half turn, 22.5 degrees each, step 0 the first transverse lattice axis of
+the heading (+Y for a ray on +X) and step 4 the second (+Z); `apparatus` is
+the polarizer body's family, its circle the default of its phase width,
+eight steps too. Every lamp emits along +X or -X at phase 0, its whole
+stock at once unless it holds several pulses; a polarizer body at (7,7,7)
+has amount 1, its pass Port +X and the reference table `[8, 7, 4, 1, 0, 1,
+4, 7]`, cos^2(d x 22.5 degrees) in eighths, rounded, its unpolarized share
+the table's mean, 4. A tick n is one `step()`. Written before the first run,
+from the rule of the section: an arriving ray of amount a and polarization
+p at a body of angle theta passes floor(a x T[d] / 8) with polarization
+theta and sinks floor(a x (8 - T[d]) / 8), d = (theta - p) mod 8, the two
+shares below one quantum going to the body's pass and sink registers of the
+ray's sign (units of 1/8), which release a whole quantum when they reach 8;
+the pass ray is a fresh event of the body's Node on +X, resident there at
+its arrival tick and one Link on at every later tick.
+
+- (a) `lamp`: a lamp at (4,7,7) emits 8 along +X with `polarization` 2:
+  after tick n the ray is at (4 + n, 7, 7), heading index 0, amount 8,
+  phase 0, steps n, mask 1, shares (8, 0, 0, 0, 0, 0), polarization 2;
+  totals light 8. Two lamps at (4,7,7) each emitting 4 along +X at
+  polarization 2 are two identical events and merge: after tick 1 one ray
+  of 8 at (5,7,7) with shares (4, 0, 0, 0, 0, 0) and polarization 2; at
+  polarizations 2 and 6 they stay two rays of 4, the one at 2 first in
+  merge order; with no `polarization` key both are unpolarized (-1) and
+  merge. `merge_rays` over two rays of that event with amounts 3 and 5 at
+  polarization 2 gives one of 8; with the 5 unpolarized, two rays, the
+  unpolarized first;
+- (b) `polarizer`: a lamp at (4,7,7) emitting `amount` per interval along
+  +X at polarization 0 (along +Y) for `pulses` intervals, a polarizer at
+  (7,7,7) of angle theta; the ray arrives at tick 3 and the pass ray of
+  pulse k is at (10 - k, 7, 7) after tick 6 with steps 3 - k, mask 1, its
+  amount as its share, phase 0, no bit, polarization theta. After tick 6:
+  theta 0, one pulse of 8: 8 passed at (10,7,7), nothing sunk, totals
+  light 8; theta 2 (45 degrees): 4 passed, sink light 4 (`external_body_totals`
+  light 4); theta 4 (90 degrees): nothing passed, no ray anywhere, sink 8;
+  theta 1 (22.5 degrees): 7 passed, sink 1; theta 1 with one pulse of 5:
+  5 x 7 = 35 = 4 x 8 + 3, so 4 passed and 3/8 to the pass register, 5 x 1
+  = 5 to the sink register, nothing sunk, the body's `held` [0, 0, 3, 5, 0,
+  0] (sign-major -1, 0, 1, then pass, sink: the sign-0 pair holds one
+  whole quantum), totals light 5 (4 on the ray and 1 held), sink empty;
+  theta 1 with three pulses of 5 (a stock of 15): pulses at ticks 3, 4, 5
+  give pass registers 3, 6, 9 -> 1 (a quantum released on the third) and
+  sink registers 5, 10 -> 2 (a quantum sunk on the second), 7: after tick
+  6 the pass rays are 4 at (10,7,7), 4 at (9,7,7) and 5 at (8,7,7) (the
+  third pulse's 4 merged with the released 1, one event of 5), sink light
+  1, `held` [0, 0, 1, 7, 0, 0], totals light 14; the three `polarizer`
+  records (position (7,7,7), body 0, Port 1, `light`, amount 5,
+  polarization 0, sign 0, angle 1, difference 1, share 7, steps 8) carry
+  (tick, passed, sunk, held, released, registers) = (3, 4, 0, [3, 5], [0,
+  0], [0, 0, 3, 5, 0, 0]), (4, 4, 0, [3, 5], [0, 1], [0, 0, 6, 2, 0, 0]),
+  (5, 4, 0, [3, 5], [1, 0], [0, 0, 1, 7, 0, 0]), and one
+  `external_body_absorbed` (tick 4, `light`, 1) books the released sink
+  quantum. In every world the body's momentum stays (0, 0, 0), it never
+  steps, and every accounting line balances at every tick. An unpolarized
+  lamp of 8 at theta 1 passes the table's mean, 4, with polarization 1,
+  sink 4, its record's polarization and difference `null` and share 4;
+  `polarizer_share` at angle 1 gives (-1, 4) for none and (1, 7), (0, 8),
+  (6, 4), (4, 0) for polarizations 0, 1, 3, 5. The runner records
+  `ray_polarization: "ray-polarization-v1"`, the body's `coupling`
+  `"polarizer"` with its declaration (`family` light, `angle` 1, `pass`
+  [1, 0, 0], `steps` 8, `unpolarized` 4) and, for the one pulse of 5, a
+  `final.held` of [0, 0, 3, 5, 0, 0], `external_body_totals` light [0],
+  final light 5, `conserved_at_every_completed_tick` true;
+- (c) `return`: theta 2 and a mark at (9,7,7) of setting 0/1 (every
+  arrival returned): the pass ray of 4 reaches the mark at tick 5 and is
+  returned, one `detector_return`; after tick 5 it is at (9,7,7) with
+  heading index 1, steps 2, `outbound` 0, polarization 2, bit 1 (a draw of
+  0), mask 1 and shares (4, 0, 0, 0, 0, 0); after tick 6 at (8,7,7) with
+  steps 1; at tick 7 it reaches the polarizer's Node and ends in its sink
+  as every returning ray at a body does: no ray anywhere, sink light 8,
+  no `inverse_split`;
+- (d) `meeting`: lamps of 5 at (5,7,7) (+X, polarization 1) and (9,7,7)
+  (-X, polarization 3) meet at (7,7,7) at tick 2 under `meeting` (two
+  `light` roles, outputs `{"of": 0}` on +Y and `{"of": 1}` on -Y with
+  `input` 1). After tick 3 the outputs are at (7,8,7) (heading 2) and
+  (7,6,7) (heading 3), 5 each, steps 1, with polarizations (1, 3) when the
+  outputs declare none and when both declare `"same"`, (3, -1) for
+  `{"of": 1}` and `"none"`, (5, 1) for the value 5 and `{"of": 0}`;
+  totals light 10. The parsed rule's `polarization_declared` is false in
+  the first two and true in the last two, and the cycle of (7,7,7) at
+  tick 2 costs 4 more in the last two (one more view component per
+  participant, one update per output) and the same in the first two. A
+  guard `eq(polarization of participant 0, 1)` fires with lamp 0 at
+  polarization 1 (the outputs as above with (1, 3)) and not at 2 (the rays
+  cross: after tick 3 at (8,7,7), heading 0, steps 3, polarization 2 and
+  (6,7,7), heading 1, steps 3, polarization 3), and marks the rule as
+  naming the property;
+- (e) `spread`: light with `spread` [6, 1, 1, 1, 1, 1]. A lamp of 11 at
+  (4,7,7) along +X at polarization 2 spreads at (5,7,7) in the cycle of
+  tick 1: after tick 2 fresh field rays of 6 at (6,7,7), 1 at (4,7,7) and
+  1 on each transverse neighbour, steps 1, no event, every one at
+  polarization 2. Lamps of 11 at (4,7,7) (+X, polarization 0) and (6,7,7)
+  (-X, polarization 4, crossed) meet at (5,7,7) and spread as one content:
+  7 at (6,7,7), 7 at (4,7,7), 2 on each transverse neighbour, every
+  departure unpolarized (the axial sum of two equal crossed lines
+  cancels); at polarizations 0 and 2 (45 degrees) every departure is at
+  step 1 (22.5 degrees, the axial mean). Totals light 11 per lamp.
+  `combined_polarization` over (5, 2), (3, 2) gives 2; (5, 0), (5, 4)
+  gives -1; (5, 0), (5, 2) gives 1; two unpolarized terms -1; (5, none),
+  (3, 6) gives 6; no terms -1;
+- (f) `identity`: the lamp of (a) unpolarized, without `polarization_bits`,
+  at a plain sink body at (7,7,7): the run record has no `ray_polarization`
+  key, the body's entry no `polarizer` and its `final` no `held`, the sink
+  light [8], and `events.jsonl` holds no `polarizer` record and the word
+  `polarization` nowhere; the parsed light has a polarization modulus of 8
+  (its phase width) and `polarization_declared` false. The same lamp with
+  `polarization_bits` 3 on light records the identity; `polarization_bits`
+  1 gives a modulus of 2;
+- (g) `rejected`: `parse_initial_state` rejects an emission polarization 8
+  or -2 at three bits ("from 0 below 8"), a polarizer without `angle`
+  ("requires an angle"), a body with coupling `polarizer` and no
+  declaration ("requires its polarizer declaration"), an angle of 8, a
+  table of seven entries ("one entry per step"), an entry 9 ("from 0
+  through 8"), a pass heading [1, 1, 0] ("unit-axial"), an unpolarized
+  share 9, a polarizer of its own family ("other than its own"), a
+  `polarizer` declaration under coupling `sink` ("requires coupling"),
+  `polarization_bits` -1, an output `polarization` `{"of": 2}` on a
+  two-role rule ("exceeds the declared roles"), 8 or `"left"` ("from 0
+  below 8"), an assignment to `polarization` ("read-only") and
+  `polarization_bits` on an outward field ("require ray transport");
+  `validate_rays` rejects a ray at polarization 8 and `Polarizer` a table
+  of seven entries and an angle of 8.
+
+Pinned consequences in existing tests: none change. `test_wave_ray_families.py`
+pins `polarization` as the ninth ray property. The byte-identity digests of
+`test_ray_momentum_turn.py` (`identical`) and `test_field_spreading.py`
+(`unchanged`) hold: a rule that does not name the property reads the view it
+read before (`read` 10 per participant) and its outputs carry their source
+input's polarization without an assignment, so the recorded costs of every
+existing world are unchanged. `test_nature_catalog.py` runs the polarizer as
+a decided coupling ([catalog of nature](#catalog-of-nature)).
 
 ## Ray layers
 
@@ -2708,7 +2849,20 @@ first run:
   (6, 0, 0, 0, 0, 0); nothing is left at (8,7,7), the totals are light 5 and
   apparatus 0, the body's sink is empty and `external_body_totals` is 0 per
   family. A `detectors` mark at (9,7,7) with setting [1, 1] and seed 0 parses
-  on the light world. The accounting balances at every tick of every world.
+  on the light world. `polarizer` (2026-09-17, feature 11,
+  `ray-polarization-v1`): the same lamp with `polarization` 0 (along +Y) at
+  a body of the apparatus family with coupling `polarizer`, angle 2 (45
+  degrees on the eight-step circle of the reference width), pass +X and the
+  catalog's table `[8, 7, 4, 1, 0, 1, 4, 7]`: the ray arrives at tick 1 and
+  is split at the difference 2, share 4: floor(5 x 4 / 8) = 2 pass with
+  polarization 2 and 2 sink, and the two shares of 4/8 wait in the body's
+  registers as one quantum at the ray's phase 1; after tick 2 the pass ray is
+  at (9,7,7), heading 0, amount 2, phase 1, steps 1, mask 1 and shares (2, 0,
+  0, 0, 0, 0), polarization 2, nothing is left at (8,7,7), the totals are
+  light 3 (2 on the ray and 1 held) and apparatus 0, `external_body_totals`
+  light 2, and the body at rest reports sink light 2, `held` [0, 0, 4, 4, 0,
+  0] and `held_phases` [0, 0, 1, 1, 0, 0]. The accounting balances at every
+  tick of every world.
 
 ## A5 Coulomb
 

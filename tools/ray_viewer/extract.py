@@ -186,6 +186,9 @@ class Unit:
     # The ray's momentum register when the recording carries one set by a push
     # (ray-momentum-turn-v1); None reads as amount x the Link's heading.
     momentum: list[int] | None = None
+    # The ray's polarization when the recording carries one (ray-polarization-v1):
+    # a step of its family's circle, or None for an unpolarized ray.
+    polarization: int | None = None
     chain: Chain | None = None
 
 
@@ -418,6 +421,8 @@ def enrich_from_frames(units: list[Unit], frames: list[dict[str, Any]] | None) -
                 unit.event_shares = [int(v) for v in ray["event_shares"]]
             if ray.get("momentum") is not None:
                 unit.momentum = [int(v) for v in ray["momentum"]]
+            if ray.get("polarization", -1) is not None and int(ray.get("polarization", -1)) >= 0:
+                unit.polarization = int(ray["polarization"])
         if transit.target is not None:
             arrived = recorded_ray(
                 by_tick.get(transit.arrival), transit.target, unit.family, transit.port
@@ -1416,6 +1421,7 @@ def chain_document(
                 "event_ports": unit.event_ports,
                 "event_shares": unit.event_shares,
                 "detector": unit.detector,
+                "polarization": unit.polarization,
                 "escaped": unit.transit.escaped,
             }
         )

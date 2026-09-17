@@ -63,7 +63,14 @@ EXPERIMENT_KEYS = {"rays", "couplings", "apparatus", "note"}
 # newly decided entry must join these lists and get a world below.
 RUNNABLE_RAYS = ["light", "electron", "positron"]
 RUNNABLE_RELEASES = [("electron", "light"), ("positron", "light")]
-RUNNABLE_COUPLINGS = ["born_steering", "electron_field_turn", "absorber", "mirror", "phase_plate"]
+RUNNABLE_COUPLINGS = [
+    "born_steering",
+    "electron_field_turn",
+    "absorber",
+    "mirror",
+    "phase_plate",
+    "polarizer",
+]
 # The names a world writes into an external-body coupling of the catalog: the met
 # family for "any" and "same", the body's family for "body", the offset for "setting".
 BODY_NAMES: dict[str, str | int] = {"any": "light", "same": "light", "body": "apparatus", "setting": 3}
@@ -398,6 +405,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "initial_momentum",
             "coupling",
             "momentum_table",
+            "polarizer",
         }
         piece = apparatus["external_body"]["apparatus_family"]
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
@@ -439,9 +447,17 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             [1, 4],
         )
         # Feature 12 (field-spreading-v1): the split table declared, the source sign
-        # the releaser's; polarization stays open.
+        # the releaser's; feature 11 (ray-polarization-v1): the polarization decided
+        # by A12, a transverse direction on the circle of the phase width, and spin
+        # the same property at one bit on the electron family.
         assert light["spread"] == [6, 1, 1, 1, 1, 1] and light["source_sign"] == "releaser"
-        assert light["decided_by"] == {"polarization": "A12"}
+        assert (light["polarization"], light["polarization_bits"]) == ("transverse", "default")
+        assert "decided_by" not in light
+        assert all(rays[name]["polarization_bits"] == 1 for name in ("electron", "positron"))
+        polarizer = couplings["polarizer"]
+        assert (polarizer["status"], polarizer["world_name"]) == ("decided", "polarizer")
+        assert polarizer["outputs"]["table"] == [8, 7, 4, 1, 0, 1, 4, 7]
+        assert polarizer["outputs"]["reference_bits"] == REFERENCE_BITS
         assert not {"electron_field", "positron_field"} & rays.keys()
         assert all("light" in rays[name]["field"] for name in ("electron", "positron"))
     elif case == "undecided":
@@ -453,9 +469,10 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        # 28 since 2026-09-17: feature 12 decided light's spread and source_sign,
-        # feature 2b the two couplings of the Detector.
-        assert len(found) == 28
+        # 26 since 2026-09-17: feature 12 decided light's spread and source_sign,
+        # feature 2b the two couplings of the Detector, feature 11 light's
+        # polarization and the polarizer's table (A12 measured).
+        assert len(found) == 26
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -465,7 +482,6 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A8",
             "A9",
             "A10",
-            "A12",
             "hypothesis 12",
             "hypothesis 13",
             "hypothesis 16",
@@ -644,3 +660,45 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert simulation.totals() == {"light": (5,), piece["name"]: (0,)}
             assert simulation.external_body_totals() == {"light": (0,), piece["name"]: (0,)}
             assert simulation.external_bodies() == [at_rest | {"sink": {}}]
+        # The polarizer (ray-polarization-v1): the same lamp polarized along +Y (step
+        # 0) at a body of angle 2 (45 degrees on the eight-step circle) with the
+        # catalog's table: 5 x 4 / 8 passes 2 with polarization 2, sinks 2, and the
+        # two shares of 4/8 wait in the body's registers as one quantum, at phase 1.
+        polarizer = couplings["polarizer"]
+        assert [types_of(p) for p in polarizer["participants"][:1]] == [["light"]]
+        document = board(records, ["light", piece["name"]], lamps, [])
+        document["emissions"][0]["polarization"] = 0
+        document["external_bodies"] = [
+            {
+                "position": [8, 7, 7],
+                "family": piece["name"],
+                "amount": 4096,
+                "coupling": polarizer["world_name"],
+                "polarizer": {
+                    "family": "light",
+                    "angle": 2,
+                    "pass": [1, 0, 0],
+                    "table": polarizer["outputs"]["table"],
+                },
+            }
+        ]
+        simulation = run(document)
+        assert rays_at(simulation, (9, 7, 7)) == [
+            Ray(
+                0,
+                (0, 0, 0),
+                2,
+                phase=1,
+                steps=1,
+                event_ports=1,
+                event_shares=(2, 0, 0, 0, 0, 0),
+                polarization=2,
+            )
+        ]
+        assert rays_at(simulation, (8, 7, 7)) == []
+        assert simulation.totals() == {"light": (3,), piece["name"]: (0,)}
+        assert simulation.external_body_totals() == {"light": (2,), piece["name"]: (0,)}
+        assert simulation.external_bodies() == [
+            at_rest
+            | {"sink": {"light": 2}, "held": [0, 0, 4, 4, 0, 0], "held_phases": [0, 0, 1, 1, 0, 0]}
+        ]
