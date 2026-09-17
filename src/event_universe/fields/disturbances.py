@@ -272,7 +272,8 @@ def convert_values(
 ) -> tuple[tuple[Values, ...], int] | None:
     """N frozen inputs to M declared outputs, or None when the guard is false.
 
-    One arithmetic for a record conversion and a meeting of rays: every output
+    The arithmetic of the meeting of rays with outputs (`ray-meeting-conversion-v1`;
+    the record conversion that shared it was deleted on 2026-09-17): every output
     value is built from the same frozen inputs by the rule's assignments; a split
     by a declared table shares the inputs' content between two outputs in the
     table's ratio and gives the whole quantum that the exact division leaves to
@@ -421,38 +422,6 @@ class DisturbanceLaw:
             raise ValueError("conversion requires zero carried routing and allowance state")
         if not 1 <= original.channel_code <= 7:
             raise ValueError("conversion channel must identify the seed or a neighbor port")
-
-    def _convert_group(
-        self, rule: InteractionDefinition, records: tuple[DisturbanceRecord, ...], meter: CostMeter
-    ) -> tuple[DisturbanceRecord, ...] | None:
-        """Replace N frozen inputs by M declared output families, or None when the guard is false.
-
-        The values are `convert_values`, shared with the meeting of rays: every
-        output payload is built from the same frozen inputs, and conserved fields
-        and every per-record readout invariant are compared as sums over all inputs
-        against sums over all outputs before anything is returned.
-        """
-        before = tuple(record.values for record in records)
-        converted = convert_values(rule, before, self.fields, meter, self.operation_costs)
-        if converted is None:
-            return None
-        for original in records:
-            self._require_convertible(original)
-        zero_phases = tuple((1,) * field.components for field in self.fields)
-        candidates = tuple(
-            DisturbanceRecord(
-                kind,
-                values,
-                zero_phases,
-                # Outputs that reuse an input slot keep its arrival provenance; new ones are local.
-                channel_code=records[index].channel_code if index < len(records) else 1,
-            )
-            for index, (kind, values) in enumerate(zip(rule.outputs, converted[0], strict=True))
-        )
-        for candidate in candidates:
-            meter.charge("update")
-            self._validate(candidate, meter)
-        return candidates
 
     def _validate(self, record: DisturbanceRecord, meter: CostMeter) -> None:
         definition = self.definitions[record.type_index]
@@ -690,36 +659,15 @@ class DisturbanceLaw:
                     updated[left_slot], updated[right_slot] = left, right
 
         # Multi-field transactions follow exchanges and precede all routing.
-        consumed: set[int] = set()
-        products: set[int] = set()
         for interaction in self.interactions:
             if interaction.participants:
                 for group in participant_groups(interaction, tuple(updated)):
                     records_in_group = tuple(updated[slot] for slot in group)
                     assert all(record is not None for record in records_in_group)
                     participants = tuple(record for record in records_in_group if record is not None)
-                    if not interaction.outputs:
-                        outputs = self._interact_group(interaction, participants, meter)
-                        for slot, output in zip(group, outputs, strict=True):
-                            updated[slot] = output
-                        continue
-                    converted = self._convert_group(interaction, participants, meter)
-                    if converted is None:
-                        continue
-                    for slot, output in zip(group, converted, strict=False):
+                    outputs = self._interact_group(interaction, participants, meter)
+                    for slot, output in zip(group, outputs, strict=True):
                         updated[slot] = output
-                        products.add(slot)
-                    for slot in group[len(converted) :]:
-                        updated[slot] = None
-                        consumed.add(slot)
-                        products.discard(slot)
-                    for output in converted[len(group) :]:
-                        free = next((s for s in range(slots) if updated[s] is None), None)
-                        if free is None:
-                            raise ValueError("conversion outputs exceed the free resident slots")
-                        updated[free] = output
-                        consumed.discard(free)
-                        products.add(free)
                 continue
             for left_slot in range(slots):
                 for right_slot in range(slots):
@@ -743,19 +691,12 @@ class DisturbanceLaw:
         departures: list[Departure] = []
         for slot, record in enumerate(updated):
             if record is None:
-                if slot in consumed:
-                    replacements.append((slot, None))
                 continue
             retained, outgoing = self._route(record, meter, port_loads)
             replacements.append((slot, retained))
             departures.extend(Departure(item.port, item.record, slot) for item in outgoing)
             if self.definitions[record.type_index].cost_field is not None:
                 meter.charge("update")
-        # Products of this cycle's conversions leave on distinct Ports; other records
-        # keep the ordinary transport, which admits several packets per Port.
-        product_ports = [item.port for item in departures if item.origin_slot in products]
-        if len(set(product_ports)) != len(product_ports):
-            raise ValueError("conversion departures must use distinct Ports")
         meter.charge("commit")
         # Subquantum exchange belongs to the current local pair, not to a later
         # occupant of its slot. It is rounding state, never conserved inventory.

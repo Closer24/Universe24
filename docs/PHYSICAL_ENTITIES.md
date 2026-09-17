@@ -107,7 +107,8 @@ a below-threshold crossing control, and a Compton-like exchange whose energy
 fraction follows an integer formula, all in catalog keV units with exact energy,
 momentum and charge accounting up to 10 GeV on a 48-cubed board. What is
 demonstrated is the accounting and the energy dependence of supplied discrete
-rules on the generic [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion),
+rules on the generic [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
+of records (deleted on 2026-09-17, issue #164 bucket B.6),
 including a 2 -> 3 three-photon channel; the kinematics, thresholds, transport
 pace and lattice angles are supplied data, and no cross section, mass shell,
 spin or rate is derived. Nuclei, bound states and binding energies are not

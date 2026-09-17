@@ -7,7 +7,6 @@ from .disturbance_state import Address3, InitialState, Values, bounded
 from .event_resolution import EventResolver, Planner
 from .integer import ceil_div, checked_work
 from .node_conservation import NodeConservationGuard
-from .record_policy import RecordPolicy
 
 
 def port_count(initial: InitialState) -> int:
@@ -89,7 +88,9 @@ class NodeServices:
 
     initial: InitialState
     planner: Planner
-    record_policy: RecordPolicy
+    # Carrier types a spatial coupling or interaction selects; a record of such a
+    # type always has a local cycle to plan.
+    spatial_types: frozenset[int]
     events: NodeEvents
     accounting: NodeAccounting
     coupled_types: frozenset[int]

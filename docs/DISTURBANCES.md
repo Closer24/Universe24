@@ -135,7 +135,7 @@ separate carriers and their different directions.
 | `fields` | Between 1 and 16 unique field definitions |
 | `disturbance_types` | Between 1 and 16 unique disturbance definitions |
 | `couplings` | Optional list, at most 32 local exchange rules |
-| `interactions` | Optional list, at most 32 atomic pair transactions; an entry with `participants` and `outputs` is an [N-to-M family conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) |
+| `interactions` | Optional list, at most 32 atomic pair transactions or indexed group rules; an entry with `outputs`, the [N-to-M family conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) of records, is rejected since its deletion on 2026-09-17 (issue #164, bucket B.6): a meeting of rays converts through `ray_interactions` ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)) |
 | `seeds` | Positions, disturbance type names and optional value overrides |
 | `spatial_fields` | Optional outward fields with baseline and branch weights, schema 1 local fields, or straight-ray fields with `headings`, `rays_per_tick` and `ray_slots`, each ray field a [wave-ray family](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1) with optional `phase_bits`, `charge` and `kerengonen`, and a ray field with `field_of` and `release` the field of that family ([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)); version 2 requires decay per field |
 | `emissions` | Optional hold/move source expressions with injection accounting; version 2 requires a budget per rule |
@@ -294,9 +294,11 @@ weights `[2,0,1,0,0,0]` send 8 through +X and 4 through +Y. Nondivisible inputs
 use retained integer phase, not dropped fractions. The split rule does not
 establish a diffusion equation or wave equation by itself.
 
-Split arrivals may combine only with an unlocked record of the same type and
-directional channel. Whole-record arrivals occupy distinct free slots. There is
-no automatic averaging of velocities or other attributes.
+Every arrival, split or whole, takes its own free slot outside the pending
+lock; nothing is folded into a resident record. The merge of split arrivals of
+one type and directional channel by summing their values (records as owners)
+was deleted on 2026-09-17 (issue #164, bucket B.6; Highlights 3.20 and 5.1).
+There is no automatic averaging of velocities or other attributes.
 
 ### Local updates and expressions
 
@@ -564,9 +566,11 @@ read-only verification and cannot correct the local law.
 Local records, outgoing packet capacity and rule/remainder storage have fixed
 bounds from the schema. More world nodes increase total host storage and runtime;
 the complete world step is not constant-time. Receiving capacity exhaustion,
-occupied outgoing capacity, overflow, invalid division, wrong component counts,
-forbidden signs or failed conservation stop the run explicitly. No disturbance
-is silently dropped and no queue grows without bound. A failed engine rejects
+overflow, invalid division, wrong component counts, forbidden signs or failed
+conservation stop the run explicitly. No disturbance is silently dropped and no
+queue grows without bound; the carrier commit's guard against occupied outgoing
+Links was deleted on 2026-09-17 (issue #164, bucket B.6; Highlights 5.1: no
+occupied channel). A failed engine rejects
 continuation. Already completed independent local events need not roll back when
 a later local event fails; failure metadata must preserve the actual stopped state.
 

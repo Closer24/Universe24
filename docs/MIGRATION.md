@@ -438,7 +438,9 @@ still names `test_generic_vector_lab.py`, `test_workspace.py` and
 The examples those rows name (`examples/directional-wave/`,
 `examples/coupled-excitations/`, `examples/known-entities/`,
 `examples/generic-ray-coupling/field-sampling.json` and the root example
-inputs) stay for that reason and for the kept tests that load them. The
+inputs) stay for that reason and for the kept tests that load them (the rows
+and `field-sampling.json` went with bucket B.6 later the same day, see
+[records as owners deleted](#records-as-owners-deleted-on-2026-09-17)). The
 modules of running feature branches (`test_energy_audit.py`,
 `test_kerengonen.py`, `test_ray_integration_guards.py`,
 `test_native_ray_coupling.py`, `test_ray_merge_contracts.py`,
@@ -499,8 +501,9 @@ to six new event rays at the meeting Node
   `ray_layers`.
 - The ray path no longer needs `fields/record_operations.py` and
   `core/record_policy.py`: a meeting of rays converts without a resident
-  record. Both stay for the record path until step 6 of issue #164 deletes
-  them.
+  record. Both stayed for the record path until step 6 of issue #164 (bucket
+  B.6) deleted them the same day, see
+  [records as owners deleted](#records-as-owners-deleted-on-2026-09-17).
 - Existing worlds with single-output rules run byte-identically. The
   native-ray coupling tests that asserted `outputs` are rejected now assert
   that the carrier output form (`{"type": ...}`) and malformed meeting outputs
@@ -639,6 +642,62 @@ at every Node a ray of the family crosses
   `released_fields` beside `ray_meeting`.
 - Existing worlds without `field_of` run byte-identically; their run record
   carries `released_fields: []`.
+
+## Records as owners deleted on 2026-09-17
+
+Issue #164 bucket B.6, the last deletion bucket, following
+[HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.20 (all the information is on the
+rays; the origin Node keeps nothing and there is no register) and 5.1 (no
+occupied channel and no capacity rule) and row R1 and migration step 6 of
+[RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md): an interaction is a property of the
+meeting of rays, and since `ray-meeting-conversion-v1` the N-to-M arithmetic
+lives at the meeting (`convert_values`), not on a resident record.
+
+- `fields/record_operations.py` (`RecordOperations`, 139 lines),
+  `core/record_policy.py` (`RecordPolicy`, 25 lines) and
+  `tests/test_record_operations.py` (19 tests, 177 lines) are gone.
+  `DisturbanceEngine` no longer takes `record_policy=`; `NodeServices` carries
+  `spatial_types` (the carrier types a spatial coupling or interaction selects)
+  in its place, and `disturbance_api.Simulation` composes nothing for it.
+- A delivered record takes the first spare slot outside the pending lock and
+  nothing is folded into a resident: the merge of split arrivals of one type
+  and channel by summing their values (records as owners) is deleted. The
+  receiving-capacity failure is unchanged ("local receiving capacity
+  exhausted; no disturbance was discarded"): a bounded-state error, not a rule
+  that makes anything wait. The activity predicate and the cost reporter moved
+  unchanged into `core/disturbance_node.py` as the pure functions
+  `carrier_work` and `report_cost` over the immutable run definition, so a
+  world in which no two arrivals of one type and channel reach one Node in one
+  tick runs byte-identically.
+- The N-to-M conversion of records is gone: `_convert_group` and the
+  `outputs` branch of `DisturbanceLaw.__call__` (`fields/disturbances.py`),
+  `_conversion_interaction` (`initialization.py`) and the one-role admission
+  of `core/coupling_selectors.py` (a group has two to six roles). An
+  `interactions` entry with `outputs` is rejected with a dated message;
+  `outputs` in `ray_interactions` is unchanged and `convert_values` stays as
+  the arithmetic of the meeting. The two-to-two `output_types` rule of
+  [local conversions](LOCAL_CONVERSIONS.md) is unchanged.
+- The carrier commit's guard "outgoing links still occupied; no implicit
+  packet queue is allowed" (`core/disturbance_node.py`) is gone, as the
+  spatial pre-planning refusal went with bucket B.5.
+- `tools/check.py` `RESOURCE_CONSUMERS` lost the rows of the consumers
+  deleted with the test-suite reduction (`test_ray_heading_flux.py`,
+  `test_property_entity_profiles.py`, `test_coupled_excitations.py`,
+  `test_directional_wave.py`, `test_local_lorentz_field.py`,
+  `test_entity_catalog.py`, `test_profile_validation.py`,
+  `test_entity_compiler.py`, `test_physical_entities.py`,
+  `test_small_space_experiments.py`, `test_reference_examples.py`,
+  `test_generic_identity.py`) and the selector names
+  `test_generic_vector_lab.py`, `test_workspace.py` and
+  `test_recorded_movie.py`; every remaining row names a kept test, which
+  `tests/test_check_scope.py` (27 tests, from 47) now asserts.
+  `examples/generic-ray-coupling/field-sampling.json`, kept only for that
+  table, is gone; `examples/directional-wave/`, `examples/coupled-excitations/`
+  and `examples/known-entities/` stay because kept tests
+  (`test_configuration_validation.py`, `test_local_conversions.py`) and
+  documented tools load them.
+
+There is no replacement API. Every deletion bucket of issue #164 is done.
 
 ## Primary initialization-based API
 

@@ -61,104 +61,44 @@ capacity, arithmetic and transit contracts.
 
 ## N-to-M family conversion
 
-`family-conversion-n-to-m-v1` generalizes the two-to-two rule above over
-families and arity. An interaction that declares `participants` and `outputs`
-is a conversion rule on the indexed-participants mechanism of the
-[Node execution profile](NODE_VECTOR_PROCESSOR.md#local-rules): the same role
-selection (one `type` or `requires` per role, earliest unused compatible slot
-in declaration order, disjoint groups, no search), the same frozen snapshot and
-the same atomic commit. It is available in the ordinary cost-budget profile as
-well as under `node_execution: true` (where `k` is required like any rule); the
-plain indexed interaction without `outputs` still requires `node_execution`.
+Deleted on 2026-09-17 (issue #164, bucket B.6). `family-conversion-n-to-m-v1`
+generalized the two-to-two rule above over families and arity: an
+`interactions` entry with `participants` and `outputs` replaced one to six
+resident records by one to six declared output families in one frozen local
+plan, each product leaving on its own Port. Under [Highlights](HIGHLIGHTS.md)
+3.20 and 5.1 and row R1 of the
+[ray-event model](RAY_EVENT_MODEL.md#5-what-the-current-engine-does-differently)
+an interaction is a property of the meeting of rays, not of a resident record,
+so the N-to-M conversion lives only at a meeting of rays
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1),
+`ray-meeting-conversion-v1`), whose arithmetic `convert_values`
+(`fields/disturbances.py`) the record rule had shared. An `interactions` entry
+with `outputs` is now rejected at initialization with a dated message;
+`outputs` in `ray_interactions` is unchanged. The compiler
+`_conversion_interaction` (`initialization.py`), the record path
+`_convert_group` with the `outputs` branch of `DisturbanceLaw.__call__`
+(`fields/disturbances.py`) and the one-role admission of
+`core/coupling_selectors.py` are gone; see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17). The
+family-conversion candidates (`examples/family-conversion/`) and their test
+module went earlier the same day with the test-suite reduction; their dated
+results stay in [validation](VALIDATION.md). The two-to-two `output_types`
+rule above is unchanged and stays covered by `tests/test_local_conversions.py`,
+which also checks the rejection of `outputs`.
 
-```json
-{"name": "decay", "participants": [{"type": "parent"}],
- "outputs": [{"type": "child"}, {"type": "child"}],
- "when": {"op": "gt", "args": [{"field": "energy", "participant": 0}, 1021]},
- "assignments": [{"output": 0, "field": "energy", "expression": {"op": "rational_floor", "args": [{"op": "ratio", "args": [{"field": "energy", "participant": 0}, 2]}]}}, "..."],
- "invariants": [{"name": "energy", "expression": {"field": "energy"}}]}
-```
-
-| Part | Contract |
-| --- | --- |
-| Inputs | 1 through 6 roles; six is a declared bound of this contract (six roles, six outputs, one product departure per Port), not `slots_per_node`; the engine's transport itself admits several packets per Port |
-| Outputs | 1 through 6 entries, each an explicit `type` (a declared family); property selection describes inputs only |
-| Assignments | `output`, `field`, `expression`; every field owned by every output is assigned exactly once from the frozen inputs (`participant: i` references); a field the output family does not own stays zero |
-| Guard | Optional scalar `when` over the frozen inputs, as in indexed rules; a zero guard leaves every input untouched |
-| Invariants | Per-record readouts (`{"field": ...}` or any owned-field expression, absent fields reading zero) summed over all N inputs and compared with the sum over all M outputs, component by component; every `conserved` field is compared the same way without a declaration |
-| Slots | Outputs `0..N-1` replace the input slots in role order; inputs beyond M are consumed and their slots emptied; outputs beyond N take free slots in the frozen snapshot, and when none is free the cycle fails before commit (no waiting, no silent drop) |
-| Ports | Products route in the same cycle under their own family transport. Every product departure uses a distinct Port; a second product on one Port fails before commit. Non-participant records leaving in the same cycle keep the ordinary transport, which admits several packets per Port, so a spectator on a product's Port does not fail the cycle. Products with a zero direction are retained instead |
-| Ownership | Reserved slots, including newly claimed free ones, are locked against arrivals during the computation wait; originals own all inventory until the single commit |
-| State boundary | No new pending, packet or Node state: the plan reuses `LocalPlan.replacements`, recording consumed inputs as `(slot, None)` and claimed free slots as replacements, which the existing pending lock protects during the wait |
-| Bounded arithmetic | Every stored component is bounded by `MAX_VALUE`; guards and assignments use the 64-bit working register; rational projections carry their fixed 65536-`evaluate` tariff. These are design bounds of the contract, and a configuration's `normal_budget` must cover a conversion cycle or the ordinary timing law delays it |
-| Carried state | Every input must carry zero routing, rate, allowance and exchange state, as for the two-to-two rule; outputs that reuse an input slot keep its arrival channel tag, new ones start local |
-| Cost | One `couple`, one `update` per assignment and one `update` per output replacement; rational projections carry their fixed tariff |
-| Failure | Guard, arithmetic, bound, conservation, invariant, slot or Port failure installs no replacement and no pending plan |
-
-The arithmetic (guard, outputs from the frozen inputs, conserved and invariant
-sums) is `convert_values` in `fields/disturbances.py`, shared unchanged with
-the [meeting of rays with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1).
-
-Excluded and rejected at initialization: pair selectors or `output_types` together
-with `outputs`, `outputs` without `participants`, more than six roles or outputs,
-split or cost-reporting families, schema 2, and families that also join exchange
-couplings, spatial responses or emission. Output families may repeat input
-families (an exchange that keeps both families is a 2-to-2 conversion); a rule
-never re-selects its own products in the same pass, and later rules or later
-cycles act on products under their own guards, as configured.
-
-The family-conversion candidates (`examples/family-conversion/`, deleted on 2026-09-17)
-are declared on this contract between catalog families, with values derived
-from the [entity catalog](ENTITY_CATALOG.md) through the reference-unit
-authoring adapter and recorded in `bindings.json`:
-
-- `family-conversion-annihilation-v1` (2 -> 2), `family-conversion-pair-production-v1`
-  (2 -> 2 with the 1022 keV threshold in `when`), `family-conversion-compton-v1`
-  (2 -> 2 keeping both families), `family-conversion-three-photon-v1` (2 -> 3)
-  and `family-conversion-four-body-v1` (4 -> 4, four rays through four Ports in
-  one joint transaction whose every output reads all four inputs), each with a
-  stated discrete kinematics and an explicit owner for every indivisible unit.
-- The catalog photon has no energy property; the shared `energy`, `momentum`,
-  `charge` layout with `energy == |momentum|` for a photon is the representation
-  the entity audit found missing, supplied here as configuration data.
-- Rest energy is a coupling parameter, not a stored field, because the ordinary
-  runner accounts every field total.
-
-Limits found while building them:
+Limits found while building the deleted candidates, kept as history:
 
 - A converting record must arrive with zero carried routing state. Cyclic
   weighted movement advances its phase once per hop, so momentum components
-  used directly as port weights are rejected at the meeting; the fixtures move
-  along the reduced direction `rational_direction(momentum)`, whose unit
+  used directly as port weights were rejected at the meeting; the fixtures
+  moved along the reduced direction `rational_direction(momentum)`, whose unit
   weights keep the phase at zero. Fractional `rate` credit and balanced-routing
-  counters are rejected for the same reason; a physical pace `|p| / E` for a
-  converting record needs an explicit rule for the credit's owner.
+  counters were rejected for the same reason.
 - Every stored component is bounded by `MAX_VALUE = 1_073_741_823`; products in
   guards and assignments use the 64-bit working register. Annihilation and pair
-  production run at exactly `MAX_VALUE` per record; the Compton recoil electron
-  carries one unit more than the photon and is rejected explicitly at that bound.
+  production ran at exactly `MAX_VALUE` per record.
 - Rational projections charge 65536 `evaluate` operations per node; the
-  configuration's `normal_budget` must cover a conversion cycle (about eleven
-  million for the annihilation rule) or the cycle is delayed by the ordinary
-  timing law.
-- The runner's `conserved_at_every_completed_tick` excludes escaped quantity and
-  is false after the first escape in an open world; the balanced flag and the
-  audit include escapes.
-- Three axis-aligned photons with zero total momentum always share a Port on the
-  cubic lattice, so the 2 -> 3 candidate requires a net momentum.
-
-Acceptance. The independent acceptance criteria are the `contract` and
-`generic_arity` entries of
-expectations.json (`examples/family-conversion/expectations.json`, deleted on 2026-09-17), written
-before the first run, and the family-conversion entry of
-[TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md): arity 1 -> 6 with one record per
-Port, 6 -> 1, arity outside one to six rejected, two products on one Port,
-missing free slots, a broken readout invariant and a conserved-field mismatch
-each leaving every owner unchanged with no pending plan, property-selected
-inputs converting, reserved slots surviving an arrival during the wait, and the
-same conversion under `node_execution` firing at `ready_tick = k`.
-
-The owners are `core/disturbance_state.py`, `core/coupling_selectors.py`,
-`initialization.py` (`_conversion_interaction`) and `fields/disturbances.py`
-(`_convert_group`). Evidence: `tests/test_family_conversion.py` (deleted on 2026-09-17); the two-to-two
-suite `tests/test_local_conversions.py` is unchanged.
+  configuration's `normal_budget` had to cover a conversion cycle or the
+  ordinary timing law delayed it.
+- Three axis-aligned photons with zero total momentum always share a Port on
+  the cubic lattice, so the 2 -> 3 candidate required a net momentum.

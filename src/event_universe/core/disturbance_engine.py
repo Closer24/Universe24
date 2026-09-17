@@ -26,7 +26,6 @@ from .node_execution import NodeExecution
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
-from .record_policy import RecordPolicy
 from .spatial_engine import (
     SpatialCoupler,
     SpatialDecayer,
@@ -57,7 +56,6 @@ class DisturbanceEngine:
         spatial_coupler: SpatialCoupler | None = None,
         spatial_decayer: SpatialDecayer | None = None,
         *,
-        record_policy: RecordPolicy,
         resolver: EventResolver | None = None,
         node_workers: int = 1,
         balance_guard: NodeConservationGuard | None = None,
@@ -83,7 +81,6 @@ class DisturbanceEngine:
         self._resolver = resolver
         self._work = WorkLedger()
         self._planner = planner
-        self._record_policy = record_policy
         self._observer = observer
         self._nodes: dict[Address3, DisturbanceNode] = {}
         self._focus_fallback = (
@@ -127,7 +124,7 @@ class DisturbanceEngine:
         self._services = NodeServices(
             replace(initial, seeds=(), spatial_seeds=()),
             carrier_planner,
-            record_policy,
+            selected_type_set(initial.spatial_couplings, initial.spatial_interactions),
             NodeEvents(observer),
             NodeAccounting(self._work, self._source_totals),
             self._coupled_types,

@@ -54,7 +54,12 @@ The Bell probes (`examples/kerengonen-bell/`, `examples/bell-chsh/`,
 probes and the bond registry were deleted on 2026-09-17 under
 [Highlights](HIGHLIGHTS.md) 3.18 (deleted), 3.19, 3.20, 5.1 and 5.4; see the
 [migration note](MIGRATION.md#bond-registry-claim-gather-lottery-capture-and-occupied-links-guard-deleted-on-2026-09-17).
-Their dated results stay in [validation](VALIDATION.md).
+Their dated results stay in [validation](VALIDATION.md). The record operations
+(records as owners: the merge of delivered records into a resident, and the
+N-to-M conversion of records) were deleted the same day under
+[Highlights](HIGHLIGHTS.md) 3.20 and 5.1 with bucket B.6, the last of issue
+#164; see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17).
 
 The shared quantum resource, its integration layer and their twelve documents
 (`QUANTUM_EVENTS.md`, `NATIVE_QUANTUM_EVENTS.md`, `WAVE_ORIGINS.md`,

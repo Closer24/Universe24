@@ -345,8 +345,8 @@ declared coupling between their families decides one of:
   bounded integer ratios with the remainder owned as Highlights 3.17
   requires, declared, not derived), exactly as the
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
-  already does for records: up to six inputs, up to six outputs, one output
-  departure per Port;
+  did for records until bucket B.6 deleted it on 2026-09-17: up to six
+  inputs, up to six outputs, one output departure per Port;
 - **a Detector interaction**: only at a Node whose Detector bit is set, for
   each transfer arriving through a Port this interval, independently, up to
   six at once: 1 or 0 is drawn from the mark's own ticket
@@ -652,10 +652,12 @@ table is a declared coupling, an output amount split by the table at the
 phase difference of two inputs, the rest output owning the remainder as
 Highlights 3.17 requires; the momentum such a split moves is booked as an
 accounted source until the field ray of step 7 owns it as recoil; see
-[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needs
-`fields/record_operations.py` and `core/record_policy.py`, so step 6 of
-issue #164, their deletion, is unlocked. The wave-ray phase rule and the
-light family of step 6 follow with feature 9.
+[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needed
+`fields/record_operations.py` and `core/record_policy.py`; step 6 of
+issue #164 (bucket B.6, done on 2026-09-17) deleted them with the N-to-M
+conversion of records, see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17). The
+wave-ray phase rule and the light family of step 6 follow with feature 9.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
