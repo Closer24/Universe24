@@ -256,7 +256,9 @@ def as_json(value):
 
 
 @pytest.mark.parametrize(
-    "mode,body", [("annul", False), ("siblings", False), ("annul", True)], ids=["annul", "siblings", "body"]
+    "mode,body",
+    [("annul", False), ("siblings", False), ("annul", True)],
+    ids=["annul", "siblings", "body"],
 )
 def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tmp_path):
     initial = parse_initial_state(document(mode, body=body))
@@ -290,12 +292,16 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
         assert ledger == expected_ledger(mode, tick, body=body)
         assert all(line_balanced(item) for item in ledger["fields"].values())
         assert all(line_balanced(item) for item in ledger["charge"].values())
-        assert world.escaped_charge_totals() == {
-            "plus": 0,
-            "minus": -1 if tick >= 5 and not body else 0,
-            "electron": 0,
-            "G": 0,
-        } | star
+        assert (
+            world.escaped_charge_totals()
+            == {
+                "plus": 0,
+                "minus": -1 if tick >= 5 and not body else 0,
+                "electron": 0,
+                "G": 0,
+            }
+            | star
+        )
         assert all(item["balanced"] for item in world.spatial_accounting().values())
         if body:
             # The body at B took the minus arm into its sink at tick 3 and is unmoved.
