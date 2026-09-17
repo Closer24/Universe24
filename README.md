@@ -8,6 +8,10 @@ framework is Reality Theory; the simulator that realizes it is Universe24.
 Canonical source: [Closer24/Universe24](https://github.com/Closer24/Universe24),
 branch `main`. The Python package remains `event_universe`.
 
+**System architecture:** [Read the central architecture document](docs/ARCHITECTURE.md)
+from the system overview through Node state, event flow, fields, quantum boundaries
+and detailed implementation ownership.
+
 **Start here:** [AGENTS.md](AGENTS.md) contains the shared instructions and
 English-only repository language rule. The active implementation lives in
 `src/event_universe/`; [Boss and specialist skills](skills/boss-orchestrator/SKILL.md)
