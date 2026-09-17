@@ -753,8 +753,10 @@ Port heading except the F ray's own, each of amount `floor(amount_F x n /
 d)`, with `event_ports` 0, `event_shares` all zero, `steps` 0, `outbound` 1,
 `detector` 0, accumulators (0, 0, 0) and the F ray's phase at the release:
 the field carries its emitter's phase, and G declares its own `phase_advance`
-(0 delivers the phase unchanged, as light does). The fraction the floor
-leaves is not released: the field is a description booked as a source, so
+(0 delivers the phase unchanged, as light does); the sign of the source's
+charge is a planned property of the released ray (feature 12, Highlights
+3.5, 2026-09-17), never encoded in its phase. The fraction the floor leaves
+is not released: the field is a description booked as a source, so
 nothing owned is destroyed and no remainder needs an owner (Highlights
 3.17); a release whose floor is 0 releases nothing. The released rays leave
 in the same interval as the F ray, with the residents; the release is a

@@ -1602,7 +1602,8 @@ first run:
 - `records`: the twelve sections, `phase_bits` without a real-N value and
   `lag_bits` open, its world key undecided and its engine (feature 8b) not
   landed; 12 rays and 16 couplings; `light` a field ray of `field_of`
-  electron, positron and proton with release `[1, 4]`, its `spread` undecided
+  electron, positron and proton with release `[1, 4]`, its `spread` and
+  `source_sign` undecided
   and decided by feature 12, `light` in the `field` of the three charged
   families (the proton's since the helium-ion run, E4, whose fixed nucleus
   radiates it) and neither `electron_field` nor `positron_field` a ray
@@ -1622,9 +1623,9 @@ first run:
   `position`, `setting`, `seed`; the Detector's two couplings on the bit,
   `on_bit_1` and `on_bit_0`, open, their world key undecided and decided by
   feature 2b, their engine not landed, their defaults pass without a draw
-  and transmission without a draw (Highlights 5.4, 2026-09-17); both
-  apparatus kinds landed;
-- `undecided`: 31 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  and transmission without a draw and their alternative `draw`
+  (Highlights 5.4, 2026-09-17); both apparatus kinds landed;
+- `undecided`: 32 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
   A10, A12, hypothesis 12, hypothesis 13, feature 2b, feature 8b, feature 12,
   read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings

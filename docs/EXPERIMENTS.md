@@ -132,7 +132,11 @@ states "exactly" and means integer equality at every tick.
   3.5, 2026-09-17): light is the field and spreads by the split table of its
   family, so a slit is a gap in a wall that absorbs and the fringes are
   where a whole quantum, which never waits, is realized by the Detector;
-  until it lands light goes straight and the slit coupling re-emits.
+  until it lands light goes straight and the slit coupling re-emits. What a
+  field quantum returned with 0 does once the field spreads is an open
+  decision of the model owner before this run (Highlights 5.5, 2026-09-17);
+  until it is decided feature 12 implements the proposal, a walk back on the
+  line of arrival with no inverse split, and says so.
 
 ### A2. Bell test in phase form, symmetric geometry
 
@@ -306,7 +310,11 @@ states "exactly" and means integer equality at every tick.
   record). Fail: any one; an exponent outside the band is a fail of the
   outward dilution or of the declared table against Coulomb, stated as
   which.
-- **Status.** planned.
+- **Status.** planned. Reading of 2026-09-17 (Highlights 3.5, the field is
+  matter's message about itself): the sign of the releasing charge travels
+  on the field ray as a visible property (`source_sign`, feature 12), never
+  in the phase, and the attraction of opposite charges (`opposite_charge`)
+  closes with it.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
