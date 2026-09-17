@@ -127,7 +127,7 @@ RAY_BINDING = "ray-binding-v1"
 # and a group is read from the record by a reader (tools/ray_viewer/extract.py).
 LOOP_BINDING = "loop-binding-v1"
 # A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
-# ray-momentum-turn-v1): a ray's direction is its momentum vector, three integers
+# ray-momentum-turn-v2): a ray's direction is its momentum vector, three integers
 # carried as its register, by default amount x heading, the line its event gave
 # it; the DDA walks the register at every departure, one Link per interval, so
 # a ray with momentum (7, -1, 0) takes seven +x Links per -y Link. A coupling
@@ -135,8 +135,13 @@ LOOP_BINDING = "loop-binding-v1"
 # one participant it does not name by sign x amount x heading of every field
 # ray it meets, as the external body's table pushes the body, the field ray
 # returned reversed; the push stamps no event and changes no amount, phase or
-# bit. The heading index stays the ray's line for the rules that read it.
-RAY_MOMENTUM_TURN = "ray-momentum-turn-v1"
+# bit. The heading index stays the ray's line for the rules that read it. A
+# push keeps the walk (v2, 2026-09-17): the DDA's three accumulators carry over
+# and continue against the new register, so a ray pushed at every interval
+# walks the DDA line of its running register; v1 reset them at every push,
+# which the helium-orbit run (E8) showed steps such a ray along its register's
+# dominant axis alone.
+RAY_MOMENTUM_TURN = "ray-momentum-turn-v2"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -349,12 +354,13 @@ class Ray:
     # family; a visible property like the Detector bit, never encoded in the
     # phase, read by no rule of the engine.
     source_sign: int = 0
-    # The momentum register (ray-momentum-turn-v1, Highlights 3.16): the ray's
+    # The momentum register (ray-momentum-turn-v2, Highlights 3.16): the ray's
     # momentum, three integers, or None for the default amount x heading, the
     # line of its heading index. Set by a push, the DDA walks it in place of the
-    # heading; a push that brings it back to the default clears it, so a ray
-    # that resumes its line is the ray it was. Negated by a return with the
-    # heading; extensive, so merging rays adds it as it adds their amounts.
+    # heading, the accumulators kept through the push (continued_walk); a push
+    # that brings it back to the default clears it, so a ray that resumes its
+    # line is the ray it was. Negated by a return with the heading; extensive,
+    # so merging rays adds it as it adds their amounts.
     momentum: tuple[int, int, int] | None = None
 
 
@@ -1742,12 +1748,40 @@ def ray_momentum_share(ray: Ray, share: int, definition: SpatialFieldDefinition)
     return ray.momentum
 
 
+def continued_walk(
+    ray: Ray, register: tuple[int, int, int], definition: SpatialFieldDefinition
+) -> tuple[int, int, int]:
+    """The walk's progress carried through a push (ray-momentum-turn-v2). The three
+    accumulators are, per axis, the momentum-intervals banked toward the next Link
+    on that axis: every interval deposits the register's component, and a Link on
+    the axis withdraws the register's Manhattan length (`dda_step`). A push changes
+    the deposit and the price, not the balance, so the accumulators carry over and
+    continue against the new register. A ray without a register walked the heading
+    of its line at the table's scale, and the default register is amount x that
+    heading, so its balance is lifted by the amount (the DDA on a vector scaled
+    takes the same Ports from accumulators scaled with it), exactly. A balance the
+    new register cannot hold, an accumulator outside the admissible (-length,
+    length] of the new length (the push shrank the register below what was
+    banked), starts the walk over at (0, 0, 0), as every push did under v1."""
+    scale = 1 if ray.momentum is not None else ray.amount
+    kept = (
+        checked_work(ray.accumulators[0] * scale),
+        checked_work(ray.accumulators[1] * scale),
+        checked_work(ray.accumulators[2] * scale),
+    )
+    length = vector_length(register)
+    if all(-length < value <= length for value in kept):
+        return kept
+    return (0, 0, 0)
+
+
 def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDefinition) -> Ray:
-    """The ray after a push (ray-momentum-turn-v1): its register moved by the push,
-    its accumulators reset as at a change of line, amount, phase, bit, heading
-    index and event record untouched. A register back at the default amount x
-    heading is cleared, so the ray resumes its line as the ray it was; a push
-    that would leave no direction fails closed, since a ray never stops."""
+    """The ray after a push (ray-momentum-turn-v2): its register moved by the push
+    and its walk kept (`continued_walk`), amount, phase, bit, heading index and
+    event record untouched. A register back at the default amount x heading is
+    cleared and the walk starts over, so the ray resumes its line as the ray it
+    was; a push that would leave no direction fails closed, since a ray never
+    stops."""
     before = ray_momentum_vector(ray, definition)
     after = (
         bounded(checked_work(before[0] + push[0])),
@@ -1758,7 +1792,9 @@ def pushed_ray(ray: Ray, push: tuple[int, int, int], definition: SpatialFieldDef
         raise ValueError("a push cannot stop a ray: its momentum would be the zero vector")
     heading = definition.headings[ray.heading]
     default = tuple(checked_work(ray.amount * component) for component in heading)
-    return replace(ray, momentum=None if after == default else after, accumulators=(0, 0, 0))
+    if after == default:
+        return replace(ray, momentum=None, accumulators=(0, 0, 0))
+    return replace(ray, momentum=after, accumulators=continued_walk(ray, after, definition))
 
 
 def turn_receiver(rule: InteractionDefinition) -> int | None:

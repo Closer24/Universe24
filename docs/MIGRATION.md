@@ -6,6 +6,43 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## A push keeps the walk on 2026-09-17 (`ray-momentum-turn-v2`)
+
+Issue #169, feature 8b ([a free ray turns by
+momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2),
+"a push keeps the walk"), the fix the helium-orbit run
+([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) asked
+for: under `ray-momentum-turn-v1` `pushed_ray` reset the DDA's three
+accumulators to (0, 0, 0) at every push, so a ray pushed at every interval,
+every ray in a spreading field, stepped along its register's dominant axis
+and never turned gradually, against the feature's own statement. Engine and
+identity only; no schema key, record field or world file changes:
+
+- `pushed_ray` keeps the accumulators through a push (`continued_walk` in
+  `spatial_state`): the walk's progress, the momentum-intervals banked per
+  axis toward the next Link, continues against the new register, so a ray
+  pushed at every interval walks the DDA line of its running register. A
+  first push lifts the progress of the default walk by the amount (zero on
+  a unit-axial heading); a push back to the default, and a push that
+  shrinks the register below the banked progress (an accumulator outside
+  (-length, length] of the new length), start the walk over at (0, 0, 0),
+  as every push did under v1.
+- `RAY_MOMENTUM_TURN` is `ray-momentum-turn-v2`, and the runner records
+  `ray_momentum_turn: "ray-momentum-turn-v2"` when any push happened. A
+  record made under v1 in which a pushed ray had progress banked when a
+  push arrived is not reproduced: E8's escape and the A5 runs of that day
+  were recorded under v1 and are not repeated with this note. A world where
+  no push happens, and a push that finds the accumulators at zero (the
+  first push of a ray on a unit-axial line, every push of
+  `test_ray_momentum_turn.py`), are byte-identical.
+- `test_momentum_turn_walk.py`
+  ([expectations](TEST_EXPECTATIONS.md#the-walk-kept-through-a-push)) pins
+  the staircases of a push of 1 and of 8 per interval on a ray of 64, the
+  flip, the cancel, the shrink and the lift by hand, and two boards where a
+  field ray meets the ray at every Node. `test_helium_orbit.py`'s pins were
+  re-read under v2 and are unchanged, the kept walk taking the same -X
+  Links on that board ([expectations](TEST_EXPECTATIONS.md#the-helium-orbit)).
+
 ## Binding as a loop landed on 2026-09-17 (`loop-binding-v1`)
 
 Issue #169, feature 14 ([binding as a
@@ -70,7 +107,7 @@ rewritten as loops (E1 to E3 measured again); `screen.json` and
 ## A free ray turns by momentum on 2026-09-17 (`ray-momentum-turn-v1`)
 
 Issue #169, feature 8b ([a free ray turns by
-momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)),
+momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)),
 the second gap the helium-ion run found (E4, "the missing rules", ii): a
 free ray's heading changed only by whole Ports or by the lag of feature 8,
 so no curved path of a free ray was expressible. The momentum register of

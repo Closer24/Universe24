@@ -340,7 +340,7 @@ delay:
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
-| `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
+| `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -1719,7 +1719,7 @@ only, naming ray families that are not among its participants, signs -1 or
 (unit-axial, unpaced, no decay). No draw, no new arithmetic beyond the
 body's; nothing else changes.
 
-### A free ray turns by momentum (`ray-momentum-turn-v1`)
+### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature
@@ -1735,7 +1735,9 @@ phase modulus with the heading unchanged, so a curved path, light bending
 the momentum register of `bound-group-motion-v1` given to a free ray.
 `test_ray_momentum_turn.py`
 ([expectations](TEST_EXPECTATIONS.md#a-free-ray-turns-by-momentum)) is the
-test.
+test. `ray-momentum-turn-v2` (2026-09-17) keeps the DDA's accumulators
+through a push ("a push keeps the walk", below), the fix the helium-orbit
+run ([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) asked for.
 
 **The register.** Every ray carries a momentum register, `Ray.momentum`,
 three integers: by default `None`, which reads as amount x heading of its
@@ -1785,8 +1787,8 @@ its participants, the ray is pushed by every resident outbound ray of a
 named family that no earlier declared rule met, the group's field
 participant among them, in slot order: each push is sign x amount x heading
 of the field ray, exactly `body_absorb`'s and the group's arithmetic, the
-register moves by it (`pushed_ray`), the accumulators reset as at a change
-of line, and the field ray is returned reversed as the recoil, a new event
+register moves by it (`pushed_ray`) with the walk kept (the next
+paragraph), and the field ray is returned reversed as the recoil, a new event
 ray on the negated heading with its amount and phase (the recoil of
 [released-field-v1](#field-as-the-rays-information-released-field-v1),
 Highlights 3.5, 3.14). A push never changes the ray's amount, phase, bit,
@@ -1802,8 +1804,41 @@ outputs is an ordinary meeting and declares no table, as before. The Node
 publishes one `ray_push` record per field ray met (family, amount, the
 register before and after, the field family, its amount and its heading),
 before the cycle's record; the runner records `ray_momentum_turn:
-"ray-momentum-turn-v1"` when any push happened, and nothing for a world
+"ray-momentum-turn-v2"` when any push happened, and nothing for a world
 where none did (a free-ray table alone does not mark `bound_group_motion`).
+
+**A push keeps the walk (`ray-momentum-turn-v2`, 2026-09-17).** The three
+accumulators are the walk's progress along the register: per axis, the
+momentum-intervals banked toward the next Link on that axis, every interval
+depositing the register's component and a Link on the axis withdrawing the
+register's Manhattan length (`dda_step`). A push changes the deposit and the
+price, not the balance: the accumulators carry over unchanged and continue
+against the new register (`continued_walk`), so under a push at every
+interval the ray walks the DDA line of its running register, one Link per
+interval along the axis furthest behind, the staircase of a circle under a
+central push that turns the register, and a small transverse push that
+arrives every interval banks toward a transverse Link as the register turns
+(a ray of 64 along +X pushed by (0, 1, 0) at every Node steps +Y at Links 9,
+15, 20 and 24, the parabola of a constant push; pushed by (0, 8, 0) it is
+past 45 degrees at Link 8). Two cases start the walk over at (0, 0, 0): a
+push that returns the register to the default amount x heading, the ray
+resuming its line as the ray it was, and a push that shrinks the register
+below the banked progress, an accumulator outside the admissible (-length,
+length] of the new length, which the new register cannot hold. A ray
+without a register walks the heading of its line at the table's scale, and
+the default register is amount x that heading, so the first push lifts its
+accumulators by the amount, exactly (the DDA on a scaled vector takes the
+same Ports from accumulators scaled with it), zero on a unit-axial heading.
+v1 reset the accumulators at every push, as at a change of line, which the
+helium-orbit run ([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) showed
+steps a ray pushed at every interval, every ray in a spreading field, along
+its register's dominant axis alone, the whole-Port turn by another road; a
+record made under v1 in which a pushed ray had progress banked is not
+reproduced by v2 ([migration](MIGRATION.md#a-push-keeps-the-walk-on-2026-09-17-ray-momentum-turn-v2)).
+A world without a push runs byte-identically, as before.
+`test_momentum_turn_walk.py`
+([expectations](TEST_EXPECTATIONS.md#the-walk-kept-through-a-push)) pins the
+staircases, the flip, the cancel, the shrink and the lift.
 
 ```json
 {"name": "turn", "participants": [{"type": "electron"}, {"type": "light"}],
