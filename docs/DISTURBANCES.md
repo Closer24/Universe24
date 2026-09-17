@@ -177,7 +177,9 @@ remains a free configured identity and cannot select behavior through its name.
 Every run also records `sampling_profile` (`detector-only-v1`, the
 [Detector-owned sampling](DETECTOR_SAMPLING.md) admission) and `ray_state`
 (`ray-event-state-v1`, the [ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)
-every ray carries).
+every ray carries), and `ray_layers` (`ray-layers-v1`) with `ray_layer_families`, the
+[layers](SPATIAL_FIELDS.md#layers-ray-layers-v1) derived from the declared
+`ray_interactions` as sorted lists of field names.
 See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
 emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
 whole-action allowances. Neither allowance is a conserved physical reservoir.

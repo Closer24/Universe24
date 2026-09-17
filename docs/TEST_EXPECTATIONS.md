@@ -363,6 +363,7 @@ the key selects the default localizing residue.
 | `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
+| `test_ray_layers.py` | Rules of different layers fire in one interval and an unruled family crosses ([ray layers](#ray-layers)): five rays of families a, a, b, b, c meet at one Node after tick 2; after tick 3 the a rays have swapped headings (mask 3, shares (5, 5, 0, 0, 0, 0), steps 1), the b rays have turned to +Z and -Z at phase 7 (mask 48, shares (0, 0, 0, 0, 5, 5), steps 1) and the c ray is one Link past the Node unchanged (mask 16, steps 3, phase 3); the derived layers are (a), (b), (c) whether or not the b rule is declared, and without it the b rays cross like c; totals 10, 10, 5 and zero momentum every tick with the audit passed, the runner recording `ray-layers-v1` and the layer families |
 
 The runner must distinguish actual physical conservation from balanced loss
 accounting. It checks tracked combined quantities and every spatial owner,
@@ -844,6 +845,61 @@ Existing worlds keep their amounts, phases, totals and audits; the one pinned
 change is the moving absorber-emitter of `test_energy_audit.py` above, whose
 earlier-cycle wake is a distinct event and no longer merges with the excluded
 one.
+
+## Ray layers
+
+`test_ray_layers.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice: three ray families `a`, `b` and `c`, each its own
+conserved scalar field with an 8-step phase advancing 1 per Link, and one
+signed `momentum` vector ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+Five lamps around the Node N = (7,7,7) each hold 5 of their family and emit
+it once, funded, directed at N with recoil into `momentum`: `a` from (5,7,7)
+along +X and from (9,7,7) along -X, `b` from (7,5,7) along +Y and from
+(7,9,7) along -Y, `c` from (7,7,5) along +Z. Two rules are declared, both
+guarded by equal amounts and opposite headings with energy and momentum
+invariants: `a_swap`, two `a` rays exchange headings; `b_turn`, two `b` rays
+turn by the cyclic axis permutation (x, y, z) to (z, x, y) and take phase 6.
+No rule selects `c`. The test is parametrized over the declared rules: both,
+or `a_swap` alone. Pinned before the first run:
+
+- (a) the derived layers are ((0,), (1,), (2,)) by field index and (("a",),
+  ("b",), ("c",)) by name in both worlds, since an unruled field is its own
+  layer; a rule whose roles select `a` and `b` would give (("a", "b"),
+  ("c",)), and a world with no rule gives one layer per field;
+- (b) after tick 1 each lamp holds 0 of its family and the recoil of its ray
+  ((-5,0,0), (5,0,0), (0,-5,0), (0,5,0), (0,0,-5)); after tick 2 N holds all
+  five rays, two of `a` (headings 0 and 1, masks 1 and 2), two of `b`
+  (headings 2 and 3, masks 4 and 8) and one of `c` (heading 4, mask 16),
+  every one with steps 2, phase 2, `outbound` 1 and `detector` 0;
+- (c) after tick 3, with both rules, N is empty and the six neighbors hold:
+  at (6,7,7) one `a` ray, heading 1, phase 3, steps 1, `event_ports` 3,
+  `event_shares` (5, 5, 0, 0, 0, 0); at (8,7,7) the same with heading 0; at
+  (7,7,8) one `b` ray, heading 4, phase 7, steps 1, mask 48, shares
+  (0, 0, 0, 0, 5, 5), beside the `c` ray, heading 4, phase 3, steps 3, mask
+  16, shares (0, 0, 0, 0, 5, 0), unchanged from its emission; at (7,7,6) one
+  `b` ray, heading 5, phase 7, steps 1, mask 48, shares (0, 0, 0, 0, 5, 5);
+  nothing at (7,6,7) and (7,8,7): two events at one Node in one interval,
+  and a third family crossing;
+- (d) after tick 3 with `a_swap` alone, the `a` rays and the `c` ray are
+  exactly as in (c), (7,7,8) holds the `c` ray only, and the `b` rays cross:
+  at (7,8,7) heading 2, phase 3, steps 3, mask 4, shares (0, 0, 5, 0, 0, 0);
+  at (7,6,7) heading 3, phase 3, steps 3, mask 8, shares (0, 0, 0, 5, 0, 0);
+- (e) after tick 4, with both rules, (7,7,9) holds the `b` ray (heading 4,
+  phase 0, steps 2) and the `c` ray (heading 4, phase 4, steps 4) on one
+  line without meeting, and the `a` rays are at (5,7,7) and (9,7,7) with
+  steps 2 and phase 4;
+- (f) at every tick 1 to 4 the world holds exactly five rays; the totals are
+  `a` 10, `b` 10, `c` 5 and `momentum` (0, 0, 0); the conservation report
+  passes with energy 25 and momentum (0, 0, 0); the spatial accounting
+  balances; the runner records `ray_layers: "ray-layers-v1"`,
+  `ray_layer_families` [["a"], ["b"], ["c"]], `ray_state`
+  "ray-event-state-v1", `conserved_at_every_completed_tick` true and final
+  totals `a` [10], `b` [10], `c` [5].
+
+Existing worlds keep their amounts, phases, totals, audits and charges: a
+world whose rules select one layer meets the same owners in the same order.
 
 ## Detector-owned sampling admission
 

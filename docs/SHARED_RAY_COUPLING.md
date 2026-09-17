@@ -41,8 +41,11 @@ tables may resolve an output vector to an admitted heading; no particle name or
 world coordinate selects a law. Non-participants keep their complete state.
 The top-level `ray_interactions` option reuses indexed `participants`,
 `assignments`, `invariants` and `when`. At most six participants are selected
-greedily into disjoint groups. Selected spatial fields have at most 32 declared
-ray slots in total, matching the fixed existing indexed-selector capacity.
+greedily into disjoint groups. The selected spatial fields of one layer have at
+most 32 declared ray slots in total, matching the fixed existing indexed-selector
+capacity; rays are met layer by layer
+([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), so fields of different
+layers do not share that capacity.
 A participant's configured spatial-field type or
 required structural properties selects its non-owning view. Initial projection
 properties are `amount`, `heading`, `phase`, `advance` and `delay`; `delay` maps
