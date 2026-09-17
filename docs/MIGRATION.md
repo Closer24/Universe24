@@ -226,8 +226,8 @@ is otherwise an ordinary Node
   (`next_ticket(state, 0)`, `ticket_draw`, bit 1 when
   `number x d < n x TICKET_MODULUS`), in Port then merge-key order, sets the
   ray's `detector` to 2 on 1 and 1 on 0, and records a `detector_click` event
-  (position, tick, Port, family, amount, bit 1) on 1 only. In this slice the
-  ray continues unchanged on both outcomes; the return is feature 3.
+  (position, tick, Port, family, amount, bit 1) on 1 only. Until
+  `detector-return-v1` (below) the ray continued unchanged on both outcomes.
 - The runner records `detector_mark: "detector-mark-v1"` in `run.json`
   beside `sampling_profile` and `ray_state`.
 - The ticket rule keeps its signature (`next_ticket(state, salt)`); the mark
@@ -240,6 +240,93 @@ is otherwise an ordinary Node
 A document without `detectors` has no marked Node, calls the ticket rule
 nowhere and runs exactly as before.
 
+## Detector return added on 2026-09-17 (`detector-return-v1`)
+
+Issue #169, feature 3, the first half of migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+[Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4: a draw of 0 at a marked Node
+returns the arriving ray, the same wave ray reversed on its line, unchanged,
+walking back the number of steps it has made since its event
+([the return](DETECTOR_SAMPLING.md#the-return-detector-return-v1),
+[transport](SPATIAL_FIELDS.md#detector-return-detector-return-v1)).
+
+- `return_ray(ray, definition)` and `DETECTOR_RETURN` in
+  `core/spatial_state.py`: heading index replaced by the negated heading's
+  index, `outbound` 0, accumulators, wait and interaction delay reset,
+  amount, phase, steps, event record and family unchanged.
+- `SpatialNode.receive`: a ray whose draw is 0 is returned in its arrival
+  interval, records a `detector_return` event (position, tick, Port, family,
+  amount) and no click, and is left out of the per-Port delivered readings;
+  a ray that arrives already returning is not drawn for and not counted in
+  those readings either. The `detector_click` list is what it was.
+- A returning ray enters no coupling: `_absorb` leaves it untouched and
+  takes the coherence over the outbound rays, `apply_ray_interactions` gives
+  it no participant view, and the value and flux samples couplings read are
+  taken over the outbound rays (`SpatialNode.coupling_rays`).
+- `forward_rays` keeps a returning ray with `steps` 0 resident, inert, with
+  its phase unchanged; `advance_ray` still refuses it a Link. A resident
+  returned ray waits for the inverse split (feature 4).
+- `ray_momentum` reads a ray with `outbound` 0 as amount times its heading
+  negated, its share on the event's heading, so a return leaves the momentum
+  total unchanged and every audit exact (issue #169: the Detector takes no
+  recoil).
+- `SpatialEngine._escape` refuses a packet holding a returning ray with a
+  validation error: its event Node is not in the world.
+- The runner records `detector_return: "detector-return-v1"` in `run.json`
+  beside `detector_mark`.
+
+Pinned consequences in existing tests: the four rays of
+`test_detector_mark.py` that draw 0 now return to their lamps and rest there,
+and the returning ray of `test_ray_hidden_state.py` is kept resident at
+`steps` 0 instead of failing the forwarding ([expectations](TEST_EXPECTATIONS.md#node-detector-bit)).
+A document without `detectors` has no returning ray and runs byte for byte
+as before.
+
+## Inverse split added on 2026-09-17 (`inverse-split-v1`)
+
+Issue #169, feature 4, the second half of migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) under
+[Highlights](HIGHLIGHTS.md) 3.20 and 5.4 and the model owner's decisions of
+2026-09-17: a returned ray at its event Node performs the inverse split of
+its own share by the world's `return_mode`
+([the inverse split](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1),
+[transport and bookkeeping](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1)).
+
+- The initialization key `return_mode` (`siblings`, the default, `straight`
+  or `annul`; any other value rejected), `InitialState.return_mode`,
+  `SpatialLaw.return_mode`, `RETURN_MODES` and `INVERSE_SPLIT` in
+  `core/spatial_state.py`.
+- `transmit`, `split_ports`, `split_amounts`, `event_port` and
+  `port_heading` in `core/spatial_state.py`: the transmission as new event
+  rays with the returned ray's phase, advance and Detector bit, the mask of
+  the lines transmitted to and the amount per line, remainder by Highlights
+  3.17.
+- `SpatialLaw._inverse_split` and `_refund` in `fields/spatial_plan.py`,
+  after absorption and before forwarding: the returned share restored to
+  the event's input (a record with a funded emission rule into the field)
+  and the transmission funded from it in the same interval, both booked in
+  `transfer_delta`; with no input, the momentum booked in the source ledger;
+  `annul` into `SpatialPlan.annulled`.
+- `SpatialPlan.inverse_splits` and `annulled`, `InverseSplit`, the
+  `inverse_split` event (position, tick, family, mode, ports, amounts,
+  amount, bit, restored, annulled) published before the cycle's
+  `spatial_cycle`, `SpatialAccounting.record_annulled`,
+  `SpatialEngine.annulled`, the `annulled` entry of the spatial accounting,
+  `annulled_totals()` on the engine, and the local conservation audit
+  reading the annulled content of a Node into its residual and reporting
+  `annulled`.
+- The runner's conservation line: initial + sources = current + dissipated
+  + escaped + annulled at every completed tick
+  (`accounting_balanced_at_every_completed_tick`), `annulled_totals`,
+  `inverse_split: "inverse-split-v1"` and `return_mode` in `run.json`.
+
+Pinned consequences in existing tests: the returned ray of
+`test_detector_return.py` (a one-line event) is restored to its lamp and
+emitted again by it, and the four returned rays of `test_detector_mark.py`
+are restored to their lamps, which then hold their share with its recoil
+undone, that test running three ticks
+([expectations](TEST_EXPECTATIONS.md#inverse-split)). A world without a mark
+has no returned ray and runs byte for byte as before.
 ## Ray layers added on 2026-09-17 (`ray-layers-v1`)
 
 Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
@@ -473,10 +560,12 @@ phase steps in the table-construction guard).
 Fixed body renamed external body, 2026-09-17, same specification extended.
 By the model owner's statement of that day, the declared element named
 "fixed body" earlier the same day is the external body: a Node declared to
-hold a family with an amount and, if wanted, a charge and a trajectory,
+hold a family with an amount, if wanted a charge, and an initial momentum
+(`initial_momentum`, in place of the declared trajectory of the first
+statement: its motion is caused by fields only, model owner, 2026-09-17),
 standing for a star, a neutron star, a fixed proton, a large charge or a
 piece of apparatus; it radiates by the one field rule, does not spread and
-is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+is not pushed by matter. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
 text; the [postulates](../POSTULATES.md) section 23, the
 [ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
 migration step 7b (`external-body-v1`, after feature 7), the
@@ -493,6 +582,66 @@ is bounded metadata like the Detector mark, with one exact counter, the
 sink totals per family; and where the back-reaction is wanted an ordinary
 bound group with a large amount is declared instead. No initialization key,
 API or runtime behavior changes; `external-body-v1` is not yet in the code.
+## Ray viewer added on 2026-09-17 (`tools/ray_viewer/`)
+
+The model owner's visualization requirement of 2026-09-17 (issue #169) is
+implemented as a repository tool, ready before feature 7 lands: a Renderer
+under [Highlights](HIGHLIGHTS.md) 3.29 and 3.30 that reads the runner's
+record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
+
+- `tools/ray_viewer/extract.py` turns one or more records (`run.json`,
+  `events.jsonl`, `initialization.json`, an optional `ray-recording.json`)
+  into `runs.json` (`ray-viewer-runs-v1`): rays chained from the Link
+  transits with their trails, every event as a marker with its Ports, and
+  a caption per tick with the coupling, the invariants and the totals from
+  the record; an event kind it does not know becomes a generic marker.
+- `tools/ray_viewer/viewer.html` is the self-contained page (Three.js r128
+  from cdnjs): dark, rays as segments with arrowheads and trails, hue by
+  phase, field rays faint, markers that stay, Detector marks with their
+  bits, lattice, axes and bounding box, a tick slider, play, a rotation
+  toggle and a run selector.
+- `tools/ray_viewer/render_gif.py` renders a GIF and a contact sheet with
+  Playwright, headless Chromium and Pillow; `playwright` joins the `render`
+  extra in `pyproject.toml`.
+- `tests/test_ray_viewer.py` pins the extraction of a two-lamp, six-tick
+  world ([expectations](TEST_EXPECTATIONS.md#ray-viewer-extraction));
+  `tools/check.py` selects it for any change under `tools/ray_viewer/`.
+
+No engine, schema or record change. The prototype under the session
+scratchpad (`gif-electrons-3d`) is superseded by the tool.
+
+## Field as the ray's information added on 2026-09-17 (`released-field-v1`)
+
+Issue #169, feature 7, under [Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.15,
+3.17 and 3.28 and step 7 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a ray field
+declared with `field_of` and `release` is the field of that family, released
+at every Node a ray of the family crosses
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)).
+
+- `SpatialFieldDefinition.field_of`, `release_numerator` and
+  `release_denominator` (`core/spatial_state.py`) carry the declaration;
+  `_spatial_fields` (`initialization.py`) parses `field_of` (a family name,
+  resolved once every spatial field is parsed) and `release` (`[n, d]`,
+  `1 <= n <= d`), declared together; `validate_released_fields` and
+  `validate_released_field_admission` admit a world at `SpatialLaw` and
+  `InitialState`.
+- `release_field` and `release_stock` (`core/spatial_state.py`) are the pure
+  release: one ray per Port heading except the source ray's own (all six for
+  resident content), amount `floor(amount x n / d)` with the fraction not
+  released, the source's phase, no event stamp. `SpatialLaw._release`
+  (`fields/spatial_plan.py`) calls them after the interval's emissions, adds
+  the rays to the departures and books their amount, and their momentum when
+  a momentum field is bound, as an explicitly accounted source. A Node whose
+  record holds stock of a source family runs its cycle every interval
+  (`holds_source_stock`, `core/spatial_node.py`, `core/spatial_engine.py`).
+- The recoil is the declared rule: a `ray_interactions` rule with outputs that
+  returns the field ray with heading `"reversed"`. No engine mechanism was
+  added for it.
+- The runner records `released_field: "released-field-v1"` and
+  `released_fields` beside `ray_meeting`.
+- Existing worlds without `field_of` run byte-identically; their run record
+  carries `released_fields: []`.
 
 ## Records as owners deleted on 2026-09-17
 

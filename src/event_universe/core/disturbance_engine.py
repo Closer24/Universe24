@@ -554,6 +554,17 @@ class DisturbanceEngine:
             if field.conserved
         }
 
+    def annulled_totals(self) -> dict[str, tuple[int, ...]]:
+        """Content that left the world at an inverse split in annul mode (inverse-split-v1):
+        an explicitly accounted sink, initial = current + escaped + annulled."""
+        return {
+            field.name: (
+                (0,) * field.components if self._spatial is None else tuple(self._spatial.annulled[i])
+            )
+            for i, field in enumerate(self.initial.fields)
+            if field.conserved
+        }
+
     def spatial_accounting(self) -> dict[str, dict[str, object]]:
         return {} if self._spatial is None else self._spatial.accounting()
 

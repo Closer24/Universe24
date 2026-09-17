@@ -85,6 +85,12 @@ Layers = tuple[tuple[int, ...], ...]
 # meeting Node, an amount may be split by a declared table indexed by the phase
 # difference of two inputs, and every family's stock is exact across the event.
 RAY_MEETING = "ray-meeting-conversion-v1"
+# The field as the ray's information (Highlights 3.5, 3.14, 3.15 and 3.28): a ray
+# field declared with field_of is the field of that family, released at every
+# Node a ray of the family crosses as one ray per heading, booked as a source;
+# a meeting of a field ray is an ordinary declared rule whose outputs return it
+# reversed as the recoil. A field has no field.
+RELEASED_FIELD = "released-field-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -111,6 +117,16 @@ MAX_STORED_PHASE_BITS = 30
 # an ordinary Node. In this slice the ray continues unchanged on both outcomes.
 DETECTOR_MARK = "detector-mark-v1"
 MAX_DETECTORS = 4096
+# A draw of 0 returns the arriving ray on its own line (detector-return-v1): the
+# same wave ray reversed, unchanged, walking its steps back to its event Node.
+DETECTOR_RETURN = "detector-return-v1"
+# At its event Node a returned ray performs the inverse split of its own share
+# (inverse-split-v1, Highlights 3.20 "Return modes"): by the world's return_mode
+# it transmits its amount, phase and bit to the sibling lines of its event
+# (siblings), continues straight on the one line opposite its own (straight) or
+# ends there into an explicitly accounted sink (annul).
+INVERSE_SPLIT = "inverse-split-v1"
+RETURN_MODES = ("siblings", "straight", "annul")
 
 
 @dataclass(frozen=True, slots=True)
@@ -390,6 +406,150 @@ def validate_ray_coupling(initial: InitialState) -> None:
         raise ValueError("ray interactions do not support coupled responses or absorption")
 
 
+def validate_released_fields(
+    definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
+) -> None:
+    """The admission of a released field (released-field-v1): a positive, conserved,
+    unpaced unit-axial ray field on the links metric with the six Port headings,
+    the field of another such ray field with the same phase steps, which is not
+    itself a field of anything, released as a rational at most 1."""
+    for definition in definitions:
+        if definition.field_of is None:
+            if definition.release_numerator or definition.release_denominator != 1:
+                raise ValueError("a release ratio requires field_of")
+            continue
+        if type(definition.field_of) is not int or not 0 <= definition.field_of < len(definitions):
+            raise ValueError("field_of refers to an unavailable spatial field")
+        origin = definitions[definition.field_of]
+        if origin is definition or origin.field == definition.field:
+            raise ValueError("a family is not its own field")
+        if origin.field_of is not None:
+            raise ValueError("a field has no field")
+        numerator, denominator = definition.release_numerator, definition.release_denominator
+        if not 1 <= bounded(numerator) <= bounded(denominator):
+            raise ValueError("release must be a rational from 1 / d through 1")
+        for member in (definition, origin):
+            field = fields[member.field]
+            if (
+                not member.rays
+                or field.signed
+                or not field.conserved
+                or any(unpack(member.baseline))
+                or member.euclidean
+                or member.pace_numerator != member.pace_denominator
+                or member.self_exclusion
+                or member.decay is not None
+                or any(sum(abs(c) for c in heading) != 1 for heading in member.headings)
+            ):
+                raise ValueError("a released field requires positive unit-axial unpaced ray fields")
+        if any(heading not in definition.headings for heading in PORT_HEADINGS):
+            raise ValueError("a released field requires the six Port headings")
+        if definition.phase_modulus != origin.phase_modulus:
+            raise ValueError("a released field carries its source's phase steps: one phase width")
+
+
+def validate_released_field_admission(initial: InitialState) -> None:
+    """A world with a released field runs under the shared Detector admission."""
+    if not any(definition.field_of is not None for definition in initial.spatial_fields):
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+    ):
+        raise ValueError("a released field requires the default fixed H=1 spatial clock")
+    validate_released_fields(initial.spatial_fields, initial.fields)
+    involved = {
+        definition.field for definition in initial.spatial_fields if definition.field_of is not None
+    } | {
+        initial.spatial_fields[definition.field_of].field
+        for definition in initial.spatial_fields
+        if definition.field_of is not None
+    }
+    if any(rule.field in involved for rule in initial.spatial_couplings):
+        raise ValueError("a released field does not support coupled responses or absorption")
+
+
+def release_amount(amount: int, definition: SpatialFieldDefinition) -> int:
+    """The amount of one released ray: the whole quanta of amount x n / d. The
+    fraction the floor leaves is not released: the field is a description booked
+    as a source, so nothing owned is lost (Highlights 3.17)."""
+    return checked_work(amount * definition.release_numerator) // definition.release_denominator
+
+
+def _released(amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None) -> Rays:
+    return tuple(
+        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase)
+        for heading in PORT_HEADINGS
+        if heading != skip
+    )
+
+
+def release_field(
+    rays: Rays, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition
+) -> Rays:
+    """The field rays a bundle of source rays releases at the Node they depart from
+    (released-field-v1): one ray per Port heading except the source ray's own,
+    each with the released amount and the source's phase, no event (mask 0,
+    steps 0). The heading the source travels on is the source's own line ahead of
+    it, which at link speed the source itself occupies, so it releases nothing
+    there and a straight ray never shares a Node with its own field."""
+    released: list[Ray] = []
+    for ray in rays:
+        amount = release_amount(ray.amount, definition)
+        if amount <= 0:
+            continue
+        released.extend(_released(amount, ray.phase, definition, origin.headings[ray.heading]))
+    return tuple(released)
+
+
+def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
+    """The field rays resident content releases once per interval: one ray per Port
+    heading, all six, from the stock a record holds, with phase 0 (a record has no
+    phase of its own in this slice)."""
+    amount = release_amount(stock, definition)
+    return _released(amount, 0, definition, None) if amount > 0 else ()
+
+
+def holds_source_stock(
+    record: DisturbanceRecord | None, definitions: tuple[SpatialFieldDefinition, ...]
+) -> bool:
+    """Whether a resident record holds stock of a family that has a released field."""
+    if record is None:
+        return False
+    for definition in definitions:
+        if definition.field_of is None:
+            continue
+        field = definitions[definition.field_of].field
+        if field < len(record.values) and unpack(record.values[field])[0] > 0:
+            return True
+    return False
+
+
+def released_field_names(
+    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> list[dict[str, object]]:
+    """The released fields for the run record: each field ray family with the family
+    it is the field of and its release ratio, in field order."""
+    return [
+        {
+            "field": fields[definition.field].name,
+            "field_of": fields[definitions[definition.field_of].field].name,
+            "release": [definition.release_numerator, definition.release_denominator],
+        }
+        for definition in definitions
+        if definition.field_of is not None
+    ]
+
+
 @dataclass(frozen=True, slots=True)
 class SpatialFieldDefinition:
     field: int
@@ -439,6 +599,12 @@ class SpatialFieldDefinition:
     # The family's charge per quantum, a bounded signed integer read by couplings
     # at a meeting and summed as charge x amount by the charge readout.
     charge: int = 0
+    # Released field (released-field-v1): the spatial-field index of the family
+    # whose field this ray field is, and the release ratio, the share of the
+    # source's amount each released ray carries per Node crossed.
+    field_of: int | None = None
+    release_numerator: int = 0
+    release_denominator: int = 1
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
@@ -714,6 +880,31 @@ class SpatialPlan:
     transfer_delta: Values = ()
     # Rays that stay resident this cycle (Euclidean pace), one tuple per field.
     kept_rays: tuple[Rays, ...] = ()
+    # The inverse splits of this cycle, one per returned ray at its event Node,
+    # and the content they annulled per field (inverse-split-v1).
+    inverse_splits: tuple[InverseSplit, ...] = ()
+    annulled: Values = ()
+
+
+@dataclass(frozen=True, slots=True)
+class InverseSplit:
+    """The record of one inverse split for the Node to publish (inverse-split-v1).
+
+    Plain bounded integers, as the Node state contract requires: the spatial
+    field, the mode as its index in RETURN_MODES, the Ports transmitted to with
+    the amount per Port, the returned share, the ray's Detector bit (0 or 1, or -1
+    for none), 1 when the share was first restored to the event's input at the
+    Node, and, in annul mode, the per-field content that left the world.
+    """
+
+    field: int
+    mode: int
+    ports: tuple[int, ...]
+    amounts: tuple[int, ...]
+    amount: int
+    bit: int
+    restored: int
+    annulled: Values = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -890,6 +1081,97 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
     )
 
 
+def return_ray(ray: Ray, definition: SpatialFieldDefinition) -> Ray:
+    """The same wave ray reversed on its line (detector-return-v1).
+
+    The heading index becomes the index of the negated heading, outbound becomes 0
+    and the transport accumulators (DDA, pace wait, interaction delay) are reset;
+    amount, phase, steps, event Ports, event shares and Detector bit are exactly
+    what arrived. The Detector admission guarantees the negated heading is in the
+    sequence; a field where it is not fails closed.
+    """
+    heading = definition.headings[ray.heading]
+    negated = (-heading[0], -heading[1], -heading[2])
+    if negated not in definition.headings:
+        raise ValueError("a return requires the negated heading in the field's sequence")
+    return replace(
+        ray,
+        heading=definition.headings.index(negated),
+        accumulators=(0, 0, 0),
+        wait=0,
+        interaction_delay=0,
+        outbound=0,
+    )
+
+
+def event_port(ray: Ray, definition: SpatialFieldDefinition) -> int:
+    """The Port the ray's event sent it through: the first DDA step of its event heading
+    from the event Node. A returning ray's event heading is its own heading negated."""
+    heading = definition.headings[ray.heading]
+    if not ray.outbound:
+        heading = (-heading[0], -heading[1], -heading[2])
+    port, _ = dda_step((0, 0, 0), heading)
+    return port
+
+
+def port_heading(port: int, definition: SpatialFieldDefinition) -> int:
+    """The index of the unit-axial heading that leaves through the given Port; a field
+    without that line fails closed."""
+    axis, negative = divmod(port, 2)
+    unit = tuple(0 if i != axis else (-1 if negative else 1) for i in range(3))
+    if unit not in definition.headings:
+        raise ValueError("a transmission requires the line of its Port in the field's sequence")
+    return definition.headings.index(unit)
+
+
+def split_ports(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[int, ...]:
+    """The Ports a returned ray transmits to at its event Node, in Port order.
+
+    siblings: every Port of its event's mask except its own; straight: the one Port
+    opposite its own; annul: none.
+    """
+    if mode not in RETURN_MODES:
+        raise ValueError("return_mode must be siblings, straight or annul")
+    own = event_port(ray, definition)
+    if mode == "annul":
+        return ()
+    if mode == "straight":
+        return (own ^ 1,)
+    return tuple(port for port in range(6) if ray.event_ports >> port & 1 and port != own)
+
+
+def split_amounts(amount: int, count: int) -> tuple[int, ...]:
+    """Share one amount exactly over `count` lines, the remainder to the first lines
+    in Port order (Highlights 3.17): nothing is dropped and nothing stays."""
+    if count <= 0:
+        return ()
+    magnitude, sign = abs(bounded(amount)), -1 if amount < 0 else 1
+    base, extra = divmod(magnitude, count)
+    return tuple(sign * (base + int(offset < extra)) for offset in range(count))
+
+
+def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[Rays, tuple[int, ...]]:
+    """The inverse split of a returned ray at its event Node (inverse-split-v1).
+
+    The ray must be resident at its event Node (`outbound` 0, `steps` 0). The
+    transmission is a set of new event rays at this Node: outbound, no steps
+    walked, the returned ray's phase, advance and Detector bit, the mask of the
+    lines transmitted to and the amount per line as their event record. Returns the
+    rays and the Ports, in Port order; annul transmits nothing.
+    """
+    if ray.outbound or ray.steps:
+        raise ValueError("the inverse split requires a returned ray at its event Node")
+    ports = split_ports(ray, definition, mode)
+    amounts = split_amounts(ray.amount, len(ports))
+    rays = tuple(
+        Ray(port_heading(port, definition), (0, 0, 0), amount, ray.phase, ray.advance)
+        for port, amount in zip(ports, amounts, strict=True)
+        if amount
+    )
+    stamped = stamp_event(rays, tuple(definition.headings[r.heading] for r in rays))
+    return tuple(replace(r, detector=ray.detector) for r in stamped), ports
+
+
 RayMergeKey = tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int]
 
 
@@ -961,11 +1243,17 @@ def ray_stock(rays: Rays) -> int:
 
 
 def ray_momentum(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int, int]:
-    """Read the candidate's amount-times-heading inventory from actual ray owners."""
+    """Read the candidate's amount-times-heading inventory from actual ray owners.
+
+    A returning ray (outbound 0) reads as its share on the event's heading, its
+    own heading negated: the Detector takes no recoil on a return and the audit
+    stays exact (detector-return-v1, issue #169).
+    """
     result = [0, 0, 0]
     for ray in rays:
+        sign = 1 if ray.outbound else -1
         for axis, component in enumerate(definition.headings[ray.heading]):
-            result[axis] = checked_work(result[axis] + checked_work(ray.amount * component))
+            result[axis] = checked_work(result[axis] + sign * checked_work(ray.amount * component))
     return result[0], result[1], result[2]
 
 

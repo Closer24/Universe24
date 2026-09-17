@@ -35,6 +35,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     coherent_stock,
+    holds_source_stock,
     ray_charge,
     ray_momentum,
     ray_stock,
@@ -105,6 +106,8 @@ class SpatialEngine:
         self.reactions = [[0] * field.components for field in initial.fields]
         self.transformations = [[0] * field.components for field in initial.fields]
         self.escaped = [[0] * field.components for field in initial.fields]
+        # Content that left the world at an inverse split in annul mode.
+        self.annulled = [[0] * field.components for field in initial.fields]
         meter = CostMeter(initial.operation_costs)
         if initial.spatial_computation_delay:
             components = 8 * sum(initial.fields[d.field].components for d in initial.spatial_fields)
@@ -119,7 +122,12 @@ class SpatialEngine:
             decayer,
             NodeActivity(self._active),
             SpatialAccounting(
-                self.sources, self.dissipation, self.reactions, self.transformations, self.localized
+                self.sources,
+                self.dissipation,
+                self.reactions,
+                self.transformations,
+                self.localized,
+                self.annulled,
             ),
             balance_guard,
             field_guard,
@@ -222,7 +230,7 @@ class SpatialEngine:
             if any(
                 record is not None and record.type_index in emitter_types | coupled_types
                 for record in records
-            ):
+            ) or any(holds_source_stock(record, self.initial.spatial_fields) for record in records):
                 positions.add(position)
         ordered = tuple(sorted(positions))
         if execution is not None and execution.parallel:
@@ -244,7 +252,14 @@ class SpatialEngine:
                     self.links.refresh(position)
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
-        """No receiving node exists outside; terminal stock escapes without exterior decay."""
+        """No receiving node exists outside; terminal stock escapes without exterior decay.
+
+        A returning ray never reaches the boundary before its event Node, which its
+        steps bound; one that would escape has no event Node in the world, and the
+        engine fails closed instead of recording an escape (detector-return-v1).
+        """
+        if any(not ray.outbound for rays in packet.rays for ray in rays):
+            raise ValueError("a returning ray cannot escape: its event Node is not in the world")
         amounts = [[0] * field.components for field in self.initial.fields]
         for definition, populations in zip(self.initial.spatial_fields, packet.fields, strict=True):
             if len(populations) != 8:
@@ -436,14 +451,15 @@ class SpatialEngine:
         for definition in self.initial.spatial_fields:
             index = definition.field
             expected = tuple(
-                start + source + reaction + transformed - loss - escaped
-                for start, source, reaction, transformed, loss, escaped in zip(
+                start + source + reaction + transformed - loss - escaped - annulled
+                for start, source, reaction, transformed, loss, escaped, annulled in zip(
                     self._initial_totals[index],
                     self.sources[index],
                     self.reactions[index],
                     self.transformations[index],
                     self.dissipation[index],
                     self.escaped[index],
+                    self.annulled[index],
                     strict=True,
                 )
             )
@@ -455,6 +471,7 @@ class SpatialEngine:
                 "dissipated": tuple(self.dissipation[index]),
                 "localized": tuple(self.localized[index]),
                 "escaped": tuple(self.escaped[index]),
+                "annulled": tuple(self.annulled[index]),
                 "balanced": tuple(totals[index]) == expected,
                 **(
                     {"transformations": tuple(self.transformations[index])}

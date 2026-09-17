@@ -48,6 +48,13 @@ def test_every_resource_consumer_row_names_an_existing_test():
             assert (root / consumer).exists(), consumer
 
 
+@pytest.mark.parametrize("name", ["extract.py", "viewer.html", "render_gif.py", "README.md"])
+def test_ray_viewer_changes_select_its_extraction_test(name):
+    tests, typed = CHECK.select(["tools/ray_viewer/" + name], {})
+    assert "tests/test_ray_viewer.py" in tests
+    assert not typed
+
+
 def test_transitive_imports_and_relative_helpers_retain_only_related_tests():
     sources = {
         "src/domain/math.py": "def calculate(): pass",

@@ -158,6 +158,8 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
+        if path.startswith("tools/ray_viewer/"):
+            tests.add("tests/test_ray_viewer.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
         if path.endswith(".json") and path.startswith(("examples/", "skills/")):
             tests.add("tests/test_configuration_validation.py")

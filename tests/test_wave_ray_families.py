@@ -412,8 +412,9 @@ def test_every_ray_is_a_wave_ray(tmp_path):
     assert outbound[3] == 0 and outbound[4] == WIDE_RATE
     assert outbound[100] == 97 * WIDE_RATE == 114517387209588896432128
     assert all(item["balanced"] for item in world.spatial_accounting().values())
-    # The walk back (feature 3's return is not on main): the ray reversed on its
-    # line with outbound 0 counts its steps and its phase down, one Link at a time.
+    # The walk back: the ray reversed on its line with outbound 0 counts its steps
+    # and its phase down, one Link at a time, and rests at its event Node
+    # (detector-return-v1).
     returning = replace(ray, outbound=0)
     meter = CostMeter(initial.operation_costs)
     for back in range(1, 101):
@@ -422,8 +423,10 @@ def test_every_ray_is_a_wave_ray(tmp_path):
         (returning,) = ports[0]
         assert (returning.steps, returning.phase) == (100 - back, outbound.get(100 - back, WIDE_PHASE))
     assert (returning.steps, returning.phase) == (0, WIDE_PHASE)
+    ports, kept = forward_rays((returning,), definition, meter)
+    assert kept == (returning,) and ports == ((),) * 6
     with pytest.raises(ValueError, match="event Node"):
-        forward_rays((returning,), definition, meter)
+        advance_ray(returning, (1, 0, 0), WIDE_MODULUS, WIDE_RATE)
     elapsed = time.perf_counter() - started
     assert elapsed < 20, f"the wide-phase case took {elapsed:.2f} s"
     with pytest.raises(ValueError, match="power of two"):

@@ -17,8 +17,12 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work, reduced_ratio
 from event_universe.core.sampling_contract import DETECTOR_ONLY, validate_spatial_sampling
 from event_universe.core.spatial_state import (
+    DETECTOR_BIT_0,
+    DETECTOR_BIT_1,
+    RETURN_MODES,
     EmissionDefinition,
     FieldRuleGuard,
+    InverseSplit,
     Layers,
     NodeFieldRuleDefinition,
     Ray,
@@ -36,9 +40,13 @@ from event_universe.core.spatial_state import (
     ray_layers,
     ray_momentum,
     ray_stock,
+    release_field,
+    release_stock,
     stamp_event,
+    transmit,
     validate_ray_participants,
     validate_rays,
+    validate_released_fields,
 )
 
 from .disturbances import evaluate
@@ -72,12 +80,17 @@ class SpatialLaw:
     least_delay_direction: str | None = None
     ray_interactions: tuple[InteractionDefinition, ...] = ()
     sampling_profile: str = DETECTOR_ONLY
+    # What a returned ray does at its event Node (inverse-split-v1).
+    return_mode: str = "siblings"
     # The layers of event spacetime (ray-layers-v1): derived here from the declared
     # ray interactions, never declared; every meeting reads them.
     layers: Layers = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
+        if self.return_mode not in RETURN_MODES:
+            raise ValueError("return_mode must be siblings, straight or annul")
+        validate_released_fields(self.definitions, self.fields)
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
             object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
@@ -162,11 +175,14 @@ class SpatialLaw:
         record's field of the same name and share x heading to its momentum field;
         the rest of the ray stays resident and is forwarded. A record's own rays
         that arrived with it are left alone. Nothing here draws: the capture is
-        the coherent share or the deterministic threshold. Returns the total
-        amount absorbed.
+        the coherent share or the deterministic threshold. A returning ray
+        (outbound 0) enters no absorption and gates no coherence: it crosses the
+        Node as if alone (detector-return-v1). Returns the total amount absorbed.
         """
         definition = self.definitions[index]
         absorbed_total = 0
+        returning = [ray for ray in resident if not ray.outbound]
+        resident[:] = [ray for ray in resident if ray.outbound]
         # Kerengonen: the coherence of everything that arrived gates every share.
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
         if definition.coherent:
@@ -271,7 +287,206 @@ class SpatialLaw:
                     values=tuple(values),
                     absorbed_phases=tuple(phases) if definition.coherent else record.absorbed_phases,
                 )
+        resident.extend(returning)
         return absorbed_total
+
+    def _input_slot(self, index: int, records: list[DisturbanceRecord | None]) -> int | None:
+        """The slot of the event's input when it is still at the Node: the first record
+        with a funded emission rule into this field (the resident emitting record)."""
+        for slot, record in enumerate(records):
+            if record is None:
+                continue
+            for rule in self.emissions:
+                if rule.spatial_field == index and rule.funded and matches_type(rule, record.type_index):
+                    return slot
+        return None
+
+    def _refund(
+        self,
+        index: int,
+        record: DisturbanceRecord,
+        returned: Ray,
+        transmitted: Rays,
+        annulled: list[list[int]],
+        meter: CostMeter,
+    ) -> DisturbanceRecord:
+        """Restore the returned share to the event's input exactly, the inverse of the
+        funded-emission bookkeeping, then fund the transmission from it in the same
+        interval: stock back by the share and out by the amounts transmitted or
+        annulled; the recoil back by share x event heading and out by amount x
+        heading per transmission or by the annulled momentum. A stock or recoil the
+        field cannot hold fails closed."""
+        definition = self.definitions[index]
+        field = self.fields[definition.field]
+        values = list(record.values)
+        stock = unpack(values[definition.field])[0]
+        restored = checked_work(stock + returned.amount)
+        values[definition.field] = pack((restored,))
+        try:
+            field.validate(values[definition.field])
+        except ValueError as error:
+            raise ValueError(
+                f"the inverse split cannot restore the returned share to its input: {error}"
+            ) from error
+        funded = checked_work(restored - annulled[definition.field][0])
+        for ray in transmitted:
+            funded = checked_work(funded - ray.amount)
+        values[definition.field] = pack((funded,))
+        field.validate(values[definition.field])
+        meter.charge("update", 2)
+        recoil_field = next(
+            (
+                rule.recoil_field
+                for rule in self.emissions
+                if rule.spatial_field == index and rule.funded and matches_type(rule, record.type_index)
+            ),
+            None,
+        )
+        if recoil_field is not None:
+            recoil = list(unpack(values[recoil_field]))
+            for axis, value in enumerate(ray_momentum((returned,), definition)):
+                recoil[axis] = checked_work(recoil[axis] + value)
+            for axis, value in enumerate(ray_momentum(transmitted, definition)):
+                recoil[axis] = checked_work(recoil[axis] - value)
+            if definition.momentum_field is not None:
+                for axis, value in enumerate(annulled[definition.momentum_field]):
+                    recoil[axis] = checked_work(recoil[axis] - value)
+            values[recoil_field] = pack(tuple(recoil))
+            self.fields[recoil_field].validate(values[recoil_field])
+            meter.charge("update", 3)
+        return replace(record, values=tuple(values))
+
+    def _inverse_split(
+        self,
+        index: int,
+        resident: list[Ray],
+        records: list[DisturbanceRecord | None],
+        meter: CostMeter,
+        source: list[list[int]],
+        funded: list[int],
+        absorbed: list[int],
+        annulled: list[list[int]],
+    ) -> tuple[list[InverseSplit], Rays]:
+        """Every returned ray resident at its event Node performs the inverse split of
+        its own share by the world's return mode (inverse-split-v1).
+
+        After the meeting by the declared couplings (absorption, ray interactions:
+        in this slice a returning ray enters none) and before forwarding, so the
+        transmission leaves on this cycle like an emission. Returns the records to
+        publish and the transmitted rays, which join this cycle's emitted rays.
+        """
+        definition = self.definitions[index]
+        due = [ray for ray in resident if not ray.outbound and ray.steps == 0]
+        if not due:
+            return [], ()
+        resident[:] = [ray for ray in resident if ray.outbound or ray.steps]
+        splits: list[InverseSplit] = []
+        transmitted: list[Ray] = []
+        slot = self._input_slot(index, records)
+        for ray in due:
+            meter.charge("read")
+            meter.charge("route")
+            rays, ports = transmit(ray, definition, self.return_mode)
+            meter.charge("split", max(len(ports), 1))
+            amounts = tuple(r.amount for r in rays)
+            annulled_now = [[0] * f.components for f in self.fields]
+            if self.return_mode == "annul":
+                annulled_now[definition.field][0] = ray.amount
+                if definition.momentum_field is not None:
+                    for axis, value in enumerate(ray_momentum((ray,), definition)):
+                        annulled_now[definition.momentum_field][axis] = value
+            elif not rays:
+                if slot is None:
+                    raise ValueError(
+                        "the inverse split of a one-line event with no input at its Node "
+                        "has no sibling line to transmit to; use return_mode straight or annul"
+                    )
+            if slot is not None:
+                record = records[slot]
+                assert record is not None
+                records[slot] = self._refund(index, record, ray, rays, annulled_now, meter)
+                # The restore is booked as stock moving from the field to the record;
+                # the transmission or the annulled content as funded from it.
+                absorbed[definition.field] = checked_work(absorbed[definition.field] + ray.amount)
+                paid = annulled_now[definition.field][0]
+                for transmission in rays:
+                    paid = checked_work(paid + transmission.amount)
+                funded[definition.field] = checked_work(funded[definition.field] + paid)
+            elif definition.momentum_field is not None and rays:
+                # No input at the Node: the transmission is booked as a sourced
+                # emission books its rays, the returned share read out of the source
+                # ledger and the transmission's momentum into it.
+                for axis, value in enumerate(ray_momentum((ray,), definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] - value
+                    )
+                for axis, value in enumerate(ray_momentum(rays, definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] + value
+                    )
+            for field_index, values in enumerate(annulled_now):
+                for component, value in enumerate(values):
+                    annulled[field_index][component] = checked_work(
+                        annulled[field_index][component] + value
+                    )
+            transmitted.extend(rays)
+            splits.append(
+                InverseSplit(
+                    index,
+                    RETURN_MODES.index(self.return_mode),
+                    ports,
+                    amounts,
+                    ray.amount,
+                    {DETECTOR_BIT_0: 0, DETECTOR_BIT_1: 1}.get(ray.detector, -1),
+                    int(slot is not None),
+                    tuple(tuple(v) for v in annulled_now) if self.return_mode == "annul" else (),
+                )
+            )
+        return splits, tuple(transmitted)
+
+    def _release(
+        self,
+        resident: list[list[Ray]],
+        records: list[DisturbanceRecord | None],
+        emitted: list[list[Ray]],
+        source: list[list[int]],
+        meter: CostMeter,
+    ) -> None:
+        """The field as the ray's information (released-field-v1, Highlights 3.5).
+
+        Every resident ray of a family that has a released field releases, at the
+        Node it departs from, one field ray per Port heading except its own, each
+        carrying the whole quanta of its amount times the release ratio and its
+        phase; resident content (a record holding stock of the family after this
+        interval's emission) releases on all six headings once per interval. The
+        released rays leave this interval with the residents. They are booked as an
+        explicitly accounted source of their field, and of its momentum field when
+        one is bound, so the source ray pays nothing: its amount, phase and heading
+        are untouched. A field ray releases nothing (a field has no field).
+        """
+        for index, definition in enumerate(self.definitions):
+            if definition.field_of is None:
+                continue
+            origin = self.definitions[definition.field_of]
+            released = release_field(tuple(resident[definition.field_of]), definition, origin)
+            meter.charge("read", len(resident[definition.field_of]))
+            for record in records:
+                if record is None or origin.field >= len(record.values):
+                    continue
+                stock = unpack(record.values[origin.field])[0]
+                if stock > 0:
+                    meter.charge("read")
+                    released += release_stock(stock, definition)
+            if not released:
+                continue
+            meter.charge("split", len(released))
+            emitted[index].extend(released)
+            source[definition.field][0] = checked_work(source[definition.field][0] + ray_stock(released))
+            if definition.momentum_field is not None:
+                for axis, value in enumerate(ray_momentum(released, definition)):
+                    source[definition.momentum_field][axis] = checked_work(
+                        source[definition.momentum_field][axis] + value
+                    )
 
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
@@ -429,6 +644,8 @@ class SpatialLaw:
                 source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
+        annulled = [[0] * field.components for field in self.fields]
+        inverse_splits: list[InverseSplit] = []
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
@@ -568,6 +785,7 @@ class SpatialLaw:
                     source[definition.field][component] = checked_work(
                         source[definition.field][component] + value
                     )
+        self._release(resident_rays, updated_records, emitted_rays, source, meter)
         before_rules = tuple(working)
         has_local = any(definition.transport == "local" for definition in self.definitions)
         local_outgoing: tuple[Values, ...] = ()
@@ -596,6 +814,25 @@ class SpatialLaw:
                 absorbed_by_field[definition.field] = checked_work(
                     absorbed_by_field[definition.field] + absorbed
                 )
+                splits, transmitted = self._inverse_split(
+                    index,
+                    resident_rays[index],
+                    updated_records,
+                    meter,
+                    source,
+                    funded,
+                    absorbed_by_field,
+                    annulled,
+                )
+                inverse_splits.extend(splits)
+                emitted_rays[index].extend(transmitted)
+                # What the splits took out of the resident rays without sending it:
+                # the shares restored to an input and the content annulled.
+                for split in splits:
+                    if split.restored:
+                        absorbed = checked_work(absorbed + split.amount)
+                    if RETURN_MODES[split.mode] == "annul":
+                        absorbed = checked_work(absorbed + split.amount)
                 if ray_hold:
                     ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
                     kept = merge_rays(
@@ -700,4 +937,6 @@ class SpatialLaw:
             if self.allocation_phase != "node"
             else (),
             kept_rays=tuple(kept_rays) if has_rays and any(kept_rays) else (),
+            inverse_splits=tuple(inverse_splits),
+            annulled=tuple(tuple(v) for v in annulled) if any(any(v) for v in annulled) else (),
         )

@@ -270,6 +270,8 @@ between arrival and the next cycle; there is no octant stock.
 | `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 | `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
+| `field_of` | Optional, with `release`: the name of the ray family this field is the field of ([released field](#field-as-the-rays-information-released-field-v1)) |
+| `release` | With `field_of`: `[n, d]`, `1 <= n <= d`, the share of the source's amount each released ray carries per Node crossed |
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
@@ -316,11 +318,14 @@ square in every direction, and mass-independent acceleration.
 The rule ([Highlights](HIGHLIGHTS.md) 3.3, 3.19, 3.20 and 5.1; [ray-event
 model](RAY_EVENT_MODEL.md#1-definitions), migration step 2): every ray
 carries the number of steps it has made since its event and the information
-of that event, and if that event was at a Detector, the bit drawn. In this
-slice they are hidden variables (Highlights 5.4): carried, part of the merge
-identity, validated, and read by no rule, coupling, absorber or readout. An
-existing world runs exactly as before except where rays of different events
-used to merge; they no longer do.
+of that event, and if that event was at a Detector, the bit drawn. They are
+carried, part of the merge identity and validated. `steps` and `outbound`
+are read by the return alone ([Detector return](#detector-return-detector-return-v1)):
+the transport of a returning ray and the momentum readout. The event Ports,
+the event shares and the Detector bit are hidden variables (Highlights 5.4),
+read by no rule, coupling, absorber or readout. An existing world runs
+exactly as before except where rays of different events used to merge; they
+no longer do.
 
 The `Ray` record (`core/spatial_state.py`) holds, beside its heading index,
 DDA accumulators, amount, wave phase, advance, pace wait and interaction
@@ -328,8 +333,8 @@ delay:
 
 | Field | Values | Rule |
 | --- | --- | --- |
-| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node; what it does there is features 3 and 4 of issue #169, so walking it further is refused |
-| `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. No rule sets `0` yet: every created ray is outbound |
+| `steps` | `0` to `MAX_VALUE` | Links walked since the ray's event: `+1` per Link while outbound, `-1` per Link on the walk back; `0` at the event Node. The count starts at the trajectory's origin event and resets only when the trajectory changes (a new event). A returning ray with no steps left is at its event Node: it stays resident there until the next cycle's inverse split ([below](#inverse-split-inverse-split-v1)); no Link is planned for it and a Link beyond its event Node is refused |
+| `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. Every created ray is outbound; a draw of 0 at a marked Node sets `0` ([Detector return](#detector-return-detector-return-v1)) |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
@@ -357,7 +362,11 @@ the event's mask and shares as a fresh outbound trajectory with `steps 0`:
   all the group's outputs; a rule with declared `outputs` stamps the new rays
   that replace its participants the same way
   ([meetings with outputs](#meetings-with-outputs-ray-meeting-conversion-v1)).
-  A group that does not fire leaves its rays, and their event state, untouched.
+  A group that does not fire leaves its rays, and their event state, untouched;
+- the inverse split of a returned ray at its event Node is one event: its
+  transmissions carry the mask of the lines transmitted to and the amount per
+  line, and the returned ray's Detector bit
+  ([inverse split](#inverse-split-inverse-split-v1)).
 
 Merge identity: `merge_rays` combines rays that agree in heading, lattice
 accumulators, wave phase, advance, wait, interaction delay, steps, outbound,
@@ -398,11 +407,129 @@ under negation, without `node_execution` or `spatial_computation_delay`.
 
 On arrival each ray draws one bit from the mark's stream, in Port then
 merge-key order, and leaves with its `detector` field set: `2` on 1, with a
-`detector_click` event (position, tick, Port, family, amount, bit 1); `1` on
-0, with nothing recorded. In this slice the ray continues unchanged in both
-cases; the return is feature 3. A document without `detectors` has no marked
-Node and runs exactly as before, and the runner records
+`detector_click` event (position, tick, Port, family, amount, bit 1), the ray
+continuing unchanged; `1` on 0, the ray returned on its line
+([Detector return](#detector-return-detector-return-v1)) with a
+`detector_return` event and no click. A document without `detectors` has no
+marked Node and runs exactly as before, and the runner records
 `detector_mark: "detector-mark-v1"`.
+
+### Detector return (`detector-return-v1`)
+
+The rule is stated in [Detector-owned sampling](DETECTOR_SAMPLING.md#the-return-detector-return-v1)
+([Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4; migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), first half;
+issue #169, feature 3). This section is the transport of a returning ray.
+
+On a draw of 0 the arriving ray is returned in the same interval
+(`return_ray`): heading index replaced by the index of the negated heading,
+`outbound` 0, accumulators `(0, 0, 0)`, `wait` 0, `interaction_delay` 0,
+everything else as it arrived. It is not counted in the Node's per-Port
+delivered readings of that interval (as if it had not arrived), so the `flux`
+sample and the `received_fields` of the `spatial_received` event do not see
+it. At the next cycle it leaves through the Port it came in through, an
+ordinary departure of `forward_rays`: one Link per tick, `steps` down by one
+and the phase back by the field's advance per Link (`advance_ray`).
+
+On the walk back a ray with `outbound` 0:
+
+- enters no absorption: `_absorb` leaves it in the residents untouched and
+  computes the coherence of the arrivals over the outbound rays only;
+- takes part in no ray interaction: `apply_ray_interactions` gives it no
+  participant view, so no group contains it;
+- is not sampled: the value sample (`coherent_stock`) and the flux sample
+  (`sample_fluxes`, both projections) that couplings read are taken over the
+  outbound rays, and its arrival adds nothing to the per-Port readings;
+- is not drawn for: a marked Node on its way sets nothing and records
+  nothing;
+- merges with nothing: `outbound` is in the merge key, and the returned ray
+  is the only ray of its event on its line;
+- counts: it is in the Node's rays, in `ray_count`, in the totals and in the
+  escape check.
+
+At `steps` 0 it is at its event Node and stops: `forward_rays` keeps it as a
+resident ray with `outbound` 0 and does not move its phase, and `advance_ray`
+refuses a Link for it. It carries exactly the phase, amount and event record
+it left the event with, the Node keeps nothing else, and in the next cycle it
+performs the inverse split ([below](#inverse-split-inverse-split-v1)).
+
+`ray_momentum` reads a ray with `outbound` 0 as amount times its heading
+negated, its share of the event on the event's heading, in the totals, the
+carried-heading flux projection and the escape ledger alike: a return leaves
+the momentum total unchanged and the audits exact. A returning ray in a
+packet that would leave an open boundary is a validation error (its event
+Node is not in the world), never an escape. The runner records
+`detector_return: "detector-return-v1"`, and a world without a mark has no
+returning ray and runs byte for byte as before.
+
+### Inverse split (`inverse-split-v1`)
+
+The rule is stated in [Detector-owned sampling](DETECTOR_SAMPLING.md#the-inverse-split-inverse-split-v1)
+([Highlights](HIGHLIGHTS.md) 3.20 and 5.4; migration step 4 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), second half;
+issue #169, feature 4). This section is the transmission as an event ray and
+the restore-and-refund bookkeeping. The world key:
+
+```json
+"return_mode": "siblings"
+```
+
+| Value | What a returned ray does at its event Node |
+| --- | --- |
+| `siblings` (default) | Transmits its amount, phase and bit to every Port of its event's mask except its own, the amount shared exactly with the remainder to the first Ports in Port order |
+| `straight` | Continues on the one Port opposite its own with its whole amount, phase and bit |
+| `annul` | Ends there; amount and momentum reading into the annulled sink |
+
+Any other value is rejected before a world is constructed. The key is read
+only for a returned ray, so a world without a mark runs byte for byte as
+before.
+
+**The transmission.** In `SpatialLaw.__call__`, for each ray field after
+`_absorb` and before `forward_rays`, `_inverse_split` takes every resident
+ray with `outbound` 0 and `steps` 0 out of the residents and calls
+`transmit` (`core/spatial_state.py`): the Ports (`split_ports`: the mask
+minus the own Port, the opposite Port, or none), the amounts
+(`split_amounts`, Highlights 3.17), one `Ray` per Port on the unit-axial
+heading that leaves through it (`port_heading`; a field without that line
+fails closed), accumulators `(0, 0, 0)`, the returned ray's phase and
+advance, stamped as one event (`stamp_event`: `steps` 0, `outbound` 1,
+`event_ports` the mask of those Ports, `event_shares` the amount per Port)
+with the returned ray's `detector` copied on. The transmissions join this
+cycle's emitted rays, so they leave on this cycle with the residents, one
+Link per tick, and merge with nothing of another event. A one-line event
+in `siblings` transmits nothing; with no input at the Node that is a
+validation error.
+
+**Restore and refund.** When a record with a funded emission rule into the
+field is at the Node (the event's input, the first such record in slot
+order), `_refund` first adds the returned share to the record's stock of
+the field and, if the rule has a `recoil_field`, share x event heading to
+its recoil (the returned ray's `ray_momentum`), the exact inverse of the
+funded-emission bookkeeping; then it takes the transmitted amounts (or the
+annulled amount) out of the stock and amount x heading per transmission (or
+the annulled momentum) out of the recoil. Both are booked in the cycle's
+`transfer_delta` (restore as absorbed, funding as funded), so the spatial
+accounting's reactions move by zero net and the record's values validate at
+each step; a stock or recoil the field cannot hold fails closed with a
+clear error. The plan's ray conservation check counts a restored or
+annulled share as taken out of the residents. Without such a record the
+share's momentum reading and the transmission's momentum are booked in the
+source ledger, as a sourced emission's rays are.
+
+**The sink.** `SpatialPlan.annulled` carries the per-field content annulled
+by the cycle; the Node books it through `SpatialAccounting.record_annulled`
+into `SpatialEngine.annulled`, read by `annulled_totals()`, by the spatial
+accounting (`balanced` subtracts it) and by the runner's conservation line.
+The `inverse_split` record (position, tick, family, mode, ports, amounts,
+amount, bit, restored, annulled) carries the same per-field values, and the
+local conservation audit adds them to the Node's residual, so a world under
+the audit passes with content annulled.
+
+**Momentum.** The transmission reads as amount times its heading, a ray like
+any other. In `siblings` and `straight` through a lamp, the lamp's recoil
+takes the returned share's momentum back and gives the transmission's, so
+the momentum total is unchanged; in `annul` the sink takes the share's
+reading and the lamp is unchanged.
 
 ### Layers (`ray-layers-v1`)
 
@@ -512,13 +639,15 @@ half through each.
 
 **Momentum of a split.** A split between two Ports moves the rays' momentum
 (amount x heading) and no ray owns the difference: the recoil belongs to the
-field ray of feature 7, which does not exist yet. Until then the spatial law
-books the momentum change of a meeting as an explicitly accounted source of
-the ray field's momentum field (Highlights 3.15), so `source_totals` names
-it and `conserved_at_every_completed_tick` stays exact. The local
-energy/momentum audit (`diagnostics/local_conservation.py`) has no source
-term, so a world that declares it must keep momentum at every meeting, as a
-declared momentum invariant does.
+[field ray](#field-as-the-rays-information-released-field-v1), and what the
+returning field ray does when it reaches its source is the declared coupling
+of feature 8. Until that coupling exists the spatial law books the momentum
+change of a meeting as an explicitly accounted source of the ray field's
+momentum field (Highlights 3.15), so `source_totals` names it and
+`conserved_at_every_completed_tick` stays exact. The local energy/momentum
+audit (`diagnostics/local_conservation.py`) has no source term, so a world
+that declares it must keep momentum at every meeting, as a declared momentum
+invariant does.
 
 Bounds and admission: two to six participants, one to six outputs, one table
 split per pair of outputs, the admission of every ray interaction (schema 1,
@@ -598,6 +727,106 @@ participant (`read` cost 9 instead of 7) and is otherwise identical. The runner
 records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
 `test_wave_ray_families.py` ([expectations](TEST_EXPECTATIONS.md#wave-ray-families))
 is the test.
+
+### Field as the ray's information (`released-field-v1`)
+
+The one field rule ([Highlights](HIGHLIGHTS.md) 3.3, 3.5, 3.14, 3.15, 3.17
+and 3.28; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step
+7; issue #169, feature 7): a ray has a field, and the field is the ray's own
+information spreading in ray form to the Nodes around it, without an event.
+A ray field G declared with `field_of: F` and `release: [n, d]` is the field
+of the ray family F:
+
+```json
+{"field": "G", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
+ "rays_per_tick": 1, "ray_slots": 16, "field_of": "electron", "release": [1, 4],
+ "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
+```
+
+**The release.** At every Node an F ray crosses (arrives at and departs
+from), in the interval it departs, G rays are released at that Node, one per
+Port heading except the F ray's own, each of amount `floor(amount_F x n /
+d)`, with `event_ports` 0, `event_shares` all zero, `steps` 0, `outbound` 1,
+`detector` 0, accumulators (0, 0, 0) and the F ray's phase at the release:
+the field carries its emitter's phase, and G declares its own `phase_advance`
+(0 delivers the phase unchanged, as light does). The fraction the floor
+leaves is not released: the field is a description booked as a source, so
+nothing owned is destroyed and no remainder needs an owner (Highlights
+3.17); a release whose floor is 0 releases nothing. The released rays leave
+in the same interval as the F ray, with the residents; the release is a
+departure, not an arrival, so it is no meeting. A ray of a family that has a
+meeting rule releases after the interval's meetings, from the trajectory
+that departs. A G ray crosses Nodes like any ray and releases nothing: a
+field has no field, and the density of the field falls by the geometry of the
+lattice alone. A G ray that reaches an open boundary escapes like any ray.
+`release_field` (`core/spatial_state.py`) is the pure function, called by the
+spatial law after its emissions and before forwarding.
+
+**The heading the ray travels on.** The ray's own line ahead of it is, at
+link speed, the ray itself: the field is born where the ray is and leaves at
+the causal speed, and the ray is never faster than its field (Highlights 3.5),
+so under this admission (pace 1/1 for F and G) the forward heading is not
+released and the five other headings are. That is the geometry of the
+no-self-field rule: the release on the ray's own heading is the ray, the
+release behind it walks away from it, and the four transverse releases leave
+its line, so a straight ray never shares a Node with a ray of its own field
+and no exclusion rule is needed. Only after a change of trajectory can a ray
+cross field it released earlier, and that is a meeting like any other. A
+slower family (feature 9) will release its forward field ahead of it.
+
+**Resident content.** A record holding stock of F (a bound group in the
+sense of Highlights 3.4, in this slice any resident record whose type owns
+F) releases once per interval on all six headings, from the stock it still
+holds after the interval's emission, with phase 0 (a record carries no phase
+of its own in this slice); a record that has paid out its stock releases
+nothing. A Node that holds such a record runs its spatial cycle every
+interval.
+
+**The booking.** G is not conserved by the F ray: the F ray pays nothing for
+its field until the field meets something (Highlights 3.5), so its amount,
+phase and heading are unchanged by the release, and the released amount, and
+`amount x heading` into G's momentum field when one is bound, are booked as
+an explicitly accounted source of G (Highlights 3.15). `source_totals` and
+the per-tick `source_delta` name it, the spatial accounting balances at every
+tick, and a G field declared conserved has total equal to its released sum
+less what escaped.
+
+**The recoil.** A meeting of a G ray with a family whose declared coupling
+responds is an ordinary rule of `ray_interactions` with outputs
+([meetings with outputs](#meetings-with-outputs-ray-meeting-conversion-v1)):
+its outputs change the ray that was met as the rule says (heading, delay or
+phase) and return the G ray reversed, an output of field G with heading
+`"reversed"` of the G input and its amount, a new event ray at the meeting
+Node stamped with the meeting's Ports and shares, so the recoil walks back
+along the field ray's line toward the line of the ray that released it, at
+finite speed (Highlights 3.14). The momentum the turn moves belongs to the
+recoil's line; what the recoil does when it reaches its source or a bound
+group is the declared coupling of feature 8, which uses it for gravity as
+bending by delay (Highlights 3.28). No rule reads G unless declared: a family
+with no coupling to G crosses it ([layers](#layers-ray-layers-v1)).
+
+```json
+{"name": "turn", "participants": [{"type": "electron"}, {"type": "G"}],
+ "outputs": [
+   {"field": "electron", "amount": {"of": 0}, "heading": "same", "input": 1, "phase": {"of": 0}},
+   {"field": "G", "amount": {"of": 1}, "heading": "reversed", "input": 1}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
+
+Admission: `field_of` and `release` are declared together, `field_of` names
+another ray spatial field that is not itself a field of anything (a field has
+no field), G carries the six Port headings, G and F are positive, conserved,
+unpaced unit-axial ray fields on the links metric with zero baseline, no
+decay and no self-exclusion, with the same phase width (`phase_bits`, and
+so the same phase steps), under the shared
+Detector admission (schema 1, `link_ticks` 1, the default fixed clock, no
+field rules, spatial interactions, couplings or absorption on G or F). The
+runner records `released_field: "released-field-v1"` and `released_fields`,
+each field ray family with the family it is the field of and its ratio
+(`[{"field": "G", "field_of": "electron", "release": [1, 4]}]`, empty when
+none), beside `ray_meeting`, so a Renderer can draw the G rays faint from the
+per-Node `ray_count` and `value` of that family. A world that declares no
+`field_of` runs byte-identically.
 
 ### Funded emission and absorption
 

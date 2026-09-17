@@ -38,7 +38,9 @@ layer, and the bond-registry gate with the registry itself.
 
 No physical probability, transport, conserved quantity, ownership layout, phase
 rule or timing law is changed by this admission boundary. The mark below
-implements the draw and PASS; the return on 0 is the next step.
+implements the draw and PASS, [the return](#the-return-detector-return-v1)
+implements RETURN on 0, and [the inverse split](#the-inverse-split-inverse-split-v1)
+what the returned ray does at its event Node.
 
 ## The Detector mark (`detector-mark-v1`)
 
@@ -92,13 +94,12 @@ position, the tick of the arrival, the Port the ray came in through, the
 family (the ray field's name), the ray's amount and `bit` 1. The click is the
 record of that 1 and the only measurement.
 
-**0, in this slice.** The ray also continues unchanged, its `detector` field
-becomes `1` (a Detector event, bit 0), and nothing is recorded: no click and
-no outcome, because a return is no measurement. The reversal on the ray's own
-line, the walk back by its step count and the inverse split at the event are
-feature 3 (`detector-return-v1`) and feature 4 of issue #169, which define
-what changes on a return; the mark of this slice changes nothing on the ray
-but the bit.
+**0, RETURN.** The ray's `detector` field becomes `1` (a Detector event, bit
+0) and the ray is returned on its own line, reversed and otherwise unchanged
+([the return](#the-return-detector-return-v1), `detector-return-v1`). No
+click and no outcome are recorded, because a return is no measurement; a
+`detector_return` event records the reversal for the Renderer. At its event
+Node the returned ray performs [the inverse split](#the-inverse-split-inverse-split-v1).
 
 **Replay.** The stream is a function of the seed and the arrival order alone:
 a recorded run replayed with the same initialization draws the same bits,
@@ -120,13 +121,187 @@ and nothing about the rays it drew for; the bit travels on the ray.
 **Identity.** The runner records `detector_mark: "detector-mark-v1"` in
 `run.json` beside `sampling_profile` and `ray_state`.
 
+## The return (`detector-return-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.19 "0, no measurement", 3.20 "A
+return is the inverse split" and 5.4 "PASS and RETURN"; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order) step 4, first half; issue
+#169, feature 3): 0 = RETURN is the same wave ray reversed on its line,
+unchanged, walking back the number of steps it has made since its event. This
+section states what the code does on a draw of 0; the transport of the
+returning ray is in [spatial fields](SPATIAL_FIELDS.md#detector-return-detector-return-v1).
+
+**The reversal.** In `SpatialNode.receive`, a ray whose draw is 0 is returned
+in the same interval it arrived (`return_ray` in `core/spatial_state.py`):
+its heading is negated on its line (the index of the negated heading in the
+field's sequence, which the Detector admission guarantees exists), `outbound`
+becomes `0`, its per-ray transport accumulators are reset (the three DDA
+accumulators, the pace wait and the interaction delay), and its amount,
+phase, `steps`, `event_ports`, `event_shares` and family are exactly what
+arrived; `detector` is `1`. The returned ray joins the Node's rays and leaves
+at the next cycle through the Port it came in through, one Link per tick, as
+an ordinary departure: the Node adds nothing, holds nothing and reads
+nothing. It merges with nothing, because `outbound` is part of the merge
+identity and the returned ray is the only ray of its event on its line.
+
+**No measurement.** Nothing is recorded as an outcome: the `detector_click`
+list is what it was, a click per draw of 1 only. The reversal is recorded as
+a `detector_return` event (position, tick, the Port the ray came in through
+and leaves by, family, amount) so that the Renderer can draw it; it is a
+record of the return, not of a measurement. The returned ray is not delivered
+flux either: it is left out of the Node's per-Port readings of that interval,
+as if the ray had not arrived (Highlights 3.19).
+
+**The walk back.** A returning ray (`outbound` 0) crosses every Node as if
+alone: it enters no coupling and no absorption, it is not part of the value,
+flux or per-Port samples that couplings read, it takes part in no ray
+interaction group, and a marked Node on its way does not draw for it (RETURN
+is no measurement, and a return is not an arrival to be measured). Per Link
+its `steps` count down and its phase steps back by the field's advance
+(`ray-event-state-v1`), so at `steps` 0 it is at its event Node with exactly
+the phase and the amount it left the event with.
+
+**Resident at the event Node.** At `steps` 0 the returning ray stops: no
+further Link is planned for it (`forward_rays` keeps it) and a Link beyond
+its event Node is refused (`advance_ray`). It stays a resident ray of that
+Node with `outbound` 0, inert: its phase no longer moves, it enters no
+coupling and no absorption, it merges with nothing, and it counts in the
+Node's `ray_count` and in the totals. In the next cycle it performs the
+inverse split of its share ([below](#the-inverse-split-inverse-split-v1),
+`inverse-split-v1`).
+
+**Momentum.** A returning ray's momentum reads as its share of the event on
+the event's heading: `ray_momentum` reads amount times the ray's heading
+negated when `outbound` is 0 (issue #169, "Momentum of a returning ray reads
+as its event share, so the Detector takes no recoil and the audit stays
+exact"). The Detector takes no recoil, the return books nothing, and the
+momentum total of the world is unchanged by a return, so
+`conserved_at_every_completed_tick` and the local audits stay exact through
+the return; the inverse split restores the share where it meets it.
+
+**Boundary.** A returning ray never reaches an open boundary before its event
+Node, because its `steps` bound its walk. A returning ray in a packet that
+would escape means its event Node is not in the world, never the case on a
+static board, and the engine fails closed with a validation error instead of
+recording an escape.
+
+**Identity.** The runner records `detector_return: "detector-return-v1"` in
+`run.json` beside `detector_mark`. No new draw and no new physics: a world
+without a mark has no returning ray and runs byte for byte as before.
+
+## The inverse split (`inverse-split-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.20 "A return is the inverse split",
+"The transmission is a ray" and "Return modes", 5.4 "A pair"; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order) step 4, second half; issue
+#169, feature 4, and the model owner's decisions of 2026-09-17): a return
+turns time back for that ray's share only. At its event Node the returning
+ray performs the inverse split with its information, transmitting it to the
+same places the event sent to, so that it cancels what was already there
+where it meets it. This section states what the code does with a returned
+ray resident at its event Node; the transmission's transport and the
+bookkeeping are in [spatial fields](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1).
+
+**When.** A returned ray with `steps` 0 and `outbound` 0 is at its event
+Node. In the Node's next cycle (the cycle after the interval it arrived in,
+as an emission leaves on the cycle after its record's arrival) it performs
+the inverse split of its own share, after the meeting by the declared
+couplings and before forwarding, so the transmission leaves the Node on that
+cycle like an emission. Nothing stays at the Node: the returned ray is
+consumed by the split in every mode.
+
+**The mode.** The world key `return_mode` ([disturbances](DISTURBANCES.md#json-schema-versions-1-and-2),
+default `siblings`) selects what the returned ray does. Its own Port is the
+Port its event sent it through, the first step of its event heading (its own
+heading negated).
+
+- `siblings`: it transmits its amount, phase and bit to every line the event
+  sent to except its own: the Ports of its `event_ports` mask other than its
+  own Port, at most five. Each transmission is a new event ray at this Node
+  (`transmit` in `core/spatial_state.py`): `outbound` 1, `steps` 0, the
+  returned ray's phase, advance and Detector bit, `event_ports` the mask of
+  the lines transmitted to and `event_shares` the amount per Port. The
+  amount is shared over those lines exactly, the remainder to the first
+  lines in Port order (Highlights 3.17); a line that would get nothing gets
+  no ray. A one-line event (a directed lamp) has no sibling line: with the
+  event's input at the Node the share is restored to it (below) and nothing
+  is transmitted, the inverse of the emission; without an input the engine
+  fails closed, because the share would have no owner.
+- `straight`: it continues straight through the Node on the one line
+  opposite its own Port, as one new event ray with its whole amount, phase
+  and bit, mask of that one Port; enough for a pair, with no per-Port
+  records needed on the ray.
+- `annul`: it ends there. Its content leaves the world into an explicitly
+  accounted sink: its amount into the ray field's annulled total and its
+  momentum reading (`ray_momentum`, its share on the event's heading) into
+  the momentum field's, `annulled_totals()` per field in the engine and the
+  runner, so that initial + sources = current + dissipated + escaped +
+  annulled at every completed tick (the runner's
+  `accounting_balanced_at_every_completed_tick`, the spatial accounting's
+  `balanced` and the local conservation audit's per-Node residual all read
+  the sink; `conserved_at_every_completed_tick` is false once content has
+  left, as at an open boundary). Its information survives only in the
+  record.
+
+**The emission-event case.** If the event's input is still at the Node, the
+resident emitting record (a lamp, a bound group: the first record in slot
+order with a funded emission rule into the ray's field), the returned share
+is first restored to it exactly, the inverse of the funded-emission
+bookkeeping: its stock of the field grows by the share and, with a
+`recoil_field`, its recoil by share x event heading. The transmission of
+the chosen mode is then funded from it in the same interval: stock out by
+the amounts transmitted (or annulled) and recoil out by amount x heading
+per transmission (or by the annulled momentum), so the net movement of
+content equals the mode's rule and the input keeps nothing of the returned
+share after the interval; in `siblings` and `straight` it keeps the recoil
+of what it transmitted, as of any emission. Both movements are booked as
+reactions (restore: field to record; funding: record to field) and the
+`inverse_split` record says `restored`. A restored stock or recoil the
+field cannot hold fails closed with a clear error before anything moves.
+A record that emits by its own rule what it holds will emit a restored
+share that stays with it (a one-line event) again as a new event on a later
+cycle; that is its rule, not the split.
+
+**No input.** With nothing of the event's input at the Node (an interaction
+event whose inputs were consumed), the transmission is booked as a sourced
+emission books its rays: the returned share's momentum reading leaves the
+source ledger and the transmission's momentum enters it (`source_totals`),
+and the ray field's amount moves from the returned ray to the transmission
+unchanged. A world under the local conservation audit reports such a Node
+as a residual, as it does a sourced emission; the owner of that recoil is
+an open point of feature 5 (Highlights 3.20, an ordinary meeting is an
+event whose outputs are new siblings).
+
+**The meeting first.** In every mode, if something else is at the Node
+(other rays, a bound group that is not the event's input), the returned ray
+meets it by the declared couplings before the split (feature 5's layers
+apply); a meeting that consumes it makes no transmission. In this slice a
+returning ray enters no coupling and no absorption
+([the return](#the-return-detector-return-v1)), so nothing consumes it and
+the split follows; rays that share the Node with it cross it as before.
+The transmission is a ray like any other: what happens when it meets the
+share it chases is a declared coupling, not part of this rule.
+
+**The record.** An `inverse_split` event is recorded per returned ray:
+position, tick (the cycle's label), `family`, `mode`, `ports` (the Ports
+transmitted to, in Port order), `amounts` (the amount per Port), `amount`
+(the returned share), `bit` (the ray's Detector bit, 0 or 1), `restored`
+and, in `annul`, `annulled` per field. It precedes the cycle's
+`spatial_cycle` record.
+
+**Identity.** The runner records `inverse_split: "inverse-split-v1"` and
+`return_mode` in `run.json` beside `detector_return`, and `annulled_totals`
+beside `escaped_totals`. No new draw: a world without a mark has no returned
+ray and runs byte for byte as before.
+
 ## External exchange implementation boundary
 
 The adopted exchange is the Detector of [Highlights](HIGHLIGHTS.md) sections
 3.19, 3.20 and 5.4: a marked Node draws 1 or 0 for each arriving transfer,
 `1 = PASS` (ordinary behavior for that arrival) and `0 = RETURN` (the same
 wave ray reversed on its line, unchanged, walking back the number of steps it
-has made since its event and performing the inverse split at its birth event).
+has made since its event and performing the inverse split at its birth event,
+`inverse-split-v1`).
 A repeated committed decision reuses its immutable result without another
 draw, output or inventory charge. The historical quantum instrument that
 earlier revisions of this section compared against was deleted on 2026-09-17
@@ -137,19 +312,26 @@ the action-bit distribution is the mark's explicit setting `n / d`, with no
 default and no assumed 50/50, drawn from the mark's own ticket stream and
 reading nothing from the ray; repeat and simultaneous encounters draw
 independently, one draw per arriving ray, up to six in one interval, from
-that stream seeded by the mark's `seed`. The following definitions are
-still open before the return:
+that stream seeded by the mark's `seed`. Closed by `detector-return-v1`
+([the return](#the-return-detector-return-v1)): the one-Link-at-a-time
+return of the same wave ray reversed on its line, unchanged, entering no
+coupling on the way back and resident at its event Node at `steps` 0.
+Closed by `inverse-split-v1` ([the inverse split](#the-inverse-split-inverse-split-v1)):
+the transmission of the returned share to the sibling lines of its event by
+the world's `return_mode`, the restore and funding through the event's
+input, and the annulled sink. The following definitions are still open:
 
 | Owner | Missing definition | Acceptance after closure |
 | --- | --- | --- |
-| Architecture, then field developer | The inverse split at the birth event and the cancellation arithmetic where the returning ray meets the delayed share; the carried step count, the event's Ports and shares and the Detector bit are on every ray since `ray-event-state-v1` ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1)), unread | One-Link-at-a-time return; no remote/global erase; complete retained/transferred amounts and remainders |
+| Physics, then field developer | The cancellation arithmetic where the transmission meets the delayed share it chases: a declared coupling of feature 5, not part of the split; and the owner of the transmission's recoil at an event Node with no input | Conserved at the Node where they meet; no remote/global erase; complete retained/transferred amounts and remainders |
 | Architecture, then engine developer | Detector/model clock mapping, bounded transaction capacity and output-clock composition | Fixed neighbor transit H plus defined output delay, atomic once-only publication and rejected overflow |
 
 An opposite-going ray alone does not define cancellation. An ordinary absorber
-cannot be renamed a Detector to fill these gaps. A return that is not the
-full reversal and inverse split is not published as physical support: in
-this slice a draw of 0 leaves the ray unchanged and recorded as bit 0, and
-no world claims a return until feature 3 defines it.
+cannot be renamed a Detector to fill these gaps. The split without the
+meeting is not published as physical support: in this slice a draw of 0
+reverses the ray, walks it back to its event Node and transmits its share
+onward, and no world claims the cancellation until feature 5 declares the
+coupling.
 
 
 ## Required evidence
@@ -167,6 +349,15 @@ no world claims a return until feature 3 defines it.
    then merge-key order, reads nothing from the ray, sets the ray's bit,
    clicks on 1 only and replays identically; an unmarked Node and a control
    world consume no ticket ([Node Detector bit](TEST_EXPECTATIONS.md#node-detector-bit)).
-6. The return on 0, causal branch cancellation by the inverse split and
+6. A draw of 0 returns the ray reversed on its line, unchanged, one Link per
+   tick, through no coupling and no absorption, to rest at its event Node
+   with the phase it left with; the momentum total is unchanged and the
+   audits exact every tick ([Detector return](TEST_EXPECTATIONS.md#detector-return)).
+7. A returned ray at its event Node transmits its share by the world's
+   `return_mode`: to the sibling lines with its phase and bit, straight
+   through, or into the annulled sink with the conservation line exact; the
+   event's input takes the share back and funds the transmission in one
+   interval ([Inverse split](TEST_EXPECTATIONS.md#inverse-split)).
+8. The cancellation where the transmission meets the share it chases and
    output-clock composition remain separately blocked until their contracts
    and implementation meet the table above.

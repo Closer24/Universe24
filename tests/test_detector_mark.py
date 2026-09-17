@@ -3,7 +3,10 @@
 Expected bits are pinned in docs/TEST_EXPECTATIONS.md ("Node Detector bit")
 before the first run: six lamps one Link from one marked Node with setting 1/2
 and seed 3, six arrivals in one interval, bits (0, 0, 0, 1, 1, 0) in Port
-order, clicks on 1 only, and the unmarked control world equal at every tick.
+order, clicks on 1 only, the rays that drew 0 returned to their lamps
+(detector-return-v1) and restored to them by the inverse split of a one-line
+event (inverse-split-v1), and the unmarked control world equal on totals and
+momentum at every tick and on the lamps until the restore.
 """
 
 import json
@@ -42,7 +45,7 @@ def lamp_position(port):
     return tuple(c + u for c, u in zip(CENTER, unit(port), strict=True))
 
 
-def document(marked=True, ticks=4):
+def document(marked=True, ticks=3):
     raw = {
         "schema_version": 1,
         "model_id": "detector-mark-test-v1",
@@ -149,13 +152,44 @@ def rays_at(world, position):
 
 
 def ray_inventory(world):
-    """Every ray in the world: Node, heading, amount, steps, phase and Detector bit."""
+    """Every ray in the world: Node, heading, amount, steps, phase, outbound and bit."""
     return sorted(
-        (node.position, ray.heading, ray.amount, ray.steps, ray.phase, ray.detector)
+        (
+            node.position,
+            ray.heading,
+            ray.amount,
+            ray.steps,
+            ray.phase,
+            ray.outbound,
+            ray.detector,
+        )
         for node in world.inventory_view().nodes
         for rays in node.rays
         for ray in rays
     )
+
+
+def continuing(port, tick, bit):
+    """The ray of Port p that continues: t - 1 Links beyond C after tick t."""
+    return (
+        tuple(c - (tick - 1) * u for c, u in zip(CENTER, unit(port), strict=True)),
+        port ^ 1,
+        port + 1,
+        tick,
+        tick,
+        1,
+        bit,
+    )
+
+
+def returned(port, tick):
+    """The ray of Port p that drew 0: reversed at C at tick 1, at its lamp at tick 2 and
+    restored to it by the inverse split of its one-line event from tick 3."""
+    if tick == 1:
+        return (CENTER, port, port + 1, 1, 1, 0, DETECTOR_BIT_0)
+    if tick == 2:
+        return (lamp_position(port), port, port + 1, 0, 0, 0, DETECTOR_BIT_0)
+    return None
 
 
 def lamp(world, type_index):
@@ -168,7 +202,7 @@ def lamp(world, type_index):
 
 
 def observed(world):
-    """What the marked and the control world must agree on: totals, audit, lamps, rays."""
+    """What the marked and the control world must agree on: totals, audit and lamps."""
     report = world.conservation_report()
     assert report["status"] == "passed"
     assert all(item["balanced"] for item in world.spatial_accounting().values())
@@ -177,7 +211,6 @@ def observed(world):
         report["current"]["energy"],
         tuple(report["current"]["momentum"]),
         [lamp(world, port) for port in range(6)],
-        [ray[:5] for ray in ray_inventory(world)],
     )
 
 
@@ -204,48 +237,74 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
                 control_clicks.append(event) if event["event"] == "detector_click" else None
             ),
         )
-        for _ in range(4):
+        for tick in range(1, 4):
             control.step()
             control_trace.append(observed(control))
-            assert all(ray[5] == DETECTOR_NONE for ray in ray_inventory(control))
+            # The control's six rays all continue, unmarked.
+            assert ray_inventory(control) == sorted(
+                continuing(port, tick, DETECTOR_NONE) for port in range(6)
+            )
         assert all(node.detector is None for node in control._spatial.nodes.values())
     assert control_clicks == []
     clicks = []
+    returns = []
+    splits = []
     world = Simulation(
         initial,
-        observer=lambda event: clicks.append(event) if event["event"] == "detector_click" else None,
+        observer=lambda event: (
+            clicks.append(event)
+            if event["event"] == "detector_click"
+            else returns.append(event)
+            if event["event"] == "detector_return"
+            else splits.append(event)
+            if event["event"] == "inverse_split"
+            else None
+        ),
     )
-    for tick in range(1, 5):
+    # Three ticks: at the fourth the restored lamps would emit again into the mark.
+    for tick in range(1, 4):
         world.step()
-        # (c) Totals, audited energy and momentum, the lamps and every ray's position,
-        # heading, amount, steps and phase equal the control's at every tick.
-        assert observed(world) == control_trace[tick - 1]
+        # (c) Totals and audited energy and momentum equal the control's at every
+        # tick, and the lamps until the restore; a returned ray's momentum reads as
+        # its share on the event's heading, and from tick 3 the lamps of the rays
+        # that drew 0 hold their share again with its recoil undone (inverse-split-v1).
+        totals, energy, momentum, lamps = observed(world)
+        assert (totals, energy, momentum) == control_trace[tick - 1][:3]
         assert world.totals() == {"quanta": (21,), "momentum": (0, 0, 0)}
-        for port in range(6):
+        for port, bit in enumerate(PINNED_BITS):
+            restored = tick >= 3 and not bit
             assert lamp(world, port) == {
-                "quanta": (0,),
-                "momentum": tuple(u * (port + 1) for u in unit(port)),
+                "quanta": (port + 1 if restored else 0,),
+                "momentum": (0, 0, 0) if restored else tuple(u * (port + 1) for u in unit(port)),
             }
-        # (a), (b) The ray that came in through Port p leaves through the opposite
-        # side with its bit and is t - 1 Links beyond the marked Node after tick t.
+        assert lamps == ([lamp(world, port) for port in range(6)])
+        assert (tick < 3) == (lamps == control_trace[tick - 1][3])
+        # (a), (b) The ray that came in through Port p and drew 1 leaves through the
+        # opposite side with its bit and is t - 1 Links beyond the marked Node after
+        # tick t; the ray that drew 0 is reversed at the marked Node in its arrival
+        # interval, is at its lamp's Node at tick 2 (detector-return-v1) and is
+        # restored to the lamp from tick 3 (inverse-split-v1).
         assert ray_inventory(world) == sorted(
-            (
-                tuple(c - (tick - 1) * u for c, u in zip(CENTER, unit(port), strict=True)),
-                port ^ 1,
-                port + 1,
-                tick,
-                tick,
-                DETECTOR_BIT_1 if bit else DETECTOR_BIT_0,
+            entry
+            for entry in (
+                continuing(port, tick, DETECTOR_BIT_1) if bit else returned(port, tick)
+                for port, bit in enumerate(PINNED_BITS)
             )
-            for port, bit in enumerate(PINNED_BITS)
+            if entry is not None
         )
         if tick == 1:
             assert world.spatial_values(CENTER)["quanta"]["ray_count"] == 6
             for ray in rays_at(world, CENTER):
-                assert ray.outbound == 1 and ray.event_ports == 1 << ray.heading
-                assert ray.event_shares == tuple(ray.amount if p == ray.heading else 0 for p in range(6))
-    # (a) Exactly the arrivals that drew 1 clicked, at tick 1, in Port order, and the
-    # mark's stream stands where the published rule leaves it after six draws.
+                origin = ray.heading if ray.outbound else ray.heading ^ 1
+                assert ray.event_ports == 1 << origin and ray.accumulators == (0, 0, 0)
+                assert ray.event_shares == tuple(ray.amount if p == origin else 0 for p in range(6))
+        if tick == 2:
+            # A passing ray and a resident returned ray share a Node and never merge.
+            assert world.spatial_values((7, 8, 7))["quanta"]["ray_count"] == 2
+            assert world.spatial_values((7, 7, 6))["quanta"]["ray_count"] == 2
+    # (a) Exactly the arrivals that drew 1 clicked, at tick 1, in Port order, the
+    # arrivals that drew 0 were returned, in Port order, and the mark's stream
+    # stands where the published rule leaves it after six draws.
     assert clicks == [
         {
             "event": "detector_click",
@@ -259,6 +318,37 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
         for port, bit in enumerate(PINNED_BITS)
         if bit
     ]
+    assert returns == [
+        {
+            "event": "detector_return",
+            "tick": 1,
+            "position": CENTER,
+            "port": port,
+            "family": "quanta",
+            "amount": port + 1,
+        }
+        for port, bit in enumerate(PINNED_BITS)
+        if not bit
+    ]
+    # Each returned ray split at its lamp in the cycle labelled 2, a one-line event
+    # with no sibling line: restored, nothing transmitted.
+    assert sorted(splits, key=lambda event: event["amount"]) == [
+        {
+            "event": "inverse_split",
+            "tick": 2,
+            "position": lamp_position(port),
+            "family": "quanta",
+            "mode": "siblings",
+            "ports": (),
+            "amounts": (),
+            "amount": port + 1,
+            "bit": 0,
+            "restored": True,
+            "annulled": {},
+        }
+        for port, bit in enumerate(PINNED_BITS)
+        if not bit
+    ]
     node = world._spatial.nodes[CENTER]
     assert node.detector == initial.detectors[0] and node.detector_ticket == FINAL_TICKET
     # (d) A replay writes the same events and the same run record, and redraws nothing.
@@ -266,7 +356,7 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     path.write_text(json.dumps(document()), encoding="utf-8")
     records = []
     for name in ("first", "second"):
-        run_initialization(path, tmp_path / name, ticks=4)
+        run_initialization(path, tmp_path / name, ticks=3)
         events = (tmp_path / name / "events.jsonl").read_text(encoding="utf-8")
         metadata = json.loads((tmp_path / name / "run.json").read_text(encoding="utf-8"))
         metadata.pop("elapsed_seconds")
@@ -277,7 +367,11 @@ def test_a_marked_node_draws_one_bit_per_arriving_ray(tmp_path, monkeypatch):
     assert [event for event in recorded if event["event"] == "detector_click"] == [
         {**click, "position": list(CENTER)} for click in clicks
     ]
+    assert [event for event in recorded if event["event"] == "detector_return"] == [
+        {**event, "position": list(CENTER)} for event in returns
+    ]
     assert first_run["detector_mark"] == DETECTOR_MARK == "detector-mark-v1"
+    assert first_run["detector_return"] == "detector-return-v1"
     assert first_run["sampling_profile"] == "detector-only-v1"
     assert first_run["ray_state"] == "ray-event-state-v1"
     assert first_run["conserved_at_every_completed_tick"] and first_run["final_totals"]["quanta"] == [21]

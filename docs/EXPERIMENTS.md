@@ -43,11 +43,16 @@ return; 4 the inverse split with `return_mode`
 conversion; 7 the field as the ray's own information in ray form; 7b the
 external body, after 7 (Highlights 3.19, `external-body-v1`; named "fixed
 body" earlier on 2026-09-17): a Node declared to hold a family with an
-amount and, if wanted, a charge and a trajectory, radiating by the field
-rule, never spreading and never pushed, every arrival met by the declared
-coupling of its family, absorption into an explicitly accounted sink by
-default (a wall, a screen, a beam stop) and otherwise a mirror, a beam
-splitter, a phase plate or, after 11, a polarizer; 8 binding and gravity by
+amount, if wanted a charge, and an initial momentum (`initial_momentum`,
+zero at rest), radiating by the field rule, never spreading, moved by
+fields only (an arriving field ray its coupling table names changes its
+momentum by the table; its velocity, momentum over amount, is an exact
+accumulator that steps one Link per full amount on an axis; the audit
+carries the bodies' momentum as its own line) and never pushed by matter,
+every arrival met by the declared coupling of its family, absorption into
+an explicitly accounted sink by default (a wall, a screen, a beam stop) and
+otherwise a mirror, a beam splitter, a phase plate or, after 11, a
+polarizer; 8 binding and gravity by
 delay; 9 every ray a wave ray with family, charge and `phase_bits`; 10 the
 audits; 11 polarization (after the ten).
 
@@ -303,11 +308,15 @@ states "exactly" and means integer equality at every tick.
 - **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
 - **Run.** A board of 65 × 65 × 9 Nodes, open boundary. The star at the
   center: an external body (feature 7b, `external-body-v1`, Highlights 3.19)
-  of declared family and amount M, no charge, no trajectory, at its default
-  coupling, absorption into its explicitly accounted sink (the mirror,
-  beam-splitter, phase-plate and polarizer couplings are not used here), so
-  that it never moves and every recoil field ray that returns to it is
-  booked in its sink counter; its computation field released in all
+  of declared family and amount M, no charge, at rest (`initial_momentum`
+  zero), at its default coupling, absorption into its explicitly accounted
+  sink (the mirror, beam-splitter, phase-plate and polarizer couplings are
+  not used here); its motion is caused by fields only (model owner,
+  2026-09-17): every recoil field ray that returns to it changes its
+  momentum by its coupling table and is booked on the audit's bodies'
+  momentum line, and its velocity, momentum over amount M, is an exact
+  accumulator that completes no Link during the run at this M, so against
+  the light ray it stands still; its computation field released in all
   directions (3.28); one control series with the same M declared instead as
   an ordinary bound group of declared families with retained content M
   (feature 8), when the star's recoil is wanted; a light source
@@ -321,13 +330,15 @@ states "exactly" and means integer equality at every tick.
   field is a declared integer table written before the run. Recorded: the
   ray's heading and momentum components before and after the pass (the
   deflection α from the integer heading), the delay k_out incurred per Node,
-  the returning field rays' momentum absorbed by the body (its sink counter
-  per tick; in the bound-group series, the group's momentum per tick), the
-  audits. G_eff(N) := α b /(4 M) with M in units of
+  the returning field rays' momentum delivered to the body (the audit's
+  bodies' momentum line and its accumulator per tick; in the bound-group
+  series, the group's momentum per tick), the audits. G_eff(N) := α b /(4 M)
+  with M in units of
   m₀ and α in radians from the heading change.
 - **Criterion.** Pass, all of: momentum exact at every tick over the ray, the
-  body's sink (the group, in the bound-group series) and every field ray; the
-  control goes straight; the ray bends toward the body on both sides; the
+  body's momentum line (the group, in the bound-group series) and every
+  field ray; the control goes straight; the ray bends toward the body on
+  both sides; the
   log-log exponent of α over the five b is
   −1.0 ± 0.1; α at 2M is 2α at M within 1/16 relative; G_eff(N) · N² is
   constant over the five N within 1/16 relative of its value at N = 2^12.
@@ -349,20 +360,31 @@ states "exactly" and means integer equality at every tick.
 - **Model prediction today.** Highlights 3.28 as in A6: the field ray of a
   heavy Node that meets a ray whose coupling responds returns reversed with
   the opposite momentum, and the heavy Node is drawn toward the ray; for two
-  bound groups each is met by the other's field, so each is drawn toward the
-  other, retarded by the field's transit, with the field's content falling
-  by the outward dilution of the lattice, 1/r² by exact shell counts.
-- **Features.** 1, 5, 6, 7, 8, 9, 10.
-- **Run.** A board of 97 × 33 × 33 Nodes, open boundary, N = 2^10. Two bound
-  groups of retained content M₁ and M₂ at separations r = 6, 8, 12, 16, 24
-  and 32 along x, one run per r, and the same separations along the (1,1,0)
-  diagonal at equal Euclidean length rounded to the lattice; M₁ doubled once
-  at r = 12; 4r intervals after the first meeting. Recorded per tick: each
-  group's momentum (the sum over its bound rays), every field ray in flight,
-  the tick of the first return, the audits. The rate of momentum gain
-  dp/dt of group 1 is read over the 2r intervals after its first return.
-- **Criterion.** Pass, all of: momentum exact at every tick over both groups
-  and all field rays; each group's momentum points toward the other; the
+  bodies, bound groups or external bodies alike (Highlights 3.19: an
+  external body's motion is caused by fields only, model owner, 2026-09-17),
+  each is met by the other's field, so each is drawn toward the other,
+  retarded by the field's transit, with the field's content falling by the
+  outward dilution of the lattice, 1/r² by exact shell counts.
+- **Features.** 1, 5, 6, 7, 7b, 8, 9, 10.
+- **Run.** A board of 97 × 33 × 33 Nodes, open boundary, N = 2^10. Two
+  bodies of amount M₁ and M₂, in two series: two ordinary bound groups of
+  retained content M₁ and M₂ (feature 8), and two external bodies (feature
+  7b, `external-body-v1`) of declared family and amount M₁ and M₂, each at
+  rest (`initial_momentum` zero) and each with its coupling table naming
+  the other's field family, so that the arriving field rays change its
+  momentum by the table and its velocity, momentum over amount, is an exact
+  accumulator that steps one Link when a full amount has accumulated on an
+  axis; at separations r = 6, 8, 12, 16, 24 and 32 along x, one run per r,
+  and the same separations along the (1,1,0) diagonal at equal Euclidean
+  length rounded to the lattice; M₁ doubled once at r = 12; 4r intervals
+  after the first meeting. Recorded per tick: each body's momentum (the sum
+  over its bound rays for a group; the audit's bodies' momentum line and
+  the accumulator for an external body), every field ray in flight, the
+  tick of the first return, the audits. The rate of momentum gain dp/dt of
+  body 1 is read over the 2r intervals after its first return.
+- **Criterion.** Pass, all of, in each series: momentum exact at every tick
+  over both bodies and all field rays; each body's momentum points toward
+  the other; the
   log-log exponent of dp/dt over the six axial r is −2.0 ± 0.1; dp/dt at
   2M₁ is twice its value at M₁ within 1/16 relative; the diagonal value at
   equal Euclidean r is within 1/8 relative of the axial value (a lattice
@@ -390,11 +412,16 @@ states "exactly" and means integer equality at every tick.
 - **Features.** 1, 2, 5, 6, 7, 7b, 8, 9, 10.
 - **Run.** A board of 33 × 33 × 33 Nodes, open boundary, N = 2^12. The fixed
   proton at the center: an external body (feature 7b, `external-body-v1`,
-  Highlights 3.19) of the proton family, charge +1, amount M_p, no
-  trajectory, at its default coupling, absorption into its explicitly
-  accounted sink (the mirror, beam-splitter, phase-plate and polarizer
-  couplings are not used here), so that it never moves and its whole content
-  stays at one Node, marked as a source with setting 1; when the proton's
+  Highlights 3.19) of the proton family, charge +1, amount M_p, at rest
+  (`initial_momentum` zero), at its default coupling, absorption into its
+  explicitly accounted sink (the mirror, beam-splitter, phase-plate and
+  polarizer couplings are not used here); its motion is caused by fields
+  only (model owner, 2026-09-17): the electron's field rays that reach it
+  change its momentum by its coupling table, the audit's bodies' momentum
+  line carries it, and its velocity, momentum over amount M_p, is an exact
+  accumulator that completes no Link during the run, so against the
+  electron it stands still and its whole content stays at one Node; marked
+  as a source with setting 1; when the proton's
   recoil is wanted, the same proton is declared instead as an ordinary bound
   group (charge +1, retained content M_p, feature 8), and then it spreads and
   is pushed like all matter; an electron ray (charge −1, rate r_e) launched
@@ -795,6 +822,15 @@ states "exactly" and means integer equality at every tick.
   equal.
 - **Status.** planned.
 
+### A14. Kinematic time dilation of a moving bound group
+
+- **Confronts:** the Lorentz factor, clock rate √(1 − v²) (the muon lifetime in flight, 2.2 µs at rest, longer by γ in flight; Rossi–Hall 1941 and every accelerator since).
+- **Model's prediction today:** hypothesis 15: everything moves at c, matter is slow only by its output clock, and a bound group's tick fires only while it is resident, so a group moving one Link every k intervals ticks at (k − 1)/k = 1 − v to first order; the per-face clocks of Highlights 3.28 may change the curve.
+- **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
+- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a board long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
+- **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a lattice anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
+- **Status:** planned (after feature 8).
+
 ## C. Order
 
 The features land in the order 1 to 11. Each line names what its feature
@@ -811,8 +847,8 @@ unlocks; an entry runs when the last feature it names has landed.
    after 9), B9 (its table at N = 2^12 today; the sweep after 9).
 7. Feature 7, the field: B6, B7. Feature 7b, the external body, after it:
    no run by itself; the sinks, splitters, phase plates and polarizers of
-   A1, A2, A3, A12 and A13 and the bodies of A6 and A8 are external bodies
-   and wait for 9 or 11.
+   A1, A2, A3, A12 and A13 and the bodies of A6, A7 (its external-body
+   series) and A8 are external bodies and wait for 8, 9 or 11.
 8. Feature 8, binding and gravity by delay: B8, A7.
 9. Feature 9, every ray a wave ray with charge and `phase_bits`: A1, A2, A3,
    A5, A6, A8, A9, A10, A11, B10, B11.

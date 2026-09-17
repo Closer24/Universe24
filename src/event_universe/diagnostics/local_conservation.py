@@ -71,6 +71,10 @@ class LocalConservationAudit:
         self.checks = 0
         self.failure: dict[str, object] | None = None
         self.escaped: Quantity = ZERO
+        # Content annulled at inverse splits (inverse-split-v1): the world total and
+        # what each Node annulled since its last check.
+        self.annulled: Quantity = ZERO
+        self._pending_annulled: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         self._nodes, self._packets = self._measure(inventory())
         self.initial_total = self._total(self._nodes, self._packets)
@@ -118,10 +122,41 @@ class LocalConservationAudit:
             if definition.rays and rays and index < len(rays):
                 for ray in rays[index]:
                     components[0] = checked_work(components[0] + ray.amount)
+                    # A returning ray reads as its share on the event's heading, its
+                    # own heading negated (detector-return-v1).
                     heading = definition.headings[ray.heading]
+                    sign = 1 if ray.outbound else -1
                     for axis in range(3):
-                        intrinsic[axis] = checked_work(intrinsic[axis] + ray.amount * heading[axis])
+                        intrinsic[axis] = checked_work(
+                            intrinsic[axis] + sign * ray.amount * heading[axis]
+                        )
             values[definition.field] = pack(tuple(components))
+        energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
+        return (
+            energy,
+            checked_work(px + intrinsic[0]),
+            checked_work(py + intrinsic[1]),
+            checked_work(pz + intrinsic[2]),
+        )
+
+    def _annulled(self, event: dict[str, object]) -> Quantity:
+        """The quantity an inverse split in annul mode removed from its Node: the ray
+        field's amount through the declared energy expression, the momentum field's
+        vector as the intrinsic momentum, as `_spatial` reads a resident ray."""
+        if self.definition.spatial is None:
+            return ZERO
+        annulled = cast(dict[str, tuple[int, ...]], event.get("annulled", {}))
+        values = [pack((0,) * field.components) for field in self.initial.fields]
+        intrinsic = [0, 0, 0]
+        for definition in self.initial.spatial_fields:
+            name = self.initial.fields[definition.field].name
+            if definition.rays and name in annulled:
+                values[definition.field] = pack(tuple(annulled[name]))
+                if definition.momentum_field is not None:
+                    momentum = annulled.get(self.initial.fields[definition.momentum_field].name)
+                    if momentum is not None:
+                        for axis in range(3):
+                            intrinsic[axis] = checked_work(intrinsic[axis] + momentum[axis])
         energy, px, py, pz = self._evaluate(self.definition.spatial, tuple(values))
         return (
             energy,
@@ -165,6 +200,12 @@ class LocalConservationAudit:
         return cast(Quantity, tuple(sum(value[c] for value in quantities) for c in range(4)))
 
     def observe(self, event: dict[str, object]) -> None:
+        if event.get("event") == "inverse_split" and event.get("mode") == "annul":
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            amount = self._annulled(event)
+            self._pending_annulled[position] = _add(self._pending_annulled.get(position, ZERO), amount)
+            self.annulled = _add(self.annulled, amount)
+            return
         if event.get("event") not in EVENTS:
             return
         tick = cast(int, event["tick"])
@@ -206,6 +247,8 @@ class LocalConservationAudit:
             before, after = self._nodes.get(position, ZERO), nodes.get(position, ZERO)
             arrived, sent = incoming.get(position, ZERO), outgoing.get(position, ZERO)
             residual = _add(_subtract(after, before), _subtract(sent, arrived))
+            # What the Node annulled left it for the explicit sink, not for a Link.
+            residual = _add(residual, self._pending_annulled.pop(position, ZERO))
             self.checks += 1
             if residual != ZERO:
                 self.failure = {
@@ -232,5 +275,6 @@ class LocalConservationAudit:
             "initial": _plain(self.initial_total),
             "current": _plain(self.current_total),
             "escaped": _plain(self.escaped),
+            "annulled": _plain(self.annulled),
             "failure": self.failure,
         }
