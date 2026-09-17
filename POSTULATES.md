@@ -443,6 +443,22 @@ conditions only.
 Introduce another law as a separate candidate and compare results. Do not change
 old tests merely to make a new law appear successful.
 
+Addition (model owner, 2026-09-17; Highlights 5.5, "the constants: what is
+derived and what is an input"): mass ratios are derivable, the ladder of
+hypothesis 12 being the set of loop-closing contents under the catalog's
+binding table, which experiment A10 counts against the known spectrum, the
+proton-to-electron ratio first; the strength of the electric coupling and
+the strength of gravity are inputs today, the release ratio n/d of a field
+family and the modulus N of the lag register (Highlights 3.28) being
+declared widths, so hypothesis 14's G = ħc/(N m₀)² is a reparametrization
+until something fixes N, as the Born table's ratios are until something
+fixes n/d; hypotheses 16 (what fixes the lag modulus: the top of the mass
+ladder, the resolution the spreading field needs, or nothing) and 17 (what
+fixes the release ratio and the table: the symmetry of Highlights 3.27 and
+the path counting of 3.5, or nothing) record the question, and until they
+are answered the model predicts forms, 1/N² and 1/r², and not the values
+of G and α.
+
 ## 10. Measurement and display are outside the physics
 
 Trajectories, reports, images and HTML only read run results. They neither direct
@@ -1155,6 +1171,18 @@ declared ratio as the setting, 1 = the conversion fires, 0 = the group ticks
 on unchanged, so half-life follows. That draw is the one draw of section 22,
 at a node whose Detector bit is set; nothing else in the world draws. None
 of this adds anything to the engine; all of it comes after feature 10.
+
+Addition (model owner, 2026-09-17; Highlights 3.26, in the language of
+binding as a loop, section 3.4): the strong field differs from light by
+one catalog line, its rays couple to each other, so the field between
+quarks does not spread as a sphere but closes into loops of gluon rays
+along the line between them, a string whose content, and so whose mass,
+grows with the distance; only colour-neutral patterns close a loop, which
+is confinement as a closure condition; and a string stretched to the
+content at which a new loop closes with a quark and an antiquark breaks
+into two hadrons, which is hadronization. None of this is inserted:
+hypothesis 13 says whether the two catalog lines produce it, in a research
+run after feature 14.
 
 Addition (model owner, 2026-09-17; Highlights 3.19; named "fixed body"
 earlier that day, renamed the external body the same day with the same
