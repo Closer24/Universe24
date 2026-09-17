@@ -100,7 +100,9 @@ def forward_rays(
     for ray in rays:
         meter.charge("read")
         meter.charge("route")
-        if not ray.outbound and ray.steps == 0:
+        if not ray.outbound and ray.steps == 0 and (ray.event_ports or not definition.spread):
+            # At its event Node; a returned field quantum of a spreading family has
+            # none and walks on along its line (field-spreading-v1, Highlights 5.5).
             kept.append(ray)
             continue
         if ray.interaction_delay:

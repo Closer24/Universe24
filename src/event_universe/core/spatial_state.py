@@ -281,6 +281,14 @@ class Ray:
     # spent as one Link toward the lagging side at the next departure; a lag on
     # the ray's own axis as one interval of wait. Zero on every created ray.
     lag: tuple[int, int, int] = (0, 0, 0)
+    # The sign of the source's charge on a field ray (field-spreading-v1;
+    # Highlights 3.5, the field is matter's message about itself): -1, 0 or 1,
+    # set at the release from the releasing family's charge (a body's from its
+    # declared charge), kept through spreading, merging, the return and the
+    # inverse split, carried by a meeting's output from the input of its own
+    # family; a visible property like the Detector bit, never encoded in the
+    # phase, read by no rule of the engine.
+    source_sign: int = 0
 
 
 Rays = tuple[Ray, ...]
@@ -599,9 +607,16 @@ def release_amount(amount: int, definition: SpatialFieldDefinition) -> int:
     return checked_work(amount * definition.release_numerator) // definition.release_denominator
 
 
-def _released(amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None) -> Rays:
+def charge_sign(charge: int) -> int:
+    """The sign a field ray carries for its source's charge: -1, 0 or 1."""
+    return -1 if charge < 0 else (1 if charge > 0 else 0)
+
+
+def _released(
+    amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None, sign: int = 0
+) -> Rays:
     return tuple(
-        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase)
+        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase, source_sign=sign)
         for heading in PORT_HEADINGS
         if heading != skip
     )
@@ -617,14 +632,16 @@ def release_field(
     it, which at link speed the source itself occupies, so it releases nothing
     there and a straight ray never shares a Node with its own field. A ray held
     at the Node by its interaction delay (a bound group, ray-binding-v1) occupies
-    no line ahead of it and releases on all six headings, once per interval."""
+    no line ahead of it and releases on all six headings, once per interval. Every
+    released ray carries the sign of the source family's charge (`source_sign`)."""
     released: list[Ray] = []
+    sign = charge_sign(origin.charge)
     for ray in rays:
         amount = release_amount(ray.amount, definition)
         if amount <= 0:
             continue
         skip = None if ray.interaction_delay else origin.headings[ray.heading]
-        released.extend(_released(amount, ray.phase, definition, skip))
+        released.extend(_released(amount, ray.phase, definition, skip, sign))
     return tuple(released)
 
 
@@ -642,12 +659,15 @@ def bound_group(rays: tuple[Rays, ...]) -> tuple[tuple[int, Ray], ...]:
     )
 
 
-def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
+def release_stock(
+    stock: int, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition | None = None
+) -> Rays:
     """The field rays resident content releases once per interval: one ray per Port
     heading, all six, from the stock a record holds, with phase 0 (a record has no
-    phase of its own in this slice)."""
+    phase of its own in this slice) and the sign of the origin family's charge."""
     amount = release_amount(stock, definition)
-    return _released(amount, 0, definition, None) if amount > 0 else ()
+    sign = 0 if origin is None else charge_sign(origin.charge)
+    return _released(amount, 0, definition, None, sign) if amount > 0 else ()
 
 
 def holds_source_stock(
@@ -700,6 +720,24 @@ class FieldSpread:
     remainders: tuple[int, ...]
     phase: int
     coherence: tuple[int, int]
+    # The distinct source signs of the content taken, in order (field-spreading-v1).
+    signs: tuple[int, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class ReturnedField:
+    """The record of one returned field quantum that ended (field-spreading-v1; the
+    orchestrator's proposal of Highlights 5.5, pending the model owner's decision):
+    plain bounded integers. The spatial field, the amount, the Port index of the
+    heading it walked on, the spatial field of the content that took it (-1 for the
+    record that emitted it) and 1 when it was restored to that record's stock, 0
+    when its release was unbooked as a source."""
+
+    field: int
+    amount: int
+    port: int
+    by: int
+    restored: int
 
 
 def validate_spread_table(table: tuple[int, ...]) -> int:
@@ -731,8 +769,8 @@ def validate_spread_fields(
     """The admission of a spreading family (field-spreading-v1): the geometry of a
     released field (a positive, conserved, unpaced unit-axial ray field on the
     links metric with the six Port headings, zero baseline, no decay, no
-    self-exclusion) and, with a phase width, the coherence table, since the phase
-    of the content is the phase of the coherent sum."""
+    self-exclusion) and a phase width of at most twelve bits, since the phase of
+    the content is the phase of the coherent sum over the table of its modulus."""
     for definition in definitions:
         if not definition.spread:
             continue
@@ -751,10 +789,10 @@ def validate_spread_fields(
             raise ValueError("a spreading family requires a positive unit-axial unpaced ray field")
         if any(heading not in definition.headings for heading in PORT_HEADINGS):
             raise ValueError("a spreading family requires the six Port headings")
-        if definition.phase_bits and not definition.coherent:
+        if definition.phase_bits > MAX_TABLE_BITS:
             raise ValueError(
-                "a spreading family with a phase width declares the coherence table: the phase "
-                "of the content is the phase of the coherent sum"
+                "a spreading family's phase width is at most twelve bits: the phase of its "
+                "content is the phase of the coherent sum over the cosine table of its modulus"
             )
 
 
@@ -807,33 +845,62 @@ def spread_remainder_entry(phase: int, phase_modulus: int, table: tuple[int, ...
     raise ValueError("a spread phase must be below the family's phase width")
 
 
+def spread_tables(
+    definition: SpatialFieldDefinition,
+) -> tuple[tuple[int, ...], tuple[int, ...]] | None:
+    """The cosine and sine tables the spread combines phases with: the family's
+    declared coherence table, or the table of its phase modulus (at most twelve
+    bits); None for a family without a phase width, whose one phase is 0."""
+    modulus = definition.phase_modulus
+    if modulus < 2:
+        return None
+    if definition.coherent:
+        return definition.cosine_table, definition.sine_table
+    return phase_cosines(modulus), phase_sines(modulus)
+
+
 def spread_phase(rays: Rays, definition: SpatialFieldDefinition) -> int:
     """The one phase of the content a Node spreads: the phase step nearest the
     direction of the coherent sum over every taken ray (the coherence rule of
     Highlights 3.20; a cancelled sum gives step 0), 0 for a family without a
     phase width."""
-    if not definition.coherent:
+    tables = spread_tables(definition)
+    if tables is None:
         return 0
-    return phase_of_sum(tuple((abs(ray.amount), ray.phase) for ray in rays), definition)
+    terms = tuple((abs(ray.amount), ray.phase) for ray in rays)
+    return _phase_of_sum(terms, tables[0], tables[1], definition.phase_modulus)
+
+
+def spread_coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]:
+    """The reduced coherence of the content a Node spreads, over the same table."""
+    tables = spread_tables(definition)
+    if tables is None or not rays:
+        return (1, 1)
+    numerator, denominator = _coherence(rays, tables[0], definition.phase_mask)
+    return reduced_ratio(numerator, denominator)
 
 
 def spread_content(
     index: int, rays: Rays, definition: SpatialFieldDefinition
 ) -> tuple[Rays, FieldSpread]:
     """The spread of one family's content at a Node (field-spreading-v1): the
-    departures, one fresh field ray per Port with content in Port order, and the
-    record. The rays are the outbound content that arrived (at least one Link
-    walked). Amounts add per arriving heading; the phase of the whole is the
+    departures, one fresh field ray per Port and source sign with content, in
+    Port then sign order, and the record. The rays are the outbound content that
+    arrived (at least one Link walked). Amounts add per arriving heading and
+    source sign, content of opposite signs at one Node combining by phase as
+    content does and keeping its sign per ray; the phase of the whole is the
     phase of the coherent sum and its Detector bit the catalog default, 1
     outranks 0 outranks none; each heading's content is shared over the six
     relative headings in whole quanta, floor(content x weight / total), and the
-    quanta the floors leave, at most five, leave whole through the entry the
-    phase selects. Each departure carries the Port's heading, accumulators
-    (0, 0, 0), the combined phase, the family's rate, no wait, delay or lag,
-    steps 0, outbound 1 and no event. The total is exact."""
+    quanta the floors leave, at most five per heading and sign, leave whole
+    through the entry the phase selects. Each departure carries the Port's
+    heading, accumulators (0, 0, 0), the combined phase, the family's rate, no
+    wait, delay or lag, steps 0, outbound 1, no event and its sign. The total
+    is exact."""
     table = definition.spread
     total = validate_spread_table(table)
     arrived = [0] * 6
+    by_sign: dict[tuple[int, int], int] = {}
     for ray in rays:
         if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
             raise ValueError("a spread takes the outbound content that arrived at the Node")
@@ -842,21 +909,25 @@ def spread_content(
             raise ValueError("a spread requires content on a Port heading")
         port = PORT_HEADINGS.index(heading)
         arrived[port] = checked_work(arrived[port] + ray.amount)
+        key = (port, ray.source_sign)
+        by_sign[key] = checked_work(by_sign.get(key, 0) + ray.amount)
     phase = spread_phase(rays, definition)
     entry = spread_remainder_entry(phase, definition.phase_modulus, table)
     amounts, remainders = [0] * 6, [0] * 6
-    for port, content in enumerate(arrived):
-        if not content:
-            continue
+    departing: dict[tuple[int, int], int] = {}
+    for (port, sign), content in sorted(by_sign.items()):
         ports = relative_ports(port)
         placed = 0
         for weight, target in zip(table, ports, strict=True):
             share = checked_work(content * weight) // total
             amounts[target] = checked_work(amounts[target] + share)
+            departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + share)
             placed = checked_work(placed + share)
         rest = content - placed
-        amounts[ports[entry]] = checked_work(amounts[ports[entry]] + rest)
-        remainders[ports[entry]] = checked_work(remainders[ports[entry]] + rest)
+        target = ports[entry]
+        amounts[target] = checked_work(amounts[target] + rest)
+        remainders[target] = checked_work(remainders[target] + rest)
+        departing[(target, sign)] = checked_work(departing.get((target, sign), 0) + rest)
     bit = max(ray.detector for ray in rays)
     departures = tuple(
         Ray(
@@ -865,11 +936,11 @@ def spread_content(
             bounded(amount),
             phase=phase,
             detector=bit,
+            source_sign=sign,
         )
-        for port, amount in enumerate(amounts)
+        for (port, sign), amount in sorted(departing.items())
         if amount
     )
-    numerator, denominator = coherence(rays, definition)
     record = FieldSpread(
         index,
         bounded(sum(arrived)),
@@ -877,7 +948,8 @@ def spread_content(
         tuple(amounts),
         tuple(remainders),
         phase,
-        reduced_ratio(numerator, denominator),
+        spread_coherence(rays, definition),
+        tuple(sorted({ray.source_sign for ray in rays})),
     )
     return departures, record
 
@@ -1247,9 +1319,10 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
-    # The spreads of this cycle, one per spreading family whose content arrived
-    # (field-spreading-v1).
+    # The spreads of this cycle, one per spreading family whose content arrived,
+    # and the returned field quanta that ended here (field-spreading-v1).
     spreads: tuple[FieldSpread, ...] = ()
+    returned: tuple[ReturnedField, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -1342,6 +1415,8 @@ def validate_rays(rays: Rays, definition: SpatialFieldDefinition, field: FieldDe
             raise ValueError("a ray requires three integer face-clock lags")
         for value in ray.lag:
             bounded(value)
+        if ray.source_sign not in (-1, 0, 1):
+            raise ValueError("ray source_sign must be -1, 0 or 1")
         validate_ray_event_state(ray)
 
 
@@ -1405,6 +1480,10 @@ def advance_ray(
         steps = bounded(checked_work(ray.steps + 1))
     elif ray.steps > 0:
         steps = ray.steps - 1
+    elif not ray.event_ports:
+        # A returned field quantum has no event Node to rest at: it walks on with
+        # its count at 0 (field-spreading-v1, the proposal of Highlights 5.5).
+        steps = 0
     else:
         raise ValueError("a returning ray with no steps left is at its event Node")
     phase = ray.phase
@@ -1538,7 +1617,14 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
     ports = split_ports(ray, definition, mode)
     amounts = split_amounts(ray.amount, len(ports))
     rays = tuple(
-        Ray(port_heading(port, definition), (0, 0, 0), amount, ray.phase, ray.advance)
+        Ray(
+            port_heading(port, definition),
+            (0, 0, 0),
+            amount,
+            ray.phase,
+            ray.advance,
+            source_sign=ray.source_sign,
+        )
         for port, amount in zip(ports, amounts, strict=True)
         if amount
     )
@@ -1547,7 +1633,19 @@ def transmit(ray: Ray, definition: SpatialFieldDefinition, mode: str) -> tuple[R
 
 
 RayMergeKey = tuple[
-    int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int, tuple[int, int, int]
+    int,
+    tuple[int, int, int],
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    int,
+    EventShares,
+    int,
+    tuple[int, int, int],
+    int,
 ]
 
 
@@ -1566,6 +1664,7 @@ def ray_merge_key(ray: Ray) -> RayMergeKey:
         ray.event_shares,
         ray.detector,
         ray.lag,
+        ray.source_sign,
     )
 
 
@@ -1574,7 +1673,8 @@ def merge_rays(rays: Rays) -> Rays:
 
     Rays of different events never merge, whatever their heading and phase: the
     event state is part of the identity, so each ray keeps the information of
-    its own event.
+    its own event. Field content of opposite source signs never merges either:
+    it stays two rays of the same family (field-spreading-v1).
     """
     combined: dict[RayMergeKey, int] = {}
     for ray in rays:
@@ -1595,6 +1695,7 @@ def merge_rays(rays: Rays) -> Rays:
             event_shares=shares,
             detector=detector,
             lag=lag,
+            source_sign=sign,
         )
         for (
             heading,
@@ -1609,6 +1710,7 @@ def merge_rays(rays: Rays) -> Rays:
             shares,
             detector,
             lag,
+            sign,
         ), amount in sorted(combined.items())
         if amount
     )
@@ -1717,13 +1819,14 @@ def phase_sines(phase_steps: int) -> tuple[int, ...]:
     return tuple(entries)
 
 
-def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
-    """The phase step nearest the direction of sum a e^(i phi): the best projection.
-
-    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
-    """
-    phase_steps, mask = definition.phase_steps, definition.phase_mask
-    cosines, sines = definition.cosine_table, definition.sine_table
+def _phase_of_sum(
+    terms: tuple[tuple[int, int], ...],
+    cosines: tuple[int, ...],
+    sines: tuple[int, ...],
+    phase_steps: int,
+) -> int:
+    """The phase step nearest the direction of sum a e^(i phi) over the given tables."""
+    mask = phase_mask(phase_steps)
     x = y = 0
     for amount, phase in terms:
         x = checked_work(x + amount * cosines[phase & mask])
@@ -1734,6 +1837,14 @@ def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDef
         if best_projection is None or projection > best_projection:
             best, best_projection = step, projection
     return best
+
+
+def phase_of_sum(terms: tuple[tuple[int, int], ...], definition: SpatialFieldDefinition) -> int:
+    """The phase step nearest the direction of sum a e^(i phi): the best projection.
+
+    Ties and an empty or cancelled sum give step zero. Bounded by phase_steps.
+    """
+    return _phase_of_sum(terms, definition.cosine_table, definition.sine_table, definition.phase_steps)
 
 
 @lru_cache(maxsize=16)
@@ -1762,8 +1873,11 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
     """Numerator and denominator of the coherent fraction of one Node's rays, in [0, 1]."""
     if not definition.coherent or not rays:
         return (1, 1)
-    mask = definition.phase_mask
-    cosines = definition.cosine_table
+    return _coherence(rays, definition.cosine_table, definition.phase_mask)
+
+
+def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, int]:
+    """The coherent fraction over the given cosine table and phase mask."""
     by_phase: dict[int, int] = {}
     magnitude = 0
     for ray in rays:
@@ -1948,7 +2062,13 @@ def body_release(body: ExternalBody, definition: SpatialFieldDefinition, port: i
     if amount <= 0:
         return ()
     skip = PORT_HEADINGS[port] if port >= 0 else None
-    return _released(bounded(amount), body.phase & definition.phase_mask, definition, skip)
+    return _released(
+        bounded(amount),
+        body.phase & definition.phase_mask,
+        definition,
+        skip,
+        charge_sign(body.charge),
+    )
 
 
 def body_absorb(

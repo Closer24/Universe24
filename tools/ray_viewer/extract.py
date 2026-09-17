@@ -35,8 +35,10 @@ SILENT_KINDS = (
     "external_body_step",
     # A spread (field-spreading-v1) is read from the transits: the field content
     # that continues is the ray's trail and what leaves on the other Ports is a
-    # release, silent on the page like every release.
+    # release, silent on the page like every release; a returned field quantum
+    # that ends at a Node is a field chain that stops there.
     "field_spread",
+    "field_returned",
 )
 # Event kinds the default caption lists (a style file can choose others).
 CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "return", "arrival", "split")

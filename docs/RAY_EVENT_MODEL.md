@@ -879,8 +879,16 @@ moves is booked as a source of the bound momentum field, the ledger of
 feature 10 exact; one `field_spread` record per Node, interval and family; a
 world without `spread` is byte-identical, its field on the six axis lines of
 its source and its light straight; the cost is measured in the
-[performance record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables);
-see [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).)
+[performance record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables).
+The sign of the source's charge travels on the field ray as `source_sign`,
+a visible property like the Detector bit, never in the phase (Highlights
+3.5, the field is matter's message about itself), and a field quantum a
+Detector returns with 0 walks back along the line it arrived by, with no
+inverse split, until it is restored to its emitter, ended at content its
+coupling responds to or at its source, taken by a body, or escaped: the
+orchestrator's proposal of Highlights 5.5, implemented exactly and pending
+the model owner's decision; see
+[field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).)
 It unlocks A1, A2 and the diagonal series of A6 in the
 [experiments register](EXPERIMENTS.md).
 

@@ -224,6 +224,25 @@ class LocalConservationAudit:
             raise ValueError("a field_spread record names a spreading ray family")
         return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
 
+    def _returned(self, event: dict[str, object]) -> Quantity:
+        """The returned field quantum a Node ended without an owner to give it to
+        (field-spreading-v1): measured as the returning ray it was, its momentum
+        read as its share on the heading it arrived by."""
+        if self.definition.spatial is None:
+            return ZERO
+        family = str(event.get("family"))
+        port, amount = int(cast(int, event.get("port", 0))), int(cast(int, event.get("amount", 0)))
+        bundle: list[Rays] = []
+        for definition in self.initial.spatial_fields:
+            if self.initial.fields[definition.field].name != family:
+                bundle.append(())
+                continue
+            heading = definition.headings.index(PORT_HEADINGS[port])
+            bundle.append((Ray(heading, (0, 0, 0), amount, outbound=0),))
+        if not any(bundle):
+            raise ValueError("a field_returned record names a spreading ray family")
+        return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+
     def _packet(self, packet: InventoryPacket) -> Quantity:
         if packet.record is not None:
             return self._carrier(packet.record)
@@ -290,6 +309,14 @@ class LocalConservationAudit:
         if event.get("event") == "field_spread":
             position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
             amount = self._spread(event)
+            self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
+            return
+        if event.get("event") == "field_returned" and not event.get("restored"):
+            # A returned field quantum whose release was unbooked as a source
+            # (field-spreading-v1): what left the Node for no Link is given back to
+            # its residual and taken off the sourced line, as a spread's content is.
+            position = cast(Address3, tuple(cast(tuple[int, int, int], event["position"])))
+            amount = self._returned(event)
             self._pending_spread[position] = _add(self._pending_spread.get(position, ZERO), amount)
             return
         if event.get("event") not in EVENTS:

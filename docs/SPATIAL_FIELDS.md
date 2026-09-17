@@ -1027,8 +1027,8 @@ the same way relative to its heading at every Node. Departures on one Port
 merge. Each departure is a fresh field ray: the Port's heading, accumulators
 (0, 0, 0), the combined phase, the family's rate, no wait, no delay, no lag,
 `steps` 0, `outbound` 1, no event (mask 0, shares all zero), the combined
-bit; it walks one Link with this interval's residents and is spread again at
-the next Node.
+bit and its source sign; it walks one Link with this interval's residents
+and is spread again at the next Node.
 
 **The booking.** The total is exact, so the amount has no source and the
 world ledger of feature 10 is unchanged by a spread. A spread changes the
@@ -1056,6 +1056,52 @@ record, registered in the Node state contract; `spread_content` is the pure
 function, `relative_ports` the relative Port order and
 `spread_remainder_entry` the phase's choice.
 
+**The sign of the source (Highlights 3.5, the field is matter's message
+about itself; model owner, 2026-09-17).** The sign of the source's charge
+travels on the field ray as a visible property, like the Detector bit and
+never encoded in the phase, which is reserved for interference: `Ray` carries
+`source_sign`, -1, 0 or 1, set at the release from the releasing family's
+charge (`release_field`, `release_stock`; a body's release from its declared
+`charge`, `body_release`), 0 on an emission and on every existing world's
+ray, part of the merge identity, so content of opposite signs at one Node
+stays two rays of the same family, kept by the return and copied by the
+inverse split (`transmit`), carried by a meeting's output from the first
+input of its own family (the recoil keeps its field's sign) and through the
+spread: the content of one Node combines by phase as content does, and each
+sign's content is split and placed on its own, the departures carrying
+their sign and the record its `signs`. The engine reads it nowhere; a
+coupling reads it as it reads the Detector bit, with the catalog read of
+feature 2b, and the attraction of opposite charges (the catalog's
+`opposite_charge` entry of `electron_field_turn`, experiment A5) closes with
+it.
+
+**A returned field quantum (the orchestrator's proposal of Highlights 5.5,
+pending the model owner's decision).** A returning ray retraces its line by
+its step count; once the field spreads, a field quantum's path is no longer
+one line and a field ray has no event at which to perform an inverse split.
+The proposal, implemented exactly and stated as such until the model owner
+decides it: a field quantum of a spreading family that a Detector returns
+with 0 (`outbound` 0, no event) reverses on the line it arrived by and walks
+back one Link per interval, its steps counting down to 0 and staying 0, past
+the Node that spread it, with no inverse split, until it is absorbed by the
+first content its coupling responds to or reaches its source. At every Node
+it reaches, before the spread of that interval: if the record that emitted
+the family is there (the funded emission's input), it is restored to that
+record's stock with its recoil, exactly as the inverse split restores a
+share; else if content of the family this field is the field of is there (a
+record holding its stock, a resident ray of it) or a resident ray of a family
+a declared `ray_interactions` rule couples with this one, it ends there and
+its release is unbooked, a negative source of the family and of its momentum
+field; an external body takes it into its sink as it takes every returning
+ray; otherwise it walks on, and through an open boundary it escapes like any
+ray. Nothing is created and every audit stays exact. One `field_returned`
+record per quantum that ends (`family`, `amount`, `port`, the Port index of
+the heading it walked on, `by`, the family that took it or none for the
+emitter, `restored`), published before the cycle's record; the local audit
+gives back what an unbooked quantum took off its Node, as it does for a
+spread. A world without `spread` keeps the return of feature 3 and the
+inverse split of feature 4 unchanged.
+
 **Consequences, none inserted.** With the released field of feature 7
 declared with `spread`, a charge's field fills the board: five rays per Node
 crossed, each spread again at the next Node, whole quanta wandering by
@@ -1071,8 +1117,9 @@ what arrived. The cost is measured before adoption
 Admission: `spread` requires ray transport, a positive, conserved, unpaced
 unit-axial ray field on the links metric with the six Port headings, zero
 baseline, no decay and no self-exclusion (the geometry of a released field),
-the coherence table when the family has a phase width (`phase_bits` above 0
-requires `kerengonen.phase_steps`), and the shared Detector admission
+a phase width of at most twelve bits (the coherent sum uses the family's
+coherence table, or the table of its modulus when none is declared), and
+the shared Detector admission
 (schema 1, `link_ticks` 1, the default fixed clock, no field rules, spatial
 interactions or couplings on the family); a table of another length, a
 negative weight, a zero backward weight or unequal transverse weights is

@@ -235,7 +235,12 @@ the departures of a spreading family, field rays with no event and one Link
 walked, are measured as a release at the Node, and the content the record
 says arrived (amount per heading, measured like resident rays) is given
 back, so the Node's residual is zero and the `sourced` line gains exactly
-the momentum the spread moved, as the world ledger books it.
+the momentum the spread moved, as the world ledger books it. A returned
+field quantum that a Node ends without an owner to give it to (the
+`field_returned` record with `restored` false, its release unbooked as a
+negative source) is given back the same way, measured as the returning ray
+it was; one restored to its emitter needs no term, the record's stock and
+recoil taking exactly what the ray carried.
 
 ## Independence, bounds and acceptance
 
