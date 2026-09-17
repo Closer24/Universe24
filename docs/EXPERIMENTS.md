@@ -1350,7 +1350,7 @@ sign rule, and its other couplings are catalog entries.
   Feature 8b landed on 2026-09-17 as `ray-momentum-turn-v1`: the transverse
   momentum is the ray's momentum register, pushed by a coupling's
   `momentum_table` and walked by the DDA ([a free ray turns by
-  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1));
+  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2));
   this run is not repeated. With both rules on `main` (feature 12 and 12b,
   feature 8b) the demonstration is made again as
   [E8](#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn).
@@ -1630,7 +1630,11 @@ sign rule, and its other couplings are catalog entries.
   `7d5bf8977e64ce3420fb5f7d35f2bd051698bfd2d877a57b3a7ca9f46c87ffec`, 7 s;
   outcome: no closed orbit, the straight pass and the escape at tick 50 as
   stated, the control's fall at tick 48 and its cage, exact at every tick;
-  the records stay outside the tree.
+  the records stay outside the tree. The escape was recorded under
+  `ray-momentum-turn-v1`, whose push reset the DDA's accumulators;
+  `ray-momentum-turn-v2` (2026-09-17,
+  [migration](MIGRATION.md#a-push-keeps-the-walk-on-2026-09-17-ray-momentum-turn-v2))
+  keeps them, and the run is not repeated here.
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 

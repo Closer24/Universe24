@@ -2,8 +2,8 @@
 family releasing its light, which spreads by the catalog's table with the Node-owned
 remainder (field-spreading-v1, field-remainder-v1), an electron held at a launcher
 body by an output delay and released into that field, turned at every Node by the
-momentum-table coupling of ray-momentum-turn-v1 (a push per field ray met, the
-recoil returned), the nucleus transparent to it (phase_plate) and sinking its own
+momentum-table coupling of ray-momentum-turn-v2 (a push per field ray met, the
+recoil returned, the DDA's walk kept through the push), the nucleus transparent to it (phase_plate) and sinking its own
 field; the world ledger exact at every tick.
 
 The board is the E8 world's declarations (examples/nature/helium_orbit.json) on a
@@ -12,7 +12,9 @@ launch, the first pushes, the fall and the cage all happen within a few seconds.
 The structural expectations are written before the first run and the record's
 integers (the pushes, the registers, the sink, the totals) were read from the
 first run of this board and pinned then, as docs/TEST_EXPECTATIONS.md ("The
-helium orbit") says.
+helium orbit") says; re-read under ray-momentum-turn-v2 (the DDA's walk kept
+through a push) and unchanged, since at both pushed Nodes the register's -X
+component exceeds the banked progress and the same -X Links are taken.
 """
 
 import json
@@ -257,7 +259,7 @@ def test_the_electron_is_launched_into_the_spreading_field_turned_and_caged(tmp_
         if line.strip()
     ]
     assert metadata["status"] == "completed" and metadata["completed_ticks"] == TICKS
-    assert metadata["ray_momentum_turn"] == "ray-momentum-turn-v1"
+    assert metadata["ray_momentum_turn"] == "ray-momentum-turn-v2"
     assert metadata["field_spreading"] == "field-spreading-v1"
     assert metadata["field_remainder"] == "field-remainder-v1"
     assert metadata["external_body"] == "external-body-v1"

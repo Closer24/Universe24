@@ -48,16 +48,32 @@ ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
 | 3.19, the external body's sinks and momentum | The `absorbed` line is what the bodies' sinks took (`external_body_totals`); the bodies' count, momentum, charge and sinks are their own lines beside the identity |
 | 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
 
+## A push keeps the walk - 2026-09-17 (`ray-momentum-turn-v2`)
+
+Issue #169, feature 8b, the fix the helium-orbit run
+([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) asked
+for: `pushed_ray` of `ray-momentum-turn-v1` reset the DDA's accumulators at
+every push, so a ray pushed at every interval stepped along its register's
+dominant axis alone
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2),
+"a push keeps the walk"):
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.16, momentum is directional; 3.28, the turn is carried with a resolution of one part in the ray's amount, as a heading is carried through six Ports | A push moves the register and keeps the walk: the accumulators, the momentum-intervals banked per axis toward the next Link, continue against the new register (`continued_walk`), so a ray pushed at every interval walks the DDA line of its running register; a ray of 64 pushed by 1 sideways at every Node steps sideways at Links 9, 15, 20 and 24, pushed by 8 it is past 45 degrees at Link 8 (`test_momentum_turn_walk.py`) |
+| 3.4, the electron ray "whose trajectory is changed at every step by the field rays" | In a spreading field every Node carries a push, so under v1 the gradual turn had no Link to show on (E8, a straight pass off the board); under v2 the path is the staircase of the running register; E8's record was made under v1 and is not repeated with this fix |
+| 3.15, exact accounting; 3.26, the engine validates without inventing | The push's arithmetic, the ledgers and the records are unchanged; a register too short to hold the banked progress, or back at the default, starts the walk over at (0, 0, 0); a world without a push is byte-identical, and so is one whose pushes find the accumulators at zero |
+
 ## A free ray turns by momentum - 2026-09-17 (`ray-momentum-turn-v1`)
 
 Issue #169, feature 8b, implements the gradual bending of a free ray of
 sections 3.5, 3.14, 3.16 and 3.28 by the momentum register of feature 8c
-([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)),
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)),
 the second gap the helium-ion run (E4) found:
 
 | Highlights | Implementation |
 | --- | --- |
-| 3.16, momentum is directional, conserved component by component | A ray's direction is its momentum register, three integers, by default amount x heading; the DDA walks the register at every departure with the ray's accumulators as before, one Link per interval, so (7, -1, 0) is seven +X Links per -Y Link and the speed never changes |
+| 3.16, momentum is directional, conserved component by component | A ray's direction is its momentum register, three integers, by default amount x heading; the DDA walks the register at every departure with the ray's accumulators as before (reset at a push until `ray-momentum-turn-v2`, above, which keeps them), one Link per interval, so (7, -1, 0) is seven +X Links per -Y Link and the speed never changes |
 | 3.5, where a field ray meets a ray whose coupling responds the meeting changes that ray's trajectory; the field ray returns reversed; 3.14, the recoil is a ray | A coupling of free rays without outputs whose `momentum_table` names the field family pushes its unnamed participant by sign x amount x heading of every field ray it meets (-1 toward the source, the body's and the group's table) and returns each field ray reversed as the recoil; no event is stamped, the ray's amount, phase, bit and record stay, and a `ray_push` record reports the register before and after |
 | 3.28, bending is a change of momentum; the lag register carries the turn with a resolution of one part in the modulus, of any width because it enters no phase sum | The turn is the register, integers of any width that enter no phase sum: a ray of amount a pushed by a field ray of amount f turns by f / a, walked exactly by the DDA; the lag of feature 8 keeps the delay on the ray's own axis in phase steps (its own modulus, `lag_bits`, open) |
 | 3.15, exact accounting | The world ledger and the local audit read a free ray by its register wherever it is; the push and the reversal are booked as the meeting's momentum change, `conserved_at_every_completed_tick` true; a world without a free-ray table runs byte-identically (case (d) pins two records' digests) |

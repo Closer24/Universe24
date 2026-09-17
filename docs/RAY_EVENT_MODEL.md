@@ -853,7 +853,8 @@ every such set; Highlights 3.20 is the text to follow.
    register-driven motion of a group (feature 8c) was the interim form of
    its motion; both went with feature 14, binding as a loop, below, which
    keeps of this feature gravity by delay, the delay table and the lag.
-   Feature 8b, a free ray turns by momentum, `ray-momentum-turn-v1` (done on
+   Feature 8b, a free ray turns by momentum, `ray-momentum-turn-v1`, and
+   `ray-momentum-turn-v2` the same day, the DDA's walk kept through a push (done on
    2026-09-17, issue #169; the second gap the helium-ion run E4 found): a
    ray's direction is its momentum register, three integers, by default
    amount x heading, which the DDA walks at every departure in place of the
@@ -866,7 +867,7 @@ every such set; Highlights 3.20 is the text to follow.
    ledgers read the register and the push is booked as the meeting's
    momentum change; the heading index stays the ray's line for the rules
    that read it; see [a free ray turns by
-   momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1).
+   momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2).
    This is the register of Highlights 3.28 for the turn: a resolution of
    one part in the ray's amount, of any width because it enters no phase
    sum, in place of the transverse lag of feature 8 spent in whole Links
