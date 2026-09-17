@@ -108,6 +108,23 @@ it by default or to compensate for an unexamined dependency. CI uses the PR base
 or the previous main commit and the same selector. It no longer unconditionally
 runs the Basic/Exchange worlds or a package build for unrelated changes.
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a
+test exercises one generic rule in isolation on a minimal board and nothing else:
+one test module per rule, one per feature of the ray-event model, with the
+expected integers written down before the first run. No test pins the numbers of
+an example world, compares two worlds or reproduces a known experiment; those are
+research runs, made once and recorded with a fingerprint and a date in
+`docs/VALIDATION.md`, never repeated as tests. The selection above is the rule: a
+change is checked only against the tests that depend on what it changed, and the
+whole suite runs together only when the shared core changes (the Node and its
+Ports, the order of the cycle, the bounded integers, the phase), and then once,
+in parallel. `tools/check.py` runs pytest with `-n auto` through the
+`pytest-xdist` development dependency. A physical milestone, a phenomenon that
+several rules produce together, is one fingerprinted, dated run of the engine,
+not a suite. The cost of checking is proportional to the risk of the change,
+never constant.
+
 
 - Give each component one responsibility, clear names and a small typed interface.
   Prefer composition and short functions over deep inheritance or unnecessary

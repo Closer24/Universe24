@@ -19,6 +19,10 @@ def pytest_configure(config):
 
 
 def pytest_sessionstart(session):
+    # Under pytest-xdist only the controller writes the JUnit file; a worker
+    # (config.workerinput is set) must not take the lease a second time.
+    if hasattr(session.config, "workerinput"):
+        return
     xml = getattr(session.config.option, "xmlpath", None)
     if xml:
         from event_universe.retention import ArtifactLease, validate_output_path
