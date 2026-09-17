@@ -63,6 +63,8 @@ class SpatialPlanningInput:
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
 PlanningResult = LocalPlan | SpatialPlan | None
 PlanningCycle = Generator[PlanningRequest, PlanningResult]
+# The Node boundary's check of one evaluated spatial plan against its request.
+SpatialValidator = Callable[[SpatialPlanningInput, SpatialPlan], None]
 
 
 def finish_local_cycle(
@@ -140,12 +142,18 @@ class NodeExecution:
         *,
         reuse_carriers: bool = False,
         reuse_fields: bool = False,
+        spatial_validator: SpatialValidator | None = None,
     ) -> None:
+        """`spatial_validator` checks every spatial plan this execution evaluates,
+        serial or batched, before the plan is returned or retained, so a reuse hit
+        is served a plan that was validated when it was made and the Node needs
+        no second check of it (see `SpatialServices.planner_validates`)."""
         if type(workers) is not int or not 1 <= workers <= MAX_NODE_WORKERS:
             raise ValueError(f"node_workers must be an integer from 1 through {MAX_NODE_WORKERS}")
         self.workers = workers
         self._disturbance_planner = disturbance_planner
         self._spatial_planner = spatial_planner
+        self._spatial_validator = spatial_validator
         self._executor: InterpreterPoolExecutor | None = None
         self._disturbance_tasks = 0
         self._spatial_tasks = 0
@@ -200,9 +208,17 @@ class NodeExecution:
             return ()
         if self._spatial_planner is None:
             raise RuntimeError("spatial planning requires a configured planner")
-        if not self.parallel:
-            return _plan_spatial_batch(self._spatial_planner, items)
-        return self._submit_fields(items)
+        plans = (
+            _plan_spatial_batch(self._spatial_planner, items)
+            if not self.parallel
+            else self._submit_fields(items)
+        )
+        if self._spatial_validator is not None:
+            # A plan that fails is raised here and never retained (`PlanReuse`
+            # keeps no failed evaluation), so every retained plan is validated.
+            for item, plan in zip(items, plans, strict=True):
+                self._spatial_validator(item, plan)
+        return plans
 
     @property
     def parallel(self) -> bool:

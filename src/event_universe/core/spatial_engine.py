@@ -88,11 +88,14 @@ class SpatialEngine:
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
         execution_planner: SpatialPlanner | None = None,
+        planner_validates: bool = False,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
         if initial.node_execution and initial.field_rules and field_guard is None:
             raise ValueError("node_execution field rules require a field commit guard")
+        if planner_validates and execution_planner is None:
+            raise ValueError("a validating planner is the execution's, not the law itself")
         self.initial = initial
         self.planner = planner
         self.observer = observer
@@ -147,6 +150,7 @@ class SpatialEngine:
             balance_guard,
             field_guard,
             meter.total,
+            planner_validates,
         )
         for seed in initial.spatial_seeds:
             node = self._at(seed.position)

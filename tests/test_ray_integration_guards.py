@@ -333,7 +333,10 @@ def test_funded_field_plan_cannot_modify_unrelated_carrier_state(target):
             records[0] = replace(record, values=tuple(values))
         return replace(plan, emission_records=tuple(records))
 
-    world._spatial._services = replace(world._spatial._services, planner=corrupt)
+    # A law installed on the services directly validates nothing; the Node does.
+    world._spatial._services = replace(
+        world._spatial._services, planner=corrupt, planner_validates=False
+    )
     with pytest.raises(ValueError):
         world.step()
     assert _record(world, 0) == before
