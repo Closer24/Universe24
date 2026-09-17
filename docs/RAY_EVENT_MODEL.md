@@ -104,11 +104,17 @@ phase, heading, the number of steps it has made since its event, the
 information of its last event and, if that was a Detector event, its bit;
 nothing larger). At the event Node it performs the
 inverse split with its information: it transmits it, with its bit, to the
-same places the event sent to, so that it cancels what was already there.
-This turns time back for that ray's share only; the other shares are
+same places the event sent to, so that it cancels what was already there
+and the momentum and energy of that share are restored exactly. This turns
+time back for that ray's share only; the other shares are
 untouched until their own rays return. For a pair, the partner ray's line is
 among those places, so the partner's Detector is not missing the bit: that
-is the same inverse split, not a second mechanism.
+is the same inverse split, not a second mechanism. The transmission is a ray like any other, with a field like any other: it
+cancels the share only where it meets it, and where it meets nothing it makes
+no event, by the same definitions. A share that left the event earlier on a
+straight line at the same speed is met only where it was delayed: bound at a
+Node, slowed by an output clock, changed by an interaction or standing at a
+Detector; for a pair this is the condition of Highlights 5.4.
 
 **Information.** Everything on the board is a transfer of information. An
 event is a splitting of information: each ray carries its own share of what
@@ -387,13 +393,15 @@ None remain from the model owner's side as of 2026-09-17: every question this
 section listed (the lifetime and register of an open alternative, moving an
 event, reassembly and re-emission, what the returning ray carries, whether a
 field ray alone changes a trajectory, the funding of the released field, the
-lifetime of a bound group) is answered in Highlights 3.3, 3.4, 3.5, 3.20 and
-5.4 and restated above.
+lifetime of a bound group, and how the transmission of an inverse split meets
+the share it cancels) is answered in Highlights 3.3, 3.4, 3.5, 3.20 and 5.4
+and restated above.
 
-One consequence is not stated in Highlights and is for the design owner to
-record before migration step 4, not for this document to choose: how the
-transmission of an inverse split meets the share it cancels when that share
-is still in flight on its line (it left the event Node earlier, at the same
-one Link per interval), and what it meets when that share was already
-realized at a Detector. Highlights 3.20 states the cancellation, not the
-meeting.
+Decided on 2026-09-17 (Highlights 3.20) for the last of these, and stated in
+the Return definition: the inverse-split transmission is a ray like any
+other, with a field like any other; it cancels the share only where it meets
+it, and where it meets nothing it makes no event, by the same definitions. A
+share that left the event earlier on a straight line at the same speed is
+met only where it was delayed: bound at a Node, slowed by an output clock,
+changed by an interaction or standing at a Detector; for a pair this is the
+condition of Highlights 5.4.

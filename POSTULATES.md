@@ -868,11 +868,18 @@ A Detector that returns a ray is not sending a message to anyone. The
 returning ray carries what happened at the event, its own share only, with
 its bit and nothing larger, and at the event node it performs the inverse
 split with its information, transmitting it to the same places the event
-sent to, so that it cancels what was already there. This turns time back
-for that ray's share only; the other shares are untouched until their own
-rays return. A ray that passes the Detector is realized. For a pair, the
+sent to, so that it cancels what was already there and the momentum and
+energy of that share are restored exactly. This turns time back for that
+ray's share only; the other shares are untouched until their own rays
+return. A ray that passes the Detector is realized. For a pair, the
 partner ray's line is among the same places, so the partner's Detector is
 not missing the bit; that is the same inverse split, not a second mechanism.
+The transmission is a ray like any other, with a field like any other: it
+cancels the share only where it meets it, and where it meets nothing it makes
+no event, by the same definitions. A share that left the event earlier on a
+straight line at the same speed is met only where it was delayed: bound at a
+node, slowed by an output clock, changed by an interaction or standing at a
+Detector; for a pair this is the condition of Highlights 5.4.
 
 Each ray meets its own fate. Sibling events of one interaction are
 independent rays; nothing cancels a sibling's share except its own return.
