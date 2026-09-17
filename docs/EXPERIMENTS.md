@@ -322,7 +322,12 @@ states "exactly" and means integer equality at every tick.
   (feature 8), when the star's recoil is wanted; a light source
   (marked, setting 1) launching one light ray on a line parallel to x at
   impact parameter b = 4, 6, 8, 12 and 16, one ray per run, on both sides
-  of the group; a slow massive ray (rate r, content equal to the light ray's)
+  of the group, and the same passes on lines parallel to the (1,1,0)
+  diagonal at equal Euclidean b rounded to the lattice (Highlights 3.5,
+  2026-09-17: the field is a diamond at the scale of Links and a sphere at
+  large scale by path counting, and the axis-versus-diagonal bending is a
+  measurable prediction, not an assumption); a slow massive ray (rate r,
+  content equal to the light ray's)
   on the same lines; a control run with no group. The phase width N = 2^8,
   2^10, 2^12, 2^14 and 2^16, with the group's retained content M fixed at
   2^6 units of m₀ = 1 phase step per interval (its rate 64 steps per
@@ -341,14 +346,18 @@ states "exactly" and means integer equality at every tick.
   both sides; the
   log-log exponent of α over the five b is
   −1.0 ± 0.1; α at 2M is 2α at M within 1/16 relative; G_eff(N) · N² is
-  constant over the five N within 1/16 relative of its value at N = 2^12.
+  constant over the five N within 1/16 relative of its value at N = 2^12;
+  the diagonal α at equal Euclidean b is within 1/8 relative of the axial α
+  (a lattice effect larger than that is measured and recorded under
+  Highlights 3.23, not hidden).
   Reported and not pinned: the ratio of the light ray's α to the slow ray's
   α at equal b and M against the value 2 of general relativity. Fail: momentum
   inexact or a control that bends (the engine); an exponent or a linearity
   outside its band (the delay table as declared against nature); G_eff · N
   constant instead of G_eff · N², or neither (the identification of m₀ or of
-  the unit of action in the derivation, not the engine), each stated as
-  which.
+  the unit of action in the derivation, not the engine); a diagonal α
+  outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
+  stated as which.
 - **Status.** planned. The N-scan part of the criterion ran on 2026-09-17 as
   the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
   experiment): a bound group of mass N / 4 phase steps per interval, b = 4,

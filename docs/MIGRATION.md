@@ -620,8 +620,9 @@ published as the `bound_tick` record), each phase advances once per interval
 by its rest rate, and a held ray releases its field on all six headings. An
 earlier declared outputs rule naming a bound participant and an arriving ray
 unbinds the group. New keys: `ray_delay` on a binding rule, the Node's
-output-clock delay while it holds the group (every arrival waits it, one
-Node-wide wait for the six per-face clocks), and a meeting output's `delay`
+output-clock delay while it holds the group (every arrival of matter waits
+it, a field ray never, one Node-wide wait for the six per-face clocks), and
+a meeting output's `delay`
 as `{"of": i, "table": [six], "per": u}`, a delay per the Port input i came
 through, carried as the ray's new `lag` field (three signed integers, part
 of the merge key, reset by a return) and spent one Link toward the lagging

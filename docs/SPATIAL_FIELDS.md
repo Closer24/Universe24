@@ -757,7 +757,16 @@ nothing owned is destroyed and no remainder needs an owner (Highlights
 in the same interval as the F ray, with the residents; the release is a
 departure, not an arrival, so it is no meeting. A ray of a family that has a
 meeting rule releases after the interval's meetings, from the trajectory
-that departs. A G ray crosses Nodes like any ray and releases nothing: a
+that departs. The release does not wait for the clock (Highlights 3.5,
+model owner, 2026-09-17): a field release is information, not a departure
+of matter, so a ray held at a Node by an output-clock delay (`ray_delay`,
+feature 8) is content resident there and releases every interval it is
+held, on all six headings as resident content does, while the clock delays
+only its departure as matter; this slice releases from the departure, which
+at pace 1/1 with no delay is every interval, and a held ray releases on all
+six headings every interval it is held
+([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
+Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
 lattice alone. A G ray that reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the
@@ -870,16 +879,19 @@ group; a family with no coupling to the group's families crosses it
 
 **Mass as output-clock delay.** A binding rule may declare `"ray_delay": k`,
 the output-clock delay of the Node that holds its group: while the rule
-fires there, every ray arriving at that Node waits `k` intervals
-(`interaction_delay` plus `k` on arrival, its phase moving by its rate per
-waiting interval) before it meets anything or departs, so every departure
-from the Node is `k` intervals later than it would be. This one Node-wide
-wait approximates the six per-face output clocks of Highlights 3.28 in this
-slice: one `k` for every face, the register `bound_delay` on the Node set by
-the plan of the cycle in which the rule fired and 0 once the group is
-unbound. The outputs of the unbinding leave in their own interval. The world
-key `ray_delay` of the computation-field hold is a different rule and is not
-admitted with ray interactions.
+fires there, every ray of a matter family arriving at that Node waits `k`
+intervals (`interaction_delay` plus `k` on arrival, its phase moving by its
+rate per waiting interval) before it meets anything or departs, so every
+departure of matter from the Node is `k` intervals later than it would be.
+A field ray (a family with `field_of`) is information, not matter: it is
+never delayed by a clock (Highlights 3.5), neither the group's own release,
+which leaves every interval, nor a field ray crossing the Node. This one
+Node-wide wait approximates the six per-face output clocks of Highlights
+3.28 in this slice: one `k` for every face, the register `bound_delay` on
+the Node set by the plan of the cycle in which the rule fired and 0 once
+the group is unbound. The outputs of the unbinding leave in their own
+interval. The world key `ray_delay` of the computation-field hold is a
+different rule and is not admitted with ray interactions.
 
 **Gravity as bending by delay.** A coupling of a light ray with the field of a
 bound family (`light x G`) is an outputs rule whose light output keeps the

@@ -1128,11 +1128,12 @@ class SpatialNode(SpatialNodeState):
                     arriving = self._draw_arrivals(
                         arriving, packet.port ^ 1, definition, tick, services, clicks, returns
                     )
-                if self.bound_delay:
-                    # The bound load delays every departure from this Node
+                if self.bound_delay and definition.field_of is None:
+                    # The bound load delays every departure of matter from this Node
                     # (ray-binding-v1, Highlights 3.28): an arrival waits the declared
                     # intervals before it meets or departs, one Node-wide wait in
-                    # place of the six per-face clocks.
+                    # place of the six per-face clocks. A field ray is information
+                    # and is never delayed by a clock (Highlights 3.5).
                     arriving = tuple(
                         replace(
                             ray,
