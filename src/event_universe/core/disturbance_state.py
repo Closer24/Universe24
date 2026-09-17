@@ -244,6 +244,12 @@ class InteractionDefinition:
     # input i (its source input by default), (1, v) the value v (-1 none, or a
     # step of the output field's circle). Empty for a rule without outputs.
     output_polarization: tuple[tuple[int, int], ...] = ()
+    # The decay setting of a conversion (decay-draw-v1): the pass share [n, d] of
+    # the one draw its meeting takes from the Node's ticket stream, None for a
+    # rule that fires without a draw; `seed` starts the stream of a Node the
+    # declaration marks (salted by the Node's position, `decay_ticket_seed`).
+    draw: tuple[int, int] | None = None
+    seed: int = 0
 
 
 @dataclass(frozen=True, slots=True)

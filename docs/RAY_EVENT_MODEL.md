@@ -1091,6 +1091,13 @@ draws with its declared ratio as the setting (the mark of feature 2), 1 = the
 conversion fires, 0 = the group ticks on unchanged, and half-life follows.
 That is the one draw of the Detector interaction, at a Node whose Detector
 bit is set; nothing else in the world draws, and no second lottery is added.
+(Done on 2026-09-17 as feature 13, `decay-draw-v1`, in the loop form of
+feature 14: the conversion's `ray_interactions` rule declares `draw: [n, d]`
+and `seed`, its meeting draws once from the Node's ticket stream, the
+unsalted draw of the mark, and fires on 1 only; the group's ticks are read
+as its corner meetings, the survival law per meeting; the Node counts as
+marked by the declaration; see [a decaying group
+draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1).)
 
 ## 7. Acceptance criteria for the first implementation slice
 

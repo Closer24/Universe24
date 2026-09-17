@@ -44,16 +44,27 @@ only its execution service receives the reuse adapter.
 Equality means the complete immutable planning input, not equal output on the
 previous tick. Carrier keys include every record field (including residuals and
 phase), coupling remainders, arrival count and directional loads. Spatial keys
-also include field state, rays, local computation cost, the tick and
-ray-hold mode. Each cache belongs to one law/configuration in one simulation;
+also include field state, rays, local computation cost, ray-hold mode and the
+remainder registers, and since 2026-09-17 not the world tick: the spatial law
+reads nothing from the clock (the Node checks its own tick before it plans),
+so a Node whose local input repeats reuses its plan across ticks, and a Node
+whose plan changes with time carries that time in its records (a lamp's stock
+or allowance, its emission cursor and wave phase), which are in the key. Each
+cache belongs to one law/configuration in one simulation;
 results cannot leak across configurations. Hash matches still require full key
 equality. Exceptions are never cached. Pending proposals are immutable.
 
 Equivalent Nodes compute one plan and independently commit it at their existing
 local boundaries. Repeated parallel requests are evaluated once per distinct
 input and restored to their original request order. Every Node still charges
-its original model cost, executes validation, retains ownership and emits its
-own events. A cache hit saves host work, never a modeled operation or world tick.
+its original model cost, retains ownership and emits its own events. Since
+2026-09-17 a spatial plan is validated once, when the execution evaluates it
+and before it is retained (`NodeExecution`'s `spatial_validator`, the Node
+boundary's `validate_spatial_plan`), so a hit is served a validated plan and
+the Node checks only what it changes after planning, an external body's part;
+the serial engine without reuse hands the Nodes the law itself and they
+validate each plan (`SpatialServices.planner_validates`). A cache hit saves
+host work, never a modeled operation or world tick.
 
 Each planner cache retains at most 4096 entries with least-recently-used eviction.
 This is a host memory limit, not a physical parameter. `execution_report()` gives

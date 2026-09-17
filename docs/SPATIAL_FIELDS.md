@@ -706,7 +706,10 @@ over the inputs and over the outputs and compared exactly, as the
 did until bucket B.6 deleted it on 2026-09-17; the total amount and the stock of every family (the sum of the amounts
 of one field over the inputs equals the sum over its outputs) are checked
 without a declaration, so no family total changes and the spatial
-accounting's `rule_delta` is zero. Every output is a ray of its `field` with
+accounting's `rule_delta` is zero (a rule that declares `draw` is the one
+exception: its outputs may change family, the total amount still exact,
+[a decaying group draws](#a-decaying-group-draws-decay-draw-v1)). Every
+output is a ray of its `field` with
 that family's charge per quantum, and the charge readout of feature 9
 (`charge x amount` of one ray, summed over the inputs and over the outputs) is
 appended to every meeting's invariants as the `charge` invariant, checked like
@@ -758,9 +761,13 @@ split per pair of outputs, the admission of every ray interaction (schema 1,
 `link_ticks` 1, positive unit-axial unpaced fields, no decay, no absorption
 on the selected fields), and at most `ray_slots` rays per field after the
 meeting; more is an explicit failure. The outputs are new rays with
-accumulators (0, 0, 0) and pace wait 0. No draw anywhere; the Detector
-(feature 2) is not touched, and its bit is inherited (feature 2b); a family
-with no rule crosses
+accumulators (0, 0, 0) and pace wait 0. No draw anywhere unless the rule
+declares `draw`, the decay setting of a conversion, and then the meeting
+draws once from the Node's ticket stream and fires on 1 only, and its
+outputs may be of other families with the change booked as each family's
+source ([a decaying group draws](#a-decaying-group-draws-decay-draw-v1),
+2026-09-17); the Detector (feature 2) is not touched, and its bit is
+inherited (feature 2b); a family with no rule crosses
 ([layers](#layers-ray-layers-v1)); existing worlds with single-output rules
 run byte-identically, and the runner records
 `ray_meeting: "ray-meeting-conversion-v1"` beside `ray_layers`.
@@ -1626,6 +1633,152 @@ Admission: that of every ray interaction with outputs; no draw, no new
 arithmetic. A world without a `delay` assignment on a rule without outputs
 runs byte-identically in its events; its `state.json` lost the empty
 `bound_groups` key.
+
+### A decaying group draws (`decay-draw-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.26 with 3.19 and 5.4; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), "the weak interaction and
+decay", feature 13 of issue #169, landed 2026-09-17 in the loop form of
+feature 14): "A free particle never decays, because there is no event
+without a meeting and a straight ray does not change; a neutron is a bound
+group whose ticks are events, and a bound group that can decay is a source,
+and a source is a Detector (section 3.19): at each tick it draws with its
+declared ratio as the setting, 1 = the conversion fires, 0 = the group ticks
+on unchanged, so half-life follows and nothing else in the world draws."
+Under [binding as a loop](#binding-as-a-loop-loop-binding-v1) there is no
+held group and no group tick at one Node: a bound group is rays circulating
+on a ring whose corner meetings are its events. The draw is therefore a
+property of the meeting, declared on the conversion's rule, and the Detector
+mark on a Node is a different thing and is not required.
+
+**The reading of "at each tick" (the implementation's, 2026-09-17, for the
+model owner to confirm).** A group's ticks are its corner meetings, so a
+decaying group draws once at every corner meeting of the rule that can
+convert it, and a ring whose rays meet at every corner every interval draws
+at every corner meeting. The survival law that follows is per meeting: a
+ring survives k meetings with probability `(1 - n/d)^k`, so its half-life is
+`k_half = -ln 2 / ln(1 - n/d)` meetings (about `d ln 2 / n` for a small
+setting), and in intervals it is `k_half / m` for a ring with m meetings per
+interval: on the unit square four per interval on the eight-ray ring
+(`ring.json`, every corner every interval) and two per interval on the
+four-ray ring, so `T_half = k_half / 4` and `k_half / 2` intervals there. The
+formula of the register and the catalog, `T_half = -ln 2 / ln(1 - n/d)`
+intervals, is the case of one meeting per interval; experiment A9 reads its
+neutron's half-life from its ring's meetings per interval
+([A9](EXPERIMENTS.md#a9-neutron-decay-from-the-bound-group-draw)).
+
+**The schema.** A `ray_interactions` rule with outputs may declare its decay
+setting and the seed of its draws:
+
+```json
+{"name": "decay", "participants": [{"type": "electron"}, {"type": "electron"}],
+ "draw": [1, 64], "seed": 6,
+ "outputs": [
+   {"field": "p", "amount": {"of": 0}, "heading": "same", "input": 0, "phase": {"of": 0}},
+   {"field": "p", "amount": {"of": 1}, "heading": "same", "input": 1, "phase": {"of": 1}}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
+
+| Key | Values | Rule |
+| --- | --- | --- |
+| `draw` | `[n, d]`, `1 <= d <= MAX_VALUE`, `0 <= n <= d` | The decay setting: the share of the draw range on which the conversion fires, read exactly as a mark's `setting` (the bit is 1 when the drawn number times `d` is below `n` times `TICKET_MODULUS`); `[0, 1]` never fires, `[1, 1]` always |
+| `seed` | `0 <= seed < TICKET_MODULUS` | The start of the stream a Node the declaration marks draws from; required with `draw`, refused without it |
+
+`draw` on a rule without outputs, a numerator above the denominator or below
+0, a denominator below 1 or not an integer, a setting that is not a pair, a
+`draw` without `seed`, a `seed` without `draw`, or a seed at or above the
+ticket modulus are rejected at initialization with a message naming the
+reason. The parsed rule carries `draw` (the pair) and `seed`
+(`InteractionDefinition`); a rule without `draw` carries None and is what it
+was.
+
+**What it does.** When the participants of a decaying rule meet (a group
+`participant_groups` forms in declared order, its `when` guard true; a false
+guard is no meeting under the rule and draws nothing), the meeting draws
+once, one draw per meeting and not per ray, from the Node's ticket stream
+with the rule's setting: `ticket_bit(state, n, d)` in `core/spatial_state.py`
+is the unsalted draw of [the mark](#detector-mark-detector-mark-v1)
+(`state = next_ticket(state, 0)`, `number = ticket_draw(state)`, bit 1 when
+`number x d < n x TICKET_MODULUS`), the one `detector_draw` calls, and it
+reads nothing from the rays. On 1 the rule fires: its outputs replace the
+participants as at any [meeting with
+outputs](#meetings-with-outputs-ray-meeting-conversion-v1), the conversion.
+On 0 the rule does not fire, the participants stay available, and the
+meeting continues to the next rule in declared order; on a ring that is the
+corner table, which reproduces the ring, so the group ticks on unchanged.
+The draws of one cycle are taken from the stream in the order the rules and
+groups are met, and a Node with several decaying rules draws for each
+meeting of each from the same stream. Nothing is charged to the cost meter
+for a draw, as at a mark.
+
+**The marked Node.** Only a Node whose Detector bit is set may draw
+(Highlights 3.19, 5.4). A Node at which a decaying rule fires counts as
+marked by the declaration: what marks it is the rule, its setting the
+rule's `draw` and its seed the rule's `seed`, and the mark acts on the
+meeting alone, since nothing declared a setting for the Node's arrivals, so
+they are not drawn and its bit is not set for them. The Node's one ticket
+state, `SpatialNodeState.detector_ticket`, is the stream: at a Node that
+carries a `detectors` mark it is the mark's, seeded from the mark, its
+arrivals drawn at the receipt (`detector-mark-v1`) and its meetings drawn in
+the cycle from the same stream, in that order; at a Node without a mark it
+is seeded when the Node is created from the declaration salted by the
+Node's position, `decay_ticket_seed(decay_seed(rules), position)`: the seeds
+of the rules that declare `draw` folded in declared order by the ticket rule
+(the first seed as the state, each further seed one salted step) and then
+one salted step per coordinate, so that two corners of one ring draw
+independently, as two marks with their own seeds do (the square in
+`ticket_draw` breaks the affine relation between the streams). A world
+without a decaying rule seeds nothing: every unmarked Node's ticket stays 0
+and the ticket rule is never called, as before. The ticket state enters the
+Node's law as an input (`SpatialLaw.__call__(..., detector_ticket)`, the
+last argument of `SpatialPlanningInput`, so a reused plan never replays a
+draw at another state) and leaves with the plan's `decay_draws`, the last of
+which is the stream's state after the cycle, which the Node commits.
+
+**The conversion may change family.** The weak interaction is a change of
+family (Highlights 3.26), so a decaying rule's outputs may be of families
+its inputs are not: the total amount (the energy invariant), the declared
+invariants and the appended charge invariant are exact as before, the
+per-family stock equality of `ray-meeting-conversion-v1` is not required of
+a rule with `draw`, and what each family lost or gained at the meeting is
+booked as that family's source in that cycle (`source_delta` of the
+`spatial_cycle` record, `electron -2, p 2` for the rule above), the families
+summing to zero, so every line of the [world
+ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1) stays
+exact, the charge lines with them (a family's sourced charge is its charge
+times that amount). A rule without `draw` keeps every family's stock as
+before; the generic key the [dictionary](../examples/nature/README.md)
+states for such a rule (`"stock": "converted"` with a `converted` line of
+the audit) stays open.
+
+**The record and the audit.** Each draw is a `decay_draw` event of the Node
+in the cycle: position, tick, `rule` (the rule's name), `setting` `[n, d]`,
+`ticket` (the stream's state the draw left) and `bit`, written before the
+cycle's `ray_push` and `spatial_cycle` records, in the record's order of
+Nodes; a draw of 0 is recorded as much as a draw of 1, since a ticket was
+consumed either way. The tickets a Node consumed in one tick are therefore
+counted from the record as its `detector_click`, `detector_return` and
+`decay_draw` lines, the line experiment B2 audits against the arrivals at
+marked Nodes and, now, the meetings of decaying rules
+([B2](EXPERIMENTS.md#b2-one-draw-only-at-a-marked-node-and-replay-determinism)).
+The stream is a function of the seed, the Node's position and the order of
+its draws alone, so a replay writes the same draws, conversions and events.
+The ray viewer reads the event as a generic marker (`decay draw`).
+
+**Identity and admission.** The runner records `decay_draw:
+"decay-draw-v1"` in `run.json` when a rule of the world declares `draw`; a
+world without one runs and records byte for byte what it did (its plan key
+carries a constant 0). The admission is that of every ray interaction with
+outputs. `test_decay_draw.py` ([expectations](TEST_EXPECTATIONS.md#decay-draw))
+is the test: the E5 ring with a decaying conversion of two electrons into
+two rays of a second family declared before the corner table, its draws by
+hand from the published ticket rule, the first 1 at P1 in the cycle of tick
+11, the ring surviving until then and dispersing after, the ledger exact,
+the tickets consumed equal to the meetings, the replay identical, the
+control without `draw` never calling the ticket rule, the rejections. The
+catalog's `weak_conversion` is written in this form
+([catalog](CATALOG.md)); the neutron's ring under `quark_binding` is not
+yet declared, so A9 stays planned.
 
 ### Binding and gravity by delay (`ray-binding-v1`)
 

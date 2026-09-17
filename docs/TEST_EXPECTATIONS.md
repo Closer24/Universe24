@@ -33,6 +33,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_decay_draw.py` | 1 | 1.05 | Issue #169 feature 13: a decaying group draws at its corner meetings; a rule with outputs that declares `draw: [n, d]` and `seed` draws once per meeting of its participants from the Node's ticket stream, the unsalted draw of `detector-mark-v1`, fires on 1 and yields to the next rule on 0, the ring surviving with the law (1 - n/d)^k over k meetings, the draws recorded and the tickets consumed equal to the meetings, a world without `draw` never calling the ticket rule (`decay-draw-v1`) |
 | `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -60,7 +61,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_node_rule_contract.py` | 37 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, aggregation policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
-| `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
+| `test_plan_reuse.py` | 10 | 0.37 | Exact transition plan reuse: every argument of a law is its key, the world tick is not (a Node in a steady field reuses its plan across ticks, a lamp whose stock counts down does not), and a plan is validated once, when it is made, a hit being served without a second check, pinned below |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_binding.py` | 2 | 1.43 | Issue #169 feature 8, gravity by delay: a light ray is delayed by a declared table per Port at the field of a mass and turns toward it, G_eff x N^2 one integer over four widths (`ray-binding-v1`; its held form removed on 2026-09-17 by feature 14) |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
@@ -502,13 +503,44 @@ Host visit reduction is distinct from physical O(1) local work.
 ## Exact transition reuse
 
 `test_plan_reuse.py` checks all carrier and spatial planning arguments, including
-local phases, resident rays, computation cost and time; hash collisions; bounded
+local phases, resident rays and computation cost; hash collisions; bounded
 LRU eviction; retry after failure; independent configurations; and default reuse
 of repeated moving patterns in serial and parallel execution. Each tick retains
 identical inventory, snapshots, ordered events, operation cost and local clocks.
 The Focus, field, delay and formula-free state tests remain consumers of this
 host-only optimization; `test_active_ports.py` was deleted on 2026-09-17.
 Timing is measured outside CI assertions with identical inputs; no speed threshold replaces physical equality.
+
+Since 2026-09-17 the spatial key does not hold the world tick, which the
+spatial law never reads (the Node checks its clock before it plans; see
+[Local Focus](LOCAL_FOCUS.md)). Pinned before the first run on a 7 x 3 x 3
+open board: one `hold` lamp at x = 1 pays one quantum of `light` per interval
+from a stock of 12 into a ray field with the single heading +X and a constant
+phase (`phase_advance` 0), and the ray walks x = 2 to 6 and escapes. The Node
+at x = k receives the same ray (amount 1, phase 0, k - 1 steps) every interval
+from tick k on, so it evaluates once and hits from its second arrival; the
+lamp's stock counts down in its record, so every interval presents a new key
+and the lamp never hits. Over eight ticks the lamp plans 8 times, the Nodes at
+x = 2 to 6 plan 7, 6, 5, 4 and 3 times: 33 requests, 13 evaluations, 20 hits,
+cumulative per tick 0, 0, 1, 3, 6, 10, 15, 20; 9 quanta remain and 3 have
+escaped. The same rule makes a lamp whose record does not change (an external
+source without a budget) a steady Node that reuses its plan too; its plan is
+the same plan.
+
+Since 2026-09-17 a spatial plan is validated by the Node boundary
+(`validate_spatial_plan`) once, when the execution evaluates it, before it is
+returned or retained, and a reuse hit is served that plan without a second
+check; the Node validates only what it changes after planning, an external
+body's part, whose registers are outside the key. Pinned before the first run:
+at the execution, two equal requests and a third with one more received packet
+validate twice and hit once. On the lamp line above, eight ticks with Focus
+on: 13 validations at the execution (one per evaluation) and none at the Node;
+with Focus off the law itself serves the Nodes and each validates its own
+plan, 33 at the Node and none at the execution; the two worlds agree at every
+tick. The sink body of `test_external_body.py` alone (`release` [1, 2048])
+for four ticks: the body's Node validates after each of its four cycles, the
+execution once per evaluation (19 of 40 requests, 21 hits), and every hit is a
+plan validated at its miss.
 
 ## Payload validation and readout reuse
 
@@ -2642,6 +2674,151 @@ the first run. Pinned before the first run:
   at the board's edge, at (0,5,5), (0,6,5), (5,0,5), (5,11,5), (6,0,5),
   (6,11,5), (11,5,5) and (11,6,5), the corners empty from tick 3, electron
   8, none escaped, momentum (0, 0, 0), charge -24, every line balanced.
+
+## Decay draw
+
+`tests/test_decay_draw.py` is the test of feature 13, a decaying group draws
+(`decay-draw-v1`, [a decaying group
+draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1); Highlights
+3.26 and 3.19 in the loop form of feature 14), pinned here on 2026-09-17
+before the module's first run, as Highlights 5.5 requires. It builds the
+unit-square ring of E5 (`examples/nature/ring.json`) inline as
+`test_loop_binding.py` does (the same open 12 x 12 x 11 board, `link_ticks`
+1, `metric: "links"`, pace 1/1, the family `electron` with charge -3 and
+rest rate 2 on a 3-bit phase, the eight corner lamps of amount 1, the `corner`
+rule of the Port form), with one more ray family `p` (the same width, rate
+and charge -3, its momentum bound through an emission of a lamp type that is
+never seeded) and the rule `decay` declared before `corner`:
+`[electron, electron]`, `"draw": [1, 64]`, `"seed": 6`, two outputs of `p`
+with each input's amount and phase on the input's own heading
+(`"heading": "same"`), invariant energy, the charge invariant appended. A
+tick t is one `step()`; the state after tick t is read from
+`inventory_view()`; a ray is written as (heading index, amount, phase, steps,
+mask, shares) as in the loop-binding section. The run is 36 ticks.
+
+**The structure, a priori.** Every corner meets two electrons in the cycle of
+every tick t from 1 while the ring is whole, the `decay` rule is met first,
+so every corner meeting draws once at 1/64 from that corner's stream, and on
+0 the meeting continues to `corner`, which reproduces the ring: the lines of
+the loop-binding case (a) hold after every tick through the first draw of 1.
+The eight-ray ring is two interleaved four-ray orbits: orbit A (the lamps of
+P0 and P2) meets at P1 and P3 in the cycles of odd ticks and at P0 and P2 of
+even ticks, orbit B the other way round. The first 1, at corner C in the
+cycle of tick T, converts the pair that met there into two `p` rays leaving
+C on the headings they arrived by, momentum unchanged; the same orbit's
+other pair meets its corner as usual that cycle and its two rays arrive alone
+at the two neighbouring corners after tick T + 1, where a corner with one
+electron fires nothing, so they cross off the ring and off the open board;
+the other orbit keeps circulating as the four-ray ring, content 4, two
+corners drawing per tick, until its own 1 at tick T2, after which its other
+pair disperses the same way and nothing is left. The survival law of the
+whole ring is (1 - 1/64)^k over its k corner meetings, four per tick. Every
+corner's stream starts at the rule's seed salted once by each coordinate of
+the corner (`decay_ticket_seed`) and advances one unsalted step per meeting;
+the tickets a corner consumed are its meetings that drew, and no other Node
+draws.
+
+**The integers, by hand from the published ticket rule** (`state = (state x
+48271 + salt + 1) mod 1073741789` with the salt 0 for a draw and the
+coordinate for the seeding, `number = state^2 mod 1073741789`, bit 1 when
+`64 x number < 1073741789`; the seed 6 was chosen by this rule so that the
+first 1 falls after two periods of the ring, which the group reader needs,
+and the second inside the run):
+
+- the streams start at 276043064 (P0), 458648927 (P1), 458697198 (P2),
+  276091335 (P3); the first draws, in the cycle of tick 1, leave them at
+  812882644, 1034149616, 143013690, 995488507, all bits 0;
+- (a) the first 1 is at P1 in the cycle of tick 11 (T = 11), its ticket
+  470793086; the other corners draw 0 that cycle at 724645537 (P0),
+  866042076 (P2), 46152738 (P3). After every tick 1 to 11 the corners hold
+  the loop-binding lines (the lamp lines after tick 1, the ring lines
+  after 2 to 11, phase 2t mod 8), electron 8, p 0, momentum (0, 0, 0),
+  charge electron -24, every ledger line balanced. Orbit A's pair at P1
+  (headings 0 and 3, the R ray input 0) becomes two p rays of amount 1,
+  phase 6, one event on Ports 0 and 3 (mask 9, shares (1, 0, 0, 1, 0, 0)),
+  leaving on +X and -Y: after tick t from 12 to 16 they are at (6 + (t - 11),
+  5, 5) heading 0 and (6, 5 - (t - 11), 5) heading 3 with steps t - 11 and
+  phase 2t mod 8, and they leave the board at tick 17 (escaped p 2). The
+  cycle of tick 11 books at P1 the family change as that corner's source,
+  `electron -2, p 2`, and no momentum; P0, P2 and P3 book their corner
+  momentum (2, 2, 0), (-2, -2, 0), (2, -2, 0) as before;
+- (b) after tick 12 P1 and P3 hold orbit B's pairs (the ring lines of P1
+  and P3, phase 0) while P0 holds one electron, heading 3, mask 9, shares
+  (1, 0, 0, 1, 0, 0), and P2 one, heading 0, mask 9, the same shares (orbit
+  A's other pair, sent by P3's corner rule in the cycle of tick 11); no rule
+  fires at P0 or P2 in the cycle of tick 12, and after tick t from 13 to 17
+  those two are at (5, 5 - (t - 12), 5) heading 3 and (6 + (t - 12), 6, 5)
+  heading 0, steps t - 11, phase 2t mod 8, leaving the board at tick 18
+  (escaped electron 2). From tick 12 orbit B holds: after even ticks its
+  pairs are at P1 and P3 and after odd ticks at P0 and P2, with the ring
+  lines of those corners and phase 2t mod 8, and only those two corners
+  draw and book their corner momentum in each cycle; electron 6 and p 2
+  after ticks 12 to 16, p 0 from tick 17, electron 4 from tick 18, content
+  4 on the ring;
+- (c) the second 1 is at P1 in the cycle of tick 26 (T2 = 26), ticket
+  549671329, P3 drawing 0 at 758084520 that cycle; orbit B's pair at P1
+  becomes two p rays as in (a), at (6 + (t - 26), 5, 5) and (6, 5 - (t -
+  26), 5) after tick t from 27 to 31, escaped at tick 32; its other pair is
+  alone at P0 (heading 3) and P2 (heading 0) after tick 27, at (5, 5 - (t -
+  27), 5) and (6 + (t - 27), 6, 5) after tick t from 28 to 32, escaped at
+  tick 33. From tick 27 no corner meets and no draw is made; after tick 36
+  the board holds no ray: electron 0, p 0, escaped electron 4 and p 4,
+  momentum (0, 0, 0) in the world and (4, -4, 0) escaped and sourced (the
+  corner bookings of the cycles of ticks 11 and 26 that had no partner
+  corner: (2, -2, 0) each), the sources electron -4 and p 4, the charge
+  lines electron -24 = 0 + 12 (sourced) - 12 (escaped) and p 0 - 12 = -12,
+  every ledger line balanced at every tick;
+- (d) the momentum of the world after tick t is (1, -1, 0) per pair off
+  the ring still in the world: (2, -2, 0) after ticks 12 to 16 and 27 to
+  31, (1, -1, 0) after 17 and 32, (0, 0, 0) otherwise;
+- (e) the draws: 74 `decay_draw` lines in `events.jsonl`, each with the
+  rule `decay`, the setting `[1, 64]`, the ticket and the bit: four per tick
+  at ticks 1 to 11 (every corner), then P1 and P3 at the even ticks 12 to 26
+  and P0 and P2 at the odd ticks 13 to 25; the bits 1 at (11, P1) and
+  (26, P1) only; per corner P0 18 draws ending at tick 25 with ticket
+  334272102, P1 19 ending at tick 26 with 549671329, P2 18 ending at 25
+  with 758871333, P3 19 ending at 26 with 758084520, and after the run each
+  corner's `detector_ticket` is that last ticket while every other Node's
+  is its salted seed, untouched; the whole ring survived 40 draws of 0
+  (ticks 1 to 10), and in the cycle of tick 11 the second draw, P1's after
+  P0's, the 42nd of the run, fired;
+- (f) the run record carries `decay_draw: "decay-draw-v1"` beside
+  `loop_binding` and `ray_meeting`, `conserved_at_every_completed_tick`
+  true, final totals electron 0, p 0, momentum (0, 0, 0), escaped electron
+  4, p 4, momentum (4, -4, 0), sources electron -4, p 4, momentum
+  (4, -4, 0); the runner run twice on the same document writes the same
+  `events.jsonl` byte for byte and the same `run.json` apart from
+  `elapsed_seconds`. The ray viewer's extractor with the phase recording
+  reads exactly one group on the square, ring `[P0, P1, P2, P3]`, content 8,
+  families `{"electron": 8}`, period 4, clock 2 on the 8-step circle, from
+  tick 1, read until the conversion breaks the recurrence (`to_tick`
+  measured after the first run: see below);
+- (g) the world with `corner` alone (the family `p` declared and unused)
+  runs the ring of the loop-binding case (a) through tick 16 with electron
+  8 and p 0 at every tick, calls the ticket rule nowhere (a monkeypatched
+  `next_ticket` fails the test if called), every Node's `detector_ticket`
+  stays 0, and its record has no `decay_draw` line and no `decay_draw` key;
+- (h) `parse_initial_state` rejects, naming the reason: `draw` on a rule
+  without outputs (the held rule of feature 8 with `draw` and `seed`), the
+  settings `[3, 2]` (n above d), `[1, 0]` (a zero denominator), `[-1, 2]`,
+  `[1, 2.5]` and `[1]`, a `draw` without `seed`, a `seed` without `draw`, a
+  seed of 1073741789 and of -1; `validate_configuration` reports each
+  document invalid.
+
+**Measured on the first run (2026-09-17).** Every integer of (a) to (h)
+held at the first run: the states after every tick, the loose rays, the
+ledger and the charge lines at every tick, the tickets, the 74 draws with
+their tickets and bits, the corner bookings and the family sources, the
+record's totals, the identical replay, the control and the rejections. Two
+readings were measured, not pinned: within one tick the `decay_draw` lines
+come in the record's order of Nodes, sorted by position, P0, P3, P1, P2
+(the test compares the sorted corners); and the group reader's window is
+`from_tick` 1 to `to_tick` 10, the last state before the conversion's cycle,
+the tick rows carrying `bound` `{"electron": [8]}` at ticks 1 to 10 and
+nothing at tick 0 or from tick 11 (the four-ray orbit that circulates on
+after the first conversion is not read as a group, since the reader takes
+the first window of the rays that share the ring). The module ran in 1.05
+seconds.
 
 ## The screen with a loop
 

@@ -160,7 +160,7 @@
       "field": ["mass_field"],
       "decay": {
         "coupling": "weak_conversion",
-        "setting": {"A9": [1, 1024], "note": "the setting [n, d] of the Detector mark the world places on the group's Node (Highlights 3.26): the group draws at each tick, 1 fires weak_conversion, 0 ticks on unchanged, so the half-life is -ln 2 / ln(1 - n/d) intervals; the ratio the physical half-life needs at one Planck time per interval, about 2^-154, and whether the bounded setting holds it, is A9's finding"}
+        "setting": {"A9": [1, 1024], "note": "the setting [n, d] the world writes as draw on weak_conversion's rule (decay-draw-v1, 2026-09-17; until then the setting of a Detector mark on the group's Node): the group draws at each of its ticks, its corner meetings in the loop form (Highlights 3.26), 1 fires weak_conversion, 0 ticks on unchanged, so the half-life is -ln 2 / ln(1 - n/d) meetings, divided by the ring's meetings per interval in intervals; the ratio the physical half-life needs at one Planck time per interval, about 2^-154, and whether the bounded setting holds it, is A9's finding"}
       },
       "decided_by": {"rest_rate": "hypothesis 12"},
       "reference": {"mass_kev": 939565, "note": "the register's value for A9"},
@@ -275,9 +275,9 @@
     },
     "weak_conversion": {
       "status": "open",
-      "engine": {"identity": "ray-meeting-conversion-v1 at the tick of a bound group (ray-binding-v1) whose Node carries a mark (detector-mark-v1); the draw at the tick is not landed", "landed": false},
+      "engine": {"identity": "ray-meeting-conversion-v1 with draw (decay-draw-v1, landed 2026-09-17) at a corner meeting of the neutron's ring (quark_binding, loop-binding-v1, not landed)", "landed": false},
       "participants": [{"type": "neutron"}],
-      "fires": "at the bound group's tick when the Detector mark on its Node draws 1; the mark's setting [n, d] is the declared ratio; a draw of 0 ticks the group on unchanged (Highlights 3.26)",
+      "fires": "at a corner meeting of the group's rays when the meeting's draw is 1 (decay-draw-v1, 2026-09-17, in the loop form of loop-binding-v1): this rule declares draw [n, d], the group's declared setting, and seed; the meeting draws once, per meeting and not per ray, from the Node's ticket stream, the Node marked by the declaration, and a draw of 0 ticks the group on unchanged, the corner table reproducing the ring (Highlights 3.26); until 2026-09-17 the setting was written on a mark of the group's Node",
       "outputs": [{"field": "proton"}, {"field": "electron"}, {"field": "antineutrino"}],
       "shares": "undecided",
       "headings": "undecided",
@@ -287,7 +287,7 @@
         {"name": "energy", "expression": {"field": "amount"}},
         {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
       ],
-      "note": "The weak interaction as a change of family: an N-to-M conversion at an event (Highlights 3.26), neutron to proton + electron + antineutrino, the group's members going from up 1, down 2 to up 2, down 1, with charge (0 = +3 - 3 + 0), amount and momentum exact. A free particle never decays: the neutron is a bound group whose ticks are events, a group that can decay is a source, and a source is a Detector, so its draw is the one draw of the model. A9 pins the survival curve (1 - n/d)^t, one conversion per group, the electron's energy at most 782 keV and no proton group ever firing; the shares of the neutron's content among the three products and their headings are written before that run. The charge invariant is the one the engine appends; it is written here because it is the point of the conversion."
+      "note": "The weak interaction as a change of family: an N-to-M conversion at an event (Highlights 3.26), neutron to proton + electron + antineutrino, the group's members going from up 1, down 2 to up 2, down 1, with charge (0 = +3 - 3 + 0), amount and momentum exact. A free particle never decays: the neutron is a bound group whose ticks are events, a group that can decay is a source, and a source is a Detector, so its draw is the one draw of the model. A9 pins the survival curve (1 - n/d)^t, one conversion per group, the electron's energy at most 782 keV and no proton group ever firing; the shares of the neutron's content among the three products and their headings are written before that run. The charge invariant is the one the engine appends; it is written here because it is the point of the conversion. In the loop form as implemented (decay-draw-v1, 2026-09-17): the draw is this rule's draw from the neutron's decay setting, taken once at every corner meeting of the ring's rays under this rule, so the survival law is (1 - n/d)^k over k meetings and A9's half-life in intervals is that in meetings divided by the ring's meetings per interval; the outputs may change family, the change booked as each family's source; the neutron's ring under quark_binding is not yet declared."
     },
     "pauli_exclusion": {
       "status": "open",
@@ -433,7 +433,7 @@
           "note": "What a marked Node does with a ray carrying 0 (Highlights 5.4, model owner, 2026-09-17; landed 2026-09-17 as feature 2b of issue #169): the ray is a transmission, it is never drawn, it passes the marked Node and does what a transmission does; a mark that wants the draw writes on_bit_0 draw. A ray carrying no bit is drawn as the does above says, and a ray on its walk back is not an arrival and is never drawn (detector-return-v1)."
         }
       },
-      "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its mark's setting is its decay ratio (weak_conversion). A passive Recorder or Renderer is not a Detector."
+      "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its decay ratio is the draw setting of its conversion's rule, the Node marked by that declaration for the meeting's draw (weak_conversion, decay-draw-v1, 2026-09-17). A passive Recorder or Renderer is not a Detector."
     },
     "external_body": {
       "world_key": "external_bodies",
@@ -516,7 +516,7 @@
       "rays": ["neutron", "proton", "electron", "antineutrino", "up", "down"],
       "couplings": ["quark_binding", "weak_conversion"],
       "apparatus": ["detector"],
-      "note": "4096 neutron groups each marked with setting [1, 1024]; a control of 64 proton groups with setting 0."
+      "note": "4096 neutron groups whose weak_conversion rule draws with setting [1, 1024] at every corner meeting (decay-draw-v1); a control of 64 proton groups with setting 0."
     },
     "A10": {
       "rays": ["electron", "muon", "proton"],

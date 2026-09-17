@@ -101,7 +101,10 @@ property at one bit; what `spin` stands undecided for is the table of
 `pauli_exclusion` (hypothesis 12).
 A `bound_group` adds `members` (ray id to count), `binding` (the corner table
 whose loop its rays close, loop-binding-v1, 2026-09-17) and, if it can decay,
-`decay` (the conversion and the mark's setting). A property read only at a meeting (`colour`, `spin`,
+`decay` (the conversion and the setting its rule draws with: the `draw` of
+the conversion's `ray_interactions` rule since 2026-09-17, `decay-draw-v1`,
+[a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1)).
+A property read only at a meeting (`colour`, `spin`,
 `polarization`) sits on the ray record; `reference` holds a measured number
 the register quotes for comparison, never a lattice value.
 
@@ -216,10 +219,13 @@ it uses; the layers follow.
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"`, `"polarizer"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once; a polarizer body writes `polarizer` (`family`, `angle`, `pass`, `table`, `unpolarized`) beside `coupling` ([polarization](SPATIAL_FIELDS.md#polarization-ray-polarization-v1)) |
 | A bound group | A loop: rays circulating on a ring of Nodes under the corner table, one `ray_interactions` rule with outputs per binding coupling, as `examples/nature/ring.json` declares the unit-square electron ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1), [loop binding](LOOP_BINDING.md); Highlights 3.4, 2026-09-17); nothing holds and no key names the group, which a reader finds in the record. The held form (a rule without outputs assigning `delay` 1, `ray_delay`) was removed by feature 14 on 2026-09-17 |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
+| A bound group's decay | `draw: [n, d]` (the group's `decay.setting`) and `seed` on the conversion's `ray_interactions` rule, declared before the group's corner table: the meeting draws once from the Node's ticket stream and fires the conversion on 1, the Node marked by the declaration for that draw ([a decaying group draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1), `decay-draw-v1`, 2026-09-17) |
 
-A bound group's decay draw (the mark drawing at the group's tick) and
-colour have no world key yet; their catalog records wait for them, and no
-engine rule is added for them
+A bound group's decay draw has its world key since 2026-09-17 (`draw` and
+`seed` on the conversion's rule, `decay-draw-v1`; the neutron's ring under
+`quark_binding` is not yet declared, so `weak_conversion` stays open);
+colour has no world key yet; its catalog records wait for it, and no
+engine rule is added for it
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
 Polarization has its keys since feature 11 (2026-09-17, above).
 The split table of feature 12 has its world key, `spread` on a ray spatial

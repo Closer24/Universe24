@@ -20,6 +20,7 @@ from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
     RAY_VIEW_COMPONENTS,
     RAY_VIEW_COMPONENTS_UNPOLARIZED,
+    DecayDraw,
     Heading,
     Layers,
     Ray,
@@ -32,6 +33,7 @@ from event_universe.core.spatial_state import (
     ray_momentum_vector,
     ray_vector,
     stamp_event,
+    ticket_bit,
     turn_receiver,
     validate_ray_participants,
     validate_rays,
@@ -40,6 +42,10 @@ from event_universe.core.spatial_state import (
 from .disturbances import convert_values, evaluate, interact_values
 
 Turns = list[RayPush]
+# The draws of the decaying rules at one Node in one cycle (decay-draw-v1), in
+# the order they were taken from the Node's ticket stream; the last one carries
+# the stream's state after the cycle, and the caller's `ticket` its state before.
+Draws = list[DecayDraw]
 
 
 def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
@@ -130,9 +136,11 @@ def _convert(
     """The outputs of a meeting with declared outputs, as (field, ray) pairs stamped as
     the events of the meeting, or None when the guard is false. The stock of every
     family is exact across the event: the sum over the inputs of one field equals the
-    sum over its outputs, beside the rule's own declared invariants. The outputs
-    carry the Detector bit the inputs hand down by the rule's `bit`
-    (detector-bit-property-v1), whatever the view of the outputs says of it."""
+    sum over its outputs, beside the rule's own declared invariants; a decaying rule
+    (decay-draw-v1) is the one exception, its outputs may change family with the
+    total amount exact. The outputs carry the Detector bit the inputs hand down by
+    the rule's `bit` (detector-bit-property-v1), whatever the view of the outputs
+    says of it."""
     before = tuple(_view(ray, definitions[kind], kind) for kind, ray in inputs)
     converted = convert_values(rule, before, RAY_PROPERTIES, meter, costs)
     if converted is None:
@@ -173,7 +181,11 @@ def _convert(
         stock[kind] = checked_work(stock.get(kind, 0) + ray.amount)
     for kind, ray in produced:
         stock[kind] = checked_work(stock.get(kind, 0) - ray.amount)
-    if any(stock.values()):
+    if any(stock.values()) and rule.draw is None:
+        # A decaying rule (decay-draw-v1, Highlights 3.26: the weak interaction is
+        # a change of family) may move content between families; the total
+        # amount, the declared invariants and the appended charge invariant were
+        # checked above, and the caller books what each family lost or gained.
         raise ValueError(f"ray meeting {rule.name} changes the stock of a family")
     # An output carries the source sign of the first input of its own family (the
     # recoil keeps its field's sign, field-spreading-v1); a family the inputs do
@@ -303,6 +315,9 @@ def _meet(
     meter: CostMeter,
     costs: OperationCosts,
     turns: Turns | None = None,
+    draws: Draws | None = None,
+    ticket: int = 0,
+    declared: tuple[InteractionDefinition, ...] = (),
 ) -> None:
     """The meeting inside one layer: its rules fire over its rays alone, in declared
     order, each group once; the events are written to the candidate bundles. A rule
@@ -312,7 +327,14 @@ def _meet(
     (ray-momentum-turn-v1). A rule meets only the rays that arrived at the Node
     (loop-binding-v1, Highlights 3.4: a ray never stops): a ray at its event Node,
     the output of a rule waiting its declared delay there, is met by nothing and
-    leaves, so no rule can hold its participants by meeting them again."""
+    leaves, so no rule can hold its participants by meeting them again. A rule
+    with outputs that declares `draw` is a decaying conversion (decay-draw-v1,
+    Highlights 3.26): when its participants meet, the meeting draws once, one draw
+    per meeting and not per ray, from the Node's ticket stream (`ticket` its state
+    before this cycle, the last of `draws` its state after) with the rule's
+    setting; on 1 the rule fires, on 0 it does not and the meeting continues to
+    the next rule in declared order. A false guard is no meeting under the rule
+    and draws nothing."""
     owners = tuple((index, slot) for index in layer for slot in range(len(rays[index])))
     if len(owners) > MAX_SLOTS:
         raise ValueError("ray coupling exceeds the bounded participant capacity")
@@ -379,6 +401,25 @@ def _meet(
                 continue
             if rule.outputs:
                 inputs = tuple((owners[o][0], rays[owners[o][0]][owners[o][1]]) for o in group)
+                if rule.draw is not None:
+                    # decay-draw-v1: the group meets under the rule (its guard read
+                    # over the views) and the meeting draws once at the rule's
+                    # setting from the Node's stream; the draw reads nothing from
+                    # the rays. On 0 the rule does not fire and the rays stay
+                    # available to the next rule in declared order.
+                    before = tuple(view.values for view in group_views if view is not None)
+                    if (
+                        rule.when is not None
+                        and evaluate(rule.when, (), (), meter, participants=before)[0] <= 0
+                    ):
+                        continue
+                    if draws is None:
+                        raise ValueError("a decaying rule draws from the Node's ticket stream")
+                    state, bit = ticket_bit(draws[-1].ticket if draws else ticket, *rule.draw)
+                    index = (declared or rules).index(rule)
+                    draws.append(DecayDraw(index, rule.draw[0], rule.draw[1], state, bit))
+                    if not bit:
+                        continue
                 products = _convert(rule, inputs, definitions, meter, costs)
                 if products is None:
                     continue
@@ -420,6 +461,8 @@ def apply_ray_interactions(
     costs: OperationCosts,
     layers: Layers | None = None,
     turns: Turns | None = None,
+    draws: Draws | None = None,
+    ticket: int = 0,
 ) -> tuple[Rays, ...]:
     """Build one complete proposal; no physical owner changes before all guards pass.
 
@@ -432,7 +475,10 @@ def apply_ray_interactions(
     stock exact; nothing is left at the Node. The outputs of every group that
     fires carry the Detector bit its inputs hand down (detector-bit-property-v1).
     `turns`, when given, collects the record of every push a coupling of free
-    rays gave its ray (ray-momentum-turn-v1).
+    rays gave its ray (ray-momentum-turn-v1). `draws`, when given, collects the
+    draw of every meeting of a rule that declares `draw` (decay-draw-v1), taken
+    from the Node's ticket stream whose state before this cycle is `ticket`; a
+    world without such a rule never touches either.
     """
     if not rules:
         return rays
@@ -449,7 +495,20 @@ def apply_ray_interactions(
         layer_rules = tuple(
             rule for rule in rules if all(kind in layer for role in rule.participants for kind in role)
         )
-        _meet(layer, layer_rules, rays, candidate, definitions, fields, meter, costs, turns)
+        _meet(
+            layer,
+            layer_rules,
+            rays,
+            candidate,
+            definitions,
+            fields,
+            meter,
+            costs,
+            turns,
+            draws,
+            ticket,
+            rules,
+        )
     result = tuple(tuple(ray for ray in bundle if ray is not None) for bundle in candidate)
     for index, bundle in enumerate(result):
         if len(bundle) > definitions[index].ray_slots:

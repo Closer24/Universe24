@@ -87,9 +87,9 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
+        Remainders,
+        Remainders,
         int,
-        Remainders,
-        Remainders,
     ],
     SpatialPlan,
 ]
@@ -176,6 +176,12 @@ class SpatialServices:
     balance_guard: NodeConservationGuard | None = None
     field_guard: SpatialFieldGuard | None = None
     node_merge_cost: int = 0
+    # True when every plan `planner` returns was validated by the Node boundary
+    # when it was evaluated (the execution's reuse adapter, whose hits are served
+    # plans validated at their miss, and its parallel batches), so the Node
+    # checks only what it changes after planning; a law installed here directly
+    # does not validate, and the Node validates each of its plans.
+    planner_validates: bool = False
 
     def __post_init__(self) -> None:
         if self.initial.node_execution and (
@@ -435,16 +441,21 @@ class SpatialNode(SpatialNodeState):
             self.received_count,
             node_cost,
             resident_rays,
-            tick,
             ray_hold,
             self.remainders,
             self.remainder_phases,
+            self.detector_ticket,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
         if self.body is not None:
+            # The body's part reads its registers, which are outside the plan's
+            # key, so what it changed is validated whether the plan was
+            # evaluated or reused.
             plan = self._body_cycle(plan, services)
-        validate_spatial_plan(services.initial, plan, len(records), records)
+            validate_spatial_plan(services.initial, plan, len(records), records)
+        elif not services.planner_validates:
+            validate_spatial_plan(services.initial, plan, len(records), records)
         services.validate_field_guards(self.states, plan)
         cost = bounded(checked_work(plan.cost + self.received_decay_cost))
         if services.initial.node_execution and plan.interaction_ticks:
@@ -752,6 +763,10 @@ class SpatialNode(SpatialNodeState):
             # The remainder registers after this cycle (field-remainder-v1).
             validate_remainders(plan.remainders, plan.remainder_phases, services.initial.spatial_fields)
             self.remainders, self.remainder_phases = plan.remainders, plan.remainder_phases
+        if plan.decay_draws:
+            # The Node's ticket stream after the draws of its decaying rules
+            # (decay-draw-v1): one unsalted step per draw, as at a mark.
+            self.detector_ticket = plan.decay_draws[-1].ticket
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -827,6 +842,22 @@ class SpatialNode(SpatialNodeState):
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
+            )
+        for draw in plan.decay_draws:
+            # The draw of a decaying rule at its meeting (decay-draw-v1, Highlights
+            # 3.26): the rule, its setting, the ticket state the draw left the
+            # Node's stream in and the bit; one line per ticket consumed, so the
+            # tickets a Node consumed in one tick are its clicks, returns and
+            # these, counted from the record.
+            self._event(
+                "decay_draw",
+                tick,
+                services,
+                notifications=notifications,
+                rule=services.initial.ray_interactions[draw.rule].name,
+                setting=(draw.numerator, draw.denominator),
+                ticket=draw.ticket,
+                bit=draw.bit,
             )
         for push in plan.ray_pushes:
             # A free ray turned by momentum (ray-momentum-turn-v1, Highlights 3.16):
@@ -999,7 +1030,8 @@ class SpatialNode(SpatialNodeState):
             plan = yield SpatialPlanningInput(states, records, self.received_count, node_cost)
             if not isinstance(plan, SpatialPlan):
                 raise ValueError("spatial planning requires a SpatialPlan")
-            validate_spatial_plan(services.initial, plan, len(records), records)
+            if not services.planner_validates:
+                validate_spatial_plan(services.initial, plan, len(records), records)
             return replace(plan, cost=bounded(checked_work(plan.cost + self.received_decay_cost)))
         blank = tuple(
             state.populations

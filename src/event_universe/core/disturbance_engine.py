@@ -21,9 +21,9 @@ from .disturbance_state import (
 )
 from .event_resolution import CommitResolver, EventResolver, Planner
 from .integer import checked_work
-from .node_boundary import validate_record
+from .node_boundary import validate_record, validate_spatial_plan
 from .node_conservation import NodeConservationGuard
-from .node_execution import NodeExecution
+from .node_execution import NodeExecution, SpatialPlanningInput
 from .node_ports import PortTable
 from .node_services import NodeAccounting, NodeEvents, NodeServices, WorkLedger
 from .node_services import cycle_timing as cycle_timing
@@ -36,6 +36,7 @@ from .spatial_engine import (
     SpatialPlanner,
 )
 from .spatial_node import SpatialNode
+from .spatial_state import SpatialPlan
 from .topology import neighbor_address
 
 EventSink = Callable[[dict[str, object]], None]
@@ -68,15 +69,26 @@ class DisturbanceEngine:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
         self.initial = initial
+        boundary = replace(initial, seeds=(), spatial_seeds=())
+
+        def validate_plan(request: SpatialPlanningInput, plan: SpatialPlan) -> None:
+            validate_spatial_plan(boundary, plan, len(request.records), request.records)
+
         self._execution = NodeExecution(
             node_workers,
             planner,
             spatial_planner,
             reuse_carriers=reuse_carrier_plans,
             reuse_fields=reuse_spatial_plans,
+            spatial_validator=validate_plan,
         )
         carrier_planner = self._execution.disturbance if reuse_carrier_plans else planner
         field_planner = self._execution.spatial if reuse_spatial_plans else spatial_planner
+        # Every plan the execution evaluates is validated before it is returned or
+        # retained: through the reuse adapter, and in the parallel batches that
+        # serve every request. The serial engine without reuse hands the Nodes the
+        # law itself, and they validate its plans as before.
+        planner_validates = reuse_spatial_plans or self._execution.parallel
         self._step_lock = Lock()
         if self._execution.parallel and resolver is not None:
             raise ValueError("parallel Node execution does not support an event program")
@@ -121,6 +133,7 @@ class DisturbanceEngine:
                 balance_guard=balance_guard,
                 field_guard=field_guard,
                 execution_planner=field_planner,
+                planner_validates=planner_validates,
             )
         )
         self._services = NodeServices(

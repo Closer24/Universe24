@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
+    DecayDraw,
     DetectorMark,
     ExternalBody,
     FieldInteractionGuard,
@@ -57,6 +58,7 @@ STATE_RECORDS = (
     FieldSpread,
     ReturnedField,
     RayPush,
+    DecayDraw,
     Polarizer,
     Polarized,
 )

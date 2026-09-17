@@ -39,6 +39,8 @@ from .spatial_state import (
     SpatialState,
     blank_remainders,
     coherent_stock,
+    decay_seed,
+    decay_ticket_seed,
     held_stock,
     holds_source_stock,
     ray_charge,
@@ -57,9 +59,9 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
+        Remainders,
+        Remainders,
         int,
-        Remainders,
-        Remainders,
     ],
     SpatialPlan,
 ]
@@ -90,11 +92,14 @@ class SpatialEngine:
         balance_guard: NodeConservationGuard | None = None,
         field_guard: SpatialFieldGuard | None = None,
         execution_planner: SpatialPlanner | None = None,
+        planner_validates: bool = False,
     ) -> None:
         if initial.node_execution and (initial.conservation_contract is None or balance_guard is None):
             raise ValueError("node_execution requires a conservation contract and balance guard")
         if initial.node_execution and initial.field_rules and field_guard is None:
             raise ValueError("node_execution field rules require a field commit guard")
+        if planner_validates and execution_planner is None:
+            raise ValueError("a validating planner is the execution's, not the law itself")
         self.initial = initial
         self.planner = planner
         self.observer = observer
@@ -104,6 +109,10 @@ class SpatialEngine:
         # The Detector marks by position, installed on each marked Node when it is
         # created; a Node without a mark never draws.
         self._marks = {mark.position: mark for mark in initial.detectors}
+        # The seed of the decaying rules' declaration (decay-draw-v1), from which an
+        # unmarked Node's ticket stream starts, salted by its position; None when
+        # no rule draws, and then an unmarked Node's ticket stays 0 and is never used.
+        self._decay_seed = decay_seed(initial.ray_interactions)
         # The external bodies by declared position, installed on their Nodes when
         # they are created; a body that steps carries its mark to the next Node.
         self._bodies = {body.position: body for body in initial.external_bodies}
@@ -149,6 +158,7 @@ class SpatialEngine:
             balance_guard,
             field_guard,
             meter.total,
+            planner_validates,
         )
         for seed in initial.spatial_seeds:
             node = self._at(seed.position)
@@ -188,7 +198,13 @@ class SpatialEngine:
                 localized=self._blank_localized(),
                 rays=tuple(() for _ in self.initial.spatial_fields),
                 detector=mark,
-                detector_ticket=0 if mark is None else mark.seed,
+                detector_ticket=(
+                    mark.seed
+                    if mark is not None
+                    else 0
+                    if self._decay_seed is None
+                    else decay_ticket_seed(self._decay_seed, position)
+                ),
                 body=self._bodies.pop(position, None),
                 remainders=blank_remainders(self.initial.spatial_fields),
                 remainder_phases=blank_remainders(self.initial.spatial_fields),

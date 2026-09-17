@@ -60,7 +60,7 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
-from .ray_interactions import Turns, apply_ray_interactions
+from .ray_interactions import Draws, Turns, apply_ray_interactions
 from .rays import emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
@@ -753,13 +753,18 @@ class SpatialLaw:
         received_count: int = 0,
         node_cost: int | None = None,
         rays: tuple[Rays, ...] = (),
-        tick: int = 0,
         ray_hold: int = 0,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
+        detector_ticket: int = 0,
     ) -> SpatialPlan:
+        """One Node's spatial plan from its local input alone: the law reads no clock
+        (the Node checks its tick before planning), so equal inputs give equal plans
+        at any tick, which is what the plan-reuse key relies on."""
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
+        if type(detector_ticket) is not int or bounded(detector_ticket) < 0:
+            raise ValueError("the Node's ticket state must be a nonnegative bounded integer")
         # The Node's remainder registers (field-remainder-v1): one block per spreading
         # family, empty blocks where none were given; returned after the step.
         registers_held: list[tuple[int, ...]] = [
@@ -776,8 +781,6 @@ class SpatialLaw:
             raise ValueError("ray interactions do not support a second ray hold clock")
         if bounded(received_count) < 0:
             raise ValueError("received spatial packet count must be nonnegative")
-        if bounded(tick) < 0:
-            raise ValueError("node clock must be nonnegative")
         has_rays = any(definition.rays for definition in self.definitions)
         # Rays that arrived on the previous link; this cycle's emission joins them
         # only after absorption, so a record never swallows its own fresh rays.
@@ -796,6 +799,11 @@ class SpatialLaw:
         # register, which the momentum readout below reads, so the push and the
         # recoil's reversal are booked together as the meeting's momentum change.
         turns: Turns = []
+        # The draws of the decaying rules (decay-draw-v1): the Node's ticket state
+        # enters as input and leaves with the last draw, never hidden in the law;
+        # the content their conversions moved between families, per field.
+        draws: Draws = []
+        converted: list[tuple[int, int]] = []
         if self.ray_interactions:
             met = apply_ray_interactions(
                 tuple(tuple(bundle) for bundle in resident_rays),
@@ -806,6 +814,8 @@ class SpatialLaw:
                 self.costs,
                 self.layers,
                 turns,
+                draws,
+                detector_ticket,
             )
             for index, definition in enumerate(self.definitions):
                 if definition.rays and definition.momentum_field is not None:
@@ -819,6 +829,15 @@ class SpatialLaw:
                         meeting_momentum.append(
                             (definition.momentum_field, (delta[0], delta[1], delta[2]))
                         )
+                if definition.rays:
+                    # The content a decaying conversion moved between families
+                    # (decay-draw-v1): what a family lost or gained at this meeting
+                    # is booked as that family's source, the families summing to
+                    # zero since the total amount is exact; a rule without `draw`
+                    # keeps every family's stock, so this is zero for it.
+                    moved = checked_work(ray_stock(met[index]) - ray_stock(tuple(resident_rays[index])))
+                    if moved:
+                        converted.append((definition.field, moved))
             resident_rays = [list(bundle) for bundle in met]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
@@ -835,6 +854,8 @@ class SpatialLaw:
         for momentum_field, delta in meeting_momentum:
             for axis, value in enumerate(delta):
                 source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
+        for field_index, moved in converted:
+            source[field_index][0] = checked_work(source[field_index][0] + moved)
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
@@ -1184,4 +1205,5 @@ class SpatialLaw:
             remainders=tuple(registers_held),
             remainder_phases=tuple(register_phases_held),
             ray_pushes=tuple(turns),
+            decay_draws=tuple(draws),
         )
