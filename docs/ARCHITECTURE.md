@@ -1,4 +1,277 @@
-# Architecture and change boundaries
+# Universe24 architecture: from system overview to implementation
+
+This is the central architecture document. Read the overview below in order to
+understand the whole system without opening other files; continue into the
+implementation sections for ownership and dependency details. Specialist
+specifications remain linked for exact schemas, profile restrictions and tests.
+They refine this architecture rather than define additional engines.
+
+This overview describes the integrated source at main commit
+`cb854328bdf14c60a4a640b097d462c0f5a8514e` (PR #160). It separates implemented
+mechanisms, optional profiles, unmerged designs and physical goals. It does not
+adopt new laws or change runtime behavior. Future changes must update the affected
+summary and its responsible detailed contract together.
+
+## Reading map
+
+1. [Purpose and system boundary](#purpose-and-system-boundary)
+2. [System components and connections](#system-components-and-connections)
+3. [Inside a Node](#inside-a-node)
+4. [From initialization to a completed event](#from-initialization-to-a-completed-event)
+5. [Carriers, fields and complete rays](#carriers-fields-and-complete-rays)
+6. [Time, transport and conservation](#time-transport-and-conservation)
+7. [Quantum owner and Detector boundary](#quantum-owner-and-detector-boundary)
+8. [Observation, execution and storage](#observation-execution-and-storage)
+9. [Implementation status and open boundaries](#implementation-status-and-open-boundaries)
+10. [Detailed implementation and contract map](#detailed-implementation-and-contract-map)
+
+## Purpose and system boundary
+
+Universe24 executes explicitly configured local laws on a three-dimensional
+lattice. The physical locations are Nodes, connected to their six nearest
+neighbors by Links through directional Ports. Scalars and Vectors describe the
+values; the initialization defines their meaning and permitted operations.
+Names such as electron, proton, mass or charge do not select hidden equations.
+
+There are three different responsibilities. The model supplies definitions,
+initial conditions and laws. The simulator evaluates admitted laws, schedules
+local work and transfers ownership. Diagnostics measure and display the result.
+A successful run verifies behavior of the configured model; it does not by itself
+establish a law of nature, a stable nucleus or an atomic orbit.
+
+The main public entry point is `event_universe.Simulation`, assembled in
+`disturbance_api.py`. The active implementation is `src/event_universe/`.
+Historical named simulators are explicit research alternatives. They are not
+implicit stages of the active engine.
+
+## System components and connections
+
+The following diagram shows software responsibilities. The generic law evaluator
+executes on supplied local Node values; it is not another physical location.
+Solid arrows show preparation or execution flow; dashed arrows show read-only
+observation or explicitly selected integration.
+
+```mermaid
+flowchart TD
+    Config["Initialization and model data"] --> Validate["Parse and validate"]
+    Validate --> API["Simulation assembly"]
+    API --> Node["Node owners and scheduler"]
+    Node --> Law["Generic local evaluation"]
+    Law --> Node
+    Node --> Link["Ports and adjacent Link transport"]
+    Link --> Node
+    API -.-> Quantum["Optional quantum integration"]
+    Quantum -.-> Node
+    Node -.-> Observe["Read-only diagnostics"]
+    Link -.-> Observe
+    Observe --> Output["Recorded files and playback"]
+```
+
+| Component | Owns | Receives and produces | Boundary |
+| --- | --- | --- | --- |
+| Initialization and preflight | Immutable definitions, shape/capacity checks and profile admission | JSON to validated typed input | No simulation or arbitrary code execution during preflight |
+| Simulation assembly | Wiring of selected engines and services | Validated input to a runnable world | No independent physical formulas |
+| Node execution and scheduling | Local state, readiness, reservations and commits | Local snapshots to accepted state transitions | Scheduling cannot invent a force or query remote state for a law |
+| Generic law services | Reusable bounded arithmetic and configured expression evaluation | Local immutable inputs to proposals | No world lookup, rendering or species-specific dispatch |
+| Port and Link transport | Outgoing banks, adjacent delivery and in-flight ownership | Accepted departures to later arrivals | No instantaneous distant access |
+| Quantum integration | Explicit finite quantum programs and their coupling boundary | Admitted event inputs and configured quantum results | Scoped optional path; not an exception for ordinary field laws |
+| Diagnostics and UI | Inspection, experiment files and playback | Committed states/events to reports and views | Never repair or drive physical state |
+
+## Inside a Node
+
+`NodeState` means all information locally owned by a Node. The implementation
+uses bounded carrier and spatial state owners where those profiles are selected.
+Their separation is code and inventory ownership at one physical location.
+
+| Part | Meaning |
+| --- | --- |
+| Resident records | Fixed slots holding carried properties and bounded routing state |
+| Spatial state | Locally retained field populations or complete rays |
+| Six Ports | Ordered directions `+X, -X, +Y, -Y, +Z, -Z`; not six new physical value types |
+| Pending work | Frozen participant values, reservations, deltas and readiness metadata |
+| Output banks | Locally owned values prepared for dispatch |
+| Immutable definitions | Types, rules, capacity limits and prepared tables shared outside evolving state |
+
+A pending proposal is not a second material copy of its inputs. Formula strings,
+expression trees, Python callbacks and growing histories do not travel inside
+physical payloads. Records carry bounded values and necessary identifiers.
+
+There is no universal fixed 36-register layout for the integrated generic engine.
+Capacity and supported property shapes belong to the selected validated schema.
+The ordinary spatial vectors have three components; the optional Node processor
+also admits configured property vectors of 1 through 32 components. Operations
+such as a cross product still require their declared dimensions. These facts do
+not imply support for arbitrary tensors or unlimited local storage.
+
+A ray's heading is different from the Port through which it last arrived.
+A diagonal ray may arrive through an X Port while retaining its complete diagonal
+heading. The chosen field projection must state which quantity it reads.
+
+## From initialization to a completed event
+
+1. The CLI or configuration workspace supplies an explicit initialization file.
+   Parsing resolves property/type references, bounds, rules and profile choices.
+   Unsupported combinations fail before execution.
+2. `Simulation` assembles the generic carrier engine, selected spatial services
+   and any admitted optional event integration. Laws remain immutable services.
+3. Transport delivers eligible existing packets across adjacent Links. Receipt
+   validates ownership and capacity before exposing arrivals to local rules.
+4. An eligible Node supplies a bounded local snapshot to the planner. Participant
+   selection and expressions use resident values and causally delivered inputs.
+   Multiple assignments in one transaction read the same selected snapshot.
+5. The planner returns a bounded proposal. If completion is delayed, the Node
+   retains actual inputs and reservations; it does not publish outputs early.
+6. At completion, the owner validates bounds, current capacity, persistent guards
+   and the configured conserved readouts. A joint carrier/field transaction
+   validates both owners before applying either part. Failure cannot publish a
+   partial transaction or use a global correction.
+7. Accepted outputs enter the appropriate output bank and then ordinary Link
+   transport. Committed events and read-only views become available to diagnostics.
+
+This is the shared ownership lifecycle, not a replacement tick algorithm for
+every profile. Field clocks, Node durations and native event programs have
+explicit compatibility limits. The older [tick order](#tick-order) below belongs
+to the historical scalar path, not the generic ray path.
+
+## Carriers, fields and complete rays
+
+Carriers group declared properties that move together. Spatial fields retain and
+transport separately owned local populations. Emission, absorption, response and
+reaction connect those owners through configured local rules. A source needs an
+explicit emission rule and any required funded reservoir/recoil; merely naming
+a record as a particle does not create a source or an interaction.
+
+Two supported interaction interfaces share the bounded expression evaluator:
+
+| Interface | Supported role | Important limit |
+| --- | --- | --- |
+| Carrier interactions and N-to-M conversion | Select local records and construct declared outputs with invariant checks | Output capacity, schemas and complete-owner accounting still apply |
+| Complete-ray coupling | Project complete resident rays into the same evaluator; assign heading, phase and finite delay | Amount and phase advance are read-only; native ray conversion is rejected |
+
+Complete-ray coupling preserves the native ray's continuation metadata. Changing
+heading starts a new lattice line; an unchanged heading must preserve movement
+remainders. The current interface selects at most six participants and at most
+32 declared ray slots across selected fields. These are interface limits, not a
+claim of 32 or 36 universal Node registers.
+
+The integrated demonstration exchanges two opposite headings, retains rays for
+two intervals and releases them. Their phase continues to advance. It proves
+finite residence and release under the supplied rule, not robust nuclear binding.
+A bound nucleus must arise from the requested common coupling, rather than from
+a separate species binding flag or a prescribed orbit.
+
+The optional `carried_heading` projection sums locally resident ray amount times
+its stored heading. The existing `ports` projection has different semantics.
+Supported self-field exclusion must subtract the matching causally local
+quantity; neither a global source scan nor mixing projections is admissible.
+Unsupported combinations with the complete-ray interface fail initialization.
+
+## Time, transport and conservation
+
+Local computation delay and Link transit are separate. A retained value remains
+Node-owned until dispatch; a transfer is Link-owned until arrival. Later changes
+to an emitter cannot rewrite an old packet. A read-only sample is not extra stock.
+
+The optional Node processor declares duration through integer `k`; counted
+operation cost remains a separate quantity. Other profiles retain their own
+cost/duration rules. Complete-ray residence uses `interaction_delay` and the
+currently admitted fixed Link clock. The six independent output-clock candidate
+is not integrated by the main revision described here. Do not infer it from
+conceptual timing vocabulary or from an open branch.
+
+Ordinary physical values and intermediates obey bounded integer contracts.
+Ratios use explicit bounded integer components; permitted remainders have owners.
+Overflow, invalid division or a failed invariant is an error, not permission to
+round, clamp or repair the result globally. Configured energy and momentum
+readouts belong to the chosen law; the scheduler does not supply a universal
+physical energy formula.
+
+For fixed declared capacities, local work and local storage are bounded
+independently of world size. A whole-world tick, sparse host indexes, a diagnostic
+sum and playback history are not O(1). Their costs must be reported separately.
+
+## Quantum owner and Detector boundary
+
+Quantum programs are an explicitly selected integration path, with their own
+finite representations and compatibility constraints. Core event identities and
+immutable causal records provide integration boundaries; ordinary local field
+services cannot import the quantum backend or read remote quantum history.
+The scoped Q-ORACLE-1 assumption is not permission for ordinary nonlocal updates.
+
+Canonical sampling uses `detector-only-v1`: an actual external Detector encounter
+must authorize a random decision. Creation, propagation, phase evolution, an
+ordinary contact or a diagnostic observer does not authorize a draw. Current
+adapters reject unbound sampling paths before consuming tickets. Mathematical
+and historical autonomous samplers require an explicit historical profile.
+
+The accepted external exchange distinguishes PASS from GENERATE_RETURN and
+requires reuse of a committed decision without another draw. Full native
+PASS/RETURN, causal cancellation and output-clock composition remain open;
+admission enforcement must not be described as their implementation. Quantum
+registers and wave-origin references are not a universal private physical
+register layout for every ordinary Node.
+
+## Observation, execution and storage
+
+The runner owns input/result files and optional recording. A local observer reads
+completed receptions at one Node; a global audit may inspect the complete world.
+Neither observer is automatically a physical Detector. HTML and GIF playback must
+show recorded states, including release or dispersion when that is the result.
+The UI validates configuration and manages runner processes; it does not compute
+an alternative physical trajectory.
+
+Host worker interpreters may calculate immutable proposals in parallel, after
+which owners validate and commit in the prescribed order. Local Focus can skip
+certified empty work and reuse exactly equal pure planning results within its
+admitted scope. Neither optimization changes modeled operation charges or
+provides an additional physical interaction.
+
+Source, reproducible inputs and contracts live in Git. Generated outputs have
+separate retention and ownership. Google specifications and conversations do not
+automatically synchronize into code. A result needs its source identity, input,
+expected outcome and actual evidence to support a claim.
+
+## Implementation status and open boundaries
+
+This is a scope map for the cited revision, not a live task tracker.
+
+| Area | Integrated scope | Still separate or unestablished |
+| --- | --- | --- |
+| Generic engine | Initialization-defined local operations, ownership, transport and atomic checks | Arbitrary topology, tensors and every possible profile composition |
+| Common coupling | Carrier N-to-M and complete-ray finite residence via shared arithmetic | Native complete-ray N-to-M, stable nucleus and recurring bound electron |
+| Directional field | Explicit carried-heading access and scoped local self-exclusion | A universal isotropic field law or proof of gravity/electromagnetism |
+| Detector | Canonical admission and explicit historical samplers | Full external PASS/RETURN integration and its unresolved numerical choices |
+| Timing | Existing profile clocks and explicit complete-ray delay | Six-output-clock integration from open PR #146 |
+| Model-document consolidation | Existing implementation contracts retained here | Draft PR #138 contains further specification consolidation; it is not merged runtime support |
+
+Tests certify their stated software or numerical expectations. They do not close
+these physical goals merely by passing. Current work and later integration status
+belong to [project status](PROJECT_STATUS.md) and the repository PRs.
+
+## Detailed implementation and contract map
+
+The rest of this same document retains the detailed ownership and dependency
+contracts, with their existing anchors. The table routes each overview topic to
+its implementation detail and exact specialist specification.
+
+| Topic | Detail in this document | Exact contract |
+| --- | --- | --- |
+| State and arithmetic | [Active generic ownership](#active-generic-ownership), [integer contract](#local-integer-operation-contract) | [Disturbances](DISTURBANCES.md), [Node processor](NODE_VECTOR_PROCESSOR.md) |
+| Parsing and preflight | [Configuration ownership](#configuration-validation-ownership) | [Validation](CONFIGURATION_VALIDATION.md) |
+| Fields and ray coupling | [Active generic ownership](#active-generic-ownership) | [Spatial fields](SPATIAL_FIELDS.md), [couplings](SPATIAL_COUPLINGS.md), [complete rays](SHARED_RAY_COUPLING.md) |
+| Local field transactions | [Active generic ownership](#active-generic-ownership) | [Local rules](LOCAL_FIELD_RULES.md), [property selection](PROPERTY_COUPLINGS.md) |
+| Clocks and conservation | [Verification scope](#verification-scope) | [Shared delay](SPATIAL_COMPUTATION_DELAY.md), [conservation](LOCAL_CONSERVATION.md) |
+| Quantum integration | [Quantum ownership](#opt-in-quantum-ownership--q-oracle-1), [native events](#shared-native-event-extension) | [Native programs](NATIVE_QUANTUM_EVENTS.md), [origins](WAVE_ORIGINS.md) |
+| Detector admission | [Sampling ownership](#sampling-admission-ownership) | [Detector sampling](DETECTOR_SAMPLING.md) |
+| UI, files and host execution | [Workspace](#configuration-workspace), [output ownership](#generated-output-ownership), [local scheduling](#local-carrier-scheduling-and-prepared-ray-laws) | [Workspace](WORKSPACE.md), [Focus](LOCAL_FOCUS.md), [retention](RETENTION.md) |
+| Repository and changes | [Monorepo](#monorepo-ownership), [dependencies](#dependency-direction), [new features](#adding-physical-features) | [Contribution](../CONTRIBUTING.md), [test expectations](TEST_EXPECTATIONS.md) |
+
+For physical principles and exact model requirements, retain the separate roles
+of [postulates](../POSTULATES.md) and [simulator definitions](../SIMULATOR_DEFINITIONS.md).
+This consolidated reading path does not turn implementation details into new
+physical postulates. Historical sections below retain their named model scopes.
+
+## Node execution ownership
 
 [Integer Node execution](NODE_VECTOR_PROCESSOR.md) owns receive, preparation,
 pending completion and publication in `core/disturbance_node.py` and
