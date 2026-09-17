@@ -463,6 +463,15 @@ issue #169 feature 8 and for the strong binding as a declared table; its
 cost is a full coupling table and long runs, and its first target is the
 lightest cases (a two-nucleon bound state and its absence for two protons).
 
+Status (2026-09-17, Highlights 3.4, binding is a periodic orbit of the
+meeting rule): the ladder is the set of loop-closing contents, the contents
+and phases whose meetings under the ordinary coupling table reproduce the
+rays that entered them so that the pattern repeats, a pattern that does not
+close dispersing; the held-ray binding of feature 8, which holds any
+content, has no ladder. A10 counts the loop-closing contents once feature
+14, binding as a loop, lands (after features 12, 8c, 2b and 8b), and the
+composite spectrum is the list of loops the declared tables close.
+
 ## 13. Confinement from the quark's field rays binding to each other
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.4, 3.5, 3.26) the

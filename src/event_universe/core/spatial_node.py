@@ -36,6 +36,8 @@ from .node_execution import (
 from .node_ports import PortBank
 from .node_services import NodeEvents, add_audit_delta, cycle_timing, port_count
 from .spatial_state import (
+    BIT_DRAW,
+    BIT_PASS,
     BODY_SINK,
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
@@ -1290,22 +1292,44 @@ class SpatialNode(SpatialNodeState):
         tick: int,
         services: SpatialServices,
         clicks: list[dict[str, object]],
+        passes: list[dict[str, object]],
         returns: list[dict[str, object]],
     ) -> Rays:
         """One unsalted draw per arriving ray from the mark's own stream (detector-mark-v1).
 
-        The rays of one Port are drawn in merge-key order. Each ray leaves with its
-        Detector bit set. On 1 the ray continues unchanged and a click is recorded, the
-        measurement. On 0 the ray is returned in this interval (detector-return-v1):
-        the same wave ray reversed on its line, unchanged, leaving through the Port it
-        came in through at the next cycle; a detector_return event records the
-        reversal and no click, because a return is no measurement. The draw reads
-        nothing from the ray.
+        The rays of one Port are taken in merge-key order. A ray that already carries
+        a bit is read first (detector-bit-property-v1): under the mark's coupling for
+        that bit, `pass` (the default), it passes without a draw, unchanged, and a
+        detector_pass event records it with the bit it carries; under `draw` it is
+        drawn like a ray with no bit. A drawn ray leaves with its Detector bit set. On
+        1 the ray continues unchanged and a click is recorded, the measurement. On 0
+        the ray is returned in this interval (detector-return-v1): the same wave ray
+        reversed on its line, unchanged, leaving through the Port it came in through at
+        the next cycle; a detector_return event records the reversal and no click,
+        because a return is no measurement. The draw reads nothing from the ray.
         """
         assert self.detector is not None
         family = services.initial.fields[definition.field].name
         drawn = []
         for ray in sorted(rays, key=ray_merge_key):
+            coupling = {
+                DETECTOR_BIT_1: self.detector.on_bit_1,
+                DETECTOR_BIT_0: self.detector.on_bit_0,
+            }.get(ray.detector, BIT_DRAW)
+            if coupling == BIT_PASS:
+                drawn.append(ray)
+                passes.append(
+                    services.events.message(
+                        "detector_pass",
+                        tick,
+                        self.position,
+                        port=port,
+                        family=family,
+                        amount=ray.amount,
+                        bit=int(ray.detector == DETECTOR_BIT_1),
+                    )
+                )
+                continue
             self.detector_ticket, bit = detector_draw(self.detector_ticket, self.detector)
             if bit:
                 drawn.append(replace(ray, detector=DETECTOR_BIT_1))
@@ -1391,6 +1415,7 @@ class SpatialNode(SpatialNodeState):
         resident_rays = list(self.rays) or [() for _ in services.initial.spatial_fields]
         ray_arrivals = [[0] * 6 for _ in services.initial.spatial_fields]
         clicks: list[dict[str, object]] = []
+        passes: list[dict[str, object]] = []
         returns: list[dict[str, object]] = []
         absorbed = [[0] * field.components for field in services.initial.fields]
         for packet in arrivals:
@@ -1429,7 +1454,7 @@ class SpatialNode(SpatialNodeState):
                 returning = tuple(ray for ray in incoming_rays if not ray.outbound)
                 if self.detector is not None and arriving:
                     arriving = self._draw_arrivals(
-                        arriving, packet.port ^ 1, definition, tick, services, clicks, returns
+                        arriving, packet.port ^ 1, definition, tick, services, clicks, passes, returns
                     )
                 if self.body is not None and (arriving or returning):
                     arriving = self._body_meet(
@@ -1592,9 +1617,11 @@ class SpatialNode(SpatialNodeState):
             packets=len(arrivals),
             received_fields=received_fields,
         )
-        # The clicks of this arrival interval, one per draw of 1, then the returns,
-        # one per draw of 0, each in draw order.
+        # The clicks of this arrival interval, one per draw of 1, then the passes
+        # without a draw, one per arrival read by its bit (detector-bit-property-v1),
+        # then the returns, one per draw of 0, each in arrival order.
         notifications.extend(clicks)
+        notifications.extend(passes)
         notifications.extend(returns)
         if services.decayer is not None:
             self._event(

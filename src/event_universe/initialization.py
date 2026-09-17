@@ -46,6 +46,10 @@ from .core.disturbance_state import (
 )
 from .core.integer import checked_work
 from .core.spatial_state import (
+    BIT_COUPLINGS,
+    BIT_HIGHEST,
+    BIT_NONE,
+    BIT_PASS,
     BODY_SINK,
     CAPTURE_MODES,
     CHARGE_INVARIANT,
@@ -894,17 +898,35 @@ def _seeds(
 
 
 def _detectors(value: object) -> tuple[DetectorMark, ...]:
-    """Detector marks: position, setting and seed, all required; there is no default rate."""
+    """Detector marks: position, setting and seed, all required; there is no default
+    rate. `on_bit_1` and `on_bit_0` (detector-bit-property-v1) say what the mark does
+    with a ray that already carries that bit: `"pass"` (the default: no draw) or
+    `"draw"` (the draw of detector-mark-v1 on that arrival); any other value is
+    rejected."""
     result: list[DetectorMark] = []
     for raw in _array(value, "detectors", MAX_DETECTORS):
-        obj = _object(raw, "detector", {"position", "setting", "seed"}, {"position", "setting", "seed"})
+        obj = _object(
+            raw,
+            "detector",
+            {"position", "setting", "seed", "on_bit_1", "on_bit_0"},
+            {"position", "setting", "seed"},
+        )
         setting = _array(obj["setting"], "detector.setting", 2, 2)
+        couplings = []
+        for key in ("on_bit_1", "on_bit_0"):
+            coupling = obj.get(key, BIT_COUPLINGS[BIT_PASS])
+            if coupling not in BIT_COUPLINGS:
+                raise ValueError(f"detector.{key} must be pass or draw")
+            couplings.append(BIT_COUPLINGS.index(coupling))
         result.append(
             DetectorMark(
                 _address(obj["position"], "detector.position", 0),
                 _integer(setting[0], "detector.setting numerator", 0),
                 _integer(setting[1], "detector.setting denominator", 1),
                 _integer(obj["seed"], "detector.seed", 0),
+                on_bit_1=couplings[0],
+                on_bit_0=couplings[1],
+                bit_keys=int("on_bit_1" in obj or "on_bit_0" in obj),
             )
         )
     return tuple(result)
@@ -1821,7 +1843,10 @@ def _ray_interactions(
 
     A rule with `outputs` is a meeting with N-to-M outputs
     (ray-meeting-conversion-v1): its outputs, not assignments, define the new
-    event rays that replace its participants.
+    event rays that replace its participants. `bit` (detector-bit-property-v1)
+    says which Detector bit the outputs of the meeting inherit: `"highest"` (the
+    default: the highest bit of the inputs, 1 over 0 over none), `"none"`, or
+    `{"of": i}` for input i's bit.
     """
     definitions = ray_participant_definitions(fields, spatial)
     required = {"name", "participants", "invariants"}
@@ -1830,7 +1855,7 @@ def _ray_interactions(
         obj = _object(
             raw,
             "ray interaction",
-            required | {"when", "assignments", "outputs", "ray_delay", "momentum_table"},
+            required | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit"},
             required,
         )
         if "outputs" in obj:
@@ -1846,7 +1871,9 @@ def _ray_interactions(
         else:
             rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
             if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
-                raise ValueError("ray interaction amount, advance, family and charge are read-only")
+                raise ValueError(
+                    "ray interaction amount, advance, family, charge and detector are read-only"
+                )
             # ray-binding-v1: the output-clock delay of the Node that holds the
             # group this rule binds; every arrival there waits it.
             rule = replace(rule, ray_delay=_integer(obj.get("ray_delay", 0), "ray_delay", 0))
@@ -1869,6 +1896,8 @@ def _ray_interactions(
                 rule = replace(rule, momentum_table=tuple(signs))
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
+        if "bit" in obj:
+            rule = replace(rule, bit=_bit_rule(obj["bit"], len(rule.participants)), bit_declared=True)
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
         # wave-ray-family-v1: charge x amount summed over the participants is an
@@ -1884,6 +1913,22 @@ def _ray_interactions(
             rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
+
+
+def _bit_rule(value: object, participants: int) -> int:
+    """The `bit` key of a ray interaction (detector-bit-property-v1): `"highest"`,
+    `"none"` or `{"of": i}` with i one of the rule's roles."""
+    if value == "highest":
+        return BIT_HIGHEST
+    if value == "none":
+        return BIT_NONE
+    if isinstance(value, dict):
+        spec = _object(value, "ray interaction bit", {"of"}, {"of"})
+        source = _integer(spec["of"], "bit.of", 0)
+        if source >= participants:
+            raise ValueError("bit.of exceeds the declared roles")
+        return source
+    raise ValueError('ray interaction bit must be highest, none or {"of": i}')
 
 
 def _ray_meeting(

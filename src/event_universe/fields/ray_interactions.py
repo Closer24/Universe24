@@ -24,6 +24,7 @@ from event_universe.core.spatial_state import (
     Ray,
     Rays,
     SpatialFieldDefinition,
+    inherited_bit,
     ray_layers,
     stamp_event,
     validate_ray_participants,
@@ -37,7 +38,8 @@ Pushes = list[tuple[int, int, int]]
 
 def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
     """The RAY_PROPERTIES view of one ray: its family is the index of its spatial field
-    and its charge per quantum is the family's (wave-ray-family-v1)."""
+    and its charge per quantum is the family's (wave-ray-family-v1); its Detector bit
+    is the one it carries, as stored (detector-bit-property-v1)."""
     return (
         pack((ray.amount,)),
         pack(definition.headings[ray.heading]),
@@ -46,6 +48,7 @@ def _view(ray: Ray, definition: SpatialFieldDefinition, family: int) -> Values:
         pack((ray.interaction_delay,)),
         pack((family,)),
         pack((definition.charge,)),
+        pack((ray.detector,)),
     )
 
 
@@ -55,6 +58,8 @@ def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, f
         raise ValueError("ray coupling amount and advance are read-only")
     if unpack(values[5]) != (family,) or unpack(values[6]) != (definition.charge,):
         raise ValueError("ray coupling family and charge are read-only")
+    if unpack(values[7]) != (ray.detector,):
+        raise ValueError("ray coupling detector is read-only")
     vector = unpack(values[1])
     if vector == definition.headings[ray.heading]:
         heading = ray.heading
@@ -72,14 +77,14 @@ def _replacement(ray: Ray, values: Values, definition: SpatialFieldDefinition, f
     )
 
 
-def _events(
-    group: tuple[tuple[Ray, SpatialFieldDefinition], ...],
-) -> Rays:
+def _events(group: tuple[tuple[Ray, SpatialFieldDefinition], ...], detector: int) -> Rays:
     """The events of one interaction: its outputs stamped together with the mask of the
-    Ports they leave through and the amount per Port, each a fresh trajectory."""
+    Ports they leave through and the amount per Port, each a fresh trajectory carrying
+    the Detector bit the meeting's inputs hand down (detector-bit-property-v1)."""
     return stamp_event(
         tuple(ray for ray, _ in group),
         tuple(definition.headings[ray.heading] for ray, definition in group),
+        detector,
     )
 
 
@@ -112,7 +117,9 @@ def _convert(
     """The outputs of a meeting with declared outputs, as (field, ray) pairs stamped as
     the events of the meeting, or None when the guard is false. The stock of every
     family is exact across the event: the sum over the inputs of one field equals the
-    sum over its outputs, beside the rule's own declared invariants."""
+    sum over its outputs, beside the rule's own declared invariants. The outputs
+    carry the Detector bit the inputs hand down by the rule's `bit`
+    (detector-bit-property-v1), whatever the view of the outputs says of it."""
     before = tuple(_view(ray, definitions[kind], kind) for kind, ray in inputs)
     converted = convert_values(rule, before, RAY_PROPERTIES, meter, costs)
     if converted is None:
@@ -157,6 +164,7 @@ def _convert(
     stamped = stamp_event(
         tuple(ray for _, ray in products),
         tuple(definitions[kind].headings[ray.heading] for kind, ray in products),
+        inherited_bit(tuple(ray.detector for _, ray in inputs), rule.bit),
     )
     return tuple((kind, ray) for (kind, _), ray in zip(products, stamped, strict=True))
 
@@ -277,7 +285,10 @@ def _meet(
                 (_replacement(rays[index][slot], values, definitions[index], index), definitions[index])
                 for (index, slot), values in zip((owners[o] for o in group), after, strict=True)
             )
-            for owner, replacement in zip(group, _events(outputs), strict=True):
+            detector = inherited_bit(
+                tuple(rays[owners[o][0]][owners[o][1]].detector for o in group), rule.bit
+            )
+            for owner, replacement in zip(group, _events(outputs, detector), strict=True):
                 index, slot = owners[owner]
                 validate_rays((replacement,), definitions[index], fields[definitions[index].field])
                 candidate[index][slot] = replacement
@@ -308,10 +319,11 @@ def apply_ray_interactions(
     unchanged. The layers are derived once by the caller or here from the rules.
     A rule with declared outputs (ray-meeting-conversion-v1) replaces its
     participants by its outputs, new event rays at this Node, with every family's
-    stock exact; nothing is left at the Node. `bound`, when given, collects the
-    `ray_delay` of every binding rule that fired (ray-binding-v1), and `pushes`
-    the momentum every field ray a binding rule's table met gave the group
-    (bound-group-motion-v1).
+    stock exact; nothing is left at the Node. The outputs of every group that
+    fires carry the Detector bit its inputs hand down (detector-bit-property-v1).
+    `bound`, when given, collects the `ray_delay` of every binding rule that fired
+    (ray-binding-v1), and `pushes` the momentum every field ray a binding rule's
+    table met gave the group (bound-group-motion-v1).
     """
     if not rules:
         return rays

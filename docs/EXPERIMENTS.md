@@ -563,7 +563,10 @@ states "exactly" and means integer equality at every tick.
   above N), so the ladder is a statement about the real N only, and the
   smallest k found there is the electron's rung; k = 1 does not fit since
   206.768 28 is not an integer, so the electron is not the first rung.
-- **Status.** planned.
+- **Status.** planned; after feature 14, binding as a loop (Highlights 3.4,
+  2026-09-17): the rungs it counts are the contents that close a loop under
+  the declared tables, which the held-ray binding of feature 8, holding any
+  content, cannot show.
 
 ### A11. The wide-phase run at the real N
 
@@ -889,7 +892,9 @@ states "exactly" and means integer equality at every tick.
 - **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
 - **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a board long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
 - **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a lattice anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
-- **Status:** planned (after feature 8).
+- **Status:** planned (after feature 8; after feature 14, binding as a loop,
+  Highlights 3.4, 2026-09-17, the moving group's motion being its corners
+  shifting and its clock the period of its loop).
 
 ## C. Order
 

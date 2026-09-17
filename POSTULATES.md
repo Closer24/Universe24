@@ -1007,6 +1007,31 @@ Binding is the interaction whose result is zero events: the rays stay at the
 node, interact again every interval, and their phase advances once per
 interval.
 
+Addition (model owner, 2026-09-17; Highlights 3.4, "binding is a periodic
+orbit of the meeting rule"): a ray never stops, and "bound" does not mean
+"resident", it means "back at the same place in the same state"; a bound
+group is a set of rays whose meetings, under the ordinary coupling table,
+reproduce the rays that entered them: the outputs leave, walk their Links,
+meet again, and the meeting gives the same amounts, the same phases modulo
+the circle and the same headings, so the pattern repeats forever; a
+pattern whose meeting does not close disperses. There is no binding rule:
+a bound group is a fixed point of the meeting table over a loop, and the
+only declared thing is the table. On the cubic lattice the smallest loop
+is a unit square of four nodes with rays circulating both ways, each
+corner meeting every interval two rays that leave through each other's
+Ports; a group therefore lives on a ring of nodes, not at one node, its
+size is the ring, its clock is the period of the loop and its mass is its
+content (Highlights 3.28); its field is released by rays in motion, five
+headings each, and its motion as a whole comes from its loop, the corners
+shifting, not from a register on a node. The ladder of hypothesis 12 is
+the set of contents and phases that close a loop under the table, which
+experiment A10 counts. The held-ray binding of feature 8 (a rule with
+delay 1 and no outputs, and its ray_delay wait), which holds any content
+and therefore has no ladder, and the register-driven motion of feature 8c
+are the interim forms, superseded by feature 14, binding as a loop, after
+features 12, 8c, 2b and 8b; the sentences of this section that speak of
+rays that stay at the node describe the interim form.
+
 Every node carries one bit, Detector or not; the mark is bounded node
 metadata (bit, setting, ticket seed), not a record and not an external
 device, and Detector behavior is how a node behaves when the bit is set. A
