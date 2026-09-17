@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
     DECAY_DRAW,
+    DENSE_FIELD,
     DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
@@ -68,10 +69,18 @@ def run_initialization(
     frame_stride: int = 1,
     observer: Path | None = None,
     node_workers: int = 1,
+    dense_field: bool | None = None,
 ) -> Path:
-    """Preserve input, events, final state, and conservation evidence."""
+    """Preserve input, events, final state, and conservation evidence.
+
+    `dense_field` overrides the world's own `dense_field` key (dense-field-v1)
+    when given; the saved `initialization.json` is the input as read, and the run
+    record names the mode when it is on.
+    """
     source = initialization.read_bytes()
     document = parse_json_document(source)
+    if dense_field is not None and isinstance(document, dict):
+        document = {**document, "dense_field": dense_field}
     validate_observer_selection(document, external=observer is not None)
     prepared = (
         prepare_initialization(document)
@@ -298,6 +307,11 @@ def _execute_run(
         # Polarization (ray-polarization-v1): recorded only when the world declares
         # the property anywhere, so the record of every other world is unchanged.
         metadata["ray_polarization"] = RAY_POLARIZATION_PROPERTY
+    if initial.dense_field:
+        # The dense mode (dense-field-v1): recorded only when on, so the record of
+        # every other world is byte for byte the same; a dense region writes no
+        # per-Node events, its record being its totals per tick.
+        metadata["dense_field"] = DENSE_FIELD
     spreading = spreading_field_names(initial.fields, initial.spatial_fields)
     if spreading:
         # Field spreading (field-spreading-v1): recorded only when a family declares
@@ -437,6 +451,11 @@ def main() -> None:
         default=1,
         help="Isolated Python interpreters used for per-Node planning (1-64)",
     )
+    parser.add_argument(
+        "--dense-field",
+        action="store_true",
+        help="Cycle the board's pure-field Nodes as one vectorized step (dense-field-v1)",
+    )
     args = parser.parse_args()
     try:
         artifact = run_initialization(
@@ -447,6 +466,7 @@ def main() -> None:
             frame_stride=args.frame_stride,
             observer=args.observer,
             node_workers=args.node_workers,
+            dense_field=True if args.dense_field else None,
         )
     except (ValueError, OSError) as error:
         parser.exit(1, f"Run failed: {error}\n")

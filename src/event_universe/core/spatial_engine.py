@@ -1,8 +1,9 @@
 """Fixed-clock ownership for configured spatial fields, separate from carriers."""
 
-from collections.abc import Callable, Mapping
+from collections.abc import Callable, Iterator, Mapping
+from contextlib import contextmanager
 from dataclasses import replace
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Protocol
 
 if TYPE_CHECKING:
     from .disturbance_node import DisturbanceNode
@@ -70,6 +71,32 @@ EventSink = Callable[[dict[str, object]], None]
 RecordCommit = Callable[[Address3, tuple[DisturbanceRecord | None, ...]], None]
 
 
+class DenseRegion(Protocol):
+    """The dense mode's owner of a board's pure-field Nodes (dense-field-v1), a host
+    scheduling component composed outside the core (`event_universe.dense_field`):
+    it cycles the Nodes it owns as one step, takes over the packets addressed to
+    them, hands the engine the packets its Nodes send to the engine's Nodes, and
+    reads back as Node state for the totals and the snapshot. The physics is the
+    spatial law's; the engine only schedules around it."""
+
+    def cycle(self, tick: int) -> None: ...
+
+    def deliver(
+        self,
+        tick: int,
+        ready: dict[Address3, list[SpatialPacket]],
+        residents: Mapping[Address3, DisturbanceNode] | None,
+    ) -> tuple[dict[Address3, list[SpatialPacket]], list[SpatialPacket]]: ...
+
+    def add_totals(self, result: list[list[int]]) -> None: ...
+
+    def add_charge_totals(self, result: dict[str, int]) -> None: ...
+
+    def materialized_nodes(self, nodes: dict[Address3, SpatialNode]) -> dict[Address3, SpatialNode]: ...
+
+    def active_count(self) -> int: ...
+
+
 class SpatialEngine:
     @property
     def observer(self) -> EventSink | None:
@@ -118,6 +145,9 @@ class SpatialEngine:
         self._bodies = {body.position: body for body in initial.external_bodies}
         # Host scheduling index only: retain physical registers in self.nodes.
         self._active: set[Address3] = set()
+        # The dense mode's region (dense-field-v1), attached by the composition
+        # when the world declares `dense_field`; None cycles every Node here.
+        self.dense: DenseRegion | None = None
         self._field_tick = -1
         self.links: PortTable[SpatialPacket] = PortTable((None,) * 6)
         self.sources = [[0] * field.components for field in initial.fields]
@@ -289,6 +319,37 @@ class SpatialEngine:
                     self._at(position).advance(tick, residents.get(position), self._services)
                 finally:
                     self.links.refresh(position)
+        if self.dense is not None:
+            # The pure-field Nodes, as one step (dense-field-v1); their departures
+            # cross to the engine's Nodes at the delivery, as packets.
+            self.dense.cycle(tick)
+
+    @contextmanager
+    def materialized(self) -> Iterator[None]:
+        """Read the dense region's Nodes as Node state (dense-field-v1): within the
+        block `nodes` also holds the Nodes the region owns, each with its resident
+        rays, registers, arrivals and cost, so a snapshot or an inventory view
+        reads every Node the same way; the engine's own Nodes are untouched."""
+        if self.dense is None:
+            yield
+            return
+        saved = self.nodes
+        self.nodes = self.dense.materialized_nodes(saved)
+        try:
+            yield
+        finally:
+            self.nodes = saved
+
+    def _clear_link(self, packet: SpatialPacket) -> None:
+        """Take one delivered packet off its Link; a packet the dense region handed
+        over never lay on a Link and is left alone."""
+        try:
+            links = list(self.links[packet.origin])
+        except KeyError:
+            return
+        if links[packet.port] is packet:
+            links[packet.port] = None
+            self.links[packet.origin] = tuple(links)
 
     def _escape(self, packet: SpatialPacket, tick: int) -> None:
         """No receiving node exists outside; terminal stock escapes without exterior decay.
@@ -357,6 +418,12 @@ class SpatialEngine:
                         self._escape(packet, tick)
                     else:
                         ready.setdefault(target, []).append(packet)
+        if self.dense is not None:
+            # The region takes the packets addressed to its Nodes and hands over
+            # what its Nodes send to the engine's (dense-field-v1).
+            ready, absorbed = self.dense.deliver(tick, ready, residents)
+            for packet in absorbed:
+                self._clear_link(packet)
         for position, arrivals in sorted(ready.items()):
             notifications = self._at(position).receive(
                 tuple(arrivals),
@@ -365,9 +432,7 @@ class SpatialEngine:
                 carrier=None if residents is None else residents.get(position),
             )
             for packet in arrivals:
-                links = list(self.links[packet.origin])
-                links[packet.port] = None
-                self.links[packet.origin] = tuple(links)
+                self._clear_link(packet)
             self._notify(notifications)
 
     def freeze_samples(self, residents: Mapping[Address3, DisturbanceNode]) -> None:
@@ -446,6 +511,10 @@ class SpatialEngine:
                                     ray_momentum(packet.rays[index], definition)
                                 ):
                                     result[definition.momentum_field][axis] += value
+        if self.dense is not None:
+            # The content the dense region owns (dense-field-v1): its resident rays,
+            # its registers' whole quanta and what is in flight between its Nodes.
+            self.dense.add_totals(result)
         return result
 
     def charge_totals(self) -> dict[str, int]:
@@ -474,6 +543,8 @@ class SpatialEngine:
                     if body.polarizer is not None and body.polarizer.family == index:
                         total = checked_work(total + checked_work(held_stock(body) * definition.charge))
             result[self.initial.fields[definition.field].name] = total
+        if self.dense is not None:
+            self.dense.add_charge_totals(result)
         return result
 
     def _located_bodies(self) -> list[ExternalBody]:
@@ -616,6 +687,10 @@ class SpatialEngine:
         return (total[0], total[1], total[2])
 
     def snapshot(self) -> dict[str, object]:
+        with self.materialized():
+            return self._snapshot()
+
+    def _snapshot(self) -> dict[str, object]:
         # Nothing at a Node names a bound group (loop-binding-v1, Highlights 3.4): a
         # group is read from the record by a reader, not listed here.
         result: dict[str, object] = {

@@ -1294,6 +1294,43 @@ rejected at initialization. The runner records `field_spreading:
 included. `test_field_spreading.py`
 ([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
 
+### The dense mode (`dense-field-v1`)
+
+A host scheduling choice (performance, 2026-09-17), not a rule: with
+`dense_field: true` in the world, the
+pure-field Nodes of the board, those holding nothing but outbound content of
+spreading families and their remainder registers, are cycled by the host as
+one vectorized step over integer arrays (`event_universe/dense_field.py`,
+numpy int64, outside the core; the engine schedules around it through the
+`DenseRegion` protocol of `core/spatial_engine.py`) that applies this rule to
+every such Node at once with the same integers: the split of each arriving
+heading's content in whole quanta and shares, the registers per sign and Port
+with their phases combined by the coherence rule in the engine's order, the
+releases at one quantum, the departures walking one Link with the family's
+rate, the open boundary's escapes per family and sign, the Detector bit of the
+whole on every departure. A Node holding anything else (a Detector mark, an
+external body, a record, a ray of another family, a returning ray, an
+event-carrying ray) is the engine's, and ownership is decided at every
+delivery for the Nodes that receive something: a ray leaving a dense Node
+toward an engine Node is handed over as an ordinary packet of merged rays, a
+packet leaving an engine Node into the region is absorbed into its arrays,
+and the registers move with the Node. The region's Nodes read back as Node
+state for the totals, the snapshot and the inventory view, so the world ledger
+and `state.json` are byte for byte the engine's ([measured before
+adoption](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17));
+a dense Node publishes no per-Node event (no `field_spread`, no
+`spatial_cycle`, no `spatial_escaped` of its own), the record of a dense
+region being its totals per tick, so the mode is not for records that need
+per-Node field events. The prototype admits a world with a spreading family
+whose spatial fields are all ray fields, without the local conservation audit
+(`conservation`, which reads per-Node events), without polarization and
+without a ray interaction two of whose participants can be spreading families
+(a coupling on field rays inside the region), one Node worker; the runner's
+`--dense-field` flag is the same switch, and the run record carries
+`dense_field: "dense-field-v1"` only when the mode is on.
+`test_dense_field.py` ([expectations](TEST_EXPECTATIONS.md#the-dense-mode))
+is the test.
+
 ### Polarization (`ray-polarization-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.26, "Forces and polarization are

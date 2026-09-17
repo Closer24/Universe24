@@ -184,6 +184,157 @@ whose releases carry many quanta per ray (a body of amount 4096 at
 `release: [1, 2048]` releases 2 per heading, still below the table's total
 11) is where the split itself acts, and it is not measured here.
 
+## The dense mode measured before adoption (2026-09-17)
+
+The dense numpy mode the plan above schedules for boards that a field fills,
+measured before adoption (`dense-field-v1`; [the dense
+mode](SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1)). The pure-field
+Nodes of a board, those holding nothing but outbound content of spreading
+families and their remainder registers, are cycled as one vectorized step
+over integer arrays (`event_universe/dense_field.py`, numpy int64, outside
+the core, behind the `DenseRegion` protocol of `core/spatial_engine.py`)
+that applies the spread and remainder rule of `field-spreading-v1` and
+`field-remainder-v1` to every such Node at once with the same integers: the
+split per arriving heading into whole quanta and shares, the registers per
+source sign and Port with their phases combined by the coherence rule in the
+engine's order (Port by Port; tabulated over held, held phase, share and
+share phase when the table fits, computed as the engine's `_phase_of_sum`
+otherwise), the releases at one quantum, the departures walking one Link
+with the family's rate, the open boundary's escapes per family and sign, the
+Detector bit of the whole on every departure, and the plan cost the spatial
+law would meter (received packets, resident rays, departures, sending
+Ports, the registers). A Node holding anything else (a Detector mark, an
+external body, a record, a ray of another family, a returning ray, an
+event-carrying ray) is the engine's, and ownership is decided at every
+delivery for the Nodes that receive something: a ray leaving a dense Node
+toward an engine Node is handed over as an ordinary packet of merged rays,
+a packet leaving an engine Node into the region is absorbed into the arrays,
+and the registers move with the Node. The region's Nodes read back as Node
+state for the totals, the snapshot and the inventory view; a dense Node
+publishes no per-Node event, the record of a dense region being its totals
+per tick, so the mode is not for records that need per-Node field events.
+The acceptance test is byte identity of `state.json` and of the world ledger.
+
+Measured on Linux with Python 3.14.0rc2 and numpy 2.5.3 on 2026-09-17, one
+Node worker, Focus on (the default), single process, the engine alone on the
+change with `dense_field` off (source fingerprint
+`0fab8a444af6a15dbb6e7a2ca630a984c046f952ecc30b1c84bcc681a38ba02e`) and with
+it on; the engine alone on `9d477f4` before the change (source fingerprint
+`aec35d9ec38c9c3778a3e2ef3966d996d0ffcadfb547c4626defa526b754d705`) gives
+the same `state.json` and ledger digests on every world below that was
+replayed on it (the field-spreading worlds, the screen loop, pp_r16), so the
+engine's path is unchanged by the hooks. The worlds: the boards of
+`tests/test_field_spreading.py` (13^3 open, the lamps emitting `light` with
+the table [6, 1, 1, 1, 1, 1], written without their `conservation` key,
+which the mode rejects: `single` for 4 and 24 ticks, `superposition`,
+`cancelled`, `stream`, `sign`, `returned`, `source` for 12 and 40 ticks,
+`resident`), `examples/nature/screen_loop.json` for 48 ticks (E9: the ring's
+four corners are records, the seven marks Detectors that return every
+quantum), and `examples/nature/a5_static/pp_r8.json` for its 48 ticks and
+`pp_r16.json` for 32 (two bodies at rest radiating 4096 quanta per heading
+per interval, the field filling the board: every Node of the 19 x 11 x 11
+and 27 x 11 x 11 boards cycles from tick 11 on).
+
+| Input | Ticks | Node cycles | Step wall, engine | Step wall, dense | ms per Node cycle, engine | Dense | Records identical |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Field spreading, single | 4 | 26 | 0.006 s | 0.037 s | 0.217 | 1.434 | yes |
+| Field spreading, stream | 12 | 47 | 0.014 s | 0.084 s | 0.304 | 1.786 | yes |
+| Field spreading, source | 12 | 205 | 0.071 s | 0.177 s | 0.347 | 0.865 | yes |
+| Field spreading, resident | 4 | 52 | 0.021 s | 0.057 s | 0.408 | 1.088 | yes |
+| Field spreading, source | 40 | 1847 | 0.414 s | 0.664 s | 0.224 | 0.360 | yes |
+| Screen loop | 48 | 10900 | 4.391 s | 0.916 s | 0.403 | 0.084 | yes |
+| A5s pp_r8 | 48 | 94355 | 219.7 s | 1.833 s | 2.328 | 0.0194 | yes |
+| A5s pp_r16 | 32 | 77683 | 152.6 s | 1.631 s | 1.964 | 0.0210 | yes |
+
+Node cycles is the sum over the ticks of the engine's active Nodes after
+each step, the same count in both modes (a Node with content cycles once per
+interval whoever cycles it); ms per Node cycle is the step wall over that
+count. Step wall is `Simulation.step` summed over the ticks, the median of
+three runs in one process per mode (one run for the engine on the two A5s
+worlds, 220 and 153 seconds each), the three within 4% of each other. The
+other field-spreading worlds are identical as well, at 0.003 s against
+0.013 s (`superposition`, `cancelled`), 0.009 against 0.024 (`sign`), 0.004
+against 0.029 (`returned`, where no Node is ever the region's: every Node
+with content holds the lamp, the mark or the returned quantum) and 0.019
+against 0.123 (`single`, 24 ticks). At the full board the engine spends 5.50
+s per tick on pp_r8 (2299 Nodes, two spreading families) and 6.19 s on
+pp_r16 (3267 Nodes) against 38.0 and 51.6 ms for the region, 145 and 120
+times shorter per tick; the whole runner call, files included, takes 245.8
+and 170.8 s against 3.06 and 3.10 s. On the small boards the mode is slower,
+by two to seven times: its step costs a fixed 3 to 6 ms per tick over the
+whole 13^3 board whether the field fills it or not (the arrays are the
+board's, not the active Nodes'), against the engine's fraction of a
+millisecond for a handful of active Nodes, which is why the mode is a
+switch and not the default.
+
+Records identical means equal SHA-256 digests of `state.json` (every Node's
+rays, registers and phases, delivered amounts, arrival mask and cost) and of
+the `audit` list of `run.json` (the world ledger of every completed tick),
+equal `final_totals`, `source_totals`, `escaped_totals`,
+`external_body_totals` and `external_bodies` (every body's momentum,
+accumulators and sinks), and the same Detector and body events in the same
+order: the 16 clicks and 4 passes of the screen loop, the 1022
+`external_body_absorbed` records of pp_r8 and the 396 of pp_r16 (tick, body,
+Port, family, amount, momentum), the 12 returns and 10 `field_returned` of
+the 40-tick source world. `events.jsonl` differs by construction: with the
+mode on, pp_r8 records 96 `spatial_cycle`, 94 `spatial_received` and 576
+`spatial_sent` events (the two bodies' Nodes) against 92058, 94353 and
+547940, and no `field_spread` or `spatial_escaped` of a dense Node (161738
+and 40066 in the engine's record); the region's cycles are in the ledger's
+current, sourced and escaped lines and nowhere else. `run.json` also differs
+in `elapsed_seconds`, `execution` (the plan-reuse and bank counters) and
+`source_sha256`. The isolated test (`tests/test_dense_field.py`) pins one
+cycle against `spread_content`, the hand-over both ways on the source world
+and the identity on the field-spreading worlds through the runner.
+
+Projection for A5s's steady state. The step's cost is the board's, not
+the active Nodes': 38.0 ms per tick over 2299 Nodes on pp_r8 and 51.6 over
+3267 on pp_r16 (16.5 and 15.8 microseconds per Node and tick, two spreading
+families), and, timed once on the same two bodies at r = 16 on larger boards
+(the region alone cycling, the engine's two body Nodes beside it, 8 and 16
+ticks, no runner), 2.23 s per tick over 59 x 43 x 43 = 109,091 Nodes (20.4
+microseconds per Node and tick) and 8.86 s over 81 x 65 x 65 = 342,225
+Nodes, the r = 16 board with the boundary 2r away of the mean-field entry
+(25.9 microseconds; the larger boards' arrays no longer fit the caches, and
+the second timing ran beside an engine run on another core). At the
+measured 26 microseconds per Node and tick, the mean-field entry's steady
+state ([EXPERIMENTS](EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest):
+342 k Nodes x 354 ticks at r = 16, 1.14 M x 866 at r = 24, at the engine's
+2.3 ms per Node cycle 78 hours and 26 days) costs about 3,150 s, 52
+minutes, at r = 16 and about 25,700 s, 7.1 hours, at r = 24, ninety times
+shorter, the r = 24 figure a projection from the r = 16 board (the 1.14 M
+board was not run; the prototype's int64 arrays hold about 4 KB per Node
+and spreading family, 4.6 GB there before the step's temporaries, which
+narrower storage would quarter). The step itself is one Python loop over
+six Ports of whole-board numpy operations per family; a compaction to the
+active Nodes, narrower storage or a compiled kernel would each shorten it
+further and none is needed for the acceptance test.
+
+Adoption: behind the world key `dense_field: true` or the runner's
+`--dense-field`, default off, the run record carrying `dense_field:
+"dense-field-v1"` when on; a world without the key runs and records byte
+for byte as before. The prototype admits a world with a spreading family
+whose spatial fields are all ray fields, without the local conservation
+audit (`conservation`, which reads per-Node events), without polarization
+(`ray-polarization-v1`; the region carries unpolarized content), without a
+ray interaction two of whose participants can be spreading families (a
+coupling on field rays inside the region), and one Node worker; the parser
+names the reason. Every other Node kind (a mark, a body, a lamp, a ray of
+another family, a returning quantum) is the engine's and crosses the region
+by packets, so the screen loop and the electron worlds run under the mode
+with the engine's Nodes where the physics needs them.
+
+Reproduction, without a committed script: write the worlds (the
+field-spreading builders with their `conservation` key removed; the two
+A5s files as they are; `screen_loop.json` as it is), each once as it is and
+once with `"dense_field": true`; in one process per mode call
+`run_initialization(path, output, ticks=N)` and hash `state.json` and the
+`audit` list of `run.json` as described, reading the events for the clicks
+and the absorptions; then build `prepare_initialization(document).initial`
+and time `Simulation(initial).step()` over N ticks three times per mode,
+reading `len(world._spatial._active)` after each step, and once on the two
+larger A5s boards.
+
 ## Ray-event engine: the tick leaves the spatial plan key (2026-09-17)
 
 The first of the two levers scheduled above. Measured on Linux with Python

@@ -34,6 +34,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
 | `test_decay_draw.py` | 1 | 1.05 | Issue #169 feature 13: a decaying group draws at its corner meetings; a rule with outputs that declares `draw: [n, d]` and `seed` draws once per meeting of its participants from the Node's ticket stream, the unsalted draw of `detector-mark-v1`, fires on 1 and yields to the next rule on 0, the ring surviving with the law (1 - n/d)^k over k meetings, the draws recorded and the tickets consumed equal to the meetings, a world without `draw` never calling the ticket rule (`decay-draw-v1`) |
+| `test_dense_field.py` | 4 | 1.0 | The dense mode for boards that a field fills (`dense-field-v1`, [performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17)): the pure-field Nodes cycled as one vectorized step, one split step equal to `spread_content` (the registers, the releases, the phases, the bit), the hand-over of rays between the region and the engine's Nodes both ways, the same `state.json` and ledger as the engine alone, the unsupported worlds rejected, pinned below |
 | `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
@@ -3284,3 +3285,61 @@ ticks 5 and 6, (-1357, 24, 0) after tick 8, (-8, -1355, 0) after tick 12. The
 bodies' momentum: (0, 0, 0) after ticks 5 and 6, (1197, 3, 0) after tick 8,
 (1169, 2398, 0) after tick 12, the nucleus's final momentum; its sink 17546
 of light at tick 12; the nucleus at (3, 3, 3) at every tick.
+
+## The dense mode
+
+`tests/test_dense_field.py` is the isolated test of the dense mode for boards
+that a field fills (`dense_field: true`, `dense-field-v1`;
+[performance](PERFORMANCE.md#the-dense-mode-measured-before-adoption-2026-09-17),
+[field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)),
+pinned here on 2026-09-17 before its first run. It builds the boards of the
+field spreading test (the same builders, loaded as data) with `dense_field`
+on and without the local audit, which the mode rejects. Four cases:
+
+- `split`: one cycle of the region at (6,7,7) against `spread_content` on the
+  same rays and registers, the departures read from the arrays as (Port, sign,
+  amount, phase, bit) rows and the eighteen registers with their phases. The
+  single ray of 12 at phase 6 on +X leaves 6 forward and 1 on each other
+  heading at phase 6 and fills the sign-0 block (6, 1, 1, 1, 1, 1) at phase 6;
+  two rays of 3 of opposite sign on +X leave 1 forward each (sign -1 and sign
+  1, phase 0) and fill both blocks (7, 3, 3, 3, 3, 3); one quantum on a forward
+  register of 10 releases one forward at phase 0 and leaves (5, 1, 1, 1, 1, 1);
+  and a mixed Node (7 at phase 1 with bit 1 on +X, 5 at phase 5 on -Y, 9 at
+  phase 2 of sign 1 and 2 at phase 6 of sign -1 on +Z, the registers 1 to 18 at
+  phases 3 x slot mod 8) gives the departures, the registers and the phases
+  `spread_content` gives, every departure carrying bit 1 (the highest), the
+  stored quanta the difference of the blocks over 11 and the (1, +Z) register
+  changed. The region cycles one Node. A packet from an engine Node with three
+  rays of 4 on +X at phases 1, 2 and 3 (one sign): the third ray is kept whole
+  beside the two layers of the arrays, the Node reads back with the three rays
+  resident, the mask of the -X face and one packet received, and the cycle
+  spreads the twelve at the phase of the sum, 2, as `spread_content` does,
+  the kept ray consumed.
+- `boundary`: the `source` world of the field spreading test (a record of
+  four electrons at (5,7,7) releasing light of sign -1, one per heading, every
+  interval; a Detector at (8,7,7) with setting [0, 1]), twelve ticks. The
+  Detector's Node, the record's Node and the Nodes a returned quantum walks
+  back through are the engine's, every other Node the region's: (7,7,7) is
+  the engine's after ticks 7 and 11 and (6,7,7) after 8 and 12, both the
+  region's after ticks 1 to 6, 9 and 10 ((7,7,7) goes back to the region when
+  it next receives content, one tick later than (6,7,7) does). The same
+  integers as the engine alone: light 6 t per tick less 1 from tick 10, the
+  source line equal, nothing escaped, the ledger balanced; the returns at ticks
+  6 and 10, the `field_returned` at tick 9 at (5,7,7) by `electron`, not
+  restored; after tick 12 (6,7,7) holds the twelfth release (heading 0, 1,
+  phase 0, sign -1) and the second returned quantum (heading 1, 1, outbound 0,
+  bit 0, sign -1), (7,7,7) one quantum of the release and the registers of sign
+  -1 (8, 5, 5, 5, 5, 5), (8,7,7) nothing; the engine records `field_spread` at
+  (7,7,7) at ticks 7 and 11 only, the region's cycles there recording nothing.
+- `identity`: the `single` world for four ticks and the `source` world for
+  twelve, run through the runner with the engine alone and with the mode:
+  equal `state.json` digests, equal `audit` lists and final totals, the run
+  record `dense_field: "dense-field-v1"` only when on, `events.jsonl` different
+  (a dense Node writes no per-Node events); the runner's `--dense-field` flag
+  gives the same `state.json` as the world's key.
+- `rejected`: with `dense_field` on, a world with `conservation` (the local
+  audit), a world without a spreading family, a spatial field without ray
+  transport, a family with `polarization_bits` and a ray interaction whose two
+  participants are the spreading family are rejected at initialization with
+  the named reason; `node_workers` 2 is rejected at the simulation; a world
+  without the key runs the engine alone (`dense_field` false, no region).
