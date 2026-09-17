@@ -467,7 +467,8 @@ dark at tick 48; light released 564, 112 escaped, 452 in the world (376 of
 them in the registers of 153 Node-and-sign blocks, 76 on rays), electron 8,
 momentum (0, 0, 0), every ledger line balanced,
 `conserved_at_every_completed_tick` true. The same world run for 240 ticks
-outside the record (`ticks` 240, exploratory, not fingerprinted here)
+(the runner's `ticks` override, the same two fingerprints, registered in E6
+at commit `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`, 33 s)
 clicks all seven marks, symmetric about the axis and the on-axis mark most:
 (7, 5, 5) 27 times from tick 19, (7, 4, 5) and (7, 6, 5) 6 each from tick
 82, (7, 3, 5) and (7, 7, 5) 3 each from tick 122, (7, 2, 5) and (7, 8, 5)
