@@ -12,11 +12,15 @@ view's first picture,
 [below](#the-screen-the-field-of-an-electron-at-rest-on-seven-marks), and
 (F) the ring, an electron at rest as a loop of rays on a unit square, with
 the control that disperses, the design world of feature 14,
-[below](#the-ring-an-electron-at-rest-as-a-loop). They are demonstrations under
+[below](#the-ring-an-electron-at-rest-as-a-loop), and (G) the worlds of
+experiment A5, two charged rays passing each other through their spreading
+fields, in `a5_coulomb/`,
+[below](#a5-coulombs-law-through-the-spreading-field). (A) to (F) are demonstrations under
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
-((E) in its section here), never repeated as tests. Nothing here is a law of nature; every number is a
+((E) in its section here), never repeated as tests, and (G) is a confrontation
+run of section A of the register. Nothing here is a law of nature; every number is a
 declaration written before the run.
 
 The rays are selected from the [catalog of nature](../../docs/CATALOG.md)
@@ -611,3 +615,115 @@ python tools/ray_viewer/render_gif.py runs/ring/runs.json --output runs/ring.gif
 The same four lines with `ring_open` render the control. The record stays
 outside the tree; the register entry E5 is planned and carries no
 fingerprint until the feature lands.
+
+## A5: Coulomb's law through the spreading field
+
+`a5_coulomb/` holds the worlds of experiment
+[A5](../../docs/EXPERIMENTS.md#a5-electron-electron-repulsion-through-released-fields)
+of the register, run on 2026-09-17 on `main` with feature 12b
+(`field-remainder-v1`): two charged rays on antiparallel lines along x at
+impact parameter b = 4, 6, 8, 12 and 16, each releasing its field `light`,
+which spreads by the catalog's table, and each turned by the other's field
+through the catalog's `electron_field_turn` as a momentum table
+([a free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)).
+Thirteen world files, written by `make_worlds.py` beside them and never by
+hand: `ee_b{4,6,8,12,16}.json` (electron-electron), `ep_b{4,6,8,12,16}.json`
+(electron-positron), `nn_b4.json` (the neutral control) and
+`ee_b{4,16}_nospread.json` (the check without `spread`, the E6 geometry).
+`analyze.py` reads the records and evaluates the criterion clause by clause;
+`record.json` is its small committed record, which `tests/test_a5_coulomb.py`
+reads. The measured outcome is in the register's entry and summarized
+[below](#what-the-runs-show).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| An electron at speed c, momentum p along x | A ray of the family `electron_a` (or `electron_b`), rest rate 1 (`kerengonen.phase_advance` 1), charge -3 (thirds of e), amount 64, emitted once by a lamp at the board's edge along +X (or -X); its momentum is amount x heading, (64, 0, 0), the default of its momentum register | [Wave-ray families](../../docs/SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1); [a free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1); Highlights 3.28 |
+| A positron | The same ray with `charge` 3 (`electron_b` in `ep_*.json`) | catalog, `positron` |
+| The neutral control | The same rays with `charge` 0 (`neutral_a`, `neutral_b`) and no coupling declared; they still release their field, so the only difference from `ee_b4.json` is the charge and the coupling | A5, "a control with a neutral family of the same rate and content" |
+| Impact parameter b | The two lines are y = 24 - b/2 and y = 24 + b/2 at z = 24; the rays start at x = 0 and x = 96 and pass each other at x = 48 at tick 48 (closest approach); the transfer is read 3b later, at tick 48 + 3b | A5, "Run" |
+| The field of the charge | `light_a`, `field_of` `electron_a`, `release` [1, 4]: at every Node the electron departs it releases 16 quanta on each heading but its own line, carrying its phase and its `source_sign` (-1 for the electron, +1 for the positron), set by the engine from the releaser's charge; `light_b` the same for `electron_b`, the engine naming one light family per releaser | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1); catalog, `light` |
+| The field spreading in all directions | `spread` [6, 1, 1, 1, 1, 1] on both light families: every Node that light reaches releases it again on the six headings by the table, forward 6, backward 1, transverse 1 each over 11; the share below one quantum is the Node's remainder register per family, sign and Port and leaves whole when it reaches one | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), `field-remainder-v1`; Highlights 3.5, 3.17 |
+| The Coulomb force, repulsion of like charges | The coupling `electron_field_turn_a` over `[electron_a, light_b]` with `"momentum_table": {"light_b": 1}` (and `_b` the mirror): every light ray of the other charge the electron meets pushes its register by +1 x amount x heading of the field ray, away from the source, and returns reversed as the recoil; no event is stamped and the amount, phase and bit are untouched | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1); catalog, `electron_field_turn` |
+| Attraction of opposite charges | The same coupling with sign -1 (`ep_*.json`): the push is toward the source. The sign is read from the field ray, never from its phase: the engine gives a `when` guard no view of `source_sign` (`RAY_PROPERTIES` holds amount, heading, phase, advance, delay, family, charge and detector), so the table names the light family that carries it, one family per releaser, and the sign of the table is the sign of the charge product written before the run | catalog, `electron_field_turn`, `opposite_charge`; [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), "the sign of the source" |
+| The momentum transfer dp(b) | The change of the ray's momentum register, read from the `ray_push` records (before and after per push), at the read-off tick; its y component is the transverse transfer along the impact axis | [A free ray turns by momentum](../../docs/SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1); Highlights 3.14, 3.16 |
+| The deflection | The DDA walks the register: with (64, -1, 0) the ray takes one -Y Link per 64 +X Links | the same |
+| The recoil | The field ray returned reversed at the push, a new event ray on the negated heading with its amount, which spreads from the next Node like every field content | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1), "the recoil" |
+| Momentum, exact | The world ledger's momentum line, initial + sourced = current + escaped at every tick: the release, every spread and every push are explicitly accounted sources | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1); Highlights 3.15 |
+| No self-interaction | Read from the record, not declared: a ray arriving at a Node together with content of its own light family (`spatial_received`) is a self-meeting; the coupling names the other ray's field only, so such a co-arrival is a crossing in these worlds | [Released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1), "the heading the ray travels on" |
+| The board | 97 x 49 x 49, open boundary, `phase_bits` 12 (N = 4096), `link_ticks` 1; A5 names 49^3, and the x extent is 97 so that both rays are on the board 3b past closest approach at b = 16 | A5, "Run" |
+
+The electron amount is 64, the smallest at which the release [1, 4] gives
+16 per heading and the register resolves one quantum in 64: with 256 the
+same 24 ticks of `ee_b4.json` cost 130 s against 27 s (the cost grows with
+the volume the field has reached, since a Node holding a remainder register
+cycles every interval), so the full runs would have taken far more than the
+ten minutes each allowed.
+
+### What the runs show
+
+Made once on 2026-09-17 (`main` at `6f35705`, feature 12b in it; the
+fingerprints are in the register's entry). The transfer, the change of
+each ray's momentum register in quanta on the impact axis, at the read-off
+tick 48 + 3b and at the end alike:
+
+| b | electron-electron, ray a / ray b | electron-positron, ray a / ray b | pushes | first push |
+| --- | --- | --- | --- | --- |
+| 4 | −3 / +3 (apart) | +3 / −3 (together) | 2 per ray: 2 quanta at tick 50, 1 at tick 53 | 50 |
+| 6 | 0 / 0 | 0 / 0 | none | none |
+| 8 | 0 / 0 | 0 / 0 | none | none |
+| 12 | 0 / 0 | 0 / 0 | none | none |
+| 16 | 0 / 0 | 0 / 0 | none | none |
+
+Without `spread` (the check) the transfer is one whole meeting of 16 at
+tick 48 + b/2 for b = 4 and for b = 16 alike, the field on the six axis
+lines of its source (E6). The control's rays go straight, no push. So the
+exponent of |dp(b)| over b has no value (four zeros give no logarithm),
+and the fail is the outward dilution of the declared table: the field in
+flight of a ray at c is a steady wake moving with it (on the line at
+transverse distance 4, 2 quanta of ray a's light at x = t − 4 and 1 at
+x = t − 10 at every tick t, which ray b sweeps through once, so dp(4) = 3),
+thinned by floor(A × 6/11) at every Link (16, 8, 4, 2, 1, 0) with the
+rest owned by the Nodes: in the control's record the +y quanta of ray a
+over ticks 40 to 68 are 667, 464, 290, 87 and 29 at distances 1 to 5 and
+none beyond, and at tick 96 of the b = 16 world 7572 quanta of `light_a`
+are in the world, 310 in flight (the same 310 at every tick from tick 16)
+and 7262 in remainder registers, which fill by 1/11 or 6/11 per arrival
+and do not release during a pass. No recoil ever reaches a releaser: a
+ray at one Link per interval outruns it, and the reversed field rays walk
+back to the line the ray left 2b intervals earlier. A turned ray does
+share Nodes with its own field: at b = 4 the first −y Link of ray a, at
+tick 65, arrives with 18 quanta of `light_a` (its own release of 16 on
+that heading from the Node it left, which skips the dominant-axis line
+only, plus 2), then 2 and 1 at ticks 66 and 67 (its earlier transverse
+releases spread forward on the new line); six co-arrivals per b = 4
+world, none where nothing turned, crossings here since the coupling names
+the other ray's field, pushes by the ray's own field under the catalog's
+single `light` family. The momentum sum over every ray is (0, 0, 0) at
+every tick of every world (the pair's release and spread sources cancel),
+every ledger line balanced, `conserved_at_every_completed_tick` true. The
+criterion's clauses as written: momentum sum pass; equal and opposite
+pass; recoil timing fail (no return); exponent fail; signs of the
+deflection fail (right at b = 4, no deflection at b ≥ 6); neutral control
+pass; no self-meeting fail for a turned ray. Run times with two to four
+runs in parallel on four cores: 176, 167, 183, 266 and 255 s for b = 4 to
+16 (the electron-positron worlds the same within two seconds), 143 s for
+the control, 21 and 35 s without spread; each viewer document
+(`runs.json`) is 4 to 8 MB.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/a5_coulomb/make_worlds.py
+for w in ee_b4 ee_b6 ee_b8 ee_b12 ee_b16 ep_b4 ep_b6 ep_b8 ep_b12 ep_b16 nn_b4 ee_b4_nospread ee_b16_nospread; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/a5_coulomb/$w.json'), Path('runs/a5/$w'))"
+  python tools/ray_viewer/extract.py runs/a5/$w --label "$w" --out runs/a5/$w/runs.json
+done
+python examples/nature/a5_coulomb/analyze.py runs/a5/ee_b* runs/a5/ep_b* runs/a5/nn_b4 --out runs/a5/summary.json --record examples/nature/a5_coulomb/record.json
+```
+
+The records stay outside the tree (one directory per world, siblings, since
+the retention registry refuses a record nested under another); the
+fingerprints in the register's entry are their register line, and
+`record.json` holds the integers the test pins.
