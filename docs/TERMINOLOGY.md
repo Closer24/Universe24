@@ -39,6 +39,11 @@ the Detector bit at a marked Node.
 - **Detector mark** — the Detector bit of a Node together with its setting `n / d` and its ticket seed (`detectors` in the initialization, `DetectorMark` in the code): bounded Node metadata, not a record and not stock. A marked Node draws one bit per arriving ray from its own ticket stream, reading nothing from the ray, and is otherwise an ordinary Node.
 - **Click** — the `detector_click` record of a draw of 1 at a marked Node: position, tick, Port, family, amount and bit 1. The click is the record of the measurement and the only one; a draw of 0 records nothing, because a return is no measurement.
 - **Hidden variable** — a value carried on a ray that no rule, coupling, absorber or readout reads; steps, outbound, event Ports, event shares and the Detector bit are hidden in `ray-event-state-v1`. A marked Node writes the Detector bit and reads none of them.
+- **Wave ray** — every ray: a ray carrying a phase of its family's declared width; a plain ray is the special case whose family's rest rate is 0, not a second kind ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1), `wave-ray-family-v1`).
+- **Family** — the kind of a ray; on the board one ray spatial field, whose `spatial_fields` entry is the catalog entry declaring the family's phase width, rest rate, coherence table and charge. A ray's `family` view is the index of that field.
+- **Rest rate** — the steps a family's phase advances every interval, `kerengonen.phase_advance`: the ray's mass as a clock, 0 for light, whose rays carry their emitter's phase unchanged.
+- **Phase width** — `phase_bits`: the phase of a family's rays is an integer from 0 below 2^`phase_bits`, and every phase advance or difference is a mask with 2^`phase_bits` - 1, never a division. The phase is the one value with its own declared width, unbounded in the model.
+- **Charge** — a family property per quantum, `spatial_fields[i].charge`. The charge readout of rays is `charge x amount` summed over them (`charge_totals()`), an invariant of every declared ray interaction.
 
 ## Values do not become new physical kinds when they move
 

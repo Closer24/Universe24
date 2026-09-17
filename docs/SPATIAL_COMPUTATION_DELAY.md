@@ -127,7 +127,7 @@ field proposals, receipt owners and commit preparation belong to
 field and carrier laws retain their existing owners. The new state has fixed
 size for fixed fields, components and record capacity.
 
-[Focused tests](../tests/test_spatial_computation_delay.py) cover budget
+Focused tests (`tests/test_spatial_computation_delay.py` (deleted on 2026-09-17), deleted on 2026-09-17) cover budget
 boundaries, real scalar/vector operation costs, one/two-tick transit, continuous
 input with empty intervals, delayed moving emitters, finite budgets, nonlinear
 guards, atomic event-capacity failures, formula-free state, passive conservation,

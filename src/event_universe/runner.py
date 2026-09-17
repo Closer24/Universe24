@@ -19,6 +19,7 @@ from event_universe.core.spatial_state import (
     RAY_LAYERS,
     RAY_MEETING,
     RELEASED_FIELD,
+    WAVE_RAY_FAMILY,
     ray_layer_names,
     released_field_names,
 )
@@ -190,6 +191,7 @@ def _execute_run(
         "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
+        "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
             list(layer)

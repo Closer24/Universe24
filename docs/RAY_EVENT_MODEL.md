@@ -419,7 +419,7 @@ every such set; Highlights 3.20 is the text to follow.
   its field meets something, a traveling ray pays nothing for it.
 - Matter as bound rays satisfies Highlights 3.4: mass is the retained energy of
   a bound group, not a stored property; the group's phase advance is its own
-  clock, which the [light-clock measurement](../examples/research/anomalies/README.md)
+  clock, which the light-clock measurement (`examples/research/anomalies/`, deleted on 2026-09-17)
   says slows with the hop time. A bound group has no lifetime of its own and
   is unbound only when an arriving ray's declared coupling produces events
   that leave; nothing else creates or destroys matter.
@@ -508,7 +508,15 @@ every such set; Highlights 3.20 is the text to follow.
    coupling, the Born rule stated as a coupling (for 8 phase steps the
    example ratios 8/8, 7/8, 4/8, 1/8, 0/8, 1/8, 4/8, 7/8 of the shared
    content to the first candidate Port and the rest to the second, the
-   remainder owned as Highlights 3.17 requires).
+   remainder owned as Highlights 3.17 requires). (The wave-ray part is done
+   on 2026-09-17, issue #169 feature 9, `wave-ray-family-v1`: every ray
+   carries a phase of its family's declared width `phase_bits`, a mask and
+   never a division; light is a family with rest rate 0 that carries its
+   emitter's phase unchanged; `family` and `charge` are read-only ray
+   properties and `charge x amount` summed over rays is an invariant of
+   every declared interaction; see [wave-ray
+   families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1). The
+   meeting with N-to-M conversion and the steering table remain feature 6.)
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as

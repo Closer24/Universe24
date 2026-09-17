@@ -357,7 +357,7 @@ class InitialState:
         if self.ray_phase_per_tick:
             if not self.ray_delay:
                 raise ValueError("ray_phase_per_tick requires ray_delay")
-            if not any(definition.phase_steps for definition in self.spatial_fields):
+            if not any(definition.kerengonen for definition in self.spatial_fields):
                 raise ValueError("ray_phase_per_tick requires a Kerengonen ray field")
         if type(self.least_delay_routing) is not bool:
             raise ValueError("least_delay_routing must be boolean")

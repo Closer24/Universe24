@@ -52,6 +52,6 @@ the configured joint inventories and the neutral control remains unchanged. The
 This is finite generic exchange, not particle dispersion, Maxwell dynamics, QED,
 gravity or a derivation of measured energies.
 
-Tests: [property selection](../tests/test_property_couplings.py),
-[entity profiles](../tests/test_property_entity_profiles.py), and
+Tests: property selection (`tests/test_property_couplings.py` (deleted on 2026-09-17), deleted on 2026-09-17),
+entity profiles (`tests/test_property_entity_profiles.py` (deleted on 2026-09-17), deleted on 2026-09-17), and
 [local conservation](../tests/test_local_conservation.py).
