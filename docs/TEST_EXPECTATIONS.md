@@ -76,6 +76,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
+| `test_screen_loop.py` | 1 | 7.7 | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
 | `test_spatial_interactions.py` | 16 | 0.05 | Atomic carrier/local-field exchange with delayed-commit guards |
@@ -2498,6 +2499,96 @@ the first run. Pinned before the first run:
   at the board's edge, at (0,5,5), (0,6,5), (5,0,5), (5,11,5), (6,0,5),
   (6,11,5), (11,5,5) and (11,6,5), the corners empty from tick 3, electron
   8, none escaped, momentum (0, 0, 0), charge -24, every line balanced.
+
+## The screen with a loop
+
+`tests/test_screen_loop.py` is the isolated test of the demonstration E9
+([the screen with a loop](../examples/nature/README.md#the-screen-with-a-loop-the-ring-radiating-on-seven-marks),
+[E9](EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)),
+pinned here on 2026-09-17 before its first run, as Highlights 5.5 requires. It
+builds the world of `examples/nature/screen_loop.json` inline (and does not
+load the file): an open 12 x 11 x 11 board, `link_ticks` 1, `metric:
+"links"`, pace 1/1, the six unit-axial headings in Port order, the family
+`electron` (charge -3, 8 ray slots, rest rate 1) and the family `light`
+(charge 0, rest rate 0, 24 ray slots) declared `field_of` `electron` with
+`release` [1, 4] and `spread` [6, 1, 1, 1, 1, 1], both on a 3-bit phase (8
+steps), a vector field `momentum` bound through `recoil_field` on every
+emission; eight lamps, two at each corner of the unit square P0 = (1,5,5),
+P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) in the plane y = 5, each holding 4
+quanta and emitting them once, funded and directed, at phase 0 in the cycle
+of tick 0: the R lamps on +X at P0, +Z at P1, -X at P2, -Z at P3 and the L
+lamps on +Z at P0, -X at P1, -Z at P2, +X at P3 (the lamps of `ring.json`
+with Y read as Z); the one rule `corner`, the Port form of the loop-binding
+expectations above; seven Detector marks at (7, 2, 5) through (7, 8, 5),
+setting [1, 1], seed 0. One test, run through the runner for 32 ticks (24 if
+the first run shows 32 to be slow: a shorter run of the same world is a
+prefix of the same record, so the integers pinned at the earlier ticks are
+those of the first run either way), read from `run.json`, `events.jsonl`
+and the ray viewer's extractor with the recording of `record_sidecar.py`.
+
+Written before the first run (the structure, all of it computed from the
+rules): the run record carries `loop_binding: "loop-binding-v1"`,
+`released_field: "released-field-v1"`, `field_spreading:
+"field-spreading-v1"`, `field_remainder: "field-remainder-v1"`,
+`released_fields` `[{"field": "light", "field_of": "electron", "release":
+[1, 4]}]`, `spreading_fields` `[{"field": "light", "spread": [6, 1, 1, 1,
+1, 1]}]` and `ray_layer_families` with `light` in a layer of its own (no
+rule names it, so it crosses the ring's Nodes unmet and spreads there like
+at any Node); `conserved_at_every_completed_tick` is true and every audit
+line is balanced at every completed tick; the electron line reads initial
+32, sourced 0, current 32, escaped 0, annulled 0, absorbed 0 at every tick
+(the source stays bound while it radiates: a release is booked as a source
+of `light`, not paid by the ray, Highlights 3.15), the charge line electron
+-96; the light line reads sourced 40 (t - 1) after tick t (the lamps' rays
+are fresh at tick 0 and release nothing; from the cycle of tick 1 each of
+the eight ring rays, amount 4, releases floor(4 / 4) = 1 on the five Port
+headings other than the one it departs on, 40 per interval, 1240 by tick 32),
+current + escaped = sourced with the registers counted as current, annulled
+and absorbed 0; the momentum line reads (0, 0, 0) sourced and current at
+every tick (`light` binds no momentum field, so a spread books none, and
+the two quarter turns of every corner are booked as that corner's source in
+its `spatial_cycle` record, (8, 0, 8) at P0, (-8, 0, 8) at P1, (-8, 0, -8)
+at P2, (8, 0, -8) at P3 in the cycle of every tick from 1, summing to zero);
+the corners' cycle records book `light` 10 each per interval (the two
+departing rays' five headings). No event of the kinds `bound_tick`,
+`bound_group_step`, `ray_push`, `inverse_split`, `detector_return`,
+`field_returned` or `external_body_absorbed` exists; the event kinds are
+those of the host's cycle, `spatial_cycle`, `spatial_sent`,
+`spatial_received`, `spatial_escaped`, `field_spread`, `detector_click` and
+`detector_pass` only. The extractor, reading the record with its recording,
+reports exactly one group: ring `[P0, P1, P2, P3]` (the closed walk from the
+lowest Node through the lowest Port: (1,5,5), (2,5,5), (2,5,6), (1,5,6)),
+ring size 4, content 32, families `{"electron": 32}`, period 8 (the
+catalog's rate 1 closes the square in two circuits, 4 x 1 = 4 is not 0 mod
+8, E5's `slow` case), clock `{"electron": 1}` on phase steps `{"electron":
+8}`, from tick 1 to tick T - 1 for a run of T ticks (the emissions of tick 0
+carry no recorded phase); every tick row from 1 to T - 1 carries `bound`
+`{"electron": [32]}`; the group's rays are electron chains only, since the
+light that crosses the corners is a field family. Every `detector_click` is
+of family `light`, amount 1 (the field is whole quanta released where the
+registers fill), bit 1, at one of the seven marks; the first click is at the
+on-axis mark (7, 5, 5), fed by the axis line from P1 (two fresh quanta per
+interval, the merged +X releases of P1's two departing rays, and P1's
+register releases), before E6's tick 19 (E6's beam was 2 per interval from
+(1, 5, 5), one Node farther and without a corner's registers behind it);
+within the run's few dozen ticks no mark off the axis clicks (a transverse
+release takes eleven arrivals at one Node, E6 saw the first pair at tick
+82), and if one does, its mirror mark (7, 10 - y, 5) clicks in the same tick
+with the same amount, the world being symmetric under y -> 10 - y.
+
+Read from the record of the first run of this board (2026-09-17, 32 ticks,
+2.9 s for the run and 4.9 s for the recording and the reading, so 32 ticks
+stay) and pinned then, as the run's integers rather than computed by hand
+(the field's integer state at a mark is the sum of many spreads): seven
+clicks, all at the on-axis mark (7, 5, 5), family light, amount 1, bit 1,
+through Port 1 (the -X face, the axis line's arrival), at ticks 11, 15, 18,
+22, 27, 27 and 31 (two quanta of different phases in the same interval at
+tick 27), no click off the axis and no `detector_pass`; the light line after
+tick 32: sourced 1240, current 1016 (rays and registers), escaped 224
+(after tick 2: 40, 40, 0; tick 8: 280, 264, 16; tick 16: 600, 530, 70;
+tick 24: 920, 784, 136); 2759 `field_spread` records; the group read from
+tick 1 to tick 31 over 248 electron rays, `ray_layer_families`
+`[["electron"], ["light"]]`.
 
 ## Catalog of nature
 
