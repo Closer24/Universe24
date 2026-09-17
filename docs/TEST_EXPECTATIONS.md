@@ -1104,6 +1104,13 @@ from the event stream alone (no per-tick recording, so no phase):
   twelve holds; 24 frames in six seconds is 250 ms a frame (the style's 120
   ms when no seconds are set). An unknown preset name, a preset with an
   unknown key and a `gif_preset` naming no preset are refused;
+- (k) a tick cap (`extract_record(..., ticks=3)` on the six-tick fixture):
+  the run's `ticks` is 3, `record.ticks_capped_from` is 6, no event is
+  later than tick 3 and `ticks_data` has four rows; a cap at or above the
+  recorded length (9) leaves `ticks_capped_from` None. The page's
+  `page_text` gains `runs` and `eye_toggle`, both true by default (the run
+  buttons for a document with several runs, the eye-view button for a run
+  with marked Nodes);
 - (g) external bodies (`external-body-v1`, pinned 2026-09-17 before the
   first run): a `run.json` listing one body of family `star`, amount 4096,
   coupling `sink`, field `G`, with `positions` rows (0, 7,7,7), (1, 7,7,7)
@@ -1145,8 +1152,9 @@ from the event stream alone (no per-tick recording, so no phase):
   `draw.view` `board` (`eye` draws the marked Nodes and the PASS clicks alone,
   a flash of `click_flash_ticks` 4 sized by amount leaving a dim dot),
   `motion.gif_preset` `phone` ((j) above), of the `page_text` flags
-  only `header` (the run's title) and `tick_counter` true, every `labels`
-  flag false, and `autoplay` and `loop` true.
+  only `header` (the run's title), `tick_counter`, `runs` and `eye_toggle`
+  true ((k) above), every `labels` flag false, and `autoplay` and `loop`
+  true.
 
 The runs document is `ray-viewer-runs-v1`. A GIF or page rendered from it is
 a rendering of the fingerprinted record, not evidence by itself.

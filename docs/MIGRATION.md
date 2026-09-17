@@ -1201,6 +1201,22 @@ view ([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
   times; after it the whole screen. The test pins the world file's
   integers, not its run.
 
+## Ray viewer: several runs on one page, the eye toggle, a tick cap, 2026-09-17
+
+The model owner wants one HTML page with the nature runs, no GIF
+([ray viewer](../tools/ray_viewer/README.md)); the record is unchanged.
+
+- `style.json` gains `draw.page_text.runs` (the run buttons above the
+  board when the document holds several runs; a button starts its run
+  from tick 0 in the board view, playing when the style autoplays) and
+  `draw.page_text.eye_toggle` (an `eye view` button for a run with marked
+  Nodes, switching the page between the board and the eye view), both
+  true by default; the run buttons no longer depend on `controls`.
+- `extract.py --ticks N` caps a large record at N ticks: only the events
+  through N are read, the run's `ticks` is N and
+  `record.ticks_capped_from` keeps the recorded length. The test pins the
+  cap and the flags.
+
 ## Ray viewer: phone GIF preset, 2026-09-17
 
 The model owner's GIFs do not always open on the phone, and he wants GIFs

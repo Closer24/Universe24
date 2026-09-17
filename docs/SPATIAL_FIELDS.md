@@ -1115,6 +1115,16 @@ amount is exact: the coherence of the arrivals (`coherence`, the ratio a
 reader or an absorber sees) is recorded and never applied to the amount,
 since nothing but a sink ends a quantum.
 
+Superseded (model owner, 2026-09-17, Highlights 3.5): the remainder below
+the table's whole quanta is owned by the Node per family and heading
+(Highlights 3.17), its phase combined by the coherence rule, and leaves as
+one whole quantum through that heading when it reaches one, a quantum
+waiting at a Node for that while the front of a strong field moves at the
+causal speed, so the phase-selected heading this slice implements is
+superseded by feature 12b, the screen run (E6) having shown
+that it sends a single quantum along one fixed line and leaves every Node
+off the axis dark.
+
 **The split.** Each arriving heading's content A is shared over the six
 relative headings in whole quanta, floor(A x w_i / S), S the table's total.
 The quanta the floors leave, at most five per heading, are the remainder of

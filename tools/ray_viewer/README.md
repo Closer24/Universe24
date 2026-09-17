@@ -90,7 +90,11 @@ here that touches the engine.
   legend, captions, totals, controls) is off in `draw.page_text` and switched
   on there when wanted; playback starts on load with the slow rotation and
   loops (`motion.autoplay`, `motion.loop`), and the space key pauses and
-  resumes.
+  resumes. A document with several runs shows one button per run above the
+  board (`page_text.runs`); a button starts its run from tick 0 in the
+  board view, playing when the style autoplays. A run with marked Nodes
+  shows an `eye view` button beside them (`page_text.eye_toggle`) that
+  switches the page between the board and the eye view.
 
 ## The eye view
 
@@ -127,7 +131,7 @@ never a code change. Its sections and keys, all of them, are:
 | --- | --- |
 | `colors` | `background`, `surface`, `scene` (the vignette's centre), `scene_edge` (its edge), `ink`, `muted`, `line`, `accent`, `lattice`, `box`, `trail` (the wake), `momentum_arrow`; `families` (`default` and `field` rules, plus one entry per family name to override: `hue` `phase` or `fixed`, `color`, `trail`, `saturation`, `lightness`, `alpha`); `markers` (a colour per event kind: `emission`, `meeting`, `deflection`, `conversion`, `click`, `pass`, `return`, `arrival`, `split`, `escape`, `other`); `source`, `detector`, `external_body` |
 | `sizes` | `ray_width_px`, `head_radius_px` (a sphere head, on screen), `head_links` (a segment head's length as a fraction of its Link), `arrowhead_px`, `momentum_arrow_px_per_quantum`, `momentum_arrow_width_px`, `trail_links` (0 for the whole path since the ray's event), `trail_width_px`, `trail_fade` (opacity at the newest and the oldest trail Link), `field_width_px`, `field_trail_links`, `field_arrowhead`, `marker_radius`, `marker_ring_thickness`, `marker_alpha`, `escape_dot_radius`, `escape_alpha`, `click_flash_ticks`, `click_flash_px_per_quantum`, `click_flash_min_px`, `click_dot_px`, `click_dot_alpha`, `mark_alpha` (the eye view), `source_size`, `detector_size`, `body_size`, `detector_alpha`, `glow_scale`, `glow_alpha`, `sphere_roughness`, `sphere_metalness`, `sphere_emissive`, `label_font_px`, `label_min_distance_px`, `node_dot_px`, `node_dot_alpha`, `lattice_alpha`, `box_alpha` |
-| `draw` | `view` (`board` or `eye`), `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, each a boolean) |
+| `draw` | `view` (`board` or `eye`), `markers` (the event kinds that get a marker), `marker_shapes` (kind to `diamond`, `ring`, `cube`, `octahedron` or `dot`), `marker_shape` (`sphere` or `cube` for sources, Detector marks, bodies and heads) with `shape_overrides` (per kind: `source`, `detector`, `body`, `head`), `glow`, `vignette`, `field_additive`, `labels` (`rays`, `fields`, `markers`, `sources`, `detectors`), `label_text` (`{family}`, `{amount}`, `{phase}`), `escapes` (`matter`, `all` or `none`), `sources`, `detectors`, `external_bodies`, `apparatus` (`default` picture and one per family or coupling name: `star`, `plane`, `slab`), `trails`, `momentum_arrow`, `hue_by_phase` (`arrowhead`, `ray` or `none`), `silent_field_events`, `page_text` (`header`, `record`, `legend`, `captions`, `totals`, `tick_counter`, `controls`, `runs` (the run buttons when the document holds several runs), `eye_toggle` (the eye-view button for a run with marked Nodes), each a boolean) |
 | `caption` | `kinds` (the event kinds listed), `max_per_tick`, `more`, `emissions`, `escapes`, `field_escapes`, `empty`, `totals` (`{family}`, `{in_world}`, `{escaped}`, `{on_links}`, `{held}`, `{sourced}`), `conservation` (`{status}`, `{balanced}`, `{every_tick}`) |
 | `motion` | `rotation_seconds_per_turn`, `autoplay`, `loop`, `page_ticks_per_second`, `gif_degrees_per_frame`, `gif_frames` (null for ticks + 1 + hold), `gif_hold_frames`, `gif_width_px`, `gif_frame_ms`, `gif_colors`, `gif_supersample`, `gif_preset` (`phone` or `full`, the GIF preset the renderer uses without `--preset`), `gif_presets` (one object per preset name, each overriding `gif_width_px`, `gif_panel_px` (per panel side by side), `gif_max_frames`, `gif_hold_frames`, `gif_hold_still`, `gif_colors`, `gif_supersample`, `gif_seconds`, `gif_frame_ms`, `gif_target_bytes` and `contact_stills`), `contact_stills`, `elevation_deg`, `start_angle_deg`, `camera_fit` (`rays` or `board`), `camera_fit_margin_links` |
 
@@ -194,7 +198,10 @@ python tools/ray_viewer/render_gif.py runs.json --output electron.gif
 
 `extract.py` takes one or more records (a `run.json` or its directory) and
 writes one `runs.json` (`ray-viewer-runs-v1`); `--label` names each run in
-order and `--sidecar` its recording. `render_gif.py` writes the GIF and
+order, `--sidecar` its recording and `--ticks` a cap for a large record
+(only the events through that tick are read, the run's `ticks` becomes the
+cap and `record.ticks_capped_from` keeps the recorded length, so a page
+can carry the first part of a long run and say so in its label). `render_gif.py` writes the GIF and
 `render-summary.json` under `--work` (the GIF's size in bytes is always
 printed), and with `--html PAGE` the viewer page with the runs and the
 style inlined. `--preset` picks a GIF preset from the style's
