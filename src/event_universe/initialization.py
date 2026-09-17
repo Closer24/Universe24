@@ -65,6 +65,7 @@ from .core.spatial_state import (
     SpatialSeed,
     ray_participant_definitions,
     validate_heading,
+    validate_released_fields,
 )
 from .json_documents import parse_json_document as parse_json_document
 from .observer_configuration import ObserverDefinition
@@ -990,6 +991,7 @@ def _spatial_fields(
     schema_version: int = 1,
 ) -> tuple[SpatialFieldDefinition, ...]:
     result: list[SpatialFieldDefinition] = []
+    sources: list[str | None] = []
     names = _names(fields)
     for raw in _array(value, "spatial_fields", MAX_FIELDS):
         obj = _object(
@@ -1005,6 +1007,8 @@ def _spatial_fields(
                 "metric",
                 "pace",
                 "flux_projection",
+                "field_of",
+                "release",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -1029,8 +1033,22 @@ def _spatial_fields(
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
         flux_projection = "ports"
+        field_of: str | None = None
+        release_numerator, release_denominator = 0, 1
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
+            if ("field_of" in obj) != ("release" in obj):
+                raise ValueError("a released field declares field_of and release together")
+            if "field_of" in obj:
+                # The field of a family (released-field-v1): resolved to its spatial
+                # field once every field is parsed, since the family may follow.
+                field_of = _text(obj["field_of"], "field_of")
+                release = tuple(
+                    _integer(v, "release term", 1) for v in _array(obj["release"], "release", 2, 2)
+                )
+                release_numerator, release_denominator = release
+                if release_numerator > release_denominator:
+                    raise ValueError("release must not exceed the source's amount")
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
@@ -1083,11 +1101,13 @@ def _spatial_fields(
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
         elif (
-            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            ray_keys
+            | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            | {"field_of", "release"}
         ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace "
-                "and flux_projection require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
+                "flux_projection, field_of and release require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1123,9 +1143,24 @@ def _spatial_fields(
                 pace_numerator=pace_numerator,
                 pace_denominator=pace_denominator,
                 flux_projection=flux_projection,
+                release_numerator=release_numerator,
+                release_denominator=release_denominator,
             )
         )
-    return tuple(result)
+        sources.append(field_of)
+    resolved: list[SpatialFieldDefinition] = []
+    for definition, source_name in zip(result, sources, strict=True):
+        if source_name is None:
+            resolved.append(definition)
+            continue
+        origin = next(
+            (i for i, item in enumerate(result) if fields[item.field].name == source_name), None
+        )
+        if origin is None or not result[origin].rays:
+            raise ValueError("field_of must name a ray spatial field")
+        resolved.append(replace(definition, field_of=origin))
+    validate_released_fields(tuple(resolved), fields)
+    return tuple(resolved)
 
 
 def _emissions(

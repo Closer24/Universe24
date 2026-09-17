@@ -49,6 +49,7 @@ from .spatial_state import (
     attenuate_rays,
     coherent_stock,
     detector_draw,
+    holds_source_stock,
     merge_rays,
     ray_merge_key,
     ray_stock,
@@ -641,6 +642,7 @@ class SpatialNode(SpatialNodeState):
         )
         active = (
             active_source
+            or any(holds_source_stock(record, services.initial.spatial_fields) for record in records)
             or self.received_count
             or any(any(unpack(payload)) for state in self.states for payload in state.populations)
         )

@@ -34,6 +34,22 @@ them) describe the current code until the ray-event migration in
 Bell results recorded with the former shared resource remain historical
 evidence about that profile, not evidence for the current model.
 
+## The field as the ray's information - 2026-09-17 (`released-field-v1`)
+
+Issue #169, feature 7, implements the one field rule of sections 3.5 and 3.28
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)):
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.5, a ray has a field, the ray's own information in ray form, released in all directions without an event | A ray field with `field_of` and `release`; `release_field` releases one G ray per Port heading except the source's own at every Node the source departs, with the source's phase and no event stamp |
+| 3.5, the free ray pays nothing until its field meets something; 3.15 | The released amount is booked as an explicitly accounted source of G; the source ray's amount, phase and heading are untouched |
+| 3.5, a straight ray never meets its own field, no exclusion rule | The ray's own line ahead of it is the ray at link speed, so that heading is not released; the other five leave behind or away from the line; the test asserts no shared Node over the run |
+| 3.5 and 3.14, the field ray returns reversed as the recoil, at finite speed | A `ray_interactions` rule with an output of heading `"reversed"`; the test pins the recoil walking back one Link per tick |
+| 3.3, the field acts at the crossing | The meeting fires in the interval the G ray and the responding ray share a Node, like every meeting |
+| 3.17, remainders | The fraction the floor leaves is not released; a description booked as a source destroys nothing |
+| 3.28, gravity is bending by delay | The delay and the turn are outputs of the declared rule (heading, delay or phase); the recoil's coupling to its source and to bound groups is feature 8 |
+| 3.19, the fixed body | Feature 7b reuses the release of resident content (`release_stock`) with the sink it declares |
+
 ## Ray integration and local Focus - 2026-09-14
 
 The repository now distinguishes the optional [local Focus scheduler](LOCAL_FOCUS.md)
