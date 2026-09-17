@@ -18,7 +18,11 @@ the axis-only control,
 [below](#the-helium-ion-with-the-field-spreading-and-the-momentum-turn),
 and (I) the screen of (E) with the ring of (F) as its source, rays of amount
 4 radiating their light on seven marks,
-[below](#the-screen-with-a-loop-the-ring-radiating-on-seven-marks).
+[below](#the-screen-with-a-loop-the-ring-radiating-on-seven-marks),
+and (J) the worlds of experiment A5s, two charges at rest as external
+bodies, the force between them through their spreading fields, in
+`a5_static/`,
+[below](#a5s-coulombs-force-law-between-two-charges-at-rest).
 (E), the field of an electron at rest on a screen of seven Detector marks,
 the eye view's first picture, ran under the interim held form and is retired
 with its records kept,
@@ -27,9 +31,9 @@ with its records kept,
 [Highlights](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions)
 5.5: research runs made once, recorded with their fingerprint in the
 [experiments register](../../docs/EXPERIMENTS.md#e-demonstrations-of-events)
-((E) in its section here), never repeated as tests, and (G) is a confrontation
-run of section A of the register. Nothing here is a law of nature; every
-number is a declaration written before the run.
+((E) in its section here), never repeated as tests, and (G) and (J) are
+confrontation runs of section A of the register. Nothing here is a law of
+nature; every number is a declaration written before the run.
 
 Since 2026-09-17 (feature 14, binding as a loop, `loop-binding-v1`;
 [binding as a loop](../../docs/SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1),
@@ -1228,6 +1232,138 @@ for w in ee_b4 ee_b6 ee_b8 ee_b12 ee_b16 ep_b4 ep_b6 ep_b8 ep_b12 ep_b16 nn_b4 e
   python tools/ray_viewer/extract.py runs/a5/$w --label "$w" --out runs/a5/$w/runs.json
 done
 python examples/nature/a5_coulomb/analyze.py runs/a5/ee_b* runs/a5/ep_b* runs/a5/nn_b4 --out runs/a5/summary.json --record examples/nature/a5_coulomb/record.json
+```
+
+The records stay outside the tree (one directory per world, siblings, since
+the retention registry refuses a record nested under another); the
+fingerprints in the register's entry are their register line, and
+`record.json` holds the integers the test pins.
+
+## A5s: Coulomb's force law between two charges at rest
+
+`a5_static/` holds the worlds of experiment
+[A5s](../../docs/EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest)
+of the register, run on 2026-09-17 on `main` after PR #239 (features 12,
+12b, 7b and 8b in it): two external bodies at rest, each radiating its light,
+which spreads by the catalog's table with the Node-owned remainder, and each
+absorbing the other's light in its sink with a `momentum_table` whose sign
+is the charge product, so that the force is the change of a body's momentum
+register per interval. A5 (the section above) ran two free rays passing each
+other and found that a ray at one Link per interval outruns its own field;
+Coulomb's law is a statement about charges at rest, and this run measures
+the force between two static sources directly. Fifteen world files, written
+by `make_worlds.py` beside them and never by hand: `pp_r{4,6,8,12,16}.json`
+(two bodies of the proton's charge on the +X axis at distance r),
+`pe_r{4,6,8,12,16}.json` (a proton's charge and an electron's),
+`pp_d{3,4,6,8}.json` (like charges on the diagonal, B at (d, d, 0) from A)
+and `p_alone.json` (the control, one body). `analyze.py` reads the records
+and evaluates the criterion clause by clause; `record.json` is its small
+committed record, which `tests/test_a5_static.py` reads. The measured
+outcome is in the register's entry and summarized
+[below](#what-the-static-runs-show).
+
+### Dictionary: each physical word next to the engine word
+
+| Physics | Engine (the key in the world file) | Where the rule is stated |
+| --- | --- | --- |
+| A charge at rest, +e (a proton) | An external body (`external_bodies`) of the family `proton_a` (or `proton_b`), `charge` 3 (thirds of e), `amount` 2^28, at rest (no `initial_momentum`), at its Node for the whole run; a declaration, not physics, with no rays of its own at its Node | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1); Highlights 3.19 |
+| A charge at rest, −e (an electron's charge) | The same body of the family `electron_b`, `charge` −3 (`pe_*.json`); the body stands for the charge only, its amount is not the electron's mass | catalog, `electron`; A5s, "Run" |
+| The field of the charge | `light_a`, `field_of` `proton_a`, `release` [1, 65536]: every interval the body releases one ray per Port heading of floor(2^28 / 65536) = 4096 quanta, booked as a source, carrying its `source_sign` (+1 for the proton's charge, −1 for the electron's), set by the engine from the body's declared charge; `light_b` the same for B's family, the engine naming one light family per releaser | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1), "the release"; catalog, `light` |
+| The field filling space | `spread` [6, 1, 1, 1, 1, 1] on both light families: every Node that light reaches releases it again on the six headings by the table, forward 6, backward 1, transverse 1 each over 11; the share below one quantum is the Node's remainder register per family, sign and Port and leaves whole when it reaches one (`field-remainder-v1`) | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1); Highlights 3.5, 3.17 |
+| The Coulomb force on a charge | The body's `momentum_table`: `{"light_b": 1}` on A and `{"light_a": 1}` on B in the like-charge worlds; every ray of the other body's light that ends in the body's sink changes its momentum register by +1 × amount × heading of the arriving ray, away from the source; the push per interval is the register's change per interval, and F(r) its mean over the last 32 ticks | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1), "motion by fields only"; Highlights 3.14 |
+| Attraction of opposite charges | The same tables with sign −1 (`pe_*.json`): the push is toward the source. The table names the family that carries the sign (a body's table reads no `source_sign`), and its sign is the charge product written before the run | catalog, `electron_field_turn`, `opposite_charge`; [field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), "the sign of the source" |
+| The charge absorbing the field | The body's coupling, the default `"sink"`: whatever arrives at its Node ends in its exact sink counter per family, its own returning light and the other body's alike; a perfect absorber one Node wide | [The external body](../../docs/SPATIAL_FIELDS.md#the-external-body-external-body-v1), "the sink" |
+| The charge staying at rest | The body's velocity is its momentum over its amount, an exact accumulator per axis that steps one Link at a whole amount: with 2^28 no Link completes in these runs (`positions` per tick in `run.json`) | the same, "motion by fields only" |
+| Newton's third law | The bodies' momentum line of the ledger, the sum of the two registers, and the two registers read per tick from the `external_body_absorbed` records | [Audits](../../docs/SPATIAL_FIELDS.md#audits-ray-event-audit-v1) |
+| Momentum, exact | The world ledger's momentum line, initial + sourced = current + escaped + absorbed at every tick: the release, every spread and every absorption are explicitly accounted; the momentum field is bound to the light by one unseeded lamp per light family (`idle_light_a`, an emission of amount 1 with `recoil_field` that is never seeded), the engine's one way to bind it; every value of the line is zero by the mirror symmetry of each world | [Field spreading](../../docs/SPATIAL_FIELDS.md#field-spreading-field-spreading-v1), "the booking"; Highlights 3.15 |
+| The control | `p_alone.json`: one body, its table naming its own light `{"light_a": 1}`; its backward-spread light returns to it from all sides and the register must stay (0, 0, 0) by symmetry | A5s, "Run" |
+| The lattice's anisotropy | The diagonal worlds `pp_d{d}.json`, B at (5 + d, 5 + d, 5): the push along the diagonal (F_x = F_y by symmetry) against the axis fit at the same Euclidean distance d√2 | Highlights 3.5, 3.23; A6 |
+| The board | [r + 11, 11, 11] Nodes (the diagonal [d + 11, d + 11, 11], the control [11, 11, 11]), open boundary, a margin of 5 empty Nodes beyond each body on every side, `phase_bits` 3 (no phase is read), `link_ticks` 1; the far field escapes at the boundary | A5s, "Run" and its deviations |
+
+The release, the amount, the margin, the ticks and the phase width differ
+from the run the register planned, each for a stated reason (the body's
+accumulator, the engine's cost of 2.3 ms per Node cycle with the whole board
+cycling): the register's entry states every deviation before the run, with
+a mean-field estimate of what each costs.
+
+### What the static runs show
+
+Made on 2026-09-17 on the branch at `b701ea7` (`main` at `1868324` with the
+planned entry; the source fingerprint and the fifteen initialization
+fingerprints are in the register's entry). The push per interval on B, the
+change of its momentum register per tick averaged over the last 32 ticks,
+F(r) in quanta per interval (the window sum is the record's integer, F its
+32nd part):
+
+| r | F(r), like charges (`pp_r`) | opposite charges (`pe_r`) | r² F | window sum | first push at tick | B's register at the end |
+| --- | --- | --- | --- | --- | --- | --- |
+| 4 | +742.81 | −742.81 | 11885 | 23770 | 4 | 27214 |
+| 6 | +252.81 | −252.81 | 9101 | 8090 | 6 | 9608 |
+| 8 | +89.75 | −89.75 | 5744 | 2872 | 8 | 3501 |
+| 12 | +13.19 | −13.19 | 1899 | 422 | 12 | 522 |
+| 16 | +2.41 | −2.41 | 616 | 77 | 18 | 91 |
+
+A's register is the negative of B's at every tick of every world, and the
+opposite-charge series is the exact negation of the like-charge series, tick
+by tick (the two light fields are the same in both, only the tables' sign
+differs). The log-log least-squares exponent of F over r is −4.14 ± 0.37
+(standard error from the five points), against the criterion's −2.0 ± 0.2:
+the exponent clause fails; the ledger, the control, the equal and opposite
+registers and the signs pass. The diagonal series, B at (d, d, 0):
+
+| d | distance d√2 | F on B | \|F\| | axis fit at d√2 | ratio | first push at tick |
+| --- | --- | --- | --- | --- | --- | --- |
+| 3 | 4.24 | (94.34, 94.34, 0) | 133.42 | 849.2 | 0.157 | 6 |
+| 4 | 5.66 | (47.16, 47.16, 0) | 66.69 | 257.9 | 0.259 | 8 |
+| 6 | 8.49 | (13.97, 13.97, 0) | 19.75 | 48.09 | 0.411 | 12 |
+| 8 | 11.31 | (4.94, 4.94, 0) | 6.98 | 14.61 | 0.478 | 19 |
+
+The push is along the diagonal exactly (F_x = F_y, F_z = 0; the window sums
+3019, 1509, 447 and 158 on both axes) and a small fraction of the axis fit
+at the same Euclidean distance, rising with d: the lattice's anisotropy of
+the split table at short range, where the field on an axis is mostly the
+forward share that never scatters.
+
+What the integers say (a reading, not a clause): the mean-field transport of
+the split table, run before the run to size it (the register's entry),
+predicted F = 742, 252, 89, 13.1 and 2.4, the exponent −4.2 ± 0.4 and the
+diagonal ratios 0.16, 0.26, 0.41 and 0.47 at these settings; the engine
+gives the same to within a quantum per interval. The forward share that
+never scatters, 4096 × (6/11)^(r−1) on the axis, is 665, 198, 59, 5.2 and
+0.46 quanta per interval at r = 4 to 16: the first push at r = 4 is 664 at
+tick 4, then 665, and the pushes rise to 750 by tick 40 as the scattered
+part builds up; at r = 16 the forward share is below one quantum, so the
+first quantum reaches B at tick 18, through the remainder registers, and
+the push is 1 to 4 per tick to the end, still rising. The rest of F, 78,
+55, 31, 8.0 and 1.9, is the scattered field, which the open boundary at the
+margin of 5 drains and which has not reached its steady state at the far r
+in 2r + 32 ticks (the mean field at the plan's settings gives −3.7 ± 0.3 and
+in free space at its steady state −3.2 ± 0.1). So the fail is the short
+range of the declared table: at these r the force falls like the forward
+share, e^(−r/1.65), and the 1/r² flux of Gauss is the small diffusive
+remainder. The control's body absorbs its own returning light (378
+absorptions in 64 ticks) with its register at (0, 0, 0) at every tick. The
+ledger at the end of `pp_r4`, `light_a`: sourced 983040 (6 × 4096 × 40) =
+current 421226 + escaped 383590 + absorbed 178224, and the same for
+`light_b`; at the end of `pp_r16`: 1572864 = 492494 + 837246 + 243124; the
+momentum line and the bodies' momentum line (0, 0, 0) throughout; every
+line balanced, `conserved_at_every_completed_tick` true in every world;
+both bodies at their Nodes at every tick, no step. Run times with two runs
+in parallel on four cores shared with other work: 156, 197, 239, 341 and
+448 s for `pp_r4` to `pp_r16`, 154, 328, 247, 342 and 443 s for `pe_r4` to
+`pe_r16`, 209, 264, 396 and 570 s for the diagonal d = 3 to 8, 111 s for
+the control; each viewer document (`runs.json`) is 136 MB (the control) to
+582 MB (d = 8), the field's rays being the record.
+
+### Run and render
+
+```bash
+PYTHONPATH=src python examples/nature/a5_static/make_worlds.py
+for w in pp_r4 pp_r6 pp_r8 pp_r12 pp_r16 pe_r4 pe_r6 pe_r8 pe_r12 pe_r16 pp_d3 pp_d4 pp_d6 pp_d8 p_alone; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/a5_static/$w.json'), Path('runs/a5s/$w'))"
+  python tools/ray_viewer/extract.py runs/a5s/$w --label "$w" --out runs/a5s/$w/runs.json
+done
+python examples/nature/a5_static/analyze.py runs/a5s/pp_r* runs/a5s/pe_r* runs/a5s/pp_d* runs/a5s/p_alone --out runs/a5s/summary.json --record examples/nature/a5_static/record.json
 ```
 
 The records stay outside the tree (one directory per world, siblings, since

@@ -28,6 +28,7 @@ Feature tests of issue #169 join this table as they land.
 
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
+| `test_a5_static.py` | 3 | 5.92 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step) and the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), pinned below |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
@@ -2765,6 +2766,76 @@ Three tests, pinned before the first run:
   table in order (momentum sum, equal and opposite, first recoil, exponent,
   sign of the deflection, neutral control, self-meeting): pass, pass, fail,
   fail, fail (no deflection either way at b ≥ 6), pass, fail.
+
+## A5s Coulomb at rest
+
+`test_a5_static.py` pins the worlds and the record of experiment A5s
+([register](EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest);
+`examples/nature/a5_static/`, the dictionary in its
+[README](../examples/nature/README.md#a5s-coulombs-force-law-between-two-charges-at-rest)).
+Three tests, the first two pinned before the first run and the third from
+the measured record:
+
+- the fifteen world files are byte for byte what `make_worlds.py` writes
+  (`json.dumps(indent=1)` and a newline), in the order `pp_r4`, `pp_r6`,
+  `pp_r8`, `pp_r12`, `pp_r16`, `pe_r4`, ..., `pe_r16`, `pp_d3`, `pp_d4`,
+  `pp_d6`, `pp_d8`, `p_alone`, and each is the pinned geometry: shape
+  [r + 11, 11, 11] for the axis worlds, [d + 11, d + 11, 11] for the
+  diagonal ones and [11, 11, 11] for the control, open, `phase_bits` 3,
+  `ticks` 2r + 32 (2 × 2d + 32 on the diagonal, 64 for the control); no
+  seeds and no `ray_interactions`; body A at (5, 5, 5) of family `proton_a`,
+  charge 3, amount 2^28, `momentum_table` `{"light_b": s}`, and body B at
+  (5 + r, 5, 5) or (5 + d, 5 + d, 5) of family `proton_b` (charge 3) in
+  `pp` or `electron_b` (charge −3) in `pe`, `momentum_table` `{"light_a":
+  s}`, s = 1 for `pp` and −1 for `pe`; the control's one body A with
+  `{"light_a": 1}`; the body families with rate 0, 2 slots and their
+  charge, and `light_a`, `light_b` with charge 0, rate 0, 8 slots,
+  `field_of` their body's family, `release` [1, 65536] and `spread`
+  [6, 1, 1, 1, 1, 1], all on the six Port headings; the momentum field
+  and, per light family, one unseeded lamp `idle_light_a` (`idle_light_b`)
+  with an emission of amount 1 along +X with `recoil_field` momentum;
+- `pp_r4.json` re-run for 8 ticks: status completed, `field_spreading`
+  `field-spreading-v1`, `field_remainder` `field-remainder-v1`,
+  `external_body` `external-body-v1`, `conserved_at_every_completed_tick`
+  true, `released_fields` `light_a` of `proton_a` and `light_b` of
+  `proton_b` at [1, 65536]; B's register after ticks 1 to 8, read from the
+  `external_body_absorbed` records, (0, 0, 0) three times then (664, 0, 0),
+  (1329, 0, 0), (2028, 0, 0), (2727, 0, 0), (3444, 0, 0), the pushes 664,
+  665, 699, 699, 717 (the unscattered 4096 × (6/11)³ = 665 on the axis and
+  what the spread adds), and A's register the negative at every tick; both
+  bodies at their Nodes at every tick and no `external_body_step`; the
+  ledger at tick 8: `light_a` and `light_b` each sourced 196608 (6 × 4096 ×
+  8), the momentum line sourced, current, escaped and absorbed (0, 0, 0),
+  the bodies' momentum line (0, 0, 0), every line balanced. (The first
+  effect of the open boundary on B is due at tick 16 at the earliest, so
+  these eight ticks are those of an unbounded board, and of the 16-tick
+  probe at margin 8 on which the register's planning paragraph rests.)
+- `record.json`, written by `analyze.py --record` from the runs of
+  2026-09-17 (the register's entry holds the fingerprints): fifteen runs,
+  every one completed under one recorded source, its
+  `initialization_sha256` equal to the SHA-256 of the committed world file,
+  its ticks the world's, every ledger line balanced and
+  `conserved_at_every_completed_tick` true, the positions fixed, the
+  momentum line and the bodies' momentum line zero, the window 32 ticks;
+  the control's register zero at every tick with 378 absorptions and no
+  first push; in every two-body world the registers equal and opposite at
+  every tick; the opposite-charge series the exact negation of the
+  like-charge series (the register series and the window sums); the
+  measured integers, written into the test from the record: the sums of
+  B's pushes over the last 32 ticks (F(r) their 32nd part) 23770, 8090,
+  2872, 422 and 77 at r = 4, 6, 8, 12, 16, B's register at the end 27214,
+  9608, 3501, 522 and 91, the first push at tick 4, 6, 8, 12 and 18, the
+  fit of `analyze.fit` over the five points −4.142 with standard error
+  0.369 (three decimals), outside the band [−2.2, −1.8]; the pushes on B
+  per tick of `pp_r4`, 0, 0, 0, 664, 665, 699, 699, 717, 717, 725, 727,
+  732, 732, 736, 737, 739, 741, 742, 742, 743, 744, 746, 744, 746, 747,
+  748, 747, 748, 747, 749, 749, 747, 750, 748, 750, 749, 750, 750, 748,
+  750; the diagonal's window sums equal on x and y and zero on z, 3019,
+  1509, 447 and 158 at d = 3, 4, 6, 8, the registers at the end 3461,
+  1756, 524 and 182 on both axes, the first push at tick 6, 8, 12 and 19;
+  the clause table's verdicts in order: ledger pass, control pass,
+  registers pass, exponent fail, signs pass, diagonal reported; and the
+  clause's series of (r, F) with the same exponent for `pp` and `pe`.
 
 ## The helium orbit
 

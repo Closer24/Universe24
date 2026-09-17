@@ -458,6 +458,222 @@ states "exactly" and means integer equality at every tick.
   `momentum_table`, so Δp(b) is a register the audit reads and not a count
   of whole Ports.
 
+### A5s. Coulomb's force law between two charges at rest
+
+- **Confronts.** Coulomb's law, the force F = k q₁ q₂ / r² between two
+  charges at rest (its inverse-square exponent verified to 1 part in 10^15
+  by Williams, Faller and Hill, 1971): the force itself, not Rutherford's
+  Δp of A5; equal and opposite on the two charges; like charges pushed
+  apart and opposite charges pulled together, with the same magnitude.
+- **Model prediction today.** Highlights 3.5: the field of a source at rest
+  fills space; its density falls as 1/r and the net momentum its rays carry
+  through a Node, which is what a met ray feels, falls as 1/r² because the
+  same flux crosses every shell (Gauss), exact on average once the Node
+  owns the remainder (feature 12b); the lattice's anisotropy is of higher
+  order, and its residue is measured, not assumed. A5 (measured today, PR
+  #239) could not test this: a free ray at one Link per interval outruns
+  its own field, so its field is a short wake behind it that never reaches
+  a second passing ray at impact parameter 6 or more. Coulomb's law is a
+  statement about charges at rest, the case the rule of 3.5 speaks of, and
+  this entry measures the force between two static sources directly.
+- **Features.** 7b, 12, 12b (on 1, 7, 9, 10).
+- **Run.** Two external bodies at rest (`external-body-v1`, Highlights
+  3.19): body A of a family of the proton's charge (+3 per quantum), body
+  B of the proton's charge for the like-charge series and of the electron's
+  (−3) for the opposite-charge series, each of amount 2^28 radiating its
+  light on all six headings every interval by `release` [1, 65536], 4096
+  quanta per heading per interval, the light declared once per releaser
+  (`light_a` `field_of` A's family, `light_b` `field_of` B's, the engine
+  naming one light family per releaser) with `spread` [6, 1, 1, 1, 1, 1],
+  the catalog's table, the Node-owned remainder (`field-remainder-v1`) and
+  the engine's `source_sign` from the body's declared charge; every
+  arrival at a body ends in its exact sink (the default coupling), and A's
+  `momentum_table` names `light_b` and B's names `light_a`, each with the
+  sign of the charge product, +1 (repulsion) for like charges and −1
+  (attraction) for opposite charges, written before the run; no matter
+  rays anywhere, no Detector. Distances: B at (r, 0, 0) from A on the +X
+  axis for r = 4, 6, 8, 12 and 16, one world per r for each of the two
+  charge signs (`pp_r{r}`, `pe_r{r}`); a diagonal series in the plane, B
+  at (d, d, 0) from A for d = 3, 4, 6 and 8 (Euclidean 4.24, 5.66, 8.49,
+  11.31), like charges only, for the lattice's anisotropy (`pp_d{d}`); a
+  control, one body alone at the same settings (`p_alone`), its table
+  naming its own light, whose register must stay (0, 0, 0) by symmetry
+  (its own backward-spread light returns to it from all sides). Board:
+  open boundary, a margin of 5 empty Nodes beyond each body on every side
+  (the far field escapes; the margin is a stated deviation, below), N =
+  2^3 (the phase is read nowhere in these worlds). Ticks: 2r + 32 for the
+  Manhattan distance r (64 for the control); the push per interval on each
+  body is the change of its momentum register per interval, read from the
+  `external_body_absorbed` records, and its steady state is read as the
+  mean over the last 32 ticks, the per-tick series recorded so that a
+  reader sees the transient and the steady state (the front reaches the
+  other body at tick r; at 4096 per heading the axis is lit at once and
+  the registers fill over time). Recorded per tick: each body's momentum
+  register and position, the world ledger with the bodies' momentum line,
+  the audits. Made as `examples/nature/a5_static/`: fifteen worlds
+  written by `make_worlds.py`, the records read by `analyze.py`, its
+  integers in `record.json`, the dictionary in the
+  [README](../examples/nature/README.md#a5s-coulombs-force-law-between-two-charges-at-rest).
+- **Criterion.** Pass, all of: (1) every ledger line balanced and
+  `conserved_at_every_completed_tick` at every tick of every world; (2)
+  the control's register (0, 0, 0) at every tick; (3) in every two-body
+  world the two registers equal and opposite at every tick (both bodies
+  radiate the same release, so this is the exact symmetry of the pair; had
+  A and B differed in release the clause would read: the two registers
+  in the ratio of the releases, the momentum absorbed from each field
+  proportional to its source); (4) the steady-state push per interval F(r)
+  over the five axis r, the mean over the last 32 ticks of the push on B
+  along x, has log-log least-squares exponent −2.0 ± 0.2 (standard error
+  from the five points); (5) like charges pushed apart (A's register on
+  −X, B's on +X) and opposite charges together, with the same magnitudes;
+  (6) the diagonal series: F at Euclidean distance d against the axis fit
+  of (4) evaluated at the same d, the ratio reported per point, no
+  pass/fail (A6's anisotropy), and the direction of the push, along the
+  diagonal (F_x = F_y, F_z = 0), exact by symmetry. Fail: any of (1) to
+  (5), stated as which and why (the table, the remainder rule, the lattice,
+  the box or the transient).
+- **Planning, before the run (not the measurement).** The engine's cost was
+  measured first, on the r = 4 world of the plan (board 21 × 17 × 17, the
+  margin of 8) for 16 ticks: 85 s, then 56 s at N = 2^3, that is 2.3 ms
+  per Node cycle, and every Node of the board cycles once the field has
+  filled it (a Node holding a remainder register is active until it
+  empties, and under a steady source none does), so a world's cost is its
+  volume times its ticks: the plan's r = 16 world (33 × 17 × 17, 96
+  ticks) would take about 35 minutes and the r = 4 world 25, against the
+  budget of about eight minutes per world with two in parallel. A
+  mean-field transport of the same split table outside the engine (the
+  linear map of the split with the remainders averaged, the two sinks and
+  the open faces; validated against that engine probe, whose pushes on B
+  per interval, 664, 665, 699, 699, 717, 717, 725, 727, 732, 732, 736,
+  737, 740 over ticks 4 to 16, it reproduces within one quantum) sized the
+  run and says what to expect. At the run's settings (margin 5, 2r + 32
+  ticks) it gives F(r) ≈ 742, 252, 89, 13.1, 2.4 for r = 4 to 16, exponent
+  −4.2 ± 0.4; at the plan's settings (margin 8, 2r + 64) 753, 264, 99,
+  17.8, 4.4, exponent −3.7 ± 0.3; in free space at its steady state
+  (margin 24, 600 ticks) 751, 270, 107, 25.2, 10.1, exponent −3.2 ± 0.1;
+  the diagonal at d = 3, 4, 6, 8 about 0.16, 0.26, 0.41, 0.47 of the axis
+  fit at the same Euclidean distance at the run's settings. Its reading,
+  to be confirmed or refuted by the engine's integers: the split table's
+  field at short range is the unscattered part, 4096 × (6/11)^(r−1) on the
+  axis, a fall like e^(−r/ℓ) with ℓ = 1/ln(11/6) ≈ 1.65 Links, which
+  dominates F below r ≈ 10 (665 of the 752 at r = 4, 59 of 106 at r = 8);
+  the 1/r² flux of Gauss is the diffusive tail beyond it, which builds up
+  over r²/(4D) intervals with D = 4/9 Link² per interval (the persistent
+  walk of the table, forward 6/11, backward 1/11) and which the open
+  boundary drains; so the exponent clause is expected to fail at these r,
+  and by more than the box and the transient account for. The run measures
+  it in the engine exactly; nothing is tuned to pass.
+- **Deviations from the plan above, each stated before the run.** (i) The
+  amount is 2^28 at `release` [1, 65536], not 2^20 at [1, 256]: the same
+  4096 quanta per heading per interval, and the body's axis accumulator,
+  which adds the register every interval and steps a Link at a whole
+  amount, stays far below a Link (F t²/2 ≈ 6 × 10^5 at r = 4 over 40
+  ticks, against 2^20 ≈ 10^6, which a longer run would have crossed); (ii)
+  the margin is 5, not at least 8, and the ticks 2r + 32, not at least
+  2r + 64, by the cost above (the largest worlds, r = 16 and d = 8, about
+  8 to 10 minutes each); the mean field puts the cost of the smaller box
+  and the shorter run at 1 % of F at r = 4, 5 % at r = 6, 10 % at r = 8, 27
+  % at r = 12 and 46 % at r = 16 against the plan's settings, which
+  themselves sit 40 % below the free-space steady state at r = 16; the
+  far points are transient readings either way, and the per-tick series
+  shows it; (iii) N = 2^3, the reference Born width, since the coherent sum
+  of a spread costs one pass over the circle per register and no phase is
+  read; (iv) the control's table names its own light, which no two-body
+  world's does (the plan's "same settings" would leave its table empty and
+  the clause vacuous): so the clause tests the symmetry of the returning
+  field, and the two-body worlds omit each body's push by its own
+  returning light, which under the catalog's single light family would
+  add the shadow of the other body's sink in that returning field to the
+  force, not measured here; (v) one unseeded lamp per light family, an
+  emission of amount 1 with `recoil_field` momentum that is never seeded,
+  binds the momentum field to the light, the engine's one way to bind it,
+  so that the ledger carries the momentum line (its every value is zero by
+  the mirror symmetry of each world, which is what it then shows); (vi)
+  the opposite-charge series is expected to be the exact negation of the
+  like-charge series, tick by tick, since the two light fields are the same
+  in both and only the tables' sign differs; it is run in full as planned
+  and the clause reads the equality.
+- **Deviations seen in the run, stated after it.** (vii) The front: the
+  entry above says the front reaches the other body at tick r and the
+  axis is lit at once; so it is for r ≤ 12 (the first push on B at tick
+  4, 6, 8 and 12), but at r = 16 the forward share that never scatters,
+  4096 × (6/11)^15 = 0.46 quanta per interval, is below one quantum, so
+  the first quantum reaches B at tick 18 (tick 19 on the diagonal at d =
+  8), through the remainder registers. (viii) The records were made in
+  two sittings of one runner script (two worlds at a time, each world in
+  its own sibling record directory): ten records in the first sitting;
+  the session was then resumed while the first sitting's runner was still
+  working, and the resumed runner's collision with it (each deletes an
+  incomplete record directory before it runs) destroyed the record
+  directories of `pp_r4` and `pe_r4` (both sittings' attempts, the engine
+  refusing the second lease: "artifact path already has an active
+  writer", "artifact path was replaced during its writer lease") and the
+  first sitting's `run.json` of `pe_r6` and `p_alone`; these four were
+  run again from the same world files under the same source (the
+  fingerprints below are the records'), their viewer documents extracted
+  from the re-runs; `pp_r6` is the first sitting's. (ix) After the run
+  the analyzer's clause-4 entry was found to have its list of (r, F)
+  points overwritten by the fit's count of the same name (`points`); the
+  list's key was renamed `series` and the record rewritten from the same
+  runs, no number changed.
+- **Status.** measured on 2026-09-17, commit
+  `b701ea779d14c7aa319c58f67db324b8802f29c5` (`main` at `1868324` with
+  this entry planned; no engine change), source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`;
+  initialization fingerprints, like charges r = 4, 6, 8, 12, 16:
+  `58abf9051ab315163b5cf08d906271568155d63fab05f75845d18ad524cccdab`,
+  `b1d3ca6d0318b9834f6ed6886b44698c029a4aee993707c757d1b03c5e57f4a0`,
+  `e1dd71bda82ee646dd792603a101f072403d66aa5beee416bc24ecc64d4324ea`,
+  `2f47e912389aedf19d8e3c542ddf420f5e507f827e90c68eebfa0243f7887658`,
+  `624292813b31ac95fa60b6287b9a6dd869f345fe1936e777960c2327af933cb1`;
+  opposite charges r = 4, 6, 8, 12, 16:
+  `1037e95e2ad521ad132612644496839ce9478756cbc5314acde078472e8292e2`,
+  `86fc91c11af22769fde7f3a57321dd18900d83a41caf9b9fe113d8184230a302`,
+  `47bf17836e2fe9022cac235013b8be14303975692ccffab8f8845f52fdc3866c`,
+  `437448ce62dd153c68468b8ff2de59da0b5284acbc5f29b56bfbb5977b917096`,
+  `ef3cbe5d76c988e56126a3f57f01029d4042c1ad09a0fd850fbeb0bdd044cc24`;
+  the diagonal d = 3, 4, 6, 8:
+  `fabca15ee719b60cb8b73c104a13487956dc1391c9a5bf19796fcc60814e43d0`,
+  `0772cb34169010481b5aa09dc904e6d604301b5ea4fb5319e5aa06bc675b1247`,
+  `54c30a7cd8ac5e280b586ce1a1d69e2f68cb035fec58b1a469f4e9ab038b7f19`,
+  `7a1b520bc7232128917bdc9223190b425033a31066ce2b7ee021d8a5a2dbecc8`;
+  the control
+  `150c99afb724cb0ade43920a2046afda80c95773a4922324502f2921cdd7479a`;
+  outcome: fail, the exponent clause (4), with (1), (2), (3) and (5)
+  passing and (6) reported: (1) every ledger line balanced and
+  `conserved_at_every_completed_tick` true at every tick of every world
+  (at the end of `pp_r4`, `light_a` sourced 983040 = current 421226 +
+  escaped 383590 + absorbed 178224; the momentum line and the bodies'
+  momentum line (0, 0, 0) throughout); (2) the control's register (0, 0,
+  0) at every tick, with 378 absorptions of its own light; (3) the two
+  registers equal and opposite at every tick of every two-body world; (4)
+  F(r) on B, the mean push per interval over the last 32 ticks, 742.81,
+  252.81, 89.75, 13.19 and 2.41 quanta per interval at r = 4, 6, 8, 12,
+  16 (the window sums 23770, 8090, 2872, 422, 77; r²F 11885, 9101, 5744,
+  1899, 616), exponent −4.14 ± 0.37, outside −2.0 ± 0.2; (5) like charges
+  apart (A's push on −X, B's on +X) and opposite charges together at every
+  r, the opposite-charge series the exact negation of the like-charge
+  series tick by tick; (6) the diagonal, B at (d, d, 0): |F| = 133.42,
+  66.69, 19.75 and 6.98 at d = 3, 4, 6, 8 (Euclidean 4.24, 5.66, 8.49,
+  11.31) against the axis fit at the same distance 849.2, 257.9, 48.09
+  and 14.61, the ratios 0.157, 0.259, 0.411 and 0.478, the push along the
+  diagonal exactly (the window sums 3019, 1509, 447, 158 on both axes, 0
+  on z). The fail is the one the mean field predicted, to within a
+  quantum per interval (predicted 742, 252, 89, 13.1, 2.4; −4.2 ± 0.4;
+  the ratios 0.16, 0.26, 0.41, 0.47): at these r the force falls like the
+  forward share that never scatters, 4096 × (6/11)^(r−1) = 665, 198, 59,
+  5.2 and 0.46 (the rest of F, 78, 55, 31, 8.0 and 1.9, is the scattered
+  field, drained by the open boundary and still rising at the far r),
+  that is, the short range of the declared table and not the box or the
+  transient alone (the mean field at the plan's settings gives −3.7 ±
+  0.3, in free space at its steady state −3.2 ± 0.1). The records stay
+  outside the tree; `record.json` holds the integers and the
+  [README](../examples/nature/README.md#what-the-static-runs-show) the
+  tables. Run times with two runs in parallel on four cores shared with
+  other work: 156, 197, 239, 341, 448 s for the like-charge axis worlds,
+  154, 328, 247, 342, 443 s for the opposite-charge ones, 209, 264, 396,
+  570 s for the diagonal, 111 s for the control.
+
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
 - **Confronts.** The deflection of light by a mass, α = 4GM/(c² b) for
