@@ -405,9 +405,9 @@ reaches the on-axis mark (7, 5, 5) alone: the first release leaves (1, 5, 5)
 in the interval after `bind` fires and arrives at tick 7, and one click of
 amount 2 follows every tick from 7 to 24, eighteen clicks at one mark and
 none at the six others. The eye panel shows one spot at that mark, growing
-with its hits. With the split table of feature 12 the released light reaches
-every Node of the screen and the whole screen clicks; the world file does
-not change for that, only the catalog's `spread` entry and the engine. The
+with its hits. With the split table of feature 12 the released light can
+reach every Node of the screen; a world declares it with `spread` on
+`light`, `screen_spread.json` below. The
 record, made once: `source_sha256`
 `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
 `initialization_sha256`
@@ -417,14 +417,32 @@ interval (276 by tick 24, 214 escaped at the open boundary, 62 in the
 world), momentum (0, 0, 0), the charge ledger electron -24, every audit line
 balanced, `conserved_at_every_completed_tick` true.
 
-**Not shown.** The simpler form, one lamp holding 8 as resident content and
-releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),
-"Resident content"), releases nothing on `main` today: `SpatialEngine.begin`
-schedules a Node whose record holds stock of a source family, but
-`SpatialNode.plan_cycle` returns before planning at a Node with no active
-source, no field content and nothing received, and no test covers
-`release_stock`. The bound group is used instead, the electron at rest of
-this README's dictionary.
+**After feature 12 (2026-09-17, `field-spreading-v1`): one of the seven
+marks clicks, the on-axis one, twelve times.** `screen_spread.json` is
+`screen.json` with `spread` `[6, 1, 1, 1, 1, 1]` declared on `light` (the
+catalog's table) and nothing else changed, run once for 24 ticks
+(`initialization_sha256`
+`34ce343eeb204d9a8b7b1b0c6e6b5c79a21eeb799f717b76d13514a18718fa2d`, `source_sha256`
+`3426aa1ddf25f30348d6238edb66b0454e484a237f40fcf9367bdb948d99c2c9`). The released rays of 2 spread at the
+first Node they reach: 2 gives 1 forward by the table and the remainder 1
+through the entry the group's phase selects, forward at phases 0 to 4,
+backward at 5, transverse at 6 and 7, and a single quantum then turns the
+same way at every Node, so in 24 ticks the +X line still feeds the on-axis
+mark alone, with less: (7, 5, 5) clicks 12 times, amount 24 in
+all, from tick 7, the six other marks never; light released 276, 207
+escaped, 69 in the world at tick 24, electron 8, momentum (0, 0, 0), every
+ledger line balanced. The whole screen clicking waits for a table and a
+phase width in which the turned quanta reach it, which experiment A1
+confronts.
+
+**Resident content.** The simpler form, one lamp holding 8 as resident
+content and releasing from its stock ([released field](../../docs/SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1),
+"Resident content"), released nothing before feature 12: `SpatialEngine.begin`
+scheduled a Node whose record holds stock of a source family, but
+`SpatialNode.plan_cycle` returned before planning at a Node with no active
+source, no field content and nothing received. Fixed on 2026-09-17 with
+`field-spreading-v1` (the `resident` case of `test_field_spreading.py`); the
+bound group is kept here, the electron at rest of this README's dictionary.
 
 ### Run and render
 
