@@ -403,6 +403,25 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
     start = page.index('id="style-default">') + len('id="style-default">')
     assert json.loads(page[start : page.index("</script>", start)]) == style
+    # The model owner's defaults of 2026-09-17: the whole path as one bright line,
+    # hue by phase on the arrowhead only, no text around the board, autoplay.
+    assert style["sizes"]["trail_links"] == 10 and style["sizes"]["ray_width_px"] == 6
+    assert style["sizes"]["trail_width_px"] == 6 and style["sizes"]["trail_fade"] == [1.0, 0.0]
+    assert style["colors"]["families"]["default"]["hue"] == "fixed"
+    assert style["draw"]["hue_by_phase"] == "arrowhead"
+    assert set(style["draw"]["page_text"]) == {
+        "header",
+        "record",
+        "legend",
+        "captions",
+        "totals",
+        "tick_counter",
+        "controls",
+    }
+    on = {k for k, v in style["draw"]["page_text"].items() if v}
+    assert on == {"header", "tick_counter"}
+    assert not any(style["draw"]["labels"].values())
+    assert style["motion"]["autoplay"] is True and style["motion"]["loop"] is True
     bad = copy.deepcopy(style)
     bad["sizes"]["ray_thickness"] = 1
     with pytest.raises(ValueError, match="unknown keys in style.sizes"):
@@ -413,4 +432,4 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     start = inlined.index('id="style">') + len('id="style">')
     assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 9
     start = inlined.index('id="style-default">') + len('id="style-default">')
-    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 4
+    assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 6

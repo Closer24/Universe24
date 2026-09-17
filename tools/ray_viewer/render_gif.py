@@ -87,7 +87,9 @@ STYLE_KEYS = {
         "external_bodies",
         "apparatus",
         "trails",
+        "hue_by_phase",
         "silent_field_events",
+        "page_text",
     ),
     "caption": (
         "kinds",
@@ -102,6 +104,8 @@ STYLE_KEYS = {
     ),
     "motion": (
         "rotation_seconds_per_turn",
+        "autoplay",
+        "loop",
         "page_ticks_per_second",
         "gif_degrees_per_frame",
         "gif_frames",
