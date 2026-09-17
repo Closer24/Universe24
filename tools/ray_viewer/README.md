@@ -156,6 +156,28 @@ inlines that file and takes every default of its arguments from the file's
 | `initialization.json` | families and which are ray fields (and fields of a family, with their `release`), sources (`seeds`), Detector marks (`detectors`), the declared couplings (`ray_interactions`, `spatial_couplings`) |
 | `ray-recording.json` (optional) | a per-tick ray listing: phase per Link, and the ray-event fields `steps`, `outbound`, `event_ports`, `event_shares`, `detector` when the recording carries them |
 
+**The reading of a group (loop-binding-v1, 2026-09-17).** Nothing at a Node
+names a bound group (Highlights 3.4, "binding is a periodic orbit of the
+meeting rule"), so the extractor reads it from the record: the matter rays
+that keep meeting each other are read at the Nodes where they meet, and when
+their states there (Node, heading, amount, phase) recur with a period over a
+window of at least two periods, the rays that meet there within the window
+are a group and the Nodes they walk its ring (at least four distinct Nodes;
+the components that walk one ring are one group). The run document's
+`groups` lists each with its `ring` (the closed walk of its Nodes from the
+lowest through the lowest Port), `ring_size`, `content` (in all and per
+family in `families`), `period`, `clock` (the phase advance per interval of
+each family, read from the recording; unknown without one) on its
+`phase_steps`, `from_tick`, `to_tick` and `rays`; each ray carries its
+`group` (an index or null) and each row of `ticks_data` the `bound` content
+per family, which the totals caption can name (`{bound}`). The rays of a
+group are drawn as any matter rays, spheres moving on the ring. On
+`examples/nature/ring.json` the reading is one group on the unit square,
+content 8, period 4, clock 2 on the 8-step circle, from tick 1; on
+`ring_open.json` none. A visitor that meets a group later, or a fragment
+that leaves it, lies outside the window, so a group that breaks reads with
+its `to_tick`.
+
 The runner's record alone gives rays, trails, markers, amounts, momentum
 and per-tick totals (initial plus the sources through the previous tick
 minus the escapes, which equals a recording's totals tick by tick); it does

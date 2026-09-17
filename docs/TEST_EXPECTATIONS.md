@@ -30,7 +30,6 @@ Feature tests of issue #169 join this table as they land.
 | --- | --- | --- | --- |
 | `test_a5_static.py` | 3 | 5.92 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step) and the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), pinned below |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
-| `test_bound_group_motion.py` | 5 | 0.90 | Issue #169 feature 8c: a bound group carries a momentum register and steps one Link when a whole content has accumulated on an axis, pushed by the field rays its binding rule's table names (`bound-group-motion-v1`) |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
@@ -42,6 +41,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_disturbance_engine.py` | 23 | 0.02 | Carrier Node cycle: budget wait, fixed Link time, split and whole-record transport, exchange remainders, capacity-failure atomicity |
 | `test_energy_audit.py` | 9 | 0.31 | Funded ray emission with recoil and absorption under the audit (running branch, untouched) |
 | `test_field_spreading.py` | 10 | 0.90 | Issue #169 feature 12: every Node that field content reaches releases it again by the family's split table, amounts adding per heading, the phase of the coherent sum, whole quanta leaving and the shares below one quantum owned by the Node's remainder registers until they reach one (`field-spreading-v1`, `field-remainder-v1`); the source sign on the field ray; a returned field quantum walking back until something takes it |
+| `test_helium_orbit.py` | 1 | 7.6 | The helium orbit of E8 in isolation on a 7^3 board: a proton-family body releasing its spreading light (`field-spreading-v1`, `field-remainder-v1`), an electron held at a launcher body by an output delay and released into that field, pushed at every Node by the momentum-table coupling (`ray-momentum-turn-v2`), the recoils, the transparent nucleus and its sink, the world ledger exact |
 | `test_initialization.py` | 42 | 0.00 | Initialization parser: one fixed schema, resolved references, no physics from names, bounded expression language |
 | `test_integer_arithmetic.py` | 75 | 0.00 | Bounded integer arithmetic: signed and ceiling division, remainders, component operations, overflow before cancellation |
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
@@ -51,6 +51,8 @@ Feature tests of issue #169 join this table as they land.
 | `test_local_field_rules.py` | 11 | 0.13 | Local field rule: six-Port reads, retained and outgoing owners, guarded joint proposals |
 | `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
+| `test_loop_binding.py` | 7 | 0.70 | Issue #169 feature 14: a bound group is a periodic orbit of the ordinary meeting rule on a ring of Nodes, nothing at a Node names it, the record reads it, and the held form's keys are rejected (`loop-binding-v1`) |
+| `test_momentum_turn_walk.py` | 4 | 7.8 | The fix of `ray-momentum-turn-v2`: a push keeps the DDA's accumulators, so a ray pushed at every interval walks the DDA line of its running register; the staircases of a push of 1 and of 8 per interval on a ray of 64, the flip, the cancel, the shrink and the lift by hand, and two boards where a field ray meets the ray at every Node |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_nature_catalog.py` | 4 | 0.12 | Data gate: `catalog/nature.json` parses, every record and reference resolves, every undecided entry names its decider and is tabled in `CATALOG.md`, the register's entries agree, and every runnable ray and decided coupling is built from the file and run for two ticks (pinned below) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
@@ -59,6 +61,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
 | `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
+| `test_ray_binding.py` | 2 | 1.43 | Issue #169 feature 8, gravity by delay: a light ray is delayed by a declared table per Port at the field of a mass and turns toward it, G_eff x N^2 one integer over four widths (`ray-binding-v1`; its held form removed on 2026-09-17 by feature 14) |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
 | `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
 | `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
@@ -68,12 +71,13 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
-| `test_ray_viewer.py` | 5 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets, the compressed inline page and the screen example world, pinned below (no browser) |
+| `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`; the walk kept through a push since `ray-momentum-turn-v2`, [the walk kept through a push](#the-walk-kept-through-a-push)) |
+| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the compressed inline page, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
 | `test_retention.py` | 48 | 0.78 | Generated-output retention: 24-hour expiry, writer leases, protected paths |
+| `test_screen_loop.py` | 1 | 7.7 | The screen with a loop source of E9 in isolation: the unit-square ring of `loop-binding-v1` with rays of amount 4 releasing its light (`released-field-v1`) that spreads by the catalog's table with the Node-owned remainder (`field-spreading-v1`, `field-remainder-v1`) onto seven Detector marks, the ring read as one group of content 32 while it radiates, the first clicks and the world ledger exact |
 | `test_spatial_coupling.py` | 53 | 1.01 | Outward-field coupling to carriers: signed rotation, exchange and the equal-and-opposite field reaction |
 | `test_spatial_decay.py` | 10 | 0.00 | Finite decay: integer extinction and signed dissipation |
 | `test_spatial_interactions.py` | 16 | 0.05 | Atomic carrier/local-field exchange with delayed-commit guards |
@@ -1056,10 +1060,22 @@ from the event stream alone (no per-tick recording, so no phase):
   reads the two G clicks and "field escaped: G 8", tick 4 the two Detector
   PASS lines and "field escaped: G 12", tick 5 "escaped: quanta 6" and
   "field escaped: G 10", tick 6 the G click and "field escaped: G 8";
-  `record.released_field` is `released-field-v1`. The first pin had one
-  release at (2,1,1), at tick 2 only, from the released-field text ("in the
-  interval it departs"): the first run showed the engine also releasing at
-  tick 1, while both rays were held at (2,1,1) by the coupling's `delay`
+  `record.released_field` is `released-field-v1`. Since 2026-09-17 (feature
+  14, `loop-binding-v1`), the six-heading release of a held ray gone, a ray
+  waiting under the coupling's `delay` releases the five headings other than
+  its own like any ray: the tick-1 release sources G 10 (the four transverse
+  spokes G 2, the +X and -X spokes G 1, one from each waiting ray, read as
+  G rays of 2, 2, 2, 2, 1, 1), the tick-3 clicks are one G 1 (the +X G ray
+  of the ray heading -X), the clicks are four, the field escapes are G 8,
+  10, 10, 8 (the two axial packets of tick 1 carrying 1 each), the
+  `source_totals` G 40, `escaped_totals` G 38 becomes 36, `in_world` G 0, 0,
+  10, 12, 12, 12, 4, and tick 3's caption reads one Detector PASS and tick
+  4's ends "field escaped: G 10"; everything else as pinned, at the first
+  run on the new engine. The screen geometry test was deleted with the
+  retired `screen.json` (E6). The first pin had one release at (2,1,1), at
+  tick 2 only, from the released-field text ("in the interval it departs"):
+  the first run showed the engine also releasing at tick 1, while both rays
+  were held at (2,1,1) by the coupling's `delay`
   (source G 40, not 30; a fourth click at tick 3). That difference between
   the text and the implementation for a retained ray was reported with this
   fixture as the reproduction and is settled by feature 8; this test pins
@@ -1610,7 +1626,9 @@ nonzero block. `relative_ports` gives (0, 1, 2, 3, 4, 5) for Port 0 and
   its `state.json` `c13cd23158e5e461f171a8e2241ff793a24ccea531bd25ef54b28cfb2623e560`,
   both taken on main `f3809be` before feature 12 (final totals `G` 16 and
   `electron` 5, `G` 9 escaped), and its run record carries no
-  `field_spreading` key.
+  `field_spreading` key. Since 2026-09-17 (feature 14, `loop-binding-v1`)
+  the `state.json` digest is `026ac5ed...`, the snapshot having lost the
+  empty `bound_groups` key; `events.jsonl` is unchanged.
 
 ## Ray-event audit
 
@@ -1858,6 +1876,25 @@ assigning `delay` 1 to both participants, invariant energy. The test is
 parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
 `criterion`. Pinned before the first run:
 
+**Since 2026-09-17 (feature 14, `loop-binding-v1`).** The held form was
+removed ([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)),
+so the cases `binding`, `unbinding` and `ray_delay` below are deleted and
+the test is parametrized over `gravity` and `criterion` alone, with the
+mass no longer a held pair but resident content: one record `mass` at
+(10,10,10) holding 16 of `n` and emitting nothing, whose stock releases
+floor(16 / 4) = 4 of `G` on every heading every interval from the cycle of
+tick 0, with phase 0 (released-field-v1, "resident content"); the two `n`
+lamps and `bind` are gone. The lines of (d) and (e) hold with three
+changes, pinned before the first run on the new engine: the G total and
+source after tick t are 24 t (24, 48, ..., 264 after tick 11, the first
+releases of the cycle of tick 0 escaping at tick 11, so the G total plus
+the G escaped equals the source); the G ray met at (10,14,10) after tick 6
+and the recoil have phase 0, not 2 (a record releases with phase 0); and in
+(e) the G total after tick 8 is 192, the mass M = N / 4 being the
+criterion's fraction rather than a sum of rates. The `n` total is 16 as
+before. The text of (a) to (c) stays below for the record of what the held
+form was.
+
 - (a) `binding`: after tick 1 the two `n` rays are at the center with
   headings 0 and 1, amount 8, phase 1, steps 1, masks 1 and 2 and shares
   (8, 0, 0, 0, 0, 0) and (0, 8, 0, 0, 0, 0). From tick 2 the rule fires
@@ -1940,9 +1977,16 @@ parametrized over `binding`, `unbinding`, `ray_delay`, `gravity` and
   passage, exact), G_eff = alpha x b / (4 M) = 64 / N^2 (1/1024, 1/16384,
   1/262144, 1/67108864), and G_eff x N^2 = 64 for all four N, exactly.
 
-## Bound group motion
+## Bound group motion (deleted on 2026-09-17)
 
-`test_bound_group_motion.py` builds its boards inline under the shared
+`test_bound_group_motion.py` was deleted on 2026-09-17 with
+`bound-group-motion-v1` by feature 14, `loop-binding-v1`
+([binding as a loop](SPATIAL_FIELDS.md#binding-as-a-loop-loop-binding-v1)):
+a bound group is rays in motion on a ring, and its motion as a whole is its
+corners shifting, which is open. The pins below stay for the record of what
+the register-driven motion was.
+
+`test_bound_group_motion.py` built its boards inline under the shared
 Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
 no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
 ([bound group motion](SPATIAL_FIELDS.md#bound-group-motion-bound-group-motion-v1)).
@@ -2054,7 +2098,7 @@ run:
 `test_ray_momentum_turn.py` builds its boards inline under the shared
 Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
 no decay, the six unit-axial headings in Port order) on an open 21^3 lattice
-([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)).
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)).
 The family `m` has rest rate 1 on a 3-bit phase (8 steps); `f` is a plain
 family of rate 0, the field ray, with no release around it; both have 8 ray
 slots. A vector field `momentum` (three signed components) is bound to both
@@ -2077,7 +2121,8 @@ Pinned before the first run:
   shares (0, 0, 2, 0, 0, 0); both are resident at the center (10,10,10)
   after tick 6. In the cycle of tick 6 the coupling fires: the push is -1 x
   2 x (0, 1, 0) = (0, -2, 0), toward the source, and the register becomes
-  (8, 0, 0) + (0, -2, 0) = (8, -2, 0), the accumulators (0, 0, 0); the
+  (8, 0, 0) + (0, -2, 0) = (8, -2, 0), the accumulators (0, 0, 0), kept
+  from the walk on the line (zero on a unit-axial heading; `ray-momentum-turn-v2`); the
   amount, phase, steps, heading index 0, mask and shares are untouched, and
   no event is stamped; `ray_push` at tick 6 at the center: family `m`,
   amount 8, before (8, 0, 0), after (8, -2, 0), field `f`, field amount 2,
@@ -2101,7 +2146,7 @@ Pinned before the first run:
   and (0, -2, 0), the m ray's register, the f ray's -2 while on the board);
   every ledger balanced, `m` 8 and `f` 2 throughout (`f` 0 and escaped 2
   from tick 17), the runner's `conserved_at_every_completed_tick` true with
-  `ray_momentum_turn: "ray-momentum-turn-v1"` and no `bound_group_motion`
+  `ray_momentum_turn: "ray-momentum-turn-v2"` and no `bound_group_motion`
   key; final totals `m` 8, `f` 0, momentum (0, -4, 0);
 - (b) `cancel`: the lamps of (a) and a third lamp at (12,18,10) emitting `f`
   2 along -Y, the field ray from the +Y side, `{"f": -1}`, 14 ticks. The
@@ -2148,11 +2193,17 @@ Pinned before the first run:
   +X, the binding rule with `{"f": -1}`), 14 ticks. The SHA-256 digests of
   `events.jsonl` and `state.json`, computed on the source before the
   feature (main `c21e03e`), are pinned in the test (`IDENTICAL`); no
-  `ray_push` record and no `ray_momentum_turn` key, every ledger balanced;
+  `ray_push` record and no `ray_momentum_turn` key, every ledger balanced.
+  Since 2026-09-17 (feature 14, `loop-binding-v1`) the bound group world
+  is gone with the held form and only the `meeting` world remains, its
+  `events.jsonl` digest unchanged and its `state.json` digest re-pinned
+  (`d824629b...`), the snapshot having lost the `bound_groups` key;
 - (e) `rejected`: a table naming a participant family on a rule that
-  assigns (`delay` 1) or declares `ray_delay`, a table with two unnamed
-  roles (`m x m x f`), a sign of 2, and a rule with neither assignments,
-  outputs nor table are each rejected at initialization; a role that mixes
+  assigns (`delay` 1) or declares `ray_delay` (both since 2026-09-17 the
+  held form removed by `loop-binding-v1`, rejected with a message naming
+  the migration note), a table with two unnamed roles (`m x m x f`), a
+  sign of 2, and a rule with neither assignments, outputs nor table are
+  each rejected at initialization; a role that mixes
   a named and an unnamed family gives `turn_receiver` no receiver (-1, the
   admission's refusal); and a push that would leave a ray with no
   direction fails the cycle: `m` 2 along +X from (4,10,10) meets `f` 2
@@ -2160,12 +2211,164 @@ Pinned before the first run:
   the push 1 x 2 x (-1, 0, 0) = (-2, 0, 0) would make the register
   (0, 0, 0), and the seventh `step()` raises ("cannot stop a ray").
 
+## The walk kept through a push
+
+`test_momentum_turn_walk.py` is the test of `ray-momentum-turn-v2`
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2),
+"a push keeps the walk"), the fix the helium-orbit run
+([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn))
+asked for: a push moves the register and keeps the DDA's three
+accumulators, the momentum-intervals each axis has banked toward its next
+Link, so that under a push at every interval the ray walks the DDA line of
+its running register. The DDA per interval: every axis adds the register's
+component (its absolute value), the axis furthest ahead steps and loses the
+register's Manhattan length, ties to the lowest axis; a push before the
+departure moves the register and leaves the accumulators as they are. Two
+cases walk the engine's own functions (`pushed_ray`, then `advance_ray` on
+`ray_vector`, the order of the Node cycle) from (0, 0, 0); two build a
+board. Every integer below is computed by hand from the rule and pinned
+before the first run. The test is parametrized over `running`, `kept`,
+`board` and `board_8`.
+
+- (a) `running`: a ray of amount 64 heading +X, the default register
+  (64, 0, 0), pushed by (0, 1, 0) before every departure has the register
+  (64, t, 0) at its t-th Link, of Manhattan length 64 + t. From (0, 0, 0)
+  the accumulators after Links 1 to 8 are (-1, 1, 0), (-3, 3, 0),
+  (-6, 6, 0), (-10, 10, 0), (-15, 15, 0), (-21, 21, 0), (-28, 28, 0),
+  (-36, 36, 0), the x axis ahead each time (the tie at Link 8, 36 against
+  36, to x); at Link 9 the y axis is ahead, 45 against 28, the Link is +Y
+  and the accumulators (28, -28, 0); then +X five times ((18, -18, 0),
+  (7, -7, 0), (-5, 5, 0), (-18, 18, 0), (-32, 32, 0)), +Y at Link 15
+  ((32, -32, 0)), +X four times ((16, -16, 0), (-1, 1, 0), (-19, 19, 0),
+  (-38, 38, 0)), +Y at Link 20 ((26, -26, 0)), +X three times ((5, -5, 0),
+  (-17, 17, 0), (-40, 40, 0)) and +Y at Link 24 ((24, -24, 0)): the Ports
+  x x x x x x x x y x x x x x y x x x x y x x x y, the +Y Links at 9, 15,
+  20 and 24, closer as the register turns (the parabola of a constant
+  push), and the positions from (0, 0, 0): (1,0,0), (2,0,0), (3,0,0),
+  (4,0,0), (5,0,0), (6,0,0), (7,0,0), (8,0,0), (8,1,0), (9,1,0), (10,1,0),
+  (11,1,0), (12,1,0), (13,1,0), (13,2,0), (14,2,0), (15,2,0), (16,2,0),
+  (17,2,0), (17,3,0), (18,3,0), (19,3,0), (20,3,0), (20,4,0). Under v1,
+  the accumulators reset at every push, the same 24 Links were all +X.
+  Pushed by (0, 8, 0) before every departure, the register (64, 8t, 0) of
+  length 64 + 8t: the accumulators after each Link (-8, 8, 0),
+  (-24, 24, 0), (40, -40, 0), (8, -8, 0), (-32, 32, 0), (32, -32, 0),
+  (-24, 24, 0), (40, -40, 0), (-32, 32, 0), (32, -32, 0), (-56, 56, 0),
+  (8, -8, 0), (72, -72, 0), (-40, 40, 0), (24, -24, 0), (88, -88, 0),
+  (-48, 48, 0), (16, -16, 0), (80, -80, 0), (-80, 80, 0), (-16, 16, 0),
+  (48, -48, 0), (112, -112, 0), (-80, 80, 0); the Ports
+  x x y x x y x y x y x y y x y y x y y x y y y x; the positions (1,0,0),
+  (2,0,0), (2,1,0), (3,1,0), (4,1,0), (4,2,0), (5,2,0), (5,3,0), (6,3,0),
+  (6,4,0), (7,4,0), (7,5,0), (7,6,0), (8,6,0), (8,7,0), (8,8,0), (9,8,0),
+  (9,9,0), (9,10,0), (10,10,0), (10,11,0), (10,12,0), (10,13,0), (11,13,0):
+  eleven +X and thirteen +Y Links, the staircase of the running register
+  from along x to past 45 degrees (the register (64, 64, 0) at Link 8 and
+  (64, 192, 0) at Link 24). One push (0, 1, 0) before the first Link and
+  none after is the static register (64, 1, 0) from (0, 0, 0), length 65:
+  +Y at Links 33, 98 and 163 of 200 (the y accumulator 33 against x's 32
+  at Link 33, then one +Y Link per 65), the DDA of the static register
+  exactly, as under v1;
+- (b) `kept`: the register (64, 1, 0) walked 20 Links from (0, 0, 0),
+  accumulators (-20, 20, 0), pushed by (0, 1, 0) is (64, 2, 0) with the
+  accumulators kept, (-20, 20, 0) (under v1 (0, 0, 0)), and its next Link
+  is +X with (-22, 22, 0) (44 against 22, length 66). The flip: the
+  register (64, 10, 0) with accumulators (-20, 20, 0) pushed by (0, 90, 0)
+  is (64, 100, 0), length 164, the accumulators kept; its next five Links
+  are +Y, +X, +Y, +Y, +X (Ports 2, 0, 2, 2, 0) with the accumulators
+  (44, -44, 0), (-56, 56, 0), (8, -8, 0), (72, -72, 0), (-28, 28, 0): the
+  whole Port turns at once when the dominant axis flips, then the
+  staircase of the new register; pushed by (-128, 0, 0) instead it is
+  (-64, 10, 0), length 74, the accumulators kept, and the next Link is -X
+  (Port 1) with (-30, 30, 0). The cancel: the default ray of amount 64
+  heading +X pushed by (0, 1, 0) and then by (0, -1, 0) is the ray it was,
+  equal field by field (no register, accumulators (0, 0, 0)); the register
+  (64, 1, 0) with accumulators (-20, 20, 0) pushed by (0, -1, 0) is the
+  default with (0, 0, 0), the walk starting over when the register returns
+  to the default. The shrink: the register (64, 30, 0) with accumulators
+  (-30, 30, 0) pushed by (-30, 0, 0) is (34, 30, 0), length 64, the
+  accumulators kept (they lie within (-64, 64]); pushed by (-62, -28, 0)
+  it is (2, 2, 0), length 4, which cannot hold them, and the accumulators
+  are (0, 0, 0). The lift: a ray of amount 5 on the table heading
+  (7, -1, 0) walked three Links from (0, 0, 0) has the accumulators
+  (-3, 3, 0) at the table's scale (length 8); pushed by (0, 0, 1) its
+  register is (35, -5, 1), length 41, and the accumulators are lifted by
+  the amount to (-15, 15, 0), the same fraction of a Link against the
+  default register's length 40; its next Link is +X (the tie of 20 against
+  20 to x) with (-21, 20, 1), as the unpushed walk's next Link is +X (4
+  against 4);
+- (c) `board`: an open 28 x 56 x 5 lattice under the shared Detector
+  admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no
+  decay, the six unit-axial headings in Port order), the families `m`
+  (rest rate 1, 3-bit phase), `f` and `g` (rate 0, the field rays), 8 ray
+  slots each, a vector field `momentum` bound through `recoil_field` on
+  every emission; every lamp holds its amount and emits it once, funded, at
+  phase 0 in the cycle of tick 0. Two couplings without outputs: `above`
+  over `[m, f]` with `{"f": -1}` and `below` over `[m, g]` with
+  `{"g": 1}`, so an `f` ray coming down (-Y) and a `g` ray coming up (+Y)
+  each push the m ray by (0, 1, 0) and return reversed. A lamp at
+  (2, 26, 2) emits `m` 64 along +X; after tick t the m ray is at P(t) =
+  (3, 26, 2) plus the position after t - 1 Links of (a) (P(1) = (3, 26, 2),
+  P(9) = (11, 26, 2), P(10) = (11, 27, 2), P(16) = (16, 28, 2), P(21) =
+  (20, 29, 2), P(25) = (23, 30, 2)). A lamp of `f` 1 along -Y stands at
+  P(t) + (0, t, 0) for every t from 1 to 24 whose Link is +X, and a lamp of
+  `g` 1 along +Y at P(t) - (0, t, 0) for t = 9, 15, 20 and 24, the +Y
+  Links (a delivery from below for the tick after a +Y Link would reach the
+  ray's Node a tick early, two pushes in one cycle, and a delivery from
+  above at a +Y Link would send its recoil along with the ray): the f lamps
+  at (3,27,2), (4,28,2), (5,29,2), (6,30,2), (7,31,2), (8,32,2), (9,33,2),
+  (10,34,2), (11,37,2), (12,38,2), (13,39,2), (14,40,2), (15,41,2),
+  (16,44,2), (17,45,2), (18,46,2), (19,47,2), (20,50,2), (21,51,2),
+  (22,52,2) and the g lamps at (11,17,2), (16,12,2), (20,8,2), (23,5,2).
+  So exactly one field ray is resident with the m ray at every tick from 1
+  to 24, none after, and no recoil (walking +Y from an f push, -Y from a g
+  push) meets the ray again; 27 ticks. In the cycle of tick t (1 to 24) the
+  push is (0, 1, 0), `ray_push` at P(t): family `m`, amount 64, before
+  (64, t - 1, 0), after (64, t, 0), field `f` with heading (0, -1, 0), or
+  `g` with (0, 1, 0) at 9, 15, 20 and 24, field amount 1; the departure of
+  that cycle is Link t of (a). After tick t from 2 to 25 the m ray is at
+  P(t) with register (64, t - 1, 0), the accumulators after Link t - 1 of
+  (a), phase t mod 8, steps t, heading index 0, mask 1, shares
+  (64, 0, 0, 0, 0, 0); after tick 1 it has no register and accumulators
+  (0, 0, 0). Without a push the walk continues on the static (64, 24, 0),
+  length 88: after tick 26 the ray is at (24, 30, 2) with (0, 0, 0) (88
+  against 0), after tick 27 at (25, 30, 2) with (-24, 24, 0). The momentum
+  line: sourced = current = (0, 3a - b, 0) after every tick, a the f pushes
+  of the cycles before it (each the push +1 and the reversal +2; the push
+  of the cycle of tick u is booked with the delivery of tick u + 1) and b
+  the g pushes (+1 and -2), nothing escaped through tick 27 (the first recoil reaches a face at
+  tick 31); every ledger balanced; `m` 64, `f` 20 and `g` 4 throughout;
+  the runner records `ray_momentum_turn: "ray-momentum-turn-v2"`,
+  `conserved_at_every_completed_tick` true;
+- (d) `board_8`: the board of (c) on an open 16 x 32 x 5 lattice, the lamp
+  at (2, 14, 2) emitting `m` 64 along +X, the field lamps of amount 8, so
+  every push is (0, 8, 0): after tick t the m ray is at P(t) = (3, 14, 2)
+  plus the position after t - 1 Links of the (0, 8, 0) walk of (a), the f
+  lamps (along -Y) at P(t) + (0, t, 0) for t = 1, 2, 4, 5, 7, 9 and 11, the
+  +X Links, ((3,15,2), (4,16,2), (5,19,2), (6,20,2), (7,23,2), (8,26,2),
+  (9,29,2)) and the g lamps (along +Y) at P(t) - (0, t, 0) for t = 3, 6,
+  8, 10 and 12, the +Y Links ((5,11,2), (7,9,2), (8,8,2), (9,7,2),
+  (10,6,2)); 17 ticks. Links 13 and 12 are both +Y, and Link 13 can be
+  served from neither side, so the pushes stop after tick 12 and the walk
+  goes on with the static register (64, 96, 0), length 160: positions
+  after ticks 1 to 17: (3,14,2), (4,14,2), (5,14,2), (5,15,2), (6,15,2),
+  (7,15,2), (7,16,2), (8,16,2), (8,17,2), (9,17,2), (9,18,2), (10,18,2),
+  (10,19,2), (10,20,2), (11,20,2), (11,21,2), (12,21,2); the register
+  (64, 8(t - 1), 0) after tick t from 2 to 13 and (64, 96, 0) after, the
+  accumulators after tick t from 2 to 13 those after Link t - 1 of the
+  (0, 8, 0) walk, then (72, -72, 0), (-24, 24, 0), (40, -40, 0),
+  (-56, 56, 0) after ticks 14 to 17 (+Y, +X, +Y, +X: 72 against 88, 136
+  against 24, 40 against 120, 104 against 56). `ray_push` at tick t (1 to
+  12) at P(t): before (64, 8(t - 1), 0), after (64, 8t, 0), field amount
+  8. The momentum line: sourced = current = (0, 24a - 8b, 0), nothing
+  escaped through tick 17 (the first recoil reaches a face at tick 18);
+  every ledger balanced; `m` 64, `f` 56, `g` 40 throughout.
+
 ## Loop binding
 
 `tests/test_loop_binding.py` is the test of feature 14, binding as a loop
 (`loop-binding-v1`, [loop binding](LOOP_BINDING.md)), pinned here on
-2026-09-17 before the module exists, as Highlights 5.5 requires; it is
-written when the feature is implemented, after feature 8b. It builds the
+2026-09-17 before the module exists, as Highlights 5.5 requires, and written
+the same day when the feature landed, after feature 8b (the cases `record`
+and `rejected` below were pinned then, before their first run). It builds the
 unit-square ring of `examples/nature/ring.json` and `ring_open.json`
 inline (and does not load the example files): an open 12 x 12 x 11 board,
 `link_ticks` 1, `metric: "links"`, pace 1/1, the six unit-axial headings in
@@ -2183,11 +2386,12 @@ amounts by the catalog's Born table on the sum (`[8, 7, 4, 1, 0, 1, 4, 7]`,
 `"of": "sum"`, `"index": "phase_difference"`) and `{"rest_of": 0}`. A tick
 t is one `step()`; the state after tick t is read from `inventory_view()`;
 a ray is written as (Node, heading index, amount, phase, steps, mask,
-shares). The test is parametrized over `ring`, `open`, `slow`, `half` and
-`quadrature`. The engine of `main` at `c21e03e` was run once on every case
-after the pins were written (the check the design allows): its column is
-identical to the hand column below in every line, so one column is given.
-Pinned before the first run:
+shares). The test is parametrized over `ring`, `open`, `slow`, `half`,
+`quadrature`, `record` and `rejected`. The engine of `main` at `c21e03e`
+was run once on every case after the pins were written (the check the design
+allows): its column is identical to the hand column below in every line, so
+one column is given; on the landed engine every line of (a) to (e) held at
+the first run. Pinned before the first run:
 
 - (a) `ring` (`ring.json`, the Port form, r = 2): after tick 1 each corner
   holds two rays of amount 1, phase 2, steps 1, each carrying its lamp's
@@ -2213,9 +2417,10 @@ Pinned before the first run:
   and in the sources (the lamps hold minus their rays' momentum, (-1,0,0),
   (0,-1,0), (0,-1,0), (1,0,0), (1,0,0), (0,1,0), (0,1,0), (-1,0,0)), the
   charge line electron -24, every ledger line balanced,
-  `conserved_at_every_completed_tick` true; the snapshot's `bound_groups`
-  is empty at every tick and no `bound_tick` is written; the runner records
-  `ray_meeting: "ray-meeting-conversion-v1"`;
+  `conserved_at_every_completed_tick` true; the snapshot has no
+  `bound_groups` key (the design's "empty at every tick", the key itself
+  gone with the held form) and no `bound_tick` is written; the runner
+  records `ray_meeting: "ray-meeting-conversion-v1"`;
 - (b) `open` (`ring_open.json`, the Born form in phase, d = 0): after tick
   1 exactly the lines of (a). In the cycle of tick 1 input 0 at each corner
   is the resident ray with the lower heading index (the L ray at P0 and P2,
@@ -2257,7 +2462,134 @@ Pinned before the first run:
   table output takes floor(2 x 4 / 8) = 1 and the rest output 1, so the
   amounts are reproduced and the corner bookings are those of (a); the
   state after tick t + 4 equals the state after tick t from t = 2, electron
-  8, none escaped, through tick 6.
+  8, none escaped, through tick 6;
+- (f) `record`: the worlds of (a) and (b) through `run_initialization` for
+  16 ticks. The run record carries `loop_binding: "loop-binding-v1"` and
+  `ray_meeting: "ray-meeting-conversion-v1"`, no `bound_group_motion` key,
+  `conserved_at_every_completed_tick` true; no `bound_tick` and no
+  `bound_group_step` event exists; the `spatial_cycle` records of the
+  corners carry the momentum of the two quarter turns as their
+  `source_delta`: in every cycle of ticks 1 to 15 of (a) (2, 2, 0) at P0,
+  (-2, 2, 0) at P1, (-2, -2, 0) at P2, (2, -2, 0) at P3, and in the cycle
+  of tick 1 of (b) (1, 3, 0), (-1, 3, 0), (-1, -3, 0), (1, -3, 0) with no
+  momentum booked at any corner in the cycle of tick 2; the final totals
+  are electron 8 and momentum (0, 0, 0) for (a), electron 0 with 8 escaped
+  for (b). The ray viewer's extractor
+  ([ray viewer](../tools/ray_viewer/README.md)), reading the record of (a)
+  with its phase recording (`record_sidecar.py`), reports exactly one
+  group: ring `[P0, P1, P2, P3]` (the closed walk from the lowest Node
+  through the lowest Port), ring size 4, content 8, families
+  `{"electron": 8}`, period 4, clock `{"electron": 2}` on phase steps
+  `{"electron": 8}`, read from tick 1 to tick 15 (the emissions of tick 0
+  carry no recorded phase), over 120 rays, each of which carries `group` 0
+  and every other ray `group` None; the tick rows carry `bound`
+  `{"electron": [8]}` at ticks 1 to 15 and nothing at ticks 0 and 16.
+  Without the phase recording the reading is the same group with period 1
+  (the pattern of Nodes, headings and amounts is the same every interval)
+  and clock None. The record of (b) reads no group and no `bound` content;
+- (g) `rejected`: `ray_delay` 1 on the held rule of feature 8 (`n x n`
+  without outputs assigning `delay` 1 to both), `ray_delay` 1 on the
+  corner rule, and `{"electron": -1}` as `momentum_table` on the held rule
+  are each rejected at initialization with a message that says "removed by
+  loop-binding-v1" and names `docs/MIGRATION.md`. The held rule alone
+  parses and is a wait, not a hold: on the board of (a) with it in place of
+  `corner`, the two rays at each corner after tick 1 wait one interval at
+  their event Node (after tick 2 they are still there with steps 0 and
+  delay 0), are met by nothing, leave in the cycle of tick 2 on their
+  unchanged headings, off the square, and after tick 7 the eight rays are
+  at the board's edge, at (0,5,5), (0,6,5), (5,0,5), (5,11,5), (6,0,5),
+  (6,11,5), (11,5,5) and (11,6,5), the corners empty from tick 3, electron
+  8, none escaped, momentum (0, 0, 0), charge -24, every line balanced.
+
+## The screen with a loop
+
+`tests/test_screen_loop.py` is the isolated test of the demonstration E9
+([the screen with a loop](../examples/nature/README.md#the-screen-with-a-loop-the-ring-radiating-on-seven-marks),
+[E9](EXPERIMENTS.md#e9-the-screen-with-a-loop-source-the-ring-radiating-on-seven-marks)),
+pinned here on 2026-09-17 before its first run, as Highlights 5.5 requires. It
+builds the world of `examples/nature/screen_loop.json` inline (and does not
+load the file): an open 12 x 11 x 11 board, `link_ticks` 1, `metric:
+"links"`, pace 1/1, the six unit-axial headings in Port order, the family
+`electron` (charge -3, 8 ray slots, rest rate 1) and the family `light`
+(charge 0, rest rate 0, 24 ray slots) declared `field_of` `electron` with
+`release` [1, 4] and `spread` [6, 1, 1, 1, 1, 1], both on a 3-bit phase (8
+steps), a vector field `momentum` bound through `recoil_field` on every
+emission; eight lamps, two at each corner of the unit square P0 = (1,5,5),
+P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6) in the plane y = 5, each holding 4
+quanta and emitting them once, funded and directed, at phase 0 in the cycle
+of tick 0: the R lamps on +X at P0, +Z at P1, -X at P2, -Z at P3 and the L
+lamps on +Z at P0, -X at P1, -Z at P2, +X at P3 (the lamps of `ring.json`
+with Y read as Z); the one rule `corner`, the Port form of the loop-binding
+expectations above; seven Detector marks at (7, 2, 5) through (7, 8, 5),
+setting [1, 1], seed 0. One test, run through the runner for 32 ticks (24 if
+the first run shows 32 to be slow: a shorter run of the same world is a
+prefix of the same record, so the integers pinned at the earlier ticks are
+those of the first run either way), read from `run.json`, `events.jsonl`
+and the ray viewer's extractor with the recording of `record_sidecar.py`.
+
+Written before the first run (the structure, all of it computed from the
+rules): the run record carries `loop_binding: "loop-binding-v1"`,
+`released_field: "released-field-v1"`, `field_spreading:
+"field-spreading-v1"`, `field_remainder: "field-remainder-v1"`,
+`released_fields` `[{"field": "light", "field_of": "electron", "release":
+[1, 4]}]`, `spreading_fields` `[{"field": "light", "spread": [6, 1, 1, 1,
+1, 1]}]` and `ray_layer_families` with `light` in a layer of its own (no
+rule names it, so it crosses the ring's Nodes unmet and spreads there like
+at any Node); `conserved_at_every_completed_tick` is true and every audit
+line is balanced at every completed tick; the electron line reads initial
+32, sourced 0, current 32, escaped 0, annulled 0, absorbed 0 at every tick
+(the source stays bound while it radiates: a release is booked as a source
+of `light`, not paid by the ray, Highlights 3.15), the charge line electron
+-96; the light line reads sourced 40 (t - 1) after tick t (the lamps' rays
+are fresh at tick 0 and release nothing; from the cycle of tick 1 each of
+the eight ring rays, amount 4, releases floor(4 / 4) = 1 on the five Port
+headings other than the one it departs on, 40 per interval, 1240 by tick 32),
+current + escaped = sourced with the registers counted as current, annulled
+and absorbed 0; the momentum line reads (0, 0, 0) sourced and current at
+every tick (`light` binds no momentum field, so a spread books none, and
+the two quarter turns of every corner are booked as that corner's source in
+its `spatial_cycle` record, (8, 0, 8) at P0, (-8, 0, 8) at P1, (-8, 0, -8)
+at P2, (8, 0, -8) at P3 in the cycle of every tick from 1, summing to zero);
+the corners' cycle records book `light` 10 each per interval (the two
+departing rays' five headings). No event of the kinds `bound_tick`,
+`bound_group_step`, `ray_push`, `inverse_split`, `detector_return`,
+`field_returned` or `external_body_absorbed` exists; the event kinds are
+those of the host's cycle, `spatial_cycle`, `spatial_sent`,
+`spatial_received`, `spatial_escaped`, `field_spread`, `detector_click` and
+`detector_pass` only. The extractor, reading the record with its recording,
+reports exactly one group: ring `[P0, P1, P2, P3]` (the closed walk from the
+lowest Node through the lowest Port: (1,5,5), (2,5,5), (2,5,6), (1,5,6)),
+ring size 4, content 32, families `{"electron": 32}`, period 8 (the
+catalog's rate 1 closes the square in two circuits, 4 x 1 = 4 is not 0 mod
+8, E5's `slow` case), clock `{"electron": 1}` on phase steps `{"electron":
+8}`, from tick 1 to tick T - 1 for a run of T ticks (the emissions of tick 0
+carry no recorded phase); every tick row from 1 to T - 1 carries `bound`
+`{"electron": [32]}`; the group's rays are electron chains only, since the
+light that crosses the corners is a field family. Every `detector_click` is
+of family `light`, amount 1 (the field is whole quanta released where the
+registers fill), bit 1, at one of the seven marks; the first click is at the
+on-axis mark (7, 5, 5), fed by the axis line from P1 (two fresh quanta per
+interval, the merged +X releases of P1's two departing rays, and P1's
+register releases), before E6's tick 19 (E6's beam was 2 per interval from
+(1, 5, 5), one Node farther and without a corner's registers behind it);
+within the run's few dozen ticks no mark off the axis clicks (a transverse
+release takes eleven arrivals at one Node, E6 saw the first pair at tick
+82), and if one does, its mirror mark (7, 10 - y, 5) clicks in the same tick
+with the same amount, the world being symmetric under y -> 10 - y.
+
+Read from the record of the first run of this board (2026-09-17, 32 ticks,
+2.9 s for the run and 4.9 s for the recording and the reading, so 32 ticks
+stay) and pinned then, as the run's integers rather than computed by hand
+(the field's integer state at a mark is the sum of many spreads): seven
+clicks, all at the on-axis mark (7, 5, 5), family light, amount 1, bit 1,
+through Port 1 (the -X face, the axis line's arrival), at ticks 11, 15, 18,
+22, 27, 27 and 31 (two quanta of different phases in the same interval at
+tick 27), no click off the axis and no `detector_pass`; the light line after
+tick 32: sourced 1240, current 1016 (rays and registers), escaped 224
+(after tick 2: 40, 40, 0; tick 8: 280, 264, 16; tick 16: 600, 530, 70;
+tick 24: 920, 784, 136); 2759 `field_spread` records; the group read from
+tick 1 to tick 31 over 248 electron rays, `ray_layer_families`
+`[["electron"], ["light"]]`.
 
 ## Catalog of nature
 
@@ -2304,8 +2636,15 @@ first run:
   `on_bit_1` and `on_bit_0`, open, their world key undecided and decided by
   feature 2b, their engine not landed, their defaults pass without a draw
   and transmission without a draw and their alternative `draw`
-  (Highlights 5.4, 2026-09-17); both apparatus kinds landed;
-- `undecided`: 28 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  (Highlights 5.4, 2026-09-17); both apparatus kinds landed. Since
+  2026-09-17 (feature 14, `loop-binding-v1`) a coupling has `outputs` or
+  `sink`, never `binds`: the four binding couplings are corner tables, an
+  outputs rule whose loop closes with a `closes` note, `electron_proton_binding`
+  the Port form and the three others `"undecided"`, and a bound group's
+  `binding` names one of them;
+- `undecided`: 28 entries (since 2026-09-17 the three undecided binding
+  tables under `outputs` instead of `table`, the same count), every decider
+  one of A1, A2, A3, A5, A6, A8, A9,
   A10, A12, hypothesis 12, hypothesis 13, hypothesis 16, hypothesis 17,
   feature 8b, read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
@@ -2497,3 +2836,81 @@ the measured record:
   the clause table's verdicts in order: ledger pass, control pass,
   registers pass, exponent fail, signs pass, diagonal reported; and the
   clause's series of (r, F) with the same exponent for `pp` and `pe`.
+
+## The helium orbit
+
+`test_helium_orbit.py` builds the E8 world
+([the helium ion with the field spreading and the momentum turn](../examples/nature/README.md#the-helium-ion-with-the-field-spreading-and-the-momentum-turn))
+inline on the smallest board that holds it: an open 7^3 lattice under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no
+decay, the six unit-axial headings, `phase_bits` 8), the same families, rules
+and bodies as `examples/nature/helium_orbit.json` with the radius 2 in place of
+6, a hold of four intervals in place of forty and twelve ticks in place of 152.
+The nucleus is a `proton` body of amount 2^20 and charge 6 at (3, 3, 3) under
+`phase_plate`, with `momentum_table` `{"light_of_nucleus": -1}`; its light,
+`field_of` `proton` with `release` [1, 749] (A = 1399 per heading per
+interval) and `spread` [6, 1, 1, 1, 1, 1], has 24 ray slots, the three one-ray
+families (electron 4, proton 2, launcher 2) the rest of the layer's 32; the
+electron of amount 256 (rest rate 1, charge -3) is emitted along +Y from a lamp
+at (5, 1, 3) with its recoil on the lamp's `momentum` vector; the `launcher`
+body (an apparatus family, amount 1) at (5, 2, 3) with the coupling `launch`
+(guard `eq(phase of the electron, 1)`, the electron returned on its heading with
+`delay` 4, the token unchanged); `nucleus_turn` over `[electron,
+light_of_nucleus]` with `momentum_table` `{"light_of_nucleus": -1}`; the
+rules in the order `launch`, `nucleus_turn`, `phase_plate`. One test, run
+through the runner, read from `run.json` and `events.jsonl`.
+
+Written before the first run (the structure): the electron arrives at the
+launcher at tick 1 with phase 1, the guard holds and it waits four intervals,
+no arrival being recorded while it waits and no push reaching it (a delayed
+ray is not met); it leaves on +Y and arrives at the tangent point (5, 3, 3) at
+tick 6, where the spreading field is already present (the body's release
+reaches the neighbours at tick 1 and every Node of the board within a few
+ticks), so `ray_push` records appear from tick 6, one per field ray at the
+Node in slot order, `family` electron, `amount` 256, `field` light_of_nucleus,
+each `after` the `before` moved by -1 x field amount x field heading, the
+register starting at (0, 256, 0), the +X beam of the axis the largest push and
+the +Z and -Z content cancelling in pairs; the register's -X component sends
+the electron down the axis to the nucleus, which it reaches at tick 8 and
+passes (`phase_plate`, which assigns the heading and so clears the register to
+(0, 256, 0)); at the nucleus's Node the sink takes every field ray before the
+meeting, so no push is recorded there; on the +Y line the whole axis ray
+(1399) pushes it back, the two-Link cage of E4, so the electron alternates
+between (3, 4, 3) and (3, 3, 3) from tick 8 to tick 12; the runner records
+`ray_momentum_turn`, `field_spreading`, `field_remainder` and `external_body`;
+the electron total is 256 at every tick, none escaped; the light line reads
+sourced = current + escaped + absorbed at every tick (the registers counted as
+current); the momentum line's `current` equals its `sourced` (the lamp's recoil
+against the ray's register, the pushes and reversals booked as the meeting's
+source); every ledger line is balanced and `conserved_at_every_completed_tick`
+is true.
+
+Read from the record of the first run of this board (2026-09-17) and pinned
+then, as the run's integers rather than computed by hand (the field's integer
+state at tick 6 is the sum of many spreads); re-read under
+`ray-momentum-turn-v2` on 2026-09-17 ([the walk kept through a
+push](#the-walk-kept-through-a-push)) and unchanged, since the kept walk
+takes the same Links here: the electron arrives at (5, 3, 3) with its
+accumulators at zero and leaves -X (743 against 277 on the register
+(-743, 277, 0)) with (-277, 277, 0), which every register of the pushes of
+tick 7 holds and against which (4, 3, 3) is left -X again (1080 against 557
+on (-1357, 280, 0), length 1637), and the cage's pushes start from the fresh
+output of `phase_plate`: the pushes of tick 6 at (5, 3, 3),
+(before, after, field amount, field heading): ((0, 256, 0), (-785, 256, 0),
+785, +X), ((-785, 256, 0), (-743, 256, 0), 42, -X), ((-743, 256, 0), (-743,
+277, 0), 21, -Y), ((-743, 277, 0), (-743, 277, -22), 22, +Z), ((-743, 277,
+-22), (-743, 277, 0), 22, -Z); of tick 7 at (4, 3, 3): ((-743, 277, 0),
+(-2142, 277, 0), 1399, +X), ((-2142, 277, 0), (-1357, 277, 0), 785, -X) (the
+recoil of the +X push of tick 6, walking with the electron, pushes back),
+((-1357, 277, 0), (-1357, 233, 0), 44, +Y), ((-1357, 233, 0), (-1357, 280, 0),
+47, -Y), ((-1357, 280, 0), (-1357, 280, -47), 47, +Z), ((-1357, 280, -47),
+(-1357, 280, 0), 47, -Z); at tick 9 seven pushes at (3, 4, 3) from (0, 256, 0)
+to (-17, -1036, 0) and at tick 11 eleven from (0, 256, 0) to (-8, -1099, 0);
+pushes at ticks 6, 7, 9 and 11 only. The light line (sourced, current,
+escaped, absorbed) after tick 5: 41970, 34466, 3411, 4093; tick 6: 50364,
+38801, 6116, 5447; tick 8: 67152, 44680, 13109, 9363; tick 12: 100728, 51215,
+31967, 17546. The momentum line, sourced and current alike: (0, 0, 0) after
+ticks 5 and 6, (-1357, 24, 0) after tick 8, (-8, -1355, 0) after tick 12. The
+bodies' momentum: (0, 0, 0) after ticks 5 and 6, (1197, 3, 0) after tick 8,
+(1169, 2398, 0) after tick 12, the nucleus's final momentum; its sink 17546
+of light at tick 12; the nucleus at (3, 3, 3) at every tick.

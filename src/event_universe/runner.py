@@ -15,7 +15,6 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
-    BOUND_GROUP_MOTION,
     DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
@@ -23,6 +22,7 @@ from event_universe.core.spatial_state import (
     FIELD_REMAINDER,
     FIELD_SPREADING,
     INVERSE_SPLIT,
+    LOOP_BINDING,
     RAY_BINDING,
     RAY_EVENT_STATE,
     RAY_LAYERS,
@@ -35,7 +35,6 @@ from event_universe.core.spatial_state import (
     ray_layer_names,
     released_field_names,
     spreading_field_names,
-    turn_receiver,
 )
 from event_universe.disturbance_api import Simulation
 from event_universe.json_documents import parse_json_document
@@ -140,18 +139,14 @@ def _execute_run(
     # The world ledger per completed tick (ray-event-audit-v1); the conservation
     # flag is true when every line of every completed tick balances.
     audit: list[dict[str, object]] = []
-    # Whether any bound group stepped (bound-group-motion-v1), and whether any
-    # free ray was pushed (ray-momentum-turn-v1).
-    moved = False
+    # Whether any free ray was pushed (ray-momentum-turn-v1).
     turned = False
     started = time.perf_counter()
     with (output / "events.jsonl").open("w", encoding="utf-8") as stream:
 
         def record(event: dict[str, object]) -> None:
-            nonlocal moved, turned
+            nonlocal turned
             stream.write(json.dumps(event) + "\n")
-            if event.get("event") == "bound_group_step":
-                moved = True
             if event.get("event") == "ray_push":
                 turned = True
             if probe is not None:
@@ -252,6 +247,7 @@ def _execute_run(
         "ray_meeting": RAY_MEETING,
         "released_field": RELEASED_FIELD,
         "ray_binding": RAY_BINDING,
+        "loop_binding": LOOP_BINDING,
         "released_fields": released_field_names(initial.fields, initial.spatial_fields),
         "external_body": EXTERNAL_BODY,
         "external_bodies": [
@@ -287,12 +283,6 @@ def _execute_run(
         "computation": world.computation_report(),
         "execution": world.execution_report(),
     }
-    if moved or any(
-        any(rule.momentum_table) and turn_receiver(rule) is None for rule in initial.ray_interactions
-    ):
-        # A world where no group ever has a nonzero register records nothing here;
-        # a momentum table on a coupling of free rays is ray-momentum-turn-v1's.
-        metadata["bound_group_motion"] = BOUND_GROUP_MOTION
     if turned:
         # A free ray turned by momentum (ray-momentum-turn-v1): recorded only when a
         # push happened, so the record of every other world is byte for byte the same.

@@ -143,23 +143,6 @@ def forward_rays(
     return result, merge_rays(tuple(kept))
 
 
-def carry_rays(rays: Rays, definition: SpatialFieldDefinition, meter: CostMeter) -> Rays:
-    """The rays of a bound group carried one Link with the group it belongs to
-    (bound-group-motion-v1): each spends this interval's delay as a held ray does
-    and advances its phase by its rate, its steps, heading and event unchanged; the
-    group's step is the departure, not a walk along the ray's own line."""
-    carried = []
-    for ray in rays:
-        if bounded(ray.interaction_delay) < 1:
-            raise ValueError("a carried ray is one its binding rule holds this interval")
-        meter.charge("read")
-        meter.charge("update", 2)
-        carried.append(
-            replace(ray, interaction_delay=ray.interaction_delay - 1, phase=_held_phase(ray, definition))
-        )
-    return merge_rays(tuple(carried))
-
-
 def _spend_lag(ray: Ray, definition: SpatialFieldDefinition, meter: CostMeter) -> tuple[int, Ray] | None:
     """Bending by delay (ray-binding-v1, Highlights 3.28): a face-clock lag that has
     reached the phase modulus, one full interval of delay on that side, is spent at

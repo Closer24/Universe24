@@ -340,7 +340,7 @@ delay:
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
 | `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
-| `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
+| `momentum` | `None` or three bounded signed integers | The momentum register ([a free ray turns by momentum](#a-free-ray-turns-by-momentum-ray-momentum-turn-v2)): the ray's momentum, `None` for the default amount x heading of its line, which every created ray carries; set by a push, walked by the DDA in place of the heading, cleared when a push brings it back to the default, negated by a return with the heading, part of the merge identity and, being extensive, summed when rays merge |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -691,7 +691,7 @@ outputs declares no `assignments`: it assigns through its outputs.
 | `amount` | An integer of at least 1; `{"of": i}`, input i's amount; `{"of": "sum"}`, the sum over the inputs; a split by a table (below); `{"rest_of": j}`, the rest of the content that output j's table splits |
 | `heading` | A Port index 0 to 5 (the unit-axial heading in Port order, which the field's heading table must contain), `"same"` (the source input's heading) or `"reversed"` (its negation) |
 | `phase` | Optional, default `"same"`, the source input's phase; an integer offset k below the phase modulus, the source input's phase plus k; `{"of": i, "offset": k}`, input i's phase plus k; read modulo the field's phase steps |
-| `delay` | Optional nonnegative interaction delay, default 0; or `{"of": i, "table": [six], "per": u}`, a delay by a declared table per the Port input i came through ([binding](#binding-and-gravity-by-delay-ray-binding-v1)) |
+| `delay` | Optional nonnegative interaction delay, default 0: an output-clock wait, the output stays at the Node that many intervals, met by nothing there, and leaves ([binding as a loop](#binding-as-a-loop-loop-binding-v1)); or `{"of": i, "table": [six], "per": u}`, a delay by a declared table per the Port input i came through ([gravity by delay](#binding-and-gravity-by-delay-ray-binding-v1)) |
 | `input` | Optional source input index, default 0: the input whose heading and phase the output reads by default; every output carries its source input's advance |
 
 The rule's optional `bit` (`"highest"`, the default, `"none"` or `{"of": i}`)
@@ -868,13 +868,14 @@ departure, not an arrival, so it is no meeting. A ray of a family that has a
 meeting rule releases after the interval's meetings, from the trajectory
 that departs. The release does not wait for the clock (Highlights 3.5,
 model owner, 2026-09-17): a field release is information, not a departure
-of matter, so a ray held at a Node by an output-clock delay (`ray_delay`,
-feature 8) is content resident there and releases every interval it is
-held, on all six headings as resident content does, while the clock delays
-only its departure as matter; this slice releases from the departure, which
-at pace 1/1 with no delay is every interval, and a held ray releases on all
-six headings every interval it is held
-([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
+of matter, so a ray waiting at a Node under a declared `delay` is content
+resident there and releases every interval it is there, on the five
+headings other than its own like any ray, while the clock delays only its
+departure as matter; this slice releases from the departure, which at pace
+1/1 with no delay is every interval. The six-heading release of a held ray,
+which existed only because a held ray occupied no line ahead of it, went
+with the held form on 2026-09-17
+([binding as a loop](#binding-as-a-loop-loop-binding-v1)). A G ray crosses
 Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
 lattice alone. Without `spread` a G ray therefore stays on its line and the
@@ -1326,6 +1327,130 @@ else changes: events, states and totals are byte for byte what they were,
 the audit adds readouts. `test_ray_event_audit.py`
 ([expectations](TEST_EXPECTATIONS.md#ray-event-audit)) is the test.
 
+### Binding as a loop (`loop-binding-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.4, "Binding is a periodic orbit of
+the meeting rule", model owner, 2026-09-17, with 3.3, 3.5, 3.17, 3.19, 3.20,
+3.28 and 5.2; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+feature 14; the design in [loop binding](LOOP_BINDING.md)): a ray never
+stops, and "bound" does not mean "resident" but "back at the same place in
+the same state". A **bound group** is a set of rays that is a periodic orbit
+of the Node's law of Highlights 5.2: rays in motion on a **ring** of Nodes,
+the closed path they walk, whose corner meetings, under an ordinary
+`ray_interactions` rule with outputs ([meetings with
+outputs](#meetings-with-outputs-ray-meeting-conversion-v1)), reproduce the
+rays that entered them, every ray again at the same Node with the same
+heading, amount and phase modulo the circle after the period, so that the
+same meetings happen again. There is no binding rule and no register: the
+only declared thing is the table, and whether a content closes under it is a
+computation, not a declaration. A set whose meetings do not reproduce it
+disperses: a corner with one ray fires no rule and the ray crosses off the
+ring. `test_loop_binding.py`
+([expectations](TEST_EXPECTATIONS.md#loop-binding)) is the test; the
+demonstration is the unit-square electron, `examples/nature/ring.json` with
+its dispersing control `ring_open.json`
+([E5](EXPERIMENTS.md#e5-the-ring-an-electron-at-rest-as-a-loop)).
+
+**What it does.** The smallest loop on the cubic lattice is the unit square,
+four Nodes and four Links, with rays circulating both ways; the Port form of
+the **corner table** is an outputs rule in today's schema, each input's
+amount and phase leaving through the Port the other input came in by:
+
+```json
+{"name": "corner", "participants": [{"type": "electron"}, {"type": "electron"}],
+ "outputs": [
+   {"field": "electron", "amount": {"of": 0}, "heading": "reversed", "input": 1, "phase": {"of": 0}},
+   {"field": "electron", "amount": {"of": 1}, "heading": "reversed", "input": 0, "phase": {"of": 1}}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
+
+Eight rays, one of each sense at every corner, make every corner meet every
+interval (two interleaved four-ray orbits whose meetings never mix); four
+rays, two per sense at opposite corners, are the smallest closed set.
+Closure is integer equalities ([loop binding](LOOP_BINDING.md#3-closure-as-integer-equalities)):
+a partner at every corner, the headings by the ring's geometry, the amounts
+by the table (every amount under the Port form; equal senses a quarter turn
+apart under the catalog's Born table, which disperses in phase), and the
+phase closing on the circle, `L r = 0 (mod N)` for one circuit (`4 r = 0
+(mod 8)` at N = 8: r = 2 closes in one circuit, the catalog's r = 1 in two,
+nothing lost). The group's content is the sum of its rays' amounts, exact at
+every tick, and its mass (Highlights 3.4, 3.28); its clock is the phase of
+its rays, advancing by the rest rate at every Link; the content passing a
+corner per interval is what a crossing ray meets, and the delay such a ray
+suffers is the `delay` output of its meeting with the ring's rays, per corner
+crossed, not a Node-wide number. The momentum the two quarter turns of a
+corner move, `(2a, 2a, 0)` at P0 of the unit square and the like at the
+other corners, is booked as that corner's source of the momentum field, as
+the momentum a table split moves, the four corners summing to zero; the
+recoil it stands for belongs to the group's own field, and the closure of a
+ring with its own field, from which alone a content ladder can come, is open
+([loop binding](LOOP_BINDING.md#6-the-field-of-a-loop)). Every ring ray
+releases its field on the five headings other than its own at every Node it
+departs, as any ray in motion ([released
+field](#field-as-the-rays-information-released-field-v1)). An arriving ray
+meets a ring ray at a corner by the table declared for the families present,
+and its outputs leave the ring or join it (`examples/nature/absorption.json`:
+a light ray taken into the ring by a corner rule over
+`[electron, electron, light]`; `photofission.json`: a light ray above the
+threshold letting a pair through unturned, momentum exact by heading);
+nothing else creates or destroys a group. The motion of a group as a whole
+is its corners shifting, a different periodic orbit, open
+([loop binding](LOOP_BINDING.md#8-motion-of-a-loop-as-a-whole)).
+
+**The schema.** Nothing new: a binding coupling is an ordinary
+`ray_interactions` rule with outputs, and the catalog's `binds` entries are
+corner tables ([catalog](CATALOG.md)). The engine's one rule of this
+feature is in the meeting: a rule meets only rays that arrived at the Node,
+so an event ray still at its event Node (`steps` 0 with an event stamp), the
+output of a rule waiting its declared `delay` there, is met by nothing and
+leaves when its wait is over; a `delay` assignment or output is an
+output-clock wait, never a hold, and no rule can hold its participants by
+meeting them again. A world that declares `ray_delay` on a rule, or
+`momentum_table` beside `assignments`, is rejected at initialization with a
+message naming the [migration
+note](MIGRATION.md#binding-as-a-loop-landed-on-2026-09-17-loop-binding-v1).
+The runner records `loop_binding: "loop-binding-v1"` beside `ray_binding`.
+
+**What was removed (2026-09-17).** The held form of
+[`ray-binding-v1`](#binding-and-gravity-by-delay-ray-binding-v1): a rule
+without outputs whose assignments set `delay` 1 as a hold, the rule's
+`ray_delay` and the Node's `bound_delay`, `bound_group`, the snapshot's
+`bound_groups`, the `bound_tick` record and the six-heading release of a
+held ray; and all of
+[`bound-group-motion-v1`](#bound-group-motion-bound-group-motion-v1): the
+register and its accumulators, `group_step`, `carry_rays`,
+`bound_group_step`, `momentum_table` on a binding rule, the ledgers'
+reading of a group by its register and `SpatialPacket.group`. What stays:
+the outputs rule and its `delay` output, the delay table and the lag
+register (gravity by delay, the identity `ray-binding-v1` keeps), the
+momentum register of a free ray and `momentum_table` on couplings of free
+rays and on the external body, the released field with its spreading and
+remainder, the external body, and the Node's five-step law, which the loop
+uses unchanged. The nature examples that used the held form are loops
+(E1 to E3) or retired with their records kept (E6).
+
+**The reading of a group.** Nothing at a Node names a group; a group is a
+set of rays that repeat, read from the record by a Renderer. The ray
+viewer's extractor (`tools/ray_viewer/extract.py`, `periodic_groups`) reads
+the matter rays that keep meeting each other at the Nodes where they meet:
+their states there (Node, heading, amount, phase) must recur with a period
+T over a window of at least two periods, the rays that meet there within the
+window are the group, the Nodes they walk its ring, at least four distinct
+Nodes; the components that walk one ring are one group. Each group reports
+its ring (the closed walk of its Nodes), its content (per family and in
+all), its period, its clock (the phase advance per interval of each family,
+read from the recorded phases) and the ticks it was read over; the run
+document lists `groups`, each ray carries its `group`, each tick row its
+`bound` content, which the viewer draws as matter
+([ray viewer](../tools/ray_viewer/README.md)). On `ring.json` the reading
+is one group on the unit square, content 8, period 4, clock 2 on the 8-step
+circle, from tick 1; on `ring_open.json` none.
+
+Admission: that of every ray interaction with outputs; no draw, no new
+arithmetic. A world without a `delay` assignment on a rule without outputs
+runs byte-identically in its events; its `state.json` lost the empty
+`bound_groups` key.
+
 ### Binding and gravity by delay (`ray-binding-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.4, 3.17 and 3.28; [ray-event
@@ -1335,12 +1460,18 @@ is zero events, a bound group is unbound by an arriving ray, and gravity is
 bending by delay. `test_ray_binding.py`
 ([expectations](TEST_EXPECTATIONS.md#ray-binding)) is the test.
 
-Interim form (model owner, 2026-09-17, Highlights 3.4): binding is a
-periodic orbit of the ordinary meeting rule, a bound group a set of rays
-whose meetings reproduce the rays that entered them on a ring of Nodes, and
-the held form of this section, rays resident under a rule with `delay` 1 and
-no outputs and the `ray_delay` wait, is superseded by feature 14, binding as
-a loop, after features 12, 8c, 2b and 8b.
+**Superseded on 2026-09-17.** The held form of this section (binding,
+unbinding, mass as output-clock delay: rays resident under a rule with
+`delay` 1 and no outputs, the `ray_delay` wait, `bound_group`,
+`bound_groups`, `bound_tick`, the six-heading release of a held ray) was
+removed by feature 14, [binding as a loop](#binding-as-a-loop-loop-binding-v1)
+(`loop-binding-v1`; Highlights 3.4, model owner, 2026-09-17): a bound group is
+a periodic orbit of the ordinary meeting rule on a ring of Nodes. The text
+below describes the interim form as it was, for the record; what stays of this
+identity is gravity as bending by delay, the delay table and the lag, which
+the paragraphs "Gravity as bending by delay" and "G_eff across the phase
+width" state and `test_ray_binding.py` keeps (with resident content, a
+record holding stock, as the mass).
 
 **Binding.** A `ray_interactions` rule without outputs whose assignments set
 `delay` 1 on its participants binds them: the rays stay resident at the Node
@@ -1453,6 +1584,17 @@ rule, a `ray_delay` or a delay table runs byte-identically.
 
 ### Bound group motion (`bound-group-motion-v1`)
 
+**Removed on 2026-09-17.** All of this identity (the register and its
+accumulators, `group_step`, `carry_rays`, `bound_group_step`,
+`momentum_table` on a binding rule, the ledgers' reading of a group by its
+register, `SpatialPacket.group`, `test_bound_group_motion.py`) went with the
+held form under feature 14, [binding as a loop](#binding-as-a-loop-loop-binding-v1)
+(`loop-binding-v1`): the motion of a group as a whole must be its corners
+shifting, a different periodic orbit
+([loop binding](LOOP_BINDING.md#8-motion-of-a-loop-as-a-whole)), which is
+open. The text below describes the interim form as it was, for the record;
+`motion_step` stays for the external body.
+
 The rule ([Highlights](HIGHLIGHTS.md) 3.4, 3.14, 3.16, 3.19 and 3.28;
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature
 8c; issue #169): matter is a bound group, and a group that moves one Link
@@ -1463,8 +1605,7 @@ exact accumulators that step one Link when a whole content has accumulated
 on an axis. The gap it closes was found by the helium-ion run
 ([E4](EXPERIMENTS.md#e4-the-helium-ion-one-electron-at-a-nucleus-of-charge-2)):
 under `ray-binding-v1` alone a group was held at its Node and could not
-move. `test_bound_group_motion.py`
-([expectations](TEST_EXPECTATIONS.md#bound-group-motion)) is the test.
+move. `test_bound_group_motion.py` was the test.
 
 **The register.** A bound group carries a momentum register, three integers,
 and three per-axis accumulators (`BoundMotion`, held by the Node beside the
@@ -1578,7 +1719,7 @@ only, naming ray families that are not among its participants, signs -1 or
 (unit-axial, unpaced, no decay). No draw, no new arithmetic beyond the
 body's; nothing else changes.
 
-### A free ray turns by momentum (`ray-momentum-turn-v1`)
+### A free ray turns by momentum (`ray-momentum-turn-v2`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.16 and 3.28;
 [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step 8, feature
@@ -1594,7 +1735,9 @@ phase modulus with the heading unchanged, so a curved path, light bending
 the momentum register of `bound-group-motion-v1` given to a free ray.
 `test_ray_momentum_turn.py`
 ([expectations](TEST_EXPECTATIONS.md#a-free-ray-turns-by-momentum)) is the
-test.
+test. `ray-momentum-turn-v2` (2026-09-17) keeps the DDA's accumulators
+through a push ("a push keeps the walk", below), the fix the helium-orbit
+run ([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) asked for.
 
 **The register.** Every ray carries a momentum register, `Ray.momentum`,
 three integers: by default `None`, which reads as amount x heading of its
@@ -1644,8 +1787,8 @@ its participants, the ray is pushed by every resident outbound ray of a
 named family that no earlier declared rule met, the group's field
 participant among them, in slot order: each push is sign x amount x heading
 of the field ray, exactly `body_absorb`'s and the group's arithmetic, the
-register moves by it (`pushed_ray`), the accumulators reset as at a change
-of line, and the field ray is returned reversed as the recoil, a new event
+register moves by it (`pushed_ray`) with the walk kept (the next
+paragraph), and the field ray is returned reversed as the recoil, a new event
 ray on the negated heading with its amount and phase (the recoil of
 [released-field-v1](#field-as-the-rays-information-released-field-v1),
 Highlights 3.5, 3.14). A push never changes the ray's amount, phase, bit,
@@ -1661,8 +1804,41 @@ outputs is an ordinary meeting and declares no table, as before. The Node
 publishes one `ray_push` record per field ray met (family, amount, the
 register before and after, the field family, its amount and its heading),
 before the cycle's record; the runner records `ray_momentum_turn:
-"ray-momentum-turn-v1"` when any push happened, and nothing for a world
+"ray-momentum-turn-v2"` when any push happened, and nothing for a world
 where none did (a free-ray table alone does not mark `bound_group_motion`).
+
+**A push keeps the walk (`ray-momentum-turn-v2`, 2026-09-17).** The three
+accumulators are the walk's progress along the register: per axis, the
+momentum-intervals banked toward the next Link on that axis, every interval
+depositing the register's component and a Link on the axis withdrawing the
+register's Manhattan length (`dda_step`). A push changes the deposit and the
+price, not the balance: the accumulators carry over unchanged and continue
+against the new register (`continued_walk`), so under a push at every
+interval the ray walks the DDA line of its running register, one Link per
+interval along the axis furthest behind, the staircase of a circle under a
+central push that turns the register, and a small transverse push that
+arrives every interval banks toward a transverse Link as the register turns
+(a ray of 64 along +X pushed by (0, 1, 0) at every Node steps +Y at Links 9,
+15, 20 and 24, the parabola of a constant push; pushed by (0, 8, 0) it is
+past 45 degrees at Link 8). Two cases start the walk over at (0, 0, 0): a
+push that returns the register to the default amount x heading, the ray
+resuming its line as the ray it was, and a push that shrinks the register
+below the banked progress, an accumulator outside the admissible (-length,
+length] of the new length, which the new register cannot hold. A ray
+without a register walks the heading of its line at the table's scale, and
+the default register is amount x that heading, so the first push lifts its
+accumulators by the amount, exactly (the DDA on a scaled vector takes the
+same Ports from accumulators scaled with it), zero on a unit-axial heading.
+v1 reset the accumulators at every push, as at a change of line, which the
+helium-orbit run ([E8](EXPERIMENTS.md#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn)) showed
+steps a ray pushed at every interval, every ray in a spreading field, along
+its register's dominant axis alone, the whole-Port turn by another road; a
+record made under v1 in which a pushed ray had progress banked is not
+reproduced by v2 ([migration](MIGRATION.md#a-push-keeps-the-walk-on-2026-09-17-ray-momentum-turn-v2)).
+A world without a push runs byte-identically, as before.
+`test_momentum_turn_walk.py`
+([expectations](TEST_EXPECTATIONS.md#the-walk-kept-through-a-push)) pins the
+staircases, the flip, the cancel, the shrink and the lift.
 
 ```json
 {"name": "turn", "participants": [{"type": "electron"}, {"type": "light"}],

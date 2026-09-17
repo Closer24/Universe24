@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "model_id": "nature-absorption-v1",
+  "model_id": "nature-absorption-v2",
   "shape": [
-    21,
-    21,
-    21
+    12,
+    12,
+    11
   ],
   "boundary": "open",
   "slots_per_node": 2,
   "link_ticks": 1,
   "normal_budget": 100000,
-  "ticks": 12,
+  "ticks": 24,
   "operation_costs": {
     "receive": 1,
     "read": 1,
@@ -50,13 +50,13 @@
   ],
   "disturbance_types": [
     {
-      "name": "electron_lamp_a",
+      "name": "corner_0_r",
       "fields": [
         "electron",
         "momentum"
       ],
       "defaults": {
-        "electron": 4,
+        "electron": 1,
         "momentum": [
           0,
           0,
@@ -68,13 +68,13 @@
       }
     },
     {
-      "name": "electron_lamp_b",
+      "name": "corner_0_l",
       "fields": [
         "electron",
         "momentum"
       ],
       "defaults": {
-        "electron": 4,
+        "electron": 1,
         "momentum": [
           0,
           0,
@@ -86,7 +86,115 @@
       }
     },
     {
-      "name": "light_lamp",
+      "name": "corner_1_r",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "corner_1_l",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "corner_2_r",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "corner_2_l",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "corner_3_r",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "corner_3_l",
+      "fields": [
+        "electron",
+        "momentum"
+      ],
+      "defaults": {
+        "electron": 1,
+        "momentum": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transport": {
+        "mode": "hold"
+      }
+    },
+    {
+      "name": "photon",
       "fields": [
         "light",
         "momentum"
@@ -149,10 +257,10 @@
         1
       ],
       "phase_bits": 3,
-      "charge": -3,
       "kerengonen": {
         "phase_advance": 1
-      }
+      },
+      "charge": -3
     },
     {
       "field": "light",
@@ -198,17 +306,17 @@
         1
       ],
       "phase_bits": 3,
-      "charge": 0,
       "kerengonen": {
         "phase_advance": 0
-      }
+      },
+      "charge": 0
     }
   ],
   "emissions": [
     {
-      "type": "electron_lamp_a",
+      "type": "corner_0_r",
       "field": "electron",
-      "amount": 4,
+      "amount": 1,
       "denominator": 1,
       "source": false,
       "recoil_field": "momentum",
@@ -220,9 +328,37 @@
       "kerengonen_phase": 0
     },
     {
-      "type": "electron_lamp_b",
+      "type": "corner_0_l",
       "field": "electron",
-      "amount": 4,
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "corner_1_r",
+      "field": "electron",
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "corner_1_l",
+      "field": "electron",
+      "amount": 1,
       "denominator": 1,
       "source": false,
       "recoil_field": "momentum",
@@ -234,7 +370,63 @@
       "kerengonen_phase": 0
     },
     {
-      "type": "light_lamp",
+      "type": "corner_2_r",
+      "field": "electron",
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        -1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "corner_2_l",
+      "field": "electron",
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        -1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "corner_3_r",
+      "field": "electron",
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        0,
+        -1,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "corner_3_l",
+      "field": "electron",
+      "amount": 1,
+      "denominator": 1,
+      "source": false,
+      "recoil_field": "momentum",
+      "heading": [
+        1,
+        0,
+        0
+      ],
+      "kerengonen_phase": 0
+    },
+    {
+      "type": "photon",
       "field": "light",
       "amount": 3,
       "denominator": 1,
@@ -242,8 +434,8 @@
       "recoil_field": "momentum",
       "heading": [
         0,
-        1,
-        0
+        0,
+        1
       ],
       "kerengonen_phase": 0
     }
@@ -251,32 +443,80 @@
   "seeds": [
     {
       "position": [
-        9,
-        10,
-        10
+        5,
+        5,
+        5
       ],
-      "type": "electron_lamp_a"
+      "type": "corner_0_r"
     },
     {
       "position": [
-        11,
-        10,
-        10
+        5,
+        5,
+        5
       ],
-      "type": "electron_lamp_b"
+      "type": "corner_0_l"
     },
     {
       "position": [
-        10,
-        4,
-        10
+        6,
+        5,
+        5
       ],
-      "type": "light_lamp"
+      "type": "corner_1_r"
+    },
+    {
+      "position": [
+        6,
+        5,
+        5
+      ],
+      "type": "corner_1_l"
+    },
+    {
+      "position": [
+        6,
+        6,
+        5
+      ],
+      "type": "corner_2_r"
+    },
+    {
+      "position": [
+        6,
+        6,
+        5
+      ],
+      "type": "corner_2_l"
+    },
+    {
+      "position": [
+        5,
+        6,
+        5
+      ],
+      "type": "corner_3_r"
+    },
+    {
+      "position": [
+        5,
+        6,
+        5
+      ],
+      "type": "corner_3_l"
+    },
+    {
+      "position": [
+        5,
+        5,
+        0
+      ],
+      "type": "photon"
     }
   ],
   "ray_interactions": [
     {
-      "name": "excite",
+      "name": "absorb",
       "participants": [
         {
           "type": "electron"
@@ -288,54 +528,52 @@
           "type": "light"
         }
       ],
-      "assignments": [
+      "outputs": [
         {
-          "participant": 0,
-          "field": "delay",
-          "expression": 1
+          "field": "electron",
+          "amount": {
+            "of": 0
+          },
+          "heading": "reversed",
+          "input": 1,
+          "phase": {
+            "of": 0
+          }
         },
         {
-          "participant": 1,
-          "field": "delay",
-          "expression": 1
+          "field": "electron",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 0,
+          "phase": {
+            "of": 1
+          }
         },
         {
-          "participant": 2,
-          "field": "delay",
-          "expression": 1
+          "field": "light",
+          "amount": {
+            "of": 2
+          },
+          "heading": "reversed",
+          "input": 1,
+          "phase": {
+            "of": 2
+          }
         }
       ],
       "invariants": [
         {
           "name": "energy",
           "expression": {
-            "op": "add",
-            "args": [
-              {
-                "op": "add",
-                "args": [
-                  {
-                    "field": "amount",
-                    "participant": 0
-                  },
-                  {
-                    "field": "amount",
-                    "participant": 1
-                  }
-                ]
-              },
-              {
-                "field": "amount",
-                "participant": 2
-              }
-            ]
+            "field": "amount"
           }
         }
-      ],
-      "ray_delay": 3
+      ]
     },
     {
-      "name": "bind",
+      "name": "corner",
       "participants": [
         {
           "type": "electron"
@@ -344,37 +582,38 @@
           "type": "electron"
         }
       ],
-      "assignments": [
+      "outputs": [
         {
-          "participant": 0,
-          "field": "delay",
-          "expression": 1
+          "field": "electron",
+          "amount": {
+            "of": 0
+          },
+          "heading": "reversed",
+          "input": 1,
+          "phase": {
+            "of": 0
+          }
         },
         {
-          "participant": 1,
-          "field": "delay",
-          "expression": 1
+          "field": "electron",
+          "amount": {
+            "of": 1
+          },
+          "heading": "reversed",
+          "input": 0,
+          "phase": {
+            "of": 1
+          }
         }
       ],
       "invariants": [
         {
           "name": "energy",
           "expression": {
-            "op": "add",
-            "args": [
-              {
-                "field": "amount",
-                "participant": 0
-              },
-              {
-                "field": "amount",
-                "participant": 1
-              }
-            ]
+            "field": "amount"
           }
         }
-      ],
-      "ray_delay": 1
+      ]
     }
   ]
 }

@@ -1863,12 +1863,24 @@ def _ray_interactions(
             required | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit"},
             required,
         )
+        if "ray_delay" in obj or ("momentum_table" in obj and "assignments" in obj):
+            # The held form of binding (ray-binding-v1's rule without outputs holding
+            # its participants, its ray_delay wait, and the momentum table that
+            # pushed the held group, bound-group-motion-v1) was removed on
+            # 2026-09-17 by loop-binding-v1: binding is a periodic orbit of the
+            # ordinary meeting rule, and no key names a group.
+            raise ValueError(
+                "ray_delay and a momentum_table beside assignments are the held form of binding, "
+                "removed by loop-binding-v1 on 2026-09-17: a bound group is a loop of rays under an "
+                "ordinary rule with outputs; see docs/MIGRATION.md, "
+                "'Binding as a loop landed on 2026-09-17'"
+            )
         if "outputs" in obj:
             if "assignments" in obj:
                 raise ValueError("a ray meeting with outputs assigns through its outputs")
-            if "ray_delay" in obj or "momentum_table" in obj:
+            if "momentum_table" in obj:
                 raise ValueError(
-                    "ray_delay and momentum_table are declared by a binding rule, one without outputs"
+                    "a momentum_table is declared by a coupling of free rays, one without outputs"
                 )
             rule = _ray_meeting(obj, spatial, definitions)
         elif "assignments" not in obj and "momentum_table" not in obj:
@@ -1879,15 +1891,10 @@ def _ray_interactions(
                 raise ValueError(
                     "ray interaction amount, advance, family, charge and detector are read-only"
                 )
-            # ray-binding-v1: the output-clock delay of the Node that holds the
-            # group this rule binds; every arrival there waits it.
-            rule = replace(rule, ray_delay=_integer(obj.get("ray_delay", 0), "ray_delay", 0))
             if "momentum_table" in obj:
-                # bound-group-motion-v1: the field families that push the group this
-                # rule binds, family name to sign, as the external body's table;
                 # ray-momentum-turn-v1: on a coupling of free rays, assigning
                 # nothing, the field families that push the one participant it
-                # does not name.
+                # does not name, family name to sign, as the external body's table.
                 families = {
                     fields[definition.field].name: index
                     for index, definition in enumerate(spatial)

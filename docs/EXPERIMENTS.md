@@ -1334,39 +1334,56 @@ sign rule, and its other couplings are catalog entries.
 
 ### E1. A photon absorbed by a bound electron
 
-- **Claim.** Highlights 3.4: binding "is the interaction whose result is zero
-  events", and a group meets an arriving ray by "the coupling declared for the
-  families present". Here that coupling, `excite`, is itself a binding over
-  `[electron, electron, light]`: the light ray ends at the Node and the group
-  re-forms with more content and a slower output clock (3.28, mass as
-  output-clock delay).
-- **Features.** 1, 5, 6, 8, 9, 10.
-- **Run.** `examples/nature/absorption.json`: board 21^3, open, N = 8, no
-  Detector, 12 ticks; two electron rays of amount 4 (rest rate 1, charge -3)
-  bound at (10, 10, 10) by `bind` (`ray_delay` 1); one light ray of amount 3
-  from (10, 4, 10) heading +Y; `excite`, a binding rule over the three
-  families with `ray_delay` 3, declared before `bind`.
-- **Shows.** Tick 2: the group `[electron, electron]`, amounts [4, 4]. Tick
-  6: the light arrives and waits the group's clock one interval. Ticks 8 to
-  12: the group `[electron, electron, light]`, amounts [4, 4, 3], `ray_delay`
-  3, the electron phases advancing once per interval and the light's held at
-  0; the light ray's trajectory ended at the Node (the record holds no
-  departure from the center). At every tick: totals electron 8, light 3,
-  momentum (0, 0, 0), the charge line electron -24, every audit line
-  balanced, `conserved_at_every_completed_tick` true.
-- **The literal translation refused.** The outputs rule "light a + electron
-  m to electron rays only, content m + a", written in the dictionary, is
+- **Claim.** Highlights 3.4 (model owner, 2026-09-17): binding is a periodic
+  orbit of the meeting rule, and "an arriving ray meets a ring ray at a
+  corner by the table declared for the families present, and its outputs
+  leave the ring or join it". Here that table, `absorb`, is a corner table
+  over `[electron, electron, light]`: the two electron rays turn as at every
+  corner and the light leaves through the same Port as one of them, so the
+  photon joins the loop and the group's content is 8 + 3 (3.28, mass as
+  content).
+- **Features.** 1, 5, 6, 9, 10, 14.
+- **Run.** `examples/nature/absorption.json`: board 12 x 12 x 11, open,
+  N = 8, no Detector, 24 ticks; the unit-square ring of E5 at the catalog's
+  rest rate 1 (eight `electron` rays of amount 1, charge -3, one of each
+  sense at every corner of P0 = (5,5,5), P1 = (6,5,5), P2 = (6,6,5),
+  P3 = (5,6,5)); one light ray of amount 3 from (5,5,0) heading +Z, at P0
+  after tick 5; `absorb` declared before `corner`.
+- **Shows.** Ticks 1 to 4: the ring, every corner meeting every interval,
+  phase t mod 8. Tick 5: the light at P0 with the corner's two rays; in the
+  cycle of tick 5 `absorb` fires, the electrons turn as at every corner and
+  the light leaves through +Y with the L ray, amount 3, phase 0, the event's
+  Ports +X and +Y with shares 1 and 4. From tick 6 the photon walks the edge
+  P0-P3 with the ring's rays, up with the L ray and down with the R ray,
+  meeting the corner's pair at both ends in every interval: a period-2 orbit
+  inside the ring's period-8 one, the group's content 11. The momentum the
+  light's turns move is booked at the corner as the electrons' turns are,
+  (0, 3, -3) after the odd ticks and (0, -3, -3) after the even ones in the
+  world's sources and total. At every tick: totals electron 8, light 3, the
+  charge line electron -24, every audit line balanced,
+  `conserved_at_every_completed_tick` true. The record's reading (the ray
+  viewer's extractor, [ring](../examples/nature/README.md#the-ring-an-electron-at-rest-as-a-loop)):
+  one group on the square, content 11 (electron 8, light 3), period 8, clock
+  electron 1 and light 0, read from tick 5 to tick 23.
+- **The literal translation refused.** As in the first record: the outputs
+  rule "light a + electron m to electron rays only, content m + a" is
   refused at initialization with the electron's charge -3 (`ray meeting
-  output 2 of family electron (charge -3) would change the total charge: its
-  amount comes from inputs of another charge`) and, with the charge set to 0,
-  at the meeting after tick 7 (`ray meeting absorb changes the stock of a
-  family`). The missing generic rule, a meeting whose outputs change family
-  stock under declared invariants with a `converted` line in the audit, is
-  stated in the dictionary and is not added by this run.
-- **Status.** measured on 2026-09-17, commit `a2aea30888ca6969d8036ae5737b54cc5818b3c7`,
-  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
-  initialization `8887461754ef2b5a32530f7fe86deaae4fcfef1b0e1f883fd99a23a3d605cac7`;
-  outcome: the event as stated, exact at every tick.
+  output 2 of family electron (charge -3) would change the total charge`)
+  and, with the charge set to 0, at the meeting (`ray meeting absorb changes
+  the stock of a family`). The missing generic rule, a meeting whose outputs
+  change family stock under declared invariants with a `converted` line in
+  the audit, is stated in the dictionary and is not added by this run.
+- **Status.** measured on 2026-09-17, commit `e3f5182ea614f84ffd6eee3a0343885800cc0ce0`,
+  source `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+  initialization `af9fd7819bd05c91b5bf95efa3b28e95f88891947d1a929dd201df8b0bdadd10`;
+  outcome: the photon taken into the ring and kept there, exact at every
+  tick. The first record, under the interim held form (commit
+  `a2aea30888ca6969d8036ae5737b54cc5818b3c7`, source
+  `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `8887461754ef2b5a32530f7fe86deaae4fcfef1b0e1f883fd99a23a3d605cac7`: the
+  group `[electron, electron, light]` held at one Node with `ray_delay` 3),
+  stays as the record of that form, removed by feature 14 the same day.
 
 ### E2. Photofission of a two-body nucleus, with the control below threshold
 
@@ -1374,70 +1391,106 @@ sign rule, and its other couplings are catalog entries.
   else happens on the board: a ray arrives (a high-energy light ray, for
   instance)") and 3.26 (the threshold is a table entry read at the meeting):
   the outputs rule fires only when the light's amount is at least 4, its
-  guard `gt(amount of the light, 3)`, and a photon below that crosses.
-- **Features.** 1, 5, 6, 8, 9, 10.
-- **Run.** `examples/nature/photofission.json`: board 21^3, open, N = 8, no
-  Detector, 16 ticks; a proton ray (amount 6, charge +3) and a neutron ray
-  (amount 6, charge 0) bound at (10, 10, 10) by `strong` (`ray_delay` 1); a
-  light ray of amount 2 from (10, 10, 4) heading +Z and one of amount 6 from
-  (10, 10, 19) heading -Z; `photofission`, declared before `strong`, with
-  outputs proton on +Y, neutron on -Y and the light on its own heading,
-  invariants energy and momentum, and the guard above.
-- **Shows.** Ticks 7 to 8: the low light crosses the group's Node after its
-  one-interval wait and walks on along +Z, the group intact and ticking.
-  Ticks 10 to 11: the high light fires the rule: the proton leaves on +Y,
-  the neutron on -Y, the light continues on -Z, each a new event ray with
-  the event's Ports and shares; momentum amount x heading (0, 0, -6) before
-  and after; no bound group from tick 11. At every tick: totals proton 6,
-  neutron 6, light 8, momentum (0, 0, 0), the charge line proton +18, every
+  guard `gt(amount of the light, 3)`, and a photon below that crosses; under
+  binding as a loop the photon above threshold stops the corner's turn and
+  the pair flies apart on its own headings, momentum exact by heading, and
+  the ring, its partners gone, disperses.
+- **Features.** 1, 5, 6, 9, 10, 14.
+- **Run.** `examples/nature/photofission.json`: board 26 x 26 x 11, open,
+  N = 8, no Detector, 32 ticks; the four-ray ring of the design (two rays per
+  sense at opposite corners), a proton ray (amount 6, charge +3, rest rate 1)
+  circulating one way from P0 = (20,20,5) and P2 = (21,21,5) and a neutron
+  ray (amount 6, charge 0, rest rate 1) the other, under the corner table
+  `strong` over `[proton, neutron]` (the Port form); the low light of amount
+  2 from (0,20,5) heading +X, at P0 after tick 20, and the high light of
+  amount 6 from (20,0,5) heading +Y, at P3 = (20,21,5) after tick 21;
+  `photofission`, declared before `strong`, with outputs proton, neutron and
+  light each on its own heading (`"same"`), invariants energy and momentum,
+  and the guard above.
+- **Shows.** Tick 1: the pairs at P1 and P3; from tick 2 the pairs at P0 and
+  P2 after the even ticks and at P1 and P3 after the odd ones, the corners
+  turning them, content 24, the state repeating every 8 ticks: the record
+  reads one group, ring the square, content 24 (proton 12, neutron 12),
+  period 8, clock 1 and 1, from tick 1 to tick 19. Ticks 20 and 21: the low
+  light meets the pair at P0 and then at P1; the guard reads 2 > 3 as 0 both
+  times, `strong` turns the pair and the light crosses, walking on along +X
+  to the boundary (escaped at tick 26). Tick 21: the high light at P3 with
+  the pair, the proton heading -X from P2 and the neutron +Y from P0; in the
+  cycle of tick 21 the guard reads 6 > 3 as 1 and `photofission` fires: the
+  proton continues -X to (19,21,5), the neutron +Y to (20,22,5) and the
+  light +Y with it, three new event rays of the event's Ports -X and +Y with
+  shares 6 and 12; momentum amount x heading (-6, 12, 0) before and after,
+  exact, nothing booked. The other pair turns at P1 in the same cycle and
+  arrives at P2 and P0 alone at tick 22: no partner, no rule, and each
+  crosses off the ring at tick 23; no group from tick 20. Ticks 26 and 27:
+  the neutron and the light of the split and then the lone proton leave
+  through +Y; at tick 32 the proton of the split is at (9,21,5) and the lone
+  neutron at (10,20,5), walking -X. At every tick: totals proton 12, neutron
+  12, light 8 (in the world with the escaped), momentum exact with the
+  corner turns booked as the corners' sources, the charge line proton +36,
+  every audit line balanced, `conserved_at_every_completed_tick` true.
+- **Status.** measured on 2026-09-17, commit `e3f5182ea614f84ffd6eee3a0343885800cc0ce0`,
+  source `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+  initialization `89e2e6d897dbb41d5ee81702034b8b1973c16df0c3806cb8db74777a34814816`;
+  outcome: the control crosses and the split happens as stated, the ring
+  dispersing after it, exact at every tick. The first record, under the
+  interim held form (commit `a2aea30888ca6969d8036ae5737b54cc5818b3c7`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`: one
+  proton and one neutron held at one Node), stays as the record of that
+  form, removed by feature 14 the same day.
+
+### E3. Absorption and emission: the photon carried in a bound electron and released
+
+- **Claim.** Highlights 3.4 (a group is unbound, or changed, by the coupling
+  declared for the families present) and 3.3 (a light ray carries the phase
+  of the clock that emitted it): the light ray taken into the ring leaves it
+  again when the ring's clock reaches a declared phase, on a new heading and
+  with the group's phase at emission, and the ground ring continues.
+- **Features.** 1, 5, 6, 9, 10, 14.
+- **Run.** `examples/nature/absorption_emission.json`: the board and ring
+  of E1, 32 ticks; a light ray of amount 4 from (5,5,1) heading +Z, at P0
+  after tick 4; `emit`, declared first, a corner table over
+  `[electron, electron, light]` with the guard `eq(phase of the electron,
+  1)` whose outputs are the electrons' turns and the light through Port +Z
+  with the electron's phase; `absorb` (the table of E1) second; `corner`
+  third.
+- **Shows.** Tick 4: the light at P0 with the pair, the electron phase 4;
+  the guard of `emit` is false and `absorb` fires: the photon joins the
+  ring. Ticks 5 to 9: the photon walks the edge P0-P3 with the ring's rays
+  (P3 after the odd ticks, P0 after the even), content 11, the electron
+  phases 5, 6, 7, 0, 1. Cycle 9, at P3: the phase reads 1 and `emit` fires,
+  the electrons turning as at every corner and the light leaving through +Z
+  with phase 1, the event's Ports +X, -Y and +Z with shares 1, 1 and 4.
+  Tick 10: the light at (5,6,6) heading +Z, phase 1, steps 1; the ring in
+  its ground state, content 8; the momentum the photon brought in, (0, 0,
+  4), leaves with it and the world's sources return to (0, 0, 0). Tick 14:
+  the light at (5,6,10); tick 15: escaped. Ticks 10 to 31: the ground ring,
+  which the record reads as one group, content 8, period 8, clock 1, from
+  tick 10 (the excited state of ticks 4 to 9 is shorter than two of its
+  periods and is read as no group). At every tick: totals electron 8, light
+  4 (in the world with the escaped), the charge line electron -24, every
   audit line balanced, `conserved_at_every_completed_tick` true.
-- **Status.** measured on 2026-09-17, commit `a2aea30888ca6969d8036ae5737b54cc5818b3c7`,
-  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
-  initialization `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`;
-  outcome: the control crosses and the split happens as stated, exact at
-  every tick.
-
-### E3. Absorption and emission: the photon held inside a bound electron and released
-
-- **Claim.** Highlights 3.4 (binding is zero events; a group is unbound by
-  the coupling declared for the families present) and 3.3 (a light ray
-  carries the phase of the clock that emitted it): the light ray bound into
-  the group leaves again when the group's clock reaches a declared phase, on
-  a new heading and with the group's phase at emission, and the ground group
-  re-forms.
-- **Features.** 1, 5, 6, 8, 9, 10.
-- **Run.** `examples/nature/absorption_emission.json`: board 11^3, open,
-  N = 8, no Detector, 14 ticks; two electron rays of amount 4 bound at
-  (5, 5, 5) by `bind` (`ray_delay` 1); a light ray of amount 4 from
-  (5, 2, 5) heading +Y; `emit`, declared first, an outputs rule over
-  `[electron, electron, light]` with the guard `eq(phase of the electron, 1)`
-  whose outputs are the light through Port +X with the electron's phase and
-  the two electrons with `delay` 1; `excite` (`ray_delay` 3) second; `bind`
-  third. The light's amount equals an electron's so that one electron
-  heading carries the recoil exactly.
-- **Shows.** Tick 2: the ground group [4, 4]. Tick 3: the light arrives and
-  waits the group's clock. Ticks 5 to 9: the group `[electron, electron,
-  light]`, amounts [4, 4, 4], `ray_delay` 3, the electron phases 5, 6, 7, 0,
-  1 and the light's 0 (the `bound_tick` records of cycles 4 to 8). Cycle 9:
-  the phase reads 1 and `emit` fires, the record's one departure from the
-  center, through +X. Tick 10: the light at (6, 5, 5) with phase 1 and
-  `steps` 1; the electrons at the Node with `ray_delay` 0 for that tick.
-  Tick 11 on: the ground group [4, 4], `ray_delay` 1 (the `bound_tick`
-  records of cycles 10 to 13), one electron on +Y holding the recoil; the
-  light walks to (10, 5, 5) at tick 14. At every tick: totals electron 8,
-  light 4, momentum (0, 0, 0), the charge line electron -24, every audit
-  line balanced, `conserved_at_every_completed_tick` true.
-- **The lifetime is declared.** Five intervals, one integer. The half-life
-  draw of Highlights 3.26 (a decaying group as a source, a source as a
-  Detector drawing at each tick) is not in the engine, whose Detector mark
-  draws on arrivals through Ports only; that draw at a `bound_tick` is the
-  missing rule for a random lifetime, stated in the dictionary and not added
-  by this run.
-- **Status.** measured on 2026-09-17, commit `84854f95da55ca3fc6dd6a43a7e7104bf94ad89e`,
-  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
-  initialization `b0ba05326c876703651bbd80b25f09fa42efd562b057824c03ef5fe28f8eb8bf`;
-  outcome: photon in, held five intervals, photon out on a new heading, the
-  group back in its ground state, exact at every tick.
+- **The lifetime is declared.** Five intervals, one integer, the ticks
+  until the electron phase reads 1 at the corner where the light is. The
+  half-life draw of Highlights 3.26 (a decaying group as a source, a source
+  as a Detector drawing at each tick) is not in the engine, whose Detector
+  mark draws on arrivals through Ports only; under the loop that draw would
+  be at the corner meeting, the mark's setting applied once per meeting of
+  the group's rays, and it is not added by this run.
+- **Status.** measured on 2026-09-17, commit `e3f5182ea614f84ffd6eee3a0343885800cc0ce0`,
+  source `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+  initialization `3f76be865e45f36c7c0b3cf2b1c56243610db2813c7e7a90e5d4b0155d245a1a`;
+  outcome: photon in, carried five intervals, photon out on a new heading
+  with the group's phase, the ring back in its ground state, exact at every
+  tick. The first record, under the interim held form (commit
+  `84854f95da55ca3fc6dd6a43a7e7104bf94ad89e`, source
+  `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization
+  `b0ba05326c876703651bbd80b25f09fa42efd562b057824c03ef5fe28f8eb8bf`: the
+  photon held five intervals in a group at one Node), stays as the record
+  of that form, removed by feature 14 the same day.
 
 ### E4. The helium ion: one electron at a nucleus of charge +2
 
@@ -1513,8 +1566,10 @@ sign rule, and its other couplings are catalog entries.
   Feature 8b landed on 2026-09-17 as `ray-momentum-turn-v1`: the transverse
   momentum is the ray's momentum register, pushed by a coupling's
   `momentum_table` and walked by the DDA ([a free ray turns by
-  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1));
-  this run is not repeated.
+  momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v2));
+  this run is not repeated. With both rules on `main` (feature 12 and 12b,
+  feature 8b) the demonstration is made again as
+  [E8](#e8-the-helium-ion-with-the-field-spreading-and-the-momentum-turn).
   The extractor of the ray viewer was corrected for this record: a ray a
   body's sink takes is not in the receiver's reading, so its transit now
   takes the amount from the `external_body_absorbed` record, and at a
@@ -1535,9 +1590,9 @@ sign rule, and its other couplings are catalog entries.
   meeting every interval two rays that leave through each other's Ports,
   and a pattern whose meeting does not close disperses; 3.28: the group's
   mass is its content and its clock the period of its loop.
-- **Features.** 1, 5, 6, 9, 10 for the meetings; 14 for the feature the
-  worlds are the design of (the removal of the held form, the record's
-  reading of a group), after 8b.
+- **Features.** 1, 5, 6, 9, 10 for the meetings; 14 (`loop-binding-v1`,
+  landed 2026-09-17 after 8b: the removal of the held form, the record's
+  reading of a group).
 - **Run.** `examples/nature/ring.json`: board 12 x 12 x 11, open, N = 8,
   no Detector, 16 ticks; eight `electron` rays of amount 1 (charge -3, rest
   rate 2) from eight lamps at the corners P0 = (5,5,5), P1 = (6,5,5),
@@ -1561,23 +1616,33 @@ sign rule, and its other couplings are catalog entries.
   with `(a + b) / gcd(a, b)` rays per sense and `2 (a + b) r = 0 (mod N)`.
   The phase difference at a corner is a constant of the motion, so the rate
   is read at no meeting of one family; the Port form gives no ladder.
-- **Shows (pinned, to be run once when the feature lands).** `ring.json`:
+- **Shows (pinned before the run).** `ring.json`:
   from tick 2 every corner holds one ray of each sense, amount 1, steps 1,
   phase 2t mod 8, stamped by the corner it last left; the state after tick
   t + 4 is the state after tick t; each corner books the momentum of its two
   quarter turns as its source, (2, 2, 0) at P0 and the like, the four
   summing to zero; electron 8, momentum (0, 0, 0), the charge line -24,
-  every ledger line balanced, `bound_groups` empty, no `bound_tick`.
-  `ring_open.json`: after tick 2 one ray of amount 2 at each corner,
-  walking +Y or -Y off the square, the board empty from tick 8, 8 escaped,
-  every line balanced. The integers are pinned in
+  every ledger line balanced, no `bound_groups` in the snapshot (the key is
+  gone with the held form), no `bound_tick`; the record's reading by the
+  ray viewer's extractor: one group, ring P0, P1, P2, P3, content 8, period
+  4, clock 2 on the 8-step circle, from tick 1. `ring_open.json`: after
+  tick 2 one ray of amount 2 at each corner, walking +Y or -Y off the
+  square, the board empty from tick 8, 8 escaped, every line balanced, no
+  group read. The integers are pinned in
   [test expectations](TEST_EXPECTATIONS.md#loop-binding) beside the
   rate-1, four-ray and quadrature cases. A check run on `main` at
   `c21e03e` (2026-09-17, not this demonstration) agreed with every pinned
-  line: today's engine already holds the ring under the Port form.
-- **Status.** planned, feature 14 (design done on 2026-09-17; the
-  demonstration is made once the held form is removed and the record reads
-  the group).
+  line: the engine already held the ring under the Port form before the
+  held form was removed.
+- **Status.** measured on 2026-09-17, commit `e3f5182ea614f84ffd6eee3a0343885800cc0ce0`,
+  source `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`;
+  `ring.json` initialization
+  `7908d327bd9163414cf3c019aec9919c2a0cbdb79c086b6fd081e52b69f83fa8`,
+  `ring_open.json` initialization
+  `deeae3635bb5924ff90f36e9996f4acd7c7b6e235a5c6315630c62a5e442e539`;
+  outcome: every pinned line as stated, the ring held and read as one group
+  of content 8, period 4, clock 2, the control dispersed and read as none,
+  exact at every tick.
 
 ### E6. The screen: the field of an electron at rest on seven marks
 
@@ -1658,7 +1723,319 @@ sign rule, and its other couplings are catalog entries.
   240, the same two fingerprints, 33 s), commit
   `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`; outcome: all seven marks
   click, 27, 6, 6, 3, 3, 1, 1 from the axis outward, the whole screen lit;
-  the records stay outside the tree.
+  the records stay outside the tree. Retired on 2026-09-17 with feature 14
+  (`loop-binding-v1`): the three records ran under the interim held form
+  (`bind`, `delay` 1, `ray_delay` 1), the last at commit `6f35705`, and the
+  world files `screen.json` and `screen_spread.json` are removed from the
+  tree with the held form, their fingerprints kept here. A loop of content
+  8 releases nothing at the catalog's ratio `[1, 4]` (a ray of amount 1
+  releases floor(1 / 4) = 0), and a radiating loop needs rays of amount 4,
+  content 32 at least, a different demonstration: the screen under a loop
+  is to be written and pinned anew, after A1's table and width, not
+  silently rerun with another source. That demonstration is E9 below
+  (`screen_loop.json`, 2026-09-17): this entry's screen and marks, the
+  source the ring of E5 with rays of amount 4. E9 was measured the same day
+  at commit `ed2078f`: the ring of content 32 lights all seven marks, 17, 4,
+  4, 1, 1, 1, 1 from the axis outward, the first at tick 11, and stays bound
+  while it radiates.
+
+### E8. The helium ion with the field spreading and the momentum turn
+
+- **Claim.** The claim of E4 (Highlights 3.19, 3.5, 3.4: an electron near a
+  fixed large charge, its trajectory changed at every step by the field rays
+  the nucleus releases) on the engine that holds the two rules E4 found
+  missing: the field spreads off the axes by the catalog's split table with
+  the Node-owned remainder (features 12 and 12b, `field-spreading-v1`,
+  `field-remainder-v1`) and a free ray turns gradually by the momentum of the
+  field rays it meets (feature 8b, `ray-momentum-turn-v1`). The model owner's
+  request of 2026-09-17, to see the nucleus with the electron around it and to
+  compute the orbit and the frequency a stable, closed orbit needs, is
+  answered in the rule's own dynamics before the run and confronted with the
+  record.
+- **Features.** 1, 5, 6, 7, 7b, 8b, 9, 10, 12, 12b.
+- **Run.** `examples/nature/helium_orbit.json`: board 15^3, open, N = 256, no
+  Detector, 152 ticks. The nucleus: an external body of the `proton` family
+  at (7, 7, 7), charge +6, amount 2^20, radiating `light_of_nucleus`
+  (`field_of` `proton`, `release` [1, 749]: A = 1399 per heading per
+  interval, `source_sign` +1) with `spread` [6, 1, 1, 1, 1, 1], coupled to
+  the electron by `phase_plate` at setting 0 and pulled by what its sink takes
+  (`momentum_table` -1). The electron: one `electron` ray of amount 256 (rest
+  rate 1, charge -3) from a lamp at (13, 5, 7) heading +Y, held forty
+  intervals by a launcher body at (13, 6, 7) (the coupling `launch`, an output
+  `delay` under the guard `eq(phase, 1)`) so that the field fills the board
+  before it moves, released at tick 42 through the tangent point (13, 7, 7)
+  of the circle of radius 6. Couplings: `nucleus_turn` over `[electron,
+  light_of_nucleus]` with `momentum_table` `{"light_of_nucleus": -1}`, the
+  catalog's `electron_field_turn` in the momentum-table form with the sign of
+  opposite charges, standing in for the open `opposite_charge` entry (A5);
+  `launch`; `phase_plate`. No field of the electron is declared (a turning
+  ray's transverse Links carry its own releases with it). The catalog is
+  unchanged. `examples/nature/helium_orbit_axes.json`: the same without
+  `spread`, the control. The board is 15^3 and the radius 6 rather than E4's
+  41^3 and 8 because a spreading field keeps every Node of the board active
+  at about 2.5 ms per Node and interval (the parallel backend is slower), so
+  the smallest board around the orbit took about an hour for 152 ticks; the
+  dictionary, the computation and the readings are in the
+  [README](../examples/nature/README.md#the-helium-ion-with-the-field-spreading-and-the-momentum-turn),
+  and `examples/nature/helium_orbit_table.py` prints the record tick by tick
+  with the verdict.
+- **Computed.** In the rule's dynamics (the register turned by the net flux
+  k / r^2, the ray walking one Link per interval along it) a circular orbit
+  exists at every radius, register P = k / r and period 8 r in the L1 metric
+  (frequency 1 / (8 r)), and is a neutral equilibrium: a radial displacement
+  grows as t^2 / (2 r^2) with nothing to restore it, since the speed is the
+  one speed of the board and the curvature k / (r^2 P) falls faster than 1 / r
+  as the electron drifts out (Kepler's stability comes from the speed falling
+  as the body climbs). So no stable closed orbit exists at any radius; the
+  push per interval that keeps the circle of radius 6 is m tan(pi / 24) = 34
+  for m = 256, T = 48. The exact mean field of the split table on this lattice
+  (a linear map the Node-owned remainders realize on average): the nucleus's
+  sink takes back 1.014 A of the 6 A released per interval; the mean inward
+  push on the 48 Nodes of the digital circle is 0.0241 A per interval, 2.2
+  times the isotropic S / (4 pi 36), the forward weight keeping a beam on each
+  axis (0.065 A at the axis crossing, 0.011 A on the diagonals); 90 percent of
+  its steady value at tick 40; hence A = 34 / 0.0241 = 1399. A push
+  perpendicular to the register lengthens it by p^2 / (2 m) = 2.3 per
+  interval, a second-order term of the integer map. The recoil of head-on
+  content walks with the electron and cancels its push one interval later,
+  content from behind drags it by 0.0114 A = 16 per interval, the transverse
+  content pushes it inward by 0.0177 A = 25 (computed after the control's
+  record and before the orbit's). Expected before the run: circulation for a
+  fraction of a period, then a fall or an escape, the fall the likelier sign.
+- **Shows.** Ticks 1 to 41: the field fills the board, a spread at 1757 of
+  the 3375 Nodes by tick 12 and at every Node but the bodies' by tick 40,
+  the sink's rate rising toward one sixth of the release as computed; the
+  electron waits at the launcher.
+  Tick 42: at the tangent point (13, 7, 7) five field rays push it, the +X
+  axis beam 94 (the mean field 91) and 7, 11, 11, 11 on -X, -Y, +Z, -Z, the
+  register (0, 256, 0) to (-87, 267, 0), five recoils reversed. Ticks 43 to
+  49: straight up the line x = 13, one Link per interval, six field rays at
+  every Node (the recoil of the head-on content among them, walking with the
+  electron and pushing it back), the +X push 35 (the mean field 34), 25, 18,
+  11, 8, 5, 3, the register (-118, 264, 0) to (-181, 256, 0); the accumulators
+  reset at every push, so the DDA steps along the dominant axis only. Tick
+  50: the electron leaves through the +Y face at (13, 14, 7), 7 Links from
+  the nucleus, register (-181, 256, 0), escaped electron 256; the distance
+  rose from 6.00 to 9.22 without a turn; 46 pushes summing to (-181, 0, 0).
+  Ticks 51 to 152: the field alone. The control: the fall of E4 in the
+  register's language, one push (-1399, 0, 0) at the axis crossing, two
+  cancelling pushes per Node down the axis (the beam and its recoil), the
+  nucleus at tick 48, the two-Link cage stepping outward along +Y late in
+  the run, the body's momentum (1399, 37773, 0). At every tick: the light line exact (released 8394 per
+  interval, 1275888 by tick 152, 258398 in the world, 798078 escaped, 219412
+  in the two sinks), the momentum line balanced (sourced (-181, 0, 0),
+  current (0, -256, 0), escaped (-181, 256, 0)), the bodies' line count 2,
+  charge 6, momentum (-29, 12, 0); every audit line balanced,
+  `conserved_at_every_completed_tick` true.
+- **Verdict.** Escape, by the rules: (i) a ray pushed in every interval
+  walks its register's dominant axis, since the push resets the DDA's
+  accumulators, so in a field that reaches every Node the gradual turn has
+  no Link to show on and the path is axis runs with whole quarter turns; (ii)
+  the transverse impulse a straight half-line gathers from the 1/r^2 flux is
+  k / R, 214 here by the mean field against the register's 256, so the axis
+  never flips and the electron passes straight, on a board of any size; (iii)
+  the neutral equilibrium of the computation. The engine on `main` gives the
+  helium ion no circulating electron: a straight pass (this record) or an
+  axis fall into E4's cage (the control). The mean field of the split table
+  agrees with the record push by push (94 against 91, 35 against 34). The
+  request of the model owner is answered as computed: a closed orbit at every
+  radius at register k / r, none stable, and on the lattice none while every
+  interval carries a push; what to decide is stated in the README's limits
+  (the accumulators kept through a push; the speed of a heavy register).
+- **Status.** measured on 2026-09-17, commit `6f357052b6c18ab186e67d0113a0c82ff8b5a99d`
+  (`main` with features 12, 12b and 8b); `helium_orbit.json`, source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`,
+  initialization
+  `3504b35d676da504734c550970bdbfce8e0a4850f6fa06ea8da8e5d93a3a7422`,
+  1589 s; `helium_orbit_axes.json`, source the same, initialization
+  `7d5bf8977e64ce3420fb5f7d35f2bd051698bfd2d877a57b3a7ca9f46c87ffec`, 7 s;
+  outcome: no closed orbit, the straight pass and the escape at tick 50 as
+  stated, the control's fall at tick 48 and its cage, exact at every tick;
+  the records stay outside the tree. The escape was recorded under
+  `ray-momentum-turn-v1`, whose push reset the DDA's accumulators;
+  `ray-momentum-turn-v2` (2026-09-17,
+  [migration](MIGRATION.md#a-push-keeps-the-walk-on-2026-09-17-ray-momentum-turn-v2))
+  keeps them, and the run is not repeated here.
+
+### E9. The screen with a loop source: the ring radiating on seven marks
+
+- **Claim.** The claim of E6 (Highlights 5.4, the picture of the world is
+  the list of PASS clicks; 3.5, light is the field of a charge and the field
+  spreads by the split table of its family) with the source in the loop form
+  of binding (3.4, 3.28; feature 14): an electron at rest is a ring of rays,
+  and every ray in motion releases its field on the five headings other than
+  its own at every Node it departs (3.5), booked as a source (3.15), so a
+  ring radiates under nothing but the corner table and the catalog's release
+  ratio, stays bound while it radiates because a release costs the ray
+  nothing, and its spreading field lights the whole screen as E6's did. A
+  ring of content 8 releases nothing at `[1, 4]`; this entry is the radiating
+  ring E6's retirement asked for, written and pinned anew.
+- **Features.** 1, 2, 5, 6, 7, 9, 10, 12, 12b, 14.
+- **Run.** `examples/nature/screen_loop.json`: E6's board 12 x 11 x 11,
+  open, N = 8 (`phase_bits` 3), 240 ticks in the file (E6's registered
+  length, no override); E6's seven marks at (7, 2, 5) through (7, 8, 5),
+  setting [1, 1] (every arrival passes), at distance 6 along +X from the
+  source's first Node (1, 5, 5) and 5 from its second (2, 5, 5). The source:
+  the ring of E5 with rays of amount 4, eight `electron` lamps (charge -3,
+  the catalog's rest rate 1) at the corners of the unit square P0 =
+  (1,5,5), P1 = (2,5,5), P2 = (2,5,6), P3 = (1,5,6), one of each sense at
+  every corner, the R lamps on +X at P0, +Z at P1, -X at P2, -Z at P3 and
+  the L lamps on +Z at P0, -X at P1, -Z at P2, +X at P3 (`ring.json`'s
+  lamps with Y read as Z), content 32; the one rule `corner` over
+  `[electron, electron]`, the Port form. `light` is declared as in the
+  retired `screen_spread.json`: `field_of` electron, `release` [1, 4],
+  `spread` [6, 1, 1, 1, 1, 1], rest rate 0, charge 0, its `source_sign` set
+  by the engine from the electron's charge; 24 ray slots (E8's field
+  family), since a corner receives field content on six Ports with up to
+  three phases per Port. No rule names `light`: layers are derived, so it is
+  a layer of its own and crosses the ring's Nodes unmet (`ray-layers-v1`),
+  spreading there like at any Node; nothing is declared to say so, where
+  E1's world declares `absorb` to say the opposite. The square lies in the
+  plane y = 5, which contains the axis and is perpendicular to the marks'
+  line, not in the plane z = 5 of the marks' line: a unit square in that
+  plane would put two of its Nodes at y = 6 (or 4), one of them on the line
+  of the mark (7, 6, 5) with an axis beam of its own, and the mirror about
+  y = 5 that clause (3) of the criterion demands would be broken by
+  construction; in the plane y = 5 the source, the marks and the split table
+  are exactly symmetric under y -> 10 - y. The dictionary, the computation
+  and the readings are in the
+  [README](../examples/nature/README.md#the-screen-with-a-loop-the-ring-radiating-on-seven-marks);
+  `tests/test_screen_loop.py` pins the first ticks in isolation
+  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)).
+- **Computed (before the run).** The content: at `[1, 4]` a ray of amount a
+  releases floor(a / 4) per heading, 0 for a < 4, so 4 is the least amount
+  that radiates, and with one ray of each sense at every corner, as
+  `ring.json` declares the electron (eight rays), content 32 is the least
+  radiating ring of that electron; the four-ray loop of E5's `half` case
+  would radiate at 16 but is not that electron. The rate: the catalog's 1,
+  not `ring.json`'s 2 (chosen there so that the hand table closes in one
+  circuit), because the light carries its releaser's clock and the source
+  here is the catalog's electron, as E1's ring and E6's held group had it;
+  at rate 1 the ring closes in two circuits, period 8, every ray at phase t
+  mod 8 after tick t (E5's `slow` case), nothing lost. The release: the
+  lamps' rays are fresh at tick 0 and release nothing; from the cycle of
+  tick 1, every interval, each of the eight rays releases 1 on the five
+  headings other than the one it departs on (the release is taken from the
+  trajectory that leaves the corner meeting), 40 quanta per interval against
+  E6's 12, 40 (t - 1) sourced by tick t, 9560 by tick 240. Per corner 10:
+  the two departing rays' releases merge per heading (one phase, one sign),
+  so P1 sends 2 on +X along the axis line y = 5, z = 5 toward the screen, 1
+  on -X and 1 on +Z along the edges to P0 and P2, 2 on -Z, 2 on +Y and 2 on
+  -Y; P2 sends 2 on +X along y = 5, z = 6, one Link beside the marks' plane;
+  P0 and P3 send 2 on -X away from the screen; per interval the ring sends 6
+  on each of +X, -X, +Z, -Z and 8 on each of +Y, -Y, of which 8 run along
+  the four edges and reach the neighbouring corners in the next interval,
+  where they are not met (no rule) and spread, so the corners' registers
+  are sources of spread content as any Node's are. The phase: every release
+  of the cycle of tick t carries the ring's phase t mod 8 and light's rate
+  0 keeps it, so the source has a clock and the screen reads it: a quantum
+  that reaches a mark on whole-quantum steps carries the phase of its
+  release tick, and a quantum a register releases carries the phase of the
+  coherent sum of the shares that filled it, which over eight consecutive
+  intervals of this clock cancels to step 0 and otherwise is the phase of
+  the shares beyond whole circles; the phases the marks see are read from
+  the recording. The momentum: `light` binds no momentum field, so a spread
+  and a release book none (as in E6) and the world's momentum is the
+  corners' bookings of their two quarter turns, (8, 0, 8) at P0, (-8, 0, 8)
+  at P1, (-8, 0, -8) at P2, (8, 0, -8) at P3 per interval, summing to zero:
+  momentum (0, 0, 0) at every tick; electron 32 in the world and none
+  escaped at every tick, the charge line -96; light current (rays and
+  registers) plus escaped equal to sourced. The order of the first clicks:
+  the on-axis mark (7, 5, 5) first, fed by the axis line from P1, two fresh
+  quanta per interval plus P1's register releases (the edge light of P0
+  arriving on +X fills P1's +X register by 6/11 per interval), a stronger
+  beam than E6's 2 starting one Node nearer the screen, so before E6's tick
+  19; then (7, 4, 5) and (7, 6, 5) in one tick, then (7, 3, 5) and (7, 7, 5),
+  then (7, 2, 5) and (7, 8, 5), each pair in the same tick with the same
+  amount by the mirror, the counts falling outward as E6's 27, 6, 6, 3, 3,
+  1, 1; the ticks are the run's to give.
+- **Criterion (written before the run).** Pass, all of: (1) every ledger
+  line balanced at every completed tick and
+  `conserved_at_every_completed_tick` true; (2) the record's group reader
+  (the ray viewer's extractor with the recording) reads exactly one group,
+  ring P0, P1, P2, P3, content 32, `{"electron": 32}`, period 8, clock 1 on
+  8 steps, from tick 1 to tick 239, so that the eight ring rays' states
+  recur at every corner through the whole run: the source stays bound while
+  radiating and its content does not change, because a release is booked as
+  a source (Highlights 3.15); (3) all seven marks click within 240 ticks,
+  the pairs (7, 4, 5) and (7, 6, 5), (7, 3, 5) and (7, 7, 5), (7, 2, 5) and
+  (7, 8, 5) with equal click counts, and the on-axis mark (7, 5, 5) with
+  the most; (4) no light ray meets a ring ray: `ray_layer_families` in
+  `run.json` lists `light` in a layer of its own, the events of the record
+  are of the kinds `spatial_cycle` (the corner meetings and the releases,
+  read in its `source_delta`), `spatial_sent`, `spatial_received`,
+  `spatial_escaped`, `field_spread`, `detector_click` and `detector_pass`
+  only, beside the host's cycle records, and the electron line has no
+  source, no escape, no annulment and no absorption at any tick. Fail: any
+  one clause, stated as which and why. The run is made once; nothing is
+  tuned after it, and if its first look forces a change, both records are
+  kept and said so.
+- **Shows.** Run once, 240 ticks, 92 s. The clicks: 29, every one of
+  family `light`, bit 1, 28 of amount 1 and one of amount 2 (tick 63, two
+  whole quanta merged on one Port in one interval); (7, 5, 5) 17 at ticks
+  11, 15, 18, 22, 27, 27, 31, 34, 37, 41, 42, 43, 51, 59, 63, 67 and 69
+  (the first eight ticks before E6's 19, as computed; the one at 43
+  through the +Z face from the line y = 5, z = 6 of P2, the others through
+  the -X face, the axis line from P1); (7, 4, 5) and (7, 6, 5) 4 each at
+  34, 46, 54 and 72; (7, 2, 5) and (7, 8, 5) once each at 70; (7, 3, 5) and
+  (7, 7, 5) once each at 71; the pairs tick for tick with the same amount;
+  the last click at tick 72, and from 73 to 240 no mark clicks. The passes:
+  378 `detector_pass` (376 of amount 1, 2 of amount 2, all bit 1), 120 at
+  the on-axis mark from tick 46, 61, 42 and 26 at each mark of the pairs
+  outward from ticks 43, 50 and 95, mirrored tick for tick, against E6's 10
+  passes among 47 clicks: a mark is a Node that spreads, and a spread's
+  departures carry the combined bit of the interval's arrivals (1 outranks
+  0 outranks none, Highlights 5.4), so the read bit leaves a mark on all six
+  headings, along the screen and back toward the source, and from tick 71
+  every axis-line arrival at (7, 5, 5) carries it: the screen's own read
+  light fills the field in front of it and the marks stop clicking, a
+  finding of the record. The phases, from the `field_spread` record at the
+  mark at each click: on the axis 3, 1, 2, 1, 2, 2, 0, then 1, 1, 1, then
+  step 2 at every click from tick 42, off the axis step 2 but the outermost
+  pair's 3; 102 of the 113 spreads at the on-axis mark record step 2: the
+  ring's clock is not read at the marks as a rotation, the registers'
+  coherent sums settling at one step. The ledger after tick 240: light
+  sourced 9560, current 3680 (620 on 594 rays, 3060 in the registers of
+  1177 Node-and-sign blocks), escaped 5880; electron 32 at every tick with
+  no source, escape, annulment or absorption; momentum (0, 0, 0); charge
+  electron -96, light 0; every line balanced at every tick,
+  `conserved_at_every_completed_tick` true. The group: the extractor with
+  the recording reads exactly one, ring (1, 5, 5), (2, 5, 5), (2, 5, 6),
+  (1, 5, 6), content 32, `{"electron": 32}`, period 8, clock 1 on 8 steps,
+  from tick 1 to tick 239 over 1912 electron chains, every tick row from 1
+  to 239 bound `{"electron": [32]}`, the eight rays at the corners at
+  amount 4 and phase 0 after tick 240 as after tick 8. The events:
+  `spatial_cycle` 181351, `spatial_sent` 98825, `spatial_received` 62808,
+  `field_spread` 62403, `spatial_escaped` 5444, `detector_click` 29,
+  `detector_pass` 378, `cycle_started` and `cycle_committed` 960 each, no
+  other kind; `ray_layer_families` `[["electron"], ["light"]]`. The
+  readings tick by tick, the eye view and the deviations from the
+  computation are in the
+  [README](../examples/nature/README.md#screen_loopjson-tick-by-tick-the-first-clicks).
+- **Status.** measured, 2026-09-17, commit
+  `ed2078f1dfc73f97f682d0bc3cf1c5dab6eb8810` (the commit that carries this
+  entry and the world); `screen_loop.json`, source
+  `693ba4693afc98315b18cb616f3a2a35ce272573ada7b9beb52be6bf54b71077`,
+  initialization
+  `e1984daf7ff47f2cc243a8fed7d60a3717da1b7c150af49a79656150b1640ac9`, 240
+  ticks, 92 s; outcome: pass in every clause. (1) every ledger line
+  balanced at every completed tick, `conserved_at_every_completed_tick`
+  true; (2) one group, the ring, content 32, `{"electron": 32}`, period 8,
+  clock 1 on 8 steps, from tick 1 to tick 239; (3) all seven marks click,
+  17, 4, 4, 1, 1, 1, 1 from the axis outward, the pairs equal, the on-axis
+  mark most; (4) `light` in a layer of its own, the events of the kinds
+  listed only, the electron line without source, escape, annulment or
+  absorption at every tick. Deviations from the computation, none from the
+  criterion: the order of the first clicks (the outermost pair at tick 70,
+  one interval before the next pair at 71; computed: the pairs from the
+  axis outward), the counts (the two outer pairs equal at 1; computed:
+  falling as E6's 27, 6, 6, 3, 3, 1, 1), one click of amount 2 (computed:
+  whole quanta of 1), and the 378 passes, which the computation did not
+  consider and which end the clicking at tick 72. The isolated test
+  (`tests/test_screen_loop.py`, 32 ticks) pins the first seven clicks, the
+  light line and the group reading from the first run of its board
+  ([expectations](TEST_EXPECTATIONS.md#the-screen-with-a-loop)). The
+  record stays outside the tree; nothing was tuned after the run.
 
 ### E7. The string: gluon loops between two quarks (after feature 14)
 

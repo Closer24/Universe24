@@ -45,7 +45,9 @@ COSTS = {
 }
 # The record hashes of the released-field world without spread, taken on main f3809be.
 UNCHANGED_EVENTS = "8ab9901a4e5c2da7b4571e7438e674e528050c5fb61e894fbb7d18703adb8fa5"
-UNCHANGED_STATE = "c13cd23158e5e461f171a8e2241ff793a24ccea531bd25ef54b28cfb2623e560"
+# state.json re-pinned on 2026-09-17 when loop-binding-v1 removed the snapshot's
+# `bound_groups` key; events.jsonl is unchanged.
+UNCHANGED_STATE = "026ac5ed14cbc996c7782082f1b742d0ba816643c0701cbf2b4d59e062128ea0"
 KINDS = ("field_spread", "field_returned", "detector_return")
 
 
