@@ -46,11 +46,13 @@ from .core.integer import checked_work
 from .core.spatial_state import (
     CAPTURE_MODES,
     DECAY_RESIDUES,
+    MAX_DETECTORS,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
     RAY_PROPERTIES,
     DecayDefinition,
+    DetectorMark,
     EmissionDefinition,
     FieldAssignment,
     FieldGroupDefinition,
@@ -938,6 +940,23 @@ def _seeds(
     return tuple(result)
 
 
+def _detectors(value: object) -> tuple[DetectorMark, ...]:
+    """Detector marks: position, setting and seed, all required; there is no default rate."""
+    result: list[DetectorMark] = []
+    for raw in _array(value, "detectors", MAX_DETECTORS):
+        obj = _object(raw, "detector", {"position", "setting", "seed"}, {"position", "setting", "seed"})
+        setting = _array(obj["setting"], "detector.setting", 2, 2)
+        result.append(
+            DetectorMark(
+                _address(obj["position"], "detector.position", 0),
+                _integer(setting[0], "detector.setting numerator", 0),
+                _integer(setting[1], "detector.setting denominator", 1),
+                _integer(obj["seed"], "detector.seed", 0),
+            )
+        )
+    return tuple(result)
+
+
 def _decay(value: object) -> DecayDefinition:
     keys = {"retain_numerator", "retain_denominator"}
     obj = _object(value, "spatial decay", keys | {"residue"}, keys)
@@ -1736,6 +1755,7 @@ def parse_initial_state(document: object) -> InitialState:
             "focus",
             "ray_phase_per_tick",
             "sampling_profile",
+            "detectors",
         },
         required,
     )
@@ -1815,6 +1835,7 @@ def parse_initial_state(document: object) -> InitialState:
         ray_delay=_boolean(obj.get("ray_delay", False), "ray_delay"),
         focus=_boolean(obj.get("focus", True), "focus"),
         ray_phase_per_tick=_boolean(obj.get("ray_phase_per_tick", False), "ray_phase_per_tick"),
+        detectors=_detectors(obj.get("detectors", [])),
     )
     if any(len(rule.participants) > capacity for rule in initial.spatial_interactions):
         raise ValueError("spatial interaction participant count exceeds slots_per_node")
