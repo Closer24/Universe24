@@ -183,6 +183,9 @@ class Unit:
     event_ports: int | None = None
     event_shares: list[int] | None = None
     detector: int | None = None
+    # The ray's momentum register when the recording carries one set by a push
+    # (ray-momentum-turn-v1); None reads as amount x the Link's heading.
+    momentum: list[int] | None = None
     chain: Chain | None = None
 
 
@@ -413,6 +416,8 @@ def enrich_from_frames(units: list[Unit], frames: list[dict[str, Any]] | None) -
                     setattr(unit, name, int(ray[name]))
             if "event_shares" in ray:
                 unit.event_shares = [int(v) for v in ray["event_shares"]]
+            if ray.get("momentum") is not None:
+                unit.momentum = [int(v) for v in ray["momentum"]]
         if transit.target is not None:
             arrived = recorded_ray(
                 by_tick.get(transit.arrival), transit.target, unit.family, transit.port
@@ -421,8 +426,16 @@ def enrich_from_frames(units: list[Unit], frames: list[dict[str, Any]] | None) -
                 unit.arrival_phase = int(arrived["phase"])
 
 
+def unit_momentum(unit: Unit) -> list[int]:
+    """One drawable ray's momentum: its register when the recording carries one
+    (ray-momentum-turn-v1), else amount x the heading of the Link it crosses."""
+    if unit.momentum is not None:
+        return list(unit.momentum)
+    return scale(heading_of_port(unit.transit.port), unit.amount[0])
+
+
 def momentum(units: list[Unit]) -> list[int]:
-    return add_vectors([scale(heading_of_port(u.transit.port), u.amount[0]) for u in units])
+    return add_vectors([unit_momentum(u) for u in units])
 
 
 def amounts_of(units: list[Unit]) -> Amounts:
@@ -1150,6 +1163,7 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
                 "port": unit.transit.port,
                 "heading": heading_of_port(unit.transit.port),
                 "amount": unit.amount,
+                "momentum": unit_momentum(unit),
                 "phase": unit.phase,
                 "arrival_phase": unit.arrival_phase,
                 "steps": steps,

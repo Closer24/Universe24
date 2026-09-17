@@ -24,6 +24,7 @@ from event_universe.core.spatial_state import (
     FieldSpread,
     InverseSplit,
     Ray,
+    RayPush,
     ReturnedField,
     SpatialNodeState,
     SpatialPacket,
@@ -55,6 +56,7 @@ STATE_RECORDS = (
     BoundMotion,
     FieldSpread,
     ReturnedField,
+    RayPush,
 )
 
 

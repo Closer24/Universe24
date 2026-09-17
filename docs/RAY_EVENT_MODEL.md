@@ -744,8 +744,8 @@ every such set; Highlights 3.20 is the text to follow.
    couplings need, since a phase is read only at a meeting and only as a
    difference (decided 2026-09-17, Highlights 3.28): eight steps resolve the
    Born table, a wider circle is allowed but never required, and the
-   weakness of gravity does not live in the phase but in the lag register of
-   feature 8b under step 8.
+   weakness of gravity does not live in the phase but in a register of any
+   width, the momentum register of feature 8b under step 8.
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
@@ -850,14 +850,28 @@ every such set; Highlights 3.20 is the text to follow.
    wait, holds any content and therefore has no ladder, and the
    register-driven motion of a group (feature 8c) is the interim form of its
    motion; both are superseded by feature 14, binding as a loop, below.
-   Feature 8b, lag modulus, after feature 10 (decided 2026-09-17, Highlights
-   3.28): the lag counted in its own modulus, declared per family, in place
-   of the phase steps of feature 8; the register is spent as one Link toward
-   the lagging side when it reaches that modulus, exactly as a heading is
-   carried with a resolution of one part in 2^30 through six Ports, and that
-   modulus, not the phase circle, is the N of hypothesis 14, of any width
-   because it enters no phase sum; the phase circle stays as small as the
-   family's couplings need.
+   Feature 8b, a free ray turns by momentum, `ray-momentum-turn-v1` (done on
+   2026-09-17, issue #169; the second gap the helium-ion run E4 found): a
+   ray's direction is its momentum register, three integers, by default
+   amount x heading, which the DDA walks at every departure in place of the
+   heading, one Link per interval, so the momentum sets the direction and
+   never the speed; a coupling of free rays without outputs whose
+   `momentum_table` names the field family pushes its one unnamed
+   participant by sign x amount x heading of every field ray it meets, the
+   field ray returned reversed as the recoil, no event stamped, the ray's
+   amount, phase, bit and record untouched, `ray_push` published; the
+   ledgers read the register and the push is booked as the meeting's
+   momentum change; the heading index stays the ray's line for the rules
+   that read it; see [a free ray turns by
+   momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1).
+   This is the register of Highlights 3.28 for the turn: a resolution of
+   one part in the ray's amount, of any width because it enters no phase
+   sum, in place of the transverse lag of feature 8 spent in whole Links
+   (the item named "lag modulus" under this number on 2026-09-17); the lag
+   keeps the delay on the ray's own axis in phase steps, and its own modulus
+   for that delay (`lag_bits`, the N of hypothesis 14 on the delay) stays
+   open under this feature until a run needs it. It unlocks A5 and A6 in the
+   [experiments register](EXPERIMENTS.md).
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two

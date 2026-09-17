@@ -22,7 +22,14 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work
-from event_universe.core.spatial_state import PORT_HEADINGS, BoundMotion, Ray, Rays, held_ray
+from event_universe.core.spatial_state import (
+    PORT_HEADINGS,
+    BoundMotion,
+    Ray,
+    Rays,
+    held_ray,
+    ray_momentum_vector,
+)
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
@@ -155,13 +162,11 @@ class LocalConservationAudit:
                     # A returning ray reads as its share on the event's heading, its
                     # own heading negated (detector-return-v1), and its charge as
                     # charge x amount like any ray (ray-event-audit-v1).
-                    heading = definition.headings[ray.heading]
+                    # A ray with a momentum register reads it (ray-momentum-turn-v1).
                     sign = 1 if ray.outbound else -1
                     if group is None or not held_ray(ray):
-                        for axis in range(3):
-                            intrinsic[axis] = checked_work(
-                                intrinsic[axis] + sign * ray.amount * heading[axis]
-                            )
+                        for axis, value in enumerate(ray_momentum_vector(ray, definition)):
+                            intrinsic[axis] = checked_work(intrinsic[axis] + sign * value)
                     charge = checked_work(charge + checked_work(ray.amount * definition.charge))
             values[definition.field] = pack(tuple(components))
         if group is not None:

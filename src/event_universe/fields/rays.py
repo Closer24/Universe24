@@ -14,6 +14,7 @@ from event_universe.core.spatial_state import (
     heading_pace,
     merge_rays,
     ray_phase_step,
+    ray_vector,
     stamp_event,
     validate_heading,
 )
@@ -128,9 +129,11 @@ def forward_rays(
             else:
                 outgoing[port].append(moved)
             continue
+        # The DDA walks the ray's momentum register when a push set one, else the
+        # heading of its line (ray-momentum-turn-v1): one Link per interval either way.
         port, moved = advance_ray(
             replace(ray, wait=wait - denominator),
-            definition.headings[ray.heading],
+            ray_vector(ray, definition),
             definition.phase_modulus,
             definition.phase_advance,
         )
@@ -177,7 +180,7 @@ def _spend_lag(ray: Ray, definition: SpatialFieldDefinition, meter: CostMeter) -
     lag[axis] = bounded(checked_work(lag[axis] - sign * modulus))
     meter.charge("update", 2)
     spent = replace(ray, lag=(lag[0], lag[1], lag[2]), phase=_held_phase(ray, definition))
-    if definition.headings[ray.heading][axis] != 0:
+    if ray_vector(ray, definition)[axis] != 0:
         return -1, spent
     return 2 * axis + (0 if sign > 0 else 1), replace(spent, steps=bounded(checked_work(ray.steps + 1)))
 

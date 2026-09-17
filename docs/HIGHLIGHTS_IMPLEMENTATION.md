@@ -48,6 +48,21 @@ ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)):
 | 3.19, the external body's sinks and momentum | The `absorbed` line is what the bodies' sinks took (`external_body_totals`); the bodies' count, momentum, charge and sinks are their own lines beside the identity |
 | 3.26, the engine validates without inventing | A meeting whose outputs would change the total charge is rejected at validation; the runner's `conserved_at_every_completed_tick` is the ledger's identity re-checked from the recorded integers, and a record altered by hand is reported by tick and line |
 
+## A free ray turns by momentum - 2026-09-17 (`ray-momentum-turn-v1`)
+
+Issue #169, feature 8b, implements the gradual bending of a free ray of
+sections 3.5, 3.14, 3.16 and 3.28 by the momentum register of feature 8c
+([a free ray turns by momentum](SPATIAL_FIELDS.md#a-free-ray-turns-by-momentum-ray-momentum-turn-v1)),
+the second gap the helium-ion run (E4) found:
+
+| Highlights | Implementation |
+| --- | --- |
+| 3.16, momentum is directional, conserved component by component | A ray's direction is its momentum register, three integers, by default amount x heading; the DDA walks the register at every departure with the ray's accumulators as before, one Link per interval, so (7, -1, 0) is seven +X Links per -Y Link and the speed never changes |
+| 3.5, where a field ray meets a ray whose coupling responds the meeting changes that ray's trajectory; the field ray returns reversed; 3.14, the recoil is a ray | A coupling of free rays without outputs whose `momentum_table` names the field family pushes its unnamed participant by sign x amount x heading of every field ray it meets (-1 toward the source, the body's and the group's table) and returns each field ray reversed as the recoil; no event is stamped, the ray's amount, phase, bit and record stay, and a `ray_push` record reports the register before and after |
+| 3.28, bending is a change of momentum; the lag register carries the turn with a resolution of one part in the modulus, of any width because it enters no phase sum | The turn is the register, integers of any width that enter no phase sum: a ray of amount a pushed by a field ray of amount f turns by f / a, walked exactly by the DDA; the lag of feature 8 keeps the delay on the ray's own axis in phase steps (its own modulus, `lag_bits`, open) |
+| 3.15, exact accounting | The world ledger and the local audit read a free ray by its register wherever it is; the push and the reversal are booked as the meeting's momentum change, `conserved_at_every_completed_tick` true; a world without a free-ray table runs byte-identically (case (d) pins two records' digests) |
+| 3.4, the electron ray "whose trajectory is changed at every step by the field rays" | With a spread field (feature 12) and this coupling, the orbit of E4 becomes a staircase of pushes; A5 and A6 are runnable after this feature ([experiments](EXPERIMENTS.md)) |
+
 ## Binding as a loop - 2026-09-17 (`loop-binding-v1`, design, feature 14 planned)
 
 Issue #169, feature 14, the model owner's decision of 2026-09-17 in section
@@ -99,8 +114,8 @@ as bending by delay of section 3.28
 | 3.4, the binding may be a very large output-clock delay; a large mass makes the Node very slow | `ray_delay` on the binding rule: every arrival at the group's Node waits the declared intervals, one Node-wide wait approximating the six per-face clocks of 3.28 (interim, feature 14) |
 | 3.4, unbound the same way anything else happens: a ray arrives and the declared coupling produces events that leave | An earlier declared outputs rule naming a bound participant and an arriving ray fires; its outputs leave as new event rays; the binding rule no longer fires |
 | 3.5, a bound group releases its field | A held ray releases on all six headings once per interval, booked as a source |
-| 3.28, the met ray is delayed, its output clock grows, more on the side nearer the heavy Node | A meeting output's `delay` by a declared table per the Port the field ray came through, in phase steps of the face clock on that side, carried as the ray's `lag`; feature 8b planned (2026-09-17, Highlights 3.28): lag modulus decoupled from `phase_bits`, the lag counted in its own modulus declared per family, after feature 10 |
-| 3.28, the ray bends toward the heavy Node; bending is a change of momentum | A transverse lag that reaches the phase modulus (the lag's own modulus after feature 8b) is spent as one Link toward the lagging side at a later departure; the field ray returns reversed as the recoil; the momentum the turn moves is booked at the meeting as the meeting's source, the recoil's coupling to the group being open |
+| 3.28, the met ray is delayed, its output clock grows, more on the side nearer the heavy Node | A meeting output's `delay` by a declared table per the Port the field ray came through, in phase steps of the face clock on that side, carried as the ray's `lag`; the lag's own modulus for this delay (`lag_bits`, Highlights 3.28) is open, the turn having moved to the momentum register of feature 8b (`ray-momentum-turn-v1`, above) |
+| 3.28, the ray bends toward the heavy Node; bending is a change of momentum | A transverse lag that reaches the phase modulus is spent as one Link toward the lagging side at a later departure, the heading unchanged; the field ray returns reversed as the recoil; the momentum the turn moves is booked at the meeting as the meeting's source, the recoil's coupling to the group being open. Since feature 8b (`ray-momentum-turn-v1`) the gradual turn is the momentum register pushed by a coupling's `momentum_table`, the lag keeping the delay |
 | 3.17, remainders | The lag below the modulus stays on the ray as its owner; the floor of the delay is of a clock count, not of content |
 | Hypothesis 14, G = hbar c / (N m_0)^2 | `test_ray_binding.py` pins G_eff x N^2 = 64 over N = 2^8, 2^10, 2^12, 2^16 with the mass N / 4 phase steps per interval and b = 4 |
 

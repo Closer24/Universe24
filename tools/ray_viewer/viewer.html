@@ -453,7 +453,7 @@
   function buildLegend() {
     var s = state.style, c = s.colors;
     var items = [
-      ["ray", c.accent, "ray on the Link it crosses in its family colour, a white wake over the last " + s.sizes.trail_links + " Links, and a momentum arrow (" + s.sizes.momentum_arrow_px_per_quantum + " px per quantum) in its heading"],
+      ["ray", c.accent, "ray on the Link it crosses in its family colour, a white wake over the last " + s.sizes.trail_links + " Links, and a momentum arrow (" + s.sizes.momentum_arrow_px_per_quantum + " px per quantum) along its momentum register, its heading unless a push turned it"],
       ["faint", c.families.field.color, "field ray"],
       ["diamond", c.markers.emission, "emission"],
       ["ring", c.markers.meeting, "meeting"],
@@ -826,8 +826,18 @@
       }
       return item;
     }
-    // A momentum arrow: from the ray's head along its heading, lengthPx on screen
-    // (amount x px per quantum), its own arrowhead at the tip; sized per frame.
+    // The direction and length (in quanta) of a momentum arrow: the segment's
+    // momentum register when the extractor gives one (ray-momentum-turn-v1), else
+    // the Link's direction and the amount.
+    function momentumArrow(momentum, dir, amount) {
+      if (!momentum || momentum.length !== 3) return { dir: dir, length: amount };
+      var v = new THREE.Vector3(momentum[0], momentum[1], momentum[2]);
+      var length = v.length();
+      if (length === 0) return { dir: dir, length: amount };
+      return { dir: v.multiplyScalar(1 / length), length: length };
+    }
+    // A momentum arrow: from the ray's head along its momentum, lengthPx on screen
+    // (|momentum| x px per quantum), its own arrowhead at the tip; sized per frame.
     function placeArrow(item, head, start, dir, lengthPx, widthPx, headPx, color, opacity) {
       item.obj.visible = true;
       item.a.copy(start); item.b.copy(dir); item.px = widthPx; item.shape = "arrow";
@@ -1129,8 +1139,10 @@
               placeSegment(segs.take(nSeg++), a, b, width, color, alpha, isField && dr.field_additive);
             }
             if (!isField && dr.momentum_arrow) {
-              // The momentum arrow carries the arrowhead: amount x heading, in pixels.
-              placeArrow(segs.take(nSeg++), heads.take(nHead++), b, dirSeg, Math.abs(seg.amount[0]) * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
+              // The momentum arrow carries the arrowhead: the ray's momentum register
+              // (amount x heading unless a push turned it), in pixels per quantum.
+              var pm = momentumArrow(seg.momentum, dirSeg, Math.abs(seg.amount[0]));
+              placeArrow(segs.take(nSeg++), heads.take(nHead++), b, pm.dir, pm.length * sz.momentum_arrow_px_per_quantum, sz.momentum_arrow_width_px, sz.arrowhead_px, s.colors.momentum_arrow, alpha);
             } else if (!isField || sz.field_arrowhead) {
               placeHead(heads.take(nHead++), b, dirSeg, sz.arrowhead_px, rayColor(f, phase, "head"), alpha);
             }

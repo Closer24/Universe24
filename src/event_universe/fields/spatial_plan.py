@@ -43,6 +43,7 @@ from event_universe.core.spatial_state import (
     phase_of_sum,
     ray_layers,
     ray_momentum,
+    ray_momentum_share,
     ray_stock,
     release_field,
     release_stock,
@@ -57,7 +58,7 @@ from event_universe.core.spatial_state import (
 
 from .disturbances import evaluate
 from .local_field_rules import apply_field_rules, validate_field_guards
-from .ray_interactions import Pushes, apply_ray_interactions
+from .ray_interactions import Pushes, Turns, apply_ray_interactions
 from .rays import carry_rays, emit_rays, forward_rays, hold_rays, validate_ray_definition
 from .spatial import (
     add_populations,
@@ -281,9 +282,8 @@ class SpatialLaw:
                             carried_share, carried_advance = abs(share), ray.advance
                             carried_heading = ray.heading
                     if momentum is not None:
-                        heading = definition.headings[ray.heading]
-                        for axis in range(3):
-                            momentum[axis] = checked_work(momentum[axis] + share * heading[axis])
+                        for axis, value in enumerate(ray_momentum_share(ray, share, definition)):
+                            momentum[axis] = checked_work(momentum[axis] + value)
                     if ray.amount != share:
                         remaining.append(replace(ray, amount=checked_work(ray.amount - share)))
                 resident[:] = remaining
@@ -787,6 +787,10 @@ class SpatialLaw:
         # (bound-group-motion-v1).
         bound: list[int] = []
         pushes: Pushes = []
+        # The pushes of free rays (ray-momentum-turn-v1): each moves its ray's
+        # register, which the momentum readout below reads, so the push and the
+        # recoil's reversal are booked together as the meeting's momentum change.
+        turns: Turns = []
         if self.ray_interactions:
             met = apply_ray_interactions(
                 tuple(tuple(bundle) for bundle in resident_rays),
@@ -798,6 +802,7 @@ class SpatialLaw:
                 self.layers,
                 bound,
                 pushes,
+                turns,
             )
             for index, definition in enumerate(self.definitions):
                 if definition.rays and definition.momentum_field is not None:
@@ -1177,4 +1182,5 @@ class SpatialLaw:
             bound_push=(push[0], push[1], push[2]),
             spreads=tuple(spreads),
             returned=tuple(returned),
+            ray_pushes=tuple(turns),
         )
