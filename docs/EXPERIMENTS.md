@@ -827,9 +827,29 @@ states "exactly" and means integer equality at every tick.
   `7c91c70988cc45e0459cf255af68bd3c0969a870043a49c7ac354f2556e08add`,
   `470b1f5e5c693edd2a3f4efa7ae02b437a425a4d08994f367bcd468ace321d22`,
   `20943c970bc264e33bf5cf3c776381a0b5eda9d81a3350b3f892e2fe68e03599`.
-  Status: launched on 2026-09-17 (the engine of `main` at `c879d9e`, no
-  engine change on the branch), results to be registered from the
-  records.
+  Status: launched on 2026-09-17 (the engine of `main` at `c879d9e`, no engine
+  change on the branch); measured on 2026-09-18 for r = 12 and 16 at commit
+  `f6196d4e37ede23a1e06092abab5bc8d4773f8df`, source
+  `25ecd24e87cea58753089a9b38c0d21620ec0eae8401a17d2b55b6352883f038`
+  (`pp_r12d` 843 s, `pp_r16d` 4249 s, `pe_r16d` 4185 s, `p_alone_16d` 1655
+  s; the numbers in `record_dense.json`): (1) pass, every ledger line
+  balanced and `conserved_at_every_completed_tick` at all 196, 386, 386 and
+  386 ticks; (2) pass, the registers equal and opposite at every tick (final
+  (-3502, 0, 0) and (3502, 0, 0) at r = 12, (-2692, 0, 0) and (2692, 0, 0)
+  at r = 16), the control's (0, 0, 0) at every tick with no push; (3) pass,
+  F = 23.156 at r = 12 against the predicted 23.137 (0.08 % away; the window
+  before 22.406 against 22.400) and F = 9.6875 at r = 16 against 9.675 (0.13
+  %; the window before 9.500 against 9.519): the engine's integers reproduce
+  the mean field to a part in a thousand; the first quantum reached B at
+  tick 12 at r = 12 (the beam) and at tick 18 at r = 16 (through the
+  registers, as Run 1 saw); (4) not yet evaluable with two points (the
+  two-point slope -3.03, the mean field's -3.03 over the same points); (5)
+  pass, `pe_r16d` the exact negation of `pp_r16d` tick by tick (final
+  registers (2692, 0, 0) and (-2692, 0, 0)). Run times 14, 71, 70 and 28
+  minutes, peak memory 7.9 GB at r = 16 (the runner's final snapshot);
+  `pp_r20d` launched at 23:51 with 14 GB projected against 15 available,
+  `pp_r24d` skipped for memory; the series was relaunched twice after the
+  machine restarted; the records stay outside the tree.
 
 ### A6. Light bending by a bound group and G_eff N² over N = 2^8 to 2^16
 
