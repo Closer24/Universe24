@@ -45,11 +45,14 @@ from .core.disturbance_state import (
 from .core.integer import checked_work
 from .core.spatial_state import (
     CAPTURE_MODES,
+    CHARGE_INVARIANT,
     DECAY_RESIDUES,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    MAX_STORED_PHASE_BITS,
     RAY_PROPERTIES,
+    RAY_WRITABLE,
     DecayDefinition,
     EmissionDefinition,
     FieldAssignment,
@@ -59,6 +62,7 @@ from .core.spatial_state import (
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
     SpatialSeed,
+    charge_invariant,
     ray_participant_definitions,
     validate_heading,
 )
@@ -88,6 +92,19 @@ def _array(value: object, label: str, limit: int, minimum: int = 0) -> list[obje
 def _integer(value: object, label: str, minimum: int = -MAX_VALUE) -> int:
     if type(value) is not int or not minimum <= value <= MAX_VALUE:
         raise ValueError(f"{label} must be an integer from {minimum} through {MAX_VALUE}")
+    return value
+
+
+def _phase_value(value: object, label: str, phase_bits: int) -> int:
+    """A phase or a rate of the declared width: an integer from 0 below 2^phase_bits.
+
+    The phase is the one value with its own declared width (issue #169, 2026-09-17),
+    so it is not bounded by MAX_VALUE; Python integers are unbounded.
+    """
+    if type(value) is not int or not 0 <= value < (1 << phase_bits):
+        raise ValueError(
+            f"{label} requires an integer from 0 below 2^{phase_bits}, the field's phase width"
+        )
     return value
 
 
@@ -984,6 +1001,8 @@ def _spatial_fields(
                 "metric",
                 "pace",
                 "flux_projection",
+                "phase_bits",
+                "charge",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -1004,6 +1023,7 @@ def _spatial_fields(
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
         self_exclusion = False
         phase_steps, phase_advance = 0, 0
+        phase_bits, charge = 0, 0
         capture = "share"
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
@@ -1011,6 +1031,16 @@ def _spatial_fields(
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
+            # Every ray is a wave ray (wave-ray-family-v1): the family declares the
+            # width of its phase, 2^phase_bits values, and its charge per quantum.
+            if "phase_bits" in obj:
+                phase_bits = _integer(obj["phase_bits"], "phase_bits", 0)
+            charge = _integer(obj.get("charge", 0), "spatial field charge")
+            if self_exclusion and phase_bits > MAX_STORED_PHASE_BITS:
+                raise ValueError(
+                    "self_exclusion stores the departure phase as a bounded value: it requires "
+                    "phase_bits at most 30"
+                )
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
                 raise ValueError("spatial field metric must be links or euclidean")
@@ -1022,25 +1052,38 @@ def _spatial_fields(
                 if pace_numerator > pace_denominator:
                     raise ValueError("pace must not exceed one link per tick")
             if "kerengonen" in obj:
-                # Kerengonen: phased rays. Both keys are required and explicit.
+                # Kerengonen: phased rays. phase_advance, the family's rest rate, is
+                # required and explicit; phase_steps declares the coherence table, one
+                # entry per phase step of one turn, and fixes the width (2^phase_bits =
+                # phase_steps) unless phase_bits declares the same width; a family
+                # without a table has a rate and no coherence coupling.
                 phased = _object(
                     obj["kerengonen"],
                     "kerengonen",
                     {"phase_steps", "phase_advance", "capture"},
-                    {"phase_steps", "phase_advance"},
+                    {"phase_advance"},
                 )
+                if "phase_steps" in phased:
+                    phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
+                    if phase_steps > MAX_PHASE_STEPS or phase_steps & (phase_steps - 1):
+                        raise ValueError(
+                            "kerengonen phase_steps must be a power of two between 2 and 4096"
+                        )
+                    table_bits = phase_steps.bit_length() - 1
+                    if "phase_bits" in obj and phase_bits != table_bits:
+                        raise ValueError("kerengonen phase_steps must equal 2 to the power phase_bits")
+                    phase_bits = table_bits
+                elif "capture" in phased:
+                    raise ValueError("kerengonen.capture requires phase_steps, the coherence table")
                 capture = _text(phased.get("capture", "share"), "kerengonen.capture")
                 if capture not in CAPTURE_MODES:
                     raise ValueError(
                         "kerengonen.capture must be share or threshold: the lottery capture was "
                         "deleted on 2026-09-17, only a Node whose Detector bit is set may draw"
                     )
-                phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
-                if phase_steps > MAX_PHASE_STEPS:
-                    raise ValueError("kerengonen phase_steps must be between 2 and 4096")
-                phase_advance = _integer(phased["phase_advance"], "kerengonen.phase_advance", 0)
-                if phase_advance >= phase_steps:
-                    raise ValueError("kerengonen phase_advance must be below phase_steps")
+                phase_advance = _phase_value(
+                    phased["phase_advance"], "kerengonen.phase_advance", phase_bits
+                )
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -1062,11 +1105,13 @@ def _spatial_fields(
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
         elif (
-            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            ray_keys
+            | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            | {"phase_bits", "charge"}
         ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace "
-                "and flux_projection require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
+                "flux_projection, phase_bits and charge require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1102,6 +1147,8 @@ def _spatial_fields(
                 pace_numerator=pace_numerator,
                 pace_denominator=pace_denominator,
                 flux_projection=flux_projection,
+                phase_bits=phase_bits,
+                charge=charge,
             )
         )
     return tuple(result)
@@ -1158,16 +1205,23 @@ def _emissions(
                 raise ValueError("recoil_field must be a signed vector owned by the emitting type")
         phase, carried = 0, False
         if "kerengonen_phase" in obj:
-            if not spatial[index].kerengonen:
-                raise ValueError("kerengonen_phase requires a kerengonen ray field")
+            # Every ray is a wave ray: an emission stamps a phase on any ray field of
+            # the declared width, a plain field included (its rate is 0, so the ray
+            # carries the emitter's phase unchanged, as light does).
+            if not spatial[index].rays:
+                raise ValueError("kerengonen_phase requires a ray field")
             if obj["kerengonen_phase"] == "carried":
                 # The phase of what the emitter last absorbed; checked against the
                 # absorb rules once every spatial coupling is parsed.
+                if not spatial[index].coherent:
+                    raise ValueError(
+                        "a carried kerengonen_phase requires the field's kerengonen coherence table"
+                    )
                 carried = True
             else:
-                phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
-                if phase >= spatial[index].phase_steps:
-                    raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
+                phase = _phase_value(
+                    obj["kerengonen_phase"], "emission.kerengonen_phase", spatial[index].phase_bits
+                )
         advance: Expression | None = None
         advance_denominator = 1
         if "kerengonen_advance" in obj:
@@ -1197,8 +1251,10 @@ def _emissions(
             dissolve_over = _integer(schedule["over_ticks"], "emission.dissolve.over_ticks", 1)
         mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
         if "kerengonen_mirror" in obj:
-            if not spatial[index].kerengonen:
-                raise ValueError("kerengonen_mirror requires a kerengonen ray field")
+            if not spatial[index].coherent:
+                raise ValueError(
+                    "kerengonen_mirror requires a kerengonen ray field with a coherence table"
+                )
             axis = _text(obj["kerengonen_mirror"], "emission.kerengonen_mirror")
             if axis in ("x", "y", "z"):
                 # A mirror across the plane normal to one axis: that component flips.
@@ -1682,10 +1738,18 @@ def _ray_interactions(
         rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
-        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
-            raise ValueError("ray interaction amount and advance are read-only")
+        if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
+            raise ValueError("ray interaction amount, advance, family and charge are read-only")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
+        if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
+            raise ValueError(
+                "the charge invariant is declared for every ray interaction; "
+                "do not declare another invariant named charge"
+            )
+        # wave-ray-family-v1: charge x amount summed over the participants is an
+        # invariant of every declared ray interaction, checked like the declared ones.
+        rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
 
