@@ -26,7 +26,10 @@ the model owner's decision, dated.
 **The rule of every entry.** Before its run, an entry names the features it
 needs (numbers 1 to 11 below), the board, the families, the Detector marks
 with their settings, the return mode and the phase width, what is recorded,
-and its pass or fail criterion as an exact statement. Nothing is retuned
+and its pass or fail criterion as an exact statement. The families and
+couplings it names are entries of the [catalog of nature](CATALOG.md)
+(`catalog/nature.json`), whose `experiments` section lists per entry the
+ids it uses, so that the register and the catalog agree. Nothing is retuned
 against the result and no criterion is redefined after a failure
 ([physics comparison method](../skills/workflow.md#physics-comparison-method)).
 A failed confrontation is recorded as the model's stated limit; it does not

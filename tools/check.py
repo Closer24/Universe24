@@ -19,6 +19,10 @@ RESOURCE_CONSUMERS = {
     "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
     "examples/local_lorentz_field.json": ("tests/test_node_state_contract.py",),
+    "catalog/nature.json": ("tests/test_nature_catalog.py",),
+    "docs/CATALOG.md": ("tests/test_nature_catalog.py",),
+    "docs/EXPERIMENTS.md": ("tests/test_nature_catalog.py",),
+    "docs/HYPOTHESES.md": ("tests/test_nature_catalog.py",),
 }
 
 

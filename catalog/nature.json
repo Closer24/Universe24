@@ -1,0 +1,536 @@
+{
+  "schema": "nature-catalog-v1",
+  "date": "2026-09-17",
+  "owner": "the model owner, Alon Gonen",
+  "statement": [
+    "Every number in this file is a declaration to be tested by docs/EXPERIMENTS.md; none is derived by the engine and none is a law of nature.",
+    "The catalog is exactly two things: the rays of nature, with the couplings that say what happens when ray A meets ray B, a table; and the apparatus, the Detector and the external body, the declarations an experimenter places on the board that obey no table.",
+    "The engine only reads this file: a world file selects rays from it and places apparatus, and nothing else exists on the board (Highlights 3.26, 3.30).",
+    "A value the model owner has not decided is the string \"undecided\", beside a decided_by that names the experiment (docs/EXPERIMENTS.md) or the hypothesis (docs/HYPOTHESES.md) that decides it; nothing is invented in its place.",
+    "Every value is an exact integer or a ratio [n, d] of exact integers; there are no floats. JSON has no comments, so a note key carries the explanation."
+  ],
+  "units": {
+    "rest_rate": {
+      "unit": "m_0",
+      "value": 1,
+      "note": "One phase step per interval, the rest rate of the electron, the unit of the mass ladder (hypotheses 12 and 14): every rest rate is an integer multiple of it, light is 0, and a rest rate is the ray's mass as a clock (Highlights 3.3). The world key is kerengonen.phase_advance."
+    },
+    "charge": {
+      "unit": "e/3",
+      "per_e": 3,
+      "note": "Every charge is an integer number of thirds of the elementary charge e, so that quarks are integers (up +2, down -1) and the electron is -3; charge x amount summed over the rays of a meeting is an invariant the engine appends to every coupling (wave-ray-family-v1). The world key is charge, per quantum."
+    },
+    "phase": {
+      "unit": "step",
+      "note": "A phase is an integer from 0 below N = 2^phase_bits; an advance and a difference are masks with N - 1, never a division."
+    },
+    "amount": {
+      "unit": "quantum",
+      "note": "The content of a ray, a bounded integer; the energy of the invariants is the amount, the momentum is amount x heading."
+    }
+  },
+  "phase_bits": {
+    "default": 8,
+    "reference_table": 3,
+    "note": "2^phase_bits phase steps per turn, the family's choice of the resolution its couplings need (Highlights 3.28, 2026-09-17): a phase is read only at a meeting and only as a difference, so eight steps resolve the Born table and a wider circle is allowed but never required. 8 (256 steps) is the width of the register's boards and 3 (8 steps) the width of the reference Born table; a world declares one width for all its rays, since a field and the ray that releases it must share it (released-field-v1). The weakness of gravity does not live in the phase: the N of hypothesis 14 is the lag modulus below, and A11's 75-bit phase is a check that a wide width leaks into no coupling."
+  },
+  "lag_bits": {
+    "status": "open",
+    "world_key": "undecided",
+    "engine": {"identity": "feature 8b of issue #169, the lag modulus, after feature 10", "landed": false},
+    "decided_by": "feature 8b",
+    "note": "The width of the lag register (Highlights 3.28, 2026-09-17): the delay a field ray lays on the ray it meets is carried in a lag register with its own declared modulus per family, spent as one Link toward the lagging side when it reaches that modulus, exactly as a heading is carried with a resolution of one part in 2^30 through six Ports. That modulus, not the phase circle, is the N of hypothesis 14, of any width because it enters no phase sum; a world declares it per family as it declares phase_bits, the runs of hypothesis 14 and A6 declaring their four N on it. Until feature 8b the engine counts the lag in phase steps (ray-binding-v1), so the two moduli are one and those runs set them equal; the world key is feature 8b's."
+  },
+  "rays": {
+    "light": {
+      "kind": "ray",
+      "rest_rate": 0,
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "polarization": "undecided",
+      "decided_by": {"polarization": "A12"},
+      "note": "A wave ray with no mass and no charge (Highlights 3.3): its phase does not advance along its line, so it carries the phase of the clock that emitted it and delivers it unchanged, and the frequency of light is its emitter's rate. Its field is not declared in this slice: no entry of the register meets the field of a light ray. Polarization, a transverse mode with two states (the two lattice axes perpendicular to an axial heading), is feature 11 (Highlights 3.26), read by the polarizer coupling."
+    },
+    "electron": {
+      "kind": "ray",
+      "rest_rate": 1,
+      "charge": -3,
+      "phase_bits": "default",
+      "field": ["electron_field", "mass_field"],
+      "spin": "undecided",
+      "decided_by": {"spin": "hypothesis 12"},
+      "reference": {"mass_kev": 511, "note": "the register's value for A9; a measured number for comparison, not a lattice value"},
+      "note": "Rest rate 1, the unit m_0 (hypotheses 12 and 14): one phase step per interval, the electron's mass as a clock. Charge -1 e, that is -3 in thirds. Its own field is electron_field and, for gravity, the mass field of its content. A10 decides whether the electron is the first rung of the ladder at the real N; until then every other rest rate is written as a multiple of the electron's. Spin, the two-state polarization of the electron family (feature 11), is read only by pauli_exclusion; the composite spectrum of hypothesis 12 is where it is decided."
+    },
+    "positron": {
+      "kind": "ray",
+      "rest_rate": 1,
+      "charge": 3,
+      "phase_bits": "default",
+      "field": ["positron_field", "mass_field"],
+      "spin": "undecided",
+      "decided_by": {"spin": "hypothesis 12"},
+      "note": "The electron's antiparticle: the same rest rate, charge +1 e (+3 in thirds), its own field positron_field. A5 runs it against an electron for the attraction of opposite charges."
+    },
+    "electron_field": {
+      "kind": "field",
+      "field_of": ["electron"],
+      "release": [1, 4],
+      "rest_rate": 0,
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "note": "The electron's own information spreading in ray form in all directions (Highlights 3.5): released at every Node an electron departs, one ray per Port heading except the electron's own, of amount floor(amount x 1 / 4), with the electron's phase, which a field ray delivers unchanged (rest rate 0). A field has no field. Charge 0: the released field is booked as a source (Highlights 3.15), so a charge on the field family would be created with it; the charge it stands for is that of its field_of family, and a coupling that reads the charge product (A5) reads it from the two families that meet. The release ratio is the one tests/test_released_field.py declares; A5 confronts the field with Coulomb's law."
+    },
+    "positron_field": {
+      "kind": "field",
+      "field_of": ["positron"],
+      "release": [1, 4],
+      "rest_rate": 0,
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "note": "The positron's own field, declared as electron_field is: the engine names one family per field (field_of), and the sign of the charge a field ray stands for is its family's. A5 meets it with an electron."
+    },
+    "muon": {
+      "kind": "ray",
+      "rest_rate": "undecided",
+      "charge": -3,
+      "phase_bits": "default",
+      "field": ["mass_field"],
+      "decided_by": {"rest_rate": "A10"},
+      "note": "A charged ray of the electron's kind on a higher rung of the ladder: its rest rate is k x 206.768 28 for the electron's rung k, and A10 finds the smallest k at which the muon, tau and proton ratios are all integers at one N (hypothesis 12); the ladder value is undecided until then. No entry of the register places a muon ray on a board, so its own field family and its couplings are declared when one does; its mass field is declared because it is massive."
+    },
+    "neutrino": {
+      "kind": "ray",
+      "rest_rate": "undecided",
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "decided_by": {"rest_rate": "hypothesis 12"},
+      "note": "A neutral ray. On the ladder its rest rate is an integer number of steps like every rest mass, and no entry of the register fixes its rung; it joins the field_of list of mass_field when its rest rate is declared nonzero. No coupling of the register reads a neutrino."
+    },
+    "antineutrino": {
+      "kind": "ray",
+      "rest_rate": "undecided",
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "decided_by": {"rest_rate": "hypothesis 12"},
+      "note": "The neutrino's antiparticle, the third product of weak_conversion (A9): A9 holds energy and momentum exact at the conversion, which bounds its rung without deciding it."
+    },
+    "up": {
+      "kind": "ray",
+      "rest_rate": "undecided",
+      "charge": 2,
+      "phase_bits": "default",
+      "field": ["gluon", "mass_field"],
+      "colour": {"values": [0, 1, 2], "note": "a property of the ray with three values, set by the world per ray and read only at a meeting by quark_binding and gluon_gluon_binding; no engine rule reads it (Highlights 3.26); catalog work after feature 10"},
+      "decided_by": {"rest_rate": "hypothesis 12"},
+      "note": "A quark family (Highlights 3.26): charge +2/3 e, that is +2 in thirds; colour a property with three values; its own field is the gluon. Its rung on the ladder is a catalog value that hypothesis 12 leaves to the composite spectrum."
+    },
+    "down": {
+      "kind": "ray",
+      "rest_rate": "undecided",
+      "charge": -1,
+      "phase_bits": "default",
+      "field": ["gluon", "mass_field"],
+      "colour": {"values": [0, 1, 2], "note": "as for up"},
+      "decided_by": {"rest_rate": "hypothesis 12"},
+      "note": "A quark family: charge -1/3 e, that is -1 in thirds; colour as for up; its own field is the gluon. Its rung on the ladder is left to the composite spectrum of hypothesis 12."
+    },
+    "gluon": {
+      "kind": "field",
+      "field_of": ["up", "down"],
+      "release": "undecided",
+      "rest_rate": 0,
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "colour": "undecided",
+      "decided_by": {"release": "hypothesis 13", "colour": "hypothesis 13"},
+      "note": "The quark's own field in ray form (Highlights 3.26, 3.5), released by up and down as electron_field is by the electron. Its release ratio, and how a gluon ray carries its releaser's colour (a property of the ray, or one field family per colour; the engine names one family per field_of today), are hypothesis 13's declarations, written before its run; the binding of gluon rays to each other is gluon_gluon_binding."
+    },
+    "proton": {
+      "kind": "bound_group",
+      "members": {"up": 2, "down": 1},
+      "binding": "quark_binding",
+      "rest_rate": "undecided",
+      "charge": 3,
+      "phase_bits": "default",
+      "field": ["mass_field"],
+      "decided_by": {"rest_rate": "A10"},
+      "reference": {"mass_kev": 938272, "note": "the register's value for A9; the ratio to the electron, 1836.152 67, is the one A10 fits"},
+      "note": "Matter (Highlights 3.4): two up and one down quark rays held at one Node by quark_binding, colour-neutral, charge +3 in thirds (+1 e). Its rest rate is its retained content, the ladder rung A10 fits; its own field is the mass field of its retained content, for gravity (Highlights 3.28), and the gluon is released through its members. In A8 it stands as an external body of this family, charge +3, amount M_p; when its recoil is wanted it is this bound group. No coupling converts it: the proton is stable."
+    },
+    "neutron": {
+      "kind": "bound_group",
+      "members": {"up": 1, "down": 2},
+      "binding": "quark_binding",
+      "rest_rate": "undecided",
+      "charge": 0,
+      "phase_bits": "default",
+      "field": ["mass_field"],
+      "decay": {
+        "coupling": "weak_conversion",
+        "setting": {"A9": [1, 1024], "note": "the setting [n, d] of the Detector mark the world places on the group's Node (Highlights 3.26): the group draws at each tick, 1 fires weak_conversion, 0 ticks on unchanged, so the half-life is -ln 2 / ln(1 - n/d) intervals; the ratio the physical half-life needs at one Planck time per interval, about 2^-154, and whether the bounded setting holds it, is A9's finding"}
+      },
+      "decided_by": {"rest_rate": "hypothesis 12"},
+      "reference": {"mass_kev": 939565, "note": "the register's value for A9"},
+      "note": "Matter: one up and two down quark rays held at one Node by quark_binding, colour-neutral, charge 0. Its rest rate is its retained content, the composite spectrum of hypothesis 12; A9 runs its decay and A14 may run it as the moving bound group. Its own field is the mass field, and the gluon is released through its members, as for the proton."
+    },
+    "mass_field": {
+      "kind": "field",
+      "field_of": ["electron", "positron", "muon", "up", "down", "proton", "neutron"],
+      "release": "undecided",
+      "rest_rate": 0,
+      "charge": 0,
+      "phase_bits": "default",
+      "field": [],
+      "decided_by": {"release": "A6"},
+      "note": "The computation field (Highlights 3.28): the information that a Node is heavy, spreading in ray form in all directions under the one field rule of 3.5, released by every massive ray and, from its retained content, by every bound group and every external body. Gravity is bending by delay: where a mass_field ray meets a ray whose coupling responds (mass_field_delay) the met ray's output clock grows and the field ray returns reversed with the opposite momentum. Its release ratio is A6's declaration, written before its run, and A6 pins that G_eff x N^2 is constant over the phase width (hypothesis 14). The engine names one family per field_of, so a world declares one mass field per massive family it holds; an external body radiates the field declared field_of its family."
+    }
+  },
+  "couplings": {
+    "born_steering": {
+      "status": "decided",
+      "engine": {"identity": "ray-meeting-conversion-v1", "landed": true},
+      "participants": [{"type": "light"}, {"type": "light"}],
+      "outputs": [
+        {"field": "light", "amount": {"table": [8, 7, 4, 1, 0, 1, 4, 7], "of": "sum", "index": "phase_difference"}, "heading": 2},
+        {"field": "light", "amount": {"rest_of": 0}, "heading": 3, "phase": {"of": 1}}
+      ],
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "table_rule": "cos^2(d/2) in N-ths, rounded, for d the phase difference of the two rays and N = 2^phase_bits; the 8-step table is the reference (Highlights 3.3; ray-event model, step 6); a wider table is written by the same rule before the run (A1 at N = 256; A3: cos 45 degrees = 181/256)",
+      "note": "Interference as steering (Highlights 3.3): where two rays of one family meet in one layer, the coupling reads their phase difference d and splits the shared content between the two candidate Ports in the ratio table[d] : N - table[d], the table output taking floor(content x table[d] / N) and the rest output the rest, so the remainder has an owner (3.17); nothing is erased and no Detector reads it. The two Ports here, +Y and -Y, are the world's choice; the same table serves any family whose rays meet in one layer (A1 confronts the electron fringes of Tonomura as well as light). Charge x amount is appended as an invariant by the engine."
+    },
+    "electron_field_turn": {
+      "status": "decided",
+      "engine": {"identity": "released-field-v1 with ray-meeting-conversion-v1", "landed": true},
+      "participants": [{"type": "electron"}, {"type": "electron_field"}],
+      "outputs": [
+        {"field": "electron", "amount": {"of": 0}, "heading": "same", "input": 1, "phase": {"of": 0}},
+        {"field": "electron_field", "amount": {"of": 1}, "heading": "reversed", "input": 1}
+      ],
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "strength_table": "undecided",
+      "opposite_charge": "undecided",
+      "decided_by": {"strength_table": "A5", "opposite_charge": "A5"},
+      "note": "Repulsion through the released field, as tests/test_released_field.py declares it: an electron that meets an electron_field ray leaves on the field ray's heading, away from the line that released it, with its amount and phase, and the field ray returns reversed as the recoil, the opposite momentum walking back to the releaser at finite speed (Highlights 3.5, 3.14). The declared integer table over the arriving field content and the charge product, which sets how much of the electron turns, and the heading rule for opposite charges (a positron meeting an electron_field ray, an electron meeting a positron_field ray) are written before A5's run."
+    },
+    "recoil_return": {
+      "status": "open",
+      "engine": {"identity": "ray-meeting-conversion-v1, a rule of the releasing family with its own field at the group's Node", "landed": true},
+      "participants": [{"type": ["electron_field", "positron_field", "mass_field", "gluon"]}, {"type": ["electron", "positron", "muon", "up", "down", "proton", "neutron"]}],
+      "outputs": "undecided",
+      "invariants": [{"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}],
+      "decided_by": {"outputs": "A5"},
+      "note": "What a returning field ray does when it reaches the ray or bound group that released it: the recoil, the field ray's momentum delivered to its releaser exactly (Highlights 3.5, 3.14; the coupling of feature 8 named by released-field-v1). The engine gives a coupling no view of the event record, so a recoil meets its releaser as any field ray of its family does, and a group with no coupling to its field is crossed by its own recoil (ray-binding-v1: the coupling of the recoil to the group is open). A5 measures the first recoil arriving at exactly twice the field ray's transit to the meeting and the two rays' equal and opposite momentum after all returns; the outputs are written before that run."
+    },
+    "mass_field_delay": {
+      "status": "open",
+      "engine": {"identity": "ray-binding-v1, the delay table of a meeting output", "landed": true},
+      "participants": [{"type": ["light", "electron", "positron", "muon", "proton", "neutron"]}, {"type": "mass_field"}],
+      "outputs": [
+        {"field": "same", "amount": {"of": 0}, "heading": "same", "phase": "same", "delay": {"of": 1, "table": "undecided", "per": 1, "decided_by": "A6", "note": "six entries, one per Port the field ray came in through; the delay is floor(amount of input 1 x table[Port] / per) phase steps, carried as lag toward that side"}},
+        {"field": "mass_field", "amount": {"of": 1}, "heading": "reversed", "input": 1}
+      ],
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "table_shape": "delay per field amount per Port: for each Port a mass_field ray arrives through, an integer times the arriving amount, in steps of the lag register on that side (Highlights 3.28; phase steps until feature 8b, the lag's own modulus after it, lag_bits), larger on the side nearer the heavy Node so that the ray bends toward it; a lag that reaches its modulus is one Link toward the lagging side",
+      "note": "Gravity as bending by delay (Highlights 3.28; ray-binding-v1): the met ray is delayed, the field ray returns reversed with the opposite momentum, nothing is absorbed and momentum is exact. The engine applies the table; the physics is the table, A6's declaration written before its run and pinned by the exponent -1 in the impact parameter, the linearity in M and G_eff x N^2 constant over the phase width (the acceptance test of feature 8 used [4, 4, 4, 4, 4, 4] per 1, a test value, not this declaration); A7 runs it between two bodies (exponent -2), A11 at the real N."
+    },
+    "electron_proton_binding": {
+      "status": "open",
+      "engine": {"identity": "ray-binding-v1", "landed": true},
+      "participants": [{"type": "electron"}, {"type": "proton"}],
+      "binds": ["electron"],
+      "delay": 1,
+      "rule_form": "a rule without outputs whose assignments set delay 1 on its participants (ray-binding-v1): the first firing forms the group, each later firing is its tick, an event, and an earlier declared outputs rule naming a bound participant and an arriving ray unbinds it; ray_delay on the rule is the group's mass as output-clock delay",
+      "binding_energy_ladder": "undecided",
+      "decided_by": {"binding_energy_ladder": "A8"},
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "Matter as a bound group (Highlights 3.4): the electron ray around a bound proton, its trajectory changed at every step by the field rays the proton releases; binding is the interaction whose result is zero events, and here it is a delay-1 rule: the electron is held one interval at the Node and meets the proton's field again at the next tick. Whether bound trajectories exist only at discrete retained energies, and their ladder (the Balmer ratio 27/5), is what A8 decides; nothing states a level structure. Unbinding is an arriving light ray of content at least the binding (A8's second series)."
+    },
+    "quark_binding": {
+      "status": "open",
+      "engine": {"identity": "ray-binding-v1 with three participants and the colour property (catalog work after feature 10)", "landed": false},
+      "participants": [{"type": ["up", "down"]}, {"type": ["up", "down"]}, {"type": ["up", "down"]}],
+      "binds": ["up", "down"],
+      "guard": "the three colours differ (the group is colour-neutral)",
+      "table": "undecided",
+      "decided_by": {"table": "hypothesis 12"},
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "The strong binding (Highlights 3.4, 3.26): three quark rays held at one Node, one of each colour, an interaction that repeats every interval and releases no event, possibly nothing more than a very large output-clock delay the bound rays create together (3.28). The proton and the neutron are its bound groups; which combinations stay bound and what they retain is the composite spectrum of hypothesis 12, its first targets the lightest cases; A9 and A14 run its groups."
+    },
+    "gluon_gluon_binding": {
+      "status": "open",
+      "engine": {"identity": "ray-binding-v1 on gluon rays, with the colour of hypothesis 13", "landed": false},
+      "participants": [{"type": "gluon"}, {"type": "gluon"}],
+      "binds": ["gluon"],
+      "table": "undecided",
+      "decided_by": {"table": "hypothesis 13"},
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "The quark's field rays binding to each other (Highlights 3.26; hypothesis 13): one more declared coupling from which the short range of the strong interaction and its growth with distance are expected. Whether it yields confinement is a research question for that run, not an engine decision; the table is written before it."
+    },
+    "weak_conversion": {
+      "status": "open",
+      "engine": {"identity": "ray-meeting-conversion-v1 at the tick of a bound group (ray-binding-v1) whose Node carries a mark (detector-mark-v1); the draw at the tick is not landed", "landed": false},
+      "participants": [{"type": "neutron"}],
+      "fires": "at the bound group's tick when the Detector mark on its Node draws 1; the mark's setting [n, d] is the declared ratio; a draw of 0 ticks the group on unchanged (Highlights 3.26)",
+      "outputs": [{"field": "proton"}, {"field": "electron"}, {"field": "antineutrino"}],
+      "shares": "undecided",
+      "headings": "undecided",
+      "decided_by": {"shares": "A9", "headings": "A9"},
+      "invariants": [
+        {"name": "charge", "expression": {"op": "mul", "args": [{"field": "charge"}, {"field": "amount"}]}},
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "The weak interaction as a change of family: an N-to-M conversion at an event (Highlights 3.26), neutron to proton + electron + antineutrino, the group's members going from up 1, down 2 to up 2, down 1, with charge (0 = +3 - 3 + 0), amount and momentum exact. A free particle never decays: the neutron is a bound group whose ticks are events, a group that can decay is a source, and a source is a Detector, so its draw is the one draw of the model. A9 pins the survival curve (1 - n/d)^t, one conversion per group, the electron's energy at most 782 keV and no proton group ever firing; the shares of the neutron's content among the three products and their headings are written before that run. The charge invariant is the one the engine appends; it is written here because it is the point of the conversion."
+    },
+    "pauli_exclusion": {
+      "status": "open",
+      "engine": {"identity": "ray-binding-v1 with the spin property of feature 11", "landed": false},
+      "participants": [{"type": "electron"}, {"type": "electron"}],
+      "binds": ["electron"],
+      "guard": "does not fire for two electrons in the same state with the same spin",
+      "table": "undecided",
+      "decided_by": {"table": "hypothesis 12"},
+      "after": "feature 11",
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "Pauli exclusion is a binding coupling that does not fire for two electrons in the same state with the same spin (Highlights 3.26); after feature 11, polarization. Its table, what two electrons of opposite spin bind to, is decided with the composite spectrum of hypothesis 12."
+    },
+    "transmission_meets_held_share": {
+      "status": "open",
+      "engine": {"identity": "ray-meeting-conversion-v1 with the hold of ray-binding-v1, where a transmission of inverse-split-v1 catches its share", "landed": true},
+      "participants": [{"type": "light"}, {"type": "light"}],
+      "outputs": "undecided",
+      "decided_by": {"outputs": "A3"},
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "A3: the transmission returned through the birth event by Alice's Detector meets Bob's share, held by an output-clock delay beyond the round trip; the coupling between the transmission and the held ray is a declared table, written before the run, whose exact expectation on the 256-step circle (724/256 at the singlet settings) is computed before it (hypothesis 11, line 2). The two rays are siblings of one event and the transmission carries the bit; the coupling reads only what a coupling reads."
+    },
+    "absorber": {
+      "status": "decided",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "participants": [{"type": "any"}, {"apparatus": "external_body"}],
+      "sink": true,
+      "world_name": "sink",
+      "invariants": [
+        {"name": "energy", "expression": {"field": "amount"}},
+        {"name": "momentum", "expression": {"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}}
+      ],
+      "note": "The default coupling of an external body (Highlights 3.19), the world's coupling value \"sink\": whatever arrives, outbound or returning, ends in the body's exact sink counter for its family in its arrival interval, so a wall, a screen and a beam stop are this; the audit books it on the absorbed_by_bodies line (initial + sources = current + dissipated + escaped + annulled + absorbed_by_bodies at every completed tick), and a field ray of a family the body's momentum_table names moves the body by the table. Matter that arrives gives no push."
+    },
+    "mirror": {
+      "status": "decided",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "participants": [{"type": "any"}, {"apparatus": "external_body"}],
+      "outputs": [
+        {"field": "same", "amount": {"of": 0}, "heading": "reversed", "input": 0, "phase": {"of": 0}},
+        {"field": "body", "amount": {"of": 1}, "heading": "same", "input": 1, "phase": {"of": 1}}
+      ],
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "note": "A reversed heading (Highlights 3.19): the arriving ray leaves on the negation of its heading with its amount and phase, the body's token returned unchanged as the second output; the reflection is one event (ray-event-state-v1) whose record counts the token as one quantum on +X, and the momentum it turns is booked at the meeting as for any meeting. A2's arms and the light clock of the ray-event model use it."
+    },
+    "beam_splitter": {
+      "status": "open",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "participants": [{"type": "any"}, {"apparatus": "external_body"}],
+      "outputs": {
+        "first": {"field": "same", "heading": "the first declared Port", "amount": "by the table at the phase difference between the arriving ray and the body's token, the body's phase"},
+        "second": {"field": "same", "heading": "the second declared Port", "amount": "the rest"},
+        "token": {"field": "body", "amount": "of the token", "heading": "same", "phase": "of the token"},
+        "table": "undecided",
+        "decided_by": "A2"
+      },
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "note": "A split by a declared table between two Ports (Highlights 3.19), the engine's table split indexed by the phase difference of two inputs, here the arriving ray and the body's token, the remainder owned by the second output (3.17); the ratio is A2's declaration, written before its run. A2 places one at the head of each arm, its two outputs the long and the short path."
+    },
+    "phase_plate": {
+      "status": "decided",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "participants": [{"type": "any"}, {"apparatus": "external_body"}],
+      "outputs": [
+        {"field": "same", "amount": {"of": 0}, "heading": "same", "input": 0, "phase": {"of": 0, "offset": "setting"}},
+        {"field": "body", "amount": {"of": 1}, "heading": "same", "input": 1, "phase": {"of": 1}}
+      ],
+      "setting": "the body's declared offset, an integer below N, switched by the world per pair (A2: Alice 0 and 64, Bob 32 and 96 at N = 256)",
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "note": "A phase offset (Highlights 3.19): the arriving ray continues with its amount and heading and its phase plus the setting, read modulo N, the body's token returned unchanged as the second output. A2 and A3 place one on the long path of each arm; it is the Bell setting in phase form (hypothesis 11)."
+    },
+    "slit": {
+      "status": "open",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "participants": [{"type": "light"}, {"apparatus": "external_body"}],
+      "outputs": {
+        "shape": "the arriving light ray re-emitted over the forward headings (the Ports that do not lead back) with its phase unchanged, one event, the body's token returned unchanged",
+        "shares": "undecided",
+        "decided_by": "A1"
+      },
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "note": "A1: each slit is a declared catalog coupling that re-emits the arriving light ray over the forward headings with its phase unchanged; the share per heading is written before the run. The two slit rays then meet at each screen Node under born_steering."
+    },
+    "polarizer": {
+      "status": "open",
+      "engine": {"identity": "external-body-v1 with the polarization property of feature 11", "landed": false},
+      "participants": [{"type": "light"}, {"apparatus": "external_body"}],
+      "outputs": {
+        "pass": {"field": "light", "heading": "the pass Port", "amount": "by the table", "polarization": "the body's angle"},
+        "sink": {"field": "light", "heading": "the sink Port", "amount": "the rest"},
+        "token": {"field": "body", "amount": "of the token", "heading": "same", "phase": "of the token"},
+        "table": "undecided",
+        "decided_by": "A12"
+      },
+      "after": "feature 11",
+      "invariants": [{"name": "energy", "expression": {"field": "amount"}}],
+      "note": "A polarization read (Highlights 3.19, 3.26): the content split between the pass Port and its declared sink by the table cos^2(theta - theta_ray) in N-ths, rounded, with the remainder owned; whether a two-state property carries the intermediate polarizer's angle through a chain is what A12 decides, and A13 uses it as the Bell setting."
+    }
+  },
+  "layers": {
+    "note": "Derived, never declared (ray-layers-v1; Highlights 5.1): the layers are the connected components of the rays over the participants of the couplings; a ray that no coupling names is its own layer and crosses everything. The runner records them per world as ray_layer_families."
+  },
+  "apparatus": {
+    "detector": {
+      "world_key": "detectors",
+      "engine": {"identity": "detector-mark-v1, with detector-return-v1 and inverse-split-v1", "landed": true},
+      "declaration": {
+        "position": "the marked Node, one mark per position",
+        "setting": "[n, d], the pass share of the draw, 1 <= d, 0 <= n <= d; 1 is a source that always passes, 0 returns every arrival",
+        "seed": "the start of the mark's own ticket stream"
+      },
+      "does": "For each transfer that arrives it draws 1 or 0, the only lottery in the model, once per arrival and independently for up to six in one interval. 1: the ray passes and that pass is the measurement, the click its record. 0: the ray is returned on its line unchanged, back the steps it has made, to its event Node, where it performs the inverse split by the world's return_mode (siblings, straight, annul). It reads nothing of the ray and obeys no table (Highlights 3.19, 5.4).",
+      "note": "A source is a Detector: whatever emits a ray of a known family is a marked Node, because knowing the family of what it emits is a measurement; a bound group that can decay is a source, and its mark's setting is its decay ratio (weak_conversion). A passive Recorder or Renderer is not a Detector."
+    },
+    "external_body": {
+      "world_key": "external_bodies",
+      "engine": {"identity": "external-body-v1", "landed": true},
+      "declaration": {
+        "position": "the Node that holds all of it; one body per Node, never on a Detector",
+        "family": "a ray id of this catalog, or the apparatus family below; never a field family",
+        "amount": "a positive integer of any width: it enters no sum and only sets how much field leaves per interval",
+        "charge": "optional, in thirds of e, read by couplings as the family's charge is",
+        "phase": "optional, the phase its field rays carry, below the world's width; 0 by default",
+        "initial_momentum": "optional, a unit-axial heading and a pace [n, d] of Links per interval, n at most d; the momentum is the whole quanta of amount x n / d on that axis; absent for a body at rest",
+        "coupling": "optional, \"sink\" (the default, the absorber below) or the name of a declared coupling below",
+        "momentum_table": "optional, family id to sign: -1 attraction toward the source of an arriving field ray that ends in the sink, 1 repulsion"
+      },
+      "does": "It radiates as any bound group does: every interval it releases the field declared field_of its family on all six headings, one ray per heading of amount floor(amount x n / d) by that field's release, with its declared phase, booked as an explicitly accounted source, so its gravity and its electric field are the ordinary field rays of the model; it never spreads (never splits, binds, unbinds, converts or decays, its whole content at one Node, no ray of its family at its Node) and is not pushed by matter, whatever arrives being met by its coupling, the sink by default, where it ends in the body's exact sink counter for its family and on the audit's absorbed_by_bodies line; its motion is caused by fields only: a field ray of a family its momentum_table names that ends in its sink changes its momentum by sign x amount x heading, nothing else moves it, its velocity is momentum over amount kept as an exact accumulator per axis that steps it one Link when a whole amount has accumulated, and the audit carries the bodies' momentum as its own line. On the Node it is bounded metadata like the mark: the kind, the declaration, the momentum with its accumulators and one exact sink counter per family; no rays, no history. It stands outside the mass ladder (hypothesis 12). When the back-reaction is wanted, a bound group with a large amount is declared instead (Highlights 3.19).",
+      "coupling_form": "Under a declared coupling the body is the participant that never changes: the rule has one role that selects the body's family alone and returns it once among its outputs, and the other roles name the families it meets. Each interval the Node adds one token of the body's family (amount 1, heading +X, the body's phase) to the residents, the rule fires over the token and the arriving rays as an ordinary meeting, and the Node strips the token's output before anything leaves, requiring it back unchanged or the cycle fails. A family the rule does not name, and every returning ray, ends in the sink. In the couplings of this catalog \"any\" and \"same\" stand for the met family and \"body\" for the body's family; a world writes the names.",
+      "apparatus_family": {
+        "name": "apparatus",
+        "rest_rate": 0,
+        "charge": 0,
+        "field": [],
+        "note": "The family a world gives a piece of apparatus (a mirror, a beam splitter, a phase plate, a slit, a polarizer, a wall) under a declared coupling: rest rate 0, because the token must come back with the body's phase and a family's rest rate advances it on the token's departure (external-body-v1, this slice); no charge and no field; named by no coupling but the body's own, so it is its own layer and radiates nothing. A star or a fixed proton is a body of the ray of nature it stands for and radiates that ray's field."
+      },
+      "default_coupling": "absorber",
+      "couplings": ["absorber", "mirror", "beam_splitter", "phase_plate", "slit", "polarizer"],
+      "note": "Stands for a star, a neutron star, a fixed proton, a large charge or a piece of apparatus, and in a rendering carries its own picture, never mistaken for matter. Landed on 2026-09-17 as feature 7b of issue #169 (RAY_EVENT_MODEL.md, step 7)."
+    }
+  },
+  "experiments": {
+    "A1": {
+      "rays": ["light"],
+      "couplings": ["born_steering", "slit", "absorber"],
+      "apparatus": ["detector", "external_body"],
+      "note": "The emitter is a bound clock of rate 32 at N = 256, a marked Node (a source) whose light carries its phase; the slits and the sideways sink are external bodies; the screen's marked Nodes click."
+    },
+    "A2": {
+      "rays": ["light"],
+      "couplings": ["beam_splitter", "phase_plate", "born_steering", "absorber"],
+      "apparatus": ["detector", "external_body"],
+      "note": "The pair source is a marked Node emitting two light rays of one birth event; the recombiner is born_steering between the + and - Ports."
+    },
+    "A3": {
+      "rays": ["light"],
+      "couplings": ["beam_splitter", "phase_plate", "born_steering", "transmission_meets_held_share", "absorber"],
+      "apparatus": ["detector", "external_body"],
+      "note": "A2 with Bob's ray held by an output-clock delay (an existing world key, not a coupling) beyond the round trip."
+    },
+    "A4": {
+      "rays": ["light"],
+      "couplings": [],
+      "apparatus": ["detector"],
+      "note": "The massive neutral and the massive charged families of rate 3 are the run's own declarations, not catalog rays; return_mode annul; nothing meets anything."
+    },
+    "A5": {
+      "rays": ["electron", "positron", "electron_field", "positron_field"],
+      "couplings": ["electron_field_turn", "recoil_return"],
+      "apparatus": ["detector"],
+      "note": "The neutral control family of the same rate and content is the run's own declaration."
+    },
+    "A6": {
+      "rays": ["light", "mass_field"],
+      "couplings": ["mass_field_delay", "recoil_return", "absorber"],
+      "apparatus": ["external_body", "detector"],
+      "note": "The star is an external body of declared family and amount M at rest; the slow massive ray and the bound-group control series (feature 8) declare their families in the run."
+    },
+    "A7": {
+      "rays": ["mass_field"],
+      "couplings": ["mass_field_delay", "recoil_return"],
+      "apparatus": ["external_body"],
+      "note": "Two bound groups of retained content M1 and M2, their families the run's declaration, and the same as two external bodies each with a coupling table naming the other's field."
+    },
+    "A8": {
+      "rays": ["electron", "proton", "electron_field", "light"],
+      "couplings": ["electron_field_turn", "electron_proton_binding", "absorber"],
+      "apparatus": ["external_body", "detector"],
+      "note": "The fixed proton is an external body of the proton family, charge +3, amount M_p, marked as a source; when its recoil is wanted it is the bound group proton under quark_binding."
+    },
+    "A9": {
+      "rays": ["neutron", "proton", "electron", "antineutrino", "up", "down"],
+      "couplings": ["quark_binding", "weak_conversion"],
+      "apparatus": ["detector"],
+      "note": "4096 neutron groups each marked with setting [1, 1024]; a control of 64 proton groups with setting 0."
+    },
+    "A10": {
+      "rays": ["electron", "muon", "proton"],
+      "couplings": [],
+      "apparatus": [],
+      "note": "A catalog fit, no board: the smallest electron rung k at which the muon, tau and proton ratios are integers at one N; the tau is fitted as a number, not being a catalog ray yet."
+    },
+    "A11": {
+      "rays": ["light", "electron", "positron", "electron_field", "positron_field", "mass_field"],
+      "couplings": ["born_steering", "slit", "absorber", "electron_field_turn", "recoil_return", "mass_field_delay"],
+      "apparatus": ["detector", "external_body"],
+      "note": "The worlds of A1, A5 and A6 at phase_bits 75, the electron rays at the rung k of A10: a width check that the wide phase leaks into no coupling, the N of nature being the lag modulus of feature 8b (lag_bits) and not the phase circle (Highlights 3.28)."
+    },
+    "A12": {
+      "rays": ["light"],
+      "couplings": ["polarizer", "absorber"],
+      "apparatus": ["detector", "external_body"],
+      "note": "After feature 11: the polarizer is an external body with the polarizer coupling."
+    },
+    "A13": {
+      "rays": ["light"],
+      "couplings": ["polarizer", "transmission_meets_held_share", "absorber"],
+      "apparatus": ["detector", "external_body"],
+      "note": "After feature 11: A2 and A3 with each analyzer a polarizer at the setting."
+    },
+    "A14": {
+      "rays": ["proton", "neutron", "up", "down"],
+      "couplings": ["quark_binding"],
+      "apparatus": [],
+      "note": "One bound group of a declared massive family, either bound group of the catalog, the run's declaration, at rest and in motion by the ray_delay of feature 8."
+    }
+  }
+}
