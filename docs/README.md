@@ -1,5 +1,9 @@
 # Documentation index
 
+For a single top-down explanation of the whole system, start with
+[Universe24 architecture](ARCHITECTURE.md). It connects the components and event
+flow before the detailed implementation contracts.
+
 The [spatial momentum and position-output experiment](../examples/quantum/position_moment_response.md)
 distinguishes evolved wave readouts, locally derived capture moments and missing
 gate/measurement energy closure.
