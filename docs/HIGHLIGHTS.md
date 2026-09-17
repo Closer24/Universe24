@@ -44,13 +44,13 @@ A Node can act only on its own state and on information that has physically arri
 
 The board contains Node states and their properties, not a separate fundamental object called a ray. A ray names the universal form in which those properties and coherent alternatives propagate through neighboring Nodes. Interactions act on the local degrees of freedom that meet. There is no additional substance called matter; references to rays below refer to this propagation and its interaction patterns.
 
-Revision 2026-09-17: a ray is the trajectory of one event along one straight line of Nodes, reversible in time; an event is the birth or the break of a ray; a break (a split or a change of heading) is the only interaction, and a Node that a ray merely crosses hosts no event. A wave ray carries a phase; light is a wave ray with no mass and no charge. A traveling ray releases a field, and the field is itself made of rays.
+Revision 2026-09-17: an interaction is a meeting of rays at a Node, decided by the coupling declared between their families, and its result is at most six events, one per Port. An event is a change of trajectory: a new straight line leaving the interaction. A ray is the trajectory of one event between two interactions, reversible in time; a Node that a ray merely crosses hosts no event. Outside a Detector every trajectory an interaction permits actually happens; alternatives arise only at interactions. A wave ray carries a phase; light is a wave ray with no mass and no charge. A traveling ray releases a field, and the field is itself made of rays.
 
 ## 3.4 Matter is emergent
 
 Particles, mass and the ordinary appearance of solid matter are stable interaction patterns of rays. They are not fundamental ingredients added to the model.
 
-Revision 2026-09-17: there is no matter in the model at this stage. Matter is the name for rays bound in one Node by a declared binding coupling (a neutron ray and a proton ray held together by the strong binding, an electron ray around them whose line is broken at every step by the field rays the bound pair releases). Mass is the retained energy of a bound group; the group's phase advance is its clock. Everything is the same generic ray with the same generic break; what remains is to close the binding couplings.
+Revision 2026-09-17: there is no matter in the model at this stage. Matter is the name for rays bound in one Node by a declared binding coupling (a neutron ray and a proton ray held together by the strong binding, an electron ray around them whose trajectory is changed at every step by the field rays the bound pair releases). Binding is the interaction whose result is zero events: the rays stay at the Node and interact again every interval. Mass is the retained energy of a bound group; the group's phase advance is its clock. Everything is the same generic ray with the same generic interaction; what remains is to close the binding couplings.
 
 ## 3.5 Fields are emergent descriptions
 
@@ -112,7 +112,7 @@ Global summaries, diagnostics, quantum dependency graphs and Focus-style computa
 
 A physical measurement is itself a local interaction. It does not merely read a globally available hidden value; the observable result must arise from the state and interaction that reached the measuring system.
 
-Revision 2026-09-17: a Detector is a break with a simple binary lottery on a wave ray, the only lottery in the model. The same ray either continues on its line or reverses by a half turn; it is not absorbed and no stock is taken; the click is the record that it passed or returned. A non-wave ray is not drawn.
+Revision 2026-09-17: a Detector is an interaction with a simple binary lottery on a wave ray, the only lottery in the model. The same ray either continues on its line or reverses by a half turn; it is not absorbed and no stock is taken; the click is the record that it passed or returned. A non-wave ray is not drawn.
 
 ## 3.20 Quantum alternatives remain physical possibilities until an event resolves them
 
@@ -186,7 +186,7 @@ Universe24 starts from local discrete Node states whose propagation takes ray fo
 
 NodeState, ownership, neighborhood, postulates and property representation. Work happens at the Node; this summary does not define a separate 36-register layer.
 
-Revision 2026-09-17: the state that moves is the ray (family properties, phase, heading, step count since the last break, one bounded outcome register); a Node holds nothing but the rays resident this interval and, under a declared binding coupling, a bounded bound group. At a meeting of rays the declared coupling between their families decides no break, a deterministic break with exact invariants, or a Detector break.
+Revision 2026-09-17: the state that moves is the ray (family properties, phase, heading, step count since the last interaction, one bounded outcome register); a Node holds nothing but the rays resident this interval and, under a declared binding coupling, a bounded bound group. At a meeting of rays the declared coupling between their families decides no interaction, a deterministic interaction with exact invariants and at most six events out, or a Detector interaction.
 
 ## 5.2 Generic operations at a Node
 

@@ -149,9 +149,10 @@ An event is a local change in a node at a particular time: a field update, a par
 momentum change, a move to a neighbor or a blocked move attempt.
 
 Adopted direction (model owner, 2026-09-17; implementation pending, see
-[section 23](#23-the-ray-event-model)): an event is the birth or the break of
-a ray. A ray is the trajectory of one event along one straight line of nodes,
-and a node that a ray merely crosses hosts no event. The definition above
+[section 23](#23-the-ray-event-model)): an event is a change of trajectory
+leaving an interaction, a new straight line through one Port. A ray is the
+trajectory of one event between two interactions, and a node that a ray
+merely crosses hosts no event. The definition above
 describes the current implementation; the ray-event definition is the target
 every future profile is measured against.
 
@@ -672,7 +673,8 @@ limits; it does not derive the matrices or establish physical energy closure.
 ## 22. Historical autonomous sampling candidates
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
-Detector break of a wave ray, pass or return, one bounded integer per break
+Detector interaction of a wave ray, pass or return, one bounded integer per
+interaction
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
 [section 23](#23-the-ray-event-model)). A pair's number is drawn at the first
 Detector and carried by the returning ray; no owner answers at a distance.
@@ -736,40 +738,51 @@ holds the complete statement, the migration order and the acceptance criteria.
 Nothing in this section is implemented yet; every implementation step is a
 separate published change measured against that document.
 
-A ray is not an object. It is the trajectory of one event along one straight
-line of nodes: the same event, the same family properties, one node per Link
-interval, one heading. A ray trajectory is reversible: run backward it returns
-exactly to the event that created it, because nothing was added or lost along
-the line. An event is an endpoint of a ray, its birth or its break. A break,
-a split or a change of heading, is the only interaction; only there is
-anything decided. A wave ray carries a phase; light is a wave ray with no mass
-and no charge, an event moving in time.
+Two words carry the model. An interaction is a meeting of rays at a node in
+one interval, decided by the coupling declared between the families present;
+it is the only place where anything is decided, and its result is at most six
+events, one per Port. An event is a change of trajectory: a new straight line
+leaving the interaction through one Port. A ray is not an object; it is the
+trajectory of one event between two interactions, the same event with the
+same family properties, one node per Link interval, one heading. A ray
+trajectory is reversible: run backward it returns exactly to the interaction
+that created it, because nothing was added or lost along the line. A node
+that a ray merely crosses hosts no event.
 
-At a node where rays meet, the coupling declared between their families
-decides one of three things: no break, and the rays cross; a deterministic
-break, a split or a heading change computed from the frozen inputs with every
-declared invariant exact over all inputs and outputs; or a Detector break,
-when one participant is a declared Detector and the other a wave ray, which
-draws one bounded integer and selects pass or return. A ray alone at a node
-never breaks, and a node never holds a ray without a declared binding
-coupling.
+Outside a Detector every trajectory an interaction permits actually happens:
+the up-to-six events all propagate, each as a straight ray with its share of
+the conserved quantities and, for a wave ray, its phase. Alternatives are
+created only at interactions, never at the empty nodes a ray crosses. A wave
+ray carries a phase; light is a wave ray with no mass and no charge, an event
+moving in time.
+
+At a node where rays meet, the declared coupling decides one of three things:
+no interaction, and the rays cross; a deterministic interaction, up to six
+events computed from the frozen inputs with every declared invariant exact
+over all inputs and outputs; or a Detector interaction, when one participant
+is a declared Detector and the other a wave ray, which draws one bounded
+integer and selects pass or return. A ray alone at a node never interacts.
+Binding is the interaction whose result is zero events: the rays stay at the
+node, interact again every interval, and their phase advances once per
+interval.
 
 A Detector does not absorb. The same ray either continues on its line or
 reverses by a half turn; the click is the record that it passed or returned.
 A returning ray retraces its own trajectory by its step count, reaches its
-birth event with certainty and continues straight, which is the direction of
-the partner ray of a pair. It carries the number the partner's Detector was
-missing. Pair identity is the trajectory, not the birth node and tick.
+birth interaction with certainty and continues straight, which is the
+direction of the partner ray of a pair. It carries the number the partner's
+Detector was missing. Pair identity is the trajectory, not the birth node and
+tick.
 
 A traveling ray releases a field, and the field is itself made of rays that
 cross nodes without event and meet other rays as any ray does. There is no
 matter in the model at this stage: matter is the name for rays bound in one
 node by a declared binding coupling, a neutron ray and a proton ray held
-together by the strong binding, an electron ray around them whose line is
-broken at every step by the field rays the bound pair releases. Mass is the
-retained energy of a bound group, and the group's phase advance is its clock.
-Held source records remain an explicitly labeled interim device until the
-binding couplings exist.
+together by the strong binding, an electron ray around them whose trajectory
+is changed at every step by the field rays the bound pair releases. Mass is
+the retained energy of a bound group, and the group's phase advance is its
+clock. Held source records remain an explicitly labeled interim device until
+the binding couplings exist.
 
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 is withdrawn, and the price stated in postulate 22 is
