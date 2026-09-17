@@ -898,7 +898,17 @@ slow, so that the rays do not leave. It is unbound the same way anything
 else happens on the board: a ray arrives (a high-energy light ray, for
 instance; there is no photon, only a ray) and the coupling declared for the
 families present produces events that leave. Nothing else creates or
-destroys matter. Held source records remain an explicitly labeled interim
+destroys matter. The computation field obeys the one field rule above, with
+no rule of its own: the retained content of a node, its mass, is what makes it slow, and the
+information that a node is heavy spreads from it in ray form in all
+directions. Where such a field ray meets a ray whose declared coupling
+responds, there is an event with two effects: the ray that was met is
+delayed, its output clock grows, and the field ray returns reversed to the
+heavy node. The delay is larger on the side nearer the heavy node, so the
+ray bends toward it; that bending is a change of momentum, and the
+returning field ray carries the opposite momentum back to the heavy node,
+which is drawn toward the ray. Gravity is this bending by delay; it is not
+inserted as a force, nothing is absorbed, and momentum is exact. Held source records remain an explicitly labeled interim
 device until the binding couplings exist.
 
 Postulates 1 to 4 hold under this model without exception; the registry
