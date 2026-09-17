@@ -43,6 +43,8 @@ Short explanations, brief read-only checks and coordination stay with Boss.
 
 Treat **Universe 24 Highlights** as the high-level specification and use [the implementation map](../../docs/HIGHLIGHTS_IMPLEMENTATION.md) to distinguish implemented behavior, hypotheses and gaps. The active model contract is [initialization-defined disturbances](../../docs/DISTURBANCES.md). Technical workflow belongs in the repository, not in Highlights.
 
+Since 2026-09-17, by the model owner's decision, the Highlights text is [docs/HIGHLIGHTS.md](../../docs/HIGHLIGHTS.md) and that file is the only copy to edit. The Google Doc is its historical source up to the revision of 2026-09-16 and is neither edited nor resynced; do not propose text for it or keep "proposed revision" paragraphs waiting for it. Boss records each decision of the model owner in `docs/HIGHLIGHTS.md` first, in the section it changes, then dispatches one synchronization specialist per change to carry it into [POSTULATES.md](../../POSTULATES.md), [the ray-event model](../../docs/RAY_EVENT_MODEL.md) and every other document that restates the changed rule, and to report the resulting diff. At any published revision, Highlights and those documents must not disagree; when they do, Highlights is the text to follow and the others are corrected.
+
 For durable integration, reconcile relevant specification changes, current main, open work and affected contracts. Do not treat a dated status snapshot as live evidence. Preserve user-defined physical names as data and do not dispatch laws by entity names.
 
 ## Choose the lightest execution lane
