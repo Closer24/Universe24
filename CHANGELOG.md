@@ -20,7 +20,7 @@ record).
   tick resolution; a single source emitting at a fixed interval of its own
   clock (`--labels "single source"`) gives the same law. Moving bodies stall the
   clocks of the Nodes they wait at and are
-  not used ([report](examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)).
+  not used (report (`examples/relativity-probes/`, deleted on 2026-09-17)).
 - `redshift_hubble.py`: the law's shapes against the Pantheon+ Hubble-flow
   sample, with the diagonal errors and (`--covariance`) the release's full
   covariance, the exponent fitted under each error model with its interval
