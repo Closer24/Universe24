@@ -32,7 +32,15 @@
       "extensive": true
     },
     {
-      "name": "electron_field",
+      "name": "light_of_nucleus",
+      "components": 1,
+      "units": "quantum",
+      "signed": false,
+      "conserved": true,
+      "extensive": true
+    },
+    {
+      "name": "light_of_electron",
       "components": 1,
       "units": "quantum",
       "signed": false,
@@ -41,14 +49,6 @@
     },
     {
       "name": "proton",
-      "components": 1,
-      "units": "quantum",
-      "signed": false,
-      "conserved": true,
-      "extensive": true
-    },
-    {
-      "name": "proton_field",
       "components": 1,
       "units": "quantum",
       "signed": false,
@@ -135,7 +135,61 @@
       "charge": -3
     },
     {
-      "field": "electron_field",
+      "field": "light_of_nucleus",
+      "baseline": 0,
+      "transport": "ray",
+      "headings": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          -1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "rays_per_tick": 1,
+      "ray_slots": 8,
+      "metric": "links",
+      "pace": [
+        1,
+        1
+      ],
+      "phase_bits": 8,
+      "kerengonen": {
+        "phase_advance": 0
+      },
+      "charge": 0,
+      "field_of": "proton",
+      "release": [
+        1,
+        4096
+      ]
+    },
+    {
+      "field": "light_of_electron",
       "baseline": 0,
       "transport": "ray",
       "headings": [
@@ -236,60 +290,6 @@
         "phase_advance": 0
       },
       "charge": 3
-    },
-    {
-      "field": "proton_field",
-      "baseline": 0,
-      "transport": "ray",
-      "headings": [
-        [
-          1,
-          0,
-          0
-        ],
-        [
-          -1,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          0
-        ],
-        [
-          0,
-          -1,
-          0
-        ],
-        [
-          0,
-          0,
-          1
-        ],
-        [
-          0,
-          0,
-          -1
-        ]
-      ],
-      "rays_per_tick": 1,
-      "ray_slots": 8,
-      "metric": "links",
-      "pace": [
-        1,
-        1
-      ],
-      "phase_bits": 8,
-      "kerengonen": {
-        "phase_advance": 0
-      },
-      "charge": 0,
-      "field_of": "proton",
-      "release": [
-        1,
-        4096
-      ]
     }
   ],
   "emissions": [
@@ -320,13 +320,13 @@
   ],
   "ray_interactions": [
     {
-      "name": "proton_field_turn",
+      "name": "nucleus_turn",
       "participants": [
         {
           "type": "electron"
         },
         {
-          "type": "proton_field"
+          "type": "light_of_nucleus"
         }
       ],
       "outputs": [
@@ -342,7 +342,7 @@
           }
         },
         {
-          "field": "proton_field",
+          "field": "light_of_nucleus",
           "amount": {
             "of": 1
           },
@@ -366,7 +366,7 @@
           "type": "electron"
         },
         {
-          "type": "electron_field"
+          "type": "light_of_electron"
         }
       ],
       "outputs": [
@@ -382,7 +382,7 @@
           }
         },
         {
-          "field": "electron_field",
+          "field": "light_of_electron",
           "amount": {
             "of": 1
           },
@@ -456,8 +456,8 @@
       "charge": 6,
       "coupling": "phase_plate",
       "momentum_table": {
-        "proton_field": -1,
-        "electron_field": -1
+        "light_of_nucleus": -1,
+        "light_of_electron": -1
       }
     }
   ]
