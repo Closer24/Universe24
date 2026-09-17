@@ -142,15 +142,6 @@ def renamed_document(raw):
         seed["type"] = types[seed["type"]]
         if "values" in seed:
             seed["values"] = values(seed["values"])
-    for domain in result.get("event_program", {}).get("domains", []):
-        source, capture = domain["source"], domain["capture"]
-        for key in ("type", "partner_type"):
-            source[key] = types[source[key]]
-        source["validity_field"] = fields[source["validity_field"]]
-        capture["detector_type"] = types[capture["detector_type"]]
-        capture["output"]["type"] = types[capture["output"]["type"]]
-        if "values" in capture["output"]:
-            capture["output"]["values"] = values(capture["output"]["values"])
     return result, {new: old for old, new in fields.items()}, {new: old for old, new in types.items()}
 
 

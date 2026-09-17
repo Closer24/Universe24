@@ -15,7 +15,7 @@ file references and required fixes.
 For the active API, read [DISTURBANCES.md](../../docs/DISTURBANCES.md).
 Apply the [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract)
 to the complete physical dependency path. Report unsupported tensor shapes and
-separately scoped historical/quantum paths instead of certifying all code as local.
+separately scoped historical paths instead of certifying all code as local.
 Check the full initialization-to-expression-to-proposal path, fixed capacities,
 positive payload coding, frozen pending ownership and lazy optional rendering.
 Historical scalar records are not the universal schema. Missing initialization

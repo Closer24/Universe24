@@ -110,8 +110,6 @@ once, followed by the actual field cycle and sends at commit. Buffered arrivals
 are causes of the later commit, not of its earlier frozen sample. Receipt port
 diagnostics report only that arrival's contribution. Graph capacity remains
 explicit and bounded; turning it off does not change the physics.
-Existing quantum/spatial and conservation/native-event composition restrictions
-remain in force.
 
 An optional [local observer](LOCAL_OBSERVER.md) counts completed shared cycles
 at its node, including field-only cycles. It records arrivals during a wait

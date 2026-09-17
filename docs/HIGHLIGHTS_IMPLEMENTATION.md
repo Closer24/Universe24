@@ -111,11 +111,11 @@ model choices whose consequences can be tested.
 | --- | --- | --- |
 | Optical wave behavior from local ray transport | [Kerengonen double slit](../examples/kerengonen-double-slit/README.md): one lamp illuminates two absorbing/re-emitting slits; phase changes the screen pattern, while the plain field gives the sum of the two single-slit controls | Carried phase, coherent capture and the slit re-emission rule are configured |
 | Where the classical wave stops and the quantum owner begins | [Bell test on the phased-ray field](../examples/kerengonen-bell/README.md): the same CHSH settings give 1.40 on the classical candidate and 2 on the plain field, against 14/5 from the finite quantum owner | The phase is the only hidden variable and local absorption the only instrument; the classical value is the model's prediction, not a loss of visibility |
-| Whole detections and a classical mean flux | [Counting probe](../examples/quantum-classical/README.md): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
+| Whole detections and a classical mean flux | Counting probe (`examples/quantum-classical/README.md`, deleted on 2026-09-17): one-quantum arrivals are 0 or 1; their average approaches the measured inverse-square profile in the tested geometry | Integer quanta and the heading distribution are supplied; this does not identify physical photons |
 | Radiation and mechanical exchange | [Local conservation contract](LOCAL_CONSERVATION.md) and [runner validation](VALIDATION.md#kerengonen-guards-reconciled-with-current-main---2026-09-14): funded emission, recoil, absorption and escaped rays close the declared energy/momentum accounting | The quantity definitions and exchange laws are explicit; this is not complete electromagnetic dynamics |
-| Coherent evolution and classical probability | [Quantum-to-classical probes](../examples/quantum-classical/README.md) and [claim check](../examples/quantum/quantum_classical_check.md): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
+| Coherent evolution and classical probability | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) and claim check (`examples/quantum/quantum_classical_check.md`, deleted on 2026-09-17): configured dephasing removes interference and reproduces the finite classical probability control | Classical probability evolution does not by itself derive a Newtonian trajectory or explain a unique measurement outcome |
 | Matter-wave wavelength and momentum | [De Broglie probe](../examples/de-broglie/README.md): momenta 16, 32 and 64 move the first dark fringe to 4, 2 and 1 | The phase advance `abs(p) / 4` is supplied; the inverse relation is propagated and measured, not derived from spatial discreteness |
-| Quantum contact and later ordinary motion | [Recurrent contacts](RECURRENT_QUANTUM_CONTACT.md) and [local moment response](../examples/quantum/local_moment_exchange.md): local encounters can continue a wave, create a new one or localize a record; a later local exchange can produce slow motion | Finite instruments and the response law are supplied; complete field/matter closure and an emergent classical trajectory remain open |
+| Quantum contact and later ordinary motion | Recurrent contacts (`docs/RECURRENT_QUANTUM_CONTACT.md`, deleted on 2026-09-17) and local moment response (`examples/quantum/local_moment_exchange.md`, deleted on 2026-09-17): local encounters can continue a wave, create a new one or localize a record; a later local exchange can produce slow motion | Finite instruments and the response law are supplied; complete field/matter closure and an emergent classical trajectory remain open |
 
 The supported highlight is therefore a tested bridge between selected classical,
 quantum and optical behaviors on discrete space, with a clear route for stronger
@@ -126,7 +126,7 @@ does not represent them as fresh executions on the reviewed main commit.
 
 ## Signed relative field phase - 2026-09-14
 
-The [field-phase contract](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase)
+The field-phase contract (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17)
 now explicitly preserves `(unit / vacuum)^n` for negative field exponents by
 conjugating both coefficients. Equivalent complex representations produce the
 same quantum capture probabilities and ordinary envelope weights. This repairs
@@ -140,7 +140,7 @@ are linked in [validation](VALIDATION.md).
 
 Live Highlights was reconciled read-only at the time of this entry.
 Section 4.7.5 requires position and momentum to describe the same wave without
-assigning both sharply. The [position-output experiment](../examples/quantum/position_moment_response.md)
+assigning both sharply. The position-output experiment (`examples/quantum/position_moment_response.md`, deleted on 2026-09-17)
 derives a finite derivative observable from actual spatial density and output
 moments from a local operator row. Its Fourier eigenvalue `2 sin(k)` gives
 partial coverage of the Fourier-momentum target, not canonical momentum or a
@@ -151,7 +151,7 @@ existing contracts. The live Highlights document was not edited.
 
 ## Local response candidate - 2026-09-14
 
-The [local moment-response experiment](../examples/quantum/local_moment_exchange.md)
+The local moment-response experiment (`examples/quantum/local_moment_exchange.md`, deleted on 2026-09-17)
 now composes quantum capture with an explicitly supplied ordinary local law.
 Mean momentum and its variance swap with a colocated equal-mass reservoir;
 the one-shot detector records completion locally. The resulting carrier moves,
@@ -164,7 +164,7 @@ document was not edited for this experimental candidate.
 
 ## Quantum-to-classical claim check - 2026-09-14
 
-The [bounded investigation](../examples/quantum/quantum_classical_check.md) verifies
+The bounded investigation (`examples/quantum/quantum_classical_check.md`, deleted on 2026-09-17) verifies
 configured dephasing, coherent recovery and classical probability evolution.
 Spatial localization produces a held record with unknown momentum; an emerging
 Newtonian trajectory remains unestablished. This adds measured evidence, not a
@@ -180,10 +180,10 @@ The new section was verified in the live document without changing adjacent sect
 
 | Highlights rule | Authoritative owner | Acceptance |
 | --- | --- | --- |
-| Complete local outcomes with no separate random switch | [Recurrent contract](RECURRENT_QUANTUM_CONTACT.md), postulate 21 and Q-RECURRENT-1 | Exact source 9/16 and capture 9/16/144 ticket counts |
-| Fresh origin without duplicate inventory or replay | [Quantum event network](../src/event_universe/quantum/event_network.py) | Occupied-domain rejection, atomic result and same-tick replay tests |
-| Local ordinary source banks and causal cancellation | [Recurrent resolver](../src/event_universe/integration/recurrent_contact_runtime.py) | Remote-prefix equality, finite allowances and signed vector inventory |
-| Repeated encounters followed by localization | [Initialization and recorded expectations](../examples/quantum/repeated_contacts.md) | Fresh-wave ticks 3/9/21, localization 24, balanced field decay |
+| Complete local outcomes with no separate random switch | Recurrent contract (`docs/RECURRENT_QUANTUM_CONTACT.md`, deleted on 2026-09-17), postulate 21 and Q-RECURRENT-1 | Exact source 9/16 and capture 9/16/144 ticket counts |
+| Fresh origin without duplicate inventory or replay | Quantum event network (`src/event_universe/quantum/event_network.py`, deleted on 2026-09-17) | Occupied-domain rejection, atomic result and same-tick replay tests |
+| Local ordinary source banks and causal cancellation | Recurrent resolver (`src/event_universe/integration/recurrent_contact_runtime.py`, deleted on 2026-09-17) | Remote-prefix equality, finite allowances and signed vector inventory |
+| Repeated encounters followed by localization | Initialization and recorded expectations (`examples/quantum/repeated_contacts.md`, deleted on 2026-09-17) | Fresh-wave ticks 3/9/21, localization 24, balanced field decay |
 
 The [validation record](VALIDATION.md) binds these results to the exact tested
 source. This is not a general many-body Hamiltonian, physical energy closure or
@@ -217,7 +217,7 @@ a schedule (`dissolve`: a particle becoming its own wave train).
 | 4.7, 10.3 | Energy closure: funded emission with recoil, absorption with momentum, signed quanta paid by the absorber, rays measured as quanta by the event audit. Attraction that the pulled body pays for. | [Funded emission and absorption](SPATIAL_FIELDS.md#funded-emission-and-absorption), [gravity probe](../examples/gravity-probe/README.md) |
 | 1.2, 4.7 | Kerengonen phased rays: coherence-gated sampling and absorption, share or lottery capture, Huygens slits, mirrors, per-ray de Broglie advance, dissolution. Identity `kerengonen-ray-field-v1`. | [Kerengonen contract](SPATIAL_FIELDS.md#kerengonen-phased-rays-kerengonen-ray-field-v1) |
 | 1.2, 4.7 | Measured: two-lamp and single-lamp double slits with exact additivity without phase, single quanta building the fringe, fringe period inverse to momentum for beams and for a dissolving particle, standing waves with period `phase_steps / (2 x advance)`, a thick screen absorbing what a thin one lets pass, a round front and a Euclidean fringe on the Euclidean pace, a whole particle gathered to one screen Node with the probability of its wave. | [Double slit](../examples/kerengonen-double-slit/README.md), [de Broglie](../examples/de-broglie/README.md), [matter wave](../examples/matter-wave/README.md), [mirror](../examples/kerengonen-mirror/README.md), [Euclidean pace](../examples/euclidean-pace/README.md), [claim and gather](../examples/claim-gather/README.md), [validation](VALIDATION.md) |
-| 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | [Quantum-to-classical probes](../examples/quantum-classical/README.md) |
+| 1.2, 10.6 | Quantum-to-classical seams on existing rules: a dephased walk equals the classical chain, quanta click whole and average to the inverse square, repeated captures follow the geometric decay law. | Quantum-to-classical probes (`examples/quantum-classical/README.md`, deleted on 2026-09-17) |
 
 What the ray is not, recorded rather than claimed: a single particle's matter
 lands spread as its wave unless the field has claims, because rays carry
@@ -252,7 +252,7 @@ The user's latest selection extends the preceding localized-source choice:
 each wave mode may source an ordinary field with its local squared weight, and
 weight changes or cancellation must travel through Nodes and Links with delay.
 This maps Highlights sections 1.2.7, 4.7.1-4.7.7 and 10.3/10.6 to the explicit
-[causal source candidate](CAUSAL_QUANTUM_SOURCES.md). The live document remains read-only.
+causal source candidate (`docs/CAUSAL_QUANTUM_SOURCES.md`, deleted on 2026-09-17). The live document remains read-only.
 
 `causal-contact-fields-v1` retains a bounded complex source envelope at each
 participating ordinary Node, immutable definitions outside NodeState, finite
@@ -274,7 +274,7 @@ passed result. This extension does not complete the broader unified-dynamics goa
 ## Localized quantum contacts - 2026-09-13
 
 Live Highlights was reconciled read-only. Its sections 1.2.7, 4.7.1-4.7.7 and
-10.3/10.6 map to the [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md).
+10.3/10.6 map to the localized contact candidate (`docs/LOCALIZED_QUANTUM_CONTACT.md`, deleted on 2026-09-17).
 The later user selection explicitly chooses ordinary fields only at localized
 events. This finite hybrid is an additional configured candidate, not a claim
 that the project's separate goal of emergent unified dynamics is complete.
@@ -311,8 +311,8 @@ starts from `fb54f3306ce8172f5ed3f2d3a65eb03cb021a6b7`, integrating current main
 
 The user's later explicit contract replaces the separate per-stream predecessor
 list. Sections 1.2.7 and 4.7.1-4.7.6 now map to
-[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
-[origin cells](WAVE_ORIGINS.md): immutable events are the sole history, each
+event spacetime (`docs/QUANTUM_EVENTS.md`, deleted on 2026-09-17) and
+origin cells (`docs/WAVE_ORIGINS.md`, deleted on 2026-09-17): immutable events are the sole history, each
 participating Node stores up to six origin IDs, and a direct origin status check
 does not traverse a history. Current virtual-register heads remain separate
 bounded state. One conditional terminal decision atomically resolves its selected
@@ -368,7 +368,7 @@ one outcome draw, origin 3 resolved at tick 2 to record 13, peer references reti
 at tick 3, and origin 4 still active. Three oracle calls include two cancellation
 certifications. These are branch-reported results, not a new experiment in this
 documentation task or proof of a universal quantum-to-classical limit.
-See [the quantum contract](QUANTUM_EVENTS.md#time-direction-and-origin-lookup).
+See the quantum contract (`docs/QUANTUM_EVENTS.md`, deleted on 2026-09-17).
 The Google Doc receives the same clarification in sections 1.2.7, 4.7.2 and 4.7.7.
 No reaction law or evaluation algorithm changes in this correction.
 

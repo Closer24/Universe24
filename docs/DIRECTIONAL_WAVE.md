@@ -133,5 +133,3 @@ periodic circuit. This does not establish arbitrary-angle isotropy, spatial
 mixing, Gauss constraints, charge/current continuity, Maxwell propagation,
 Lorentz response, matter exchange or quantum photons. Those require separately
 specified laws and independent acceptance evidence.
-The newer native event program is absent here: its current contract explicitly
-rejects composition with spatial fields until timing and ownership are specified.

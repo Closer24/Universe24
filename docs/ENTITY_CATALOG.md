@@ -76,13 +76,12 @@ independent inventory and physical-property tests supplement them.
 
 ## Run a selected representation experiment
 
-The [catalog contact experiment](../examples/catalog-contact/README.md) binds all
-34 established particle/multiplet records to the existing causal quantum source
-and contact mechanism. It reuses catalog charge/mass with shared reference units,
-preserves unassigned flavor-neutrino mass explicitly and keeps species-specific
-physics as reference metadata. No engine law is added by selecting an entity.
+The catalog contact experiment (`examples/catalog-contact`), which bound the 34
+established particle/multiplet records to the causal quantum source and contact
+mechanism, was deleted on 2026-09-17 with the shared quantum resource. No engine
+law is added by selecting an entity.
 
-The original 46 classical and quantum probes live unchanged in
+The original 46 classical probes live in
 [representation-probes.json](../examples/known-entities/representation-probes.json).
 Its `profiles` array identifies each row by `entity_id`, separately from the
 physical reference. There is no automatic profile lookup or species dispatch.
@@ -92,8 +91,7 @@ python -m event_universe.entities --catalog examples/known-entities/catalog.json
 python -m event_universe --init artifacts/selected-entities.json --output artifacts/selected-entities-run
 ```
 
-Use new output paths. Add `--representation quantum` to compile an explicit
-[finite quantum preparation](QUANTUM_ENTITIES.md). Add `--visualize` to the
+Use new output paths. Add `--visualize` to the
 runner only when visual output is wanted. The Python API is
 `compile_entities(catalog, entity_ids, profiles=profiles, shape=(9,9,9), ticks=4, link_ticks=1)`.
 Both documents must be passed explicitly. Legacy version 1 catalogs retain their
@@ -108,13 +106,12 @@ absence of a profile never creates an implicit physical model.
 Each classical profile declares `kind`, `fields`, `seed_values`, nonempty
 `assumptions` and `claim_level: representation_probe`. Carrier profiles add a
 `disturbance`; field probes declare their components and explicit local rules.
-Quantum profiles declare finite modes and missing dynamics, without inferring
-a Hamiltonian from particle names. Duplicate or orphan profile IDs, incompatible
+Duplicate or orphan profile IDs, incompatible
 declarations, malformed profiles and exceeded runtime capacities fail explicitly.
 Subset profile documents are allowed when every selected entity is covered.
 
 For whole-library checks, `entities.validate_profiles(catalog, profiles)` validates
-every supplied representation independently and returns profile/classical/quantum
+every supplied profile independently and returns profile/classical
 counts. Use the [common preflight CLI](CONFIGURATION_VALIDATION.md) for file reports
 and explicit dependencies. It checks unselected rows as well; validate a compiled
 multi-entity initialization separately for its combined capacity and compatibility.
@@ -132,7 +129,7 @@ updates remain elementary copy/clear operations. Limits remain 16 fields and
 `tests/test_entity_catalog.py` checks reference coverage, sourced physical
 properties and invalid metadata. `tests/test_entity_compiler.py` checks explicit
 profile selection, legacy compatibility, rejection cases and active representative
-worlds. Quantum and small-space consumers use the same separated profiles.
+worlds. Small-space consumers use the same separated profiles.
 Changing reference metadata must not change compiled laws or resulting physics.
 
 The separate [bounded local conversion](LOCAL_CONVERSIONS.md) interface supports

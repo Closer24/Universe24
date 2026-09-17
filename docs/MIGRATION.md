@@ -32,18 +32,58 @@ particle candidates from the package, tests, tools and documents:
 There is no replacement API: the active `Simulation` is initialization-defined
 ([DISTURBANCES.md](DISTURBANCES.md)), shared bounded arithmetic is
 `core/integer.py`, and `pytest --visualize-runs` now only enables the
-visualization-marked tests. `core/state.py` remains until its quantum consumers
-are removed in the next step. Dated validation records keep their original scope.
+visualization-marked tests. `core/state.py` was deleted in the next step,
+below. Dated validation records keep their original scope.
+
+## Shared quantum resource and integration layer deleted on 2026-09-17
+
+Under the same instruction, issue #164 buckets B.1 and B.2 removed the shared
+quantum resource and the integration layer built on it, following
+[HIGHLIGHTS.md](HIGHLIGHTS.md) sections 3.18 (deleted), 3.19, 3.20 and 5.4
+and [RAY_EVENT_MODEL.md](RAY_EVENT_MODEL.md) section 6, steps 3 and 4: no
+owner answers at a distance, the Detector is a marked Node and every
+alternative is an event on the board.
+
+- The `quantum/` package (`deferred`, `event_network`, `event_rules`, `focus`,
+  `mixed`, `state`, `query`, `terminal`, `postulates`, `wave_origins`,
+  `operations`, `contact_outcomes`, `contact_rules`) and the `integration/`
+  package (`event_program`, `event_runtime`, `contact_program`,
+  `contact_runtime`, `causal_contact_runtime`, `recurrent_contact_runtime`,
+  `quantum_entities`, `quantum_bridge`, `quantum_contact_trial`,
+  `quantum_event_trial`) are gone.
+- The `event_program` initialization member and `InitialState.event_program`
+  are gone: a document that still carries the member is rejected as an unknown
+  key, no configuration selects a native program, a quantum profile or the
+  classical `causal-events-v1` ledger, and `causal-events.jsonl` is no longer
+  written. `Simulation` no longer refuses `node_workers > 1` for a program.
+- `event_universe.entities` compiles classical profiles only: the
+  `representation` argument, the `--representation` option, the
+  `quantum_profile` binding key and the `quantum` count of `validate_profiles`
+  are gone, and the 46 `quantum_profile` members left
+  `examples/known-entities/representation-probes.json`.
+- `core/state.py` and `tests/test_integer_contract.py` are gone;
+  `fields/source_envelope.py` imports `bounded_gcd` from `core/integer.py`.
+- `examples/quantum/`, `examples/quantum-classical/`,
+  `examples/catalog-contact/`, `examples/spatial_causal_events.json`, the
+  relativity probes `quantum_gravity.py`, `quantum_from_the_side.py` and
+  `time_symmetry.py`, the three quantum entity-audit inputs and the
+  contact-fields experiment of the named-particle gallery are gone;
+  `examples/spatial_computation_delay.json` lost its `event_program` member.
+- The twelve quantum documents named in the [documentation index](README.md),
+  the `quantum-contact-trial` workflow, 36 test modules and the fixtures
+  `tests/quantum_detector_fixture.py`, `tests/support/quantum.py` and
+  `tests/support/contact.py` are gone; the Node-level source-envelope and
+  event-ledger cases of `test_causal_contact_fields.py`,
+  `test_null_notices.py` and `test_native_event_runtime.py` moved to
+  `test_active_node_contracts.py`, `test_null_notices.py` and
+  `test_event_links.py`.
+
+There is no replacement API. `core/event_space.py`, `core/event_links.py`,
+`core/event_resolution.py`, the source-envelope modules, the bond registry,
+claim/gather and `fields/record_operations.py` stay until buckets B.3 to B.6
+of the same issue.
 
 ## Primary initialization-based API
-
-The quantum event storage migration removes the separate local predecessor list
-and `history(register)` traversal. Events remain directly addressable in the
-immutable spacetime DAG; fixed cursors retain current register heads and modeled
-times. The native v3 [origin-cell contract](WAVE_ORIGINS.md) adds six local wave
-references, separate from virtual register heads. The coherent path example is
-now `examples/quantum/event_paths.json`; its regression suite is
-`tests/test_quantum_node_events.py`.
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an
 implicit scalar Config or built-in particle semantics. Initialize the active

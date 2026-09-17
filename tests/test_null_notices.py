@@ -1,6 +1,5 @@
-"""Opt-in causal null notices: local factor, Link transport, delayed commit, no defaults changed."""
+"""Source-envelope null notices: local factor, Link transport, delayed commit and corrections."""
 
-import json
 from fractions import Fraction
 
 import pytest
@@ -9,52 +8,30 @@ from event_universe.core.disturbance_state import OPERATIONS, CostMeter, Operati
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
 from event_universe.core.source_envelope_node import (
+    CORRECTION_QUEUE,
     NOTICE_BANK,
     OUTPUT_SLOTS,
     EnvelopePacket,
     SourceEnvelopeNode,
 )
-from event_universe.core.source_envelope_state import EnvelopeAmplitude, EnvelopeScale
+from event_universe.core.source_envelope_state import EnvelopeAmplitude, EnvelopeScale, NullRecord
 from event_universe.diagnostics.node_contract import node_state_violations
-from event_universe.fields.source_envelope import local_output, null_factor, scaled_weight
-from event_universe.initialization import parse_initial_state
-
-from .test_causal_contact_fields import (
-    DETECTOR,
-    MIDDLE,
-    SOURCE,
-    causal_configuration,
-    scalar_sources,
-    source_trace,
+from event_universe.fields.source_envelope import (
+    local_output,
+    null_correction,
+    null_factor,
+    scaled_weight,
+    squared_weight,
 )
-from .test_localized_quantum_contact import step, world_for
 
+SOURCE = (1, 1, 1)
+MIDDLE = (2, 1, 1)
+DETECTOR = (3, 1, 1)
 COSTS = OperationCosts((1,) * len(OPERATIONS))
 
 
 def meter():
     return CostMeter(COSTS)
-
-
-def notice_configuration(*, arm_detector=False, tickets=(0, 0, 0)):
-    raw = causal_configuration()
-    raw["event_program"]["null_notices"] = True
-    raw["event_program"]["tickets"] = list(tickets)
-    raw["ticks"] = 14
-    domain = raw["event_program"]["domains"][0]
-    inverse = [[5, 0, 0, 0], [0, 3, 4, 0], [0, -4, 3, 0], [0, 0, 0, 5]]
-    swap = [[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]]
-    domain["phases"] = [
-        [{"register_indices": [0, 1], "matrix": domain["phases"][0][0]["matrix"]}],
-        [{"register_indices": [1], "matrix": [[1, 0], [0, [0, 1]]]}],
-        [{"register_indices": [0, 1], "matrix": inverse}],
-        [{"register_indices": [1, 2], "matrix": swap}],
-        *([[]] * 12),
-    ]
-    if arm_detector:
-        domain["capture"]["register_indices"] = [1, 2]
-        raw["seeds"].append({"position": list(MIDDLE), "type": "contact_probe"})
-    return raw
 
 
 def test_scale_and_factor_arithmetic_are_exact_and_clip_at_one():
@@ -174,96 +151,10 @@ def test_applied_notice_bank_is_fixed_and_a_retired_node_ignores_notices():
     assert retired.scale == EnvelopeScale() and all(p is None for p in retired.pending_scales)
 
 
-def test_option_requires_the_causal_model_and_a_boolean():
-    raw = causal_configuration()
-    raw["event_program"]["null_notices"] = True
-    raw["event_program"]["model"] = "localized-contact-quantum-v1"
-    with pytest.raises(ValueError, match="causal contact field model"):
-        parse_initial_state(raw)
-    raw = causal_configuration()
-    raw["event_program"]["null_notices"] = 1
-    with pytest.raises(ValueError, match="true or false"):
-        parse_initial_state(raw)
-
-
-def test_default_profile_report_and_emission_are_unchanged_without_the_option(monkeypatch):
-    raw = notice_configuration(arm_detector=True)
-    del raw["event_program"]["null_notices"]
-    world, resolver = world_for(raw)
-    trace = source_trace(world, monkeypatch)
-    assert resolver.report()["null_notices"] is False
-    step(world, 5)
-    assert [amount for tick, amount in scalar_sources(trace, SOURCE) if tick in (2, 3, 4)] == [-9] * 3
-    assert all(node.scale == EnvelopeScale() for node in resolver.source_nodes().values())
-    assert all(p is None for node in resolver.source_nodes().values() for p in node.output)
-
-
-def test_arm_null_restores_the_source_to_the_conditional_weight_after_one_link(monkeypatch):
-    raw = notice_configuration(arm_detector=True)
-    world, resolver = world_for(raw)
-    trace = source_trace(world, monkeypatch)
-    assert resolver.report()["null_notices"] is True
-    step(world, 2)
-    # Tick 1: M decided [9, 16] and drew a null; its notice reached S at tick 2.
-    assert scalar_sources(trace, SOURCE) == [(1, -9)]
-    nodes = resolver.source_nodes()
-    assert [nodes[a].scale for a in (SOURCE, MIDDLE, DETECTOR)] == [EnvelopeScale(25, 9)] * 3
-    step(world, 4)
-    assert [amount for tick, amount in scalar_sources(trace, SOURCE) if tick in (2, 3, 4)] == [-25] * 3
-    # The next gate acts on the scaled envelopes: 9/25 and 16/25 are the exact
-    # conditional Born weights of the state after the null.
-    assert scalar_sources(trace, SOURCE)[-1] == (5, -9)
-    assert scalar_sources(trace, MIDDLE)[-1] == (5, -16)
-    # The second null at M (tick 5) sent a second factor; the world clock is
-    # now at tick 6 and both neighbors applied it at the start of that tick.
-    scales = [nodes[a].scale for a in (SOURCE, MIDDLE, DETECTOR)]
-    assert all(Fraction(x.numerator, x.denominator) == Fraction(625, 81) for x in scales)
-    step(world, 2)
-    assert scalar_sources(trace, SOURCE)[-1][1] == -25
-    assert all(not node_state_violations(node) for node in resolver.source_nodes().values())
-    assert all(value["balanced"] for value in world.spatial_accounting().values())
-
-
-def test_output_null_notice_crosses_two_links_before_the_source_recovers(monkeypatch):
-    raw = notice_configuration()
-    world, resolver = world_for(raw)
-    trace = source_trace(world, monkeypatch)
-    step(world, 8)
-    # Tick 7: D decided [337, 288] and drew a null. Its notice reaches M at 8 and S at 9.
-    assert resolver.space.records[-1].decision.weights == (337, 288)
-    assert resolver.source_nodes()[DETECTOR].scale == EnvelopeScale(625, 337)
-    assert resolver.source_nodes()[SOURCE].scale == EnvelopeScale()
-    step(world, 1)
-    assert resolver.source_nodes()[MIDDLE].scale == EnvelopeScale(625, 337)
-    assert scalar_sources(trace, SOURCE)[-1] == (8, -13)
-    step(world, 1)
-    assert resolver.source_nodes()[SOURCE].scale == EnvelopeScale(625, 337)
-    assert scalar_sources(trace, SOURCE)[-1] == (9, -25)
-    report = resolver.report()
-    assert [tuple(e["weight_scale"]) for e in report["source_envelopes"]] == [(625, 337)] * 3
-
-
-def test_headless_run_records_scales_and_keeps_balanced_accounting(tmp_path):
-    initial = tmp_path / "notices.json"
-    initial.write_text(json.dumps(notice_configuration(arm_detector=True)), encoding="utf-8")
-    from event_universe.runner import run_initialization
-
-    run_initialization(initial, tmp_path / "run")
-    report = json.loads((tmp_path / "run/run.json").read_text(encoding="utf-8"))
-    resolver = report["computation"]["resolver"]
-    assert resolver["null_notices"] is True
-    assert report["accounting_balanced_at_every_completed_tick"]
-    assert report["final_totals"]["charge"] == [-1]
-    assert all(e["weight_scale"] == [625, 81] for e in resolver["source_envelopes"])
-
-
 # Crossing nulls: a null decided before an earlier-ordered notice arrives is corrected.
 
 
 def test_null_correction_is_the_exact_quotient_and_telescopes():
-    from event_universe.core.source_envelope_state import NullRecord
-    from event_universe.fields.source_envelope import null_correction
-
     record = NullRecord(4, 256, 625)
     result = null_correction(record, (625, 481), meter())
     assert result is not None
@@ -297,74 +188,7 @@ def test_notice_packets_carry_an_optional_ordering_key():
         EnvelopePacket(3, (1, 1, 1), 0, 7, None, null_origin=(2, 1, 1))
 
 
-def crossing_configuration(offset):
-    import importlib.util
-    from pathlib import Path
-
-    path = Path(__file__).resolve().parents[1] / "examples/quantum/crossing_nulls.py"
-    spec = importlib.util.spec_from_file_location("crossing_nulls", path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module, module.configuration(offset)
-
-
-def source_scales(resolver):
-    return {
-        tuple(e["position"]): (Fraction(*e["weight_scale"]), e["corrections"])
-        for e in resolver.report()["source_envelopes"]
-    }
-
-
-def test_crossing_nulls_are_corrected_to_the_conditional_scale_by_the_later_null():
-    probe, raw = crossing_configuration(0)
-    world, resolver = world_for(raw)
-    step(world, 5)
-    # Both probes decide at tick 4: M with the exact conditional weights, D given M's null.
-    decisions = [
-        (r.decision.tick, r.decision.register_index, tuple(r.decision.weights))
-        for r in resolver.space.records
-    ]
-    assert decisions[:2] == [(4, 1, (481, 144)), (4, 2, (225, 256))]
-    scales = source_scales(resolver)
-    # M sent 625/481 from its exact scale and D sent 625/369 from the stale one; one Link
-    # later M's notice reached D, and D, the later null by (tick, position), corrected itself
-    # to the conditional 25/9 and queued the correction. D's stale notice reached M, and S
-    # so far holds M's factor only.
-    assert scales[DETECTOR] == (Fraction(25, 9), 1)
-    assert scales[MIDDLE] == (Fraction(390625, 177489), 0)
-    assert scales[SOURCE] == (Fraction(625, 481), 0)
-    step(world, 1)
-    scales = source_scales(resolver)
-    assert scales[MIDDLE] == (Fraction(25, 9), 0) and scales[SOURCE] == (Fraction(390625, 177489), 0)
-    step(world, 1)
-    scales = source_scales(resolver)
-    assert scales == {
-        SOURCE: (Fraction(25, 9), 0),
-        MIDDLE: (Fraction(25, 9), 0),
-        DETECTOR: (Fraction(25, 9), 1),
-    }
-    assert resolver.report()["null_corrections"] == 1
-    assert all(value["balanced"] for value in world.spatial_accounting().values())
-    # The probe's own analytic targets agree.
-    targets = probe.analytic()
-    assert targets["exact_source_scale"] == Fraction(25, 9)
-    assert targets["stale_product"] == Fraction(390625, 177489)
-
-
-@pytest.mark.parametrize("offset", [1, 2])
-def test_sequential_nulls_need_no_correction(offset):
-    _, raw = crossing_configuration(offset)
-    world, resolver = world_for(raw)
-    step(world, 8)
-    scales = source_scales(resolver)
-    assert scales[SOURCE] == (Fraction(25, 9), 0) and resolver.report()["null_corrections"] == 0
-
-
 def test_corrections_leave_through_their_own_bank_and_are_bounded():
-    from event_universe.core.source_envelope_node import CORRECTION_QUEUE
-    from event_universe.core.source_envelope_state import NullRecord
-    from event_universe.fields.source_envelope import null_correction, squared_weight
-
     events = NodeEvents(CausalEventSpace(400), None)
     node = SourceEnvelopeNode((2, 1, 1), source_id=7, amplitude=EnvelopeAmplitude(4, 0, 5))
     node.null(

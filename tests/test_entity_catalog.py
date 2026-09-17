@@ -366,7 +366,6 @@ def test_possible_interactions_require_conditions_and_no_claim_of_a_derived_law(
         ("hamiltonian", [[0, 1], [1, 0]]),
         ("rates", {"decay": 1}),
         ("executable_profile", {}),
-        ("quantum_profile", {}),
     ],
 )
 def test_executable_content_is_rejected_even_when_nested_in_descriptive_scope(catalog, key, value):

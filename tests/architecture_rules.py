@@ -86,9 +86,7 @@ def violations(source, module):
                 found.append((line, "core imports another layer"))
             if layer == "fields":
                 if not (
-                    dependency == "core.state"
-                    or dependency.startswith("core.state.")
-                    or dependency == "core.disturbance_state"
+                    dependency == "core.disturbance_state"
                     or dependency.startswith("core.disturbance_state.")
                     or dependency == "core.spatial_state"
                     or dependency.startswith("core.spatial_state.")

@@ -22,38 +22,32 @@ def documents():
 
 def test_all_profiles_validate_independently_without_world_capacity_failure(documents):
     catalog, profiles = documents
-    assert validate_profiles(catalog, profiles) == {"profiles": 46, "classical": 46, "quantum": 46}
+    assert validate_profiles(catalog, profiles) == {"profiles": 46, "classical": 46}
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_invalid_unselected_profile_is_caught_with_context(documents, representation):
+def test_invalid_unselected_profile_is_caught_with_context(documents):
     catalog, profiles = documents
     positron = next(row for row in profiles["profiles"] if row["entity_id"] == "positron")
-    if representation == "classical":
-        positron["executable_profile"]["seed_values"]["inventory"] = 1.5
-    else:
-        positron["quantum_profile"]["registers"][0]["initial_level"] = 99
+    positron["executable_profile"]["seed_values"]["inventory"] = 1.5
     # Selection-scoped compilation need not inspect unrelated profile contents.
-    compile_entities(catalog, ["electron"], profiles=profiles, representation=representation)
-    with pytest.raises(ValueError, match=f"positron {representation} profile"):
+    compile_entities(catalog, ["electron"], profiles=profiles)
+    with pytest.raises(ValueError, match="positron classical profile"):
         validate_profiles(catalog, profiles)
 
 
-@pytest.mark.parametrize("representation", ["classical", "quantum"])
-def test_subset_with_one_representation_is_valid(documents, representation):
+def test_subset_with_one_profile_is_valid(documents):
     catalog, profiles = documents
     electron = next(row for row in profiles["profiles"] if row["entity_id"] == "electron")
-    key = "executable_profile" if representation == "classical" else "quantum_profile"
-    profiles["profiles"] = [{"entity_id": "electron", key: electron[key]}]
-    expected = {"profiles": 1, "classical": 0, "quantum": 0}
-    expected[representation] = 1
-    assert validate_profiles(catalog, profiles) == expected
+    profiles["profiles"] = [
+        {"entity_id": "electron", "executable_profile": electron["executable_profile"]}
+    ]
+    assert validate_profiles(catalog, profiles) == {"profiles": 1, "classical": 1}
 
 
 def test_empty_library_does_not_require_unsupported_catalog_families(documents):
     catalog, profiles = documents
     profiles["profiles"] = []
-    assert validate_profiles(catalog, profiles) == {"profiles": 0, "classical": 0, "quantum": 0}
+    assert validate_profiles(catalog, profiles) == {"profiles": 0, "classical": 0}
 
 
 def test_validation_preserves_inputs_and_never_constructs_simulation_or_reads_files(
@@ -102,18 +96,11 @@ def test_invalid_profile_binding_or_document_is_rejected(documents, mutation, me
         validate_profiles(catalog, profiles)
 
 
-@pytest.mark.parametrize(
-    "key, representation",
-    [
-        ("executable_profile", "classical"),
-        ("quantum_profile", "quantum"),
-    ],
-)
-def test_malformed_profile_object_has_entity_and_representation_context(documents, key, representation):
+def test_malformed_profile_object_has_entity_and_representation_context(documents):
     catalog, profiles = documents
     row = next(row for row in profiles["profiles"] if row["entity_id"] == "electron")
-    row[key] = None
-    with pytest.raises(ValueError, match=f"electron {representation} profile"):
+    row["executable_profile"] = None
+    with pytest.raises(ValueError, match="electron classical profile"):
         validate_profiles(catalog, profiles)
 
 
@@ -126,7 +113,7 @@ def test_public_library_validator_requires_physical_catalog_v2(documents):
 
 def test_failed_validation_also_preserves_inputs(documents):
     catalog, profiles = documents
-    profiles["profiles"][-1]["quantum_profile"]["claim_level"] = "unsupported"
+    profiles["profiles"][-1]["executable_profile"]["claim_level"] = "unsupported"
     before = copy.deepcopy(documents)
     with pytest.raises(ValueError):
         validate_profiles(catalog, profiles)

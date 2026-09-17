@@ -13,8 +13,8 @@ the commands below regenerate them.
 checked-in [radiation-scattering adapter](../../radiation-scattering/build.py)
 and binds the carrier's charge and mass to the
 [entity catalog](../../known-entities/catalog.json) through the shared
-reference-unit encoder, as [catalog contact](../../catalog-contact/README.md)
-does. Everything physical is catalog data, a supplied rule or an exact
+reference-unit encoder, as the catalog contact example (`examples/catalog-contact`,
+deleted on 2026-09-17) did. Everything physical is catalog data, a supplied rule or an exact
 accounting invariant; the bindings file lists them:
 
 | item | value |

@@ -1,6 +1,5 @@
 """Validate declarative initial conditions without importing physical model laws."""
 
-import json
 from dataclasses import replace
 from pathlib import Path
 from typing import cast
@@ -1813,7 +1812,6 @@ def parse_initial_state(document: object) -> InitialState:
             "field_rules",
             "spatial_interactions",
             "ray_interactions",
-            "event_program",
             "observer",
             "conservation",
             "node_execution",
@@ -1889,7 +1887,6 @@ def parse_initial_state(document: object) -> InitialState:
             node_execution=node_execution,
         ),
         ray_interactions=_ray_interactions(obj.get("ray_interactions", []), fields, spatial),
-        event_program=None if "event_program" not in obj else json.dumps(obj["event_program"]),
         node_execution=node_execution,
         spatial_computation_delay=_boolean(
             obj.get("spatial_computation_delay", False), "spatial_computation_delay"
@@ -1967,14 +1964,8 @@ def parse_initial_state(document: object) -> InitialState:
             or any(kind.updates for kind in initial.disturbances)
         ):
             raise ValueError("node_execution requires explicit k rules instead of unpriced legacy rules")
-        if initial.event_program is not None:
-            raise ValueError("node_execution does not support native event programs")
         if any(len(rule.participants) > capacity for rule in initial.interactions):
             raise ValueError("interaction participant count exceeds slots_per_node")
-    if initial.event_program is not None:
-        from .integration.event_program import parse_event_program
-
-        parse_event_program(initial)
     for rule in initial.emissions:
         if (rule.phase_carried or rule.mirror is not None or rule.train_carried) and not any(
             coupling.mode == "absorb"
@@ -2005,8 +1996,6 @@ def _conservation(value: object, initial: InitialState) -> ConservationDefinitio
     """Parse explicit measurement expressions without executing a law or world."""
     required = {"name", "energy_units", "momentum_units", "carriers"}
     obj = _object(value, "conservation", required | {"spatial"}, required)
-    if initial.event_program is not None:
-        raise ValueError("conservation audit does not support native event programs")
     if any(not rule.funded for rule in initial.emissions) or any(
         update.source for kind in initial.disturbances for update in kind.updates
     ):

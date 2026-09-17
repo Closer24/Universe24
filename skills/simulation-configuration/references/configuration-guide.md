@@ -19,11 +19,10 @@ by a supported adapter. Do not put Python expressions or callbacks into JSON.
 
 ## 1. Start with a complete working configuration
 
-For catalog particles using the existing causal quantum contact/source rule, use
-[catalog-contact](../../../examples/catalog-contact/README.md). Select entity IDs
-in its authoring JSON or CLI; its adapter reuses the original interaction template
-and shared unit encoder. Retain the binding report and unassigned-mass marker.
-Selecting a catalog identity does not activate its descriptive QCD/weak channels.
+The catalog-contact adapter and the causal quantum contact/source rule were
+deleted on 2026-09-17; compile catalog particles with `event_universe.entities`
+as the [entity catalog](../../../docs/ENTITY_CATALOG.md) describes. Selecting a
+catalog identity does not activate its descriptive QCD/weak channels.
 
 For fields that count as local computation, use
 [`spatial_computation_delay`](../../../docs/SPATIAL_COMPUTATION_DELAY.md).
@@ -203,14 +202,9 @@ direction-weighted sum, including in-flight modes. The 3Y/2Y opposite pair has
 U=13 and P=5X. Its encounter rotates polarization, not trajectories.
 See the complete [candidate contract](../../../docs/DIRECTIONAL_WAVE.md).
 
-For the optional `event_program`, use
-[event graph configuration](../../../docs/EVENT_GRAPH_CONFIGURATION.md): choose
-graph off, classical graph only, or a complete quantum program. It gives the exact
-JSON placement, UI steps, capacity meaning and output files. Explain that omission
-disables the native program, while `events.jsonl` remains an ordinary action log.
-Quantum behavior is not required for a causal graph. Classical spatial runs use
-the same bounded graph; preserve the separate quantum/spatial and directional-wait
-composition limits. Capacity is retained events, not bytes or a physical clock.
+The optional `event_program` member was deleted on 2026-09-17 with the shared
+quantum resource; a configuration that carries it is rejected. `events.jsonl`
+remains the ordinary action log of every run.
 
 ## 6. Execute, record and display
 

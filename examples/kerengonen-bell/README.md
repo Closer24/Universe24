@@ -4,7 +4,8 @@ A configuration on the [Kerengonen candidate](../../docs/SPATIAL_FIELDS.md#keren
 `kerengonen-ray-field-v1`; no other engine rule is involved. It runs the
 Clauser-Horne-Shimony-Holt form of Bell's test on the classical phased field
 with the same four settings the finite quantum owner uses in the
-[two-wing Bell experiment](../quantum/bell_chsh.md), and asks whether a local
+two-wing Bell experiment (`examples/quantum/bell_chsh.md`, deleted on 2026-09-17),
+and asks whether a local
 field of whole quanta with a phase can reach the value 14/5 that the quantum
 owner records. It cannot: the field measures 1.40 and the plain field 2, both
 inside the bound of 2 that every local model obeys. Every number is a read-only
@@ -97,7 +98,7 @@ quanta absorbed at each analyzer.
 - It shows that the phased-ray candidate, run through the same local ray
   owners as the double-slit and de Broglie probes, gives correlations that are
   half the quantum owner's at every setting pair and a CHSH value inside the
-  local bound, while the [finite quantum owner](../quantum/bell_chsh.md) gives
+  local bound, while the finite quantum owner (deleted on 2026-09-17) gave
   14/5 with the same settings and the same combination. The two candidates are
   distinguished by this measurement, not by interpretation.
 - It shows that the classical value is the model's prediction and not a loss

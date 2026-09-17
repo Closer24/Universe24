@@ -113,8 +113,8 @@ responsibilities. Keep renames, consumers, migration notes and the
   including self-field estimation and subtraction. Audit the origin of every
   input end-to-end: a local subtraction cannot legalize a global estimator.
   Require fixed local work and storage for fixed K; report total host costs
-  separately. Q-ORACLE-1 is confined to the explicit quantum owner and cannot
-  supply an exception for ordinary fields, forces, movement or geometry.
+  separately. There is no exception for ordinary fields, forces, movement or
+  geometry; the shared quantum resource (Q-ORACLE-1) was deleted on 2026-09-17.
 - Physical calculations use bounded integers, fixed local NodeState and six
   neighboring Nodes. Measure host computation and storage separately from the
   model's local cost.

@@ -380,3 +380,18 @@ def test_overlapping_origin_resolutions_do_not_partially_commit_the_loser():
     assert statuses == (
         (decisions[0], decisions[0], None) if left_won else (None, decisions[1], decisions[1])
     )
+
+
+def test_dependency_is_not_a_physical_link_and_capacity_is_atomic():
+    events = CausalEventSpace(3)
+    a = events.append(tick=0, addresses=((0, 0, 0),), owner="a", kind="source")
+    with pytest.raises(ValueError, match="link"):
+        events.append(
+            tick=0, addresses=((9, 0, 0),), owner="b", kind="receive", physical_parents=(a.id,)
+        )
+    assert events.next_id == 1
+    b = events.append(tick=0, addresses=((9, 0, 0),), owner="b", kind="calculation", parents=(a.id,))
+    events.append(tick=0, addresses=((9, 0, 0),), owner="b", kind="result", parents=(b.id,))
+    with pytest.raises(OverflowError):
+        events.append(tick=0, addresses=((9, 0, 0),), owner="b", kind="overflow")
+    assert events.next_id == 3

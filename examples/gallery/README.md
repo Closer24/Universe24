@@ -13,7 +13,7 @@ PYTHONPATH=src python examples/gallery/particle_gallery.py --output artifacts/pa
 
 `--no-render` runs and summarizes without matplotlib. The output directory
 receives each derived initialization file, each run directory,
-`summary.json`, five GIF files and five stills.
+`summary.json`, four GIF files and four stills.
 
 ## Electron and positron: bounded rational elastic contact
 
@@ -32,25 +32,10 @@ Node (8, 8, 8); the configured elastic backscatter exchanges their momenta,
 completed tick. The frame shows each body's name, symbol, momentum, mass and
 charge, and the momentum arrows; the contact frame is held.
 
-## Catalog electron and positron in the causal contact profile
-
-Source: [catalog-contact/prepare.py](../catalog-contact/prepare.py) with
-`--entity electron --entity positron`, which reuses the
-[causal charge template](../quantum/causal_charge.json) and the shared
-[entity catalog](../known-entities/catalog.json). Each occurrence has its own
-three-Node domain: the electron at y = 1 and the positron at y = 3, sources at
-x = 1 and capture probes at x = 3, in an open 7 x 5 x 3 world for 16 ticks.
-Charges are catalog values in thirds of the elementary charge and masses are
-511 keV/c2; the frame labels show them.
-
-Recorded: at tick 0 each source meets its held probe and becomes a unit wave
-whose Node emits `electric_signal` with the catalog charge, so the two field
-halos have opposite signs. At tick 3 the far probe of each domain decides with
-weights `[9, 16]`, the fixed ticket 9 selects capture, and one
-`localized_charge` record appears at x = 3 in each domain. The recorded field
-per Node is drawn as a glow, blue for negative and red for positive, with the
-one-half decay per hop of the outward transport. Final totals are charge 0 and
-mass 1022 keV/c2.
+The former third experiment, the catalog electron and positron in the causal
+contact profile prepared by `examples/catalog-contact/prepare.py`, was deleted
+on 2026-09-17 with the shared quantum resource and its integration layer
+(issue #164, buckets B.1 and B.2).
 
 ## Configured lepton reactions: annihilation, muon pair and beta decay
 
@@ -87,9 +72,6 @@ The backscatter is a configured elastic rule, not a derived interaction. The
 reactions are configured conversions with conserved integer inventories, not
 a derived weak or electromagnetic interaction: there are no cross sections,
 lifetimes, spins or angular distributions, and a decay happens where a vacuum
-slot was placed. The contact profile is
-the [causal source candidate](../../docs/CAUSAL_QUANTUM_SOURCES.md) with its
-documented retarded-source approximation; the two domains share the ordinary
-field but no mutual force. `tests/test_particle_gallery.py` checks the derived
+slot was placed. `tests/test_particle_gallery.py` checks the derived
 inputs and the recorded facts in the fast gate and the rendering only with
 `--visualize-runs`.

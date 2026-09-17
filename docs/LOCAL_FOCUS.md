@@ -4,8 +4,9 @@ Local Focus is enabled by default in both ordinary initialization JSON and the
 Python InitialState interface. Set `"focus": false` to opt out. Only actual
 booleans are accepted. Focus skips certified empty carrier Nodes and reuses
 pure local transition calculations when every input is exactly equal.
-This host optimization is separate from `quantum/focus.py`, the existing
-Q-ORACLE option, physical LocalRules and configured interaction durations.
+This host optimization is separate from physical LocalRules and configured
+interaction durations; the former quantum Focus (`quantum/focus.py`) was
+deleted on 2026-09-17.
 
 Spatial transport already maintains an active-Node index without this option.
 Local Focus adds a carrier index; it does not replace the ordinary baseline
@@ -22,7 +23,7 @@ still needs clearing, and the configured pure record policy reports no work.
 Actual creation and completed Link delivery wake its address before the closing
 commit phase. Retained NodeState and in-transit ownership are never deleted.
 
-An event resolver or shared field computation clock retains the ordinary
+A shared field computation clock retains the ordinary
 scheduler because it can own autonomous work. `execution_report()` reports the
 requested flag, effective flag and fallback reason. It also reports
 `carrier_phase_visits` and `awake_carrier_nodes` as host measurements, separate
@@ -33,7 +34,7 @@ in the first implementation's active set.
 
 `core/plan_reuse.py` holds a bounded host cache for each certified pure planner.
 The canonical Simulation enables carrier reuse and, when no mutable bond registry
-is present, spatial reuse. Event resolvers bypass both caches. Low-level custom
+is present, spatial reuse. Low-level custom
 DisturbanceEngine planners are not assumed pure; their reuse flags default off.
 The empty-carrier scheduler fallback and planner reuse are separate decisions:
 shared field clocks keep the ordinary carrier schedule but can reuse pure plans.

@@ -32,11 +32,9 @@ The optional [local conservation audit](LOCAL_CONSERVATION.md) lives in
 events and exposes immutable `core/conservation_state.py` inventory views.
 Its host work is separate from model operation costs; it never provides an update or repair.
 
-The [quantum-register extension](QUANTUM_ENTITIES.md) keeps density arithmetic in
-`quantum/mixed.py`, reusable matrix builders in `quantum/operations.py`, and the
-finite entity-profile compiler in `integration/quantum_entities.py`. The generic
-core is unchanged; native v2 selection extends the existing event-program owner.
-
+The quantum-register extension (`quantum/mixed.py`, `quantum/operations.py`,
+`integration/quantum_entities.py`) was deleted on 2026-09-17; `entities.py`
+compiles classical profiles only.
 
 `entity_catalog.py` validates descriptive reference metadata and its links.
 Its decimal measurement parsing is host-side only and never updates physical
@@ -153,12 +151,12 @@ models retain their explicit contracts and must not be copied into the active
 generic engine. External floating-point or globally coupled reference prototypes
 are not compliant active-engine implementations, even if their GIFs look useful.
 
-Q-ORACLE-1 is an existing explicitly scoped opt-in quantum exception, documented
-below. It is not a local-law implementation and cannot justify nonlocal inputs
-to ordinary physical rules. This instruction contract neither removes that
-separate research backend nor certifies it as local. Report such scope limits
-instead of claiming that every repository path already satisfies the active
-local integer contract.
+Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
+2026-09-17 with Highlights section 3.18 (issue #164, buckets B.1 and B.2). No
+path in the package answers at a distance. The source-envelope, event-ledger
+and bond-registry modules that stay until buckets B.3 to B.6 are scope limits
+to report, not evidence that every repository path already satisfies the
+active local integer contract.
 
 ## Generated output ownership
 
@@ -170,7 +168,7 @@ it to physical state; the runner selects recording without eager diagnostic impo
 archives copied reception values plus a cycle counter. The runner captures exact
 receipt prefixes beside playback frames. Enriched spatial reception events are
 emitted after ownership commits. Neither archive, display nor clock count is a
-physical planner input or a quantum oracle query.
+physical planner input.
 
 `retention.py` owns host-only artifact registration, writer leases and expiry.
 Runners own complete fresh output directories; the workspace owns exact input,
@@ -328,7 +326,6 @@ There is no automatic chat-to-repository or Google-Doc-to-code synchronization.
 | Module | Allowed dependencies |
 | --- | --- |
 | `core/integer` | Standard-library types; owns working bounds, integer division and decoded component arithmetic |
-| `core/state` | Standard-library data types and `core/integer` |
 | `core/disturbance_state` | Bounded arithmetic and immutable generic definitions |
 | `core/disturbance_engine` | Generic records, local planner interface, scheduling and ownership |
 | `core/node_execution` | Host-only isolated-interpreter Node tasks and execution measurements; no physical state ownership |
@@ -373,112 +370,40 @@ validation, operation pricing and atomic commit ownership. The expression
 interpreter delegates arithmetic while retaining broadcasting and AST costs.
 See [shared arithmetic tests](../tests/test_integer_arithmetic.py).
 
-## Commit-time local quantum transfer
+## Source envelopes, kept until bucket B.3
 
-The [localized contact candidate](LOCALIZED_QUANTUM_CONTACT.md) uses a generic
-`CommitResolver` protocol. Pending Node state carries one bounded integer token;
-immutable definitions and bounded reservations stay with the resolver. The Node
-validates all reserved replacement alternatives and the common field reaction
-before requesting a choice. Routing, sources and cycle cost cannot vary between
-those alternatives. Spare unreserved slots remain available during a wait.
-The event-backed tick and snapshot use the same transaction lock, making quantum
-transfer and ordinary installation one observable publication.
+The `core/source_*` modules own formula-free amplitudes, finite source state,
+pending proposals, twenty-four Port slots (amplitude, terminal, null-notice
+and correction), one rational weight scale, at most one null record and local
+transitions. No component holds a world reference, executable matrix or
+expression tree in its physical state. `fields/source_envelope.py` owns the
+shared rational complex and weighted-source arithmetic;
+`fields/source_emission.py` composes generic spatial primitives. Their
+runtime owners (`integration/contact_runtime.py`,
+`integration/causal_contact_runtime.py`,
+`integration/recurrent_contact_runtime.py`) and the quantum rules they
+composed (`quantum/contact_rules.py`, `quantum/contact_outcomes.py`) were
+deleted on 2026-09-17, so no public assembly creates an envelope; the modules
+and their Node-level tests stay until issue #164 bucket B.3 (Highlights 3.5:
+fields are emergent descriptions).
 
-`integration/contact_program.py` validates configuration and
-`integration/contact_runtime.py` composes existing owners. Occupation/capture
-arithmetic constraints belong to `quantum/contact_rules.py`; the quantum semantic
-owner enforces them even for typed callers. Ordinary core and fields do not import
-quantum laws. Inventory sector totals and possible-origin display are diagnostic
-reads, not physical inputs. Contact model limits are owned by its linked contract.
+## Deleted on 2026-09-17: the shared quantum resource, Q-ORACLE-1
 
-The opt-in [causal source extension](CAUSAL_QUANTUM_SOURCES.md) adds a bounded
-source-envelope component attached to the same ordinary Node. The `core/source_*`
-modules own formula-free amplitudes, finite source state, pending proposals,
-twenty-four Port slots (amplitude, terminal, null-notice and correction), one
-rational weight scale, at most one null record and local transitions. No component holds a world reference,
-quantum query, executable matrix or expression tree in its physical state.
-`fields/source_envelope.py` owns the shared rational complex and weighted-source
-arithmetic; `fields/source_emission.py` composes generic spatial primitives.
-Immutable matrix/emission definitions and initialization routing remain outside
-NodeState in `integration/causal_contact_runtime.py`.
-
-Only actual Link packets supply neighbor inputs. The controller transports frozen
-messages and advances local owners; it does not reconstruct sources from the
-quantum state or shared origin flags. Local source commits use write-only
-`NodeEvents` provenance and the existing ordinary spatial accounting. A local
-capture atomically ends its source and installs its ordinary output; remote
-termination requires a received notice and local delay. The candidate contract
-owns its retarded approximation, numerical bounds and clock restrictions.
-
-The [recurrent extension](RECURRENT_QUANTUM_CONTACT.md) preallocates one to six
-such envelope banks per participating Node. The root envelope retains a flat
-tuple of at most five additional same-address owners, exposing all evolving
-state to the transitive NodeState audit. Fixed generation routing and emission
-turns keep old packets isolated without storing growing local history. The
-recurrent resolver composes existing envelope arithmetic and inventory commits;
-`quantum/contact_outcomes.py` validates matrix/effect support, and the quantum
-event network owns atomic result/origin creation and idempotent result lookup.
-
-## Opt-in quantum ownership — Q-ORACLE-1
-
-The `deferred-unit-cost-oracle-v1` assumption is defined in POSTULATES.md and its
-numeric, timing and resource contracts in SIMULATOR_DEFINITIONS.md. The feature
-contract and limits are in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
-The existing physical engines and schemas above are unchanged.
-
-| Module | Responsibility and allowed dependencies |
-| --- | --- |
-| `quantum/state`, `quantum/query`, `quantum/terminal` | Fixed records and bounded integer helpers; may use core.state, never an engine |
-| `quantum/deferred` | Sole owner of deferred history, cache, accounting and one terminal result |
-| `integration/quantum_bridge` | Sole production adapter between spacetime references and quantum APIs; no Engine or write callback |
-| `tests/quantum_detector_fixture` | Test-only interferometer preparation for the terminal readout trial |
-
-Physical modules, application assembly and diagnostics must not import
-quantum. Quantum must not import physical engines, fields, diagnostics or
-integration. Shared bounded arithmetic from core.state is allowed.
-The architecture tests reuse the existing import resolver and cover relative,
-member and aliased imports. They are static guards, not a sandbox against dynamic
-Python. The bridge does not duplicate evaluation or maintain another quantum cache.
-
-Queries are explicit, not automatically polled. Only DeferredQuantum evaluates
-histories or chooses the terminal output. Replies are immutable. The test-only
-readout records that result without writing NodeState, time or Engine events. A future native physical commit needs an explicit engine contract;
-it cannot be added by turning a diagnostic observer into a second state owner.
-
-### Selected joint-state event backend
-
-`DeferredQuantum.bind_event_network` composes the selected finite backend from
-`quantum/event_network.py`. That module owns immutable quantum payloads,
-conditional-record closure and exact host checkpoints. `core/event_space.py`
-owns immutable event identities, dependency edges and write-once origin-resolution
-slots. It stores no separate predecessor list. Each native Node and the quantum
-backend share fixed `EventCursor` handles for current register state, preserving
-each register's physical time across checkpoints. Native v3 also gives each
-participating Node a bank of at most six integer wave-origin references. These
-are distinct from the finite virtual register heads, never amplitudes or a local
-history. `quantum/wave_origins.py` owns their configured quantum lifecycle;
-ordinary field rules cannot consume remote resolution state. See
-[event spacetime](QUANTUM_EVENTS.md#event-spacetime-and-current-references) and
-[origin cells](WAVE_ORIGINS.md) for the transaction, polling and cost contracts.
-Retired-gate and null-instrument cancellation require exact correlated-density
-certificates in the quantum owner; direct origin lookup does not replace them.
-`quantum/event_rules.py`
-owns generic bounded local matrix validation/evaluation. It does not infer a
-physical law from a name. The existing scalar-expression backend is preserved;
-an owner cannot mix the two representations or silently switch a live history.
-
-`integration/quantum_event_trial.py` is an explicit headless test controller, not
-an Engine adapter. It supplies example matrices and one externally supplied
-integer ticket. Native disturbance schemas, scheduling, fields and momentum
-updates are unchanged. The existing quantum import boundary applies to the new
-modules. Host full-state inspection and controller-conditioned weights are not
-local physical observables. See [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md) for the
-selected contract and [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md) for its tests.
+The `quantum/` package (`deferred-unit-cost-oracle-v1`, the deferred event
+network, wave origins, focus, mixed states and the terminal trial) and the
+`integration/` package that bound it to the primary Simulation
+(`event_program`, `event_runtime`, the contact runtimes, `quantum_entities`,
+`quantum_bridge` and the two trials) were deleted under Highlights sections
+3.18 (deleted), 3.19, 3.20 and 5.4 (issue #164, buckets B.1 and B.2). No
+owner answers at a distance; the Detector is a marked Node, and every
+alternative is an event on the board ([ray-event model](RAY_EVENT_MODEL.md)
+section 5). The `event_program` initialization member went with them. Dated
+evidence in [VALIDATION.md](VALIDATION.md) keeps its original scope.
 
 ## Verification scope
 
 LOCALITY-1 in SIMULATOR_DEFINITIONS.md governs the complete dependency path of
-every non-quantum physical update, including self-field inputs. Shadow/reference
+every physical update, including self-field inputs. Shadow/reference
 computations cannot be hidden behind a local adapter. `test_locality.py` rejects
 known world access and replay in generic field modules. Code review
 must still check causal input provenance and bounded loops; static checks do
@@ -491,7 +416,7 @@ their explicitly separate host costs.
 | Diagnostics and rendering | Not a physical update; cannot feed state repairs | Full-state audits, histories and rendering are not O(1) |
 
 The implementation therefore supports bounded local model work, not a claim that
-the entire non-quantum Python program or a full simulation tick is O(1).
+the entire Python program or a full simulation tick is O(1).
 
 The import-boundary audit resolves absolute and relative imports and rejects
 runtime arithmetic in API assembly while allowing type annotations and literal
@@ -523,35 +448,22 @@ is an opt-in mechanism experiment with its own explicit JSON laws. It does not
 import, replace or extend the active engine or its schema. The lab runtime owns
 its local transactions; its separate movie tool reads saved states. Generated
 outputs go under artifacts and remain outside source commits. Its local quantum
-coupling is a toy experiment, not an implementation of the active Q-ORACLE-1
-bridge contract. The active source-of-truth boundaries above remain unchanged.
+coupling is a toy experiment of the lab alone; the repository's shared quantum
+resource was deleted on 2026-09-17. The active source-of-truth boundaries above
+remain unchanged.
 
-## Shared native event extension
+## Causal event ledger, kept until bucket B.4
 
-The [native event contract](NATIVE_QUANTUM_EVENTS.md) adds a domain-neutral causal
-ledger and local resolver protocol under core. The integration owner composes
-quantum payloads, initialization-selected instruments and classical control codes.
-Only primary API assembly and initialization reference that integration owner;
-core and ordinary field arithmetic never import quantum.
-
-The [generic graph contract](EVENT_GRAPH_CONFIGURATION.md#spatial-provenance-and-resource-bounds)
-also covers the independent spatial scheduler. `SpatialNodeState` owns three optional
-host IDs for state, frozen response sample and charged field phase; `SpatialPacket`
-owns one final-departure cause. These IDs never enter the pure field planners.
-Carrier emission bookkeeping and joint responses connect the owners through
-local event IDs, with fixed parent fan-in and capacity checked before local
-ownership commits. Shared history remains a bounded host audit; quantum-plus-field
-clock composition and observer inference are separate features.
-
-
-Parallel planning preserves Node-owned transitions. A transient scheduler-thread
-continuation yields only immutable carrier or spatial planning records; the spatial
-request includes the colocated committed-cost scalar. Worker interpreters receive
-no Node, continuation, world or event graph. After each bounded planning phase,
-the scheduler resumes owners in address order. Each owner performs its existing
-validation and atomic commit. Continuations are closed and discarded every tick;
-they are never part of NodeState. Shared-clock cycles use two planning barriers,
-while ordinary carrier and field phases each use one.
+`core/event_space.py` and `core/event_links.py` own the immutable event
+identities, dependency edges, fixed `EventCursor` and `EventReferences`
+handles and write-once resolution slots of the causal ledger;
+`core/event_resolution.py` keeps the resolver protocols. Since the
+`event_program` member and the integration layer were deleted on 2026-09-17,
+the public `Simulation` assembles no ledger and no resolver: `DisturbanceEngine`
+still accepts `event_space=` for direct callers and the ledger's own tests,
+`SpatialNodeState` keeps its three optional host IDs and `SpatialPacket` its
+final-departure cause. The ledger stays until issue #164 bucket B.4
+(Highlights 3.20: there is no register).
 
 
 ### Local carrier scheduling and prepared ray laws

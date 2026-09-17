@@ -3,11 +3,17 @@
 This page keeps the questions the model raises apart from the results it has
 measured. Everything on it is a hypothesis: something the framework suggests,
 stated so that a run can confirm or refute it, or stated as outside the model's
-reach. Nothing here is a claim of the [coupling summary](QUANTUM_CLASSICAL_COUPLING.md)
-or of the [validation log](VALIDATION.md). A hypothesis moves off this page
+reach. Nothing here is a claim of the coupling summary
+(`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17) or of the
+[validation log](VALIDATION.md). A hypothesis moves off this page
 only with a measured result and a fingerprint.
 
 ## 1. The lottery is the only door for outside information
+
+*Superseded on 2026-09-17: this hypothesis leans on the bond registry and the
+shared quantum resource of Highlights section 3.18, deleted on that date;
+under sections 3.19, 3.20 and 5.4 the only draw is the Detector's bit and a
+pair's outcome travels on the returning ray. The text is kept as stated.*
 
 [Postulate 22](../POSTULATES.md#22-historical-autonomous-sampling-candidates)
 makes every uncertain outcome the value of one bounded integer. It follows,
@@ -89,6 +95,11 @@ mistaken for a result.
 
 ## 5. The derivation program
 
+*Superseded on 2026-09-17: the mixers, instruments and the singlet law in the
+bond registry named below belong to the shared quantum resource of Highlights
+section 3.18, deleted on that date, and to the bond registry that follows it;
+the text is kept as stated.*
+
 The framework is one setting in which mechanics, radiation, interference,
 quantum contacts and Bell's test run on the same lattice. It is not yet one
 theory: the mixers, the instruments, the phase advance per link, the `|p| / D`
@@ -96,8 +107,8 @@ rule, the cosine table and the singlet law in the bond registry are configured
 data, measured to hold, not derived. The program is to replace each configured
 law by a rule of the lattice and show by a run that the measured tables do not
 change. Each replacement is a hypothesis with its own experiment; the
-[what would make this a physics result](QUANTUM_CLASSICAL_COUPLING.md#what-would-make-this-a-physics-result)
-list is its first four entries.
+"what would make this a physics result" list of the deleted coupling summary
+was its first four entries.
 
 ## 6. Dark matter is a closed dimension, not extra mass
 

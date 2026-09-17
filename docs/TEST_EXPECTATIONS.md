@@ -35,78 +35,7 @@ shared same-owner evaluator rejects either conversion form before charging or
 changing values. The separate family-conversion suite retains its one-to-six,
 six-to-one, conservation, capacity, Port and delayed-owner coverage.
 
-## Spatial momentum and position output
-
-`test_spatial_momentum.py` verifies the
-[finite observable](../examples/quantum/position_moment_response.md) against
-independent phase and mixed-state expectations. Equal spatial probabilities
-can have mean +2, -2 or zero; real coherent and incoherent uniform states have
-variance 0 and 2. Endpoint superpositions distinguish second-neighbor coherence.
-Vacuum has unavailable particle moments, partial occupation is explicit, and
-multiple excitations or nonlocal/duplicate edges are rejected.
-
-`test_position_moment_response.py` runs the primary native middle-capture input,
-six endpoint orientations, absent reservoir, delayed computation and longer
-Links. Local re-encoding gives variance 1 or 2 from the operator row. Wave
-diagnostics leave native events and model cost exactly unchanged. The actual
-combined second moment changes 10 -> 11 -> 10 during endpoint propagation,
-and remains 11 after middle capture. This is an exposed closure gap, not a
-conserved quantum energy claim. Subsequent ordinary exchange and escape balance;
-invalid first/second moment proposals reject before conversion.
-Projective controls separate the ensemble drift from selected conditional change.
-The target's later direction still comes from the supplied reservoir.
-
-## Local moment response after capture
-
-`test_local_moment_exchange.py` runs the
-[candidate](../examples/quantum/local_moment_exchange.md) in all six directions,
-with no reservoir, longer Links and computation delay. A unit-mass target with
-mean 0 and variance 1 exchanges moments with a unit-mass reservoir with mean 3
-and variance 0. Total mean momentum 3 and doubled expected kinetic energy 10
-include ordinary, quantum-inventory and escaped owners. The target follows the
-selected axis at nominal c/100; the zero-mean recoil remains uncertain. Test
-mass/validity rejection, renamed fields/types and nonlinear energy rejection
-despite an unchanged mean sum. Separate exact quantum-owner controls preserve
-all sixteen basis momentum/energy cases and coherent reversal.
-
-`test_record_operations.py` verifies that reserved empty slots cannot receive
-new records: select the first unlocked spare, or reject the entire proposal
-without mutation when capacity is insufficient. The delayed quantum capture
-regression in `test_localized_quantum_contact.py` receives a messenger into
-spare slot 2 at tick 4 and commits capture at tick 11 with both owners intact.
-
-## Quantum-to-classical investigation
-
-`test_quantum_classical_experiment.py` runs the bounded
-[investigation](../examples/quantum/quantum_classical_check.md). Ten native controls
-must give exact visibility `(9/25)^n` at fixed contact tick 8; zero coupling and
-phase reversal cover both certain outputs. Explicit coherent environment controls
-must restore interference after retained interactions are inverted. The existing
-five-cycle Markov comparison remains exact. Three spatial outcome controls
-preserve inventory and field accounting while recording configured hold and
-unknown momentum; direct moving capture remains a rejected composition. A pass
-must retain the report's `not_established` trajectory conclusion. No statistical
-or Newtonian emergence claim follows from this acceptance test.
-
-## Recurrent quantum contacts
-
-`test_recurrent_quantum_contact.py` owns the
-[recurrent contract](RECURRENT_QUANTUM_CONTACT.md). Exhaustive source tickets for
-matrices 3I and 4X yield 9 localized retentions and 16 new waves out of 25.
-Capture matrices 13P0, 3|0><1|, 4P1 and 12P1 yield 9 localizations, 16 new waves
-and 144 continuations out of 169 occupied-mode tickets; vacuum is a certain null.
-Check no extra draw for a certain outcome, one scalar/vector inventory owner,
-renamed entities/fields, equal-inventory alternate outputs, finite original
-source allowances and capacity rejection before RNG. The checked-in 48-tick
-example has fresh-wave events at ticks 3, 9 and 21, localization at 24, injection
--36 and eventual zero field stock under explicit dissipation.
-
-`test_recurrent_contact_locality.py` compares reversed-address source prefixes:
-a remote event at tick 3 cannot select which ordinary local bank clears before
-the notice can arrive at tick 6. Source amplitude, field and local cost 45 agree.
-It also rejects preparation into local vacuum when another mode is occupied and
-checks same-tick result replay after absorption without origin resurrection.
-Retain all affected localized/causal contact, origin, state and field regressions.
+## Kerengonen integration guards
 
 The Kerengonen integration regressions in `test_ray_integration_guards.py` cover
 ordinary runner momentum accounting through absorption and escape, frozen phase
@@ -133,7 +62,13 @@ stay equal. Host world indexes are made unreadable during each local transition.
 Expected outputs remain explicit: one carrier crosses one Link, spatial stock 64
 is owned locally or in outgoing packets, and the source mixer yields amplitude 3/5.
 These are bounded-work regressions plus state/locality guards, not a timing-based
-proof for arbitrary callbacks, whole-world scheduling or quantum evaluation.
+proof for arbitrary callbacks, whole-world scheduling or remote evaluation.
+The same suite keeps the source-envelope Node's own gate and terminal
+transitions: a null during a frozen pair keeps both operands, mixing
+`(3/5, 4/5)` gives `(-7/25, 24/25)` and the inverse restores the pair; a
+duplicate terminal is charged receive plus read (10) without restarting or
+forwarding; a terminal commits before a later amplitude and prevents
+resurrection.
 
 Shared builders live in narrowly scoped `tests/support/` modules. Their imports
 remain dependencies of every consuming test. They do not contain alternate
@@ -146,8 +81,6 @@ activity and input immutability assertions are retained.
 | --- | --- |
 | Three self-identity assertions in the obsolete Node alias test | Recursive NodeState/schema rejection tests remain; no supported alias requirement was being checked by the self-comparisons |
 | 21 repeated classic baseline worlds | Seven immutable baselines and all 21 independent transformed worlds; all original trace and accounting assertions |
-| 34 full catalog-contact worlds | All 34 preparation bindings checked through parsed source records and capture templates; 11 dynamic representatives cover every charge value, passive spin value, zero/unknown/positive mass and maximum mass, plus the original simultaneous-domain and rejection tests |
-| Contact renaming checked only charge/source totals | Semantic rename, declaration reorder and combined variants compare complete public snapshots, events, balances and quantum outcomes at each tick; real capture and nonzero emission are required |
 
 The representative regime-coverage test must fail if a new catalog property value
 is not represented. Data preparation remains checked for every entry. Catalog
@@ -156,155 +89,44 @@ not establish species dynamics. Distinct signed, overflow, denominator, boundary
 null/capture and correlated-state cases are not removed. The exact 25-ticket
 fixtures remain exhaustive.
 
-The remote-detector causal comparison also requires equal local source-cost and
-delay prefixes before delivery, with observed source work and an actual later
-capture/terminal effect. Globally conditioned quantum state remains distinct from
-the retarded ordinary source envelope after a measurement.
-
 `test_check_scope.py` requires empty selections to avoid source/dependency scans
 while honoring explicit `--tests`. Prior source reads use two Git processes and
 preserve exact blobs, including empty files and deleted providers. Old and current
 dependency selections, dynamic resource consumers and failure evidence remain
 part of the gate; batching does not authorize dropping related tests.
 
-## Causal quantum sources
+## Source envelopes
 
-The [causal source contract](CAUSAL_QUANTUM_SOURCES.md) requires exact 3:4 mixing
-and inverse interference, signed full emission `-25` producing requests `-9`
-and `-16`, rational complex vacuum normalization, changing-denominator residue,
-finite allowance exhaustion and explicit overflow rejection. These arithmetic
-cases belong to `test_source_envelope.py`.
+`test_source_envelope.py` owns the exact 3:4 mixing and inverse interference,
+signed full emission `-25` producing requests `-9` and `-16`, rational complex
+vacuum normalization, changing-denominator residue, finite allowance exhaustion
+and explicit overflow rejection. The integration acceptance of the causal
+contact fields (`test_causal_contact_fields.py`, `test_causal_source_commit.py`,
+`test_funded_envelope.py`, `test_field_phase.py`) was deleted on 2026-09-17
+with the integration layer; the envelope modules stay until issue #164
+bucket B.3.
 
-`test_causal_contact_fields.py` owns integration acceptance: frozen neighbor
-inputs, tariff-derived local delays, every periodic direction, one committed
-localized output, a local null
-without remote renormalization, and terminal packets that end remote emission
-only after causal arrival and local delay. Compare ordinary source, field and
-cost prefixes with and without a distant detector. Include a coupled third
-resident, pending emissions at capture, charged duplicate notices, termination
-before amplitude arrival, no resurrection, finite per-mode allowances and
-formula-free transitive NodeState. Preserve the older contact profile's tests.
-These expectations distinguish conserved carrier inventory from retarded source
-weights and field injection; they are not a claim of full field/matter energy
-conservation. Completed results belong in [validation evidence](VALIDATION.md).
+## Null notices
 
-`test_causal_source_commit.py` checks that generation, identity, arrival-time
-and accounting failures occur before sampling or publishing a quantum result.
-Source observers must see both deposited stock and the consumed finite allowance.
-A null during an already started gate retains both frozen operands: mixing
-`(3/5, 4/5)` yields `(-7/25, 24/25)`, and the inverse restores the original pair.
-Changing only one frozen operand is forbidden because it can increase the norm.
-
-## Localized quantum contacts
-
-`test_causal_interference.py` runs the
-[two-arm interference harness](../examples/quantum/causal_interference.md) in
-the fast gate: exact output decision weights `[337, 288]`, `[49, 576]` and
-`[337, 288]` for `phi = pi/2, pi, 3pi/2` and no uncertain decision at `phi = 0`;
-balanced Hadamard capture probabilities 0, 1/2, 1 and 1/2 with arm emission
-(12, 12); mean source emission after recombination within 1/6 unit of `25 |a_S|^2`;
-one localized capture at D at tick 7 when the ticket selects it; an arm
-detector giving `[9, 16]` for every phase with no later uncertain output
-decision; and a retarded source emission of 9 of 25 after an arm null. With
-`null_notices` the same arm null gives 25 of 25 from tick 2, 9 and 16 at the
-next gate and final scales 625/81; the output null gives 25 from tick 9 and
-scales 625/337. With a `field_phase` on the M arm, coil fields 0, 200, 400 and
-800 give capture probabilities 0, 0, `576/3125` and `9216/15625`, and a coil on
-the far side of the source gives 0.
-
-`test_bell_chsh.py` runs the [two-wing Bell test](../examples/quantum/bell_chsh.md)
-in the fast gate: exact correlations `3/5, 3/5, 4/5, -4/5` and CHSH `14/5` from
-recorded decision weights at two wings nine Links apart, both deciding at tick
-8; Alice's weights `[4, 4]` for every Bob setting; Bob's conditional weights
-`[360, 40]` and `[40, 360]` for `a1b0` and reversed for `a1b1`; Bob's marginal
-`1/2` for every Alice setting; a dephased control with correlations
-`3/5, 3/5, 0, 0` and CHSH `6/5`; classical outcome codes at the wings equal to
-the recorded quantum outcomes plus one; and five seeded trials per setting with
-complete counts. The 100-trial coincidence evidence belongs to the experiment
-report.
-
-`test_null_notices.py` owns the opt-in
-[null notice extension](CAUSAL_QUANTUM_SOURCES.md#opt-in-causal-null-notices):
-factor 25/9 from a 16/25 null and `None` for vacuum or certain occupation;
-scaled weight clipped at one; notice packets require a factor of at least one
-and an event identity; a null without the option sends nothing and keeps scale
-one; a null with it scales itself and fills one notice slot per Port; a received
-notice waits the control delay, applies, forwards away from its arrival Port
-and is ignored when repeated or at a retired Node; the applied bank keeps six
-identities; the option is rejected without the causal model; in the two-arm
-world the source emits 25 from tick 2 after an arm null at tick 1, the next
-gate emits 9 and 16, all scales reach 625/81 after the second null, and an
-output null at tick 7 reaches the source at tick 9 with scale 625/337.
-The default profile without the option is unchanged. Crossing nulls: the
-correction of a 256/625 null after a delivered 625/481 is 19721/15625 and
-completes 625/481 x 625/369 to 25/9, two corrections telescope to one, a
-weight that would reach one gives none, and a factor below one or a weight
-above one is rejected; notice packets carry an optional (tick, position) key
-that requires both parts; in the crossing world both probes null at tick 4
-with owner weights [481, 144] and [225, 256], D corrects itself to 25/9 one
-tick later while M holds 390625/177489, and every Node holds 25/9 at tick 7
-with one correction, while the sequential variants reach 25/9 with none; at
-the Node level a null with the weight law keeps the record (4, 16/25, 1), an
+`test_null_notices.py` owns the Node-level null-notice arithmetic of the source
+envelope: factor 25/9 from a 16/25 null and `None` for vacuum or certain
+occupation; scaled weight clipped at one; notice packets require a factor of at
+least one and an event identity; a null without the option sends nothing and
+keeps scale one; a null with it scales itself and fills one notice slot per
+Port; a received notice waits the control delay, applies, forwards away from
+its arrival Port and is ignored when repeated or at a retired Node; the
+applied bank keeps six identities. Crossing nulls: the correction of a 256/625
+null after a delivered 625/481 is 19721/15625 and completes 625/481 x 625/369
+to 25/9, two corrections telescope to one, a weight that would reach one gives
+none, and a factor below one or a weight above one is rejected; notice packets
+carry an optional (tick, position) key that requires both parts; at the Node
+level a null with the weight law keeps the record (4, 16/25, 1), an
 earlier-ordered notice produces one correction in the correction bank under
 the Node's own key, a later-ordered one produces none, a null without the
 weight law keeps no record, and more than six queued corrections are rejected.
+The world-level cases (the two-arm world, the crossing-null probe and the
+headless run) were deleted on 2026-09-17 with the integration layer.
 
-`test_causal_interference.py` also owns the emission-scale sweep of the
-two-arm harness: at full emissions 25, 250, 2500 and 25000 per tick and
-`phi = pi/2` and `pi`, the recorded S emission is 13, 14, 13, 14, 13, 14 and
-2 x 6 at 25, 1348 x 6 at 2500 for `pi/2` and 1960 x 6 at 25000 for `pi`, every
-per-tick departure from `amount x weight` is below one unit and the mean's
-relative departure is below `1/amount`.
-
-`test_field_phase.py` owns the opt-in
-[field-dependent phase](CAUSAL_QUANTUM_SOURCES.md#opt-in-field-dependent-phase):
-a nine-entry table for `max_exponent` 4 with identity at zero, `(3, 4)` at one,
-`(3, -4)` at minus one and `(-7, 24)` over `25` at two; exponent 0/1/4 for
-values 24/25/100 and rejection at 125; parser rejections for unequal norms,
-zero divisor, a limit above twelve, a non-spatial field, a bad component, the
-localized model, two registers and a matrix given together; coil fields 0, 200,
-400 and 800 selecting exponents 0, 0, 1 and 2 with output weights
-`[12745, 2880]` and `[160225, 230400]` at tick 7; a coil beside the far side of
-the source selecting exponent 0; source port weight `2549/3125` after the
-shifted recombination; rejection of `start_sources` without field values; the
-headless report listing the retained choice; and zero field phases in the
-unchanged default example.
-
-Complex-coefficient regressions require unchanged interference under a common
-phase for exponents -3 through 3 and exact reversal for positive/negative powers
-in either order. A native coil of -400 compares `(5, 3+4i)` with `(5i, -4+3i)`:
-both must select -1, capture with probability `576/3125` at tick 7, retain source
-envelope weight `2549/3125` after twelve ticks and balance ordinary field stock.
-
-`test_funded_envelope.py` owns the opt-in
-[funded envelope emission](CAUSAL_QUANTUM_SOURCES.md#opt-in-funded-envelope-emission):
-funded octant emission accepted when the type owns the field and rejected
-otherwise; stock 2999 rejected against three modes of budget 1000 and 3000
-accepted; rejection without the causal model; totals constant at 3000 with zero
-sources and balanced spatial accounting for seven ticks while the inventory
-equals stock minus paid; the localized winner holding stock minus paid and
-paying 25 per tick afterwards; the post-capture residual equal to the recorded
-sources in a headless run with the strict conservation flag true; and an empty
-funded report for the default profile.
-
-`test_many_contacts.py` validates the thirty-mode periodic experiment, two-Link
-target separation and its fixed-seed one-shot result: three A captures at event
-tick 3, two B captures at 5 and one C capture at 7. It checks charge/mass ownership,
-finite dissipative field accounting and unchanged headless output. The actual
-200-trial evidence belongs to the
-[experiment report](../examples/quantum/many_contacts.md).
-
-`test_localized_quantum_contact.py` owns the
-[contact hybrid expectations](LOCALIZED_QUANTUM_CONTACT.md#numerical-acceptance):
-actual source birth, delayed single ownership, finite classical emission and Link
-fronts, 9/25 versus 16/25 mixing and inverse interference, exhaustive capture
-tickets, unchanged unconditional receiver statistics, constant detector cost,
-six periodic directions, positive transit times and unused local capacity.
-It also reproduces a third-resident field-reaction conservation defect, checks
-rejection before sampling, semantic-owner guards, concurrent snapshot publication,
-active generic renaming and headless primary-runner output. The scope is finite
-configured absorption and component accounting, not complete electromagnetic
-energy/momentum conservation or quantum emergence.
 
 ## Computational response
 
@@ -346,10 +168,10 @@ cost 32, field costs 68/69/169 and B=100,h=2, departures occur at 0/2/4 and
 receipts at 2/4/6. Field/carrier costs 20+20 plus merge32 share C=72, giving
 one wait at B=40. Later arrivals cannot alter the frozen result or deadline;
 their original owners, source allowances and declared linear inventory remain
-exact through commit. Nonlinear guards and event-capacity failures stop before
-the affected transaction mutates stock. Real scalar/vector costs, empty input
-intervals, moving sources, finite decay, formula-free state, graph controls
-and passive conservation are covered. These are timing and inventory claims.
+exact through commit. Nonlinear guards stop before the affected transaction
+mutates stock. Real scalar/vector costs, empty input intervals, moving sources,
+finite decay, formula-free state and passive conservation are covered. These
+are timing and inventory claims.
 
 ## Property coupling and passive local conservation
 
@@ -385,26 +207,13 @@ The [validation contract](CONFIGURATION_VALIDATION.md) is covered by
 `test_configuration_validation.py`. Shipped runnable configurations must pass;
 unknown/ambiguous formats, duplicate keys, nonfinite numbers, invalid references,
 bad placements and missing/mismatched dependencies must fail. All 46 classical
-and quantum profiles are checked independently, including unselected rows;
-subsets and single representations remain valid. Tests forbid world construction
+profiles are checked independently, including unselected rows; subsets remain
+valid. Tests forbid world construction
 and implicit filesystem access, preserve supplied objects and verify CLI batch
 exit/report behavior and rejection before runner artifacts are created. Existing
 UI and runner tests retain accepted output and physical execution contracts.
-`test_event_program_validation.py` checks exact and insufficient startup event
-capacity for distinct/colocated classical seeds and quantum registers, including
-mixed worlds. Future exhaustion remains a separate runtime test.
-
-`test_spatial_causal_events.py` covers two-tick field transport and periodic return,
-two-parent cancellation and complete decay, frozen samples versus later field
-arrivals, emission allowances, joint packet creation/amendment/cancellation,
-exact and one-short transaction capacities, runner failure evidence, and on/off
-equality of physical state, bookkeeping, costs and timing. The shipped signed
-encounter reaches zero at tick 6 while retaining both histories and 20 events.
-Stepping must not traverse ancestry or instantiate a quantum resolver. Existing
-native quantum/runtime tests retain their own inverse, checkpoint and cost checks.
-Typed initialization with the separate conservation audit and a native event
-program must fail before event-space or resolver allocation, through parsing,
-runtime construction and the public simulation entry point.
+The native event-program validation and the spatial causal-event suites were
+deleted on 2026-09-17 with the `event_program` member.
 
 
 ## Local observer
@@ -420,8 +229,10 @@ contracts, not human vision or Maxwell acceptance tests.
 
 ## Local record operations
 
-`test_record_operations.py` checks generic vector merging with independent
-expected components, separation by type/channel/pending lock and whole-record
+`test_record_operations.py` verifies that reserved empty slots cannot receive
+new records: select the first unlocked spare, or reject the entire proposal
+without mutation when capacity is insufficient. It checks generic vector
+merging with independent expected components, separation by type/channel/pending lock and whole-record
 transport, all-or-nothing failure for overflow and capacity, zero-state activity
 (including held zero records with configured local checks),
 and configured cost reporting without repricing. Direct engine composition tests
@@ -460,17 +271,6 @@ Existing integer regressions retain their original paths. The headless
 `tools/audit_particle_contracts.py` runs longer instances with per-tick exact
 diagnostics; supplied formulas are reference benchmarks, not emergence claims.
 See [the contract](RATIONAL_PARTICLES.md).
-
-
-## Quantum registers, channels and catalog profiles
-
-See [the explicit v2 contract](QUANTUM_ENTITIES.md). New tests cover channel
-completeness, grouped outcomes without hidden sampling, 72 dense rational state
-comparisons, phase interference, CHSH 14/5 and local marginals, classical Markov
-probabilities, multilevel/colocated registers, rejection boundaries, all 46
-profiles, and native priced control paths. Preserve earlier uncertainty, quantum,
-classical, import and locality regressions. Quantum-mode definitions alone are
-not evidence of full species dynamics.
 
 
 ## Local reflection and Maxwell-limit experiment
@@ -588,7 +388,6 @@ the key selects the default localizing residue.
 | `test_gathered_gravity.py` | On a 13-cubed world with 128 headings a body three links from a source of negative-quanta trains pays for its own line's rays without a claim and, with a claiming rule, gathers the rest of each train the flood reaches, pays more, and is pulled more than four times harder every tick; both worlds closed |
 | `test_euclidean_pace.py` | One lamp on the 26 neighbor headings after twelve ticks reaches 12 links in every heading on the links metric (Euclidean radii 12, 8.49, 6.93, spread 1.732) and 6, 9 and 12 links on the Euclidean metric (radii 6, 6.4, 6.93, spread below 1.2); two lamps four links apart behind a screen twelve links away read their darkest Nodes at x = -1 and 1 on the links metric with a flat line beyond, and at x = -5 and 5 on the Euclidean metric where the Euclidean path difference is a half turn, with the center more than four times the dark reading; every world closed; the runner records `euclidean-ray-pace-v1` beside `isotropic-ray-field-v1` |
 | `test_claim_gather.py` | An isotropic wave of 64 quanta at a quarter link per tick, dissolved after two ticks over eight, is captured by a screen six links away at tick 26; the claim floods all 1,875 Nodes and every quantum is at the screen by tick 60 with momentum (0, 0, 0), nothing escaped, closed; without a claim the screen keeps its own line's 8 and the axis rays' 24 have escaped by tick 80 with 32 still walking out; a rival screen four links away captures first at tick 18 and gathers 62 while the farther screen keeps the 2 it took before yielding, one root; the double-slit landing document composes with pace 1/2, a stamped and a carried train and a claiming screen rule, and seed 3 over 150 ticks gathers to one root that is the winning screen Node with more matter than every other screen Node, nothing in flight, closed; claims are validated (one per train, positive train, parent -1 to 5, nonnegative tick, slot budget, lattice origin), homing needs a train, a negative train is rejected, rays of different trains or directions do not merge, the runner records `claim-gather-ray-field-v1`, and a pace above one link per tick, zero claim ticks, 65 slots, a train_field or claiming rule without claims, a carried train without an absorb rule and a vector train field are rejected; a quarter pace keeps every ray home for four ticks after the two-tick delay and one link out from tick 6; under the event audit a 13-cubed-by-3 world gathers 13 of 16 quanta with momentum (1, 0, 0) while 3 escaped before the flood, and the audit passes over more than 100,000 Node events |
-| `test_quantum_classical.py` | A one-excitation walk with the position record discarded after every step equals the classical Markov chain exactly, with variance `t - 3/4`, while the coherent walk is wider and not the classical bell at step 6; single quanta on the ray field click as 0 or 1 at a detector and every emitted quantum is a record, in flight or escaped; repeated capture attempts land only on pass ticks 3 and 7 with charge and mass exact |
 | `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 
@@ -678,7 +477,6 @@ attribution after a turn or through periodic boundaries.
 | Test file | Responsibility | Expected outcome |
 | --- | --- | --- |
 | `test_integer_arithmetic.py` | Shared integer arithmetic | Exact quotient and remainder for either sign; bounded working register; component operations reject overflow before cancellation |
-| `test_integer_contract.py` | Historical register bounds in `core/state.py` | Reject non-integers and 32-bit overflow; exact scaled division with a carried remainder; invalid `Config` rejected |
 | `test_architecture.py` | Layer separation | Reject forbidden imports and adapter formulas; audit integer physics |
 | `test_repository_language.py` | English repository text | Reject legacy non-English scripts in project prose; preserve mathematical notation |
 
@@ -704,9 +502,9 @@ are not acceptance targets.
 
 ## Calculation ownership
 
-Shared bounded arithmetic lives in `core/integer.py`. The 32-bit register check
-and carried-remainder scaling that the deleted historical scalar models used
-remain in `core/state.py` only while the quantum owner still imports them.
+Shared bounded arithmetic lives in `core/integer.py`; `core/state.py` and its
+register and scaling helpers were deleted on 2026-09-17 with their last quantum
+consumers.
 
 API assembly contains no independent arithmetic. Architecture checks reject
 runtime formulas in that module. Configuration and initial conditions are
@@ -752,31 +550,6 @@ review; this check does not certify physical acceptance.
   reusable component owns the formula.
 - These tests do not run worlds and do not prove that an agent in another
   conversation has read the instructions.
-
-## Quantum detector trial — opt-in only
-
-The feature contract is in [QUANTUM_DETECTOR_TRIAL.md](QUANTUM_DETECTOR_TRIAL.md).
-For a prescribed two-output interferometer, phase counts 0, 1, 2, 3 must yield
-weights (4,0), (2,2), (0,4), (2,2). Enumerating tickets 0 through 3 verifies the
-exact categorical selection; it does not test empirical randomness.
-
-At readout tick 8, exactly one terminal record is committed. Four repeated
-readouts, including a changed ticket, return the same record without extra
-evaluation. Two bridges share the result. The record is not an Engine-native
-physical event; the comparison against a stepped historical scalar world was
-deleted with that engine on 2026-09-17.
-
-Bad tickets, early or late first-readout timestamps, overflowing amplitudes or
-weights, a zero total weight and exhausted combined work budgets must fail
-without creating a terminal record. Pure queries never sample; repeated queries
-preserve history and report cache hits. Different query depths retain model cost
-1 and world time cost 0 while reporting distinct host work under Q-ORACLE-1.
-
-Quantum boundary tests reuse the project's import resolver. Relative Engine
-imports, importing engine from core and importing quantum from diagnostics must
-be rejected even with aliases. Bounded arithmetic from core.state, imports within
-quantum and the integration adapter are allowed. These are static checks, not a
-proof against arbitrary dynamic Python or a proof of physical locality.
 
 ## Locality and bounded local work
 
@@ -850,64 +623,16 @@ cyclic vector map. These are mechanism checks, not real-particle validation.
 cases; the check selector maps every lab source/configuration change to it.
 
 
-## Selected deferred quantum event network
+## Causal event ledger
 
 `test_event_links.py` checks immutable event spacetime through a split/join,
 direct event lookup without separate predecessor lists, current-head updates,
-foreign and forged handle rejection, failed-append atomicity and fixed capacity.
-`test_quantum_node_events.py` runs the native four-Node initialization: final
-C/D weights are 0/1, reversed by a phase, and 1/2 each after either intermediate
-position outcome. Exact correlated checkpoints preserve those cases, audit
-records, handle identity and individual modeled times. A two-tick link must
-remain admissible after compaction, while a prematurely reused register remains
-inadmissible. Colocated registers retain disjoint dependency components until
-their configured joint operation. A 2,000-event DAG leaves cursor storage fixed
-and stores its past solely in immutable spacetime events. Empty quantum
-Nodes introduce no carrier source, cycle, inventory, transport or model cost;
-public head snapshots stay immutable and queries never change physical state.
+foreign and forged handle rejection, failed-append atomicity, fixed capacity,
+and that a dependency edge is not a physical link while a capacity failure
+leaves the identity counter unchanged. The quantum event network, the origin
+cells and their suites were deleted on 2026-09-17; the ledger stays until
+issue #164 bucket B.4.
 
-The [origin-cell contract](WAVE_ORIGINS.md) additionally requires a six-origin
-local capacity, causal support propagation without multi-Link same-tick relay,
-one terminal commit under competing requests, conditional retry after no-click,
-and local invalidation at the next tick without a commit-time bank sweep. A
-continuing outcome must preserve conditional state and remaining coherence; a
-position result must not fabricate a sharp momentum, and this extension does not
-claim a physical momentum observable. A seventh origin fails before
-partial publication. Origins and immutable source events survive checkpoints.
-Unarrived support cannot execute a gate. Retired gates may be skipped only when
-the complete retained correlated density is invariant; otherwise reject before
-layer publication. A certified skip adds no operation payload, phase change or
-physical-ready-time write. A retired instrument requires one possible outcome,
-equal to its declared `null_outcome`, and unchanged complete density. An arbitrary
-remote X, deterministic click or state-changing null must fail cancellation.
-Recheck native null certificates when the target head changes even without a
-fresh arrival marker. One-origin joint states are valid interaction definitions;
-origin count never supplies evidence of a two-disturbance collision.
-Untagged v3 gates, instrument requests without participant IDs and origin-unaware carrier
-bindings are rejected. Active tagged continuations preserve the configured
-interference. Event provenance names origins without treating them as extra
-quantum amplitude sources. Cancellation guards and their one-unit audit events
-must be included once in total model cost and reported in `host_cancellation_checks`.
-The carrier subtotal remains separate. Direct status checks are bounded local
-work; certification, tensor evaluation, locking and total audit size have separate
-host costs. Finite passing cases do not prove
-universal physical locality, conservation or a classical limit.
-
-The contract is [QUANTUM_EVENTS.md](QUANTUM_EVENTS.md), Q-EVENTS-1 in the main
-definitions, and the existing Q-ORACLE-1 exception. This table defines required
-expectations; a passing source identity and command belong in the integration PR.
-
-| Suite | Independent expectations |
-| --- | --- |
-| `test_quantum_event_network.py` | Existing-owner selection; 3:4 split gives 9:16 weights; deferred/eager agreement using independently lifted dense matrices; prior correlated records are included; a postponed phase becomes necessary at recombination; partial records and exact checkpoints preserve remaining entanglement |
-| `test_quantum_event_network.py` | No-transfer changes excitation from 1/2 to 9/34; early projection changes coherent return from 1 to 337/625; fresh-environment contacts use no detector call; immutable and stale decision guards; certain outcomes require no random ticket |
-| `test_quantum_event_network.py` | A 2,000-operation queried chain leaves a disconnected 2,000-operation chain unevaluated; zero extra world ticks; nearest-neighbor/disjoint supports; matrix completeness; node/term/traversal/record/register failures do not commit an outcome |
-| `test_quantum_event_network.py` | A single occupied Node has 16 equal Fourier weights; Parseval and the finite position/Fourier uncertainty bound; these are state-representation checks, not a derived free-motion law |
-| `test_quantum_event_trial.py` | Reproducible 4x4 headless controller through the existing owner, explicit ticket choice, fixed event time, and preserved legacy scalar query API |
-
-The legacy quantum, architecture, integer, locality, navigation and language
-suites remain regression requirements. Do not weaken them to accept the new
-candidate. No physical engine behavior or default rendering mode is changed.
 
 ## Local field impulse and node ownership
 
@@ -1006,15 +731,6 @@ assertions without producing HTML/GIF. The wrapper and its dynamically selected
 inputs explicitly select this regression through `tools/check.py`; every changed
 path selects the inexpensive repository language and canonical-copy guards.
 
-## Native event programs and path costs
-
-`tests/test_native_event_runtime.py` covers the [native event contract](NATIVE_QUANTUM_EVENTS.md):
-365 exact ticket cases, deterministic classical trajectories, shared identity
-and packet ancestry, repeated encounters, bounded failures, code/type renaming,
-normal runner output and per-cycle cost-dependent delay without repeated charges.
-Existing quantum, locality, generic initialization and physical regression suites
-remain affected consumers. These checks do not derive a classical limit.
-
 ## Shared integer arithmetic
 
 `test_integer_arithmetic.py` covers decoded scalar/vector addition and
@@ -1035,7 +751,7 @@ transport suites remain the integration coverage for callers and operation costs
 every tick for carried disturbances, finite spatial fields and the shared delayed
 field/carrier Node cycle. Snapshots, events, model costs, conserved totals, sources,
 dissipation and escape must remain exactly equal. Separate checks require bounded
-worker counts, explicit rejection of native event programs, saved host-execution
+worker counts, saved host-execution
 metadata and actual disturbance/spatial task submission. The tests do not claim a
 speedup for small worlds; performance depends
 on local rule cost, active Node count and interpreter serialization overhead.
@@ -1069,21 +785,6 @@ widths, CODATA 2022 electron magnetic moment, signed antiparticle references and
 the distinction between omitted and inapplicable lifetimes. See
 [reference units](REFERENCE_UNITS.md) for calibration and evidence boundaries.
 
-## Catalog contact bindings
-
-`tests/test_catalog_contact.py` exercises all 34 established particle/multiplet
-bindings through the existing causal contact rule for 16 ticks each. Charge and
-encoded mass inventory keep one owner through preparation and capture; spatial
-source/loss/escape accounting remains balanced. The default three-domain world
-retains charge -2 in charge-thirds and mass reference inventory 7371 keV/c2.
-Positive, negative and neutral source signs, antiparticle references, duplicate
-placements, metadata preservation and the ten-domain schema bound are checked.
-Unassigned flavor-neutrino mass is distinguished from theoretical zero mass.
-This is configuration integration, not QCD, spin dynamics, physical total mass
-or field/matter energy closure. The [example guide](../examples/catalog-contact/README.md)
-owns the setup and limitations.
-
-
 ### Ray integration and local Focus
 
 `test_ray_merge_contracts.py` independently covers funded inventory during a
@@ -1103,7 +804,7 @@ local phases, claim inputs, computation cost and time; hash collisions; bounded
 LRU eviction; retry after failure; independent configurations; and default reuse
 of repeated moving patterns in serial and parallel execution. Each tick retains
 identical inventory, snapshots, ordered events, operation cost and local clocks.
-Event programs retain their uncached owners. `test_active_ports.py` checks stable
+`test_active_ports.py` checks stable
 bank-creation order after reactivation, release during iteration, preserved empty
 mapping entries and continued stepping without scans of inactive bank history.
 The existing Focus, field, delay, boundary, parallel and formula-free state tests
@@ -1131,10 +832,11 @@ values hits it, and that failed readouts are requested again and never retained.
 ## Detector-owned sampling admission
 
 [Detector sampling tests](../tests/test_detector_sampling_contract.py) reject the
-previous unbound lottery and native instrument/contact fixtures under the default
+previous unbound lottery under the default
 [Detector-only contract](DETECTOR_SAMPLING.md), including direct owner construction
-and renamed-observer counterexamples. Coherent preparation remains zero-draw.
-The explicitly historical seed-7 fixture retains 18 tickets and five absorbed
-quanta, complete accounting and its marked run metadata; it does not become
-canonical Detector acceptance. Full PASS/RETURN and output-clock composition
-remain blocked by the contract's owner/acceptance table.
+and renamed-observer counterexamples. The explicitly historical seed-7 fixture
+retains 18 tickets and five absorbed quanta, complete accounting and its marked
+run metadata; it does not become canonical Detector acceptance. The native
+instrument/contact fixtures were deleted on 2026-09-17 with the integration
+layer. Full PASS/RETURN and output-clock composition remain blocked by the
+contract's owner/acceptance table.

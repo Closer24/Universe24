@@ -22,8 +22,8 @@ def parse_node_conservation(value: object, initial: InitialState) -> NodeConserv
 
     if not initial.node_execution:
         raise ValueError("conservation_contract requires node_execution")
-    if initial.schema_version != 1 or initial.event_program is not None:
-        raise ValueError("node conservation requires schema 1 without a native event program")
+    if initial.schema_version != 1:
+        raise ValueError("node conservation requires schema 1")
     if initial.emissions or any(
         update.source for kind in initial.disturbances for update in kind.updates
     ):

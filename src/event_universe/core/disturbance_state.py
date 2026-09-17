@@ -281,7 +281,6 @@ class InitialState:
     field_rules: tuple[NodeFieldRuleDefinition, ...] = ()
     spatial_interactions: tuple[SpatialInteractionDefinition, ...] = ()
     ray_interactions: tuple[InteractionDefinition, ...] = ()
-    event_program: str | None = None
     conservation: ConservationDefinition | None = None
     node_execution: bool = False
     conservation_contract: NodeConservationDefinition | None = None

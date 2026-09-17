@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from event_universe import Simulation
-from event_universe.core.disturbance_state import Packet, pack, unpack
+from event_universe.core.disturbance_state import OPERATIONS, OperationCosts, Packet, pack, unpack
 from event_universe.core.event_space import CausalEventSpace
 from event_universe.core.node_services import NodeEvents
 from event_universe.core.source_envelope_node import (
@@ -24,10 +24,12 @@ from event_universe.diagnostics.node_contract import node_state_violations
 from event_universe.fields.source_envelope import local_output
 from event_universe.initialization import parse_initial_state
 
-from .support.contact import ROTATION
 from .support.disturbances import document, kind
 
 SOURCE = (3, 3, 3)
+MIDDLE = (2, 1, 1)
+ROTATION = [[5, 0, 0, 0], [0, 3, -4, 0], [0, 4, 3, 0], [0, 0, 0, 5]]
+INVERSE = [[5, 0, 0, 0], [0, 3, 4, 0], [0, -4, 3, 0], [0, 0, 0, 5]]
 PACKAGE = str(Path(__file__).resolve().parents[1] / "src/event_universe").lower()
 MIXER = tuple(tuple((value, 0) for value in row) for row in ROTATION)
 
@@ -178,3 +180,87 @@ def test_active_local_transition_is_independent_of_remote_world_and_event_growth
         assert not node_state_violations(node)
         observations.append((work, result()))
     assert observations[0] == observations[1] == observations[2]
+
+
+# Source-envelope gate and terminal transitions on the Node alone.
+
+
+def test_null_during_frozen_pair_preserves_the_complete_unitary_snapshot():
+    costs = OperationCosts((1,) * len(OPERATIONS))
+    events = NodeEvents(None, None)
+    left = SourceEnvelopeNode(SOURCE, source_id=1, amplitude=EnvelopeAmplitude(3, 0, 5))
+    right = SourceEnvelopeNode(MIDDLE, source_id=1, amplitude=EnvelopeAmplitude(4, 0, 5))
+    matrices = tuple(
+        tuple(tuple((value, 0) for value in row) for row in matrix) for matrix in (ROTATION, INVERSE)
+    )
+    for epoch in range(2):
+        tick = epoch * 2
+        left.start_gate(tick, epoch, EnvelopeGate(epoch, 0, 0), 0, 1, 1, 4, events)
+        right.start_gate(tick, epoch, EnvelopeGate(epoch, 1, 1), 0, 1, 1, 4, events)
+        from_left, from_right = left.output[0], right.output[1]
+        right.receive(from_left, tick + 1, 1, 0, events, costs=costs)
+        left.receive(from_right, tick + 1, 1, 0, events, costs=costs)
+        left.clear_output(0, from_left)
+        right.clear_output(1, from_right)
+        if epoch == 0:
+            left.null(tick + 1, None)
+            assert left.amplitude == EnvelopeAmplitude()
+            assert left.pending_gate.amplitude == EnvelopeAmplitude(3, 0, 5)
+        left.complete(tick + 2, local_output, matrices, costs, (0,), 0, 1, events)
+        right.complete(tick + 2, local_output, matrices, costs, (1,), 0, 1, events)
+        if epoch == 0:
+            assert (left.amplitude, right.amplitude) == (
+                EnvelopeAmplitude(-7, 0, 25),
+                EnvelopeAmplitude(24, 0, 25),
+            )
+    assert (left.amplitude, right.amplitude) == (EnvelopeAmplitude(3, 0, 5), EnvelopeAmplitude(4, 0, 5))
+
+
+def test_duplicate_terminal_is_charged_without_restarting_or_forwarding():
+    costs = OperationCosts(
+        tuple(7 if name == "receive" else 3 if name == "read" else 1 for name in OPERATIONS)
+    )
+    space = CausalEventSpace(20)
+    events = NodeEvents(space, None)
+    node = SourceEnvelopeNode(SOURCE, source_id=7, amplitude=EnvelopeAmplitude(1))
+    first = EnvelopePacket(1, MIDDLE, 1, 7, None)
+    node.receive(first, 1, 1, 0, events, costs=costs)
+    assert node.complete(1, local_output, (), costs, (0,), 0, 1, events)
+    assert node.retired == 7
+    outputs, generation, cause = node.output, node.generation, node.cause_id
+    assert outputs[6] is not None
+    duplicate = EnvelopePacket(2, MIDDLE, 1, 7, None)
+    node.receive(duplicate, 2, 1, 5, events, costs=costs)
+    assert space.events[-1].kind == "source-terminal-ignored"
+    assert space.events[-1].model_cost == costs.price("receive") + costs.price("read") == 10
+    assert node.pending_stop is None
+    assert node.output is outputs
+    assert node.generation == generation and node.cause_id == cause
+    assert node.amplitude == EnvelopeAmplitude() and node.retired == 7
+
+
+def test_terminal_commits_before_later_amplitude_and_prevents_resurrection():
+    costs = OperationCosts((1,) * len(OPERATIONS))
+    space = CausalEventSpace(20)
+    events = NodeEvents(space, None)
+    node = SourceEnvelopeNode(SOURCE, source_id=7, amplitude=EnvelopeAmplitude(3, 0, 5))
+    node.start_gate(0, 0, EnvelopeGate(0, 0, 0), 2, 1, 1, 4, events)
+    node.receive(EnvelopePacket(1, MIDDLE, 1, 7, None), 1, 1, 1, events, costs=costs)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("a retired source must not evaluate a late amplitude")
+
+    assert node.pending_stop.ready_tick == 2
+    assert node.pending_gate.ready_tick == 4
+    node.complete(2, forbidden, (), costs, (0,), 0, 1, events)
+    assert node.retired == 7 and node.amplitude == EnvelopeAmplitude()
+    outputs = node.output
+    arriving = EnvelopePacket(3, MIDDLE, 1, 7, EnvelopeAmplitude(4, 0, 5), epoch=0)
+    node.receive(arriving, 3, 1, 1, events, costs=costs)
+    assert node.incoming_gate is arriving
+    node.complete(4, forbidden, (), costs, (0,), 0, 1, events)
+    assert node.retired == node.source_id == 7
+    assert node.amplitude == EnvelopeAmplitude()
+    assert node.pending_gate is None and node.incoming_gate is None
+    assert node.output is outputs
+    assert not [event for event in space.events if event.kind == "source-gate-committed"]

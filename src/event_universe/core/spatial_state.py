@@ -193,7 +193,6 @@ def validate_ray_coupling(initial: InitialState) -> None:
         or initial.ray_delay
         or initial.ray_phase_per_tick
         or initial.delay_direction is not None
-        or initial.event_program is not None
         or initial.field_rules
         or initial.spatial_interactions
     ):

@@ -30,17 +30,11 @@ the example family in the guide for fields, catalog entities or native events.
 2. Choose the supported schema and mechanism before assigning physical labels.
    Use schema 1 for local field rules, schema 2 for finite attenuating outward
    fields with explicitly selected localization or dissipation of attenuated flux.
-   The classical causal graph supports both. Quantum spatial-field composition
-   requires an explicit [localized-contact](../../docs/LOCALIZED_QUANTUM_CONTACT.md)
-   or [causal-source](../../docs/CAUSAL_QUANTUM_SOURCES.md) profile and its restrictions;
-   other native quantum profiles still reject spatial fields.
-   Repeated localized/continued/new-wave outcomes require the explicit
-   [recurrent profile](../../docs/RECURRENT_QUANTUM_CONTACT.md), complete matrices,
-   a finite generation capacity and emission allowances. Use its
-   [example](../../examples/quantum/repeated_contacts.md); do not add a separate
-   random switch or infer a collapse law from a missing momentum value.
-   Follow the [graph contract](../../docs/EVENT_GRAPH_CONFIGURATION.md)
-   for provenance granularity, capacity and failure behavior.
+   The `event_program` member, the causal graph and the localized-contact,
+   causal-source and recurrent quantum profiles were deleted on 2026-09-17
+   with the shared quantum resource; a document that still carries
+   `event_program` is rejected. Do not add a separate random switch or infer
+   a collapse law from a missing momentum value.
 3. Define the space and run envelope. Set boundary explicitly, keep every seed
    in range, and distinguish transit time, computation delay and playback speed.
    Select [shared field computation delay](../../docs/SPATIAL_COMPUTATION_DELAY.md)

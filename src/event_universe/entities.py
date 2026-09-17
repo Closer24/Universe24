@@ -34,7 +34,7 @@ def _profile_index(
     indexed: dict[str, JsonObject], profiles: object, version: int
 ) -> dict[str, JsonObject]:
     """Bind explicit experiment data without interpreting physical metadata."""
-    profile_keys = {"executable_profile", "quantum_profile"}
+    profile_keys = {"executable_profile"}
     embedded = any(profile_keys.intersection(entry) for entry in indexed.values())
     if embedded and (profiles is not None or version == 2):
         raise ValueError("embedded profiles cannot be combined with external profiles or catalog v2")
@@ -62,10 +62,7 @@ def _profile_index(
             raise ValueError("unsupported or incomplete profile binding")
         result[identity] = {}
         for key in profile_keys.intersection(row):
-            representation = "classical" if key == "executable_profile" else "quantum"
-            result[identity][key] = copy.deepcopy(
-                _object(row[key], f"{identity} {representation} profile")
-            )
+            result[identity][key] = copy.deepcopy(_object(row[key], f"{identity} classical profile"))
     return result
 
 
@@ -109,11 +106,9 @@ def _spatial_profile(
     result["spatial_fields"].extend(spatial)
 
 
-def _shared_classical(profiles: object, representation: str) -> JsonObject | None:
+def _shared_classical(profiles: object) -> JsonObject | None:
     if not isinstance(profiles, dict) or "shared_classical" not in profiles:
         return None
-    if representation != "classical":
-        raise ValueError("shared_classical cannot be used with a quantum representation")
     shared = copy.deepcopy(_object(profiles["shared_classical"], "shared_classical"))
     required = {
         "model_id",
@@ -146,7 +141,6 @@ def compile_entities(
     shape: tuple[int, int, int] = (9, 9, 9),
     ticks: int = 4,
     link_ticks: int = 1,
-    representation: str = "classical",
 ) -> JsonObject:
     """Select explicit experiments separately from physical descriptors.
 
@@ -183,21 +177,12 @@ def compile_entities(
         raise ValueError("select at least one entity without duplicates")
     if len(shape) != 3 or any(type(size) is not int or size < 5 for size in shape):
         raise ValueError("representation probes require three integer dimensions of at least five")
-    if representation not in ("classical", "quantum"):
-        raise ValueError("representation must be classical or quantum")
-    shared = _shared_classical(profiles, representation)
-    profile_key = "executable_profile" if representation == "classical" else "quantum_profile"
+    shared = _shared_classical(profiles)
     for identity in entity_ids:
         if identity not in indexed:
             raise ValueError(f"unknown entity: {identity}")
-        if identity not in experiments or profile_key not in experiments[identity]:
-            raise ValueError(f"unsupported {representation} representation: no profile for {identity}")
-    if representation == "quantum":
-        from event_universe.integration.quantum_entities import compile_quantum_entities
-
-        return compile_quantum_entities(
-            experiments, entity_ids, shape=shape, ticks=ticks, link_ticks=link_ticks
-        )
+        if identity not in experiments or "executable_profile" not in experiments[identity]:
+            raise ValueError(f"unsupported classical representation: no profile for {identity}")
     fields: dict[str, JsonObject] = {}
     types: dict[str, JsonObject] = {}
     spatial_names: set[str] = set()
@@ -292,8 +277,8 @@ def validate_profiles(catalog: object, profiles: object) -> dict[str, int]:
     """Validate each supplied experiment separately without constructing a world.
 
     The catalog must be a complete physical reference version 2. Bindings may
-    cover any subset and contain either or both supported representations.
-    Separate checks avoid imposing one world's capacity on the whole library.
+    cover any subset. Separate checks avoid imposing one world's capacity on
+    the whole library.
     """
     source = _object(catalog, "catalog")
     validate_catalog(source)
@@ -301,22 +286,18 @@ def validate_profiles(catalog: object, profiles: object) -> dict[str, int]:
         entry["id"]: entry for section in ENTITY_SECTIONS for entry in _rows(source[section], section)
     }
     experiments = _profile_index(indexed, profiles, 2)
-    shared = _shared_classical(profiles, "classical")
+    shared = _shared_classical(profiles)
     if shared is not None and not any("executable_profile" in row for row in experiments.values()):
         raise ValueError("shared_classical requires at least one classical profile")
-    summary = {"profiles": len(experiments), "classical": 0, "quantum": 0}
+    summary = {"profiles": len(experiments), "classical": 0}
     for identity, experiment in experiments.items():
-        for representation, key in (
-            ("classical", "executable_profile"),
-            ("quantum", "quantum_profile"),
-        ):
-            if key not in experiment:
-                continue
-            try:
-                compile_entities(source, [identity], profiles=profiles, representation=representation)
-            except (ValueError, OverflowError) as error:
-                raise ValueError(f"{identity} {representation} profile: {error}") from error
-            summary[representation] += 1
+        if "executable_profile" not in experiment:
+            continue
+        try:
+            compile_entities(source, [identity], profiles=profiles)
+        except (ValueError, OverflowError) as error:
+            raise ValueError(f"{identity} classical profile: {error}") from error
+        summary["classical"] += 1
     return summary
 
 
@@ -328,14 +309,12 @@ def main() -> None:
     parser.add_argument("--entity", action="append", required=True)
     parser.add_argument("--output-init", type=Path, required=True)
     parser.add_argument("--ticks", type=int, default=4)
-    parser.add_argument("--representation", choices=("classical", "quantum"), default="classical")
     args = parser.parse_args()
     initial = compile_entities(
         parse_json_document(args.catalog.read_bytes()),
         args.entity,
         profiles=parse_json_document(args.profiles.read_bytes()) if args.profiles is not None else None,
         ticks=args.ticks,
-        representation=args.representation,
     )
     args.output_init.parent.mkdir(parents=True, exist_ok=True)
     with args.output_init.open("x", encoding="utf-8") as output:

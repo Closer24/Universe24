@@ -1,7 +1,6 @@
 """Exact input equivalence, bounded reuse and independent physical owners."""
 
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -10,7 +9,7 @@ from event_universe.core.disturbance_state import LocalPlan, pack
 from event_universe.core.node_execution import NodeExecution
 from event_universe.core.plan_reuse import PlanReuse
 from event_universe.core.spatial_state import Claim, Ray, SpatialPlan, zero_spatial_state
-from event_universe.initialization import load_initial_state, parse_initial_state
+from event_universe.initialization import parse_initial_state
 
 from .support.disturbances import document, kind
 from .test_local_focus import assert_same_world
@@ -151,15 +150,6 @@ def test_repeated_moving_patterns_share_plans_but_keep_owners_events_and_clocks(
         assert report["hits"] >= report["requests"] - 3
         assert reused.totals() == {"inventory": (12,)}
         assert len({event["position"] for event in reused_events}) >= 12
-
-
-def test_event_resolvers_are_not_treated_as_pure_laws():
-    root = Path(__file__).resolve().parents[1] / "examples"
-    event_initial = load_initial_state(root / "quantum/native_classical.json")
-    with Simulation(event_initial) as world:
-        report = world.execution_report()
-        assert report["carrier_plan_reuse"]["capacity"] == 0
-        assert report["spatial_plan_reuse"]["capacity"] == 0
 
 
 def test_different_configurations_do_not_share_a_cache():

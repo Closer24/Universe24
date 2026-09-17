@@ -2,22 +2,15 @@
 
 import json
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
-from event_universe import Simulation
 from event_universe.configuration_validation import validate_configuration
-from event_universe.core.event_space import CausalEventSpace
 from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import parse_initial_state
-from event_universe.integration.event_program import parse_event_program
-from event_universe.integration.event_runtime import NativeEventResolver
 from event_universe.runner import run_initialization
 
 from .test_kerengonen import lottery_document, two_lamps
-
-ROOT = Path(__file__).resolve().parents[1]
 
 
 def ordinary_lottery():
@@ -36,14 +29,6 @@ def test_canonical_ordinary_lottery_fails_before_a_draw(monkeypatch):
     report = validate_configuration(json.dumps(ordinary_lottery()))
     assert not report.valid
     assert "actual external Detector" in report.issues[0].message
-
-
-@pytest.mark.parametrize("name", ["native_quantum", "wave_origins", "localized_charge"])
-def test_ordinary_quantum_instruments_cannot_authorize_themselves(name):
-    raw = json.loads((ROOT / "examples/quantum" / f"{name}.json").read_text())
-    raw.pop("sampling_profile", None)
-    with pytest.raises(ValueError, match="actual external Detector"):
-        parse_initial_state(raw)
 
 
 def test_local_semantic_owner_rejects_unbound_lottery_directly():
@@ -69,21 +54,6 @@ def test_diagnostic_observer_or_entity_name_does_not_grant_draw_authority():
         parse_initial_state(raw)
 
 
-def test_deterministic_quantum_preparation_needs_no_sampling_exception(tmp_path):
-    raw = json.loads((ROOT / "examples/quantum/native_quantum.json").read_text())
-    raw.pop("sampling_profile", None)
-    raw["event_program"]["bindings"] = []
-    initial = parse_initial_state(raw)
-    assert initial.sampling_profile == "detector-only-v1"
-    source = tmp_path / "input.json"
-    source.write_text(json.dumps(raw))
-    run_initialization(source, tmp_path / "run", visualize=True)
-    meta = json.loads((tmp_path / "run/run.json").read_text())
-    assert meta["computation"]["resolver"]["random_draws"] == 0
-    assert meta["sampling_profile"] == "detector-only-v1"
-    assert (tmp_path / "run/run.html").exists()
-
-
 @pytest.mark.parametrize("profile", ["Detector", "detector-only", "", True, None, 1])
 def test_unknown_profile_cannot_disable_the_gate(profile):
     raw = ordinary_lottery()
@@ -97,20 +67,6 @@ def test_bond_registry_is_not_an_external_detector():
     raw["spatial_fields"][0]["bond"] = {"seed": 7}
     with pytest.raises(ValueError, match="actual external Detector"):
         parse_initial_state(raw)
-
-
-def test_direct_native_resolver_rejects_unbound_program_before_sampling():
-    raw = json.loads((ROOT / "examples/quantum/native_quantum.json").read_text())
-    raw["sampling_profile"] = "historical-autonomous-v1"
-    historical = parse_initial_state(raw)
-    program = parse_event_program(historical)
-    canonical = replace(historical, sampling_profile="detector-only-v1")
-    events = CausalEventSpace(program.capacity, shape=canonical.shape)
-    with pytest.raises(ValueError, match="actual external Detector"):
-        NativeEventResolver(canonical, program, events)
-    with pytest.raises(ValueError, match="actual external Detector"):
-        Simulation(canonical)
-    assert events.next_id == 0
 
 
 def test_historical_lottery_retains_counterexample_and_marks_its_profile(tmp_path, monkeypatch):
@@ -164,19 +120,3 @@ def test_direct_bond_owner_cannot_bypass_an_unbonded_definition():
             initial.operation_costs,
             absorptions=(replace(initial.spatial_couplings[0], bond_setting=0),),
         )
-
-
-@pytest.mark.parametrize("tickets", [None, (0,)])
-def test_direct_native_ticket_sampling_requires_bound_detector_even_without_bindings(tickets):
-    raw = json.loads((ROOT / "examples/quantum/native_quantum.json").read_text())
-    raw.pop("sampling_profile", None)
-    raw["event_program"]["bindings"] = []
-    initial = parse_initial_state(raw)
-    program = replace(parse_event_program(initial), tickets=tickets)
-    events = CausalEventSpace(program.capacity, shape=initial.shape)
-    resolver = NativeEventResolver(initial, program, events)
-    before = events.next_id, resolver.rng.getstate()
-    with pytest.raises(ValueError, match="actual external Detector"):
-        resolver._sample(2)
-    assert resolver.draws == 0
-    assert (events.next_id, resolver.rng.getstate()) == before

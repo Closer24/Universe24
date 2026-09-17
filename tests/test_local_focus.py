@@ -156,12 +156,3 @@ def test_focus_defaults_to_true_and_allows_explicit_opt_out():
     assert parse_initial_state({**moving_document(), "focus": False}).focus is False
     with pytest.raises(ValueError, match="focus must be boolean"):
         replace(initial, focus=1)
-
-
-def test_event_resolver_retains_the_existing_quantum_owner_and_scheduler():
-    from .test_native_event_runtime import configuration
-
-    plain, focus = compare(parse_initial_state(configuration()), 4)
-    assert focus["focus_requested"] and not focus["focus_enabled"]
-    assert focus["focus_fallback"] == "event resolver"
-    assert focus["carrier_phase_visits"] == plain["carrier_phase_visits"]

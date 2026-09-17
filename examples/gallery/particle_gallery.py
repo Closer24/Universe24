@@ -12,14 +12,12 @@ Two experiments:
 1. ``backscatter``: the bounded rational elastic electron-positron contract
    from ``examples/particle-contracts``, with the two particles seeded six
    Nodes apart so that the approach, the contact and the recoil are recorded.
-2. ``contact_fields``: the catalog electron and positron in the causal contact
-   profile, prepared by ``examples/catalog-contact/prepare.py``. Each source
-   emits the ordinary field with its own catalog charge, a 3:4 mixer splits the
-   wave, and a held probe captures a localized record.
+2. ``reactions``: the configured lepton reactions of ``lepton_reactions.json``,
+   annihilation, a muon pair with its decays and beta decay, each rule a
+   two-record conversion with conserved integer inventories.
 """
 
 import argparse
-import importlib.util
 import json
 import shutil
 from fractions import Fraction
@@ -33,7 +31,6 @@ from event_universe.runner import run_initialization
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 BACKSCATTER_TEMPLATE = ROOT / "examples/particle-contracts/electron-positron.json"
-CATALOG_PREPARE = ROOT / "examples/catalog-contact/prepare.py"
 BACKSCATTER_SEEDS = [
     {"position": [5, 8, 8], "type": "electron"},
     {"position": [11, 8, 8], "type": "positron"},
@@ -101,16 +98,10 @@ DIM = "#8a95b3"
 LATTICE = "#22304f"
 NEGATIVE = "#5ea8ff"
 POSITIVE = "#ff6b6b"
-PROBE = "#c9d3ea"
-LOCALIZED = "#ffd166"
 FLASH = "#ffffff"
 LABELS = {
     "electron": ("electron  e⁻", NEGATIVE),
     "positron": ("positron  e⁺", POSITIVE),
-    "source_electron": ("electron  e⁻  511 keV/c²  q = −1", NEGATIVE),
-    "source_positron": ("positron  e⁺  511 keV/c²  q = +1", POSITIVE),
-    "contact_probe": ("probe", PROBE),
-    "localized_charge": ("localized record", LOCALIZED),
 }
 FRAME_MS = 650
 CONTACT_HOLD = 3
@@ -124,16 +115,6 @@ def backscatter_configuration() -> dict[str, Any]:
     raw = json.loads(BACKSCATTER_TEMPLATE.read_text(encoding="utf-8"))
     raw["seeds"] = json.loads(json.dumps(BACKSCATTER_SEEDS))
     raw["ticks"] = BACKSCATTER_TICKS
-    return raw
-
-
-def catalog_configuration() -> dict[str, Any]:
-    """The catalog contact preparation for one electron and one positron."""
-    spec = importlib.util.spec_from_file_location("catalog_contact_prepare", CATALOG_PREPARE)
-    module = importlib.util.module_from_spec(spec)
-    assert spec.loader is not None
-    spec.loader.exec_module(module)
-    raw, _provenance = module.prepare(["electron", "positron"])
     return raw
 
 
@@ -217,30 +198,6 @@ def recorded_frames(case_dir: Path) -> list[dict[str, Any]]:
         raise ValueError("run.html carries no recorded frames; run with visualize")
     recording, _ = json.JSONDecoder().raw_decode(document[start:])
     return recording["frames"]
-
-
-def contact_summary(case_dir: Path) -> dict[str, Any]:
-    report = json.loads((case_dir / "run.json").read_text(encoding="utf-8"))
-    resolver = report["computation"]["resolver"]
-    return {
-        "decisions": [
-            {
-                "tick": r["decision"]["tick"],
-                "register": r["decision"]["register_index"],
-                "weights": r["decision"]["weights"],
-                "outcome": r["outcome"],
-            }
-            for r in resolver["records"]
-            if r["decision"]["weights"][1] != 0
-        ],
-        "captures": [
-            {"tick": t["tick"], "address": t["address"]}
-            for t in resolver["contact_transfers"]
-            if t["direction"] == "to_localized"
-        ],
-        "final_totals": report["final_totals"],
-        "source_totals": report["source_totals"],
-    }
 
 
 def _records_by_node(frame: dict[str, Any]) -> dict[tuple[int, ...], list[dict[str, Any]]]:
@@ -444,157 +401,6 @@ def draw_backscatter_frame(timeline: dict[str, Any], tick: int, plt: Any, line: 
     return fig
 
 
-def _field_value(node: dict[str, Any]) -> int:
-    field = node["fields"]["electric_signal"]
-    return int(field["value"][0]) + int(field.get("localized", [0])[0])
-
-
-def draw_contact_frame(
-    frame: dict[str, Any],
-    shape: list[int],
-    summary: dict[str, Any],
-    maximum: int,
-    plt: Any,
-    line: Any,
-    sources: dict[tuple[int, ...], str] | None = None,
-) -> Any:
-    fig, ax = _figure(plt)
-    ax.set_box_aspect((shape[0], shape[1], shape[2] * 1.2), zoom=1.7)
-    ax.set_xlim(-0.5, shape[0] - 0.5)
-    ax.set_ylim(-0.5, shape[1] - 0.5)
-    ax.set_zlim(-0.5, shape[2] - 0.5)
-    ax.view_init(elev=30, azim=-62)
-    segments = []
-    for x in range(shape[0]):
-        for y in range(shape[1]):
-            for zz in range(shape[2]):
-                if x + 1 < shape[0]:
-                    segments.append([(x, y, zz), (x + 1, y, zz)])
-                if y + 1 < shape[1]:
-                    segments.append([(x, y, zz), (x, y + 1, zz)])
-                if zz + 1 < shape[2]:
-                    segments.append([(x, y, zz), (x, y, zz + 1)])
-    ax.add_collection3d(line(segments, colors=LATTICE, linewidths=0.4, alpha=0.7))
-    tick = frame["tick"]
-    for node in frame.get("spatial_fields", []):
-        value = _field_value(node)
-        if value == 0:
-            continue
-        strength = min(1.0, abs(value) / max(1, maximum))
-        color = NEGATIVE if value < 0 else POSITIVE
-        p = node["position"]
-        ax.scatter(
-            [p[0]],
-            [p[1]],
-            [p[2]],
-            s=40 + 900 * strength,
-            c=color,
-            alpha=0.10 + 0.5 * strength,
-            depthshade=False,
-            linewidths=0,
-        )
-    for node in frame["nodes"]:
-        p = node["position"]
-        kinds = [d["type"] for d in node["disturbances"]]
-        if sources and tuple(p) in sources and not any(k.startswith("source_") for k in kinds):
-            label, color = LABELS[sources[tuple(p)]]
-            ax.scatter(
-                [p[0]],
-                [p[1]],
-                [p[2]],
-                s=90,
-                facecolors="none",
-                edgecolors=color,
-                linewidths=1.0,
-                depthshade=False,
-            )
-            ax.text(
-                p[0], p[1], p[2] - 0.8, label + "  (wave source)", color=color, fontsize=8.5, ha="center"
-            )
-        for kind in kinds:
-            label, color = LABELS.get(kind, (kind, INK))
-            if kind == "contact_probe":
-                ax.scatter(
-                    [p[0]],
-                    [p[1]],
-                    [p[2]],
-                    s=70,
-                    facecolors="none",
-                    edgecolors=PROBE,
-                    linewidths=1.2,
-                    depthshade=False,
-                )
-                if len(kinds) == 1:
-                    ax.text(p[0], p[1], p[2] - 0.55, "probe", color=PROBE, fontsize=8, ha="center")
-            elif kind == "localized_charge":
-                charge = node["disturbances"][kinds.index(kind)]["values"]["charge"][0]
-                _glow(ax, p, LOCALIZED, 120)
-                ax.text(
-                    p[0],
-                    p[1],
-                    p[2] + 0.75,
-                    f"localized  q = {charge / 3:+.0f}",
-                    color=LOCALIZED,
-                    fontsize=9.5,
-                    ha="center",
-                    fontweight="bold",
-                )
-            else:
-                _glow(ax, p, color, 150)
-                ax.text(
-                    p[0],
-                    p[1],
-                    p[2] + 0.75,
-                    label,
-                    color=color,
-                    fontsize=10,
-                    ha="center",
-                    fontweight="bold",
-                )
-    for y, name in ((1, "electron domain"), (3, "positron domain")):
-        ax.text(-0.6, y, 0.2, name, color=DIM, fontsize=8.5, ha="right")
-    _unclip(ax)
-    decisions = [d for d in summary["decisions"] if d["tick"] == tick]
-    note = ""
-    if tick == 0:
-        note = "Tick 0: each catalog source meets its held probe and becomes a unit wave; its Node starts emitting the electric field with the catalog charge"
-    elif decisions:
-        note = (
-            "Tick 3: the 3:4 mixer has split each wave; the far probe decides with weights "
-            + ", ".join(str(d["weights"]) for d in decisions)
-            + "; ticket 9 selects capture"
-        )
-    elif summary["captures"] and tick <= max(c["tick"] for c in summary["captures"]) + 2:
-        note = "The localized record emits at full strength; the source envelopes stop after the terminal notice crosses the Links"
-    else:
-        note = "Opposite charges, opposite field signs: blue is negative field, red is positive; the outward field decays by one half per hop"
-    fig.text(
-        0.03,
-        0.93,
-        "Catalog electron and positron in the causal contact profile",
-        color=INK,
-        fontsize=17,
-        fontweight="bold",
-    )
-    fig.text(
-        0.03,
-        0.88,
-        f"tick {tick:02d}   open 7 x 5 x 3 lattice   sources at x = 1, capture probes at x = 3",
-        color=DIM,
-        fontsize=10.5,
-    )
-    fig.text(0.03, 0.04, note, color=INK, fontsize=9.8)
-    fig.text(
-        0.97,
-        0.005,
-        "field glow: recorded electric_signal per Node; names, charges and masses from the entity catalog",
-        color=DIM,
-        fontsize=8.5,
-        ha="right",
-    )
-    return fig
-
-
 def _reaction_caption(events: list[dict[str, Any]], tick: int, rules: dict[str, dict[str, Any]]) -> str:
     parts = []
     for event in events:
@@ -746,13 +552,6 @@ def run_backscatter(output: Path) -> dict[str, Any]:
     }
 
 
-def run_contact_fields(output: Path) -> dict[str, Any]:
-    case_dir = _run(catalog_configuration(), output, "electron_positron_contact_fields", visualize=True)
-    frames = recorded_frames(case_dir)
-    summary = contact_summary(case_dir)
-    return {"case": case_dir.name, "frames": frames, "summary": summary}
-
-
 def run_reactions(output: Path) -> dict[str, Any]:
     results = {}
     for name in REACTION_SCENARIOS:
@@ -802,7 +601,7 @@ def render_reactions(output: Path, reactions: dict[str, Any]) -> tuple[Path, ...
     return tuple(saved)
 
 
-def render(output: Path, backscatter: dict[str, Any], contact: dict[str, Any]) -> tuple[Path, ...]:
+def render(output: Path, backscatter: dict[str, Any]) -> tuple[Path, ...]:
     import matplotlib
 
     matplotlib.use("Agg")
@@ -812,8 +611,6 @@ def render(output: Path, backscatter: dict[str, Any], contact: dict[str, Any]) -
     saved = [
         output / "electron_positron_backscatter.gif",
         output / "electron_positron_backscatter_contact.png",
-        output / "electron_positron_contact_fields.gif",
-        output / "electron_positron_contact_fields_tick03.png",
     ]
     for path in saved:
         path.touch()
@@ -828,38 +625,6 @@ def render(output: Path, backscatter: dict[str, Any], contact: dict[str, Any]) -
             if tick in timeline["contact_ticks"]:
                 image.save(saved[1])
         _save_gif(images, durations, saved[0])
-
-        frames = contact["frames"]
-        shape = json.loads(
-            (output / contact["case"] / "initialization.json").read_text(encoding="utf-8")
-        )["shape"]
-        maximum = max(
-            (abs(_field_value(n)) for f in frames for n in f.get("spatial_fields", [])), default=1
-        )
-        sources = {
-            tuple(node["position"]): d["type"]
-            for node in frames[0]["nodes"]
-            for d in node["disturbances"]
-            if d["type"].startswith("source_")
-        }
-        images, durations = [], []
-        for frame in frames:
-            image = _image(
-                draw_contact_frame(
-                    frame, shape, contact["summary"], maximum, plt, Line3DCollection, sources
-                ),
-                plt,
-            )
-            hold = (
-                CONTACT_HOLD
-                if frame["tick"] in {c["tick"] for c in contact["summary"]["captures"]}
-                else 1
-            )
-            images.extend([image] * hold)
-            durations.extend([FRAME_MS] * hold)
-            if frame["tick"] == 3:
-                image.save(saved[3])
-        _save_gif(images, durations, saved[2])
     return tuple(saved)
 
 
@@ -874,15 +639,13 @@ def main() -> None:
         raise ValueError("use a new or empty output directory")
     out.mkdir(parents=True, exist_ok=True)
     backscatter = run_backscatter(out)
-    contact = run_contact_fields(out)
     reactions = run_reactions(out)
     summary = {
         "backscatter": {k: v for k, v in backscatter.items() if k != "timeline"},
-        "contact_fields": contact["summary"],
         "reactions": {name: r["summary"] for name, r in reactions.items()},
     }
     if not args.no_render:
-        summary["rendered"] = [str(p) for p in render(out, backscatter, contact)]
+        summary["rendered"] = [str(p) for p in render(out, backscatter)]
         summary["rendered"] += [str(p) for p in render_reactions(out, reactions)]
     (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items() if k != "rendered"}, indent=None)[:600])
