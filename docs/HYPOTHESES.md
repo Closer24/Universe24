@@ -303,6 +303,14 @@ number, `H_0` from `lambda / B`.
 
 ## 10. Rest phase as the self-field
 
+**Fails on geometry, 2026-09-17.** A ray's field is born where the ray is
+and leaves at the causal speed, ahead of the ray or away from it; a ray is
+never faster than its own field, so a ray traveling straight never meets it,
+at any output-clock delay. There is no self-meeting from which a rest phase
+could come. The hypothesis is kept on the page as a closed one; the declared
+rate of [Highlights](HIGHLIGHTS.md) 3.3 stands. The text below is the
+hypothesis as raised.
+
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3 and 3.5) a ray's
 phase advances each step at a rate its family declares, and a ray's field is
 not released ahead of it along its own line, so a ray never meets its own

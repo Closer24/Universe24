@@ -852,11 +852,14 @@ return is the opposite momentum of the field, carried back along the field
 ray's line to the ray that released it, which recoils when the return
 arrives, at finite speed. That is how postulate 7 and Highlights 3.14 are
 satisfied: the recoil is a ray. Until its field meets something, a
-traveling ray pays nothing for it. A ray's field does not act on the ray
-itself: the field is released to the nodes around the ray but not ahead of
-it along its own line, so a ray never meets its own field, and every other
-ray does. A ray's phase per step comes from its family rate alone, not from
-its own field. There is no
+traveling ray pays nothing for it. The field is released in all directions.
+A ray traveling straight never meets its own field: the field is born where
+the ray is and leaves at the causal speed, ahead of the ray or away from it,
+and the ray is never faster than its field, at any output-clock delay; no
+exclusion rule is needed. Only after a change of trajectory can a ray cross
+field it released earlier, and that is a meeting like any other. A ray's
+phase per step comes from its family rate alone, not from its own field.
+There is no
 matter in the model at this stage: matter is the name for rays bound in one
 node by a declared binding coupling, a neutron ray and a proton ray held
 together by the strong binding, an electron ray around them whose trajectory
