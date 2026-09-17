@@ -349,7 +349,15 @@ states "exactly" and means integer equality at every tick.
   constant instead of G_eff · N², or neither (the identification of m₀ or of
   the unit of action in the derivation, not the engine), each stated as
   which.
-- **Status.** planned.
+- **Status.** planned. The N-scan part of the criterion ran on 2026-09-17 as
+  the acceptance test of feature 8 (`test_ray_binding.py`, a test, not this
+  experiment): a bound group of mass N / 4 phase steps per interval, b = 4,
+  the delay table `[4, 4, 4, 4, 4, 4]` per unit of field amount, gave
+  G_eff · N² = 64 exactly for N = 2^8, 2^10, 2^12 and 2^16, by the
+  construction of the delay in phase steps of a content-fixed field amount
+  ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)).
+  The five b, the exponent, the linearity in M and the external body remain
+  to be run here.
 
 ### A7. Newtonian attraction between two bound groups
 

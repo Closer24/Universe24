@@ -623,7 +623,18 @@ every such set; Highlights 3.20 is the text to follow.
    the orbit: a ray whose trajectory is changed at every step by the field
    rays of a bound group; the heavy Node's field delaying a passing ray more
    on its nearer side so that it bends toward the Node, gravity as bending
-   by delay, not an inserted force, momentum exact.
+   by delay, not an inserted force, momentum exact. (Done on 2026-09-17,
+   issue #169 feature 8, `ray-binding-v1`: a rule without outputs assigning
+   `delay` 1 binds its participants, the group ticking every interval, each
+   phase advancing by its rest rate, the field released on six headings; an
+   earlier outputs rule naming a bound participant and an arriving ray
+   unbinds it; `ray_delay` on the binding rule is the Node's output-clock
+   delay, one Node-wide wait for the six per-face clocks; a meeting output's
+   `delay` by a table per the Port the field ray came through is the lag of
+   the met ray's face clock in phase steps, spent one Link toward the
+   lagging side per phase modulus, the field ray returning reversed; the
+   recoil's coupling to the group and the orbit are open; see
+   [binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1).)
 9. Tests and experiments: reversibility replay; the light cone of the carried
    bit; CHSH with equal distances (expected at most 2) and with a delayed
    second ray (expected the singlet value); a light clock between two

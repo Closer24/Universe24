@@ -188,6 +188,20 @@ class TableSplit:
 
 
 @dataclass(frozen=True, slots=True)
+class LagTable:
+    """A delay assigned to one output of a meeting of rays by a declared integer table,
+    per the Port the source input came through (ray-binding-v1, Highlights 3.28): the
+    whole quanta of `amount x table[port] / per` phase steps of the output's face
+    clock on the side of that Port. The engine applies the table; the physics is the
+    table."""
+
+    output: int
+    source: int
+    table: tuple[int, int, int, int, int, int]
+    per: int = 1
+
+
+@dataclass(frozen=True, slots=True)
 class InteractionDefinition:
     name: str
     left_type: int
@@ -206,6 +220,11 @@ class InteractionDefinition:
     outputs: tuple[int, ...] = ()
     # Splits by a declared table among the outputs, applied after the assignments.
     splits: tuple[TableSplit, ...] = ()
+    # Delays by a declared table per Port, on the outputs of a meeting of rays
+    # (ray-binding-v1), and the output-clock delay a binding rule declares for the
+    # Node that holds its bound group: every arrival there waits this many intervals.
+    lags: tuple[LagTable, ...] = ()
+    ray_delay: int = 0
 
 
 @dataclass(frozen=True, slots=True)

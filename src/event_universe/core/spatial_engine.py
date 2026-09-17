@@ -34,6 +34,7 @@ from .spatial_state import (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    bound_group,
     coherent_stock,
     holds_source_stock,
     ray_charge,
@@ -482,7 +483,26 @@ class SpatialEngine:
         return result
 
     def snapshot(self) -> dict[str, object]:
+        bound_groups: list[dict[str, object]] = []
+        for position, node in sorted(self.nodes.items()):
+            group = bound_group(node.rays) if node.rays else ()
+            if group:
+                # Matter (ray-binding-v1, Highlights 3.4): the bound group held at
+                # the Node this tick, for a Renderer to draw.
+                bound_groups.append(
+                    {
+                        "position": position,
+                        "families": [
+                            self.initial.fields[self.initial.spatial_fields[index].field].name
+                            for index, _ in group
+                        ],
+                        "amounts": [ray.amount for _, ray in group],
+                        "phases": [ray.phase for _, ray in group],
+                        "ray_delay": node.bound_delay,
+                    }
+                )
         return {
+            "bound_groups": bound_groups,
             "spatial_fields": [
                 {
                     "position": position,
