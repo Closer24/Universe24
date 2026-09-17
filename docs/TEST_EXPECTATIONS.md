@@ -983,7 +983,16 @@ from the event stream alone (no per-tick recording, so no phase):
   `momentum_arrow_width_px` 1.5, `arrowhead_px` 5 and `colors.momentum_arrow`
   `#7fd7ff` (a tiny arrow at the head in the ray's heading, amount x 1.75 px
   long, 14 px for an electron of 8, carrying the arrowhead), a fixed matter
-  colour with `hue_by_phase` on the arrowhead only, of the `page_text` flags
+  colour with `hue_by_phase` on the arrowhead only, `draw.marker_shape`
+  `sphere` with empty `shape_overrides` (sources, Detector marks, external
+  bodies and ray heads as smooth spheres, a head of `head_radius_px` 4),
+  `draw.glow`, `draw.vignette` and `draw.field_additive` true, every event
+  marker shape but `escape` a `ring`, `lattice_alpha` 0.07, `colors.scene`
+  `#0b1730` fading to `scene_edge` `#03060b`, `gif_supersample` 2,
+  `camera_fit` `rays` with `camera_fit_margin_links` 1 (the camera and the
+  lattice fit the box around every matter ray path, source, Detector mark and
+  body over the run, padded by one Link; `board` fits the whole board), and
+  fixed colours for the families `electron`, `light`, `proton` and `neutron`, of the `page_text` flags
   only `header` (the run's title) and `tick_counter` true, every `labels`
   flag false, and `autoplay` and `loop` true.
 
