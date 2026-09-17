@@ -49,7 +49,10 @@ all the information is on the rays. From its event, every ray carries the
 number of steps it has made. Every ray carries the information of the last
 event it was involved in; if that event was at a Detector, the ray records
 that it was a Detector event and the bit drawn, 1 or 0, and the bit is all
-the Detector adds. Between two interactions nothing new happens
+the Detector adds. The information of the last event and the Detector's bit stay on the ray as
+hidden variables: no Detector and no ordinary coupling reads them today, they
+come from no ordinary physics, and for now they affect no one; nothing on the
+board feels them. Between two interactions nothing new happens
 to it. A ray trajectory is therefore reversible: run backward step
 by step it returns exactly to the interaction that created it, because no
 information was added or lost along the line.
@@ -256,7 +259,10 @@ were decided at time zero, but nothing happened at time zero: the value was
 carried through the birth event in event spacetime, one Link per interval.
 Every Detector behaves the same: the second Detector draws its own bit on
 that arrival like on any other and reads nothing from the ray; the received
-value is information on the ray, not an input to the draw.
+value is information on the ray, not an input to the draw. The information of the last event and the Detector's bit stay on the ray as
+hidden variables: no Detector and no ordinary coupling reads them today, they
+come from no ordinary physics, and for now they affect no one; nothing on the
+board feels them.
 
 This replaces the shared registry of the historical bonded profile with a
 carried bit, so the model has no owner that answers at a distance. The
@@ -332,7 +338,9 @@ on 16 September 2026.
 2. Ray state, the list of Highlights 5.1: family properties, phase, heading,
    the number of steps it has made since its event, the information of its
    last event and, if that was a Detector event, its bit. The step count, the
-   last event's information and the bit are added; heading and phase exist,
+   last event's information and the bit are added, carried, not read by any
+   rule yet (hidden variables that affect no one for now); heading and phase
+   exist,
    and the phase is carried by every ray, since every ray is a wave ray. No
    origin reference is stored: the count suffices on a straight line, and no
    Node keeps anything about the event.

@@ -687,7 +687,10 @@ at the birth event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it and draws its own bit on that
 arrival like on any other; a Detector sees nothing of the ray, only its own
 value, the received value is information on the ray, not an input to the
-draw, and no owner answers at a distance. With two Detectors,
+draw, and no owner answers at a distance. The information of the last event
+and the Detector's bit stay on the ray as hidden variables: no Detector and
+no ordinary coupling reads them today, they come from no ordinary physics,
+and for now they affect no one; nothing on the board feels them. With two Detectors,
 Alice's and Bob's, whichever returns first sends its value through the birth
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
