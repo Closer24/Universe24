@@ -145,6 +145,7 @@ separate carriers and their different directions.
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |
 | `spatial_interactions` | Schema 1 only: at most 32 joint field/carrier transactions with delayed-commit guards |
+| `ray_interactions` | Schema 1 only: at most 32 meetings of rays over indexed ray-field roles ([shared coupling](SHARED_RAY_COUPLING.md)); an entry with `outputs` replaces its participants by one to six new event rays, an amount optionally split by a declared table ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)) |
 
 The authoritative contract for local field selection, group semantics, rule
 expressions and joint transactions is [LOCAL_FIELD_RULES.md](LOCAL_FIELD_RULES.md).
@@ -183,7 +184,9 @@ every ray carries), `detector_mark` (`detector-mark-v1`, the
 [Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1) a Node
 may carry), and `ray_layers` (`ray-layers-v1`) with `ray_layer_families`, the
 [layers](SPATIAL_FIELDS.md#layers-ray-layers-v1) derived from the declared
-`ray_interactions` as sorted lists of field names.
+`ray_interactions` as sorted lists of field names, and `ray_meeting`
+(`ray-meeting-conversion-v1`, the
+[meeting with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
 See [spatial fields](SPATIAL_FIELDS.md) for per-completed-link decay and clipped
 emission allowances, and [spatial response](SPATIAL_COUPLINGS.md) for atomic
 whole-action allowances. Neither allowance is a conserved physical reservoir.

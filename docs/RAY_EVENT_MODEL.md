@@ -605,6 +605,20 @@ rules of different layers fire independently in one interval and an unruled
 ray crosses unchanged, and the runner records the derived layers; see
 [layers](SPATIAL_FIELDS.md#layers-ray-layers-v1).
 
+The meeting with N-to-M outputs of step 6 is feature 6 of issue #169 (done on
+2026-09-17, `ray-meeting-conversion-v1`): a `ray_interactions` rule with
+declared outputs replaces its participants by up to six new event rays at
+the meeting Node, without a resident record, every family's stock and the
+declared invariants exact as sums over inputs and outputs; the steering
+table is a declared coupling, an output amount split by the table at the
+phase difference of two inputs, the rest output owning the remainder as
+Highlights 3.17 requires; the momentum such a split moves is booked as an
+accounted source until the field ray of step 7 owns it as recoil; see
+[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needs
+`fields/record_operations.py` and `core/record_policy.py`, so step 6 of
+issue #164, their deletion, is unlocked. The wave-ray phase rule and the
+light family of step 6 follow with feature 9.
+
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.
 

@@ -17,6 +17,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_MARK,
     RAY_EVENT_STATE,
     RAY_LAYERS,
+    RAY_MEETING,
     WAVE_RAY_FAMILY,
     ray_layer_names,
 )
@@ -196,6 +197,7 @@ def _execute_run(
                 initial.fields, initial.spatial_fields, initial.ray_interactions
             )
         ],
+        "ray_meeting": RAY_MEETING,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

@@ -301,19 +301,25 @@ def test_existing_carrier_false_guard_remains_the_original_noop():
     assert meter.total == 1 and meter.interaction_ticks == 0
 
 
-def test_native_ray_json_does_not_admit_carrier_conversion_outputs():
+def test_native_ray_json_does_not_admit_the_carrier_conversion_output_form():
+    # A meeting with outputs (ray-meeting-conversion-v1) assigns through its
+    # outputs, each a ray field with an amount and a heading, never a carrier type.
     doc = document()
     doc["ray_interactions"][0]["outputs"] = [{"type": "wave"}]
-    with pytest.raises(ValueError, match="unknown keys: outputs"):
+    with pytest.raises(ValueError, match="assigns through its outputs"):
+        parse_initial_state(doc)
+    del doc["ray_interactions"][0]["assignments"]
+    with pytest.raises(ValueError, match="ray meeting output has unknown keys: type"):
         parse_initial_state(doc)
 
 
 @pytest.mark.parametrize("entry", ["initial_state", "local_law", "local_apply"])
-def test_native_ray_typed_entries_reject_new_n_to_m_output_metadata(entry):
+def test_native_ray_typed_entries_reject_malformed_meeting_outputs(entry):
     initial = parse_initial_state(document())
+    # One declared output while the assignments address two participants.
     rule = replace(initial.ray_interactions[0], outputs=(0,))
     rays = (Ray(0, (0, 0, 0), 5), Ray(1, (0, 0, 0), 5))
-    with pytest.raises(ValueError, match="without k or conversion"):
+    with pytest.raises(ValueError, match="address its declared outputs"):
         if entry == "initial_state":
             replace(initial, ray_interactions=(rule,))
         elif entry == "local_law":
