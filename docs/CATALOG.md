@@ -101,6 +101,12 @@ offset; a world writes the names.
 among the outputs) and the `apparatus_family` a world gives a mirror, a
 splitter or a plate under a declared coupling: rest rate 0, since the token
 must come back with the body's phase, no charge, no field.
+The Detector's record also lists its `couplings` on the bit a ray already
+carries (Highlights 5.4, model owner, 2026-09-17; feature 2b, after feature
+10), two open entries with the decided default: `on_bit_1`, a ray carrying 1
+passes without a draw; `on_bit_0`, a ray carrying 0 is a transmission and is
+never drawn; only a ray carrying no bit is drawn, and the key by which a
+mark declares another behaviour is undecided until the feature lands.
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -146,6 +152,8 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
 | `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
+| `apparatus.detector.couplings.on_bit_1.world_key` | The key by which a mark declares what it does with a ray carrying 1, the default being to pass it without a draw (Highlights 5.4, 2026-09-17) | feature 2b |
+| `apparatus.detector.couplings.on_bit_0.world_key` | The key by which a mark declares what it does with a ray carrying 0, the default being a transmission that is never drawn | feature 2b |
 
 ## How a world selects rays from the catalog
 
@@ -163,7 +171,7 @@ it uses; the layers follow.
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
 | A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
-| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode` |
+| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode`; the couplings on the bit have no world key yet (feature 2b) |
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
 | A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |

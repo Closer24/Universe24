@@ -1618,9 +1618,14 @@ first run:
   name it, `absorber` its default, its declaration exactly the eight keys of
   `external-body-v1` and its apparatus family of rest rate 0, charge 0 and no
   field, not a ray of the catalog; the Detector's declaration exactly
-  `position`, `setting`, `seed`; both apparatus kinds landed;
-- `undecided`: 29 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
-  A10, A12, hypothesis 12, hypothesis 13, feature 8b, feature 12, read from the
+  `position`, `setting`, `seed`; the Detector's two couplings on the bit,
+  `on_bit_1` and `on_bit_0`, open, their world key undecided and decided by
+  feature 2b, their engine not landed, their defaults pass without a draw
+  and transmission without a draw (Highlights 5.4, 2026-09-17); both
+  apparatus kinds landed;
+- `undecided`: 31 entries, every decider one of A1, A2, A3, A5, A6, A8, A9,
+  A10, A12, hypothesis 12, hypothesis 13, feature 2b, feature 8b, feature 12,
+  read from the
   `### A<n>.` and `### B<n>.` headings of the register, the `## <n>.` headings
   of the hypotheses page and the `feature <n>` names of the ray-event model;
   the table of `CATALOG.md` equal to the file, path for path and decider for
