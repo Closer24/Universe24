@@ -189,6 +189,7 @@ def _execute_run(
         "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
         "detector_mark": DETECTOR_MARK,
+        "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
             list(layer)
@@ -197,7 +198,6 @@ def _execute_run(
             )
         ],
         "ray_meeting": RAY_MEETING,
-        "wave_ray": WAVE_RAY_FAMILY,
         "boundary": initial.boundary,
         "elapsed_seconds": time.perf_counter() - started,
         "status": "failed" if failure else "completed",

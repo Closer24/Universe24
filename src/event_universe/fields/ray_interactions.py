@@ -17,8 +17,8 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.integer import checked_work
 from event_universe.core.spatial_state import (
     RAY_PROPERTIES,
-    Layers,
     RAY_VIEW_COMPONENTS,
+    Layers,
     Ray,
     Rays,
     SpatialFieldDefinition,
