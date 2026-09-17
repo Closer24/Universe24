@@ -677,8 +677,9 @@ limits; it does not derive the matrices or establish physical energy closure.
 
 Adopted direction (model owner, 2026-09-17): the only draw in the model is the
 Detector interaction, 1 or 0 for each transfer arriving at a marked node,
-every ray being a wave ray, 1 ordinary behavior and 0 return, one bit per
-arriving transfer, and the bit is all the Detector adds
+every ray being a wave ray, 1 ordinary behavior and the only measurement,
+0 return and no measurement (nothing measured or recorded as an outcome),
+one bit per arriving transfer, and the bit is all the Detector adds
 (the [Detector-only contract](docs/DETECTOR_SAMPLING.md) made concrete in
 [section 23](#23-the-ray-event-model)). A pair's bit is drawn at the first
 Detector and carried by the returning ray, which walks back the same number
@@ -835,6 +836,11 @@ the node draws once for each, independently: the arrivals that drew 1 enter
 the ordinary interaction together, each arrival that drew 0 is returned on
 its own line. The Detector reads, changes,
 absorbs and adds nothing; the click is the record of the bit drawn. A
+measurement exists only when the node drew 1 and let the ray pass: on 0
+there is no measurement, the node returns the ray without touching it and
+is a node without measurement, as if the ray had not arrived, and it waits
+for what the return brings back; nothing is measured or recorded as an
+outcome. A
 Detector sees nothing of the ray, on 1 or on 0: it sees only its own value.
 When it returned a ray with 0, that value travels with the ray, and the
 second Detector of the pair receives it on the ray that reaches it.
