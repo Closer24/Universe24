@@ -20,6 +20,7 @@ from event_universe.core.spatial_state import (
     ExternalBody,
     FieldInteractionGuard,
     FieldRuleGuard,
+    FieldSpread,
     InverseSplit,
     Ray,
     SpatialNodeState,
@@ -49,6 +50,7 @@ STATE_RECORDS = (
     DetectorMark,
     InverseSplit,
     ExternalBody,
+    FieldSpread,
 )
 
 

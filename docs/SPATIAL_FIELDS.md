@@ -771,7 +771,10 @@ six headings every interval it is held
 ([binding](#binding-and-gravity-by-delay-ray-binding-v1)). A G ray crosses
 Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
-lattice alone. A G ray that reaches an open boundary escapes like any ray.
+lattice alone, unless G declares `spread`
+([field spreading](#field-spreading-field-spreading-v1), feature 12), when
+every Node its content reaches releases it again by the declared table. A G
+ray that reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the
 spatial law after its emissions and before forwarding.
 
@@ -951,6 +954,130 @@ is the bodies' momentum line, the exact sum. The runner records
 with its `positions` per completed tick, `[tick, x, y, z]`, and its final
 state), `external_body_totals` and `external_body_momentum`. A world that
 declares no `external_bodies` runs byte-identically.
+
+### Field spreading (`field-spreading-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.5, "Light is the field, and the
+field spreads", 3.17, 3.20 and 3.23; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 12; model owner,
+2026-09-17): light and the field of a charge are one family, and because
+light spreads, the field spreads by the same rule: every Node that field
+content reaches releases it again in all six headings by a declared split
+table, Huygens' principle in the lattice's language, one catalog entry of the
+family and not an engine mechanism. A ray family declares it with `spread`:
+
+```json
+{"field": "light", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
+ "rays_per_tick": 1, "ray_slots": 16, "spread": [6, 1, 1, 1, 1, 1],
+ "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
+```
+
+**The table.** `spread` is six nonnegative integer weights in Port order
+relative to the arriving heading: forward (the heading the content arrived
+on), backward (its reverse) and the four transverse Port headings in Port
+order (for content arriving on +X or -X: +Y, -Y, +Z, -Z; on +Y or -Y: +X,
+-X, +Z, -Z; on +Z or -Z: +X, -X, +Y, -Y); the denominator is their sum, as
+for `octant_weights`. The backward weight must be positive: a forward-only
+split piles the field on the diagonals and empties the axes (Highlights
+3.5). The four transverse weights must be equal: the lattice has no
+preferred transverse direction (Highlights 3.23), so the momentum a spread
+moves lies on the arriving axis up to the remainder. The total is a bounded
+integer.
+
+**The step.** In every interval, after the marks of step 2 (a Detector's
+draw, a body's sink or coupling) and the meetings of step 3 (Highlights 5.2)
+and before the departures, the spatial law takes off the Node the content of
+the family that arrived this interval and is due to leave: the outbound rays
+with at least one Link walked and no delay or wait pending. A fresh ray at
+its event Node (an emission, a meeting's output, the recoil, a transmission)
+and a fresh release depart on their line and spread from the next Node; a
+returning ray walks back and is not spread; a held ray is not due. What a
+Detector returned or a body took follows those rules first, and only the
+rest spreads. Nothing of the taken content is forwarded as it came, and
+nothing stays at the Node.
+
+**The combination.** Field rays carry no event, so the content combines
+before it spreads (Highlights 3.20): amounts add per arriving heading,
+content on one line being one content; the phase of the whole is one phase,
+the phase step nearest the direction of the coherent sum of amount x
+e^(i phase) over every taken ray (`phase_of_sum`, the coherence rule and its
+cosine table; a cancelled sum gives step 0); the Detector bit of the whole is
+the catalog default of Highlights 5.4, 1 outranks 0 outranks none. The
+amount is exact: the coherence of the arrivals (`coherence`, the ratio a
+reader or an absorber sees) is recorded and never applied to the amount,
+since nothing but a sink ends a quantum.
+
+**The split.** Each arriving heading's content A is shared over the six
+relative headings in whole quanta, floor(A x w_i / S), S the table's total.
+The quanta the floors leave, at most five per heading, are the remainder of
+Highlights 3.17, and it leaves whole through the heading the phase selects,
+as the steering table places a whole quantum by a phase: the phase p, as a
+share of the turn, laid against the weights end to end, selects the smallest
+entry i with m x (w_0 + ... + w_i) > p x S, m the phase modulus
+(2^`phase_bits`; with no width p is 0 and the first entry with a weight is
+selected). With the table `[6, 1, 1, 1, 1, 1]` and eight phase steps, phases
+0 to 4 select forward, 5 backward, 6 the second transverse and 7 the third.
+So over all phases the remainders follow the table and the wave shows in
+intensities; a single quantum cannot split and never waits: a ray of amount
+1 keeps moving at one Link per interval on the path its phase sets, turning
+the same way relative to its heading at every Node. Departures on one Port
+merge. Each departure is a fresh field ray: the Port's heading, accumulators
+(0, 0, 0), the combined phase, the family's rate, no wait, no delay, no lag,
+`steps` 0, `outbound` 1, no event (mask 0, shares all zero), the combined
+bit; it walks one Link with this interval's residents and is spread again at
+the next Node.
+
+**The booking.** The total is exact, so the amount has no source and the
+world ledger of feature 10 is unchanged by a spread. A spread changes the
+momentum of field content, amount x heading: a ray heading +X becomes six
+rays, and the difference, amount x heading summed over the departures less
+the same sum over what arrived, is booked as an explicitly accounted source
+of the family's momentum field when one is bound (Highlights 3.15), exactly
+as the release of feature 7 and the table split of feature 6 are booked;
+`source_totals` and the per-tick `source_delta` name it, and
+`conserved_at_every_completed_tick` stays the ledger's identity. The local
+audit (`diagnostics/local_conservation.py`) measures the departures as it
+measures a release, a source at the Node, and reads the `field_spread`
+record to give back what the Node itself held, so its `sourced` line gains
+the momentum difference and nothing else
+([local conservation](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)).
+
+**The record.** One `field_spread` record per Node, interval and family:
+`family`, `amount` (what was taken), `arrived` (the amount per arriving
+heading, six entries by the heading's Port index), `amounts` (the departure
+per Port), `remainders` (the remainder quanta placed per Port), `phase` (the
+combined phase) and `coherence` (the reduced ratio of the arrivals'
+coherence). It is published before the interval's `spatial_cycle` record,
+like `inverse_split`. `FieldSpread` (`core/spatial_state.py`) is the plan's
+record, registered in the Node state contract; `spread_content` is the pure
+function, `relative_ports` the relative Port order and
+`spread_remainder_entry` the phase's choice.
+
+**Consequences, none inserted.** With the released field of feature 7
+declared with `spread`, a charge's field fills the board: five rays per Node
+crossed, each spread again at the next Node, whole quanta wandering by
+phase. A recoil, the reversed output of a meeting, departs on its line and
+spreads from the next Node like every field content: what walks back toward
+the source is the net momentum of the spread, forward less backward on the
+line, not one whole ray; a world that wants the recoil whole declares no
+`spread`. Field content that meets a ray whose coupling responds is met
+before it spreads, so the rule of feature 7 and the sink of feature 7b act on
+what arrived. The cost is measured before adoption
+([performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables)).
+
+Admission: `spread` requires ray transport, a positive, conserved, unpaced
+unit-axial ray field on the links metric with the six Port headings, zero
+baseline, no decay and no self-exclusion (the geometry of a released field),
+the coherence table when the family has a phase width (`phase_bits` above 0
+requires `kerengonen.phase_steps`), and the shared Detector admission
+(schema 1, `link_ticks` 1, the default fixed clock, no field rules, spatial
+interactions or couplings on the family); a table of another length, a
+negative weight, a zero backward weight or unequal transverse weights is
+rejected at initialization. The runner records `field_spreading:
+"field-spreading-v1"` and `spreading_fields` (each family with its table)
+only when a family declares `spread`; a world that declares none runs
+byte-identically, records included. `test_field_spreading.py`
+([expectations](TEST_EXPECTATIONS.md#field-spreading)) is the test.
 
 ### Audits (`ray-event-audit-v1`)
 

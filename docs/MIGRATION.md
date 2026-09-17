@@ -6,6 +6,44 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## Field spreading added on 2026-09-17 (`field-spreading-v1`)
+
+Feature 12 of the [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order),
+the model owner's decision of 2026-09-17 in Highlights 3.5 ("Light is the
+field, and the field spreads"; [field
+spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1)):
+
+- `spatial_fields[i].spread`, ray transport only: six nonnegative integer
+  weights in Port order relative to the arriving heading (forward, backward,
+  the four transverse in Port order), the backward one positive and the four
+  transverse equal; the sum is the denominator. Every Node that content of
+  the family reaches releases it again by the table, after the marks and
+  the meetings of the interval and before the departures: amounts add per
+  arriving heading, the phase is the phase of the coherent sum, whole quanta
+  by the table, the remainder whole through the entry the phase selects. A
+  world that declares no `spread` runs byte-identically, its run record
+  included (`test_field_spreading.py`, `unchanged`, pins the record hashes of
+  the released-field world on main `f3809be`).
+- New in `core/spatial_state.py`: `FIELD_SPREADING`, the definition key
+  `spread`, `FieldSpread` (the plan's record, in `STATE_RECORDS`),
+  `validate_spread_table`, `validate_spread_fields`,
+  `validate_spread_admission`, `relative_ports`, `spread_remainder_entry`,
+  `spread_phase`, `spread_content` and `spreading_field_names`;
+  `SpatialPlan.spreads`. The spatial law's `_spread` runs per ray field after
+  the inverse split and before forwarding.
+- A new record kind, `field_spread`, per Node, interval and family (`family`,
+  `amount`, `arrived`, `amounts`, `remainders`, `phase`, `coherence`),
+  published before the cycle's `spatial_cycle` record; the ray viewer's
+  extractor lists it among its silent kinds and shows the spread as a
+  release. The momentum a spread moves is an explicitly accounted source of
+  the family's momentum field, so `source_totals` and the ledger's `sourced`
+  line carry it and `conserved_at_every_completed_tick` stays the identity;
+  the local conservation audit reads the record and reports the same term.
+- The runner records `field_spreading: "field-spreading-v1"` and
+  `spreading_fields` only when a family declares `spread`.
+- Tests: `tests/test_field_spreading.py` (single, superposition, cancelled,
+  quantum, rejected, unchanged; [expectations](TEST_EXPECTATIONS.md#field-spreading)).
+
 ## Ray-event audits on 2026-09-17 (`ray-event-audit-v1`)
 
 Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),

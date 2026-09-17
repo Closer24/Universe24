@@ -28,7 +28,16 @@ RECORD_FILES = ("run.json", "events.jsonl", "initialization.json", "state.json",
 # Event kinds consumed structurally (they build rays) rather than drawn as markers,
 # and host-timing diagnostics of a Node's cycle that mark nothing on the board.
 STRUCTURAL_KINDS = ("spatial_sent", "spatial_received", "spatial_escaped", "spatial_cycle")
-SILENT_KINDS = ("spatial_cycle_started", "cycle_started", "cycle_committed", "external_body_step")
+SILENT_KINDS = (
+    "spatial_cycle_started",
+    "cycle_started",
+    "cycle_committed",
+    "external_body_step",
+    # A spread (field-spreading-v1) is read from the transits: the field content
+    # that continues is the ray's trail and what leaves on the other Ports is a
+    # release, silent on the page like every release.
+    "field_spread",
+)
 # Event kinds the default caption lists (a style file can choose others).
 CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "return", "arrival", "split")
 CAPTION_MAX = 3
@@ -833,6 +842,7 @@ def families(record: Record) -> list[dict[str, Any]]:
                 "field": is_field_family(name, definition),
                 "field_of": None if definition is None else definition.get("field_of"),
                 "release": None if definition is None else definition.get("release"),
+                "spread": None if definition is None else definition.get("spread"),
                 "phase_steps": kerengonen.get("phase_steps"),
             }
         )

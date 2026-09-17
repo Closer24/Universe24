@@ -22,6 +22,7 @@ from event_universe.core.spatial_state import (
     RETURN_MODES,
     EmissionDefinition,
     FieldRuleGuard,
+    FieldSpread,
     InverseSplit,
     Layers,
     NodeFieldRuleDefinition,
@@ -42,11 +43,13 @@ from event_universe.core.spatial_state import (
     ray_stock,
     release_field,
     release_stock,
+    spread_content,
     stamp_event,
     transmit,
     validate_ray_participants,
     validate_rays,
     validate_released_fields,
+    validate_spread_fields,
 )
 
 from .disturbances import evaluate
@@ -91,6 +94,7 @@ class SpatialLaw:
         if self.return_mode not in RETURN_MODES:
             raise ValueError("return_mode must be siblings, straight or annul")
         validate_released_fields(self.definitions, self.fields)
+        validate_spread_fields(self.definitions, self.fields)
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
             object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
@@ -489,6 +493,50 @@ class SpatialLaw:
                         source[definition.momentum_field][axis] + value
                     )
 
+    def _spread(
+        self,
+        index: int,
+        resident: list[Ray],
+        emitted: list[Ray],
+        source: list[list[int]],
+        meter: CostMeter,
+    ) -> FieldSpread | None:
+        """Field spreading (field-spreading-v1, Highlights 3.5): every Node that
+        content of a spreading family reaches releases it again by the declared
+        table. After the marks and the meetings and before the departures, the
+        outbound content that arrived this interval and is due to leave (at least
+        one Link walked, no delay or wait pending) is taken off the Node; a fresh
+        ray at its event Node and a fresh release depart on their line and spread
+        from the next Node, a returning ray walks back, a held ray is not due. The
+        departures join this interval's emitted rays. The total is exact, so no
+        amount is sourced; the momentum the spread moves, amount x heading over
+        the departures less the same over what arrived, is booked as an explicitly
+        accounted source of the family's momentum field when one is bound, as the
+        release and the table split are (Highlights 3.15)."""
+        definition = self.definitions[index]
+        due = tuple(
+            ray
+            for ray in resident
+            if ray.outbound and ray.steps and not ray.interaction_delay and not ray.wait
+        )
+        if not due:
+            return None
+        resident[:] = [ray for ray in resident if ray not in due]
+        meter.charge("read", len(due))
+        if definition.coherent:
+            meter.charge("evaluate", len(due) + definition.phase_steps)
+        departures, record = spread_content(index, due, definition)
+        meter.charge("split", len(departures))
+        emitted.extend(departures)
+        if definition.momentum_field is not None:
+            before = ray_momentum(due, definition)
+            after = ray_momentum(departures, definition)
+            for axis in range(3):
+                source[definition.momentum_field][axis] = checked_work(
+                    source[definition.momentum_field][axis] + after[axis] - before[axis]
+                )
+        return record
+
     def validate_guards(self, states: tuple[SpatialState, ...], plan: SpatialPlan) -> None:
         validate_field_guards(self.fields, self.definitions, self.field_rules, states, plan, self.costs)
 
@@ -651,6 +699,7 @@ class SpatialLaw:
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
         inverse_splits: list[InverseSplit] = []
+        spreads: list[FieldSpread] = []
         for index, rule in enumerate(self.emissions):
             definition = self.definitions[rule.spatial_field]
             field = self.fields[definition.field]
@@ -838,6 +887,12 @@ class SpatialLaw:
                         absorbed = checked_work(absorbed + split.amount)
                     if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
+                if definition.spread:
+                    spread = self._spread(
+                        index, resident_rays[index], emitted_rays[index], source, meter
+                    )
+                    if spread is not None:
+                        spreads.append(spread)
                 if ray_hold:
                     ports, fresh_kept = forward_rays(tuple(emitted_rays[index]), definition, meter)
                     kept = merge_rays(
@@ -945,4 +1000,5 @@ class SpatialLaw:
             inverse_splits=tuple(inverse_splits),
             annulled=tuple(tuple(v) for v in annulled) if any(any(v) for v in annulled) else (),
             bound_delay=max(bound, default=0),
+            spreads=tuple(spreads),
         )

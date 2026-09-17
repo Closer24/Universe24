@@ -147,6 +147,19 @@ RETURN_MODES = ("siblings", "straight", "annul")
 EXTERNAL_BODY = "external-body-v1"
 MAX_EXTERNAL_BODIES = 4096
 BODY_SINK = -1
+# Field spreading (Highlights 3.5, 3.17, 3.20 and 3.23, model owner 2026-09-17;
+# field-spreading-v1): light is the field, and the field spreads. A family that
+# declares `spread`, six weights in Port order relative to the arriving heading
+# (forward, backward, the four transverse in Port order), releases again at
+# every Node its content reaches: the outbound content that arrived is taken
+# off the Node, amounts add per arriving heading, the phase is the phase of the
+# coherent sum, each heading's content is shared by the table in whole quanta
+# and the remainder leaves whole through the entry the phase selects; the
+# departures are fresh field rays with no event. Huygens' principle in the
+# lattice's language: one catalog entry of the family, not an engine mechanism.
+FIELD_SPREADING = "field-spreading-v1"
+SPREAD_ENTRIES = 6
+SPREAD_BACKWARD = 1
 
 
 @dataclass(frozen=True, slots=True)
@@ -668,6 +681,218 @@ def released_field_names(
     ]
 
 
+# Field spreading (field-spreading-v1). Every rule here reads the content that
+# arrived at one Node and the family's declared table; nothing reads another Node.
+
+
+@dataclass(frozen=True, slots=True)
+class FieldSpread:
+    """The record of one spread for the Node to publish (field-spreading-v1): plain
+    bounded integers, as the Node state contract requires. The spatial field, the
+    amount taken off the Node, the amount that arrived per heading (six entries by
+    the heading's Port index), the departure per Port, the remainder quanta placed
+    per Port, the combined phase and the reduced coherence of the arrivals."""
+
+    field: int
+    amount: int
+    arrived: tuple[int, ...]
+    amounts: tuple[int, ...]
+    remainders: tuple[int, ...]
+    phase: int
+    coherence: tuple[int, int]
+
+
+def validate_spread_table(table: tuple[int, ...]) -> int:
+    """The split table of a spreading family: six nonnegative bounded weights in Port
+    order relative to the arriving heading, the backward weight positive (a
+    forward-only split piles the field on the diagonals and empties the axes,
+    Highlights 3.5) and the four transverse weights equal (the lattice has no
+    preferred transverse direction, Highlights 3.23). Returns the total, the
+    table's denominator."""
+    if (
+        type(table) is not tuple
+        or len(table) != SPREAD_ENTRIES
+        or any(type(weight) is not int or bounded(weight) < 0 for weight in table)
+    ):
+        raise ValueError(
+            "a spread table holds six nonnegative integer weights in Port order relative to "
+            "the arriving heading"
+        )
+    if table[SPREAD_BACKWARD] <= 0:
+        raise ValueError("a spread table must give the backward heading a positive weight")
+    if len(set(table[2:])) != 1:
+        raise ValueError("a spread table gives the four transverse headings one weight")
+    return bounded(sum(table))
+
+
+def validate_spread_fields(
+    definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
+) -> None:
+    """The admission of a spreading family (field-spreading-v1): the geometry of a
+    released field (a positive, conserved, unpaced unit-axial ray field on the
+    links metric with the six Port headings, zero baseline, no decay, no
+    self-exclusion) and, with a phase width, the coherence table, since the phase
+    of the content is the phase of the coherent sum."""
+    for definition in definitions:
+        if not definition.spread:
+            continue
+        field = fields[definition.field]
+        if (
+            not definition.rays
+            or field.signed
+            or not field.conserved
+            or any(unpack(definition.baseline))
+            or definition.euclidean
+            or definition.pace_numerator != definition.pace_denominator
+            or definition.self_exclusion
+            or definition.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
+        ):
+            raise ValueError("a spreading family requires a positive unit-axial unpaced ray field")
+        if any(heading not in definition.headings for heading in PORT_HEADINGS):
+            raise ValueError("a spreading family requires the six Port headings")
+        if definition.phase_bits and not definition.coherent:
+            raise ValueError(
+                "a spreading family with a phase width declares the coherence table: the phase "
+                "of the content is the phase of the coherent sum"
+            )
+
+
+def validate_spread_admission(initial: InitialState) -> None:
+    """A world with a spreading family runs under the shared Detector admission."""
+    if not any(definition.spread for definition in initial.spatial_fields):
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+    ):
+        raise ValueError("a spreading family requires the default fixed H=1 spatial clock")
+    validate_spread_fields(initial.spatial_fields, initial.fields)
+    spreading = {definition.field for definition in initial.spatial_fields if definition.spread}
+    if any(rule.field in spreading for rule in initial.spatial_couplings):
+        raise ValueError("a spreading family does not support coupled responses or absorption")
+
+
+def relative_ports(port: int) -> tuple[int, ...]:
+    """The six Ports in the order of a spread table for content arriving on the
+    heading of Port `port`: forward, that Port; backward, its opposite; then the
+    four transverse Ports in Port order."""
+    if type(port) is not int or not 0 <= port < 6:
+        raise ValueError("a relative Port order requires a Port index")
+    return (port, port ^ 1, *(other for other in range(6) if other >> 1 != port >> 1))
+
+
+def spread_remainder_entry(phase: int, phase_modulus: int, table: tuple[int, ...]) -> int:
+    """The entry of the table the phase selects for the remainder (Highlights 3.17
+    and 3.20, the steering table's rule for a whole quantum): the phase, as a
+    share of the turn, laid against the weights end to end; the smallest entry i
+    with modulus x (w_0 + ... + w_i) > phase x total. At phase 0 the first entry
+    with a weight; over all phases the remainders follow the table."""
+    total = sum(table)
+    target = checked_work(phase * total)
+    cumulative = 0
+    for entry, weight in enumerate(table):
+        cumulative = checked_work(cumulative + weight)
+        if checked_work(phase_modulus * cumulative) > target:
+            return entry
+    raise ValueError("a spread phase must be below the family's phase width")
+
+
+def spread_phase(rays: Rays, definition: SpatialFieldDefinition) -> int:
+    """The one phase of the content a Node spreads: the phase step nearest the
+    direction of the coherent sum over every taken ray (the coherence rule of
+    Highlights 3.20; a cancelled sum gives step 0), 0 for a family without a
+    phase width."""
+    if not definition.coherent:
+        return 0
+    return phase_of_sum(tuple((abs(ray.amount), ray.phase) for ray in rays), definition)
+
+
+def spread_content(
+    index: int, rays: Rays, definition: SpatialFieldDefinition
+) -> tuple[Rays, FieldSpread]:
+    """The spread of one family's content at a Node (field-spreading-v1): the
+    departures, one fresh field ray per Port with content in Port order, and the
+    record. The rays are the outbound content that arrived (at least one Link
+    walked). Amounts add per arriving heading; the phase of the whole is the
+    phase of the coherent sum and its Detector bit the catalog default, 1
+    outranks 0 outranks none; each heading's content is shared over the six
+    relative headings in whole quanta, floor(content x weight / total), and the
+    quanta the floors leave, at most five, leave whole through the entry the
+    phase selects. Each departure carries the Port's heading, accumulators
+    (0, 0, 0), the combined phase, the family's rate, no wait, delay or lag,
+    steps 0, outbound 1 and no event. The total is exact."""
+    table = definition.spread
+    total = validate_spread_table(table)
+    arrived = [0] * 6
+    for ray in rays:
+        if not ray.outbound or ray.steps < 1 or ray.amount <= 0:
+            raise ValueError("a spread takes the outbound content that arrived at the Node")
+        heading = definition.headings[ray.heading]
+        if heading not in PORT_HEADINGS:
+            raise ValueError("a spread requires content on a Port heading")
+        port = PORT_HEADINGS.index(heading)
+        arrived[port] = checked_work(arrived[port] + ray.amount)
+    phase = spread_phase(rays, definition)
+    entry = spread_remainder_entry(phase, definition.phase_modulus, table)
+    amounts, remainders = [0] * 6, [0] * 6
+    for port, content in enumerate(arrived):
+        if not content:
+            continue
+        ports = relative_ports(port)
+        placed = 0
+        for weight, target in zip(table, ports, strict=True):
+            share = checked_work(content * weight) // total
+            amounts[target] = checked_work(amounts[target] + share)
+            placed = checked_work(placed + share)
+        rest = content - placed
+        amounts[ports[entry]] = checked_work(amounts[ports[entry]] + rest)
+        remainders[ports[entry]] = checked_work(remainders[ports[entry]] + rest)
+    bit = max(ray.detector for ray in rays)
+    departures = tuple(
+        Ray(
+            definition.headings.index(PORT_HEADINGS[port]),
+            (0, 0, 0),
+            bounded(amount),
+            phase=phase,
+            detector=bit,
+        )
+        for port, amount in enumerate(amounts)
+        if amount
+    )
+    numerator, denominator = coherence(rays, definition)
+    record = FieldSpread(
+        index,
+        bounded(sum(arrived)),
+        tuple(arrived),
+        tuple(amounts),
+        tuple(remainders),
+        phase,
+        reduced_ratio(numerator, denominator),
+    )
+    return departures, record
+
+
+def spreading_field_names(
+    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> list[dict[str, object]]:
+    """The spreading families for the run record: each with its table, in field order."""
+    return [
+        {"field": fields[definition.field].name, "spread": list(definition.spread)}
+        for definition in definitions
+        if definition.spread
+    ]
+
+
 @dataclass(frozen=True, slots=True)
 class SpatialFieldDefinition:
     field: int
@@ -723,6 +948,10 @@ class SpatialFieldDefinition:
     field_of: int | None = None
     release_numerator: int = 0
     release_denominator: int = 1
+    # Field spreading (field-spreading-v1): the split table, six weights in Port
+    # order relative to the arriving heading; empty for a family that does not
+    # spread, the behaviour of every existing world.
+    spread: tuple[int, ...] = ()
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)
@@ -752,6 +981,10 @@ class SpatialFieldDefinition:
             object.__setattr__(self, "cosine_table", phase_cosines(self.phase_steps))
             object.__setattr__(self, "sine_table", phase_sines(self.phase_steps))
         bounded(self.charge)
+        if self.spread:
+            if not self.rays:
+                raise ValueError("spread requires ray transport")
+            validate_spread_table(self.spread)
 
     @property
     def rays(self) -> bool:
@@ -1014,6 +1247,9 @@ class SpatialPlan:
     # when it stays (external-body-v1); None at a Node without a body.
     body: ExternalBody | None = None
     body_port: int = -1
+    # The spreads of this cycle, one per spreading family whose content arrived
+    # (field-spreading-v1).
+    spreads: tuple[FieldSpread, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

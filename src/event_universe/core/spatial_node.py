@@ -715,6 +715,23 @@ class SpatialNode(SpatialNodeState):
                     if split.annulled and any(split.annulled[i])
                 },
             )
+        # The spreads of this cycle precede the cycle record as well (field-spreading-v1):
+        # the local audit reads what each spread took off the Node before it measures it.
+        for spread in plan.spreads:
+            definition = services.initial.spatial_fields[spread.field]
+            self._event(
+                "field_spread",
+                tick,
+                services,
+                notifications=notifications,
+                family=services.initial.fields[definition.field].name,
+                amount=spread.amount,
+                arrived=spread.arrived,
+                amounts=spread.amounts,
+                remainders=spread.remainders,
+                phase=spread.phase,
+                coherence=spread.coherence,
+            )
         group = bound_group(plan.kept_rays)
         if group and held_before:
             # The tick of the bound group (ray-binding-v1, Highlights 3.4): the

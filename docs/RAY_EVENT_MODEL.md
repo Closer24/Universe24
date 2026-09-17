@@ -804,6 +804,24 @@ with the same spin. The Bell prediction of
 [hypothesis 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail)
 is testable before this feature, in its phase form.
 
+**Feature 12, field spreading (done 2026-09-17, `field-spreading-v1`).**
+Light is the field, and the field spreads (Highlights 3.5, model owner,
+2026-09-17): a family's catalog entry `spread`, six weights in Port order
+relative to the arriving heading with the backward one positive, makes every
+Node that its content reaches release it again in all six headings, Huygens'
+principle in the lattice's language and no engine mechanism. The content
+that arrived combines before it spreads, amounts adding per arriving heading
+and the phase being the phase of the coherent sum (3.20); each heading's
+content is shared in whole quanta by the table and the remainder leaves
+whole through the entry the phase selects (3.17), so a quantum never waits
+and the wave shows in intensities; the departures are fresh field rays with
+no event, the total is exact and the momentum a spread moves is booked as a
+source of the bound momentum field, the ledger of feature 10 exact; one
+`field_spread` record per Node, interval and family; a world without
+`spread` is byte-identical, and the cost of a field that fills the board is
+in the [performance record](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables);
+see [field spreading](SPATIAL_FIELDS.md#field-spreading-field-spreading-v1).
+
 **The strong interaction, catalog work after feature 10.** Quark families,
 colour a property with three values (a family property like charge, feature
 9), the gluon the quark's own field in ray form (feature 7, Highlights 3.5),
