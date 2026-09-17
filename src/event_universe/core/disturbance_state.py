@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from .spatial_state import (
         DetectorMark,
         EmissionDefinition,
+        ExternalBody,
         FieldGroupDefinition,
         FieldInteractionGuard,
         NodeFieldRuleDefinition,
@@ -340,11 +341,15 @@ class InitialState:
     # What a returned ray does at its event Node (inverse-split-v1): siblings,
     # straight or annul; a world without a mark never reads it.
     return_mode: str = "siblings"
+    # The external bodies of the world (external-body-v1): declared marks, one per
+    # Node, in declaration order; a world without one is unchanged.
+    external_bodies: tuple[ExternalBody, ...] = ()
 
     def __post_init__(self) -> None:
         from .spatial_state import (
             RETURN_MODES,
             validate_detector_marks,
+            validate_external_bodies,
             validate_ray_coupling,
             validate_released_field_admission,
         )
@@ -355,6 +360,7 @@ class InitialState:
         validate_ray_coupling(self)
         validate_released_field_admission(self)
         validate_detector_marks(self)
+        validate_external_bodies(self)
         if self.node_execution and self.spatial_computation_delay:
             raise ValueError("node_execution and spatial_computation_delay select different clocks")
         for index, spatial_definition in enumerate(self.spatial_fields):

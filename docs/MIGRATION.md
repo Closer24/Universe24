@@ -666,6 +666,38 @@ at every Node a ray of the family crosses
 - Existing worlds without `field_of` run byte-identically; their run record
   carries `released_fields: []`.
 
+## External body added on 2026-09-17 (`external-body-v1`)
+
+Issue #169, feature 7b, Highlights 3.19 (model owner, 2026-09-17; the
+"fixed body" of earlier that day): the world key `external_bodies` declares
+the second apparatus element beside the Detector mark, a Node holding a
+family with an amount of any width, a charge, a phase, an initial momentum
+(heading and pace), a coupling (`"sink"` or a declared ray interaction) and
+a momentum table ([external
+body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)).
+
+- `ExternalBody` in `core/spatial_state.py` (position, family, amount,
+  charge, field, coupling, phase, signs, momentum, accumulators, sink), with
+  `body_release`, `body_absorb`, `body_step`, `body_token`,
+  `body_coupled_families`, `validate_external_bodies` and
+  `external_body_names`; `InitialState.external_bodies`;
+  `SpatialNodeState.body`, `SpatialPlan.body` and `body_port`,
+  `SpatialPacket.body`; the record type registered in `STATE_RECORDS`.
+- `core/spatial_node.py`: a body Node stays active; the body's cycle
+  (`_body_cycle`) strips a coupled body's token, releases its field on six
+  headings booked as a source and steps it by its accumulators; arrivals at
+  a body are met by its coupling (`_body_meet`), the sink by default; the
+  new records `external_body_absorbed` and `external_body_step`.
+- The audit: `SpatialAccounting.record_absorbed`, the engine's
+  `absorbed_by_bodies` line, `external_body_totals()`, `external_bodies()`
+  and `external_body_momentum()` on the engine; the runner's conservation
+  line gains `+ absorbed_by_bodies` and the run record `external_body`,
+  `external_bodies` (with positions per tick), `external_body_totals` and
+  `external_body_momentum`; a body cannot leave an open world.
+- Worlds without `external_bodies` are byte-identical. New test module
+  `tests/test_external_body.py` (sink, stars, uniform, mirror, rejected),
+  pinned in [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md#external-body).
+
 ## Records as owners deleted on 2026-09-17
 
 Issue #164 bucket B.6, the last deletion bucket, following

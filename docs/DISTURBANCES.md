@@ -142,6 +142,7 @@ separate carriers and their different directions.
 | `spatial_seeds` | Optional initial octant populations at named lattice nodes |
 | `detectors` | Optional list of Detector marks, one per position, each with `position`, `setting` `[n, d]` and `seed`, all required and none defaulted ([Detector mark](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1)); the only place a draw exists, under the shared Detector admission |
 | `return_mode` | Optional, `"siblings"` (default), `"straight"` or `"annul"`: what a returned ray does at its event Node ([Inverse split](SPATIAL_FIELDS.md#inverse-split-inverse-split-v1)); read only for a returned ray, so a world without a mark is unchanged |
+| `external_bodies` | Optional list of external bodies, one per Node, each with `position`, `family` and `amount` (a positive integer of any width) required and `charge`, `phase`, `initial_momentum` (`heading`, `pace` `[n, d]`), `coupling` (`"sink"` or a declared ray interaction) and `momentum_table` (family to sign) optional ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); the second declared element beside the Detector mark, under the shared Detector admission |
 | `spatial_couplings` | Optional list, at most 32 local field-response rules; version 2 requires a budget per rule |
 | `field_groups` | Optional metadata groups referencing existing scalar/vector fields, at most 16 |
 | `field_rules` | Schema 1 only: at most 32 atomic multi-field retained/six-output rules |

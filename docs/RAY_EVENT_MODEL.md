@@ -360,7 +360,7 @@ comes from the spreading law, since a bound group is rays that must keep
 moving and bind again every interval, so only the closed patterns the
 binding table can hold exist; a body that does not spread has no closure
 condition and any amount is allowed. It is feature 7b of the migration in
-section 6, after feature 7, `external-body-v1`.
+section 6, after feature 7, `external-body-v1`, done on 2026-09-17.
 
 ## 2. The single generic rule
 
@@ -669,7 +669,13 @@ every such set; Highlights 3.20 is the text to follow.
    the sink totals per family; no rays, no history); the approximation of
    infinite mass for the confrontation runs (section 1), and where the
    back-reaction is wanted an ordinary bound group with a large amount is
-   declared instead.
+   declared instead. (Done on 2026-09-17, issue #169 feature 7b,
+   `external-body-v1`: the world key `external_bodies`, the release on six
+   headings booked as a source, the sink line `absorbed_by_bodies`, a
+   declared coupling as a meeting in which the body is the participant that
+   never changes, the momentum table and the per-axis accumulator, the
+   bodies' momentum line and the run record `external_bodies`; see
+   [external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1).)
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
