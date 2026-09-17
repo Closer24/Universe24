@@ -270,24 +270,42 @@ interaction, and everything follows from the generic transactions of the
 declared couplings; what remains is to close the binding couplings. Until
 they exist, held source records remain an explicitly labeled interim device.
 
-**Fixed body (model owner, 2026-09-17; Highlights 3.19).** Beside the
-Detector there is one more declared element of a world, and like the Detector
-it is a declaration, not physics: a Node declared to hold a family with a
-very large amount and, if wanted, a charge, standing for a star or a large
-charge. It radiates exactly as any bound group does, by the one field rule
-above and with the strength its amount gives, so its gravity and its electric
-field are the ordinary field rays of this document and every ray that meets
-them responds by its declared coupling. It never changes: whatever arrives at
-it, a recoil field ray or a ray that couples to it, is absorbed into an
-explicitly accounted sink, and it never splits, binds, unbinds, converts or
-decays; the audit books what it radiates as a source and what it absorbs as a
-sink, so conservation stays exact at every tick. It may move on a declared
-trajectory, and wherever it is, the Node it is at holds all of it; its motion
-is declared, never caused, because nothing on the board can push it. It is
-the approximation of infinite mass, used for the confrontation runs: light
+**External body (model owner, 2026-09-17; Highlights 3.19; named "fixed
+body" earlier that day).** Beside the Detector there is one more declared
+element of a world, and like the Detector it is a declaration, not physics:
+a Node declared to hold a family with an amount and, if wanted, a charge,
+standing for a star, a neutron star, a fixed proton, a large charge, or a
+piece of apparatus. What is declared: the family, the amount (finite, of any
+width, since it enters no sum; it only sets how much field leaves per
+interval), the charge, and, if wanted, a trajectory. What it does: it
+radiates exactly as any bound group does, by the one field rule above and
+with the strength its amount gives, so its gravity and its electric field
+are the ordinary field rays of this document and every ray that meets them
+responds by its declared coupling. What it does not do: it does not spread,
+which is its defining property: it never splits, binds, unbinds, converts or
+decays, and its whole content stays at one Node; and it is not pushed:
+whatever arrives at it, a recoil field ray or a ray that couples to it, is
+met by the declared coupling of its family, and the body itself never
+changes. Absorption into an explicitly accounted sink is the default
+coupling, and the other couplings make the apparatus: a reversed heading is
+a mirror, a split by a declared table is a beam splitter, a phase offset is
+a phase plate, a polarization read is a polarizer once feature 11 exists; a
+wall, a screen and a beam stop are the default. It may move on a declared
+trajectory, and wherever it is, the Node it is at holds all of it; its
+motion is declared, never caused, because nothing on the board can push it,
+so two external bodies never move each other. The audit books what it
+radiates as a source and what it absorbs as a sink, so conservation stays
+exact at every tick. On the Node it is bounded metadata like the Detector
+mark: the kind of mark, the declaration, and one exact counter (the sink
+totals per family); no rays, no history. When the back-reaction is wanted, a
+star that recoils or a proton that moves, the body is not used: the same
+thing is declared as an ordinary bound group with a large amount, and then
+it spreads and is pushed like all matter. The external body is the
+approximation of infinite mass, used for the confrontation runs: light
 bending by a star, an electron near a large charge, a hydrogen-like spectrum
-around a fixed proton. It is feature 7b of the migration in section 6, after
-feature 7.
+around a fixed proton, and the two-slit and Bell geometries with their
+walls, mirrors and splitters. It is feature 7b of the migration in section
+6, after feature 7, `external-body-v1`.
 
 ## 2. The single generic rule
 
@@ -523,14 +541,26 @@ every such set; Highlights 3.20 is the text to follow.
    declared coupling responds being delayed (its output clock grows) and the
    field ray returning reversed with the opposite momentum to the heavy
    Node.
-   Feature 7b, fixed body, after feature 7 (model owner, 2026-09-17,
-   Highlights 3.19): a Node declared to hold a family with a very large
-   amount and, if wanted, a charge, standing for a star or a large charge; it
-   radiates by this one field rule with the strength its amount gives, never
-   changes, absorbs whatever arrives at it into an explicitly accounted sink
-   that the audit books beside what it radiates as a source, may move on a
-   declared trajectory and is held whole by the Node it is at; the
-   approximation of infinite mass for the confrontation runs (section 1).
+   Feature 7b, external body, `external-body-v1`, after feature 7 (model
+   owner, 2026-09-17, Highlights 3.19; named "fixed body" earlier that day):
+   a Node declared to hold a family with an amount (finite, of any width,
+   since it enters no sum) and, if wanted, a charge and a trajectory,
+   standing for a star, a neutron star, a fixed proton, a large charge, or a
+   piece of apparatus; it radiates by this one field rule with the strength
+   its amount gives, does not spread (never splits, binds, unbinds, converts
+   or decays, its whole content at one Node) and is not pushed: whatever
+   arrives at it is met by the declared coupling of its family, absorption
+   into an explicitly accounted sink by default (a wall, a screen, a beam
+   stop), a reversed heading a mirror, a split by a declared table a beam
+   splitter, a phase offset a phase plate, a polarization read a polarizer
+   after feature 11; the audit books what it radiates as a source and what
+   it absorbs as a sink; it may move on a declared trajectory, never caused,
+   and is held whole by the Node it is at; on the Node bounded metadata like
+   the Detector mark (the kind of mark, the declaration, one exact counter of
+   the sink totals per family; no rays, no history); the approximation of
+   infinite mass for the confrontation runs (section 1), and where the
+   back-reaction is wanted an ordinary bound group with a large amount is
+   declared instead.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays

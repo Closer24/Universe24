@@ -965,26 +965,45 @@ on unchanged, so half-life follows. That draw is the one draw of section 22,
 at a node whose Detector bit is set; nothing else in the world draws. None
 of this adds anything to the engine; all of it comes after feature 10.
 
-Addition (model owner, 2026-09-17; Highlights 3.19): beside the Detector
-there is one more declared element of a world, and like the Detector it is a
-declaration, not physics: the fixed body, a node declared to hold a family
-with a very large amount and, if wanted, a charge, standing for a star or a
-large charge. It radiates exactly as any bound group does, by the one field
-rule of this section (Highlights 3.5) and with the strength its amount gives,
-so its gravity and its electric field are the ordinary field rays of the
-model and every ray that meets them responds by its declared coupling. It
-never changes: whatever arrives at it, a recoil field ray or a ray that
-couples to it, is absorbed into an explicitly accounted sink, and it never
-splits, binds, unbinds, converts or decays; the audit books what it radiates
-as a source and what it absorbs as a sink, so conservation stays exact at
-every tick. It may move on a declared trajectory, and wherever it is, the
-node it is at holds all of it; its motion is declared, never caused, because
-nothing on the board can push it. It is the approximation of infinite mass,
-used for the confrontation runs: light bending by a star, an electron near a
-large charge, a hydrogen-like spectrum around a fixed proton. It is feature
+Addition (model owner, 2026-09-17; Highlights 3.19; named "fixed body"
+earlier that day, renamed the external body the same day with the same
+specification extended): beside the Detector there is one more declared
+element of a world, and like the Detector it is a declaration, not physics:
+the external body, a node declared to hold a family with an amount and, if
+wanted, a charge, standing for a star, a neutron star, a fixed proton, a
+large charge, or a piece of apparatus. What is declared: the family, the
+amount (finite, of any width, since it enters no sum; it only sets how much
+field leaves per interval), the charge, and, if wanted, a trajectory. What
+it does: it radiates exactly as any bound group does, by the one field rule
+of this section (Highlights 3.5) and with the strength its amount gives, so
+its gravity and its electric field are the ordinary field rays of the model
+and every ray that meets them responds by its declared coupling. What it
+does not do: it does not spread, which is its defining property: it never
+splits, binds, unbinds, converts or decays, and its whole content stays at
+one node; and it is not pushed: whatever arrives at it, a recoil field ray
+or a ray that couples to it, is met by the declared coupling of its family,
+and the body itself never changes. Absorption into an explicitly accounted
+sink is the default coupling, and the other couplings make the apparatus: a
+reversed heading is a mirror, a split by a declared table is a beam
+splitter, a phase offset is a phase plate, a polarization read is a
+polarizer once feature 11 exists; a wall, a screen and a beam stop are the
+default. It may move on a declared trajectory, and wherever it is, the node
+it is at holds all of it; its motion is declared, never caused, because
+nothing on the board can push it, so two external bodies never move each
+other. The audit books what it radiates as a source and what it absorbs as
+a sink, so conservation stays exact at every tick. On the node it is
+bounded metadata like the Detector mark: the kind of mark, the declaration,
+and one exact counter (the sink totals per family); no rays, no history.
+When the back-reaction is wanted, a star that recoils or a proton that
+moves, the body is not used: the same thing is declared as an ordinary
+bound group with a large amount, and then it spreads and is pushed like all
+matter. The external body is the approximation of infinite mass, used for
+the confrontation runs: light bending by a star, an electron near a large
+charge, a hydrogen-like spectrum around a fixed proton, and the two-slit
+and Bell geometries with their walls, mirrors and splitters. It is feature
 7b of the migration in
 [docs/RAY_EVENT_MODEL.md](docs/RAY_EVENT_MODEL.md#6-migration-in-order),
-after feature 7.
+after feature 7, `external-body-v1`.
 
 Postulates 1 to 4 hold under this model without exception; the registry
 exception of postulate 4 and the shared query of section 14 lapsed with
