@@ -91,7 +91,9 @@ def test_all_carrier_arguments_separate_reuse_entries():
     assert len(calls) == 5
 
 
-def test_all_spatial_arguments_including_time_and_phase_separate_reuse_entries():
+def test_all_spatial_arguments_including_phase_separate_reuse_entries():
+    """Every argument of the spatial law is in the key; the world tick is not an
+    argument, so it is not in the key (see the steady-field test below)."""
     calls = []
 
     def planner(*args):
@@ -103,14 +105,13 @@ def test_all_spatial_arguments_including_time_and_phase_separate_reuse_entries()
 
     record = parse_initial_state(document([kind("held")], [((0, 0, 0), "held")])).seeds[0].record
     state = zero_spatial_state(1)
-    base = ((state,), (None,), 0, 0, (), 0, 0)
+    base = ((state,), (None,), 0, 0, (), 0)
     changes = (
         (replace(state, received_mask=1),),
         (record,),
         1,
         3,
         ((Ray(0, (0, 0, 0), 1, phase=2),),),
-        7,
         2,
     )
     execution = NodeExecution(1, carrier, planner, reuse_fields=True)
@@ -120,7 +121,103 @@ def test_all_spatial_arguments_including_time_and_phase_separate_reuse_entries()
         args = list(base)
         args[index] = value
         assert execution.spatial(*args).cost == index + 2
-    assert len(calls) == 8
+    assert len(calls) == 7
+
+
+def lamp_line(stock, ticks):
+    """One `hold` lamp at x = 1 of a 7 x 3 x 3 open board, paying one quantum of
+    `light` per interval from its own stock into a ray field with the single
+    heading +X, phase constant (`phase_advance` 0); the ray walks x = 2 to 6 and
+    escapes."""
+    return {
+        "schema_version": 1,
+        "model_id": "plan-key-test-v1",
+        "shape": [7, 3, 3],
+        "boundary": "open",
+        "slots_per_node": 2,
+        "link_ticks": 1,
+        "normal_budget": 100000,
+        "ticks": ticks,
+        "operation_costs": {
+            name: 1
+            for name in (
+                "receive",
+                "read",
+                "evaluate",
+                "update",
+                "couple",
+                "route",
+                "split",
+                "send",
+                "commit",
+            )
+        },
+        "fields": [
+            {
+                "name": "light",
+                "components": 1,
+                "units": "quantum",
+                "signed": False,
+                "conserved": True,
+                "extensive": True,
+            }
+        ],
+        "disturbance_types": [
+            {
+                "name": "lamp",
+                "fields": ["light"],
+                "defaults": {"light": stock},
+                "transport": {"mode": "hold"},
+            }
+        ],
+        "spatial_fields": [
+            {
+                "field": "light",
+                "baseline": 0,
+                "transport": "ray",
+                "headings": [[1, 0, 0]],
+                "rays_per_tick": 1,
+                "ray_slots": 8,
+                "metric": "links",
+                "pace": [1, 1],
+                "kerengonen": {"phase_steps": 8, "phase_advance": 0},
+            }
+        ],
+        "emissions": [
+            {
+                "type": "lamp",
+                "field": "light",
+                "amount": 1,
+                "denominator": 1,
+                "source": False,
+                "heading": [1, 0, 0],
+                "kerengonen_phase": 0,
+            }
+        ],
+        "seeds": [{"position": [1, 1, 1], "type": "lamp"}],
+    }
+
+
+def test_a_node_in_a_steady_field_reuses_its_plan_across_ticks_and_a_counting_lamp_does_not():
+    """The key holds the Node's local input, not the clock: the Node at x = k
+    receives the same ray (amount 1, phase 0, k - 1 steps) every interval from
+    tick k on, so it evaluates once and hits from its second arrival; the lamp
+    pays a quantum per interval, its stock counts down in its record and every
+    interval presents a new key. Eight ticks: the lamp plans 8 times without a
+    hit, the Nodes at x = 2 to 6 plan 7, 6, 5, 4 and 3 times with one evaluation
+    each, 33 requests, 13 evaluations, 20 hits, cumulative per tick 0, 0, 1, 3,
+    6, 10, 15, 20; the quanta of ticks 1 to 3 have left through the open
+    boundary at x = 6."""
+    with Simulation(parse_initial_state(lamp_line(12, 8))) as world:
+        hits = []
+        for _ in range(8):
+            world.step()
+            hits.append(world.execution_report()["spatial_plan_reuse"]["hits"])
+        assert hits == [0, 0, 1, 3, 6, 10, 15, 20]
+        report = world.execution_report()["spatial_plan_reuse"]
+        assert (report["requests"], report["evaluations"], report["hits"]) == (33, 13, 20)
+        assert world.totals() == {"light": (9,)}
+        assert world.escaped_totals() == {"light": (3,)}
 
 
 @pytest.mark.parametrize("workers", [1, 2])

@@ -184,6 +184,69 @@ whose releases carry many quanta per ray (a body of amount 4096 at
 `release: [1, 2048]` releases 2 per heading, still below the table's total
 11) is where the split itself acts, and it is not measured here.
 
+## Ray-event engine: the tick leaves the spatial plan key (2026-09-17)
+
+The first of the two levers scheduled above. Measured on Linux with Python
+3.14.0rc2 on 2026-09-17, one Node worker, Focus on (the default), before on
+`2af76d7` (source fingerprint
+`57d6c941dede850cb952948ad739e1e4216bc0e788ae38c37fdc52a710a23de2`) and
+after on the change (source fingerprint
+`27061f2926566afa58fae56cb30f826a56fd06b11d2b19430fc967a5ba7586f3`). The
+spatial law (`fields/spatial_plan.py`) read the tick only in a bounds check
+and the Node checks its clock before it plans, so the tick left
+`SpatialPlanningInput` and the law's signature: a Node whose local input
+repeats hits the entry of an earlier tick, and a Node whose plan changes with
+time carries that time in its records (a lamp's stock or allowance, its
+emission cursor and wave phase). Five worlds: the one-lamp electron world of
+the field-spreading measurement above (one lamp at (2,5,3) emitting an
+electron of 5 along +X, `G` released `[1, 4]` with 4096 slots, 21 x 11 x 7
+open, 48 ticks, no spread); a two-electron world after the Local Focus
+recording (two `hold` lamps at (2,4,3) and (18,6,3) emitting electron 8 toward
+each other on parallel lines, `G` released `[1, 4]`, `phase_steps` 8, the
+`turn` interaction, 21 x 11 x 7 open, the builder of
+`tests/test_released_field.py` with its default slots) for 24 and 96 ticks;
+`examples/nature/screen_loop.json` for 48 ticks; `examples/nature/ring.json`
+for its 16 ticks.
+
+| Input | Ticks | Requests -> evaluations, before | After | Hit rate, before | After | Step wall, before | After | Records identical |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| One electron, released G | 48 | 543 -> 543 | 543 -> 290 | 0.0% | 46.6% | 0.289 s | 0.256 s | yes |
+| Two electrons, released G | 24 | 723 -> 527 | 723 -> 383 | 27.1% | 47.0% | 0.394 s | 0.369 s | yes |
+| Two electrons, released G | 96 | 869 -> 673 | 869 -> 385 | 22.6% | 55.7% | 0.446 s | 0.396 s | yes |
+| Screen loop | 48 | 10477 -> 6858 | 10477 -> 4942 | 34.5% | 52.8% | 4.956 s | 4.758 s | yes |
+| Ring | 16 | 64 -> 64 | 64 -> 24 | 0.0% | 62.5% | 0.061 s | 0.041 s | yes |
+
+Requests, evaluations and hits are `spatial_plan_reuse` of the `execution`
+object of `run.json`. Step wall is `Simulation.step` summed over the ticks,
+the median of seven runs in one process per source; the seven runs of one
+world and source lie within 4% of each other, and the two sources ran in
+separate processes, not interleaved. The two-electron world gains 19.9
+points at 24 ticks (the plan above projected 21 on the recording's world,
+whose lamp positions are not committed) and 33.1 at 96, where the tail of
+the run repeats the inputs of earlier ticks; the one-lamp world and the ring,
+which had no symmetric Node and no hit, now reuse every steady Node's plan.
+Step time falls by 4% to 11% on the electron worlds and the screen loop, and
+by a third on the ring; validation and delivery still run on every request
+(the second lever).
+
+Records identical means equal SHA-256 digests of `events.jsonl`, of
+`state.json` and of `run.json` after removing `elapsed_seconds`, `execution`
+(the reuse counters are the lever) and `source_sha256` (the code differs);
+`initialization_sha256` is kept, the inputs being the same files. All five
+worlds are identical, and the isolated test of the key
+(`tests/test_plan_reuse.py`) pins a Node in a steady field hitting from its
+second arrival while a lamp whose stock counts down never hits.
+
+Reproduction, without a committed script: write the five inputs (the two
+electron worlds from the builder of `tests/test_released_field.py` with
+`shape` `[21, 11, 7]`, `boundary` `open` and, for the one-lamp world, `G`'s
+`ray_slots` 4096); in one process per source call
+`run_initialization(path, output, ticks=N)` once per world and hash the three
+records as described, reading the counters from `run.json`; then build
+`prepare_initialization(document).initial` and time
+`Simulation(initial).step()` over N ticks seven times per world, taking the
+median.
+
 ## Active engine: default Focus and exact plan reuse
 
 Measured on Linux with Python 3.14.7 on 2026-09-15. Baseline:

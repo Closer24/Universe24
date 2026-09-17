@@ -6,6 +6,24 @@ Install from the extracted project first:
 python -m pip install -e '.[render,dev]'
 ```
 
+## The spatial plan key drops the world tick on 2026-09-17
+
+The first of the two levers scheduled in
+[Run performance](PERFORMANCE.md#plan-compiling-the-catalog-into-transition-tables):
+the spatial law reads nothing from the clock, so the tick left the plan-reuse
+key and the law's signature, and a Node whose local input repeats reuses its
+plan across ticks. Host work only; every run record is byte for byte the same
+(the measurement is recorded in
+[Run performance](PERFORMANCE.md#ray-event-engine-the-tick-leaves-the-spatial-plan-key-2026-09-17)).
+
+- `SpatialPlanningInput` (`core/node_execution.py`) has no `tick` field; its
+  fields are `states`, `records`, `received`, `node_cost`, `rays`, `ray_hold`,
+  `remainders` and `remainder_phases`.
+- `SpatialLaw.__call__` (`fields/spatial_plan.py`), the `SpatialPlanner`
+  callable and `NodeExecution.spatial` take no `tick` argument; `rays` is
+  followed by `ray_hold`. The Node's clock check (`node clock must be
+  nonnegative`) stays in `SpatialNode.plan_cycle`.
+
 ## A push keeps the walk on 2026-09-17 (`ray-momentum-turn-v2`)
 
 Issue #169, feature 8b ([a free ray turns by

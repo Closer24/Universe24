@@ -60,7 +60,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_node_rule_contract.py` | 37 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, aggregation policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
-| `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
+| `test_plan_reuse.py` | 9 | 0.31 | Exact transition plan reuse: every argument of a law is its key, the world tick is not (a Node in a steady field reuses its plan across ticks, a lamp whose stock counts down does not), pinned below |
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_binding.py` | 2 | 1.43 | Issue #169 feature 8, gravity by delay: a light ray is delayed by a declared table per Port at the field of a mass and turns toward it, G_eff x N^2 one integer over four widths (`ray-binding-v1`; its held form removed on 2026-09-17 by feature 14) |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
@@ -501,13 +501,29 @@ Host visit reduction is distinct from physical O(1) local work.
 ## Exact transition reuse
 
 `test_plan_reuse.py` checks all carrier and spatial planning arguments, including
-local phases, resident rays, computation cost and time; hash collisions; bounded
+local phases, resident rays and computation cost; hash collisions; bounded
 LRU eviction; retry after failure; independent configurations; and default reuse
 of repeated moving patterns in serial and parallel execution. Each tick retains
 identical inventory, snapshots, ordered events, operation cost and local clocks.
 The Focus, field, delay and formula-free state tests remain consumers of this
 host-only optimization; `test_active_ports.py` was deleted on 2026-09-17.
 Timing is measured outside CI assertions with identical inputs; no speed threshold replaces physical equality.
+
+Since 2026-09-17 the spatial key does not hold the world tick, which the
+spatial law never reads (the Node checks its clock before it plans; see
+[Local Focus](LOCAL_FOCUS.md)). Pinned before the first run on a 7 x 3 x 3
+open board: one `hold` lamp at x = 1 pays one quantum of `light` per interval
+from a stock of 12 into a ray field with the single heading +X and a constant
+phase (`phase_advance` 0), and the ray walks x = 2 to 6 and escapes. The Node
+at x = k receives the same ray (amount 1, phase 0, k - 1 steps) every interval
+from tick k on, so it evaluates once and hits from its second arrival; the
+lamp's stock counts down in its record, so every interval presents a new key
+and the lamp never hits. Over eight ticks the lamp plans 8 times, the Nodes at
+x = 2 to 6 plan 7, 6, 5, 4 and 3 times: 33 requests, 13 evaluations, 20 hits,
+cumulative per tick 0, 0, 1, 3, 6, 10, 15, 20; 9 quanta remain and 3 have
+escaped. The same rule makes a lamp whose record does not change (an external
+source without a budget) a steady Node that reuses its plan too; its plan is
+the same plan.
 
 ## Payload validation and readout reuse
 

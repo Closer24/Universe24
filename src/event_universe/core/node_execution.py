@@ -18,7 +18,6 @@ SpatialPlanner = Callable[
         int,
         tuple[Rays, ...],
         int,
-        int,
         Remainders,
         Remainders,
     ],
@@ -39,12 +38,21 @@ class DisturbancePlanningInput:
 
 @dataclass(frozen=True, slots=True)
 class SpatialPlanningInput:
+    """The complete input of one spatial plan, and so the plan-reuse key.
+
+    The world tick is not part of it: the spatial law reads nothing from the
+    clock, so a Node whose local input repeats (a Node in a steady field) gets
+    the same plan at any tick. What a Node's plan depends on through time is in
+    its records: a lamp's remaining allowance, its emission cursor and its wave
+    phase are record fields, so a lamp whose schedule advances presents a new
+    key every interval. The Node checks its own clock before it plans.
+    """
+
     states: tuple[SpatialState, ...]
     records: tuple[DisturbanceRecord | None, ...]
     received: int
     node_cost: int = 0
     rays: tuple[Rays, ...] = ()
-    tick: int = 0
     # 0 forwards normally, 1 holds resident rays, 2 also advances their phase.
     ray_hold: int = 0
     # The Node's remainder registers and their phases (field-remainder-v1).
@@ -84,7 +92,6 @@ def finish_local_cycle(
                     request.received,
                     request.node_cost,
                     request.rays,
-                    request.tick,
                     request.ray_hold,
                     request.remainders,
                     request.remainder_phases,
@@ -114,7 +121,6 @@ def _plan_spatial_batch(
             item.received,
             item.node_cost,
             item.rays,
-            item.tick,
             item.ray_hold,
             item.remainders,
             item.remainder_phases,
@@ -168,7 +174,6 @@ class NodeExecution:
         received: int,
         node_cost: int = 0,
         rays: tuple[Rays, ...] = (),
-        tick: int = 0,
         ray_hold: int = 0,
         remainders: Remainders = (),
         remainder_phases: Remainders = (),
@@ -179,7 +184,6 @@ class NodeExecution:
             received,
             node_cost,
             rays,
-            tick,
             ray_hold,
             remainders,
             remainder_phases,
