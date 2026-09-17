@@ -20,6 +20,7 @@ from event_universe.core.spatial_state import (
     DETECTOR_BIT_0,
     DETECTOR_BIT_1,
     PORT_HEADINGS,
+    REMAINDER_SLOTS,
     RETURN_MODES,
     EmissionDefinition,
     FieldRuleGuard,
@@ -29,6 +30,7 @@ from event_universe.core.spatial_state import (
     NodeFieldRuleDefinition,
     Ray,
     Rays,
+    Remainders,
     ReturnedField,
     SpatialCouplingDefinition,
     SpatialFieldDefinition,
@@ -46,6 +48,7 @@ from event_universe.core.spatial_state import (
     ray_stock,
     release_field,
     release_stock,
+    remainder_stock,
     spread_content,
     stamp_event,
     transmit,
@@ -532,6 +535,10 @@ class SpatialLaw:
         emitted: list[Ray],
         source: list[list[int]],
         meter: CostMeter,
+        registers: tuple[int, ...],
+        register_phases: tuple[int, ...],
+        blocks: list[tuple[int, ...]],
+        block_phases: list[tuple[int, ...]],
     ) -> FieldSpread | None:
         """Field spreading (field-spreading-v1, Highlights 3.5): every Node that
         content of a spreading family reaches releases it again by the declared
@@ -554,11 +561,15 @@ class SpatialLaw:
         if not due:
             return None
         resident[:] = [ray for ray in resident if ray not in due]
-        meter.charge("read", len(due))
+        meter.charge("read", len(due) + REMAINDER_SLOTS)
         if definition.coherent:
             meter.charge("evaluate", len(due) + definition.phase_steps)
-        departures, record = spread_content(index, due, definition)
+        departures, record, after, after_phases = spread_content(
+            index, due, definition, registers, register_phases
+        )
+        blocks[index], block_phases[index] = after, after_phases
         meter.charge("split", len(departures))
+        meter.charge("update", REMAINDER_SLOTS)
         emitted.extend(departures)
         if definition.momentum_field is not None:
             before = ray_momentum(due, definition)
@@ -754,9 +765,23 @@ class SpatialLaw:
         tick: int = 0,
         ray_hold: int = 0,
         bound_port: int = -1,
+        remainders: Remainders = (),
+        remainder_phases: Remainders = (),
     ) -> SpatialPlan:
         if type(ray_hold) is not int or ray_hold not in (0, 1, 2):
             raise ValueError("ray hold must be a bounded local delay mode")
+        # The Node's remainder registers (field-remainder-v1): one block per spreading
+        # family, empty blocks where none were given; returned after the step.
+        registers_held: list[tuple[int, ...]] = [
+            (remainders[index] if remainders and index < len(remainders) else ())
+            or ((0,) * REMAINDER_SLOTS if definition.spread else ())
+            for index, definition in enumerate(self.definitions)
+        ]
+        register_phases_held: list[tuple[int, ...]] = [
+            (remainder_phases[index] if remainder_phases and index < len(remainder_phases) else ())
+            or ((0,) * REMAINDER_SLOTS if definition.spread else ())
+            for index, definition in enumerate(self.definitions)
+        ]
         if self.ray_interactions and ray_hold:
             raise ValueError("ray interactions do not support a second ray hold clock")
         if type(bound_port) is not int or not -1 <= bound_port < 6:
@@ -1041,6 +1066,11 @@ class SpatialLaw:
                         absorbed = checked_work(absorbed + split.amount)
                     if RETURN_MODES[split.mode] == "annul":
                         absorbed = checked_work(absorbed + split.amount)
+                registers_before = (
+                    remainder_stock(registers_held[index], sum(definition.spread))
+                    if definition.spread
+                    else 0
+                )
                 if definition.spread:
                     ended = self._returned(
                         index, resident_rays, updated_records, source, absorbed_by_field, meter
@@ -1051,7 +1081,15 @@ class SpatialLaw:
                         if item.restored:
                             absorbed = checked_work(absorbed + item.amount)
                     spread = self._spread(
-                        index, resident_rays[index], emitted_rays[index], source, meter
+                        index,
+                        resident_rays[index],
+                        emitted_rays[index],
+                        source,
+                        meter,
+                        registers_held[index],
+                        register_phases_held[index],
+                        registers_held,
+                        register_phases_held,
                     )
                     if spread is not None:
                         spreads.append(spread)
@@ -1082,9 +1120,17 @@ class SpatialLaw:
                 kept_rays[index] = kept
                 before_rays = ray_stock(tuple(rays[index])) if rays and index < len(rays) else 0
                 before_rays = checked_work(
-                    before_rays + source[definition.field][0] + funded[definition.field]
+                    before_rays
+                    + source[definition.field][0]
+                    + funded[definition.field]
+                    + registers_before
                 )
                 after_rays = checked_work(absorbed + ray_stock(kept))
+                if definition.spread:
+                    # What the registers hold after the step (field-remainder-v1).
+                    after_rays = checked_work(
+                        after_rays + remainder_stock(registers_held[index], sum(definition.spread))
+                    )
                 for port_rays in ports:
                     after_rays = checked_work(after_rays + ray_stock(port_rays))
                 if field.conserved and before_rays != after_rays:
@@ -1177,4 +1223,6 @@ class SpatialLaw:
             bound_push=(push[0], push[1], push[2]),
             spreads=tuple(spreads),
             returned=tuple(returned),
+            remainders=tuple(registers_held),
+            remainder_phases=tuple(register_phases_held),
         )

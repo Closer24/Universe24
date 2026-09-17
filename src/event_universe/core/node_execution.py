@@ -8,7 +8,7 @@ from typing import TypeVar
 from .disturbance_state import DisturbanceRecord, LocalPlan
 from .event_resolution import Planner as DisturbancePlanner
 from .plan_reuse import PlanReuse
-from .spatial_state import Rays, SpatialPlan, SpatialState
+from .spatial_state import Rays, Remainders, SpatialPlan, SpatialState
 
 SpatialPlanner = Callable[
     [
@@ -20,6 +20,8 @@ SpatialPlanner = Callable[
         int,
         int,
         int,
+        Remainders,
+        Remainders,
     ],
     SpatialPlan,
 ]
@@ -49,6 +51,9 @@ class SpatialPlanningInput:
     # The Port the bound group held at the Node departs through this interval,
     # or -1 (bound-group-motion-v1): decided by the Node from its register.
     bound_port: int = -1
+    # The Node's remainder registers and their phases (field-remainder-v1).
+    remainders: Remainders = ()
+    remainder_phases: Remainders = ()
 
 
 PlanningRequest = DisturbancePlanningInput | SpatialPlanningInput | None
@@ -86,6 +91,8 @@ def finish_local_cycle(
                     request.tick,
                     request.ray_hold,
                     request.bound_port,
+                    request.remainders,
+                    request.remainder_phases,
                 )
             else:
                 result = None
@@ -115,6 +122,8 @@ def _plan_spatial_batch(
             item.tick,
             item.ray_hold,
             item.bound_port,
+            item.remainders,
+            item.remainder_phases,
         )
         for item in items
     )
@@ -168,9 +177,20 @@ class NodeExecution:
         tick: int = 0,
         ray_hold: int = 0,
         bound_port: int = -1,
+        remainders: Remainders = (),
+        remainder_phases: Remainders = (),
     ) -> SpatialPlan:
         request = SpatialPlanningInput(
-            states, records, received, node_cost, rays, tick, ray_hold, bound_port
+            states,
+            records,
+            received,
+            node_cost,
+            rays,
+            tick,
+            ray_hold,
+            bound_port,
+            remainders,
+            remainder_phases,
         )
         return self._field_reuse.one(request, lambda: self._evaluate_fields((request,))[0])
 

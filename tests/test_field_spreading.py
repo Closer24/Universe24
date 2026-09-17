@@ -1,14 +1,16 @@
 """Field spreading (field-spreading-v1, Highlights 3.5): every Node that field content
 reaches releases it again in all six headings by the family's declared split table;
 the content combines by phase before it spreads, each heading's content is shared in
-whole quanta and the remainder leaves whole through the entry the phase selects, so
-a quantum never waits; the total is exact and the momentum a spread moves is booked.
-The sign of the source's charge travels on the field ray, and a returned field
-quantum walks back until something takes it (the proposal of Highlights 5.5).
+whole quanta and the share below one quantum stays in the Node's remainder register
+of that heading and sign (field-remainder-v1, Highlights 3.5 and 3.17), which
+releases a whole quantum through its heading when it fills; the total is exact and
+the momentum a spread moves is booked. The sign of the source's charge travels on
+the field ray, and a returned field quantum walks back until something takes it (the
+proposal of Highlights 5.5).
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Field spreading")
-before the first run: single, superposition, cancelled, quantum, sign, returned,
-source, rejected, unchanged.
+before the first run: single, superposition, cancelled, stream, sign, returned,
+source, resident, rejected, unchanged.
 """
 
 import hashlib
@@ -19,6 +21,7 @@ import pytest
 from event_universe import Simulation
 from event_universe.core.spatial_state import (
     DETECTOR_BIT_0,
+    FIELD_REMAINDER,
     FIELD_SPREADING,
     Ray,
     merge_rays,
@@ -26,7 +29,6 @@ from event_universe.core.spatial_state import (
     relative_ports,
     release_field,
     spread_content,
-    spread_remainder_entry,
     transmit,
 )
 from event_universe.initialization import parse_initial_state
@@ -36,6 +38,7 @@ from event_universe.runner import run_initialization
 HEADINGS = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]
 # Forward 6/11, backward 1/11, each transverse 1/11.
 SPREAD = [6, 1, 1, 1, 1, 1]
+ZERO = (0, 0, 0, 0, 0, 0)
 COSTS = {
     name: 1
     for name in ("receive", "read", "evaluate", "update", "couple", "route", "split", "send", "commit")
@@ -116,9 +119,10 @@ def conserved(carrier, spatial):
     }
 
 
-def document(lamps, spread=SPREAD, ticks=4, detectors=()):
+def document(lamps, spread=SPREAD, ticks=4, detectors=(), stock=None):
     """The board: `lamps` are (position, amount, heading index, phase) of `light`, each
-    lamp's recoil into its own `momentum` field, so the momentum ledger line reads."""
+    lamp holding `stock` (its amount by default) and emitting `amount` every interval
+    it can pay, its recoil into its own `momentum` field, so the momentum line reads."""
     light = ray_field("light", 0) | ({"spread": list(spread)} if spread else {})
     return world(
         [field("light"), vector("momentum")],
@@ -126,7 +130,7 @@ def document(lamps, spread=SPREAD, ticks=4, detectors=()):
             {
                 "name": f"lamp_{index}",
                 "fields": ["light", "momentum"],
-                "defaults": {"light": amount, "momentum": [0, 0, 0]},
+                "defaults": {"light": amount if stock is None else stock, "momentum": [0, 0, 0]},
                 "transport": {"mode": "hold"},
             }
             for index, (_, amount, _, _) in enumerate(lamps)
@@ -270,6 +274,22 @@ def positions_of(world, family="light"):
     return {n.position for n in world.inventory_view().nodes if rays_at(world, n.position, family)}
 
 
+def registers_at(world, position, family="light"):
+    """The Node's remainder block of one family: eighteen registers and their phases."""
+    node = world._spatial.nodes[position]
+    index = family_index(world, family)
+    return node.remainders[index], node.remainder_phases[index]
+
+
+def remainder_map(world, family="light"):
+    """Every nonzero block of sign 0 on the board, by position."""
+    return {
+        n.position: registers_at(world, n.position, family)[0][6:12]
+        for n in world.inventory_view().nodes
+        if n.remainders and any(n.remainders[family_index(world, family)])
+    }
+
+
 def record_of(world, type_index):
     return next(
         world.record_values(r)
@@ -304,7 +324,30 @@ def returned(steps, sign=0):
     return Ray(1, (0, 0, 0), 1, steps=steps, outbound=0, detector=DETECTOR_BIT_0, source_sign=sign)
 
 
-def record(tick, position, arrived, amounts, remainders, phase=6, coherence=(1, 1), signs=(0,)):
+def block(zero=ZERO, minus=ZERO, plus=ZERO):
+    """A family's eighteen registers, sign-major -1, 0, 1 then Port."""
+    return (*minus, *zero, *plus)
+
+
+def phased(registers, phase):
+    """The phases of a block filled at one phase: the phase where content is, else 0."""
+    return tuple(phase if value else 0 for value in registers)
+
+
+def record(
+    tick,
+    position,
+    arrived,
+    amounts,
+    stored,
+    registers,
+    released=ZERO,
+    phase=6,
+    coherence=(1, 1),
+    signs=(0,),
+):
+    """A `field_spread` record: `registers` is the sign-0 block unless a full block."""
+    full = registers if len(registers) == 18 else block(registers)
     return {
         "event": "field_spread",
         "tick": tick,
@@ -313,7 +356,10 @@ def record(tick, position, arrived, amounts, remainders, phase=6, coherence=(1, 
         "amount": sum(arrived),
         "arrived": arrived,
         "amounts": amounts,
-        "remainders": remainders,
+        "released": released,
+        "stored": stored,
+        "registers": full,
+        "register_phases": phased(full, phase),
         "phase": phase,
         "coherence": coherence,
         "signs": signs,
@@ -336,113 +382,106 @@ def assert_board(world, expected, phase, sign=0):
         assert rays_at(world, position) == [spread_ray(h, a, phase, sign) for h, a in rays], position
 
 
-# (a) The single ray of 12 at phase 6: its remainder leaves through the second transverse.
+def stream_forward(arrivals):
+    """The forward register of a Node fed one quantum per arrival, after each arrival's
+    release: 6 per arrival, less 11 whenever it reaches 11."""
+    value = 0
+    for _ in range(arrivals):
+        value = (value + 6) % 11
+    return value
+
+
+# (a) The single ray of 12 at phase 6: whole quanta leave, the shares stay.
 SINGLE_RAYS = {
     2: {
         (7, 7, 7): [(0, 6)],
         (5, 7, 7): [(1, 1)],
         (6, 8, 7): [(2, 1)],
-        (6, 6, 7): [(3, 2)],
+        (6, 6, 7): [(3, 1)],
         (6, 7, 8): [(4, 1)],
         (6, 7, 6): [(5, 1)],
     },
-    3: {
-        (8, 7, 7): [(0, 3)],
-        (7, 6, 7): [(3, 3)],
-        (5, 6, 7): [(1, 1), (3, 1)],
-        (5, 8, 7): [(1, 1)],
-        (6, 5, 7): [(3, 1)],
-        (5, 7, 8): [(1, 1)],
-        (5, 7, 6): [(1, 1)],
-    },
-    4: {
-        (9, 7, 7): [(0, 1)],
-        (8, 6, 7): [(3, 2)],
-        (7, 5, 7): [(3, 1)],
-        (6, 6, 7): [(1, 2)],
-        (4, 6, 7): [(1, 1)],
-        (5, 5, 7): [(1, 1), (3, 1)],
-        (5, 7, 7): [(3, 1)],
-        (5, 6, 8): [(3, 1)],
-        (5, 6, 6): [(3, 1)],
-    },
+    3: {(8, 7, 7): [(0, 3)]},
+    4: {(9, 7, 7): [(0, 1)]},
 }
-ONE_BACK = ((0, 1, 0, 0, 0, 0), (0, 0, 0, 1, 0, 0), (0, 0, 0, 1, 0, 0))
+
+
+def one_in(port):
+    """A quantum arriving on `port` fills that Port's register by 6 and the rest by 1."""
+    arrived = tuple(int(p == port) for p in range(6))
+    return (arrived, ZERO, 1, tuple(6 if p == port else 1 for p in range(6)))
+
+
 SINGLE_RECORDS = {
-    1: [((6, 7, 7), (12, 0, 0, 0, 0, 0), (6, 1, 1, 2, 1, 1), (0, 0, 0, 1, 0, 0))],
+    1: [((6, 7, 7), (12, 0, 0, 0, 0, 0), (6, 1, 1, 1, 1, 1), 1, (6, 1, 1, 1, 1, 1))],
     2: [
-        ((5, 7, 7), *ONE_BACK),
-        ((6, 6, 7), (0, 0, 0, 2, 0, 0), (0, 1, 0, 1, 0, 0), (0, 1, 0, 0, 0, 0)),
-        ((6, 7, 6), (0, 0, 0, 0, 0, 1), (0, 1, 0, 0, 0, 0), (0, 1, 0, 0, 0, 0)),
-        ((6, 7, 8), (0, 0, 0, 0, 1, 0), (0, 1, 0, 0, 0, 0), (0, 1, 0, 0, 0, 0)),
-        ((6, 8, 7), (0, 0, 1, 0, 0, 0), (0, 1, 0, 0, 0, 0), (0, 1, 0, 0, 0, 0)),
-        ((7, 7, 7), (6, 0, 0, 0, 0, 0), (3, 0, 0, 3, 0, 0), (0, 0, 0, 3, 0, 0)),
+        ((5, 7, 7), *one_in(1)),
+        ((6, 6, 7), *one_in(3)),
+        ((6, 7, 6), *one_in(5)),
+        ((6, 7, 8), *one_in(4)),
+        ((6, 8, 7), *one_in(2)),
+        ((7, 7, 7), (6, 0, 0, 0, 0, 0), (3, 0, 0, 0, 0, 0), 3, (3, 6, 6, 6, 6, 6)),
     ],
-    3: [
-        ((5, 6, 7), (0, 1, 0, 1, 0, 0), (0, 1, 0, 1, 0, 0), (0, 1, 0, 1, 0, 0)),
-        ((5, 7, 6), *ONE_BACK),
-        ((5, 7, 8), *ONE_BACK),
-        ((5, 8, 7), *ONE_BACK),
-        ((6, 5, 7), (0, 0, 0, 1, 0, 0), (0, 1, 0, 0, 0, 0), (0, 1, 0, 0, 0, 0)),
-        ((7, 6, 7), (0, 0, 0, 3, 0, 0), (0, 2, 0, 1, 0, 0), (0, 2, 0, 0, 0, 0)),
-        ((8, 7, 7), (3, 0, 0, 0, 0, 0), (1, 0, 0, 2, 0, 0), (0, 0, 0, 2, 0, 0)),
-    ],
+    3: [((8, 7, 7), (3, 0, 0, 0, 0, 0), (1, 0, 0, 0, 0, 0), 2, (7, 3, 3, 3, 3, 3))],
 }
-SINGLE_MOMENTUM = {1: (0, 0, 0), 2: (-7, -1, 0), 3: (-13, -5, 0), 4: (-15, -7, 0)}
+SINGLE_MOMENTUM = {1: (0, 0, 0), 2: (-7, 0, 0), 3: (-9, 0, 0), 4: (-11, 0, 0)}
+SINGLE_REMAINDERS = {
+    2: {(6, 7, 7): (6, 1, 1, 1, 1, 1)},
+    3: {
+        (6, 7, 7): (6, 1, 1, 1, 1, 1),
+        (5, 7, 7): (1, 6, 1, 1, 1, 1),
+        (6, 6, 7): (1, 1, 1, 6, 1, 1),
+        (6, 7, 6): (1, 1, 1, 1, 1, 6),
+        (6, 7, 8): (1, 1, 1, 1, 6, 1),
+        (6, 8, 7): (1, 1, 6, 1, 1, 1),
+        (7, 7, 7): (3, 6, 6, 6, 6, 6),
+    },
+}
+SINGLE_REMAINDERS[4] = SINGLE_REMAINDERS[3] | {(8, 7, 7): (7, 3, 3, 3, 3, 3)}
 # (b) Two rays of 23 meeting head on: the phase of the coherent sum, then the split.
-SUPERPOSITION = {
-    "superposition": (6, 23, 7, (1, 2), (14, 14, 4, 4, 6, 4), (0, 0, 0, 0, 2, 0), (0, 0, 2)),
-    "cancelled": (4, 0, 0, (0, 1), (15, 15, 4, 4, 4, 4), (1, 1, 0, 0, 0, 0), (0, 0, 0)),
-}
-# (c) One quantum at phase 7 turns to its third transverse at every Node.
-QUANTUM_PATH = {
-    1: ((6, 7, 7), 0),
-    2: ((6, 7, 8), 4),
-    3: ((6, 8, 8), 2),
-    4: ((6, 8, 9), 4),
-    5: ((6, 9, 9), 2),
-    6: ((6, 9, 10), 4),
-}
-QUANTUM_MOMENTUM = {
-    1: (0, 0, 0),
-    2: (-1, 0, 1),
-    3: (-1, 1, 0),
-    4: (-1, 0, 1),
-    5: (-1, 1, 0),
-    6: (-1, 0, 1),
+SUPERPOSITION = {"superposition": (6, 23, 7, (1, 2)), "cancelled": (4, 0, 0, (0, 1))}
+# (c) A stream of single quanta: the records at (6,7,7) for n = 1 to 11, then the
+# ticks at which (7,7,7), (8,7,7) and (9,7,7) record a spread.
+STREAM_RELEASES = {2, 4, 6, 8, 10}
+STREAM_SPREADS = {(7, 7, 7): [3, 5, 7, 9, 11], (8, 7, 7): [6, 10], (9, 7, 7): [11]}
+STREAM_REMAINDERS = {
+    (7, 7, 7): (8, 5, 5, 5, 5, 5),
+    (8, 7, 7): (1, 2, 2, 2, 2, 2),
+    (9, 7, 7): (6, 1, 1, 1, 1, 1),
 }
 # (f) The five light rays an electron of 4 releases at (6,7,7) in the interval of
-# tick 2 and at (7,7,7) in the interval of tick 3, each 1, phase the electron's, sign
-# -1, going straight (phases 1 and 2 select forward); after tick 3.
+# tick 2 (phase 1, into the registers of the Nodes around) and at (7,7,7) in the
+# interval of tick 3 (phase 2, on the board after tick 3), each 1, sign -1.
 SIGN_RAYS = {
-    (4, 7, 7): (1, 1),
-    (6, 9, 7): (2, 1),
-    (6, 5, 7): (3, 1),
-    (6, 7, 9): (4, 1),
-    (6, 7, 5): (5, 1),
     (6, 7, 7): (1, 2),
     (7, 8, 7): (2, 2),
     (7, 6, 7): (3, 2),
     (7, 7, 8): (4, 2),
     (7, 7, 6): (5, 2),
 }
-# (g) A quantum returned by a Detector at (8,7,7) walks back to its lamp, which takes
-# it back: where it is after each tick.
-RETURNED_PATH = {
-    1: ((6, 7, 7), emitted(0, 1, 0)),
-    2: ((7, 7, 7), spread_ray(0, 1, 0)),
-    3: ((8, 7, 7), returned(1)),
-    4: ((7, 7, 7), returned(0)),
-    5: ((6, 7, 7), returned(0)),
-    6: ((5, 7, 7), returned(0)),
+SIGN_REMAINDERS = {
+    (5, 7, 7): (1, 6, 1, 1, 1, 1),
+    (6, 8, 7): (1, 1, 6, 1, 1, 1),
+    (6, 6, 7): (1, 1, 1, 6, 1, 1),
+    (6, 7, 8): (1, 1, 1, 1, 6, 1),
+    (6, 7, 6): (1, 1, 1, 1, 1, 6),
 }
-# (h) A record of 4 electrons radiating light every interval, a Detector at (8,7,7)
-# returning every quantum: the +X line after tick 8, and the ledger.
+# (g) The second quantum releases the first forward; a Detector at (7,7,7) returns
+# it and it walks back to its lamp, which takes it back: where it is after each tick.
+RETURNED_PATH = {
+    1: {(6, 7, 7): [emitted(0, 1, 0)]},
+    2: {(6, 7, 7): [emitted(0, 1, 0)]},
+    3: {(7, 7, 7): [returned(1)]},
+    4: {(6, 7, 7): [returned(0)]},
+    5: {(5, 7, 7): [returned(0)]},
+    6: {},
+}
+# (h) The +X line after tick 12: the twelfth release and the second returned quantum
+# at (6,7,7), the quantum (6,7,7) released in the interval of tick 12 at (7,7,7).
 SOURCE_LINE = {
-    (5, 7, 7): [returned(0, -1)],
     (6, 7, 7): [spread_ray(0, 1, 0, -1), returned(0, -1)],
-    (7, 7, 7): [spread_ray(0, 1, 0, -1), returned(0, -1)],
-    (8, 7, 7): [returned(1, -1)],
+    (7, 7, 7): [spread_ray(0, 1, 0, -1)],
+    (8, 7, 7): [],
 }
 
 
@@ -452,7 +491,7 @@ SOURCE_LINE = {
         "single",
         "superposition",
         "cancelled",
-        "quantum",
+        "stream",
         "sign",
         "returned",
         "source",
@@ -464,48 +503,66 @@ SOURCE_LINE = {
 def test_every_node_field_content_reaches_releases_it_again_by_the_declared_table(tmp_path, case):
     if case == "single":
         # (a) One ray of 12 spreads at every Node it reaches, whole quanta by the
-        # table, the remainder through the heading its phase selects; the total is
-        # exact and the momentum the spreads move is the source.
+        # table, the shares below one quantum into the Node's registers; the total
+        # is exact and the momentum the spreads move is the source.
         world, events = simulate(document((((5, 7, 7), 12, 0, 6),)))
         for tick in range(1, 5):
             world.step()
             assert world.totals() == {"light": (12,), "momentum": SINGLE_MOMENTUM[tick]}
             assert world.source_totals() == {"light": (0,), "momentum": SINGLE_MOMENTUM[tick]}
             assert all(item["balanced"] for item in world.spatial_accounting().values())
+            assert world.audit()["balanced"]
             if tick == 1:
                 assert positions_of(world) == {(6, 7, 7)}
                 assert rays_at(world, (6, 7, 7)) == [emitted(0, 12, 6)]
-                assert events == []
+                assert events == [] and remainder_map(world) == {}
                 continue
             assert_board(world, SINGLE_RAYS[tick], 6)
+            assert remainder_map(world) == SINGLE_REMAINDERS[tick]
             assert [e for e in events if e["tick"] == tick - 1] == [
                 record(tick - 1, *entry) for entry in SINGLE_RECORDS[tick - 1]
             ]
-        assert len(events) == 14
+        assert registers_at(world, (7, 7, 7)) == (
+            block((3, 6, 6, 6, 6, 6)),
+            phased(block((3, 6, 6, 6, 6, 6)), 6),
+        )
+        assert len(events) == 8
         assert world.conservation_report()["status"] == "passed"
         path = tmp_path / "single.json"
         path.write_text(json.dumps(document((((5, 7, 7), 12, 0, 6),))), encoding="utf-8")
         run_initialization(path, tmp_path / "out", ticks=4)
         metadata = json.loads((tmp_path / "out" / "run.json").read_text(encoding="utf-8"))
         assert metadata["field_spreading"] == FIELD_SPREADING == "field-spreading-v1"
+        assert metadata["field_remainder"] == FIELD_REMAINDER == "field-remainder-v1"
         assert metadata["spreading_fields"] == [{"field": "light", "spread": SPREAD}]
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["local_conservation"]["status"] == "passed"
-        assert metadata["final_totals"] == {"light": [12], "momentum": [-15, -7, 0]}
-        assert metadata["source_totals"] == {"light": [0], "momentum": [-15, -7, 0]}
+        assert metadata["final_totals"] == {"light": [12], "momentum": [-11, 0, 0]}
+        assert metadata["source_totals"] == {"light": [0], "momentum": [-11, 0, 0]}
         recorded = [
             json.loads(line)
             for line in (tmp_path / "out" / "events.jsonl").read_text(encoding="utf-8").splitlines()
         ]
-        assert sum(1 for e in recorded if e["event"] == "field_spread") == 14
+        assert sum(1 for e in recorded if e["event"] == "field_spread") == 8
         assert next(e for e in recorded if e["event"] == "field_spread") == json.loads(
             json.dumps(record(1, *SINGLE_RECORDS[1][0]))
         )
+        state = json.loads((tmp_path / "out" / "state.json").read_text(encoding="utf-8"))
+        assert len(state["field_remainders"]) == 8
+        assert state["field_remainders"][0] == {
+            "position": [5, 7, 7],
+            "family": "light",
+            "sign": 0,
+            "registers": [1, 6, 1, 1, 1, 1],
+            "phases": [6, 6, 6, 6, 6, 6],
+            "total": 11,
+        }
         return
     if case in SUPERPOSITION:
         # (b) Two rays of one family meeting at a Node combine by phase before
-        # they spread: the phase of the coherent sum places both remainders.
-        phase_b, stock, phase, coherence, amounts, remainders, momentum = SUPERPOSITION[case]
+        # they spread: the registers take the shares at the phase of the coherent
+        # sum.
+        phase_b, stock, phase, coherence = SUPERPOSITION[case]
         world, events = simulate(document((((5, 7, 7), 23, 0, 0), ((7, 7, 7), 23, 1, phase_b)), ticks=2))
         world.step()
         assert positions_of(world) == {(6, 7, 7)}
@@ -515,63 +572,104 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         assert world.spatial_values((6, 7, 7))["light"]["value"] == (stock,)
         assert world.totals() == {"light": (46,), "momentum": (0, 0, 0)}
         world.step()
+        amounts = (14, 14, 4, 4, 4, 4)
         assert events == [
-            record(1, (6, 7, 7), (23, 23, 0, 0, 0, 0), amounts, remainders, phase, coherence)
+            record(
+                1,
+                (6, 7, 7),
+                (23, 23, 0, 0, 0, 0),
+                amounts,
+                2,
+                (7, 7, 2, 2, 2, 2),
+                phase=phase,
+                coherence=coherence,
+            )
         ]
         assert_board(
             world,
             {
-                (7, 7, 7): [(0, amounts[0])],
-                (5, 7, 7): [(1, amounts[1])],
-                (6, 8, 7): [(2, amounts[2])],
-                (6, 6, 7): [(3, amounts[3])],
-                (6, 7, 8): [(4, amounts[4])],
-                (6, 7, 6): [(5, amounts[5])],
+                (7, 7, 7): [(0, 14)],
+                (5, 7, 7): [(1, 14)],
+                (6, 8, 7): [(2, 4)],
+                (6, 6, 7): [(3, 4)],
+                (6, 7, 8): [(4, 4)],
+                (6, 7, 6): [(5, 4)],
             },
             phase,
         )
-        assert world.totals() == {"light": (46,), "momentum": momentum}
-        assert world.source_totals() == {"light": (0,), "momentum": momentum}
+        assert registers_at(world, (6, 7, 7)) == (
+            block((7, 7, 2, 2, 2, 2)),
+            phased(block((7, 7, 2, 2, 2, 2)), phase),
+        )
+        assert world.totals() == {"light": (46,), "momentum": (0, 0, 0)}
+        assert world.source_totals() == {"light": (0,), "momentum": (0, 0, 0)}
         assert all(item["balanced"] for item in world.spatial_accounting().values())
+        assert world.audit()["balanced"]
         assert world.conservation_report()["status"] == "passed"
         return
-    if case == "quantum":
-        # (c) A single quantum cannot split and never waits: it keeps moving one
-        # Link per interval on the path its phase sets.
-        assert [spread_remainder_entry(p, 8, tuple(SPREAD)) for p in range(8)] == [
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            3,
-            4,
-        ]
+    if case == "stream":
+        # (c) A ray of amount 1 fills the forward register by 6/11 per arrival and
+        # the backward and transverse ones by 1/11: the second quantum releases
+        # forward after two arrivals, a transverse quantum after eleven.
         assert relative_ports(0) == (0, 1, 2, 3, 4, 5) and relative_ports(3) == (3, 2, 0, 1, 4, 5)
-        world, events = simulate(document((((5, 7, 7), 1, 0, 7),), ticks=6))
-        for tick in range(1, 7):
+        assert [stream_forward(n) for n in range(1, 12)] == [6, 1, 7, 2, 8, 3, 9, 4, 10, 5, 0]
+        world, events = simulate(document((((5, 7, 7), 1, 0, 0),), ticks=12, stock=12))
+        for _ in range(12):
             world.step()
-            position, heading = QUANTUM_PATH[tick]
-            assert positions_of(world) == {position}
-            expected = emitted(0, 1, 7) if tick == 1 else spread_ray(heading, 1, 7)
-            assert rays_at(world, position) == [expected]
-            assert world.totals() == {"light": (1,), "momentum": QUANTUM_MOMENTUM[tick]}
-            assert world.source_totals() == {"light": (0,), "momentum": QUANTUM_MOMENTUM[tick]}
-        assert [(e["tick"], e["position"], e["remainders"]) for e in events] == [
-            (
-                tick - 1,
-                QUANTUM_PATH[tick - 1][0],
-                tuple(int(p == QUANTUM_PATH[tick][1]) for p in range(6)),
+            assert world.totals()["light"] == (12,)
+            assert world.audit()["balanced"]
+            assert all(item["balanced"] for item in world.spatial_accounting().values())
+        at_source = [e for e in events if e["position"] == (6, 7, 7)]
+        assert [e["tick"] for e in at_source] == list(range(1, 12))
+        for n, event in enumerate(at_source, start=1):
+            forward = stream_forward(n)
+            others = 0 if n == 11 else n
+            released = (
+                (1, 1, 1, 1, 1, 1) if n == 11 else ((1, *ZERO[1:]) if n in STREAM_RELEASES else ZERO)
             )
-            for tick in range(2, 7)
+            stored = -5 if n == 11 else int(n % 2 == 1)
+            assert event == record(
+                n,
+                (6, 7, 7),
+                (1, 0, 0, 0, 0, 0),
+                released,
+                stored,
+                (forward, others, others, others, others, others),
+                released,
+                phase=0,
+            ), n
+        assert {
+            position: [e["tick"] for e in events if e["position"] == position]
+            for position in STREAM_SPREADS
+        } == STREAM_SPREADS
+        assert len(events) == 19
+        assert [e["released"] for e in events if e["position"] == (7, 7, 7)] == [
+            ZERO,
+            (1, 0, 0, 0, 0, 0),
+            ZERO,
+            (1, 0, 0, 0, 0, 0),
+            ZERO,
         ]
+        assert rays_at(world, (6, 7, 7)) == [emitted(0, 1, 0)]
+        for position, heading in (
+            ((7, 7, 7), 0),
+            ((5, 7, 7), 1),
+            ((6, 8, 7), 2),
+            ((6, 6, 7), 3),
+            ((6, 7, 8), 4),
+            ((6, 7, 6), 5),
+        ):
+            assert rays_at(world, position) == [spread_ray(heading, 1, 0)], position
+        assert len(positions_of(world)) == 7
+        assert remainder_map(world) == STREAM_REMAINDERS
+        assert record_of(world, 0)["light"] == (0,)
         assert world.conservation_report()["status"] == "passed"
         return
     if case == "sign":
-        # (f) The sign of the source's charge travels on the field ray: an electron
-        # of charge -3 releases light of sign -1, kept through the spread, the
-        # inverse split and the merge, where opposite signs stay two rays.
+        # (f) The sign of the source's charge travels on the field ray and into the
+        # registers: an electron of charge -3 releases light of sign -1, kept
+        # through the spread, the registers and the merge, where opposite signs
+        # stay two rays.
         world, events = simulate(charged_world(True, 3))
         initial = world.initial
         electron, light = initial.spatial_fields
@@ -581,26 +679,50 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         assert positions_of(world) == set(SIGN_RAYS)
         for position, (heading, phase) in SIGN_RAYS.items():
             assert rays_at(world, position) == [spread_ray(heading, 1, phase, -1)], position
+        for position, registers in SIGN_REMAINDERS.items():
+            assert registers_at(world, position) == (
+                block(minus=registers),
+                phased(block(minus=registers), 1),
+            ), position
         assert world.totals() == {"electron": (4,), "light": (10,)}
         assert world.source_totals() == {"electron": (0,), "light": (10,)}
-        assert [e["signs"] for e in events] == [(-1,)] * 5
+        assert world.audit()["balanced"]
+        assert [(e["tick"], e["signs"], e["stored"], e["released"]) for e in events] == [
+            (2, (-1,), 1, ZERO)
+        ] * 5
         assert release_field((emitted(0, 4, 1),), light, electron) == tuple(
             Ray(heading, (0, 0, 0), 1, phase=1, source_sign=-1) for heading in range(1, 6)
         )
         positive = Ray(0, (0, 0, 0), 3, steps=1, source_sign=1)
         negative = Ray(0, (0, 0, 0), 3, steps=1, source_sign=-1)
         assert len(merge_rays((positive, negative))) == 2
-        departures, taken = spread_content(1, (positive, negative), light)
+        departures, taken, held, held_phases = spread_content(1, (positive, negative), light)
         assert departures == (
-            Ray(0, (0, 0, 0), 3, source_sign=-1),
-            Ray(0, (0, 0, 0), 3, source_sign=1),
+            Ray(0, (0, 0, 0), 1, source_sign=-1),
+            Ray(0, (0, 0, 0), 1, source_sign=1),
         )
-        assert (taken.amount, taken.arrived, taken.amounts, taken.remainders, taken.signs) == (
-            6,
-            (6, 0, 0, 0, 0, 0),
-            (6, 0, 0, 0, 0, 0),
-            (4, 0, 0, 0, 0, 0),
-            (-1, 1),
+        both = block(minus=(7, 3, 3, 3, 3, 3), plus=(7, 3, 3, 3, 3, 3))
+        assert (
+            taken.amount,
+            taken.arrived,
+            taken.amounts,
+            taken.released,
+            taken.stored,
+            taken.registers,
+            taken.register_phases,
+            taken.signs,
+        ) == (6, (6, 0, 0, 0, 0, 0), (2, 0, 0, 0, 0, 0), ZERO, 4, both, (0,) * 18, (-1, 1))
+        assert (held, held_phases) == (both, (0,) * 18)
+        one = Ray(0, (0, 0, 0), 1, steps=1)
+        departures, taken, held, held_phases = spread_content(
+            1, (one,), light, block((10, 0, 0, 0, 0, 0)), (0,) * 18
+        )
+        assert departures == (Ray(0, (0, 0, 0), 1),)
+        assert (taken.released, taken.stored, held, held_phases) == (
+            (1, 0, 0, 0, 0, 0),
+            0,
+            block((5, 1, 1, 1, 1, 1)),
+            (0,) * 18,
         )
         pair = Ray(
             1,
@@ -620,27 +742,33 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         # (g) A quantum a Detector returns with 0 walks back along the line it
         # arrived by, past the Node that spread it, with no inverse split, until its
         # emitter takes it back: stock and recoil restored exactly.
-        detector = {"position": [8, 7, 7], "setting": [0, 1], "seed": 1}
-        world, events = simulate(document((((5, 7, 7), 1, 0, 0),), ticks=7, detectors=[detector]), KINDS)
-        for tick in range(1, 8):
+        detector = {"position": [7, 7, 7], "setting": [0, 1], "seed": 1}
+        raw = document((((5, 7, 7), 1, 0, 0),), ticks=6, detectors=[detector], stock=2)
+        world, events = simulate(raw, KINDS)
+        for tick in range(1, 7):
             world.step()
-            assert world.totals() == {"light": (1,), "momentum": (0, 0, 0)}
-            assert world.source_totals() == {"light": (0,), "momentum": (0, 0, 0)}
-            if tick < 7:
-                position, ray = RETURNED_PATH[tick]
-                assert positions_of(world) == {position} and rays_at(world, position) == [ray]
-            else:
-                assert positions_of(world) == set()
-                assert record_of(world, 0) == {"light": (1,), "momentum": (0, 0, 0)}
+            momentum = (0, 0, 0) if tick == 1 else (-1, 0, 0)
+            assert world.totals() == {"light": (2,), "momentum": momentum}
+            assert world.source_totals() == {"light": (0,), "momentum": momentum}
+            assert world.audit()["balanced"]
+            expected = RETURNED_PATH[tick]
+            assert positions_of(world) == set(expected)
+            for position, rays in expected.items():
+                assert rays_at(world, position) == rays, position
+            assert remainder_map(world) == (
+                {} if tick == 1 else {(6, 7, 7): (6, 1, 1, 1, 1, 1) if tick == 2 else (1, 2, 2, 2, 2, 2)}
+            )
+        assert record_of(world, 0) == {"light": (1,), "momentum": (-1, 0, 0)}
         assert [(e["event"], e["tick"]) for e in events] == [
             ("field_spread", 1),
             ("field_spread", 2),
             ("detector_return", 3),
-            ("field_returned", 6),
+            ("field_returned", 5),
         ]
+        assert [(e["released"], e["stored"]) for e in events[:2]] == [(ZERO, 1), ((1, *ZERO[1:]), 0)]
         assert events[-1] == {
             "event": "field_returned",
-            "tick": 6,
+            "tick": 5,
             "position": (5, 7, 7),
             "family": "light",
             "amount": 1,
@@ -650,37 +778,33 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
         }
         assert world.conservation_report()["status"] == "passed"
         path = tmp_path / "returned.json"
-        path.write_text(
-            json.dumps(document((((5, 7, 7), 1, 0, 0),), ticks=7, detectors=[detector])),
-            encoding="utf-8",
-        )
-        run_initialization(path, tmp_path / "out", ticks=7)
+        path.write_text(json.dumps(raw), encoding="utf-8")
+        run_initialization(path, tmp_path / "out", ticks=6)
         metadata = json.loads((tmp_path / "out" / "run.json").read_text(encoding="utf-8"))
         assert metadata["conserved_at_every_completed_tick"]
         assert metadata["local_conservation"]["status"] == "passed"
-        assert metadata["final_totals"] == {"light": [1], "momentum": [0, 0, 0]}
+        assert metadata["final_totals"] == {"light": [2], "momentum": [-1, 0, 0]}
         return
     if case == "source":
         # (h) A record of electrons radiates light every interval; the Detector at
-        # (8,7,7) returns every quantum of the +X line, which walks back to its
-        # source and ends there, its release unbooked; the rest escapes.
+        # (8,7,7) returns every quantum the registers release that far, which walks
+        # back to its source and ends there, its release unbooked; nothing escapes.
         detector = {"position": [8, 7, 7], "setting": [0, 1], "seed": 1}
-        world, events = simulate(charged_world(False, 8, [detector]), KINDS)
-        for tick in range(1, 9):
+        world, events = simulate(charged_world(False, 12, [detector]), KINDS)
+        for tick in range(1, 13):
             world.step()
-            escaped = 3 * max(0, tick - 5) + 2 * max(0, tick - 7)
-            unbooked = max(0, tick - 6)
-            assert world.totals()["light"] == (6 * tick - escaped - unbooked,)
+            unbooked = int(tick >= 10)
+            assert world.totals()["light"] == (6 * tick - unbooked,)
             assert world.source_totals()["light"] == (6 * tick - unbooked,)
-            assert world.escaped_totals()["light"] == (escaped,)
+            assert world.escaped_totals()["light"] == (0,)
             assert world.audit()["balanced"]
         for position, rays in SOURCE_LINE.items():
             assert rays_at(world, position) == sorted(rays, key=ray_merge_key), position
-        assert [e["tick"] for e in events if e["event"] == "detector_return"] == [3, 4, 5, 6, 7, 8]
+        assert [e["tick"] for e in events if e["event"] == "detector_return"] == [6, 10]
         assert [e for e in events if e["event"] == "field_returned"] == [
             {
                 "event": "field_returned",
-                "tick": tick,
+                "tick": 9,
                 "position": (5, 7, 7),
                 "family": "light",
                 "amount": 1,
@@ -688,8 +812,17 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
                 "by": "electron",
                 "restored": False,
             }
-            for tick in (6, 7)
         ]
+        assert [
+            e["tick"] for e in events if e["position"] == (7, 7, 7) and e["event"] == "field_spread"
+        ] == [
+            3,
+            5,
+            7,
+            9,
+            11,
+        ]
+        assert registers_at(world, (7, 7, 7)) == (block(minus=(8, 5, 5, 5, 5, 5)), (0,) * 18)
         assert world.conservation_report()["status"] == "passed"
         return
     if case == "resident":
@@ -704,11 +837,29 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
             assert world.audit()["balanced"]
             assert record_of(world, 0) == {"electron": (8,)}
             expected = {
-                (5 + d * h[0], 7 + d * h[1], 7 + d * h[2]): [(heading, 2)]
+                (5 + d * h[0], 7 + d * h[1], 7 + d * h[2]): [(heading, 2 if d == 1 else 1)]
                 for heading, h in enumerate(HEADINGS)
-                for d in range(1, tick + 1)
+                for d in (1, 2, 3)
+                if d == 1 or (d == 2 and tick >= 2) or (d == 3 and tick >= 4)
             }
             assert_board(world, expected, 0, -1)
+        assert registers_at(world, (6, 7, 7)) == (block(minus=(3, 6, 6, 6, 6, 6)), (0,) * 18)
+        assert registers_at(world, (7, 7, 7)) == (block(minus=(1, 2, 2, 2, 2, 2)), (0,) * 18)
+        assert registers_at(world, (5, 6, 7)) == (block(minus=(6, 6, 6, 3, 6, 6)), (0,) * 18)
+        assert [
+            (e["tick"], e["position"], e["stored"]) for e in events if e["position"][1:] == (7, 7)
+        ] == [
+            (1, (4, 7, 7), 1),
+            (1, (6, 7, 7), 1),
+            (2, (3, 7, 7), 1),
+            (2, (4, 7, 7), 1),
+            (2, (6, 7, 7), 1),
+            (2, (7, 7, 7), 1),
+            (3, (3, 7, 7), 0),
+            (3, (4, 7, 7), 1),
+            (3, (6, 7, 7), 1),
+            (3, (7, 7, 7), 0),
+        ]
         assert world.conservation_report()["status"] == "passed"
         return
     if case == "rejected":
@@ -743,6 +894,8 @@ def test_every_node_field_content_reaches_releases_it_again_by_the_declared_tabl
     assert digests == {"events.jsonl": UNCHANGED_EVENTS, "state.json": UNCHANGED_STATE}
     metadata = json.loads((tmp_path / "out" / "run.json").read_text(encoding="utf-8"))
     assert "field_spreading" not in metadata and "spreading_fields" not in metadata
+    assert "field_remainder" not in metadata
+    assert "field_remainders" not in json.loads((tmp_path / "out" / "state.json").read_text())
     assert metadata["final_totals"] == {"G": [16], "electron": [5]}
     assert metadata["escaped_totals"]["G"] == [9]
     assert metadata["released_fields"] == [{"field": "G", "field_of": "electron", "release": [1, 4]}]

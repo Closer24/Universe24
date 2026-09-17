@@ -29,13 +29,16 @@ from .spatial_node import ReactionCommit as ReactionCommit
 from .spatial_node import SpatialCoupler as SpatialCoupler
 from .spatial_node import SpatialFieldGuard as SpatialFieldGuard
 from .spatial_state import (
+    REMAINDER_SIGNS,
     BoundMotion,
     ExternalBody,
     Rays,
+    Remainders,
     SpatialBundle,
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    blank_remainders,
     bound_group,
     coherent_stock,
     group_content,
@@ -45,6 +48,7 @@ from .spatial_state import (
     ray_charge,
     ray_momentum,
     ray_stock,
+    remainder_stock,
     validate_rays,
 )
 from .topology import neighbor_address
@@ -69,6 +73,8 @@ SpatialPlanner = Callable[
         int,
         int,
         int,
+        Remainders,
+        Remainders,
     ],
     SpatialPlan,
 ]
@@ -199,6 +205,8 @@ class SpatialEngine:
                 detector=mark,
                 detector_ticket=0 if mark is None else mark.seed,
                 body=self._bodies.pop(position, None),
+                remainders=blank_remainders(self.initial.spatial_fields),
+                remainder_phases=blank_remainders(self.initial.spatial_fields),
             )
             self._active.add(position)
         elif position not in self._active:
@@ -437,6 +445,13 @@ class SpatialEngine:
             # without enumerating idle history.
             for component, value in enumerate(self.localized[definition.field]):
                 result[definition.field][component] += value
+            if definition.spread:
+                # The remainder registers hold whole quanta in total (field-remainder-v1).
+                for node in self.nodes.values():
+                    if node.remainders and node.remainders[index]:
+                        result[definition.field][0] += remainder_stock(
+                            node.remainders[index], sum(definition.spread)
+                        )
             if definition.rays:
                 # Resident rays keep a Node active, including finite local residence.
                 # A bound group's rays read their momentum by the group's register,
@@ -496,6 +511,11 @@ class SpatialEngine:
                 for packet in packets:
                     if packet is not None and packet.rays:
                         total = checked_work(total + ray_charge(packet.rays[index], definition))
+            if definition.spread and definition.charge:
+                for node in self.nodes.values():
+                    if node.remainders and node.remainders[index]:
+                        held = remainder_stock(node.remainders[index], sum(definition.spread))
+                        total = checked_work(total + checked_work(held * definition.charge))
             result[self.initial.fields[definition.field].name] = total
         return result
 
@@ -646,7 +666,7 @@ class SpatialEngine:
                         ),
                     }
                 )
-        return {
+        result: dict[str, object] = {
             "bound_groups": bound_groups,
             "spatial_fields": [
                 {
@@ -680,3 +700,32 @@ class SpatialEngine:
                 if p is not None
             ],
         }
+        if any(definition.spread for definition in self.initial.spatial_fields):
+            # The remainder registers (field-remainder-v1): every nonzero block of a
+            # family and sign at a Node, for a Renderer and the record.
+            remainders: list[dict[str, object]] = []
+            for position, node in sorted(self.nodes.items()):
+                for index, definition in enumerate(self.initial.spatial_fields):
+                    if (
+                        not definition.spread
+                        or index >= len(node.remainders)
+                        or not any(node.remainders[index])
+                    ):
+                        continue
+                    block, phases = node.remainders[index], node.remainder_phases[index]
+                    for sign in REMAINDER_SIGNS:
+                        start = (sign + 1) * 6
+                        values = block[start : start + 6]
+                        if any(values):
+                            remainders.append(
+                                {
+                                    "position": position,
+                                    "family": self.initial.fields[definition.field].name,
+                                    "sign": sign,
+                                    "registers": list(values),
+                                    "phases": list(phases[start : start + 6]),
+                                    "total": sum(definition.spread),
+                                }
+                            )
+            result["field_remainders"] = remainders
+        return result

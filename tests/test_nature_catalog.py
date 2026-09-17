@@ -513,10 +513,12 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             sign = (charge > 0) - (charge < 0)
             expected = event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
             if isinstance(rays[source].get("spread"), list):
-                # A spreading family (field-spreading-v1): its content was released
-                # again at (8,7,7), a fresh field ray with no event, whole because
-                # phase 3 selects the forward entry of its table.
-                expected = Ray(0, (0, 0, 0), 5, phase=(3 + 2 * rate) % 8, steps=1)
+                # A spreading family (field-spreading-v1, field-remainder-v1): its
+                # content was released again at (8,7,7): floor(5 x 6 / 11) = 2 go on
+                # as a fresh field ray with no event, and 3 quanta wait there in the
+                # Node's remainder registers, 8/11 forward and 5/11 on each other
+                # heading; the total stays 5.
+                expected = Ray(0, (0, 0, 0), 2, phase=(3 + 2 * rate) % 8, steps=1)
             assert rays_at(simulation, (9, 7, 7)) == [expected]
             totals = {source: (5,)}
             if name is not None:

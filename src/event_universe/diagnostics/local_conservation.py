@@ -22,7 +22,15 @@ from event_universe.core.disturbance_state import (
     unpack,
 )
 from event_universe.core.integer import checked_work
-from event_universe.core.spatial_state import PORT_HEADINGS, BoundMotion, Ray, Rays, held_ray
+from event_universe.core.spatial_state import (
+    PORT_HEADINGS,
+    BoundMotion,
+    Ray,
+    Rays,
+    Remainders,
+    held_ray,
+    remainder_stock,
+)
 from event_universe.core.topology import neighbor_address
 from event_universe.core.validation import ValidationMeter
 from event_universe.fields.disturbances import evaluate
@@ -127,6 +135,7 @@ class LocalConservationAudit:
         populations: tuple[tuple[tuple[int, ...], ...], ...],
         rays: tuple[Rays, ...] = (),
         group: BoundMotion | None = None,
+        remainders: Remainders = (),
     ) -> Quantity:
         """Octant stock feeds the declared expressions; rays add their own quanta.
 
@@ -163,6 +172,12 @@ class LocalConservationAudit:
                                 intrinsic[axis] + sign * ray.amount * heading[axis]
                             )
                     charge = checked_work(charge + checked_work(ray.amount * definition.charge))
+            if definition.spread and remainders and index < len(remainders) and remainders[index]:
+                # The Node's remainder registers hold whole quanta in total, content
+                # without momentum (field-remainder-v1).
+                held = remainder_stock(remainders[index], sum(definition.spread))
+                components[0] = checked_work(components[0] + held)
+                charge = checked_work(charge + checked_work(held * definition.charge))
             values[definition.field] = pack(tuple(components))
         if group is not None:
             for axis in range(3):
@@ -229,7 +244,18 @@ class LocalConservationAudit:
             )
         if not any(bundle):
             raise ValueError("a field_spread record names a spreading ray family")
-        return self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+        taken = self._spatial(tuple(() for _ in self.initial.spatial_fields), tuple(bundle))
+        stored = int(cast(int, event.get("stored", 0)))
+        if not stored:
+            return taken
+        # The whole quanta the registers kept (field-remainder-v1) stayed at the
+        # Node as content without momentum: they are not among the departures the
+        # release term measured, so only their energy and charge are given back.
+        kept = self._spatial(
+            tuple(() for _ in self.initial.spatial_fields),
+            tuple((Ray(0, (0, 0, 0), stored),) if rays else () for rays in bundle),
+        )
+        return _subtract(taken, (kept[0], 0, 0, 0, kept[4]))
 
     def _returned(self, event: dict[str, object]) -> Quantity:
         """The returned field quantum a Node ended without an owner to give it to
@@ -283,7 +309,10 @@ class LocalConservationAudit:
         nodes: dict[Address3, Quantity] = {}
         for node in view.nodes:
             amount = self._spatial(
-                tuple(state.populations for state in node.spatial), node.rays, node.group
+                tuple(state.populations for state in node.spatial),
+                node.rays,
+                node.group,
+                node.remainders,
             )
             if node.incoming_spatial:
                 amount = _add(amount, self._spatial(tuple(s.populations for s in node.incoming_spatial)))

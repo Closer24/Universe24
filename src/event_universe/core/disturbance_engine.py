@@ -199,6 +199,11 @@ class DisturbanceEngine:
                     if spatial is None or position not in spatial.nodes
                     else spatial.nodes[position].bound_motion
                 ),
+                remainders=(
+                    ()
+                    if spatial is None or position not in spatial.nodes
+                    else spatial.nodes[position].remainders
+                ),
             )
             for position in sorted(positions)
         )

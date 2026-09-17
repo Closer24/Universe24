@@ -46,6 +46,7 @@ from .spatial_state import (
     FieldInteractionGuard,
     Ray,
     Rays,
+    Remainders,
     SpatialBundle,
     SpatialCouplingResult,
     SpatialFieldDefinition,
@@ -74,6 +75,7 @@ from .spatial_state import (
     ray_stock,
     return_ray,
     validate_rays,
+    validate_remainders,
     zero_spatial_state,
 )
 from .topology import neighbor_address
@@ -91,6 +93,8 @@ SpatialPlanner = Callable[
         int,
         int,
         int,
+        Remainders,
+        Remainders,
     ],
     SpatialPlan,
 ]
@@ -370,6 +374,8 @@ class SpatialNode(SpatialNodeState):
             any(any(unpack(payload)) for state in states for payload in state.populations)
             or any(self.rays)
             or self.body is not None
+            # Remainder registers are content the Node owns (field-remainder-v1).
+            or any(any(block) for block in self.remainders)
         )
         # An exhausted source still clears its last emission before a later move.
         active_source = active_source or any(
@@ -436,7 +442,16 @@ class SpatialNode(SpatialNodeState):
             if held:
                 bound_port, _ = group_step(self.bound_motion, group_content(held))
         plan = yield SpatialPlanningInput(
-            states, records, self.received_count, node_cost, resident_rays, tick, ray_hold, bound_port
+            states,
+            records,
+            self.received_count,
+            node_cost,
+            resident_rays,
+            tick,
+            ray_hold,
+            bound_port,
+            self.remainders,
+            self.remainder_phases,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -751,6 +766,10 @@ class SpatialNode(SpatialNodeState):
         # group's register, gone with the group when it steps.
         self.bound_delay = plan.bound_delay if plan.bound_port < 0 else 0
         self.bound_motion = None if plan.bound_port >= 0 else motion
+        if plan.remainders:
+            # The remainder registers after this cycle (field-remainder-v1).
+            validate_remainders(plan.remainders, plan.remainder_phases, services.initial.spatial_fields)
+            self.remainders, self.remainder_phases = plan.remainders, plan.remainder_phases
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -819,7 +838,10 @@ class SpatialNode(SpatialNodeState):
                 amount=spread.amount,
                 arrived=spread.arrived,
                 amounts=spread.amounts,
-                remainders=spread.remainders,
+                released=spread.released,
+                stored=spread.stored,
+                registers=spread.registers,
+                register_phases=spread.register_phases,
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
