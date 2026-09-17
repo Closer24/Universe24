@@ -28,7 +28,7 @@ Feature tests of issue #169 join this table as they land.
 
 | Module | Tests | Seconds | Rule isolated |
 | --- | --- | --- | --- |
-| `test_a5_static.py` | 3 | 5.92 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step) and the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), pinned below |
+| `test_a5_static.py` | 5 | 10.8 | Experiment A5s (`examples/nature/a5_static/`): the fifteen worlds byte for byte what `make_worlds.py` writes and the pinned geometry, the r = 4 like-charge world's first eight ticks (the registers, the ledger, no step), the committed record of the measured series (the window sums, the exponent, the diagonal, the control, the verdicts), and Run 2's six dense worlds with the mean field's predictions written before it, pinned below |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
@@ -3202,8 +3202,8 @@ Three tests, pinned before the first run:
 ([register](EXPERIMENTS.md#a5s-coulombs-force-law-between-two-charges-at-rest);
 `examples/nature/a5_static/`, the dictionary in its
 [README](../examples/nature/README.md#a5s-coulombs-force-law-between-two-charges-at-rest)).
-Three tests, the first two pinned before the first run and the third from
-the measured record:
+Five tests, the first two pinned before the first run, the third from the
+measured record, the fourth and fifth before Run 2:
 
 - the fifteen world files are byte for byte what `make_worlds.py` writes
   (`json.dumps(indent=1)` and a newline), in the order `pp_r4`, `pp_r6`,
@@ -3264,7 +3264,37 @@ the measured record:
   1756, 524 and 182 on both axes, the first push at tick 6, 8, 12 and 19;
   the clause table's verdicts in order: ledger pass, control pass,
   registers pass, exponent fail, signs pass, diagonal reported; and the
-  clause's series of (r, F) with the same exponent for `pp` and `pe`.
+  clause's series of (r, F) with the same exponent for `pp` and `pe`;
+- Run 2 (the dense mode, to the steady state; the register's "Run 2, to the
+  steady state (dense mode)"): the six world files `pp_r12d`, `pp_r16d`,
+  `pp_r20d`, `pp_r24d`, `pe_r16d`, `p_alone_16d` are byte for byte what
+  `make_worlds.dense_cases` writes, in that order, `make_worlds.DENSE_TICKS`
+  is {12: 196, 16: 386, 20: 622, 24: 898} (t90 + 32 for t90 = 164, 354, 590,
+  866), and each is the pinned geometry: `dense_field` true, no
+  `conservation` and no `polarization` key, `model_id` `a5-static-<name with
+  dashes>`, shape [5r + 1, 4r + 1, 4r + 1] (the control [65, 65, 65]), open,
+  the ticks of its r (the opposite-charge world's and the control's those of
+  r = 16), A at (2r, 2r, 2r) and B at (3r, 2r, 2r) (the control's one body at
+  (32, 32, 32)), every body at least 2r from every face; stripped of the key
+  and the name, each equals `make_worlds.world` at the same margin and ticks
+  (the same families, tables, lamps and fields as Run 1); `pe_r16d`'s B with
+  `{"light_a": -1}` and the control with `{"light_a": 1}`;
+- `predictions.json`, written by `predict_dense.py` before Run 2 (the
+  boundary factor 2, the window 32, the extra ticks 32): one row per r = 12,
+  16, 20, 24 with the boundary 2r, the box {shape [5r + 1, 4r + 1, 4r + 1],
+  a (2r, 2r, 2r), b (3r, 2r, 2r)}, the mean field's quarter board [5r + 1,
+  2r + 1, 2r + 1], t50 = 34, 94, 164, 246, t90 = 164, 354, 590, 866, the
+  ticks t90 + 32, the first push at tick r, the box's steady push 25.3245,
+  10.6675, 6.1929, 4.1493 and the predicted push (the mean over the last 32
+  ticks) 23.1370, 9.6752, 5.6039, 3.7474 (four decimals), the predicted
+  between 90 and 92 % of the steady push and above the window before it,
+  and the world's ticks equal to the row's; the fits over r = 12, 16, 20 and
+  12, 16, 20, 24 with the rows' points, the predicted push's exponent −2.788
+  and −2.629 and the steady push's −2.769 and −2.612 (three decimals); the
+  asymptote's local exponent between r = 24 and 32 −2.093 and the free-space
+  band r {0.2: 21, 0.1: 26}; and the r = 12 row recomputed by
+  `predict_dense.predict(12, 24)`: the same t50, t90, ticks, first push, box
+  and quarter board, and the three pushes within 1e-9.
 
 ## The split table's mean field
 

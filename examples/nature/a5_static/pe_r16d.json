@@ -1,0 +1,390 @@
+{
+ "schema_version": 1,
+ "model_id": "a5-static-pe-r16d",
+ "shape": [
+  81,
+  65,
+  65
+ ],
+ "boundary": "open",
+ "dense_field": true,
+ "slots_per_node": 2,
+ "link_ticks": 1,
+ "normal_budget": 100000,
+ "ticks": 386,
+ "operation_costs": {
+  "receive": 1,
+  "read": 1,
+  "evaluate": 1,
+  "update": 1,
+  "couple": 1,
+  "route": 1,
+  "split": 1,
+  "send": 1,
+  "commit": 1
+ },
+ "fields": [
+  {
+   "name": "proton_a",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "electron_b",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "light_a",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "light_b",
+   "components": 1,
+   "units": "quantum",
+   "signed": false,
+   "conserved": true,
+   "extensive": true
+  },
+  {
+   "name": "momentum",
+   "components": 3,
+   "units": "quantum times heading",
+   "signed": true,
+   "conserved": true,
+   "extensive": true
+  }
+ ],
+ "disturbance_types": [
+  {
+   "name": "idle_light_a",
+   "fields": [
+    "light_a",
+    "momentum"
+   ],
+   "defaults": {
+    "light_a": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  },
+  {
+   "name": "idle_light_b",
+   "fields": [
+    "light_b",
+    "momentum"
+   ],
+   "defaults": {
+    "light_b": 1,
+    "momentum": [
+     0,
+     0,
+     0
+    ]
+   },
+   "transport": {
+    "mode": "hold"
+   }
+  }
+ ],
+ "spatial_fields": [
+  {
+   "field": "proton_a",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 2,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "phase_bits": 3,
+   "charge": 3,
+   "kerengonen": {
+    "phase_advance": 0
+   }
+  },
+  {
+   "field": "electron_b",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 2,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "phase_bits": 3,
+   "charge": -3,
+   "kerengonen": {
+    "phase_advance": 0
+   }
+  },
+  {
+   "field": "light_a",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 8,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "phase_bits": 3,
+   "charge": 0,
+   "kerengonen": {
+    "phase_advance": 0
+   },
+   "field_of": "proton_a",
+   "release": [
+    1,
+    65536
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "field": "light_b",
+   "baseline": 0,
+   "transport": "ray",
+   "headings": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     -1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     0,
+     -1
+    ]
+   ],
+   "rays_per_tick": 1,
+   "ray_slots": 8,
+   "metric": "links",
+   "pace": [
+    1,
+    1
+   ],
+   "phase_bits": 3,
+   "charge": 0,
+   "kerengonen": {
+    "phase_advance": 0
+   },
+   "field_of": "electron_b",
+   "release": [
+    1,
+    65536
+   ],
+   "spread": [
+    6,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  }
+ ],
+ "emissions": [
+  {
+   "type": "idle_light_a",
+   "field": "light_a",
+   "amount": 1,
+   "denominator": 1,
+   "source": false,
+   "heading": [
+    1,
+    0,
+    0
+   ],
+   "kerengonen_phase": 0,
+   "recoil_field": "momentum"
+  },
+  {
+   "type": "idle_light_b",
+   "field": "light_b",
+   "amount": 1,
+   "denominator": 1,
+   "source": false,
+   "heading": [
+    1,
+    0,
+    0
+   ],
+   "kerengonen_phase": 0,
+   "recoil_field": "momentum"
+  }
+ ],
+ "seeds": [],
+ "ray_interactions": [],
+ "external_bodies": [
+  {
+   "position": [
+    32,
+    32,
+    32
+   ],
+   "family": "proton_a",
+   "amount": 268435456,
+   "charge": 3,
+   "momentum_table": {
+    "light_b": -1
+   }
+  },
+  {
+   "position": [
+    48,
+    32,
+    32
+   ],
+   "family": "electron_b",
+   "amount": 268435456,
+   "charge": -3,
+   "momentum_table": {
+    "light_a": -1
+   }
+  }
+ ]
+}

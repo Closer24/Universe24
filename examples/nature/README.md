@@ -1510,7 +1510,9 @@ by `make_worlds.py` beside them and never by hand: `pp_r{4,6,8,12,16}.json`
 (two bodies of the proton's charge on the +X axis at distance r),
 `pe_r{4,6,8,12,16}.json` (a proton's charge and an electron's),
 `pp_d{3,4,6,8}.json` (like charges on the diagonal, B at (d, d, 0) from A)
-and `p_alone.json` (the control, one body). `analyze.py` reads the records
+and `p_alone.json` (the control, one body); six more for Run 2, the dense
+mode to the steady state ([below](#run-2-to-the-steady-state-dense-mode-planned)).
+`analyze.py` reads the records
 and evaluates the criterion clause by clause; `record.json` is its small
 committed record, which `tests/test_a5_static.py` reads;
 `mean_field_gauss.py` is the computation made after the run, the table's
@@ -1701,6 +1703,57 @@ field of a charge at rest is established, in this table's sense, at no r
 the engine reaches today, and the exponent clause can be met only from r ≈
 24 up.
 
+### Run 2, to the steady state (dense mode), planned
+
+Planned before the run on 2026-09-17 (the register's entry, "Run 2, to the
+steady state (dense mode)"): the same two bodies under the dense mode
+(`dense_field: true`, [the dense
+mode](../../docs/SPATIAL_FIELDS.md#the-dense-mode-dense-field-v1), PR #251),
+which cycles the pure-field Nodes as one vectorized step with the same
+integers and makes the mean-field computation's boxes and durations
+feasible: the boundary 2r from both bodies (the box [5r + 1, 4r + 1, 4r + 1],
+A at (2r, 2r, 2r), B at (3r, 2r, 2r)) and t90 + 32 ticks, t90 the first tick
+at which the mean field's push in that box reaches 90 % of its steady
+state. Six worlds, written by `make_worlds.py` (`dense_cases`) beside the
+fifteen of Run 1: `pp_r{12,16,20,24}d` (like charges), `pe_r16d` (opposite
+charges, for the sign) and `p_alone_16d` (the control alone in the cube of
+r = 16's margin, 65³, for r = 16's ticks). `predict_dense.py` writes the
+mean field's prediction for exactly these boxes and ticks into
+`predictions.json` (the push averaged over the last 32 ticks, as
+`analyze.py` reads the engine's); `analyze_dense.py` evaluates the criterion
+from the records against it. The smoke test of the r = 12 world for 16
+ticks gives the same `state.json` with the key and without it (SHA-256
+`ab54313628ce…3108e7`), in 63 s against 76 s.
+
+| r | box | ticks (t90 + 32) | predicted F | the window before | box steady state | r² F | beam 4096 (6/11)^(r−1) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 12 | [61, 49, 49] | 196 | 23.137 | 22.400 | 25.324 | 3332 | 5.21 |
+| 16 | [81, 65, 65] | 386 | 9.675 | 9.519 | 10.668 | 2477 | 0.46 |
+| 20 | [101, 81, 81] | 622 | 5.604 | 5.548 | 6.193 | 2242 | 0.041 |
+| 24 | [121, 97, 97] | 898 | 3.747 | 3.721 | 4.149 | 2158 | 0.0036 |
+
+The log-log exponent of the predicted F over r = 12, 16, 20 is −2.79 ± 0.16
+and over 12, 16, 20, 24 −2.63 ± 0.14; the mean field's asymptote is −2 (the
+local exponent of the box's steady push −3.01, −2.44, −2.20, −2.09 between
+12 and 16, 16 and 20, 20 and 24, 24 and 32; in free space within −2.0 ± 0.2
+from r = 21 and within ± 0.1 from r = 26 on), so these r read the approach
+to Gauss's law and the criterion is the agreement with the mean field.
+Criterion, pre-registered, pass, all of: (1) every ledger line balanced and
+`conserved_at_every_completed_tick` at every tick of every world; (2) the
+registers equal and opposite at every tick, the control's (0, 0, 0); (3)
+the engine's F(r), the mean over the last 32 ticks, within 3 % of the
+prediction at every r run; (4) the log-log exponent over the r run equal
+to the mean field's over the same points within ± 0.1; (5) `pe_r16d` the
+exact negation of `pp_r16d`, tick by tick. The worlds run one at a time,
+smallest first, r = 24 last and only if 8 GB is available then (about 13
+hours in all at the measured 26 µs per Node and tick); the memory peaks at
+the runner's final snapshot, about 22 KB per Node measured on the r = 12
+board (3.3 GB at r = 12, 7.8 at r = 16, 15 at r = 20, 26 at r = 24 against
+16 GB on the machine), so each world runs only if the available memory
+covers its projection when its turn comes: r = 20 is a borderline attempt
+and r = 24 waits for a runner that writes the snapshot Node by Node.
+Status: launched on 2026-09-17, results to be registered from the records.
+
 ### Run and render
 
 ```bash
@@ -1710,6 +1763,12 @@ for w in pp_r4 pp_r6 pp_r8 pp_r12 pp_r16 pe_r4 pe_r6 pe_r8 pe_r12 pe_r16 pp_d3 p
   python tools/ray_viewer/extract.py runs/a5s/$w --label "$w" --out runs/a5s/$w/runs.json
 done
 python examples/nature/a5_static/analyze.py runs/a5s/pp_r* runs/a5s/pe_r* runs/a5s/pp_d* runs/a5s/p_alone --out runs/a5s/summary.json --record examples/nature/a5_static/record.json
+# Run 2 (the dense mode): the predictions (about three minutes), the six worlds one at a time, the criterion
+PYTHONPATH=src python examples/nature/a5_static/predict_dense.py
+for w in pp_r12d pp_r16d pe_r16d p_alone_16d pp_r20d pp_r24d; do
+  PYTHONPATH=src python -c "from pathlib import Path; from event_universe.runner import run_initialization; run_initialization(Path('examples/nature/a5_static/$w.json'), Path('runs/a5sd/$w'))"
+done
+python examples/nature/a5_static/analyze_dense.py runs/a5sd/pp_r12d runs/a5sd/pp_r16d runs/a5sd/pp_r20d runs/a5sd/pp_r24d runs/a5sd/pe_r16d runs/a5sd/p_alone_16d --out runs/a5sd/summary.json --record examples/nature/a5_static/record_dense.json
 ```
 
 The computation after the run (about ten minutes on one core; `--only-free`
