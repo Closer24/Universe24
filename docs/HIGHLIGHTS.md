@@ -33,6 +33,15 @@ This English-language Highlights document summarizes the central model specifica
 
 # 2. Intuitive picture: multidimensional Snake
 
+The whole model, as decided on 2026-09-17, is four definitions and one principle; section 3 states each in full.
+
+1. **Event and ray** (3.3, 3.20). A ray is a straight trajectory between two events and carries information. An event is where information splits, at a Node, by the declared coupling, into at most six rays. There is no third thing.
+2. **Detector** (3.19, 5.4). A Node with a bit. On 1 the ray passes, and that pass is the only measurement. On 0 the Node returns the ray untouched, without reading it; the return cancels that ray's share of its event and carries it to the sibling lines. No register, nothing at a distance.
+3. **Phase** (3.3). Every ray is a wave ray. Its phase advances at the rest rate of its family, which is its mass; light's rate is zero and it carries its emitter's clock. Interference is steering of content by phase difference, the Born rule as a declared table.
+4. **Field** (3.5, 3.28). A ray's field is its own information spreading in ray form in all directions. It makes an event only where it meets something it changes: delay, bending, a changed trajectory, and the field ray returning with the opposite momentum. The computation field, which is gravity, obeys the same rule.
+
+The principle (3.15): every declared invariant is exact, in bounded integers, at every event, because only then can an event be rebuilt from its parts when they return.
+
 Think of Universe24 as a kind of multidimensional Snake game with obstacles and interactions. Multiple rays move through the same 3D Node network across compatible property and field channels. They may cross without responding, respond weakly, or interact very strongly according to their selected coupling; crossing or co-location alone is not a collision. Here, weak and strong describe response strength, not automatically the fundamental weak and strong forces. Multidimensional includes independent state channels, not extra spatial dimensions. Obstacles are an analogy for declared interactions, not invented opaque walls or a capacity fix. Ordinary evolution is deterministic; only an actual Detector generates a draw. The central specification remains the precise definition.
 
 # 3. Foundational postulates
