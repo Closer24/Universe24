@@ -464,6 +464,8 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A12",
             "hypothesis 12",
             "hypothesis 13",
+            "hypothesis 16",
+            "hypothesis 17",
             "feature 8b",
         }
     elif case == "experiments":
