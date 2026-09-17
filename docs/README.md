@@ -39,10 +39,15 @@ result are different claims. Revision-specific results are not a live status fee
 | --- | --- |
 | [Hypotheses under test](HYPOTHESES.md) | Questions the framework raises, kept apart from measured results: the lottery as the only door for outside information, living and inanimate as number sources, the size of the universe, what the sequence is, the derivation program, dark matter as a closed dimension, redshift without recession |
 | [Experiments register](EXPERIMENTS.md) | The research runs of the ray-event model, one entry each with its features, run design and criterion pinned before the run: confrontation with physics (two-slit Born intensities, Bell in phase form, Detector statistics, Coulomb, light bending and G_eff N², Newtonian attraction, hydrogen levels, neutron decay, the mass ladder, the wide phase, Malus and polarization Bell), proof for the paper, the order in which features unlock them, and what it replaces; runs made once at one fingerprint, never test-suite tests |
-| [Research explorations of 2026-09-16](../examples/research/README.md) | Six dated exploration studies (Bell and postulate 22, anomalies, ray form, entity audit, electron-photon scatter, ray gallery) with pre-registered expectations, scripts and recorded results at one fingerprint; evidence, not integrated behavior or proof of physics |
-| [Named-particle gallery](../examples/gallery/README.md) | Electron-positron elastic contact and configured annihilation, muon-pair and beta-decay conversions, rendered from recorded runs with names, charges and masses |
-| [Family conversion](../examples/family-conversion/README.md) | Generic N-to-M conversion between catalog families: electron-positron annihilation into two or three photons, a four-ray joint conversion, threshold two-photon pair production with a crossing control, and a Compton-like exchange as supplied integer laws in catalog keV units, with exact accounting up to 10 GeV on a 48-cubed board |
-| [Isotropy probe](../examples/isotropy-probe/README.md) | Directional ratio of the outward and straight-ray fields against the isotropic expectation: exact path counts, counting spread and the heading cost of isotropy |
+
+The dated research studies of 2026-09-16 (`examples/research/`: Bell and
+postulate 22, anomalies, ray form, entity audit, electron-photon scatter, ray
+gallery), the named-particle gallery (`examples/gallery/`), the family
+conversion (`examples/family-conversion/`) and isotropy (`examples/isotropy-probe/`)
+experiments, and the other example worlds that no kept test loads were deleted
+on 2026-09-17 with the test-suite reduction; see the
+[migration note](MIGRATION.md#test-suite-reduced-on-2026-09-17-one-test-per-rule).
+Their dated results stay in [validation](VALIDATION.md).
 
 The Bell probes (`examples/kerengonen-bell/`, `examples/bell-chsh/`,
 `examples/research/bell-postulate-22/`), the claim-and-gather and gathered-gravity

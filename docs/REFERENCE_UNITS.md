@@ -102,7 +102,7 @@ constant does not enable a Lorentz force or gravitational momentum change.
 
 ## Validation and boundaries
 
-`tests/test_reference_units.py` checks dimensions, defining constants, conjugate
+`tests/test_reference_units.py` (deleted on 2026-09-17) checks dimensions, defining constants, conjugate
 magnetic conversion, vector signs, exact rejection, explicit error budgets and
 runtime bounds. A 40-tick periodic transport probe carries encoded electron,
 proton and neutron reference masses and a signed three-vector through the
