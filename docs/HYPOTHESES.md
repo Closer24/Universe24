@@ -345,3 +345,47 @@ delay `k_out`. Three outcomes: a fixed ratio that depends only on the delay
 ratio that needs tuning per family (the parameter has only moved), or no
 stable ratio (the hypothesis fails). The same run with a massless ray must
 gain nothing.
+
+## 11. The Bell prediction of the ray-event model, stated so that it can fail
+
+Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.19, 3.20, 5.4) a
+pair is two rays of one birth event, each carrying its share of that event;
+every Detector draws 1 or 0 without reading the ray; only a pass is a
+measurement; a return walks back to the birth event and transmits the share
+and the bit along the partner's line at one Link per interval; no register
+answers at a distance. The hypothesis raised by the model owner on
+2026-09-17 is that this reproduces the correlations of entangled pairs. What
+the model predicts, exactly:
+
+1. Two Detectors at equal distance from the birth, settings chosen at the
+   last moment, coincidences counted within a window: the first Detector's
+   value reaches the other only after the round trip through the birth
+   event, after the other has already drawn, so each measured outcome
+   depends only on its own setting, the arriving ray and a local draw. Every
+   such model obeys CHSH at most 2 (Bell's theorem); with a blind draw the
+   passed pairs are a fair sample, so the coincidence subset obeys it too.
+2. One arm delayed beyond the round trip before its Detector: the value
+   arrives first, and the joint law of the declared couplings can give the
+   quantum value.
+3. A draw that reads the ray and the setting would bias which pairs count
+   (the detection loophole); a shared draw sequence correlates the two bits
+   with each other but not with the settings.
+
+What is measured: the loophole-free experiments of 2015 (Delft, event-ready
+electron spins over 1.3 km, S = 2.42; Vienna and NIST, photons with detection
+efficiency above the fair-sampling bound and settings chosen at spacelike
+separation) and the three-particle GHZ tests all report violations under
+condition 1. The prediction of line 1 therefore contradicts existing data
+unless the model's coincidence count differs from the experiments' in a way
+the pair test can show. The test (issue #169, feature 4): the pair board with
+the source as a marked Node, two Detectors at equal distance with settings
+drawn per pair, coincidences counted within a declared window, CHSH computed
+from clicks only; then the same board with one arm delayed by more than the
+round trip. Three outcomes: at most 2 in the symmetric case (the model's
+prediction stands and disagrees with the data; the hypothesis fails as a
+model of entanglement and is kept as the model's stated limit), above 2 in
+the symmetric case (the analysis above is wrong, to be understood before
+anything else), or above 2 only in the delayed case (as predicted). The
+only door left in the model's own terms is that the sequence feeding the
+draws also feeds the settings (section 1 above); that reading explains any
+correlation and is not a prediction.
