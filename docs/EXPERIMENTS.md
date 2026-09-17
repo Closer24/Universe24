@@ -62,7 +62,8 @@ audits; 11 polarization (after the ten).
 **Status values.** `planned` (this page, criterion fixed, not run);
 `measured` with date, commit and fingerprint, and the outcome in one word
 (pass, fail, or the named alternative); `withdrawn` by the model owner, dated.
-Today every entry is `planned`.
+Today every entry of sections A and B is `planned`; section E holds the dated
+demonstration runs, which confront nothing and are `measured` as made.
 
 **Conventions.** The board is the cubic Node lattice of Highlights 3.1 with
 its boundary stated per entry; c is one Link per interval; a Detector setting
@@ -893,3 +894,86 @@ as history and not as evidence for the ray-event model. This register
 replaces them: an experiment exists as an entry here, runs once at one
 fingerprint under its pinned criterion, and is recorded in the validation
 log; no experiment directory, harness or example world is kept in the tree.
+
+## E. Demonstrations of events
+
+Dated research runs under Highlights 5.5 that show one event of nature each
+in the engine's language, with the rules that exist on `main` today. They are
+not confrontations (no measured value is compared) and not tests: each is
+made once by the runner (`run_initialization`) from its world file under
+`examples/nature/`, whose [README](../examples/nature/README.md) is the
+dictionary from each physical word to the engine word, recorded here with
+its fingerprint, and rendered with the [ray viewer](../tools/ray_viewer/README.md);
+the records and the renders stay outside the tree. They stand beside B8,
+which stays `planned`: B8 holds its group for 2^12 intervals and pins the
+threshold criterion, while these runs show the events over a dozen ticks.
+The families are catalog rays (`light`, `electron`, `proton`, `neutron`, the
+charge unit e/3, the electron's rest rate 1); the two couplings are the
+worlds' own declarations, since the catalog holds no photon-absorption and no
+photofission coupling, and the proton's and the neutron's rest rates,
+undecided in the catalog, are set to 1 for the picture.
+
+### E1. A photon absorbed by a bound electron
+
+- **Claim.** Highlights 3.4: binding "is the interaction whose result is zero
+  events", and a group meets an arriving ray by "the coupling declared for the
+  families present". Here that coupling, `excite`, is itself a binding over
+  `[electron, electron, light]`: the light ray ends at the Node and the group
+  re-forms with more content and a slower output clock (3.28, mass as
+  output-clock delay).
+- **Features.** 1, 5, 6, 8, 9, 10.
+- **Run.** `examples/nature/absorption.json`: board 21^3, open, N = 8, no
+  Detector, 12 ticks; two electron rays of amount 4 (rest rate 1, charge -3)
+  bound at (10, 10, 10) by `bind` (`ray_delay` 1); one light ray of amount 3
+  from (10, 4, 10) heading +Y; `excite`, a binding rule over the three
+  families with `ray_delay` 3, declared before `bind`.
+- **Shows.** Tick 2: the group `[electron, electron]`, amounts [4, 4]. Tick
+  6: the light arrives and waits the group's clock one interval. Ticks 8 to
+  12: the group `[electron, electron, light]`, amounts [4, 4, 3], `ray_delay`
+  3, the electron phases advancing once per interval and the light's held at
+  0; the light ray's trajectory ended at the Node (the record holds no
+  departure from the center). At every tick: totals electron 8, light 3,
+  momentum (0, 0, 0), the charge line electron -24, every audit line
+  balanced, `conserved_at_every_completed_tick` true.
+- **The literal translation refused.** The outputs rule "light a + electron
+  m to electron rays only, content m + a", written in the dictionary, is
+  refused at initialization with the electron's charge -3 (`ray meeting
+  output 2 of family electron (charge -3) would change the total charge: its
+  amount comes from inputs of another charge`) and, with the charge set to 0,
+  at the meeting after tick 7 (`ray meeting absorb changes the stock of a
+  family`). The missing generic rule, a meeting whose outputs change family
+  stock under declared invariants with a `converted` line in the audit, is
+  stated in the dictionary and is not added by this run.
+- **Status.** measured on 2026-09-17, commit `a2aea30888ca6969d8036ae5737b54cc5818b3c7`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization `8887461754ef2b5a32530f7fe86deaae4fcfef1b0e1f883fd99a23a3d605cac7`;
+  outcome: the event as stated, exact at every tick.
+
+### E2. Photofission of a two-body nucleus, with the control below threshold
+
+- **Claim.** Highlights 3.4 (a bound group "is unbound the same way anything
+  else happens on the board: a ray arrives (a high-energy light ray, for
+  instance)") and 3.26 (the threshold is a table entry read at the meeting):
+  the outputs rule fires only when the light's amount is at least 4, its
+  guard `gt(amount of the light, 3)`, and a photon below that crosses.
+- **Features.** 1, 5, 6, 8, 9, 10.
+- **Run.** `examples/nature/photofission.json`: board 21^3, open, N = 8, no
+  Detector, 16 ticks; a proton ray (amount 6, charge +3) and a neutron ray
+  (amount 6, charge 0) bound at (10, 10, 10) by `strong` (`ray_delay` 1); a
+  light ray of amount 2 from (10, 10, 4) heading +Z and one of amount 6 from
+  (10, 10, 19) heading -Z; `photofission`, declared before `strong`, with
+  outputs proton on +Y, neutron on -Y and the light on its own heading,
+  invariants energy and momentum, and the guard above.
+- **Shows.** Ticks 7 to 8: the low light crosses the group's Node after its
+  one-interval wait and walks on along +Z, the group intact and ticking.
+  Ticks 10 to 11: the high light fires the rule: the proton leaves on +Y,
+  the neutron on -Y, the light continues on -Z, each a new event ray with
+  the event's Ports and shares; momentum amount x heading (0, 0, -6) before
+  and after; no bound group from tick 11. At every tick: totals proton 6,
+  neutron 6, light 8, momentum (0, 0, 0), the charge line proton +18, every
+  audit line balanced, `conserved_at_every_completed_tick` true.
+- **Status.** measured on 2026-09-17, commit `a2aea30888ca6969d8036ae5737b54cc5818b3c7`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`;
+  outcome: the control crosses and the split happens as stated, exact at
+  every tick.
