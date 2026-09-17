@@ -41,7 +41,7 @@ SILENT_KINDS = (
     "field_returned",
 )
 # Event kinds the default caption lists (a style file can choose others).
-CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "return", "arrival", "split")
+CAPTION_KINDS = ("meeting", "deflection", "conversion", "click", "pass", "return", "arrival", "split")
 CAPTION_MAX = 3
 
 Position = tuple[int, int, int]
@@ -201,6 +201,11 @@ class Chain:
     held: list[dict[str, int | list[int]]] = field(default_factory=list)
     end: dict[str, Any] | None = None
     steps_at_start: int = 0
+    # The Detector bit the ray carries (detector-bit-property-v1): None for none, 0
+    # or 1; set by a click, a pass or a return at a marked Node, inherited by the
+    # outputs of an event from its inputs (the highest, 1 over 0 over none), and
+    # read from the ray recording when the record carries one.
+    bit: int | None = None
 
     @property
     def amount(self) -> list[int]:
@@ -250,6 +255,7 @@ class Builder:
     receptions: dict[tuple[Position, int], list[dict[str, Any]]] = field(default_factory=dict)
     escapes: dict[tuple[Position, int, int], Amounts] = field(default_factory=dict)
     clicks: list[dict[str, Any]] = field(default_factory=list)
+    passes: list[dict[str, Any]] = field(default_factory=list)
     absorptions: dict[tuple[Position, int], list[dict[str, Any]]] = field(default_factory=dict)
     notes: dict[tuple[Position, int], dict[str, Any]] = field(default_factory=dict)
     sources: dict[int, Amounts] = field(default_factory=dict)
@@ -292,6 +298,11 @@ class Builder:
     def add_click(self, event: dict[str, Any]) -> None:
         self.clicks.append(event)
 
+    def add_pass(self, event: dict[str, Any]) -> None:
+        """A marked Node read the bit a ray carries and let it pass without a draw
+        (detector-bit-property-v1)."""
+        self.passes.append(event)
+
     def add_absorbed(self, event: dict[str, Any]) -> None:
         """An external body absorbed an arriving ray into its sink (external-body-v1)."""
         key = (position_of(event["position"]), int(event["tick"]))
@@ -310,6 +321,7 @@ EVENT_KINDS: dict[str, Handler] = {
     "spatial_escaped": Builder.add_escaped,
     "spatial_cycle": Builder.add_cycle,
     "detector_click": Builder.add_click,
+    "detector_pass": Builder.add_pass,
     "external_body_absorbed": Builder.add_absorbed,
 }
 
@@ -488,6 +500,9 @@ def resolve(
     clicks_at: dict[tuple[Position, int], list[dict[str, Any]]] = {}
     for click in builder.clicks:
         clicks_at.setdefault((position_of(click["position"]), int(click["tick"])), []).append(click)
+    passes_at: dict[tuple[Position, int], list[dict[str, Any]]] = {}
+    for passed in builder.passes:
+        passes_at.setdefault((position_of(passed["position"]), int(passed["tick"])), []).append(passed)
 
     def new_chain(unit: Unit, tick: int, node: Position, event: Event | None) -> Chain:
         chain = Chain(len(chains), unit.family, tick, node, None if event is None else event.identifier)
@@ -516,8 +531,11 @@ def resolve(
             if tick > event.tick:
                 event.detail["held_ticks"] = tick - event.tick
         started = []
+        # The outputs carry the highest bit among the inputs (detector-bit-property-v1).
+        inherited = max((chains[i].bit for i in event.inputs if chains[i].bit is not None), default=None)
         for unit in outs:
             chain = new_chain(unit, tick, node, event)
+            chain.bit = inherited
             started.append(chain)
             event.outputs.append(chain.identifier)
             if unit.transit.port not in event.ports:
@@ -571,7 +589,7 @@ def resolve(
     nodes_by_tick: dict[int, set[Position]] = {}
     for (node, tick), _ in list(by_arrival.items()) + list(by_departure.items()):
         nodes_by_tick.setdefault(tick, set()).add(node)
-    for (node, tick), _ in clicks_at.items():
+    for (node, tick), _ in list(clicks_at.items()) + list(passes_at.items()):
         nodes_by_tick.setdefault(tick, set()).add(node)
 
     for tick in range(ticks + 1):
@@ -599,6 +617,25 @@ def resolve(
                 )
                 if clicked is not None:
                     marker.inputs.append(clicked.identifier)
+                    clicked.bit = int(click.get("bit", 1))
+            for passed in passes_at.get((node, tick), []):
+                # A marked Node read the ray's bit and let it pass without a draw
+                # (detector-bit-property-v1): a marker like a click, the ray unchanged.
+                port = int(passed.get("port", -1))
+                through = next((c for c in arrived + arrived_field if c.last_port == port ^ 1), None)
+                marker = new_event(
+                    tick,
+                    node,
+                    "pass",
+                    "Detector pass, no draw",
+                    port=port,
+                    family=passed.get("family"),
+                    amount=passed.get("amount"),
+                    bit=passed.get("bit"),
+                )
+                if through is not None:
+                    marker.inputs.append(through.identifier)
+                    through.bit = int(passed.get("bit", 0))
             for chain in arrived + arrived_field:
                 if chain.returning and chain.event_node == node:
                     marker = new_event(tick, node, "arrival", "returning ray at its event Node")
@@ -759,6 +796,8 @@ def resolve(
                         reversed_chain.returning = True
                         reversed_chain.event_node = chain.origin_node
                         reversed_chain.steps_at_start = chain.steps
+                        if node in detectors:
+                            reversed_chain.bit = 0
                         departing = [reversed_chain]
                     else:
                         kind = "conversion" if out.family != chain.family else "deflection"
@@ -950,7 +989,7 @@ def event_caption(event: Event, chains: list[Chain]) -> str:
         return f"{text}: {out} through {ports}"
     if event.kind == "release":
         return f"{text}: {amounts_text(detail.get('amount_out'))}"
-    if event.kind == "click":
+    if event.kind in ("click", "pass"):
         return (
             f"{text}: {detail.get('family')} {detail.get('amount')} through"
             f" {PORT_NAMES[int(detail.get('port', 0))]}, bit {detail.get('bit')}"
@@ -1120,11 +1159,16 @@ def chain_document(chain: Chain, family_flags: dict[str, bool]) -> dict[str, Any
                 "escaped": unit.transit.escaped,
             }
         )
+    # The ray recording, when the record carries one, says what bit the ray carries
+    # (0 none, 1 a draw of 0, 2 a draw of 1); the events say it otherwise.
+    recorded_bits = [unit.detector for unit in chain.units if unit.detector is not None]
+    bit = {0: None, 1: 0, 2: 1}.get(recorded_bits[-1], chain.bit) if recorded_bits else chain.bit
     return {
         "id": chain.identifier,
         "family": chain.family,
         "field": family_flags.get(chain.family, False),
         "amount": chain.amount,
+        "bit": bit,
         "origin": {
             "tick": chain.origin_tick,
             "node": list(chain.origin_node),

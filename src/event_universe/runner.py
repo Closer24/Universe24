@@ -15,6 +15,7 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
+    DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
     EXTERNAL_BODY,
@@ -26,6 +27,7 @@ from event_universe.core.spatial_state import (
     RAY_MEETING,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
+    detector_bit_property_declared,
     external_body_names,
     ray_layer_names,
     released_field_names,
@@ -218,6 +220,14 @@ def _execute_run(
         "detector_return": DETECTOR_RETURN,
         "inverse_split": INVERSE_SPLIT,
         "return_mode": initial.return_mode,
+        # The Detector's bit as a property (detector-bit-property-v1): recorded when
+        # the world declares the rule anywhere (a mark's on_bit keys, a rule's bit);
+        # a world that declares neither runs the defaults and its record is unchanged.
+        **(
+            {"detector_bit_property": DETECTOR_BIT_PROPERTY}
+            if detector_bit_property_declared(initial)
+            else {}
+        ),
         "wave_ray": WAVE_RAY_FAMILY,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [

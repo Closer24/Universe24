@@ -32,6 +32,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
 | `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
+| `test_detector_bit_property.py` | 13 | 0.44 | Issue #169 feature 2b: a marked Node reads the bit a ray carries and passes it without a draw unless the mark declares `draw`, the outputs of a meeting inherit the bit, a guard reads it (`detector-bit-property-v1`) |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_return.py` | 6 | 0.40 | Issue #169 feature 3: a draw of 0 returns the ray reversed on its line, through no coupling, to rest at its event Node (`detector-return-v1`) |
 | `test_detector_sampling_contract.py` | 18 | 0.00 | Detector-only sampling admission (running branch, untouched) |
@@ -776,6 +777,116 @@ labelled 2, the lamps holding their share again with its recoil undone from
 tick 3 ([Node Detector bit](#node-detector-bit)), and that test runs three
 ticks, because at the fourth the restored lamps would emit again into the
 mark and draw again.
+## Detector bit as a property
+
+`test_detector_bit_property.py` builds its boards inline under the shared
+Detector admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1,
+no decay, the six unit-axial headings in Port order, closed under negation)
+on a periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([the bit read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1),
+[the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+Every lamp holds exactly what it emits once at tick 0, funded, at phase 0,
+recoiling into its own momentum. Pinned before the first run from the
+published ticket rule (`state = (state x 48271 + 1) mod 1073741789`,
+`number = state^2 mod 1073741789`, bit 1 when `number x d < n x
+1073741789`): one draw from seed 3 at setting 1/2 gives state 144814 and bit
+0 (as in [Node Detector bit](#node-detector-bit)); one draw from seed 0 at
+1/1 gives state 1 and bit 1; one draw from seed 5 at 1/1 gives state 241356
+and bit 1, a second 913077587 and bit 1; seed 7 undrawn stays 7.
+
+- (a) a lamp at (4,7,7) sends 8 quanta along +X (one directed emission).
+  Mark A at (5,7,7), setting 1/1 and seed 0, draws the ray at tick 1: one
+  `detector_click` (position (5,7,7), Port 1, family `quanta`, amount 8, bit
+  1), the ray's `detector` 2, A's ticket 1 for the rest of the run. Mark B
+  at (9,7,7), setting 1/2 and seed 3, receives the ray at tick 5 carrying
+  bit 1. With no `on_bit_1` key, and with `on_bit_1: "pass"`, B does not
+  draw: its ticket stays 3 through tick 6, one `detector_pass` (position
+  (9,7,7), tick 5, Port 1, `quanta`, 8, `bit` 1) follows the click in the
+  event stream, and after every tick t from 1 to 6 the one ray of the world
+  is at (4 + t, 7, 7), heading index 0, amount 8, `steps` t, phase t,
+  `outbound` 1, `detector` 2. With `on_bit_1: "draw"` B draws at tick 5,
+  seed 3 at 1/2 drawing 0: one `detector_return` (position (9,7,7), tick 5,
+  Port 1, `quanta`, 8) instead of the pass, B's ticket 144814, and after
+  ticks 5 and 6 the ray is at (14 - t, 7, 7), heading index 1, amount 8,
+  `steps` 10 - t, phase 10 - t, `outbound` 0, `detector` 1. In every case
+  the totals are 8 quanta and momentum (0,0,0) and the conservation report
+  passes at every tick; the runner writes the same two `detector_` lines
+  and records `detector_bit_property: "detector-bit-property-v1"` exactly
+  when the key was written (absent with no key), with
+  `conserved_at_every_completed_tick` true and final quanta 8;
+- (b) a pair lamp at X = (7,7,7) holds 8 and emits a sweep of two headings
+  (`rays_per_tick` 2, cursor 0: +X and -X), 4 each way, one event with mask
+  3 and shares (4, 4, 0, 0, 0, 0); X itself carries mark C, setting 1/1 and
+  seed 7 (a source is a Detector); mark A at (10,7,7), setting 0/1 and seed
+  3; mark D at (4,7,7), setting 1/1 and seed 5; ten ticks, `return_mode`
+  siblings. Arm B (-X) reaches D at tick 3: one `detector_click` (position
+  (4,7,7), Port 0, `quanta`, 4, bit 1), D's ticket 241356, and arm B is at
+  ((7 - t) mod 15, 7, 7), heading index 1, amount 4, `steps` t, phase t mod
+  8, `outbound` 1, `detector` 0 through tick 2 and 2 from tick 3, after
+  every tick t. Arm A (+X) reaches A at tick 3: one `detector_return`
+  (position (10,7,7), Port 1, `quanta`, 4), A's ticket 144814, and arm A is
+  at (7 + t, 7, 7), 0, 4, t, t, 1, 0 after ticks 1 and 2 and at (13 - t, 7,
+  7), 1, 4, 6 - t, 6 - t, 0, 1 after ticks 3 to 6; it walks back through no
+  other mark and arrives at X, mark C, at tick 6 undrawn: C's ticket is 7 at
+  every tick, C clicks, passes and returns nothing. One `inverse_split` in
+  the cycle labelled 6 (position (7,7,7), `quanta`, `siblings`, `ports`
+  (1,), `amounts` (4,), `amount` 4, `bit` 0, `restored` true, `annulled`
+  {}) transmits 4 on arm B's line with bit 0, undrawn by C: the transmission
+  is at (13 - t, 7, 7), 1, 4, t - 6, t - 6, 1, 1 after ticks 7 and 8 and
+  reaches D at tick 9 carrying bit 0. With no `on_bit_0` key D does not
+  draw: one `detector_pass` (position (4,7,7), tick 9, Port 0, `quanta`, 4,
+  `bit` 0), D's ticket 241356 through tick 10, the transmission at (3,7,7),
+  1, 4, 4, 4, 1, 1 after tick 10. With `on_bit_0: "draw"` D draws it at
+  tick 9, seed 5's second draw at 1/1 giving 1: a `detector_click`
+  (position (4,7,7), tick 9, Port 0, `quanta`, 4, bit 1) instead, D's
+  ticket 913077587, the transmission's `detector` 2 from tick 9. The event
+  stream is the D click, the A return, the split, then the D event; the
+  totals are 8 quanta and momentum (0,0,0) and the conservation report
+  passes at every tick;
+- (c) lamp 0 at (5,7,7) sends 5 quanta along +X, lamp 1 at (9,7,7) sends 5
+  along -X; mark M at (6,7,7), setting 1/1 and seed 0, realizes lamp 0's ray
+  at tick 1 (one `detector_click`, position (6,7,7), Port 1, `quanta`, 5,
+  bit 1; `detector` 2); the declared rule `meeting` (two `quanta`
+  participants, no guard, energy and momentum invariants) replaces the two
+  rays that meet at (7,7,7) at tick 2 by two outputs of 5: `{"of": 0}` on
+  Port 2 (+Y) and `{"of": 1}` on Port 3 (-Y) with `input` 1. After tick 1
+  the rays are at (6,7,7), 0, 5, 1, 1, 1, 2 and (8,7,7), 1, 5, 1, 1, 1, 0;
+  after tick 2 both at (7,7,7) with `steps` 2 and phase 2; after ticks 3
+  and 4 the outputs are at (7, 5 + t, 7), 2, 5, t - 2, t, 1, b and (7, 9 -
+  t, 7), 3, 5, t - 2, t, 1, b with `event_ports` 12 and `event_shares` (0,
+  0, 5, 5, 0, 0), where b is the inherited bit: 2 with no `bit` key, with
+  `bit: "highest"` and with `bit: {"of": 0}` (lamp 0's ray, heading index 0,
+  is participant 0 in merge order); 0 with `bit: "none"` and with `bit:
+  {"of": 1}`. The parsed rule carries `bit` -1 (`BIT_HIGHEST`) and
+  `bit_declared` false with no key, -1 and true for `"highest"`, -2
+  (`BIT_NONE`) and true for `"none"`, 0 or 1 and true for `{"of": i}`. The
+  totals are 10 quanta and momentum (0,0,0) at every tick, the report
+  passes, and the runner records the identity exactly when the key was
+  written;
+- (d) the meeting of (c) guarded by `when` equal to 1 when the `max` of the
+  two participants' `detector` equals 2: with the mark it fires and after
+  tick 3 the outputs are at (7,6,7), 3, 5, 1, 3, 1, 2 and (7,8,7), 2, 5, 1,
+  3, 1, 2 with one click recorded; without the mark the guard is false, no
+  event is recorded and the rays cross: after tick 3 at (6,7,7), 1, 5, 3, 3,
+  1, 0 and (8,7,7), 0, 5, 3, 3, 1, 0; 10 quanta and momentum (0,0,0) in both;
+- (e) `parse_initial_state` rejects `on_bit_1: "maybe"`, `on_bit_0: 1`,
+  `bit: "sometimes"`, `bit: {"of": 2}` on a two-role rule, `bit: {"of":
+  -1}` and an assignment to `detector`; `validate_configuration` reports
+  the same documents invalid; `DetectorMark` with `on_bit_1` 5 is rejected
+  and a mark of four arguments equals one with the three defaults 0;
+  `inherited_bit` gives 2 for (0, 2), 1 for (1, 0), 2 for (2, 1) by default,
+  0 for (2, 1) under `BIT_NONE`, 1 for (2, 1) with rule 1, 0 for no inputs,
+  and rejects a role index beyond the inputs and a bit of 3.
+
+Pinned consequences in existing tests: none change. The worlds of
+`test_detector_mark.py`, `test_detector_return.py` and
+`test_inverse_split.py` write the same `events.jsonl` and `run.json` as
+before the feature (no marked ray reaches a second mark or meets another
+ray there); the worlds of `test_ray_viewer.py` and
+`test_ray_meeting_conversion.py` differ in their recorded cost alone (one
+more view component per participant, `read` 10 instead of 9), and
+`test_wave_ray_families.py` pins `detector` as the eighth ray property.
+
 ## Ray layers
 
 `test_ray_layers.py` builds its board inline under the shared Detector
@@ -984,6 +1095,13 @@ from the event stream alone (no per-tick recording, so no phase):
   and (2, 8,7,7), extracts to one body at (7,7,7) carrying those rows, so
   the page draws its picture (chosen by family in `style.json`, `star` by
   default) at (7,7,7) through tick 1 and at (8,7,7) from tick 2;
+- (h) the ray's bit (`detector-bit-property-v1`, pinned 2026-09-17 before
+  the first run): every ray of `runs.json` carries `bit`, `null` for none,
+  0 or 1, set by a click, a pass or a Detector RETURN and inherited by the
+  outputs of an event from its inputs (the highest); here rays 0 and 1 and
+  the -X output carry `null` and the +X output, clicked at (4,1,1) at tick
+  4, carries 1, and no event of kind `pass` exists, since no ray carrying a
+  bit reaches a second mark;
 - (f) the style: `tools/ray_viewer/style.json` is a `ray-viewer-style-v1`
   object whose sections and keys are exactly the documented ones (the
   renderer's `validate_style` accepts it and rejects an unknown key), the

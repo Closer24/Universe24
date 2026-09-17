@@ -321,11 +321,12 @@ carries the number of steps it has made since its event and the information
 of that event, and if that event was at a Detector, the bit drawn. They are
 carried, part of the merge identity and validated. `steps` and `outbound`
 are read by the return alone ([Detector return](#detector-return-detector-return-v1)):
-the transport of a returning ray and the momentum readout. The event Ports,
-the event shares and the Detector bit are hidden variables (Highlights 5.4),
-read by no rule, coupling, absorber or readout. An existing world runs
-exactly as before except where rays of different events used to merge; they
-no longer do.
+the transport of a returning ray and the momentum readout. The event Ports
+and the event shares are hidden variables (Highlights 5.4), read by no rule,
+coupling, absorber or readout; the Detector bit is a visible property of the
+ray since 2026-09-17 ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+An existing world runs exactly as before except where rays of different
+events used to merge; they no longer do.
 
 The `Ray` record (`core/spatial_state.py`) holds, beside its heading index,
 DDA accumulators, amount, wave phase, advance, pace wait and interaction
@@ -337,7 +338,7 @@ delay:
 | `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. Every created ray is outbound; a draw of 0 at a marked Node sets `0` ([Detector return](#detector-return-detector-return-v1)) |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
-| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
+| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every emitted ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)). A property of the ray like charge (`detector-bit-property-v1`): the outputs of a meeting inherit it, a coupling reads it as the ray property `detector`, and a marked Node reads it ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)) |
 | `lag` | three bounded signed integers | The lag of the ray's output-face clocks in phase steps, one per axis, positive toward the +axis Port ([binding](#binding-and-gravity-by-delay-ray-binding-v1)); `(0, 0, 0)` on every created ray, reset by a return |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
@@ -396,24 +397,32 @@ feature 2). The schema key:
 | `position` | three integers within `shape` | The marked Node; one mark per position |
 | `setting` | `[n, d]`, `1 <= d <= MAX_VALUE`, `0 <= n <= d` | The pass share of the draw range: the bit is 1 when the drawn number times `d` is below `n` times `TICKET_MODULUS`. Required; there is no default rate |
 | `seed` | `0 <= seed < TICKET_MODULUS` | The start of the mark's own ticket stream. Required |
+| `on_bit_1` | `"pass"` (default) or `"draw"` | What the mark does with a ray carrying bit 1 ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)): passes it without a draw, or draws as for a ray carrying no bit. Optional |
+| `on_bit_0` | `"pass"` (default) or `"draw"` | The same for a ray carrying bit 0, a transmission. Optional |
 
-All three keys are required and no other key is accepted. The parsed
-`DetectorMark(position, pass_numerator, pass_denominator, seed)` records are
-`InitialState.detectors`; the engine installs each on its Node as
+The first three keys are required, the two couplings are optional, and no
+other key is accepted. The parsed
+`DetectorMark(position, pass_numerator, pass_denominator, seed, on_bit_1,
+on_bit_0, bit_keys)` records are `InitialState.detectors` (the couplings as
+`BIT_PASS` 0 or `BIT_DRAW` 1, `bit_keys` 1 when the file wrote either); the
+engine installs each on its Node as
 `SpatialNodeState.detector` with `detector_ticket` seeded from `seed`. A
 document with marks is admitted only under the shared Detector admission:
 `schema_version` 1, `link_ticks` 1, at least one ray field, every ray field on
 `"metric": "links"` with pace `1 / 1`, no decay and unit-axial headings closed
 under negation, without `node_execution` or `spatial_computation_delay`.
 
-On arrival each ray draws one bit from the mark's stream, in Port then
+On arrival each ray carrying no bit (and each ray carrying a bit whose
+coupling is `draw`) draws one bit from the mark's stream, in Port then
 merge-key order, and leaves with its `detector` field set: `2` on 1, with a
 `detector_click` event (position, tick, Port, family, amount, bit 1), the ray
 continuing unchanged; `1` on 0, the ray returned on its line
 ([Detector return](#detector-return-detector-return-v1)) with a
-`detector_return` event and no click. A document without `detectors` has no
-marked Node and runs exactly as before, and the runner records
-`detector_mark: "detector-mark-v1"`.
+`detector_return` event and no click. A ray carrying a bit whose coupling is
+`pass`, the default, is read and not drawn: it continues unchanged with a
+`detector_pass` event ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
+A document without `detectors` has no marked Node and runs exactly as
+before, and the runner records `detector_mark: "detector-mark-v1"`.
 
 ### Detector return (`detector-return-v1`)
 
@@ -442,7 +451,8 @@ On the walk back a ray with `outbound` 0:
   (`sample_fluxes`, both projections) that couplings read are taken over the
   outbound rays, and its arrival adds nothing to the per-Port readings;
 - is not drawn for: a marked Node on its way sets nothing and records
-  nothing;
+  nothing (a returning ray is not an arrival; `detector-bit-property-v1`
+  reads the bit of arrivals only);
 - merges with nothing: `outbound` is in the merge key, and the returned ray
   is the only ray of its event on its line;
 - counts: it is in the Node's rays, in `ray_count`, in the totals and in the
@@ -532,6 +542,91 @@ takes the returned share's momentum back and gives the transmission's, so
 the momentum total is unchanged; in `annul` the sink takes the share's
 reading and the lamp is unchanged.
 
+### The Detector's bit as a property (`detector-bit-property-v1`)
+
+The rule ([Highlights](HIGHLIGHTS.md) 3.20 and 5.4 "The Detector's bit is a
+property of the ray", model owner, 2026-09-17; [ray-event
+model](RAY_EVENT_MODEL.md#6-migration-in-order), feature 2b under step 3;
+issue #169): the bit a marked Node set on a ray, 1 for PASS and 0 for
+RETURN, travels with the ray as a property like charge, visible to every
+meeting, to the record and to the rendering; it propagates, so the
+descendants of a realized ray are known to be realized and the descendants
+of a transmission are known to carry a return; and a Detector reads it. The
+statement of the rule at the mark is in [Detector-owned
+sampling](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1); this
+section is the schema and what the code does. Three things, and nothing
+else, changed on 2026-09-17:
+
+**Inheritance.** `stamp_event(rays, headings, detector)` stamps the bit the
+event's outputs carry: `DETECTOR_NONE` for an emission (a lamp, a release, a
+restored share emitted again), the returned ray's bit for an inverse split
+(as before), and for a meeting the bit `inherited_bit(bits, rule)` hands
+down from the inputs. Every group that fires in `apply_ray_interactions`,
+a rule with `outputs` and a rule with assignments alike, stamps its outputs
+with it: by default the highest bit among the inputs in the order 1 over 0
+over none (`DETECTOR_BIT_1` 2 over `DETECTOR_BIT_0` 1 over `DETECTOR_NONE`
+0, the stored order), unless the rule declares `bit`:
+
+```json
+{"name": "meeting", "participants": [{"type": "a"}, {"type": "a"}],
+ "bit": "none",
+ "outputs": [...], "invariants": [...]}
+```
+
+| `bit` | The outputs carry |
+| --- | --- |
+| `"highest"` (default) | The highest bit among the inputs, 1 over 0 over none |
+| `"none"` | No bit |
+| `{"of": i}` | The bit of input i, one of the rule's roles |
+
+Any other value, or an index beyond the roles, is rejected before a world
+exists. A meeting of a marked ray with an unmarked ray therefore sends both
+outputs on with the bit (a realized ray's meeting products are realized; a
+transmission's are transmissions); an external body's coupled token
+(`external-body-v1`) inherits it too and is stripped as before. A field ray
+released by a marked ray carries no bit, since a release is an emission and
+a field ray carries no event.
+
+**Visibility.** `RAY_PROPERTIES`, the view of a ray in a [ray
+interaction](SHARED_RAY_COUPLING.md), gains the read-only property
+`detector`, the bit as the engine stores it: `0` none, `1` a draw of 0, `2`
+a draw of 1. A `when` guard or an invariant reads it as it reads `charge`
+(`{"field": "detector", "participant": 0}`); an assignment to it is refused
+as read-only, and a meeting's outputs carry the inherited bit whatever the
+view of the outputs says of it. A world with ray interactions reads one
+more view component per participant (`read` cost 10 instead of 9), as
+`wave-ray-family-v1` added two; a world without is unchanged.
+
+**The marked Node reads the bit.** In `SpatialNode.receive`, before the
+draw, each arriving ray is read: a ray carrying 1 under `on_bit_1: "pass"`
+(the default) passes without a draw, unchanged, and a ray carrying 0 under
+`on_bit_0: "pass"` (the default) is a transmission and passes without a
+draw, unchanged; a `detector_pass` event (position, tick, the Port the ray
+came in through, family, amount, `bit` 1 or 0, the bit it carries) records
+each such pass, after the interval's clicks and before its returns, and the
+mark's ticket stream does not move. Under `"draw"` the ray is drawn exactly
+as a ray carrying no bit (`detector-mark-v1`), its bit set by that draw: a
+mark that declares both keys `"draw"` behaves as every mark did before
+2026-09-17. Only a ray carrying no bit is always drawn. A ray on its walk
+back is not an arrival and is never drawn nor recorded, as before
+([Detector return](#detector-return-detector-return-v1)); a ray arriving at
+its event Node performs the inverse split undrawn; what a marked Node emits
+or transmits is not an arrival and is not drawn.
+
+**Identity and the record.** The runner records `detector_bit_property:
+"detector-bit-property-v1"` in `run.json` when the world declares the rule
+anywhere (a mark that writes `on_bit_1` or `on_bit_0`, a ray interaction
+that writes `bit`); a world that declares neither runs the same rule with
+its defaults and its record is what it was, byte for byte, unless a marked
+ray reaches a second mark (a `detector_pass` line, no draw) or meets another
+ray (the outputs carry the bit). The viewer
+([`tools/ray_viewer/extract.py`](../tools/ray_viewer/README.md)) reads
+`detector_pass` as the event kind `pass`, a marker listed in the captions
+like a click, and carries each ray's `bit` (`null`, 0 or 1) in `runs.json`.
+`test_detector_bit_property.py`
+([expectations](TEST_EXPECTATIONS.md#detector-bit-as-a-property)) is the
+test.
+
 ### Layers (`ray-layers-v1`)
 
 The rule ([Highlights](HIGHLIGHTS.md) 5.1; [ray-event
@@ -583,10 +678,11 @@ and at most six events out. A `ray_interactions` rule with `outputs`
 replaces its participants, two to six rays of one layer, by one to six new
 rays at the meeting Node, one per output. Each output is a new event ray:
 `steps 0`, `outbound 1`, `event_ports` the mask of the Ports the outputs
-leave through, `event_shares` the amount per Port, `detector 0`, so outputs
-on distinct Ports are distinct events in the record and two outputs on one
-Port are one share; nothing is left at the Node. A rule with outputs declares
-no `assignments`: it assigns through its outputs.
+leave through, `event_shares` the amount per Port, `detector` the bit the
+inputs hand down ([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)),
+so outputs on distinct Ports are distinct events in the record and two
+outputs on one Port are one share; nothing is left at the Node. A rule with
+outputs declares no `assignments`: it assigns through its outputs.
 
 | Key | Contract |
 | --- | --- |
@@ -596,6 +692,10 @@ no `assignments`: it assigns through its outputs.
 | `phase` | Optional, default `"same"`, the source input's phase; an integer offset k below the phase modulus, the source input's phase plus k; `{"of": i, "offset": k}`, input i's phase plus k; read modulo the field's phase steps |
 | `delay` | Optional nonnegative interaction delay, default 0; or `{"of": i, "table": [six], "per": u}`, a delay by a declared table per the Port input i came through ([binding](#binding-and-gravity-by-delay-ray-binding-v1)) |
 | `input` | Optional source input index, default 0: the input whose heading and phase the output reads by default; every output carries its source input's advance |
+
+The rule's optional `bit` (`"highest"`, the default, `"none"` or `{"of": i}`)
+says which Detector bit every output carries
+([the bit as a property](#the-detectors-bit-as-a-property-detector-bit-property-v1)).
 
 The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
 `{"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}`) summed
@@ -657,7 +757,8 @@ split per pair of outputs, the admission of every ray interaction (schema 1,
 on the selected fields), and at most `ray_slots` rays per field after the
 meeting; more is an explicit failure. The outputs are new rays with
 accumulators (0, 0, 0) and pace wait 0. No draw anywhere; the Detector
-(feature 2) is not touched; a family with no rule crosses
+(feature 2) is not touched, and its bit is inherited (feature 2b); a family
+with no rule crosses
 ([layers](#layers-ray-layers-v1)); existing worlds with single-output rules
 run byte-identically, and the runner records
 `ray_meeting: "ray-meeting-conversion-v1"` beside `ray_layers`.
@@ -709,7 +810,8 @@ keeps 32-bit storage and 64-bit intermediates.
 
 `RAY_PROPERTIES`, the view of a ray in a [ray interaction](SHARED_RAY_COUPLING.md),
 gains two read-only properties: `family`, the index of the ray's spatial
-field, and `charge`, the family's charge per quantum. Charge is per quantum
+field, and `charge`, the family's charge per quantum (and, since
+`detector-bit-property-v1`, a third, `detector`). Charge is per quantum
 because amounts merge and split; the charge readout of a bundle is `charge x
 amount` summed over its rays (`ray_charge`), and `charge_totals()` reads it
 per ray field over the rays resident at active Nodes and in flight on Links,
@@ -725,7 +827,8 @@ Nothing else changes: an existing world without ray interactions runs
 byte-identically (a plain field has width 0 and rate 0; a Kerengonen field has
 the width of its `phase_steps`, and the mask equals its former modulus), and a
 world with ray interactions reads the two added view components per
-participant (`read` cost 9 instead of 7) and is otherwise identical. The runner
+participant (`read` cost 9 instead of 7; 10 since `detector-bit-property-v1`)
+and is otherwise identical. The runner
 records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
 `test_wave_ray_families.py` ([expectations](TEST_EXPECTATIONS.md#wave-ray-families))
 is the test.

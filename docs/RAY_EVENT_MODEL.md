@@ -668,14 +668,20 @@ every such set; Highlights 3.20 is the text to follow.
    same basis repeats its result, a ray carrying 0 is a transmission and is
    never drawn, and only a ray carrying no bit is drawn; how a marked Node
    meets each bit is its declared coupling in the catalog with this as the
-   default and the draw on every arrival, as before, the declarable
-   alternative (`apparatus.detector.couplings` of `catalog/nature.json`, two
-   open entries decided by this feature, each with its default and its
-   alternative `draw`), a table entry and not an engine mechanism
-   (Highlights 3.26), this feature implementing both; until it lands the
-   engine draws on every arrival, and the price of section 3 is to be
-   re-derived under this rule by hypothesis 11 and experiment A13 before it
-   is quoted again.
+   default (`apparatus.detector.couplings` of `catalog/nature.json`, two
+   entries decided by this feature), a table entry and not an engine
+   mechanism (Highlights 3.26); the price of section 3 is to be re-derived
+   under this rule by hypothesis 11 and experiment A13 before it is quoted
+   again. (Done on 2026-09-17, issue #169 feature 2b,
+   `detector-bit-property-v1`: the outputs of every ray interaction that
+   fires inherit the highest bit of its inputs unless the rule declares
+   `bit`, the read-only ray property `detector` for a `when` guard, the
+   marks' `on_bit_1` and `on_bit_0` keys with `pass` as the default and
+   `draw` as the alternative, a `detector_pass` record for each pass without
+   a draw, the identity recorded when a world declares a key, the viewer's
+   `pass` kind and per-ray `bit`, the catalog entries decided; see [the bit
+   read](DETECTOR_SAMPLING.md#the-bit-read-detector-bit-property-v1) and
+   [the bit as a property](SPATIAL_FIELDS.md#the-detectors-bit-as-a-property-detector-bit-property-v1).)
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
@@ -1012,8 +1018,11 @@ bit is set; nothing else in the world draws, and no second lottery is added.
   counting error; the joint law's value appears only when the second ray's
   path exceeds the round trip through the first Detector, and no Detector
   reads the carried value: the second Detector draws its own bit and reads
-  nothing from the ray. The pair test counts coincidences of clicks within a
-  declared time window; a pair with one return is unpaired. The test reports
+  nothing from the ray (as stated before 2026-09-17; since feature 2b a
+  Detector reads the bit a ray carries and draws only for a ray carrying
+  none, and hypothesis 11 re-derives the price under that rule). The pair
+  test counts coincidences of clicks within a declared time window; a pair
+  with one return is unpaired. The test reports
   CHSH in the symmetric geometry and in the delayed geometry; what each
   outcome means is stated in
   [HYPOTHESES.md section 11](HYPOTHESES.md#11-the-bell-prediction-of-the-ray-event-model-stated-so-that-it-can-fail).
