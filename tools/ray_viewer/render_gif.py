@@ -44,6 +44,7 @@ STYLE_KEYS = {
         "background",
         "surface",
         "scene",
+        "scene_edge",
         "ink",
         "muted",
         "line",
@@ -60,6 +61,7 @@ STYLE_KEYS = {
     ),
     "sizes": (
         "ray_width_px",
+        "head_radius_px",
         "head_links",
         "arrowhead_px",
         "momentum_arrow_px_per_quantum",
@@ -71,19 +73,34 @@ STYLE_KEYS = {
         "field_trail_links",
         "field_arrowhead",
         "marker_radius",
+        "marker_ring_thickness",
+        "marker_alpha",
         "escape_dot_radius",
+        "escape_alpha",
         "source_size",
         "detector_size",
         "body_size",
+        "detector_alpha",
+        "glow_scale",
+        "glow_alpha",
+        "sphere_roughness",
+        "sphere_metalness",
+        "sphere_emissive",
         "label_font_px",
         "label_min_distance_px",
         "node_dot_px",
+        "node_dot_alpha",
         "lattice_alpha",
         "box_alpha",
     ),
     "draw": (
         "markers",
         "marker_shapes",
+        "marker_shape",
+        "shape_overrides",
+        "glow",
+        "vignette",
+        "field_additive",
         "labels",
         "label_text",
         "escapes",
@@ -119,9 +136,12 @@ STYLE_KEYS = {
         "gif_width_px",
         "gif_frame_ms",
         "gif_colors",
+        "gif_supersample",
         "contact_stills",
         "elevation_deg",
         "start_angle_deg",
+        "camera_fit",
+        "camera_fit_margin_links",
     ),
 }
 CHROMIUM_ARGS = [
@@ -256,6 +276,7 @@ def capture_frames(
     width: int,
     three: Path,
     work: Path,
+    supersample: int = 1,
 ) -> tuple[list[Image.Image], list[str], list[str]]:
     wrapped = (work / "viewer-inlined.html").resolve()
     wrapped.write_text(page_html, encoding="utf-8")
@@ -277,7 +298,7 @@ def capture_frames(
         browser = playwright.chromium.launch(args=CHROMIUM_ARGS)
         context = browser.new_context(
             viewport={"width": width + 2 * GUTTER, "height": 1400},
-            device_scale_factor=1,
+            device_scale_factor=max(1, supersample),
             color_scheme="dark",
             reduced_motion="no-preference",
         )
@@ -300,7 +321,14 @@ def capture_frames(
                     [tick, angle, key, "first" if j == 0 else "second", elevation],
                 )
                 png = capture.screenshot(type="png")
-                parts.append(Image.open(io.BytesIO(png)).convert("RGB"))
+                image = Image.open(io.BytesIO(png)).convert("RGB")
+                if supersample > 1:
+                    # Rendered at supersample times the size and scaled down: gentle anti-aliasing.
+                    image = image.resize(
+                        (image.width // supersample, image.height // supersample),
+                        Image.Resampling.LANCZOS,
+                    )
+                parts.append(image)
             images.append(stack(parts))
             print(f"frame {i:03d} tick {tick:03d} angle {angle:7.1f} size {images[-1].size}", flush=True)
         browser.close()
@@ -346,6 +374,7 @@ def main() -> None:
     colors = int(pick(args.colors, "gif_colors", 128))
     frame_ms = int(pick(args.frame_ms, "gif_frame_ms", 120))
     stills = int(pick(args.contact_stills, "contact_stills", 16))
+    supersample = int(motion.get("gif_supersample", 1) or 1)
     runs = json.loads(args.runs.read_text(encoding="utf-8"))
     keys = args.run or [run["key"] for run in runs["runs"]]
     known = {run["key"] for run in runs["runs"]}
@@ -381,6 +410,7 @@ def main() -> None:
         width=width,
         three=three,
         work=work,
+        supersample=supersample,
     )
     if errors:
         raise RuntimeError("page errors: " + "; ".join(errors))
@@ -417,6 +447,7 @@ def main() -> None:
         "colors": colors,
         "style": str(args.style or STYLE_FILE),
         "contact_stills": stills,
+        "supersample": supersample,
         "runs": keys,
         "tick_schedule": f"tick = min(frame, {ticks}); frames {ticks + 1}..{frames - 1} hold tick {ticks}",
         "records": [

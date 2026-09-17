@@ -416,6 +416,15 @@ only door left in the model's own terms is that the sequence feeding the
 draws also feeds the settings (section 1 above); that reading explains any
 correlation and is not a prediction.
 
+Status (2026-09-17, Highlights 5.4): a Detector reads the bit since that day
+(feature 2b): a ray carrying 1 passes a later Detector without a draw, a ray
+carrying 0 is a transmission and is never drawn, and only a ray carrying no
+bit is drawn. The premise above, every Detector drawing without reading the
+ray, holds for a ray carrying no bit only, so the price of Highlights 5.4
+(line 1, CHSH at most 2 in the symmetric geometry) is to be re-derived under
+this rule by this hypothesis and experiment A13 before it is quoted again;
+lines 1 to 3 stand as recorded until then.
+
 ## 12. One mass ladder, and the composite spectrum from binding
 
 Under the ray-event model ([Highlights](HIGHLIGHTS.md) 3.3, 3.4) a rest mass

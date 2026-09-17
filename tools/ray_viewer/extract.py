@@ -342,6 +342,12 @@ def resolve_amounts(builder: Builder, ray_families: set[str] | None = None) -> l
             reading = readings[entry] if entry < len(readings) and readings[entry] else {}
             for family, values in dict(reading).items():
                 transit.amounts[str(family)] = [int(v) for v in values]
+            # What an external body's sink took on arrival is not in the receiver's
+            # reading (external-body-v1): the absorbed record names the Port the ray
+            # came in through, the family and the amount, so the transit keeps them.
+            for taken in builder.absorptions.get((transit.target, transit.arrival), []):
+                if int(taken.get("port", -1)) == entry:
+                    add_amounts(transit.amounts, str(taken["family"]), [int(taken["amount"])])
         for family, values in transit.amounts.items():
             if any(values) and (ray_families is None or family in ray_families):
                 units.append(Unit(transit, family, values))
@@ -596,6 +602,19 @@ def resolve(
                     marker = new_event(tick, node, "arrival", "returning ray at its event Node")
                     marker.field = chain.family in field_families
                     marker.inputs.append(chain.identifier)
+            taken_here = builder.absorptions.get((node, tick), [])
+            if taken_here:
+                # A body's sink (external-body-v1): the arriving rays of the families
+                # the body took end here, drawn as an absorption; a family its declared
+                # coupling meets goes on to the ordinary law below, as does what leaves.
+                families_taken = {str(taken.get("family")) for taken in taken_here}
+                taken = [c for c in arrived + arrived_field if c.family in families_taken]
+                absorbed = new_event(tick, node, "absorption", "absorbed by the body")
+                absorbed.detail["absorbed"] = amounts_of([c.units[-1] for c in taken])
+                for chain in taken:
+                    end_chain(chain, tick, node, "absorbed", absorbed)
+                arrived = [c for c in arrived if c.family not in families_taken]
+                arrived_field = [c for c in arrived_field if c.family not in families_taken]
             # Field rays that pass straight through are not an event here.
             changed_field: list[Chain] = []
             for chain in arrived_field:
@@ -617,17 +636,6 @@ def resolve(
             present = held + arrived
             note = builder.notes.get((node, tick), {})
             departing: list[Chain] = []
-            if (node, tick) in builder.absorptions:
-                # A body's sink: the arriving rays end here, drawn as an absorption.
-                absorbed = new_event(tick, node, "absorption", "absorbed by the body")
-                absorbed.detail["absorbed"] = amounts_of([c.units[-1] for c in present + changed_field])
-                for chain in present + changed_field:
-                    end_chain(chain, tick, node, "absorbed", absorbed)
-                present, changed_field = [], []
-                left_now = [u for u in field_outs if u.chain is None]
-                if left_now:
-                    release(node, tick, left_now, [])
-                continue
             if changed_field and present:
                 # A field ray meets the matter at this Node and leaves changed.
                 event = open_meeting(node, tick, present + changed_field)
@@ -638,7 +646,9 @@ def resolve(
                         (
                             o
                             for o in field_outs
-                            if o.chain is None and o.transit.port == (chain.last_port or 0) ^ 1
+                            if o.chain is None
+                            and o.family == chain.family
+                            and o.transit.port == (chain.last_port or 0) ^ 1
                         ),
                         None,
                     )

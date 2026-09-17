@@ -5,9 +5,12 @@ under the strict decoder with no float; every ray, coupling and apparatus record
 carries its required keys and every reference resolves; every "undecided" names
 the experiment or hypothesis that decides it and is listed in docs/CATALOG.md;
 the register's confrontation entries and the catalog's agree; every ray a world
-can select and every decided coupling the engine runs today is built from the
-file into a minimal inline world, parsed and run for two ticks against pinned
-integers, an external body under each of its decided couplings among them.
+can select, every release a world can declare and every decided coupling the
+engine runs today is built from the file into a minimal inline world, parsed and
+run for two ticks against pinned integers, an external body under each of its
+decided couplings among them. Light is the field of a charge (Highlights 3.5,
+2026-09-17): one family, released by the electron and the positron and emitted
+by any source, its spread table open for feature 12.
 
 Expected integers are pinned in docs/TEST_EXPECTATIONS.md ("Catalog of nature")
 before the first run.
@@ -53,9 +56,11 @@ COUPLING_KEYS = {"status", "engine", "participants", "invariants", "note"}
 RESULT_KEYS = {"outputs", "binds", "sink"}
 APPARATUS_KEYS = {"world_key", "engine", "declaration", "does", "note"}
 EXPERIMENT_KEYS = {"rays", "couplings", "apparatus", "note"}
-# The rays a world can select today, in catalog order, and the couplings the engine
-# runs today: a newly decided entry must join these lists and get a world below.
-RUNNABLE_RAYS = ["light", "electron", "positron", "electron_field", "positron_field"]
+# The rays a world can select today, in catalog order, the releases a world can
+# declare today as (releaser, field), and the couplings the engine runs today: a
+# newly decided entry must join these lists and get a world below.
+RUNNABLE_RAYS = ["light", "electron", "positron"]
+RUNNABLE_RELEASES = [("electron", "light"), ("positron", "light")]
 RUNNABLE_COUPLINGS = ["born_steering", "electron_field_turn", "absorber", "mirror", "phase_plate"]
 # The names a world writes into an external-body coupling of the catalog: the met
 # family for "any" and "same", the body's family for "body", the offset for "setting".
@@ -140,8 +145,9 @@ def scalar(name: str) -> JsonObject:
     }
 
 
-def spatial_field(records: JsonObject, name: str) -> JsonObject:
-    """The world's `spatial_fields` entry for one catalog ray, at the reference width."""
+def spatial_field(records: JsonObject, name: str, source: str | None = None) -> JsonObject:
+    """The world's `spatial_fields` entry for one catalog ray, at the reference width;
+    with `source`, the ray is declared as the released field of that family."""
     ray = records[name]
     entry = {
         "field": name,
@@ -156,8 +162,8 @@ def spatial_field(records: JsonObject, name: str) -> JsonObject:
         "kerengonen": {"phase_advance": ray["rest_rate"]},
         "charge": ray["charge"],
     }
-    if ray.get("kind") == "field":
-        (source,) = ray["field_of"]
+    if source is not None:
+        assert ray["kind"] == "field" and source in ray["field_of"], name
         entry |= {"field_of": source, "release": ray["release"]}
     return entry
 
@@ -168,10 +174,12 @@ def board(
     lamps: list[Lamp],
     rules: list[JsonObject],
     bodies: list[JsonObject] | None = None,
+    released: dict[str, str] | None = None,
 ) -> JsonObject:
     """A periodic 15^3 board of the named catalog rays (or the apparatus family);
     `lamps` are (position, ray, amount, heading index, phase), each a holding lamp
-    that emits once, funded; `bodies` are external-body declarations."""
+    that emits once, funded; `bodies` are external-body declarations; `released`
+    maps a field ray to the family of the world that releases it."""
     return {
         "schema_version": 1,
         "model_id": "nature-catalog-test-v1",
@@ -205,7 +213,7 @@ def board(
             }
             for index, (_, name, amount, _, _) in enumerate(lamps)
         ],
-        "spatial_fields": [spatial_field(records, name) for name in names],
+        "spatial_fields": [spatial_field(records, name, (released or {}).get(name)) for name in names],
         "emissions": [
             {
                 "type": f"lamp_{index}",
@@ -381,8 +389,40 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert (piece["rest_rate"], piece["charge"], piece["field"]) == (0, 0, [])
         assert piece["name"] not in rays
         assert apparatus["detector"]["engine"]["landed"]
+        # The Detector reads the bit (Highlights 5.4, 2026-09-17): two open couplings
+        # on the bit a ray carries, decided by feature 2b, with the decided default.
+        bits = apparatus["detector"]["couplings"]
+        assert set(bits) == {"on_bit_1", "on_bit_0"}
+        for name, entry in bits.items():
+            assert (entry["status"], entry["world_key"], entry["decided_by"]) == (
+                "open",
+                UNDECIDED,
+                "feature 2b",
+            ), name
+            assert entry["engine"]["landed"] is False, name
+        assert (bits["on_bit_1"]["reads"], bits["on_bit_1"]["default"]) == (
+            {"bit": 1},
+            "pass without a draw",
+        )
+        assert (bits["on_bit_0"]["reads"], bits["on_bit_0"]["default"]) == (
+            {"bit": 0},
+            "transmission, no draw",
+        )
         assert apparatus["external_body"]["engine"]["landed"]
-        assert len(rays) == 14 and len(couplings) == 16
+        assert len(rays) == 12 and len(couplings) == 16
+        # Light is the field of a charge (Highlights 3.5, 2026-09-17): the one
+        # electromagnetic family, released by the electron, the positron and the
+        # proton (a body of that family radiates it), its spread table open, and
+        # no other family the field of a charged ray.
+        light = rays["light"]
+        assert (light["kind"], light["field_of"], light["release"]) == (
+            "field",
+            ["electron", "positron", "proton"],
+            [1, 4],
+        )
+        assert light["spread"] == UNDECIDED and light["decided_by"]["spread"] == "feature 12"
+        assert not {"electron_field", "positron_field"} & rays.keys()
+        assert all("light" in rays[name]["field"] for name in ("electron", "positron"))
     elif case == "undecided":
         # (b) Every "undecided" names, in its own record, an entry of the register or
         # a hypothesis of the hypotheses page that decides it, and the table of
@@ -392,7 +432,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         for path, named in found.items():
             assert named and all(decider in known for decider in named), (path, named)
         assert documented_undecided() == found
-        assert len(found) == 28
+        assert len(found) == 31
         assert {decider for named in found.values() for decider in named} == {
             "A1",
             "A2",
@@ -405,7 +445,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             "A12",
             "hypothesis 12",
             "hypothesis 13",
+            "feature 2b",
             "feature 8b",
+            "feature 12",
         }
     elif case == "experiments":
         # (c) The catalog lists exactly the confrontation entries of the register,
@@ -424,28 +466,38 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
     else:
         # (d) Every ray a world can select today: one lamp of 5 at (7,7,7) emitting
         # along +X at phase 3; after two ticks the ray is at (9,7,7) with its phase
-        # advanced twice by its rest rate, and a field ray's source has released five
-        # field rays at its departure from (8,7,7), one per Port heading but its own.
+        # advanced twice by its rest rate. Every release a world can declare today,
+        # light by the electron and light by the positron: the same lamp of the
+        # releaser, whose departure from (8,7,7) releases five field rays, one per
+        # Port heading but its own.
         runnable = [
             name
             for name, ray in rays.items()
             if ray["kind"] != "bound_group"
             and ray["rest_rate"] != UNDECIDED
-            and (ray["kind"] != "field" or (ray["release"] != UNDECIDED and len(ray["field_of"]) == 1))
+            and (ray["kind"] != "field" or ray["release"] != UNDECIDED)
         ]
         assert runnable == RUNNABLE_RAYS
-        for name in runnable:
-            ray = rays[name]
-            source = ray["field_of"][0] if ray["kind"] == "field" else name
-            names = [source, name] if ray["kind"] == "field" else [name]
-            simulation = run(board(rays, names, [((7, 7, 7), source, 5, 0, 3)], []))
+        releases = [
+            (source, name)
+            for name, ray in rays.items()
+            if ray["kind"] == "field" and ray["release"] != UNDECIDED
+            for source in ray["field_of"]
+            if rays[source]["rest_rate"] != UNDECIDED
+        ]
+        assert releases == RUNNABLE_RELEASES
+        for source, name in [(name, None) for name in runnable] + releases:
+            names = [source] if name is None else [source, name]
+            released = {} if name is None else {name: source}
+            lamps: list[Lamp] = [((7, 7, 7), source, 5, 0, 3)]
+            simulation = run(board(rays, names, lamps, [], released=released))
             rate = rays[source]["rest_rate"]
             assert rays_at(simulation, (9, 7, 7)) == [
                 event_ray(0, 5, (3 + 2 * rate) % 8, 1, (5, 0, 0, 0, 0, 0), 2)
             ]
             totals = {source: (5,)}
-            if ray["kind"] == "field":
-                numerator, denominator = ray["release"]
+            if name is not None:
+                numerator, denominator = rays[name]["release"]
                 each = 5 * numerator // denominator
                 for heading in range(1, 6):
                     assert rays_at(simulation, neighbor((8, 7, 7), heading)) == [
@@ -471,7 +523,7 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
         assert steering["outputs"][0]["amount"]["table"] == [8, 7, 4, 1, 0, 1, 4, 7]
         assert [types_of(p) for p in steering["participants"]] == [["light"], ["light"]]
         for delta, (plus, minus) in STEERED.items():
-            lamps: list[Lamp] = [((6, 7, 7), "light", 8, 0, 0), ((8, 7, 7), "light", 8, 1, delta)]
+            lamps = [((6, 7, 7), "light", 8, 0, 0), ((8, 7, 7), "light", 8, 1, delta)]
             simulation = run(board(rays, ["light"], lamps, [rule("born_steering", steering)]))
             mask = (4 if plus else 0) | (8 if minus else 0)
             shares = (0, 0, plus, minus, 0, 0)
@@ -484,15 +536,20 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             assert rays_at(simulation, (7, 7, 7)) == []
             assert simulation.totals() == {"light": (16,)}
             assert simulation.source_totals() == {"light": (0,)}
-        # electron_field_turn: an electron of 5 and a field ray of 1 meet at (7,7,7)
-        # after tick 1; at tick 2 the electron leaves on the field ray's heading -Y,
-        # the field ray returns reversed, and the electron's departure releases five
-        # field rays of amount 1 with its phase 1.
+        # electron_field_turn: an electron of 5 and a light ray of 1, the field the
+        # electron family releases, meet at (7,7,7) after tick 1; at tick 2 the
+        # electron leaves on the field ray's heading -Y, the field ray returns
+        # reversed, and the electron's departure releases five light rays of amount
+        # 1 with its phase 1.
         turn = couplings["electron_field_turn"]
-        assert [types_of(p) for p in turn["participants"]] == [["electron"], ["electron_field"]]
-        lamps = [((6, 7, 7), "electron", 5, 0, 0), ((7, 8, 7), "electron_field", 1, 3, 0)]
-        names = ["electron", "electron_field"]
-        simulation = run(board(rays, names, lamps, [rule("electron_field_turn", turn)]))
+        assert [types_of(p) for p in turn["participants"]] == [["electron"], ["light"]]
+        lamps = [((6, 7, 7), "electron", 5, 0, 0), ((7, 8, 7), "light", 1, 3, 0)]
+        names = ["electron", "light"]
+        simulation = run(
+            board(
+                rays, names, lamps, [rule("electron_field_turn", turn)], released={"light": "electron"}
+            )
+        )
         shares = (0, 0, 1, 5, 0, 0)
         assert rays_at(simulation, (7, 6, 7)) == [event_ray(3, 5, 2, 12, shares)]
         assert rays_at(simulation, (7, 7, 7)) == []
@@ -501,9 +558,9 @@ def test_the_catalog_of_nature_validates_as_data_on_the_one_engine(case: str) ->
             if heading == 2:
                 expected.append(event_ray(2, 1, 0, 12, shares))
             assert rays_at(simulation, neighbor((7, 7, 7), heading)) == expected
-        assert simulation.totals() == {"electron": (5,), "electron_field": (6,)}
-        assert simulation.source_totals() == {"electron": (0,), "electron_field": (5,)}
-        assert simulation.charge_totals() == {"electron": -15, "electron_field": 0}
+        assert simulation.totals() == {"electron": (5,), "light": (6,)}
+        assert simulation.source_totals() == {"electron": (0,), "light": (5,)}
+        assert simulation.charge_totals() == {"electron": -15, "light": 0}
         # The apparatus. A Detector mark parses under the admission these worlds
         # share. An external body at (8,7,7) meets a light ray of 5 emitted at
         # (7,7,7) along +X at phase 1: under the absorber (the sink, a body of the

@@ -154,7 +154,9 @@ port. Two cheaper levers come first, each as its own PR with byte identity of
 the run records as the acceptance test: drop the tick from the spatial key
 where the planner ignores it (+21 points of hit rate on the electron world),
 and skip `validate_spatial_plan` on a cache hit (22% of step time). A dense
-numpy mode for boards that fields fill is measured before adoption.
+numpy mode for boards that fields fill is measured before adoption, with
+feature 12, field spreading (Highlights 3.5, 2026-09-17), under which the
+field fills the board.
 
 **Field spreading measured before adoption (2026-09-17, `field-spreading-v1`,
 feature 12).** The electron world of `tests/test_released_field.py` (one lamp

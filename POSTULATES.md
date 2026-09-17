@@ -360,6 +360,25 @@ leading order; whether the bending of a passing ray is the same on an axis
 and on a diagonal is a measurable prediction (experiment A6 of
 [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)), not an assumption.
 
+Addition (model owner, 2026-09-17; Highlights 3.5, "light is the field, and
+the field spreads"): light and the field of a charge are one family of the
+catalog, the electromagnetic field in ray form; a photon is one quantum of a
+field ray, an emission is a release of that family at an event, and an
+absorption is a meeting of a field ray with a bound group. Because light
+spreads, the field spreads by the same rule: every node that field content
+reaches releases it again in all six headings by a declared split table of
+the family, the backward heading included, the remainder owned (Highlights
+3.17). Field content meeting at a node combines by phase before it spreads;
+a single quantum cannot split, and where the table would give a heading less
+than one the remainder leaves whole through the heading the phase selects,
+so a quantum never waits and only a Detector decides where it is realized.
+The field of a static charge then fills space, the net momentum through a
+node falling as 1/r² (Gauss), and diffraction needs no rule of its own, a
+wall being a body that absorbs. This is one catalog entry of the light
+family, not an engine mechanism: feature 12, field spreading, of the
+ray-event model, its cost measured before adoption; until it lands the field
+lives on the six axis lines of its source and light goes straight.
+
 ## 7. An isolated symmetric source does not push itself
 
 For a single stationary source in symmetric space, field values on opposite sides
@@ -784,24 +803,30 @@ Detector and carried by the returning ray, which walks back the same number
 of steps it has made since its event and transmits it by the inverse split
 at the birth event to the partner ray's line, and the second Detector
 receives it on the ray that reaches it and draws its own bit on that
-arrival like on any other; a Detector sees nothing of the ray, only its own
-value, the received value is information on the ray, not an input to the
-draw, and no owner answers at a distance. The information of the last
-event, its Ports and shares, stays on the ray as a hidden variable: no
-Detector and no ordinary coupling reads it, it comes from no ordinary
-physics, and nothing on the board feels it. The Detector's bit is
+arrival like on any other; a Detector sees nothing of the ray, only its
+own value, the received value is information on the ray, not an input to
+the draw, and no owner answers at a distance (superseded on 2026-09-17 for
+rays that carry a bit: a Detector reads the bit, below). The information
+of the last event, its Ports and shares, stays on the ray as a hidden
+variable: no Detector and no ordinary coupling reads it, it comes from no
+ordinary physics, and nothing on the board feels it. The Detector's bit is
 different (model owner, 2026-09-17; Highlights 5.4, "the Detector's bit is
 a property of the ray"): it travels with the ray as a visible property
 like charge, seen by every meeting, by the record and by the rendering,
 inherited by the outputs of any event a marked ray takes part in (where
 the inputs carry different bits the declared coupling says which the
-outputs carry, by default 1 outranks 0 and 0 outranks none) and readable
-by a coupling in the catalog as charge is; the draw is unchanged, a
-Detector drawing on every arrival and reading nothing from the ray, and
-whether a ray carrying 1 passes a later Detector without a draw is an open
-decision of the model owner, no Detector reading the bit until it is made
-(feature 2b of the ray-event model, after feature 10). With two Detectors,
-Alice's and Bob's, whichever returns first sends its value through the birth
+outputs carry, by default 1 outranks 0 and 0 outranks none), readable by a
+coupling in the catalog as charge is, and read by a Detector (model owner,
+2026-09-17, closing the open decision of that morning): a ray carrying 1
+is already realized and passes a later Detector without a draw, as a
+measurement repeated in the same basis repeats its result, a ray carrying
+0 is a transmission and is never drawn, and only a ray carrying no bit is
+drawn, how a marked Node meets each bit being its declared coupling in the
+catalog with this as the default (feature 2b of the ray-event model, after
+feature 10; until it lands the engine draws on every arrival). The price
+of Highlights 5.4 is to be re-derived under this rule by hypothesis 11 and
+experiment A13 before it is quoted again. With two Detectors, Alice's and
+Bob's, whichever returns first sends its value through the birth
 event and the other receives it; sometimes it is Alice's information,
 sometimes Bob's. To Alice and Bob the correlation feels as if it were decided
 at time zero, but nothing happened at time zero: the value was carried
@@ -962,7 +987,10 @@ there is no measurement, the node returns the ray without touching it and
 is a node without measurement, as if the ray had not arrived, and it waits
 for what the return brings back; nothing is measured or recorded as an
 outcome. A
-Detector sees nothing of the ray, on 1 or on 0: it sees only its own value.
+Detector sees nothing of the ray, on 1 or on 0: it sees only its own
+value, except the bit a ray already carries, which it reads since
+2026-09-17 (Highlights 5.4, feature 2b): a ray carrying 1 passes without a
+draw, a ray carrying 0 is a transmission and is never drawn.
 When it returned a ray with 0, that value travels with the ray, and the
 second Detector of the pair receives it on the ray that reaches it.
 A returning ray retraces its own trajectory by its step count, reaches its

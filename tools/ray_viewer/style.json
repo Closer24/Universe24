@@ -3,7 +3,8 @@
   "colors": {
     "background": "#0b1016",
     "surface": "#121a23",
-    "scene": "#070b10",
+    "scene": "#0b1730",
+    "scene_edge": "#03060b",
     "ink": "#e6ebf0",
     "muted": "#93a0ad",
     "line": "#26323d",
@@ -22,12 +23,27 @@
       },
       "field": {
         "hue": "fixed",
-        "color": "#62b8d3",
-        "alpha": 0.3
+        "color": "#bfefff",
+        "alpha": 0.35
       },
       "electron": {
         "hue": "fixed",
         "color": "#ffd166",
+        "alpha": 1.0
+      },
+      "light": {
+        "hue": "fixed",
+        "color": "#eaf6ff",
+        "alpha": 1.0
+      },
+      "proton": {
+        "hue": "fixed",
+        "color": "#ff8c69",
+        "alpha": 1.0
+      },
+      "neutron": {
+        "hue": "fixed",
+        "color": "#c9d3dc",
         "alpha": 1.0
       }
     },
@@ -40,7 +56,7 @@
       "return": "#c58cff",
       "arrival": "#c58cff",
       "split": "#c58cff",
-      "escape": "#7f8f9c",
+      "escape": "#55636f",
       "other": "#93a0ad"
     },
     "source": "#f0a33a",
@@ -49,6 +65,7 @@
   },
   "sizes": {
     "ray_width_px": 3,
+    "head_radius_px": 4,
     "head_links": 0.5,
     "arrowhead_px": 5,
     "momentum_arrow_px_per_quantum": 1.75,
@@ -59,19 +76,29 @@
       0.35,
       0.0
     ],
-    "field_width_px": 1.5,
+    "field_width_px": 1.0,
     "field_trail_links": 3,
     "field_arrowhead": false,
     "marker_radius": 0.4,
-    "escape_dot_radius": 0.14,
+    "marker_ring_thickness": 0.06,
+    "marker_alpha": 0.8,
+    "escape_dot_radius": 0.09,
+    "escape_alpha": 0.45,
     "source_size": 0.4,
     "detector_size": 0.8,
     "body_size": 0.7,
+    "detector_alpha": 0.6,
+    "glow_scale": 2.8,
+    "glow_alpha": 0.5,
+    "sphere_roughness": 0.35,
+    "sphere_metalness": 0.15,
+    "sphere_emissive": 0.4,
     "label_font_px": 15,
     "label_min_distance_px": 24,
     "node_dot_px": 2.2,
-    "lattice_alpha": 0.16,
-    "box_alpha": 0.55
+    "node_dot_alpha": 0.22,
+    "lattice_alpha": 0.07,
+    "box_alpha": 0.35
   },
   "draw": {
     "markers": [
@@ -85,17 +112,22 @@
       "split"
     ],
     "marker_shapes": {
-      "emission": "diamond",
+      "emission": "ring",
       "meeting": "ring",
       "deflection": "ring",
       "conversion": "ring",
-      "click": "cube",
+      "click": "ring",
       "return": "ring",
       "arrival": "ring",
-      "split": "octahedron",
+      "split": "ring",
       "escape": "dot",
-      "other": "diamond"
+      "other": "ring"
     },
+    "marker_shape": "sphere",
+    "shape_overrides": {},
+    "glow": true,
+    "vignette": true,
+    "field_additive": true,
     "labels": {
       "rays": false,
       "fields": false,
@@ -153,14 +185,17 @@
     "autoplay": true,
     "loop": true,
     "page_ticks_per_second": 4,
-    "gif_degrees_per_frame": 5,
+    "gif_degrees_per_frame": 4,
     "gif_frames": null,
     "gif_hold_frames": 12,
     "gif_width_px": 640,
     "gif_frame_ms": 120,
     "gif_colors": 128,
+    "gif_supersample": 2,
     "contact_stills": 16,
-    "elevation_deg": 28,
-    "start_angle_deg": -35
+    "elevation_deg": 30,
+    "start_angle_deg": -40,
+    "camera_fit": "rays",
+    "camera_fit_margin_links": 1
   }
 }

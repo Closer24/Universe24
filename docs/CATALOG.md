@@ -64,6 +64,14 @@ and `note`. A `field` ray adds `field_of` (the rays that release it) and
 `release` (`[n, d]`: each departure releases `floor(amount × n / d)` per Port
 heading except the ray's own,
 [released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)).
+`light` is a `field` ray, the electromagnetic field in ray form (Highlights
+3.5, model owner, 2026-09-17): released by the electron and the positron as
+their field (the families `electron_field` and `positron_field` until that
+date) and emitted at an event by any source, a photon one quantum of it. Its
+`spread` key is the six-heading split table of feature 12 by which every Node
+that light reaches releases it again, the backward heading included, a
+quantum never waiting; until it is declared the field lives on the six axis
+lines of its source and light goes straight.
 A `bound_group` adds `members` (ray id to count), `binding` (the coupling that
 holds it) and, if it can decay, `decay` (the conversion and the mark's
 setting). A property read only at a meeting (`colour`, `spin`,
@@ -93,6 +101,12 @@ offset; a world writes the names.
 among the outputs) and the `apparatus_family` a world gives a mirror, a
 splitter or a plate under a declared coupling: rest rate 0, since the token
 must come back with the body's phase, no charge, no field.
+The Detector's record also lists its `couplings` on the bit a ray already
+carries (Highlights 5.4, model owner, 2026-09-17; feature 2b, after feature
+10), two open entries with the decided default: `on_bit_1`, a ray carrying 1
+passes without a draw; `on_bit_0`, a ray carrying 0 is a transmission and is
+never drawn; only a ray carrying no bit is drawn, and the key by which a
+mark declares another behaviour is undecided until the feature lands.
 
 `layers` is a note only: layers are derived from the couplings
 ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), never declared.
@@ -111,6 +125,7 @@ the file, path for path and decider for decider. A decider is an entry of the
 | --- | --- | --- |
 | `lag_bits.world_key` | The key that declares the lag modulus per family, the N of hypothesis 14 on the lag register and not on the phase | feature 8b |
 | `rays.light.polarization` | The two-state transverse property of light (feature 11) | A12 |
+| `rays.light.spread` | The six-heading split table by which every Node that light reaches releases it again (feature 12, Highlights 3.5, 2026-09-17), the backward heading included; a quantum never waits, the remainder leaving whole through the heading the phase selects | feature 12 |
 | `rays.electron.spin` | The two-state property of the electron family (feature 11) | hypothesis 12 |
 | `rays.positron.spin` | As for the electron | hypothesis 12 |
 | `rays.muon.rest_rate` | The muon's rung on the ladder, k × 206.768 28 | A10 |
@@ -137,6 +152,8 @@ the file, path for path and decider for decider. A decider is an entry of the
 | `couplings.beam_splitter.outputs.table` | The split ratio of the splitter | A2 |
 | `couplings.slit.outputs.shares` | The share per forward heading of a slit | A1 |
 | `couplings.polarizer.outputs.table` | The polarizer's cos² table in N-ths (feature 11) | A12 |
+| `apparatus.detector.couplings.on_bit_1.world_key` | The key by which a mark declares what it does with a ray carrying 1, the default being to pass it without a draw (Highlights 5.4, 2026-09-17) | feature 2b |
+| `apparatus.detector.couplings.on_bit_0.world_key` | The key by which a mark declares what it does with a ray carrying 0, the default being a transmission that is never drawn | feature 2b |
 
 ## How a world selects rays from the catalog
 
@@ -152,16 +169,17 @@ it uses; the layers follow.
 | `rest_rate` | `spatial_fields[].kerengonen.phase_advance` |
 | `charge` | `spatial_fields[].charge` |
 | `phase_bits` | `spatial_fields[].phase_bits`, the same for every ray of the world |
-| A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release` |
+| A field ray's `field_of` and `release` | `spatial_fields[].field_of` (one family per field today) and `spatial_fields[].release`; a world that holds both charged families declares the light family once per releaser, as it does the mass field, and a world whose light no charge releases writes neither key |
 | A coupling's `participants`, `outputs`, `invariants` | One `ray_interactions` rule |
-| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode` |
+| `apparatus.detector` | `detectors[]` with `position`, `setting`, `seed`, and the world's `return_mode`; the couplings on the bit have no world key yet (feature 2b) |
 | `apparatus.external_body` | `external_bodies[]` with `position`, `family`, `amount` and the optional `charge`, `phase`, `initial_momentum`, `coupling` (`"sink"` or a declared rule's name) and `momentum_table` ([external body](SPATIAL_FIELDS.md#the-external-body-external-body-v1)); a coupled body's rule names the body's family for the apparatus role and returns its token once |
 | A bound group | Rays held by a binding rule: a `ray_interactions` rule without outputs whose assignments set `delay` 1 on its participants, `ray_delay` for the group's mass as output-clock delay ([binding](SPATIAL_FIELDS.md#binding-and-gravity-by-delay-ray-binding-v1)) |
 | A source | A marked Node that emits the family: a lamp on a Node with a mark of setting 1 |
 
-A bound group's decay draw (the mark drawing at the group's tick), colour and
-the properties of feature 11 have no world key yet; their catalog records
-wait for them, and no engine rule is added for them
+A bound group's decay draw (the mark drawing at the group's tick), colour,
+the properties of feature 11 and the split table of feature 12 (`spread`)
+have no world key yet; their catalog records wait for them, and no engine
+rule is added for them
 ([ray-event model, after feature 10](RAY_EVENT_MODEL.md#6-migration-in-order)).
 
 ## What the catalog is not
@@ -183,9 +201,10 @@ criterion; this file only lists, per entry, the ids it uses.
 under the strict decoder, checks every record and reference, holds the
 undecided table above equal to the file, holds the experiment ids equal to
 the register's, builds a world from the file for every ray a world can select
-today and for every decided coupling the engine runs today (the Born
-steering, the electron's turn at a field ray, and an external body under the
-absorber, the mirror and the phase plate), runs each for two ticks against
+today, for every release a world can declare today (light by the electron
+and by the positron) and for every decided coupling the engine runs today
+(the Born steering, the electron's turn at a field ray, and an external body
+under the absorber, the mirror and the phase plate), runs each for two ticks against
 pinned integers, and checks that a Detector mark parses. `tools/check.py` selects it when the catalog, this
 document, the register or the hypotheses change. Passing it establishes the
 file's contract, not any agreement with nature: that is the register's.

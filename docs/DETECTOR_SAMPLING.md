@@ -51,6 +51,15 @@ Node draws once for each arriving ray, independently, from its own ticket
 stream, reading nothing from the ray. This section states the rule the code
 implements; the schema key is in [spatial fields](SPATIAL_FIELDS.md#detector-mark-detector-mark-v1).
 
+Decision of 2026-09-17 (Highlights 5.4; feature 2b of the ray-event model,
+after feature 10): a Detector reads the bit a ray already carries. A ray
+carrying 1 is already realized and passes a later Detector without a draw,
+as a measurement repeated in the same basis repeats its result, a ray
+carrying 0 is a transmission and is never drawn, and only a ray carrying no
+bit is drawn, how a marked Node meets each bit being its declared coupling
+in the catalog with this as the default. Until feature 2b lands the code
+draws once for each arriving ray, as this section states.
+
 **The mark.** The initialization key `"detectors": [{"position": [x, y, z],
 "setting": [n, d], "seed": s}]` sets the Detector bit of the Node at
 `position`. `DetectorMark(position, pass_numerator, pass_denominator, seed)`
