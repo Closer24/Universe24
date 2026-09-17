@@ -22,7 +22,6 @@ SPEC.loader.exec_module(CHECK)
     ("name", "consumer"),
     [
         ("finite-residence.json", "tests/test_native_ray_coupling.py"),
-        ("field-sampling.json", "tests/test_ray_heading_flux.py"),
         ("evidence.py", "tests/test_ray_coupling_evidence.py"),
         ("render_gif.py", "tests/test_ray_coupling_evidence.py"),
         ("run_experiments.py", "tests/test_ray_coupling_evidence.py"),
@@ -35,17 +34,18 @@ def test_ray_candidate_resources_select_their_direct_consumers(name, consumer):
     assert "tests/test_spatial_engine.py" not in selected
 
 
-def test_local_field_example_selects_state_and_physical_contract_consumers():
+def test_local_field_example_selects_its_state_contract_consumer():
     selected, _ = CHECK.select(["examples/local_lorentz_field.json"], {})
     assert "tests/test_node_state_contract.py" in selected
-    assert "tests/test_local_lorentz_field.py" in selected
+    assert "tests/test_spatial_engine.py" not in selected
 
 
-@pytest.mark.parametrize("name", ["runtime.py", "definitions.json", "README.md"])
-def test_standalone_lab_changes_select_its_contract_suite(name):
-    tests, typed = CHECK.select(["tools/generic_vector_lab/" + name], {})
-    assert "tests/test_generic_vector_lab.py" in tests
-    assert not typed
+def test_every_resource_consumer_row_names_an_existing_test():
+    root = Path(__file__).resolve().parents[1]
+    for resource, consumers in CHECK.RESOURCE_CONSUMERS.items():
+        assert (root / resource).exists(), resource
+        for consumer in consumers:
+            assert (root / consumer).exists(), consumer
 
 
 @pytest.mark.parametrize("name", ["extract.py", "viewer.html", "render_gif.py", "README.md"])
@@ -113,7 +113,7 @@ def test_example_selects_its_consumers_and_not_other_collision_candidates():
     }
     tests, _ = CHECK.select(["examples/04-unequal-mass-collision.json"], sources)
     assert "tests/test_atomic_interactions.py" in tests
-    assert "tests/test_workspace.py" in tests
+    assert "tests/test_configuration_validation.py" in tests
     assert "tests/test_historical.py" not in tests
 
 
@@ -123,35 +123,14 @@ def test_shared_fixture_includes_all_its_consumers():
     assert {"tests/test_a.py", "tests/test_b.py"} <= set(tests)
 
 
-@pytest.mark.parametrize(
-    "example", ["basic", "exchange", "finite_fields", "open_world", "spatial_turning"]
-)
-def test_dynamic_example_paths_retain_identity_checks_without_unrelated_physics(example):
+def test_example_script_selects_only_the_test_that_names_it():
     sources = {
-        "tests/test_generic_identity.py": 'filename = f"{name}.json"',
+        "tests/test_example_script.py": 'SCRIPT = ROOT / "examples/some-world/run_experiments.py"',
         "tests/test_historical.py": "def test_historical(): pass",
     }
-    tests, _ = CHECK.select([f"examples/{example}.json"], sources)
-    assert "tests/test_generic_identity.py" in tests
+    tests, _ = CHECK.select(["examples/some-world/run_experiments.py"], sources)
+    assert "tests/test_example_script.py" in tests
     assert "tests/test_historical.py" not in tests
-
-
-def test_reference_script_retains_its_dynamically_loading_consumer():
-    sources = {
-        "tests/test_reference_examples.py": 'spec_from_file_location("reference_examples", SCRIPT)',
-        "tests/test_historical.py": "def test_historical(): pass",
-    }
-    tests, _ = CHECK.select(["examples/known-entities/run_reference_checks.py"], sources)
-    assert "tests/test_reference_examples.py" in tests
-    assert "tests/test_historical.py" not in tests
-
-
-@pytest.mark.parametrize(
-    "filename", ["law.json", "definition.json", "experiments.json", "prepare.py", "observe.py"]
-)
-def test_directional_field_resources_select_the_candidate_consumer(filename):
-    tests, _ = CHECK.select([f"examples/directional-wave/{filename}"], {})
-    assert "tests/test_directional_wave.py" in tests
 
 
 @pytest.mark.parametrize(
@@ -292,16 +271,6 @@ def test_scope_report_stays_leased_until_failed_selected_command_finishes(monkey
     assert selected.exists()
 
 
-def test_catalog_and_profile_resources_select_their_consumers():
-    tests, _ = CHECK.select(["examples/known-entities/catalog.json"], {})
-    assert "tests/test_small_space_experiments.py" in tests
-    assert "tests/test_entity_catalog.py" in tests
-    assert "tests/test_entity_compiler.py" in tests
-    assert "tests/test_physical_entities.py" in tests
-    tests, _ = CHECK.select(["examples/known-entities/representation-probes.json"], {})
-    assert {"tests/test_entity_compiler.py", "tests/test_small_space_experiments.py"} <= set(tests)
-
-
 @pytest.mark.parametrize(
     "path",
     [
@@ -317,20 +286,8 @@ def test_configuration_inventory_selects_preflight_without_unrelated_worlds(path
 
 
 @pytest.mark.parametrize("name", ["catalog.json", "representation-probes.json"])
-def test_profile_validation_retains_explicit_data_dependencies(name):
+def test_catalog_resources_select_the_preflight_and_no_deleted_consumer(name):
     tests, _ = CHECK.select(["examples/known-entities/" + name], {})
-    assert "tests/test_profile_validation.py" in tests
     assert "tests/test_configuration_validation.py" in tests
-
-
-@pytest.mark.parametrize("filename", ["law.json", "definition.json", "experiments.json", "prepare.py"])
-def test_coupled_excitation_resources_select_their_behavioral_consumer(filename):
-    tests, _ = CHECK.select([f"examples/coupled-excitations/{filename}"], {})
-    assert "tests/test_coupled_excitations.py" in tests
-    assert "tests/test_directional_wave.py" not in tests
-
-
-@pytest.mark.parametrize("name", ["catalog.json", "property-coupling-probes.json"])
-def test_property_coupling_profiles_select_their_behavioral_consumer(name):
-    tests, _ = CHECK.select([f"examples/known-entities/{name}"], {})
-    assert "tests/test_property_entity_profiles.py" in tests
+    assert all(test.startswith("tests/test_") for test in tests)
+    assert not any("entity" in test or "profile" in test for test in tests)

@@ -3,12 +3,14 @@
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING
 
-from .coupling_selectors import matches_type
+from .coupling_selectors import matches_pair, matches_type, participant_groups
 from .disturbance_state import (
     Address3,
+    CouplingDefinition,
     DisturbanceNodeState,
     DisturbanceRecord,
     InitialState,
+    InteractionDefinition,
     LocalPlan,
     Packet,
     PendingCycle,
@@ -37,6 +39,64 @@ def record_values(initial: InitialState, record: DisturbanceRecord) -> dict[str,
     }
 
 
+def carrier_work(
+    initial: InitialState,
+    spatial_types: frozenset[int],
+    records: tuple[DisturbanceRecord | None, ...],
+) -> bool:
+    """Whether the resident records give this Node a carrier cycle to plan.
+
+    A record of a spatially coupled type, a pair or group a declared rule
+    selects, a move without a direction field, a configured update, check or
+    cost reporter, or any nonzero value is work; a zero record with nothing
+    declared for it is not.
+    """
+    present = [record.type_index for record in records if record is not None]
+    if spatial_types.intersection(present):
+        return True
+    rules: tuple[CouplingDefinition | InteractionDefinition, ...] = (
+        *initial.couplings,
+        *initial.interactions,
+    )
+    for rule in rules:
+        if isinstance(rule, InteractionDefinition) and rule.participants:
+            if participant_groups(rule, records):
+                return True
+            continue
+        if any(
+            matches_pair(rule, left, right)
+            for i, left in enumerate(present)
+            for j, right in enumerate(present)
+            if i != j
+        ):
+            return True
+    for record in records:
+        if record is not None:
+            definition = initial.disturbances[record.type_index]
+            if definition.transport.mode == "move" and definition.transport.direction_field is None:
+                return True
+            if definition.updates or definition.checks or definition.cost_field is not None:
+                return True
+            if any(any(unpack(v)) for v in record.values):
+                return True
+    return False
+
+
+def report_cost(initial: InitialState, plan: LocalPlan) -> LocalPlan:
+    """Write the already-metered cost reporters after the local costs are combined."""
+    replacements = []
+    for slot, record in plan.replacements:
+        if record is not None:
+            cost_field = initial.disturbances[record.type_index].cost_field
+            if cost_field is not None:
+                values = list(record.values)
+                # This reporter assignment was already metered by the local planner.
+                values[cost_field] = pack((plan.cost,))
+                record = replace(record, values=tuple(values))
+        replacements.append((slot, record))
+    return replace(plan, replacements=tuple(replacements))
+
+
 @dataclass(slots=True)
 class DisturbanceNode(DisturbanceNodeState):
     """Local state and transitions; no world, neighbor inventory or history access."""
@@ -60,7 +120,6 @@ class DisturbanceNode(DisturbanceNodeState):
             and self.pending is None
             and all(record is None for record in self.records)
             and not (services.initial.node_execution and any(self.delay_counts))
-            and not services.record_policy.has_work(self.records)
         )
 
     def advance(
@@ -138,14 +197,19 @@ class DisturbanceNode(DisturbanceNodeState):
                 if record is not None
             )
         arrivals = tuple(packet.record for packet in packets)
-        records = services.record_policy.receive(self.records, arrivals, locked)
-        if len(records) != len(self.records):
-            raise ValueError("record policy cannot change local capacity")
-        # Every arrival was validated above; a policy may place that same immutable
-        # object into a free slot. Any other new record, such as a merge, is checked.
+        # Every arrival takes the first spare slot outside the pending lock; nothing
+        # is folded into a resident (records as owners were deleted on 2026-09-17).
+        placed = list(self.records)
+        for incoming in arrivals:
+            slot = next(
+                (index for index, old in enumerate(placed) if old is None and index not in locked),
+                None,
+            )
+            if slot is None:
+                raise ValueError("local receiving capacity exhausted; no disturbance was discarded")
+            placed[slot] = incoming
+        records = tuple(placed)
         validate_records(initial, records, len(self.records), self.records, arrivals)
-        if any(records[slot] != self.records[slot] for slot in locked):
-            raise ValueError("record policy cannot change a pending local slot")
         if initial.arrival_port_blind:
             codes = list(self.arrival_port_codes) or [0] * len(records)
             for packet in packets:
@@ -238,7 +302,7 @@ class DisturbanceNode(DisturbanceNodeState):
             return
         if services.initial.node_execution and spatial is not None and spatial.pending is not None:
             return
-        if not services.record_policy.has_work(self.records) and not (
+        if not carrier_work(services.initial, services.spatial_types, self.records) and not (
             services.resolver is not None
             and services.resolver.has_work(
                 LocalContext(
@@ -299,7 +363,7 @@ class DisturbanceNode(DisturbanceNodeState):
             plan = replace(
                 plan, cost=bounded(checked_work(plan.cost + spatial.cost(tick, spatial_services)))
             )
-            plan = services.record_policy.report_cost(plan)
+            plan = report_cost(services.initial, plan)
         validate_local_plan(services.initial, plan, len(self.coupling_remainders), self.records)
         if services.initial.node_execution:
             extra = plan.interaction_ticks
@@ -373,7 +437,7 @@ class DisturbanceNode(DisturbanceNodeState):
         field_plan = yield from spatial.plan_shared_fields(
             self.records, spatial_services, self.committed_cost
         )
-        has_carriers = services.record_policy.has_work(self.records)
+        has_carriers = carrier_work(services.initial, services.spatial_types, self.records)
         if not has_carriers and field_plan.cost == 0:
             spatial.last_cost = 0
             spatial_services.activity.mark(self.position, False)
@@ -421,8 +485,8 @@ class DisturbanceNode(DisturbanceNodeState):
                 spatial_guards=coupled.guards,
                 cost=bounded(checked_work(plan.cost + coupled.cost)),
             )
-        plan = services.record_policy.report_cost(
-            replace(plan, cost=bounded(checked_work(plan.cost + field_plan.cost)))
+        plan = report_cost(
+            services.initial, replace(plan, cost=bounded(checked_work(plan.cost + field_plan.cost)))
         )
         validate_local_plan(services.initial, plan, len(self.coupling_remainders), self.records)
         if plan.spatial_guards:
@@ -500,9 +564,6 @@ class DisturbanceNode(DisturbanceNodeState):
                     guarded, pending.plan.spatial_reaction, pending.plan.spatial_guards
                 )
             field_packets = spatial.packets(tick, field_plan.outgoing, spatial_services, field_plan.rays)
-        old_links = self.output.packets
-        if any(packet is not None for packet in old_links):
-            raise ValueError("outgoing links still occupied; no implicit packet queue is allowed")
         source_records = list(self.records)
         if field_plan is not None:
             for slot, emitted in enumerate(field_plan.emission_records):
@@ -539,7 +600,7 @@ class DisturbanceNode(DisturbanceNodeState):
                 validate_records(services.initial, tuple(proposed), len(self.records))
                 alternatives.append(tuple(self._staying(record) for record in proposed))
         departure_tick = bounded(tick + services.initial.link_ticks)
-        links: list[Packet | None] = [None] * len(old_links)
+        links: list[Packet | None] = [None] * len(self.output.packets)
         for index, departure in enumerate(pending.plan.departures):
             record = departure.record
             if departure.origin_slot != -1:

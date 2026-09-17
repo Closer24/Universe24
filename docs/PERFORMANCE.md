@@ -64,7 +64,7 @@ Measured on Linux with Python 3.14.0rc2 on 2026-09-16 with the same
 Profiling that baseline showed `node_boundary.validate_record` at about half
 of the repeated-carrier step time, with each delivered record validated by the
 transport loop, by `DisturbanceNode.receive` and again by `validate_records`
-over the record policy's output. In the two-field input, `decode` and `unpack`
+over the received records. In the two-field input, `decode` and `unpack`
 took more than half of the step time, reached from conservation readouts,
 field guard validation and spatial-state validation.
 

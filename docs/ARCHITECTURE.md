@@ -156,9 +156,11 @@ Q-ORACLE-1, the explicitly scoped opt-in quantum exception, was deleted on
 source envelopes on the same day under Highlights section 3.5 (bucket B.3),
 the causal event ledger under Highlights section 3.20 (bucket B.4) and the
 bond registry, claim-gather and the lottery capture the same day under
-Highlights sections 3.19, 3.20, 5.1 and 5.4 (bucket B.5). No path in the
-package answers at a distance. The record operations that stay until bucket
-B.6 are scope limits to report, not evidence that every
+Highlights sections 3.19, 3.20, 5.1 and 5.4 (bucket B.5), and the record
+operations (records as owners and the N-to-M conversion of records) the same
+day under Highlights sections 3.20 and 5.1 (bucket B.6, the last). No path in
+the package answers at a distance, and no Node folds an arrival into a
+resident. That every bucket of issue #164 is deleted is not evidence that every
 repository path already satisfies the active local integer contract.
 
 ## Generated output ownership
@@ -183,23 +185,20 @@ physical engine state. Its one-shot and singleton watcher interfaces share the
 
 ## Active generic ownership
 
-The engine receives an explicit `core/record_policy.RecordPolicy` alongside its
-local planner. `fields/record_operations.RecordOperations` owns the existing
-activity predicate, delivered-record merging and configured cost reporting.
-It stores immutable definitions and receives only fixed local slots, delivered
-records, pending-slot locks or a local plan. It receives no world, address or
-clock. The engine alone determines arrival eligibility, supplies locks, validates
-slot capacity, and commits proposals before clearing packets. Public Simulation
-and the explicit contact trial assemble this component; direct DisturbanceEngine
-callers must supply `record_policy=`. Configuration files are unchanged.
-
-This is an ownership refactor: arithmetic order, transport/channel distinctions,
-source bookkeeping, cost prices and frozen pending semantics are preserved.
-Generic operations and configured physical meaning remain separate; this change
-does not add a physical force, a tensor schema or an arbitrary Python plugin API.
-See tests/test_record_operations.py and the existing disturbance, spatial and
-native-event regressions. The independent spatial scheduler retains its current
-ownership and is outside this refactor.
+The record policy (`core/record_policy.RecordPolicy`,
+`fields/record_operations.RecordOperations`) was deleted on 2026-09-17 (issue
+#164, bucket B.6; see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17)).
+`core/disturbance_node.py` owns what stays of it as pure functions over the
+immutable run definition: `carrier_work`, the activity predicate that decides
+whether resident records give a Node a cycle to plan, and `report_cost`, the
+write of an already-metered `cost_field`. A delivered record takes the first
+spare slot outside the pending lock; nothing is folded into a resident record.
+The engine alone determines arrival eligibility, supplies locks, validates slot
+capacity and commits proposals before clearing packets; `NodeServices` carries
+the carrier types a spatial coupling or interaction selects (`spatial_types`).
+Direct `DisturbanceEngine` callers pass no `record_policy=`. Configuration files
+are unchanged.
 
 
 `disturbance_api.Simulation(initial: InitialState)` composes the generic engine

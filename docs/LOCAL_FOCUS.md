@@ -18,8 +18,9 @@ execute at their existing local boundaries.
 
 `DisturbanceNode.can_sleep` inspects only its own fixed payload and immutable
 services. Every occupied record and every pending cycle stays awake. A Node
-may sleep only when no record exists, no pending cycle exists, no delay counter
-still needs clearing, and the configured pure record policy reports no work.
+may sleep only when no record exists, no pending cycle exists and no delay
+counter still needs clearing (the pure activity predicate `carrier_work` of
+`core/disturbance_node.py` gates planning, not sleep).
 Actual creation and completed Link delivery wake its address before the closing
 commit phase. Retained NodeState and in-transit ownership are never deleted.
 

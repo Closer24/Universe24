@@ -10,49 +10,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 # These consumers build resource paths at runtime rather than importing modules.
-# Rows whose consumer was deleted on 2026-09-17 stay while tests/test_check_scope.py
-# (edited on a running branch) asserts them; main() skips tests that do not exist.
+# Every row names a kept test; main() still skips a selected test that does not exist.
 RESOURCE_CONSUMERS = {
     "examples/generic-ray-coupling/finite-residence.json": ("tests/test_native_ray_coupling.py",),
-    "examples/generic-ray-coupling/field-sampling.json": ("tests/test_ray_heading_flux.py",),
     "examples/generic-ray-coupling/evidence.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/render_gif.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/run_experiments.py": ("tests/test_ray_coupling_evidence.py",),
     "examples/generic-ray-coupling/compare_controls.py": ("tests/test_ray_coupling_evidence.py",),
-    "examples/known-entities/property-coupling-probes.json": ("tests/test_property_entity_profiles.py",),
-    "examples/coupled-excitations/law.json": ("tests/test_coupled_excitations.py",),
-    "examples/coupled-excitations/definition.json": ("tests/test_coupled_excitations.py",),
-    "examples/coupled-excitations/experiments.json": ("tests/test_coupled_excitations.py",),
-    "examples/coupled-excitations/prepare.py": ("tests/test_coupled_excitations.py",),
     "examples/kerengonen-double-slit/run_experiments.py": ("tests/test_kerengonen.py",),
-    "examples/directional-wave/law.json": ("tests/test_directional_wave.py",),
-    "examples/directional-wave/definition.json": ("tests/test_directional_wave.py",),
-    "examples/directional-wave/experiments.json": ("tests/test_directional_wave.py",),
-    "examples/directional-wave/prepare.py": ("tests/test_directional_wave.py",),
-    "examples/directional-wave/observe.py": ("tests/test_directional_wave.py",),
-    "examples/local_lorentz_field.json": (
-        "tests/test_node_state_contract.py",
-        "tests/test_local_lorentz_field.py",
-    ),
-    "examples/known-entities/catalog.json": (
-        "tests/test_property_entity_profiles.py",
-        "tests/test_entity_catalog.py",
-        "tests/test_profile_validation.py",
-        "tests/test_entity_compiler.py",
-        "tests/test_physical_entities.py",
-        "tests/test_small_space_experiments.py",
-    ),
-    "examples/known-entities/representation-probes.json": (
-        "tests/test_profile_validation.py",
-        "tests/test_entity_compiler.py",
-        "tests/test_small_space_experiments.py",
-    ),
-    "examples/known-entities/run_reference_checks.py": ("tests/test_reference_examples.py",),
-    "examples/basic.json": ("tests/test_generic_identity.py",),
-    "examples/exchange.json": ("tests/test_generic_identity.py",),
-    "examples/finite_fields.json": ("tests/test_generic_identity.py",),
-    "examples/open_world.json": ("tests/test_generic_identity.py",),
-    "examples/spatial_turning.json": ("tests/test_generic_identity.py",),
+    "examples/local_lorentz_field.json": ("tests/test_node_state_contract.py",),
 }
 
 
@@ -192,8 +158,6 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        if path.startswith("tools/generic_vector_lab/"):
-            tests.add("tests/test_generic_vector_lab.py")
         if path.startswith("tools/ray_viewer/"):
             tests.add("tests/test_ray_viewer.py")
         tests.update(RESOURCE_CONSUMERS.get(path, ()))
@@ -208,7 +172,6 @@ def select(changed, sources):
         if path.startswith("src/") and path.endswith(".py"):
             tests.update(("tests/test_architecture.py", "tests/test_locality.py"))
         if path.startswith("examples/") or path.startswith("src/event_universe/ui_assets/"):
-            tests.update(("tests/test_workspace.py", "tests/test_recorded_movie.py"))
             tests.update(
                 p
                 for p, text in sources.items()

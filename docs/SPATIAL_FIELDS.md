@@ -600,7 +600,7 @@ The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
 `{"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}`) summed
 over the inputs and over the outputs and compared exactly, as the
 [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) of records
-does; the total amount and the stock of every family (the sum of the amounts
+did until bucket B.6 deleted it on 2026-09-17; the total amount and the stock of every family (the sum of the amounts
 of one field over the inputs equals the sum over its outputs) are checked
 without a declaration, so no family total changes and the spatial
 accounting's `rule_delta` is zero. Every output is a ray of its `field` with
@@ -612,7 +612,8 @@ the declared ones. Momentum is a declared invariant, as in the
 physical formula. A false guard leaves the group untouched; a failed check
 rejects the interval's proposal before any owner changes. The arithmetic is
 `convert_values` (`fields/disturbances.py`), one pure function over bounded
-integers used unchanged by the record conversion and by the meeting: the
+integers (the record conversion that shared it was deleted on 2026-09-17,
+issue #164 bucket B.6): the
 guard, the outputs built from the frozen inputs, the table splits, the
 conserved sums and the invariant sums, returning the outputs and the
 remainder.
@@ -755,7 +756,14 @@ nothing owned is destroyed and no remainder needs an owner (Highlights
 in the same interval as the F ray, with the residents; the release is a
 departure, not an arrival, so it is no meeting. A ray of a family that has a
 meeting rule releases after the interval's meetings, from the trajectory
-that departs. A G ray crosses Nodes like any ray and releases nothing: a
+that departs. The release does not wait for the clock (Highlights 3.5,
+model owner, 2026-09-17): a field release is information, not a departure
+of matter, so a ray held at a Node by an output-clock delay (`ray_delay`,
+feature 8) is content resident there and releases every interval it is
+held, on all six headings as resident content does, while the clock delays
+only its departure as matter; this slice releases from the departure, which
+at pace 1/1 with no delay is every interval, and the held-ray release lands
+with feature 8. A G ray crosses Nodes like any ray and releases nothing: a
 field has no field, and the density of the field falls by the geometry of the
 lattice alone. A G ray that reaches an open boundary escapes like any ray.
 `release_field` (`core/spatial_state.py`) is the pure function, called by the

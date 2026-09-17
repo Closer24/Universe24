@@ -682,12 +682,11 @@ def _interactions(
             raise ValueError("duplicate interaction name")
         k = _rule_ticks(obj, node_execution)
         if "outputs" in obj:
-            if selectors.intersection(obj) or "output_types" in obj:
-                raise ValueError("a family conversion selects its inputs with participants only")
-            if "participants" not in obj:
-                raise ValueError("conversion outputs require indexed participants")
-            result.append(_conversion_interaction(obj, fields, disturbances, k))
-            continue
+            raise ValueError(
+                "record interactions have no outputs: the N-to-M conversion of records was "
+                "deleted on 2026-09-17 (issue #164, bucket B.6); a meeting of rays converts "
+                "through ray_interactions"
+            )
         if "participants" in obj:
             if not node_execution:
                 raise ValueError("indexed interactions require node_execution")
@@ -858,77 +857,6 @@ def _indexed_interaction(
         when=expression(obj["when"], 1) if "when" in obj else None,
         k=k,
         participants=tuple(selections),
-    )
-
-
-def _conversion_interaction(
-    obj: dict[str, object],
-    fields: tuple[FieldDefinition, ...],
-    disturbances: tuple[DisturbanceDefinition, ...],
-    k: int,
-) -> InteractionDefinition:
-    """Compile an N-to-M family conversion: indexed inputs, declared output families.
-
-    Every output payload is assigned from the frozen inputs. Invariants are
-    per-record readouts whose sums over all inputs and all outputs must agree.
-    """
-    selections, layouts = _participant_selections(
-        obj, fields, disturbances, minimum=1, maximum=MAX_CONVERSION_ARITY
-    )
-    type_names = _names(disturbances)
-    outputs = []
-    for raw in _array(obj["outputs"], "interaction.outputs", MAX_CONVERSION_ARITY, 1):
-        item = _object(raw, "conversion output", {"type"}, {"type"})
-        outputs.append(_index(item["type"], type_names, "output.type"))
-    involved = {kind for role in selections for kind in role} | set(outputs)
-    if any(
-        disturbances[kind].transport.mode == "split" or disturbances[kind].cost_field is not None
-        for kind in involved
-    ):
-        raise ValueError("conversion requires whole records without cost_field")
-
-    def expression(value: object, size: int | None = None) -> Expression:
-        return _Expressions(fields, (), participants=layouts).parse(value, size)
-
-    field_names = _names(fields)
-    assignments: list[Assignment] = []
-    for raw in _array(obj["assignments"], "assignments", MAX_FIELDS * MAX_CONVERSION_ARITY, 1):
-        item = _object(
-            raw, "assignment", {"output", "field", "expression"}, {"output", "field", "expression"}
-        )
-        output = _integer(item["output"], "assignment.output", 0)
-        if output >= len(outputs):
-            raise ValueError("assignment output exceeds the declared outputs")
-        field = _index(item["field"], field_names, "assignment.field")
-        if field not in disturbances[outputs[output]].fields:
-            raise ValueError("assignment requires a field owned by its output family")
-        if any(a.side == output and a.field == field for a in assignments):
-            raise ValueError("duplicate assignment target")
-        assignments.append(
-            Assignment(output, field, expression(item["expression"], fields[field].components))
-        )
-    expected = {(j, field) for j, kind in enumerate(outputs) for field in disturbances[kind].fields}
-    if {(a.side, a.field) for a in assignments} != expected:
-        raise ValueError("conversion requires explicit assignments for every output field")
-    every_field = tuple(range(len(fields)))
-    invariants: list[Invariant] = []
-    for raw in _array(obj["invariants"], "invariants", MAX_FIELDS, 1):
-        item = _object(raw, "invariant", {"name", "expression"}, {"name", "expression"})
-        name = _text(item["name"], "invariant.name")
-        if any(invariant.name == name for invariant in invariants):
-            raise ValueError("duplicate invariant name")
-        # A readout of one record; absent fields read as zero for that family.
-        invariants.append(Invariant(name, _Expressions(fields, every_field).parse(item["expression"])))
-    return InteractionDefinition(
-        name=_text(obj["name"], "interaction.name"),
-        left_type=selections[0][0],
-        right_type=selections[-1][0],
-        assignments=tuple(assignments),
-        invariants=tuple(invariants),
-        when=expression(obj["when"], 1) if "when" in obj else None,
-        k=k,
-        participants=tuple(selections),
-        outputs=tuple(outputs),
     )
 
 
@@ -2306,15 +2234,11 @@ def _conservation(value: object, initial: InitialState) -> ConservationDefinitio
 
 def _validate_conversions(initial: InitialState) -> None:
     for rule in initial.interactions:
-        if rule.output_types is None and not rule.outputs:
+        if rule.output_types is None:
             continue
         if initial.schema_version != 1:
             raise ValueError("conversion requires schema_version 1")
-        kinds = (
-            {rule.left_type, rule.right_type, *rule.output_types}
-            if rule.output_types is not None
-            else {kind for role in rule.participants for kind in role} | set(rule.outputs)
-        )
+        kinds = {rule.left_type, rule.right_type, *rule.output_types}
         if any(
             set((*selected_left_types(c), *selected_right_types(c))) & kinds for c in initial.couplings
         ):

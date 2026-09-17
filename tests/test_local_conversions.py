@@ -99,12 +99,20 @@ def test_conversion_cannot_discard_new_routing_registers(carried):
 
 
 @pytest.mark.parametrize(
-    "failure", ["missing_payload", "same_type", "different_fields", "split", "exchange", "capacity"]
+    "failure",
+    ["missing_payload", "same_type", "different_fields", "split", "exchange", "capacity", "outputs"],
 )
 def test_conversion_rejects_unsupported_ownership_at_initialization(failure):
     raw = document()
     if failure == "missing_payload":
         raw["interactions"][0]["assignments"].pop()
+    elif failure == "outputs":
+        # The N-to-M conversion of records was deleted on 2026-09-17 (issue #164,
+        # bucket B.6); only a meeting of rays converts (ray_interactions).
+        raw["interactions"][0]["outputs"] = [{"type": "outgoing A"}]
+        with pytest.raises(ValueError, match="deleted on 2026-09-17"):
+            parse_initial_state(raw)
+        return
     elif failure == "same_type":
         raw["interactions"][0]["output_types"]["left"] = "stored A"
     elif failure == "different_fields":

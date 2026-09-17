@@ -20,8 +20,8 @@ pair, existing slot order selects one transaction.
 
 Existing exact-type configurations remain supported. Property selection does not
 relax transport, ownership, capacity or arithmetic restrictions. The two-to-two `output_types` conversion keeps exact type selectors;
-property-selected inputs are admitted by the [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion),
-whose outputs are always explicit families. Matching properties alone establish neither physical unit compatibility
+property-selected inputs were admitted by the [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
+of records until its deletion on 2026-09-17 (issue #164, bucket B.6); a meeting of rays selects its inputs by field. Matching properties alone establish neither physical unit compatibility
 nor an experimentally valid law.
 
 ## Entity configuration

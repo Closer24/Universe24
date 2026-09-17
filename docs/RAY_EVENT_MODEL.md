@@ -253,6 +253,44 @@ returning field ray carries the opposite momentum back to the heavy Node,
 which is drawn toward the ray. Gravity is this bending by delay; it is not
 inserted as a force, nothing is absorbed, and momentum is exact.
 
+**The release does not wait for the clock (model owner, 2026-09-17;
+Highlights 3.5).** A field release is information, not a departure of
+matter: every interval, the content resident at a Node says in all six
+headings that it is there, with the strength its amount gives, and this is
+booked as a source; the Node's output clock delays only what leaves it as
+matter, never its field. So a heavy Node radiates every interval, its field
+is static and its strength grows with its content, as a mass at rest
+should; if the clock slowed the field too, a heavier body would radiate
+less. The engine's reading of the no-self-field rule (2026-09-17): a
+traveling ray releases in the five headings other than its own, because at
+one Link per interval a forward field ray would share its packet at every
+step, so the forward field of a ray at the speed of light is the ray
+itself; resident content releases in all six. On the lattice the field
+spreads as a diamond at the scale of Links and as a sphere at large scale,
+because the number of paths to a Node after k steps is the multinomial
+count, which is rotationally symmetric to leading order; whether the
+bending of a passing ray is the same on an axis and on a diagonal is a
+measurable prediction (experiment A6 of the
+[experiments register](EXPERIMENTS.md)), not an assumption.
+
+**Speed is a clock slowing (model owner, 2026-09-17; Highlights 3.28).**
+Everything on the board moves at one Link per interval; there is no other
+speed in the engine. Matter is slower only because the output clock of its
+bound group delays its departures: a group that moves one Link every k
+intervals has speed 1/k in units of c, and light, with delay 0, has c.
+Three things slow a clock, and all three are content meeting content by a
+declared table: the content retained at the Node itself (the group's own
+mass), the field of another mass that a ray meets (gravity, the paragraph
+above), and a declared interaction whose output assigns a delay (binding
+among them). Nothing slows a clock because of motion: there is no kinematic
+rule, and the slower ticking of a moving group, if it appears, must emerge
+from its rays spending intervals on Links instead of resident
+([hypothesis 15](HYPOTHESES.md#15-time-dilation-from-transit-a-moving-bound-groups-clock-runs-at-1--v), experiment A14 of the
+[experiments register](EXPERIMENTS.md)). This is why mass, time dilation
+and gravity are one bookkeeping of integer delays read from different
+tables, and why the tables, not the engine, are what the confrontation runs
+test.
+
 **Matter.** There is no matter in the model at this stage. Matter is the name
 for rays bound in one Node: for example a neutron ray and a proton ray held
 together in one cell by a declared strong binding coupling, and an electron
@@ -345,8 +383,8 @@ declared coupling between their families decides one of:
   bounded integer ratios with the remainder owned as Highlights 3.17
   requires, declared, not derived), exactly as the
   [N-to-M conversion contract](LOCAL_CONVERSIONS.md#n-to-m-family-conversion)
-  already does for records: up to six inputs, up to six outputs, one output
-  departure per Port;
+  did for records until bucket B.6 deleted it on 2026-09-17: up to six
+  inputs, up to six outputs, one output departure per Port;
 - **a Detector interaction**: only at a Node whose Detector bit is set, for
   each transfer arriving through a Port this interval, independently, up to
   six at once: 1 or 0 is drawn from the mark's own ticket
@@ -366,11 +404,27 @@ The
 is the special case of a binding coupling between two counter-heading rays of
 one family.
 
+**The Node's law in five steps (model owner, 2026-09-17; Highlights 5.2).**
+The rule above, as the Node runs it: a Node knows nothing about electrons
+or stars; it is a switchboard with six Ports, six output clocks and a table
+to read. Each interval: (1) receive what arrived on the six Ports, with
+what is resident (a bound group); (2) apply its mark, if any: a Detector
+draws once per arrival, 0 returned and 1 continued; an external body
+absorbs into its sink and radiates by its amount; (3) meet by table, layer
+by layer: families with no declared coupling cross as if alone, families
+with one produce the outputs the table says, with exact invariants and the
+remainder placed by Highlights 3.17; (4) stamp every output as a new event
+ray, with its event's Ports, shares and steps 0; (5) depart, each ray
+through its Port when that face's clock is ready. The two marks, the
+Detector and the external body, are the whole apparatus of a world: they
+are the only places where the board does something the tables do not say,
+and both are declarations in the initial file, never physics.
+
 The rule in the form Highlights 3.27 requires:
 
 | Question | Answer under this model |
 | --- | --- |
-| Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
+| Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the mark if the Node carries one, a Detector mark (mark, setting, ticket seed) or an external body (Highlights 3.19). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
 | What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to |
 | Is an outcome recorded | Only at an interaction: the events that leave it, and at a marked Node the click on 1 only, the pass being the measurement; a return (0) is not a measurement and records no outcome; crossing records nothing |
@@ -652,10 +706,12 @@ table is a declared coupling, an output amount split by the table at the
 phase difference of two inputs, the rest output owning the remainder as
 Highlights 3.17 requires; the momentum such a split moves is booked as an
 accounted source until the field ray of step 7 owns it as recoil; see
-[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needs
-`fields/record_operations.py` and `core/record_policy.py`, so step 6 of
-issue #164, their deletion, is unlocked. The wave-ray phase rule and the
-light family of step 6 follow with feature 9.
+[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needed
+`fields/record_operations.py` and `core/record_policy.py`; step 6 of
+issue #164 (bucket B.6, done on 2026-09-17) deleted them with the N-to-M
+conversion of records, see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17). The
+wave-ray phase rule and the light family of step 6 follow with feature 9.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.

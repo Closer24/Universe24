@@ -322,7 +322,12 @@ states "exactly" and means integer equality at every tick.
   (feature 8), when the star's recoil is wanted; a light source
   (marked, setting 1) launching one light ray on a line parallel to x at
   impact parameter b = 4, 6, 8, 12 and 16, one ray per run, on both sides
-  of the group; a slow massive ray (rate r, content equal to the light ray's)
+  of the group, and the same passes on lines parallel to the (1,1,0)
+  diagonal at equal Euclidean b rounded to the lattice (Highlights 3.5,
+  2026-09-17: the field is a diamond at the scale of Links and a sphere at
+  large scale by path counting, and the axis-versus-diagonal bending is a
+  measurable prediction, not an assumption); a slow massive ray (rate r,
+  content equal to the light ray's)
   on the same lines; a control run with no group. The phase width N = 2^8,
   2^10, 2^12, 2^14 and 2^16, with the group's retained content M fixed at
   2^6 units of m₀ = 1 phase step per interval (its rate 64 steps per
@@ -341,14 +346,18 @@ states "exactly" and means integer equality at every tick.
   both sides; the
   log-log exponent of α over the five b is
   −1.0 ± 0.1; α at 2M is 2α at M within 1/16 relative; G_eff(N) · N² is
-  constant over the five N within 1/16 relative of its value at N = 2^12.
+  constant over the five N within 1/16 relative of its value at N = 2^12;
+  the diagonal α at equal Euclidean b is within 1/8 relative of the axial α
+  (a lattice effect larger than that is measured and recorded under
+  Highlights 3.23, not hidden).
   Reported and not pinned: the ratio of the light ray's α to the slow ray's
   α at equal b and M against the value 2 of general relativity. Fail: momentum
   inexact or a control that bends (the engine); an exponent or a linearity
   outside its band (the delay table as declared against nature); G_eff · N
   constant instead of G_eff · N², or neither (the identification of m₀ or of
-  the unit of action in the derivation, not the engine), each stated as
-  which.
+  the unit of action in the derivation, not the engine); a diagonal α
+  outside its band (the lattice, Highlights 3.5, recorded under 3.23), each
+  stated as which.
 - **Status.** planned.
 
 ### A7. Newtonian attraction between two bound groups
@@ -821,6 +830,15 @@ states "exactly" and means integer equality at every tick.
   arrived at tick 96; the table of arrival ticks over the 2^8 pairs, all
   equal.
 - **Status.** planned.
+
+### A14. Kinematic time dilation of a moving bound group
+
+- **Confronts:** the Lorentz factor, clock rate √(1 − v²) (the muon lifetime in flight, 2.2 µs at rest, longer by γ in flight; Rossi–Hall 1941 and every accelerator since).
+- **Model's prediction today:** hypothesis 15: everything moves at c, matter is slow only by its output clock, and a bound group's tick fires only while it is resident, so a group moving one Link every k intervals ticks at (k − 1)/k = 1 − v to first order; the per-face clocks of Highlights 3.28 may change the curve.
+- **Features required:** 8 (binding, `ray_delay`), 9 (rest rate as the tick's phase advance).
+- **Run design:** one bound group of a declared massive family at rest, and the same group given an initial motion of v = 1/2, 1/3, 1/4, 1/8 Links per interval along an axis and along a diagonal (DDA line), on a board long enough for 64 intervals with an open boundary; record the number of ticks (binding-rule firings) and the phase advanced in 64 intervals for each v and direction; totals exact.
+- **Criterion:** the tick ratio moving/rest is compared with 1 − v and with √(1 − v²) at each v; the model's curve is the one it matches within the remainder tolerance of Highlights 3.17; a direction dependence beyond that tolerance is a lattice anisotropy and is reported as such. Pass for the paper is a clean curve; the confrontation is then the curve against nature's.
+- **Status:** planned (after feature 8).
 
 ## C. Order
 
