@@ -907,11 +907,12 @@ its fingerprint, and rendered with the [ray viewer](../tools/ray_viewer/README.m
 the records and the renders stay outside the tree. They stand beside B8,
 which stays `planned`: B8 holds its group for 2^12 intervals and pins the
 threshold criterion, while these runs show the events over a dozen ticks.
-The families are catalog rays (`light`, `electron`, `proton`, `neutron`, the
-charge unit e/3, the electron's rest rate 1); the two couplings are the
-worlds' own declarations, since the catalog holds no photon-absorption and no
-photofission coupling, and the proton's and the neutron's rest rates,
-undecided in the catalog, are set to 1 for the picture.
+The families are catalog rays (`light`, `electron`, `proton`, `neutron`,
+`electron_field`, `proton_field`, the charge unit e/3, the electron's rest
+rate 1); the two couplings of E1 and E2 are the worlds' own declarations,
+since the catalog holds no photon-absorption and no photofission coupling,
+and the proton's and the neutron's rest rates, undecided in the catalog, are
+set to 1 for the picture; E3's couplings are catalog entries.
 
 ### E1. A photon absorbed by a bound electron
 
@@ -977,3 +978,78 @@ undecided in the catalog, are set to 1 for the picture.
   initialization `7f8a490db98a1658860c54d3a6b0bb03781366122de31a7a1421dcc65f83bf7f`;
   outcome: the control crosses and the split happens as stated, exact at
   every tick.
+
+### E3. The helium ion: one electron at a nucleus of charge +2
+
+- **Claim.** Highlights 3.19: the external body is "the approximation of
+  infinite mass, used for the confrontation runs: ... an electron near a
+  large charge, a hydrogen-like spectrum around a fixed proton"; 3.5: the
+  body's field is its ordinary field rays, released on the six headings,
+  and where a field ray meets a ray whose coupling responds the meeting
+  changes that ray's trajectory and the field ray returns reversed; 3.4: the
+  electron's trajectory "is changed at every step by the field rays" the
+  nucleus releases. The model owner asked (2026-09-17) to see the He+ ion
+  and to compute the orbit and the frequency a stable, closed orbit needs.
+- **Features.** 1, 5, 6, 7, 7b, 9, 10.
+- **Run.** `examples/nature/helium_ion.json`: board 41^3, open, N = 256, no
+  Detector, 128 ticks (two computed periods). The nucleus: an external body
+  of the `proton` family at (20, 20, 20), charge +6 (two protons), amount
+  2^20, radiating `proton_field` (`release` [1, 4096]: 256 per axis ray per
+  interval), coupled to the electron by the catalog's `phase_plate` at
+  setting 0 (transparent) and pulled by absorbed field rays (`momentum_table`
+  -1). The electron: one `electron` ray of amount 4 (rest rate 1, charge -3)
+  from (28, 12, 20) heading +Y, the lower end of the side x = 28 of the
+  square of half-side r = 8, releasing `electron_field` ([1, 4]). Couplings:
+  `proton_field_turn` (catalog, open, added by this run: the electron leaves
+  on the negation of the field ray's heading, the field ray returns
+  reversed), `electron_field_turn` (never met), `phase_plate`. The
+  dictionary, the orbit computed and the limits are in the
+  [README](../examples/nature/README.md#the-helium-ion-one-electron-at-a-nucleus-of-charge-2).
+- **Computed.** The square orbit of half-side r at speed 1/k: period
+  T = 8 r k intervals, frequency 1/T; r = 8, k = 1: T = 64, f = 1/64. Its
+  stability as integer equalities at every turn: the turn where the field
+  is (the corners, which no axis line reaches); a whole quarter turn per
+  turn (any field amount from 1 under the Port table; exactly
+  floor(A t_p / u) = N under a delay table, one quantum low no turn, one
+  quantum high an extra Link every N circuits); the four recoils of A on
+  +x, +y, -x, -y summing to zero at the nucleus; the clock closing on the
+  phase circle, 8 r k = j N once a table reads the phase difference (at
+  N = 256, k = 1 the smallest square has r = 32).
+- **Shows.** Ticks 1 to 8: the electron runs the side to the axis crossing
+  (28, 20, 20), where the field ray released at tick 1 arrives in the same
+  interval. Tick 9: the turn, a quarter turn toward the nucleus (-X), the
+  recoil reversed behind it; not the square's next side. Ticks 9 to 15: the
+  fall along the axis, a meeting and a recoil at every Node. Tick 16: the
+  electron passes the nucleus; the eight recoils of 256 arrive in that one
+  interval, the sink takes 2048, the body's momentum becomes (2048, 0, 0).
+  Ticks 17 to 128: the cage, the electron turned back at the first Node
+  past the nucleus on either side, positions 21, 20, 19, 20, 21, ..., one
+  recoil of 256 every second interval alternating in sign, the body's
+  momentum between 2048 and 1792, no Link stepped (2^20 needed). Observed
+  period 4 intervals against the computed 64: the engine's bound state of
+  He+ is a two-Link cage through the nucleus, for every r, m and field
+  amount, because the body's field is on its six axis lines only and the
+  landed turn is whole. At every tick: electron 4, none escaped;
+  `proton_field` sourced 1536 per tick, 16384 in the sink by tick 128 (64
+  recoils); the momentum line balanced with the turns booked as its source
+  (initial (0, 0, 0), sourced and current (-4, -4, 0) or (4, -4, 0)); the
+  charge line electron -12, the bodies' line count 1, charge 6; every audit
+  line balanced, `conserved_at_every_completed_tick` true.
+- **The missing rules.** (i) The field off the axes: a field ray
+  re-releasing its information on the five other headings by a declared
+  ratio (the path counting of Highlights 3.5; today a field has no field).
+  (ii) A turn proportional to the field: the lag of feature 8 is spent as a
+  sideways Link with the heading unchanged and cannot reverse a ray, so a
+  transverse lag that reaches N should be spent as a quarter turn of the
+  heading toward the lagging side, the lag register being the transverse
+  momentum the audit reads (Highlights 3.28, feature 8b). Neither is added
+  by this run; with both, the orbit is a staircase circle of period 8 r k.
+  The extractor of the ray viewer was corrected for this record: a ray a
+  body's sink takes is not in the receiver's reading, so its transit now
+  takes the amount from the `external_body_absorbed` record, and at a
+  coupled body only the absorbed families end there.
+- **Status.** measured on 2026-09-17, commit `fb2cf96c6713806585bde154a8c5a0417320f228`,
+  source `5f89c465b235083ebb2e9284db1f172a094cefa8003b94ea38a04003a10d23cc`,
+  initialization `4a560dcd808948326ef0cf615884415fc14731466fa1b7f5a5a2b7481c1faef8`;
+  outcome: no closed orbit, the fall and the two-Link cage as stated, exact
+  at every tick.
