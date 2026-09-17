@@ -41,6 +41,21 @@ Read [the shared workflow](../workflow.md) and the regression expectations in
 [test expectations](../../docs/TEST_EXPECTATIONS.md). Run independently or accept
 an exact old/new tree and expected-change contract from Boss.
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](../../docs/HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions),
+the tests run for a change are those that depend on what it changed, selected
+by the import graph through `python tools/check.py`; the whole suite runs
+together only when the shared core changes (the Node and its Ports, the order
+of the cycle, the bounded integers, the phase), and then once, in parallel
+(`pytest -n auto`). Do not run the whole suite for reassurance, and do not add
+an old/new tree comparison, an example world's numbers or a known experiment to
+the suite: such a comparison is a research run, made once and recorded with a
+fingerprint and a date in [validation evidence](../../docs/VALIDATION.md). A
+physical milestone that several rules produce together is one fingerprinted,
+dated run of the engine, not a suite. A test exercises one generic rule in
+isolation on a minimal board, with its expected integers written down before
+the first run.
+
 For physical-path audits, apply the
 [local integer operation contract](../../docs/ARCHITECTURE.md#local-integer-operation-contract).
 Check intermediate bounds, exact division or declared remainder ownership,

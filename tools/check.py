@@ -251,7 +251,7 @@ def main():
             ["ruff", "check", "."],
             ["ruff", "format", "--check", "."],
             ["mypy"],
-            ["pytest", "--junitxml=artifacts/junit.xml"],
+            ["pytest", "-n", "auto", "--junitxml=artifacts/junit.xml"],
         ]
         changed = []
     else:
@@ -283,7 +283,7 @@ def main():
         if typed:
             commands.append(["mypy", "--follow-imports=silent", *typed])
         if tests:
-            commands.append(["pytest", *tests, "--junitxml=artifacts/junit.xml"])
+            commands.append(["pytest", "-n", "auto", *tests, "--junitxml=artifacts/junit.xml"])
         if {"pyproject.toml", "MANIFEST.in"} & set(changed):
             commands.append(["build"])
     report = {"mode": "full" if args.full else "affected", "changed": changed, "commands": commands}

@@ -1,5 +1,16 @@
 # Test inputs and expected results
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a test
+exercises one generic rule in isolation on a minimal board and nothing else: one
+test module per rule, one per feature of the ray-event model, with the expected
+integers written down here before the first run. No test pins the numbers of an
+example world, compares two worlds or reproduces a known experiment; those are
+research runs, made once and recorded with a fingerprint and a date in
+[validation evidence](VALIDATION.md), never repeated as tests. Entries recorded
+before that date describe the suite as it was and are brought under the rule
+when their tests change.
+
 ## Suite inventory of 2026-09-17
 
 Decision of the model owner, 2026-09-17: the engine is generic, so the suite

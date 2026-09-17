@@ -335,6 +335,24 @@ were; `test_ray_delay.py` and `test_local_focus.py` stay as their import
 dependencies and as the output-clock and Local Focus modules. There is no
 replacement: a rule that needs a new check gets one focused module.
 
+## Experiments register added on 2026-09-17
+
+By the model owner's decision of 2026-09-17, the research runs of the
+ray-event model are listed in one register,
+[docs/EXPERIMENTS.md](EXPERIMENTS.md): section A, the confrontations with
+known measurements in which the model can be falsified (A1 to A13); section
+B, the demonstrations the manuscript needs (B1 to B12); section C, the order
+in which the features of issue #169 unlock them; section D, what the register
+replaces. Every entry names the features it needs, its run design and its
+pass or fail criterion before the run, and runs once at one runtime source
+fingerprint under [Highlights](HIGHLIGHTS.md) 5.5; none is a test of the test
+suite. The register replaces the historical example worlds and study
+directories removed the same day; their dated results stay in the
+[validation log](VALIDATION.md) with their original scope. The
+[documentation index](README.md) routes to the register and the
+[hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
+runtime behavior changes.
+
 ## Primary initialization-based API
 
 `Simulation` now requires a validated `InitialState`; it no longer accepts an
