@@ -270,24 +270,51 @@ interaction, and everything follows from the generic transactions of the
 declared couplings; what remains is to close the binding couplings. Until
 they exist, held source records remain an explicitly labeled interim device.
 
-**Fixed body (model owner, 2026-09-17; Highlights 3.19).** Beside the
-Detector there is one more declared element of a world, and like the Detector
-it is a declaration, not physics: a Node declared to hold a family with a
-very large amount and, if wanted, a charge, standing for a star or a large
-charge. It radiates exactly as any bound group does, by the one field rule
-above and with the strength its amount gives, so its gravity and its electric
-field are the ordinary field rays of this document and every ray that meets
-them responds by its declared coupling. It never changes: whatever arrives at
-it, a recoil field ray or a ray that couples to it, is absorbed into an
-explicitly accounted sink, and it never splits, binds, unbinds, converts or
-decays; the audit books what it radiates as a source and what it absorbs as a
-sink, so conservation stays exact at every tick. It may move on a declared
-trajectory, and wherever it is, the Node it is at holds all of it; its motion
-is declared, never caused, because nothing on the board can push it. It is
-the approximation of infinite mass, used for the confrontation runs: light
+**External body (model owner, 2026-09-17; Highlights 3.19; named "fixed
+body" earlier that day).** Beside the Detector there is one more declared
+element of a world, and like the Detector it is a declaration, not physics:
+a Node declared to hold a family with an amount and, if wanted, a charge,
+standing for a star, a neutron star, a fixed proton, a large charge, or a
+piece of apparatus. What is declared: the family, the amount (finite, of any
+width, since it enters no sum; it only sets how much field leaves per
+interval), the charge, and, if wanted, a trajectory. What it does: it
+radiates exactly as any bound group does, by the one field rule above and
+with the strength its amount gives, so its gravity and its electric field
+are the ordinary field rays of this document and every ray that meets them
+responds by its declared coupling. What it does not do: it does not spread,
+which is its defining property: it never splits, binds, unbinds, converts or
+decays, and its whole content stays at one Node; and it is not pushed:
+whatever arrives at it, a recoil field ray or a ray that couples to it, is
+met by the declared coupling of its family, and the body itself never
+changes. Absorption into an explicitly accounted sink is the default
+coupling, and the other couplings make the apparatus: a reversed heading is
+a mirror, a split by a declared table is a beam splitter, a phase offset is
+a phase plate, a polarization read is a polarizer once feature 11 exists; a
+wall, a screen and a beam stop are the default. It may move on a declared
+trajectory, and wherever it is, the Node it is at holds all of it; its
+motion is declared, never caused, because nothing on the board can push it,
+so two external bodies never move each other. The audit books what it
+radiates as a source and what it absorbs as a sink, so conservation stays
+exact at every tick. On the Node it is bounded metadata like the Detector
+mark: the kind of mark, the declaration, and one exact counter (the sink
+totals per family); no rays, no history. When the back-reaction is wanted, a
+star that recoils or a proton that moves, the body is not used: the same
+thing is declared as an ordinary bound group with a large amount, and then
+it spreads and is pushed like all matter. The external body is the
+approximation of infinite mass, used for the confrontation runs: light
 bending by a star, an electron near a large charge, a hydrogen-like spectrum
-around a fixed proton. It is feature 7b of the migration in section 6, after
-feature 7.
+around a fixed proton, and the two-slit and Bell geometries with their
+walls, mirrors and splitters. In the Node's law it is one flag: spreading
+is not enforced for this Node's content, and every other step of the law
+(the arrivals, the couplings by table, the stamping, the departures of what
+leaves) is unchanged. That flag is also why it has no ladder of masses: the
+ladder of
+[hypothesis 12](HYPOTHESES.md#12-one-mass-ladder-and-the-composite-spectrum-from-binding)
+comes from the spreading law, since a bound group is rays that must keep
+moving and bind again every interval, so only the closed patterns the
+binding table can hold exist; a body that does not spread has no closure
+condition and any amount is allowed. It is feature 7b of the migration in
+section 6, after feature 7, `external-body-v1`.
 
 ## 2. The single generic rule
 
@@ -419,7 +446,7 @@ every such set; Highlights 3.20 is the text to follow.
   its field meets something, a traveling ray pays nothing for it.
 - Matter as bound rays satisfies Highlights 3.4: mass is the retained energy of
   a bound group, not a stored property; the group's phase advance is its own
-  clock, which the [light-clock measurement](../examples/research/anomalies/README.md)
+  clock, which the light-clock measurement (`examples/research/anomalies/`, deleted on 2026-09-17)
   says slows with the hop time. A bound group has no lifetime of its own and
   is unbound only when an arriving ray's declared coupling produces events
   that leave; nothing else creates or destroys matter.
@@ -521,7 +548,15 @@ every such set; Highlights 3.20 is the text to follow.
    coupling, the Born rule stated as a coupling (for 8 phase steps the
    example ratios 8/8, 7/8, 4/8, 1/8, 0/8, 1/8, 4/8, 7/8 of the shared
    content to the first candidate Port and the rest to the second, the
-   remainder owned as Highlights 3.17 requires).
+   remainder owned as Highlights 3.17 requires). (The wave-ray part is done
+   on 2026-09-17, issue #169 feature 9, `wave-ray-family-v1`: every ray
+   carries a phase of its family's declared width `phase_bits`, a mask and
+   never a division; light is a family with rest rate 0 that carries its
+   emitter's phase unchanged; `family` and `charge` are read-only ray
+   properties and `charge x amount` summed over rays is an invariant of
+   every declared interaction; see [wave-ray
+   families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1). The
+   meeting with N-to-M conversion and the steering table remain feature 6.)
 7. Field emission by traveling rays, with the outward dilution or declared
    attenuation of the existing field contracts; a field ray whose meeting
    changes another ray's trajectory returns reversed along its own line as
@@ -536,14 +571,26 @@ every such set; Highlights 3.20 is the text to follow.
    declared coupling responds being delayed (its output clock grows) and the
    field ray returning reversed with the opposite momentum to the heavy
    Node.
-   Feature 7b, fixed body, after feature 7 (model owner, 2026-09-17,
-   Highlights 3.19): a Node declared to hold a family with a very large
-   amount and, if wanted, a charge, standing for a star or a large charge; it
-   radiates by this one field rule with the strength its amount gives, never
-   changes, absorbs whatever arrives at it into an explicitly accounted sink
-   that the audit books beside what it radiates as a source, may move on a
-   declared trajectory and is held whole by the Node it is at; the
-   approximation of infinite mass for the confrontation runs (section 1).
+   Feature 7b, external body, `external-body-v1`, after feature 7 (model
+   owner, 2026-09-17, Highlights 3.19; named "fixed body" earlier that day):
+   a Node declared to hold a family with an amount (finite, of any width,
+   since it enters no sum) and, if wanted, a charge and a trajectory,
+   standing for a star, a neutron star, a fixed proton, a large charge, or a
+   piece of apparatus; it radiates by this one field rule with the strength
+   its amount gives, does not spread (never splits, binds, unbinds, converts
+   or decays, its whole content at one Node) and is not pushed: whatever
+   arrives at it is met by the declared coupling of its family, absorption
+   into an explicitly accounted sink by default (a wall, a screen, a beam
+   stop), a reversed heading a mirror, a split by a declared table a beam
+   splitter, a phase offset a phase plate, a polarization read a polarizer
+   after feature 11; the audit books what it radiates as a source and what
+   it absorbs as a sink; it may move on a declared trajectory, never caused,
+   and is held whole by the Node it is at; on the Node bounded metadata like
+   the Detector mark (the kind of mark, the declaration, one exact counter of
+   the sink totals per family; no rays, no history); the approximation of
+   infinite mass for the confrontation runs (section 1), and where the
+   back-reaction is wanted an ordinary bound group with a large amount is
+   declared instead.
 8. Binding couplings: the bound-ray-pair candidate generalized to a bound
    group of N rays of declared families in one Node (the strong binding),
    possibly nothing more than a very large output-clock delay the bound rays
@@ -560,6 +607,30 @@ every such set; Highlights 3.20 is the text to follow.
    catalog coupling, for 8 phase steps the ratios 8/8, 7/8, 4/8, 1/8, 0/8,
    1/8, 4/8, 7/8, click intensities following the Born rule with nothing
    read by any Detector; the bound group under load.
+
+Layers, the "met layer by layer" of the table in section 2, are not a
+numbered step of this list but feature 5 of issue #169 (done on 2026-09-17,
+`ray-layers-v1`): the layers are derived once from the catalog as the
+connected components of the ray fields over the participants of the declared
+`ray_interactions`, a field that no rule selects is its own layer, the
+interaction step at a Node meets the resident rays layer by layer so that
+rules of different layers fire independently in one interval and an unruled
+ray crosses unchanged, and the runner records the derived layers; see
+[layers](SPATIAL_FIELDS.md#layers-ray-layers-v1).
+
+The meeting with N-to-M outputs of step 6 is feature 6 of issue #169 (done on
+2026-09-17, `ray-meeting-conversion-v1`): a `ray_interactions` rule with
+declared outputs replaces its participants by up to six new event rays at
+the meeting Node, without a resident record, every family's stock and the
+declared invariants exact as sums over inputs and outputs; the steering
+table is a declared coupling, an output amount split by the table at the
+phase difference of two inputs, the rest output owning the remainder as
+Highlights 3.17 requires; the momentum such a split moves is booked as an
+accounted source until the field ray of step 7 owns it as recoil; see
+[meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1). With it the ray path no longer needs
+`fields/record_operations.py` and `core/record_policy.py`, so step 6 of
+issue #164, their deletion, is unlocked. The wave-ray phase rule and the
+light family of step 6 follow with feature 9.
 
 Each step is a separate published change with its own model identity, tests
 and evidence, under the ordinary gates.

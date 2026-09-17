@@ -35,6 +35,7 @@ from .core.disturbance_state import (
     OperationCosts,
     Payload,
     Seed,
+    TableSplit,
     TransportDefinition,
     UpdateRule,
     Values,
@@ -45,12 +46,16 @@ from .core.disturbance_state import (
 from .core.integer import checked_work
 from .core.spatial_state import (
     CAPTURE_MODES,
+    CHARGE_INVARIANT,
     DECAY_RESIDUES,
     MAX_DETECTORS,
     MAX_HEADINGS,
     MAX_PHASE_STEPS,
     MAX_RAY_SLOTS,
+    MAX_STORED_PHASE_BITS,
+    PORT_HEADINGS,
     RAY_PROPERTIES,
+    RAY_WRITABLE,
     DecayDefinition,
     DetectorMark,
     EmissionDefinition,
@@ -61,6 +66,7 @@ from .core.spatial_state import (
     SpatialFieldDefinition,
     SpatialInteractionDefinition,
     SpatialSeed,
+    charge_invariant,
     ray_participant_definitions,
     validate_heading,
 )
@@ -90,6 +96,19 @@ def _array(value: object, label: str, limit: int, minimum: int = 0) -> list[obje
 def _integer(value: object, label: str, minimum: int = -MAX_VALUE) -> int:
     if type(value) is not int or not minimum <= value <= MAX_VALUE:
         raise ValueError(f"{label} must be an integer from {minimum} through {MAX_VALUE}")
+    return value
+
+
+def _phase_value(value: object, label: str, phase_bits: int) -> int:
+    """A phase or a rate of the declared width: an integer from 0 below 2^phase_bits.
+
+    The phase is the one value with its own declared width (issue #169, 2026-09-17),
+    so it is not bounded by MAX_VALUE; Python integers are unbounded.
+    """
+    if type(value) is not int or not 0 <= value < (1 << phase_bits):
+        raise ValueError(
+            f"{label} requires an integer from 0 below 2^{phase_bits}, the field's phase width"
+        )
     return value
 
 
@@ -1003,6 +1022,8 @@ def _spatial_fields(
                 "metric",
                 "pace",
                 "flux_projection",
+                "phase_bits",
+                "charge",
             }
             | ({"decay"} if schema_version == 2 else set()),
             {"field", "transport"} | ({"decay"} if schema_version == 2 else set()),
@@ -1023,6 +1044,7 @@ def _spatial_fields(
         ray_keys = {"headings", "rays_per_tick", "ray_slots"}
         self_exclusion = False
         phase_steps, phase_advance = 0, 0
+        phase_bits, charge = 0, 0
         capture = "share"
         metric = "links"
         pace_numerator, pace_denominator = 1, 1
@@ -1030,6 +1052,16 @@ def _spatial_fields(
         if transport == "ray":
             flux_projection = _text(obj.get("flux_projection", "ports"), "flux_projection")
             self_exclusion = _boolean(obj.get("self_exclusion", False), "self_exclusion")
+            # Every ray is a wave ray (wave-ray-family-v1): the family declares the
+            # width of its phase, 2^phase_bits values, and its charge per quantum.
+            if "phase_bits" in obj:
+                phase_bits = _integer(obj["phase_bits"], "phase_bits", 0)
+            charge = _integer(obj.get("charge", 0), "spatial field charge")
+            if self_exclusion and phase_bits > MAX_STORED_PHASE_BITS:
+                raise ValueError(
+                    "self_exclusion stores the departure phase as a bounded value: it requires "
+                    "phase_bits at most 30"
+                )
             metric = _text(obj.get("metric", "links"), "spatial field metric")
             if metric not in ("links", "euclidean"):
                 raise ValueError("spatial field metric must be links or euclidean")
@@ -1041,25 +1073,38 @@ def _spatial_fields(
                 if pace_numerator > pace_denominator:
                     raise ValueError("pace must not exceed one link per tick")
             if "kerengonen" in obj:
-                # Kerengonen: phased rays. Both keys are required and explicit.
+                # Kerengonen: phased rays. phase_advance, the family's rest rate, is
+                # required and explicit; phase_steps declares the coherence table, one
+                # entry per phase step of one turn, and fixes the width (2^phase_bits =
+                # phase_steps) unless phase_bits declares the same width; a family
+                # without a table has a rate and no coherence coupling.
                 phased = _object(
                     obj["kerengonen"],
                     "kerengonen",
                     {"phase_steps", "phase_advance", "capture"},
-                    {"phase_steps", "phase_advance"},
+                    {"phase_advance"},
                 )
+                if "phase_steps" in phased:
+                    phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
+                    if phase_steps > MAX_PHASE_STEPS or phase_steps & (phase_steps - 1):
+                        raise ValueError(
+                            "kerengonen phase_steps must be a power of two between 2 and 4096"
+                        )
+                    table_bits = phase_steps.bit_length() - 1
+                    if "phase_bits" in obj and phase_bits != table_bits:
+                        raise ValueError("kerengonen phase_steps must equal 2 to the power phase_bits")
+                    phase_bits = table_bits
+                elif "capture" in phased:
+                    raise ValueError("kerengonen.capture requires phase_steps, the coherence table")
                 capture = _text(phased.get("capture", "share"), "kerengonen.capture")
                 if capture not in CAPTURE_MODES:
                     raise ValueError(
                         "kerengonen.capture must be share or threshold: the lottery capture was "
                         "deleted on 2026-09-17, only a Node whose Detector bit is set may draw"
                     )
-                phase_steps = _integer(phased["phase_steps"], "kerengonen.phase_steps", 2)
-                if phase_steps > MAX_PHASE_STEPS:
-                    raise ValueError("kerengonen phase_steps must be between 2 and 4096")
-                phase_advance = _integer(phased["phase_advance"], "kerengonen.phase_advance", 0)
-                if phase_advance >= phase_steps:
-                    raise ValueError("kerengonen phase_advance must be below phase_steps")
+                phase_advance = _phase_value(
+                    phased["phase_advance"], "kerengonen.phase_advance", phase_bits
+                )
             missing = ray_keys - obj.keys()
             if missing:
                 raise ValueError(f"ray transport requires keys: {', '.join(sorted(missing))}")
@@ -1081,11 +1126,13 @@ def _spatial_fields(
             if ray_slots > MAX_RAY_SLOTS or rays_per_tick > ray_slots:
                 raise ValueError("rays_per_tick must not exceed ray_slots, at most 4096")
         elif (
-            ray_keys | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            ray_keys
+            | {"self_exclusion", "kerengonen", "metric", "pace", "flux_projection"}
+            | {"phase_bits", "charge"}
         ) & obj.keys():
             raise ValueError(
-                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace "
-                "and flux_projection require ray transport"
+                "headings, rays_per_tick, ray_slots, self_exclusion, kerengonen, metric, pace, "
+                "flux_projection, phase_bits and charge require ray transport"
             )
         else:
             headings, rays_per_tick, ray_slots = (), 0, 0
@@ -1121,6 +1168,8 @@ def _spatial_fields(
                 pace_numerator=pace_numerator,
                 pace_denominator=pace_denominator,
                 flux_projection=flux_projection,
+                phase_bits=phase_bits,
+                charge=charge,
             )
         )
     return tuple(result)
@@ -1177,16 +1226,23 @@ def _emissions(
                 raise ValueError("recoil_field must be a signed vector owned by the emitting type")
         phase, carried = 0, False
         if "kerengonen_phase" in obj:
-            if not spatial[index].kerengonen:
-                raise ValueError("kerengonen_phase requires a kerengonen ray field")
+            # Every ray is a wave ray: an emission stamps a phase on any ray field of
+            # the declared width, a plain field included (its rate is 0, so the ray
+            # carries the emitter's phase unchanged, as light does).
+            if not spatial[index].rays:
+                raise ValueError("kerengonen_phase requires a ray field")
             if obj["kerengonen_phase"] == "carried":
                 # The phase of what the emitter last absorbed; checked against the
                 # absorb rules once every spatial coupling is parsed.
+                if not spatial[index].coherent:
+                    raise ValueError(
+                        "a carried kerengonen_phase requires the field's kerengonen coherence table"
+                    )
                 carried = True
             else:
-                phase = _integer(obj["kerengonen_phase"], "emission.kerengonen_phase", 0)
-                if phase >= spatial[index].phase_steps:
-                    raise ValueError("emission.kerengonen_phase must be below the field's phase_steps")
+                phase = _phase_value(
+                    obj["kerengonen_phase"], "emission.kerengonen_phase", spatial[index].phase_bits
+                )
         advance: Expression | None = None
         advance_denominator = 1
         if "kerengonen_advance" in obj:
@@ -1216,8 +1272,10 @@ def _emissions(
             dissolve_over = _integer(schedule["over_ticks"], "emission.dissolve.over_ticks", 1)
         mirror: tuple[tuple[int, int], tuple[int, int], tuple[int, int]] | None = None
         if "kerengonen_mirror" in obj:
-            if not spatial[index].kerengonen:
-                raise ValueError("kerengonen_mirror requires a kerengonen ray field")
+            if not spatial[index].coherent:
+                raise ValueError(
+                    "kerengonen_mirror requires a kerengonen ray field with a coherence table"
+                )
             axis = _text(obj["kerengonen_mirror"], "emission.kerengonen_mirror")
             if axis in ("x", "y", "z"):
                 # A mirror across the plane normal to one axis: that component flips.
@@ -1692,21 +1750,226 @@ def _ray_interactions(
     fields: tuple[FieldDefinition, ...],
     spatial: tuple[SpatialFieldDefinition, ...],
 ) -> tuple[InteractionDefinition, ...]:
-    """Compile the existing indexed syntax against structural complete-ray views."""
+    """Compile the existing indexed syntax against structural complete-ray views.
+
+    A rule with `outputs` is a meeting with N-to-M outputs
+    (ray-meeting-conversion-v1): its outputs, not assignments, define the new
+    event rays that replace its participants.
+    """
     definitions = ray_participant_definitions(fields, spatial)
-    required = {"name", "participants", "assignments", "invariants"}
+    required = {"name", "participants", "invariants"}
     rules: list[InteractionDefinition] = []
     for raw in _array(value, "ray_interactions", MAX_RULES):
-        obj = _object(raw, "ray interaction", required | {"when"}, required)
-        rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+        obj = _object(raw, "ray interaction", required | {"when", "assignments", "outputs"}, required)
+        if "outputs" in obj:
+            if "assignments" in obj:
+                raise ValueError("a ray meeting with outputs assigns through its outputs")
+            rule = _ray_meeting(obj, spatial, definitions)
+        elif "assignments" not in obj:
+            raise ValueError("a ray interaction requires assignments or outputs")
+        else:
+            rule = _indexed_interaction(obj, RAY_PROPERTIES, definitions, 0)
+            if any(assignment.field not in RAY_WRITABLE for assignment in rule.assignments):
+                raise ValueError("ray interaction amount, advance, family and charge are read-only")
         if len(rule.participants) > 6:
             raise ValueError("ray interactions admit at most six participants")
-        if any(assignment.field not in (1, 2, 4) for assignment in rule.assignments):
-            raise ValueError("ray interaction amount and advance are read-only")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
+        # wave-ray-family-v1: charge x amount summed over the participants is an
+        # invariant of every declared ray interaction, checked like the declared ones.
+        # A meeting with outputs carries it as a per-ray readout summed over its
+        # inputs and over its outputs, appended by _ray_meeting after the same check.
+        if not rule.outputs:
+            if any(invariant.name == CHARGE_INVARIANT for invariant in rule.invariants):
+                raise ValueError(
+                    "the charge invariant is declared for every ray interaction; "
+                    "do not declare another invariant named charge"
+                )
+            rule = replace(rule, invariants=(*rule.invariants, charge_invariant(len(rule.participants))))
         rules.append(rule)
     return tuple(rules)
+
+
+def _ray_meeting(
+    obj: dict[str, object],
+    spatial: tuple[SpatialFieldDefinition, ...],
+    definitions: tuple[DisturbanceDefinition, ...],
+) -> InteractionDefinition:
+    """Compile a meeting of rays with declared outputs (ray-meeting-conversion-v1).
+
+    Each output declares its `field`, `amount` (an integer, `{"of": i}` for an
+    input's amount, `{"of": "sum"}` for the sum over the inputs, a split by a
+    declared table `{"table": [...], "of": ..., "index": "phase_difference"}`, or
+    `{"rest_of": j}` for the rest of the content that output `j`'s table splits),
+    `heading` (a Port index, `"same"` or `"reversed"` from its source `input`),
+    `phase` (`"same"`, an offset from the source input, or `{"of": i, "offset": k}`)
+    and `delay`; its advance is its source input's. The outputs are compiled to the
+    assignments and table splits of `convert_values`.
+    """
+    selections, layouts = _participant_selections(
+        obj, RAY_PROPERTIES, definitions, minimum=2, maximum=MAX_CONVERSION_ARITY
+    )
+    names = _names(definitions)
+    parser = _Expressions(RAY_PROPERTIES, (), participants=layouts)
+
+    def ref(field: str, participant: int) -> dict[str, object]:
+        return {"field": field, "participant": participant}
+
+    raw_outputs = _array(obj["outputs"], "ray meeting outputs", MAX_CONVERSION_ARITY, 1)
+    outputs: list[int] = []
+    assignments: list[Assignment] = []
+    tables: dict[int, tuple[int, ...]] = {}
+    tables_source: dict[int, tuple[int, tuple[int, int]]] = {}
+    rests: dict[int, int] = {}
+    for position, raw in enumerate(raw_outputs):
+        item = _object(
+            raw,
+            "ray meeting output",
+            {"field", "amount", "heading", "phase", "delay", "input"},
+            {"field", "amount", "heading"},
+        )
+        kind = _index(item["field"], names, "output.field")
+        definition = spatial[kind]
+        if not definition.rays:
+            raise ValueError("ray meeting outputs require a ray field")
+        outputs.append(kind)
+        source = _integer(item.get("input", 0), "output.input", 0)
+        if source >= len(selections):
+            raise ValueError("output.input exceeds the declared roles")
+        amount = item["amount"]
+        if type(amount) is int:
+            amount_expression: object = _integer(amount, "output.amount", 1)
+            assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
+        elif isinstance(amount, dict) and "rest_of" in amount:
+            spec = _object(amount, "output.amount", {"rest_of"}, {"rest_of"})
+            rests[position] = _integer(spec["rest_of"], "output.amount.rest_of", 0)
+        elif isinstance(amount, dict) and "table" in amount:
+            spec = _object(
+                amount, "output.amount", {"table", "of", "index", "between"}, {"table", "of", "index"}
+            )
+            if spec["index"] != "phase_difference":
+                raise ValueError("a table split is indexed by the phase difference of two inputs")
+            table = tuple(
+                _integer(weight, "output.amount.table", 0)
+                for weight in _array(spec["table"], "output.amount.table", MAX_PHASE_STEPS, 1)
+            )
+            if any(weight > len(table) for weight in table):
+                raise ValueError("a table weight is at most the table length, the phase modulus")
+            between_raw = _array(spec.get("between", [0, 1]), "output.amount.between", 2, 2)
+            between = (
+                _integer(between_raw[0], "output.amount.between", 0),
+                _integer(between_raw[1], "output.amount.between", 0),
+            )
+            if max(between) >= len(selections) or between[0] == between[1]:
+                raise ValueError("a table split reads the phases of two distinct inputs")
+            of = spec["of"]
+            if of == "sum":
+                shared = -1
+            else:
+                shared = _integer(of, "output.amount.of", 0)
+                if shared >= len(selections):
+                    raise ValueError("output.amount.of exceeds the declared roles")
+            tables[position] = table
+            tables_source[position] = (shared, between)
+        else:
+            spec = _object(amount, "output.amount", {"of"}, {"of"})
+            if spec["of"] == "sum":
+                amount_expression = ref("amount", 0)
+                for participant in range(1, len(selections)):
+                    amount_expression = {
+                        "op": "add",
+                        "args": [amount_expression, ref("amount", participant)],
+                    }
+            else:
+                of_index = _integer(spec["of"], "output.amount.of", 0)
+                if of_index >= len(selections):
+                    raise ValueError("output.amount.of exceeds the declared roles")
+                amount_expression = ref("amount", of_index)
+            assignments.append(Assignment(position, 0, parser.parse(amount_expression, 1)))
+        heading = item["heading"]
+        if heading == "same":
+            heading_expression: object = ref("heading", source)
+        elif heading == "reversed":
+            heading_expression = {"op": "neg", "args": [ref("heading", source)]}
+        else:
+            port = _integer(heading, "output.heading", 0)
+            if port >= 6:
+                raise ValueError("output.heading is a Port index from 0 through 5, same or reversed")
+            if PORT_HEADINGS[port] not in definition.headings:
+                raise ValueError("ray meeting output Port is absent from its field's heading table")
+            heading_expression = list(PORT_HEADINGS[port])
+        assignments.append(Assignment(position, 1, parser.parse(heading_expression, 3)))
+        phase = item.get("phase", "same")
+        modulus = definition.phase_modulus
+        if phase == "same":
+            phase_of, offset = source, 0
+        elif type(phase) is int:
+            phase_of, offset = source, _integer(phase, "output.phase", 0)
+        else:
+            spec = _object(phase, "output.phase", {"of", "offset"}, {"of"})
+            phase_of = _integer(spec["of"], "output.phase.of", 0)
+            offset = _integer(spec.get("offset", 0), "output.phase.offset", 0)
+        if phase_of >= len(selections) or offset >= modulus:
+            raise ValueError("output.phase reads a declared input plus an offset below the modulus")
+        phase_expression: object = ref("phase", phase_of)
+        if offset:
+            phase_expression = {"op": "add", "args": [phase_expression, offset]}
+        assignments.append(Assignment(position, 2, parser.parse(phase_expression, 1)))
+        assignments.append(Assignment(position, 3, parser.parse(ref("advance", source), 1)))
+        delay = _integer(item.get("delay", 0), "output.delay", 0)
+        assignments.append(Assignment(position, 4, parser.parse(delay, 1)))
+        # wave-ray-family-v1: an output is a ray of its field, with its field's charge.
+        assignments.append(Assignment(position, 5, parser.parse(kind, 1)))
+        assignments.append(Assignment(position, 6, parser.parse(definition.charge, 1)))
+    if any(target not in tables for target in rests.values()):
+        raise ValueError("rest_of requires an output split by a table")
+    splits: list[TableSplit] = []
+    for first, table in tables.items():
+        partners = [second for second, target in rests.items() if target == first]
+        if len(partners) != 1:
+            raise ValueError("a table split requires exactly one output taking the rest")
+        shared, between = tables_source[first]
+        splits.append(TableSplit(first, partners[0], 0, 2, table, shared, between))
+    involved = {kind for role in selections for kind in role} | set(outputs)
+    if any(len(split.table) != spatial[kind].phase_modulus for split in splits for kind in involved):
+        raise ValueError("a table split requires the table length to equal the phase steps")
+    every_field = tuple(range(len(RAY_PROPERTIES)))
+    invariants: list[Invariant] = []
+    for raw in _array(obj["invariants"], "invariants", MAX_FIELDS, 1):
+        item = _object(raw, "invariant", {"name", "expression"}, {"name", "expression"})
+        name = _text(item["name"], "invariant.name")
+        if any(invariant.name == name for invariant in invariants):
+            raise ValueError("duplicate invariant name")
+        # A readout of one ray, summed over the inputs and over the outputs.
+        invariants.append(
+            Invariant(name, _Expressions(RAY_PROPERTIES, every_field).parse(item["expression"]))
+        )
+    if any(invariant.name == CHARGE_INVARIANT for invariant in invariants):
+        raise ValueError(
+            "the charge invariant is declared for every ray interaction; "
+            "do not declare another invariant named charge"
+        )
+    # wave-ray-family-v1: charge x amount of one ray, summed over the inputs and over
+    # the outputs, is an invariant of every meeting.
+    invariants.append(
+        Invariant(
+            CHARGE_INVARIANT,
+            _Expressions(RAY_PROPERTIES, every_field).parse(
+                {"op": "mul", "args": [{"field": "charge"}, {"field": "amount"}]}
+            ),
+        )
+    )
+    return InteractionDefinition(
+        name=_text(obj["name"], "interaction.name"),
+        left_type=selections[0][0],
+        right_type=selections[-1][0],
+        assignments=tuple(assignments),
+        invariants=tuple(invariants),
+        when=parser.parse(obj["when"], 1) if "when" in obj else None,
+        participants=tuple(selections),
+        outputs=tuple(outputs),
+        splits=tuple(splits),
+    )
 
 
 def parse_initial_state(document: object) -> InitialState:

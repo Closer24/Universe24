@@ -78,7 +78,7 @@ no result of this repository bears on it.
 ## 3. The size and shape of the universe
 
 The lattice is finite and its boundary is configured, open or periodic. The
-closed-universe probes ([expansion and redshift](../examples/relativity-probes/README.md))
+closed-universe probes (expansion and redshift (`examples/relativity-probes/`, deleted on 2026-09-17))
 measure what a periodic lattice does to a ray that laps it: a stepwise stretch
 within one lap, a delay-growth redshift, and a loss of outward momentum that
 does not depend on radius when one dimension is short. The hypothesis is that
@@ -118,7 +118,7 @@ was its first four entries.
 
 ## 6. Dark matter is a closed dimension, not extra mass
 
-The [relativity probes](../examples/relativity-probes/README.md) measure the
+The relativity probes (`examples/relativity-probes/`, deleted on 2026-09-17) measure the
 model's own rotation-curve test: the momentum a body loses along an outward
 path under one `1/r^2` coupling. In three open dimensions it is Newtonian
 (escape speed as `1/sqrt(R)` within resolution); in a periodic slab whose
@@ -140,7 +140,7 @@ The gathered gravity probe (`examples/gathered-gravity/`, deleted on
 the other route: gathering a gravity train focused quanta, not a force law.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
-[anomalies study](../examples/research/anomalies/README.md#e3-the-force-law-exponent-with-a-short-closed-dimension)
+anomalies study (`examples/research/anomalies/`, deleted on 2026-09-17)
 ran the open three-dimensional control named above with the identical
 metric. Pooled over 12 radii (r = 4 to 24, four directions each), the pull on
 a held body falls as r^p with p = -0.97 +/- 0.10 in the closed period-3 slab,
@@ -152,7 +152,7 @@ here.
 
 ## 7. Redshift without recession, and no dark energy
 
-The [closed-row sweep](../examples/relativity-probes/README.md#redshift-sweep-the-law-its-statistics-and-the-supernova-test)
+The closed-row sweep (`examples/relativity-probes/`, deleted on 2026-09-17)
 measures the law: on a closed row whose computation load grows with age, and
 whose rules delay rays but not local cycles, rays emitted one hop apart are
 absorbed `k_o / k_e` hops apart on the eye's own clock, so
@@ -199,7 +199,7 @@ exponent is derived rather than fitted; and a surface-brightness exponent
 the same rule predicts.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
-[anomalies study](../examples/research/anomalies/README.md) reads the
+anomalies study (`examples/research/anomalies/`, deleted on 2026-09-17) reads the
 lattice's Tolman exponent as n = 2.0013 +/- 0.0008 under the per-link phase
 rule (three loaded rows, stretch 1.18 to 3.68; dilution and angular size
 identical with and without load), against 2.59 +/- 0.17 and 3.37 +/- 0.13 in
@@ -236,7 +236,7 @@ particle's clock). What can be tested first: convert one moving-body probe
 its speed, the model's own time dilation.
 
 **Measured on 2026-09-16** (commit `e5b5911`, fingerprint `4e0c9eeffd4a1ce1bb832c0687913c71a8c44dd4d79d100296c42e9238f50c36`): the
-[ray-form study](../examples/research/ray-form/README.md) inventories the
+ray-form study (`examples/research/ray-form/`, deleted on 2026-09-17) inventories the
 engine's forms (outward and ray fields are ray-form; carrier records, local
 fields, localized residue, claims, source envelopes, the quantum owner and the
 bond registry are not) and finds that a bound ray pair cannot be built from
@@ -247,7 +247,7 @@ phase cycle without `ray_phase_per_tick` and 16.0 with it, against 2 links
 per tick of separation in the no-mirror control; the isotropic delay refuses
 the configuration explicitly. The first check of the third manuscript below
 is therefore answered for a mirror cavity, not for a pair of rays. The
-[ray gallery](../examples/research/ray-gallery/README.md) draws one recorded
+ray gallery (`examples/research/ray-gallery/`, deleted on 2026-09-17) draws one recorded
 run of each of the eight ray forms (replay verified against the runner's
 frames, 0 mismatches over 226 frames) with every record labelled as a record;
 it is a drawing of recorded state, not evidence.
@@ -432,7 +432,12 @@ What can be tested is representability: with the bounded integers of the
 engine, the measured ratios (muon to electron 206.77, tau to electron
 3477.2, proton to electron 1836.15) must all fit one grid within the encoding
 error the [reference units](REFERENCE_UNITS.md) declare, at one `N`. If no
-single `N` fits them within that error, the ladder fails.
+single `N` fits them within that error, the ladder fails. The external body
+of Highlights 3.19 (model owner, 2026-09-17) stands outside the ladder: the
+ladder comes from the spreading law, since a bound group is rays that must
+keep moving and bind again every interval, so only the closed patterns the
+binding table can hold exist, and a body that does not spread has no
+closure condition and any amount is allowed.
 
 **The composite spectrum.** A composite (a hadron, a nucleus, an atom) is a
 bound group: rays held at one Node by a binding coupling, an interaction that
@@ -499,8 +504,8 @@ Recorded 2026-09-17 from the model owner's statement of that day; open.
 
 **Statement.** In the ray-event model gravity is bending by delay (Highlights 3.28): the retained content of a Node makes it slow, and the information that it is heavy spreads in ray form. The unit of mass is the rest rate m₀ of the lightest massive family (one phase step per interval), and the largest rest rate the phase can represent is N steps per interval, N being the phase modulus declared by `phase_bits`. The hypothesis is that the effective gravitational coupling measured on the board scales as the inverse square of that ceiling, G_eff ∝ 1/N², so that in physical units G = ħc/(N m₀)², with N m₀ playing the role of the Planck mass. The real N is then of the order of 10²², which the 74-bit phase of the integer width convention can hold.
 
-**Prediction.** Measure G_eff from the bending of a light ray passing a body of declared mass (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
+**Prediction.** Measure G_eff from the bending of a light ray passing an external body (Highlights 3.19, feature 7b, `external-body-v1`; named "fixed body" earlier on 2026-09-17) of declared family and amount, at its default coupling, absorption into its explicitly accounted sink, so that it never moves (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
 
 **What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
 
-**Status.** Open. Needs features 7, 7b and 8 of issue #169.
+**Status.** Open. Needs features 7, 7b (the external body) and 8 of issue #169.

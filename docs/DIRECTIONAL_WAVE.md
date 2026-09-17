@@ -119,7 +119,7 @@ All output directories must be new; the renderer leases its output while writing
 
 ## Acceptance and limits
 
-[Tests](../tests/test_directional_wave.py) cover independent unequal-input values,
+Tests (`tests/test_directional_wave.py` (deleted on 2026-09-17), deleted on 2026-09-17) cover independent unequal-input values,
 coincident pure-E/pure-B readouts, six simultaneous modes, a dark aggregate,
 solitary motion, atomic longitudinal/amplification/misrouting rejection, periodic
 seams and returns, double transit time and even lattices. All 24 proper cubic

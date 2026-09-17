@@ -41,19 +41,29 @@ tables may resolve an output vector to an admitted heading; no particle name or
 world coordinate selects a law. Non-participants keep their complete state.
 The top-level `ray_interactions` option reuses indexed `participants`,
 `assignments`, `invariants` and `when`. At most six participants are selected
-greedily into disjoint groups. Selected spatial fields have at most 32 declared
-ray slots in total, matching the fixed existing indexed-selector capacity.
+greedily into disjoint groups. The selected spatial fields of one layer have at
+most 32 declared ray slots in total, matching the fixed existing indexed-selector
+capacity; rays are met layer by layer
+([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)), so fields of different
+layers do not share that capacity.
 A participant's configured spatial-field type or
-required structural properties selects its non-owning view. Initial projection
-properties are `amount`, `heading`, `phase`, `advance` and `delay`; `delay` maps
-to native `interaction_delay`. Only heading, phase and delay are writable in
-this first interface. Amount and advance are read-only. The shared value-level
+required structural properties selects its non-owning view. The projection
+properties are `amount`, `heading`, `phase`, `advance`, `delay`, `family` and
+`charge` (`RAY_PROPERTIES`); `delay` maps to native `interaction_delay`,
+`family` is the index of the ray's spatial field and `charge` its family's
+charge per quantum ([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+Only heading, phase and delay are writable in this first interface. Amount,
+advance, family and charge are read-only, and `charge x amount` summed over the
+participants is an invariant appended to every rule. The shared value-level
 evaluator is also the carrier path's evaluator, not a copied implementation.
-Native ray operations preserve the number and identity of complete owners. They
-reject both carrier conversion forms (`outputs` and `output_types`), including
-typed initialization and direct local-law calls. Ordinary carrier N-to-M
-conversion retains its separate declared-output implementation and invariants;
-its one-input admission does not widen native ray participant limits.
+Native ray operations without outputs preserve the number and identity of
+complete owners. They reject `output_types`, including typed initialization and
+direct local-law calls; a rule with `outputs` is the meeting with N-to-M outputs
+of `ray-meeting-conversion-v1` ([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)), which replaces its
+participants by new event rays and shares the record conversion's arithmetic
+(`convert_values`). Ordinary carrier N-to-M conversion retains its
+declared-output invariants; its one-input admission does not widen native ray
+participant limits, a meeting having at least two.
 Process each selected ray at most once in one local coupling pass. An earlier
 successfully received packet remains an owned input when a proposal is rejected.
 

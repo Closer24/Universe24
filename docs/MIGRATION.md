@@ -327,6 +327,126 @@ are restored to their lamps, which then hold their share with its recoil
 undone, that test running three ticks
 ([expectations](TEST_EXPECTATIONS.md#inverse-split)). A world without a mark
 has no returned ray and runs byte for byte as before.
+## Ray layers added on 2026-09-17 (`ray-layers-v1`)
+
+Issue #169, feature 5, under [Highlights](HIGHLIGHTS.md) 5.1 and the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): event spacetime
+has layers, a layer is a set of families that couple, and a meeting exists
+only inside a layer ([layers](SPATIAL_FIELDS.md#layers-ray-layers-v1)).
+
+- `ray_layers` (`core/spatial_state.py`) derives the layers from the catalog
+  as the connected components of the ray fields over the participants of the
+  declared `ray_interactions`; a ray field that no rule selects is its own
+  layer. `SpatialLaw` derives them once when it is built (`layers`) and
+  `apply_ray_interactions` (`fields/ray_interactions.py`) meets the resident
+  rays of a Node layer by layer: each layer's rules fire over that layer's
+  rays alone, in declared order, and a ray of a layer without a firing rule
+  crosses unchanged. Rules of different layers fire independently in one
+  interval.
+- The 32-slot participant capacity of `validate_ray_participants` is now a
+  bound per layer with a rule (the `ray_slots` of that layer's fields sum to
+  at most 32) instead of over every selected field.
+- The runner records `ray_layers: "ray-layers-v1"` and `ray_layer_families`
+  (the derived layers as sorted lists of field names) in `run.json` beside
+  `ray_state`.
+- A world with a single layer runs byte-identically to before: the same
+  owners, rules, charges and events. No initialization key changes; no
+  draw, absorber, readout or Detector is touched.
+
+## Test suite reduced on 2026-09-17: one test per rule
+
+Decision of the model owner, 2026-09-17: the engine is generic, so the test
+suite keeps one module per generic rule, each exercising that rule in isolation
+on a minimal board, and one module per feature of the
+[ray-event model](RAY_EVENT_MODEL.md) (issue #169); modules that pin the numbers
+of an example world, combine several rules to reach a pinned number, duplicate a
+kept rule under another world, or exist for a study, a gallery, a probe, a
+comparison of worlds, rendering or playback were deleted, and so were the dated
+research studies and every `examples/` directory that no kept test loads and
+`tools/check.py` does not need. Before: 108 modules, 2,194 tests (2,191 passed,
+3 visual-only skipped) in 622 seconds single-process on the recording host
+(about 15 minutes in CI). After: 40 modules with `test_detector_mark.py` of
+the merged PR #186, 1,009 tests, 35 seconds on the same host. The kept
+modules and the rule each isolates are the
+[suite inventory](TEST_EXPECTATIONS.md#suite-inventory-of-2026-09-17).
+
+Deleted test modules (69):
+
+- world-specific probes and studies:
+  `test_atomic_interactions.py`, `test_computational_response.py`,
+  `test_coupled_excitations.py`, `test_de_broglie.py`,
+  `test_directional_wave.py`, `test_euclidean_pace.py`,
+  `test_family_conversion.py`, `test_generic_identity.py`,
+  `test_gravity_probe.py`, `test_inverse_square_experiments.py`,
+  `test_isotropy_probe.py`, `test_kerengonen_mirror.py`,
+  `test_local_lorentz_field.py`, `test_lorentz_response_physics.py`,
+  `test_matter_wave.py`, `test_maxwell_configuration.py`,
+  `test_particle_gallery.py`, `test_particle_interactions.py`,
+  `test_radiation_scattering.py`, `test_ray_heading_flux.py`,
+  `test_redshift_sweep.py`, `test_reference_examples.py`,
+  `test_small_space_experiments.py`;
+- computational curvature and self-field scenarios:
+  `test_arrival_port_blind.py`, `test_carried_allocation_phase.py`,
+  `test_computation_field_delay.py`, `test_delay_direction.py`,
+  `test_field_phase_first.py`, `test_least_delay_routing.py`,
+  `test_node_work_emission.py`, `test_rotation_self_interaction.py`;
+- catalog and profile data:
+  `test_entity_catalog.py`, `test_entity_compiler.py`,
+  `test_physical_entities.py`, `test_profile_validation.py`,
+  `test_property_couplings.py`, `test_property_entity_profiles.py`,
+  `test_reference_units.py`;
+- duplicates of a kept rule:
+  `test_active_node_contracts.py`, `test_active_ports.py`,
+  `test_dissipative_initialization.py`, `test_emission_residuals.py`,
+  `test_exchange_residuals.py`, `test_field_commit_guards.py`,
+  `test_finite_spatial_engine.py`, `test_generic_vector_lab.py`,
+  `test_interaction_spatial_integration.py`, `test_joint_node_reactions.py`,
+  `test_joint_reaction_configuration.py`,
+  `test_node_conservation_configuration.py`, `test_node_guard_boundaries.py`,
+  `test_node_runtime.py`, `test_node_terminology.py`,
+  `test_node_vector_examples.py`, `test_node_vector_integration.py`,
+  `test_open_boundaries.py`, `test_parallel_node_execution.py`,
+  `test_spatial_computation_delay.py`, `test_spatial_coupling_budget.py`,
+  `test_spatial_engine.py`, `test_spatial_scheduling.py`,
+  `test_spatial_seed_bounds.py`, `test_zero_carrier.py`;
+- observer, playback, workspace and visualization:
+  `test_local_observer.py`, `test_observer_playback.py`,
+  `test_recorded_movie.py`, `test_workspace.py`,
+  `test_workspace_integration.py`, `test_workspace_retention.py`.
+
+The helper `tests/support/identity.py` went with `test_generic_identity.py`.
+Deleted example directories (20), with their READMEs, configurations, scripts
+and recorded results: `examples/charged-pair/`, `examples/collisions/`, `examples/computational-curvature/`, `examples/computational-response/`, `examples/de-broglie/`, `examples/euclidean-pace/`, `examples/family-conversion/`, `examples/gallery/`, `examples/gravity-probe/`, `examples/inverse-square/`, `examples/isotropy-probe/`, `examples/kerengonen-mirror/`, `examples/matter-wave/`, `examples/maxwell/`, `examples/observer/`, `examples/particle-interactions/`, `examples/radiation-scattering/`, `examples/relativity-probes/`, `examples/research/`, `examples/small-space/`.
+The six research studies of 2026-09-16 under `examples/research/` (Bell and
+postulate 22, already deleted with bucket B.5; anomalies; ray form; entity
+audit; electron-photon scatter; ray gallery) are among them. Links to the
+deleted paths in the documents became plain text with this date; the
+hypotheses they informed stay stated in [HYPOTHESES.md](HYPOTHESES.md) and
+their dated results in [VALIDATION.md](VALIDATION.md).
+
+`tools/check.py` `RESOURCE_CONSUMERS` lost the rows of deleted examples and of
+deleted consumers, except the rows that `tests/test_check_scope.py` (edited on
+a running branch, left untouched) asserts: those rows still name
+`test_ray_heading_flux.py`, `test_local_lorentz_field.py`,
+`test_directional_wave.py`, `test_coupled_excitations.py`,
+`test_property_entity_profiles.py`, `test_entity_catalog.py`,
+`test_entity_compiler.py`, `test_physical_entities.py`,
+`test_profile_validation.py`, `test_small_space_experiments.py`,
+`test_reference_examples.py` and `test_generic_identity.py`, and the selector
+still names `test_generic_vector_lab.py`, `test_workspace.py` and
+`test_recorded_movie.py`; `main()` skips a selected test that does not exist.
+The examples those rows name (`examples/directional-wave/`,
+`examples/coupled-excitations/`, `examples/known-entities/`,
+`examples/generic-ray-coupling/field-sampling.json` and the root example
+inputs) stay for that reason and for the kept tests that load them. The
+modules of running feature branches (`test_energy_audit.py`,
+`test_kerengonen.py`, `test_ray_integration_guards.py`,
+`test_native_ray_coupling.py`, `test_ray_merge_contracts.py`,
+`test_plan_reuse.py`, `test_ray_coupling_evidence.py`,
+`test_detector_sampling_contract.py`, `test_check_scope.py`) were left as they
+were; `test_ray_delay.py` and `test_local_focus.py` stay as their import
+dependencies and as the output-clock and Local Focus modules. There is no
+replacement: a rule that needs a new check gets one focused module.
 
 ## Experiments register added on 2026-09-17
 
@@ -345,6 +465,118 @@ directories removed the same day; their dated results stay in the
 [documentation index](README.md) routes to the register and the
 [hypotheses page](HYPOTHESES.md) points to it. No initialization key, API or
 runtime behavior changes.
+## Meeting of rays with N-to-M outputs added on 2026-09-17 (`ray-meeting-conversion-v1`)
+
+Issue #169, feature 6, under [Highlights](HIGHLIGHTS.md) 3.15, 3.17, 3.26
+and 5.1 and step 6 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a rule of
+`ray_interactions` with declared `outputs` replaces its participants by one
+to six new event rays at the meeting Node
+([meetings with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)).
+
+- `convert_values` (`fields/disturbances.py`) is the arithmetic of the record
+  conversion's `_convert_group` factored into one pure function over bounded
+  integers (guard, outputs from the frozen inputs, table splits, conserved
+  sums, invariant sums, returning the outputs and the remainder), used
+  unchanged by the record path and by the meeting of rays.
+- `InteractionDefinition.outputs` names spatial fields for a ray rule and
+  `InteractionDefinition.splits` holds its `TableSplit` entries
+  (`core/disturbance_state.py`); `_ray_meeting` (`initialization.py`)
+  compiles each output's `field`, `amount`, `heading`, `phase`, `delay` and
+  `input` to assignments and splits; `apply_ray_interactions`
+  (`fields/ray_interactions.py`) removes the participants, stamps the outputs
+  as the events of the meeting (`steps 0`, the mask and shares of the
+  outputs' Ports) and checks every family's stock; `ray_layers` puts a rule's
+  output fields in its layer; `validate_ray_participants` admits outputs and
+  still rejects `output_types` and `k`.
+- The momentum a split by a table moves between two Ports is booked by the
+  spatial law as an explicitly accounted source of the momentum field until
+  the field ray of feature 7 owns it as recoil; `source_totals` shows it.
+- With `wave-ray-family-v1` every output carries its field's `family` and
+  `charge`, and a meeting's appended `charge` invariant is the per-ray readout
+  `charge x amount` summed over its inputs and over its outputs.
+- The runner records `ray_meeting: "ray-meeting-conversion-v1"` beside
+  `ray_layers`.
+- The ray path no longer needs `fields/record_operations.py` and
+  `core/record_policy.py`: a meeting of rays converts without a resident
+  record. Both stay for the record path until step 6 of issue #164 deletes
+  them.
+- Existing worlds with single-output rules run byte-identically. The
+  native-ray coupling tests that asserted `outputs` are rejected now assert
+  that the carrier output form (`{"type": ...}`) and malformed meeting outputs
+  are rejected.
+## Wave-ray families added on 2026-09-17 (`wave-ray-family-v1`)
+
+Issue #169, feature 9, the wave-ray part of
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order) migration step 6
+under [Highlights](HIGHLIGHTS.md) 3.3 and 5.1: every ray is a wave ray, a
+plain ray the special case with rest rate 0, light a family with rest rate 0
+that carries its emitter's phase unchanged, and the phase the one value with
+its own declared width
+([wave-ray families](SPATIAL_FIELDS.md#wave-ray-families-wave-ray-family-v1)).
+
+- `spatial_fields[i]` (ray transport) admits `phase_bits` (the phase width;
+  default 0, or log2 of `kerengonen.phase_steps`) and `charge` (per quantum,
+  default 0). In the `kerengonen` object `phase_advance` (the rest rate) is
+  required and `phase_steps` (the coherence table) optional; `phase_steps`
+  must be a power of two (every existing world's is: 4, 8, 64), and
+  `phase_advance` is bounded by the width, not by `MAX_VALUE`.
+- `SpatialFieldDefinition` (`core/spatial_state.py`) gains `phase_bits`,
+  `charge` and the properties `coherent`, `phase_modulus` and `phase_mask`;
+  `kerengonen` now means a declared phase rule (a table or a nonzero rate);
+  `advance_ray(ray, heading, phase_modulus, phase_advance)` takes the modulus,
+  a power of two (a Kerengonen world's `phase_steps`), and masks; `phase_mask`,
+  `ray_charge`, `charge_invariant`, `RAY_WRITABLE`, `RAY_VIEW_COMPONENTS`,
+  `CHARGE_INVARIANT`, `WAVE_RAY_FAMILY`, `MAX_TABLE_BITS` and
+  `MAX_STORED_PHASE_BITS` are added. Every `% phase_steps` in the engine became
+  a mask.
+- `RAY_PROPERTIES` gains read-only `family` and `charge`; a ray interaction's
+  view reads nine components per participant (`read` cost 9 instead of 7), and
+  the parser appends the `charge` invariant to every `ray_interactions` rule.
+  `Simulation.charge_totals()` reads `charge x amount` per ray field.
+- `kerengonen_phase` on an emission requires a ray field of sufficient width,
+  not the `kerengonen` key (a plain field without a width admits phase 0
+  only); a carried phase and `kerengonen_mirror` require the coherence table;
+  `ray_phase_per_tick` and `hold_rays` follow the declared phase rule.
+- Not admitted in this slice: `self_exclusion` or `ray_interactions` on a
+  family wider than 30 bits, a coherence table wider than 12 bits
+  (`phase_steps` above 4096), and a non-power-of-two `phase_steps` in a field
+  definition (the table builders `phase_cosines` and `phase_sines` still take
+  any count from 2 to 4096).
+- The runner records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
+
+Existing worlds run unchanged: a plain field has width 0 and rate 0, a
+Kerengonen field the width of its `phase_steps`; the metered `read` cost of a
+ray interaction is the one recorded difference. Tests adapted:
+`test_kerengonen.py` (a nonzero phase before the plain-field rejection) and
+`test_ray_integration_guards.py` (odd table sizes through the builders, 32
+phase steps in the table-construction guard).
+
+## Fixed body renamed external body on 2026-09-17
+
+Fixed body renamed external body, 2026-09-17, same specification extended.
+By the model owner's statement of that day, the declared element named
+"fixed body" earlier the same day is the external body: a Node declared to
+hold a family with an amount and, if wanted, a charge and a trajectory,
+standing for a star, a neutron star, a fixed proton, a large charge or a
+piece of apparatus; it radiates by the one field rule, does not spread and
+is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+text; the [postulates](../POSTULATES.md) section 23, the
+[ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
+migration step 7b (`external-body-v1`, after feature 7), the
+[experiments register](EXPERIMENTS.md) (A1, A2, A3, A6, A8, A12, A13 and
+section C), the [terminology](TERMINOLOGY.md) (External body, Apparatus)
+and section 14 of the [hypotheses page](HYPOTHESES.md) restate it. What the
+extension adds: the amount is finite and of any width, since it enters no
+sum; absorption into an explicitly accounted sink is the default coupling of
+the body's family and the other couplings make the apparatus (a reversed
+heading a mirror, a split by a declared table a beam splitter, a phase
+offset a phase plate, a polarization read a polarizer once feature 11
+exists; a wall, a screen and a beam stop the default); on the Node the body
+is bounded metadata like the Detector mark, with one exact counter, the
+sink totals per family; and where the back-reaction is wanted an ordinary
+bound group with a large amount is declared instead. No initialization key,
+API or runtime behavior changes; `external-body-v1` is not yet in the code.
 
 ## Primary initialization-based API
 
@@ -372,7 +604,6 @@ Use Git commits and tags for source versions. Each run records
 a SHA-256 fingerprint of the active package files, so source identity survives
 installation from a ZIP or wheel without a Git checkout.
 
-
 ## Explicit historical component names
 
 The 2026-09-12 consistency cleanup made the active generic engine distinct from
@@ -395,7 +626,6 @@ The reference command resolves its logical `collision` experiment to that file;
 other reference inputs retain their separate configuration and expectations.
 Earlier validation records retain their original paths and hashes; use this
 table to locate the current owner.
-
 
 ## Duration-only reference configuration
 

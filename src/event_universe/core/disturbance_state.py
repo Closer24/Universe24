@@ -170,6 +170,24 @@ class Invariant:
 
 
 @dataclass(frozen=True, slots=True)
+class TableSplit:
+    """A split by a declared table (Highlights 3.26): the content `field` of the
+    inputs (`source` -1 for their sum, else one input) is shared between the
+    outputs `first` and `second` in the ratio `table[d] : (len(table) - table[d])`,
+    `d` the difference of the `phase_field` of the two inputs `between`, read
+    modulo the table length. `first` takes the whole quanta of its share; the
+    quantum an exact division leaves belongs to `second` (Highlights 3.17)."""
+
+    first: int
+    second: int
+    field: int
+    phase_field: int
+    table: tuple[int, ...]
+    source: int = -1
+    between: tuple[int, int] = (0, 1)
+
+
+@dataclass(frozen=True, slots=True)
 class InteractionDefinition:
     name: str
     left_type: int
@@ -182,8 +200,12 @@ class InteractionDefinition:
     right_types: tuple[int, ...] = ()
     k: int = 0
     participants: tuple[tuple[int, ...], ...] = ()
-    # Declared output families of an N-to-M conversion, in output index order.
+    # Declared output families of an N-to-M conversion, in output index order:
+    # disturbance types for a record conversion, spatial fields for a meeting of
+    # rays (ray-meeting-conversion-v1).
     outputs: tuple[int, ...] = ()
+    # Splits by a declared table among the outputs, applied after the assignments.
+    splits: tuple[TableSplit, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -335,7 +357,7 @@ class InitialState:
         if self.ray_phase_per_tick:
             if not self.ray_delay:
                 raise ValueError("ray_phase_per_tick requires ray_delay")
-            if not any(definition.phase_steps for definition in self.spatial_fields):
+            if not any(definition.kerengonen for definition in self.spatial_fields):
                 raise ValueError("ray_phase_per_tick requires a Kerengonen ray field")
         if type(self.least_delay_routing) is not bool:
             raise ValueError("least_delay_routing must be boolean")

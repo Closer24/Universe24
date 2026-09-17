@@ -23,6 +23,7 @@ from event_universe.core.spatial_state import (
     EmissionDefinition,
     FieldRuleGuard,
     InverseSplit,
+    Layers,
     NodeFieldRuleDefinition,
     Ray,
     Rays,
@@ -36,6 +37,7 @@ from event_universe.core.spatial_state import (
     coherence,
     merge_rays,
     phase_of_sum,
+    ray_layers,
     ray_momentum,
     ray_stock,
     stamp_event,
@@ -77,6 +79,9 @@ class SpatialLaw:
     sampling_profile: str = DETECTOR_ONLY
     # What a returned ray does at its event Node (inverse-split-v1).
     return_mode: str = "siblings"
+    # The layers of event spacetime (ray-layers-v1): derived here from the declared
+    # ray interactions, never declared; every meeting reads them.
+    layers: Layers = ()
 
     def __post_init__(self) -> None:
         validate_spatial_sampling(self.sampling_profile, self.definitions)
@@ -84,6 +89,7 @@ class SpatialLaw:
             raise ValueError("return_mode must be siblings, straight or annul")
         if self.ray_interactions:
             selected = validate_ray_participants(self.definitions, self.fields, self.ray_interactions)
+            object.__setattr__(self, "layers", ray_layers(self.definitions, self.ray_interactions))
             if (
                 self.field_rules
                 or self.least_delay_direction is not None
@@ -114,7 +120,7 @@ class SpatialLaw:
                 first_port, moved = advance_ray(
                     ray,
                     definition.headings[ray.heading],
-                    definition.phase_steps,
+                    definition.phase_modulus,
                     definition.phase_advance,
                 )
                 meter.charge("evaluate")
@@ -131,7 +137,7 @@ class SpatialLaw:
                 if rule_index < len(record.absorbed_phases):
                     stored, advance, heading = unpack(record.absorbed_phases[rule_index])
                     step = advance if advance >= 0 else definition.phase_advance
-                    return (stored + step) % definition.phase_steps, advance, heading
+                    return (stored + step) & definition.phase_mask, advance, heading
                 return 0, -1, -1
         raise ValueError("a carried emission phase requires an absorb rule on the same field")
 
@@ -175,7 +181,7 @@ class SpatialLaw:
         resident[:] = [ray for ray in resident if ray.outbound]
         # Kerengonen: the coherence of everything that arrived gates every share.
         coherent_numerator, coherent_denominator = coherence(tuple(resident), definition)
-        if definition.kerengonen:
+        if definition.coherent:
             meter.charge("evaluate", len(resident))
         for rule_index, rule in enumerate(self.absorptions):
             if rule.field != definition.field:
@@ -239,7 +245,7 @@ class SpatialLaw:
                         )
                     stock = checked_work(stock + share)
                     absorbed_total = checked_work(absorbed_total + share)
-                    if share and definition.kerengonen:
+                    if share and definition.coherent:
                         absorbed_terms.append((abs(share), ray.phase))
                         if abs(share) > carried_share:
                             carried_share, carried_advance = abs(share), ray.advance
@@ -258,7 +264,7 @@ class SpatialLaw:
                     self.fields[rule.momentum_field].validate(values[rule.momentum_field])
                 meter.charge("update", 1 + (3 if momentum is not None else 0))
                 phases = list(record.absorbed_phases)
-                if definition.kerengonen:
+                if definition.coherent:
                     if len(phases) != len(self.absorptions):
                         phases = [pack((0, -1, -1)) for _ in self.absorptions]
                     if absorbed_terms:
@@ -275,7 +281,7 @@ class SpatialLaw:
                 records[slot] = replace(
                     record,
                     values=tuple(values),
-                    absorbed_phases=tuple(phases) if definition.kerengonen else record.absorbed_phases,
+                    absorbed_phases=tuple(phases) if definition.coherent else record.absorbed_phases,
                 )
         resident.extend(returning)
         return absorbed_total
@@ -500,10 +506,10 @@ class SpatialLaw:
                     definition = self.definitions[self.emissions[index].spatial_field]
                     if not 0 <= cursor < max(len(definition.headings), 1):
                         raise ValueError("carried self-exclusion cursor is outside its heading sequence")
-                    if not 0 <= wave_phase < max(definition.phase_steps, 1):
-                        raise ValueError("carried self-exclusion phase is outside its phase steps")
-                    if not -1 <= wave_advance < max(definition.phase_steps, 1):
-                        raise ValueError("carried self-exclusion advance is outside its phase steps")
+                    if not 0 <= wave_phase < definition.phase_modulus:
+                        raise ValueError("carried self-exclusion phase is outside its phase width")
+                    if not -1 <= wave_advance < definition.phase_modulus:
+                        raise ValueError("carried self-exclusion advance is outside its phase width")
         elif record.emission_last or record.emission_departed:
             raise ValueError("self-exclusion state requires a self-excluding ray field")
         return replace(record, emission_last=blank_last) if excluding else record
@@ -545,18 +551,34 @@ class SpatialLaw:
         ]
         emitted_rays: list[list[Ray]] = [[] for _ in self.definitions]
         meter = CostMeter(self.costs)
+        # The momentum a meeting moves between lines (ray-meeting-conversion-v1): a
+        # split by a table steers content between two Ports, and the recoil owner,
+        # the field ray of feature 7, does not exist yet, so the change is booked as
+        # an explicitly accounted source of the momentum field (Highlights 3.15).
+        meeting_momentum: list[tuple[int, tuple[int, int, int]]] = []
         if self.ray_interactions:
-            resident_rays = [
-                list(bundle)
-                for bundle in apply_ray_interactions(
-                    tuple(tuple(bundle) for bundle in resident_rays),
-                    self.definitions,
-                    self.fields,
-                    self.ray_interactions,
-                    meter,
-                    self.costs,
-                )
-            ]
+            met = apply_ray_interactions(
+                tuple(tuple(bundle) for bundle in resident_rays),
+                self.definitions,
+                self.fields,
+                self.ray_interactions,
+                meter,
+                self.costs,
+                self.layers,
+            )
+            for index, definition in enumerate(self.definitions):
+                if definition.rays and definition.momentum_field is not None:
+                    before_momentum = ray_momentum(tuple(resident_rays[index]), definition)
+                    after_momentum = ray_momentum(met[index], definition)
+                    delta = tuple(
+                        checked_work(after - before)
+                        for after, before in zip(after_momentum, before_momentum, strict=True)
+                    )
+                    if any(delta):
+                        meeting_momentum.append(
+                            (definition.momentum_field, (delta[0], delta[1], delta[2]))
+                        )
+            resident_rays = [list(bundle) for bundle in met]
         meter.charge("receive", received_count)
         meter.charge("read", received_count * 8 * len(self.definitions))
         received_components = sum(self.fields[d.field].components for d in self.definitions)
@@ -569,6 +591,9 @@ class SpatialLaw:
             for record in records
         ]
         source = [[0] * field.components for field in self.fields]
+        for momentum_field, delta in meeting_momentum:
+            for axis, value in enumerate(delta):
+                source[momentum_field][axis] = checked_work(source[momentum_field][axis] + value)
         funded = [0] * len(self.fields)
         absorbed_by_field = [0] * len(self.fields)
         annulled = [[0] * field.components for field in self.fields]
@@ -641,7 +666,7 @@ class SpatialLaw:
                         raw_advance = evaluate(rule.advance, record.values, record.values, meter)[0]
                         if raw_advance < 0:
                             raise ValueError("kerengonen_advance must not be negative")
-                        advance = (raw_advance // rule.advance_denominator) % definition.phase_steps
+                        advance = (raw_advance // rule.advance_denominator) & definition.phase_mask
                     if rule.mirror is not None:
                         # A mirror: the whole amount back along the image of the absorbed
                         # heading, or nothing until something has been absorbed.

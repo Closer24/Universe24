@@ -95,6 +95,10 @@ plain indexed interaction without `outputs` still requires `node_execution`.
 | Cost | One `couple`, one `update` per assignment and one `update` per output replacement; rational projections carry their fixed tariff |
 | Failure | Guard, arithmetic, bound, conservation, invariant, slot or Port failure installs no replacement and no pending plan |
 
+The arithmetic (guard, outputs from the frozen inputs, conserved and invariant
+sums) is `convert_values` in `fields/disturbances.py`, shared unchanged with
+the [meeting of rays with outputs](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1).
+
 Excluded and rejected at initialization: pair selectors or `output_types` together
 with `outputs`, `outputs` without `participants`, more than six roles or outputs,
 split or cost-reporting families, schema 2, and families that also join exchange
@@ -103,7 +107,7 @@ families (an exchange that keeps both families is a 2-to-2 conversion); a rule
 never re-selects its own products in the same pass, and later rules or later
 cycles act on products under their own guards, as configured.
 
-The [family-conversion candidates](../examples/family-conversion/README.md)
+The family-conversion candidates (`examples/family-conversion/`, deleted on 2026-09-17)
 are declared on this contract between catalog families, with values derived
 from the [entity catalog](ENTITY_CATALOG.md) through the reference-unit
 authoring adapter and recorded in `bindings.json`:
@@ -145,7 +149,7 @@ Limits found while building them:
 
 Acceptance. The independent acceptance criteria are the `contract` and
 `generic_arity` entries of
-[expectations.json](../examples/family-conversion/expectations.json), written
+expectations.json (`examples/family-conversion/expectations.json`, deleted on 2026-09-17), written
 before the first run, and the family-conversion entry of
 [TEST_EXPECTATIONS.md](TEST_EXPECTATIONS.md): arity 1 -> 6 with one record per
 Port, 6 -> 1, arity outside one to six rejected, two products on one Port,
@@ -156,5 +160,5 @@ same conversion under `node_execution` firing at `ready_tick = k`.
 
 The owners are `core/disturbance_state.py`, `core/coupling_selectors.py`,
 `initialization.py` (`_conversion_interaction`) and `fields/disturbances.py`
-(`_convert_group`). Evidence: `tests/test_family_conversion.py`; the two-to-two
+(`_convert_group`). Evidence: `tests/test_family_conversion.py` (deleted on 2026-09-17); the two-to-two
 suite `tests/test_local_conversions.py` is unchanged.
