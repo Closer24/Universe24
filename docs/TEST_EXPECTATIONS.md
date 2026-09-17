@@ -30,7 +30,7 @@ Feature tests of issue #169 join this table as they land.
 | --- | --- | --- | --- |
 | `test_architecture.py` | 28 | 0.34 | Static gate: layer dependency direction, formula-free API assembly and the integer audit of every physical module |
 | `test_boundary_configuration.py` | 89 | 0.00 | Topology: the six-face neighbor function under periodic and open boundaries, as a pure function and at the schema |
-| `test_check_scope.py` | 47 | 0.10 | Changed-code test selection of `tools/check.py` (running branch, untouched) |
+| `test_check_scope.py` | 27 | 0.10 | Changed-code test selection of `tools/check.py`; every resource row names a kept test |
 | `test_configuration_validation.py` | 99 | 2.40 | Read-only configuration preflight, format ownership and its CLI, over every shipped input |
 | `test_detector_mark.py` | 1 | 0.18 | Issue #169 feature 2: a marked Node draws one bit per arriving ray (`detector-mark-v1`; feature test, untouched) |
 | `test_detector_sampling_contract.py` | 18 | 0.00 | Detector-only sampling admission (running branch, untouched) |
@@ -42,13 +42,13 @@ Feature tests of issue #169 join this table as they land.
 | `test_json_documents.py` | 52 | 0.00 | Documentation gate: strict JSON decoding shared by inputs, editor fragments and observer files |
 | `test_kerengonen.py` | 19 | 6.88 | Phased rays: phase advance, coherence, capture, slit, mirror and pace (running branch, untouched) |
 | `test_local_conservation.py` | 18 | 0.01 | Passive local energy/momentum audit across Node events and Link flux |
-| `test_local_conversions.py` | 16 | 0.00 | N-to-M record conversion as an atomic inventory transfer with declared balances |
+| `test_local_conversions.py` | 17 | 0.00 | Two-to-two record conversion (`output_types`) as an atomic inventory transfer with declared balances; record `outputs` rejected |
 | `test_local_field_rules.py` | 11 | 0.13 | Local field rule: six-Port reads, retained and outgoing owners, guarded joint proposals |
 | `test_local_focus.py` | 31 | 1.28 | Local Focus scheduler equals the ordinary scheduler tick by tick, serial and parallel |
 | `test_locality.py` | 7 | 0.00 | Static gate: no world reads or shadow replay in generic field code |
 | `test_native_ray_coupling.py` | 33 | 0.04 | Ray interactions, the generic coupling (running branch, untouched) |
 | `test_node_conservation.py` | 13 | 0.00 | Pre-commit conservation readout guard and its bounded readout cache |
-| `test_node_rule_contract.py` | 38 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, record policies |
+| `test_node_rule_contract.py` | 37 | 0.00 | Node profile contract: explicit k*h duration, indexed vector rules, aggregation policies |
 | `test_node_state_contract.py` | 9 | 0.31 | Node-state contract: evolving state is formula-free |
 | `test_payload_validation.py` | 26 | 0.00 | Signed and unsigned integer codes (zigzag) validate exactly as the decoding reference, without decoding |
 | `test_plan_reuse.py` | 8 | 0.16 | Exact transition plan reuse (running branch, untouched) |
@@ -61,7 +61,6 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_layers.py` | 2 | 0.28 | Issue #169 feature 5: rules of different layers fire in one interval and an unruled family crosses (`ray-layers-v1`) |
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
-| `test_record_operations.py` | 19 | 0.00 | Record merge by type and channel, reserved slots and capacity policy |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -171,16 +170,14 @@ deleted on 2026-09-17 with the `event_program` member.
 
 ## Local record operations
 
-`test_record_operations.py` verifies that reserved empty slots cannot receive
-new records: select the first unlocked spare, or reject the entire proposal
-without mutation when capacity is insufficient. It checks generic vector
-merging with independent expected components, separation by type/channel/pending lock and whole-record
-transport, all-or-nothing failure for overflow and capacity, zero-state activity
-(including held zero records with configured local checks),
-and configured cost reporting without repricing. Direct engine composition tests
-prove that the injected activity policy is used and that a capacity-changing
-arrival proposal fails before packets are cleared. Existing timing, generic-name,
-spatial-response and native-event tests retain the cross-owner contracts.
+Deleted on 2026-09-17 (issue #164, bucket B.6): `test_record_operations.py`
+(19 tests) covered the merge of delivered records by type and channel, the
+reserved slots and the capacity policy of `fields/record_operations.py`. A
+delivered record now takes the first spare slot outside the pending lock and
+nothing is merged; the receiving-capacity failure and its atomicity stay
+covered by `test_disturbance_engine.py`, and the activity predicate and the
+cost reporter moved unchanged into `core/disturbance_node.py` (`carrier_work`,
+`report_cost`), exercised by every carrier test through the Node.
 
 ## Bounded rational particle candidates
 
@@ -228,7 +225,7 @@ See [RETENTION.md](RETENTION.md) for ownership and expiry policy.
 | Suite | Independent expectations |
 | --- | --- |
 | `test_retention.py` | Registered generations expire at 24 hours; later writes extend age; active and dependent writer locks survive future cleanup; unregistered, protected, linked and replaced files survive; interrupted quarantine resumes without deleting replacement data; expected adoption identity rejects stale inventory; concurrent catalog use waits; duplicate watchers share one lock |
-| `test_check_scope.py` | Explicit non-import edges retain identity-example and reference-script consumers; the exact scope report expires while unrelated files survive; dry-run creates no output |
+| `test_check_scope.py` | Explicit non-import edges retain the kept resource consumers and every row names an existing test; the exact scope report expires while unrelated files survive; dry-run creates no output |
 
 Ordinary test execution leases its JUnit report. Neither test collection nor
 cleanup enables rendering.
@@ -433,9 +430,11 @@ deleted on 2026-09-17; see [the scoped candidate contract](LOCAL_LORENTZ_FIELD.m
 ## Executable entity and conversion expectations
 `tests/test_local_conversions.py` checks two-to-two ownership, ignored output
 defaults, causal/delayed commits and rejected invalid balances or carried progress
-on the [catalog conversion input](../examples/known-entities/conversion.json).
-The catalog compiler, profile and family-conversion modules were deleted on
-2026-09-17; the conversion rule is covered here alone.
+on the [catalog conversion input](../examples/known-entities/conversion.json),
+and that an `interactions` entry with `outputs` (the N-to-M conversion of
+records, deleted on 2026-09-17 with issue #164 bucket B.6) is rejected at
+initialization. The catalog compiler, profile and family-conversion modules were
+deleted on 2026-09-17; the conversion rule is covered here alone.
 
 ## Repository consistency and canonical references
 

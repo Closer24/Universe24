@@ -473,7 +473,7 @@ The rule's `invariants` are per-ray readouts (`{"field": "amount"}`,
 `{"op": "mul", "args": [{"field": "amount"}, {"field": "heading"}]}`) summed
 over the inputs and over the outputs and compared exactly, as the
 [N-to-M conversion](LOCAL_CONVERSIONS.md#n-to-m-family-conversion) of records
-does; the total amount and the stock of every family (the sum of the amounts
+did until bucket B.6 deleted it on 2026-09-17; the total amount and the stock of every family (the sum of the amounts
 of one field over the inputs equals the sum over its outputs) are checked
 without a declaration, so no family total changes and the spatial
 accounting's `rule_delta` is zero. Every output is a ray of its `field` with
@@ -485,7 +485,8 @@ the declared ones. Momentum is a declared invariant, as in the
 physical formula. A false guard leaves the group untouched; a failed check
 rejects the interval's proposal before any owner changes. The arithmetic is
 `convert_values` (`fields/disturbances.py`), one pure function over bounded
-integers used unchanged by the record conversion and by the meeting: the
+integers (the record conversion that shared it was deleted on 2026-09-17,
+issue #164 bucket B.6): the
 guard, the outputs built from the frozen inputs, the table splits, the
 conserved sums and the invariant sums, returning the outputs and the
 remainder.

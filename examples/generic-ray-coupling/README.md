@@ -27,8 +27,7 @@ operator has outgoing channels and uses no contact binding flag.
 
 Run the ordinary simulator with this explicit initialization. The experiment
 runner adds independent controls and reads actual ray owners for requested
-canonical HTML and GIF. `field-sampling.json` separately checks the optional
-carried-heading flux projection without supplying a force.
+canonical HTML and GIF.
 
 Structural projection properties are `amount`, `heading`, `phase`, `advance` and
 `delay`. Indexed roles select configured spatial field names or required

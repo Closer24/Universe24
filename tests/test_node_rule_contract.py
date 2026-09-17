@@ -9,7 +9,6 @@ from event_universe.core.coupling_selectors import participant_groups
 from event_universe.core.disturbance_state import MAX_VALUE, CostMeter, Expression, pack, unpack
 from event_universe.core.spatial_state import zero_spatial_state
 from event_universe.fields.disturbances import DisturbanceLaw, evaluate
-from event_universe.fields.record_operations import RecordOperations
 from event_universe.fields.spatial_interactions import JointSpatialCouplingLaw
 from event_universe.fields.spatial_plan import SpatialLaw
 from event_universe.initialization import _Expressions, parse_initial_state
@@ -238,25 +237,9 @@ def test_nonadditive_policies_are_retained_and_never_silently_split(aggregation)
     raw["fields"][0]["aggregation"] = aggregation
     initial = parse_initial_state(raw)
     assert initial.fields[0].aggregation == aggregation
-    policy = RecordOperations(initial.fields, initial.disturbances)
-    record = initial.seeds[0].record
-    assert policy.receive((record, None), (record,), frozenset()) == (record, record)
     raw["disturbance_types"][0]["transport"] = {"mode": "split"}
     with pytest.raises(ValueError, match="additive aggregation"):
         parse_initial_state(raw)
-
-
-def test_additive_receipt_partitions_different_carried_bookkeeping():
-    raw = indexed_document(width=1, count=1)
-    raw["interactions"] = []
-    raw["disturbance_types"][0]["transport"] = {"mode": "split"}
-    initial = parse_initial_state(raw)
-    record = initial.seeds[0].record
-    policy = RecordOperations(initial.fields, initial.disturbances)
-    combined = policy.receive((record, None), (record,), frozenset())
-    assert unpack(combined[0].values[0]) == (2,)
-    incoming = replace(record, phase_codes=(pack((1,)),))
-    assert policy.receive((record, None), (incoming,), frozenset()) == (record, incoming)
 
 
 def test_received_presence_distinguishes_zero_packet_and_prices_only_fired_field_rules():

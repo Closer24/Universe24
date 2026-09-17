@@ -28,8 +28,11 @@ modules were deleted on 2026-09-17 under Highlights section 3.5 (bucket B.3;
 see the [migration note](MIGRATION.md#source-envelopes-deleted-on-2026-09-17)),
 the causal event ledger under Highlights section 3.20 (bucket B.4; see the
 [migration note](MIGRATION.md#causal-event-ledger-deleted-on-2026-09-17)) and
-the bond registry and claim/gather the same day with bucket B.5; the record
-operations stay until bucket B.6 of issue #164.
+the bond registry and claim/gather the same day with bucket B.5, and the record
+operations (records as owners, the N-to-M conversion of records) the same day
+with bucket B.6, the last (see the
+[migration note](MIGRATION.md#records-as-owners-deleted-on-2026-09-17)); every
+deletion bucket of issue #164 is done.
 
 
 The test suite was reduced on 2026-09-17 by decision of the model owner: the
@@ -253,7 +256,7 @@ records are temporary, while their recorded conclusions remain in the repository
 | Scope | Implemented owner | Contract and limits |
 | --- | --- | --- |
 | Active generic simulator | [disturbance_api.py](../src/event_universe/disturbance_api.py), [disturbance_engine.py](../src/event_universe/core/disturbance_engine.py) | `Simulation(InitialState)`; laws and fields come from explicit initialization, not physical names |
-| Record operation policy | [record_operations.py](../src/event_universe/fields/record_operations.py) | Fixed local activity, delivered-record combination and cost reporting; the engine retains scheduling |
+| Carrier Node activity and cost reporting | [disturbance_node.py](../src/event_universe/core/disturbance_node.py) | `carrier_work` and `report_cost`, pure functions over the immutable run definition; an arrival takes a spare slot and nothing merges (the record operation policy was deleted on 2026-09-17, bucket B.6) |
 | Rational particle candidates | [rational contract](RATIONAL_PARTICLES.md) | Explicit bounded rational regions, balanced routes, fractional movement credit and local checks; supplied reference laws |
 | Local expressions and transactions | [disturbances.py](../src/event_universe/fields/disturbances.py) | Bounded integer operations, declared balances, fixed local capacities and explicit rejection |
 | Spatial fields | [spatial_engine.py](../src/event_universe/core/spatial_engine.py) | Fixed neighbor transit, baselines, schema 1 transport and opt-in schema 2 finite budgets/decay |

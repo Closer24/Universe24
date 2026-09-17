@@ -19,8 +19,7 @@ def _participant_roles(
     rule: InteractionDefinition | SpatialInteractionDefinition,
 ) -> tuple[tuple[int, ...], ...]:
     roles = rule.participants
-    minimum = 1 if isinstance(rule, InteractionDefinition) and rule.outputs else 2
-    if type(roles) is not tuple or not minimum <= len(roles) <= MAX_SLOTS:
+    if type(roles) is not tuple or not 2 <= len(roles) <= MAX_SLOTS:
         raise ValueError("indexed interactions require bounded immutable participant roles")
     for kinds in roles:
         if type(kinds) is not tuple or not 1 <= len(kinds) <= MAX_TYPES:
