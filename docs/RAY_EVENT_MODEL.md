@@ -277,27 +277,35 @@ a Node declared to hold a family with an amount and, if wanted, a charge,
 standing for a star, a neutron star, a fixed proton, a large charge, or a
 piece of apparatus. What is declared: the family, the amount (finite, of any
 width, since it enters no sum; it only sets how much field leaves per
-interval), the charge, and, if wanted, a trajectory. What it does: it
+interval), the charge, and an initial momentum (a heading and a pace, zero
+for a body at rest; the world key `initial_momentum`). What it does: it
 radiates exactly as any bound group does, by the one field rule above and
 with the strength its amount gives, so its gravity and its electric field
 are the ordinary field rays of this document and every ray that meets them
 responds by its declared coupling. What it does not do: it does not spread,
 which is its defining property: it never splits, binds, unbinds, converts or
-decays, and its whole content stays at one Node; and it is not pushed:
-whatever arrives at it, a recoil field ray or a ray that couples to it, is
-met by the declared coupling of its family, and the body itself never
-changes. Absorption into an explicitly accounted sink is the default
+decays, and its whole content stays at one Node; and it is not pushed by
+matter: whatever arrives at it, a recoil field ray or a ray that couples to
+it, is met by the declared coupling of its family, and the body's content
+never changes. Absorption into an explicitly accounted sink is the default
 coupling, and the other couplings make the apparatus: a reversed heading is
 a mirror, a split by a declared table is a beam splitter, a phase offset is
 a phase plate, a polarization read is a polarizer once feature 11 exists; a
-wall, a screen and a beam stop are the default. It may move on a declared
-trajectory, and wherever it is, the Node it is at holds all of it; its
-motion is declared, never caused, because nothing on the board can push it,
-so two external bodies never move each other. The audit books what it
-radiates as a source and what it absorbs as a sink, so conservation stays
-exact at every tick. On the Node it is bounded metadata like the Detector
-mark: the kind of mark, the declaration, and one exact counter (the sink
-totals per family); no rays, no history. When the back-reaction is wanted, a
+wall, a screen and a beam stop are the default. Its motion is caused by
+fields only (model owner, 2026-09-17, replacing the declared trajectory,
+never caused, of earlier that day): it starts with its declared momentum,
+an arriving field ray of a family its coupling table names changes that
+momentum by the table, and nothing else moves it, since matter that arrives
+is absorbed without a push; its velocity is its momentum over its amount,
+kept as an exact accumulator that steps one Link when a full amount has
+accumulated on an axis, so against an electron it stands still while two
+stars turn each other over long times; and wherever it is, the Node it is
+at holds all of it. The audit carries the bodies' momentum as its own line,
+so momentum stays exact when a field ray is absorbed. The audit books what
+it radiates as a source and what it absorbs as a sink, so conservation
+stays exact at every tick. On the Node it is bounded metadata like the
+Detector mark: the kind of mark, the declaration, and one exact counter
+(the sink totals per family); no rays, no history. When the back-reaction is wanted, a
 star that recoils or a proton that moves, the body is not used: the same
 thing is declared as an ordinary bound group with a large amount, and then
 it spreads and is pushed like all matter. The external body is the
@@ -570,22 +578,39 @@ every such set; Highlights 3.20 is the text to follow.
    Node is heavy spreading in ray form in all directions, a met ray whose
    declared coupling responds being delayed (its output clock grows) and the
    field ray returning reversed with the opposite momentum to the heavy
-   Node.
+   Node. (Done on 2026-09-17, issue #169 feature 7, `released-field-v1`: a
+   ray field with `field_of` and `release` is the field of a family,
+   released at every Node a ray of the family departs as one ray per Port
+   heading except the ray's own, which at link speed is the ray itself,
+   with the ray's phase and no event, booked as a source so the ray pays
+   nothing; resident content releases on all six headings once per
+   interval; the recoil is the declared rule's output with heading
+   `"reversed"`; the coupling of the recoil to its source and to bound
+   groups, and the delay of the computation field as a coupling output, are
+   feature 8; see
+   [released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1).)
    Feature 7b, external body, `external-body-v1`, after feature 7 (model
    owner, 2026-09-17, Highlights 3.19; named "fixed body" earlier that day):
    a Node declared to hold a family with an amount (finite, of any width,
-   since it enters no sum) and, if wanted, a charge and a trajectory,
+   since it enters no sum), if wanted a charge, and an initial momentum (a
+   heading and a pace, zero for a body at rest; the world key
+   `initial_momentum`, in place of the `trajectory` of earlier that day),
    standing for a star, a neutron star, a fixed proton, a large charge, or a
    piece of apparatus; it radiates by this one field rule with the strength
    its amount gives, does not spread (never splits, binds, unbinds, converts
-   or decays, its whole content at one Node) and is not pushed: whatever
-   arrives at it is met by the declared coupling of its family, absorption
-   into an explicitly accounted sink by default (a wall, a screen, a beam
-   stop), a reversed heading a mirror, a split by a declared table a beam
-   splitter, a phase offset a phase plate, a polarization read a polarizer
-   after feature 11; the audit books what it radiates as a source and what
-   it absorbs as a sink; it may move on a declared trajectory, never caused,
-   and is held whole by the Node it is at; on the Node bounded metadata like
+   or decays, its whole content at one Node) and is not pushed by matter:
+   whatever arrives at it is met by the declared coupling of its family,
+   absorption into an explicitly accounted sink by default (a wall, a
+   screen, a beam stop), a reversed heading a mirror, a split by a declared
+   table a beam splitter, a phase offset a phase plate, a polarization read
+   a polarizer after feature 11; the audit books what it radiates as a
+   source and what it absorbs as a sink; its motion is caused by fields only
+   (model owner, 2026-09-17): an arriving field ray of a family its coupling
+   table names changes its momentum by the table, nothing else moves it, its
+   velocity is its momentum over its amount as an exact accumulator that
+   steps one Link when a full amount has accumulated on an axis, and the
+   audit carries the bodies' momentum as its own line; it is held whole by
+   the Node it is at; on the Node bounded metadata like
    the Detector mark (the kind of mark, the declaration, one exact counter of
    the sink totals per family; no rays, no history); the approximation of
    infinite mass for the confrontation runs (section 1), and where the

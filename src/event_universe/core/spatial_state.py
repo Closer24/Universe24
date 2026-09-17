@@ -85,6 +85,12 @@ Layers = tuple[tuple[int, ...], ...]
 # meeting Node, an amount may be split by a declared table indexed by the phase
 # difference of two inputs, and every family's stock is exact across the event.
 RAY_MEETING = "ray-meeting-conversion-v1"
+# The field as the ray's information (Highlights 3.5, 3.14, 3.15 and 3.28): a ray
+# field declared with field_of is the field of that family, released at every
+# Node a ray of the family crosses as one ray per heading, booked as a source;
+# a meeting of a field ray is an ordinary declared rule whose outputs return it
+# reversed as the recoil. A field has no field.
+RELEASED_FIELD = "released-field-v1"
 # The six unit-axial headings in Port order [+X, -X, +Y, -Y, +Z, -Z].
 PORT_HEADINGS: tuple[Heading, ...] = (
     (1, 0, 0),
@@ -400,6 +406,150 @@ def validate_ray_coupling(initial: InitialState) -> None:
         raise ValueError("ray interactions do not support coupled responses or absorption")
 
 
+def validate_released_fields(
+    definitions: tuple[SpatialFieldDefinition, ...], fields: tuple[FieldDefinition, ...]
+) -> None:
+    """The admission of a released field (released-field-v1): a positive, conserved,
+    unpaced unit-axial ray field on the links metric with the six Port headings,
+    the field of another such ray field with the same phase steps, which is not
+    itself a field of anything, released as a rational at most 1."""
+    for definition in definitions:
+        if definition.field_of is None:
+            if definition.release_numerator or definition.release_denominator != 1:
+                raise ValueError("a release ratio requires field_of")
+            continue
+        if type(definition.field_of) is not int or not 0 <= definition.field_of < len(definitions):
+            raise ValueError("field_of refers to an unavailable spatial field")
+        origin = definitions[definition.field_of]
+        if origin is definition or origin.field == definition.field:
+            raise ValueError("a family is not its own field")
+        if origin.field_of is not None:
+            raise ValueError("a field has no field")
+        numerator, denominator = definition.release_numerator, definition.release_denominator
+        if not 1 <= bounded(numerator) <= bounded(denominator):
+            raise ValueError("release must be a rational from 1 / d through 1")
+        for member in (definition, origin):
+            field = fields[member.field]
+            if (
+                not member.rays
+                or field.signed
+                or not field.conserved
+                or any(unpack(member.baseline))
+                or member.euclidean
+                or member.pace_numerator != member.pace_denominator
+                or member.self_exclusion
+                or member.decay is not None
+                or any(sum(abs(c) for c in heading) != 1 for heading in member.headings)
+            ):
+                raise ValueError("a released field requires positive unit-axial unpaced ray fields")
+        if any(heading not in definition.headings for heading in PORT_HEADINGS):
+            raise ValueError("a released field requires the six Port headings")
+        if definition.phase_modulus != origin.phase_modulus:
+            raise ValueError("a released field carries its source's phase steps: one phase width")
+
+
+def validate_released_field_admission(initial: InitialState) -> None:
+    """A world with a released field runs under the shared Detector admission."""
+    if not any(definition.field_of is not None for definition in initial.spatial_fields):
+        return
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or initial.field_phase_first
+        or initial.arrival_port_blind
+        or initial.ray_delay
+        or initial.ray_phase_per_tick
+        or initial.delay_direction is not None
+        or initial.field_rules
+        or initial.spatial_interactions
+    ):
+        raise ValueError("a released field requires the default fixed H=1 spatial clock")
+    validate_released_fields(initial.spatial_fields, initial.fields)
+    involved = {
+        definition.field for definition in initial.spatial_fields if definition.field_of is not None
+    } | {
+        initial.spatial_fields[definition.field_of].field
+        for definition in initial.spatial_fields
+        if definition.field_of is not None
+    }
+    if any(rule.field in involved for rule in initial.spatial_couplings):
+        raise ValueError("a released field does not support coupled responses or absorption")
+
+
+def release_amount(amount: int, definition: SpatialFieldDefinition) -> int:
+    """The amount of one released ray: the whole quanta of amount x n / d. The
+    fraction the floor leaves is not released: the field is a description booked
+    as a source, so nothing owned is lost (Highlights 3.17)."""
+    return checked_work(amount * definition.release_numerator) // definition.release_denominator
+
+
+def _released(amount: int, phase: int, definition: SpatialFieldDefinition, skip: Heading | None) -> Rays:
+    return tuple(
+        Ray(definition.headings.index(heading), (0, 0, 0), amount, phase=phase)
+        for heading in PORT_HEADINGS
+        if heading != skip
+    )
+
+
+def release_field(
+    rays: Rays, definition: SpatialFieldDefinition, origin: SpatialFieldDefinition
+) -> Rays:
+    """The field rays a bundle of source rays releases at the Node they depart from
+    (released-field-v1): one ray per Port heading except the source ray's own,
+    each with the released amount and the source's phase, no event (mask 0,
+    steps 0). The heading the source travels on is the source's own line ahead of
+    it, which at link speed the source itself occupies, so it releases nothing
+    there and a straight ray never shares a Node with its own field."""
+    released: list[Ray] = []
+    for ray in rays:
+        amount = release_amount(ray.amount, definition)
+        if amount <= 0:
+            continue
+        released.extend(_released(amount, ray.phase, definition, origin.headings[ray.heading]))
+    return tuple(released)
+
+
+def release_stock(stock: int, definition: SpatialFieldDefinition) -> Rays:
+    """The field rays resident content releases once per interval: one ray per Port
+    heading, all six, from the stock a record holds, with phase 0 (a record has no
+    phase of its own in this slice)."""
+    amount = release_amount(stock, definition)
+    return _released(amount, 0, definition, None) if amount > 0 else ()
+
+
+def holds_source_stock(
+    record: DisturbanceRecord | None, definitions: tuple[SpatialFieldDefinition, ...]
+) -> bool:
+    """Whether a resident record holds stock of a family that has a released field."""
+    if record is None:
+        return False
+    for definition in definitions:
+        if definition.field_of is None:
+            continue
+        field = definitions[definition.field_of].field
+        if field < len(record.values) and unpack(record.values[field])[0] > 0:
+            return True
+    return False
+
+
+def released_field_names(
+    fields: tuple[FieldDefinition, ...], definitions: tuple[SpatialFieldDefinition, ...]
+) -> list[dict[str, object]]:
+    """The released fields for the run record: each field ray family with the family
+    it is the field of and its release ratio, in field order."""
+    return [
+        {
+            "field": fields[definition.field].name,
+            "field_of": fields[definitions[definition.field_of].field].name,
+            "release": [definition.release_numerator, definition.release_denominator],
+        }
+        for definition in definitions
+        if definition.field_of is not None
+    ]
+
+
 @dataclass(frozen=True, slots=True)
 class SpatialFieldDefinition:
     field: int
@@ -449,6 +599,12 @@ class SpatialFieldDefinition:
     # The family's charge per quantum, a bounded signed integer read by couplings
     # at a meeting and summed as charge x amount by the charge readout.
     charge: int = 0
+    # Released field (released-field-v1): the spatial-field index of the family
+    # whose field this ray field is, and the release ratio, the share of the
+    # source's amount each released ray carries per Node crossed.
+    field_of: int | None = None
+    release_numerator: int = 0
+    release_denominator: int = 1
     cosine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     sine_table: tuple[int, ...] = dataclass_field(default=(), init=False, repr=False)
     pace_table: tuple[tuple[int, int], ...] = dataclass_field(default=(), init=False, repr=False)

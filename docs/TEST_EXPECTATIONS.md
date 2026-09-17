@@ -961,6 +961,96 @@ parametrized over the cases `four` (d = 0), `table_0`, `table_4`, `table_2`,
 Existing worlds with the single-output rules are byte-identical: the suite
 is the regression.
 
+## Released field
+
+`test_released_field.py` builds its boards inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order) on a periodic 15^3 lattice
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)).
+The family `electron` is a conserved scalar with an 8-step phase advancing 1
+per Link; `G` is its field, `field_of: "electron"` with `release: [1, 4]`,
+an 8-step phase advancing 0 (a field ray delivers its emitter's phase
+unchanged). Every lamp holds 5 of its family and emits it once, funded and
+directed, at phase 0. The test is parametrized over `straight`, `meeting`
+and `rejected`. Pinned before the first run:
+
+- (a) `straight`: one lamp at (5,7,7) emits the electron along +X. After
+  tick t (1 to 5) the electron is at (5+t,7,7) with heading 0, amount 5,
+  phase t, steps t, mask 1 and shares (5, 0, 0, 0, 0, 0): unchanged by its
+  field. In the interval of tick t (t from 2) it departs (4+t,7,7) and
+  releases five G rays there, one per Port heading except its own +X, each
+  of amount floor(5 x 1 / 4) = 1 (the fraction is not released), phase
+  t - 1 (the electron's phase at the release), steps 0, mask 0 and shares
+  all zero; after tick t they are at (3+t,7,7) heading 1, (4+t,8,7)
+  heading 2, (4+t,6,7) heading 3, (4+t,7,8) heading 4 and (4+t,7,6)
+  heading 5, each with steps 1, and every earlier release has walked one
+  more Link along its heading. `release_field` applied to the electron's
+  ray returns exactly these five rays. The G total and the G source total
+  after tick t are both 5 (t - 1): 0, 5, 10, 15, 20; the electron total is
+  5 with source 0; the lamp holds 0 after tick 1 and, holding nothing,
+  releases nothing. At every tick no Node holds the electron and a G ray
+  together: the released rays leave away from the line or behind, and the
+  ray's own line ahead of it is the ray itself. The spatial accounting
+  balances at every tick;
+- (b) `meeting`: lamp 0 at (5,7,7) emits an electron along +X, lamp 1 at
+  (8,8,7) an electron along -X on the parallel line one Node above, and a
+  lamp of the uncoupled family `c` at (6,7,10), holding and emitting 3, a
+  `c` ray along -Z. The G field has 16 ray slots. One
+  rule `turn` is declared, `electron x G` without a guard, with outputs
+  the electron on the G ray's heading (`"same"` of input 1, amount of input
+  0, phase of input 0) and the G ray reversed (`"reversed"` of input 1,
+  amount of input 1), invariant energy. After tick 2 the electrons are at
+  (7,7,7) (heading 0, phase 2, steps 2) and (6,8,7) (heading 1, phase 2,
+  steps 2), the `c` ray at (6,7,8) (heading 5, phase 2, steps 2, amount 3)
+  beside a G ray of heading 4, and the ten G rays released in the interval
+  of tick 2 (amount 1, phase 1, steps 1, mask 0) are at (5,7,7) heading 1,
+  (6,8,7) heading 2, (6,6,7) heading 3, (6,7,8) heading 4, (6,7,6) heading
+  5, (8,8,7) heading 0, (7,9,7) heading 2, (7,7,7) heading 3, (7,8,8)
+  heading 4 and (7,8,6) heading 5; no electron has turned. The first
+  meetings are at tick 3, at (7,7,7) and at (6,8,7). Applied to the
+  residents of (7,7,7) the meeting returns the electron on heading 3,
+  amount 5, phase 2 and the G ray on heading 2, amount 1, phase 1, both
+  steps 0, mask 12 and shares (0, 0, 1, 5, 0, 0): the electron is turned
+  away from the source line y = 8, toward -Y. At (6,8,7) it returns the
+  electron on heading 2, amount 5, phase 2 and the G ray on heading 3,
+  amount 1, phase 1, mask 12, shares (0, 0, 5, 1, 0, 0): turned toward +Y,
+  away from y = 7. After tick 3 the turned electrons are at (7,6,7)
+  (heading 3, phase 3, steps 1, mask 12, shares (0, 0, 1, 5, 0, 0)) and
+  (6,9,7) (heading 2, phase 3, steps 1, mask 12, shares (0, 0, 5, 1, 0, 0));
+  the recoils walk back: the reversed G ray of (7,7,7) is at (7,8,7)
+  (heading 2, amount 1, phase 1, steps 1, mask 12, shares (0, 0, 1, 5, 0,
+  0)) and after tick 4 at (7,9,7) with steps 2; the reversed G ray of
+  (6,8,7) is at (6,7,7) (heading 3, phase 1, steps 1, mask 12, shares
+  (0, 0, 5, 1, 0, 0)) and after tick 4 at (6,6,7) with steps 2. The turned
+  electrons release at the meeting Node in the same interval, on every
+  heading but their new one (phase 2): from (7,7,7) to (8,7,7), (6,7,7),
+  (7,8,7), (7,7,8), (7,7,6) and from (6,8,7) to (7,8,7), (5,8,7), (6,7,7),
+  (6,8,8), (6,8,6), each amount 1, steps 1 after tick 3;
+- (c) after tick 3 the `c` ray is at (6,7,7) (heading 5, phase 3, steps 3,
+  amount 3) with three G rays: the reversed one above, and the released
+  rays of heading 1 and heading 3 with phase 2 and mask 0. After tick 4 it
+  is at (6,7,6) with heading 5, phase 4, steps 4, amount 3, mask 32 and
+  shares (0, 0, 0, 0, 0, 3): a family with no coupling to G crosses it,
+  as it crossed the G ray at (6,7,8) after tick 2;
+- in `meeting` the totals after ticks 1 to 4 are `electron` 10, `c` 3 and
+  `G` 0, 10, 20, 30, with `source_totals` `electron` 0, `c` 0 and `G` the
+  same 0, 10, 20, 30 (ten rays released per interval from tick 2: five per
+  electron); the spatial accounting balances; the derived layers are
+  (("G", "electron"), ("c",)); the runner records `released_field:
+  "released-field-v1"` and `released_fields` `[{"field": "G", "field_of":
+  "electron", "release": [1, 4]}]` beside `ray_meeting`, with
+  `conserved_at_every_completed_tick` true, final totals `electron` [10],
+  `G` [30], `c` [3] and `source_totals` `G` [30];
+- (d) `rejected`, at initialization: `field_of` without `release` ("declares
+  field_of and release together"), `release` [5, 4] ("must not exceed the
+  source's amount"), a `field_of` naming the field itself ("not its own
+  field"), a field of a field ("a field has no field"), a G field without
+  the -Z heading ("six Port headings") and a G field with 4 phase steps
+  under an 8-step source ("its source's phase steps").
+
+A world that declares no `field_of` runs byte-identically: the suite is the
+regression, and its run record carries `released_fields: []`.
+
 ## Detector-owned sampling admission
 
 [Detector sampling tests](../tests/test_detector_sampling_contract.py) accept only

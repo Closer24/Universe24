@@ -35,6 +35,7 @@ from .spatial_state import (
     SpatialPlan,
     SpatialState,
     coherent_stock,
+    holds_source_stock,
     ray_charge,
     ray_momentum,
     ray_stock,
@@ -229,7 +230,7 @@ class SpatialEngine:
             if any(
                 record is not None and record.type_index in emitter_types | coupled_types
                 for record in records
-            ):
+            ) or any(holds_source_stock(record, self.initial.spatial_fields) for record in records):
                 positions.add(position)
         ordered = tuple(sorted(positions))
         if execution is not None and execution.parallel:

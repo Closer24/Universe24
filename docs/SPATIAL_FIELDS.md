@@ -270,6 +270,8 @@ between arrival and the next cycle; there is no octant stock.
 | `ray_slots` | Fixed resident ray capacity of one Node; exceeding it is an explicit failure, never a silent merge or loss |
 | `self_exclusion` | Optional, default false: a record that emits into this field and departs subtracts its own rays from the flux and value it samples at the next Node |
 | `phase_bits`, `charge`, `kerengonen` | The family's phase width, charge per quantum and phase rule: every ray is a wave ray ([wave-ray families](#wave-ray-families-wave-ray-family-v1), [Kerengonen](#kerengonen-phased-rays-kerengonen-ray-field-v1)) |
+| `field_of` | Optional, with `release`: the name of the ray family this field is the field of ([released field](#field-as-the-rays-information-released-field-v1)) |
+| `release` | With `field_of`: `[n, d]`, `1 <= n <= d`, the share of the source's amount each released ray carries per Node crossed |
 
 An emitting record keeps a cursor into the heading sequence in its emission
 phase register and advances it by `rays_per_tick` each tick, so a long sequence
@@ -636,13 +638,15 @@ half through each.
 
 **Momentum of a split.** A split between two Ports moves the rays' momentum
 (amount x heading) and no ray owns the difference: the recoil belongs to the
-field ray of feature 7, which does not exist yet. Until then the spatial law
-books the momentum change of a meeting as an explicitly accounted source of
-the ray field's momentum field (Highlights 3.15), so `source_totals` names
-it and `conserved_at_every_completed_tick` stays exact. The local
-energy/momentum audit (`diagnostics/local_conservation.py`) has no source
-term, so a world that declares it must keep momentum at every meeting, as a
-declared momentum invariant does.
+[field ray](#field-as-the-rays-information-released-field-v1), and what the
+returning field ray does when it reaches its source is the declared coupling
+of feature 8. Until that coupling exists the spatial law books the momentum
+change of a meeting as an explicitly accounted source of the ray field's
+momentum field (Highlights 3.15), so `source_totals` names it and
+`conserved_at_every_completed_tick` stays exact. The local energy/momentum
+audit (`diagnostics/local_conservation.py`) has no source term, so a world
+that declares it must keep momentum at every meeting, as a declared momentum
+invariant does.
 
 Bounds and admission: two to six participants, one to six outputs, one table
 split per pair of outputs, the admission of every ray interaction (schema 1,
@@ -722,6 +726,106 @@ participant (`read` cost 9 instead of 7) and is otherwise identical. The runner
 records `wave_ray: "wave-ray-family-v1"` beside `ray_state`.
 `test_wave_ray_families.py` ([expectations](TEST_EXPECTATIONS.md#wave-ray-families))
 is the test.
+
+### Field as the ray's information (`released-field-v1`)
+
+The one field rule ([Highlights](HIGHLIGHTS.md) 3.3, 3.5, 3.14, 3.15, 3.17
+and 3.28; [ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order), step
+7; issue #169, feature 7): a ray has a field, and the field is the ray's own
+information spreading in ray form to the Nodes around it, without an event.
+A ray field G declared with `field_of: F` and `release: [n, d]` is the field
+of the ray family F:
+
+```json
+{"field": "G", "baseline": 0, "transport": "ray", "headings": [[1, 0, 0], ...],
+ "rays_per_tick": 1, "ray_slots": 16, "field_of": "electron", "release": [1, 4],
+ "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
+```
+
+**The release.** At every Node an F ray crosses (arrives at and departs
+from), in the interval it departs, G rays are released at that Node, one per
+Port heading except the F ray's own, each of amount `floor(amount_F x n /
+d)`, with `event_ports` 0, `event_shares` all zero, `steps` 0, `outbound` 1,
+`detector` 0, accumulators (0, 0, 0) and the F ray's phase at the release:
+the field carries its emitter's phase, and G declares its own `phase_advance`
+(0 delivers the phase unchanged, as light does). The fraction the floor
+leaves is not released: the field is a description booked as a source, so
+nothing owned is destroyed and no remainder needs an owner (Highlights
+3.17); a release whose floor is 0 releases nothing. The released rays leave
+in the same interval as the F ray, with the residents; the release is a
+departure, not an arrival, so it is no meeting. A ray of a family that has a
+meeting rule releases after the interval's meetings, from the trajectory
+that departs. A G ray crosses Nodes like any ray and releases nothing: a
+field has no field, and the density of the field falls by the geometry of the
+lattice alone. A G ray that reaches an open boundary escapes like any ray.
+`release_field` (`core/spatial_state.py`) is the pure function, called by the
+spatial law after its emissions and before forwarding.
+
+**The heading the ray travels on.** The ray's own line ahead of it is, at
+link speed, the ray itself: the field is born where the ray is and leaves at
+the causal speed, and the ray is never faster than its field (Highlights 3.5),
+so under this admission (pace 1/1 for F and G) the forward heading is not
+released and the five other headings are. That is the geometry of the
+no-self-field rule: the release on the ray's own heading is the ray, the
+release behind it walks away from it, and the four transverse releases leave
+its line, so a straight ray never shares a Node with a ray of its own field
+and no exclusion rule is needed. Only after a change of trajectory can a ray
+cross field it released earlier, and that is a meeting like any other. A
+slower family (feature 9) will release its forward field ahead of it.
+
+**Resident content.** A record holding stock of F (a bound group in the
+sense of Highlights 3.4, in this slice any resident record whose type owns
+F) releases once per interval on all six headings, from the stock it still
+holds after the interval's emission, with phase 0 (a record carries no phase
+of its own in this slice); a record that has paid out its stock releases
+nothing. A Node that holds such a record runs its spatial cycle every
+interval.
+
+**The booking.** G is not conserved by the F ray: the F ray pays nothing for
+its field until the field meets something (Highlights 3.5), so its amount,
+phase and heading are unchanged by the release, and the released amount, and
+`amount x heading` into G's momentum field when one is bound, are booked as
+an explicitly accounted source of G (Highlights 3.15). `source_totals` and
+the per-tick `source_delta` name it, the spatial accounting balances at every
+tick, and a G field declared conserved has total equal to its released sum
+less what escaped.
+
+**The recoil.** A meeting of a G ray with a family whose declared coupling
+responds is an ordinary rule of `ray_interactions` with outputs
+([meetings with outputs](#meetings-with-outputs-ray-meeting-conversion-v1)):
+its outputs change the ray that was met as the rule says (heading, delay or
+phase) and return the G ray reversed, an output of field G with heading
+`"reversed"` of the G input and its amount, a new event ray at the meeting
+Node stamped with the meeting's Ports and shares, so the recoil walks back
+along the field ray's line toward the line of the ray that released it, at
+finite speed (Highlights 3.14). The momentum the turn moves belongs to the
+recoil's line; what the recoil does when it reaches its source or a bound
+group is the declared coupling of feature 8, which uses it for gravity as
+bending by delay (Highlights 3.28). No rule reads G unless declared: a family
+with no coupling to G crosses it ([layers](#layers-ray-layers-v1)).
+
+```json
+{"name": "turn", "participants": [{"type": "electron"}, {"type": "G"}],
+ "outputs": [
+   {"field": "electron", "amount": {"of": 0}, "heading": "same", "input": 1, "phase": {"of": 0}},
+   {"field": "G", "amount": {"of": 1}, "heading": "reversed", "input": 1}],
+ "invariants": [{"name": "energy", "expression": {"field": "amount"}}]}
+```
+
+Admission: `field_of` and `release` are declared together, `field_of` names
+another ray spatial field that is not itself a field of anything (a field has
+no field), G carries the six Port headings, G and F are positive, conserved,
+unpaced unit-axial ray fields on the links metric with zero baseline, no
+decay and no self-exclusion, with the same phase width (`phase_bits`, and
+so the same phase steps), under the shared
+Detector admission (schema 1, `link_ticks` 1, the default fixed clock, no
+field rules, spatial interactions, couplings or absorption on G or F). The
+runner records `released_field: "released-field-v1"` and `released_fields`,
+each field ray family with the family it is the field of and its ratio
+(`[{"field": "G", "field_of": "electron", "release": [1, 4]}]`, empty when
+none), beside `ray_meeting`, so a Renderer can draw the G rays faint from the
+per-Node `ray_count` and `value` of that family. A world that declares no
+`field_of` runs byte-identically.
 
 ### Funded emission and absorption
 

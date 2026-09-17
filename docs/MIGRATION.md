@@ -557,10 +557,12 @@ phase steps in the table-construction guard).
 Fixed body renamed external body, 2026-09-17, same specification extended.
 By the model owner's statement of that day, the declared element named
 "fixed body" earlier the same day is the external body: a Node declared to
-hold a family with an amount and, if wanted, a charge and a trajectory,
+hold a family with an amount, if wanted a charge, and an initial momentum
+(`initial_momentum`, in place of the declared trajectory of the first
+statement: its motion is caused by fields only, model owner, 2026-09-17),
 standing for a star, a neutron star, a fixed proton, a large charge or a
 piece of apparatus; it radiates by the one field rule, does not spread and
-is not pushed. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
+is not pushed by matter. [Highlights](HIGHLIGHTS.md) 3.19 is the only authoritative
 text; the [postulates](../POSTULATES.md) section 23, the
 [ray-event model](RAY_EVENT_MODEL.md#1-definitions) section 1 and its
 migration step 7b (`external-body-v1`, after feature 7), the
@@ -604,6 +606,39 @@ record and never the engine ([ray viewer](../tools/ray_viewer/README.md)).
 
 No engine, schema or record change. The prototype under the session
 scratchpad (`gif-electrons-3d`) is superseded by the tool.
+
+## Field as the ray's information added on 2026-09-17 (`released-field-v1`)
+
+Issue #169, feature 7, under [Highlights](HIGHLIGHTS.md) 3.5, 3.14, 3.15,
+3.17 and 3.28 and step 7 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order): a ray field
+declared with `field_of` and `release` is the field of that family, released
+at every Node a ray of the family crosses
+([released field](SPATIAL_FIELDS.md#field-as-the-rays-information-released-field-v1)).
+
+- `SpatialFieldDefinition.field_of`, `release_numerator` and
+  `release_denominator` (`core/spatial_state.py`) carry the declaration;
+  `_spatial_fields` (`initialization.py`) parses `field_of` (a family name,
+  resolved once every spatial field is parsed) and `release` (`[n, d]`,
+  `1 <= n <= d`), declared together; `validate_released_fields` and
+  `validate_released_field_admission` admit a world at `SpatialLaw` and
+  `InitialState`.
+- `release_field` and `release_stock` (`core/spatial_state.py`) are the pure
+  release: one ray per Port heading except the source ray's own (all six for
+  resident content), amount `floor(amount x n / d)` with the fraction not
+  released, the source's phase, no event stamp. `SpatialLaw._release`
+  (`fields/spatial_plan.py`) calls them after the interval's emissions, adds
+  the rays to the departures and books their amount, and their momentum when
+  a momentum field is bound, as an explicitly accounted source. A Node whose
+  record holds stock of a source family runs its cycle every interval
+  (`holds_source_stock`, `core/spatial_node.py`, `core/spatial_engine.py`).
+- The recoil is the declared rule: a `ray_interactions` rule with outputs that
+  returns the field ray with heading `"reversed"`. No engine mechanism was
+  added for it.
+- The runner records `released_field: "released-field-v1"` and
+  `released_fields` beside `ray_meeting`.
+- Existing worlds without `field_of` run byte-identically; their run record
+  carries `released_fields: []`.
 
 ## Primary initialization-based API
 
