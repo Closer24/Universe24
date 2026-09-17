@@ -69,7 +69,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_ray_meeting_conversion.py` | 6 | 0.25 | Issue #169 feature 6: a meeting replaces its rays by declared outputs, an amount split by a declared table, every family's stock exact (`ray-meeting-conversion-v1`) |
 | `test_ray_merge_contracts.py` | 16 | 0.04 | Ray merge and ownership boundaries (running branch, untouched) |
 | `test_ray_momentum_turn.py` | 5 | 0.90 | Issue #169 feature 8b: a free ray's direction is its momentum register, walked by the DDA one Link per interval, pushed by the field rays a coupling's `momentum_table` names, the field ray returned reversed (`ray-momentum-turn-v1`) |
-| `test_ray_viewer.py` | 4 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets and the screen example world, pinned below (no browser) |
+| `test_ray_viewer.py` | 5 | 0.15 | Tooling: `tools/ray_viewer/extract.py` reads a runner record into rays, events and captions, the style file, its GIF presets, the compressed inline page and the screen example world, pinned below (no browser) |
 | `test_repository_hygiene.py` | 6 | 0.05 | Documentation gate: one canonical copy of every file and configuration |
 | `test_repository_language.py` | 14 | 5.37 | Documentation gate: English repository text, ASCII paths and identifiers |
 | `test_repository_navigation.py` | 8 | 0.09 | Documentation gate: Markdown links and Skill routes resolve |
@@ -2369,6 +2369,64 @@ first run:
   apparatus 0, the body's sink is empty and `external_body_totals` is 0 per
   family. A `detectors` mark at (9,7,7) with setting [1, 1] and seed 0 parses
   on the light world. The accounting balances at every tick of every world.
+
+## A5 Coulomb
+
+`test_a5_coulomb.py` pins the worlds and the record of experiment A5
+([register](EXPERIMENTS.md#a5-electron-electron-repulsion-through-released-fields);
+`examples/nature/a5_coulomb/`, the dictionary in its
+[README](../examples/nature/README.md#a5-coulombs-law-through-the-spreading-field)).
+Three tests, pinned before the first run:
+
+- the thirteen world files are byte for byte what `make_worlds.py` writes
+  (`json.dumps(indent=1)` and a newline), in the order `ee_b4`, `ee_b6`,
+  `ee_b8`, `ee_b12`, `ee_b16`, `ep_b4`, ..., `ep_b16`, `nn_b4`,
+  `ee_b4_nospread`, `ee_b16_nospread`, and each is the pinned geometry:
+  shape [97, 49, 49], open, `ticks` min(48 + 3b + 8, 96); the lamp of ray a
+  at (0, 24 − b/2, 24) emitting 64 along +X and of ray b at (96, 24 + b/2,
+  24) emitting 64 along −X; the families `electron_a`, `electron_b`
+  (`neutral_a`, `neutral_b` in the control) with charges (−3, −3), (−3, 3)
+  and (0, 0) for `ee`, `ep` and `nn`, rate 1, `phase_bits` 12, 2 slots, and
+  `light_a`, `light_b` with charge 0, rate 0, 30 slots, `field_of` ray a and
+  ray b, `release` [1, 4] and `spread` [6, 1, 1, 1, 1, 1] (absent in the
+  `nospread` worlds), all on the six Port headings; the couplings
+  `electron_field_turn_a` over `[electron_a, light_b]` with
+  `{"light_b": s}` and `electron_field_turn_b` over `[electron_b, light_a]`
+  with `{"light_a": s}`, s = 1 for `ee` and −1 for `ep`, none in the
+  control;
+- `ee_b4.json` re-run for 8 ticks: status completed, `field_spreading`
+  `field-spreading-v1`, `field_remainder` `field-remainder-v1`, no
+  `ray_momentum_turn`, `conserved_at_every_completed_tick` true,
+  `released_fields` `light_a` of `electron_a` and `light_b` of `electron_b`
+  at [1, 4]; the ledger at tick 8: `light_a` and `light_b` each sourced 560,
+  current 540, escaped 20; `electron_a` and `electron_b` sourced 0, current
+  64, escaped 0; momentum sourced, current and escaped (0, 0, 0); no
+  `ray_push`; ray a received at (8, 22, 24) and ray b at (88, 26, 24) at
+  tick 8;
+- `record.json`, written by `analyze.py --record` from the runs of
+  2026-09-17 (source
+  `4c6e313ce9f0b14be95ce85b3c4f256d4072f2e81715ddf1f1071b44c11d33bb`):
+  thirteen runs, every one completed with the source above, its
+  `initialization_sha256` equal to the SHA-256 of the committed world file,
+  `conserved_at_every_completed_tick` true, `rays_sum_max_abs` 0 (the sum
+  over every ray's momentum is (0, 0, 0) at every tick) and the momentum
+  sourced (0, 0, 0) at the end; the spread series: at b = 4, `ee` dp
+  (0, −3, 0) for `electron_a` and (0, 3, 0) for `electron_b`, `ep` (0, 3, 0)
+  and (0, −3, 0), at the read-off (tick 60) and at the end (tick 68) alike,
+  4 pushes each, two per ray, at tick 50 by a field ray of 2 and at tick 53
+  by a field ray of 1 (ray a at (50, 22, 24) then (53, 22, 24) by `light_b`
+  heading (0, −1, 0), ray b at (46, 26, 24) then (43, 26, 24) by `light_a`
+  heading (0, 1, 0)), first return none for the recoil, the first
+  co-arrival with own field at tick 65 for both rays, 6 self-meetings; at
+  b = 6, 8, 12 and 16, dp (0, 0, 0) for both rays in both pairs, 0 pushes,
+  0 self-meetings, no first return; the control: dp (0, 0, 0), 0 pushes, 0
+  self-meetings, both rays straight; without spread: dp (0, −16, 0) and
+  (0, 16, 0) at b = 4 and at b = 16, 2 pushes at tick 50 (b = 4) and 56
+  (b = 16) by a field ray of 16, 8 and 16 self-meetings; the fit of
+  |dp_y(b)| over b for each ray and pair: 4 zeros, no exponent; the clause
+  table in order (momentum sum, equal and opposite, first recoil, exponent,
+  sign of the deflection, neutral control, self-meeting): pass, pass, fail,
+  fail, fail (no deflection either way at b ≥ 6), pass, fail.
 
 ## The helium orbit
 

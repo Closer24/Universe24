@@ -561,3 +561,29 @@ def test_style_file_has_the_documented_keys_and_reaches_the_inlined_page():
     assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 9
     start = inlined.index('id="style-default">') + len('id="style-default">')
     assert json.loads(inlined[start : inlined.index("</script>", start)])["sizes"]["ray_width_px"] == 3
+
+
+def test_compressed_inline_page_holds_the_same_runs_document():
+    """--compress inlines the runs gzipped and base64-encoded, marked on the tag, and
+    read_inline gives the same document back; the plain form stays as it was and
+    the style is inlined plain in both."""
+    style = RENDER.load_style(None)
+    doc = {
+        "schema": "ray-viewer-runs-v1",
+        "runs": [{"key": "k", "label": "a </script> label", "rays": [], "events": []}],
+    }
+    plain = RENDER.inline_page(doc, style)
+    packed = RENDER.inline_page(doc, style, compress=True)
+    assert 'id="runs-data" data-encoding="gzip+base64">' in packed
+    assert 'id="runs-data">' in plain
+    assert RENDER.read_inline(plain, "runs-data") == doc
+    assert RENDER.read_inline(packed, "runs-data") == doc
+    assert RENDER.read_inline(packed, "style") == style
+    start = packed.index('data-encoding="gzip+base64">') + len('data-encoding="gzip+base64">')
+    body = packed[start : packed.index("</script>", start)]
+    assert body.strip("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=") == ""
+    # The page decodes the packed tag itself: the plain reader skips it, the gzip
+    # reader is there, and the browser needs DecompressionStream.
+    page = (ROOT / "tools/ray_viewer/viewer.html").read_text(encoding="utf-8")
+    assert 'getAttribute("data-encoding") === "gzip+base64"' in page
+    assert 'new DecompressionStream("gzip")' in page

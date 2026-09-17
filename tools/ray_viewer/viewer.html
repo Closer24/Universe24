@@ -505,8 +505,26 @@
     if (state.style.motion.autoplay && !state.frozen) setPlaying(true);
   }
   function tryInline(id) {
-    var text = document.getElementById(id).textContent.trim();
+    var el = document.getElementById(id);
+    if (el.getAttribute("data-encoding") === "gzip+base64") return null;
+    var text = el.textContent.trim();
     return text ? JSON.parse(text) : null;
+  }
+  // A gzipped, base64-encoded inline document (render_gif.py --compress): decoded
+  // with the browser's DecompressionStream; resolves to null when the tag is plain.
+  function tryInlineGzip(id) {
+    var el = document.getElementById(id);
+    if (el.getAttribute("data-encoding") !== "gzip+base64") return Promise.resolve(null);
+    var text = el.textContent.trim();
+    if (!text) return Promise.resolve(null);
+    if (typeof DecompressionStream === "undefined") {
+      return Promise.reject(new Error("this browser cannot decompress the inline runs (no DecompressionStream)"));
+    }
+    var bin = atob(text);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+    return new Response(stream).text().then(function (t) { return JSON.parse(t); });
   }
   function fetchJson(url) {
     return fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
@@ -1370,7 +1388,10 @@
     var inline = null;
     try { inline = tryInline("runs-data"); } catch (e) { els.recordLabel.textContent = "inline runs.json is not valid: " + e.message; }
     if (inline) { loadData(inline); finish(); return; }
-    fetchJson(params.get("runs") || "runs.json").then(function (d) { loadData(d); finish(); }, function () { els.loader.hidden = false; finish(); });
+    tryInlineGzip("runs-data").then(function (d) {
+      if (d) { loadData(d); finish(); return; }
+      fetchJson(params.get("runs") || "runs.json").then(function (d2) { loadData(d2); finish(); }, function () { els.loader.hidden = false; finish(); });
+    }, function (e) { els.recordLabel.textContent = "inline runs.json is not readable: " + e.message; finish(); });
   }
   var inlineStyle = null;
   try { inlineStyle = tryInline("style"); } catch (e) { inlineStyle = null; }

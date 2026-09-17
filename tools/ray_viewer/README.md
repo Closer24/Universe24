@@ -206,7 +206,10 @@ cap and `record.ticks_capped_from` keeps the recorded length, so a page
 can carry the first part of a long run and say so in its label). `render_gif.py` writes the GIF and
 `render-summary.json` under `--work` (the GIF's size in bytes is always
 printed), and with `--html PAGE` the viewer page with the runs and the
-style inlined. `--preset` picks a GIF preset from the style's
+style inlined; `--compress` inlines the runs of that page gzipped and
+base64-encoded (a run document shrinks about twentyfold, a 240-tick
+spreading screen from 8.2 MB to 0.5 MB, so the whole record fits a phone
+page), decoded by the page with the browser's `DecompressionStream`. `--preset` picks a GIF preset from the style's
 `motion.gif_presets`; without it the style's `gif_preset` applies. `phone`
 (the default; the model owner's phone, 2026-09-17): 640 px wide, 480 px per
 panel side by side, at most 20 frames spread evenly over the run so it
@@ -256,7 +259,8 @@ events and captions against the pins in
 [test expectations](../../docs/TEST_EXPECTATIONS.md#ray-viewer-extraction),
 pins the extraction of a body's recorded positions, and checks that
 `style.json` has exactly the documented keys, equals the page's built-in
-default and reaches the inlined page; no browser. The page and the renderer
+default and reaches the inlined page, and that the compressed inline
+form (`--compress`) reads back as the same document; no browser. The page and the renderer
 are checked by rendering a record and looking at the stills; that is a
 visual check, not a test. To type-check the tools, run
 `MYPYPATH=src mypy --follow-imports=silent tools/ray_viewer`.
