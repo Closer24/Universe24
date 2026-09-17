@@ -71,7 +71,8 @@ RAY_EVENT_STATE = "ray-event-state-v1"
 EventShares = tuple[int, int, int, int, int, int]
 NO_EVENT_SHARES: EventShares = (0, 0, 0, 0, 0, 0)
 # The Detector bit carried by a ray: no Detector event, or a Detector event
-# that drew 0 or 1. No Detector exists yet, so every ray carries 0.
+# that drew 0 or 1. Every created ray carries 0; a marked Node sets 1 or 2 on
+# arrival (detector_draw) and no rule reads it.
 DETECTOR_NONE, DETECTOR_BIT_0, DETECTOR_BIT_1 = 0, 1, 2
 # Layers of event spacetime (Highlights 5.1): a layer is a set of families that
 # couple, and a meeting exists only inside a layer. Layers are derived, never
@@ -93,6 +94,39 @@ PORT_HEADINGS: tuple[Heading, ...] = (
     (0, 0, 1),
     (0, 0, -1),
 )
+# The Detector mark (Highlights 3.19, 3.20 and 5.4, detector-mark-v1): a Node's
+# bit with its setting and ticket seed. A marked Node draws one bit per arriving
+# ray from its own ticket stream, reading nothing from the ray, and is otherwise
+# an ordinary Node. In this slice the ray continues unchanged on both outcomes.
+DETECTOR_MARK = "detector-mark-v1"
+MAX_DETECTORS = 4096
+
+
+@dataclass(frozen=True, slots=True)
+class DetectorMark:
+    """A Node's Detector bit with its setting and ticket seed: bounded Node metadata.
+
+    The setting is the pass share of the draw range, an explicit rational with no
+    default; the seed starts the mark's own ticket stream. Nothing here is a
+    record, stock or a reading of any ray.
+    """
+
+    position: Address3
+    pass_numerator: int
+    pass_denominator: int
+    seed: int
+
+    def __post_init__(self) -> None:
+        if type(self.position) is not tuple or len(self.position) != 3:
+            raise ValueError("a Detector mark requires a three-integer position")
+        if any(type(c) is not int or bounded(c) < 0 for c in self.position):
+            raise ValueError("a Detector mark position must be nonnegative bounded integers")
+        if bounded(self.pass_denominator) < 1:
+            raise ValueError("a Detector setting requires a positive denominator")
+        if not 0 <= bounded(self.pass_numerator) <= self.pass_denominator:
+            raise ValueError("a Detector setting must be a rational from 0 through 1")
+        if type(self.seed) is not int or not 0 <= self.seed < TICKET_MODULUS:
+            raise ValueError("a Detector seed must stay below the ticket modulus")
 
 
 @dataclass(frozen=True, slots=True)
@@ -571,6 +605,10 @@ class SpatialNodeState:
     incoming_decay_cost: int = 0
     # Intervals the resident rays still wait under ray_delay before forwarding.
     ray_wait: int = 0
+    # The Detector mark of this Node when its bit is set, and the mark's own ticket
+    # state: seeded from the mark, advanced by one unsalted step per arriving ray.
+    detector: DetectorMark | None = None
+    detector_ticket: int = 0
 
 
 @dataclass(frozen=True, slots=True)
@@ -739,8 +777,8 @@ def event_stamp(rays: Rays, headings: tuple[Heading, ...]) -> tuple[int, EventSh
 
 def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
     """Make the given rays the events of one interaction: fresh outbound trajectories
-    with no steps walked, each carrying the mask and shares of that interaction. No
-    Detector exists in this slice, so the Detector bit is none."""
+    with no steps walked, each carrying the mask and shares of that interaction. A
+    fresh event carries no Detector bit; a marked Node sets it on arrival."""
     mask, shares = event_stamp(rays, headings)
     return tuple(
         replace(
@@ -755,6 +793,26 @@ def stamp_event(rays: Rays, headings: tuple[Heading, ...]) -> Rays:
     )
 
 
+RayMergeKey = tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int]
+
+
+def ray_merge_key(ray: Ray) -> RayMergeKey:
+    """The identity of a ray's line and event: everything but its amount, in a fixed order."""
+    return (
+        ray.heading,
+        ray.accumulators,
+        ray.phase,
+        ray.advance,
+        ray.wait,
+        ray.interaction_delay,
+        ray.steps,
+        ray.outbound,
+        ray.event_ports,
+        ray.event_shares,
+        ray.detector,
+    )
+
+
 def merge_rays(rays: Rays) -> Rays:
     """Combine rays that share heading, lattice phase, wave phase and event: one line, so exact.
 
@@ -762,23 +820,9 @@ def merge_rays(rays: Rays) -> Rays:
     event state is part of the identity, so each ray keeps the information of
     its own event.
     """
-    combined: dict[
-        tuple[int, tuple[int, int, int], int, int, int, int, int, int, int, EventShares, int], int
-    ] = {}
+    combined: dict[RayMergeKey, int] = {}
     for ray in rays:
-        key = (
-            ray.heading,
-            ray.accumulators,
-            ray.phase,
-            ray.advance,
-            ray.wait,
-            ray.interaction_delay,
-            ray.steps,
-            ray.outbound,
-            ray.event_ports,
-            ray.event_shares,
-            ray.detector,
-        )
+        key = ray_merge_key(ray)
         combined[key] = checked_work(combined.get(key, 0) + ray.amount)
     return tuple(
         Ray(
@@ -964,16 +1008,20 @@ def coherence(rays: Rays, definition: SpatialFieldDefinition) -> tuple[int, int]
 
 # The two captures are deterministic. The ordinary lottery capture and the bond
 # registry were deleted on 2026-09-17 (Highlights 3.18 deleted, 3.19, 3.20, 5.4):
-# an absorber never draws. The ticket sequence below stays as the bounded local
-# draw that a Node whose Detector bit is set will own.
+# an absorber never draws. The ticket sequence below is the bounded local draw
+# the Detector mark owns (detector_draw); no other owner calls it.
 CAPTURE_MODES = ("share", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
 
 
 def next_ticket(state: int, salt: int) -> int:
-    """Advance a local ticket state: a multiplicative congruence salted by the arrival."""
+    """Advance a local ticket state: a multiplicative congruence plus a salt.
+
+    The Detector mark draws unsalted (salt 0): its stream depends on its seed and
+    the order of its arrivals alone, never on what arrives.
+    """
     if not 0 <= state < TICKET_MODULUS:
-        raise ValueError("absorb ticket state must stay below the ticket modulus")
+        raise ValueError("ticket state must stay below the ticket modulus")
     return (state * 48271 + salt + 1) % TICKET_MODULUS
 
 
@@ -985,6 +1033,63 @@ def ticket_draw(state: int) -> int:
     so two Detectors with their own seeds draw independently for every arrival.
     """
     return checked_work(state * state) % TICKET_MODULUS
+
+
+def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
+    """One unsalted draw of a marked Node: the next ticket state and the bit, 1 = PASS.
+
+    The bit is 1 when the drawn number times the setting's denominator is below
+    the numerator times the ticket modulus, so the setting is the pass share of
+    the draw range: 1 / 1 always passes and 0 / 1 never does. The product is a
+    64-bit intermediate. The draw reads nothing from the ray it is drawn for.
+    """
+    state = next_ticket(ticket, 0)
+    number = ticket_draw(state)
+    passes = checked_work(number * mark.pass_denominator) < checked_work(
+        mark.pass_numerator * TICKET_MODULUS
+    )
+    return state, int(passes)
+
+
+def validate_detector_marks(initial: InitialState) -> None:
+    """Marks are admitted under the shared Detector admission, one mark per Node."""
+    if type(initial.detectors) is not tuple or len(initial.detectors) > MAX_DETECTORS:
+        raise ValueError("detectors exceed their fixed capacity")
+    if not initial.detectors:
+        return
+    positions: set[Address3] = set()
+    for mark in initial.detectors:
+        if type(mark) is not DetectorMark:
+            raise ValueError("detectors require DetectorMark entries")
+        if any(c >= length for c, length in zip(mark.position, initial.shape, strict=True)):
+            raise ValueError("a Detector mark position must be within shape")
+        if mark.position in positions:
+            raise ValueError("a Node carries one Detector mark")
+        positions.add(mark.position)
+    ray_fields = [definition for definition in initial.spatial_fields if definition.rays]
+    if (
+        initial.schema_version != 1
+        or initial.link_ticks != 1
+        or initial.node_execution
+        or initial.spatial_computation_delay
+        or not ray_fields
+    ):
+        raise ValueError(
+            "Detector marks require schema 1, link_ticks 1, the default clock and a ray field"
+        )
+    for definition in ray_fields:
+        headings = set(definition.headings)
+        if (
+            definition.euclidean
+            or definition.pace_numerator != definition.pace_denominator
+            or definition.decay is not None
+            or any(sum(abs(c) for c in heading) != 1 for heading in definition.headings)
+            or any(tuple(-c for c in heading) not in headings for heading in definition.headings)
+        ):
+            raise ValueError(
+                "Detector marks require unpaced, undecayed ray fields with unit-axial "
+                "headings closed under negation"
+            )
 
 
 def coherent_stock(rays: Rays, definition: SpatialFieldDefinition) -> int:

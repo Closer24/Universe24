@@ -6,7 +6,10 @@ stated so that a run can confirm or refute it, or stated as outside the model's
 reach. Nothing here is a claim of the coupling summary
 (`docs/QUANTUM_CLASSICAL_COUPLING.md`, deleted on 2026-09-17) or of the
 [validation log](VALIDATION.md). A hypothesis moves off this page
-only with a measured result and a fingerprint.
+only with a measured result and a fingerprint. The runs that confront these
+hypotheses with known measurements, and the demonstrations the paper needs,
+are entries of the [experiments register](EXPERIMENTS.md), each with its
+features and its criterion pinned before the run.
 
 ## 1. The lottery is the only door for outside information
 
@@ -489,3 +492,15 @@ group does not stay bound once the extra coupling is declared (the table is
 wrong, not the engine). Status: open. This hypothesis waits for feature 8
 and for the catalog entries of Highlights 3.26; it moves off this page only
 with a measured result and a fingerprint.
+
+## 14. The gravitational constant from the lattice, G = ħc/(N m₀)²
+
+Recorded 2026-09-17 from the model owner's statement of that day; open.
+
+**Statement.** In the ray-event model gravity is bending by delay (Highlights 3.28): the retained content of a Node makes it slow, and the information that it is heavy spreads in ray form. The unit of mass is the rest rate m₀ of the lightest massive family (one phase step per interval), and the largest rest rate the phase can represent is N steps per interval, N being the phase modulus declared by `phase_bits`. The hypothesis is that the effective gravitational coupling measured on the board scales as the inverse square of that ceiling, G_eff ∝ 1/N², so that in physical units G = ħc/(N m₀)², with N m₀ playing the role of the Planck mass. The real N is then of the order of 10²², which the 74-bit phase of the integer width convention can hold.
+
+**Prediction.** Measure G_eff from the bending of a light ray passing a body of declared mass (experiment A6 of `docs/EXPERIMENTS.md`) on one small board with N = 2⁸, 2¹⁰, 2¹², 2¹⁶ and everything else held fixed; G_eff · N² is the same number for all four, within the remainder tolerance of Highlights 3.17. If G_eff · N² drifts with N, the hypothesis fails as stated, and the drift's form says what the delay table does instead.
+
+**What would falsify it.** A bending that does not fall as 1/N², or that depends on the board size, the impact parameter or the family in a way the delay rule does not predict; or a real-N run (experiment A11) whose G, converted with the measured m₀, is not the measured G of nature within the accuracy the board allows.
+
+**Status.** Open. Needs features 7, 7b and 8 of issue #169.

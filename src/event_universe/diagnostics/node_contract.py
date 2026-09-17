@@ -16,6 +16,7 @@ from event_universe.core.disturbance_state import (
 from event_universe.core.node_ports import PortBank
 from event_universe.core.spatial_node import PendingSpatialCycle, SpatialNode
 from event_universe.core.spatial_state import (
+    DetectorMark,
     FieldInteractionGuard,
     FieldRuleGuard,
     Ray,
@@ -43,6 +44,7 @@ STATE_RECORDS = (
     SpatialPacket,
     SpatialPlan,
     SpatialState,
+    DetectorMark,
 )
 
 

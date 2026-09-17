@@ -14,6 +14,7 @@ from event_universe.configuration_validation import (
 )
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.spatial_state import (
+    DETECTOR_MARK,
     RAY_EVENT_STATE,
     RAY_LAYERS,
     RAY_MEETING,
@@ -186,6 +187,7 @@ def _execute_run(
         "schema_version": initial.schema_version,
         "sampling_profile": initial.sampling_profile,
         "ray_state": RAY_EVENT_STATE,
+        "detector_mark": DETECTOR_MARK,
         "ray_layers": RAY_LAYERS,
         "ray_layer_families": [
             list(layer)

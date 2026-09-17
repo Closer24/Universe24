@@ -331,7 +331,7 @@ delay:
 | `outbound` | `1` or `0` | `1` while the ray travels on its event's heading, `0` once it is reversed on its line. No rule sets `0` yet: every created ray is outbound |
 | `event_ports` | six-bit mask | The Ports the event sent to, bit `p` for Port `p` in the order `[+X, -X, +Y, -Y, +Z, -Z]` |
 | `event_shares` | six bounded integers | The amount the event sent through each Port, in Port order, `0` where the mask bit is `0`. The record is fixed at six entries rather than a variable list: at most six records, one per Port (Highlights 3.20), and exactly the information of a mask-indexed list. A share is signed where the field is signed, like `amount`; the record stores the integer, not a zigzag code |
-| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. No Detector exists yet, so every ray carries `0` |
+| `detector` | `0`, `1` or `2` | No Detector event, a Detector event that drew 0, a Detector event that drew 1. Every created ray carries `0`; a marked Node sets `1` or `2` on arrival ([Detector mark](#detector-mark-detector-mark-v1)), and no rule reads it |
 
 Storage width: every stored value is bounded by `MAX_VALUE` (2^30 - 1); the
 sums that form the shares and the step count are 64-bit intermediates
@@ -367,6 +367,40 @@ not lines, and one-Link self-exclusion excludes exactly the departure cycle's
 rays (above). Nothing else changes: amounts, headings, phases, coherence,
 absorption shares, totals and the audits are what they were, and the runner
 records `ray_state: "ray-event-state-v1"` beside `sampling_profile`.
+
+### Detector mark (`detector-mark-v1`)
+
+The rule is stated in [Detector-owned sampling](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)
+([Highlights](HIGHLIGHTS.md) 3.19, 3.20 and 5.4; migration step 3 of the
+[ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order); issue #169,
+feature 2). The schema key:
+
+```json
+"detectors": [{"position": [7, 7, 7], "setting": [1, 2], "seed": 3}]
+```
+
+| Key | Values | Rule |
+| --- | --- | --- |
+| `position` | three integers within `shape` | The marked Node; one mark per position |
+| `setting` | `[n, d]`, `1 <= d <= MAX_VALUE`, `0 <= n <= d` | The pass share of the draw range: the bit is 1 when the drawn number times `d` is below `n` times `TICKET_MODULUS`. Required; there is no default rate |
+| `seed` | `0 <= seed < TICKET_MODULUS` | The start of the mark's own ticket stream. Required |
+
+All three keys are required and no other key is accepted. The parsed
+`DetectorMark(position, pass_numerator, pass_denominator, seed)` records are
+`InitialState.detectors`; the engine installs each on its Node as
+`SpatialNodeState.detector` with `detector_ticket` seeded from `seed`. A
+document with marks is admitted only under the shared Detector admission:
+`schema_version` 1, `link_ticks` 1, at least one ray field, every ray field on
+`"metric": "links"` with pace `1 / 1`, no decay and unit-axial headings closed
+under negation, without `node_execution` or `spatial_computation_delay`.
+
+On arrival each ray draws one bit from the mark's stream, in Port then
+merge-key order, and leaves with its `detector` field set: `2` on 1, with a
+`detector_click` event (position, tick, Port, family, amount, bit 1); `1` on
+0, with nothing recorded. In this slice the ray continues unchanged in both
+cases; the return is feature 3. A document without `detectors` has no marked
+Node and runs exactly as before, and the runner records
+`detector_mark: "detector-mark-v1"`.
 
 ### Layers (`ray-layers-v1`)
 
@@ -588,7 +622,8 @@ the record row `absorb_tickets` were deleted on 2026-09-17 (issue #164, bucket
 B.5) under [Highlights](HIGHLIGHTS.md) 3.19: the only draw in the model is at
 a Node whose Detector bit is set. The bounded ticket sequence
 (`TICKET_MODULUS`, `next_ticket`, `ticket_draw`) stays in
-`core/spatial_state.py` as the local draw that mark will own.
+`core/spatial_state.py` as the local draw the
+[Detector mark](#detector-mark-detector-mark-v1) owns.
 
 Two sources in phase therefore give a fringe in Manhattan path difference:
 `k x (d_a - d_b)` steps. One source alone never interferes with itself, because

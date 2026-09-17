@@ -1,5 +1,16 @@
 # Test inputs and expected results
 
+Since 2026-09-17, by the model owner's decision in
+[Highlights 5.5](HIGHLIGHTS.md#55-acceptance-tests-and-open-decisions), a test
+exercises one generic rule in isolation on a minimal board and nothing else: one
+test module per rule, one per feature of the ray-event model, with the expected
+integers written down here before the first run. No test pins the numbers of an
+example world, compares two worlds or reproduces a known experiment; those are
+research runs, made once and recorded with a fingerprint and a date in
+[validation evidence](VALIDATION.md), never repeated as tests. Entries recorded
+before that date describe the suite as it was and are brought under the rule
+when their tests change.
+
 ## Complete-ray direction projection
 
 `test_ray_heading_flux.py` distinguishes the optional carried-heading readout
@@ -363,6 +374,7 @@ the key selects the default localizing residue.
 | `test_particle_interactions.py` | With six axis rays per body through one shared field with `self_exclusion` (a lone mover keeps momentum 16 while moving, and without exclusion it pushes itself): like charges approaching head-on never share a Node and leave with reversed, equal-and-opposite momenta; opposite charges at rest move toward each other; neutral bodies emit nothing and cross unchanged; a light body beside a heavy one takes the same kick per hit, moves farther, and the heavy one's kicks lag by retardation; a bound pair converts after its timer into a proton leaving at one hop per tick and a triple-mass core recoiling at a third, with mass 4 and zero momentum conserved |
 | `test_spatial_coupling_budget.py` | Signed reversal never refunds budget; unaffordable turns/exchanges leave both owners and old fractions unchanged; large work-register requests are rejected before payload packing; concurrent delayed emission refresh does not overwrite frozen coupling allowance |
 | `test_ray_hidden_state.py` | Every ray carries its event and its steps ([ray hidden state](#ray-hidden-state)): a sweeping lamp's six rays carry mask 63 and shares (3, 3, 3, 2, 2, 2) with steps and phase equal to the tick; rays of two events with one heading and phase stay two rays (7t rays after t ticks); a returning ray walks steps 5 to 0 and phase 1 to 4 backward and is refused a Link beyond its event Node; 1200 quanta and zero momentum every tick, the audit passed, the runner recording `ray-event-state-v1` |
+| `test_detector_mark.py` | A marked Node draws one bit per arriving ray ([Node Detector bit](#node-detector-bit)): six lamps around one marked Node with setting 1/2 and seed 3 arrive in one interval and draw (0, 0, 0, 1, 1, 0) in Port order, exactly two clicks (Ports 3 and 4, amounts 4 and 5), the six rays leave with `detector` 1 or 2 matching the bits and continue unchanged, the marked and the unmarked control world agree on totals, momentum, lamps and rays at every tick, the control consumes no ticket, a replay writes the same events and run record, the runner records `detector-mark-v1`, and a mark without a setting, a setting above 1, a zero denominator, a seed at the modulus, a duplicate or outside position and a world without an admitted ray field are rejected |
 | `test_ray_layers.py` | Rules of different layers fire in one interval and an unruled family crosses ([ray layers](#ray-layers)): five rays of families a, a, b, b, c meet at one Node after tick 2; after tick 3 the a rays have swapped headings (mask 3, shares (5, 5, 0, 0, 0, 0), steps 1), the b rays have turned to +Z and -Z at phase 7 (mask 48, shares (0, 0, 0, 0, 5, 5), steps 1) and the c ray is one Link past the Node unchanged (mask 16, steps 3, phase 3); the derived layers are (a), (b), (c) whether or not the b rule is declared, and without it the b rays cross like c; totals 10, 10, 5 and zero momentum every tick with the audit passed, the runner recording `ray-layers-v1` and the layer families |
 
 The runner must distinguish actual physical conservation from balanced loss
@@ -846,6 +858,65 @@ change is the moving absorber-emitter of `test_energy_audit.py` above, whose
 earlier-cycle wake is a distinct event and no longer merges with the excluded
 one.
 
+## Node Detector bit
+
+`test_detector_mark.py` builds its board inline under the shared Detector
+admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
+the six unit-axial headings in Port order, closed under negation) on a
+periodic 15^3 lattice with an 8-step phase advancing 1 per Link
+([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1)).
+The Node C = (7,7,7) carries the one mark, setting `[1, 2]` and seed 3. Six
+lamps stand one Link from C, one on each side, each aimed at C through a
+directed emission (`heading`) and holding exactly the amount it emits, funded,
+so each fires once at tick 0 and holds 0 afterwards: by the Port of C the ray
+comes in through, Port 0 (+X) the lamp at (8,7,7) emitting -X with amount 1,
+Port 1 (-X) the lamp at (6,7,7) emitting +X with amount 2, Port 2 (+Y) the
+lamp at (7,8,7) emitting -Y with amount 3, Port 3 (-Y) the lamp at (7,6,7)
+emitting +Y with amount 4, Port 4 (+Z) the lamp at (7,7,8) emitting -Z with
+amount 5, Port 5 (-Z) the lamp at (7,7,6) emitting +Z with amount 6; 21
+quanta in all, every emission at phase 0, every lamp recoiling into its own
+momentum. The control world is the same document without `detectors`. Pinned
+before the first run from the published rule (`state = (state x 48271 + 1)
+mod 1073741789`, `number = state^2 mod 1073741789`, bit 1 when
+`2 x number < 1073741789`):
+
+- (a) the six rays arrive at C at tick 1, one per Port, and are drawn in Port
+  order from seed 3: ticket states 144814, 547865861, 846455051, 135470005,
+  185116346, 71969709; numbers 570000605, 726844321, 834939851, 327526431,
+  382336536, 965202535; bits (0, 0, 0, 1, 1, 0). Exactly two clicks, both at
+  tick 1 and position (7,7,7): Port 3, family `quanta`, amount 4, bit 1, and
+  Port 4, family `quanta`, amount 5, bit 1; a draw of 0 records nothing.
+  After tick 1 C holds six rays (`ray_count` 6): the ray that came in through
+  Port p has heading index `p ^ 1` (it travels toward the opposite side),
+  amount p + 1, `steps` 1, phase 1, `outbound` 1, `event_ports` `1 << (p ^ 1)`
+  and `event_shares` its amount on that Port, and `detector` 2 for Ports 3 and
+  4 and 1 for Ports 0, 1, 2 and 5;
+- (b) after tick t (2 to 4) the ray that came in through Port p is t - 1
+  Links beyond C on the opposite side, at C minus (t - 1) times the unit
+  vector of Port p, with `steps` t, phase t, its amount and its bit unchanged:
+  after tick 2 at (6,7,7), (8,7,7), (7,6,7), (7,8,7), (7,7,6), (7,7,8) for
+  Ports 0 to 5; the six rays are the whole ray inventory of the world at
+  every tick;
+- (c) the marked world and the control world agree at every tick 1 to 4 on
+  the totals (21 quanta, momentum (0, 0, 0)), on the audited energy and
+  momentum, on every lamp's stock and recoil (0 quanta each; momentum
+  (1,0,0), (-2,0,0), (0,3,0), (0,-4,0), (0,0,5), (0,0,-6)), and on every ray's
+  position, heading, amount, steps and phase; the control's rays carry
+  `detector` 0 everywhere, its Nodes carry no mark and it records no click;
+  neither world's unmarked Nodes call the ticket rule, and the control world
+  never does (a monkeypatched `next_ticket` fails the test if called);
+- (d) the runner run twice on the same document writes the same
+  `events.jsonl` byte for byte, including exactly two `detector_click`
+  lines, and the same `run.json` apart from `elapsed_seconds`, recording
+  `detector_mark: "detector-mark-v1"` beside `sampling_profile:
+  "detector-only-v1"` and `ray_state: "ray-event-state-v1"`, with
+  `conserved_at_every_completed_tick` true and final quanta 21;
+- (e) `parse_initial_state` rejects a mark without `setting`, a setting
+  `[3, 2]`, `[1, 0]` or `[-1, 2]`, a seed of 1073741789 or -1, two marks at
+  one position, a mark outside the shape, marks on a world without a ray
+  field, and marks on a Euclidean-metric ray field; `validate_configuration`
+  reports the same documents invalid.
+
 ## Ray layers
 
 `test_ray_layers.py` builds its board inline under the shared Detector
@@ -992,5 +1063,7 @@ at parsing, at direct typed construction and at `SpatialLaw` before any ticket i
 consumed; a record named Detector or an observer grants no draw authority; and
 the share and threshold captures parse and draw nothing. The historical seed-7
 lottery fixture was deleted on 2026-09-17 with the lottery capture, and the native
-instrument/contact fixtures with the integration layer. Full PASS/RETURN and
-output-clock composition remain blocked by the contract's owner/acceptance table.
+instrument/contact fixtures with the integration layer. PASS and the draw are
+implemented by the Detector mark (`detector-mark-v1`,
+[Node Detector bit](#node-detector-bit)); the return on 0 and output-clock
+composition remain blocked by the contract's owner/acceptance table.
