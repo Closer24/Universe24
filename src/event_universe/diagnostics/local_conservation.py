@@ -78,6 +78,9 @@ class LocalConservationAudit:
         # Content annulled at inverse splits (inverse-split-v1): the world total and
         # what each Node annulled since its last check.
         self.annulled: Quantity = ZERO
+        # Content released as a field (released-field-v1): an explicitly accounted
+        # source at the Node that released it, the world total (ray-event-audit-v1).
+        self.sourced: Quantity = ZERO
         self._pending_annulled: dict[Address3, Quantity] = {}
         validate_empty_measurement(initial)
         # The charged ray families (ray-event-audit-v1): the audit measures their
@@ -196,6 +199,25 @@ class LocalConservationAudit:
             return self._carrier(packet.record)
         return self._spatial(packet.spatial, packet.rays)
 
+    def _released(self, packet: InventoryPacket) -> Quantity:
+        """What a new packet carries that its origin released in the cycle that sent
+        it (released-field-v1): the rays of a field family with no event and one
+        Link walked, measured like any rays. A release is booked as a source and
+        no owner pays for it, so it is a source term at the Node, not a residual
+        (ray-event-audit-v1); an emitted or transmitted ray carries its event's
+        mask, and a field ray that crosses the Node has walked more than one Link."""
+        if packet.record is not None or not packet.rays:
+            return ZERO
+        rays = tuple(
+            tuple(ray for ray in bundle if ray.outbound and ray.steps == 1 and not ray.event_ports)
+            if definition.field_of is not None
+            else ()
+            for definition, bundle in zip(self.initial.spatial_fields, packet.rays, strict=True)
+        )
+        if not any(rays):
+            return ZERO
+        return self._spatial(tuple(() for _ in self.initial.spatial_fields), rays)
+
     def _measure(
         self, view: InventoryView
     ) -> tuple[dict[Address3, Quantity], dict[PacketKey, tuple[InventoryPacket, Quantity]]]:
@@ -265,9 +287,13 @@ class LocalConservationAudit:
                 escaped = _add(escaped, amount)
             else:
                 incoming[target] = _add(incoming.get(target, ZERO), amount)
+        sourced: dict[Address3, Quantity] = {}
         for key, (packet, amount) in packets.items():
             if key not in self._packets:
                 outgoing[packet.origin] = _add(outgoing.get(packet.origin, ZERO), amount)
+                released = self._released(packet)
+                if released != ZERO:
+                    sourced[packet.origin] = _add(sourced.get(packet.origin, ZERO), released)
         self.current_total = self._total(nodes, packets)
         for position in sorted(self._nodes.keys() | nodes.keys() | incoming.keys() | outgoing.keys()):
             before, after = self._nodes.get(position, ZERO), nodes.get(position, ZERO)
@@ -275,6 +301,8 @@ class LocalConservationAudit:
             residual = _add(_subtract(after, before), _subtract(sent, arrived))
             # What the Node annulled left it for the explicit sink, not for a Link.
             residual = _add(residual, self._pending_annulled.pop(position, ZERO))
+            # What the Node released as a field came from no owner: a source.
+            residual = _subtract(residual, sourced.get(position, ZERO))
             self.checks += 1
             if residual != ZERO:
                 self.failure = {
@@ -289,6 +317,8 @@ class LocalConservationAudit:
                 }
                 raise ValueError(f"local energy/momentum conservation failed at {position}: {residual}")
         self.escaped = cast(Quantity, tuple(a + b for a, b in zip(self.escaped, escaped, strict=True)))
+        for released in sourced.values():
+            self.sourced = _add(self.sourced, released)
         self._nodes, self._packets = nodes, packets
 
     def report(self) -> dict[str, object]:
@@ -299,6 +329,7 @@ class LocalConservationAudit:
             "momentum_units": self.definition.momentum_units,
             "checked_node_events": self.checks,
             "initial": _plain(self.initial_total, self.charged),
+            "sourced": _plain(self.sourced, self.charged),
             "current": _plain(self.current_total, self.charged),
             "escaped": _plain(self.escaped, self.charged),
             "annulled": _plain(self.annulled, self.charged),

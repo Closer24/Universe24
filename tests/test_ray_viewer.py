@@ -177,10 +177,24 @@ def document():
                 ],
             }
         ],
-        # No `conservation` block: with the released field G, the local audit counts
-        # a G ray resident at a lamp Node in the Node's momentum but not in the
-        # packet that carries it away, and fails; the runner's own accounting flags
-        # still cover the run (reported as a suspected audit defect, not fixed here).
+        # The `conservation` block is declared again since ray-event-audit-v1
+        # (2026-09-17): the local audit reads every release as a source at its Node.
+        "conservation": {
+            "name": "quanta",
+            "energy_units": "quantum",
+            "momentum_units": "quantum times heading",
+            "carriers": [
+                {
+                    "requires": ["quanta", "momentum"],
+                    "energy": {"field": "quanta"},
+                    "momentum": {"field": "momentum"},
+                }
+            ],
+            "spatial": {
+                "energy": {"field": "quanta", "side": "right"},
+                "momentum": {"op": "vector", "args": [0, 0, 0]},
+            },
+        },
     }
 
 

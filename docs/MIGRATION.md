@@ -32,7 +32,11 @@ Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
   the lamps' charge before the first tick.
 - The local conservation audit measures charge as a fifth quantity when a
   family declares one, reported as `charge` beside `energy` and `momentum`;
-  a world without a charged family reports as before.
+  a world without a charged family reports as before. It reads every field
+  release as a source at its Node and reports the sum as `sourced`, so a
+  world with a `field_of` family may declare `conservation` (the viewer's
+  world declares it again; its residual momentum (1, 0, 0) of 2026-09-17
+  was the momentum of a single held ray's release, not a packet defect).
 - A `ray_interactions` rule with outputs whose family's charge differs from
   the charge of the inputs its amount comes from is rejected at validation.
 

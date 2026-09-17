@@ -151,6 +151,10 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
         raw["external_bodies"] = [BODY]
     if conservation:
         both = {"op": "add", "args": [{"field": "plus"}, {"field": "minus"}]}
+        names = ["plus", "minus"] + (["electron", "G"] if source else [])
+        energy = {"field": names[0], "side": "right"}
+        for name in names[1:]:
+            energy = {"op": "add", "args": [energy, {"field": name, "side": "right"}]}
         raw["conservation"] = {
             "name": "pair",
             "energy_units": "quantum",
@@ -161,14 +165,19 @@ def document(mode, source=True, conservation=False, rules=(), body=False):
                     "energy": both,
                     "momentum": {"field": "momentum"},
                 }
-            ],
-            "spatial": {
-                "energy": {
-                    "op": "add",
-                    "args": [{"field": "plus", "side": "right"}, {"field": "minus", "side": "right"}],
-                },
-                "momentum": {"op": "vector", "args": [0, 0, 0]},
-            },
+            ]
+            + (
+                [
+                    {
+                        "requires": ["electron", "momentum"],
+                        "energy": {"field": "electron"},
+                        "momentum": {"field": "momentum"},
+                    }
+                ]
+                if source
+                else []
+            ),
+            "spatial": {"energy": energy, "momentum": {"op": "vector", "args": [0, 0, 0]}},
         }
     return raw
 
@@ -362,7 +371,21 @@ def test_the_world_ledger_is_exact_for_amount_momentum_and_charge(mode, body, tm
     ledger = pair.audit()
     assert ledger == expected_ledger(mode, TICKS, source=False)
     assert report["status"] == "passed"
-    for key in ("initial", "current", "escaped", "annulled"):
+    for key in ("initial", "sourced", "current", "escaped", "annulled"):
         assert report[key]["charge"] == sum(item[key] for item in ledger["charge"].values())
         assert report[key]["energy"] == sum(ledger["fields"][n][key][0] for n in ("plus", "minus"))
         assert report[key]["momentum"] == ledger["fields"]["momentum"][key]
+    # (i) The local audit reads every release as a source at its Node, so the whole
+    # world (releases, escapes, the return and the inverse split) declares it and
+    # passes; the energy sums the four families, the momentum counts every ray.
+    if mode == "annul" and not body:
+        whole = Simulation(parse_initial_state(document(mode, conservation=True)))
+        for _ in range(TICKS):
+            whole.step()
+        report = whole.conservation_report()
+        assert report["status"] == "passed"
+        assert report["initial"] == {"energy": 6, "momentum": (0, 0, 0), "charge": 0}
+        assert report["sourced"] == {"energy": 20, "momentum": (0, 0, -4), "charge": 0}
+        assert report["current"] == {"energy": 4, "momentum": (4, 0, -4), "charge": 0}
+        assert report["escaped"] == {"energy": 21, "momentum": (-5, 0, 0), "charge": -1}
+        assert report["annulled"] == {"energy": 1, "momentum": (1, 0, 0), "charge": 1}

@@ -634,8 +634,10 @@ every such set; Highlights 3.20 is the text to follow.
    field ray returning reversed with the opposite momentum to the heavy
    Node. (Done on 2026-09-17, issue #169 feature 7, `released-field-v1`: a
    ray field with `field_of` and `release` is the field of a family,
-   released at every Node a ray of the family departs as one ray per Port
-   heading except the ray's own, which at link speed is the ray itself,
+   released at every Node a ray of the family is at, in every interval it
+   is there and not only the one it departs in (the release does not wait
+   for the clock, Highlights 3.5), as one ray per Port heading except the
+   ray's own, which at link speed is the ray itself,
    with the ray's phase and no event, booked as a source so the ray pays
    nothing; resident content releases on all six headings once per
    interval; the recoil is the declared rule's output with heading

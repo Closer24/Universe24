@@ -216,8 +216,19 @@ declares a charge, charge x amount over rays and over the stock a record
 holds as a fifth measured quantity, reported as `charge` beside `energy` and
 `momentum` in its totals and residuals (a world without a charged family
 reports as before). Local and world audits therefore agree on what a ray
-owns; the local audit has no source term, so a world with a release cannot
-declare it, and the world ledger names the release as `sourced`.
+owns. The local audit reads every release as a source at its Node
+(`released-field-v1`, Highlights 3.5): the rays of a field family that leave
+a Node with no event and one Link walked are the release of that cycle,
+measured like any rays (energy through the declared spatial expression,
+momentum amount x heading, charge x amount), subtracted from the Node's
+residual and summed as the report's `sourced` line, so the report reads
+initial + sourced = current + escaped + annulled as the ledger does. The
+viewer's world showed why the term is needed (2026-09-17): a single held
+ray's release, five field rays on every heading but its own, has net
+momentum minus its own heading, and without the term the Node's residual
+read exactly that, (1, 0, 0). The momentum a table split moves is still
+booked to the world ledger only ([meetings](SPATIAL_FIELDS.md#meetings-with-outputs-ray-meeting-conversion-v1)),
+and an external body's sink is not read by the local audit.
 
 ## Independence, bounds and acceptance
 

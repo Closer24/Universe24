@@ -1006,7 +1006,8 @@ parametrized over the cases `four` (d = 0), `table_0`, `table_4`, `table_2`,
   and the `momentum` source total are both (0, 10, 0) for d = 0,
   (0, -10, 0) for d = 4, (0, 0, 0) for d = 2 and (0, 6, 0) for d = 1, and
   (0, 0, 0) at ticks 1 and 2. The table worlds declare no local
-  energy/momentum audit (its per-Node residual has no source term) and
+  energy/momentum audit (its per-Node residual read no source term until
+  `ray-event-audit-v1`, which reads every release as a source) and
   their conservation report reads `not_configured`; the `four` world
   declares it and its meeting keeps the rays' momentum at (0, 0, 0);
 - in every case, at every tick 1 to 4, the `a` total is 10 with source 0,
@@ -1288,6 +1289,17 @@ before the first run:
   `annulled` read the ledger's lines summed over the two families: energy
   2, 0 (`annul`) or 1 (`siblings`), 1, 1 or 0; momentum (0,0,0), (0,0,0)
   or (1,0,0), (-1,0,0), (1,0,0) or (0,0,0); charge 0, 0 or 1, -1, 1 or 0;
+  the report's `sourced` line is 0 there;
+- (i) the whole `annul` world (the electron lamp and G included) under a
+  `conservation` block (a second carrier row for the electron lamp, the
+  spatial energy the four families' right sides added) runs nine ticks with
+  the local audit `passed`, since the audit reads every release as a source
+  at its Node (the five field rays a crossing releases have net momentum
+  minus the ray's own heading, (0,0,-1) here, and no owner pays for them):
+  its report at tick 9 reads initial energy 6, momentum (0,0,0), charge 0;
+  sourced 20, (0,0,-4), 0; current 4, (4,0,-4), 0 (the four +X field rays
+  and the electron lamp's recoil); escaped 21, (-5,0,0), -1 (the minus arm,
+  the electron and sixteen field rays); annulled 1, (1,0,0), 1;
 - (h) every ledger carries the bodies' own lines beside the identity:
   `count`, `momentum` (the exact sum over the bodies), `charge` (the sum of
   their declared charges) and `sink` (their sinks per field, the `absorbed`

@@ -646,7 +646,8 @@ of feature 8. Until that coupling exists the spatial law books the momentum
 change of a meeting as an explicitly accounted source of the ray field's
 momentum field (Highlights 3.15), so `source_totals` names it and
 `conserved_at_every_completed_tick` stays exact. The local energy/momentum
-audit (`diagnostics/local_conservation.py`) has no source term, so a world
+audit (`diagnostics/local_conservation.py`) has no source term for it (it
+reads releases as sources since `ray-event-audit-v1`), so a world
 that declares it must keep momentum at every meeting, as a declared momentum
 invariant does.
 
@@ -744,8 +745,10 @@ of the ray family F:
  "kerengonen": {"phase_steps": 8, "phase_advance": 0}}
 ```
 
-**The release.** At every Node an F ray crosses (arrives at and departs
-from), in the interval it departs, G rays are released at that Node, one per
+**The release.** At every Node an F ray is at, in every interval it is
+there, held by a coupling or a clock as well as the interval it departs in
+(the release does not wait for the clock, [Highlights](HIGHLIGHTS.md) 3.5),
+G rays are released at that Node, one per
 Port heading except the F ray's own, each of amount `floor(amount_F x n /
 d)`, with `event_ports` 0, `event_shares` all zero, `steps` 0, `outbound` 1,
 `detector` 0, accumulators (0, 0, 0) and the F ray's phase at the release:
