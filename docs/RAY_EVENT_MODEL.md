@@ -106,9 +106,9 @@ transfer that arrives,
 whatever it is, it draws 1 or 0 from the mark's ticket sequence, and this
 is the only place a lottery exists (`detector-only-v1`). On 1 the Node
 behaves as an ordinary Node for that arrival: the transfer continues on its
-line, or enters the declared interaction, as if no Detector were there. On 0
-the Node behaves as a Detector for that arrival: it returns that wave ray on
-the same line in the opposite direction, unchanged, back the same number of
+line, or enters the declared interaction, as if no Detector were there, and
+that pass is the measurement. On 0 there is no measurement: the Node returns
+that wave ray on the same line in the opposite direction, unchanged, back the same number of
 steps it has made since its event, so that it arrives at the Node it left
 from with exactly the information it left with. Up to six
 transfers can arrive in the same interval, one through each Port, and the
@@ -118,8 +118,12 @@ each arrival that drew 0 is returned on its own line. The Detector does not read
 change, absorb or add anything; it needs to know nothing about what passed.
 A Detector sees nothing of the ray, on 1 or on 0: it sees only its own
 value, the bit it drew. It is the same ray in both outcomes: not absorbed,
-not split, no stock taken. The click is the record of the bit drawn, and the
-bit is all the Detector adds: a ray leaving a marked Node records that its
+not split, no stock taken. The click is the record of the bit drawn, and it
+exists on 1 only: a measurement exists only when the Node drew 1 and let the
+ray pass; on 0 there is no measurement and no click, the Node returns the
+ray without touching it and is a Node without measurement, as if the ray
+had not arrived, and it waits for what the return brings back. The bit is
+all the Detector adds: a ray leaving a marked Node records that its
 last event was a Detector event and the bit drawn, nothing larger. When it
 returned a ray with 0, that value travels with the ray through the inverse
 split to the partner's line, and the second Detector of the pair receives it
@@ -289,7 +293,7 @@ The rule in the form Highlights 3.27 requires:
 | Where is state stored | On the ray, the list of Highlights 5.1: family properties, phase, heading, the number of steps it has made since its event, the information of its last event and, if that was a Detector event, its bit; every ray is a wave ray and all the information is on the rays. On the Node: the rays resident this interval, the bounded bound group if any, and the Detector mark if the Node carries one (mark, setting, ticket seed). The origin Node of an event keeps nothing; there is no register of any kind, no occupied channel and no capacity rule: rays cross, meet or bind by their declared couplings, and nothing is pushed back or made to wait for room |
 | What arrived | The rays delivered through the six Ports this interval, met layer by layer (a layer is a set of families that couple; rays of families with no declared coupling never meet); a resident bound group counts as arrived every interval |
 | What operation acts | The coupling declared for the set of families present, in declared order; at a Node whose Detector bit is set, first one 1-or-0 draw for each transfer that arrived this interval, independently, the kind of ray making no difference since every ray is a wave ray; the arrivals that drew 1 then enter the declared coupling as at an unmarked Node, and each arrival that drew 0 is returned on its own line; a returning ray that has walked back its step count performs the inverse split of its share at its event Node, transmitting it, with its bit, to the same places the event sent to |
-| Is an outcome recorded | Only at an interaction: the events that leave it, and at a Detector the click; crossing records nothing |
+| Is an outcome recorded | Only at an interaction: the events that leave it, and at a marked Node the click on 1 only, the pass being the measurement; a return (0) is not a measurement and records no outcome; crossing records nothing |
 | How long it takes | One interval per Link as today; an interaction takes its declared wait; a bound group advances its phase once per interval it is held |
 | What crosses each Link | Rays only, at most one new event per Port per interaction. A returning ray is an ordinary ray with a reversed heading and a decreasing step count, and what its inverse split transmits travels the lines the event sent to, one Link per interval. No message, no registry answer, nothing that skips a Node |
 
@@ -398,7 +402,8 @@ on 16 September 2026.
 3. Detector as a Node bit in the initialization (position, setting, ticket
    seed): each transfer through a marked Node draws 1 or 0 from the mark's
    ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
-   click event recorded; no stock; no detector record type.
+   the `detector_click` record on 1 only, a return recording no outcome; no
+   stock; no detector record type.
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
@@ -460,16 +465,18 @@ and evidence, under the ordinary gates.
 - One bit per transfer arriving at a marked Node, and the bit is all the
   Detector adds: a Detector sees nothing of the ray, only its own value; a
   ray leaving it carries its share, that its last event was a Detector event
-  and the bit, nothing larger; replay with the same seed
-  reproduces every click; changing one Detector's bit changes the world only
-  inside the forward light cone of that interaction.
+  and the bit, nothing larger; a click is recorded on 1 only, a return is
+  not a measurement and no outcome is recorded for it; replay with the same
+  seed reproduces every click; changing one Detector's bit changes the world
+  only inside the forward light cone of that interaction.
 - An interaction never emits more than six events and never two on one Port;
   every declared invariant is exact over all inputs and all events out.
 - A pair with equal Detector distances gives CHSH at most 2 within counting
   error; the joint law's value appears only when the second ray's path
   exceeds the round trip through the first Detector, and no Detector reads
   the carried value: the second Detector draws its own bit and reads nothing
-  from the ray.
+  from the ray. The pair test counts coincidences of clicks within a declared
+  time window; a pair with one return is unpaired.
 - Conservation audits balance at every tick; no Node holds stock after an
   interaction; every ray is resident, in flight or escaped, and nothing else.
 - Mode siblings (the default): a returned ray that finds nothing at its
