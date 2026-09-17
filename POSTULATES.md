@@ -202,6 +202,23 @@ can make propagation slower. There is no global correction at the end of a tick.
 **Not established:** that these local laws suffice for every kind of physical
 consistency, particularly quantum consistency and entanglement.
 
+Addition (model owner, 2026-09-17; Highlights 5.2, "the Node's law in five
+steps"): under the ray-event model of section 23 the same local law is
+this. A node knows nothing about electrons or stars; it is a switchboard
+with six Ports, six output clocks and a table to read. Each interval: (1)
+receive what arrived on the six Ports, with what is resident (a bound
+group); (2) apply its mark, if any: a Detector draws once per arrival, 0
+returned and 1 continued; an external body absorbs into its sink and
+radiates by its amount; (3) meet by table, layer by layer: families with no
+declared coupling cross as if alone, families with one produce the outputs
+the table says, with exact invariants and the remainder placed by
+Highlights 3.17; (4) stamp every output as a new event ray, with its
+event's Ports, shares and steps 0; (5) depart, each ray through its Port
+when that face's clock is ready. The two marks, the Detector and the
+external body, are the whole apparatus of a world: they are the only places
+where the board does something the tables do not say, and both are
+declarations in the initial file, never physics.
+
 ## 4. There is a maximum causal speed
 
 Physical influence cannot skip nodes. It travels at most one neighboring node per
@@ -252,6 +269,25 @@ every heading covers the same Euclidean distance per step. Waiting is slower,
 never faster: the bound holds for every heading, and the lattice metric is a
 configured choice, not a derivation.
 
+Addition (model owner, 2026-09-17; Highlights 3.28, "speed is a clock
+slowing"): everything on the board moves at one Link per interval, and
+there is no other speed in the engine. Matter is slower only because the
+output clock of its bound group delays its departures: a group that moves
+one Link every k intervals has speed 1/k in units of c, and light, with
+delay 0, has c. Three things slow a clock, and all three are content
+meeting content by a declared table: the content retained at the node
+itself (the group's own mass), the field of another mass that a ray meets
+(gravity as bending by delay, section 23), and a declared interaction whose
+output assigns a delay (binding among them). Nothing slows a clock because
+of motion: there is no kinematic rule, and the slower ticking of a moving
+group, if it appears, must emerge from its rays spending intervals on Links
+instead of resident
+([hypothesis 15](docs/HYPOTHESES.md#15-time-dilation-from-transit-a-moving-bound-groups-clock-runs-at-1--v),
+experiment A14 of [docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)). Mass, time
+dilation and gravity are therefore one bookkeeping of integer delays read
+from different tables, and the tables, not the engine, are what the
+confrontation runs test.
+
 ## 5. Physical calculations use integers only
 
 Every value affecting simulation evolution is an integer: position, time, field,
@@ -288,6 +324,26 @@ Its presence in that node represents the source.
 The simulator does not repeatedly add a source's own new emission to itself.
 A stationary source should form a persistent surrounding state, rather than grow
 without bound or disappear because there was no movement event.
+
+Addition (model owner, 2026-09-17; Highlights 3.5, "the release does not
+wait for the clock"): under the ray-event model of section 23 a field
+release is information, not a departure of matter. Every interval, the
+content resident at a node says in all six headings that it is there, with
+the strength its amount gives, and this is booked as a source; the node's
+output clock delays only what leaves it as matter, never its field. So a
+heavy node radiates every interval, its field is static and its strength
+grows with its content, as a mass at rest should; if the clock slowed the
+field too, a heavier body would radiate less. The engine's reading of the
+no-self-field rule (2026-09-17): a traveling ray releases in the five
+headings other than its own, because at one Link per interval a forward
+field ray would share its packet at every step, so the forward field of a
+ray at the speed of light is the ray itself; resident content releases in
+all six. On the lattice the field spreads as a diamond at the scale of
+Links and as a sphere at large scale, because the number of paths to a node
+after k steps is the multinomial count, which is rotationally symmetric to
+leading order; whether the bending of a passing ray is the same on an axis
+and on a diagonal is a measurable prediction (experiment A6 of
+[docs/EXPERIMENTS.md](docs/EXPERIMENTS.md)), not an assumption.
 
 ## 7. An isolated symmetric source does not push itself
 
@@ -347,6 +403,14 @@ Every application run saves initial conditions, parameters, code identity and
 completion or failure evidence. Runs and ordinary tests are headless. Only an
 explicit visualization request adds frame capture and a visual artifact identifying
 its displayed quantity and geometry. A slice does not change the underlying 3D world.
+
+Addition (model owner, 2026-09-17; Highlights 5.2): inside the physics, the
+two marks of a world, the Detector and the external body (section 23,
+Highlights 3.19), are its whole apparatus: they are the only places where
+the board does something the tables do not say, and both are declarations
+in the initial file, never physics. The Detector's draw is the one
+measurement that is an interaction; the diagnostics of this section stay
+outside the physics as before.
 
 ## 11. A result must pass tests to be considered reliable
 
@@ -897,7 +961,11 @@ return is the opposite momentum of the field, carried back along the field
 ray's line to the ray that released it, which recoils when the return
 arrives, at finite speed. That is how postulate 7 and Highlights 3.14 are
 satisfied: the recoil is a ray. Until its field meets something, a
-traveling ray pays nothing for it. The field is released in all directions.
+traveling ray pays nothing for it. The field is released in all directions,
+and the release does not wait for the clock (model owner, 2026-09-17;
+Highlights 3.5, section 6): resident content releases every interval on all
+six headings, a traveling ray on the five headings other than its own, and
+the output clock delays only what leaves as matter, never the field.
 A ray traveling straight never meets its own field: the field is born where
 the ray is and leaves at the causal speed, ahead of the ray or away from it,
 and the ray is never faster than its field, at any output-clock delay; no
