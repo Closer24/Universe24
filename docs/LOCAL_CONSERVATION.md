@@ -179,14 +179,19 @@ every line reads six values and its identity:
 | `current` | What the world holds now: resident and in-flight rays, records and their stock, populations (`totals`, `charge_totals`) |
 | `escaped` | What left through an open boundary (`escaped_totals`, `escaped_charge_totals`) |
 | `annulled` | What an inverse split in `annul` mode ended into its sink (`annulled_totals`) |
-| `absorbed` | What external bodies absorbed into their declared sinks (`external-body-v1`, feature 7b), 0 until that ledger exists |
+| `absorbed` | What the external bodies' sinks took (`external_body_totals`, the `absorbed_by_bodies` line of `external-body-v1`), the momentum field's components included when one is bound |
 
 ```text
 initial + sourced = current + escaped + annulled + absorbed
 ```
 
 exactly, component by component; `balanced` on the line and on the ledger
-says whether it holds. A returning ray reads its momentum as its share on
+says whether it holds. The ledger also carries the external bodies' own
+lines (`bodies`: count, the exact sum of their momentum, the sum of their
+declared charge, their sinks per field) beside the identity: a body's
+content never enters a sum, and its momentum is its declared response to the
+field rays it absorbs, whose momentum the `absorbed` line already holds. A
+returning ray reads its momentum as its share on
 the event's heading, its own heading negated (`detector-return-v1`), and its
 charge as charge x amount like any ray; charge is per quantum, so the charge
 a family sourced, annulled or absorbed is its charge times that amount, and

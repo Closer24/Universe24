@@ -64,7 +64,7 @@ performs the inverse split at the event Node.
 - **Charge** — a family property per quantum, `spatial_fields[i].charge`. The charge readout of rays is `charge x amount` summed over them, and over the stock a record holds of the family (`charge_totals()`, `escaped_charge_totals()`), an invariant of every declared ray interaction.
 - **Ledger** — the world audit of one completed tick (`ray-event-audit-v1`, [the world ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)): one line per conserved field (amount per family, momentum) and one per ray family (charge), each reading initial, sourced, current, escaped, annulled and absorbed, exact when initial + sourced = current + escaped + annulled + absorbed. `Simulation.audit()` reads it; the runner records it per tick under `audit` and its identity as `conserved_at_every_completed_tick`.
 - **Sourced** — the ledger line of what an explicitly accounted source added to the world (Highlights 3.15): a field release, a sourced emission, the momentum a table split moves, an inverse split without its input at the Node; `source_totals()`. A funded emission is not a source: the emitter pays.
-- **Absorbed** — the ledger line of what external bodies absorbed into their declared sinks (`external-body-v1`, feature 7b); `absorbed_totals()`, zero until that ledger exists.
+- **Absorbed** — the ledger line of what the external bodies' sinks took (`external-body-v1`; `external_body_totals()`, the `absorbed_by_bodies` line), with the momentum field's components when one is bound; the bodies' own momentum and charge are their own lines beside the identity.
 
 ## Values do not become new physical kinds when they move
 

@@ -899,9 +899,11 @@ bound), an `external_body_absorbed` record naming the body, the Port, the
 family, the amount and the body's momentum after it. The conservation line
 becomes initial + sources = current + dissipated + escaped + annulled +
 absorbed_by_bodies at every completed tick, the sources holding what the
-bodies released; `conserved_at_every_completed_tick` (initial + sources =
-current) is therefore false once a sink has taken anything, as under
-`annul`. A wall, a screen and a beam stop are this default.
+bodies released; since `ray-event-audit-v1` (2026-09-17)
+`conserved_at_every_completed_tick` is the world ledger's identity, in which
+the sink is the `absorbed` line, so it stays true, as under `annul`
+([audits](#audits-ray-event-audit-v1)). A wall, a screen and a beam stop are
+this default.
 
 **A declared coupling.** Under the name of a declared meeting with outputs
 ([meetings](#meetings-with-outputs-ray-meeting-conversion-v1)), the body is
@@ -961,8 +963,15 @@ readouts of this document:
 
 - `totals()` and `source_totals()` are the `current` and `sourced` lines of
   every conserved field, `escaped_totals()` and `annulled_totals()` the
-  `escaped` and `annulled` lines, and `absorbed_totals()` the `absorbed`
-  line, zero until the external body (feature 7b) books its sinks;
+  `escaped` and `annulled` lines, and `external_body_totals()` the
+  `absorbed` line, what the external bodies' sinks took (`absorbed_by_bodies`,
+  [external body](#the-external-body-external-body-v1)), with the momentum
+  field's components when one is bound; every ledger also carries the
+  bodies' own lines (`bodies`: their count, the exact sum of their momentum
+  from `external_body_momentum()`, the sum of their declared charge and
+  their sinks per field), beside the identity, since a body's content never
+  enters a sum and its momentum is its declared response to the fields it
+  absorbs, not a ray's;
 - `charge_totals()` reads charge x amount per ray family over the owners
   `totals()` reads: the rays resident at active Nodes and in flight on Links
   and, since this feature, the stock a record holds of the family, resident

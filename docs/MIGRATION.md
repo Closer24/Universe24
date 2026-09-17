@@ -25,9 +25,11 @@ Issue #169, feature 10 ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1),
   `test_ray_integration_guards.py`, `test_disturbance_application.py`
   ([expectations](TEST_EXPECTATIONS.md#ray-event-audit)).
 - `charge_totals()` counts the stock a record holds of a charged family,
-  the owners `totals()` reads, beside the rays; `escaped_charge_totals()`
-  and `absorbed_totals()` are new readouts. The charge case of
-  `test_wave_ray_families.py` reads the lamps' charge before the first tick.
+  the owners `totals()` reads, beside the rays; `escaped_charge_totals()` is
+  a new readout, and the ledger's `absorbed` line is `external_body_totals()`
+  (`external-body-v1`), with the bodies' own count, momentum, charge and
+  sinks under `bodies`. The charge case of `test_wave_ray_families.py` reads
+  the lamps' charge before the first tick.
 - The local conservation audit measures charge as a fifth quantity when a
   family declares one, reported as `charge` beside `energy` and `momentum`;
   a world without a charged family reports as before.

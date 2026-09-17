@@ -56,7 +56,7 @@ Feature tests of issue #169 join this table as they land.
 | `test_rational_particles.py` | 16 | 0.47 | Opt-in bounded rational ratios: balanced routes, fractional credit, local checks |
 | `test_ray_coupling_evidence.py` | 3 | 0.00 | Evidence helper of the ray coupling (running branch, untouched) |
 | `test_ray_delay.py` | 6 | 12.78 | Output clocks: rays wait at a loaded Node and the phase per interval shows the wait |
-| `test_ray_event_audit.py` | 2 | 0.60 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release and an escape (`ray-event-audit-v1`) |
+| `test_ray_event_audit.py` | 3 | 0.90 | Issue #169 feature 10: the world ledger per completed tick, exact for amount, momentum and charge through a return, an inverse split, a release, an escape and an external body's sink (`ray-event-audit-v1`) |
 | `test_ray_field.py` | 22 | 0.31 | Straight ray transport: DDA heading, emission sweep and shares, shell stock, slots, escape |
 | `test_ray_hidden_state.py` | 1 | 0.19 | Issue #169 feature 1: every ray carries its event and its steps (`ray-event-state-v1`) |
 | `test_ray_integration_guards.py` | 22 | 0.36 | Ray integration boundaries (running branch, untouched) |
@@ -1147,8 +1147,9 @@ token is added, no source is booked and the sink line is zero.
 `test_ray_event_audit.py` builds its board inline under the shared Detector
 admission (schema 1, `link_ticks` 1, `metric: "links"`, pace 1/1, no decay,
 the six unit-axial headings in Port order, closed under negation) on an open
-9 x 5 x 5 lattice, one world per `return_mode` (`annul`, `siblings`), nine
-ticks ([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1), [the world
+9 x 5 x 5 lattice, one world per `return_mode` (`annul`, `siblings`) and a
+third, `body`, in `annul` with one external body, nine ticks
+([audits](SPATIAL_FIELDS.md#audits-ray-event-audit-v1), [the world
 ledger](LOCAL_CONSERVATION.md#the-world-ledger-ray-event-audit-v1)). The
 charged pair lamp stands at X = (4,2,2) holding 1 quantum of `plus` (charge
 +1) and 1 of `minus` (charge -1), and emits them once at tick 0 as two
@@ -1224,7 +1225,26 @@ before the first run:
   from tick 7), and the local audit's `initial`, `current`, `escaped` and
   `annulled` read the ledger's lines summed over the two families: energy
   2, 0 (`annul`) or 1 (`siblings`), 1, 1 or 0; momentum (0,0,0), (0,0,0)
-  or (1,0,0), (-1,0,0), (1,0,0) or (0,0,0); charge 0, 0 or 1, -1, 1 or 0.
+  or (1,0,0), (-1,0,0), (1,0,0) or (0,0,0); charge 0, 0 or 1, -1, 1 or 0;
+- (h) every ledger carries the bodies' own lines beside the identity:
+  `count`, `momentum` (the exact sum over the bodies), `charge` (the sum of
+  their declared charges) and `sink` (their sinks per field, the `absorbed`
+  line of every field); without a body count 0, momentum (0,0,0), charge 0
+  and every sink 0. The `body` world is the `annul` world with a fifth
+  family `star` (charge 0, no lamp) and one external body at B = (1,2,2) of
+  family `star`, amount 100, charge 3, coupling `sink`, at rest, no momentum
+  table: the minus arm arrives at B at tick 3 and ends in the sink, so from
+  tick 3 `minus` reads current 0 and absorbed 1 (never escaped), charge
+  `minus` current 0 and absorbed -1, `momentum` absorbed (-1,0,0) with
+  current (1,0,0) after ticks 3 and 4, (1,0,-4) after 5 and 6 and (0,0,-4)
+  from tick 7, escaped (0,0,4) from tick 5 (the electron alone) and annulled
+  (1,0,0) from tick 7; `star` every line 0; `escaped_charge_totals()` reads
+  0 for every family; `external_bodies()` lists the one body at B, not
+  stepping, momentum (0,0,0), accumulators (0,0,0), sink {} through tick 2
+  and {minus: 1} from tick 3; the bodies' lines read count 1, momentum
+  (0,0,0), charge 3 and sink `minus` (1,) and `momentum` (-1,0,0) from tick
+  3; every other line as in (b) to (f), and the runner's
+  `external_body_totals` equals the last ledger's sink.
 
 Pinned consequences in existing tests (2026-09-17, `ray-event-audit-v1`):
 `conserved_at_every_completed_tick` is the world ledger's identity, so it

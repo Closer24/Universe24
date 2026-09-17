@@ -62,12 +62,21 @@ def ledger_line(
     return line
 
 
-def world_ledger(tick: int, fields: dict[str, Line], charge: dict[str, Line]) -> dict[str, object]:
-    """The ledger of one completed tick: a line per conserved field and per ray family."""
+def world_ledger(
+    tick: int,
+    fields: dict[str, Line],
+    charge: dict[str, Line],
+    bodies: dict[str, object],
+) -> dict[str, object]:
+    """The ledger of one completed tick: a line per conserved field and per ray family,
+    and the external bodies' own lines (external-body-v1): their count, the exact sum
+    of their momentum, the sum of their declared charge and their sinks per field. A
+    body's content never enters a sum, so its lines are beside the identity, not in
+    it; what its sinks took is the `absorbed` line of every field."""
     balanced = all(bool(line["balanced"]) for line in fields.values()) and all(
         bool(line["balanced"]) for line in charge.values()
     )
-    return {"tick": tick, "balanced": balanced, "fields": fields, "charge": charge}
+    return {"tick": tick, "balanced": balanced, "fields": fields, "charge": charge, "bodies": bodies}
 
 
 def audit_failure(audit: Sequence[Mapping[str, object]]) -> dict[str, object] | None:

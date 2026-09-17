@@ -629,29 +629,20 @@ class DisturbanceEngine:
                 result[name] = checked_work(result[name] + checked_work(stock * definition.charge))
         return result
 
-    def absorbed_totals(self) -> dict[str, tuple[int, ...]]:
-        """Content absorbed by external bodies into their declared sinks, per field:
-        the `absorbed` ledger of the spatial engine when external bodies exist
-        (external-body-v1, feature 7b), zero otherwise (ray-event-audit-v1)."""
-        absorbed = getattr(self._spatial, "absorbed", None)
-        return {
-            field.name: ((0,) * field.components if absorbed is None else tuple(absorbed[index]))
-            for index, field in enumerate(self.initial.fields)
-            if field.conserved
-        }
-
     def audit(self) -> dict[str, object]:
         """The world ledger at the current tick (ray-event-audit-v1): one line per
         conserved field (amount per family, momentum) and one per ray family
         (charge), each reading initial, sourced, current, escaped, annulled and
         absorbed with initial + sourced = current + escaped + annulled + absorbed
-        exact. Read-only, like the totals it is built from."""
+        exact, and the external bodies' own lines (count, momentum, charge, sinks).
+        Read-only, like the totals it is built from."""
         initial_totals, initial_charge = self._ledger_initial
         totals, sources = self.totals(), self.source_totals()
+        # The absorbed line is what the external bodies' sinks took (external-body-v1).
         escaped, annulled, absorbed = (
             self.escaped_totals(),
             self.annulled_totals(),
-            self.absorbed_totals(),
+            self.external_body_totals(),
         )
         fields = {
             name: ledger_line(
@@ -677,7 +668,16 @@ class DisturbanceEngine:
                 checked_work(annulled.get(name, (0,))[0] * per_quantum),
                 checked_work(absorbed.get(name, (0,))[0] * per_quantum),
             )
-        return world_ledger(self.tick, fields, charge)
+        body_charge = 0
+        for body in self.initial.external_bodies:
+            body_charge = checked_work(body_charge + body.charge)
+        bodies = {
+            "count": len(self.initial.external_bodies),
+            "momentum": self.external_body_momentum(),
+            "charge": body_charge,
+            "sink": absorbed,
+        }
+        return world_ledger(self.tick, fields, charge, bodies)
 
     @staticmethod
     def _bookkeeping(record: DisturbanceRecord) -> dict[str, object]:
