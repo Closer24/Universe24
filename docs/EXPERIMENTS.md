@@ -36,7 +36,9 @@ reopen an adopted decision and does not authorize a new law.
 of Highlights 3.26, in the order they land
 ([ray-event model](RAY_EVENT_MODEL.md#6-migration-in-order)): 1 ray state
 (done on 2026-09-17, `ray-event-state-v1`); 2 the Node Detector bit (mark,
-setting, ticket seed); 3 the return; 4 the inverse split with `return_mode`
+setting, ticket seed; done on 2026-09-17, `detector-mark-v1`, the
+`detectors` key with `position`, `setting` `[n, d]` and `seed`); 3 the
+return; 4 the inverse split with `return_mode`
 (siblings, straight, annul); 5 layers; 6 the meeting of rays with N-to-M
 conversion; 7 the field as the ray's own information in ray form; 8 binding
 and gravity by delay; 9 every ray a wave ray with family, charge and
@@ -49,7 +51,8 @@ Today every entry is `planned`.
 
 **Conventions.** The board is the cubic Node lattice of Highlights 3.1 with
 its boundary stated per entry; c is one Link per interval; a Detector setting
-is the declared ratio p/q of its draw (1 = every arrival passes); N is the
+is the declared ratio n/d of its draw, the `setting` `[n, d]` of the mark
+(1 = every arrival passes, 0 = every arrival returned); N is the
 number of phase steps of the circle, N = 2^`phase_bits`; the steering table
 is the Born rule as a coupling, cos²(δ/2) to sin²(δ/2) in bounded integer
 ratios with the remainder owned (Highlights 3.3, 3.17). A statistical
@@ -78,8 +81,8 @@ states "exactly" and means integer equality at every tick.
 - **Run.** A slab of 129 × 65 × 3 Nodes, open boundary. One emitter, a bound
   clock of rate r = 32 at N = 2^8 (λ = 8 Links, so that the integer path
   differences of the screen hit the table's exact zero), a marked Node with
-  setting 1,
-  emitting one light ray per interval toward two slit Nodes 16 Links apart;
+  setting 1, emitting one light ray per interval toward two slit Nodes 16
+  Links apart;
   each slit a declared catalog coupling that re-emits the arriving light ray
   over the forward headings with its phase unchanged. A screen row 48 Links
   behind the slits: at each screen Node the meeting of the two slit rays is
@@ -213,7 +216,7 @@ states "exactly" and means integer equality at every tick.
   six-Port run; the annulled total per tick; the click sequence of the run
   and of its replay.
 - **Criterion.** Pass, all of: clicks + returns = arrivals exactly in every
-  cell; |clicks/arrivals − p/q| ≤ 3 √(p/q (1 − p/q)/arrivals) in every cell;
+  cell; |clicks/arrivals − n/d| ≤ 3 √(n/d (1 − n/d)/arrivals) in every cell;
   the click fraction differs between families, amounts and phases at one
   setting by less than 3 standard errors; in the six-Port run the chi-square
   of the 64-cell table against the product of its six marginals is below the
@@ -401,19 +404,19 @@ states "exactly" and means integer equality at every tick.
   decay is a source, and a source is a Detector, so at each tick it draws
   with its declared ratio as the setting, 1 = the conversion fires (an
   N-to-M conversion with charge, energy and momentum exact), 0 = the group
-  ticks on unchanged; half-life follows, T½ = −ln 2 / ln(1 − p/q) intervals,
+  ticks on unchanged; half-life follows, T½ = −ln 2 / ln(1 − n/d) intervals,
   and nothing else in the world draws.
 - **Features.** 1, 2, 5, 6, 8, 9, 10.
 - **Run.** A board of 65 × 65 × 65 Nodes, periodic, N = 2^10. 4096 neutron
   groups (the binding coupling of feature 8, catalog masses in keV: neutron
   939 565, proton 938 272, electron 511), each at its own Node 4 Links from
-  any other so that products never meet, each marked with setting p/q =
+  any other so that products never meet, each marked with setting n/d =
   1/1024 and the conversion n → p + e⁻ + ν̄ declared as the event of a 1 with
   its invariants; 2^14 intervals. A control of 64 proton groups with setting
   0. Recorded: per group the tick of its firing or its survival; the
   products' families, charges, energies and momenta at every conversion;
   the number of draws per tick (from the ticket consumption, feature 10);
-  the audits. Recorded as a finding, not pinned: the ratio p/q that the
+  the audits. Recorded as a finding, not pinned: the ratio n/d that the
   physical half-life needs at one Planck time per interval, about 2^-154,
   and whether the bounded setting of feature 2 can hold it.
 - **Criterion.** Pass, all of: exactly one draw per neutron group per tick
@@ -767,7 +770,8 @@ unlocks; an entry runs when the last feature it names has landed.
 
 1. Feature 1, ray state (done on 2026-09-17): unlocks no run by itself; every
    entry needs it.
-2. Feature 2, the Node Detector bit: B2.
+2. Feature 2, the Node Detector bit (done on 2026-09-17): B2, whose
+   return-free part can run today.
 3. Feature 3, the return: the retrace panel of B3.
 4. Feature 4, the inverse split with `return_mode`: B3 complete, B12, A4.
 5. Feature 5, layers: B4.

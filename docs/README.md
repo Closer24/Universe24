@@ -17,7 +17,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Configuration validation](CONFIGURATION_VALIDATION.md) | Read-only preflight, format ownership, explicit dependencies, CLI reports and limits |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
-| [Ray-event model](RAY_EVENT_MODEL.md) | Design candidate `ray-event-model-v1`: ray as an event trajectory carrying a phase and its step count, a meeting of rays as the only interaction, Detector as pass-or-return, carried pair bit, fields and matter as rays; adopted target direction of 2026-09-17, migration step 2 ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1), `ray-event-state-v1`) implemented, the rest not |
+| [Ray-event model](RAY_EVENT_MODEL.md) | Design candidate `ray-event-model-v1`: ray as an event trajectory carrying a phase and its step count, a meeting of rays as the only interaction, Detector as pass-or-return, carried pair bit, fields and matter as rays; adopted target direction of 2026-09-17, migration steps 2 ([ray state](SPATIAL_FIELDS.md#ray-state-ray-event-state-v1), `ray-event-state-v1`) and 3 ([Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1), `detector-mark-v1`) implemented, the rest not |
 | [Spatial computation delay](SPATIAL_COMPUTATION_DELAY.md) | Configurable shared field/carrier clock, fixed input buffers and integer departure timing |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Shared complete-ray coupling](SHARED_RAY_COUPLING.md) | Candidate common ray participants, finite phase-sensitive residence/release and carried-heading readout |
@@ -82,4 +82,4 @@ The root [postulates](../POSTULATES.md), [simulator definitions](../SIMULATOR_DE
 and [contribution procedure](../CONTRIBUTING.md) retain their authority. This index
 routes readers; it does not duplicate their technical rules.
 
-- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, explicit historical research profiles and external exchange blockers.
+- [Detector-owned sampling](DETECTOR_SAMPLING.md): canonical fail-closed admission, the Node Detector mark (`detector-mark-v1`: one draw per arriving ray, the click on 1 only) and the external exchange blockers that remain (the return).

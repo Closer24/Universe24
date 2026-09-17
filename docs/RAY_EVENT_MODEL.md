@@ -455,7 +455,13 @@ every such set; Highlights 3.20 is the text to follow.
    seed): each transfer through a marked Node draws 1 or 0 from the mark's
    ticket sequence, 1 ordinary behavior, 0 return on the same line reversed;
    the `detector_click` record on 1 only, a return recording no outcome; no
-   stock; no detector record type.
+   stock; no detector record type. (Done on 2026-09-17, issue #169 feature
+   2, `detector-mark-v1`: the `detectors` key, `DetectorMark`, one unsalted
+   draw per arriving ray from the mark's own stream in Port then merge-key
+   order, the ray's bit set to 2 on 1 and 1 on 0, the click on 1 only, a
+   replay redrawing nothing; the reversal on 0 is step 4, feature 3, and
+   until then a ray that drew 0 continues unchanged with its bit 0; see
+   [Detector mark](DETECTOR_SAMPLING.md#the-detector-mark-detector-mark-v1).)
 4. Return propagation: reversed heading, decreasing count; at the event Node
    the inverse split of the returning ray's share, transmitted with its bit
    to the same places the event sent to, the partner's line among them;
