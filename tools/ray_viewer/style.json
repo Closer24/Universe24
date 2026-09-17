@@ -168,7 +168,9 @@
       "captions": false,
       "totals": false,
       "tick_counter": true,
-      "controls": false
+      "controls": false,
+      "runs": true,
+      "eye_toggle": true
     }
   },
   "caption": {
