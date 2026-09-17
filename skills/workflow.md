@@ -13,6 +13,10 @@ Use [monorepo ownership](../docs/ARCHITECTURE.md#monorepo-ownership) and the
 [restart guide](../docs/PROJECT_STATUS.md) to recover context without chat history.
 Read only affected contracts and Skills after the root entry point. Use one
 authoritative definition per concept; Skills link to laws rather than copy them.
+Since 2026-09-17 the Highlights specification is `docs/HIGHLIGHTS.md`, edited
+directly; the Google Doc is not edited or resynced, and the documents that
+restate a Highlights rule are synchronized from that file after each change
+([Boss project reference](boss-orchestrator/SKILL.md#project-reference)).
 
 Keep durable procedures in Skills and architectural decisions in their responsible
 documents. Put temporary task state, assignments, blocked checks and next actions

@@ -22,6 +22,7 @@ result are different claims. Revision-specific results are not a live status fee
 | [Event graph configuration](EVENT_GRAPH_CONFIGURATION.md) | Enable or disable the causal graph, distinguish quantum programs, set capacity and locate saved records |
 | [Disturbances](DISTURBANCES.md) | Active initialization schema, transport, expressions and transactions |
 | [Spatial fields](SPATIAL_FIELDS.md) | Outward propagation, baselines, finite decay and field accounting |
+| [Ray-event model](RAY_EVENT_MODEL.md) | Design candidate `ray-event-model-v1`: ray as an event trajectory carrying a phase and its step count, a meeting of rays as the only interaction, Detector as pass-or-return, carried pair bit, fields and matter as rays; adopted target direction of 2026-09-17, not implemented |
 | [Spatial computation delay](SPATIAL_COMPUTATION_DELAY.md) | Configurable shared field/carrier clock, fixed input buffers and integer departure timing |
 | [Spatial couplings](SPATIAL_COUPLINGS.md) | Configured exchange, rotation, reaction budgets and self-interaction limits |
 | [Shared complete-ray coupling](SHARED_RAY_COUPLING.md) | Candidate common ray participants, finite phase-sensitive residence/release and carried-heading readout |
@@ -86,7 +87,7 @@ concepts.
 
 | Document | Responsibility |
 | --- | --- |
-| [Highlights snapshot](HIGHLIGHTS.md) | Dated verbatim copy of the Universe 24 Highlights specification; the live Google Doc stays authoritative |
+| [Highlights specification](HIGHLIGHTS.md) | The Universe 24 Highlights specification, edited directly since 2026-09-17; the Google Doc is the historical source up to its revision of 2026-09-16 and is not edited or resynced |
 | [Highlights coverage](HIGHLIGHTS_IMPLEMENTATION.md) | Dated implementation inventory and specification coverage, not a live status feed |
 | [Recovery](RECOVERY.md) | Restore a checkout, environment and authorized operational procedures without chat history |
 | [Project status](PROJECT_STATUS.md) | Restart map and implemented-versus-pending distinctions |

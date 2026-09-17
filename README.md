@@ -44,13 +44,15 @@ generic disturbance schema.
 
 ## Project specification (Google Docs)
 
+[docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) is the Universe 24 Highlights
+specification, the high-level project specification, edited directly since
+2026-09-17 by the model owner's decision. The Google Doc
 [Universe 24 Highlights](https://docs.google.com/document/d/1IkhSyqZZMBSgbJV-PMMwcXG0D_Rlfg4FrLy2jXBMUSs/edit)
-is the high-level project specification. Open it using a Google account with
-document access. Repository access does not grant Google Docs access. A dated
-verbatim snapshot is kept in [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) for
-offline reading; the live document remains authoritative when they differ.
+is its historical source up to the revision of 2026-09-16 and is neither
+edited nor resynced. Opening it requires a Google account with document
+access; repository access does not grant Google Docs access.
 
-The document contains goals as well as requirements. Keep proposed behavior,
+The specification contains goals as well as requirements. Keep proposed behavior,
 implemented contracts and tested results distinct. Consult
 [project status](docs/PROJECT_STATUS.md#specifications-and-gaps),
 [POSTULATES.md](POSTULATES.md) and
