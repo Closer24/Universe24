@@ -15,6 +15,7 @@ from event_universe.configuration_validation import (
 from event_universe.core.disturbance_state import InitialState
 from event_universe.core.ray_event_audit import RAY_EVENT_AUDIT, audit_failure
 from event_universe.core.spatial_state import (
+    DECAY_DRAW,
     DETECTOR_BIT_PROPERTY,
     DETECTOR_MARK,
     DETECTOR_RETURN,
@@ -30,6 +31,7 @@ from event_universe.core.spatial_state import (
     RAY_MOMENTUM_TURN,
     RELEASED_FIELD,
     WAVE_RAY_FAMILY,
+    decay_draw_declared,
     detector_bit_property_declared,
     external_body_names,
     ray_layer_names,
@@ -248,6 +250,9 @@ def _execute_run(
         "released_field": RELEASED_FIELD,
         "ray_binding": RAY_BINDING,
         "loop_binding": LOOP_BINDING,
+        # A decaying group draws (decay-draw-v1): recorded when a rule declares
+        # `draw`; a world without one runs and records exactly as before.
+        **({"decay_draw": DECAY_DRAW} if decay_draw_declared(initial) else {}),
         "released_fields": released_field_names(initial.fields, initial.spatial_fields),
         "external_body": EXTERNAL_BODY,
         "external_bodies": [

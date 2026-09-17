@@ -86,6 +86,7 @@ SpatialPlanner = Callable[
         int,
         Remainders,
         Remainders,
+        int,
     ],
     SpatialPlan,
 ]
@@ -440,6 +441,7 @@ class SpatialNode(SpatialNodeState):
             ray_hold,
             self.remainders,
             self.remainder_phases,
+            self.detector_ticket,
         )
         if not isinstance(plan, SpatialPlan):
             raise ValueError("spatial planning requires a SpatialPlan")
@@ -689,6 +691,10 @@ class SpatialNode(SpatialNodeState):
             # The remainder registers after this cycle (field-remainder-v1).
             validate_remainders(plan.remainders, plan.remainder_phases, services.initial.spatial_fields)
             self.remainders, self.remainder_phases = plan.remainders, plan.remainder_phases
+        if plan.decay_draws:
+            # The Node's ticket stream after the draws of its decaying rules
+            # (decay-draw-v1): one unsalted step per draw, as at a mark.
+            self.detector_ticket = plan.decay_draws[-1].ticket
         self.last_cost = cost
         if self.pending is None:
             self.arrival_mask = (0,) * port_count(services.initial)
@@ -764,6 +770,22 @@ class SpatialNode(SpatialNodeState):
                 phase=spread.phase,
                 coherence=spread.coherence,
                 signs=spread.signs,
+            )
+        for draw in plan.decay_draws:
+            # The draw of a decaying rule at its meeting (decay-draw-v1, Highlights
+            # 3.26): the rule, its setting, the ticket state the draw left the
+            # Node's stream in and the bit; one line per ticket consumed, so the
+            # tickets a Node consumed in one tick are its clicks, returns and
+            # these, counted from the record.
+            self._event(
+                "decay_draw",
+                tick,
+                services,
+                notifications=notifications,
+                rule=services.initial.ray_interactions[draw.rule].name,
+                setting=(draw.numerator, draw.denominator),
+                ticket=draw.ticket,
+                bit=draw.bit,
             )
         for push in plan.ray_pushes:
             # A free ray turned by momentum (ray-momentum-turn-v1, Highlights 3.16):

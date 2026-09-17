@@ -126,6 +126,17 @@ RAY_BINDING = "ray-binding-v1"
 # declared delay at their event Node without meeting anything there and leave,
 # and a group is read from the record by a reader (tools/ray_viewer/extract.py).
 LOOP_BINDING = "loop-binding-v1"
+# A decaying group draws (Highlights 3.26 and 3.19, decay-draw-v1): a bound group
+# that can decay is a source, and a source is a Detector, so at each of its
+# ticks, its corner meetings in the loop form, it draws with its declared ratio
+# as the setting, 1 = the conversion fires, 0 = the group ticks on unchanged. A
+# ray_interactions rule with outputs may declare `draw: [n, d]` and its `seed`:
+# when its participants meet, the meeting draws once from the Node's ticket
+# stream, the unsalted draw of detector-mark-v1, and on 1 the rule fires; on 0
+# it does not, and the meeting continues to the next rule in declared order.
+# The declaration marks the Node for that draw, so the only draw in the model
+# is still at a marked Node; nothing else in the world draws.
+DECAY_DRAW = "decay-draw-v1"
 # A free ray turns by momentum (Highlights 3.5, 3.14, 3.16 and 3.28,
 # ray-momentum-turn-v2): a ray's direction is its momentum vector, three integers
 # carried as its register, by default amount x heading, the line its event gave
@@ -1490,8 +1501,11 @@ class SpatialNodeState:
     incoming_decay_cost: int = 0
     # Intervals the resident rays still wait under ray_delay before forwarding.
     ray_wait: int = 0
-    # The Detector mark of this Node when its bit is set, and the mark's own ticket
-    # state: seeded from the mark, advanced by one unsalted step per arriving ray.
+    # The Detector mark of this Node when its bit is set, and the Node's one ticket
+    # state: seeded from the mark, advanced by one unsalted step per arriving ray;
+    # at a Node a decaying rule may fire at (decay-draw-v1) seeded from that
+    # declaration salted by the position when no mark is set, and advanced by one
+    # unsalted step per meeting of such a rule.
     detector: DetectorMark | None = None
     detector_ticket: int = 0
     # The external body this Node holds, whole, when one is declared or has
@@ -1540,6 +1554,26 @@ class SpatialPlan:
     # The pushes of free rays this cycle, one per field ray met by a coupling's
     # momentum table (ray-momentum-turn-v1).
     ray_pushes: tuple[RayPush, ...] = ()
+    # The draws of the decaying rules this cycle, one per meeting of such a rule,
+    # in the order they were taken from the Node's ticket stream (decay-draw-v1);
+    # the last one carries the stream's state after the cycle.
+    decay_draws: tuple[DecayDraw, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class DecayDraw:
+    """The record of one draw of a decaying rule for the Node to publish
+    (decay-draw-v1): plain bounded integers, as the Node state contract requires.
+    The rule's index among the world's declared ray interactions, its setting
+    `[n, d]`, the ticket state the draw left the Node's stream in, and the bit,
+    1 = the conversion fired.
+    """
+
+    rule: int
+    numerator: int
+    denominator: int
+    ticket: int
+    bit: int
 
 
 @dataclass(frozen=True, slots=True)
@@ -2315,7 +2349,9 @@ def _coherence(rays: Rays, cosines: tuple[int, ...], mask: int) -> tuple[int, in
 # The two captures are deterministic. The ordinary lottery capture and the bond
 # registry were deleted on 2026-09-17 (Highlights 3.18 deleted, 3.19, 3.20, 5.4):
 # an absorber never draws. The ticket sequence below is the bounded local draw
-# the Detector mark owns (detector_draw); no other owner calls it.
+# the Detector mark owns (detector_draw); its one other caller is the draw of a
+# decaying rule at a meeting (decay-draw-v1, ticket_bit), the same draw at a Node
+# the rule's declaration marks. No ordinary owner calls it.
 CAPTURE_MODES = ("share", "threshold")
 TICKET_MODULUS = 1073741789  # the largest prime below the field register bound
 
@@ -2341,20 +2377,60 @@ def ticket_draw(state: int) -> int:
     return checked_work(state * state) % TICKET_MODULUS
 
 
-def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
-    """One unsalted draw of a marked Node: the next ticket state and the bit, 1 = PASS.
+def ticket_bit(ticket: int, numerator: int, denominator: int) -> tuple[int, int]:
+    """One unsalted draw from a Node's ticket stream at a setting: the next ticket
+    state and the bit, 1 = PASS.
 
     The bit is 1 when the drawn number times the setting's denominator is below
     the numerator times the ticket modulus, so the setting is the pass share of
     the draw range: 1 / 1 always passes and 0 / 1 never does. The product is a
-    64-bit intermediate. The draw reads nothing from the ray it is drawn for.
+    64-bit intermediate. The draw reads nothing from the ray or the meeting it is
+    drawn for. The Detector mark draws with its own setting (detector_draw); a
+    decaying rule draws with its `draw` setting at its meeting (decay-draw-v1).
     """
     state = next_ticket(ticket, 0)
     number = ticket_draw(state)
-    passes = checked_work(number * mark.pass_denominator) < checked_work(
-        mark.pass_numerator * TICKET_MODULUS
-    )
+    passes = checked_work(number * denominator) < checked_work(numerator * TICKET_MODULUS)
     return state, int(passes)
+
+
+def detector_draw(ticket: int, mark: DetectorMark) -> tuple[int, int]:
+    """One unsalted draw of a marked Node: the next ticket state and the bit, 1 = PASS."""
+    return ticket_bit(ticket, mark.pass_numerator, mark.pass_denominator)
+
+
+def decay_seed(rules: tuple[InteractionDefinition, ...]) -> int | None:
+    """The seed of the declaration that marks the Nodes a decaying rule may fire at
+    (decay-draw-v1): the seeds of the rules that declare `draw`, folded in declared
+    order by the ticket rule (the first seed as the state, each further seed one
+    salted step); None when no rule draws, and then no unmarked Node has a stream.
+    """
+    state: int | None = None
+    for rule in rules:
+        if rule.draw is None:
+            continue
+        state = rule.seed if state is None else next_ticket(state, rule.seed)
+    return state
+
+
+def decay_ticket_seed(seed: int, position: Address3) -> int:
+    """The start of an unmarked Node's ticket stream under a decaying declaration
+    (decay-draw-v1): the declaration's seed salted once by each coordinate of the
+    Node, so that two corners of one ring draw independently, as two marks with
+    their own seeds do (the square in ticket_draw breaks the affine relation).
+    A Node that carries a mark keeps the mark's seed: one stream per Node.
+    """
+    state = seed
+    for coordinate in position:
+        state = next_ticket(state, coordinate)
+    return state
+
+
+def decay_draw_declared(initial: InitialState) -> bool:
+    """Whether the world declares a decaying rule, one with `draw` (decay-draw-v1);
+    the runner records the identity when it does, and a world without one runs
+    byte-identically to what it was."""
+    return any(rule.draw is not None for rule in initial.ray_interactions)
 
 
 def detector_bit_property_declared(initial: InitialState) -> bool:

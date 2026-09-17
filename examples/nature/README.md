@@ -205,7 +205,12 @@ out holds per family at every tick. For absorption into a charged family a
 second, larger decision is also needed: charge as a property of the ray
 rather than of each quantum, since today an electron ray of amount 11
 carries charge -33. Neither is added here; the register's B8 and the weak
-interaction of the catalog will need the first.
+interaction of the catalog will need the first. (On 2026-09-17 feature 13,
+`decay-draw-v1`, added the first for a decaying conversion only: a rule with
+outputs that declares `draw` may change family stock, the total amount and
+the invariants exact, the change booked as each family's source at the
+meeting; the generic key for a rule without `draw` stays open, [a decaying
+group draws](../../docs/SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1).)
 
 **A random lifetime is not expressible.** The emission of
 `absorption_emission.json` fires at a declared phase, so the excited state's
@@ -216,7 +221,12 @@ corner meeting, and the engine's Detector mark draws on arrivals through
 Ports only, at a marked Node, never inside a rule. The missing rule is that
 draw, the mark's setting applied at the corner meeting of the group's rays,
 with the conversion as the outputs rule fired on 1; the catalog's
-`weak_conversion` waits for the same rule.
+`weak_conversion` waits for the same rule. (Added on 2026-09-17 as feature
+13, `decay-draw-v1`: the conversion's rule declares `draw: [n, d]` and
+`seed`, and its meeting draws once, per meeting, from the Node's stream,
+the Node marked by the declaration for that draw; a random lifetime is one
+world key now, [a decaying group
+draws](../../docs/SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1).)
 
 **The photon in the ring walks one edge.** The light output of `absorb`
 leaves through input 1's entry Port, and at every corner input 0 is the

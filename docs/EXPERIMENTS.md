@@ -945,7 +945,15 @@ states "exactly" and means integer equality at every tick.
   with its declared ratio as the setting, 1 = the conversion fires (an
   N-to-M conversion with charge, energy and momentum exact), 0 = the group
   ticks on unchanged; half-life follows, T½ = −ln 2 / ln(1 − n/d) intervals,
-  and nothing else in the world draws.
+  and nothing else in the world draws. In the loop form as implemented
+  (`decay-draw-v1`, 2026-09-17, [a decaying group
+  draws](SPATIAL_FIELDS.md#a-decaying-group-draws-decay-draw-v1)) the
+  group's ticks are its corner meetings and the draw is the `draw` setting
+  of the conversion's rule, taken once at every meeting of the group's rays
+  under it, so the survival law is (1 − n/d)^k over k meetings and the
+  half-life above is in meetings, divided by the ring's meetings per
+  interval to read it in intervals (four on the eight-ray unit square, two
+  on the four-ray one).
 - **Features.** 1, 2, 5, 6, 8, 9, 10.
 - **Run.** A board of 65 × 65 × 65 Nodes, periodic, N = 2^10. 4096 neutron
   groups (the binding coupling of feature 8, catalog masses in keV: neutron

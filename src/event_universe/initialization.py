@@ -63,6 +63,7 @@ from .core.spatial_state import (
     PORT_HEADINGS,
     RAY_PROPERTIES,
     RAY_WRITABLE,
+    TICKET_MODULUS,
     DecayDefinition,
     DetectorMark,
     EmissionDefinition,
@@ -1851,7 +1852,9 @@ def _ray_interactions(
     event rays that replace its participants. `bit` (detector-bit-property-v1)
     says which Detector bit the outputs of the meeting inherit: `"highest"` (the
     default: the highest bit of the inputs, 1 over 0 over none), `"none"`, or
-    `{"of": i}` for input i's bit.
+    `{"of": i}` for input i's bit. `draw: [n, d]` with `seed` (decay-draw-v1) makes
+    a rule with outputs a decaying conversion: its meeting draws once from the
+    Node's ticket stream at that setting and fires on 1 only.
     """
     definitions = ray_participant_definitions(fields, spatial)
     required = {"name", "participants", "invariants"}
@@ -1860,7 +1863,8 @@ def _ray_interactions(
         obj = _object(
             raw,
             "ray interaction",
-            required | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit"},
+            required
+            | {"when", "assignments", "outputs", "ray_delay", "momentum_table", "bit", "draw", "seed"},
             required,
         )
         if "ray_delay" in obj or ("momentum_table" in obj and "assignments" in obj):
@@ -1913,6 +1917,27 @@ def _ray_interactions(
             raise ValueError("ray interactions admit at most six participants")
         if "bit" in obj:
             rule = replace(rule, bit=_bit_rule(obj["bit"], len(rule.participants)), bit_declared=True)
+        if "draw" in obj:
+            # decay-draw-v1: the decay setting of a conversion, the one draw its
+            # meeting takes at the Node with the unsalted draw of detector-mark-v1.
+            if not rule.outputs:
+                raise ValueError(
+                    "draw is the decay setting of a conversion: it requires a ray interaction "
+                    "with outputs (decay-draw-v1)"
+                )
+            if "seed" not in obj:
+                raise ValueError("a ray interaction with draw requires its seed (decay-draw-v1)")
+            setting = _array(obj["draw"], "ray interaction draw", 2, 2)
+            numerator = _integer(setting[0], "draw numerator", 0)
+            denominator = _integer(setting[1], "draw denominator", 1)
+            if numerator > denominator:
+                raise ValueError("draw must be a setting [n, d] from 0 through 1: n at most d")
+            seed = _integer(obj["seed"], "ray interaction seed", 0)
+            if seed >= TICKET_MODULUS:
+                raise ValueError("a ray interaction seed must stay below the ticket modulus")
+            rule = replace(rule, draw=(numerator, denominator), seed=seed)
+        elif "seed" in obj:
+            raise ValueError("seed starts the ticket stream of a draw: it requires draw (decay-draw-v1)")
         if any(existing.name == rule.name for existing in rules):
             raise ValueError("duplicate ray interaction name")
         # wave-ray-family-v1: charge x amount summed over the participants is an
